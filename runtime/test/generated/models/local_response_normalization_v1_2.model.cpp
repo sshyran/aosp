@@ -1,5 +1,10 @@
+// Generated from local_response_normalization_v1_2.mod.py
+// DO NOT EDIT
 // clang-format off
-// Generated file (from: local_response_normalization_v1_2.mod.py). Do not edit
+#include "TestGenerated.h"
+
+namespace generated_tests::local_response_normalization_v1_2 {
+
 void CreateModel_axis_dim4_axis0(Model *model) {
   OperandType type1(Type::INT32, {});
   OperandType type2(Type::FLOAT32, {});
@@ -31,10 +36,13 @@ void CreateModel_axis_dim4_axis0(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim4_axis0(int i) {
+bool is_ignored_axis_dim4_axis0(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dim4_axis0_float16(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -67,10 +75,13 @@ void CreateModel_axis_dim4_axis0_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim4_axis0_float16(int i) {
+bool is_ignored_axis_dim4_axis0_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dim4_axis0_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -103,10 +114,13 @@ void CreateModel_axis_dim4_axis0_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim4_axis0_neg(int i) {
+bool is_ignored_axis_dim4_axis0_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dim4_axis0_neg_float16(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -139,10 +153,13 @@ void CreateModel_axis_dim4_axis0_neg_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim4_axis0_neg_float16(int i) {
+bool is_ignored_axis_dim4_axis0_neg_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dim4_axis1(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -175,10 +192,13 @@ void CreateModel_axis_dim4_axis1(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim4_axis1(int i) {
+bool is_ignored_axis_dim4_axis1(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dim4_axis1_float16(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -211,10 +231,13 @@ void CreateModel_axis_dim4_axis1_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim4_axis1_float16(int i) {
+bool is_ignored_axis_dim4_axis1_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dim4_axis1_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -247,10 +270,13 @@ void CreateModel_axis_dim4_axis1_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim4_axis1_neg(int i) {
+bool is_ignored_axis_dim4_axis1_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dim4_axis1_neg_float16(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -283,10 +309,13 @@ void CreateModel_axis_dim4_axis1_neg_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim4_axis1_neg_float16(int i) {
+bool is_ignored_axis_dim4_axis1_neg_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dim4_axis2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -319,10 +348,13 @@ void CreateModel_axis_dim4_axis2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim4_axis2(int i) {
+bool is_ignored_axis_dim4_axis2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dim4_axis2_float16(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -355,10 +387,13 @@ void CreateModel_axis_dim4_axis2_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim4_axis2_float16(int i) {
+bool is_ignored_axis_dim4_axis2_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dim4_axis2_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -391,10 +426,13 @@ void CreateModel_axis_dim4_axis2_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim4_axis2_neg(int i) {
+bool is_ignored_axis_dim4_axis2_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dim4_axis2_neg_float16(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -427,10 +465,13 @@ void CreateModel_axis_dim4_axis2_neg_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim4_axis2_neg_float16(int i) {
+bool is_ignored_axis_dim4_axis2_neg_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dim4_axis3(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
@@ -463,10 +504,13 @@ void CreateModel_axis_dim4_axis3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim4_axis3(int i) {
+bool is_ignored_axis_dim4_axis3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dim4_axis3_float16(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -499,10 +543,13 @@ void CreateModel_axis_dim4_axis3_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim4_axis3_float16(int i) {
+bool is_ignored_axis_dim4_axis3_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dim4_axis3_neg(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
@@ -535,10 +582,13 @@ void CreateModel_axis_dim4_axis3_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim4_axis3_neg(int i) {
+bool is_ignored_axis_dim4_axis3_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dim4_axis3_neg_float16(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -571,10 +621,13 @@ void CreateModel_axis_dim4_axis3_neg_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim4_axis3_neg_float16(int i) {
+bool is_ignored_axis_dim4_axis3_neg_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dim3_axis0(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -607,10 +660,13 @@ void CreateModel_axis_dim3_axis0(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim3_axis0(int i) {
+bool is_ignored_axis_dim3_axis0(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dim3_axis0_float16(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -643,10 +699,13 @@ void CreateModel_axis_dim3_axis0_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim3_axis0_float16(int i) {
+bool is_ignored_axis_dim3_axis0_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dim3_axis0_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -679,10 +738,13 @@ void CreateModel_axis_dim3_axis0_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim3_axis0_neg(int i) {
+bool is_ignored_axis_dim3_axis0_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dim3_axis0_neg_float16(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -715,10 +777,13 @@ void CreateModel_axis_dim3_axis0_neg_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim3_axis0_neg_float16(int i) {
+bool is_ignored_axis_dim3_axis0_neg_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dim3_axis1(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -751,10 +816,13 @@ void CreateModel_axis_dim3_axis1(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim3_axis1(int i) {
+bool is_ignored_axis_dim3_axis1(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dim3_axis1_float16(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -787,10 +855,13 @@ void CreateModel_axis_dim3_axis1_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim3_axis1_float16(int i) {
+bool is_ignored_axis_dim3_axis1_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dim3_axis1_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -823,10 +894,13 @@ void CreateModel_axis_dim3_axis1_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim3_axis1_neg(int i) {
+bool is_ignored_axis_dim3_axis1_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dim3_axis1_neg_float16(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -859,10 +933,13 @@ void CreateModel_axis_dim3_axis1_neg_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim3_axis1_neg_float16(int i) {
+bool is_ignored_axis_dim3_axis1_neg_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dim3_axis2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -895,10 +972,13 @@ void CreateModel_axis_dim3_axis2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim3_axis2(int i) {
+bool is_ignored_axis_dim3_axis2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dim3_axis2_float16(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -931,10 +1011,13 @@ void CreateModel_axis_dim3_axis2_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim3_axis2_float16(int i) {
+bool is_ignored_axis_dim3_axis2_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dim3_axis2_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -967,10 +1050,13 @@ void CreateModel_axis_dim3_axis2_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim3_axis2_neg(int i) {
+bool is_ignored_axis_dim3_axis2_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dim3_axis2_neg_float16(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -1003,10 +1089,13 @@ void CreateModel_axis_dim3_axis2_neg_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim3_axis2_neg_float16(int i) {
+bool is_ignored_axis_dim3_axis2_neg_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dim2_axis0(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -1039,10 +1128,13 @@ void CreateModel_axis_dim2_axis0(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim2_axis0(int i) {
+bool is_ignored_axis_dim2_axis0(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dim2_axis0_float16(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -1075,10 +1167,13 @@ void CreateModel_axis_dim2_axis0_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim2_axis0_float16(int i) {
+bool is_ignored_axis_dim2_axis0_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dim2_axis0_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -1111,10 +1206,13 @@ void CreateModel_axis_dim2_axis0_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim2_axis0_neg(int i) {
+bool is_ignored_axis_dim2_axis0_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dim2_axis0_neg_float16(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -1147,10 +1245,13 @@ void CreateModel_axis_dim2_axis0_neg_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim2_axis0_neg_float16(int i) {
+bool is_ignored_axis_dim2_axis0_neg_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dim2_axis1(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -1183,10 +1284,13 @@ void CreateModel_axis_dim2_axis1(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim2_axis1(int i) {
+bool is_ignored_axis_dim2_axis1(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dim2_axis1_float16(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -1219,10 +1323,13 @@ void CreateModel_axis_dim2_axis1_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim2_axis1_float16(int i) {
+bool is_ignored_axis_dim2_axis1_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dim2_axis1_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -1255,10 +1362,13 @@ void CreateModel_axis_dim2_axis1_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim2_axis1_neg(int i) {
+bool is_ignored_axis_dim2_axis1_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dim2_axis1_neg_float16(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -1291,10 +1401,13 @@ void CreateModel_axis_dim2_axis1_neg_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim2_axis1_neg_float16(int i) {
+bool is_ignored_axis_dim2_axis1_neg_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dim1_axis0(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -1327,10 +1440,13 @@ void CreateModel_axis_dim1_axis0(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim1_axis0(int i) {
+bool is_ignored_axis_dim1_axis0(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dim1_axis0_float16(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -1363,10 +1479,13 @@ void CreateModel_axis_dim1_axis0_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim1_axis0_float16(int i) {
+bool is_ignored_axis_dim1_axis0_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dim1_axis0_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -1399,10 +1518,13 @@ void CreateModel_axis_dim1_axis0_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim1_axis0_neg(int i) {
+bool is_ignored_axis_dim1_axis0_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dim1_axis0_neg_float16(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -1435,10 +1557,13 @@ void CreateModel_axis_dim1_axis0_neg_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim1_axis0_neg_float16(int i) {
+bool is_ignored_axis_dim1_axis0_neg_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_relaxed_dim4_axis0(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -1473,10 +1598,13 @@ void CreateModel_axis_relaxed_dim4_axis0(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim4_axis0(int i) {
+bool is_ignored_axis_relaxed_dim4_axis0(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_relaxed_dim4_axis0_float16(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -1511,10 +1639,13 @@ void CreateModel_axis_relaxed_dim4_axis0_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim4_axis0_float16(int i) {
+bool is_ignored_axis_relaxed_dim4_axis0_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_relaxed_dim4_axis0_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -1549,10 +1680,13 @@ void CreateModel_axis_relaxed_dim4_axis0_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim4_axis0_neg(int i) {
+bool is_ignored_axis_relaxed_dim4_axis0_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_relaxed_dim4_axis0_neg_float16(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -1587,10 +1721,13 @@ void CreateModel_axis_relaxed_dim4_axis0_neg_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim4_axis0_neg_float16(int i) {
+bool is_ignored_axis_relaxed_dim4_axis0_neg_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_relaxed_dim4_axis1(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -1625,10 +1762,13 @@ void CreateModel_axis_relaxed_dim4_axis1(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim4_axis1(int i) {
+bool is_ignored_axis_relaxed_dim4_axis1(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_relaxed_dim4_axis1_float16(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -1663,10 +1803,13 @@ void CreateModel_axis_relaxed_dim4_axis1_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim4_axis1_float16(int i) {
+bool is_ignored_axis_relaxed_dim4_axis1_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_relaxed_dim4_axis1_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -1701,10 +1844,13 @@ void CreateModel_axis_relaxed_dim4_axis1_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim4_axis1_neg(int i) {
+bool is_ignored_axis_relaxed_dim4_axis1_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_relaxed_dim4_axis1_neg_float16(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -1739,10 +1885,13 @@ void CreateModel_axis_relaxed_dim4_axis1_neg_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim4_axis1_neg_float16(int i) {
+bool is_ignored_axis_relaxed_dim4_axis1_neg_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_relaxed_dim4_axis2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -1777,10 +1926,13 @@ void CreateModel_axis_relaxed_dim4_axis2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim4_axis2(int i) {
+bool is_ignored_axis_relaxed_dim4_axis2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_relaxed_dim4_axis2_float16(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -1815,10 +1967,13 @@ void CreateModel_axis_relaxed_dim4_axis2_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim4_axis2_float16(int i) {
+bool is_ignored_axis_relaxed_dim4_axis2_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_relaxed_dim4_axis2_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -1853,10 +2008,13 @@ void CreateModel_axis_relaxed_dim4_axis2_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim4_axis2_neg(int i) {
+bool is_ignored_axis_relaxed_dim4_axis2_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_relaxed_dim4_axis2_neg_float16(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -1891,10 +2049,13 @@ void CreateModel_axis_relaxed_dim4_axis2_neg_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim4_axis2_neg_float16(int i) {
+bool is_ignored_axis_relaxed_dim4_axis2_neg_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_relaxed_dim4_axis3(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
@@ -1929,10 +2090,13 @@ void CreateModel_axis_relaxed_dim4_axis3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim4_axis3(int i) {
+bool is_ignored_axis_relaxed_dim4_axis3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_relaxed_dim4_axis3_float16(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -1967,10 +2131,13 @@ void CreateModel_axis_relaxed_dim4_axis3_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim4_axis3_float16(int i) {
+bool is_ignored_axis_relaxed_dim4_axis3_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_relaxed_dim4_axis3_neg(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
@@ -2005,10 +2172,13 @@ void CreateModel_axis_relaxed_dim4_axis3_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim4_axis3_neg(int i) {
+bool is_ignored_axis_relaxed_dim4_axis3_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_relaxed_dim4_axis3_neg_float16(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -2043,10 +2213,13 @@ void CreateModel_axis_relaxed_dim4_axis3_neg_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim4_axis3_neg_float16(int i) {
+bool is_ignored_axis_relaxed_dim4_axis3_neg_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_relaxed_dim3_axis0(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -2081,10 +2254,13 @@ void CreateModel_axis_relaxed_dim3_axis0(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim3_axis0(int i) {
+bool is_ignored_axis_relaxed_dim3_axis0(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_relaxed_dim3_axis0_float16(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -2119,10 +2295,13 @@ void CreateModel_axis_relaxed_dim3_axis0_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim3_axis0_float16(int i) {
+bool is_ignored_axis_relaxed_dim3_axis0_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_relaxed_dim3_axis0_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -2157,10 +2336,13 @@ void CreateModel_axis_relaxed_dim3_axis0_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim3_axis0_neg(int i) {
+bool is_ignored_axis_relaxed_dim3_axis0_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_relaxed_dim3_axis0_neg_float16(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -2195,10 +2377,13 @@ void CreateModel_axis_relaxed_dim3_axis0_neg_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim3_axis0_neg_float16(int i) {
+bool is_ignored_axis_relaxed_dim3_axis0_neg_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_relaxed_dim3_axis1(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -2233,10 +2418,13 @@ void CreateModel_axis_relaxed_dim3_axis1(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim3_axis1(int i) {
+bool is_ignored_axis_relaxed_dim3_axis1(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_relaxed_dim3_axis1_float16(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -2271,10 +2459,13 @@ void CreateModel_axis_relaxed_dim3_axis1_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim3_axis1_float16(int i) {
+bool is_ignored_axis_relaxed_dim3_axis1_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_relaxed_dim3_axis1_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -2309,10 +2500,13 @@ void CreateModel_axis_relaxed_dim3_axis1_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim3_axis1_neg(int i) {
+bool is_ignored_axis_relaxed_dim3_axis1_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_relaxed_dim3_axis1_neg_float16(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -2347,10 +2541,13 @@ void CreateModel_axis_relaxed_dim3_axis1_neg_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim3_axis1_neg_float16(int i) {
+bool is_ignored_axis_relaxed_dim3_axis1_neg_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_relaxed_dim3_axis2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -2385,10 +2582,13 @@ void CreateModel_axis_relaxed_dim3_axis2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim3_axis2(int i) {
+bool is_ignored_axis_relaxed_dim3_axis2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_relaxed_dim3_axis2_float16(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -2423,10 +2623,13 @@ void CreateModel_axis_relaxed_dim3_axis2_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim3_axis2_float16(int i) {
+bool is_ignored_axis_relaxed_dim3_axis2_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_relaxed_dim3_axis2_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -2461,10 +2664,13 @@ void CreateModel_axis_relaxed_dim3_axis2_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim3_axis2_neg(int i) {
+bool is_ignored_axis_relaxed_dim3_axis2_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_relaxed_dim3_axis2_neg_float16(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -2499,10 +2705,13 @@ void CreateModel_axis_relaxed_dim3_axis2_neg_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim3_axis2_neg_float16(int i) {
+bool is_ignored_axis_relaxed_dim3_axis2_neg_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_relaxed_dim2_axis0(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -2537,10 +2746,13 @@ void CreateModel_axis_relaxed_dim2_axis0(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim2_axis0(int i) {
+bool is_ignored_axis_relaxed_dim2_axis0(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_relaxed_dim2_axis0_float16(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -2575,10 +2787,13 @@ void CreateModel_axis_relaxed_dim2_axis0_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim2_axis0_float16(int i) {
+bool is_ignored_axis_relaxed_dim2_axis0_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_relaxed_dim2_axis0_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -2613,10 +2828,13 @@ void CreateModel_axis_relaxed_dim2_axis0_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim2_axis0_neg(int i) {
+bool is_ignored_axis_relaxed_dim2_axis0_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_relaxed_dim2_axis0_neg_float16(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -2651,10 +2869,13 @@ void CreateModel_axis_relaxed_dim2_axis0_neg_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim2_axis0_neg_float16(int i) {
+bool is_ignored_axis_relaxed_dim2_axis0_neg_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_relaxed_dim2_axis1(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -2689,10 +2910,13 @@ void CreateModel_axis_relaxed_dim2_axis1(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim2_axis1(int i) {
+bool is_ignored_axis_relaxed_dim2_axis1(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_relaxed_dim2_axis1_float16(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -2727,10 +2951,13 @@ void CreateModel_axis_relaxed_dim2_axis1_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim2_axis1_float16(int i) {
+bool is_ignored_axis_relaxed_dim2_axis1_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_relaxed_dim2_axis1_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -2765,10 +2992,13 @@ void CreateModel_axis_relaxed_dim2_axis1_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim2_axis1_neg(int i) {
+bool is_ignored_axis_relaxed_dim2_axis1_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_relaxed_dim2_axis1_neg_float16(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -2803,10 +3033,13 @@ void CreateModel_axis_relaxed_dim2_axis1_neg_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim2_axis1_neg_float16(int i) {
+bool is_ignored_axis_relaxed_dim2_axis1_neg_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_relaxed_dim1_axis0(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -2841,10 +3074,13 @@ void CreateModel_axis_relaxed_dim1_axis0(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim1_axis0(int i) {
+bool is_ignored_axis_relaxed_dim1_axis0(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_relaxed_dim1_axis0_float16(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -2879,10 +3115,13 @@ void CreateModel_axis_relaxed_dim1_axis0_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim1_axis0_float16(int i) {
+bool is_ignored_axis_relaxed_dim1_axis0_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_relaxed_dim1_axis0_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -2917,10 +3156,13 @@ void CreateModel_axis_relaxed_dim1_axis0_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim1_axis0_neg(int i) {
+bool is_ignored_axis_relaxed_dim1_axis0_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_relaxed_dim1_axis0_neg_float16(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -2955,10 +3197,13 @@ void CreateModel_axis_relaxed_dim1_axis0_neg_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim1_axis0_neg_float16(int i) {
+bool is_ignored_axis_relaxed_dim1_axis0_neg_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim4_axis0(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -2992,10 +3237,13 @@ void CreateModel_axis_dynamic_output_shape_dim4_axis0(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim4_axis0(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim4_axis0(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim4_axis0_float16(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -3029,10 +3277,13 @@ void CreateModel_axis_dynamic_output_shape_dim4_axis0_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim4_axis0_float16(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim4_axis0_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim4_axis0_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -3066,10 +3317,13 @@ void CreateModel_axis_dynamic_output_shape_dim4_axis0_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim4_axis0_neg(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim4_axis0_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim4_axis0_neg_float16(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -3103,10 +3357,13 @@ void CreateModel_axis_dynamic_output_shape_dim4_axis0_neg_float16(Model *model) 
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim4_axis0_neg_float16(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim4_axis0_neg_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim4_axis1(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -3140,10 +3397,13 @@ void CreateModel_axis_dynamic_output_shape_dim4_axis1(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim4_axis1(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim4_axis1(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim4_axis1_float16(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -3177,10 +3437,13 @@ void CreateModel_axis_dynamic_output_shape_dim4_axis1_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim4_axis1_float16(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim4_axis1_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim4_axis1_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -3214,10 +3477,13 @@ void CreateModel_axis_dynamic_output_shape_dim4_axis1_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim4_axis1_neg(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim4_axis1_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim4_axis1_neg_float16(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -3251,10 +3517,13 @@ void CreateModel_axis_dynamic_output_shape_dim4_axis1_neg_float16(Model *model) 
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim4_axis1_neg_float16(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim4_axis1_neg_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim4_axis2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -3288,10 +3557,13 @@ void CreateModel_axis_dynamic_output_shape_dim4_axis2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim4_axis2(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim4_axis2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim4_axis2_float16(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -3325,10 +3597,13 @@ void CreateModel_axis_dynamic_output_shape_dim4_axis2_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim4_axis2_float16(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim4_axis2_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim4_axis2_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -3362,10 +3637,13 @@ void CreateModel_axis_dynamic_output_shape_dim4_axis2_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim4_axis2_neg(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim4_axis2_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim4_axis2_neg_float16(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -3399,10 +3677,13 @@ void CreateModel_axis_dynamic_output_shape_dim4_axis2_neg_float16(Model *model) 
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim4_axis2_neg_float16(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim4_axis2_neg_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim4_axis3(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
@@ -3436,10 +3717,13 @@ void CreateModel_axis_dynamic_output_shape_dim4_axis3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim4_axis3(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim4_axis3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim4_axis3_float16(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -3473,10 +3757,13 @@ void CreateModel_axis_dynamic_output_shape_dim4_axis3_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim4_axis3_float16(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim4_axis3_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim4_axis3_neg(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
@@ -3510,10 +3797,13 @@ void CreateModel_axis_dynamic_output_shape_dim4_axis3_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim4_axis3_neg(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim4_axis3_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim4_axis3_neg_float16(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -3547,10 +3837,13 @@ void CreateModel_axis_dynamic_output_shape_dim4_axis3_neg_float16(Model *model) 
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim4_axis3_neg_float16(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim4_axis3_neg_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim3_axis0(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -3584,10 +3877,13 @@ void CreateModel_axis_dynamic_output_shape_dim3_axis0(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim3_axis0(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim3_axis0(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim3_axis0_float16(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -3621,10 +3917,13 @@ void CreateModel_axis_dynamic_output_shape_dim3_axis0_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim3_axis0_float16(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim3_axis0_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim3_axis0_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -3658,10 +3957,13 @@ void CreateModel_axis_dynamic_output_shape_dim3_axis0_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim3_axis0_neg(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim3_axis0_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim3_axis0_neg_float16(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -3695,10 +3997,13 @@ void CreateModel_axis_dynamic_output_shape_dim3_axis0_neg_float16(Model *model) 
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim3_axis0_neg_float16(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim3_axis0_neg_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim3_axis1(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -3732,10 +4037,13 @@ void CreateModel_axis_dynamic_output_shape_dim3_axis1(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim3_axis1(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim3_axis1(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim3_axis1_float16(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -3769,10 +4077,13 @@ void CreateModel_axis_dynamic_output_shape_dim3_axis1_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim3_axis1_float16(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim3_axis1_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim3_axis1_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -3806,10 +4117,13 @@ void CreateModel_axis_dynamic_output_shape_dim3_axis1_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim3_axis1_neg(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim3_axis1_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim3_axis1_neg_float16(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -3843,10 +4157,13 @@ void CreateModel_axis_dynamic_output_shape_dim3_axis1_neg_float16(Model *model) 
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim3_axis1_neg_float16(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim3_axis1_neg_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim3_axis2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -3880,10 +4197,13 @@ void CreateModel_axis_dynamic_output_shape_dim3_axis2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim3_axis2(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim3_axis2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim3_axis2_float16(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -3917,10 +4237,13 @@ void CreateModel_axis_dynamic_output_shape_dim3_axis2_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim3_axis2_float16(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim3_axis2_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim3_axis2_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -3954,10 +4277,13 @@ void CreateModel_axis_dynamic_output_shape_dim3_axis2_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim3_axis2_neg(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim3_axis2_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim3_axis2_neg_float16(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -3991,10 +4317,13 @@ void CreateModel_axis_dynamic_output_shape_dim3_axis2_neg_float16(Model *model) 
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim3_axis2_neg_float16(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim3_axis2_neg_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim2_axis0(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -4028,10 +4357,13 @@ void CreateModel_axis_dynamic_output_shape_dim2_axis0(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim2_axis0(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim2_axis0(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim2_axis0_float16(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -4065,10 +4397,13 @@ void CreateModel_axis_dynamic_output_shape_dim2_axis0_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim2_axis0_float16(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim2_axis0_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim2_axis0_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -4102,10 +4437,13 @@ void CreateModel_axis_dynamic_output_shape_dim2_axis0_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim2_axis0_neg(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim2_axis0_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim2_axis0_neg_float16(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -4139,10 +4477,13 @@ void CreateModel_axis_dynamic_output_shape_dim2_axis0_neg_float16(Model *model) 
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim2_axis0_neg_float16(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim2_axis0_neg_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim2_axis1(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -4176,10 +4517,13 @@ void CreateModel_axis_dynamic_output_shape_dim2_axis1(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim2_axis1(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim2_axis1(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim2_axis1_float16(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -4213,10 +4557,13 @@ void CreateModel_axis_dynamic_output_shape_dim2_axis1_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim2_axis1_float16(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim2_axis1_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim2_axis1_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -4250,10 +4597,13 @@ void CreateModel_axis_dynamic_output_shape_dim2_axis1_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim2_axis1_neg(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim2_axis1_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim2_axis1_neg_float16(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -4287,10 +4637,13 @@ void CreateModel_axis_dynamic_output_shape_dim2_axis1_neg_float16(Model *model) 
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim2_axis1_neg_float16(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim2_axis1_neg_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim1_axis0(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -4324,10 +4677,13 @@ void CreateModel_axis_dynamic_output_shape_dim1_axis0(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim1_axis0(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim1_axis0(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim1_axis0_float16(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -4361,10 +4717,13 @@ void CreateModel_axis_dynamic_output_shape_dim1_axis0_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim1_axis0_float16(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim1_axis0_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim1_axis0_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -4398,10 +4757,13 @@ void CreateModel_axis_dynamic_output_shape_dim1_axis0_neg(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim1_axis0_neg(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim1_axis0_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim1_axis0_neg_float16(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -4435,10 +4797,13 @@ void CreateModel_axis_dynamic_output_shape_dim1_axis0_neg_float16(Model *model) 
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim1_axis0_neg_float16(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim1_axis0_neg_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis0(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -4474,10 +4839,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis0(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis0(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis0(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis0_float16(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -4513,10 +4881,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis0_float16(Model *mod
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis0_float16(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis0_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis0_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -4552,10 +4923,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis0_neg(Model *model) 
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis0_neg(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis0_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis0_neg_float16(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -4591,10 +4965,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis0_neg_float16(Model 
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis0_neg_float16(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis0_neg_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis1(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -4630,10 +5007,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis1(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis1(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis1(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis1_float16(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -4669,10 +5049,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis1_float16(Model *mod
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis1_float16(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis1_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis1_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -4708,10 +5091,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis1_neg(Model *model) 
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis1_neg(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis1_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis1_neg_float16(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -4747,10 +5133,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis1_neg_float16(Model 
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis1_neg_float16(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis1_neg_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -4786,10 +5175,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis2(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis2_float16(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -4825,10 +5217,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis2_float16(Model *mod
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis2_float16(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis2_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis2_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -4864,10 +5259,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis2_neg(Model *model) 
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis2_neg(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis2_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis2_neg_float16(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -4903,10 +5301,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis2_neg_float16(Model 
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis2_neg_float16(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis2_neg_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis3(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
@@ -4942,10 +5343,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis3(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis3_float16(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -4981,10 +5385,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis3_float16(Model *mod
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis3_float16(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis3_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis3_neg(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
@@ -5020,10 +5427,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis3_neg(Model *model) 
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis3_neg(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis3_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis3_neg_float16(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -5059,10 +5469,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis3_neg_float16(Model 
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis3_neg_float16(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis3_neg_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim3_axis0(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -5098,10 +5511,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim3_axis0(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis0(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis0(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim3_axis0_float16(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -5137,10 +5553,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim3_axis0_float16(Model *mod
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis0_float16(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis0_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim3_axis0_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -5176,10 +5595,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim3_axis0_neg(Model *model) 
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis0_neg(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis0_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim3_axis0_neg_float16(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -5215,10 +5637,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim3_axis0_neg_float16(Model 
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis0_neg_float16(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis0_neg_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim3_axis1(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -5254,10 +5679,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim3_axis1(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis1(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis1(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim3_axis1_float16(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -5293,10 +5721,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim3_axis1_float16(Model *mod
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis1_float16(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis1_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim3_axis1_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -5332,10 +5763,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim3_axis1_neg(Model *model) 
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis1_neg(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis1_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim3_axis1_neg_float16(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -5371,10 +5805,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim3_axis1_neg_float16(Model 
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis1_neg_float16(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis1_neg_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim3_axis2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -5410,10 +5847,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim3_axis2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis2(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim3_axis2_float16(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -5449,10 +5889,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim3_axis2_float16(Model *mod
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis2_float16(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis2_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim3_axis2_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -5488,10 +5931,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim3_axis2_neg(Model *model) 
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis2_neg(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis2_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim3_axis2_neg_float16(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -5527,10 +5973,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim3_axis2_neg_float16(Model 
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis2_neg_float16(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis2_neg_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim2_axis0(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -5566,10 +6015,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim2_axis0(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim2_axis0(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim2_axis0(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim2_axis0_float16(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -5605,10 +6057,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim2_axis0_float16(Model *mod
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim2_axis0_float16(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim2_axis0_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim2_axis0_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -5644,10 +6099,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim2_axis0_neg(Model *model) 
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim2_axis0_neg(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim2_axis0_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim2_axis0_neg_float16(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -5683,10 +6141,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim2_axis0_neg_float16(Model 
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim2_axis0_neg_float16(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim2_axis0_neg_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim2_axis1(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -5722,10 +6183,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim2_axis1(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim2_axis1(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim2_axis1(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim2_axis1_float16(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -5761,10 +6225,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim2_axis1_float16(Model *mod
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim2_axis1_float16(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim2_axis1_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim2_axis1_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -5800,10 +6267,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim2_axis1_neg(Model *model) 
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim2_axis1_neg(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim2_axis1_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim2_axis1_neg_float16(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -5839,10 +6309,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim2_axis1_neg_float16(Model 
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim2_axis1_neg_float16(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim2_axis1_neg_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim1_axis0(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -5878,10 +6351,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim1_axis0(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim1_axis0(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim1_axis0(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim1_axis0_float16(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -5917,10 +6393,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim1_axis0_float16(Model *mod
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim1_axis0_float16(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim1_axis0_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim1_axis0_neg(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -5956,10 +6435,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim1_axis0_neg(Model *model) 
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim1_axis0_neg(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim1_axis0_neg(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim1_axis0_neg_float16(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -5995,10 +6477,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim1_axis0_neg_float16(Model 
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim1_axis0_neg_float16(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim1_axis0_neg_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dim4_axis0_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -6031,10 +6516,13 @@ void CreateModel_axis_dim4_axis0_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim4_axis0_2(int i) {
+bool is_ignored_axis_dim4_axis0_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dim4_axis0_float16_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -6067,10 +6555,13 @@ void CreateModel_axis_dim4_axis0_float16_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim4_axis0_float16_2(int i) {
+bool is_ignored_axis_dim4_axis0_float16_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dim4_axis0_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -6103,10 +6594,13 @@ void CreateModel_axis_dim4_axis0_neg_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim4_axis0_neg_2(int i) {
+bool is_ignored_axis_dim4_axis0_neg_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dim4_axis0_neg_float16_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -6139,10 +6633,13 @@ void CreateModel_axis_dim4_axis0_neg_float16_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim4_axis0_neg_float16_2(int i) {
+bool is_ignored_axis_dim4_axis0_neg_float16_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dim4_axis1_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -6175,10 +6672,13 @@ void CreateModel_axis_dim4_axis1_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim4_axis1_2(int i) {
+bool is_ignored_axis_dim4_axis1_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dim4_axis1_float16_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -6211,10 +6711,13 @@ void CreateModel_axis_dim4_axis1_float16_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim4_axis1_float16_2(int i) {
+bool is_ignored_axis_dim4_axis1_float16_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dim4_axis1_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -6247,10 +6750,13 @@ void CreateModel_axis_dim4_axis1_neg_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim4_axis1_neg_2(int i) {
+bool is_ignored_axis_dim4_axis1_neg_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dim4_axis1_neg_float16_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -6283,10 +6789,13 @@ void CreateModel_axis_dim4_axis1_neg_float16_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim4_axis1_neg_float16_2(int i) {
+bool is_ignored_axis_dim4_axis1_neg_float16_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dim4_axis2_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -6319,10 +6828,13 @@ void CreateModel_axis_dim4_axis2_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim4_axis2_2(int i) {
+bool is_ignored_axis_dim4_axis2_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dim4_axis2_float16_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -6355,10 +6867,13 @@ void CreateModel_axis_dim4_axis2_float16_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim4_axis2_float16_2(int i) {
+bool is_ignored_axis_dim4_axis2_float16_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dim4_axis2_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -6391,10 +6906,13 @@ void CreateModel_axis_dim4_axis2_neg_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim4_axis2_neg_2(int i) {
+bool is_ignored_axis_dim4_axis2_neg_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dim4_axis2_neg_float16_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -6427,10 +6945,13 @@ void CreateModel_axis_dim4_axis2_neg_float16_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim4_axis2_neg_float16_2(int i) {
+bool is_ignored_axis_dim4_axis2_neg_float16_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dim4_axis3_2(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
@@ -6463,10 +6984,13 @@ void CreateModel_axis_dim4_axis3_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim4_axis3_2(int i) {
+bool is_ignored_axis_dim4_axis3_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dim4_axis3_float16_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -6499,10 +7023,13 @@ void CreateModel_axis_dim4_axis3_float16_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim4_axis3_float16_2(int i) {
+bool is_ignored_axis_dim4_axis3_float16_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dim4_axis3_neg_2(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
@@ -6535,10 +7062,13 @@ void CreateModel_axis_dim4_axis3_neg_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim4_axis3_neg_2(int i) {
+bool is_ignored_axis_dim4_axis3_neg_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dim4_axis3_neg_float16_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -6571,10 +7101,13 @@ void CreateModel_axis_dim4_axis3_neg_float16_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim4_axis3_neg_float16_2(int i) {
+bool is_ignored_axis_dim4_axis3_neg_float16_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dim3_axis0_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -6607,10 +7140,13 @@ void CreateModel_axis_dim3_axis0_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim3_axis0_2(int i) {
+bool is_ignored_axis_dim3_axis0_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dim3_axis0_float16_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -6643,10 +7179,13 @@ void CreateModel_axis_dim3_axis0_float16_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim3_axis0_float16_2(int i) {
+bool is_ignored_axis_dim3_axis0_float16_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dim3_axis0_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -6679,10 +7218,13 @@ void CreateModel_axis_dim3_axis0_neg_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim3_axis0_neg_2(int i) {
+bool is_ignored_axis_dim3_axis0_neg_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dim3_axis0_neg_float16_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -6715,10 +7257,13 @@ void CreateModel_axis_dim3_axis0_neg_float16_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim3_axis0_neg_float16_2(int i) {
+bool is_ignored_axis_dim3_axis0_neg_float16_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dim3_axis1_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -6751,10 +7296,13 @@ void CreateModel_axis_dim3_axis1_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim3_axis1_2(int i) {
+bool is_ignored_axis_dim3_axis1_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dim3_axis1_float16_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -6787,10 +7335,13 @@ void CreateModel_axis_dim3_axis1_float16_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim3_axis1_float16_2(int i) {
+bool is_ignored_axis_dim3_axis1_float16_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dim3_axis1_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -6823,10 +7374,13 @@ void CreateModel_axis_dim3_axis1_neg_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim3_axis1_neg_2(int i) {
+bool is_ignored_axis_dim3_axis1_neg_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dim3_axis1_neg_float16_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -6859,10 +7413,13 @@ void CreateModel_axis_dim3_axis1_neg_float16_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim3_axis1_neg_float16_2(int i) {
+bool is_ignored_axis_dim3_axis1_neg_float16_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dim3_axis2_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -6895,10 +7452,13 @@ void CreateModel_axis_dim3_axis2_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim3_axis2_2(int i) {
+bool is_ignored_axis_dim3_axis2_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dim3_axis2_float16_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -6931,10 +7491,13 @@ void CreateModel_axis_dim3_axis2_float16_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim3_axis2_float16_2(int i) {
+bool is_ignored_axis_dim3_axis2_float16_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dim3_axis2_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -6967,10 +7530,13 @@ void CreateModel_axis_dim3_axis2_neg_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim3_axis2_neg_2(int i) {
+bool is_ignored_axis_dim3_axis2_neg_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dim3_axis2_neg_float16_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -7003,10 +7569,13 @@ void CreateModel_axis_dim3_axis2_neg_float16_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim3_axis2_neg_float16_2(int i) {
+bool is_ignored_axis_dim3_axis2_neg_float16_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dim2_axis0_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -7039,10 +7608,13 @@ void CreateModel_axis_dim2_axis0_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim2_axis0_2(int i) {
+bool is_ignored_axis_dim2_axis0_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dim2_axis0_float16_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -7075,10 +7647,13 @@ void CreateModel_axis_dim2_axis0_float16_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim2_axis0_float16_2(int i) {
+bool is_ignored_axis_dim2_axis0_float16_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dim2_axis0_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -7111,10 +7686,13 @@ void CreateModel_axis_dim2_axis0_neg_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim2_axis0_neg_2(int i) {
+bool is_ignored_axis_dim2_axis0_neg_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dim2_axis0_neg_float16_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -7147,10 +7725,13 @@ void CreateModel_axis_dim2_axis0_neg_float16_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim2_axis0_neg_float16_2(int i) {
+bool is_ignored_axis_dim2_axis0_neg_float16_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dim2_axis1_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -7183,10 +7764,13 @@ void CreateModel_axis_dim2_axis1_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim2_axis1_2(int i) {
+bool is_ignored_axis_dim2_axis1_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dim2_axis1_float16_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -7219,10 +7803,13 @@ void CreateModel_axis_dim2_axis1_float16_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim2_axis1_float16_2(int i) {
+bool is_ignored_axis_dim2_axis1_float16_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dim2_axis1_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -7255,10 +7842,13 @@ void CreateModel_axis_dim2_axis1_neg_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim2_axis1_neg_2(int i) {
+bool is_ignored_axis_dim2_axis1_neg_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dim2_axis1_neg_float16_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -7291,10 +7881,13 @@ void CreateModel_axis_dim2_axis1_neg_float16_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim2_axis1_neg_float16_2(int i) {
+bool is_ignored_axis_dim2_axis1_neg_float16_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dim1_axis0_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -7327,10 +7920,13 @@ void CreateModel_axis_dim1_axis0_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim1_axis0_2(int i) {
+bool is_ignored_axis_dim1_axis0_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dim1_axis0_float16_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -7363,10 +7959,13 @@ void CreateModel_axis_dim1_axis0_float16_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim1_axis0_float16_2(int i) {
+bool is_ignored_axis_dim1_axis0_float16_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dim1_axis0_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -7399,10 +7998,13 @@ void CreateModel_axis_dim1_axis0_neg_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim1_axis0_neg_2(int i) {
+bool is_ignored_axis_dim1_axis0_neg_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dim1_axis0_neg_float16_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -7435,10 +8037,13 @@ void CreateModel_axis_dim1_axis0_neg_float16_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim1_axis0_neg_float16_2(int i) {
+bool is_ignored_axis_dim1_axis0_neg_float16_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_relaxed_dim4_axis0_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -7473,10 +8078,13 @@ void CreateModel_axis_relaxed_dim4_axis0_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim4_axis0_2(int i) {
+bool is_ignored_axis_relaxed_dim4_axis0_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_relaxed_dim4_axis0_float16_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -7511,10 +8119,13 @@ void CreateModel_axis_relaxed_dim4_axis0_float16_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim4_axis0_float16_2(int i) {
+bool is_ignored_axis_relaxed_dim4_axis0_float16_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_relaxed_dim4_axis0_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -7549,10 +8160,13 @@ void CreateModel_axis_relaxed_dim4_axis0_neg_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim4_axis0_neg_2(int i) {
+bool is_ignored_axis_relaxed_dim4_axis0_neg_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_relaxed_dim4_axis0_neg_float16_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -7587,10 +8201,13 @@ void CreateModel_axis_relaxed_dim4_axis0_neg_float16_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim4_axis0_neg_float16_2(int i) {
+bool is_ignored_axis_relaxed_dim4_axis0_neg_float16_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_relaxed_dim4_axis1_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -7625,10 +8242,13 @@ void CreateModel_axis_relaxed_dim4_axis1_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim4_axis1_2(int i) {
+bool is_ignored_axis_relaxed_dim4_axis1_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_relaxed_dim4_axis1_float16_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -7663,10 +8283,13 @@ void CreateModel_axis_relaxed_dim4_axis1_float16_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim4_axis1_float16_2(int i) {
+bool is_ignored_axis_relaxed_dim4_axis1_float16_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_relaxed_dim4_axis1_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -7701,10 +8324,13 @@ void CreateModel_axis_relaxed_dim4_axis1_neg_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim4_axis1_neg_2(int i) {
+bool is_ignored_axis_relaxed_dim4_axis1_neg_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_relaxed_dim4_axis1_neg_float16_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -7739,10 +8365,13 @@ void CreateModel_axis_relaxed_dim4_axis1_neg_float16_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim4_axis1_neg_float16_2(int i) {
+bool is_ignored_axis_relaxed_dim4_axis1_neg_float16_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_relaxed_dim4_axis2_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -7777,10 +8406,13 @@ void CreateModel_axis_relaxed_dim4_axis2_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim4_axis2_2(int i) {
+bool is_ignored_axis_relaxed_dim4_axis2_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_relaxed_dim4_axis2_float16_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -7815,10 +8447,13 @@ void CreateModel_axis_relaxed_dim4_axis2_float16_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim4_axis2_float16_2(int i) {
+bool is_ignored_axis_relaxed_dim4_axis2_float16_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_relaxed_dim4_axis2_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -7853,10 +8488,13 @@ void CreateModel_axis_relaxed_dim4_axis2_neg_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim4_axis2_neg_2(int i) {
+bool is_ignored_axis_relaxed_dim4_axis2_neg_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_relaxed_dim4_axis2_neg_float16_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -7891,10 +8529,13 @@ void CreateModel_axis_relaxed_dim4_axis2_neg_float16_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim4_axis2_neg_float16_2(int i) {
+bool is_ignored_axis_relaxed_dim4_axis2_neg_float16_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_relaxed_dim4_axis3_2(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
@@ -7929,10 +8570,13 @@ void CreateModel_axis_relaxed_dim4_axis3_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim4_axis3_2(int i) {
+bool is_ignored_axis_relaxed_dim4_axis3_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_relaxed_dim4_axis3_float16_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -7967,10 +8611,13 @@ void CreateModel_axis_relaxed_dim4_axis3_float16_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim4_axis3_float16_2(int i) {
+bool is_ignored_axis_relaxed_dim4_axis3_float16_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_relaxed_dim4_axis3_neg_2(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
@@ -8005,10 +8652,13 @@ void CreateModel_axis_relaxed_dim4_axis3_neg_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim4_axis3_neg_2(int i) {
+bool is_ignored_axis_relaxed_dim4_axis3_neg_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_relaxed_dim4_axis3_neg_float16_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -8043,10 +8693,13 @@ void CreateModel_axis_relaxed_dim4_axis3_neg_float16_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim4_axis3_neg_float16_2(int i) {
+bool is_ignored_axis_relaxed_dim4_axis3_neg_float16_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_relaxed_dim3_axis0_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -8081,10 +8734,13 @@ void CreateModel_axis_relaxed_dim3_axis0_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim3_axis0_2(int i) {
+bool is_ignored_axis_relaxed_dim3_axis0_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_relaxed_dim3_axis0_float16_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -8119,10 +8775,13 @@ void CreateModel_axis_relaxed_dim3_axis0_float16_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim3_axis0_float16_2(int i) {
+bool is_ignored_axis_relaxed_dim3_axis0_float16_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_relaxed_dim3_axis0_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -8157,10 +8816,13 @@ void CreateModel_axis_relaxed_dim3_axis0_neg_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim3_axis0_neg_2(int i) {
+bool is_ignored_axis_relaxed_dim3_axis0_neg_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_relaxed_dim3_axis0_neg_float16_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -8195,10 +8857,13 @@ void CreateModel_axis_relaxed_dim3_axis0_neg_float16_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim3_axis0_neg_float16_2(int i) {
+bool is_ignored_axis_relaxed_dim3_axis0_neg_float16_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_relaxed_dim3_axis1_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -8233,10 +8898,13 @@ void CreateModel_axis_relaxed_dim3_axis1_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim3_axis1_2(int i) {
+bool is_ignored_axis_relaxed_dim3_axis1_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_relaxed_dim3_axis1_float16_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -8271,10 +8939,13 @@ void CreateModel_axis_relaxed_dim3_axis1_float16_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim3_axis1_float16_2(int i) {
+bool is_ignored_axis_relaxed_dim3_axis1_float16_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_relaxed_dim3_axis1_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -8309,10 +8980,13 @@ void CreateModel_axis_relaxed_dim3_axis1_neg_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim3_axis1_neg_2(int i) {
+bool is_ignored_axis_relaxed_dim3_axis1_neg_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_relaxed_dim3_axis1_neg_float16_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -8347,10 +9021,13 @@ void CreateModel_axis_relaxed_dim3_axis1_neg_float16_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim3_axis1_neg_float16_2(int i) {
+bool is_ignored_axis_relaxed_dim3_axis1_neg_float16_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_relaxed_dim3_axis2_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -8385,10 +9062,13 @@ void CreateModel_axis_relaxed_dim3_axis2_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim3_axis2_2(int i) {
+bool is_ignored_axis_relaxed_dim3_axis2_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_relaxed_dim3_axis2_float16_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -8423,10 +9103,13 @@ void CreateModel_axis_relaxed_dim3_axis2_float16_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim3_axis2_float16_2(int i) {
+bool is_ignored_axis_relaxed_dim3_axis2_float16_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_relaxed_dim3_axis2_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -8461,10 +9144,13 @@ void CreateModel_axis_relaxed_dim3_axis2_neg_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim3_axis2_neg_2(int i) {
+bool is_ignored_axis_relaxed_dim3_axis2_neg_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_relaxed_dim3_axis2_neg_float16_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -8499,10 +9185,13 @@ void CreateModel_axis_relaxed_dim3_axis2_neg_float16_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim3_axis2_neg_float16_2(int i) {
+bool is_ignored_axis_relaxed_dim3_axis2_neg_float16_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_relaxed_dim2_axis0_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -8537,10 +9226,13 @@ void CreateModel_axis_relaxed_dim2_axis0_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim2_axis0_2(int i) {
+bool is_ignored_axis_relaxed_dim2_axis0_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_relaxed_dim2_axis0_float16_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -8575,10 +9267,13 @@ void CreateModel_axis_relaxed_dim2_axis0_float16_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim2_axis0_float16_2(int i) {
+bool is_ignored_axis_relaxed_dim2_axis0_float16_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_relaxed_dim2_axis0_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -8613,10 +9308,13 @@ void CreateModel_axis_relaxed_dim2_axis0_neg_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim2_axis0_neg_2(int i) {
+bool is_ignored_axis_relaxed_dim2_axis0_neg_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_relaxed_dim2_axis0_neg_float16_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -8651,10 +9349,13 @@ void CreateModel_axis_relaxed_dim2_axis0_neg_float16_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim2_axis0_neg_float16_2(int i) {
+bool is_ignored_axis_relaxed_dim2_axis0_neg_float16_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_relaxed_dim2_axis1_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -8689,10 +9390,13 @@ void CreateModel_axis_relaxed_dim2_axis1_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim2_axis1_2(int i) {
+bool is_ignored_axis_relaxed_dim2_axis1_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_relaxed_dim2_axis1_float16_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -8727,10 +9431,13 @@ void CreateModel_axis_relaxed_dim2_axis1_float16_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim2_axis1_float16_2(int i) {
+bool is_ignored_axis_relaxed_dim2_axis1_float16_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_relaxed_dim2_axis1_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -8765,10 +9472,13 @@ void CreateModel_axis_relaxed_dim2_axis1_neg_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim2_axis1_neg_2(int i) {
+bool is_ignored_axis_relaxed_dim2_axis1_neg_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_relaxed_dim2_axis1_neg_float16_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -8803,10 +9513,13 @@ void CreateModel_axis_relaxed_dim2_axis1_neg_float16_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim2_axis1_neg_float16_2(int i) {
+bool is_ignored_axis_relaxed_dim2_axis1_neg_float16_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_relaxed_dim1_axis0_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -8841,10 +9554,13 @@ void CreateModel_axis_relaxed_dim1_axis0_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim1_axis0_2(int i) {
+bool is_ignored_axis_relaxed_dim1_axis0_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_relaxed_dim1_axis0_float16_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -8879,10 +9595,13 @@ void CreateModel_axis_relaxed_dim1_axis0_float16_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim1_axis0_float16_2(int i) {
+bool is_ignored_axis_relaxed_dim1_axis0_float16_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_relaxed_dim1_axis0_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -8917,10 +9636,13 @@ void CreateModel_axis_relaxed_dim1_axis0_neg_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim1_axis0_neg_2(int i) {
+bool is_ignored_axis_relaxed_dim1_axis0_neg_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_relaxed_dim1_axis0_neg_float16_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -8955,10 +9677,13 @@ void CreateModel_axis_relaxed_dim1_axis0_neg_float16_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim1_axis0_neg_float16_2(int i) {
+bool is_ignored_axis_relaxed_dim1_axis0_neg_float16_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim4_axis0_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -8992,10 +9717,13 @@ void CreateModel_axis_dynamic_output_shape_dim4_axis0_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim4_axis0_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim4_axis0_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim4_axis0_float16_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -9029,10 +9757,13 @@ void CreateModel_axis_dynamic_output_shape_dim4_axis0_float16_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim4_axis0_float16_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim4_axis0_float16_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim4_axis0_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -9066,10 +9797,13 @@ void CreateModel_axis_dynamic_output_shape_dim4_axis0_neg_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim4_axis0_neg_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim4_axis0_neg_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim4_axis0_neg_float16_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -9103,10 +9837,13 @@ void CreateModel_axis_dynamic_output_shape_dim4_axis0_neg_float16_2(Model *model
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim4_axis0_neg_float16_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim4_axis0_neg_float16_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim4_axis1_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -9140,10 +9877,13 @@ void CreateModel_axis_dynamic_output_shape_dim4_axis1_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim4_axis1_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim4_axis1_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim4_axis1_float16_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -9177,10 +9917,13 @@ void CreateModel_axis_dynamic_output_shape_dim4_axis1_float16_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim4_axis1_float16_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim4_axis1_float16_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim4_axis1_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -9214,10 +9957,13 @@ void CreateModel_axis_dynamic_output_shape_dim4_axis1_neg_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim4_axis1_neg_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim4_axis1_neg_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim4_axis1_neg_float16_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -9251,10 +9997,13 @@ void CreateModel_axis_dynamic_output_shape_dim4_axis1_neg_float16_2(Model *model
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim4_axis1_neg_float16_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim4_axis1_neg_float16_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim4_axis2_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -9288,10 +10037,13 @@ void CreateModel_axis_dynamic_output_shape_dim4_axis2_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim4_axis2_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim4_axis2_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim4_axis2_float16_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -9325,10 +10077,13 @@ void CreateModel_axis_dynamic_output_shape_dim4_axis2_float16_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim4_axis2_float16_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim4_axis2_float16_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim4_axis2_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -9362,10 +10117,13 @@ void CreateModel_axis_dynamic_output_shape_dim4_axis2_neg_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim4_axis2_neg_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim4_axis2_neg_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim4_axis2_neg_float16_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -9399,10 +10157,13 @@ void CreateModel_axis_dynamic_output_shape_dim4_axis2_neg_float16_2(Model *model
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim4_axis2_neg_float16_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim4_axis2_neg_float16_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim4_axis3_2(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
@@ -9436,10 +10197,13 @@ void CreateModel_axis_dynamic_output_shape_dim4_axis3_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim4_axis3_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim4_axis3_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim4_axis3_float16_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -9473,10 +10237,13 @@ void CreateModel_axis_dynamic_output_shape_dim4_axis3_float16_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim4_axis3_float16_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim4_axis3_float16_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim4_axis3_neg_2(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
@@ -9510,10 +10277,13 @@ void CreateModel_axis_dynamic_output_shape_dim4_axis3_neg_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim4_axis3_neg_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim4_axis3_neg_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim4_axis3_neg_float16_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -9547,10 +10317,13 @@ void CreateModel_axis_dynamic_output_shape_dim4_axis3_neg_float16_2(Model *model
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim4_axis3_neg_float16_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim4_axis3_neg_float16_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim3_axis0_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -9584,10 +10357,13 @@ void CreateModel_axis_dynamic_output_shape_dim3_axis0_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim3_axis0_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim3_axis0_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim3_axis0_float16_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -9621,10 +10397,13 @@ void CreateModel_axis_dynamic_output_shape_dim3_axis0_float16_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim3_axis0_float16_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim3_axis0_float16_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim3_axis0_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -9658,10 +10437,13 @@ void CreateModel_axis_dynamic_output_shape_dim3_axis0_neg_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim3_axis0_neg_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim3_axis0_neg_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim3_axis0_neg_float16_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -9695,10 +10477,13 @@ void CreateModel_axis_dynamic_output_shape_dim3_axis0_neg_float16_2(Model *model
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim3_axis0_neg_float16_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim3_axis0_neg_float16_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim3_axis1_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -9732,10 +10517,13 @@ void CreateModel_axis_dynamic_output_shape_dim3_axis1_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim3_axis1_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim3_axis1_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim3_axis1_float16_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -9769,10 +10557,13 @@ void CreateModel_axis_dynamic_output_shape_dim3_axis1_float16_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim3_axis1_float16_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim3_axis1_float16_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim3_axis1_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -9806,10 +10597,13 @@ void CreateModel_axis_dynamic_output_shape_dim3_axis1_neg_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim3_axis1_neg_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim3_axis1_neg_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim3_axis1_neg_float16_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -9843,10 +10637,13 @@ void CreateModel_axis_dynamic_output_shape_dim3_axis1_neg_float16_2(Model *model
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim3_axis1_neg_float16_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim3_axis1_neg_float16_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim3_axis2_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -9880,10 +10677,13 @@ void CreateModel_axis_dynamic_output_shape_dim3_axis2_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim3_axis2_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim3_axis2_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim3_axis2_float16_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -9917,10 +10717,13 @@ void CreateModel_axis_dynamic_output_shape_dim3_axis2_float16_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim3_axis2_float16_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim3_axis2_float16_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim3_axis2_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -9954,10 +10757,13 @@ void CreateModel_axis_dynamic_output_shape_dim3_axis2_neg_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim3_axis2_neg_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim3_axis2_neg_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim3_axis2_neg_float16_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -9991,10 +10797,13 @@ void CreateModel_axis_dynamic_output_shape_dim3_axis2_neg_float16_2(Model *model
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim3_axis2_neg_float16_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim3_axis2_neg_float16_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim2_axis0_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -10028,10 +10837,13 @@ void CreateModel_axis_dynamic_output_shape_dim2_axis0_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim2_axis0_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim2_axis0_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim2_axis0_float16_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -10065,10 +10877,13 @@ void CreateModel_axis_dynamic_output_shape_dim2_axis0_float16_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim2_axis0_float16_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim2_axis0_float16_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim2_axis0_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -10102,10 +10917,13 @@ void CreateModel_axis_dynamic_output_shape_dim2_axis0_neg_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim2_axis0_neg_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim2_axis0_neg_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim2_axis0_neg_float16_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -10139,10 +10957,13 @@ void CreateModel_axis_dynamic_output_shape_dim2_axis0_neg_float16_2(Model *model
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim2_axis0_neg_float16_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim2_axis0_neg_float16_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim2_axis1_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -10176,10 +10997,13 @@ void CreateModel_axis_dynamic_output_shape_dim2_axis1_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim2_axis1_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim2_axis1_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim2_axis1_float16_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -10213,10 +11037,13 @@ void CreateModel_axis_dynamic_output_shape_dim2_axis1_float16_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim2_axis1_float16_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim2_axis1_float16_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim2_axis1_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -10250,10 +11077,13 @@ void CreateModel_axis_dynamic_output_shape_dim2_axis1_neg_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim2_axis1_neg_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim2_axis1_neg_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim2_axis1_neg_float16_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -10287,10 +11117,13 @@ void CreateModel_axis_dynamic_output_shape_dim2_axis1_neg_float16_2(Model *model
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim2_axis1_neg_float16_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim2_axis1_neg_float16_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim1_axis0_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -10324,10 +11157,13 @@ void CreateModel_axis_dynamic_output_shape_dim1_axis0_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim1_axis0_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim1_axis0_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim1_axis0_float16_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -10361,10 +11197,13 @@ void CreateModel_axis_dynamic_output_shape_dim1_axis0_float16_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim1_axis0_float16_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim1_axis0_float16_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim1_axis0_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -10398,10 +11237,13 @@ void CreateModel_axis_dynamic_output_shape_dim1_axis0_neg_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim1_axis0_neg_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim1_axis0_neg_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim1_axis0_neg_float16_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -10435,10 +11277,13 @@ void CreateModel_axis_dynamic_output_shape_dim1_axis0_neg_float16_2(Model *model
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim1_axis0_neg_float16_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim1_axis0_neg_float16_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis0_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -10474,10 +11319,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis0_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis0_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis0_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis0_float16_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -10513,10 +11361,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis0_float16_2(Model *m
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis0_float16_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis0_float16_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis0_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -10552,10 +11403,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis0_neg_2(Model *model
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis0_neg_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis0_neg_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis0_neg_float16_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -10591,10 +11445,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis0_neg_float16_2(Mode
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis0_neg_float16_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis0_neg_float16_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis1_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -10630,10 +11487,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis1_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis1_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis1_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis1_float16_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -10669,10 +11529,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis1_float16_2(Model *m
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis1_float16_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis1_float16_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis1_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -10708,10 +11571,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis1_neg_2(Model *model
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis1_neg_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis1_neg_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis1_neg_float16_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -10747,10 +11613,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis1_neg_float16_2(Mode
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis1_neg_float16_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis1_neg_float16_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis2_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -10786,10 +11655,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis2_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis2_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis2_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis2_float16_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -10825,10 +11697,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis2_float16_2(Model *m
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis2_float16_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis2_float16_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis2_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -10864,10 +11739,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis2_neg_2(Model *model
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis2_neg_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis2_neg_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis2_neg_float16_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -10903,10 +11781,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis2_neg_float16_2(Mode
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis2_neg_float16_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis2_neg_float16_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis3_2(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
@@ -10942,10 +11823,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis3_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis3_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis3_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis3_float16_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -10981,10 +11865,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis3_float16_2(Model *m
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis3_float16_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis3_float16_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis3_neg_2(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
@@ -11020,10 +11907,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis3_neg_2(Model *model
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis3_neg_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis3_neg_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis3_neg_float16_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -11059,10 +11949,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis3_neg_float16_2(Mode
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis3_neg_float16_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis3_neg_float16_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim3_axis0_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -11098,10 +11991,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim3_axis0_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis0_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis0_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim3_axis0_float16_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -11137,10 +12033,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim3_axis0_float16_2(Model *m
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis0_float16_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis0_float16_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim3_axis0_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -11176,10 +12075,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim3_axis0_neg_2(Model *model
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis0_neg_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis0_neg_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim3_axis0_neg_float16_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -11215,10 +12117,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim3_axis0_neg_float16_2(Mode
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis0_neg_float16_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis0_neg_float16_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim3_axis1_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -11254,10 +12159,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim3_axis1_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis1_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis1_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim3_axis1_float16_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -11293,10 +12201,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim3_axis1_float16_2(Model *m
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis1_float16_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis1_float16_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim3_axis1_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -11332,10 +12243,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim3_axis1_neg_2(Model *model
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis1_neg_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis1_neg_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim3_axis1_neg_float16_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -11371,10 +12285,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim3_axis1_neg_float16_2(Mode
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis1_neg_float16_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis1_neg_float16_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim3_axis2_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -11410,10 +12327,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim3_axis2_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis2_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis2_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim3_axis2_float16_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -11449,10 +12369,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim3_axis2_float16_2(Model *m
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis2_float16_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis2_float16_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim3_axis2_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -11488,10 +12411,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim3_axis2_neg_2(Model *model
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis2_neg_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis2_neg_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim3_axis2_neg_float16_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -11527,10 +12453,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim3_axis2_neg_float16_2(Mode
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis2_neg_float16_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis2_neg_float16_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim2_axis0_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -11566,10 +12495,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim2_axis0_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim2_axis0_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim2_axis0_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim2_axis0_float16_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -11605,10 +12537,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim2_axis0_float16_2(Model *m
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim2_axis0_float16_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim2_axis0_float16_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim2_axis0_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -11644,10 +12579,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim2_axis0_neg_2(Model *model
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim2_axis0_neg_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim2_axis0_neg_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim2_axis0_neg_float16_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -11683,10 +12621,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim2_axis0_neg_float16_2(Mode
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim2_axis0_neg_float16_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim2_axis0_neg_float16_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim2_axis1_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -11722,10 +12663,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim2_axis1_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim2_axis1_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim2_axis1_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim2_axis1_float16_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -11761,10 +12705,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim2_axis1_float16_2(Model *m
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim2_axis1_float16_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim2_axis1_float16_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim2_axis1_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -11800,10 +12747,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim2_axis1_neg_2(Model *model
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim2_axis1_neg_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim2_axis1_neg_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim2_axis1_neg_float16_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -11839,10 +12789,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim2_axis1_neg_float16_2(Mode
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim2_axis1_neg_float16_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim2_axis1_neg_float16_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim1_axis0_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -11878,10 +12831,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim1_axis0_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim1_axis0_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim1_axis0_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim1_axis0_float16_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -11917,10 +12873,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim1_axis0_float16_2(Model *m
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim1_axis0_float16_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim1_axis0_float16_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim1_axis0_neg_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -11956,10 +12915,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim1_axis0_neg_2(Model *model
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim1_axis0_neg_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim1_axis0_neg_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim1_axis0_neg_float16_2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -11995,10 +12957,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim1_axis0_neg_float16_2(Mode
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim1_axis0_neg_float16_2(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim1_axis0_neg_float16_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dim4_axis0_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -12031,10 +12996,13 @@ void CreateModel_axis_dim4_axis0_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim4_axis0_3(int i) {
+bool is_ignored_axis_dim4_axis0_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dim4_axis0_float16_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -12067,10 +13035,13 @@ void CreateModel_axis_dim4_axis0_float16_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim4_axis0_float16_3(int i) {
+bool is_ignored_axis_dim4_axis0_float16_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dim4_axis0_neg_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -12103,10 +13074,13 @@ void CreateModel_axis_dim4_axis0_neg_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim4_axis0_neg_3(int i) {
+bool is_ignored_axis_dim4_axis0_neg_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dim4_axis0_neg_float16_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -12139,10 +13113,13 @@ void CreateModel_axis_dim4_axis0_neg_float16_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim4_axis0_neg_float16_3(int i) {
+bool is_ignored_axis_dim4_axis0_neg_float16_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dim4_axis1_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -12175,10 +13152,13 @@ void CreateModel_axis_dim4_axis1_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim4_axis1_3(int i) {
+bool is_ignored_axis_dim4_axis1_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dim4_axis1_float16_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -12211,10 +13191,13 @@ void CreateModel_axis_dim4_axis1_float16_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim4_axis1_float16_3(int i) {
+bool is_ignored_axis_dim4_axis1_float16_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dim4_axis1_neg_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -12247,10 +13230,13 @@ void CreateModel_axis_dim4_axis1_neg_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim4_axis1_neg_3(int i) {
+bool is_ignored_axis_dim4_axis1_neg_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dim4_axis1_neg_float16_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -12283,10 +13269,13 @@ void CreateModel_axis_dim4_axis1_neg_float16_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim4_axis1_neg_float16_3(int i) {
+bool is_ignored_axis_dim4_axis1_neg_float16_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dim4_axis2_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -12319,10 +13308,13 @@ void CreateModel_axis_dim4_axis2_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim4_axis2_3(int i) {
+bool is_ignored_axis_dim4_axis2_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dim4_axis2_float16_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -12355,10 +13347,13 @@ void CreateModel_axis_dim4_axis2_float16_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim4_axis2_float16_3(int i) {
+bool is_ignored_axis_dim4_axis2_float16_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dim4_axis2_neg_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -12391,10 +13386,13 @@ void CreateModel_axis_dim4_axis2_neg_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim4_axis2_neg_3(int i) {
+bool is_ignored_axis_dim4_axis2_neg_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dim4_axis2_neg_float16_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -12427,10 +13425,13 @@ void CreateModel_axis_dim4_axis2_neg_float16_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim4_axis2_neg_float16_3(int i) {
+bool is_ignored_axis_dim4_axis2_neg_float16_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dim4_axis3_3(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
@@ -12463,10 +13464,13 @@ void CreateModel_axis_dim4_axis3_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim4_axis3_3(int i) {
+bool is_ignored_axis_dim4_axis3_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dim4_axis3_float16_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -12499,10 +13503,13 @@ void CreateModel_axis_dim4_axis3_float16_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim4_axis3_float16_3(int i) {
+bool is_ignored_axis_dim4_axis3_float16_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dim4_axis3_neg_3(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
@@ -12535,10 +13542,13 @@ void CreateModel_axis_dim4_axis3_neg_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim4_axis3_neg_3(int i) {
+bool is_ignored_axis_dim4_axis3_neg_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dim4_axis3_neg_float16_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -12571,10 +13581,13 @@ void CreateModel_axis_dim4_axis3_neg_float16_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim4_axis3_neg_float16_3(int i) {
+bool is_ignored_axis_dim4_axis3_neg_float16_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dim3_axis0_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -12607,10 +13620,13 @@ void CreateModel_axis_dim3_axis0_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim3_axis0_3(int i) {
+bool is_ignored_axis_dim3_axis0_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dim3_axis0_float16_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -12643,10 +13659,13 @@ void CreateModel_axis_dim3_axis0_float16_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim3_axis0_float16_3(int i) {
+bool is_ignored_axis_dim3_axis0_float16_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dim3_axis0_neg_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -12679,10 +13698,13 @@ void CreateModel_axis_dim3_axis0_neg_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim3_axis0_neg_3(int i) {
+bool is_ignored_axis_dim3_axis0_neg_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dim3_axis0_neg_float16_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -12715,10 +13737,13 @@ void CreateModel_axis_dim3_axis0_neg_float16_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim3_axis0_neg_float16_3(int i) {
+bool is_ignored_axis_dim3_axis0_neg_float16_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dim3_axis1_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -12751,10 +13776,13 @@ void CreateModel_axis_dim3_axis1_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim3_axis1_3(int i) {
+bool is_ignored_axis_dim3_axis1_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dim3_axis1_float16_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -12787,10 +13815,13 @@ void CreateModel_axis_dim3_axis1_float16_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim3_axis1_float16_3(int i) {
+bool is_ignored_axis_dim3_axis1_float16_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dim3_axis1_neg_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -12823,10 +13854,13 @@ void CreateModel_axis_dim3_axis1_neg_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim3_axis1_neg_3(int i) {
+bool is_ignored_axis_dim3_axis1_neg_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dim3_axis1_neg_float16_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -12859,10 +13893,13 @@ void CreateModel_axis_dim3_axis1_neg_float16_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim3_axis1_neg_float16_3(int i) {
+bool is_ignored_axis_dim3_axis1_neg_float16_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dim3_axis2_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -12895,10 +13932,13 @@ void CreateModel_axis_dim3_axis2_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim3_axis2_3(int i) {
+bool is_ignored_axis_dim3_axis2_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dim3_axis2_float16_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -12931,10 +13971,13 @@ void CreateModel_axis_dim3_axis2_float16_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim3_axis2_float16_3(int i) {
+bool is_ignored_axis_dim3_axis2_float16_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dim3_axis2_neg_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -12967,10 +14010,13 @@ void CreateModel_axis_dim3_axis2_neg_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim3_axis2_neg_3(int i) {
+bool is_ignored_axis_dim3_axis2_neg_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dim3_axis2_neg_float16_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -13003,10 +14049,13 @@ void CreateModel_axis_dim3_axis2_neg_float16_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim3_axis2_neg_float16_3(int i) {
+bool is_ignored_axis_dim3_axis2_neg_float16_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dim2_axis0_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -13039,10 +14088,13 @@ void CreateModel_axis_dim2_axis0_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim2_axis0_3(int i) {
+bool is_ignored_axis_dim2_axis0_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dim2_axis0_float16_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -13075,10 +14127,13 @@ void CreateModel_axis_dim2_axis0_float16_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim2_axis0_float16_3(int i) {
+bool is_ignored_axis_dim2_axis0_float16_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dim2_axis0_neg_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -13111,10 +14166,13 @@ void CreateModel_axis_dim2_axis0_neg_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim2_axis0_neg_3(int i) {
+bool is_ignored_axis_dim2_axis0_neg_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dim2_axis0_neg_float16_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -13147,10 +14205,13 @@ void CreateModel_axis_dim2_axis0_neg_float16_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim2_axis0_neg_float16_3(int i) {
+bool is_ignored_axis_dim2_axis0_neg_float16_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dim2_axis1_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -13183,10 +14244,13 @@ void CreateModel_axis_dim2_axis1_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim2_axis1_3(int i) {
+bool is_ignored_axis_dim2_axis1_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dim2_axis1_float16_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -13219,10 +14283,13 @@ void CreateModel_axis_dim2_axis1_float16_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim2_axis1_float16_3(int i) {
+bool is_ignored_axis_dim2_axis1_float16_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dim2_axis1_neg_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -13255,10 +14322,13 @@ void CreateModel_axis_dim2_axis1_neg_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim2_axis1_neg_3(int i) {
+bool is_ignored_axis_dim2_axis1_neg_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dim2_axis1_neg_float16_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -13291,10 +14361,13 @@ void CreateModel_axis_dim2_axis1_neg_float16_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim2_axis1_neg_float16_3(int i) {
+bool is_ignored_axis_dim2_axis1_neg_float16_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dim1_axis0_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -13327,10 +14400,13 @@ void CreateModel_axis_dim1_axis0_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim1_axis0_3(int i) {
+bool is_ignored_axis_dim1_axis0_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dim1_axis0_float16_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -13363,10 +14439,13 @@ void CreateModel_axis_dim1_axis0_float16_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim1_axis0_float16_3(int i) {
+bool is_ignored_axis_dim1_axis0_float16_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dim1_axis0_neg_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -13399,10 +14478,13 @@ void CreateModel_axis_dim1_axis0_neg_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim1_axis0_neg_3(int i) {
+bool is_ignored_axis_dim1_axis0_neg_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dim1_axis0_neg_float16_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -13435,10 +14517,13 @@ void CreateModel_axis_dim1_axis0_neg_float16_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dim1_axis0_neg_float16_3(int i) {
+bool is_ignored_axis_dim1_axis0_neg_float16_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_relaxed_dim4_axis0_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -13473,10 +14558,13 @@ void CreateModel_axis_relaxed_dim4_axis0_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim4_axis0_3(int i) {
+bool is_ignored_axis_relaxed_dim4_axis0_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_relaxed_dim4_axis0_float16_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -13511,10 +14599,13 @@ void CreateModel_axis_relaxed_dim4_axis0_float16_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim4_axis0_float16_3(int i) {
+bool is_ignored_axis_relaxed_dim4_axis0_float16_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_relaxed_dim4_axis0_neg_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -13549,10 +14640,13 @@ void CreateModel_axis_relaxed_dim4_axis0_neg_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim4_axis0_neg_3(int i) {
+bool is_ignored_axis_relaxed_dim4_axis0_neg_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_relaxed_dim4_axis0_neg_float16_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -13587,10 +14681,13 @@ void CreateModel_axis_relaxed_dim4_axis0_neg_float16_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim4_axis0_neg_float16_3(int i) {
+bool is_ignored_axis_relaxed_dim4_axis0_neg_float16_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_relaxed_dim4_axis1_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -13625,10 +14722,13 @@ void CreateModel_axis_relaxed_dim4_axis1_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim4_axis1_3(int i) {
+bool is_ignored_axis_relaxed_dim4_axis1_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_relaxed_dim4_axis1_float16_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -13663,10 +14763,13 @@ void CreateModel_axis_relaxed_dim4_axis1_float16_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim4_axis1_float16_3(int i) {
+bool is_ignored_axis_relaxed_dim4_axis1_float16_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_relaxed_dim4_axis1_neg_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -13701,10 +14804,13 @@ void CreateModel_axis_relaxed_dim4_axis1_neg_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim4_axis1_neg_3(int i) {
+bool is_ignored_axis_relaxed_dim4_axis1_neg_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_relaxed_dim4_axis1_neg_float16_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -13739,10 +14845,13 @@ void CreateModel_axis_relaxed_dim4_axis1_neg_float16_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim4_axis1_neg_float16_3(int i) {
+bool is_ignored_axis_relaxed_dim4_axis1_neg_float16_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_relaxed_dim4_axis2_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -13777,10 +14886,13 @@ void CreateModel_axis_relaxed_dim4_axis2_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim4_axis2_3(int i) {
+bool is_ignored_axis_relaxed_dim4_axis2_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_relaxed_dim4_axis2_float16_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -13815,10 +14927,13 @@ void CreateModel_axis_relaxed_dim4_axis2_float16_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim4_axis2_float16_3(int i) {
+bool is_ignored_axis_relaxed_dim4_axis2_float16_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_relaxed_dim4_axis2_neg_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -13853,10 +14968,13 @@ void CreateModel_axis_relaxed_dim4_axis2_neg_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim4_axis2_neg_3(int i) {
+bool is_ignored_axis_relaxed_dim4_axis2_neg_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_relaxed_dim4_axis2_neg_float16_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -13891,10 +15009,13 @@ void CreateModel_axis_relaxed_dim4_axis2_neg_float16_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim4_axis2_neg_float16_3(int i) {
+bool is_ignored_axis_relaxed_dim4_axis2_neg_float16_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_relaxed_dim4_axis3_3(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
@@ -13929,10 +15050,13 @@ void CreateModel_axis_relaxed_dim4_axis3_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim4_axis3_3(int i) {
+bool is_ignored_axis_relaxed_dim4_axis3_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_relaxed_dim4_axis3_float16_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -13967,10 +15091,13 @@ void CreateModel_axis_relaxed_dim4_axis3_float16_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim4_axis3_float16_3(int i) {
+bool is_ignored_axis_relaxed_dim4_axis3_float16_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_relaxed_dim4_axis3_neg_3(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
@@ -14005,10 +15132,13 @@ void CreateModel_axis_relaxed_dim4_axis3_neg_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim4_axis3_neg_3(int i) {
+bool is_ignored_axis_relaxed_dim4_axis3_neg_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_relaxed_dim4_axis3_neg_float16_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -14043,10 +15173,13 @@ void CreateModel_axis_relaxed_dim4_axis3_neg_float16_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim4_axis3_neg_float16_3(int i) {
+bool is_ignored_axis_relaxed_dim4_axis3_neg_float16_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_relaxed_dim3_axis0_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -14081,10 +15214,13 @@ void CreateModel_axis_relaxed_dim3_axis0_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim3_axis0_3(int i) {
+bool is_ignored_axis_relaxed_dim3_axis0_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_relaxed_dim3_axis0_float16_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -14119,10 +15255,13 @@ void CreateModel_axis_relaxed_dim3_axis0_float16_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim3_axis0_float16_3(int i) {
+bool is_ignored_axis_relaxed_dim3_axis0_float16_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_relaxed_dim3_axis0_neg_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -14157,10 +15296,13 @@ void CreateModel_axis_relaxed_dim3_axis0_neg_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim3_axis0_neg_3(int i) {
+bool is_ignored_axis_relaxed_dim3_axis0_neg_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_relaxed_dim3_axis0_neg_float16_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -14195,10 +15337,13 @@ void CreateModel_axis_relaxed_dim3_axis0_neg_float16_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim3_axis0_neg_float16_3(int i) {
+bool is_ignored_axis_relaxed_dim3_axis0_neg_float16_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_relaxed_dim3_axis1_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -14233,10 +15378,13 @@ void CreateModel_axis_relaxed_dim3_axis1_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim3_axis1_3(int i) {
+bool is_ignored_axis_relaxed_dim3_axis1_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_relaxed_dim3_axis1_float16_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -14271,10 +15419,13 @@ void CreateModel_axis_relaxed_dim3_axis1_float16_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim3_axis1_float16_3(int i) {
+bool is_ignored_axis_relaxed_dim3_axis1_float16_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_relaxed_dim3_axis1_neg_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -14309,10 +15460,13 @@ void CreateModel_axis_relaxed_dim3_axis1_neg_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim3_axis1_neg_3(int i) {
+bool is_ignored_axis_relaxed_dim3_axis1_neg_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_relaxed_dim3_axis1_neg_float16_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -14347,10 +15501,13 @@ void CreateModel_axis_relaxed_dim3_axis1_neg_float16_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim3_axis1_neg_float16_3(int i) {
+bool is_ignored_axis_relaxed_dim3_axis1_neg_float16_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_relaxed_dim3_axis2_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -14385,10 +15542,13 @@ void CreateModel_axis_relaxed_dim3_axis2_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim3_axis2_3(int i) {
+bool is_ignored_axis_relaxed_dim3_axis2_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_relaxed_dim3_axis2_float16_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -14423,10 +15583,13 @@ void CreateModel_axis_relaxed_dim3_axis2_float16_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim3_axis2_float16_3(int i) {
+bool is_ignored_axis_relaxed_dim3_axis2_float16_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_relaxed_dim3_axis2_neg_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -14461,10 +15624,13 @@ void CreateModel_axis_relaxed_dim3_axis2_neg_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim3_axis2_neg_3(int i) {
+bool is_ignored_axis_relaxed_dim3_axis2_neg_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_relaxed_dim3_axis2_neg_float16_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -14499,10 +15665,13 @@ void CreateModel_axis_relaxed_dim3_axis2_neg_float16_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim3_axis2_neg_float16_3(int i) {
+bool is_ignored_axis_relaxed_dim3_axis2_neg_float16_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_relaxed_dim2_axis0_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -14537,10 +15706,13 @@ void CreateModel_axis_relaxed_dim2_axis0_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim2_axis0_3(int i) {
+bool is_ignored_axis_relaxed_dim2_axis0_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_relaxed_dim2_axis0_float16_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -14575,10 +15747,13 @@ void CreateModel_axis_relaxed_dim2_axis0_float16_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim2_axis0_float16_3(int i) {
+bool is_ignored_axis_relaxed_dim2_axis0_float16_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_relaxed_dim2_axis0_neg_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -14613,10 +15788,13 @@ void CreateModel_axis_relaxed_dim2_axis0_neg_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim2_axis0_neg_3(int i) {
+bool is_ignored_axis_relaxed_dim2_axis0_neg_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_relaxed_dim2_axis0_neg_float16_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -14651,10 +15829,13 @@ void CreateModel_axis_relaxed_dim2_axis0_neg_float16_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim2_axis0_neg_float16_3(int i) {
+bool is_ignored_axis_relaxed_dim2_axis0_neg_float16_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_relaxed_dim2_axis1_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -14689,10 +15870,13 @@ void CreateModel_axis_relaxed_dim2_axis1_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim2_axis1_3(int i) {
+bool is_ignored_axis_relaxed_dim2_axis1_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_relaxed_dim2_axis1_float16_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -14727,10 +15911,13 @@ void CreateModel_axis_relaxed_dim2_axis1_float16_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim2_axis1_float16_3(int i) {
+bool is_ignored_axis_relaxed_dim2_axis1_float16_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_relaxed_dim2_axis1_neg_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -14765,10 +15952,13 @@ void CreateModel_axis_relaxed_dim2_axis1_neg_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim2_axis1_neg_3(int i) {
+bool is_ignored_axis_relaxed_dim2_axis1_neg_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_relaxed_dim2_axis1_neg_float16_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -14803,10 +15993,13 @@ void CreateModel_axis_relaxed_dim2_axis1_neg_float16_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim2_axis1_neg_float16_3(int i) {
+bool is_ignored_axis_relaxed_dim2_axis1_neg_float16_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_relaxed_dim1_axis0_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -14841,10 +16034,13 @@ void CreateModel_axis_relaxed_dim1_axis0_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim1_axis0_3(int i) {
+bool is_ignored_axis_relaxed_dim1_axis0_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_relaxed_dim1_axis0_float16_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -14879,10 +16075,13 @@ void CreateModel_axis_relaxed_dim1_axis0_float16_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim1_axis0_float16_3(int i) {
+bool is_ignored_axis_relaxed_dim1_axis0_float16_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_relaxed_dim1_axis0_neg_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -14917,10 +16116,13 @@ void CreateModel_axis_relaxed_dim1_axis0_neg_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim1_axis0_neg_3(int i) {
+bool is_ignored_axis_relaxed_dim1_axis0_neg_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_relaxed_dim1_axis0_neg_float16_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -14955,10 +16157,13 @@ void CreateModel_axis_relaxed_dim1_axis0_neg_float16_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_relaxed_dim1_axis0_neg_float16_3(int i) {
+bool is_ignored_axis_relaxed_dim1_axis0_neg_float16_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim4_axis0_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -14992,10 +16197,13 @@ void CreateModel_axis_dynamic_output_shape_dim4_axis0_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim4_axis0_3(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim4_axis0_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim4_axis0_float16_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -15029,10 +16237,13 @@ void CreateModel_axis_dynamic_output_shape_dim4_axis0_float16_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim4_axis0_float16_3(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim4_axis0_float16_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim4_axis0_neg_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -15066,10 +16277,13 @@ void CreateModel_axis_dynamic_output_shape_dim4_axis0_neg_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim4_axis0_neg_3(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim4_axis0_neg_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim4_axis0_neg_float16_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -15103,10 +16317,13 @@ void CreateModel_axis_dynamic_output_shape_dim4_axis0_neg_float16_3(Model *model
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim4_axis0_neg_float16_3(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim4_axis0_neg_float16_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim4_axis1_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -15140,10 +16357,13 @@ void CreateModel_axis_dynamic_output_shape_dim4_axis1_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim4_axis1_3(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim4_axis1_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim4_axis1_float16_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -15177,10 +16397,13 @@ void CreateModel_axis_dynamic_output_shape_dim4_axis1_float16_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim4_axis1_float16_3(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim4_axis1_float16_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim4_axis1_neg_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -15214,10 +16437,13 @@ void CreateModel_axis_dynamic_output_shape_dim4_axis1_neg_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim4_axis1_neg_3(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim4_axis1_neg_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim4_axis1_neg_float16_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -15251,10 +16477,13 @@ void CreateModel_axis_dynamic_output_shape_dim4_axis1_neg_float16_3(Model *model
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim4_axis1_neg_float16_3(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim4_axis1_neg_float16_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim4_axis2_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -15288,10 +16517,13 @@ void CreateModel_axis_dynamic_output_shape_dim4_axis2_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim4_axis2_3(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim4_axis2_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim4_axis2_float16_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -15325,10 +16557,13 @@ void CreateModel_axis_dynamic_output_shape_dim4_axis2_float16_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim4_axis2_float16_3(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim4_axis2_float16_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim4_axis2_neg_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -15362,10 +16597,13 @@ void CreateModel_axis_dynamic_output_shape_dim4_axis2_neg_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim4_axis2_neg_3(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim4_axis2_neg_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim4_axis2_neg_float16_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -15399,10 +16637,13 @@ void CreateModel_axis_dynamic_output_shape_dim4_axis2_neg_float16_3(Model *model
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim4_axis2_neg_float16_3(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim4_axis2_neg_float16_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim4_axis3_3(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
@@ -15436,10 +16677,13 @@ void CreateModel_axis_dynamic_output_shape_dim4_axis3_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim4_axis3_3(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim4_axis3_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim4_axis3_float16_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -15473,10 +16717,13 @@ void CreateModel_axis_dynamic_output_shape_dim4_axis3_float16_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim4_axis3_float16_3(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim4_axis3_float16_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim4_axis3_neg_3(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
@@ -15510,10 +16757,13 @@ void CreateModel_axis_dynamic_output_shape_dim4_axis3_neg_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim4_axis3_neg_3(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim4_axis3_neg_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim4_axis3_neg_float16_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -15547,10 +16797,13 @@ void CreateModel_axis_dynamic_output_shape_dim4_axis3_neg_float16_3(Model *model
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim4_axis3_neg_float16_3(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim4_axis3_neg_float16_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim3_axis0_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -15584,10 +16837,13 @@ void CreateModel_axis_dynamic_output_shape_dim3_axis0_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim3_axis0_3(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim3_axis0_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim3_axis0_float16_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -15621,10 +16877,13 @@ void CreateModel_axis_dynamic_output_shape_dim3_axis0_float16_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim3_axis0_float16_3(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim3_axis0_float16_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim3_axis0_neg_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -15658,10 +16917,13 @@ void CreateModel_axis_dynamic_output_shape_dim3_axis0_neg_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim3_axis0_neg_3(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim3_axis0_neg_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim3_axis0_neg_float16_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -15695,10 +16957,13 @@ void CreateModel_axis_dynamic_output_shape_dim3_axis0_neg_float16_3(Model *model
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim3_axis0_neg_float16_3(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim3_axis0_neg_float16_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim3_axis1_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -15732,10 +16997,13 @@ void CreateModel_axis_dynamic_output_shape_dim3_axis1_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim3_axis1_3(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim3_axis1_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim3_axis1_float16_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -15769,10 +17037,13 @@ void CreateModel_axis_dynamic_output_shape_dim3_axis1_float16_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim3_axis1_float16_3(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim3_axis1_float16_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim3_axis1_neg_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -15806,10 +17077,13 @@ void CreateModel_axis_dynamic_output_shape_dim3_axis1_neg_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim3_axis1_neg_3(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim3_axis1_neg_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim3_axis1_neg_float16_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -15843,10 +17117,13 @@ void CreateModel_axis_dynamic_output_shape_dim3_axis1_neg_float16_3(Model *model
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim3_axis1_neg_float16_3(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim3_axis1_neg_float16_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim3_axis2_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -15880,10 +17157,13 @@ void CreateModel_axis_dynamic_output_shape_dim3_axis2_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim3_axis2_3(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim3_axis2_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim3_axis2_float16_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -15917,10 +17197,13 @@ void CreateModel_axis_dynamic_output_shape_dim3_axis2_float16_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim3_axis2_float16_3(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim3_axis2_float16_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim3_axis2_neg_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -15954,10 +17237,13 @@ void CreateModel_axis_dynamic_output_shape_dim3_axis2_neg_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim3_axis2_neg_3(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim3_axis2_neg_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim3_axis2_neg_float16_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -15991,10 +17277,13 @@ void CreateModel_axis_dynamic_output_shape_dim3_axis2_neg_float16_3(Model *model
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim3_axis2_neg_float16_3(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim3_axis2_neg_float16_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim2_axis0_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -16028,10 +17317,13 @@ void CreateModel_axis_dynamic_output_shape_dim2_axis0_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim2_axis0_3(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim2_axis0_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim2_axis0_float16_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -16065,10 +17357,13 @@ void CreateModel_axis_dynamic_output_shape_dim2_axis0_float16_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim2_axis0_float16_3(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim2_axis0_float16_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim2_axis0_neg_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -16102,10 +17397,13 @@ void CreateModel_axis_dynamic_output_shape_dim2_axis0_neg_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim2_axis0_neg_3(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim2_axis0_neg_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim2_axis0_neg_float16_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -16139,10 +17437,13 @@ void CreateModel_axis_dynamic_output_shape_dim2_axis0_neg_float16_3(Model *model
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim2_axis0_neg_float16_3(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim2_axis0_neg_float16_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim2_axis1_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -16176,10 +17477,13 @@ void CreateModel_axis_dynamic_output_shape_dim2_axis1_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim2_axis1_3(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim2_axis1_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim2_axis1_float16_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -16213,10 +17517,13 @@ void CreateModel_axis_dynamic_output_shape_dim2_axis1_float16_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim2_axis1_float16_3(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim2_axis1_float16_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim2_axis1_neg_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -16250,10 +17557,13 @@ void CreateModel_axis_dynamic_output_shape_dim2_axis1_neg_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim2_axis1_neg_3(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim2_axis1_neg_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim2_axis1_neg_float16_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -16287,10 +17597,13 @@ void CreateModel_axis_dynamic_output_shape_dim2_axis1_neg_float16_3(Model *model
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim2_axis1_neg_float16_3(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim2_axis1_neg_float16_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim1_axis0_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -16324,10 +17637,13 @@ void CreateModel_axis_dynamic_output_shape_dim1_axis0_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim1_axis0_3(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim1_axis0_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim1_axis0_float16_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -16361,10 +17677,13 @@ void CreateModel_axis_dynamic_output_shape_dim1_axis0_float16_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim1_axis0_float16_3(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim1_axis0_float16_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim1_axis0_neg_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -16398,10 +17717,13 @@ void CreateModel_axis_dynamic_output_shape_dim1_axis0_neg_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim1_axis0_neg_3(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim1_axis0_neg_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_dim1_axis0_neg_float16_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -16435,10 +17757,13 @@ void CreateModel_axis_dynamic_output_shape_dim1_axis0_neg_float16_3(Model *model
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_dim1_axis0_neg_float16_3(int i) {
+bool is_ignored_axis_dynamic_output_shape_dim1_axis0_neg_float16_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis0_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -16474,10 +17799,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis0_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis0_3(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis0_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis0_float16_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -16513,10 +17841,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis0_float16_3(Model *m
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis0_float16_3(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis0_float16_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis0_neg_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -16552,10 +17883,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis0_neg_3(Model *model
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis0_neg_3(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis0_neg_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis0_neg_float16_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -16591,10 +17925,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis0_neg_float16_3(Mode
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis0_neg_float16_3(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis0_neg_float16_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis1_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -16630,10 +17967,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis1_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis1_3(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis1_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis1_float16_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -16669,10 +18009,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis1_float16_3(Model *m
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis1_float16_3(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis1_float16_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis1_neg_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -16708,10 +18051,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis1_neg_3(Model *model
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis1_neg_3(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis1_neg_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis1_neg_float16_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -16747,10 +18093,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis1_neg_float16_3(Mode
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis1_neg_float16_3(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis1_neg_float16_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis2_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -16786,10 +18135,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis2_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis2_3(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis2_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis2_float16_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -16825,10 +18177,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis2_float16_3(Model *m
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis2_float16_3(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis2_float16_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis2_neg_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -16864,10 +18219,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis2_neg_3(Model *model
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis2_neg_3(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis2_neg_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis2_neg_float16_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -16903,10 +18261,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis2_neg_float16_3(Mode
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis2_neg_float16_3(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis2_neg_float16_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis3_3(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
@@ -16942,10 +18303,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis3_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis3_3(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis3_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis3_float16_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -16981,10 +18345,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis3_float16_3(Model *m
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis3_float16_3(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis3_float16_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis3_neg_3(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {2, 2, 2, 6});
@@ -17020,10 +18387,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis3_neg_3(Model *model
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis3_neg_3(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis3_neg_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis3_neg_float16_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -17059,10 +18429,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim4_axis3_neg_float16_3(Mode
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis3_neg_float16_3(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim4_axis3_neg_float16_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim3_axis0_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -17098,10 +18471,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim3_axis0_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis0_3(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis0_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim3_axis0_float16_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -17137,10 +18513,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim3_axis0_float16_3(Model *m
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis0_float16_3(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis0_float16_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim3_axis0_neg_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -17176,10 +18555,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim3_axis0_neg_3(Model *model
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis0_neg_3(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis0_neg_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim3_axis0_neg_float16_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -17215,10 +18597,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim3_axis0_neg_float16_3(Mode
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis0_neg_float16_3(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis0_neg_float16_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim3_axis1_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -17254,10 +18639,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim3_axis1_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis1_3(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis1_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim3_axis1_float16_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -17293,10 +18681,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim3_axis1_float16_3(Model *m
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis1_float16_3(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis1_float16_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim3_axis1_neg_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -17332,10 +18723,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim3_axis1_neg_3(Model *model
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis1_neg_3(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis1_neg_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim3_axis1_neg_float16_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -17371,10 +18765,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim3_axis1_neg_float16_3(Mode
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis1_neg_float16_3(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis1_neg_float16_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim3_axis2_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -17410,10 +18807,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim3_axis2_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis2_3(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis2_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim3_axis2_float16_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -17449,10 +18849,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim3_axis2_float16_3(Model *m
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis2_float16_3(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis2_float16_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim3_axis2_neg_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -17488,10 +18891,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim3_axis2_neg_3(Model *model
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis2_neg_3(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis2_neg_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim3_axis2_neg_float16_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -17527,10 +18933,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim3_axis2_neg_float16_3(Mode
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis2_neg_float16_3(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim3_axis2_neg_float16_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim2_axis0_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -17566,10 +18975,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim2_axis0_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim2_axis0_3(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim2_axis0_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim2_axis0_float16_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -17605,10 +19017,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim2_axis0_float16_3(Model *m
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim2_axis0_float16_3(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim2_axis0_float16_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim2_axis0_neg_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -17644,10 +19059,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim2_axis0_neg_3(Model *model
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim2_axis0_neg_3(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim2_axis0_neg_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim2_axis0_neg_float16_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -17683,10 +19101,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim2_axis0_neg_float16_3(Mode
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim2_axis0_neg_float16_3(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim2_axis0_neg_float16_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim2_axis1_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -17722,10 +19143,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim2_axis1_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim2_axis1_3(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim2_axis1_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim2_axis1_float16_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -17761,10 +19185,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim2_axis1_float16_3(Model *m
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim2_axis1_float16_3(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim2_axis1_float16_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim2_axis1_neg_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -17800,10 +19227,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim2_axis1_neg_3(Model *model
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim2_axis1_neg_3(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim2_axis1_neg_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim2_axis1_neg_float16_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -17839,10 +19269,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim2_axis1_neg_float16_3(Mode
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim2_axis1_neg_float16_3(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim2_axis1_neg_float16_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim1_axis0_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -17878,10 +19311,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim1_axis0_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim1_axis0_3(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim1_axis0_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim1_axis0_float16_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -17917,10 +19353,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim1_axis0_float16_3(Model *m
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim1_axis0_float16_3(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim1_axis0_float16_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim1_axis0_neg_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -17956,10 +19395,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim1_axis0_neg_3(Model *model
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim1_axis0_neg_3(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim1_axis0_neg_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_axis_dynamic_output_shape_relaxed_dim1_axis0_neg_float16_3(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -17995,10 +19437,13 @@ void CreateModel_axis_dynamic_output_shape_relaxed_dim1_axis0_neg_float16_3(Mode
   assert(model->isValid());
 }
 
-inline bool is_ignored_axis_dynamic_output_shape_relaxed_dim1_axis0_neg_float16_3(int i) {
+bool is_ignored_axis_dynamic_output_shape_relaxed_dim1_axis0_neg_float16_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_dim1_axis0(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -18028,10 +19473,13 @@ void CreateModel_dim1_axis0(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dim1_axis0(int i) {
+bool is_ignored_dim1_axis0(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_dim1_axis0_float16(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -18061,10 +19509,13 @@ void CreateModel_dim1_axis0_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dim1_axis0_float16(int i) {
+bool is_ignored_dim1_axis0_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_dim2_axis1(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -18094,10 +19545,13 @@ void CreateModel_dim2_axis1(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dim2_axis1(int i) {
+bool is_ignored_dim2_axis1(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_dim2_axis1_float16(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -18127,10 +19581,13 @@ void CreateModel_dim2_axis1_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dim2_axis1_float16(int i) {
+bool is_ignored_dim2_axis1_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_dim3_axis2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -18160,10 +19617,13 @@ void CreateModel_dim3_axis2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dim3_axis2(int i) {
+bool is_ignored_dim3_axis2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_dim3_axis2_float16(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -18193,10 +19653,13 @@ void CreateModel_dim3_axis2_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dim3_axis2_float16(int i) {
+bool is_ignored_dim3_axis2_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_relaxed_dim1_axis0(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -18228,10 +19691,13 @@ void CreateModel_relaxed_dim1_axis0(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_relaxed_dim1_axis0(int i) {
+bool is_ignored_relaxed_dim1_axis0(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_relaxed_dim1_axis0_float16(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -18263,10 +19729,13 @@ void CreateModel_relaxed_dim1_axis0_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_relaxed_dim1_axis0_float16(int i) {
+bool is_ignored_relaxed_dim1_axis0_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_relaxed_dim2_axis1(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -18298,10 +19767,13 @@ void CreateModel_relaxed_dim2_axis1(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_relaxed_dim2_axis1(int i) {
+bool is_ignored_relaxed_dim2_axis1(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_relaxed_dim2_axis1_float16(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -18333,10 +19805,13 @@ void CreateModel_relaxed_dim2_axis1_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_relaxed_dim2_axis1_float16(int i) {
+bool is_ignored_relaxed_dim2_axis1_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_relaxed_dim3_axis2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -18368,10 +19843,13 @@ void CreateModel_relaxed_dim3_axis2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_relaxed_dim3_axis2(int i) {
+bool is_ignored_relaxed_dim3_axis2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_relaxed_dim3_axis2_float16(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -18403,10 +19881,13 @@ void CreateModel_relaxed_dim3_axis2_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_relaxed_dim3_axis2_float16(int i) {
+bool is_ignored_relaxed_dim3_axis2_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_dynamic_output_shape_dim1_axis0(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -18437,10 +19918,13 @@ void CreateModel_dynamic_output_shape_dim1_axis0(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_dim1_axis0(int i) {
+bool is_ignored_dynamic_output_shape_dim1_axis0(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_dynamic_output_shape_dim1_axis0_float16(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -18471,10 +19955,13 @@ void CreateModel_dynamic_output_shape_dim1_axis0_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_dim1_axis0_float16(int i) {
+bool is_ignored_dynamic_output_shape_dim1_axis0_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_dynamic_output_shape_dim2_axis1(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -18505,10 +19992,13 @@ void CreateModel_dynamic_output_shape_dim2_axis1(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_dim2_axis1(int i) {
+bool is_ignored_dynamic_output_shape_dim2_axis1(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_dynamic_output_shape_dim2_axis1_float16(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -18539,10 +20029,13 @@ void CreateModel_dynamic_output_shape_dim2_axis1_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_dim2_axis1_float16(int i) {
+bool is_ignored_dynamic_output_shape_dim2_axis1_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_dynamic_output_shape_dim3_axis2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -18573,10 +20066,13 @@ void CreateModel_dynamic_output_shape_dim3_axis2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_dim3_axis2(int i) {
+bool is_ignored_dynamic_output_shape_dim3_axis2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_dynamic_output_shape_dim3_axis2_float16(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -18607,10 +20103,13 @@ void CreateModel_dynamic_output_shape_dim3_axis2_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_dim3_axis2_float16(int i) {
+bool is_ignored_dynamic_output_shape_dim3_axis2_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_dynamic_output_shape_relaxed_dim1_axis0(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -18643,10 +20142,13 @@ void CreateModel_dynamic_output_shape_relaxed_dim1_axis0(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_relaxed_dim1_axis0(int i) {
+bool is_ignored_dynamic_output_shape_relaxed_dim1_axis0(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_dynamic_output_shape_relaxed_dim1_axis0_float16(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -18679,10 +20181,13 @@ void CreateModel_dynamic_output_shape_relaxed_dim1_axis0_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_relaxed_dim1_axis0_float16(int i) {
+bool is_ignored_dynamic_output_shape_relaxed_dim1_axis0_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_dynamic_output_shape_relaxed_dim2_axis1(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -18715,10 +20220,13 @@ void CreateModel_dynamic_output_shape_relaxed_dim2_axis1(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_relaxed_dim2_axis1(int i) {
+bool is_ignored_dynamic_output_shape_relaxed_dim2_axis1(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_dynamic_output_shape_relaxed_dim2_axis1_float16(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -18751,10 +20259,13 @@ void CreateModel_dynamic_output_shape_relaxed_dim2_axis1_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_relaxed_dim2_axis1_float16(int i) {
+bool is_ignored_dynamic_output_shape_relaxed_dim2_axis1_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_dynamic_output_shape_relaxed_dim3_axis2(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -18787,10 +20298,13 @@ void CreateModel_dynamic_output_shape_relaxed_dim3_axis2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_relaxed_dim3_axis2(int i) {
+bool is_ignored_dynamic_output_shape_relaxed_dim3_axis2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::local_response_normalization_v1_2
+namespace generated_tests::local_response_normalization_v1_2 {
 
 void CreateModel_dynamic_output_shape_relaxed_dim3_axis2_float16(Model *model) {
   OperandType type1(Type::INT32, {});
@@ -18823,8 +20337,9 @@ void CreateModel_dynamic_output_shape_relaxed_dim3_axis2_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_relaxed_dim3_axis2_float16(int i) {
+bool is_ignored_dynamic_output_shape_relaxed_dim3_axis2_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
 
+} // namespace generated_tests::local_response_normalization_v1_2

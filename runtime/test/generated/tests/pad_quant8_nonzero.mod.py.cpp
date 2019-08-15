@@ -1,24 +1,34 @@
+// Generated from pad_quant8_nonzero.mod.py
+// DO NOT EDIT
 // clang-format off
-// Generated file (from: pad_quant8_nonzero.mod.py). Do not edit
-#include "../../TestGenerated.h"
+#include "TestGenerated.h"
 
-namespace pad_quant8_nonzero {
-// Generated pad_quant8_nonzero test
-#include "generated/examples/pad_quant8_nonzero.example.cpp"
-// Generated model constructor
-#include "generated/models/pad_quant8_nonzero.model.cpp"
-} // namespace pad_quant8_nonzero
+namespace generated_tests::pad_quant8_nonzero {
+
+void CreateModel(Model *model);
+bool is_ignored(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples();
 
 TEST_F(GeneratedTests, pad_quant8_nonzero) {
-    execute(pad_quant8_nonzero::CreateModel,
-            pad_quant8_nonzero::is_ignored,
-            pad_quant8_nonzero::get_examples());
+    execute(CreateModel,
+            is_ignored,
+            get_examples());
 }
-TEST_AVAILABLE_SINCE(V1_2, pad_quant8_nonzero, pad_quant8_nonzero::CreateModel)
+
+} // namespace generated_tests::pad_quant8_nonzero
+TEST_AVAILABLE_SINCE(V1_2, pad_quant8_nonzero, generated_tests::pad_quant8_nonzero::CreateModel)
+
+namespace generated_tests::pad_quant8_nonzero {
+
+void CreateModel_dynamic_output_shape(Model *model);
+bool is_ignored_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape();
 
 TEST_F(DynamicOutputShapeTest, pad_quant8_nonzero_dynamic_output_shape) {
-    execute(pad_quant8_nonzero::CreateModel_dynamic_output_shape,
-            pad_quant8_nonzero::is_ignored_dynamic_output_shape,
-            pad_quant8_nonzero::get_examples_dynamic_output_shape());
+    execute(CreateModel_dynamic_output_shape,
+            is_ignored_dynamic_output_shape,
+            get_examples_dynamic_output_shape());
 }
+
+} // namespace generated_tests::pad_quant8_nonzero
 

@@ -1,23 +1,33 @@
+// Generated from lsh_projection_deprecated.mod.py
+// DO NOT EDIT
 // clang-format off
-// Generated file (from: lsh_projection_deprecated.mod.py). Do not edit
-#include "../../TestGenerated.h"
+#include "TestGenerated.h"
 
-namespace lsh_projection_deprecated {
-// Generated lsh_projection_deprecated test
-#include "generated/examples/lsh_projection_deprecated.example.cpp"
-// Generated model constructor
-#include "generated/models/lsh_projection_deprecated.model.cpp"
-} // namespace lsh_projection_deprecated
+namespace generated_tests::lsh_projection_deprecated {
+
+void CreateModel(Model *model);
+bool is_ignored(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples();
 
 TEST_F(GeneratedTests, lsh_projection_deprecated) {
-    execute(lsh_projection_deprecated::CreateModel,
-            lsh_projection_deprecated::is_ignored,
-            lsh_projection_deprecated::get_examples());
+    execute(CreateModel,
+            is_ignored,
+            get_examples());
 }
 
+} // namespace generated_tests::lsh_projection_deprecated
+
+namespace generated_tests::lsh_projection_deprecated {
+
+void CreateModel_dynamic_output_shape(Model *model);
+bool is_ignored_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape();
+
 TEST_F(DynamicOutputShapeTest, lsh_projection_deprecated_dynamic_output_shape) {
-    execute(lsh_projection_deprecated::CreateModel_dynamic_output_shape,
-            lsh_projection_deprecated::is_ignored_dynamic_output_shape,
-            lsh_projection_deprecated::get_examples_dynamic_output_shape());
+    execute(CreateModel_dynamic_output_shape,
+            is_ignored_dynamic_output_shape,
+            get_examples_dynamic_output_shape());
 }
+
+} // namespace generated_tests::lsh_projection_deprecated
 
