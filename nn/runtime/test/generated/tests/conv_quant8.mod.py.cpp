@@ -1,24 +1,34 @@
+// Generated from conv_quant8.mod.py
+// DO NOT EDIT
 // clang-format off
-// Generated file (from: conv_quant8.mod.py). Do not edit
-#include "../../TestGenerated.h"
+#include "TestGenerated.h"
 
-namespace conv_quant8 {
-// Generated conv_quant8 test
-#include "generated/examples/conv_quant8.example.cpp"
-// Generated model constructor
-#include "generated/models/conv_quant8.model.cpp"
-} // namespace conv_quant8
+namespace generated_tests::conv_quant8 {
+
+void CreateModel(Model *model);
+bool is_ignored(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples();
 
 TEST_F(GeneratedTests, conv_quant8) {
-    execute(conv_quant8::CreateModel,
-            conv_quant8::is_ignored,
-            conv_quant8::get_examples());
+    execute(CreateModel,
+            is_ignored,
+            get_examples());
 }
-TEST_AVAILABLE_SINCE(V1_0, conv_quant8, conv_quant8::CreateModel)
+
+} // namespace generated_tests::conv_quant8
+TEST_AVAILABLE_SINCE(V1_0, conv_quant8, generated_tests::conv_quant8::CreateModel)
+
+namespace generated_tests::conv_quant8 {
+
+void CreateModel_dynamic_output_shape(Model *model);
+bool is_ignored_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape();
 
 TEST_F(DynamicOutputShapeTest, conv_quant8_dynamic_output_shape) {
-    execute(conv_quant8::CreateModel_dynamic_output_shape,
-            conv_quant8::is_ignored_dynamic_output_shape,
-            conv_quant8::get_examples_dynamic_output_shape());
+    execute(CreateModel_dynamic_output_shape,
+            is_ignored_dynamic_output_shape,
+            get_examples_dynamic_output_shape());
 }
+
+} // namespace generated_tests::conv_quant8
 

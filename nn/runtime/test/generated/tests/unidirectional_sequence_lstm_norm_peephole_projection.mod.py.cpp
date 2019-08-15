@@ -1,24 +1,34 @@
+// Generated from unidirectional_sequence_lstm_norm_peephole_projection.mod.py
+// DO NOT EDIT
 // clang-format off
-// Generated file (from: unidirectional_sequence_lstm_norm_peephole_projection.mod.py). Do not edit
-#include "../../TestGenerated.h"
+#include "TestGenerated.h"
 
-namespace unidirectional_sequence_lstm_norm_peephole_projection {
-// Generated unidirectional_sequence_lstm_norm_peephole_projection test
-#include "generated/examples/unidirectional_sequence_lstm_norm_peephole_projection.example.cpp"
-// Generated model constructor
-#include "generated/models/unidirectional_sequence_lstm_norm_peephole_projection.model.cpp"
-} // namespace unidirectional_sequence_lstm_norm_peephole_projection
+namespace generated_tests::unidirectional_sequence_lstm_norm_peephole_projection {
+
+void CreateModel(Model *model);
+bool is_ignored(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples();
 
 TEST_F(GeneratedTests, unidirectional_sequence_lstm_norm_peephole_projection) {
-    execute(unidirectional_sequence_lstm_norm_peephole_projection::CreateModel,
-            unidirectional_sequence_lstm_norm_peephole_projection::is_ignored,
-            unidirectional_sequence_lstm_norm_peephole_projection::get_examples());
+    execute(CreateModel,
+            is_ignored,
+            get_examples());
 }
-TEST_AVAILABLE_SINCE(V1_2, unidirectional_sequence_lstm_norm_peephole_projection, unidirectional_sequence_lstm_norm_peephole_projection::CreateModel)
+
+} // namespace generated_tests::unidirectional_sequence_lstm_norm_peephole_projection
+TEST_AVAILABLE_SINCE(V1_2, unidirectional_sequence_lstm_norm_peephole_projection, generated_tests::unidirectional_sequence_lstm_norm_peephole_projection::CreateModel)
+
+namespace generated_tests::unidirectional_sequence_lstm_norm_peephole_projection {
+
+void CreateModel_dynamic_output_shape(Model *model);
+bool is_ignored_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape();
 
 TEST_F(DynamicOutputShapeTest, unidirectional_sequence_lstm_norm_peephole_projection_dynamic_output_shape) {
-    execute(unidirectional_sequence_lstm_norm_peephole_projection::CreateModel_dynamic_output_shape,
-            unidirectional_sequence_lstm_norm_peephole_projection::is_ignored_dynamic_output_shape,
-            unidirectional_sequence_lstm_norm_peephole_projection::get_examples_dynamic_output_shape());
+    execute(CreateModel_dynamic_output_shape,
+            is_ignored_dynamic_output_shape,
+            get_examples_dynamic_output_shape());
 }
+
+} // namespace generated_tests::unidirectional_sequence_lstm_norm_peephole_projection
 

@@ -1,7 +1,12 @@
+// Generated from l2_normalization_v1_2.mod.py
+// DO NOT EDIT
 // clang-format off
-// Generated file (from: l2_normalization_v1_2.mod.py). Do not edit
-std::vector<MixedTypedExample>& get_examples_dim4_axis3() {
-static std::vector<MixedTypedExample> examples_dim4_axis3 = {
+#include "TestHarness.h"
+
+namespace generated_tests::l2_normalization_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_dim4_axis3() {
+static std::vector<::test_helper::MixedTypedExample> examples_dim4_axis3 = {
 // Begin of an example
 {
 .operands = {
@@ -57,8 +62,11 @@ static std::vector<MixedTypedExample> examples_dim4_axis3 = {
 return examples_dim4_axis3;
 };
 
-std::vector<MixedTypedExample>& get_examples_dim4_axis3_relaxed() {
-static std::vector<MixedTypedExample> examples_dim4_axis3_relaxed = {
+} // namespace generated_tests::l2_normalization_v1_2
+namespace generated_tests::l2_normalization_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_dim4_axis3_relaxed() {
+static std::vector<::test_helper::MixedTypedExample> examples_dim4_axis3_relaxed = {
 // Begin of an example
 {
 .operands = {
@@ -114,8 +122,11 @@ static std::vector<MixedTypedExample> examples_dim4_axis3_relaxed = {
 return examples_dim4_axis3_relaxed;
 };
 
-std::vector<MixedTypedExample>& get_examples_dim4_axis3_float16() {
-static std::vector<MixedTypedExample> examples_dim4_axis3_float16 = {
+} // namespace generated_tests::l2_normalization_v1_2
+namespace generated_tests::l2_normalization_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_dim4_axis3_float16() {
+static std::vector<::test_helper::MixedTypedExample> examples_dim4_axis3_float16 = {
 // Begin of an example
 {
 .operands = {
@@ -171,8 +182,11 @@ static std::vector<MixedTypedExample> examples_dim4_axis3_float16 = {
 return examples_dim4_axis3_float16;
 };
 
-std::vector<MixedTypedExample>& get_examples_dim4_axis3_quant8() {
-static std::vector<MixedTypedExample> examples_dim4_axis3_quant8 = {
+} // namespace generated_tests::l2_normalization_v1_2
+namespace generated_tests::l2_normalization_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_dim4_axis3_quant8() {
+static std::vector<::test_helper::MixedTypedExample> examples_dim4_axis3_quant8 = {
 // Begin of an example
 {
 .operands = {
@@ -228,8 +242,11 @@ static std::vector<MixedTypedExample> examples_dim4_axis3_quant8 = {
 return examples_dim4_axis3_quant8;
 };
 
-std::vector<MixedTypedExample>& get_examples_dim3_axis2() {
-static std::vector<MixedTypedExample> examples_dim3_axis2 = {
+} // namespace generated_tests::l2_normalization_v1_2
+namespace generated_tests::l2_normalization_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_dim3_axis2() {
+static std::vector<::test_helper::MixedTypedExample> examples_dim3_axis2 = {
 // Begin of an example
 {
 .operands = {
@@ -285,8 +302,11 @@ static std::vector<MixedTypedExample> examples_dim3_axis2 = {
 return examples_dim3_axis2;
 };
 
-std::vector<MixedTypedExample>& get_examples_dim3_axis2_relaxed() {
-static std::vector<MixedTypedExample> examples_dim3_axis2_relaxed = {
+} // namespace generated_tests::l2_normalization_v1_2
+namespace generated_tests::l2_normalization_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_dim3_axis2_relaxed() {
+static std::vector<::test_helper::MixedTypedExample> examples_dim3_axis2_relaxed = {
 // Begin of an example
 {
 .operands = {
@@ -342,8 +362,11 @@ static std::vector<MixedTypedExample> examples_dim3_axis2_relaxed = {
 return examples_dim3_axis2_relaxed;
 };
 
-std::vector<MixedTypedExample>& get_examples_dim3_axis2_float16() {
-static std::vector<MixedTypedExample> examples_dim3_axis2_float16 = {
+} // namespace generated_tests::l2_normalization_v1_2
+namespace generated_tests::l2_normalization_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_dim3_axis2_float16() {
+static std::vector<::test_helper::MixedTypedExample> examples_dim3_axis2_float16 = {
 // Begin of an example
 {
 .operands = {
@@ -399,8 +422,11 @@ static std::vector<MixedTypedExample> examples_dim3_axis2_float16 = {
 return examples_dim3_axis2_float16;
 };
 
-std::vector<MixedTypedExample>& get_examples_dim3_axis2_quant8() {
-static std::vector<MixedTypedExample> examples_dim3_axis2_quant8 = {
+} // namespace generated_tests::l2_normalization_v1_2
+namespace generated_tests::l2_normalization_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_dim3_axis2_quant8() {
+static std::vector<::test_helper::MixedTypedExample> examples_dim3_axis2_quant8 = {
 // Begin of an example
 {
 .operands = {
@@ -456,8 +482,11 @@ static std::vector<MixedTypedExample> examples_dim3_axis2_quant8 = {
 return examples_dim3_axis2_quant8;
 };
 
-std::vector<MixedTypedExample>& get_examples_dim2_axis1() {
-static std::vector<MixedTypedExample> examples_dim2_axis1 = {
+} // namespace generated_tests::l2_normalization_v1_2
+namespace generated_tests::l2_normalization_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_dim2_axis1() {
+static std::vector<::test_helper::MixedTypedExample> examples_dim2_axis1 = {
 // Begin of an example
 {
 .operands = {
@@ -513,8 +542,11 @@ static std::vector<MixedTypedExample> examples_dim2_axis1 = {
 return examples_dim2_axis1;
 };
 
-std::vector<MixedTypedExample>& get_examples_dim2_axis1_relaxed() {
-static std::vector<MixedTypedExample> examples_dim2_axis1_relaxed = {
+} // namespace generated_tests::l2_normalization_v1_2
+namespace generated_tests::l2_normalization_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_dim2_axis1_relaxed() {
+static std::vector<::test_helper::MixedTypedExample> examples_dim2_axis1_relaxed = {
 // Begin of an example
 {
 .operands = {
@@ -570,8 +602,11 @@ static std::vector<MixedTypedExample> examples_dim2_axis1_relaxed = {
 return examples_dim2_axis1_relaxed;
 };
 
-std::vector<MixedTypedExample>& get_examples_dim2_axis1_float16() {
-static std::vector<MixedTypedExample> examples_dim2_axis1_float16 = {
+} // namespace generated_tests::l2_normalization_v1_2
+namespace generated_tests::l2_normalization_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_dim2_axis1_float16() {
+static std::vector<::test_helper::MixedTypedExample> examples_dim2_axis1_float16 = {
 // Begin of an example
 {
 .operands = {
@@ -627,8 +662,11 @@ static std::vector<MixedTypedExample> examples_dim2_axis1_float16 = {
 return examples_dim2_axis1_float16;
 };
 
-std::vector<MixedTypedExample>& get_examples_dim2_axis1_quant8() {
-static std::vector<MixedTypedExample> examples_dim2_axis1_quant8 = {
+} // namespace generated_tests::l2_normalization_v1_2
+namespace generated_tests::l2_normalization_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_dim2_axis1_quant8() {
+static std::vector<::test_helper::MixedTypedExample> examples_dim2_axis1_quant8 = {
 // Begin of an example
 {
 .operands = {
@@ -684,8 +722,11 @@ static std::vector<MixedTypedExample> examples_dim2_axis1_quant8 = {
 return examples_dim2_axis1_quant8;
 };
 
-std::vector<MixedTypedExample>& get_examples_dim1_axis0() {
-static std::vector<MixedTypedExample> examples_dim1_axis0 = {
+} // namespace generated_tests::l2_normalization_v1_2
+namespace generated_tests::l2_normalization_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_dim1_axis0() {
+static std::vector<::test_helper::MixedTypedExample> examples_dim1_axis0 = {
 // Begin of an example
 {
 .operands = {
@@ -741,8 +782,11 @@ static std::vector<MixedTypedExample> examples_dim1_axis0 = {
 return examples_dim1_axis0;
 };
 
-std::vector<MixedTypedExample>& get_examples_dim1_axis0_relaxed() {
-static std::vector<MixedTypedExample> examples_dim1_axis0_relaxed = {
+} // namespace generated_tests::l2_normalization_v1_2
+namespace generated_tests::l2_normalization_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_dim1_axis0_relaxed() {
+static std::vector<::test_helper::MixedTypedExample> examples_dim1_axis0_relaxed = {
 // Begin of an example
 {
 .operands = {
@@ -798,8 +842,11 @@ static std::vector<MixedTypedExample> examples_dim1_axis0_relaxed = {
 return examples_dim1_axis0_relaxed;
 };
 
-std::vector<MixedTypedExample>& get_examples_dim1_axis0_float16() {
-static std::vector<MixedTypedExample> examples_dim1_axis0_float16 = {
+} // namespace generated_tests::l2_normalization_v1_2
+namespace generated_tests::l2_normalization_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_dim1_axis0_float16() {
+static std::vector<::test_helper::MixedTypedExample> examples_dim1_axis0_float16 = {
 // Begin of an example
 {
 .operands = {
@@ -855,8 +902,11 @@ static std::vector<MixedTypedExample> examples_dim1_axis0_float16 = {
 return examples_dim1_axis0_float16;
 };
 
-std::vector<MixedTypedExample>& get_examples_dim1_axis0_quant8() {
-static std::vector<MixedTypedExample> examples_dim1_axis0_quant8 = {
+} // namespace generated_tests::l2_normalization_v1_2
+namespace generated_tests::l2_normalization_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_dim1_axis0_quant8() {
+static std::vector<::test_helper::MixedTypedExample> examples_dim1_axis0_quant8 = {
 // Begin of an example
 {
 .operands = {
@@ -912,8 +962,11 @@ static std::vector<MixedTypedExample> examples_dim1_axis0_quant8 = {
 return examples_dim1_axis0_quant8;
 };
 
-std::vector<MixedTypedExample>& get_examples_relaxed_dim4_axis3() {
-static std::vector<MixedTypedExample> examples_relaxed_dim4_axis3 = {
+} // namespace generated_tests::l2_normalization_v1_2
+namespace generated_tests::l2_normalization_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_relaxed_dim4_axis3() {
+static std::vector<::test_helper::MixedTypedExample> examples_relaxed_dim4_axis3 = {
 // Begin of an example
 {
 .operands = {
@@ -969,8 +1022,11 @@ static std::vector<MixedTypedExample> examples_relaxed_dim4_axis3 = {
 return examples_relaxed_dim4_axis3;
 };
 
-std::vector<MixedTypedExample>& get_examples_relaxed_dim4_axis3_relaxed() {
-static std::vector<MixedTypedExample> examples_relaxed_dim4_axis3_relaxed = {
+} // namespace generated_tests::l2_normalization_v1_2
+namespace generated_tests::l2_normalization_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_relaxed_dim4_axis3_relaxed() {
+static std::vector<::test_helper::MixedTypedExample> examples_relaxed_dim4_axis3_relaxed = {
 // Begin of an example
 {
 .operands = {
@@ -1026,8 +1082,11 @@ static std::vector<MixedTypedExample> examples_relaxed_dim4_axis3_relaxed = {
 return examples_relaxed_dim4_axis3_relaxed;
 };
 
-std::vector<MixedTypedExample>& get_examples_relaxed_dim4_axis3_float16() {
-static std::vector<MixedTypedExample> examples_relaxed_dim4_axis3_float16 = {
+} // namespace generated_tests::l2_normalization_v1_2
+namespace generated_tests::l2_normalization_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_relaxed_dim4_axis3_float16() {
+static std::vector<::test_helper::MixedTypedExample> examples_relaxed_dim4_axis3_float16 = {
 // Begin of an example
 {
 .operands = {
@@ -1083,8 +1142,11 @@ static std::vector<MixedTypedExample> examples_relaxed_dim4_axis3_float16 = {
 return examples_relaxed_dim4_axis3_float16;
 };
 
-std::vector<MixedTypedExample>& get_examples_relaxed_dim4_axis3_quant8() {
-static std::vector<MixedTypedExample> examples_relaxed_dim4_axis3_quant8 = {
+} // namespace generated_tests::l2_normalization_v1_2
+namespace generated_tests::l2_normalization_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_relaxed_dim4_axis3_quant8() {
+static std::vector<::test_helper::MixedTypedExample> examples_relaxed_dim4_axis3_quant8 = {
 // Begin of an example
 {
 .operands = {
@@ -1140,8 +1202,11 @@ static std::vector<MixedTypedExample> examples_relaxed_dim4_axis3_quant8 = {
 return examples_relaxed_dim4_axis3_quant8;
 };
 
-std::vector<MixedTypedExample>& get_examples_relaxed_dim3_axis2() {
-static std::vector<MixedTypedExample> examples_relaxed_dim3_axis2 = {
+} // namespace generated_tests::l2_normalization_v1_2
+namespace generated_tests::l2_normalization_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_relaxed_dim3_axis2() {
+static std::vector<::test_helper::MixedTypedExample> examples_relaxed_dim3_axis2 = {
 // Begin of an example
 {
 .operands = {
@@ -1197,8 +1262,11 @@ static std::vector<MixedTypedExample> examples_relaxed_dim3_axis2 = {
 return examples_relaxed_dim3_axis2;
 };
 
-std::vector<MixedTypedExample>& get_examples_relaxed_dim3_axis2_relaxed() {
-static std::vector<MixedTypedExample> examples_relaxed_dim3_axis2_relaxed = {
+} // namespace generated_tests::l2_normalization_v1_2
+namespace generated_tests::l2_normalization_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_relaxed_dim3_axis2_relaxed() {
+static std::vector<::test_helper::MixedTypedExample> examples_relaxed_dim3_axis2_relaxed = {
 // Begin of an example
 {
 .operands = {
@@ -1254,8 +1322,11 @@ static std::vector<MixedTypedExample> examples_relaxed_dim3_axis2_relaxed = {
 return examples_relaxed_dim3_axis2_relaxed;
 };
 
-std::vector<MixedTypedExample>& get_examples_relaxed_dim3_axis2_float16() {
-static std::vector<MixedTypedExample> examples_relaxed_dim3_axis2_float16 = {
+} // namespace generated_tests::l2_normalization_v1_2
+namespace generated_tests::l2_normalization_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_relaxed_dim3_axis2_float16() {
+static std::vector<::test_helper::MixedTypedExample> examples_relaxed_dim3_axis2_float16 = {
 // Begin of an example
 {
 .operands = {
@@ -1311,8 +1382,11 @@ static std::vector<MixedTypedExample> examples_relaxed_dim3_axis2_float16 = {
 return examples_relaxed_dim3_axis2_float16;
 };
 
-std::vector<MixedTypedExample>& get_examples_relaxed_dim3_axis2_quant8() {
-static std::vector<MixedTypedExample> examples_relaxed_dim3_axis2_quant8 = {
+} // namespace generated_tests::l2_normalization_v1_2
+namespace generated_tests::l2_normalization_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_relaxed_dim3_axis2_quant8() {
+static std::vector<::test_helper::MixedTypedExample> examples_relaxed_dim3_axis2_quant8 = {
 // Begin of an example
 {
 .operands = {
@@ -1368,8 +1442,11 @@ static std::vector<MixedTypedExample> examples_relaxed_dim3_axis2_quant8 = {
 return examples_relaxed_dim3_axis2_quant8;
 };
 
-std::vector<MixedTypedExample>& get_examples_relaxed_dim2_axis1() {
-static std::vector<MixedTypedExample> examples_relaxed_dim2_axis1 = {
+} // namespace generated_tests::l2_normalization_v1_2
+namespace generated_tests::l2_normalization_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_relaxed_dim2_axis1() {
+static std::vector<::test_helper::MixedTypedExample> examples_relaxed_dim2_axis1 = {
 // Begin of an example
 {
 .operands = {
@@ -1425,8 +1502,11 @@ static std::vector<MixedTypedExample> examples_relaxed_dim2_axis1 = {
 return examples_relaxed_dim2_axis1;
 };
 
-std::vector<MixedTypedExample>& get_examples_relaxed_dim2_axis1_relaxed() {
-static std::vector<MixedTypedExample> examples_relaxed_dim2_axis1_relaxed = {
+} // namespace generated_tests::l2_normalization_v1_2
+namespace generated_tests::l2_normalization_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_relaxed_dim2_axis1_relaxed() {
+static std::vector<::test_helper::MixedTypedExample> examples_relaxed_dim2_axis1_relaxed = {
 // Begin of an example
 {
 .operands = {
@@ -1482,8 +1562,11 @@ static std::vector<MixedTypedExample> examples_relaxed_dim2_axis1_relaxed = {
 return examples_relaxed_dim2_axis1_relaxed;
 };
 
-std::vector<MixedTypedExample>& get_examples_relaxed_dim2_axis1_float16() {
-static std::vector<MixedTypedExample> examples_relaxed_dim2_axis1_float16 = {
+} // namespace generated_tests::l2_normalization_v1_2
+namespace generated_tests::l2_normalization_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_relaxed_dim2_axis1_float16() {
+static std::vector<::test_helper::MixedTypedExample> examples_relaxed_dim2_axis1_float16 = {
 // Begin of an example
 {
 .operands = {
@@ -1539,8 +1622,11 @@ static std::vector<MixedTypedExample> examples_relaxed_dim2_axis1_float16 = {
 return examples_relaxed_dim2_axis1_float16;
 };
 
-std::vector<MixedTypedExample>& get_examples_relaxed_dim2_axis1_quant8() {
-static std::vector<MixedTypedExample> examples_relaxed_dim2_axis1_quant8 = {
+} // namespace generated_tests::l2_normalization_v1_2
+namespace generated_tests::l2_normalization_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_relaxed_dim2_axis1_quant8() {
+static std::vector<::test_helper::MixedTypedExample> examples_relaxed_dim2_axis1_quant8 = {
 // Begin of an example
 {
 .operands = {
@@ -1596,8 +1682,11 @@ static std::vector<MixedTypedExample> examples_relaxed_dim2_axis1_quant8 = {
 return examples_relaxed_dim2_axis1_quant8;
 };
 
-std::vector<MixedTypedExample>& get_examples_relaxed_dim1_axis0() {
-static std::vector<MixedTypedExample> examples_relaxed_dim1_axis0 = {
+} // namespace generated_tests::l2_normalization_v1_2
+namespace generated_tests::l2_normalization_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_relaxed_dim1_axis0() {
+static std::vector<::test_helper::MixedTypedExample> examples_relaxed_dim1_axis0 = {
 // Begin of an example
 {
 .operands = {
@@ -1653,8 +1742,11 @@ static std::vector<MixedTypedExample> examples_relaxed_dim1_axis0 = {
 return examples_relaxed_dim1_axis0;
 };
 
-std::vector<MixedTypedExample>& get_examples_relaxed_dim1_axis0_relaxed() {
-static std::vector<MixedTypedExample> examples_relaxed_dim1_axis0_relaxed = {
+} // namespace generated_tests::l2_normalization_v1_2
+namespace generated_tests::l2_normalization_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_relaxed_dim1_axis0_relaxed() {
+static std::vector<::test_helper::MixedTypedExample> examples_relaxed_dim1_axis0_relaxed = {
 // Begin of an example
 {
 .operands = {
@@ -1710,8 +1802,11 @@ static std::vector<MixedTypedExample> examples_relaxed_dim1_axis0_relaxed = {
 return examples_relaxed_dim1_axis0_relaxed;
 };
 
-std::vector<MixedTypedExample>& get_examples_relaxed_dim1_axis0_float16() {
-static std::vector<MixedTypedExample> examples_relaxed_dim1_axis0_float16 = {
+} // namespace generated_tests::l2_normalization_v1_2
+namespace generated_tests::l2_normalization_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_relaxed_dim1_axis0_float16() {
+static std::vector<::test_helper::MixedTypedExample> examples_relaxed_dim1_axis0_float16 = {
 // Begin of an example
 {
 .operands = {
@@ -1767,8 +1862,11 @@ static std::vector<MixedTypedExample> examples_relaxed_dim1_axis0_float16 = {
 return examples_relaxed_dim1_axis0_float16;
 };
 
-std::vector<MixedTypedExample>& get_examples_relaxed_dim1_axis0_quant8() {
-static std::vector<MixedTypedExample> examples_relaxed_dim1_axis0_quant8 = {
+} // namespace generated_tests::l2_normalization_v1_2
+namespace generated_tests::l2_normalization_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_relaxed_dim1_axis0_quant8() {
+static std::vector<::test_helper::MixedTypedExample> examples_relaxed_dim1_axis0_quant8 = {
 // Begin of an example
 {
 .operands = {
@@ -1824,8 +1922,11 @@ static std::vector<MixedTypedExample> examples_relaxed_dim1_axis0_quant8 = {
 return examples_relaxed_dim1_axis0_quant8;
 };
 
-std::vector<MixedTypedExample>& get_examples_dynamic_output_shape_dim4_axis3() {
-static std::vector<MixedTypedExample> examples_dynamic_output_shape_dim4_axis3 = {
+} // namespace generated_tests::l2_normalization_v1_2
+namespace generated_tests::l2_normalization_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_dim4_axis3() {
+static std::vector<::test_helper::MixedTypedExample> examples_dynamic_output_shape_dim4_axis3 = {
 // Begin of an example
 {
 .operands = {
@@ -1881,8 +1982,11 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_dim4_axis3 =
 return examples_dynamic_output_shape_dim4_axis3;
 };
 
-std::vector<MixedTypedExample>& get_examples_dynamic_output_shape_dim4_axis3_relaxed() {
-static std::vector<MixedTypedExample> examples_dynamic_output_shape_dim4_axis3_relaxed = {
+} // namespace generated_tests::l2_normalization_v1_2
+namespace generated_tests::l2_normalization_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_dim4_axis3_relaxed() {
+static std::vector<::test_helper::MixedTypedExample> examples_dynamic_output_shape_dim4_axis3_relaxed = {
 // Begin of an example
 {
 .operands = {
@@ -1938,8 +2042,11 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_dim4_axis3_r
 return examples_dynamic_output_shape_dim4_axis3_relaxed;
 };
 
-std::vector<MixedTypedExample>& get_examples_dynamic_output_shape_dim4_axis3_float16() {
-static std::vector<MixedTypedExample> examples_dynamic_output_shape_dim4_axis3_float16 = {
+} // namespace generated_tests::l2_normalization_v1_2
+namespace generated_tests::l2_normalization_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_dim4_axis3_float16() {
+static std::vector<::test_helper::MixedTypedExample> examples_dynamic_output_shape_dim4_axis3_float16 = {
 // Begin of an example
 {
 .operands = {
@@ -1995,8 +2102,11 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_dim4_axis3_f
 return examples_dynamic_output_shape_dim4_axis3_float16;
 };
 
-std::vector<MixedTypedExample>& get_examples_dynamic_output_shape_dim4_axis3_quant8() {
-static std::vector<MixedTypedExample> examples_dynamic_output_shape_dim4_axis3_quant8 = {
+} // namespace generated_tests::l2_normalization_v1_2
+namespace generated_tests::l2_normalization_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_dim4_axis3_quant8() {
+static std::vector<::test_helper::MixedTypedExample> examples_dynamic_output_shape_dim4_axis3_quant8 = {
 // Begin of an example
 {
 .operands = {
@@ -2052,8 +2162,11 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_dim4_axis3_q
 return examples_dynamic_output_shape_dim4_axis3_quant8;
 };
 
-std::vector<MixedTypedExample>& get_examples_dynamic_output_shape_dim3_axis2() {
-static std::vector<MixedTypedExample> examples_dynamic_output_shape_dim3_axis2 = {
+} // namespace generated_tests::l2_normalization_v1_2
+namespace generated_tests::l2_normalization_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_dim3_axis2() {
+static std::vector<::test_helper::MixedTypedExample> examples_dynamic_output_shape_dim3_axis2 = {
 // Begin of an example
 {
 .operands = {
@@ -2109,8 +2222,11 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_dim3_axis2 =
 return examples_dynamic_output_shape_dim3_axis2;
 };
 
-std::vector<MixedTypedExample>& get_examples_dynamic_output_shape_dim3_axis2_relaxed() {
-static std::vector<MixedTypedExample> examples_dynamic_output_shape_dim3_axis2_relaxed = {
+} // namespace generated_tests::l2_normalization_v1_2
+namespace generated_tests::l2_normalization_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_dim3_axis2_relaxed() {
+static std::vector<::test_helper::MixedTypedExample> examples_dynamic_output_shape_dim3_axis2_relaxed = {
 // Begin of an example
 {
 .operands = {
@@ -2166,8 +2282,11 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_dim3_axis2_r
 return examples_dynamic_output_shape_dim3_axis2_relaxed;
 };
 
-std::vector<MixedTypedExample>& get_examples_dynamic_output_shape_dim3_axis2_float16() {
-static std::vector<MixedTypedExample> examples_dynamic_output_shape_dim3_axis2_float16 = {
+} // namespace generated_tests::l2_normalization_v1_2
+namespace generated_tests::l2_normalization_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_dim3_axis2_float16() {
+static std::vector<::test_helper::MixedTypedExample> examples_dynamic_output_shape_dim3_axis2_float16 = {
 // Begin of an example
 {
 .operands = {
@@ -2223,8 +2342,11 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_dim3_axis2_f
 return examples_dynamic_output_shape_dim3_axis2_float16;
 };
 
-std::vector<MixedTypedExample>& get_examples_dynamic_output_shape_dim3_axis2_quant8() {
-static std::vector<MixedTypedExample> examples_dynamic_output_shape_dim3_axis2_quant8 = {
+} // namespace generated_tests::l2_normalization_v1_2
+namespace generated_tests::l2_normalization_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_dim3_axis2_quant8() {
+static std::vector<::test_helper::MixedTypedExample> examples_dynamic_output_shape_dim3_axis2_quant8 = {
 // Begin of an example
 {
 .operands = {
@@ -2280,8 +2402,11 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_dim3_axis2_q
 return examples_dynamic_output_shape_dim3_axis2_quant8;
 };
 
-std::vector<MixedTypedExample>& get_examples_dynamic_output_shape_dim2_axis1() {
-static std::vector<MixedTypedExample> examples_dynamic_output_shape_dim2_axis1 = {
+} // namespace generated_tests::l2_normalization_v1_2
+namespace generated_tests::l2_normalization_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_dim2_axis1() {
+static std::vector<::test_helper::MixedTypedExample> examples_dynamic_output_shape_dim2_axis1 = {
 // Begin of an example
 {
 .operands = {
@@ -2337,8 +2462,11 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_dim2_axis1 =
 return examples_dynamic_output_shape_dim2_axis1;
 };
 
-std::vector<MixedTypedExample>& get_examples_dynamic_output_shape_dim2_axis1_relaxed() {
-static std::vector<MixedTypedExample> examples_dynamic_output_shape_dim2_axis1_relaxed = {
+} // namespace generated_tests::l2_normalization_v1_2
+namespace generated_tests::l2_normalization_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_dim2_axis1_relaxed() {
+static std::vector<::test_helper::MixedTypedExample> examples_dynamic_output_shape_dim2_axis1_relaxed = {
 // Begin of an example
 {
 .operands = {
@@ -2394,8 +2522,11 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_dim2_axis1_r
 return examples_dynamic_output_shape_dim2_axis1_relaxed;
 };
 
-std::vector<MixedTypedExample>& get_examples_dynamic_output_shape_dim2_axis1_float16() {
-static std::vector<MixedTypedExample> examples_dynamic_output_shape_dim2_axis1_float16 = {
+} // namespace generated_tests::l2_normalization_v1_2
+namespace generated_tests::l2_normalization_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_dim2_axis1_float16() {
+static std::vector<::test_helper::MixedTypedExample> examples_dynamic_output_shape_dim2_axis1_float16 = {
 // Begin of an example
 {
 .operands = {
@@ -2451,8 +2582,11 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_dim2_axis1_f
 return examples_dynamic_output_shape_dim2_axis1_float16;
 };
 
-std::vector<MixedTypedExample>& get_examples_dynamic_output_shape_dim2_axis1_quant8() {
-static std::vector<MixedTypedExample> examples_dynamic_output_shape_dim2_axis1_quant8 = {
+} // namespace generated_tests::l2_normalization_v1_2
+namespace generated_tests::l2_normalization_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_dim2_axis1_quant8() {
+static std::vector<::test_helper::MixedTypedExample> examples_dynamic_output_shape_dim2_axis1_quant8 = {
 // Begin of an example
 {
 .operands = {
@@ -2508,8 +2642,11 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_dim2_axis1_q
 return examples_dynamic_output_shape_dim2_axis1_quant8;
 };
 
-std::vector<MixedTypedExample>& get_examples_dynamic_output_shape_dim1_axis0() {
-static std::vector<MixedTypedExample> examples_dynamic_output_shape_dim1_axis0 = {
+} // namespace generated_tests::l2_normalization_v1_2
+namespace generated_tests::l2_normalization_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_dim1_axis0() {
+static std::vector<::test_helper::MixedTypedExample> examples_dynamic_output_shape_dim1_axis0 = {
 // Begin of an example
 {
 .operands = {
@@ -2565,8 +2702,11 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_dim1_axis0 =
 return examples_dynamic_output_shape_dim1_axis0;
 };
 
-std::vector<MixedTypedExample>& get_examples_dynamic_output_shape_dim1_axis0_relaxed() {
-static std::vector<MixedTypedExample> examples_dynamic_output_shape_dim1_axis0_relaxed = {
+} // namespace generated_tests::l2_normalization_v1_2
+namespace generated_tests::l2_normalization_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_dim1_axis0_relaxed() {
+static std::vector<::test_helper::MixedTypedExample> examples_dynamic_output_shape_dim1_axis0_relaxed = {
 // Begin of an example
 {
 .operands = {
@@ -2622,8 +2762,11 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_dim1_axis0_r
 return examples_dynamic_output_shape_dim1_axis0_relaxed;
 };
 
-std::vector<MixedTypedExample>& get_examples_dynamic_output_shape_dim1_axis0_float16() {
-static std::vector<MixedTypedExample> examples_dynamic_output_shape_dim1_axis0_float16 = {
+} // namespace generated_tests::l2_normalization_v1_2
+namespace generated_tests::l2_normalization_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_dim1_axis0_float16() {
+static std::vector<::test_helper::MixedTypedExample> examples_dynamic_output_shape_dim1_axis0_float16 = {
 // Begin of an example
 {
 .operands = {
@@ -2679,8 +2822,11 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_dim1_axis0_f
 return examples_dynamic_output_shape_dim1_axis0_float16;
 };
 
-std::vector<MixedTypedExample>& get_examples_dynamic_output_shape_dim1_axis0_quant8() {
-static std::vector<MixedTypedExample> examples_dynamic_output_shape_dim1_axis0_quant8 = {
+} // namespace generated_tests::l2_normalization_v1_2
+namespace generated_tests::l2_normalization_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_dim1_axis0_quant8() {
+static std::vector<::test_helper::MixedTypedExample> examples_dynamic_output_shape_dim1_axis0_quant8 = {
 // Begin of an example
 {
 .operands = {
@@ -2736,8 +2882,11 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_dim1_axis0_q
 return examples_dynamic_output_shape_dim1_axis0_quant8;
 };
 
-std::vector<MixedTypedExample>& get_examples_dynamic_output_shape_relaxed_dim4_axis3() {
-static std::vector<MixedTypedExample> examples_dynamic_output_shape_relaxed_dim4_axis3 = {
+} // namespace generated_tests::l2_normalization_v1_2
+namespace generated_tests::l2_normalization_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_relaxed_dim4_axis3() {
+static std::vector<::test_helper::MixedTypedExample> examples_dynamic_output_shape_relaxed_dim4_axis3 = {
 // Begin of an example
 {
 .operands = {
@@ -2793,8 +2942,11 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_relaxed_dim4
 return examples_dynamic_output_shape_relaxed_dim4_axis3;
 };
 
-std::vector<MixedTypedExample>& get_examples_dynamic_output_shape_relaxed_dim4_axis3_relaxed() {
-static std::vector<MixedTypedExample> examples_dynamic_output_shape_relaxed_dim4_axis3_relaxed = {
+} // namespace generated_tests::l2_normalization_v1_2
+namespace generated_tests::l2_normalization_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_relaxed_dim4_axis3_relaxed() {
+static std::vector<::test_helper::MixedTypedExample> examples_dynamic_output_shape_relaxed_dim4_axis3_relaxed = {
 // Begin of an example
 {
 .operands = {
@@ -2850,8 +3002,11 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_relaxed_dim4
 return examples_dynamic_output_shape_relaxed_dim4_axis3_relaxed;
 };
 
-std::vector<MixedTypedExample>& get_examples_dynamic_output_shape_relaxed_dim4_axis3_float16() {
-static std::vector<MixedTypedExample> examples_dynamic_output_shape_relaxed_dim4_axis3_float16 = {
+} // namespace generated_tests::l2_normalization_v1_2
+namespace generated_tests::l2_normalization_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_relaxed_dim4_axis3_float16() {
+static std::vector<::test_helper::MixedTypedExample> examples_dynamic_output_shape_relaxed_dim4_axis3_float16 = {
 // Begin of an example
 {
 .operands = {
@@ -2907,8 +3062,11 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_relaxed_dim4
 return examples_dynamic_output_shape_relaxed_dim4_axis3_float16;
 };
 
-std::vector<MixedTypedExample>& get_examples_dynamic_output_shape_relaxed_dim4_axis3_quant8() {
-static std::vector<MixedTypedExample> examples_dynamic_output_shape_relaxed_dim4_axis3_quant8 = {
+} // namespace generated_tests::l2_normalization_v1_2
+namespace generated_tests::l2_normalization_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_relaxed_dim4_axis3_quant8() {
+static std::vector<::test_helper::MixedTypedExample> examples_dynamic_output_shape_relaxed_dim4_axis3_quant8 = {
 // Begin of an example
 {
 .operands = {
@@ -2964,8 +3122,11 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_relaxed_dim4
 return examples_dynamic_output_shape_relaxed_dim4_axis3_quant8;
 };
 
-std::vector<MixedTypedExample>& get_examples_dynamic_output_shape_relaxed_dim3_axis2() {
-static std::vector<MixedTypedExample> examples_dynamic_output_shape_relaxed_dim3_axis2 = {
+} // namespace generated_tests::l2_normalization_v1_2
+namespace generated_tests::l2_normalization_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_relaxed_dim3_axis2() {
+static std::vector<::test_helper::MixedTypedExample> examples_dynamic_output_shape_relaxed_dim3_axis2 = {
 // Begin of an example
 {
 .operands = {
@@ -3021,8 +3182,11 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_relaxed_dim3
 return examples_dynamic_output_shape_relaxed_dim3_axis2;
 };
 
-std::vector<MixedTypedExample>& get_examples_dynamic_output_shape_relaxed_dim3_axis2_relaxed() {
-static std::vector<MixedTypedExample> examples_dynamic_output_shape_relaxed_dim3_axis2_relaxed = {
+} // namespace generated_tests::l2_normalization_v1_2
+namespace generated_tests::l2_normalization_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_relaxed_dim3_axis2_relaxed() {
+static std::vector<::test_helper::MixedTypedExample> examples_dynamic_output_shape_relaxed_dim3_axis2_relaxed = {
 // Begin of an example
 {
 .operands = {
@@ -3078,8 +3242,11 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_relaxed_dim3
 return examples_dynamic_output_shape_relaxed_dim3_axis2_relaxed;
 };
 
-std::vector<MixedTypedExample>& get_examples_dynamic_output_shape_relaxed_dim3_axis2_float16() {
-static std::vector<MixedTypedExample> examples_dynamic_output_shape_relaxed_dim3_axis2_float16 = {
+} // namespace generated_tests::l2_normalization_v1_2
+namespace generated_tests::l2_normalization_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_relaxed_dim3_axis2_float16() {
+static std::vector<::test_helper::MixedTypedExample> examples_dynamic_output_shape_relaxed_dim3_axis2_float16 = {
 // Begin of an example
 {
 .operands = {
@@ -3135,8 +3302,11 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_relaxed_dim3
 return examples_dynamic_output_shape_relaxed_dim3_axis2_float16;
 };
 
-std::vector<MixedTypedExample>& get_examples_dynamic_output_shape_relaxed_dim3_axis2_quant8() {
-static std::vector<MixedTypedExample> examples_dynamic_output_shape_relaxed_dim3_axis2_quant8 = {
+} // namespace generated_tests::l2_normalization_v1_2
+namespace generated_tests::l2_normalization_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_relaxed_dim3_axis2_quant8() {
+static std::vector<::test_helper::MixedTypedExample> examples_dynamic_output_shape_relaxed_dim3_axis2_quant8 = {
 // Begin of an example
 {
 .operands = {
@@ -3192,8 +3362,11 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_relaxed_dim3
 return examples_dynamic_output_shape_relaxed_dim3_axis2_quant8;
 };
 
-std::vector<MixedTypedExample>& get_examples_dynamic_output_shape_relaxed_dim2_axis1() {
-static std::vector<MixedTypedExample> examples_dynamic_output_shape_relaxed_dim2_axis1 = {
+} // namespace generated_tests::l2_normalization_v1_2
+namespace generated_tests::l2_normalization_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_relaxed_dim2_axis1() {
+static std::vector<::test_helper::MixedTypedExample> examples_dynamic_output_shape_relaxed_dim2_axis1 = {
 // Begin of an example
 {
 .operands = {
@@ -3249,8 +3422,11 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_relaxed_dim2
 return examples_dynamic_output_shape_relaxed_dim2_axis1;
 };
 
-std::vector<MixedTypedExample>& get_examples_dynamic_output_shape_relaxed_dim2_axis1_relaxed() {
-static std::vector<MixedTypedExample> examples_dynamic_output_shape_relaxed_dim2_axis1_relaxed = {
+} // namespace generated_tests::l2_normalization_v1_2
+namespace generated_tests::l2_normalization_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_relaxed_dim2_axis1_relaxed() {
+static std::vector<::test_helper::MixedTypedExample> examples_dynamic_output_shape_relaxed_dim2_axis1_relaxed = {
 // Begin of an example
 {
 .operands = {
@@ -3306,8 +3482,11 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_relaxed_dim2
 return examples_dynamic_output_shape_relaxed_dim2_axis1_relaxed;
 };
 
-std::vector<MixedTypedExample>& get_examples_dynamic_output_shape_relaxed_dim2_axis1_float16() {
-static std::vector<MixedTypedExample> examples_dynamic_output_shape_relaxed_dim2_axis1_float16 = {
+} // namespace generated_tests::l2_normalization_v1_2
+namespace generated_tests::l2_normalization_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_relaxed_dim2_axis1_float16() {
+static std::vector<::test_helper::MixedTypedExample> examples_dynamic_output_shape_relaxed_dim2_axis1_float16 = {
 // Begin of an example
 {
 .operands = {
@@ -3363,8 +3542,11 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_relaxed_dim2
 return examples_dynamic_output_shape_relaxed_dim2_axis1_float16;
 };
 
-std::vector<MixedTypedExample>& get_examples_dynamic_output_shape_relaxed_dim2_axis1_quant8() {
-static std::vector<MixedTypedExample> examples_dynamic_output_shape_relaxed_dim2_axis1_quant8 = {
+} // namespace generated_tests::l2_normalization_v1_2
+namespace generated_tests::l2_normalization_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_relaxed_dim2_axis1_quant8() {
+static std::vector<::test_helper::MixedTypedExample> examples_dynamic_output_shape_relaxed_dim2_axis1_quant8 = {
 // Begin of an example
 {
 .operands = {
@@ -3420,8 +3602,11 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_relaxed_dim2
 return examples_dynamic_output_shape_relaxed_dim2_axis1_quant8;
 };
 
-std::vector<MixedTypedExample>& get_examples_dynamic_output_shape_relaxed_dim1_axis0() {
-static std::vector<MixedTypedExample> examples_dynamic_output_shape_relaxed_dim1_axis0 = {
+} // namespace generated_tests::l2_normalization_v1_2
+namespace generated_tests::l2_normalization_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_relaxed_dim1_axis0() {
+static std::vector<::test_helper::MixedTypedExample> examples_dynamic_output_shape_relaxed_dim1_axis0 = {
 // Begin of an example
 {
 .operands = {
@@ -3477,8 +3662,11 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_relaxed_dim1
 return examples_dynamic_output_shape_relaxed_dim1_axis0;
 };
 
-std::vector<MixedTypedExample>& get_examples_dynamic_output_shape_relaxed_dim1_axis0_relaxed() {
-static std::vector<MixedTypedExample> examples_dynamic_output_shape_relaxed_dim1_axis0_relaxed = {
+} // namespace generated_tests::l2_normalization_v1_2
+namespace generated_tests::l2_normalization_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_relaxed_dim1_axis0_relaxed() {
+static std::vector<::test_helper::MixedTypedExample> examples_dynamic_output_shape_relaxed_dim1_axis0_relaxed = {
 // Begin of an example
 {
 .operands = {
@@ -3534,8 +3722,11 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_relaxed_dim1
 return examples_dynamic_output_shape_relaxed_dim1_axis0_relaxed;
 };
 
-std::vector<MixedTypedExample>& get_examples_dynamic_output_shape_relaxed_dim1_axis0_float16() {
-static std::vector<MixedTypedExample> examples_dynamic_output_shape_relaxed_dim1_axis0_float16 = {
+} // namespace generated_tests::l2_normalization_v1_2
+namespace generated_tests::l2_normalization_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_relaxed_dim1_axis0_float16() {
+static std::vector<::test_helper::MixedTypedExample> examples_dynamic_output_shape_relaxed_dim1_axis0_float16 = {
 // Begin of an example
 {
 .operands = {
@@ -3591,8 +3782,11 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_relaxed_dim1
 return examples_dynamic_output_shape_relaxed_dim1_axis0_float16;
 };
 
-std::vector<MixedTypedExample>& get_examples_dynamic_output_shape_relaxed_dim1_axis0_quant8() {
-static std::vector<MixedTypedExample> examples_dynamic_output_shape_relaxed_dim1_axis0_quant8 = {
+} // namespace generated_tests::l2_normalization_v1_2
+namespace generated_tests::l2_normalization_v1_2 {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_relaxed_dim1_axis0_quant8() {
+static std::vector<::test_helper::MixedTypedExample> examples_dynamic_output_shape_relaxed_dim1_axis0_quant8 = {
 // Begin of an example
 {
 .operands = {
@@ -3648,3 +3842,4 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_relaxed_dim1
 return examples_dynamic_output_shape_relaxed_dim1_axis0_quant8;
 };
 
+} // namespace generated_tests::l2_normalization_v1_2

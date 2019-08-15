@@ -1,5 +1,10 @@
+// Generated from pow.mod.py
+// DO NOT EDIT
 // clang-format off
-// Generated file (from: pow.mod.py). Do not edit
+#include "TestGenerated.h"
+
+namespace generated_tests::pow {
+
 void CreateModel(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {2, 1});
   OperandType type1(Type::TENSOR_FLOAT32, {1});
@@ -16,10 +21,13 @@ void CreateModel(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored(int i) {
+bool is_ignored(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::pow
+namespace generated_tests::pow {
 
 void CreateModel_relaxed(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {2, 1});
@@ -39,10 +47,13 @@ void CreateModel_relaxed(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_relaxed(int i) {
+bool is_ignored_relaxed(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::pow
+namespace generated_tests::pow {
 
 void CreateModel_float16(Model *model) {
   OperandType type6(Type::TENSOR_FLOAT16, {2, 1});
@@ -60,10 +71,13 @@ void CreateModel_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_float16(int i) {
+bool is_ignored_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::pow
+namespace generated_tests::pow {
 
 void CreateModel_dynamic_output_shape(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {2, 1});
@@ -82,10 +96,13 @@ void CreateModel_dynamic_output_shape(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape(int i) {
+bool is_ignored_dynamic_output_shape(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::pow
+namespace generated_tests::pow {
 
 void CreateModel_dynamic_output_shape_relaxed(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {2, 1});
@@ -106,10 +123,13 @@ void CreateModel_dynamic_output_shape_relaxed(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_relaxed(int i) {
+bool is_ignored_dynamic_output_shape_relaxed(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::pow
+namespace generated_tests::pow {
 
 void CreateModel_dynamic_output_shape_float16(Model *model) {
   OperandType type6(Type::TENSOR_FLOAT16, {2, 1});
@@ -128,10 +148,13 @@ void CreateModel_dynamic_output_shape_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_float16(int i) {
+bool is_ignored_dynamic_output_shape_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::pow
+namespace generated_tests::pow {
 
 void CreateModel_2(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {2, 1});
@@ -150,10 +173,13 @@ void CreateModel_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_2(int i) {
+bool is_ignored_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::pow
+namespace generated_tests::pow {
 
 void CreateModel_relaxed_2(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {2, 1});
@@ -174,10 +200,13 @@ void CreateModel_relaxed_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_relaxed_2(int i) {
+bool is_ignored_relaxed_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::pow
+namespace generated_tests::pow {
 
 void CreateModel_float16_2(Model *model) {
   OperandType type10(Type::TENSOR_FLOAT16, {1, 2});
@@ -196,10 +225,13 @@ void CreateModel_float16_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_float16_2(int i) {
+bool is_ignored_float16_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::pow
+namespace generated_tests::pow {
 
 void CreateModel_dynamic_output_shape_2(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {2, 1});
@@ -218,10 +250,13 @@ void CreateModel_dynamic_output_shape_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_2(int i) {
+bool is_ignored_dynamic_output_shape_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::pow
+namespace generated_tests::pow {
 
 void CreateModel_dynamic_output_shape_relaxed_2(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {2, 1});
@@ -242,10 +277,13 @@ void CreateModel_dynamic_output_shape_relaxed_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_relaxed_2(int i) {
+bool is_ignored_dynamic_output_shape_relaxed_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::pow
+namespace generated_tests::pow {
 
 void CreateModel_dynamic_output_shape_float16_2(Model *model) {
   OperandType type10(Type::TENSOR_FLOAT16, {1, 2});
@@ -264,10 +302,13 @@ void CreateModel_dynamic_output_shape_float16_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_float16_2(int i) {
+bool is_ignored_dynamic_output_shape_float16_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::pow
+namespace generated_tests::pow {
 
 void CreateModel_3(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {2, 1});
@@ -286,10 +327,13 @@ void CreateModel_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_3(int i) {
+bool is_ignored_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::pow
+namespace generated_tests::pow {
 
 void CreateModel_relaxed_3(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {2, 1});
@@ -310,10 +354,13 @@ void CreateModel_relaxed_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_relaxed_3(int i) {
+bool is_ignored_relaxed_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::pow
+namespace generated_tests::pow {
 
 void CreateModel_float16_3(Model *model) {
   OperandType type12(Type::TENSOR_FLOAT16, {3, 1, 2});
@@ -332,10 +379,13 @@ void CreateModel_float16_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_float16_3(int i) {
+bool is_ignored_float16_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::pow
+namespace generated_tests::pow {
 
 void CreateModel_dynamic_output_shape_3(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {2, 1});
@@ -354,10 +404,13 @@ void CreateModel_dynamic_output_shape_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_3(int i) {
+bool is_ignored_dynamic_output_shape_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::pow
+namespace generated_tests::pow {
 
 void CreateModel_dynamic_output_shape_relaxed_3(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {2, 1});
@@ -378,10 +431,13 @@ void CreateModel_dynamic_output_shape_relaxed_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_relaxed_3(int i) {
+bool is_ignored_dynamic_output_shape_relaxed_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::pow
+namespace generated_tests::pow {
 
 void CreateModel_dynamic_output_shape_float16_3(Model *model) {
   OperandType type12(Type::TENSOR_FLOAT16, {3, 1, 2});
@@ -400,8 +456,9 @@ void CreateModel_dynamic_output_shape_float16_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_float16_3(int i) {
+bool is_ignored_dynamic_output_shape_float16_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
 
+} // namespace generated_tests::pow

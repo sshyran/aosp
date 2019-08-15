@@ -1,5 +1,10 @@
+// Generated from gather_higher_rank.mod.py
+// DO NOT EDIT
 // clang-format off
-// Generated file (from: gather_higher_rank.mod.py). Do not edit
+#include "TestGenerated.h"
+
+namespace generated_tests::gather_higher_rank {
+
 void CreateModel(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {1, 3, 2});
   OperandType type1(Type::TENSOR_INT32, {3, 2});
@@ -21,10 +26,13 @@ void CreateModel(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored(int i) {
+bool is_ignored(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::gather_higher_rank
+namespace generated_tests::gather_higher_rank {
 
 void CreateModel_relaxed(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {1, 3, 2});
@@ -49,10 +57,13 @@ void CreateModel_relaxed(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_relaxed(int i) {
+bool is_ignored_relaxed(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::gather_higher_rank
+namespace generated_tests::gather_higher_rank {
 
 void CreateModel_quant8(Model *model) {
   OperandType type1(Type::TENSOR_INT32, {3, 2});
@@ -75,10 +86,13 @@ void CreateModel_quant8(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_quant8(int i) {
+bool is_ignored_quant8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::gather_higher_rank
+namespace generated_tests::gather_higher_rank {
 
 void CreateModel_int32(Model *model) {
   OperandType type1(Type::TENSOR_INT32, {3, 2});
@@ -101,10 +115,13 @@ void CreateModel_int32(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_int32(int i) {
+bool is_ignored_int32(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::gather_higher_rank
+namespace generated_tests::gather_higher_rank {
 
 void CreateModel_dynamic_output_shape(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {1, 3, 2});
@@ -127,10 +144,13 @@ void CreateModel_dynamic_output_shape(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape(int i) {
+bool is_ignored_dynamic_output_shape(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::gather_higher_rank
+namespace generated_tests::gather_higher_rank {
 
 void CreateModel_dynamic_output_shape_relaxed(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {1, 3, 2});
@@ -155,10 +175,13 @@ void CreateModel_dynamic_output_shape_relaxed(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_relaxed(int i) {
+bool is_ignored_dynamic_output_shape_relaxed(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::gather_higher_rank
+namespace generated_tests::gather_higher_rank {
 
 void CreateModel_dynamic_output_shape_quant8(Model *model) {
   OperandType type1(Type::TENSOR_INT32, {3, 2});
@@ -181,10 +204,13 @@ void CreateModel_dynamic_output_shape_quant8(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_quant8(int i) {
+bool is_ignored_dynamic_output_shape_quant8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::gather_higher_rank
+namespace generated_tests::gather_higher_rank {
 
 void CreateModel_dynamic_output_shape_int32(Model *model) {
   OperandType type1(Type::TENSOR_INT32, {3, 2});
@@ -207,8 +233,9 @@ void CreateModel_dynamic_output_shape_int32(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_int32(int i) {
+bool is_ignored_dynamic_output_shape_int32(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
 
+} // namespace generated_tests::gather_higher_rank
