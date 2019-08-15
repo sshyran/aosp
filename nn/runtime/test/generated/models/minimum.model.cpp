@@ -1,5 +1,10 @@
+// Generated from minimum.mod.py
+// DO NOT EDIT
 // clang-format off
-// Generated file (from: minimum.mod.py). Do not edit
+#include "TestGenerated.h"
+
+namespace generated_tests::minimum {
+
 void CreateModel(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {3, 1, 2});
   // Phase 1, operands
@@ -15,10 +20,13 @@ void CreateModel(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored(int i) {
+bool is_ignored(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::minimum
+namespace generated_tests::minimum {
 
 void CreateModel_relaxed(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {3, 1, 2});
@@ -37,10 +45,13 @@ void CreateModel_relaxed(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_relaxed(int i) {
+bool is_ignored_relaxed(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::minimum
+namespace generated_tests::minimum {
 
 void CreateModel_float16(Model *model) {
   OperandType type4(Type::TENSOR_FLOAT16, {3, 1, 2});
@@ -57,10 +68,13 @@ void CreateModel_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_float16(int i) {
+bool is_ignored_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::minimum
+namespace generated_tests::minimum {
 
 void CreateModel_int32(Model *model) {
   OperandType type5(Type::TENSOR_INT32, {3, 1, 2});
@@ -77,10 +91,13 @@ void CreateModel_int32(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_int32(int i) {
+bool is_ignored_int32(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::minimum
+namespace generated_tests::minimum {
 
 void CreateModel_quant8(Model *model) {
   OperandType type6(Type::TENSOR_QUANT8_ASYMM, {3, 1, 2}, 0.5f, 127);
@@ -99,10 +116,13 @@ void CreateModel_quant8(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_quant8(int i) {
+bool is_ignored_quant8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::minimum
+namespace generated_tests::minimum {
 
 void CreateModel_dynamic_output_shape(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {3, 1, 2});
@@ -120,10 +140,13 @@ void CreateModel_dynamic_output_shape(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape(int i) {
+bool is_ignored_dynamic_output_shape(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::minimum
+namespace generated_tests::minimum {
 
 void CreateModel_dynamic_output_shape_relaxed(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {3, 1, 2});
@@ -143,10 +166,13 @@ void CreateModel_dynamic_output_shape_relaxed(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_relaxed(int i) {
+bool is_ignored_dynamic_output_shape_relaxed(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::minimum
+namespace generated_tests::minimum {
 
 void CreateModel_dynamic_output_shape_float16(Model *model) {
   OperandType type10(Type::TENSOR_FLOAT16, {0, 0, 0});
@@ -164,10 +190,13 @@ void CreateModel_dynamic_output_shape_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_float16(int i) {
+bool is_ignored_dynamic_output_shape_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::minimum
+namespace generated_tests::minimum {
 
 void CreateModel_dynamic_output_shape_int32(Model *model) {
   OperandType type11(Type::TENSOR_INT32, {0, 0, 0});
@@ -185,10 +214,13 @@ void CreateModel_dynamic_output_shape_int32(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_int32(int i) {
+bool is_ignored_dynamic_output_shape_int32(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::minimum
+namespace generated_tests::minimum {
 
 void CreateModel_dynamic_output_shape_quant8(Model *model) {
   OperandType type12(Type::TENSOR_QUANT8_ASYMM, {0, 0, 0}, 2.0f, 80);
@@ -207,10 +239,13 @@ void CreateModel_dynamic_output_shape_quant8(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_quant8(int i) {
+bool is_ignored_dynamic_output_shape_quant8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::minimum
+namespace generated_tests::minimum {
 
 void CreateModel_2(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {3, 1, 2});
@@ -228,10 +263,13 @@ void CreateModel_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_2(int i) {
+bool is_ignored_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::minimum
+namespace generated_tests::minimum {
 
 void CreateModel_relaxed_2(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {3, 1, 2});
@@ -251,10 +289,13 @@ void CreateModel_relaxed_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_relaxed_2(int i) {
+bool is_ignored_relaxed_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::minimum
+namespace generated_tests::minimum {
 
 void CreateModel_float16_2(Model *model) {
   OperandType type13(Type::TENSOR_FLOAT16, {2});
@@ -272,10 +313,13 @@ void CreateModel_float16_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_float16_2(int i) {
+bool is_ignored_float16_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::minimum
+namespace generated_tests::minimum {
 
 void CreateModel_int32_2(Model *model) {
   OperandType type14(Type::TENSOR_INT32, {2});
@@ -293,10 +337,13 @@ void CreateModel_int32_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_int32_2(int i) {
+bool is_ignored_int32_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::minimum
+namespace generated_tests::minimum {
 
 void CreateModel_quant8_2(Model *model) {
   OperandType type15(Type::TENSOR_QUANT8_ASYMM, {2}, 1.0f, 100);
@@ -315,10 +362,13 @@ void CreateModel_quant8_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_quant8_2(int i) {
+bool is_ignored_quant8_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::minimum
+namespace generated_tests::minimum {
 
 void CreateModel_dynamic_output_shape_2(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {3, 1, 2});
@@ -337,10 +387,13 @@ void CreateModel_dynamic_output_shape_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_2(int i) {
+bool is_ignored_dynamic_output_shape_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::minimum
+namespace generated_tests::minimum {
 
 void CreateModel_dynamic_output_shape_relaxed_2(Model *model) {
   OperandType type0(Type::TENSOR_FLOAT32, {3, 1, 2});
@@ -361,10 +414,13 @@ void CreateModel_dynamic_output_shape_relaxed_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_relaxed_2(int i) {
+bool is_ignored_dynamic_output_shape_relaxed_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::minimum
+namespace generated_tests::minimum {
 
 void CreateModel_dynamic_output_shape_float16_2(Model *model) {
   OperandType type10(Type::TENSOR_FLOAT16, {0, 0, 0});
@@ -383,10 +439,13 @@ void CreateModel_dynamic_output_shape_float16_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_float16_2(int i) {
+bool is_ignored_dynamic_output_shape_float16_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::minimum
+namespace generated_tests::minimum {
 
 void CreateModel_dynamic_output_shape_int32_2(Model *model) {
   OperandType type11(Type::TENSOR_INT32, {0, 0, 0});
@@ -405,10 +464,13 @@ void CreateModel_dynamic_output_shape_int32_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_int32_2(int i) {
+bool is_ignored_dynamic_output_shape_int32_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::minimum
+namespace generated_tests::minimum {
 
 void CreateModel_dynamic_output_shape_quant8_2(Model *model) {
   OperandType type12(Type::TENSOR_QUANT8_ASYMM, {0, 0, 0}, 2.0f, 80);
@@ -427,10 +489,13 @@ void CreateModel_dynamic_output_shape_quant8_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_quant8_2(int i) {
+bool is_ignored_dynamic_output_shape_quant8_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::minimum
+namespace generated_tests::minimum {
 
 void CreateModel_3(Model *model) {
   OperandType type2(Type::TENSOR_QUANT8_ASYMM, {2}, 1.0f, 128);
@@ -448,10 +513,13 @@ void CreateModel_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_3(int i) {
+bool is_ignored_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::minimum
+namespace generated_tests::minimum {
 
 void CreateModel_dynamic_output_shape_3(Model *model) {
   OperandType type16(Type::TENSOR_QUANT8_ASYMM, {0}, 0.5f, 128);
@@ -469,8 +537,9 @@ void CreateModel_dynamic_output_shape_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_3(int i) {
+bool is_ignored_dynamic_output_shape_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
 
+} // namespace generated_tests::minimum

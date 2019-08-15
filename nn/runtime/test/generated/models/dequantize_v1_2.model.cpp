@@ -1,5 +1,10 @@
+// Generated from dequantize_v1_2.mod.py
+// DO NOT EDIT
 // clang-format off
-// Generated file (from: dequantize_v1_2.mod.py). Do not edit
+#include "TestGenerated.h"
+
+namespace generated_tests::dequantize_v1_2 {
+
 void CreateModel(Model *model) {
   OperandType type0(Type::TENSOR_QUANT8_ASYMM, {10}, 0.5f, 127);
   OperandType type1(Type::TENSOR_FLOAT32, {10});
@@ -15,10 +20,13 @@ void CreateModel(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored(int i) {
+bool is_ignored(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::dequantize_v1_2
+namespace generated_tests::dequantize_v1_2 {
 
 void CreateModel_relaxed(Model *model) {
   OperandType type0(Type::TENSOR_QUANT8_ASYMM, {10}, 0.5f, 127);
@@ -37,10 +45,13 @@ void CreateModel_relaxed(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_relaxed(int i) {
+bool is_ignored_relaxed(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::dequantize_v1_2
+namespace generated_tests::dequantize_v1_2 {
 
 void CreateModel_float16(Model *model) {
   OperandType type0(Type::TENSOR_QUANT8_ASYMM, {10}, 0.5f, 127);
@@ -57,10 +68,13 @@ void CreateModel_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_float16(int i) {
+bool is_ignored_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::dequantize_v1_2
+namespace generated_tests::dequantize_v1_2 {
 
 void CreateModel_dynamic_output_shape(Model *model) {
   OperandType type0(Type::TENSOR_QUANT8_ASYMM, {10}, 0.5f, 127);
@@ -77,10 +91,13 @@ void CreateModel_dynamic_output_shape(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape(int i) {
+bool is_ignored_dynamic_output_shape(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::dequantize_v1_2
+namespace generated_tests::dequantize_v1_2 {
 
 void CreateModel_dynamic_output_shape_relaxed(Model *model) {
   OperandType type0(Type::TENSOR_QUANT8_ASYMM, {10}, 0.5f, 127);
@@ -99,10 +116,13 @@ void CreateModel_dynamic_output_shape_relaxed(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_relaxed(int i) {
+bool is_ignored_dynamic_output_shape_relaxed(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::dequantize_v1_2
+namespace generated_tests::dequantize_v1_2 {
 
 void CreateModel_dynamic_output_shape_float16(Model *model) {
   OperandType type0(Type::TENSOR_QUANT8_ASYMM, {10}, 0.5f, 127);
@@ -119,10 +139,13 @@ void CreateModel_dynamic_output_shape_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_float16(int i) {
+bool is_ignored_dynamic_output_shape_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::dequantize_v1_2
+namespace generated_tests::dequantize_v1_2 {
 
 void CreateModel_2(Model *model) {
   OperandType type2(Type::TENSOR_QUANT8_ASYMM, {2, 5}, 0.5f, 127);
@@ -139,10 +162,13 @@ void CreateModel_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_2(int i) {
+bool is_ignored_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::dequantize_v1_2
+namespace generated_tests::dequantize_v1_2 {
 
 void CreateModel_relaxed_2(Model *model) {
   OperandType type2(Type::TENSOR_QUANT8_ASYMM, {2, 5}, 0.5f, 127);
@@ -161,10 +187,13 @@ void CreateModel_relaxed_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_relaxed_2(int i) {
+bool is_ignored_relaxed_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::dequantize_v1_2
+namespace generated_tests::dequantize_v1_2 {
 
 void CreateModel_float16_2(Model *model) {
   OperandType type2(Type::TENSOR_QUANT8_ASYMM, {2, 5}, 0.5f, 127);
@@ -181,10 +210,13 @@ void CreateModel_float16_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_float16_2(int i) {
+bool is_ignored_float16_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::dequantize_v1_2
+namespace generated_tests::dequantize_v1_2 {
 
 void CreateModel_dynamic_output_shape_2(Model *model) {
   OperandType type2(Type::TENSOR_QUANT8_ASYMM, {2, 5}, 0.5f, 127);
@@ -201,10 +233,13 @@ void CreateModel_dynamic_output_shape_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_2(int i) {
+bool is_ignored_dynamic_output_shape_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::dequantize_v1_2
+namespace generated_tests::dequantize_v1_2 {
 
 void CreateModel_dynamic_output_shape_relaxed_2(Model *model) {
   OperandType type2(Type::TENSOR_QUANT8_ASYMM, {2, 5}, 0.5f, 127);
@@ -223,10 +258,13 @@ void CreateModel_dynamic_output_shape_relaxed_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_relaxed_2(int i) {
+bool is_ignored_dynamic_output_shape_relaxed_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::dequantize_v1_2
+namespace generated_tests::dequantize_v1_2 {
 
 void CreateModel_dynamic_output_shape_float16_2(Model *model) {
   OperandType type2(Type::TENSOR_QUANT8_ASYMM, {2, 5}, 0.5f, 127);
@@ -243,10 +281,13 @@ void CreateModel_dynamic_output_shape_float16_2(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_float16_2(int i) {
+bool is_ignored_dynamic_output_shape_float16_2(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::dequantize_v1_2
+namespace generated_tests::dequantize_v1_2 {
 
 void CreateModel_3(Model *model) {
   OperandType type4(Type::TENSOR_QUANT8_SYMM, {2, 2, 2}, 0.5f, 0);
@@ -263,10 +304,13 @@ void CreateModel_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_3(int i) {
+bool is_ignored_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::dequantize_v1_2
+namespace generated_tests::dequantize_v1_2 {
 
 void CreateModel_relaxed_3(Model *model) {
   OperandType type4(Type::TENSOR_QUANT8_SYMM, {2, 2, 2}, 0.5f, 0);
@@ -285,10 +329,13 @@ void CreateModel_relaxed_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_relaxed_3(int i) {
+bool is_ignored_relaxed_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::dequantize_v1_2
+namespace generated_tests::dequantize_v1_2 {
 
 void CreateModel_float16_3(Model *model) {
   OperandType type31(Type::TENSOR_FLOAT16, {2, 2, 2});
@@ -305,10 +352,13 @@ void CreateModel_float16_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_float16_3(int i) {
+bool is_ignored_float16_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::dequantize_v1_2
+namespace generated_tests::dequantize_v1_2 {
 
 void CreateModel_dynamic_output_shape_3(Model *model) {
   OperandType type32(Type::TENSOR_FLOAT32, {0, 0, 0});
@@ -325,10 +375,13 @@ void CreateModel_dynamic_output_shape_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_3(int i) {
+bool is_ignored_dynamic_output_shape_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::dequantize_v1_2
+namespace generated_tests::dequantize_v1_2 {
 
 void CreateModel_dynamic_output_shape_relaxed_3(Model *model) {
   OperandType type32(Type::TENSOR_FLOAT32, {0, 0, 0});
@@ -347,10 +400,13 @@ void CreateModel_dynamic_output_shape_relaxed_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_relaxed_3(int i) {
+bool is_ignored_dynamic_output_shape_relaxed_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::dequantize_v1_2
+namespace generated_tests::dequantize_v1_2 {
 
 void CreateModel_dynamic_output_shape_float16_3(Model *model) {
   OperandType type33(Type::TENSOR_FLOAT16, {0, 0, 0});
@@ -367,10 +423,13 @@ void CreateModel_dynamic_output_shape_float16_3(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_float16_3(int i) {
+bool is_ignored_dynamic_output_shape_float16_3(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::dequantize_v1_2
+namespace generated_tests::dequantize_v1_2 {
 
 void CreateModel_4(Model *model) {
   OperandType type6(Type::TENSOR_QUANT8_SYMM, {2, 1, 2, 2}, 0.5f, 0);
@@ -387,10 +446,13 @@ void CreateModel_4(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_4(int i) {
+bool is_ignored_4(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::dequantize_v1_2
+namespace generated_tests::dequantize_v1_2 {
 
 void CreateModel_relaxed_4(Model *model) {
   OperandType type6(Type::TENSOR_QUANT8_SYMM, {2, 1, 2, 2}, 0.5f, 0);
@@ -409,10 +471,13 @@ void CreateModel_relaxed_4(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_relaxed_4(int i) {
+bool is_ignored_relaxed_4(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::dequantize_v1_2
+namespace generated_tests::dequantize_v1_2 {
 
 void CreateModel_float16_4(Model *model) {
   OperandType type34(Type::TENSOR_FLOAT16, {2, 1, 2, 2});
@@ -429,10 +494,13 @@ void CreateModel_float16_4(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_float16_4(int i) {
+bool is_ignored_float16_4(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::dequantize_v1_2
+namespace generated_tests::dequantize_v1_2 {
 
 void CreateModel_dynamic_output_shape_4(Model *model) {
   OperandType type35(Type::TENSOR_FLOAT32, {0, 0, 0, 0});
@@ -449,10 +517,13 @@ void CreateModel_dynamic_output_shape_4(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_4(int i) {
+bool is_ignored_dynamic_output_shape_4(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::dequantize_v1_2
+namespace generated_tests::dequantize_v1_2 {
 
 void CreateModel_dynamic_output_shape_relaxed_4(Model *model) {
   OperandType type35(Type::TENSOR_FLOAT32, {0, 0, 0, 0});
@@ -471,10 +542,13 @@ void CreateModel_dynamic_output_shape_relaxed_4(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_relaxed_4(int i) {
+bool is_ignored_dynamic_output_shape_relaxed_4(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::dequantize_v1_2
+namespace generated_tests::dequantize_v1_2 {
 
 void CreateModel_dynamic_output_shape_float16_4(Model *model) {
   OperandType type36(Type::TENSOR_FLOAT16, {0, 0, 0, 0});
@@ -491,10 +565,13 @@ void CreateModel_dynamic_output_shape_float16_4(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_float16_4(int i) {
+bool is_ignored_dynamic_output_shape_float16_4(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::dequantize_v1_2
+namespace generated_tests::dequantize_v1_2 {
 
 void CreateModel_5(Model *model) {
   OperandType type8(Type::TENSOR_QUANT8_SYMM_PER_CHANNEL, {2, 3, 4}, SymmPerChannelQuantParams({2.0f, 0.5f},0));
@@ -511,10 +588,13 @@ void CreateModel_5(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_5(int i) {
+bool is_ignored_5(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::dequantize_v1_2
+namespace generated_tests::dequantize_v1_2 {
 
 void CreateModel_relaxed_5(Model *model) {
   OperandType type8(Type::TENSOR_QUANT8_SYMM_PER_CHANNEL, {2, 3, 4}, SymmPerChannelQuantParams({2.0f, 0.5f},0));
@@ -533,10 +613,13 @@ void CreateModel_relaxed_5(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_relaxed_5(int i) {
+bool is_ignored_relaxed_5(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::dequantize_v1_2
+namespace generated_tests::dequantize_v1_2 {
 
 void CreateModel_float16_5(Model *model) {
   OperandType type37(Type::TENSOR_FLOAT16, {2, 3, 4});
@@ -553,10 +636,13 @@ void CreateModel_float16_5(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_float16_5(int i) {
+bool is_ignored_float16_5(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::dequantize_v1_2
+namespace generated_tests::dequantize_v1_2 {
 
 void CreateModel_dynamic_output_shape_5(Model *model) {
   OperandType type32(Type::TENSOR_FLOAT32, {0, 0, 0});
@@ -573,10 +659,13 @@ void CreateModel_dynamic_output_shape_5(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_5(int i) {
+bool is_ignored_dynamic_output_shape_5(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::dequantize_v1_2
+namespace generated_tests::dequantize_v1_2 {
 
 void CreateModel_dynamic_output_shape_relaxed_5(Model *model) {
   OperandType type32(Type::TENSOR_FLOAT32, {0, 0, 0});
@@ -595,10 +684,13 @@ void CreateModel_dynamic_output_shape_relaxed_5(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_relaxed_5(int i) {
+bool is_ignored_dynamic_output_shape_relaxed_5(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::dequantize_v1_2
+namespace generated_tests::dequantize_v1_2 {
 
 void CreateModel_dynamic_output_shape_float16_5(Model *model) {
   OperandType type33(Type::TENSOR_FLOAT16, {0, 0, 0});
@@ -615,10 +707,13 @@ void CreateModel_dynamic_output_shape_float16_5(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_float16_5(int i) {
+bool is_ignored_dynamic_output_shape_float16_5(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::dequantize_v1_2
+namespace generated_tests::dequantize_v1_2 {
 
 void CreateModel_6(Model *model) {
   OperandType type10(Type::TENSOR_QUANT8_SYMM_PER_CHANNEL, {2, 3, 4}, SymmPerChannelQuantParams({2.0f, 1.0f, 0.5f},1));
@@ -635,10 +730,13 @@ void CreateModel_6(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_6(int i) {
+bool is_ignored_6(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::dequantize_v1_2
+namespace generated_tests::dequantize_v1_2 {
 
 void CreateModel_relaxed_6(Model *model) {
   OperandType type10(Type::TENSOR_QUANT8_SYMM_PER_CHANNEL, {2, 3, 4}, SymmPerChannelQuantParams({2.0f, 1.0f, 0.5f},1));
@@ -657,10 +755,13 @@ void CreateModel_relaxed_6(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_relaxed_6(int i) {
+bool is_ignored_relaxed_6(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::dequantize_v1_2
+namespace generated_tests::dequantize_v1_2 {
 
 void CreateModel_float16_6(Model *model) {
   OperandType type10(Type::TENSOR_QUANT8_SYMM_PER_CHANNEL, {2, 3, 4}, SymmPerChannelQuantParams({2.0f, 1.0f, 0.5f},1));
@@ -677,10 +778,13 @@ void CreateModel_float16_6(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_float16_6(int i) {
+bool is_ignored_float16_6(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::dequantize_v1_2
+namespace generated_tests::dequantize_v1_2 {
 
 void CreateModel_dynamic_output_shape_6(Model *model) {
   OperandType type10(Type::TENSOR_QUANT8_SYMM_PER_CHANNEL, {2, 3, 4}, SymmPerChannelQuantParams({2.0f, 1.0f, 0.5f},1));
@@ -697,10 +801,13 @@ void CreateModel_dynamic_output_shape_6(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_6(int i) {
+bool is_ignored_dynamic_output_shape_6(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::dequantize_v1_2
+namespace generated_tests::dequantize_v1_2 {
 
 void CreateModel_dynamic_output_shape_relaxed_6(Model *model) {
   OperandType type10(Type::TENSOR_QUANT8_SYMM_PER_CHANNEL, {2, 3, 4}, SymmPerChannelQuantParams({2.0f, 1.0f, 0.5f},1));
@@ -719,10 +826,13 @@ void CreateModel_dynamic_output_shape_relaxed_6(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_relaxed_6(int i) {
+bool is_ignored_dynamic_output_shape_relaxed_6(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::dequantize_v1_2
+namespace generated_tests::dequantize_v1_2 {
 
 void CreateModel_dynamic_output_shape_float16_6(Model *model) {
   OperandType type10(Type::TENSOR_QUANT8_SYMM_PER_CHANNEL, {2, 3, 4}, SymmPerChannelQuantParams({2.0f, 1.0f, 0.5f},1));
@@ -739,10 +849,13 @@ void CreateModel_dynamic_output_shape_float16_6(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_float16_6(int i) {
+bool is_ignored_dynamic_output_shape_float16_6(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::dequantize_v1_2
+namespace generated_tests::dequantize_v1_2 {
 
 void CreateModel_7(Model *model) {
   OperandType type11(Type::TENSOR_QUANT8_ASYMM, {1, 2, 2, 1}, 1.0f, 0);
@@ -759,10 +872,13 @@ void CreateModel_7(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_7(int i) {
+bool is_ignored_7(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::dequantize_v1_2
+namespace generated_tests::dequantize_v1_2 {
 
 void CreateModel_dynamic_output_shape_7(Model *model) {
   OperandType type11(Type::TENSOR_QUANT8_ASYMM, {1, 2, 2, 1}, 1.0f, 0);
@@ -779,10 +895,13 @@ void CreateModel_dynamic_output_shape_7(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_7(int i) {
+bool is_ignored_dynamic_output_shape_7(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::dequantize_v1_2
+namespace generated_tests::dequantize_v1_2 {
 
 void CreateModel_zero_sized(Model *model) {
   OperandType type13(Type::TENSOR_QUANT8_ASYMM, {1, 2}, 0.1f, 128);
@@ -864,10 +983,13 @@ void CreateModel_zero_sized(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_zero_sized(int i) {
+bool is_ignored_zero_sized(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::dequantize_v1_2
+namespace generated_tests::dequantize_v1_2 {
 
 void CreateModel_zero_sized_relaxed(Model *model) {
   OperandType type13(Type::TENSOR_QUANT8_ASYMM, {1, 2}, 0.1f, 128);
@@ -951,10 +1073,13 @@ void CreateModel_zero_sized_relaxed(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_zero_sized_relaxed(int i) {
+bool is_ignored_zero_sized_relaxed(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::dequantize_v1_2
+namespace generated_tests::dequantize_v1_2 {
 
 void CreateModel_zero_sized_float16(Model *model) {
   OperandType type13(Type::TENSOR_QUANT8_ASYMM, {1, 2}, 0.1f, 128);
@@ -1036,10 +1161,13 @@ void CreateModel_zero_sized_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_zero_sized_float16(int i) {
+bool is_ignored_zero_sized_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::dequantize_v1_2
+namespace generated_tests::dequantize_v1_2 {
 
 void CreateModel_zero_sized_dynamic_output_shape(Model *model) {
   OperandType type13(Type::TENSOR_QUANT8_ASYMM, {1, 2}, 0.1f, 128);
@@ -1121,10 +1249,13 @@ void CreateModel_zero_sized_dynamic_output_shape(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_zero_sized_dynamic_output_shape(int i) {
+bool is_ignored_zero_sized_dynamic_output_shape(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::dequantize_v1_2
+namespace generated_tests::dequantize_v1_2 {
 
 void CreateModel_zero_sized_dynamic_output_shape_relaxed(Model *model) {
   OperandType type13(Type::TENSOR_QUANT8_ASYMM, {1, 2}, 0.1f, 128);
@@ -1208,10 +1339,13 @@ void CreateModel_zero_sized_dynamic_output_shape_relaxed(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_zero_sized_dynamic_output_shape_relaxed(int i) {
+bool is_ignored_zero_sized_dynamic_output_shape_relaxed(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::dequantize_v1_2
+namespace generated_tests::dequantize_v1_2 {
 
 void CreateModel_zero_sized_dynamic_output_shape_float16(Model *model) {
   OperandType type13(Type::TENSOR_QUANT8_ASYMM, {1, 2}, 0.1f, 128);
@@ -1293,8 +1427,9 @@ void CreateModel_zero_sized_dynamic_output_shape_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_zero_sized_dynamic_output_shape_float16(int i) {
+bool is_ignored_zero_sized_dynamic_output_shape_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
 
+} // namespace generated_tests::dequantize_v1_2

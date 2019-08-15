@@ -1,5 +1,10 @@
+// Generated from fully_connected_quant8_large_weights_as_inputs.mod.py
+// DO NOT EDIT
 // clang-format off
-// Generated file (from: fully_connected_quant8_large_weights_as_inputs.mod.py). Do not edit
+#include "TestGenerated.h"
+
+namespace generated_tests::fully_connected_quant8_large_weights_as_inputs {
+
 void CreateModel(Model *model) {
   OperandType type0(Type::TENSOR_QUANT8_ASYMM, {1, 5}, 0.2f, 0);
   OperandType type1(Type::TENSOR_INT32, {1}, 0.04f, 0);
@@ -22,10 +27,13 @@ void CreateModel(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored(int i) {
+bool is_ignored(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::fully_connected_quant8_large_weights_as_inputs
+namespace generated_tests::fully_connected_quant8_large_weights_as_inputs {
 
 void CreateModel_dynamic_output_shape(Model *model) {
   OperandType type0(Type::TENSOR_QUANT8_ASYMM, {1, 5}, 0.2f, 0);
@@ -49,8 +57,9 @@ void CreateModel_dynamic_output_shape(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape(int i) {
+bool is_ignored_dynamic_output_shape(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
 
+} // namespace generated_tests::fully_connected_quant8_large_weights_as_inputs

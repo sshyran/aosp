@@ -1,7 +1,12 @@
+// Generated from layer_norm_lstm.mod.py
+// DO NOT EDIT
 // clang-format off
-// Generated file (from: layer_norm_lstm.mod.py). Do not edit
-std::vector<MixedTypedExample>& get_examples_NoCifgPeepholeProjectionNoClippingLayerNormLstm() {
-static std::vector<MixedTypedExample> examples_NoCifgPeepholeProjectionNoClippingLayerNormLstm = {
+#include "TestHarness.h"
+
+namespace generated_tests::layer_norm_lstm {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_NoCifgPeepholeProjectionNoClippingLayerNormLstm() {
+static std::vector<::test_helper::MixedTypedExample> examples_NoCifgPeepholeProjectionNoClippingLayerNormLstm = {
 // Begin of an example
 {
 .operands = {
@@ -57,8 +62,11 @@ static std::vector<MixedTypedExample> examples_NoCifgPeepholeProjectionNoClippin
 return examples_NoCifgPeepholeProjectionNoClippingLayerNormLstm;
 };
 
-std::vector<MixedTypedExample>& get_examples_NoCifgPeepholeProjectionNoClippingLayerNormLstm_dynamic_output_shape() {
-static std::vector<MixedTypedExample> examples_NoCifgPeepholeProjectionNoClippingLayerNormLstm_dynamic_output_shape = {
+} // namespace generated_tests::layer_norm_lstm
+namespace generated_tests::layer_norm_lstm {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_NoCifgPeepholeProjectionNoClippingLayerNormLstm_dynamic_output_shape() {
+static std::vector<::test_helper::MixedTypedExample> examples_NoCifgPeepholeProjectionNoClippingLayerNormLstm_dynamic_output_shape = {
 // Begin of an example
 {
 .operands = {
@@ -114,8 +122,11 @@ static std::vector<MixedTypedExample> examples_NoCifgPeepholeProjectionNoClippin
 return examples_NoCifgPeepholeProjectionNoClippingLayerNormLstm_dynamic_output_shape;
 };
 
-std::vector<MixedTypedExample>& get_examples_NoCifgPeepholeProjectionNoClippingLayerNormLstm_2() {
-static std::vector<MixedTypedExample> examples_NoCifgPeepholeProjectionNoClippingLayerNormLstm_2 = {
+} // namespace generated_tests::layer_norm_lstm
+namespace generated_tests::layer_norm_lstm {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_NoCifgPeepholeProjectionNoClippingLayerNormLstm_2() {
+static std::vector<::test_helper::MixedTypedExample> examples_NoCifgPeepholeProjectionNoClippingLayerNormLstm_2 = {
 // Begin of an example
 {
 .operands = {
@@ -171,8 +182,11 @@ static std::vector<MixedTypedExample> examples_NoCifgPeepholeProjectionNoClippin
 return examples_NoCifgPeepholeProjectionNoClippingLayerNormLstm_2;
 };
 
-std::vector<MixedTypedExample>& get_examples_NoCifgPeepholeProjectionNoClippingLayerNormLstm_dynamic_output_shape_2() {
-static std::vector<MixedTypedExample> examples_NoCifgPeepholeProjectionNoClippingLayerNormLstm_dynamic_output_shape_2 = {
+} // namespace generated_tests::layer_norm_lstm
+namespace generated_tests::layer_norm_lstm {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_NoCifgPeepholeProjectionNoClippingLayerNormLstm_dynamic_output_shape_2() {
+static std::vector<::test_helper::MixedTypedExample> examples_NoCifgPeepholeProjectionNoClippingLayerNormLstm_dynamic_output_shape_2 = {
 // Begin of an example
 {
 .operands = {
@@ -228,8 +242,11 @@ static std::vector<MixedTypedExample> examples_NoCifgPeepholeProjectionNoClippin
 return examples_NoCifgPeepholeProjectionNoClippingLayerNormLstm_dynamic_output_shape_2;
 };
 
-std::vector<MixedTypedExample>& get_examples_NoCifgPeepholeProjectionNoClippingLayerNormLstm_3() {
-static std::vector<MixedTypedExample> examples_NoCifgPeepholeProjectionNoClippingLayerNormLstm_3 = {
+} // namespace generated_tests::layer_norm_lstm
+namespace generated_tests::layer_norm_lstm {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_NoCifgPeepholeProjectionNoClippingLayerNormLstm_3() {
+static std::vector<::test_helper::MixedTypedExample> examples_NoCifgPeepholeProjectionNoClippingLayerNormLstm_3 = {
 // Begin of an example
 {
 .operands = {
@@ -285,8 +302,11 @@ static std::vector<MixedTypedExample> examples_NoCifgPeepholeProjectionNoClippin
 return examples_NoCifgPeepholeProjectionNoClippingLayerNormLstm_3;
 };
 
-std::vector<MixedTypedExample>& get_examples_NoCifgPeepholeProjectionNoClippingLayerNormLstm_dynamic_output_shape_3() {
-static std::vector<MixedTypedExample> examples_NoCifgPeepholeProjectionNoClippingLayerNormLstm_dynamic_output_shape_3 = {
+} // namespace generated_tests::layer_norm_lstm
+namespace generated_tests::layer_norm_lstm {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_NoCifgPeepholeProjectionNoClippingLayerNormLstm_dynamic_output_shape_3() {
+static std::vector<::test_helper::MixedTypedExample> examples_NoCifgPeepholeProjectionNoClippingLayerNormLstm_dynamic_output_shape_3 = {
 // Begin of an example
 {
 .operands = {
@@ -342,8 +362,11 @@ static std::vector<MixedTypedExample> examples_NoCifgPeepholeProjectionNoClippin
 return examples_NoCifgPeepholeProjectionNoClippingLayerNormLstm_dynamic_output_shape_3;
 };
 
-std::vector<MixedTypedExample>& get_examples_CifgPeepholeProjectionNoClippingLayerNormLstm() {
-static std::vector<MixedTypedExample> examples_CifgPeepholeProjectionNoClippingLayerNormLstm = {
+} // namespace generated_tests::layer_norm_lstm
+namespace generated_tests::layer_norm_lstm {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_CifgPeepholeProjectionNoClippingLayerNormLstm() {
+static std::vector<::test_helper::MixedTypedExample> examples_CifgPeepholeProjectionNoClippingLayerNormLstm = {
 // Begin of an example
 {
 .operands = {
@@ -399,8 +422,11 @@ static std::vector<MixedTypedExample> examples_CifgPeepholeProjectionNoClippingL
 return examples_CifgPeepholeProjectionNoClippingLayerNormLstm;
 };
 
-std::vector<MixedTypedExample>& get_examples_CifgPeepholeProjectionNoClippingLayerNormLstm_dynamic_output_shape() {
-static std::vector<MixedTypedExample> examples_CifgPeepholeProjectionNoClippingLayerNormLstm_dynamic_output_shape = {
+} // namespace generated_tests::layer_norm_lstm
+namespace generated_tests::layer_norm_lstm {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_CifgPeepholeProjectionNoClippingLayerNormLstm_dynamic_output_shape() {
+static std::vector<::test_helper::MixedTypedExample> examples_CifgPeepholeProjectionNoClippingLayerNormLstm_dynamic_output_shape = {
 // Begin of an example
 {
 .operands = {
@@ -456,8 +482,11 @@ static std::vector<MixedTypedExample> examples_CifgPeepholeProjectionNoClippingL
 return examples_CifgPeepholeProjectionNoClippingLayerNormLstm_dynamic_output_shape;
 };
 
-std::vector<MixedTypedExample>& get_examples_CifgPeepholeProjectionNoClippingLayerNormLstm_2() {
-static std::vector<MixedTypedExample> examples_CifgPeepholeProjectionNoClippingLayerNormLstm_2 = {
+} // namespace generated_tests::layer_norm_lstm
+namespace generated_tests::layer_norm_lstm {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_CifgPeepholeProjectionNoClippingLayerNormLstm_2() {
+static std::vector<::test_helper::MixedTypedExample> examples_CifgPeepholeProjectionNoClippingLayerNormLstm_2 = {
 // Begin of an example
 {
 .operands = {
@@ -513,8 +542,11 @@ static std::vector<MixedTypedExample> examples_CifgPeepholeProjectionNoClippingL
 return examples_CifgPeepholeProjectionNoClippingLayerNormLstm_2;
 };
 
-std::vector<MixedTypedExample>& get_examples_CifgPeepholeProjectionNoClippingLayerNormLstm_dynamic_output_shape_2() {
-static std::vector<MixedTypedExample> examples_CifgPeepholeProjectionNoClippingLayerNormLstm_dynamic_output_shape_2 = {
+} // namespace generated_tests::layer_norm_lstm
+namespace generated_tests::layer_norm_lstm {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_CifgPeepholeProjectionNoClippingLayerNormLstm_dynamic_output_shape_2() {
+static std::vector<::test_helper::MixedTypedExample> examples_CifgPeepholeProjectionNoClippingLayerNormLstm_dynamic_output_shape_2 = {
 // Begin of an example
 {
 .operands = {
@@ -570,8 +602,11 @@ static std::vector<MixedTypedExample> examples_CifgPeepholeProjectionNoClippingL
 return examples_CifgPeepholeProjectionNoClippingLayerNormLstm_dynamic_output_shape_2;
 };
 
-std::vector<MixedTypedExample>& get_examples_CifgPeepholeProjectionNoClippingLayerNormLstm_3() {
-static std::vector<MixedTypedExample> examples_CifgPeepholeProjectionNoClippingLayerNormLstm_3 = {
+} // namespace generated_tests::layer_norm_lstm
+namespace generated_tests::layer_norm_lstm {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_CifgPeepholeProjectionNoClippingLayerNormLstm_3() {
+static std::vector<::test_helper::MixedTypedExample> examples_CifgPeepholeProjectionNoClippingLayerNormLstm_3 = {
 // Begin of an example
 {
 .operands = {
@@ -627,8 +662,11 @@ static std::vector<MixedTypedExample> examples_CifgPeepholeProjectionNoClippingL
 return examples_CifgPeepholeProjectionNoClippingLayerNormLstm_3;
 };
 
-std::vector<MixedTypedExample>& get_examples_CifgPeepholeProjectionNoClippingLayerNormLstm_dynamic_output_shape_3() {
-static std::vector<MixedTypedExample> examples_CifgPeepholeProjectionNoClippingLayerNormLstm_dynamic_output_shape_3 = {
+} // namespace generated_tests::layer_norm_lstm
+namespace generated_tests::layer_norm_lstm {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_CifgPeepholeProjectionNoClippingLayerNormLstm_dynamic_output_shape_3() {
+static std::vector<::test_helper::MixedTypedExample> examples_CifgPeepholeProjectionNoClippingLayerNormLstm_dynamic_output_shape_3 = {
 // Begin of an example
 {
 .operands = {
@@ -684,3 +722,4 @@ static std::vector<MixedTypedExample> examples_CifgPeepholeProjectionNoClippingL
 return examples_CifgPeepholeProjectionNoClippingLayerNormLstm_dynamic_output_shape_3;
 };
 
+} // namespace generated_tests::layer_norm_lstm
