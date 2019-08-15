@@ -1,24 +1,34 @@
+// Generated from conv_float_large.mod.py
+// DO NOT EDIT
 // clang-format off
-// Generated file (from: conv_float_large.mod.py). Do not edit
-#include "../../TestGenerated.h"
+#include "TestGenerated.h"
 
-namespace conv_float_large {
-// Generated conv_float_large test
-#include "generated/examples/conv_float_large.example.cpp"
-// Generated model constructor
-#include "generated/models/conv_float_large.model.cpp"
-} // namespace conv_float_large
+namespace generated_tests::conv_float_large {
+
+void CreateModel(Model *model);
+bool is_ignored(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples();
 
 TEST_F(GeneratedTests, conv_float_large) {
-    execute(conv_float_large::CreateModel,
-            conv_float_large::is_ignored,
-            conv_float_large::get_examples());
+    execute(CreateModel,
+            is_ignored,
+            get_examples());
 }
-TEST_AVAILABLE_SINCE(V1_0, conv_float_large, conv_float_large::CreateModel)
+
+} // namespace generated_tests::conv_float_large
+TEST_AVAILABLE_SINCE(V1_0, conv_float_large, generated_tests::conv_float_large::CreateModel)
+
+namespace generated_tests::conv_float_large {
+
+void CreateModel_dynamic_output_shape(Model *model);
+bool is_ignored_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape();
 
 TEST_F(DynamicOutputShapeTest, conv_float_large_dynamic_output_shape) {
-    execute(conv_float_large::CreateModel_dynamic_output_shape,
-            conv_float_large::is_ignored_dynamic_output_shape,
-            conv_float_large::get_examples_dynamic_output_shape());
+    execute(CreateModel_dynamic_output_shape,
+            is_ignored_dynamic_output_shape,
+            get_examples_dynamic_output_shape());
 }
+
+} // namespace generated_tests::conv_float_large
 

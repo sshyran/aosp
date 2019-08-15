@@ -1,24 +1,34 @@
+// Generated from rnn.mod.py
+// DO NOT EDIT
 // clang-format off
-// Generated file (from: rnn.mod.py). Do not edit
-#include "../../TestGenerated.h"
+#include "TestGenerated.h"
 
-namespace rnn {
-// Generated rnn test
-#include "generated/examples/rnn.example.cpp"
-// Generated model constructor
-#include "generated/models/rnn.model.cpp"
-} // namespace rnn
+namespace generated_tests::rnn {
+
+void CreateModel(Model *model);
+bool is_ignored(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples();
 
 TEST_F(GeneratedTests, rnn) {
-    execute(rnn::CreateModel,
-            rnn::is_ignored,
-            rnn::get_examples());
+    execute(CreateModel,
+            is_ignored,
+            get_examples());
 }
-TEST_AVAILABLE_SINCE(V1_0, rnn, rnn::CreateModel)
+
+} // namespace generated_tests::rnn
+TEST_AVAILABLE_SINCE(V1_0, rnn, generated_tests::rnn::CreateModel)
+
+namespace generated_tests::rnn {
+
+void CreateModel_dynamic_output_shape(Model *model);
+bool is_ignored_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape();
 
 TEST_F(DynamicOutputShapeTest, rnn_dynamic_output_shape) {
-    execute(rnn::CreateModel_dynamic_output_shape,
-            rnn::is_ignored_dynamic_output_shape,
-            rnn::get_examples_dynamic_output_shape());
+    execute(CreateModel_dynamic_output_shape,
+            is_ignored_dynamic_output_shape,
+            get_examples_dynamic_output_shape());
 }
+
+} // namespace generated_tests::rnn
 

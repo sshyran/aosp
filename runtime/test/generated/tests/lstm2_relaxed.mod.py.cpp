@@ -1,23 +1,33 @@
+// Generated from lstm2_relaxed.mod.py
+// DO NOT EDIT
 // clang-format off
-// Generated file (from: lstm2_relaxed.mod.py). Do not edit
-#include "../../TestGenerated.h"
+#include "TestGenerated.h"
 
-namespace lstm2_relaxed {
-// Generated lstm2_relaxed test
-#include "generated/examples/lstm2_relaxed.example.cpp"
-// Generated model constructor
-#include "generated/models/lstm2_relaxed.model.cpp"
-} // namespace lstm2_relaxed
+namespace generated_tests::lstm2_relaxed {
+
+void CreateModel(Model *model);
+bool is_ignored(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples();
 
 TEST_F(GeneratedTests, lstm2_relaxed) {
-    execute(lstm2_relaxed::CreateModel,
-            lstm2_relaxed::is_ignored,
-            lstm2_relaxed::get_examples());
+    execute(CreateModel,
+            is_ignored,
+            get_examples());
 }
 
+} // namespace generated_tests::lstm2_relaxed
+
+namespace generated_tests::lstm2_relaxed {
+
+void CreateModel_dynamic_output_shape(Model *model);
+bool is_ignored_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape();
+
 TEST_F(DynamicOutputShapeTest, lstm2_relaxed_dynamic_output_shape) {
-    execute(lstm2_relaxed::CreateModel_dynamic_output_shape,
-            lstm2_relaxed::is_ignored_dynamic_output_shape,
-            lstm2_relaxed::get_examples_dynamic_output_shape());
+    execute(CreateModel_dynamic_output_shape,
+            is_ignored_dynamic_output_shape,
+            get_examples_dynamic_output_shape());
 }
+
+} // namespace generated_tests::lstm2_relaxed
 

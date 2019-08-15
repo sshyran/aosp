@@ -1,5 +1,10 @@
+// Generated from bbox_graph.mod.py
+// DO NOT EDIT
 // clang-format off
-// Generated file (from: bbox_graph.mod.py). Do not edit
+#include "TestGenerated.h"
+
+namespace generated_tests::bbox_graph {
+
 void CreateModel_zero_sized(Model *model) {
   OperandType type0(Type::BOOL, {});
   OperandType type1(Type::TENSOR_FLOAT32, {1, 1, 1, 1});
@@ -124,10 +129,13 @@ void CreateModel_zero_sized(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_zero_sized(int i) {
+bool is_ignored_zero_sized(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::bbox_graph
+namespace generated_tests::bbox_graph {
 
 void CreateModel_zero_sized_relaxed(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -255,10 +263,13 @@ void CreateModel_zero_sized_relaxed(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_zero_sized_relaxed(int i) {
+bool is_ignored_zero_sized_relaxed(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::bbox_graph
+namespace generated_tests::bbox_graph {
 
 void CreateModel_zero_sized_float16(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -384,10 +395,13 @@ void CreateModel_zero_sized_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_zero_sized_float16(int i) {
+bool is_ignored_zero_sized_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::bbox_graph
+namespace generated_tests::bbox_graph {
 
 void CreateModel_zero_sized_quant8(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -514,10 +528,13 @@ void CreateModel_zero_sized_quant8(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_zero_sized_quant8(int i) {
+bool is_ignored_zero_sized_quant8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::bbox_graph
+namespace generated_tests::bbox_graph {
 
 void CreateModel_zero_sized_dynamic_output_shape(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -644,10 +661,13 @@ void CreateModel_zero_sized_dynamic_output_shape(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_zero_sized_dynamic_output_shape(int i) {
+bool is_ignored_zero_sized_dynamic_output_shape(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::bbox_graph
+namespace generated_tests::bbox_graph {
 
 void CreateModel_zero_sized_dynamic_output_shape_relaxed(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -776,10 +796,13 @@ void CreateModel_zero_sized_dynamic_output_shape_relaxed(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_zero_sized_dynamic_output_shape_relaxed(int i) {
+bool is_ignored_zero_sized_dynamic_output_shape_relaxed(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::bbox_graph
+namespace generated_tests::bbox_graph {
 
 void CreateModel_zero_sized_dynamic_output_shape_float16(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -906,10 +929,13 @@ void CreateModel_zero_sized_dynamic_output_shape_float16(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_zero_sized_dynamic_output_shape_float16(int i) {
+bool is_ignored_zero_sized_dynamic_output_shape_float16(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::bbox_graph
+namespace generated_tests::bbox_graph {
 
 void CreateModel_zero_sized_dynamic_output_shape_quant8(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -1037,8 +1063,9 @@ void CreateModel_zero_sized_dynamic_output_shape_quant8(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_zero_sized_dynamic_output_shape_quant8(int i) {
+bool is_ignored_zero_sized_dynamic_output_shape_quant8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
 
+} // namespace generated_tests::bbox_graph
