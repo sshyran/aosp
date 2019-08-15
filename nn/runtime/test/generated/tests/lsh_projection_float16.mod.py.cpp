@@ -1,37 +1,63 @@
+// Generated from lsh_projection_float16.mod.py
+// DO NOT EDIT
 // clang-format off
-// Generated file (from: lsh_projection_float16.mod.py). Do not edit
-#include "../../TestGenerated.h"
+#include "TestGenerated.h"
 
-namespace lsh_projection_float16 {
-// Generated lsh_projection_float16 test
-#include "generated/examples/lsh_projection_float16.example.cpp"
-// Generated model constructor
-#include "generated/models/lsh_projection_float16.model.cpp"
-} // namespace lsh_projection_float16
+namespace generated_tests::lsh_projection_float16 {
+
+void CreateModel(Model *model);
+bool is_ignored(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples();
 
 TEST_F(GeneratedTests, lsh_projection_float16) {
-    execute(lsh_projection_float16::CreateModel,
-            lsh_projection_float16::is_ignored,
-            lsh_projection_float16::get_examples());
+    execute(CreateModel,
+            is_ignored,
+            get_examples());
 }
-TEST_AVAILABLE_SINCE(V1_2, lsh_projection_float16, lsh_projection_float16::CreateModel)
+
+} // namespace generated_tests::lsh_projection_float16
+TEST_AVAILABLE_SINCE(V1_2, lsh_projection_float16, generated_tests::lsh_projection_float16::CreateModel)
+
+namespace generated_tests::lsh_projection_float16 {
+
+void CreateModel_float16(Model *model);
+bool is_ignored_float16(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_float16();
 
 TEST_F(GeneratedTests, lsh_projection_float16_float16) {
-    execute(lsh_projection_float16::CreateModel_float16,
-            lsh_projection_float16::is_ignored_float16,
-            lsh_projection_float16::get_examples_float16());
+    execute(CreateModel_float16,
+            is_ignored_float16,
+            get_examples_float16());
 }
-TEST_AVAILABLE_SINCE(V1_2, lsh_projection_float16_float16, lsh_projection_float16::CreateModel_float16)
+
+} // namespace generated_tests::lsh_projection_float16
+TEST_AVAILABLE_SINCE(V1_2, lsh_projection_float16_float16, generated_tests::lsh_projection_float16::CreateModel_float16)
+
+namespace generated_tests::lsh_projection_float16 {
+
+void CreateModel_dynamic_output_shape(Model *model);
+bool is_ignored_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape();
 
 TEST_F(DynamicOutputShapeTest, lsh_projection_float16_dynamic_output_shape) {
-    execute(lsh_projection_float16::CreateModel_dynamic_output_shape,
-            lsh_projection_float16::is_ignored_dynamic_output_shape,
-            lsh_projection_float16::get_examples_dynamic_output_shape());
+    execute(CreateModel_dynamic_output_shape,
+            is_ignored_dynamic_output_shape,
+            get_examples_dynamic_output_shape());
 }
 
+} // namespace generated_tests::lsh_projection_float16
+
+namespace generated_tests::lsh_projection_float16 {
+
+void CreateModel_dynamic_output_shape_float16(Model *model);
+bool is_ignored_dynamic_output_shape_float16(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_float16();
+
 TEST_F(DynamicOutputShapeTest, lsh_projection_float16_dynamic_output_shape_float16) {
-    execute(lsh_projection_float16::CreateModel_dynamic_output_shape_float16,
-            lsh_projection_float16::is_ignored_dynamic_output_shape_float16,
-            lsh_projection_float16::get_examples_dynamic_output_shape_float16());
+    execute(CreateModel_dynamic_output_shape_float16,
+            is_ignored_dynamic_output_shape_float16,
+            get_examples_dynamic_output_shape_float16());
 }
+
+} // namespace generated_tests::lsh_projection_float16
 

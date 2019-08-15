@@ -1,24 +1,34 @@
+// Generated from random_multinomial.mod.py
+// DO NOT EDIT
 // clang-format off
-// Generated file (from: random_multinomial.mod.py). Do not edit
-#include "../../TestGenerated.h"
+#include "TestGenerated.h"
 
-namespace random_multinomial {
-// Generated random_multinomial test
-#include "generated/examples/random_multinomial.example.cpp"
-// Generated model constructor
-#include "generated/models/random_multinomial.model.cpp"
-} // namespace random_multinomial
+namespace generated_tests::random_multinomial {
+
+void CreateModel(Model *model);
+bool is_ignored(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples();
 
 TEST_F(GeneratedTests, random_multinomial) {
-    execute(random_multinomial::CreateModel,
-            random_multinomial::is_ignored,
-            random_multinomial::get_examples());
+    execute(CreateModel,
+            is_ignored,
+            get_examples());
 }
-TEST_AVAILABLE_SINCE(V1_2, random_multinomial, random_multinomial::CreateModel)
+
+} // namespace generated_tests::random_multinomial
+TEST_AVAILABLE_SINCE(V1_2, random_multinomial, generated_tests::random_multinomial::CreateModel)
+
+namespace generated_tests::random_multinomial {
+
+void CreateModel_dynamic_output_shape(Model *model);
+bool is_ignored_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape();
 
 TEST_F(DynamicOutputShapeTest, random_multinomial_dynamic_output_shape) {
-    execute(random_multinomial::CreateModel_dynamic_output_shape,
-            random_multinomial::is_ignored_dynamic_output_shape,
-            random_multinomial::get_examples_dynamic_output_shape());
+    execute(CreateModel_dynamic_output_shape,
+            is_ignored_dynamic_output_shape,
+            get_examples_dynamic_output_shape());
 }
+
+} // namespace generated_tests::random_multinomial
 

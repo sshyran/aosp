@@ -1,5 +1,10 @@
+// Generated from transpose_conv2d_large.mod.py
+// DO NOT EDIT
 // clang-format off
-// Generated file (from: transpose_conv2d_large.mod.py). Do not edit
+#include "TestGenerated.h"
+
+namespace generated_tests::transpose_conv2d_large {
+
 void CreateModel_quant8(Model *model) {
   OperandType type0(Type::BOOL, {});
   OperandType type10(Type::TENSOR_QUANT8_ASYMM, {25, 32, 32, 16}, 0.5f, 0);
@@ -44,10 +49,13 @@ void CreateModel_quant8(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_quant8(int i) {
+bool is_ignored_quant8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::transpose_conv2d_large
+namespace generated_tests::transpose_conv2d_large {
 
 void CreateModel_channelQuant8(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -93,10 +101,13 @@ void CreateModel_channelQuant8(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_channelQuant8(int i) {
+bool is_ignored_channelQuant8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::transpose_conv2d_large
+namespace generated_tests::transpose_conv2d_large {
 
 void CreateModel_dynamic_output_shape_quant8(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -142,10 +153,13 @@ void CreateModel_dynamic_output_shape_quant8(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_quant8(int i) {
+bool is_ignored_dynamic_output_shape_quant8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
+
+} // namespace generated_tests::transpose_conv2d_large
+namespace generated_tests::transpose_conv2d_large {
 
 void CreateModel_dynamic_output_shape_channelQuant8(Model *model) {
   OperandType type0(Type::BOOL, {});
@@ -191,8 +205,9 @@ void CreateModel_dynamic_output_shape_channelQuant8(Model *model) {
   assert(model->isValid());
 }
 
-inline bool is_ignored_dynamic_output_shape_channelQuant8(int i) {
+bool is_ignored_dynamic_output_shape_channelQuant8(int i) {
   static std::set<int> ignore = {};
   return ignore.find(i) != ignore.end();
 }
 
+} // namespace generated_tests::transpose_conv2d_large

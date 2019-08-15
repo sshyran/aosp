@@ -1,24 +1,34 @@
+// Generated from pad.mod.py
+// DO NOT EDIT
 // clang-format off
-// Generated file (from: pad.mod.py). Do not edit
-#include "../../TestGenerated.h"
+#include "TestGenerated.h"
 
-namespace pad {
-// Generated pad test
-#include "generated/examples/pad.example.cpp"
-// Generated model constructor
-#include "generated/models/pad.model.cpp"
-} // namespace pad
+namespace generated_tests::pad {
+
+void CreateModel(Model *model);
+bool is_ignored(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples();
 
 TEST_F(GeneratedTests, pad) {
-    execute(pad::CreateModel,
-            pad::is_ignored,
-            pad::get_examples());
+    execute(CreateModel,
+            is_ignored,
+            get_examples());
 }
-TEST_AVAILABLE_SINCE(V1_1, pad, pad::CreateModel)
+
+} // namespace generated_tests::pad
+TEST_AVAILABLE_SINCE(V1_1, pad, generated_tests::pad::CreateModel)
+
+namespace generated_tests::pad {
+
+void CreateModel_dynamic_output_shape(Model *model);
+bool is_ignored_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape();
 
 TEST_F(DynamicOutputShapeTest, pad_dynamic_output_shape) {
-    execute(pad::CreateModel_dynamic_output_shape,
-            pad::is_ignored_dynamic_output_shape,
-            pad::get_examples_dynamic_output_shape());
+    execute(CreateModel_dynamic_output_shape,
+            is_ignored_dynamic_output_shape,
+            get_examples_dynamic_output_shape());
 }
+
+} // namespace generated_tests::pad
 
