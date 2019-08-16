@@ -18,11 +18,30 @@
 
 #include "ExecutionPlan.h"
 
+#include <cutils/native_handle.h>
+#include <fcntl.h>
+#include <openssl/sha.h>
+#include <sys/stat.h>
+#include <sys/types.h>
+
+#include <functional>
+#include <map>
+#include <memory>
+#include <mutex>
+#include <queue>
+#include <set>
+#include <string>
+#include <type_traits>
+#include <unordered_set>
+#include <utility>
+#include <vector>
+
 #include "BurstBuilder.h"
 #include "Callbacks.h"
 #include "CompilationBuilder.h"
 #include "ExecutionBuilder.h"
 #include "ExecutionBurstController.h"
+#include "GraphDump.h"
 #include "Manager.h"
 #include "MetaModel.h"
 #include "ModelBuilder.h"
@@ -31,19 +50,6 @@
 #include "Tracing.h"
 #include "TypeManager.h"
 #include "Utils.h"
-
-#include <cutils/native_handle.h>
-#include <fcntl.h>
-#include <openssl/sha.h>
-#include <sys/stat.h>
-#include <sys/types.h>
-#include <functional>
-#include <map>
-#include <mutex>
-#include <queue>
-#include <unordered_set>
-#include <utility>
-#include <vector>
 
 namespace android {
 namespace nn {
@@ -118,8 +124,7 @@ bool getCacheHandles(const std::string& cacheDir, const uint8_t* token,
 
 // Tries to compile directly from cache, returns false on fail.
 bool compileFromCache(const std::shared_ptr<Device>& device, const std::string& cacheDir,
-                      const uint8_t* token,
-                      std::shared_ptr<VersionedIPreparedModel>* preparedModel) {
+                      const uint8_t* token, std::shared_ptr<PreparedModel>* preparedModel) {
     CHECK(token != nullptr && device != nullptr);
     VLOG(COMPILATION) << "compileFromCache";
     *preparedModel = nullptr;
@@ -133,8 +138,7 @@ bool compileFromCache(const std::shared_ptr<Device>& device, const std::string& 
 
 int compileModelAndCache(const std::shared_ptr<Device>& device, const ModelBuilder* model,
                          int32_t executionPreference, const std::string& cacheDir,
-                         const uint8_t* token,
-                         std::shared_ptr<VersionedIPreparedModel>* preparedModel) {
+                         const uint8_t* token, std::shared_ptr<PreparedModel>* preparedModel) {
     CHECK(device != nullptr);
     *preparedModel = nullptr;
     uint8_t dummyToken[ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN] = {0};
@@ -157,7 +161,7 @@ int compileModelAndCache(const std::shared_ptr<Device>& device, const ModelBuild
 // device name, device version string, and the execution preference in this function.
 int compile(std::shared_ptr<Device> device, const ModelBuilder* model, int32_t executionPreference,
             const std::string& cacheDir, TokenHasher* token,
-            std::shared_ptr<VersionedIPreparedModel>* preparedModel) {
+            std::shared_ptr<PreparedModel>* preparedModel) {
     CHECK(device != nullptr);
     const uint8_t* tokenData = nullptr;
     if (device->isCachingSupported() && token->ok() && token->updateFromString(device->getName()) &&
