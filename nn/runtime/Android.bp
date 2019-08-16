@@ -53,21 +53,21 @@ cc_library {
         android: {
             version_script: "libneuralnetworks.map.txt",
             shared_libs: [
-                "libbase",
-                "libbinder",
-                "libcutils",
-                "libhidlbase",
-                "libhidltransport",
-                "libhidlmemory",
-                "liblog",
-                "libnativewindow",
-                "libui",
-                "libutils",
                 "android.hardware.neuralnetworks@1.0",
                 "android.hardware.neuralnetworks@1.1",
                 "android.hardware.neuralnetworks@1.2",
                 "android.hidl.allocator@1.0",
                 "android.hidl.memory@1.0",
+                "libbase",
+                "libbinder",
+                "libcutils",
+                "libhidlbase",
+                "libhidlmemory",
+                "libhidltransport",
+                "liblog",
+                "libnativewindow",
+                "libui",
+                "libutils",
             ],
             static_libs: [
                 "libcrypto_static",
@@ -89,7 +89,7 @@ cc_library {
 
     shared_libs: [
         "libfmq",
-        "libtextclassifier_hash"
+        "libtextclassifier_hash",
     ],
 
     header_libs: [
