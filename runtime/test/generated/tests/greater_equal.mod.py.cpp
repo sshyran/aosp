@@ -360,7 +360,6 @@ TEST_F(GeneratedTests, greater_equal_boolean) {
             is_ignored_7,
             get_examples_boolean());
 }
-TEST_AVAILABLE_SINCE(V1_2, greater_equal_boolean, greater_equal::CreateModel_7)
 
 } // namespace generated_tests::greater_equal
 TEST_AVAILABLE_SINCE(V1_2, greater_equal_boolean, generated_tests::greater_equal::CreateModel_7)
