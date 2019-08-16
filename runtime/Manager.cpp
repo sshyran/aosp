@@ -17,11 +17,6 @@
 #define LOG_TAG "Manager"
 
 #include "Manager.h"
-#include "Callbacks.h"
-#include "HalInterfaces.h"
-#include "MetaModel.h"
-#include "Tracing.h"
-#include "Utils.h"
 
 #include <android/hidl/manager/1.2/IServiceManager.h>
 #include <build/version.h>
@@ -30,6 +25,21 @@
 
 #include <algorithm>
 #include <functional>
+#include <memory>
+#include <string>
+#include <utility>
+#include <vector>
+
+#include "Callbacks.h"
+#include "CpuExecutor.h"
+#include "ExecutionBurstController.h"
+#include "HalInterfaces.h"
+#include "Memory.h"
+#include "MetaModel.h"
+#include "ModelArgumentInfo.h"
+#include "Tracing.h"
+#include "Utils.h"
+#include "VersionedInterfaces.h"
 
 namespace android {
 namespace nn {
@@ -37,6 +47,8 @@ namespace nn {
 using namespace hal;
 
 using HidlToken = hidl_array<uint8_t, ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN>;
+
+const Timing kNoTiming = {.timeOnDevice = UINT64_MAX, .timeInDriver = UINT64_MAX};
 
 bool Device::isCachingSupported() const {
     auto pair = getNumberOfCacheFilesNeeded();
@@ -46,8 +58,6 @@ bool Device::isCachingSupported() const {
 
 // A Device with actual underlying driver
 class DriverDevice : public Device {
-    DISALLOW_IMPLICIT_CONSTRUCTORS(DriverDevice);
-
    public:
     DriverDevice(std::string name, const sp<V1_0::IDevice>& device);
 
@@ -56,12 +66,11 @@ class DriverDevice : public Device {
 
     const char* getName() const override { return mName.c_str(); }
     const char* getVersionString() const override { return mVersionString.c_str(); }
-    VersionedIDevice* getInterface() override { return mInterface.get(); }
-    int64_t getFeatureLevel() override { return mInterface->getFeatureLevel(); }
+    int64_t getFeatureLevel() const override { return mInterface->getFeatureLevel(); }
     int32_t getType() const override { return mInterface->getType(); }
     hidl_vec<Extension> getSupportedExtensions() const override;
     void getSupportedOperations(const MetaModel& metaModel,
-                                hidl_vec<bool>* supportedOperations) override;
+                                hidl_vec<bool>* supportedOperations) const override;
     PerformanceInfo getPerformance(OperandType type) const override;
     PerformanceInfo getRelaxedFloat32toFloat16PerformanceScalar() const override {
         return mCapabilities.relaxedFloat32toFloat16PerformanceScalar;
@@ -76,10 +85,10 @@ class DriverDevice : public Device {
     int prepareModel(const Model& hidlModel, ExecutionPreference executionPreference,
                      const hidl_vec<hidl_handle>& modelCache,
                      const hidl_vec<hidl_handle>& dataCache, const HidlToken& token,
-                     std::shared_ptr<VersionedIPreparedModel>* preparedModel) override;
+                     std::shared_ptr<PreparedModel>* preparedModel) const override;
     int prepareModelFromCache(const hidl_vec<hidl_handle>& modelCache,
                               const hidl_vec<hidl_handle>& dataCache, const HidlToken& token,
-                              std::shared_ptr<VersionedIPreparedModel>* preparedModel) override;
+                              std::shared_ptr<PreparedModel>* preparedModel) const override;
 
    private:
     std::string mName;
@@ -95,6 +104,26 @@ class DriverDevice : public Device {
     // 1 - some operations reported by IDevice::getSupportedOperations() supported
     uint32_t mSupported = 0;
 #endif  // NN_DEBUGGABLE
+};
+
+// A PreparedModel with underlying IPreparedModel instance return by actual driver.
+class DriverPreparedModel : public PreparedModel {
+   public:
+    DriverPreparedModel(const std::shared_ptr<VersionedIPreparedModel>& preparedModel)
+        : mPreparedModel(preparedModel) {}
+
+    int execute(const std::shared_ptr<ExecutionBurstController>& burstController,
+                MeasureTiming measure, std::vector<ModelArgumentInfo>* inputs,
+                std::vector<ModelArgumentInfo>* outputs, MemoryTracker* memories,
+                sp<ExecutionCallback>* synchronizationCallback) const override;
+
+    std::shared_ptr<ExecutionBurstController> configureExecutionBurst(
+            bool blocking) const override {
+        return mPreparedModel->configureExecutionBurst(blocking);
+    }
+
+   private:
+    const std::shared_ptr<VersionedIPreparedModel> mPreparedModel;
 };
 
 DriverDevice::DriverDevice(std::string name, const sp<V1_0::IDevice>& device)
@@ -160,7 +189,7 @@ hidl_vec<Extension> DriverDevice::getSupportedExtensions() const {
 }
 
 void DriverDevice::getSupportedOperations(const MetaModel& metaModel,
-                                          hidl_vec<bool>* outSupportedOperations) {
+                                          hidl_vec<bool>* outSupportedOperations) const {
     // Query the driver for what it can do.
     ErrorStatus status = ErrorStatus::GENERAL_FAILURE;
     hidl_vec<bool> supportedOperations;
@@ -231,7 +260,7 @@ PerformanceInfo DriverDevice::getPerformance(OperandType type) const {
 static int prepareModelCheck(ErrorStatus status,
                              const std::shared_ptr<VersionedIPreparedModel>& preparedModel,
                              const char* prepareName, const char* serviceName,
-                             std::shared_ptr<VersionedIPreparedModel>* preparedModelOut) {
+                             std::shared_ptr<PreparedModel>* preparedModelOut) {
     CHECK(preparedModelOut != nullptr) << "prepareModelCheck -- preparedModelOut must be non-null";
     *preparedModelOut = nullptr;
 
@@ -245,14 +274,14 @@ static int prepareModelCheck(ErrorStatus status,
         return ANEURALNETWORKS_OP_FAILED;
     }
 
-    *preparedModelOut = preparedModel;
+    *preparedModelOut = std::make_shared<DriverPreparedModel>(preparedModel);
     return ANEURALNETWORKS_NO_ERROR;
 }
 
 int DriverDevice::prepareModel(const Model& hidlModel, ExecutionPreference executionPreference,
                                const hidl_vec<hidl_handle>& modelCache,
                                const hidl_vec<hidl_handle>& dataCache, const HidlToken& token,
-                               std::shared_ptr<VersionedIPreparedModel>* preparedModel) {
+                               std::shared_ptr<PreparedModel>* preparedModel) const {
     // Note that some work within VersionedIDevice will be subtracted from the IPC layer
     NNTRACE_FULL(NNTRACE_LAYER_IPC, NNTRACE_PHASE_COMPILATION, "prepareModel");
 
@@ -265,7 +294,7 @@ int DriverDevice::prepareModel(const Model& hidlModel, ExecutionPreference execu
 int DriverDevice::prepareModelFromCache(const hidl_vec<hidl_handle>& modelCache,
                                         const hidl_vec<hidl_handle>& dataCache,
                                         const HidlToken& token,
-                                        std::shared_ptr<VersionedIPreparedModel>* preparedModel) {
+                                        std::shared_ptr<PreparedModel>* preparedModel) const {
     // Note that some work within VersionedIDevice will be subtracted from the IPC layer
     NNTRACE_FULL(NNTRACE_LAYER_IPC, NNTRACE_PHASE_COMPILATION, "prepareModelFromCache");
 
@@ -276,11 +305,207 @@ int DriverDevice::prepareModelFromCache(const hidl_vec<hidl_handle>& modelCache,
                              preparedModel);
 }
 
+static void setRequestArgumentArray(const std::vector<ModelArgumentInfo>& argumentInfos,
+                                    hidl_vec<RequestArgument>* ioInfos) {
+    size_t count = argumentInfos.size();
+    ioInfos->resize(count);
+    for (size_t i = 0; i < count; i++) {
+        const auto& info = argumentInfos[i];
+        (*ioInfos)[i] = {
+                .hasNoValue = info.state == ModelArgumentInfo::HAS_NO_VALUE,
+                .location = info.locationAndLength,
+                .dimensions = info.dimensions,
+        };
+    }
+}
+
+// Figures out how to place each of the input or outputs in a buffer. This just does the layout,
+// it does not copy data.  Aligns each input a bit.
+static int allocatePointerArgumentsToPool(MemoryTracker* memories,
+                                          std::vector<ModelArgumentInfo>* args, Memory* memory) {
+    CHECK(memories != nullptr);
+    CHECK(args != nullptr);
+    CHECK(memory != nullptr);
+    uint32_t nextPoolIndex = memories->size();
+    int64_t total = 0;
+    for (auto& info : *args) {
+        if (info.state == ModelArgumentInfo::POINTER) {
+            DataLocation& loc = info.locationAndLength;
+            // TODO Good enough alignment?
+            total += alignBytesNeeded(static_cast<uint32_t>(total), loc.length);
+            loc.poolIndex = nextPoolIndex;
+            loc.offset = static_cast<uint32_t>(total);
+            total += loc.length;
+        }
+    };
+    if (total > 0xFFFFFFFF) {
+        LOG(ERROR) << "allocatePointerArgumentsToPool: ANeuralNetworksExecution: "
+                      "Size of all inputs or outputs exceeds 2^32.";
+        return ANEURALNETWORKS_BAD_DATA;
+    }
+    if (total > 0) {
+        memory->create(total);  // TODO check error
+        memories->add(memory);
+    }
+    return ANEURALNETWORKS_NO_ERROR;
+}
+
+// Start compute on an actual HIDL driver.
+//
+// Two separate memory pools will be allocated for inputs and outputs specified by pointers. The
+// loc field in each ModelArgumentInfo structure will be updated accordingly. The input pointer
+// data will be copied to the input pool prior to execution, and the output pointer data will be
+// copied out from the output pool after the execution.
+//
+// The HIDL invocation will choose between sync/async execution according to
+// DeviceManager::mSyncExecHal.
+int DriverPreparedModel::execute(const std::shared_ptr<ExecutionBurstController>& burstController,
+                                 MeasureTiming measure, std::vector<ModelArgumentInfo>* inputs,
+                                 std::vector<ModelArgumentInfo>* outputs, MemoryTracker* memories,
+                                 sp<ExecutionCallback>* synchronizationCallback) const {
+    CHECK(inputs != nullptr);
+    CHECK(outputs != nullptr);
+    CHECK(memories != nullptr);
+    CHECK(synchronizationCallback != nullptr);
+    *synchronizationCallback = nullptr;
+
+    NNTRACE_RT(NNTRACE_PHASE_INPUTS_AND_OUTPUTS, "DriverPreparedModel::execute");
+    // We separate the input & output pools so that we reduce the copying done if we
+    // do an eventual remoting (hidl_memory->update()).  We could also use it to set
+    // protection on read only memory but that's not currently done.
+    Memory inputPointerArguments;
+    Memory outputPointerArguments;
+
+    // Layout the input and output data
+    NN_RETURN_IF_ERROR(allocatePointerArgumentsToPool(memories, inputs, &inputPointerArguments));
+    NN_RETURN_IF_ERROR(allocatePointerArgumentsToPool(memories, outputs, &outputPointerArguments));
+
+    // Copy the input data that was specified via a pointer.
+    // inputPointerArguments.update();
+    for (auto& info : *inputs) {
+        if (info.state == ModelArgumentInfo::POINTER) {
+            DataLocation& loc = info.locationAndLength;
+            uint8_t* data = nullptr;
+            NN_RETURN_IF_ERROR(inputPointerArguments.getPointer(&data));
+            memcpy(data + loc.offset, info.buffer, loc.length);
+        }
+    }
+    // TODO: Add inputPointerArguments.commit() and .update() at all the right places
+
+    Request request;
+    setRequestArgumentArray(*inputs, &request.inputs);
+    setRequestArgumentArray(*outputs, &request.outputs);
+    uint32_t count = memories->size();
+    request.pools.resize(count);
+    for (uint32_t i = 0; i < count; i++) {
+        request.pools[i] = (*memories)[i]->getHidlMemory();
+    }
+
+    NNTRACE_FULL_SWITCH(NNTRACE_LAYER_IPC, NNTRACE_PHASE_EXECUTION,
+                        "DriverPreparedModel::execute::execute");
+
+    // Prepare the callback for asynchronous execution. sp<ExecutionCallback>
+    // object is returned when the execution has been successfully launched,
+    // otherwise a nullptr is returned. The executionCallback is abstracted in
+    // the NN API as an "event".
+    //
+    // The sp is used for ref-counting purposes. Without it, the HIDL service
+    // could attempt to communicate with a dead callback object.
+    //
+    // TODO: Explain the "dead callback" problem further, either here or
+    // in the design document.
+    sp<ExecutionCallback> executionCallback = new ExecutionCallback();
+
+    // compute using burst if present
+    const bool burstCompute = (burstController != nullptr);
+    bool burstFallback = false;
+    if (burstCompute) {
+        std::vector<intptr_t> memoryIds;
+        memoryIds.reserve(memories->size());
+        for (const Memory* memory : *memories) {
+            memory->usedBy(burstController);
+            memoryIds.push_back(memory->getKey());
+        }
+
+        VLOG(EXECUTION) << "Before ExecutionBurstController->tryCompute() "
+                        << SHOW_IF_DEBUG(toString(request));
+        auto [status, outputShapes, timing, fallback] =
+                burstController->tryCompute(request, measure, memoryIds);
+
+        burstFallback = fallback;
+        if (!fallback) {
+            executionCallback->notify(status, outputShapes, timing);
+        }
+    }
+
+    // compute from IPreparedModel if either:
+    // (1) burst was not supplied, or
+    // (2) the burst execution failed and requested a fallback execution
+    if (!burstCompute || burstFallback) {
+        if (DeviceManager::get()->syncExecHal()) {
+            VLOG(EXECUTION) << "Before mPreparedModel->executeSynchronously() "
+                            << SHOW_IF_DEBUG(toString(request));
+            auto syncExecuteResult = mPreparedModel->executeSynchronously(request, measure);
+            executionCallback->notify(std::get<0>(syncExecuteResult),
+                                      std::get<1>(syncExecuteResult),
+                                      std::get<2>(syncExecuteResult));
+        } else {
+            VLOG(EXECUTION) << "Before mPreparedModel->execute() "
+                            << SHOW_IF_DEBUG(toString(request));
+            // Execute.
+            // TODO: What happens to the Callback if the service dies abnormally
+            // -- won't that keep the Callback live forever, because the service
+            // never has the opportunity to bump the reference count down? Or
+            // maybe the HIDL infrastructure handles this magically? At worst,
+            // it seems like this is a small memory leak, if the Callback stays
+            // alive forever.
+            Return<ErrorStatus> executeStatus =
+                    mPreparedModel->execute(request, measure, executionCallback);
+            if (!executeStatus.isOk() || executeStatus != ErrorStatus::NONE) {
+                VLOG(EXECUTION) << "**Execute launch failed**";
+                return executeStatus.isOk() ? convertErrorStatusToResultCode(executeStatus)
+                                            : ANEURALNETWORKS_OP_FAILED;
+            }
+        }
+    }
+
+    // TODO: Remove this synchronization point when the block of code below is removed.
+    executionCallback->wait();
+    NNTRACE_FULL_SWITCH(NNTRACE_LAYER_RUNTIME, NNTRACE_PHASE_EXECUTION,
+                        "DriverPreparedModel::execute::waited");
+    Return<ErrorStatus> callbackStatus = executionCallback->getStatus();
+    if (!callbackStatus.isOk() || callbackStatus != ErrorStatus::NONE) {
+        VLOG(EXECUTION) << "**Execution failed**";
+        if (callbackStatus == ErrorStatus::OUTPUT_INSUFFICIENT_SIZE) {
+            *synchronizationCallback = executionCallback;
+            return ANEURALNETWORKS_NO_ERROR;
+        }
+        return callbackStatus.isOk() ? convertErrorStatusToResultCode(callbackStatus)
+                                     : ANEURALNETWORKS_OP_FAILED;
+    }
+
+    // Copy the output data from shared memory to the output buffers.
+    // TODO: Move this block of code somewhere else. It should not be in the
+    // startCompute function.
+    // TODO: outputMemory->update(); outputMemory->commit()
+    NNTRACE_RT_SWITCH(NNTRACE_PHASE_RESULTS, "DriverPreparedModel::execute");
+    for (auto& info : *outputs) {
+        if (info.state == ModelArgumentInfo::POINTER) {
+            DataLocation& loc = info.locationAndLength;
+            uint8_t* data = nullptr;
+            NN_RETURN_IF_ERROR(outputPointerArguments.getPointer(&data));
+            memcpy(info.buffer, data + loc.offset, loc.length);
+        }
+    }
+    VLOG(EXECUTION) << "DriverPreparedModel::execute completed";
+
+    *synchronizationCallback = executionCallback;
+    return ANEURALNETWORKS_NO_ERROR;
+}
+
 // A special abstracted device for the CPU. Only one instance of this class will exist.
 // Use get() to retrieve it.
 class CpuDevice : public Device {
-    DISALLOW_COPY_AND_ASSIGN(CpuDevice);
-
    public:
     // Returns the singleton CPU fallback device.
     static std::shared_ptr<CpuDevice> get() {
@@ -290,12 +515,11 @@ class CpuDevice : public Device {
 
     const char* getName() const override { return kName.c_str(); }
     const char* getVersionString() const override { return kVersionString.c_str(); }
-    VersionedIDevice* getInterface() override { return nullptr; }
-    int64_t getFeatureLevel() override { return kFeatureLevel; }
+    int64_t getFeatureLevel() const override { return kFeatureLevel; }
     int32_t getType() const override { return ANEURALNETWORKS_DEVICE_CPU; }
     hidl_vec<Extension> getSupportedExtensions() const override { return {/* No extensions. */}; }
     void getSupportedOperations(const MetaModel& metaModel,
-                                hidl_vec<bool>* supportedOperations) override;
+                                hidl_vec<bool>* supportedOperations) const override;
     PerformanceInfo getPerformance(OperandType) const override { return kPerformance; }
     PerformanceInfo getRelaxedFloat32toFloat16PerformanceScalar() const override {
         return kPerformance;
@@ -310,10 +534,9 @@ class CpuDevice : public Device {
     int prepareModel(const Model& hidlModel, ExecutionPreference executionPreference,
                      const hidl_vec<hidl_handle>& modelCache,
                      const hidl_vec<hidl_handle>& dataCache, const HidlToken&,
-                     std::shared_ptr<VersionedIPreparedModel>* preparedModel) override;
+                     std::shared_ptr<PreparedModel>* preparedModel) const override;
     int prepareModelFromCache(const hidl_vec<hidl_handle>&, const hidl_vec<hidl_handle>&,
-                              const HidlToken&,
-                              std::shared_ptr<VersionedIPreparedModel>*) override {
+                              const HidlToken&, std::shared_ptr<PreparedModel>*) const override {
         CHECK(false) << "Should never call prepareModelFromCache on CpuDevice";
         return ANEURALNETWORKS_OP_FAILED;
     }
@@ -331,8 +554,32 @@ class CpuDevice : public Device {
                                                           /*numDataCache=*/0};
 };
 
+// A special abstracted PreparedModel for the CPU, constructed by CpuDevice.
+class CpuPreparedModel : public PreparedModel {
+   public:
+    // Factory method for CpuPreparedModel. Returns ANEURALNETWORKS_NO_ERROR if
+    // successfully created.
+    static int create(Model hidlModel, std::shared_ptr<PreparedModel>* preparedModel);
+
+    int execute(const std::shared_ptr<ExecutionBurstController>& burstController,
+                MeasureTiming measure, std::vector<ModelArgumentInfo>* inputs,
+                std::vector<ModelArgumentInfo>* outputs, MemoryTracker* memories,
+                sp<ExecutionCallback>* synchronizationCallback) const override;
+
+    std::shared_ptr<ExecutionBurstController> configureExecutionBurst(bool) const override {
+        return nullptr;
+    }
+
+   private:
+    CpuPreparedModel(Model model, std::vector<RunTimePoolInfo> poolInfos)
+        : mModel(std::move(model)), mModelPoolInfos(std::move(poolInfos)) {}
+
+    const Model mModel;
+    const std::vector<RunTimePoolInfo> mModelPoolInfos;
+};
+
 void CpuDevice::getSupportedOperations(const MetaModel& metaModel,
-                                       hidl_vec<bool>* supportedOperations) {
+                                       hidl_vec<bool>* supportedOperations) const {
     const Model& hidlModel = metaModel.getModel();
     const size_t count = hidlModel.operations.size();
     hidl_vec<bool> result(count);
@@ -350,13 +597,110 @@ void CpuDevice::getSupportedOperations(const MetaModel& metaModel,
 int CpuDevice::prepareModel(const Model& hidlModel, ExecutionPreference executionPreference,
                             const hidl_vec<hidl_handle>& modelCache,
                             const hidl_vec<hidl_handle>& dataCache, const HidlToken&,
-                            std::shared_ptr<VersionedIPreparedModel>* preparedModel) {
+                            std::shared_ptr<PreparedModel>* preparedModel) const {
     CHECK(modelCache.size() == 0 && dataCache.size() == 0)
             << "Should never call prepareModel with cache information on CpuDevice";
+    CHECK(preparedModel != nullptr) << "CpuDevice::prepareModel -- preparedModel must be non-null";
     *preparedModel = nullptr;
+
     if (!validateModel(hidlModel) || !validateExecutionPreference(executionPreference)) {
         return ANEURALNETWORKS_OP_FAILED;
     }
+
+    return CpuPreparedModel::create(hidlModel, preparedModel);
+}
+
+int CpuPreparedModel::create(Model hidlModel, std::shared_ptr<PreparedModel>* preparedModel) {
+    CHECK(preparedModel != nullptr);
+    *preparedModel = nullptr;
+
+    std::vector<RunTimePoolInfo> poolInfos;
+    if (!setRunTimePoolInfosFromHidlMemories(&poolInfos, hidlModel.pools)) {
+        return ANEURALNETWORKS_UNMAPPABLE;
+    }
+
+    *preparedModel = std::shared_ptr<CpuPreparedModel>(
+            new CpuPreparedModel(std::move(hidlModel), std::move(poolInfos)));
+    return ANEURALNETWORKS_NO_ERROR;
+}
+
+static void computeOnCpu(const Model& model, const Request& request,
+                         const std::vector<RunTimePoolInfo>& modelPoolInfos,
+                         const std::vector<RunTimePoolInfo>& requestPoolInfos,
+                         const sp<IExecutionCallback>& executionCallback) {
+    NNTRACE_RT(NNTRACE_PHASE_EXECUTION, "computeOnCpu");
+    CpuExecutor executor;
+    int err = executor.run(model, request, modelPoolInfos, requestPoolInfos);
+    const auto& outputShapes = executor.getOutputShapes();
+    executionCallback->notify_1_2(convertResultCodeToErrorStatus(err), outputShapes, kNoTiming);
+}
+
+// Start compute on NNAPI CPU reference implementation.
+//
+// Contrary to DriverPreparedModel::execute, the NNAPI CPU reference executor lives in the
+// same process as the NNAPI runtime and can take raw pointers. We will create as many pools as
+// there are input/output in this method to avoid data copying.
+//
+// Will choose between sync/async execution according to DeviceManager::mSyncExecCpu.
+int CpuPreparedModel::execute(const std::shared_ptr<ExecutionBurstController>& /*burstController*/,
+                              MeasureTiming /*measure*/, std::vector<ModelArgumentInfo>* inputs,
+                              std::vector<ModelArgumentInfo>* outputs, MemoryTracker* memories,
+                              sp<ExecutionCallback>* synchronizationCallback) const {
+    CHECK(inputs != nullptr);
+    CHECK(outputs != nullptr);
+    CHECK(memories != nullptr);
+    CHECK(synchronizationCallback != nullptr);
+
+    // TODO: use a thread pool
+    // TODO(mikie): this could have NNTRACE so we could measure the overhead of
+    //              spinning up a new thread.
+
+    // Prepare the callback for asynchronous execution. sp<ExecutionCallback>
+    // object is returned when the execution has been successfully launched,
+    // otherwise a nullptr is returned. The executionCallback is abstracted in
+    // the NN API as an "event".
+    sp<ExecutionCallback> executionCallback = new ExecutionCallback();
+    *synchronizationCallback = nullptr;
+
+    std::vector<RunTimePoolInfo> requestPoolInfos;
+    requestPoolInfos.reserve(memories->size());
+    for (const Memory* mem : *memories) {
+        if (std::optional<RunTimePoolInfo> poolInfo =
+                    RunTimePoolInfo::createFromHidlMemory(mem->getHidlMemory())) {
+            requestPoolInfos.emplace_back(*poolInfo);
+        } else {
+            return ANEURALNETWORKS_UNMAPPABLE;
+        }
+    }
+    // Create as many pools as there are input / output.
+    auto fixPointerArguments = [&requestPoolInfos](std::vector<ModelArgumentInfo>* argumentInfos) {
+        for (ModelArgumentInfo& argumentInfo : *argumentInfos) {
+            if (argumentInfo.state == ModelArgumentInfo::POINTER) {
+                argumentInfo.locationAndLength.poolIndex =
+                        static_cast<uint32_t>(requestPoolInfos.size());
+                argumentInfo.locationAndLength.offset = 0;
+                requestPoolInfos.emplace_back(RunTimePoolInfo::createFromExistingBuffer(
+                        static_cast<uint8_t*>(argumentInfo.buffer)));
+            }
+        }
+    };
+    fixPointerArguments(inputs);
+    fixPointerArguments(outputs);
+
+    Request request;
+    setRequestArgumentArray(*inputs, &request.inputs);
+    setRequestArgumentArray(*outputs, &request.outputs);
+
+    if (DeviceManager::get()->syncExecCpu()) {
+        computeOnCpu(mModel, request, mModelPoolInfos, requestPoolInfos, executionCallback);
+    } else {
+        std::thread thread(computeOnCpu, std::cref(mModel), std::move(request),
+                           std::cref(mModelPoolInfos), std::move(requestPoolInfos),
+                           executionCallback);
+        executionCallback->bindThread(std::move(thread));
+    }
+
+    *synchronizationCallback = executionCallback;
     return ANEURALNETWORKS_NO_ERROR;
 }
 
