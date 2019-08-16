@@ -27,9 +27,9 @@ android_app_certificate {
 
 apex {
     name: "com.android.neuralnetworks",
-    manifest: "manifest.json", 
-    native_shared_libs:["libneuralnetworks"],
-    compile_multilib:"both",
-    key:"com.android.neuralnetworks.key",
+    manifest: "manifest.json",
+    native_shared_libs: ["libneuralnetworks"],
+    compile_multilib: "both",
+    key: "com.android.neuralnetworks.key",
     certificate: ":com.android.neuralnetworks.certificate",
 }
