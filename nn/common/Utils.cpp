@@ -1737,6 +1737,23 @@ int convertErrorStatusToResultCode(ErrorStatus status) {
     }
 }
 
+std::tuple<int, std::vector<OutputShape>, Timing> getExecutionResult(
+        ErrorStatus status, std::vector<OutputShape> outputShapes, Timing timing) {
+    constexpr Timing kNoTiming = {std::numeric_limits<uint64_t>::max(),
+                                  std::numeric_limits<uint64_t>::max()};
+    const int n = convertErrorStatusToResultCode(status);
+    if (status != ErrorStatus::NONE && status != ErrorStatus::OUTPUT_INSUFFICIENT_SIZE &&
+        !outputShapes.empty()) {
+        LOG(ERROR) << "The driver returned OutputShapes when it shouldn't.";
+        outputShapes.clear();
+    }
+    if (status != ErrorStatus::NONE && timing != kNoTiming) {
+        LOG(ERROR) << "The driver returned Timing when it shouldn't.";
+        timing = kNoTiming;
+    }
+    return {n, std::move(outputShapes), timing};
+}
+
 // V1_2::Capabilities::operandPerformance utilities.
 // The field V1_2::Capabilities::operandPerformance is a vector sorted by the
 // field V1_2::Capabilities::OperandPerformance::type.

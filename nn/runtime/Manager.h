@@ -47,13 +47,12 @@ class PreparedModel {
     PreparedModel() = default;
     virtual ~PreparedModel() = default;
 
-    // Start computation with given input/output argument info and memory pools.
-    virtual int execute(const std::vector<ModelArgumentInfo>& inputs,
-                        const std::vector<ModelArgumentInfo>& outputs,
-                        const MemoryTracker& memories,
-                        const std::shared_ptr<ExecutionBurstController>& burstController,
-                        hal::MeasureTiming measure,
-                        sp<ExecutionCallback>* synchronizationCallback) const = 0;
+    // Perform computation with given input/output argument info and memory pools.
+    virtual std::tuple<int, std::vector<hal::OutputShape>, hal::Timing> execute(
+            const std::vector<ModelArgumentInfo>& inputs,
+            const std::vector<ModelArgumentInfo>& outputs, const MemoryTracker& memories,
+            const std::shared_ptr<ExecutionBurstController>& burstController,
+            hal::MeasureTiming measure) const = 0;
 
     virtual std::shared_ptr<ExecutionBurstController> configureExecutionBurst(
             bool blocking) const = 0;
