@@ -309,13 +309,13 @@ class ExecutionBurstController {
      * @param memoryIds Identifiers corresponding to each memory object in the
      *     request's pools.
      * @return A tuple of:
-     *     - status of the execution
+     *     - result code of the execution
      *     - dynamic output shapes from the execution
      *     - any execution time measurements of the execution
      *     - whether or not a failed burst execution should be re-run using a
      *       different path (e.g., IPreparedModel::executeSynchronously)
      */
-    std::tuple<hal::ErrorStatus, std::vector<hal::OutputShape>, hal::Timing, bool> tryCompute(
+    std::tuple<int, std::vector<hal::OutputShape>, hal::Timing, bool> tryCompute(
             const hal::Request& request, hal::MeasureTiming measure,
             const std::vector<intptr_t>& memoryIds);
 
