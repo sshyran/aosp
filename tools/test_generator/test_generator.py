@@ -622,11 +622,10 @@ class ModelVariation:
         self.targetOperands = {}
         self.name = name
 
-    # Make a deepcopy of the model and apply the change
-    def ApplyTo(self, modelOrigin):
-        model = copy.deepcopy(modelOrigin)
-        model.compiled = False
-        model.dumped = False
+    # Apply the model variation.
+    def ApplyTo(self, model):
+        assert not model.compiled
+        assert not model.dumped
 
         if not self.targetOperands:
             self.AutoIdentify(model)
