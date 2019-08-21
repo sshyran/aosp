@@ -112,7 +112,7 @@ class ResultChannelReceiver {
     void invalidate();
 
     // prefer calling ResultChannelReceiver::getBlocking
-    std::optional<std::vector<FmqResultDatum>> getPacketBlocking();
+    std::optional<std::vector<hal::FmqResultDatum>> getPacketBlocking();
 
     ResultChannelReceiver(std::unique_ptr<FmqResultChannel> fmqResultChannel, bool blocking);
 
