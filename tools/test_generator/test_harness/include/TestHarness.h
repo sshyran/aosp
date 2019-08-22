@@ -47,8 +47,6 @@ static_assert(sizeof(bool8) == 1, "size of bool8 must be 8 bits");
 
 // We need the following enum classes since the test harness can neither depend on NDK nor HIDL
 // definitions.
-//
-// TODO: Find a place to statically check the values against HIDL and NDK definitions.
 
 enum class TestOperandType {
     FLOAT32 = 0,
