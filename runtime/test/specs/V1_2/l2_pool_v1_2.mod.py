@@ -72,12 +72,11 @@ model = model.Operation("ROI_ALIGN", i1, tmp1, tmp2, 2, 2, 2.0, 2.0, 4, 4, layou
 o3 = Output("out", "TENSOR_FLOAT32", "{0, 1, 1, 1}") # out
 model = model.Operation("L2_POOL_2D", zero_sized, 0, 0, 0, 0, 1, 1, 2, 2, 0, layout).To(o3)
 
-# Create test case with dummy values.
 Example({
     i1: [1],
-    o1: [0],
-    o2: [0],
-    o3: [0],
+    o1: [],
+    o2: [],
+    o3: [],
 }).AddNchw(i1, zero_sized, o3, layout).AddVariations("relaxed", "float16")
 
 
@@ -101,10 +100,9 @@ model = model.Operation("ROI_ALIGN", i1, tmp1, tmp2, 2, 2, 2.0, 2.0, 4, 4, layou
 o3 = Output("out", "TENSOR_FLOAT32", "{0, 2, 2, 1}") # out
 model = model.Operation("L2_POOL_2D", zero_sized, 1, 1, 1, 2, 2, 0, layout).To(o3)
 
-# Create test case with dummy values.
 Example({
     i1: [1],
-    o1: [0],
-    o2: [0],
-    o3: [0],
+    o1: [],
+    o2: [],
+    o3: [],
 }).AddNchw(i1, zero_sized, o3, layout).AddVariations("relaxed", "float16")

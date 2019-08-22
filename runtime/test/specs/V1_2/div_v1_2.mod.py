@@ -79,10 +79,9 @@ i2 = Parameter("op", "TENSOR_FLOAT32", "{1, 2, 2, 1}", [1, 2, 3, 4]) # weights
 o3 = Output("out", "TENSOR_FLOAT32", "{0, 2, 2, 2}") # out
 model = model.Operation("DIV", zero_sized, i2, 0).To(o3)
 
-# Create test case with dummy values.
 Example({
     i1: [1, 2],
-    o1: [0],
-    o2: [0],
-    o3: [0],
+    o1: [],
+    o2: [],
+    o3: [],
 }).AddVariations("relaxed", "float16")
