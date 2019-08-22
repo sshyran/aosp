@@ -97,13 +97,12 @@ void createModel(const TestModel& testModel, bool testDynamicOutputShape, Model*
 }
 
 static void createRequest(const TestModel& testModel, Execution* execution,
-                          std::vector<TestBuffer>* inputs, std::vector<TestBuffer>* outputs) {
+                          std::vector<TestBuffer>* outputs) {
     // Model inputs.
     for (uint32_t i = 0; i < testModel.inputIndexes.size(); i++) {
         const auto& operand = testModel.operands[testModel.inputIndexes[i]];
-        inputs->push_back(operand.data.copy());
         ASSERT_EQ(Result::NO_ERROR,
-                  execution->setInput(i, inputs->back().get<void>(), operand.data.size()));
+                  execution->setInput(i, operand.data.get<void>(), operand.data.size()));
     }
 
     // Model outputs.
@@ -156,12 +155,10 @@ void GeneratedTests::executeWithCompilation(const Compilation* compilation,
     NNTRACE_APP(NNTRACE_PHASE_EXECUTION, "executeWithCompilation example");
 
     Execution execution(compilation);
-    std::vector<TestBuffer> inputs;
     std::vector<TestBuffer> outputs;
     {
         NNTRACE_APP(NNTRACE_PHASE_INPUTS_AND_OUTPUTS, "executeWithCompilation example");
-        // TODO: Do not copy the input buffers once b/138797596 is fixed.
-        createRequest(testModel, &execution, &inputs, &outputs);
+        createRequest(testModel, &execution, &outputs);
     }
 
     Result result = execution.compute();
