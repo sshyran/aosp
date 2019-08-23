@@ -72,12 +72,8 @@ def ParseCmdLine():
         "-t", "--test", help="the output test file/directory", default="-")
     parser.add_argument(
         "-f", "--force", help="force to regenerate all spec files", action="store_true")
-    # for slicing tool
-    parser.add_argument(
-        "-l", "--log", help="the optional log file", default="")
     args = parser.parse_args()
-    tg.FileNames.InitializeFileLists(
-        args.spec, args.model, args.example, args.test, args.log)
+    tg.FileNames.InitializeFileLists(args.spec, args.model, args.example, args.test)
     Configuration.force_regenerate = args.force
 
 def NeedRegenerate():
@@ -275,7 +271,7 @@ std::vector<::test_helper::MixedTypedExample>& get_{examples_name}();
 TEST_F({test_case_name}, {test_name}) {{
     execute({create_model_name},
             {is_ignored_name},
-            get_{examples_name}(){log_file});
+            get_{examples_name}());
 }}
 
 }} // namespace {namespace}
@@ -298,8 +294,7 @@ TEST_AVAILABLE_SINCE({version}, {test_name}, {namespace}::{create_model_name})\n
         create_model_name=str(example.model.createFunctionName),
         is_ignored_name=str(example.model.isIgnoredFunctionName),
         examples_name=str(example.examplesName),
-        version=example.model.version,
-        log_file=tg.FileNames.logFile), file=test_fd)
+        version=example.model.version), file=test_fd)
 
 if __name__ == '__main__':
     ParseCmdLine()
