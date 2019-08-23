@@ -2,16 +2,17 @@
 // DO NOT EDIT
 // clang-format off
 #include "TestHarness.h"
-
 using namespace test_helper;
 
 namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_0,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({17.0f, 16.0f, 15.0f, 14.0f, 1.0f, -1.0f, -2.0f, -3.0f, -4.0f, -17.0f, 17.0f, 16.0f, 15.0f, 14.0f, 1.0f, -1.0f, -2.0f, -3.0f, -4.0f, -17.0f, 17.0f, 16.0f, 15.0f, 14.0f, 1.0f, -1.0f, -2.0f, -3.0f, -4.0f, -17.0f, 17.0f, 16.0f, 15.0f, 14.0f, 1.0f, -1.0f, -2.0f, -3.0f, -4.0f, -17.0f}),
@@ -52,6 +53,8 @@ const TestModel& get_test_model() {
     };
     return model;
 }
+
+const auto dummy_test_model = TestModelManager::get().add("softmax_v1_2", get_test_model());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -59,9 +62,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {3},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_0,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -136,6 +141,8 @@ const TestModel& get_test_model_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_all_inputs_as_internal = TestModelManager::get().add("softmax_v1_2_all_inputs_as_internal", get_test_model_all_inputs_as_internal());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -143,9 +150,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_dim1_axis0() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({17.0f, 16.0f, 15.0f, 14.0f, 1.0f}),
@@ -186,6 +195,8 @@ const TestModel& get_test_model_dim1_axis0() {
     };
     return model;
 }
+
+const auto dummy_test_model_dim1_axis0 = TestModelManager::get().add("softmax_v1_2_dim1_axis0", get_test_model_dim1_axis0());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -193,9 +204,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_dim1_axis0_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {3},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -270,6 +283,8 @@ const TestModel& get_test_model_dim1_axis0_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_dim1_axis0_all_inputs_as_internal = TestModelManager::get().add("softmax_v1_2_dim1_axis0_all_inputs_as_internal", get_test_model_dim1_axis0_all_inputs_as_internal());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -277,9 +292,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_dim3_axis2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({17.0f, 16.0f, 15.0f, 14.0f, 1.0f, -1.0f, -2.0f, -3.0f, -4.0f, -17.0f, 17.0f, 16.0f, 15.0f, 14.0f, 1.0f, -1.0f, -2.0f, -3.0f, -4.0f, -17.0f}),
@@ -320,6 +337,8 @@ const TestModel& get_test_model_dim3_axis2() {
     };
     return model;
 }
+
+const auto dummy_test_model_dim3_axis2 = TestModelManager::get().add("softmax_v1_2_dim3_axis2", get_test_model_dim3_axis2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -327,9 +346,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_dim3_axis2_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {3},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -404,6 +425,8 @@ const TestModel& get_test_model_dim3_axis2_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_dim3_axis2_all_inputs_as_internal = TestModelManager::get().add("softmax_v1_2_dim3_axis2_all_inputs_as_internal", get_test_model_dim3_axis2_all_inputs_as_internal());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -411,9 +434,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_relaxed() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({17.0f, 16.0f, 15.0f, 14.0f, 1.0f, -1.0f, -2.0f, -3.0f, -4.0f, -17.0f, 17.0f, 16.0f, 15.0f, 14.0f, 1.0f, -1.0f, -2.0f, -3.0f, -4.0f, -17.0f, 17.0f, 16.0f, 15.0f, 14.0f, 1.0f, -1.0f, -2.0f, -3.0f, -4.0f, -17.0f, 17.0f, 16.0f, 15.0f, 14.0f, 1.0f, -1.0f, -2.0f, -3.0f, -4.0f, -17.0f}),
@@ -454,6 +479,8 @@ const TestModel& get_test_model_relaxed() {
     };
     return model;
 }
+
+const auto dummy_test_model_relaxed = TestModelManager::get().add("softmax_v1_2_relaxed", get_test_model_relaxed());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -461,9 +488,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_relaxed_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {3},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -538,6 +567,8 @@ const TestModel& get_test_model_relaxed_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_relaxed_all_inputs_as_internal = TestModelManager::get().add("softmax_v1_2_relaxed_all_inputs_as_internal", get_test_model_relaxed_all_inputs_as_internal());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -545,9 +576,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_relaxed_dim1_axis0() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({17.0f, 16.0f, 15.0f, 14.0f, 1.0f}),
@@ -588,6 +621,8 @@ const TestModel& get_test_model_relaxed_dim1_axis0() {
     };
     return model;
 }
+
+const auto dummy_test_model_relaxed_dim1_axis0 = TestModelManager::get().add("softmax_v1_2_relaxed_dim1_axis0", get_test_model_relaxed_dim1_axis0());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -595,9 +630,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_relaxed_dim1_axis0_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {3},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -672,6 +709,8 @@ const TestModel& get_test_model_relaxed_dim1_axis0_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_relaxed_dim1_axis0_all_inputs_as_internal = TestModelManager::get().add("softmax_v1_2_relaxed_dim1_axis0_all_inputs_as_internal", get_test_model_relaxed_dim1_axis0_all_inputs_as_internal());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -679,9 +718,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_relaxed_dim3_axis2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({17.0f, 16.0f, 15.0f, 14.0f, 1.0f, -1.0f, -2.0f, -3.0f, -4.0f, -17.0f, 17.0f, 16.0f, 15.0f, 14.0f, 1.0f, -1.0f, -2.0f, -3.0f, -4.0f, -17.0f}),
@@ -722,6 +763,8 @@ const TestModel& get_test_model_relaxed_dim3_axis2() {
     };
     return model;
 }
+
+const auto dummy_test_model_relaxed_dim3_axis2 = TestModelManager::get().add("softmax_v1_2_relaxed_dim3_axis2", get_test_model_relaxed_dim3_axis2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -729,9 +772,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_relaxed_dim3_axis2_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {3},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -806,6 +851,8 @@ const TestModel& get_test_model_relaxed_dim3_axis2_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_relaxed_dim3_axis2_all_inputs_as_internal = TestModelManager::get().add("softmax_v1_2_relaxed_dim3_axis2_all_inputs_as_internal", get_test_model_relaxed_dim3_axis2_all_inputs_as_internal());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -813,9 +860,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_float16() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({17.0f, 16.0f, 15.0f, 14.0f, 1.0f, -1.0f, -2.0f, -3.0f, -4.0f, -17.0f, 17.0f, 16.0f, 15.0f, 14.0f, 1.0f, -1.0f, -2.0f, -3.0f, -4.0f, -17.0f, 17.0f, 16.0f, 15.0f, 14.0f, 1.0f, -1.0f, -2.0f, -3.0f, -4.0f, -17.0f, 17.0f, 16.0f, 15.0f, 14.0f, 1.0f, -1.0f, -2.0f, -3.0f, -4.0f, -17.0f}),
@@ -856,6 +905,8 @@ const TestModel& get_test_model_float16() {
     };
     return model;
 }
+
+const auto dummy_test_model_float16 = TestModelManager::get().add("softmax_v1_2_float16", get_test_model_float16());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -863,9 +914,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_float16_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {3},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -940,6 +993,8 @@ const TestModel& get_test_model_float16_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_float16_all_inputs_as_internal = TestModelManager::get().add("softmax_v1_2_float16_all_inputs_as_internal", get_test_model_float16_all_inputs_as_internal());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -947,9 +1002,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_float16_dim1_axis0() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({17.0f, 16.0f, 15.0f, 14.0f, 1.0f}),
@@ -990,6 +1047,8 @@ const TestModel& get_test_model_float16_dim1_axis0() {
     };
     return model;
 }
+
+const auto dummy_test_model_float16_dim1_axis0 = TestModelManager::get().add("softmax_v1_2_float16_dim1_axis0", get_test_model_float16_dim1_axis0());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -997,9 +1056,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_float16_dim1_axis0_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {3},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -1074,6 +1135,8 @@ const TestModel& get_test_model_float16_dim1_axis0_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_float16_dim1_axis0_all_inputs_as_internal = TestModelManager::get().add("softmax_v1_2_float16_dim1_axis0_all_inputs_as_internal", get_test_model_float16_dim1_axis0_all_inputs_as_internal());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -1081,9 +1144,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_float16_dim3_axis2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({17.0f, 16.0f, 15.0f, 14.0f, 1.0f, -1.0f, -2.0f, -3.0f, -4.0f, -17.0f, 17.0f, 16.0f, 15.0f, 14.0f, 1.0f, -1.0f, -2.0f, -3.0f, -4.0f, -17.0f}),
@@ -1124,6 +1189,8 @@ const TestModel& get_test_model_float16_dim3_axis2() {
     };
     return model;
 }
+
+const auto dummy_test_model_float16_dim3_axis2 = TestModelManager::get().add("softmax_v1_2_float16_dim3_axis2", get_test_model_float16_dim3_axis2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -1131,9 +1198,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_float16_dim3_axis2_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {3},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -1208,6 +1277,8 @@ const TestModel& get_test_model_float16_dim3_axis2_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_float16_dim3_axis2_all_inputs_as_internal = TestModelManager::get().add("softmax_v1_2_float16_dim3_axis2_all_inputs_as_internal", get_test_model_float16_dim3_axis2_all_inputs_as_internal());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -1215,9 +1286,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_quant8() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_0,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({196, 192, 188, 184, 132, 124, 120, 116, 112, 60, 196, 192, 188, 184, 132, 124, 120, 116, 112, 60, 196, 192, 188, 184, 132, 124, 120, 116, 112, 60, 196, 192, 188, 184, 132, 124, 120, 116, 112, 60}),
@@ -1258,6 +1331,8 @@ const TestModel& get_test_model_quant8() {
     };
     return model;
 }
+
+const auto dummy_test_model_quant8 = TestModelManager::get().add("softmax_v1_2_quant8", get_test_model_quant8());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -1265,9 +1340,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_quant8_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {3},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_0,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -1342,6 +1419,8 @@ const TestModel& get_test_model_quant8_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_quant8_all_inputs_as_internal = TestModelManager::get().add("softmax_v1_2_quant8_all_inputs_as_internal", get_test_model_quant8_all_inputs_as_internal());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -1349,9 +1428,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_quant8_dim1_axis0() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({196, 192, 188, 184, 132}),
@@ -1392,6 +1473,8 @@ const TestModel& get_test_model_quant8_dim1_axis0() {
     };
     return model;
 }
+
+const auto dummy_test_model_quant8_dim1_axis0 = TestModelManager::get().add("softmax_v1_2_quant8_dim1_axis0", get_test_model_quant8_dim1_axis0());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -1399,9 +1482,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_quant8_dim1_axis0_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {3},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -1476,6 +1561,8 @@ const TestModel& get_test_model_quant8_dim1_axis0_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_quant8_dim1_axis0_all_inputs_as_internal = TestModelManager::get().add("softmax_v1_2_quant8_dim1_axis0_all_inputs_as_internal", get_test_model_quant8_dim1_axis0_all_inputs_as_internal());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -1483,9 +1570,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_quant8_dim3_axis2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({196, 192, 188, 184, 132, 124, 120, 116, 112, 60, 196, 192, 188, 184, 132, 124, 120, 116, 112, 60}),
@@ -1526,6 +1615,8 @@ const TestModel& get_test_model_quant8_dim3_axis2() {
     };
     return model;
 }
+
+const auto dummy_test_model_quant8_dim3_axis2 = TestModelManager::get().add("softmax_v1_2_quant8_dim3_axis2", get_test_model_quant8_dim3_axis2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -1533,9 +1624,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_quant8_dim3_axis2_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {3},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -1610,6 +1703,8 @@ const TestModel& get_test_model_quant8_dim3_axis2_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_quant8_dim3_axis2_all_inputs_as_internal = TestModelManager::get().add("softmax_v1_2_quant8_dim3_axis2_all_inputs_as_internal", get_test_model_quant8_dim3_axis2_all_inputs_as_internal());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -1617,9 +1712,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_0,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, -1.0f, -2.0f, -3.0f, -4.0f, -5.0f, 1.0f, 2.0f, 3.0f, 4.0f, 5.0f, -1.0f, -2.0f, -3.0f, -4.0f, -5.0f, 1.0f, 2.0f, 3.0f, 4.0f, 5.0f, -1.0f, -2.0f, -3.0f, -4.0f, -5.0f, 1.0f, 2.0f, 3.0f, 4.0f, 5.0f, -1.0f, -2.0f, -3.0f, -4.0f, -5.0f}),
@@ -1660,6 +1757,8 @@ const TestModel& get_test_model_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_2 = TestModelManager::get().add("softmax_v1_2_2", get_test_model_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -1667,9 +1766,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {3},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_0,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -1744,6 +1845,8 @@ const TestModel& get_test_model_all_inputs_as_internal_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_all_inputs_as_internal_2 = TestModelManager::get().add("softmax_v1_2_all_inputs_as_internal_2", get_test_model_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -1751,9 +1854,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_dim1_axis0_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f}),
@@ -1794,6 +1899,8 @@ const TestModel& get_test_model_dim1_axis0_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_dim1_axis0_2 = TestModelManager::get().add("softmax_v1_2_dim1_axis0_2", get_test_model_dim1_axis0_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -1801,9 +1908,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_dim1_axis0_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {3},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -1878,6 +1987,8 @@ const TestModel& get_test_model_dim1_axis0_all_inputs_as_internal_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_dim1_axis0_all_inputs_as_internal_2 = TestModelManager::get().add("softmax_v1_2_dim1_axis0_all_inputs_as_internal_2", get_test_model_dim1_axis0_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -1885,9 +1996,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_dim3_axis2_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, -1.0f, -2.0f, -3.0f, -4.0f, -5.0f, 1.0f, 2.0f, 3.0f, 4.0f, 5.0f, -1.0f, -2.0f, -3.0f, -4.0f, -5.0f}),
@@ -1928,6 +2041,8 @@ const TestModel& get_test_model_dim3_axis2_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_dim3_axis2_2 = TestModelManager::get().add("softmax_v1_2_dim3_axis2_2", get_test_model_dim3_axis2_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -1935,9 +2050,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_dim3_axis2_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {3},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -2012,6 +2129,8 @@ const TestModel& get_test_model_dim3_axis2_all_inputs_as_internal_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_dim3_axis2_all_inputs_as_internal_2 = TestModelManager::get().add("softmax_v1_2_dim3_axis2_all_inputs_as_internal_2", get_test_model_dim3_axis2_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -2019,9 +2138,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_relaxed_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, -1.0f, -2.0f, -3.0f, -4.0f, -5.0f, 1.0f, 2.0f, 3.0f, 4.0f, 5.0f, -1.0f, -2.0f, -3.0f, -4.0f, -5.0f, 1.0f, 2.0f, 3.0f, 4.0f, 5.0f, -1.0f, -2.0f, -3.0f, -4.0f, -5.0f, 1.0f, 2.0f, 3.0f, 4.0f, 5.0f, -1.0f, -2.0f, -3.0f, -4.0f, -5.0f}),
@@ -2062,6 +2183,8 @@ const TestModel& get_test_model_relaxed_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_relaxed_2 = TestModelManager::get().add("softmax_v1_2_relaxed_2", get_test_model_relaxed_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -2069,9 +2192,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_relaxed_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {3},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -2146,6 +2271,8 @@ const TestModel& get_test_model_relaxed_all_inputs_as_internal_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_relaxed_all_inputs_as_internal_2 = TestModelManager::get().add("softmax_v1_2_relaxed_all_inputs_as_internal_2", get_test_model_relaxed_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -2153,9 +2280,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_relaxed_dim1_axis0_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f}),
@@ -2196,6 +2325,8 @@ const TestModel& get_test_model_relaxed_dim1_axis0_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_relaxed_dim1_axis0_2 = TestModelManager::get().add("softmax_v1_2_relaxed_dim1_axis0_2", get_test_model_relaxed_dim1_axis0_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -2203,9 +2334,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_relaxed_dim1_axis0_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {3},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -2280,6 +2413,8 @@ const TestModel& get_test_model_relaxed_dim1_axis0_all_inputs_as_internal_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_relaxed_dim1_axis0_all_inputs_as_internal_2 = TestModelManager::get().add("softmax_v1_2_relaxed_dim1_axis0_all_inputs_as_internal_2", get_test_model_relaxed_dim1_axis0_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -2287,9 +2422,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_relaxed_dim3_axis2_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, -1.0f, -2.0f, -3.0f, -4.0f, -5.0f, 1.0f, 2.0f, 3.0f, 4.0f, 5.0f, -1.0f, -2.0f, -3.0f, -4.0f, -5.0f}),
@@ -2330,6 +2467,8 @@ const TestModel& get_test_model_relaxed_dim3_axis2_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_relaxed_dim3_axis2_2 = TestModelManager::get().add("softmax_v1_2_relaxed_dim3_axis2_2", get_test_model_relaxed_dim3_axis2_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -2337,9 +2476,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_relaxed_dim3_axis2_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {3},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -2414,6 +2555,8 @@ const TestModel& get_test_model_relaxed_dim3_axis2_all_inputs_as_internal_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_relaxed_dim3_axis2_all_inputs_as_internal_2 = TestModelManager::get().add("softmax_v1_2_relaxed_dim3_axis2_all_inputs_as_internal_2", get_test_model_relaxed_dim3_axis2_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -2421,9 +2564,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_float16_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, -1.0f, -2.0f, -3.0f, -4.0f, -5.0f, 1.0f, 2.0f, 3.0f, 4.0f, 5.0f, -1.0f, -2.0f, -3.0f, -4.0f, -5.0f, 1.0f, 2.0f, 3.0f, 4.0f, 5.0f, -1.0f, -2.0f, -3.0f, -4.0f, -5.0f, 1.0f, 2.0f, 3.0f, 4.0f, 5.0f, -1.0f, -2.0f, -3.0f, -4.0f, -5.0f}),
@@ -2464,6 +2609,8 @@ const TestModel& get_test_model_float16_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_float16_2 = TestModelManager::get().add("softmax_v1_2_float16_2", get_test_model_float16_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -2471,9 +2618,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_float16_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {3},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -2548,6 +2697,8 @@ const TestModel& get_test_model_float16_all_inputs_as_internal_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_float16_all_inputs_as_internal_2 = TestModelManager::get().add("softmax_v1_2_float16_all_inputs_as_internal_2", get_test_model_float16_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -2555,9 +2706,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_float16_dim1_axis0_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f}),
@@ -2598,6 +2751,8 @@ const TestModel& get_test_model_float16_dim1_axis0_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_float16_dim1_axis0_2 = TestModelManager::get().add("softmax_v1_2_float16_dim1_axis0_2", get_test_model_float16_dim1_axis0_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -2605,9 +2760,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_float16_dim1_axis0_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {3},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -2682,6 +2839,8 @@ const TestModel& get_test_model_float16_dim1_axis0_all_inputs_as_internal_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_float16_dim1_axis0_all_inputs_as_internal_2 = TestModelManager::get().add("softmax_v1_2_float16_dim1_axis0_all_inputs_as_internal_2", get_test_model_float16_dim1_axis0_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -2689,9 +2848,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_float16_dim3_axis2_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, -1.0f, -2.0f, -3.0f, -4.0f, -5.0f, 1.0f, 2.0f, 3.0f, 4.0f, 5.0f, -1.0f, -2.0f, -3.0f, -4.0f, -5.0f}),
@@ -2732,6 +2893,8 @@ const TestModel& get_test_model_float16_dim3_axis2_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_float16_dim3_axis2_2 = TestModelManager::get().add("softmax_v1_2_float16_dim3_axis2_2", get_test_model_float16_dim3_axis2_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -2739,9 +2902,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_float16_dim3_axis2_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {3},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -2816,6 +2981,8 @@ const TestModel& get_test_model_float16_dim3_axis2_all_inputs_as_internal_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_float16_dim3_axis2_all_inputs_as_internal_2 = TestModelManager::get().add("softmax_v1_2_float16_dim3_axis2_all_inputs_as_internal_2", get_test_model_float16_dim3_axis2_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -2823,9 +2990,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_quant8_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_0,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({132, 136, 140, 144, 148, 124, 120, 116, 112, 108, 132, 136, 140, 144, 148, 124, 120, 116, 112, 108, 132, 136, 140, 144, 148, 124, 120, 116, 112, 108, 132, 136, 140, 144, 148, 124, 120, 116, 112, 108}),
@@ -2866,6 +3035,8 @@ const TestModel& get_test_model_quant8_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_quant8_2 = TestModelManager::get().add("softmax_v1_2_quant8_2", get_test_model_quant8_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -2873,9 +3044,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_quant8_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {3},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_0,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -2950,6 +3123,8 @@ const TestModel& get_test_model_quant8_all_inputs_as_internal_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_quant8_all_inputs_as_internal_2 = TestModelManager::get().add("softmax_v1_2_quant8_all_inputs_as_internal_2", get_test_model_quant8_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -2957,9 +3132,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_quant8_dim1_axis0_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({132, 136, 140, 144, 148}),
@@ -3000,6 +3177,8 @@ const TestModel& get_test_model_quant8_dim1_axis0_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_quant8_dim1_axis0_2 = TestModelManager::get().add("softmax_v1_2_quant8_dim1_axis0_2", get_test_model_quant8_dim1_axis0_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -3007,9 +3186,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_quant8_dim1_axis0_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {3},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -3084,6 +3265,8 @@ const TestModel& get_test_model_quant8_dim1_axis0_all_inputs_as_internal_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_quant8_dim1_axis0_all_inputs_as_internal_2 = TestModelManager::get().add("softmax_v1_2_quant8_dim1_axis0_all_inputs_as_internal_2", get_test_model_quant8_dim1_axis0_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -3091,9 +3274,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_quant8_dim3_axis2_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({132, 136, 140, 144, 148, 124, 120, 116, 112, 108, 132, 136, 140, 144, 148, 124, 120, 116, 112, 108}),
@@ -3135,15 +3320,19 @@ const TestModel& get_test_model_quant8_dim3_axis2_2() {
     return model;
 }
 
+const auto dummy_test_model_quant8_dim3_axis2_2 = TestModelManager::get().add("softmax_v1_2_quant8_dim3_axis2_2", get_test_model_quant8_dim3_axis2_2());
+
 }  // namespace generated_tests::softmax_v1_2
 
 namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_quant8_dim3_axis2_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {3},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -3219,15 +3408,19 @@ const TestModel& get_test_model_quant8_dim3_axis2_all_inputs_as_internal_2() {
     return model;
 }
 
+const auto dummy_test_model_quant8_dim3_axis2_all_inputs_as_internal_2 = TestModelManager::get().add("softmax_v1_2_quant8_dim3_axis2_all_inputs_as_internal_2", get_test_model_quant8_dim3_axis2_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::softmax_v1_2
 
 namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis0() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({17.0f, -1.0f, 17.0f, -1.0f, 17.0f, -1.0f, 17.0f, -1.0f, 16.0f, -2.0f, 16.0f, -2.0f, 16.0f, -2.0f, 16.0f, -2.0f, 15.0f, -3.0f, 15.0f, -3.0f, 15.0f, -3.0f, 15.0f, -3.0f, 14.0f, -4.0f, 14.0f, -4.0f, 14.0f, -4.0f, 14.0f, -4.0f, 1.0f, -17.0f, 1.0f, -17.0f, 1.0f, -17.0f, 1.0f, -17.0f}),
@@ -3278,6 +3471,8 @@ const TestModel& get_test_model_axis_dim4_axis0() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis0 = TestModelManager::get().add("softmax_v1_2_axis_dim4_axis0", get_test_model_axis_dim4_axis0());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -3285,9 +3480,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis0_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -3372,6 +3569,8 @@ const TestModel& get_test_model_axis_dim4_axis0_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis0_all_inputs_as_internal = TestModelManager::get().add("softmax_v1_2_axis_dim4_axis0_all_inputs_as_internal", get_test_model_axis_dim4_axis0_all_inputs_as_internal());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -3379,9 +3578,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis0_neg() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({17.0f, -1.0f, 17.0f, -1.0f, 17.0f, -1.0f, 17.0f, -1.0f, 16.0f, -2.0f, 16.0f, -2.0f, 16.0f, -2.0f, 16.0f, -2.0f, 15.0f, -3.0f, 15.0f, -3.0f, 15.0f, -3.0f, 15.0f, -3.0f, 14.0f, -4.0f, 14.0f, -4.0f, 14.0f, -4.0f, 14.0f, -4.0f, 1.0f, -17.0f, 1.0f, -17.0f, 1.0f, -17.0f, 1.0f, -17.0f}),
@@ -3432,6 +3633,8 @@ const TestModel& get_test_model_axis_dim4_axis0_neg() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis0_neg = TestModelManager::get().add("softmax_v1_2_axis_dim4_axis0_neg", get_test_model_axis_dim4_axis0_neg());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -3439,9 +3642,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis0_neg_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -3526,6 +3731,8 @@ const TestModel& get_test_model_axis_dim4_axis0_neg_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis0_neg_all_inputs_as_internal = TestModelManager::get().add("softmax_v1_2_axis_dim4_axis0_neg_all_inputs_as_internal", get_test_model_axis_dim4_axis0_neg_all_inputs_as_internal());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -3533,9 +3740,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis1() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({17.0f, -1.0f, 17.0f, -1.0f, 16.0f, -2.0f, 16.0f, -2.0f, 15.0f, -3.0f, 15.0f, -3.0f, 14.0f, -4.0f, 14.0f, -4.0f, 1.0f, -17.0f, 1.0f, -17.0f, 17.0f, -1.0f, 17.0f, -1.0f, 16.0f, -2.0f, 16.0f, -2.0f, 15.0f, -3.0f, 15.0f, -3.0f, 14.0f, -4.0f, 14.0f, -4.0f, 1.0f, -17.0f, 1.0f, -17.0f}),
@@ -3586,6 +3795,8 @@ const TestModel& get_test_model_axis_dim4_axis1() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis1 = TestModelManager::get().add("softmax_v1_2_axis_dim4_axis1", get_test_model_axis_dim4_axis1());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -3593,9 +3804,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis1_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -3680,6 +3893,8 @@ const TestModel& get_test_model_axis_dim4_axis1_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis1_all_inputs_as_internal = TestModelManager::get().add("softmax_v1_2_axis_dim4_axis1_all_inputs_as_internal", get_test_model_axis_dim4_axis1_all_inputs_as_internal());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -3687,9 +3902,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis1_neg() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({17.0f, -1.0f, 17.0f, -1.0f, 16.0f, -2.0f, 16.0f, -2.0f, 15.0f, -3.0f, 15.0f, -3.0f, 14.0f, -4.0f, 14.0f, -4.0f, 1.0f, -17.0f, 1.0f, -17.0f, 17.0f, -1.0f, 17.0f, -1.0f, 16.0f, -2.0f, 16.0f, -2.0f, 15.0f, -3.0f, 15.0f, -3.0f, 14.0f, -4.0f, 14.0f, -4.0f, 1.0f, -17.0f, 1.0f, -17.0f}),
@@ -3740,6 +3957,8 @@ const TestModel& get_test_model_axis_dim4_axis1_neg() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis1_neg = TestModelManager::get().add("softmax_v1_2_axis_dim4_axis1_neg", get_test_model_axis_dim4_axis1_neg());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -3747,9 +3966,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis1_neg_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -3834,6 +4055,8 @@ const TestModel& get_test_model_axis_dim4_axis1_neg_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis1_neg_all_inputs_as_internal = TestModelManager::get().add("softmax_v1_2_axis_dim4_axis1_neg_all_inputs_as_internal", get_test_model_axis_dim4_axis1_neg_all_inputs_as_internal());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -3841,9 +4064,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({17.0f, -1.0f, 16.0f, -2.0f, 15.0f, -3.0f, 14.0f, -4.0f, 1.0f, -17.0f, 17.0f, -1.0f, 16.0f, -2.0f, 15.0f, -3.0f, 14.0f, -4.0f, 1.0f, -17.0f, 17.0f, -1.0f, 16.0f, -2.0f, 15.0f, -3.0f, 14.0f, -4.0f, 1.0f, -17.0f, 17.0f, -1.0f, 16.0f, -2.0f, 15.0f, -3.0f, 14.0f, -4.0f, 1.0f, -17.0f}),
@@ -3894,6 +4119,8 @@ const TestModel& get_test_model_axis_dim4_axis2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis2 = TestModelManager::get().add("softmax_v1_2_axis_dim4_axis2", get_test_model_axis_dim4_axis2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -3901,9 +4128,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis2_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -3988,6 +4217,8 @@ const TestModel& get_test_model_axis_dim4_axis2_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis2_all_inputs_as_internal = TestModelManager::get().add("softmax_v1_2_axis_dim4_axis2_all_inputs_as_internal", get_test_model_axis_dim4_axis2_all_inputs_as_internal());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -3995,9 +4226,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis2_neg() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({17.0f, -1.0f, 16.0f, -2.0f, 15.0f, -3.0f, 14.0f, -4.0f, 1.0f, -17.0f, 17.0f, -1.0f, 16.0f, -2.0f, 15.0f, -3.0f, 14.0f, -4.0f, 1.0f, -17.0f, 17.0f, -1.0f, 16.0f, -2.0f, 15.0f, -3.0f, 14.0f, -4.0f, 1.0f, -17.0f, 17.0f, -1.0f, 16.0f, -2.0f, 15.0f, -3.0f, 14.0f, -4.0f, 1.0f, -17.0f}),
@@ -4048,6 +4281,8 @@ const TestModel& get_test_model_axis_dim4_axis2_neg() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis2_neg = TestModelManager::get().add("softmax_v1_2_axis_dim4_axis2_neg", get_test_model_axis_dim4_axis2_neg());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -4055,9 +4290,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis2_neg_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -4142,6 +4379,8 @@ const TestModel& get_test_model_axis_dim4_axis2_neg_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis2_neg_all_inputs_as_internal = TestModelManager::get().add("softmax_v1_2_axis_dim4_axis2_neg_all_inputs_as_internal", get_test_model_axis_dim4_axis2_neg_all_inputs_as_internal());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -4149,9 +4388,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({17.0f, 16.0f, 15.0f, 14.0f, 1.0f, -1.0f, -2.0f, -3.0f, -4.0f, -17.0f, 17.0f, 16.0f, 15.0f, 14.0f, 1.0f, -1.0f, -2.0f, -3.0f, -4.0f, -17.0f, 17.0f, 16.0f, 15.0f, 14.0f, 1.0f, -1.0f, -2.0f, -3.0f, -4.0f, -17.0f, 17.0f, 16.0f, 15.0f, 14.0f, 1.0f, -1.0f, -2.0f, -3.0f, -4.0f, -17.0f}),
@@ -4202,6 +4443,8 @@ const TestModel& get_test_model_axis_dim4_axis3() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis3 = TestModelManager::get().add("softmax_v1_2_axis_dim4_axis3", get_test_model_axis_dim4_axis3());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -4209,9 +4452,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis3_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -4296,6 +4541,8 @@ const TestModel& get_test_model_axis_dim4_axis3_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis3_all_inputs_as_internal = TestModelManager::get().add("softmax_v1_2_axis_dim4_axis3_all_inputs_as_internal", get_test_model_axis_dim4_axis3_all_inputs_as_internal());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -4303,9 +4550,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis3_neg() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({17.0f, 16.0f, 15.0f, 14.0f, 1.0f, -1.0f, -2.0f, -3.0f, -4.0f, -17.0f, 17.0f, 16.0f, 15.0f, 14.0f, 1.0f, -1.0f, -2.0f, -3.0f, -4.0f, -17.0f, 17.0f, 16.0f, 15.0f, 14.0f, 1.0f, -1.0f, -2.0f, -3.0f, -4.0f, -17.0f, 17.0f, 16.0f, 15.0f, 14.0f, 1.0f, -1.0f, -2.0f, -3.0f, -4.0f, -17.0f}),
@@ -4356,6 +4605,8 @@ const TestModel& get_test_model_axis_dim4_axis3_neg() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis3_neg = TestModelManager::get().add("softmax_v1_2_axis_dim4_axis3_neg", get_test_model_axis_dim4_axis3_neg());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -4363,9 +4614,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis3_neg_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -4450,6 +4703,8 @@ const TestModel& get_test_model_axis_dim4_axis3_neg_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis3_neg_all_inputs_as_internal = TestModelManager::get().add("softmax_v1_2_axis_dim4_axis3_neg_all_inputs_as_internal", get_test_model_axis_dim4_axis3_neg_all_inputs_as_internal());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -4457,9 +4712,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis0() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({17.0f, -1.0f, 17.0f, -1.0f, 16.0f, -2.0f, 16.0f, -2.0f, 15.0f, -3.0f, 15.0f, -3.0f, 14.0f, -4.0f, 14.0f, -4.0f, 1.0f, -17.0f, 1.0f, -17.0f}),
@@ -4510,6 +4767,8 @@ const TestModel& get_test_model_axis_dim3_axis0() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim3_axis0 = TestModelManager::get().add("softmax_v1_2_axis_dim3_axis0", get_test_model_axis_dim3_axis0());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -4517,9 +4776,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis0_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -4604,6 +4865,8 @@ const TestModel& get_test_model_axis_dim3_axis0_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim3_axis0_all_inputs_as_internal = TestModelManager::get().add("softmax_v1_2_axis_dim3_axis0_all_inputs_as_internal", get_test_model_axis_dim3_axis0_all_inputs_as_internal());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -4611,9 +4874,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis0_neg() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({17.0f, -1.0f, 17.0f, -1.0f, 16.0f, -2.0f, 16.0f, -2.0f, 15.0f, -3.0f, 15.0f, -3.0f, 14.0f, -4.0f, 14.0f, -4.0f, 1.0f, -17.0f, 1.0f, -17.0f}),
@@ -4664,6 +4929,8 @@ const TestModel& get_test_model_axis_dim3_axis0_neg() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim3_axis0_neg = TestModelManager::get().add("softmax_v1_2_axis_dim3_axis0_neg", get_test_model_axis_dim3_axis0_neg());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -4671,9 +4938,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis0_neg_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -4758,6 +5027,8 @@ const TestModel& get_test_model_axis_dim3_axis0_neg_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim3_axis0_neg_all_inputs_as_internal = TestModelManager::get().add("softmax_v1_2_axis_dim3_axis0_neg_all_inputs_as_internal", get_test_model_axis_dim3_axis0_neg_all_inputs_as_internal());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -4765,9 +5036,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis1() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({17.0f, -1.0f, 16.0f, -2.0f, 15.0f, -3.0f, 14.0f, -4.0f, 1.0f, -17.0f, 17.0f, -1.0f, 16.0f, -2.0f, 15.0f, -3.0f, 14.0f, -4.0f, 1.0f, -17.0f}),
@@ -4818,6 +5091,8 @@ const TestModel& get_test_model_axis_dim3_axis1() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim3_axis1 = TestModelManager::get().add("softmax_v1_2_axis_dim3_axis1", get_test_model_axis_dim3_axis1());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -4825,9 +5100,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis1_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -4912,6 +5189,8 @@ const TestModel& get_test_model_axis_dim3_axis1_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim3_axis1_all_inputs_as_internal = TestModelManager::get().add("softmax_v1_2_axis_dim3_axis1_all_inputs_as_internal", get_test_model_axis_dim3_axis1_all_inputs_as_internal());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -4919,9 +5198,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis1_neg() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({17.0f, -1.0f, 16.0f, -2.0f, 15.0f, -3.0f, 14.0f, -4.0f, 1.0f, -17.0f, 17.0f, -1.0f, 16.0f, -2.0f, 15.0f, -3.0f, 14.0f, -4.0f, 1.0f, -17.0f}),
@@ -4972,6 +5253,8 @@ const TestModel& get_test_model_axis_dim3_axis1_neg() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim3_axis1_neg = TestModelManager::get().add("softmax_v1_2_axis_dim3_axis1_neg", get_test_model_axis_dim3_axis1_neg());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -4979,9 +5262,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis1_neg_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -5066,6 +5351,8 @@ const TestModel& get_test_model_axis_dim3_axis1_neg_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim3_axis1_neg_all_inputs_as_internal = TestModelManager::get().add("softmax_v1_2_axis_dim3_axis1_neg_all_inputs_as_internal", get_test_model_axis_dim3_axis1_neg_all_inputs_as_internal());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -5073,9 +5360,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({17.0f, 16.0f, 15.0f, 14.0f, 1.0f, -1.0f, -2.0f, -3.0f, -4.0f, -17.0f, 17.0f, 16.0f, 15.0f, 14.0f, 1.0f, -1.0f, -2.0f, -3.0f, -4.0f, -17.0f}),
@@ -5126,6 +5415,8 @@ const TestModel& get_test_model_axis_dim3_axis2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim3_axis2 = TestModelManager::get().add("softmax_v1_2_axis_dim3_axis2", get_test_model_axis_dim3_axis2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -5133,9 +5424,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis2_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -5220,6 +5513,8 @@ const TestModel& get_test_model_axis_dim3_axis2_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim3_axis2_all_inputs_as_internal = TestModelManager::get().add("softmax_v1_2_axis_dim3_axis2_all_inputs_as_internal", get_test_model_axis_dim3_axis2_all_inputs_as_internal());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -5227,9 +5522,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis2_neg() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({17.0f, 16.0f, 15.0f, 14.0f, 1.0f, -1.0f, -2.0f, -3.0f, -4.0f, -17.0f, 17.0f, 16.0f, 15.0f, 14.0f, 1.0f, -1.0f, -2.0f, -3.0f, -4.0f, -17.0f}),
@@ -5280,6 +5577,8 @@ const TestModel& get_test_model_axis_dim3_axis2_neg() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim3_axis2_neg = TestModelManager::get().add("softmax_v1_2_axis_dim3_axis2_neg", get_test_model_axis_dim3_axis2_neg());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -5287,9 +5586,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis2_neg_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -5374,6 +5675,8 @@ const TestModel& get_test_model_axis_dim3_axis2_neg_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim3_axis2_neg_all_inputs_as_internal = TestModelManager::get().add("softmax_v1_2_axis_dim3_axis2_neg_all_inputs_as_internal", get_test_model_axis_dim3_axis2_neg_all_inputs_as_internal());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -5381,9 +5684,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_dim2_axis0() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({17.0f, -1.0f, 16.0f, -2.0f, 15.0f, -3.0f, 14.0f, -4.0f, 1.0f, -17.0f}),
@@ -5434,6 +5739,8 @@ const TestModel& get_test_model_axis_dim2_axis0() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim2_axis0 = TestModelManager::get().add("softmax_v1_2_axis_dim2_axis0", get_test_model_axis_dim2_axis0());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -5441,9 +5748,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_dim2_axis0_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -5528,6 +5837,8 @@ const TestModel& get_test_model_axis_dim2_axis0_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim2_axis0_all_inputs_as_internal = TestModelManager::get().add("softmax_v1_2_axis_dim2_axis0_all_inputs_as_internal", get_test_model_axis_dim2_axis0_all_inputs_as_internal());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -5535,9 +5846,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_dim2_axis0_neg() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({17.0f, -1.0f, 16.0f, -2.0f, 15.0f, -3.0f, 14.0f, -4.0f, 1.0f, -17.0f}),
@@ -5588,6 +5901,8 @@ const TestModel& get_test_model_axis_dim2_axis0_neg() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim2_axis0_neg = TestModelManager::get().add("softmax_v1_2_axis_dim2_axis0_neg", get_test_model_axis_dim2_axis0_neg());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -5595,9 +5910,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_dim2_axis0_neg_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -5682,6 +5999,8 @@ const TestModel& get_test_model_axis_dim2_axis0_neg_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim2_axis0_neg_all_inputs_as_internal = TestModelManager::get().add("softmax_v1_2_axis_dim2_axis0_neg_all_inputs_as_internal", get_test_model_axis_dim2_axis0_neg_all_inputs_as_internal());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -5689,9 +6008,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_dim2_axis1() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({17.0f, 16.0f, 15.0f, 14.0f, 1.0f, -1.0f, -2.0f, -3.0f, -4.0f, -17.0f}),
@@ -5742,6 +6063,8 @@ const TestModel& get_test_model_axis_dim2_axis1() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim2_axis1 = TestModelManager::get().add("softmax_v1_2_axis_dim2_axis1", get_test_model_axis_dim2_axis1());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -5749,9 +6072,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_dim2_axis1_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -5836,6 +6161,8 @@ const TestModel& get_test_model_axis_dim2_axis1_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim2_axis1_all_inputs_as_internal = TestModelManager::get().add("softmax_v1_2_axis_dim2_axis1_all_inputs_as_internal", get_test_model_axis_dim2_axis1_all_inputs_as_internal());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -5843,9 +6170,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_dim2_axis1_neg() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({17.0f, 16.0f, 15.0f, 14.0f, 1.0f, -1.0f, -2.0f, -3.0f, -4.0f, -17.0f}),
@@ -5896,6 +6225,8 @@ const TestModel& get_test_model_axis_dim2_axis1_neg() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim2_axis1_neg = TestModelManager::get().add("softmax_v1_2_axis_dim2_axis1_neg", get_test_model_axis_dim2_axis1_neg());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -5903,9 +6234,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_dim2_axis1_neg_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -5990,6 +6323,8 @@ const TestModel& get_test_model_axis_dim2_axis1_neg_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim2_axis1_neg_all_inputs_as_internal = TestModelManager::get().add("softmax_v1_2_axis_dim2_axis1_neg_all_inputs_as_internal", get_test_model_axis_dim2_axis1_neg_all_inputs_as_internal());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -5997,9 +6332,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_dim1_axis0() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({17.0f, 16.0f, 15.0f, 14.0f, 1.0f}),
@@ -6050,6 +6387,8 @@ const TestModel& get_test_model_axis_dim1_axis0() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim1_axis0 = TestModelManager::get().add("softmax_v1_2_axis_dim1_axis0", get_test_model_axis_dim1_axis0());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -6057,9 +6396,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_dim1_axis0_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -6144,6 +6485,8 @@ const TestModel& get_test_model_axis_dim1_axis0_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim1_axis0_all_inputs_as_internal = TestModelManager::get().add("softmax_v1_2_axis_dim1_axis0_all_inputs_as_internal", get_test_model_axis_dim1_axis0_all_inputs_as_internal());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -6151,9 +6494,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_dim1_axis0_neg() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({17.0f, 16.0f, 15.0f, 14.0f, 1.0f}),
@@ -6204,6 +6549,8 @@ const TestModel& get_test_model_axis_dim1_axis0_neg() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim1_axis0_neg = TestModelManager::get().add("softmax_v1_2_axis_dim1_axis0_neg", get_test_model_axis_dim1_axis0_neg());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -6211,9 +6558,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_dim1_axis0_neg_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -6298,6 +6647,8 @@ const TestModel& get_test_model_axis_dim1_axis0_neg_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim1_axis0_neg_all_inputs_as_internal = TestModelManager::get().add("softmax_v1_2_axis_dim1_axis0_neg_all_inputs_as_internal", get_test_model_axis_dim1_axis0_neg_all_inputs_as_internal());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -6305,9 +6656,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_relaxed_dim4_axis0() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({17.0f, -1.0f, 17.0f, -1.0f, 17.0f, -1.0f, 17.0f, -1.0f, 16.0f, -2.0f, 16.0f, -2.0f, 16.0f, -2.0f, 16.0f, -2.0f, 15.0f, -3.0f, 15.0f, -3.0f, 15.0f, -3.0f, 15.0f, -3.0f, 14.0f, -4.0f, 14.0f, -4.0f, 14.0f, -4.0f, 14.0f, -4.0f, 1.0f, -17.0f, 1.0f, -17.0f, 1.0f, -17.0f, 1.0f, -17.0f}),
@@ -6358,6 +6711,8 @@ const TestModel& get_test_model_axis_relaxed_dim4_axis0() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_relaxed_dim4_axis0 = TestModelManager::get().add("softmax_v1_2_axis_relaxed_dim4_axis0", get_test_model_axis_relaxed_dim4_axis0());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -6365,9 +6720,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_relaxed_dim4_axis0_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -6452,6 +6809,8 @@ const TestModel& get_test_model_axis_relaxed_dim4_axis0_all_inputs_as_internal()
     };
     return model;
 }
+
+const auto dummy_test_model_axis_relaxed_dim4_axis0_all_inputs_as_internal = TestModelManager::get().add("softmax_v1_2_axis_relaxed_dim4_axis0_all_inputs_as_internal", get_test_model_axis_relaxed_dim4_axis0_all_inputs_as_internal());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -6459,9 +6818,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_relaxed_dim4_axis0_neg() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({17.0f, -1.0f, 17.0f, -1.0f, 17.0f, -1.0f, 17.0f, -1.0f, 16.0f, -2.0f, 16.0f, -2.0f, 16.0f, -2.0f, 16.0f, -2.0f, 15.0f, -3.0f, 15.0f, -3.0f, 15.0f, -3.0f, 15.0f, -3.0f, 14.0f, -4.0f, 14.0f, -4.0f, 14.0f, -4.0f, 14.0f, -4.0f, 1.0f, -17.0f, 1.0f, -17.0f, 1.0f, -17.0f, 1.0f, -17.0f}),
@@ -6512,6 +6873,8 @@ const TestModel& get_test_model_axis_relaxed_dim4_axis0_neg() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_relaxed_dim4_axis0_neg = TestModelManager::get().add("softmax_v1_2_axis_relaxed_dim4_axis0_neg", get_test_model_axis_relaxed_dim4_axis0_neg());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -6519,9 +6882,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_relaxed_dim4_axis0_neg_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -6607,15 +6972,19 @@ const TestModel& get_test_model_axis_relaxed_dim4_axis0_neg_all_inputs_as_intern
     return model;
 }
 
+const auto dummy_test_model_axis_relaxed_dim4_axis0_neg_all_inputs_as_internal = TestModelManager::get().add("softmax_v1_2_axis_relaxed_dim4_axis0_neg_all_inputs_as_internal", get_test_model_axis_relaxed_dim4_axis0_neg_all_inputs_as_internal());
+
 }  // namespace generated_tests::softmax_v1_2
 
 namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_relaxed_dim4_axis1() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({17.0f, -1.0f, 17.0f, -1.0f, 16.0f, -2.0f, 16.0f, -2.0f, 15.0f, -3.0f, 15.0f, -3.0f, 14.0f, -4.0f, 14.0f, -4.0f, 1.0f, -17.0f, 1.0f, -17.0f, 17.0f, -1.0f, 17.0f, -1.0f, 16.0f, -2.0f, 16.0f, -2.0f, 15.0f, -3.0f, 15.0f, -3.0f, 14.0f, -4.0f, 14.0f, -4.0f, 1.0f, -17.0f, 1.0f, -17.0f}),
@@ -6666,6 +7035,8 @@ const TestModel& get_test_model_axis_relaxed_dim4_axis1() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_relaxed_dim4_axis1 = TestModelManager::get().add("softmax_v1_2_axis_relaxed_dim4_axis1", get_test_model_axis_relaxed_dim4_axis1());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -6673,9 +7044,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_relaxed_dim4_axis1_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -6760,6 +7133,8 @@ const TestModel& get_test_model_axis_relaxed_dim4_axis1_all_inputs_as_internal()
     };
     return model;
 }
+
+const auto dummy_test_model_axis_relaxed_dim4_axis1_all_inputs_as_internal = TestModelManager::get().add("softmax_v1_2_axis_relaxed_dim4_axis1_all_inputs_as_internal", get_test_model_axis_relaxed_dim4_axis1_all_inputs_as_internal());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -6767,9 +7142,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_relaxed_dim4_axis1_neg() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({17.0f, -1.0f, 17.0f, -1.0f, 16.0f, -2.0f, 16.0f, -2.0f, 15.0f, -3.0f, 15.0f, -3.0f, 14.0f, -4.0f, 14.0f, -4.0f, 1.0f, -17.0f, 1.0f, -17.0f, 17.0f, -1.0f, 17.0f, -1.0f, 16.0f, -2.0f, 16.0f, -2.0f, 15.0f, -3.0f, 15.0f, -3.0f, 14.0f, -4.0f, 14.0f, -4.0f, 1.0f, -17.0f, 1.0f, -17.0f}),
@@ -6820,6 +7197,8 @@ const TestModel& get_test_model_axis_relaxed_dim4_axis1_neg() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_relaxed_dim4_axis1_neg = TestModelManager::get().add("softmax_v1_2_axis_relaxed_dim4_axis1_neg", get_test_model_axis_relaxed_dim4_axis1_neg());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -6827,9 +7206,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_relaxed_dim4_axis1_neg_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -6915,15 +7296,19 @@ const TestModel& get_test_model_axis_relaxed_dim4_axis1_neg_all_inputs_as_intern
     return model;
 }
 
+const auto dummy_test_model_axis_relaxed_dim4_axis1_neg_all_inputs_as_internal = TestModelManager::get().add("softmax_v1_2_axis_relaxed_dim4_axis1_neg_all_inputs_as_internal", get_test_model_axis_relaxed_dim4_axis1_neg_all_inputs_as_internal());
+
 }  // namespace generated_tests::softmax_v1_2
 
 namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_relaxed_dim4_axis2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({17.0f, -1.0f, 16.0f, -2.0f, 15.0f, -3.0f, 14.0f, -4.0f, 1.0f, -17.0f, 17.0f, -1.0f, 16.0f, -2.0f, 15.0f, -3.0f, 14.0f, -4.0f, 1.0f, -17.0f, 17.0f, -1.0f, 16.0f, -2.0f, 15.0f, -3.0f, 14.0f, -4.0f, 1.0f, -17.0f, 17.0f, -1.0f, 16.0f, -2.0f, 15.0f, -3.0f, 14.0f, -4.0f, 1.0f, -17.0f}),
@@ -6974,6 +7359,8 @@ const TestModel& get_test_model_axis_relaxed_dim4_axis2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_relaxed_dim4_axis2 = TestModelManager::get().add("softmax_v1_2_axis_relaxed_dim4_axis2", get_test_model_axis_relaxed_dim4_axis2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -6981,9 +7368,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_relaxed_dim4_axis2_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -7068,6 +7457,8 @@ const TestModel& get_test_model_axis_relaxed_dim4_axis2_all_inputs_as_internal()
     };
     return model;
 }
+
+const auto dummy_test_model_axis_relaxed_dim4_axis2_all_inputs_as_internal = TestModelManager::get().add("softmax_v1_2_axis_relaxed_dim4_axis2_all_inputs_as_internal", get_test_model_axis_relaxed_dim4_axis2_all_inputs_as_internal());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -7075,9 +7466,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_relaxed_dim4_axis2_neg() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({17.0f, -1.0f, 16.0f, -2.0f, 15.0f, -3.0f, 14.0f, -4.0f, 1.0f, -17.0f, 17.0f, -1.0f, 16.0f, -2.0f, 15.0f, -3.0f, 14.0f, -4.0f, 1.0f, -17.0f, 17.0f, -1.0f, 16.0f, -2.0f, 15.0f, -3.0f, 14.0f, -4.0f, 1.0f, -17.0f, 17.0f, -1.0f, 16.0f, -2.0f, 15.0f, -3.0f, 14.0f, -4.0f, 1.0f, -17.0f}),
@@ -7128,6 +7521,8 @@ const TestModel& get_test_model_axis_relaxed_dim4_axis2_neg() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_relaxed_dim4_axis2_neg = TestModelManager::get().add("softmax_v1_2_axis_relaxed_dim4_axis2_neg", get_test_model_axis_relaxed_dim4_axis2_neg());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -7135,9 +7530,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_relaxed_dim4_axis2_neg_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -7223,15 +7620,19 @@ const TestModel& get_test_model_axis_relaxed_dim4_axis2_neg_all_inputs_as_intern
     return model;
 }
 
+const auto dummy_test_model_axis_relaxed_dim4_axis2_neg_all_inputs_as_internal = TestModelManager::get().add("softmax_v1_2_axis_relaxed_dim4_axis2_neg_all_inputs_as_internal", get_test_model_axis_relaxed_dim4_axis2_neg_all_inputs_as_internal());
+
 }  // namespace generated_tests::softmax_v1_2
 
 namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_relaxed_dim4_axis3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({17.0f, 16.0f, 15.0f, 14.0f, 1.0f, -1.0f, -2.0f, -3.0f, -4.0f, -17.0f, 17.0f, 16.0f, 15.0f, 14.0f, 1.0f, -1.0f, -2.0f, -3.0f, -4.0f, -17.0f, 17.0f, 16.0f, 15.0f, 14.0f, 1.0f, -1.0f, -2.0f, -3.0f, -4.0f, -17.0f, 17.0f, 16.0f, 15.0f, 14.0f, 1.0f, -1.0f, -2.0f, -3.0f, -4.0f, -17.0f}),
@@ -7282,6 +7683,8 @@ const TestModel& get_test_model_axis_relaxed_dim4_axis3() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_relaxed_dim4_axis3 = TestModelManager::get().add("softmax_v1_2_axis_relaxed_dim4_axis3", get_test_model_axis_relaxed_dim4_axis3());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -7289,9 +7692,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_relaxed_dim4_axis3_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -7376,6 +7781,8 @@ const TestModel& get_test_model_axis_relaxed_dim4_axis3_all_inputs_as_internal()
     };
     return model;
 }
+
+const auto dummy_test_model_axis_relaxed_dim4_axis3_all_inputs_as_internal = TestModelManager::get().add("softmax_v1_2_axis_relaxed_dim4_axis3_all_inputs_as_internal", get_test_model_axis_relaxed_dim4_axis3_all_inputs_as_internal());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -7383,9 +7790,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_relaxed_dim4_axis3_neg() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({17.0f, 16.0f, 15.0f, 14.0f, 1.0f, -1.0f, -2.0f, -3.0f, -4.0f, -17.0f, 17.0f, 16.0f, 15.0f, 14.0f, 1.0f, -1.0f, -2.0f, -3.0f, -4.0f, -17.0f, 17.0f, 16.0f, 15.0f, 14.0f, 1.0f, -1.0f, -2.0f, -3.0f, -4.0f, -17.0f, 17.0f, 16.0f, 15.0f, 14.0f, 1.0f, -1.0f, -2.0f, -3.0f, -4.0f, -17.0f}),
@@ -7436,6 +7845,8 @@ const TestModel& get_test_model_axis_relaxed_dim4_axis3_neg() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_relaxed_dim4_axis3_neg = TestModelManager::get().add("softmax_v1_2_axis_relaxed_dim4_axis3_neg", get_test_model_axis_relaxed_dim4_axis3_neg());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -7443,9 +7854,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_relaxed_dim4_axis3_neg_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -7531,15 +7944,19 @@ const TestModel& get_test_model_axis_relaxed_dim4_axis3_neg_all_inputs_as_intern
     return model;
 }
 
+const auto dummy_test_model_axis_relaxed_dim4_axis3_neg_all_inputs_as_internal = TestModelManager::get().add("softmax_v1_2_axis_relaxed_dim4_axis3_neg_all_inputs_as_internal", get_test_model_axis_relaxed_dim4_axis3_neg_all_inputs_as_internal());
+
 }  // namespace generated_tests::softmax_v1_2
 
 namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_relaxed_dim3_axis0() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({17.0f, -1.0f, 17.0f, -1.0f, 16.0f, -2.0f, 16.0f, -2.0f, 15.0f, -3.0f, 15.0f, -3.0f, 14.0f, -4.0f, 14.0f, -4.0f, 1.0f, -17.0f, 1.0f, -17.0f}),
@@ -7590,6 +8007,8 @@ const TestModel& get_test_model_axis_relaxed_dim3_axis0() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_relaxed_dim3_axis0 = TestModelManager::get().add("softmax_v1_2_axis_relaxed_dim3_axis0", get_test_model_axis_relaxed_dim3_axis0());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -7597,9 +8016,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_relaxed_dim3_axis0_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -7684,6 +8105,8 @@ const TestModel& get_test_model_axis_relaxed_dim3_axis0_all_inputs_as_internal()
     };
     return model;
 }
+
+const auto dummy_test_model_axis_relaxed_dim3_axis0_all_inputs_as_internal = TestModelManager::get().add("softmax_v1_2_axis_relaxed_dim3_axis0_all_inputs_as_internal", get_test_model_axis_relaxed_dim3_axis0_all_inputs_as_internal());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -7691,9 +8114,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_relaxed_dim3_axis0_neg() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({17.0f, -1.0f, 17.0f, -1.0f, 16.0f, -2.0f, 16.0f, -2.0f, 15.0f, -3.0f, 15.0f, -3.0f, 14.0f, -4.0f, 14.0f, -4.0f, 1.0f, -17.0f, 1.0f, -17.0f}),
@@ -7744,6 +8169,8 @@ const TestModel& get_test_model_axis_relaxed_dim3_axis0_neg() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_relaxed_dim3_axis0_neg = TestModelManager::get().add("softmax_v1_2_axis_relaxed_dim3_axis0_neg", get_test_model_axis_relaxed_dim3_axis0_neg());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -7751,9 +8178,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_relaxed_dim3_axis0_neg_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -7839,15 +8268,19 @@ const TestModel& get_test_model_axis_relaxed_dim3_axis0_neg_all_inputs_as_intern
     return model;
 }
 
+const auto dummy_test_model_axis_relaxed_dim3_axis0_neg_all_inputs_as_internal = TestModelManager::get().add("softmax_v1_2_axis_relaxed_dim3_axis0_neg_all_inputs_as_internal", get_test_model_axis_relaxed_dim3_axis0_neg_all_inputs_as_internal());
+
 }  // namespace generated_tests::softmax_v1_2
 
 namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_relaxed_dim3_axis1() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({17.0f, -1.0f, 16.0f, -2.0f, 15.0f, -3.0f, 14.0f, -4.0f, 1.0f, -17.0f, 17.0f, -1.0f, 16.0f, -2.0f, 15.0f, -3.0f, 14.0f, -4.0f, 1.0f, -17.0f}),
@@ -7898,6 +8331,8 @@ const TestModel& get_test_model_axis_relaxed_dim3_axis1() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_relaxed_dim3_axis1 = TestModelManager::get().add("softmax_v1_2_axis_relaxed_dim3_axis1", get_test_model_axis_relaxed_dim3_axis1());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -7905,9 +8340,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_relaxed_dim3_axis1_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -7992,6 +8429,8 @@ const TestModel& get_test_model_axis_relaxed_dim3_axis1_all_inputs_as_internal()
     };
     return model;
 }
+
+const auto dummy_test_model_axis_relaxed_dim3_axis1_all_inputs_as_internal = TestModelManager::get().add("softmax_v1_2_axis_relaxed_dim3_axis1_all_inputs_as_internal", get_test_model_axis_relaxed_dim3_axis1_all_inputs_as_internal());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -7999,9 +8438,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_relaxed_dim3_axis1_neg() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({17.0f, -1.0f, 16.0f, -2.0f, 15.0f, -3.0f, 14.0f, -4.0f, 1.0f, -17.0f, 17.0f, -1.0f, 16.0f, -2.0f, 15.0f, -3.0f, 14.0f, -4.0f, 1.0f, -17.0f}),
@@ -8052,6 +8493,8 @@ const TestModel& get_test_model_axis_relaxed_dim3_axis1_neg() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_relaxed_dim3_axis1_neg = TestModelManager::get().add("softmax_v1_2_axis_relaxed_dim3_axis1_neg", get_test_model_axis_relaxed_dim3_axis1_neg());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -8059,9 +8502,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_relaxed_dim3_axis1_neg_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -8147,15 +8592,19 @@ const TestModel& get_test_model_axis_relaxed_dim3_axis1_neg_all_inputs_as_intern
     return model;
 }
 
+const auto dummy_test_model_axis_relaxed_dim3_axis1_neg_all_inputs_as_internal = TestModelManager::get().add("softmax_v1_2_axis_relaxed_dim3_axis1_neg_all_inputs_as_internal", get_test_model_axis_relaxed_dim3_axis1_neg_all_inputs_as_internal());
+
 }  // namespace generated_tests::softmax_v1_2
 
 namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_relaxed_dim3_axis2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({17.0f, 16.0f, 15.0f, 14.0f, 1.0f, -1.0f, -2.0f, -3.0f, -4.0f, -17.0f, 17.0f, 16.0f, 15.0f, 14.0f, 1.0f, -1.0f, -2.0f, -3.0f, -4.0f, -17.0f}),
@@ -8206,6 +8655,8 @@ const TestModel& get_test_model_axis_relaxed_dim3_axis2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_relaxed_dim3_axis2 = TestModelManager::get().add("softmax_v1_2_axis_relaxed_dim3_axis2", get_test_model_axis_relaxed_dim3_axis2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -8213,9 +8664,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_relaxed_dim3_axis2_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -8300,6 +8753,8 @@ const TestModel& get_test_model_axis_relaxed_dim3_axis2_all_inputs_as_internal()
     };
     return model;
 }
+
+const auto dummy_test_model_axis_relaxed_dim3_axis2_all_inputs_as_internal = TestModelManager::get().add("softmax_v1_2_axis_relaxed_dim3_axis2_all_inputs_as_internal", get_test_model_axis_relaxed_dim3_axis2_all_inputs_as_internal());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -8307,9 +8762,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_relaxed_dim3_axis2_neg() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({17.0f, 16.0f, 15.0f, 14.0f, 1.0f, -1.0f, -2.0f, -3.0f, -4.0f, -17.0f, 17.0f, 16.0f, 15.0f, 14.0f, 1.0f, -1.0f, -2.0f, -3.0f, -4.0f, -17.0f}),
@@ -8360,6 +8817,8 @@ const TestModel& get_test_model_axis_relaxed_dim3_axis2_neg() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_relaxed_dim3_axis2_neg = TestModelManager::get().add("softmax_v1_2_axis_relaxed_dim3_axis2_neg", get_test_model_axis_relaxed_dim3_axis2_neg());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -8367,9 +8826,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_relaxed_dim3_axis2_neg_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -8455,15 +8916,19 @@ const TestModel& get_test_model_axis_relaxed_dim3_axis2_neg_all_inputs_as_intern
     return model;
 }
 
+const auto dummy_test_model_axis_relaxed_dim3_axis2_neg_all_inputs_as_internal = TestModelManager::get().add("softmax_v1_2_axis_relaxed_dim3_axis2_neg_all_inputs_as_internal", get_test_model_axis_relaxed_dim3_axis2_neg_all_inputs_as_internal());
+
 }  // namespace generated_tests::softmax_v1_2
 
 namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_relaxed_dim2_axis0() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({17.0f, -1.0f, 16.0f, -2.0f, 15.0f, -3.0f, 14.0f, -4.0f, 1.0f, -17.0f}),
@@ -8514,6 +8979,8 @@ const TestModel& get_test_model_axis_relaxed_dim2_axis0() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_relaxed_dim2_axis0 = TestModelManager::get().add("softmax_v1_2_axis_relaxed_dim2_axis0", get_test_model_axis_relaxed_dim2_axis0());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -8521,9 +8988,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_relaxed_dim2_axis0_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -8608,6 +9077,8 @@ const TestModel& get_test_model_axis_relaxed_dim2_axis0_all_inputs_as_internal()
     };
     return model;
 }
+
+const auto dummy_test_model_axis_relaxed_dim2_axis0_all_inputs_as_internal = TestModelManager::get().add("softmax_v1_2_axis_relaxed_dim2_axis0_all_inputs_as_internal", get_test_model_axis_relaxed_dim2_axis0_all_inputs_as_internal());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -8615,9 +9086,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_relaxed_dim2_axis0_neg() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({17.0f, -1.0f, 16.0f, -2.0f, 15.0f, -3.0f, 14.0f, -4.0f, 1.0f, -17.0f}),
@@ -8668,6 +9141,8 @@ const TestModel& get_test_model_axis_relaxed_dim2_axis0_neg() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_relaxed_dim2_axis0_neg = TestModelManager::get().add("softmax_v1_2_axis_relaxed_dim2_axis0_neg", get_test_model_axis_relaxed_dim2_axis0_neg());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -8675,9 +9150,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_relaxed_dim2_axis0_neg_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -8763,15 +9240,19 @@ const TestModel& get_test_model_axis_relaxed_dim2_axis0_neg_all_inputs_as_intern
     return model;
 }
 
+const auto dummy_test_model_axis_relaxed_dim2_axis0_neg_all_inputs_as_internal = TestModelManager::get().add("softmax_v1_2_axis_relaxed_dim2_axis0_neg_all_inputs_as_internal", get_test_model_axis_relaxed_dim2_axis0_neg_all_inputs_as_internal());
+
 }  // namespace generated_tests::softmax_v1_2
 
 namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_relaxed_dim2_axis1() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({17.0f, 16.0f, 15.0f, 14.0f, 1.0f, -1.0f, -2.0f, -3.0f, -4.0f, -17.0f}),
@@ -8822,6 +9303,8 @@ const TestModel& get_test_model_axis_relaxed_dim2_axis1() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_relaxed_dim2_axis1 = TestModelManager::get().add("softmax_v1_2_axis_relaxed_dim2_axis1", get_test_model_axis_relaxed_dim2_axis1());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -8829,9 +9312,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_relaxed_dim2_axis1_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -8916,6 +9401,8 @@ const TestModel& get_test_model_axis_relaxed_dim2_axis1_all_inputs_as_internal()
     };
     return model;
 }
+
+const auto dummy_test_model_axis_relaxed_dim2_axis1_all_inputs_as_internal = TestModelManager::get().add("softmax_v1_2_axis_relaxed_dim2_axis1_all_inputs_as_internal", get_test_model_axis_relaxed_dim2_axis1_all_inputs_as_internal());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -8923,9 +9410,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_relaxed_dim2_axis1_neg() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({17.0f, 16.0f, 15.0f, 14.0f, 1.0f, -1.0f, -2.0f, -3.0f, -4.0f, -17.0f}),
@@ -8976,6 +9465,8 @@ const TestModel& get_test_model_axis_relaxed_dim2_axis1_neg() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_relaxed_dim2_axis1_neg = TestModelManager::get().add("softmax_v1_2_axis_relaxed_dim2_axis1_neg", get_test_model_axis_relaxed_dim2_axis1_neg());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -8983,9 +9474,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_relaxed_dim2_axis1_neg_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -9071,15 +9564,19 @@ const TestModel& get_test_model_axis_relaxed_dim2_axis1_neg_all_inputs_as_intern
     return model;
 }
 
+const auto dummy_test_model_axis_relaxed_dim2_axis1_neg_all_inputs_as_internal = TestModelManager::get().add("softmax_v1_2_axis_relaxed_dim2_axis1_neg_all_inputs_as_internal", get_test_model_axis_relaxed_dim2_axis1_neg_all_inputs_as_internal());
+
 }  // namespace generated_tests::softmax_v1_2
 
 namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_relaxed_dim1_axis0() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({17.0f, 16.0f, 15.0f, 14.0f, 1.0f}),
@@ -9130,6 +9627,8 @@ const TestModel& get_test_model_axis_relaxed_dim1_axis0() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_relaxed_dim1_axis0 = TestModelManager::get().add("softmax_v1_2_axis_relaxed_dim1_axis0", get_test_model_axis_relaxed_dim1_axis0());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -9137,9 +9636,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_relaxed_dim1_axis0_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -9224,6 +9725,8 @@ const TestModel& get_test_model_axis_relaxed_dim1_axis0_all_inputs_as_internal()
     };
     return model;
 }
+
+const auto dummy_test_model_axis_relaxed_dim1_axis0_all_inputs_as_internal = TestModelManager::get().add("softmax_v1_2_axis_relaxed_dim1_axis0_all_inputs_as_internal", get_test_model_axis_relaxed_dim1_axis0_all_inputs_as_internal());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -9231,9 +9734,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_relaxed_dim1_axis0_neg() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({17.0f, 16.0f, 15.0f, 14.0f, 1.0f}),
@@ -9284,6 +9789,8 @@ const TestModel& get_test_model_axis_relaxed_dim1_axis0_neg() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_relaxed_dim1_axis0_neg = TestModelManager::get().add("softmax_v1_2_axis_relaxed_dim1_axis0_neg", get_test_model_axis_relaxed_dim1_axis0_neg());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -9291,9 +9798,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_relaxed_dim1_axis0_neg_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -9379,15 +9888,19 @@ const TestModel& get_test_model_axis_relaxed_dim1_axis0_neg_all_inputs_as_intern
     return model;
 }
 
+const auto dummy_test_model_axis_relaxed_dim1_axis0_neg_all_inputs_as_internal = TestModelManager::get().add("softmax_v1_2_axis_relaxed_dim1_axis0_neg_all_inputs_as_internal", get_test_model_axis_relaxed_dim1_axis0_neg_all_inputs_as_internal());
+
 }  // namespace generated_tests::softmax_v1_2
 
 namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_float16_dim4_axis0() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({17.0f, -1.0f, 17.0f, -1.0f, 17.0f, -1.0f, 17.0f, -1.0f, 16.0f, -2.0f, 16.0f, -2.0f, 16.0f, -2.0f, 16.0f, -2.0f, 15.0f, -3.0f, 15.0f, -3.0f, 15.0f, -3.0f, 15.0f, -3.0f, 14.0f, -4.0f, 14.0f, -4.0f, 14.0f, -4.0f, 14.0f, -4.0f, 1.0f, -17.0f, 1.0f, -17.0f, 1.0f, -17.0f, 1.0f, -17.0f}),
@@ -9438,6 +9951,8 @@ const TestModel& get_test_model_axis_float16_dim4_axis0() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_float16_dim4_axis0 = TestModelManager::get().add("softmax_v1_2_axis_float16_dim4_axis0", get_test_model_axis_float16_dim4_axis0());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -9445,9 +9960,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_float16_dim4_axis0_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -9532,6 +10049,8 @@ const TestModel& get_test_model_axis_float16_dim4_axis0_all_inputs_as_internal()
     };
     return model;
 }
+
+const auto dummy_test_model_axis_float16_dim4_axis0_all_inputs_as_internal = TestModelManager::get().add("softmax_v1_2_axis_float16_dim4_axis0_all_inputs_as_internal", get_test_model_axis_float16_dim4_axis0_all_inputs_as_internal());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -9539,9 +10058,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_float16_dim4_axis0_neg() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({17.0f, -1.0f, 17.0f, -1.0f, 17.0f, -1.0f, 17.0f, -1.0f, 16.0f, -2.0f, 16.0f, -2.0f, 16.0f, -2.0f, 16.0f, -2.0f, 15.0f, -3.0f, 15.0f, -3.0f, 15.0f, -3.0f, 15.0f, -3.0f, 14.0f, -4.0f, 14.0f, -4.0f, 14.0f, -4.0f, 14.0f, -4.0f, 1.0f, -17.0f, 1.0f, -17.0f, 1.0f, -17.0f, 1.0f, -17.0f}),
@@ -9592,6 +10113,8 @@ const TestModel& get_test_model_axis_float16_dim4_axis0_neg() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_float16_dim4_axis0_neg = TestModelManager::get().add("softmax_v1_2_axis_float16_dim4_axis0_neg", get_test_model_axis_float16_dim4_axis0_neg());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -9599,9 +10122,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_float16_dim4_axis0_neg_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -9687,15 +10212,19 @@ const TestModel& get_test_model_axis_float16_dim4_axis0_neg_all_inputs_as_intern
     return model;
 }
 
+const auto dummy_test_model_axis_float16_dim4_axis0_neg_all_inputs_as_internal = TestModelManager::get().add("softmax_v1_2_axis_float16_dim4_axis0_neg_all_inputs_as_internal", get_test_model_axis_float16_dim4_axis0_neg_all_inputs_as_internal());
+
 }  // namespace generated_tests::softmax_v1_2
 
 namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_float16_dim4_axis1() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({17.0f, -1.0f, 17.0f, -1.0f, 16.0f, -2.0f, 16.0f, -2.0f, 15.0f, -3.0f, 15.0f, -3.0f, 14.0f, -4.0f, 14.0f, -4.0f, 1.0f, -17.0f, 1.0f, -17.0f, 17.0f, -1.0f, 17.0f, -1.0f, 16.0f, -2.0f, 16.0f, -2.0f, 15.0f, -3.0f, 15.0f, -3.0f, 14.0f, -4.0f, 14.0f, -4.0f, 1.0f, -17.0f, 1.0f, -17.0f}),
@@ -9746,6 +10275,8 @@ const TestModel& get_test_model_axis_float16_dim4_axis1() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_float16_dim4_axis1 = TestModelManager::get().add("softmax_v1_2_axis_float16_dim4_axis1", get_test_model_axis_float16_dim4_axis1());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -9753,9 +10284,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_float16_dim4_axis1_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -9840,6 +10373,8 @@ const TestModel& get_test_model_axis_float16_dim4_axis1_all_inputs_as_internal()
     };
     return model;
 }
+
+const auto dummy_test_model_axis_float16_dim4_axis1_all_inputs_as_internal = TestModelManager::get().add("softmax_v1_2_axis_float16_dim4_axis1_all_inputs_as_internal", get_test_model_axis_float16_dim4_axis1_all_inputs_as_internal());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -9847,9 +10382,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_float16_dim4_axis1_neg() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({17.0f, -1.0f, 17.0f, -1.0f, 16.0f, -2.0f, 16.0f, -2.0f, 15.0f, -3.0f, 15.0f, -3.0f, 14.0f, -4.0f, 14.0f, -4.0f, 1.0f, -17.0f, 1.0f, -17.0f, 17.0f, -1.0f, 17.0f, -1.0f, 16.0f, -2.0f, 16.0f, -2.0f, 15.0f, -3.0f, 15.0f, -3.0f, 14.0f, -4.0f, 14.0f, -4.0f, 1.0f, -17.0f, 1.0f, -17.0f}),
@@ -9900,6 +10437,8 @@ const TestModel& get_test_model_axis_float16_dim4_axis1_neg() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_float16_dim4_axis1_neg = TestModelManager::get().add("softmax_v1_2_axis_float16_dim4_axis1_neg", get_test_model_axis_float16_dim4_axis1_neg());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -9907,9 +10446,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_float16_dim4_axis1_neg_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -9995,15 +10536,19 @@ const TestModel& get_test_model_axis_float16_dim4_axis1_neg_all_inputs_as_intern
     return model;
 }
 
+const auto dummy_test_model_axis_float16_dim4_axis1_neg_all_inputs_as_internal = TestModelManager::get().add("softmax_v1_2_axis_float16_dim4_axis1_neg_all_inputs_as_internal", get_test_model_axis_float16_dim4_axis1_neg_all_inputs_as_internal());
+
 }  // namespace generated_tests::softmax_v1_2
 
 namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_float16_dim4_axis2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({17.0f, -1.0f, 16.0f, -2.0f, 15.0f, -3.0f, 14.0f, -4.0f, 1.0f, -17.0f, 17.0f, -1.0f, 16.0f, -2.0f, 15.0f, -3.0f, 14.0f, -4.0f, 1.0f, -17.0f, 17.0f, -1.0f, 16.0f, -2.0f, 15.0f, -3.0f, 14.0f, -4.0f, 1.0f, -17.0f, 17.0f, -1.0f, 16.0f, -2.0f, 15.0f, -3.0f, 14.0f, -4.0f, 1.0f, -17.0f}),
@@ -10054,6 +10599,8 @@ const TestModel& get_test_model_axis_float16_dim4_axis2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_float16_dim4_axis2 = TestModelManager::get().add("softmax_v1_2_axis_float16_dim4_axis2", get_test_model_axis_float16_dim4_axis2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -10061,9 +10608,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_float16_dim4_axis2_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -10148,6 +10697,8 @@ const TestModel& get_test_model_axis_float16_dim4_axis2_all_inputs_as_internal()
     };
     return model;
 }
+
+const auto dummy_test_model_axis_float16_dim4_axis2_all_inputs_as_internal = TestModelManager::get().add("softmax_v1_2_axis_float16_dim4_axis2_all_inputs_as_internal", get_test_model_axis_float16_dim4_axis2_all_inputs_as_internal());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -10155,9 +10706,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_float16_dim4_axis2_neg() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({17.0f, -1.0f, 16.0f, -2.0f, 15.0f, -3.0f, 14.0f, -4.0f, 1.0f, -17.0f, 17.0f, -1.0f, 16.0f, -2.0f, 15.0f, -3.0f, 14.0f, -4.0f, 1.0f, -17.0f, 17.0f, -1.0f, 16.0f, -2.0f, 15.0f, -3.0f, 14.0f, -4.0f, 1.0f, -17.0f, 17.0f, -1.0f, 16.0f, -2.0f, 15.0f, -3.0f, 14.0f, -4.0f, 1.0f, -17.0f}),
@@ -10208,6 +10761,8 @@ const TestModel& get_test_model_axis_float16_dim4_axis2_neg() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_float16_dim4_axis2_neg = TestModelManager::get().add("softmax_v1_2_axis_float16_dim4_axis2_neg", get_test_model_axis_float16_dim4_axis2_neg());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -10215,9 +10770,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_float16_dim4_axis2_neg_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -10303,15 +10860,19 @@ const TestModel& get_test_model_axis_float16_dim4_axis2_neg_all_inputs_as_intern
     return model;
 }
 
+const auto dummy_test_model_axis_float16_dim4_axis2_neg_all_inputs_as_internal = TestModelManager::get().add("softmax_v1_2_axis_float16_dim4_axis2_neg_all_inputs_as_internal", get_test_model_axis_float16_dim4_axis2_neg_all_inputs_as_internal());
+
 }  // namespace generated_tests::softmax_v1_2
 
 namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_float16_dim4_axis3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({17.0f, 16.0f, 15.0f, 14.0f, 1.0f, -1.0f, -2.0f, -3.0f, -4.0f, -17.0f, 17.0f, 16.0f, 15.0f, 14.0f, 1.0f, -1.0f, -2.0f, -3.0f, -4.0f, -17.0f, 17.0f, 16.0f, 15.0f, 14.0f, 1.0f, -1.0f, -2.0f, -3.0f, -4.0f, -17.0f, 17.0f, 16.0f, 15.0f, 14.0f, 1.0f, -1.0f, -2.0f, -3.0f, -4.0f, -17.0f}),
@@ -10362,6 +10923,8 @@ const TestModel& get_test_model_axis_float16_dim4_axis3() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_float16_dim4_axis3 = TestModelManager::get().add("softmax_v1_2_axis_float16_dim4_axis3", get_test_model_axis_float16_dim4_axis3());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -10369,9 +10932,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_float16_dim4_axis3_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -10456,6 +11021,8 @@ const TestModel& get_test_model_axis_float16_dim4_axis3_all_inputs_as_internal()
     };
     return model;
 }
+
+const auto dummy_test_model_axis_float16_dim4_axis3_all_inputs_as_internal = TestModelManager::get().add("softmax_v1_2_axis_float16_dim4_axis3_all_inputs_as_internal", get_test_model_axis_float16_dim4_axis3_all_inputs_as_internal());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -10463,9 +11030,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_float16_dim4_axis3_neg() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({17.0f, 16.0f, 15.0f, 14.0f, 1.0f, -1.0f, -2.0f, -3.0f, -4.0f, -17.0f, 17.0f, 16.0f, 15.0f, 14.0f, 1.0f, -1.0f, -2.0f, -3.0f, -4.0f, -17.0f, 17.0f, 16.0f, 15.0f, 14.0f, 1.0f, -1.0f, -2.0f, -3.0f, -4.0f, -17.0f, 17.0f, 16.0f, 15.0f, 14.0f, 1.0f, -1.0f, -2.0f, -3.0f, -4.0f, -17.0f}),
@@ -10516,6 +11085,8 @@ const TestModel& get_test_model_axis_float16_dim4_axis3_neg() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_float16_dim4_axis3_neg = TestModelManager::get().add("softmax_v1_2_axis_float16_dim4_axis3_neg", get_test_model_axis_float16_dim4_axis3_neg());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -10523,9 +11094,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_float16_dim4_axis3_neg_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -10611,15 +11184,19 @@ const TestModel& get_test_model_axis_float16_dim4_axis3_neg_all_inputs_as_intern
     return model;
 }
 
+const auto dummy_test_model_axis_float16_dim4_axis3_neg_all_inputs_as_internal = TestModelManager::get().add("softmax_v1_2_axis_float16_dim4_axis3_neg_all_inputs_as_internal", get_test_model_axis_float16_dim4_axis3_neg_all_inputs_as_internal());
+
 }  // namespace generated_tests::softmax_v1_2
 
 namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_float16_dim3_axis0() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({17.0f, -1.0f, 17.0f, -1.0f, 16.0f, -2.0f, 16.0f, -2.0f, 15.0f, -3.0f, 15.0f, -3.0f, 14.0f, -4.0f, 14.0f, -4.0f, 1.0f, -17.0f, 1.0f, -17.0f}),
@@ -10670,6 +11247,8 @@ const TestModel& get_test_model_axis_float16_dim3_axis0() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_float16_dim3_axis0 = TestModelManager::get().add("softmax_v1_2_axis_float16_dim3_axis0", get_test_model_axis_float16_dim3_axis0());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -10677,9 +11256,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_float16_dim3_axis0_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -10764,6 +11345,8 @@ const TestModel& get_test_model_axis_float16_dim3_axis0_all_inputs_as_internal()
     };
     return model;
 }
+
+const auto dummy_test_model_axis_float16_dim3_axis0_all_inputs_as_internal = TestModelManager::get().add("softmax_v1_2_axis_float16_dim3_axis0_all_inputs_as_internal", get_test_model_axis_float16_dim3_axis0_all_inputs_as_internal());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -10771,9 +11354,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_float16_dim3_axis0_neg() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({17.0f, -1.0f, 17.0f, -1.0f, 16.0f, -2.0f, 16.0f, -2.0f, 15.0f, -3.0f, 15.0f, -3.0f, 14.0f, -4.0f, 14.0f, -4.0f, 1.0f, -17.0f, 1.0f, -17.0f}),
@@ -10824,6 +11409,8 @@ const TestModel& get_test_model_axis_float16_dim3_axis0_neg() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_float16_dim3_axis0_neg = TestModelManager::get().add("softmax_v1_2_axis_float16_dim3_axis0_neg", get_test_model_axis_float16_dim3_axis0_neg());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -10831,9 +11418,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_float16_dim3_axis0_neg_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -10919,15 +11508,19 @@ const TestModel& get_test_model_axis_float16_dim3_axis0_neg_all_inputs_as_intern
     return model;
 }
 
+const auto dummy_test_model_axis_float16_dim3_axis0_neg_all_inputs_as_internal = TestModelManager::get().add("softmax_v1_2_axis_float16_dim3_axis0_neg_all_inputs_as_internal", get_test_model_axis_float16_dim3_axis0_neg_all_inputs_as_internal());
+
 }  // namespace generated_tests::softmax_v1_2
 
 namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_float16_dim3_axis1() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({17.0f, -1.0f, 16.0f, -2.0f, 15.0f, -3.0f, 14.0f, -4.0f, 1.0f, -17.0f, 17.0f, -1.0f, 16.0f, -2.0f, 15.0f, -3.0f, 14.0f, -4.0f, 1.0f, -17.0f}),
@@ -10978,6 +11571,8 @@ const TestModel& get_test_model_axis_float16_dim3_axis1() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_float16_dim3_axis1 = TestModelManager::get().add("softmax_v1_2_axis_float16_dim3_axis1", get_test_model_axis_float16_dim3_axis1());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -10985,9 +11580,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_float16_dim3_axis1_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -11072,6 +11669,8 @@ const TestModel& get_test_model_axis_float16_dim3_axis1_all_inputs_as_internal()
     };
     return model;
 }
+
+const auto dummy_test_model_axis_float16_dim3_axis1_all_inputs_as_internal = TestModelManager::get().add("softmax_v1_2_axis_float16_dim3_axis1_all_inputs_as_internal", get_test_model_axis_float16_dim3_axis1_all_inputs_as_internal());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -11079,9 +11678,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_float16_dim3_axis1_neg() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({17.0f, -1.0f, 16.0f, -2.0f, 15.0f, -3.0f, 14.0f, -4.0f, 1.0f, -17.0f, 17.0f, -1.0f, 16.0f, -2.0f, 15.0f, -3.0f, 14.0f, -4.0f, 1.0f, -17.0f}),
@@ -11132,6 +11733,8 @@ const TestModel& get_test_model_axis_float16_dim3_axis1_neg() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_float16_dim3_axis1_neg = TestModelManager::get().add("softmax_v1_2_axis_float16_dim3_axis1_neg", get_test_model_axis_float16_dim3_axis1_neg());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -11139,9 +11742,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_float16_dim3_axis1_neg_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -11227,15 +11832,19 @@ const TestModel& get_test_model_axis_float16_dim3_axis1_neg_all_inputs_as_intern
     return model;
 }
 
+const auto dummy_test_model_axis_float16_dim3_axis1_neg_all_inputs_as_internal = TestModelManager::get().add("softmax_v1_2_axis_float16_dim3_axis1_neg_all_inputs_as_internal", get_test_model_axis_float16_dim3_axis1_neg_all_inputs_as_internal());
+
 }  // namespace generated_tests::softmax_v1_2
 
 namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_float16_dim3_axis2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({17.0f, 16.0f, 15.0f, 14.0f, 1.0f, -1.0f, -2.0f, -3.0f, -4.0f, -17.0f, 17.0f, 16.0f, 15.0f, 14.0f, 1.0f, -1.0f, -2.0f, -3.0f, -4.0f, -17.0f}),
@@ -11286,6 +11895,8 @@ const TestModel& get_test_model_axis_float16_dim3_axis2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_float16_dim3_axis2 = TestModelManager::get().add("softmax_v1_2_axis_float16_dim3_axis2", get_test_model_axis_float16_dim3_axis2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -11293,9 +11904,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_float16_dim3_axis2_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -11380,6 +11993,8 @@ const TestModel& get_test_model_axis_float16_dim3_axis2_all_inputs_as_internal()
     };
     return model;
 }
+
+const auto dummy_test_model_axis_float16_dim3_axis2_all_inputs_as_internal = TestModelManager::get().add("softmax_v1_2_axis_float16_dim3_axis2_all_inputs_as_internal", get_test_model_axis_float16_dim3_axis2_all_inputs_as_internal());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -11387,9 +12002,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_float16_dim3_axis2_neg() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({17.0f, 16.0f, 15.0f, 14.0f, 1.0f, -1.0f, -2.0f, -3.0f, -4.0f, -17.0f, 17.0f, 16.0f, 15.0f, 14.0f, 1.0f, -1.0f, -2.0f, -3.0f, -4.0f, -17.0f}),
@@ -11440,6 +12057,8 @@ const TestModel& get_test_model_axis_float16_dim3_axis2_neg() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_float16_dim3_axis2_neg = TestModelManager::get().add("softmax_v1_2_axis_float16_dim3_axis2_neg", get_test_model_axis_float16_dim3_axis2_neg());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -11447,9 +12066,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_float16_dim3_axis2_neg_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -11535,15 +12156,19 @@ const TestModel& get_test_model_axis_float16_dim3_axis2_neg_all_inputs_as_intern
     return model;
 }
 
+const auto dummy_test_model_axis_float16_dim3_axis2_neg_all_inputs_as_internal = TestModelManager::get().add("softmax_v1_2_axis_float16_dim3_axis2_neg_all_inputs_as_internal", get_test_model_axis_float16_dim3_axis2_neg_all_inputs_as_internal());
+
 }  // namespace generated_tests::softmax_v1_2
 
 namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_float16_dim2_axis0() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({17.0f, -1.0f, 16.0f, -2.0f, 15.0f, -3.0f, 14.0f, -4.0f, 1.0f, -17.0f}),
@@ -11594,6 +12219,8 @@ const TestModel& get_test_model_axis_float16_dim2_axis0() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_float16_dim2_axis0 = TestModelManager::get().add("softmax_v1_2_axis_float16_dim2_axis0", get_test_model_axis_float16_dim2_axis0());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -11601,9 +12228,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_float16_dim2_axis0_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -11688,6 +12317,8 @@ const TestModel& get_test_model_axis_float16_dim2_axis0_all_inputs_as_internal()
     };
     return model;
 }
+
+const auto dummy_test_model_axis_float16_dim2_axis0_all_inputs_as_internal = TestModelManager::get().add("softmax_v1_2_axis_float16_dim2_axis0_all_inputs_as_internal", get_test_model_axis_float16_dim2_axis0_all_inputs_as_internal());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -11695,9 +12326,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_float16_dim2_axis0_neg() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({17.0f, -1.0f, 16.0f, -2.0f, 15.0f, -3.0f, 14.0f, -4.0f, 1.0f, -17.0f}),
@@ -11748,6 +12381,8 @@ const TestModel& get_test_model_axis_float16_dim2_axis0_neg() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_float16_dim2_axis0_neg = TestModelManager::get().add("softmax_v1_2_axis_float16_dim2_axis0_neg", get_test_model_axis_float16_dim2_axis0_neg());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -11755,9 +12390,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_float16_dim2_axis0_neg_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -11843,15 +12480,19 @@ const TestModel& get_test_model_axis_float16_dim2_axis0_neg_all_inputs_as_intern
     return model;
 }
 
+const auto dummy_test_model_axis_float16_dim2_axis0_neg_all_inputs_as_internal = TestModelManager::get().add("softmax_v1_2_axis_float16_dim2_axis0_neg_all_inputs_as_internal", get_test_model_axis_float16_dim2_axis0_neg_all_inputs_as_internal());
+
 }  // namespace generated_tests::softmax_v1_2
 
 namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_float16_dim2_axis1() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({17.0f, 16.0f, 15.0f, 14.0f, 1.0f, -1.0f, -2.0f, -3.0f, -4.0f, -17.0f}),
@@ -11902,6 +12543,8 @@ const TestModel& get_test_model_axis_float16_dim2_axis1() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_float16_dim2_axis1 = TestModelManager::get().add("softmax_v1_2_axis_float16_dim2_axis1", get_test_model_axis_float16_dim2_axis1());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -11909,9 +12552,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_float16_dim2_axis1_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -11996,6 +12641,8 @@ const TestModel& get_test_model_axis_float16_dim2_axis1_all_inputs_as_internal()
     };
     return model;
 }
+
+const auto dummy_test_model_axis_float16_dim2_axis1_all_inputs_as_internal = TestModelManager::get().add("softmax_v1_2_axis_float16_dim2_axis1_all_inputs_as_internal", get_test_model_axis_float16_dim2_axis1_all_inputs_as_internal());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -12003,9 +12650,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_float16_dim2_axis1_neg() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({17.0f, 16.0f, 15.0f, 14.0f, 1.0f, -1.0f, -2.0f, -3.0f, -4.0f, -17.0f}),
@@ -12056,6 +12705,8 @@ const TestModel& get_test_model_axis_float16_dim2_axis1_neg() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_float16_dim2_axis1_neg = TestModelManager::get().add("softmax_v1_2_axis_float16_dim2_axis1_neg", get_test_model_axis_float16_dim2_axis1_neg());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -12063,9 +12714,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_float16_dim2_axis1_neg_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -12151,15 +12804,19 @@ const TestModel& get_test_model_axis_float16_dim2_axis1_neg_all_inputs_as_intern
     return model;
 }
 
+const auto dummy_test_model_axis_float16_dim2_axis1_neg_all_inputs_as_internal = TestModelManager::get().add("softmax_v1_2_axis_float16_dim2_axis1_neg_all_inputs_as_internal", get_test_model_axis_float16_dim2_axis1_neg_all_inputs_as_internal());
+
 }  // namespace generated_tests::softmax_v1_2
 
 namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_float16_dim1_axis0() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({17.0f, 16.0f, 15.0f, 14.0f, 1.0f}),
@@ -12210,6 +12867,8 @@ const TestModel& get_test_model_axis_float16_dim1_axis0() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_float16_dim1_axis0 = TestModelManager::get().add("softmax_v1_2_axis_float16_dim1_axis0", get_test_model_axis_float16_dim1_axis0());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -12217,9 +12876,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_float16_dim1_axis0_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -12304,6 +12965,8 @@ const TestModel& get_test_model_axis_float16_dim1_axis0_all_inputs_as_internal()
     };
     return model;
 }
+
+const auto dummy_test_model_axis_float16_dim1_axis0_all_inputs_as_internal = TestModelManager::get().add("softmax_v1_2_axis_float16_dim1_axis0_all_inputs_as_internal", get_test_model_axis_float16_dim1_axis0_all_inputs_as_internal());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -12311,9 +12974,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_float16_dim1_axis0_neg() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({17.0f, 16.0f, 15.0f, 14.0f, 1.0f}),
@@ -12364,6 +13029,8 @@ const TestModel& get_test_model_axis_float16_dim1_axis0_neg() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_float16_dim1_axis0_neg = TestModelManager::get().add("softmax_v1_2_axis_float16_dim1_axis0_neg", get_test_model_axis_float16_dim1_axis0_neg());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -12371,9 +13038,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_float16_dim1_axis0_neg_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -12459,15 +13128,19 @@ const TestModel& get_test_model_axis_float16_dim1_axis0_neg_all_inputs_as_intern
     return model;
 }
 
+const auto dummy_test_model_axis_float16_dim1_axis0_neg_all_inputs_as_internal = TestModelManager::get().add("softmax_v1_2_axis_float16_dim1_axis0_neg_all_inputs_as_internal", get_test_model_axis_float16_dim1_axis0_neg_all_inputs_as_internal());
+
 }  // namespace generated_tests::softmax_v1_2
 
 namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_quant8_dim4_axis0() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({196, 124, 196, 124, 196, 124, 196, 124, 192, 120, 192, 120, 192, 120, 192, 120, 188, 116, 188, 116, 188, 116, 188, 116, 184, 112, 184, 112, 184, 112, 184, 112, 132, 60, 132, 60, 132, 60, 132, 60}),
@@ -12518,6 +13191,8 @@ const TestModel& get_test_model_axis_quant8_dim4_axis0() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_quant8_dim4_axis0 = TestModelManager::get().add("softmax_v1_2_axis_quant8_dim4_axis0", get_test_model_axis_quant8_dim4_axis0());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -12525,9 +13200,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_quant8_dim4_axis0_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -12612,6 +13289,8 @@ const TestModel& get_test_model_axis_quant8_dim4_axis0_all_inputs_as_internal() 
     };
     return model;
 }
+
+const auto dummy_test_model_axis_quant8_dim4_axis0_all_inputs_as_internal = TestModelManager::get().add("softmax_v1_2_axis_quant8_dim4_axis0_all_inputs_as_internal", get_test_model_axis_quant8_dim4_axis0_all_inputs_as_internal());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -12619,9 +13298,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_quant8_dim4_axis0_neg() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({196, 124, 196, 124, 196, 124, 196, 124, 192, 120, 192, 120, 192, 120, 192, 120, 188, 116, 188, 116, 188, 116, 188, 116, 184, 112, 184, 112, 184, 112, 184, 112, 132, 60, 132, 60, 132, 60, 132, 60}),
@@ -12672,6 +13353,8 @@ const TestModel& get_test_model_axis_quant8_dim4_axis0_neg() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_quant8_dim4_axis0_neg = TestModelManager::get().add("softmax_v1_2_axis_quant8_dim4_axis0_neg", get_test_model_axis_quant8_dim4_axis0_neg());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -12679,9 +13362,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_quant8_dim4_axis0_neg_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -12767,15 +13452,19 @@ const TestModel& get_test_model_axis_quant8_dim4_axis0_neg_all_inputs_as_interna
     return model;
 }
 
+const auto dummy_test_model_axis_quant8_dim4_axis0_neg_all_inputs_as_internal = TestModelManager::get().add("softmax_v1_2_axis_quant8_dim4_axis0_neg_all_inputs_as_internal", get_test_model_axis_quant8_dim4_axis0_neg_all_inputs_as_internal());
+
 }  // namespace generated_tests::softmax_v1_2
 
 namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_quant8_dim4_axis1() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({196, 124, 196, 124, 192, 120, 192, 120, 188, 116, 188, 116, 184, 112, 184, 112, 132, 60, 132, 60, 196, 124, 196, 124, 192, 120, 192, 120, 188, 116, 188, 116, 184, 112, 184, 112, 132, 60, 132, 60}),
@@ -12826,6 +13515,8 @@ const TestModel& get_test_model_axis_quant8_dim4_axis1() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_quant8_dim4_axis1 = TestModelManager::get().add("softmax_v1_2_axis_quant8_dim4_axis1", get_test_model_axis_quant8_dim4_axis1());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -12833,9 +13524,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_quant8_dim4_axis1_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -12920,6 +13613,8 @@ const TestModel& get_test_model_axis_quant8_dim4_axis1_all_inputs_as_internal() 
     };
     return model;
 }
+
+const auto dummy_test_model_axis_quant8_dim4_axis1_all_inputs_as_internal = TestModelManager::get().add("softmax_v1_2_axis_quant8_dim4_axis1_all_inputs_as_internal", get_test_model_axis_quant8_dim4_axis1_all_inputs_as_internal());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -12927,9 +13622,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_quant8_dim4_axis1_neg() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({196, 124, 196, 124, 192, 120, 192, 120, 188, 116, 188, 116, 184, 112, 184, 112, 132, 60, 132, 60, 196, 124, 196, 124, 192, 120, 192, 120, 188, 116, 188, 116, 184, 112, 184, 112, 132, 60, 132, 60}),
@@ -12980,6 +13677,8 @@ const TestModel& get_test_model_axis_quant8_dim4_axis1_neg() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_quant8_dim4_axis1_neg = TestModelManager::get().add("softmax_v1_2_axis_quant8_dim4_axis1_neg", get_test_model_axis_quant8_dim4_axis1_neg());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -12987,9 +13686,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_quant8_dim4_axis1_neg_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -13075,15 +13776,19 @@ const TestModel& get_test_model_axis_quant8_dim4_axis1_neg_all_inputs_as_interna
     return model;
 }
 
+const auto dummy_test_model_axis_quant8_dim4_axis1_neg_all_inputs_as_internal = TestModelManager::get().add("softmax_v1_2_axis_quant8_dim4_axis1_neg_all_inputs_as_internal", get_test_model_axis_quant8_dim4_axis1_neg_all_inputs_as_internal());
+
 }  // namespace generated_tests::softmax_v1_2
 
 namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_quant8_dim4_axis2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({196, 124, 192, 120, 188, 116, 184, 112, 132, 60, 196, 124, 192, 120, 188, 116, 184, 112, 132, 60, 196, 124, 192, 120, 188, 116, 184, 112, 132, 60, 196, 124, 192, 120, 188, 116, 184, 112, 132, 60}),
@@ -13134,6 +13839,8 @@ const TestModel& get_test_model_axis_quant8_dim4_axis2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_quant8_dim4_axis2 = TestModelManager::get().add("softmax_v1_2_axis_quant8_dim4_axis2", get_test_model_axis_quant8_dim4_axis2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -13141,9 +13848,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_quant8_dim4_axis2_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -13228,6 +13937,8 @@ const TestModel& get_test_model_axis_quant8_dim4_axis2_all_inputs_as_internal() 
     };
     return model;
 }
+
+const auto dummy_test_model_axis_quant8_dim4_axis2_all_inputs_as_internal = TestModelManager::get().add("softmax_v1_2_axis_quant8_dim4_axis2_all_inputs_as_internal", get_test_model_axis_quant8_dim4_axis2_all_inputs_as_internal());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -13235,9 +13946,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_quant8_dim4_axis2_neg() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({196, 124, 192, 120, 188, 116, 184, 112, 132, 60, 196, 124, 192, 120, 188, 116, 184, 112, 132, 60, 196, 124, 192, 120, 188, 116, 184, 112, 132, 60, 196, 124, 192, 120, 188, 116, 184, 112, 132, 60}),
@@ -13288,6 +14001,8 @@ const TestModel& get_test_model_axis_quant8_dim4_axis2_neg() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_quant8_dim4_axis2_neg = TestModelManager::get().add("softmax_v1_2_axis_quant8_dim4_axis2_neg", get_test_model_axis_quant8_dim4_axis2_neg());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -13295,9 +14010,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_quant8_dim4_axis2_neg_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -13383,15 +14100,19 @@ const TestModel& get_test_model_axis_quant8_dim4_axis2_neg_all_inputs_as_interna
     return model;
 }
 
+const auto dummy_test_model_axis_quant8_dim4_axis2_neg_all_inputs_as_internal = TestModelManager::get().add("softmax_v1_2_axis_quant8_dim4_axis2_neg_all_inputs_as_internal", get_test_model_axis_quant8_dim4_axis2_neg_all_inputs_as_internal());
+
 }  // namespace generated_tests::softmax_v1_2
 
 namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_quant8_dim4_axis3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({196, 192, 188, 184, 132, 124, 120, 116, 112, 60, 196, 192, 188, 184, 132, 124, 120, 116, 112, 60, 196, 192, 188, 184, 132, 124, 120, 116, 112, 60, 196, 192, 188, 184, 132, 124, 120, 116, 112, 60}),
@@ -13442,6 +14163,8 @@ const TestModel& get_test_model_axis_quant8_dim4_axis3() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_quant8_dim4_axis3 = TestModelManager::get().add("softmax_v1_2_axis_quant8_dim4_axis3", get_test_model_axis_quant8_dim4_axis3());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -13449,9 +14172,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_quant8_dim4_axis3_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -13536,6 +14261,8 @@ const TestModel& get_test_model_axis_quant8_dim4_axis3_all_inputs_as_internal() 
     };
     return model;
 }
+
+const auto dummy_test_model_axis_quant8_dim4_axis3_all_inputs_as_internal = TestModelManager::get().add("softmax_v1_2_axis_quant8_dim4_axis3_all_inputs_as_internal", get_test_model_axis_quant8_dim4_axis3_all_inputs_as_internal());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -13543,9 +14270,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_quant8_dim4_axis3_neg() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({196, 192, 188, 184, 132, 124, 120, 116, 112, 60, 196, 192, 188, 184, 132, 124, 120, 116, 112, 60, 196, 192, 188, 184, 132, 124, 120, 116, 112, 60, 196, 192, 188, 184, 132, 124, 120, 116, 112, 60}),
@@ -13596,6 +14325,8 @@ const TestModel& get_test_model_axis_quant8_dim4_axis3_neg() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_quant8_dim4_axis3_neg = TestModelManager::get().add("softmax_v1_2_axis_quant8_dim4_axis3_neg", get_test_model_axis_quant8_dim4_axis3_neg());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -13603,9 +14334,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_quant8_dim4_axis3_neg_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -13691,15 +14424,19 @@ const TestModel& get_test_model_axis_quant8_dim4_axis3_neg_all_inputs_as_interna
     return model;
 }
 
+const auto dummy_test_model_axis_quant8_dim4_axis3_neg_all_inputs_as_internal = TestModelManager::get().add("softmax_v1_2_axis_quant8_dim4_axis3_neg_all_inputs_as_internal", get_test_model_axis_quant8_dim4_axis3_neg_all_inputs_as_internal());
+
 }  // namespace generated_tests::softmax_v1_2
 
 namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_quant8_dim3_axis0() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({196, 124, 196, 124, 192, 120, 192, 120, 188, 116, 188, 116, 184, 112, 184, 112, 132, 60, 132, 60}),
@@ -13750,6 +14487,8 @@ const TestModel& get_test_model_axis_quant8_dim3_axis0() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_quant8_dim3_axis0 = TestModelManager::get().add("softmax_v1_2_axis_quant8_dim3_axis0", get_test_model_axis_quant8_dim3_axis0());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -13757,9 +14496,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_quant8_dim3_axis0_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -13844,6 +14585,8 @@ const TestModel& get_test_model_axis_quant8_dim3_axis0_all_inputs_as_internal() 
     };
     return model;
 }
+
+const auto dummy_test_model_axis_quant8_dim3_axis0_all_inputs_as_internal = TestModelManager::get().add("softmax_v1_2_axis_quant8_dim3_axis0_all_inputs_as_internal", get_test_model_axis_quant8_dim3_axis0_all_inputs_as_internal());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -13851,9 +14594,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_quant8_dim3_axis0_neg() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({196, 124, 196, 124, 192, 120, 192, 120, 188, 116, 188, 116, 184, 112, 184, 112, 132, 60, 132, 60}),
@@ -13904,6 +14649,8 @@ const TestModel& get_test_model_axis_quant8_dim3_axis0_neg() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_quant8_dim3_axis0_neg = TestModelManager::get().add("softmax_v1_2_axis_quant8_dim3_axis0_neg", get_test_model_axis_quant8_dim3_axis0_neg());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -13911,9 +14658,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_quant8_dim3_axis0_neg_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -13999,15 +14748,19 @@ const TestModel& get_test_model_axis_quant8_dim3_axis0_neg_all_inputs_as_interna
     return model;
 }
 
+const auto dummy_test_model_axis_quant8_dim3_axis0_neg_all_inputs_as_internal = TestModelManager::get().add("softmax_v1_2_axis_quant8_dim3_axis0_neg_all_inputs_as_internal", get_test_model_axis_quant8_dim3_axis0_neg_all_inputs_as_internal());
+
 }  // namespace generated_tests::softmax_v1_2
 
 namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_quant8_dim3_axis1() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({196, 124, 192, 120, 188, 116, 184, 112, 132, 60, 196, 124, 192, 120, 188, 116, 184, 112, 132, 60}),
@@ -14058,6 +14811,8 @@ const TestModel& get_test_model_axis_quant8_dim3_axis1() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_quant8_dim3_axis1 = TestModelManager::get().add("softmax_v1_2_axis_quant8_dim3_axis1", get_test_model_axis_quant8_dim3_axis1());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -14065,9 +14820,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_quant8_dim3_axis1_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -14152,6 +14909,8 @@ const TestModel& get_test_model_axis_quant8_dim3_axis1_all_inputs_as_internal() 
     };
     return model;
 }
+
+const auto dummy_test_model_axis_quant8_dim3_axis1_all_inputs_as_internal = TestModelManager::get().add("softmax_v1_2_axis_quant8_dim3_axis1_all_inputs_as_internal", get_test_model_axis_quant8_dim3_axis1_all_inputs_as_internal());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -14159,9 +14918,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_quant8_dim3_axis1_neg() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({196, 124, 192, 120, 188, 116, 184, 112, 132, 60, 196, 124, 192, 120, 188, 116, 184, 112, 132, 60}),
@@ -14212,6 +14973,8 @@ const TestModel& get_test_model_axis_quant8_dim3_axis1_neg() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_quant8_dim3_axis1_neg = TestModelManager::get().add("softmax_v1_2_axis_quant8_dim3_axis1_neg", get_test_model_axis_quant8_dim3_axis1_neg());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -14219,9 +14982,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_quant8_dim3_axis1_neg_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -14307,15 +15072,19 @@ const TestModel& get_test_model_axis_quant8_dim3_axis1_neg_all_inputs_as_interna
     return model;
 }
 
+const auto dummy_test_model_axis_quant8_dim3_axis1_neg_all_inputs_as_internal = TestModelManager::get().add("softmax_v1_2_axis_quant8_dim3_axis1_neg_all_inputs_as_internal", get_test_model_axis_quant8_dim3_axis1_neg_all_inputs_as_internal());
+
 }  // namespace generated_tests::softmax_v1_2
 
 namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_quant8_dim3_axis2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({196, 192, 188, 184, 132, 124, 120, 116, 112, 60, 196, 192, 188, 184, 132, 124, 120, 116, 112, 60}),
@@ -14366,6 +15135,8 @@ const TestModel& get_test_model_axis_quant8_dim3_axis2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_quant8_dim3_axis2 = TestModelManager::get().add("softmax_v1_2_axis_quant8_dim3_axis2", get_test_model_axis_quant8_dim3_axis2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -14373,9 +15144,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_quant8_dim3_axis2_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -14460,6 +15233,8 @@ const TestModel& get_test_model_axis_quant8_dim3_axis2_all_inputs_as_internal() 
     };
     return model;
 }
+
+const auto dummy_test_model_axis_quant8_dim3_axis2_all_inputs_as_internal = TestModelManager::get().add("softmax_v1_2_axis_quant8_dim3_axis2_all_inputs_as_internal", get_test_model_axis_quant8_dim3_axis2_all_inputs_as_internal());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -14467,9 +15242,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_quant8_dim3_axis2_neg() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({196, 192, 188, 184, 132, 124, 120, 116, 112, 60, 196, 192, 188, 184, 132, 124, 120, 116, 112, 60}),
@@ -14520,6 +15297,8 @@ const TestModel& get_test_model_axis_quant8_dim3_axis2_neg() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_quant8_dim3_axis2_neg = TestModelManager::get().add("softmax_v1_2_axis_quant8_dim3_axis2_neg", get_test_model_axis_quant8_dim3_axis2_neg());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -14527,9 +15306,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_quant8_dim3_axis2_neg_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -14615,15 +15396,19 @@ const TestModel& get_test_model_axis_quant8_dim3_axis2_neg_all_inputs_as_interna
     return model;
 }
 
+const auto dummy_test_model_axis_quant8_dim3_axis2_neg_all_inputs_as_internal = TestModelManager::get().add("softmax_v1_2_axis_quant8_dim3_axis2_neg_all_inputs_as_internal", get_test_model_axis_quant8_dim3_axis2_neg_all_inputs_as_internal());
+
 }  // namespace generated_tests::softmax_v1_2
 
 namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_quant8_dim2_axis0() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({196, 124, 192, 120, 188, 116, 184, 112, 132, 60}),
@@ -14674,6 +15459,8 @@ const TestModel& get_test_model_axis_quant8_dim2_axis0() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_quant8_dim2_axis0 = TestModelManager::get().add("softmax_v1_2_axis_quant8_dim2_axis0", get_test_model_axis_quant8_dim2_axis0());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -14681,9 +15468,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_quant8_dim2_axis0_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -14768,6 +15557,8 @@ const TestModel& get_test_model_axis_quant8_dim2_axis0_all_inputs_as_internal() 
     };
     return model;
 }
+
+const auto dummy_test_model_axis_quant8_dim2_axis0_all_inputs_as_internal = TestModelManager::get().add("softmax_v1_2_axis_quant8_dim2_axis0_all_inputs_as_internal", get_test_model_axis_quant8_dim2_axis0_all_inputs_as_internal());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -14775,9 +15566,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_quant8_dim2_axis0_neg() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({196, 124, 192, 120, 188, 116, 184, 112, 132, 60}),
@@ -14828,6 +15621,8 @@ const TestModel& get_test_model_axis_quant8_dim2_axis0_neg() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_quant8_dim2_axis0_neg = TestModelManager::get().add("softmax_v1_2_axis_quant8_dim2_axis0_neg", get_test_model_axis_quant8_dim2_axis0_neg());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -14835,9 +15630,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_quant8_dim2_axis0_neg_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -14923,15 +15720,19 @@ const TestModel& get_test_model_axis_quant8_dim2_axis0_neg_all_inputs_as_interna
     return model;
 }
 
+const auto dummy_test_model_axis_quant8_dim2_axis0_neg_all_inputs_as_internal = TestModelManager::get().add("softmax_v1_2_axis_quant8_dim2_axis0_neg_all_inputs_as_internal", get_test_model_axis_quant8_dim2_axis0_neg_all_inputs_as_internal());
+
 }  // namespace generated_tests::softmax_v1_2
 
 namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_quant8_dim2_axis1() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({196, 192, 188, 184, 132, 124, 120, 116, 112, 60}),
@@ -14982,6 +15783,8 @@ const TestModel& get_test_model_axis_quant8_dim2_axis1() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_quant8_dim2_axis1 = TestModelManager::get().add("softmax_v1_2_axis_quant8_dim2_axis1", get_test_model_axis_quant8_dim2_axis1());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -14989,9 +15792,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_quant8_dim2_axis1_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -15076,6 +15881,8 @@ const TestModel& get_test_model_axis_quant8_dim2_axis1_all_inputs_as_internal() 
     };
     return model;
 }
+
+const auto dummy_test_model_axis_quant8_dim2_axis1_all_inputs_as_internal = TestModelManager::get().add("softmax_v1_2_axis_quant8_dim2_axis1_all_inputs_as_internal", get_test_model_axis_quant8_dim2_axis1_all_inputs_as_internal());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -15083,9 +15890,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_quant8_dim2_axis1_neg() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({196, 192, 188, 184, 132, 124, 120, 116, 112, 60}),
@@ -15136,6 +15945,8 @@ const TestModel& get_test_model_axis_quant8_dim2_axis1_neg() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_quant8_dim2_axis1_neg = TestModelManager::get().add("softmax_v1_2_axis_quant8_dim2_axis1_neg", get_test_model_axis_quant8_dim2_axis1_neg());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -15143,9 +15954,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_quant8_dim2_axis1_neg_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -15231,15 +16044,19 @@ const TestModel& get_test_model_axis_quant8_dim2_axis1_neg_all_inputs_as_interna
     return model;
 }
 
+const auto dummy_test_model_axis_quant8_dim2_axis1_neg_all_inputs_as_internal = TestModelManager::get().add("softmax_v1_2_axis_quant8_dim2_axis1_neg_all_inputs_as_internal", get_test_model_axis_quant8_dim2_axis1_neg_all_inputs_as_internal());
+
 }  // namespace generated_tests::softmax_v1_2
 
 namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_quant8_dim1_axis0() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({196, 192, 188, 184, 132}),
@@ -15290,6 +16107,8 @@ const TestModel& get_test_model_axis_quant8_dim1_axis0() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_quant8_dim1_axis0 = TestModelManager::get().add("softmax_v1_2_axis_quant8_dim1_axis0", get_test_model_axis_quant8_dim1_axis0());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -15297,9 +16116,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_quant8_dim1_axis0_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -15384,6 +16205,8 @@ const TestModel& get_test_model_axis_quant8_dim1_axis0_all_inputs_as_internal() 
     };
     return model;
 }
+
+const auto dummy_test_model_axis_quant8_dim1_axis0_all_inputs_as_internal = TestModelManager::get().add("softmax_v1_2_axis_quant8_dim1_axis0_all_inputs_as_internal", get_test_model_axis_quant8_dim1_axis0_all_inputs_as_internal());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -15391,9 +16214,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_quant8_dim1_axis0_neg() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({196, 192, 188, 184, 132}),
@@ -15444,6 +16269,8 @@ const TestModel& get_test_model_axis_quant8_dim1_axis0_neg() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_quant8_dim1_axis0_neg = TestModelManager::get().add("softmax_v1_2_axis_quant8_dim1_axis0_neg", get_test_model_axis_quant8_dim1_axis0_neg());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -15451,9 +16278,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_quant8_dim1_axis0_neg_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -15539,15 +16368,19 @@ const TestModel& get_test_model_axis_quant8_dim1_axis0_neg_all_inputs_as_interna
     return model;
 }
 
+const auto dummy_test_model_axis_quant8_dim1_axis0_neg_all_inputs_as_internal = TestModelManager::get().add("softmax_v1_2_axis_quant8_dim1_axis0_neg_all_inputs_as_internal", get_test_model_axis_quant8_dim1_axis0_neg_all_inputs_as_internal());
+
 }  // namespace generated_tests::softmax_v1_2
 
 namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis0_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, -1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 2.0f, -2.0f, 2.0f, -2.0f, 2.0f, -2.0f, 2.0f, -2.0f, 3.0f, -3.0f, 3.0f, -3.0f, 3.0f, -3.0f, 3.0f, -3.0f, 4.0f, -4.0f, 4.0f, -4.0f, 4.0f, -4.0f, 4.0f, -4.0f, 5.0f, -5.0f, 5.0f, -5.0f, 5.0f, -5.0f, 5.0f, -5.0f}),
@@ -15598,6 +16431,8 @@ const TestModel& get_test_model_axis_dim4_axis0_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis0_2 = TestModelManager::get().add("softmax_v1_2_axis_dim4_axis0_2", get_test_model_axis_dim4_axis0_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -15605,9 +16440,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis0_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -15692,6 +16529,8 @@ const TestModel& get_test_model_axis_dim4_axis0_all_inputs_as_internal_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis0_all_inputs_as_internal_2 = TestModelManager::get().add("softmax_v1_2_axis_dim4_axis0_all_inputs_as_internal_2", get_test_model_axis_dim4_axis0_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -15699,9 +16538,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis0_neg_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, -1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 2.0f, -2.0f, 2.0f, -2.0f, 2.0f, -2.0f, 2.0f, -2.0f, 3.0f, -3.0f, 3.0f, -3.0f, 3.0f, -3.0f, 3.0f, -3.0f, 4.0f, -4.0f, 4.0f, -4.0f, 4.0f, -4.0f, 4.0f, -4.0f, 5.0f, -5.0f, 5.0f, -5.0f, 5.0f, -5.0f, 5.0f, -5.0f}),
@@ -15752,6 +16593,8 @@ const TestModel& get_test_model_axis_dim4_axis0_neg_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis0_neg_2 = TestModelManager::get().add("softmax_v1_2_axis_dim4_axis0_neg_2", get_test_model_axis_dim4_axis0_neg_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -15759,9 +16602,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis0_neg_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -15846,6 +16691,8 @@ const TestModel& get_test_model_axis_dim4_axis0_neg_all_inputs_as_internal_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis0_neg_all_inputs_as_internal_2 = TestModelManager::get().add("softmax_v1_2_axis_dim4_axis0_neg_all_inputs_as_internal_2", get_test_model_axis_dim4_axis0_neg_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -15853,9 +16700,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis1_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, -1.0f, 1.0f, -1.0f, 2.0f, -2.0f, 2.0f, -2.0f, 3.0f, -3.0f, 3.0f, -3.0f, 4.0f, -4.0f, 4.0f, -4.0f, 5.0f, -5.0f, 5.0f, -5.0f, 1.0f, -1.0f, 1.0f, -1.0f, 2.0f, -2.0f, 2.0f, -2.0f, 3.0f, -3.0f, 3.0f, -3.0f, 4.0f, -4.0f, 4.0f, -4.0f, 5.0f, -5.0f, 5.0f, -5.0f}),
@@ -15906,6 +16755,8 @@ const TestModel& get_test_model_axis_dim4_axis1_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis1_2 = TestModelManager::get().add("softmax_v1_2_axis_dim4_axis1_2", get_test_model_axis_dim4_axis1_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -15913,9 +16764,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis1_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -16000,6 +16853,8 @@ const TestModel& get_test_model_axis_dim4_axis1_all_inputs_as_internal_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis1_all_inputs_as_internal_2 = TestModelManager::get().add("softmax_v1_2_axis_dim4_axis1_all_inputs_as_internal_2", get_test_model_axis_dim4_axis1_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -16007,9 +16862,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis1_neg_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, -1.0f, 1.0f, -1.0f, 2.0f, -2.0f, 2.0f, -2.0f, 3.0f, -3.0f, 3.0f, -3.0f, 4.0f, -4.0f, 4.0f, -4.0f, 5.0f, -5.0f, 5.0f, -5.0f, 1.0f, -1.0f, 1.0f, -1.0f, 2.0f, -2.0f, 2.0f, -2.0f, 3.0f, -3.0f, 3.0f, -3.0f, 4.0f, -4.0f, 4.0f, -4.0f, 5.0f, -5.0f, 5.0f, -5.0f}),
@@ -16060,6 +16917,8 @@ const TestModel& get_test_model_axis_dim4_axis1_neg_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis1_neg_2 = TestModelManager::get().add("softmax_v1_2_axis_dim4_axis1_neg_2", get_test_model_axis_dim4_axis1_neg_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -16067,9 +16926,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis1_neg_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -16154,6 +17015,8 @@ const TestModel& get_test_model_axis_dim4_axis1_neg_all_inputs_as_internal_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis1_neg_all_inputs_as_internal_2 = TestModelManager::get().add("softmax_v1_2_axis_dim4_axis1_neg_all_inputs_as_internal_2", get_test_model_axis_dim4_axis1_neg_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -16161,9 +17024,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis2_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, -1.0f, 2.0f, -2.0f, 3.0f, -3.0f, 4.0f, -4.0f, 5.0f, -5.0f, 1.0f, -1.0f, 2.0f, -2.0f, 3.0f, -3.0f, 4.0f, -4.0f, 5.0f, -5.0f, 1.0f, -1.0f, 2.0f, -2.0f, 3.0f, -3.0f, 4.0f, -4.0f, 5.0f, -5.0f, 1.0f, -1.0f, 2.0f, -2.0f, 3.0f, -3.0f, 4.0f, -4.0f, 5.0f, -5.0f}),
@@ -16214,6 +17079,8 @@ const TestModel& get_test_model_axis_dim4_axis2_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis2_2 = TestModelManager::get().add("softmax_v1_2_axis_dim4_axis2_2", get_test_model_axis_dim4_axis2_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -16221,9 +17088,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis2_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -16308,6 +17177,8 @@ const TestModel& get_test_model_axis_dim4_axis2_all_inputs_as_internal_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis2_all_inputs_as_internal_2 = TestModelManager::get().add("softmax_v1_2_axis_dim4_axis2_all_inputs_as_internal_2", get_test_model_axis_dim4_axis2_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -16315,9 +17186,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis2_neg_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, -1.0f, 2.0f, -2.0f, 3.0f, -3.0f, 4.0f, -4.0f, 5.0f, -5.0f, 1.0f, -1.0f, 2.0f, -2.0f, 3.0f, -3.0f, 4.0f, -4.0f, 5.0f, -5.0f, 1.0f, -1.0f, 2.0f, -2.0f, 3.0f, -3.0f, 4.0f, -4.0f, 5.0f, -5.0f, 1.0f, -1.0f, 2.0f, -2.0f, 3.0f, -3.0f, 4.0f, -4.0f, 5.0f, -5.0f}),
@@ -16368,6 +17241,8 @@ const TestModel& get_test_model_axis_dim4_axis2_neg_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis2_neg_2 = TestModelManager::get().add("softmax_v1_2_axis_dim4_axis2_neg_2", get_test_model_axis_dim4_axis2_neg_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -16375,9 +17250,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis2_neg_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -16462,6 +17339,8 @@ const TestModel& get_test_model_axis_dim4_axis2_neg_all_inputs_as_internal_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis2_neg_all_inputs_as_internal_2 = TestModelManager::get().add("softmax_v1_2_axis_dim4_axis2_neg_all_inputs_as_internal_2", get_test_model_axis_dim4_axis2_neg_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -16469,9 +17348,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis3_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, -1.0f, -2.0f, -3.0f, -4.0f, -5.0f, 1.0f, 2.0f, 3.0f, 4.0f, 5.0f, -1.0f, -2.0f, -3.0f, -4.0f, -5.0f, 1.0f, 2.0f, 3.0f, 4.0f, 5.0f, -1.0f, -2.0f, -3.0f, -4.0f, -5.0f, 1.0f, 2.0f, 3.0f, 4.0f, 5.0f, -1.0f, -2.0f, -3.0f, -4.0f, -5.0f}),
@@ -16522,6 +17403,8 @@ const TestModel& get_test_model_axis_dim4_axis3_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis3_2 = TestModelManager::get().add("softmax_v1_2_axis_dim4_axis3_2", get_test_model_axis_dim4_axis3_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -16529,9 +17412,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis3_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -16616,6 +17501,8 @@ const TestModel& get_test_model_axis_dim4_axis3_all_inputs_as_internal_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis3_all_inputs_as_internal_2 = TestModelManager::get().add("softmax_v1_2_axis_dim4_axis3_all_inputs_as_internal_2", get_test_model_axis_dim4_axis3_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -16623,9 +17510,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis3_neg_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, -1.0f, -2.0f, -3.0f, -4.0f, -5.0f, 1.0f, 2.0f, 3.0f, 4.0f, 5.0f, -1.0f, -2.0f, -3.0f, -4.0f, -5.0f, 1.0f, 2.0f, 3.0f, 4.0f, 5.0f, -1.0f, -2.0f, -3.0f, -4.0f, -5.0f, 1.0f, 2.0f, 3.0f, 4.0f, 5.0f, -1.0f, -2.0f, -3.0f, -4.0f, -5.0f}),
@@ -16676,6 +17565,8 @@ const TestModel& get_test_model_axis_dim4_axis3_neg_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis3_neg_2 = TestModelManager::get().add("softmax_v1_2_axis_dim4_axis3_neg_2", get_test_model_axis_dim4_axis3_neg_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -16683,9 +17574,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis3_neg_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -16770,6 +17663,8 @@ const TestModel& get_test_model_axis_dim4_axis3_neg_all_inputs_as_internal_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis3_neg_all_inputs_as_internal_2 = TestModelManager::get().add("softmax_v1_2_axis_dim4_axis3_neg_all_inputs_as_internal_2", get_test_model_axis_dim4_axis3_neg_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -16777,9 +17672,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis0_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, -1.0f, 1.0f, -1.0f, 2.0f, -2.0f, 2.0f, -2.0f, 3.0f, -3.0f, 3.0f, -3.0f, 4.0f, -4.0f, 4.0f, -4.0f, 5.0f, -5.0f, 5.0f, -5.0f}),
@@ -16830,6 +17727,8 @@ const TestModel& get_test_model_axis_dim3_axis0_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim3_axis0_2 = TestModelManager::get().add("softmax_v1_2_axis_dim3_axis0_2", get_test_model_axis_dim3_axis0_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -16837,9 +17736,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis0_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -16924,6 +17825,8 @@ const TestModel& get_test_model_axis_dim3_axis0_all_inputs_as_internal_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim3_axis0_all_inputs_as_internal_2 = TestModelManager::get().add("softmax_v1_2_axis_dim3_axis0_all_inputs_as_internal_2", get_test_model_axis_dim3_axis0_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -16931,9 +17834,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis0_neg_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, -1.0f, 1.0f, -1.0f, 2.0f, -2.0f, 2.0f, -2.0f, 3.0f, -3.0f, 3.0f, -3.0f, 4.0f, -4.0f, 4.0f, -4.0f, 5.0f, -5.0f, 5.0f, -5.0f}),
@@ -16984,6 +17889,8 @@ const TestModel& get_test_model_axis_dim3_axis0_neg_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim3_axis0_neg_2 = TestModelManager::get().add("softmax_v1_2_axis_dim3_axis0_neg_2", get_test_model_axis_dim3_axis0_neg_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -16991,9 +17898,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis0_neg_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -17078,6 +17987,8 @@ const TestModel& get_test_model_axis_dim3_axis0_neg_all_inputs_as_internal_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim3_axis0_neg_all_inputs_as_internal_2 = TestModelManager::get().add("softmax_v1_2_axis_dim3_axis0_neg_all_inputs_as_internal_2", get_test_model_axis_dim3_axis0_neg_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -17085,9 +17996,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis1_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, -1.0f, 2.0f, -2.0f, 3.0f, -3.0f, 4.0f, -4.0f, 5.0f, -5.0f, 1.0f, -1.0f, 2.0f, -2.0f, 3.0f, -3.0f, 4.0f, -4.0f, 5.0f, -5.0f}),
@@ -17138,6 +18051,8 @@ const TestModel& get_test_model_axis_dim3_axis1_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim3_axis1_2 = TestModelManager::get().add("softmax_v1_2_axis_dim3_axis1_2", get_test_model_axis_dim3_axis1_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -17145,9 +18060,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis1_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -17232,6 +18149,8 @@ const TestModel& get_test_model_axis_dim3_axis1_all_inputs_as_internal_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim3_axis1_all_inputs_as_internal_2 = TestModelManager::get().add("softmax_v1_2_axis_dim3_axis1_all_inputs_as_internal_2", get_test_model_axis_dim3_axis1_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -17239,9 +18158,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis1_neg_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, -1.0f, 2.0f, -2.0f, 3.0f, -3.0f, 4.0f, -4.0f, 5.0f, -5.0f, 1.0f, -1.0f, 2.0f, -2.0f, 3.0f, -3.0f, 4.0f, -4.0f, 5.0f, -5.0f}),
@@ -17292,6 +18213,8 @@ const TestModel& get_test_model_axis_dim3_axis1_neg_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim3_axis1_neg_2 = TestModelManager::get().add("softmax_v1_2_axis_dim3_axis1_neg_2", get_test_model_axis_dim3_axis1_neg_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -17299,9 +18222,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis1_neg_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -17386,6 +18311,8 @@ const TestModel& get_test_model_axis_dim3_axis1_neg_all_inputs_as_internal_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim3_axis1_neg_all_inputs_as_internal_2 = TestModelManager::get().add("softmax_v1_2_axis_dim3_axis1_neg_all_inputs_as_internal_2", get_test_model_axis_dim3_axis1_neg_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -17393,9 +18320,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis2_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, -1.0f, -2.0f, -3.0f, -4.0f, -5.0f, 1.0f, 2.0f, 3.0f, 4.0f, 5.0f, -1.0f, -2.0f, -3.0f, -4.0f, -5.0f}),
@@ -17446,6 +18375,8 @@ const TestModel& get_test_model_axis_dim3_axis2_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim3_axis2_2 = TestModelManager::get().add("softmax_v1_2_axis_dim3_axis2_2", get_test_model_axis_dim3_axis2_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -17453,9 +18384,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis2_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -17540,6 +18473,8 @@ const TestModel& get_test_model_axis_dim3_axis2_all_inputs_as_internal_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim3_axis2_all_inputs_as_internal_2 = TestModelManager::get().add("softmax_v1_2_axis_dim3_axis2_all_inputs_as_internal_2", get_test_model_axis_dim3_axis2_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -17547,9 +18482,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis2_neg_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, -1.0f, -2.0f, -3.0f, -4.0f, -5.0f, 1.0f, 2.0f, 3.0f, 4.0f, 5.0f, -1.0f, -2.0f, -3.0f, -4.0f, -5.0f}),
@@ -17600,6 +18537,8 @@ const TestModel& get_test_model_axis_dim3_axis2_neg_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim3_axis2_neg_2 = TestModelManager::get().add("softmax_v1_2_axis_dim3_axis2_neg_2", get_test_model_axis_dim3_axis2_neg_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -17607,9 +18546,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis2_neg_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -17694,6 +18635,8 @@ const TestModel& get_test_model_axis_dim3_axis2_neg_all_inputs_as_internal_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim3_axis2_neg_all_inputs_as_internal_2 = TestModelManager::get().add("softmax_v1_2_axis_dim3_axis2_neg_all_inputs_as_internal_2", get_test_model_axis_dim3_axis2_neg_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -17701,9 +18644,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_dim2_axis0_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, -1.0f, 2.0f, -2.0f, 3.0f, -3.0f, 4.0f, -4.0f, 5.0f, -5.0f}),
@@ -17754,6 +18699,8 @@ const TestModel& get_test_model_axis_dim2_axis0_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim2_axis0_2 = TestModelManager::get().add("softmax_v1_2_axis_dim2_axis0_2", get_test_model_axis_dim2_axis0_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -17761,9 +18708,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_dim2_axis0_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -17848,6 +18797,8 @@ const TestModel& get_test_model_axis_dim2_axis0_all_inputs_as_internal_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim2_axis0_all_inputs_as_internal_2 = TestModelManager::get().add("softmax_v1_2_axis_dim2_axis0_all_inputs_as_internal_2", get_test_model_axis_dim2_axis0_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -17855,9 +18806,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_dim2_axis0_neg_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, -1.0f, 2.0f, -2.0f, 3.0f, -3.0f, 4.0f, -4.0f, 5.0f, -5.0f}),
@@ -17908,6 +18861,8 @@ const TestModel& get_test_model_axis_dim2_axis0_neg_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim2_axis0_neg_2 = TestModelManager::get().add("softmax_v1_2_axis_dim2_axis0_neg_2", get_test_model_axis_dim2_axis0_neg_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -17915,9 +18870,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_dim2_axis0_neg_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -18002,6 +18959,8 @@ const TestModel& get_test_model_axis_dim2_axis0_neg_all_inputs_as_internal_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim2_axis0_neg_all_inputs_as_internal_2 = TestModelManager::get().add("softmax_v1_2_axis_dim2_axis0_neg_all_inputs_as_internal_2", get_test_model_axis_dim2_axis0_neg_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -18009,9 +18968,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_dim2_axis1_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, -1.0f, -2.0f, -3.0f, -4.0f, -5.0f}),
@@ -18062,6 +19023,8 @@ const TestModel& get_test_model_axis_dim2_axis1_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim2_axis1_2 = TestModelManager::get().add("softmax_v1_2_axis_dim2_axis1_2", get_test_model_axis_dim2_axis1_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -18069,9 +19032,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_dim2_axis1_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -18156,6 +19121,8 @@ const TestModel& get_test_model_axis_dim2_axis1_all_inputs_as_internal_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim2_axis1_all_inputs_as_internal_2 = TestModelManager::get().add("softmax_v1_2_axis_dim2_axis1_all_inputs_as_internal_2", get_test_model_axis_dim2_axis1_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -18163,9 +19130,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_dim2_axis1_neg_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, -1.0f, -2.0f, -3.0f, -4.0f, -5.0f}),
@@ -18216,6 +19185,8 @@ const TestModel& get_test_model_axis_dim2_axis1_neg_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim2_axis1_neg_2 = TestModelManager::get().add("softmax_v1_2_axis_dim2_axis1_neg_2", get_test_model_axis_dim2_axis1_neg_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -18223,9 +19194,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_dim2_axis1_neg_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -18310,6 +19283,8 @@ const TestModel& get_test_model_axis_dim2_axis1_neg_all_inputs_as_internal_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim2_axis1_neg_all_inputs_as_internal_2 = TestModelManager::get().add("softmax_v1_2_axis_dim2_axis1_neg_all_inputs_as_internal_2", get_test_model_axis_dim2_axis1_neg_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -18317,9 +19292,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_dim1_axis0_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f}),
@@ -18370,6 +19347,8 @@ const TestModel& get_test_model_axis_dim1_axis0_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim1_axis0_2 = TestModelManager::get().add("softmax_v1_2_axis_dim1_axis0_2", get_test_model_axis_dim1_axis0_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -18377,9 +19356,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_dim1_axis0_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -18464,6 +19445,8 @@ const TestModel& get_test_model_axis_dim1_axis0_all_inputs_as_internal_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim1_axis0_all_inputs_as_internal_2 = TestModelManager::get().add("softmax_v1_2_axis_dim1_axis0_all_inputs_as_internal_2", get_test_model_axis_dim1_axis0_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -18471,9 +19454,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_dim1_axis0_neg_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f}),
@@ -18524,6 +19509,8 @@ const TestModel& get_test_model_axis_dim1_axis0_neg_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim1_axis0_neg_2 = TestModelManager::get().add("softmax_v1_2_axis_dim1_axis0_neg_2", get_test_model_axis_dim1_axis0_neg_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -18531,9 +19518,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_dim1_axis0_neg_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -18618,6 +19607,8 @@ const TestModel& get_test_model_axis_dim1_axis0_neg_all_inputs_as_internal_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim1_axis0_neg_all_inputs_as_internal_2 = TestModelManager::get().add("softmax_v1_2_axis_dim1_axis0_neg_all_inputs_as_internal_2", get_test_model_axis_dim1_axis0_neg_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -18625,9 +19616,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_relaxed_dim4_axis0_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, -1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 2.0f, -2.0f, 2.0f, -2.0f, 2.0f, -2.0f, 2.0f, -2.0f, 3.0f, -3.0f, 3.0f, -3.0f, 3.0f, -3.0f, 3.0f, -3.0f, 4.0f, -4.0f, 4.0f, -4.0f, 4.0f, -4.0f, 4.0f, -4.0f, 5.0f, -5.0f, 5.0f, -5.0f, 5.0f, -5.0f, 5.0f, -5.0f}),
@@ -18678,6 +19671,8 @@ const TestModel& get_test_model_axis_relaxed_dim4_axis0_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_relaxed_dim4_axis0_2 = TestModelManager::get().add("softmax_v1_2_axis_relaxed_dim4_axis0_2", get_test_model_axis_relaxed_dim4_axis0_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -18685,9 +19680,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_relaxed_dim4_axis0_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -18772,6 +19769,8 @@ const TestModel& get_test_model_axis_relaxed_dim4_axis0_all_inputs_as_internal_2
     };
     return model;
 }
+
+const auto dummy_test_model_axis_relaxed_dim4_axis0_all_inputs_as_internal_2 = TestModelManager::get().add("softmax_v1_2_axis_relaxed_dim4_axis0_all_inputs_as_internal_2", get_test_model_axis_relaxed_dim4_axis0_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -18779,9 +19778,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_relaxed_dim4_axis0_neg_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, -1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 2.0f, -2.0f, 2.0f, -2.0f, 2.0f, -2.0f, 2.0f, -2.0f, 3.0f, -3.0f, 3.0f, -3.0f, 3.0f, -3.0f, 3.0f, -3.0f, 4.0f, -4.0f, 4.0f, -4.0f, 4.0f, -4.0f, 4.0f, -4.0f, 5.0f, -5.0f, 5.0f, -5.0f, 5.0f, -5.0f, 5.0f, -5.0f}),
@@ -18832,6 +19833,8 @@ const TestModel& get_test_model_axis_relaxed_dim4_axis0_neg_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_relaxed_dim4_axis0_neg_2 = TestModelManager::get().add("softmax_v1_2_axis_relaxed_dim4_axis0_neg_2", get_test_model_axis_relaxed_dim4_axis0_neg_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -18839,9 +19842,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_relaxed_dim4_axis0_neg_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -18927,15 +19932,19 @@ const TestModel& get_test_model_axis_relaxed_dim4_axis0_neg_all_inputs_as_intern
     return model;
 }
 
+const auto dummy_test_model_axis_relaxed_dim4_axis0_neg_all_inputs_as_internal_2 = TestModelManager::get().add("softmax_v1_2_axis_relaxed_dim4_axis0_neg_all_inputs_as_internal_2", get_test_model_axis_relaxed_dim4_axis0_neg_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::softmax_v1_2
 
 namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_relaxed_dim4_axis1_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, -1.0f, 1.0f, -1.0f, 2.0f, -2.0f, 2.0f, -2.0f, 3.0f, -3.0f, 3.0f, -3.0f, 4.0f, -4.0f, 4.0f, -4.0f, 5.0f, -5.0f, 5.0f, -5.0f, 1.0f, -1.0f, 1.0f, -1.0f, 2.0f, -2.0f, 2.0f, -2.0f, 3.0f, -3.0f, 3.0f, -3.0f, 4.0f, -4.0f, 4.0f, -4.0f, 5.0f, -5.0f, 5.0f, -5.0f}),
@@ -18986,6 +19995,8 @@ const TestModel& get_test_model_axis_relaxed_dim4_axis1_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_relaxed_dim4_axis1_2 = TestModelManager::get().add("softmax_v1_2_axis_relaxed_dim4_axis1_2", get_test_model_axis_relaxed_dim4_axis1_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -18993,9 +20004,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_relaxed_dim4_axis1_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -19080,6 +20093,8 @@ const TestModel& get_test_model_axis_relaxed_dim4_axis1_all_inputs_as_internal_2
     };
     return model;
 }
+
+const auto dummy_test_model_axis_relaxed_dim4_axis1_all_inputs_as_internal_2 = TestModelManager::get().add("softmax_v1_2_axis_relaxed_dim4_axis1_all_inputs_as_internal_2", get_test_model_axis_relaxed_dim4_axis1_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -19087,9 +20102,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_relaxed_dim4_axis1_neg_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, -1.0f, 1.0f, -1.0f, 2.0f, -2.0f, 2.0f, -2.0f, 3.0f, -3.0f, 3.0f, -3.0f, 4.0f, -4.0f, 4.0f, -4.0f, 5.0f, -5.0f, 5.0f, -5.0f, 1.0f, -1.0f, 1.0f, -1.0f, 2.0f, -2.0f, 2.0f, -2.0f, 3.0f, -3.0f, 3.0f, -3.0f, 4.0f, -4.0f, 4.0f, -4.0f, 5.0f, -5.0f, 5.0f, -5.0f}),
@@ -19140,6 +20157,8 @@ const TestModel& get_test_model_axis_relaxed_dim4_axis1_neg_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_relaxed_dim4_axis1_neg_2 = TestModelManager::get().add("softmax_v1_2_axis_relaxed_dim4_axis1_neg_2", get_test_model_axis_relaxed_dim4_axis1_neg_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -19147,9 +20166,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_relaxed_dim4_axis1_neg_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -19235,15 +20256,19 @@ const TestModel& get_test_model_axis_relaxed_dim4_axis1_neg_all_inputs_as_intern
     return model;
 }
 
+const auto dummy_test_model_axis_relaxed_dim4_axis1_neg_all_inputs_as_internal_2 = TestModelManager::get().add("softmax_v1_2_axis_relaxed_dim4_axis1_neg_all_inputs_as_internal_2", get_test_model_axis_relaxed_dim4_axis1_neg_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::softmax_v1_2
 
 namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_relaxed_dim4_axis2_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, -1.0f, 2.0f, -2.0f, 3.0f, -3.0f, 4.0f, -4.0f, 5.0f, -5.0f, 1.0f, -1.0f, 2.0f, -2.0f, 3.0f, -3.0f, 4.0f, -4.0f, 5.0f, -5.0f, 1.0f, -1.0f, 2.0f, -2.0f, 3.0f, -3.0f, 4.0f, -4.0f, 5.0f, -5.0f, 1.0f, -1.0f, 2.0f, -2.0f, 3.0f, -3.0f, 4.0f, -4.0f, 5.0f, -5.0f}),
@@ -19294,6 +20319,8 @@ const TestModel& get_test_model_axis_relaxed_dim4_axis2_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_relaxed_dim4_axis2_2 = TestModelManager::get().add("softmax_v1_2_axis_relaxed_dim4_axis2_2", get_test_model_axis_relaxed_dim4_axis2_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -19301,9 +20328,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_relaxed_dim4_axis2_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -19388,6 +20417,8 @@ const TestModel& get_test_model_axis_relaxed_dim4_axis2_all_inputs_as_internal_2
     };
     return model;
 }
+
+const auto dummy_test_model_axis_relaxed_dim4_axis2_all_inputs_as_internal_2 = TestModelManager::get().add("softmax_v1_2_axis_relaxed_dim4_axis2_all_inputs_as_internal_2", get_test_model_axis_relaxed_dim4_axis2_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -19395,9 +20426,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_relaxed_dim4_axis2_neg_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, -1.0f, 2.0f, -2.0f, 3.0f, -3.0f, 4.0f, -4.0f, 5.0f, -5.0f, 1.0f, -1.0f, 2.0f, -2.0f, 3.0f, -3.0f, 4.0f, -4.0f, 5.0f, -5.0f, 1.0f, -1.0f, 2.0f, -2.0f, 3.0f, -3.0f, 4.0f, -4.0f, 5.0f, -5.0f, 1.0f, -1.0f, 2.0f, -2.0f, 3.0f, -3.0f, 4.0f, -4.0f, 5.0f, -5.0f}),
@@ -19448,6 +20481,8 @@ const TestModel& get_test_model_axis_relaxed_dim4_axis2_neg_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_relaxed_dim4_axis2_neg_2 = TestModelManager::get().add("softmax_v1_2_axis_relaxed_dim4_axis2_neg_2", get_test_model_axis_relaxed_dim4_axis2_neg_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -19455,9 +20490,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_relaxed_dim4_axis2_neg_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -19543,15 +20580,19 @@ const TestModel& get_test_model_axis_relaxed_dim4_axis2_neg_all_inputs_as_intern
     return model;
 }
 
+const auto dummy_test_model_axis_relaxed_dim4_axis2_neg_all_inputs_as_internal_2 = TestModelManager::get().add("softmax_v1_2_axis_relaxed_dim4_axis2_neg_all_inputs_as_internal_2", get_test_model_axis_relaxed_dim4_axis2_neg_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::softmax_v1_2
 
 namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_relaxed_dim4_axis3_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, -1.0f, -2.0f, -3.0f, -4.0f, -5.0f, 1.0f, 2.0f, 3.0f, 4.0f, 5.0f, -1.0f, -2.0f, -3.0f, -4.0f, -5.0f, 1.0f, 2.0f, 3.0f, 4.0f, 5.0f, -1.0f, -2.0f, -3.0f, -4.0f, -5.0f, 1.0f, 2.0f, 3.0f, 4.0f, 5.0f, -1.0f, -2.0f, -3.0f, -4.0f, -5.0f}),
@@ -19602,6 +20643,8 @@ const TestModel& get_test_model_axis_relaxed_dim4_axis3_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_relaxed_dim4_axis3_2 = TestModelManager::get().add("softmax_v1_2_axis_relaxed_dim4_axis3_2", get_test_model_axis_relaxed_dim4_axis3_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -19609,9 +20652,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_relaxed_dim4_axis3_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -19696,6 +20741,8 @@ const TestModel& get_test_model_axis_relaxed_dim4_axis3_all_inputs_as_internal_2
     };
     return model;
 }
+
+const auto dummy_test_model_axis_relaxed_dim4_axis3_all_inputs_as_internal_2 = TestModelManager::get().add("softmax_v1_2_axis_relaxed_dim4_axis3_all_inputs_as_internal_2", get_test_model_axis_relaxed_dim4_axis3_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -19703,9 +20750,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_relaxed_dim4_axis3_neg_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, -1.0f, -2.0f, -3.0f, -4.0f, -5.0f, 1.0f, 2.0f, 3.0f, 4.0f, 5.0f, -1.0f, -2.0f, -3.0f, -4.0f, -5.0f, 1.0f, 2.0f, 3.0f, 4.0f, 5.0f, -1.0f, -2.0f, -3.0f, -4.0f, -5.0f, 1.0f, 2.0f, 3.0f, 4.0f, 5.0f, -1.0f, -2.0f, -3.0f, -4.0f, -5.0f}),
@@ -19756,6 +20805,8 @@ const TestModel& get_test_model_axis_relaxed_dim4_axis3_neg_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_relaxed_dim4_axis3_neg_2 = TestModelManager::get().add("softmax_v1_2_axis_relaxed_dim4_axis3_neg_2", get_test_model_axis_relaxed_dim4_axis3_neg_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -19763,9 +20814,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_relaxed_dim4_axis3_neg_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -19851,15 +20904,19 @@ const TestModel& get_test_model_axis_relaxed_dim4_axis3_neg_all_inputs_as_intern
     return model;
 }
 
+const auto dummy_test_model_axis_relaxed_dim4_axis3_neg_all_inputs_as_internal_2 = TestModelManager::get().add("softmax_v1_2_axis_relaxed_dim4_axis3_neg_all_inputs_as_internal_2", get_test_model_axis_relaxed_dim4_axis3_neg_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::softmax_v1_2
 
 namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_relaxed_dim3_axis0_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, -1.0f, 1.0f, -1.0f, 2.0f, -2.0f, 2.0f, -2.0f, 3.0f, -3.0f, 3.0f, -3.0f, 4.0f, -4.0f, 4.0f, -4.0f, 5.0f, -5.0f, 5.0f, -5.0f}),
@@ -19910,6 +20967,8 @@ const TestModel& get_test_model_axis_relaxed_dim3_axis0_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_relaxed_dim3_axis0_2 = TestModelManager::get().add("softmax_v1_2_axis_relaxed_dim3_axis0_2", get_test_model_axis_relaxed_dim3_axis0_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -19917,9 +20976,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_relaxed_dim3_axis0_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -20004,6 +21065,8 @@ const TestModel& get_test_model_axis_relaxed_dim3_axis0_all_inputs_as_internal_2
     };
     return model;
 }
+
+const auto dummy_test_model_axis_relaxed_dim3_axis0_all_inputs_as_internal_2 = TestModelManager::get().add("softmax_v1_2_axis_relaxed_dim3_axis0_all_inputs_as_internal_2", get_test_model_axis_relaxed_dim3_axis0_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -20011,9 +21074,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_relaxed_dim3_axis0_neg_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, -1.0f, 1.0f, -1.0f, 2.0f, -2.0f, 2.0f, -2.0f, 3.0f, -3.0f, 3.0f, -3.0f, 4.0f, -4.0f, 4.0f, -4.0f, 5.0f, -5.0f, 5.0f, -5.0f}),
@@ -20064,6 +21129,8 @@ const TestModel& get_test_model_axis_relaxed_dim3_axis0_neg_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_relaxed_dim3_axis0_neg_2 = TestModelManager::get().add("softmax_v1_2_axis_relaxed_dim3_axis0_neg_2", get_test_model_axis_relaxed_dim3_axis0_neg_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -20071,9 +21138,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_relaxed_dim3_axis0_neg_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -20159,15 +21228,19 @@ const TestModel& get_test_model_axis_relaxed_dim3_axis0_neg_all_inputs_as_intern
     return model;
 }
 
+const auto dummy_test_model_axis_relaxed_dim3_axis0_neg_all_inputs_as_internal_2 = TestModelManager::get().add("softmax_v1_2_axis_relaxed_dim3_axis0_neg_all_inputs_as_internal_2", get_test_model_axis_relaxed_dim3_axis0_neg_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::softmax_v1_2
 
 namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_relaxed_dim3_axis1_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, -1.0f, 2.0f, -2.0f, 3.0f, -3.0f, 4.0f, -4.0f, 5.0f, -5.0f, 1.0f, -1.0f, 2.0f, -2.0f, 3.0f, -3.0f, 4.0f, -4.0f, 5.0f, -5.0f}),
@@ -20218,6 +21291,8 @@ const TestModel& get_test_model_axis_relaxed_dim3_axis1_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_relaxed_dim3_axis1_2 = TestModelManager::get().add("softmax_v1_2_axis_relaxed_dim3_axis1_2", get_test_model_axis_relaxed_dim3_axis1_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -20225,9 +21300,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_relaxed_dim3_axis1_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -20312,6 +21389,8 @@ const TestModel& get_test_model_axis_relaxed_dim3_axis1_all_inputs_as_internal_2
     };
     return model;
 }
+
+const auto dummy_test_model_axis_relaxed_dim3_axis1_all_inputs_as_internal_2 = TestModelManager::get().add("softmax_v1_2_axis_relaxed_dim3_axis1_all_inputs_as_internal_2", get_test_model_axis_relaxed_dim3_axis1_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -20319,9 +21398,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_relaxed_dim3_axis1_neg_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, -1.0f, 2.0f, -2.0f, 3.0f, -3.0f, 4.0f, -4.0f, 5.0f, -5.0f, 1.0f, -1.0f, 2.0f, -2.0f, 3.0f, -3.0f, 4.0f, -4.0f, 5.0f, -5.0f}),
@@ -20372,6 +21453,8 @@ const TestModel& get_test_model_axis_relaxed_dim3_axis1_neg_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_relaxed_dim3_axis1_neg_2 = TestModelManager::get().add("softmax_v1_2_axis_relaxed_dim3_axis1_neg_2", get_test_model_axis_relaxed_dim3_axis1_neg_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -20379,9 +21462,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_relaxed_dim3_axis1_neg_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -20467,15 +21552,19 @@ const TestModel& get_test_model_axis_relaxed_dim3_axis1_neg_all_inputs_as_intern
     return model;
 }
 
+const auto dummy_test_model_axis_relaxed_dim3_axis1_neg_all_inputs_as_internal_2 = TestModelManager::get().add("softmax_v1_2_axis_relaxed_dim3_axis1_neg_all_inputs_as_internal_2", get_test_model_axis_relaxed_dim3_axis1_neg_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::softmax_v1_2
 
 namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_relaxed_dim3_axis2_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, -1.0f, -2.0f, -3.0f, -4.0f, -5.0f, 1.0f, 2.0f, 3.0f, 4.0f, 5.0f, -1.0f, -2.0f, -3.0f, -4.0f, -5.0f}),
@@ -20526,6 +21615,8 @@ const TestModel& get_test_model_axis_relaxed_dim3_axis2_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_relaxed_dim3_axis2_2 = TestModelManager::get().add("softmax_v1_2_axis_relaxed_dim3_axis2_2", get_test_model_axis_relaxed_dim3_axis2_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -20533,9 +21624,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_relaxed_dim3_axis2_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -20620,6 +21713,8 @@ const TestModel& get_test_model_axis_relaxed_dim3_axis2_all_inputs_as_internal_2
     };
     return model;
 }
+
+const auto dummy_test_model_axis_relaxed_dim3_axis2_all_inputs_as_internal_2 = TestModelManager::get().add("softmax_v1_2_axis_relaxed_dim3_axis2_all_inputs_as_internal_2", get_test_model_axis_relaxed_dim3_axis2_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -20627,9 +21722,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_relaxed_dim3_axis2_neg_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, -1.0f, -2.0f, -3.0f, -4.0f, -5.0f, 1.0f, 2.0f, 3.0f, 4.0f, 5.0f, -1.0f, -2.0f, -3.0f, -4.0f, -5.0f}),
@@ -20680,6 +21777,8 @@ const TestModel& get_test_model_axis_relaxed_dim3_axis2_neg_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_relaxed_dim3_axis2_neg_2 = TestModelManager::get().add("softmax_v1_2_axis_relaxed_dim3_axis2_neg_2", get_test_model_axis_relaxed_dim3_axis2_neg_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -20687,9 +21786,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_relaxed_dim3_axis2_neg_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -20775,15 +21876,19 @@ const TestModel& get_test_model_axis_relaxed_dim3_axis2_neg_all_inputs_as_intern
     return model;
 }
 
+const auto dummy_test_model_axis_relaxed_dim3_axis2_neg_all_inputs_as_internal_2 = TestModelManager::get().add("softmax_v1_2_axis_relaxed_dim3_axis2_neg_all_inputs_as_internal_2", get_test_model_axis_relaxed_dim3_axis2_neg_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::softmax_v1_2
 
 namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_relaxed_dim2_axis0_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, -1.0f, 2.0f, -2.0f, 3.0f, -3.0f, 4.0f, -4.0f, 5.0f, -5.0f}),
@@ -20834,6 +21939,8 @@ const TestModel& get_test_model_axis_relaxed_dim2_axis0_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_relaxed_dim2_axis0_2 = TestModelManager::get().add("softmax_v1_2_axis_relaxed_dim2_axis0_2", get_test_model_axis_relaxed_dim2_axis0_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -20841,9 +21948,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_relaxed_dim2_axis0_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -20928,6 +22037,8 @@ const TestModel& get_test_model_axis_relaxed_dim2_axis0_all_inputs_as_internal_2
     };
     return model;
 }
+
+const auto dummy_test_model_axis_relaxed_dim2_axis0_all_inputs_as_internal_2 = TestModelManager::get().add("softmax_v1_2_axis_relaxed_dim2_axis0_all_inputs_as_internal_2", get_test_model_axis_relaxed_dim2_axis0_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -20935,9 +22046,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_relaxed_dim2_axis0_neg_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, -1.0f, 2.0f, -2.0f, 3.0f, -3.0f, 4.0f, -4.0f, 5.0f, -5.0f}),
@@ -20988,6 +22101,8 @@ const TestModel& get_test_model_axis_relaxed_dim2_axis0_neg_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_relaxed_dim2_axis0_neg_2 = TestModelManager::get().add("softmax_v1_2_axis_relaxed_dim2_axis0_neg_2", get_test_model_axis_relaxed_dim2_axis0_neg_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -20995,9 +22110,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_relaxed_dim2_axis0_neg_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -21083,15 +22200,19 @@ const TestModel& get_test_model_axis_relaxed_dim2_axis0_neg_all_inputs_as_intern
     return model;
 }
 
+const auto dummy_test_model_axis_relaxed_dim2_axis0_neg_all_inputs_as_internal_2 = TestModelManager::get().add("softmax_v1_2_axis_relaxed_dim2_axis0_neg_all_inputs_as_internal_2", get_test_model_axis_relaxed_dim2_axis0_neg_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::softmax_v1_2
 
 namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_relaxed_dim2_axis1_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, -1.0f, -2.0f, -3.0f, -4.0f, -5.0f}),
@@ -21142,6 +22263,8 @@ const TestModel& get_test_model_axis_relaxed_dim2_axis1_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_relaxed_dim2_axis1_2 = TestModelManager::get().add("softmax_v1_2_axis_relaxed_dim2_axis1_2", get_test_model_axis_relaxed_dim2_axis1_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -21149,9 +22272,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_relaxed_dim2_axis1_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -21236,6 +22361,8 @@ const TestModel& get_test_model_axis_relaxed_dim2_axis1_all_inputs_as_internal_2
     };
     return model;
 }
+
+const auto dummy_test_model_axis_relaxed_dim2_axis1_all_inputs_as_internal_2 = TestModelManager::get().add("softmax_v1_2_axis_relaxed_dim2_axis1_all_inputs_as_internal_2", get_test_model_axis_relaxed_dim2_axis1_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -21243,9 +22370,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_relaxed_dim2_axis1_neg_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, -1.0f, -2.0f, -3.0f, -4.0f, -5.0f}),
@@ -21296,6 +22425,8 @@ const TestModel& get_test_model_axis_relaxed_dim2_axis1_neg_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_relaxed_dim2_axis1_neg_2 = TestModelManager::get().add("softmax_v1_2_axis_relaxed_dim2_axis1_neg_2", get_test_model_axis_relaxed_dim2_axis1_neg_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -21303,9 +22434,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_relaxed_dim2_axis1_neg_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -21391,15 +22524,19 @@ const TestModel& get_test_model_axis_relaxed_dim2_axis1_neg_all_inputs_as_intern
     return model;
 }
 
+const auto dummy_test_model_axis_relaxed_dim2_axis1_neg_all_inputs_as_internal_2 = TestModelManager::get().add("softmax_v1_2_axis_relaxed_dim2_axis1_neg_all_inputs_as_internal_2", get_test_model_axis_relaxed_dim2_axis1_neg_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::softmax_v1_2
 
 namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_relaxed_dim1_axis0_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f}),
@@ -21450,6 +22587,8 @@ const TestModel& get_test_model_axis_relaxed_dim1_axis0_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_relaxed_dim1_axis0_2 = TestModelManager::get().add("softmax_v1_2_axis_relaxed_dim1_axis0_2", get_test_model_axis_relaxed_dim1_axis0_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -21457,9 +22596,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_relaxed_dim1_axis0_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -21544,6 +22685,8 @@ const TestModel& get_test_model_axis_relaxed_dim1_axis0_all_inputs_as_internal_2
     };
     return model;
 }
+
+const auto dummy_test_model_axis_relaxed_dim1_axis0_all_inputs_as_internal_2 = TestModelManager::get().add("softmax_v1_2_axis_relaxed_dim1_axis0_all_inputs_as_internal_2", get_test_model_axis_relaxed_dim1_axis0_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -21551,9 +22694,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_relaxed_dim1_axis0_neg_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f}),
@@ -21605,15 +22750,19 @@ const TestModel& get_test_model_axis_relaxed_dim1_axis0_neg_2() {
     return model;
 }
 
+const auto dummy_test_model_axis_relaxed_dim1_axis0_neg_2 = TestModelManager::get().add("softmax_v1_2_axis_relaxed_dim1_axis0_neg_2", get_test_model_axis_relaxed_dim1_axis0_neg_2());
+
 }  // namespace generated_tests::softmax_v1_2
 
 namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_relaxed_dim1_axis0_neg_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -21699,15 +22848,19 @@ const TestModel& get_test_model_axis_relaxed_dim1_axis0_neg_all_inputs_as_intern
     return model;
 }
 
+const auto dummy_test_model_axis_relaxed_dim1_axis0_neg_all_inputs_as_internal_2 = TestModelManager::get().add("softmax_v1_2_axis_relaxed_dim1_axis0_neg_all_inputs_as_internal_2", get_test_model_axis_relaxed_dim1_axis0_neg_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::softmax_v1_2
 
 namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_float16_dim4_axis0_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({1.0f, -1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 2.0f, -2.0f, 2.0f, -2.0f, 2.0f, -2.0f, 2.0f, -2.0f, 3.0f, -3.0f, 3.0f, -3.0f, 3.0f, -3.0f, 3.0f, -3.0f, 4.0f, -4.0f, 4.0f, -4.0f, 4.0f, -4.0f, 4.0f, -4.0f, 5.0f, -5.0f, 5.0f, -5.0f, 5.0f, -5.0f, 5.0f, -5.0f}),
@@ -21758,6 +22911,8 @@ const TestModel& get_test_model_axis_float16_dim4_axis0_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_float16_dim4_axis0_2 = TestModelManager::get().add("softmax_v1_2_axis_float16_dim4_axis0_2", get_test_model_axis_float16_dim4_axis0_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -21765,9 +22920,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_float16_dim4_axis0_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -21852,6 +23009,8 @@ const TestModel& get_test_model_axis_float16_dim4_axis0_all_inputs_as_internal_2
     };
     return model;
 }
+
+const auto dummy_test_model_axis_float16_dim4_axis0_all_inputs_as_internal_2 = TestModelManager::get().add("softmax_v1_2_axis_float16_dim4_axis0_all_inputs_as_internal_2", get_test_model_axis_float16_dim4_axis0_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -21859,9 +23018,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_float16_dim4_axis0_neg_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({1.0f, -1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 2.0f, -2.0f, 2.0f, -2.0f, 2.0f, -2.0f, 2.0f, -2.0f, 3.0f, -3.0f, 3.0f, -3.0f, 3.0f, -3.0f, 3.0f, -3.0f, 4.0f, -4.0f, 4.0f, -4.0f, 4.0f, -4.0f, 4.0f, -4.0f, 5.0f, -5.0f, 5.0f, -5.0f, 5.0f, -5.0f, 5.0f, -5.0f}),
@@ -21912,6 +23073,8 @@ const TestModel& get_test_model_axis_float16_dim4_axis0_neg_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_float16_dim4_axis0_neg_2 = TestModelManager::get().add("softmax_v1_2_axis_float16_dim4_axis0_neg_2", get_test_model_axis_float16_dim4_axis0_neg_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -21919,9 +23082,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_float16_dim4_axis0_neg_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -22007,15 +23172,19 @@ const TestModel& get_test_model_axis_float16_dim4_axis0_neg_all_inputs_as_intern
     return model;
 }
 
+const auto dummy_test_model_axis_float16_dim4_axis0_neg_all_inputs_as_internal_2 = TestModelManager::get().add("softmax_v1_2_axis_float16_dim4_axis0_neg_all_inputs_as_internal_2", get_test_model_axis_float16_dim4_axis0_neg_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::softmax_v1_2
 
 namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_float16_dim4_axis1_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({1.0f, -1.0f, 1.0f, -1.0f, 2.0f, -2.0f, 2.0f, -2.0f, 3.0f, -3.0f, 3.0f, -3.0f, 4.0f, -4.0f, 4.0f, -4.0f, 5.0f, -5.0f, 5.0f, -5.0f, 1.0f, -1.0f, 1.0f, -1.0f, 2.0f, -2.0f, 2.0f, -2.0f, 3.0f, -3.0f, 3.0f, -3.0f, 4.0f, -4.0f, 4.0f, -4.0f, 5.0f, -5.0f, 5.0f, -5.0f}),
@@ -22066,6 +23235,8 @@ const TestModel& get_test_model_axis_float16_dim4_axis1_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_float16_dim4_axis1_2 = TestModelManager::get().add("softmax_v1_2_axis_float16_dim4_axis1_2", get_test_model_axis_float16_dim4_axis1_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -22073,9 +23244,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_float16_dim4_axis1_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -22160,6 +23333,8 @@ const TestModel& get_test_model_axis_float16_dim4_axis1_all_inputs_as_internal_2
     };
     return model;
 }
+
+const auto dummy_test_model_axis_float16_dim4_axis1_all_inputs_as_internal_2 = TestModelManager::get().add("softmax_v1_2_axis_float16_dim4_axis1_all_inputs_as_internal_2", get_test_model_axis_float16_dim4_axis1_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -22167,9 +23342,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_float16_dim4_axis1_neg_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({1.0f, -1.0f, 1.0f, -1.0f, 2.0f, -2.0f, 2.0f, -2.0f, 3.0f, -3.0f, 3.0f, -3.0f, 4.0f, -4.0f, 4.0f, -4.0f, 5.0f, -5.0f, 5.0f, -5.0f, 1.0f, -1.0f, 1.0f, -1.0f, 2.0f, -2.0f, 2.0f, -2.0f, 3.0f, -3.0f, 3.0f, -3.0f, 4.0f, -4.0f, 4.0f, -4.0f, 5.0f, -5.0f, 5.0f, -5.0f}),
@@ -22220,6 +23397,8 @@ const TestModel& get_test_model_axis_float16_dim4_axis1_neg_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_float16_dim4_axis1_neg_2 = TestModelManager::get().add("softmax_v1_2_axis_float16_dim4_axis1_neg_2", get_test_model_axis_float16_dim4_axis1_neg_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -22227,9 +23406,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_float16_dim4_axis1_neg_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -22315,15 +23496,19 @@ const TestModel& get_test_model_axis_float16_dim4_axis1_neg_all_inputs_as_intern
     return model;
 }
 
+const auto dummy_test_model_axis_float16_dim4_axis1_neg_all_inputs_as_internal_2 = TestModelManager::get().add("softmax_v1_2_axis_float16_dim4_axis1_neg_all_inputs_as_internal_2", get_test_model_axis_float16_dim4_axis1_neg_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::softmax_v1_2
 
 namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_float16_dim4_axis2_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({1.0f, -1.0f, 2.0f, -2.0f, 3.0f, -3.0f, 4.0f, -4.0f, 5.0f, -5.0f, 1.0f, -1.0f, 2.0f, -2.0f, 3.0f, -3.0f, 4.0f, -4.0f, 5.0f, -5.0f, 1.0f, -1.0f, 2.0f, -2.0f, 3.0f, -3.0f, 4.0f, -4.0f, 5.0f, -5.0f, 1.0f, -1.0f, 2.0f, -2.0f, 3.0f, -3.0f, 4.0f, -4.0f, 5.0f, -5.0f}),
@@ -22374,6 +23559,8 @@ const TestModel& get_test_model_axis_float16_dim4_axis2_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_float16_dim4_axis2_2 = TestModelManager::get().add("softmax_v1_2_axis_float16_dim4_axis2_2", get_test_model_axis_float16_dim4_axis2_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -22381,9 +23568,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_float16_dim4_axis2_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -22468,6 +23657,8 @@ const TestModel& get_test_model_axis_float16_dim4_axis2_all_inputs_as_internal_2
     };
     return model;
 }
+
+const auto dummy_test_model_axis_float16_dim4_axis2_all_inputs_as_internal_2 = TestModelManager::get().add("softmax_v1_2_axis_float16_dim4_axis2_all_inputs_as_internal_2", get_test_model_axis_float16_dim4_axis2_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -22475,9 +23666,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_float16_dim4_axis2_neg_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({1.0f, -1.0f, 2.0f, -2.0f, 3.0f, -3.0f, 4.0f, -4.0f, 5.0f, -5.0f, 1.0f, -1.0f, 2.0f, -2.0f, 3.0f, -3.0f, 4.0f, -4.0f, 5.0f, -5.0f, 1.0f, -1.0f, 2.0f, -2.0f, 3.0f, -3.0f, 4.0f, -4.0f, 5.0f, -5.0f, 1.0f, -1.0f, 2.0f, -2.0f, 3.0f, -3.0f, 4.0f, -4.0f, 5.0f, -5.0f}),
@@ -22528,6 +23721,8 @@ const TestModel& get_test_model_axis_float16_dim4_axis2_neg_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_float16_dim4_axis2_neg_2 = TestModelManager::get().add("softmax_v1_2_axis_float16_dim4_axis2_neg_2", get_test_model_axis_float16_dim4_axis2_neg_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -22535,9 +23730,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_float16_dim4_axis2_neg_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -22623,15 +23820,19 @@ const TestModel& get_test_model_axis_float16_dim4_axis2_neg_all_inputs_as_intern
     return model;
 }
 
+const auto dummy_test_model_axis_float16_dim4_axis2_neg_all_inputs_as_internal_2 = TestModelManager::get().add("softmax_v1_2_axis_float16_dim4_axis2_neg_all_inputs_as_internal_2", get_test_model_axis_float16_dim4_axis2_neg_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::softmax_v1_2
 
 namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_float16_dim4_axis3_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, -1.0f, -2.0f, -3.0f, -4.0f, -5.0f, 1.0f, 2.0f, 3.0f, 4.0f, 5.0f, -1.0f, -2.0f, -3.0f, -4.0f, -5.0f, 1.0f, 2.0f, 3.0f, 4.0f, 5.0f, -1.0f, -2.0f, -3.0f, -4.0f, -5.0f, 1.0f, 2.0f, 3.0f, 4.0f, 5.0f, -1.0f, -2.0f, -3.0f, -4.0f, -5.0f}),
@@ -22682,6 +23883,8 @@ const TestModel& get_test_model_axis_float16_dim4_axis3_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_float16_dim4_axis3_2 = TestModelManager::get().add("softmax_v1_2_axis_float16_dim4_axis3_2", get_test_model_axis_float16_dim4_axis3_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -22689,9 +23892,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_float16_dim4_axis3_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -22776,6 +23981,8 @@ const TestModel& get_test_model_axis_float16_dim4_axis3_all_inputs_as_internal_2
     };
     return model;
 }
+
+const auto dummy_test_model_axis_float16_dim4_axis3_all_inputs_as_internal_2 = TestModelManager::get().add("softmax_v1_2_axis_float16_dim4_axis3_all_inputs_as_internal_2", get_test_model_axis_float16_dim4_axis3_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -22783,9 +23990,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_float16_dim4_axis3_neg_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, -1.0f, -2.0f, -3.0f, -4.0f, -5.0f, 1.0f, 2.0f, 3.0f, 4.0f, 5.0f, -1.0f, -2.0f, -3.0f, -4.0f, -5.0f, 1.0f, 2.0f, 3.0f, 4.0f, 5.0f, -1.0f, -2.0f, -3.0f, -4.0f, -5.0f, 1.0f, 2.0f, 3.0f, 4.0f, 5.0f, -1.0f, -2.0f, -3.0f, -4.0f, -5.0f}),
@@ -22836,6 +24045,8 @@ const TestModel& get_test_model_axis_float16_dim4_axis3_neg_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_float16_dim4_axis3_neg_2 = TestModelManager::get().add("softmax_v1_2_axis_float16_dim4_axis3_neg_2", get_test_model_axis_float16_dim4_axis3_neg_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -22843,9 +24054,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_float16_dim4_axis3_neg_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -22931,15 +24144,19 @@ const TestModel& get_test_model_axis_float16_dim4_axis3_neg_all_inputs_as_intern
     return model;
 }
 
+const auto dummy_test_model_axis_float16_dim4_axis3_neg_all_inputs_as_internal_2 = TestModelManager::get().add("softmax_v1_2_axis_float16_dim4_axis3_neg_all_inputs_as_internal_2", get_test_model_axis_float16_dim4_axis3_neg_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::softmax_v1_2
 
 namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_float16_dim3_axis0_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({1.0f, -1.0f, 1.0f, -1.0f, 2.0f, -2.0f, 2.0f, -2.0f, 3.0f, -3.0f, 3.0f, -3.0f, 4.0f, -4.0f, 4.0f, -4.0f, 5.0f, -5.0f, 5.0f, -5.0f}),
@@ -22990,6 +24207,8 @@ const TestModel& get_test_model_axis_float16_dim3_axis0_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_float16_dim3_axis0_2 = TestModelManager::get().add("softmax_v1_2_axis_float16_dim3_axis0_2", get_test_model_axis_float16_dim3_axis0_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -22997,9 +24216,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_float16_dim3_axis0_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -23084,6 +24305,8 @@ const TestModel& get_test_model_axis_float16_dim3_axis0_all_inputs_as_internal_2
     };
     return model;
 }
+
+const auto dummy_test_model_axis_float16_dim3_axis0_all_inputs_as_internal_2 = TestModelManager::get().add("softmax_v1_2_axis_float16_dim3_axis0_all_inputs_as_internal_2", get_test_model_axis_float16_dim3_axis0_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -23091,9 +24314,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_float16_dim3_axis0_neg_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({1.0f, -1.0f, 1.0f, -1.0f, 2.0f, -2.0f, 2.0f, -2.0f, 3.0f, -3.0f, 3.0f, -3.0f, 4.0f, -4.0f, 4.0f, -4.0f, 5.0f, -5.0f, 5.0f, -5.0f}),
@@ -23144,6 +24369,8 @@ const TestModel& get_test_model_axis_float16_dim3_axis0_neg_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_float16_dim3_axis0_neg_2 = TestModelManager::get().add("softmax_v1_2_axis_float16_dim3_axis0_neg_2", get_test_model_axis_float16_dim3_axis0_neg_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -23151,9 +24378,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_float16_dim3_axis0_neg_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -23239,15 +24468,19 @@ const TestModel& get_test_model_axis_float16_dim3_axis0_neg_all_inputs_as_intern
     return model;
 }
 
+const auto dummy_test_model_axis_float16_dim3_axis0_neg_all_inputs_as_internal_2 = TestModelManager::get().add("softmax_v1_2_axis_float16_dim3_axis0_neg_all_inputs_as_internal_2", get_test_model_axis_float16_dim3_axis0_neg_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::softmax_v1_2
 
 namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_float16_dim3_axis1_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({1.0f, -1.0f, 2.0f, -2.0f, 3.0f, -3.0f, 4.0f, -4.0f, 5.0f, -5.0f, 1.0f, -1.0f, 2.0f, -2.0f, 3.0f, -3.0f, 4.0f, -4.0f, 5.0f, -5.0f}),
@@ -23298,6 +24531,8 @@ const TestModel& get_test_model_axis_float16_dim3_axis1_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_float16_dim3_axis1_2 = TestModelManager::get().add("softmax_v1_2_axis_float16_dim3_axis1_2", get_test_model_axis_float16_dim3_axis1_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -23305,9 +24540,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_float16_dim3_axis1_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -23392,6 +24629,8 @@ const TestModel& get_test_model_axis_float16_dim3_axis1_all_inputs_as_internal_2
     };
     return model;
 }
+
+const auto dummy_test_model_axis_float16_dim3_axis1_all_inputs_as_internal_2 = TestModelManager::get().add("softmax_v1_2_axis_float16_dim3_axis1_all_inputs_as_internal_2", get_test_model_axis_float16_dim3_axis1_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -23399,9 +24638,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_float16_dim3_axis1_neg_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({1.0f, -1.0f, 2.0f, -2.0f, 3.0f, -3.0f, 4.0f, -4.0f, 5.0f, -5.0f, 1.0f, -1.0f, 2.0f, -2.0f, 3.0f, -3.0f, 4.0f, -4.0f, 5.0f, -5.0f}),
@@ -23452,6 +24693,8 @@ const TestModel& get_test_model_axis_float16_dim3_axis1_neg_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_float16_dim3_axis1_neg_2 = TestModelManager::get().add("softmax_v1_2_axis_float16_dim3_axis1_neg_2", get_test_model_axis_float16_dim3_axis1_neg_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -23459,9 +24702,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_float16_dim3_axis1_neg_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -23547,15 +24792,19 @@ const TestModel& get_test_model_axis_float16_dim3_axis1_neg_all_inputs_as_intern
     return model;
 }
 
+const auto dummy_test_model_axis_float16_dim3_axis1_neg_all_inputs_as_internal_2 = TestModelManager::get().add("softmax_v1_2_axis_float16_dim3_axis1_neg_all_inputs_as_internal_2", get_test_model_axis_float16_dim3_axis1_neg_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::softmax_v1_2
 
 namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_float16_dim3_axis2_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, -1.0f, -2.0f, -3.0f, -4.0f, -5.0f, 1.0f, 2.0f, 3.0f, 4.0f, 5.0f, -1.0f, -2.0f, -3.0f, -4.0f, -5.0f}),
@@ -23606,6 +24855,8 @@ const TestModel& get_test_model_axis_float16_dim3_axis2_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_float16_dim3_axis2_2 = TestModelManager::get().add("softmax_v1_2_axis_float16_dim3_axis2_2", get_test_model_axis_float16_dim3_axis2_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -23613,9 +24864,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_float16_dim3_axis2_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -23700,6 +24953,8 @@ const TestModel& get_test_model_axis_float16_dim3_axis2_all_inputs_as_internal_2
     };
     return model;
 }
+
+const auto dummy_test_model_axis_float16_dim3_axis2_all_inputs_as_internal_2 = TestModelManager::get().add("softmax_v1_2_axis_float16_dim3_axis2_all_inputs_as_internal_2", get_test_model_axis_float16_dim3_axis2_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -23707,9 +24962,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_float16_dim3_axis2_neg_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, -1.0f, -2.0f, -3.0f, -4.0f, -5.0f, 1.0f, 2.0f, 3.0f, 4.0f, 5.0f, -1.0f, -2.0f, -3.0f, -4.0f, -5.0f}),
@@ -23760,6 +25017,8 @@ const TestModel& get_test_model_axis_float16_dim3_axis2_neg_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_float16_dim3_axis2_neg_2 = TestModelManager::get().add("softmax_v1_2_axis_float16_dim3_axis2_neg_2", get_test_model_axis_float16_dim3_axis2_neg_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -23767,9 +25026,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_float16_dim3_axis2_neg_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -23855,15 +25116,19 @@ const TestModel& get_test_model_axis_float16_dim3_axis2_neg_all_inputs_as_intern
     return model;
 }
 
+const auto dummy_test_model_axis_float16_dim3_axis2_neg_all_inputs_as_internal_2 = TestModelManager::get().add("softmax_v1_2_axis_float16_dim3_axis2_neg_all_inputs_as_internal_2", get_test_model_axis_float16_dim3_axis2_neg_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::softmax_v1_2
 
 namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_float16_dim2_axis0_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({1.0f, -1.0f, 2.0f, -2.0f, 3.0f, -3.0f, 4.0f, -4.0f, 5.0f, -5.0f}),
@@ -23914,6 +25179,8 @@ const TestModel& get_test_model_axis_float16_dim2_axis0_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_float16_dim2_axis0_2 = TestModelManager::get().add("softmax_v1_2_axis_float16_dim2_axis0_2", get_test_model_axis_float16_dim2_axis0_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -23921,9 +25188,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_float16_dim2_axis0_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -24008,6 +25277,8 @@ const TestModel& get_test_model_axis_float16_dim2_axis0_all_inputs_as_internal_2
     };
     return model;
 }
+
+const auto dummy_test_model_axis_float16_dim2_axis0_all_inputs_as_internal_2 = TestModelManager::get().add("softmax_v1_2_axis_float16_dim2_axis0_all_inputs_as_internal_2", get_test_model_axis_float16_dim2_axis0_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -24015,9 +25286,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_float16_dim2_axis0_neg_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({1.0f, -1.0f, 2.0f, -2.0f, 3.0f, -3.0f, 4.0f, -4.0f, 5.0f, -5.0f}),
@@ -24068,6 +25341,8 @@ const TestModel& get_test_model_axis_float16_dim2_axis0_neg_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_float16_dim2_axis0_neg_2 = TestModelManager::get().add("softmax_v1_2_axis_float16_dim2_axis0_neg_2", get_test_model_axis_float16_dim2_axis0_neg_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -24075,9 +25350,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_float16_dim2_axis0_neg_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -24163,15 +25440,19 @@ const TestModel& get_test_model_axis_float16_dim2_axis0_neg_all_inputs_as_intern
     return model;
 }
 
+const auto dummy_test_model_axis_float16_dim2_axis0_neg_all_inputs_as_internal_2 = TestModelManager::get().add("softmax_v1_2_axis_float16_dim2_axis0_neg_all_inputs_as_internal_2", get_test_model_axis_float16_dim2_axis0_neg_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::softmax_v1_2
 
 namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_float16_dim2_axis1_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, -1.0f, -2.0f, -3.0f, -4.0f, -5.0f}),
@@ -24222,6 +25503,8 @@ const TestModel& get_test_model_axis_float16_dim2_axis1_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_float16_dim2_axis1_2 = TestModelManager::get().add("softmax_v1_2_axis_float16_dim2_axis1_2", get_test_model_axis_float16_dim2_axis1_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -24229,9 +25512,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_float16_dim2_axis1_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -24316,6 +25601,8 @@ const TestModel& get_test_model_axis_float16_dim2_axis1_all_inputs_as_internal_2
     };
     return model;
 }
+
+const auto dummy_test_model_axis_float16_dim2_axis1_all_inputs_as_internal_2 = TestModelManager::get().add("softmax_v1_2_axis_float16_dim2_axis1_all_inputs_as_internal_2", get_test_model_axis_float16_dim2_axis1_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -24323,9 +25610,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_float16_dim2_axis1_neg_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, -1.0f, -2.0f, -3.0f, -4.0f, -5.0f}),
@@ -24376,6 +25665,8 @@ const TestModel& get_test_model_axis_float16_dim2_axis1_neg_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_float16_dim2_axis1_neg_2 = TestModelManager::get().add("softmax_v1_2_axis_float16_dim2_axis1_neg_2", get_test_model_axis_float16_dim2_axis1_neg_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -24383,9 +25674,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_float16_dim2_axis1_neg_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -24471,15 +25764,19 @@ const TestModel& get_test_model_axis_float16_dim2_axis1_neg_all_inputs_as_intern
     return model;
 }
 
+const auto dummy_test_model_axis_float16_dim2_axis1_neg_all_inputs_as_internal_2 = TestModelManager::get().add("softmax_v1_2_axis_float16_dim2_axis1_neg_all_inputs_as_internal_2", get_test_model_axis_float16_dim2_axis1_neg_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::softmax_v1_2
 
 namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_float16_dim1_axis0_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f}),
@@ -24530,6 +25827,8 @@ const TestModel& get_test_model_axis_float16_dim1_axis0_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_float16_dim1_axis0_2 = TestModelManager::get().add("softmax_v1_2_axis_float16_dim1_axis0_2", get_test_model_axis_float16_dim1_axis0_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -24537,9 +25836,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_float16_dim1_axis0_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -24624,6 +25925,8 @@ const TestModel& get_test_model_axis_float16_dim1_axis0_all_inputs_as_internal_2
     };
     return model;
 }
+
+const auto dummy_test_model_axis_float16_dim1_axis0_all_inputs_as_internal_2 = TestModelManager::get().add("softmax_v1_2_axis_float16_dim1_axis0_all_inputs_as_internal_2", get_test_model_axis_float16_dim1_axis0_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -24631,9 +25934,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_float16_dim1_axis0_neg_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f}),
@@ -24685,15 +25990,19 @@ const TestModel& get_test_model_axis_float16_dim1_axis0_neg_2() {
     return model;
 }
 
+const auto dummy_test_model_axis_float16_dim1_axis0_neg_2 = TestModelManager::get().add("softmax_v1_2_axis_float16_dim1_axis0_neg_2", get_test_model_axis_float16_dim1_axis0_neg_2());
+
 }  // namespace generated_tests::softmax_v1_2
 
 namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_float16_dim1_axis0_neg_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -24779,15 +26088,19 @@ const TestModel& get_test_model_axis_float16_dim1_axis0_neg_all_inputs_as_intern
     return model;
 }
 
+const auto dummy_test_model_axis_float16_dim1_axis0_neg_all_inputs_as_internal_2 = TestModelManager::get().add("softmax_v1_2_axis_float16_dim1_axis0_neg_all_inputs_as_internal_2", get_test_model_axis_float16_dim1_axis0_neg_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::softmax_v1_2
 
 namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_quant8_dim4_axis0_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({132, 124, 132, 124, 132, 124, 132, 124, 136, 120, 136, 120, 136, 120, 136, 120, 140, 116, 140, 116, 140, 116, 140, 116, 144, 112, 144, 112, 144, 112, 144, 112, 148, 108, 148, 108, 148, 108, 148, 108}),
@@ -24838,6 +26151,8 @@ const TestModel& get_test_model_axis_quant8_dim4_axis0_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_quant8_dim4_axis0_2 = TestModelManager::get().add("softmax_v1_2_axis_quant8_dim4_axis0_2", get_test_model_axis_quant8_dim4_axis0_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -24845,9 +26160,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_quant8_dim4_axis0_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -24932,6 +26249,8 @@ const TestModel& get_test_model_axis_quant8_dim4_axis0_all_inputs_as_internal_2(
     };
     return model;
 }
+
+const auto dummy_test_model_axis_quant8_dim4_axis0_all_inputs_as_internal_2 = TestModelManager::get().add("softmax_v1_2_axis_quant8_dim4_axis0_all_inputs_as_internal_2", get_test_model_axis_quant8_dim4_axis0_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -24939,9 +26258,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_quant8_dim4_axis0_neg_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({132, 124, 132, 124, 132, 124, 132, 124, 136, 120, 136, 120, 136, 120, 136, 120, 140, 116, 140, 116, 140, 116, 140, 116, 144, 112, 144, 112, 144, 112, 144, 112, 148, 108, 148, 108, 148, 108, 148, 108}),
@@ -24992,6 +26313,8 @@ const TestModel& get_test_model_axis_quant8_dim4_axis0_neg_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_quant8_dim4_axis0_neg_2 = TestModelManager::get().add("softmax_v1_2_axis_quant8_dim4_axis0_neg_2", get_test_model_axis_quant8_dim4_axis0_neg_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -24999,9 +26322,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_quant8_dim4_axis0_neg_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -25087,15 +26412,19 @@ const TestModel& get_test_model_axis_quant8_dim4_axis0_neg_all_inputs_as_interna
     return model;
 }
 
+const auto dummy_test_model_axis_quant8_dim4_axis0_neg_all_inputs_as_internal_2 = TestModelManager::get().add("softmax_v1_2_axis_quant8_dim4_axis0_neg_all_inputs_as_internal_2", get_test_model_axis_quant8_dim4_axis0_neg_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::softmax_v1_2
 
 namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_quant8_dim4_axis1_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({132, 124, 132, 124, 136, 120, 136, 120, 140, 116, 140, 116, 144, 112, 144, 112, 148, 108, 148, 108, 132, 124, 132, 124, 136, 120, 136, 120, 140, 116, 140, 116, 144, 112, 144, 112, 148, 108, 148, 108}),
@@ -25146,6 +26475,8 @@ const TestModel& get_test_model_axis_quant8_dim4_axis1_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_quant8_dim4_axis1_2 = TestModelManager::get().add("softmax_v1_2_axis_quant8_dim4_axis1_2", get_test_model_axis_quant8_dim4_axis1_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -25153,9 +26484,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_quant8_dim4_axis1_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -25240,6 +26573,8 @@ const TestModel& get_test_model_axis_quant8_dim4_axis1_all_inputs_as_internal_2(
     };
     return model;
 }
+
+const auto dummy_test_model_axis_quant8_dim4_axis1_all_inputs_as_internal_2 = TestModelManager::get().add("softmax_v1_2_axis_quant8_dim4_axis1_all_inputs_as_internal_2", get_test_model_axis_quant8_dim4_axis1_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -25247,9 +26582,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_quant8_dim4_axis1_neg_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({132, 124, 132, 124, 136, 120, 136, 120, 140, 116, 140, 116, 144, 112, 144, 112, 148, 108, 148, 108, 132, 124, 132, 124, 136, 120, 136, 120, 140, 116, 140, 116, 144, 112, 144, 112, 148, 108, 148, 108}),
@@ -25300,6 +26637,8 @@ const TestModel& get_test_model_axis_quant8_dim4_axis1_neg_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_quant8_dim4_axis1_neg_2 = TestModelManager::get().add("softmax_v1_2_axis_quant8_dim4_axis1_neg_2", get_test_model_axis_quant8_dim4_axis1_neg_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -25307,9 +26646,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_quant8_dim4_axis1_neg_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -25395,15 +26736,19 @@ const TestModel& get_test_model_axis_quant8_dim4_axis1_neg_all_inputs_as_interna
     return model;
 }
 
+const auto dummy_test_model_axis_quant8_dim4_axis1_neg_all_inputs_as_internal_2 = TestModelManager::get().add("softmax_v1_2_axis_quant8_dim4_axis1_neg_all_inputs_as_internal_2", get_test_model_axis_quant8_dim4_axis1_neg_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::softmax_v1_2
 
 namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_quant8_dim4_axis2_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({132, 124, 136, 120, 140, 116, 144, 112, 148, 108, 132, 124, 136, 120, 140, 116, 144, 112, 148, 108, 132, 124, 136, 120, 140, 116, 144, 112, 148, 108, 132, 124, 136, 120, 140, 116, 144, 112, 148, 108}),
@@ -25454,6 +26799,8 @@ const TestModel& get_test_model_axis_quant8_dim4_axis2_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_quant8_dim4_axis2_2 = TestModelManager::get().add("softmax_v1_2_axis_quant8_dim4_axis2_2", get_test_model_axis_quant8_dim4_axis2_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -25461,9 +26808,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_quant8_dim4_axis2_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -25548,6 +26897,8 @@ const TestModel& get_test_model_axis_quant8_dim4_axis2_all_inputs_as_internal_2(
     };
     return model;
 }
+
+const auto dummy_test_model_axis_quant8_dim4_axis2_all_inputs_as_internal_2 = TestModelManager::get().add("softmax_v1_2_axis_quant8_dim4_axis2_all_inputs_as_internal_2", get_test_model_axis_quant8_dim4_axis2_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -25555,9 +26906,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_quant8_dim4_axis2_neg_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({132, 124, 136, 120, 140, 116, 144, 112, 148, 108, 132, 124, 136, 120, 140, 116, 144, 112, 148, 108, 132, 124, 136, 120, 140, 116, 144, 112, 148, 108, 132, 124, 136, 120, 140, 116, 144, 112, 148, 108}),
@@ -25608,6 +26961,8 @@ const TestModel& get_test_model_axis_quant8_dim4_axis2_neg_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_quant8_dim4_axis2_neg_2 = TestModelManager::get().add("softmax_v1_2_axis_quant8_dim4_axis2_neg_2", get_test_model_axis_quant8_dim4_axis2_neg_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -25615,9 +26970,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_quant8_dim4_axis2_neg_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -25703,15 +27060,19 @@ const TestModel& get_test_model_axis_quant8_dim4_axis2_neg_all_inputs_as_interna
     return model;
 }
 
+const auto dummy_test_model_axis_quant8_dim4_axis2_neg_all_inputs_as_internal_2 = TestModelManager::get().add("softmax_v1_2_axis_quant8_dim4_axis2_neg_all_inputs_as_internal_2", get_test_model_axis_quant8_dim4_axis2_neg_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::softmax_v1_2
 
 namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_quant8_dim4_axis3_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({132, 136, 140, 144, 148, 124, 120, 116, 112, 108, 132, 136, 140, 144, 148, 124, 120, 116, 112, 108, 132, 136, 140, 144, 148, 124, 120, 116, 112, 108, 132, 136, 140, 144, 148, 124, 120, 116, 112, 108}),
@@ -25762,6 +27123,8 @@ const TestModel& get_test_model_axis_quant8_dim4_axis3_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_quant8_dim4_axis3_2 = TestModelManager::get().add("softmax_v1_2_axis_quant8_dim4_axis3_2", get_test_model_axis_quant8_dim4_axis3_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -25769,9 +27132,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_quant8_dim4_axis3_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -25857,15 +27222,19 @@ const TestModel& get_test_model_axis_quant8_dim4_axis3_all_inputs_as_internal_2(
     return model;
 }
 
+const auto dummy_test_model_axis_quant8_dim4_axis3_all_inputs_as_internal_2 = TestModelManager::get().add("softmax_v1_2_axis_quant8_dim4_axis3_all_inputs_as_internal_2", get_test_model_axis_quant8_dim4_axis3_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::softmax_v1_2
 
 namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_quant8_dim4_axis3_neg_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({132, 136, 140, 144, 148, 124, 120, 116, 112, 108, 132, 136, 140, 144, 148, 124, 120, 116, 112, 108, 132, 136, 140, 144, 148, 124, 120, 116, 112, 108, 132, 136, 140, 144, 148, 124, 120, 116, 112, 108}),
@@ -25916,6 +27285,8 @@ const TestModel& get_test_model_axis_quant8_dim4_axis3_neg_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_quant8_dim4_axis3_neg_2 = TestModelManager::get().add("softmax_v1_2_axis_quant8_dim4_axis3_neg_2", get_test_model_axis_quant8_dim4_axis3_neg_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -25923,9 +27294,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_quant8_dim4_axis3_neg_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -26011,15 +27384,19 @@ const TestModel& get_test_model_axis_quant8_dim4_axis3_neg_all_inputs_as_interna
     return model;
 }
 
+const auto dummy_test_model_axis_quant8_dim4_axis3_neg_all_inputs_as_internal_2 = TestModelManager::get().add("softmax_v1_2_axis_quant8_dim4_axis3_neg_all_inputs_as_internal_2", get_test_model_axis_quant8_dim4_axis3_neg_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::softmax_v1_2
 
 namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_quant8_dim3_axis0_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({132, 124, 132, 124, 136, 120, 136, 120, 140, 116, 140, 116, 144, 112, 144, 112, 148, 108, 148, 108}),
@@ -26070,6 +27447,8 @@ const TestModel& get_test_model_axis_quant8_dim3_axis0_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_quant8_dim3_axis0_2 = TestModelManager::get().add("softmax_v1_2_axis_quant8_dim3_axis0_2", get_test_model_axis_quant8_dim3_axis0_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -26077,9 +27456,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_quant8_dim3_axis0_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -26164,6 +27545,8 @@ const TestModel& get_test_model_axis_quant8_dim3_axis0_all_inputs_as_internal_2(
     };
     return model;
 }
+
+const auto dummy_test_model_axis_quant8_dim3_axis0_all_inputs_as_internal_2 = TestModelManager::get().add("softmax_v1_2_axis_quant8_dim3_axis0_all_inputs_as_internal_2", get_test_model_axis_quant8_dim3_axis0_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -26171,9 +27554,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_quant8_dim3_axis0_neg_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({132, 124, 132, 124, 136, 120, 136, 120, 140, 116, 140, 116, 144, 112, 144, 112, 148, 108, 148, 108}),
@@ -26224,6 +27609,8 @@ const TestModel& get_test_model_axis_quant8_dim3_axis0_neg_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_quant8_dim3_axis0_neg_2 = TestModelManager::get().add("softmax_v1_2_axis_quant8_dim3_axis0_neg_2", get_test_model_axis_quant8_dim3_axis0_neg_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -26231,9 +27618,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_quant8_dim3_axis0_neg_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -26319,15 +27708,19 @@ const TestModel& get_test_model_axis_quant8_dim3_axis0_neg_all_inputs_as_interna
     return model;
 }
 
+const auto dummy_test_model_axis_quant8_dim3_axis0_neg_all_inputs_as_internal_2 = TestModelManager::get().add("softmax_v1_2_axis_quant8_dim3_axis0_neg_all_inputs_as_internal_2", get_test_model_axis_quant8_dim3_axis0_neg_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::softmax_v1_2
 
 namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_quant8_dim3_axis1_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({132, 124, 136, 120, 140, 116, 144, 112, 148, 108, 132, 124, 136, 120, 140, 116, 144, 112, 148, 108}),
@@ -26378,6 +27771,8 @@ const TestModel& get_test_model_axis_quant8_dim3_axis1_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_quant8_dim3_axis1_2 = TestModelManager::get().add("softmax_v1_2_axis_quant8_dim3_axis1_2", get_test_model_axis_quant8_dim3_axis1_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -26385,9 +27780,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_quant8_dim3_axis1_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -26472,6 +27869,8 @@ const TestModel& get_test_model_axis_quant8_dim3_axis1_all_inputs_as_internal_2(
     };
     return model;
 }
+
+const auto dummy_test_model_axis_quant8_dim3_axis1_all_inputs_as_internal_2 = TestModelManager::get().add("softmax_v1_2_axis_quant8_dim3_axis1_all_inputs_as_internal_2", get_test_model_axis_quant8_dim3_axis1_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -26479,9 +27878,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_quant8_dim3_axis1_neg_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({132, 124, 136, 120, 140, 116, 144, 112, 148, 108, 132, 124, 136, 120, 140, 116, 144, 112, 148, 108}),
@@ -26532,6 +27933,8 @@ const TestModel& get_test_model_axis_quant8_dim3_axis1_neg_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_quant8_dim3_axis1_neg_2 = TestModelManager::get().add("softmax_v1_2_axis_quant8_dim3_axis1_neg_2", get_test_model_axis_quant8_dim3_axis1_neg_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -26539,9 +27942,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_quant8_dim3_axis1_neg_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -26627,15 +28032,19 @@ const TestModel& get_test_model_axis_quant8_dim3_axis1_neg_all_inputs_as_interna
     return model;
 }
 
+const auto dummy_test_model_axis_quant8_dim3_axis1_neg_all_inputs_as_internal_2 = TestModelManager::get().add("softmax_v1_2_axis_quant8_dim3_axis1_neg_all_inputs_as_internal_2", get_test_model_axis_quant8_dim3_axis1_neg_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::softmax_v1_2
 
 namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_quant8_dim3_axis2_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({132, 136, 140, 144, 148, 124, 120, 116, 112, 108, 132, 136, 140, 144, 148, 124, 120, 116, 112, 108}),
@@ -26686,6 +28095,8 @@ const TestModel& get_test_model_axis_quant8_dim3_axis2_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_quant8_dim3_axis2_2 = TestModelManager::get().add("softmax_v1_2_axis_quant8_dim3_axis2_2", get_test_model_axis_quant8_dim3_axis2_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -26693,9 +28104,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_quant8_dim3_axis2_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -26780,6 +28193,8 @@ const TestModel& get_test_model_axis_quant8_dim3_axis2_all_inputs_as_internal_2(
     };
     return model;
 }
+
+const auto dummy_test_model_axis_quant8_dim3_axis2_all_inputs_as_internal_2 = TestModelManager::get().add("softmax_v1_2_axis_quant8_dim3_axis2_all_inputs_as_internal_2", get_test_model_axis_quant8_dim3_axis2_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -26787,9 +28202,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_quant8_dim3_axis2_neg_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({132, 136, 140, 144, 148, 124, 120, 116, 112, 108, 132, 136, 140, 144, 148, 124, 120, 116, 112, 108}),
@@ -26840,6 +28257,8 @@ const TestModel& get_test_model_axis_quant8_dim3_axis2_neg_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_quant8_dim3_axis2_neg_2 = TestModelManager::get().add("softmax_v1_2_axis_quant8_dim3_axis2_neg_2", get_test_model_axis_quant8_dim3_axis2_neg_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -26847,9 +28266,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_quant8_dim3_axis2_neg_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -26935,15 +28356,19 @@ const TestModel& get_test_model_axis_quant8_dim3_axis2_neg_all_inputs_as_interna
     return model;
 }
 
+const auto dummy_test_model_axis_quant8_dim3_axis2_neg_all_inputs_as_internal_2 = TestModelManager::get().add("softmax_v1_2_axis_quant8_dim3_axis2_neg_all_inputs_as_internal_2", get_test_model_axis_quant8_dim3_axis2_neg_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::softmax_v1_2
 
 namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_quant8_dim2_axis0_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({132, 124, 136, 120, 140, 116, 144, 112, 148, 108}),
@@ -26994,6 +28419,8 @@ const TestModel& get_test_model_axis_quant8_dim2_axis0_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_quant8_dim2_axis0_2 = TestModelManager::get().add("softmax_v1_2_axis_quant8_dim2_axis0_2", get_test_model_axis_quant8_dim2_axis0_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -27001,9 +28428,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_quant8_dim2_axis0_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -27088,6 +28517,8 @@ const TestModel& get_test_model_axis_quant8_dim2_axis0_all_inputs_as_internal_2(
     };
     return model;
 }
+
+const auto dummy_test_model_axis_quant8_dim2_axis0_all_inputs_as_internal_2 = TestModelManager::get().add("softmax_v1_2_axis_quant8_dim2_axis0_all_inputs_as_internal_2", get_test_model_axis_quant8_dim2_axis0_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -27095,9 +28526,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_quant8_dim2_axis0_neg_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({132, 124, 136, 120, 140, 116, 144, 112, 148, 108}),
@@ -27148,6 +28581,8 @@ const TestModel& get_test_model_axis_quant8_dim2_axis0_neg_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_quant8_dim2_axis0_neg_2 = TestModelManager::get().add("softmax_v1_2_axis_quant8_dim2_axis0_neg_2", get_test_model_axis_quant8_dim2_axis0_neg_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -27155,9 +28590,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_quant8_dim2_axis0_neg_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -27243,15 +28680,19 @@ const TestModel& get_test_model_axis_quant8_dim2_axis0_neg_all_inputs_as_interna
     return model;
 }
 
+const auto dummy_test_model_axis_quant8_dim2_axis0_neg_all_inputs_as_internal_2 = TestModelManager::get().add("softmax_v1_2_axis_quant8_dim2_axis0_neg_all_inputs_as_internal_2", get_test_model_axis_quant8_dim2_axis0_neg_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::softmax_v1_2
 
 namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_quant8_dim2_axis1_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({132, 136, 140, 144, 148, 124, 120, 116, 112, 108}),
@@ -27302,6 +28743,8 @@ const TestModel& get_test_model_axis_quant8_dim2_axis1_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_quant8_dim2_axis1_2 = TestModelManager::get().add("softmax_v1_2_axis_quant8_dim2_axis1_2", get_test_model_axis_quant8_dim2_axis1_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -27309,9 +28752,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_quant8_dim2_axis1_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -27397,15 +28842,19 @@ const TestModel& get_test_model_axis_quant8_dim2_axis1_all_inputs_as_internal_2(
     return model;
 }
 
+const auto dummy_test_model_axis_quant8_dim2_axis1_all_inputs_as_internal_2 = TestModelManager::get().add("softmax_v1_2_axis_quant8_dim2_axis1_all_inputs_as_internal_2", get_test_model_axis_quant8_dim2_axis1_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::softmax_v1_2
 
 namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_quant8_dim2_axis1_neg_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({132, 136, 140, 144, 148, 124, 120, 116, 112, 108}),
@@ -27456,6 +28905,8 @@ const TestModel& get_test_model_axis_quant8_dim2_axis1_neg_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_quant8_dim2_axis1_neg_2 = TestModelManager::get().add("softmax_v1_2_axis_quant8_dim2_axis1_neg_2", get_test_model_axis_quant8_dim2_axis1_neg_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -27463,9 +28914,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_quant8_dim2_axis1_neg_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -27551,15 +29004,19 @@ const TestModel& get_test_model_axis_quant8_dim2_axis1_neg_all_inputs_as_interna
     return model;
 }
 
+const auto dummy_test_model_axis_quant8_dim2_axis1_neg_all_inputs_as_internal_2 = TestModelManager::get().add("softmax_v1_2_axis_quant8_dim2_axis1_neg_all_inputs_as_internal_2", get_test_model_axis_quant8_dim2_axis1_neg_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::softmax_v1_2
 
 namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_quant8_dim1_axis0_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({132, 136, 140, 144, 148}),
@@ -27610,6 +29067,8 @@ const TestModel& get_test_model_axis_quant8_dim1_axis0_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_quant8_dim1_axis0_2 = TestModelManager::get().add("softmax_v1_2_axis_quant8_dim1_axis0_2", get_test_model_axis_quant8_dim1_axis0_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -27617,9 +29076,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_quant8_dim1_axis0_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -27704,6 +29165,8 @@ const TestModel& get_test_model_axis_quant8_dim1_axis0_all_inputs_as_internal_2(
     };
     return model;
 }
+
+const auto dummy_test_model_axis_quant8_dim1_axis0_all_inputs_as_internal_2 = TestModelManager::get().add("softmax_v1_2_axis_quant8_dim1_axis0_all_inputs_as_internal_2", get_test_model_axis_quant8_dim1_axis0_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -27711,9 +29174,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_quant8_dim1_axis0_neg_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({132, 136, 140, 144, 148}),
@@ -27765,15 +29230,19 @@ const TestModel& get_test_model_axis_quant8_dim1_axis0_neg_2() {
     return model;
 }
 
+const auto dummy_test_model_axis_quant8_dim1_axis0_neg_2 = TestModelManager::get().add("softmax_v1_2_axis_quant8_dim1_axis0_neg_2", get_test_model_axis_quant8_dim1_axis0_neg_2());
+
 }  // namespace generated_tests::softmax_v1_2
 
 namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_axis_quant8_dim1_axis0_neg_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -27859,15 +29328,19 @@ const TestModel& get_test_model_axis_quant8_dim1_axis0_neg_all_inputs_as_interna
     return model;
 }
 
+const auto dummy_test_model_axis_quant8_dim1_axis0_neg_all_inputs_as_internal_2 = TestModelManager::get().add("softmax_v1_2_axis_quant8_dim1_axis0_neg_all_inputs_as_internal_2", get_test_model_axis_quant8_dim1_axis0_neg_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::softmax_v1_2
 
 namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_zero_sized() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({0.9f, 0.1f}),
@@ -28126,6 +29599,8 @@ const TestModel& get_test_model_zero_sized() {
     };
     return model;
 }
+
+const auto dummy_test_model_zero_sized = TestModelManager::get().add("softmax_v1_2_zero_sized", get_test_model_zero_sized());
 
 }  // namespace generated_tests::softmax_v1_2
 
@@ -28133,9 +29608,11 @@ namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_zero_sized_relaxed() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({0.9f, 0.1f}),
@@ -28395,15 +29872,19 @@ const TestModel& get_test_model_zero_sized_relaxed() {
     return model;
 }
 
+const auto dummy_test_model_zero_sized_relaxed = TestModelManager::get().add("softmax_v1_2_zero_sized_relaxed", get_test_model_zero_sized_relaxed());
+
 }  // namespace generated_tests::softmax_v1_2
 
 namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_zero_sized_quant8() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({137, 129}),
@@ -28663,15 +30144,19 @@ const TestModel& get_test_model_zero_sized_quant8() {
     return model;
 }
 
+const auto dummy_test_model_zero_sized_quant8 = TestModelManager::get().add("softmax_v1_2_zero_sized_quant8", get_test_model_zero_sized_quant8());
+
 }  // namespace generated_tests::softmax_v1_2
 
 namespace generated_tests::softmax_v1_2 {
 
 const TestModel& get_test_model_zero_sized_float16() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({0.8999999761581421f, 0.10000000149011612f}),
@@ -28930,6 +30415,8 @@ const TestModel& get_test_model_zero_sized_float16() {
     };
     return model;
 }
+
+const auto dummy_test_model_zero_sized_float16 = TestModelManager::get().add("softmax_v1_2_zero_sized_float16", get_test_model_zero_sized_float16());
 
 }  // namespace generated_tests::softmax_v1_2
 

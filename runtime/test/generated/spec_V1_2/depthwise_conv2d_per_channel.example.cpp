@@ -2,16 +2,17 @@
 // DO NOT EDIT
 // clang-format off
 #include "TestHarness.h"
-
 using namespace test_helper;
 
 namespace generated_tests::depthwise_conv2d_per_channel {
 
 const TestModel& get_test_model_same() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({4, 16, 4, 32, 4, 64, 4, 128}),
@@ -145,6 +146,8 @@ const TestModel& get_test_model_same() {
     };
     return model;
 }
+
+const auto dummy_test_model_same = TestModelManager::get().add("depthwise_conv2d_per_channel_same", get_test_model_same());
 
 }  // namespace generated_tests::depthwise_conv2d_per_channel
 
@@ -152,9 +155,11 @@ namespace generated_tests::depthwise_conv2d_per_channel {
 
 const TestModel& get_test_model_same_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {12},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -322,6 +327,8 @@ const TestModel& get_test_model_same_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_same_all_inputs_as_internal = TestModelManager::get().add("depthwise_conv2d_per_channel_same_all_inputs_as_internal", get_test_model_same_all_inputs_as_internal());
 
 }  // namespace generated_tests::depthwise_conv2d_per_channel
 
@@ -329,9 +336,11 @@ namespace generated_tests::depthwise_conv2d_per_channel {
 
 const TestModel& get_test_model_same_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({4, 16, 4, 32, 4, 64, 4, 128}),
@@ -466,15 +475,19 @@ const TestModel& get_test_model_same_all_tensors_as_inputs() {
     return model;
 }
 
+const auto dummy_test_model_same_all_tensors_as_inputs = TestModelManager::get().add("depthwise_conv2d_per_channel_same_all_tensors_as_inputs", get_test_model_same_all_tensors_as_inputs());
+
 }  // namespace generated_tests::depthwise_conv2d_per_channel
 
 namespace generated_tests::depthwise_conv2d_per_channel {
 
 const TestModel& get_test_model_same_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {1, 2, 12},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -643,15 +656,19 @@ const TestModel& get_test_model_same_all_tensors_as_inputs_all_inputs_as_interna
     return model;
 }
 
+const auto dummy_test_model_same_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("depthwise_conv2d_per_channel_same_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_same_all_tensors_as_inputs_all_inputs_as_internal());
+
 }  // namespace generated_tests::depthwise_conv2d_per_channel
 
 namespace generated_tests::depthwise_conv2d_per_channel {
 
 const TestModel& get_test_model_different() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({129, 130, 129, 130, 129, 130, 129, 130, 129, 130, 129, 130, 129, 130, 129, 130, 129, 130}),
@@ -785,6 +802,8 @@ const TestModel& get_test_model_different() {
     };
     return model;
 }
+
+const auto dummy_test_model_different = TestModelManager::get().add("depthwise_conv2d_per_channel_different", get_test_model_different());
 
 }  // namespace generated_tests::depthwise_conv2d_per_channel
 
@@ -792,9 +811,11 @@ namespace generated_tests::depthwise_conv2d_per_channel {
 
 const TestModel& get_test_model_different_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {12},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -962,6 +983,8 @@ const TestModel& get_test_model_different_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_different_all_inputs_as_internal = TestModelManager::get().add("depthwise_conv2d_per_channel_different_all_inputs_as_internal", get_test_model_different_all_inputs_as_internal());
 
 }  // namespace generated_tests::depthwise_conv2d_per_channel
 
@@ -969,9 +992,11 @@ namespace generated_tests::depthwise_conv2d_per_channel {
 
 const TestModel& get_test_model_different_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({129, 130, 129, 130, 129, 130, 129, 130, 129, 130, 129, 130, 129, 130, 129, 130, 129, 130}),
@@ -1106,15 +1131,19 @@ const TestModel& get_test_model_different_all_tensors_as_inputs() {
     return model;
 }
 
+const auto dummy_test_model_different_all_tensors_as_inputs = TestModelManager::get().add("depthwise_conv2d_per_channel_different_all_tensors_as_inputs", get_test_model_different_all_tensors_as_inputs());
+
 }  // namespace generated_tests::depthwise_conv2d_per_channel
 
 namespace generated_tests::depthwise_conv2d_per_channel {
 
 const TestModel& get_test_model_different_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {1, 2, 12},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -1283,15 +1312,19 @@ const TestModel& get_test_model_different_all_tensors_as_inputs_all_inputs_as_in
     return model;
 }
 
+const auto dummy_test_model_different_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("depthwise_conv2d_per_channel_different_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_different_all_tensors_as_inputs_all_inputs_as_internal());
+
 }  // namespace generated_tests::depthwise_conv2d_per_channel
 
 namespace generated_tests::depthwise_conv2d_per_channel {
 
 const TestModel& get_test_model_layout_nhwc() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({129, 130, 129, 130, 129, 130, 129, 130, 129, 130, 129, 130, 129, 130, 129, 130, 129, 130}),
@@ -1435,6 +1468,8 @@ const TestModel& get_test_model_layout_nhwc() {
     };
     return model;
 }
+
+const auto dummy_test_model_layout_nhwc = TestModelManager::get().add("depthwise_conv2d_per_channel_layout_nhwc", get_test_model_layout_nhwc());
 
 }  // namespace generated_tests::depthwise_conv2d_per_channel
 
@@ -1442,9 +1477,11 @@ namespace generated_tests::depthwise_conv2d_per_channel {
 
 const TestModel& get_test_model_layout_nhwc_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -1622,6 +1659,8 @@ const TestModel& get_test_model_layout_nhwc_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_layout_nhwc_all_inputs_as_internal = TestModelManager::get().add("depthwise_conv2d_per_channel_layout_nhwc_all_inputs_as_internal", get_test_model_layout_nhwc_all_inputs_as_internal());
 
 }  // namespace generated_tests::depthwise_conv2d_per_channel
 
@@ -1629,9 +1668,11 @@ namespace generated_tests::depthwise_conv2d_per_channel {
 
 const TestModel& get_test_model_layout_nhwc_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({129, 130, 129, 130, 129, 130, 129, 130, 129, 130, 129, 130, 129, 130, 129, 130, 129, 130}),
@@ -1775,6 +1816,8 @@ const TestModel& get_test_model_layout_nhwc_all_tensors_as_inputs() {
     };
     return model;
 }
+
+const auto dummy_test_model_layout_nhwc_all_tensors_as_inputs = TestModelManager::get().add("depthwise_conv2d_per_channel_layout_nhwc_all_tensors_as_inputs", get_test_model_layout_nhwc_all_tensors_as_inputs());
 
 }  // namespace generated_tests::depthwise_conv2d_per_channel
 
@@ -1782,9 +1825,11 @@ namespace generated_tests::depthwise_conv2d_per_channel {
 
 const TestModel& get_test_model_layout_nhwc_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {1, 2, 13},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -1963,15 +2008,19 @@ const TestModel& get_test_model_layout_nhwc_all_tensors_as_inputs_all_inputs_as_
     return model;
 }
 
+const auto dummy_test_model_layout_nhwc_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("depthwise_conv2d_per_channel_layout_nhwc_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_layout_nhwc_all_tensors_as_inputs_all_inputs_as_internal());
+
 }  // namespace generated_tests::depthwise_conv2d_per_channel
 
 namespace generated_tests::depthwise_conv2d_per_channel {
 
 const TestModel& get_test_model_layout_nchw() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({129, 129, 129, 129, 129, 129, 129, 129, 129, 130, 130, 130, 130, 130, 130, 130, 130, 130}),
@@ -2115,6 +2164,8 @@ const TestModel& get_test_model_layout_nchw() {
     };
     return model;
 }
+
+const auto dummy_test_model_layout_nchw = TestModelManager::get().add("depthwise_conv2d_per_channel_layout_nchw", get_test_model_layout_nchw());
 
 }  // namespace generated_tests::depthwise_conv2d_per_channel
 
@@ -2122,9 +2173,11 @@ namespace generated_tests::depthwise_conv2d_per_channel {
 
 const TestModel& get_test_model_layout_nchw_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -2302,6 +2355,8 @@ const TestModel& get_test_model_layout_nchw_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_layout_nchw_all_inputs_as_internal = TestModelManager::get().add("depthwise_conv2d_per_channel_layout_nchw_all_inputs_as_internal", get_test_model_layout_nchw_all_inputs_as_internal());
 
 }  // namespace generated_tests::depthwise_conv2d_per_channel
 
@@ -2309,9 +2364,11 @@ namespace generated_tests::depthwise_conv2d_per_channel {
 
 const TestModel& get_test_model_layout_nchw_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({129, 129, 129, 129, 129, 129, 129, 129, 129, 130, 130, 130, 130, 130, 130, 130, 130, 130}),
@@ -2456,15 +2513,19 @@ const TestModel& get_test_model_layout_nchw_all_tensors_as_inputs() {
     return model;
 }
 
+const auto dummy_test_model_layout_nchw_all_tensors_as_inputs = TestModelManager::get().add("depthwise_conv2d_per_channel_layout_nchw_all_tensors_as_inputs", get_test_model_layout_nchw_all_tensors_as_inputs());
+
 }  // namespace generated_tests::depthwise_conv2d_per_channel
 
 namespace generated_tests::depthwise_conv2d_per_channel {
 
 const TestModel& get_test_model_layout_nchw_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {1, 2, 13},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -2642,6 +2703,8 @@ const TestModel& get_test_model_layout_nchw_all_tensors_as_inputs_all_inputs_as_
     };
     return model;
 }
+
+const auto dummy_test_model_layout_nchw_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("depthwise_conv2d_per_channel_layout_nchw_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_layout_nchw_all_tensors_as_inputs_all_inputs_as_internal());
 
 }  // namespace generated_tests::depthwise_conv2d_per_channel
 
