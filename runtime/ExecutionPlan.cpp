@@ -211,7 +211,7 @@ int copyOperandExtraParams(ModelBuilder& model, uint32_t toOperandIndex,
 // This class tracks whether we know the value of an operand as operations
 // are processed.
 class OperandTracker {
-public:
+   public:
     // Creates the tracker for this model. Figure out which operations can be
     // executed right away and cb for each one of them.
     OperandTracker(const ModelBuilder* model, OperationReadyCallback cb);
@@ -220,14 +220,14 @@ public:
     // able to run.  Call cb for each one of them.
     void markProcessed(uint32_t operationIndex, OperationReadyCallback cb);
 
-private:
+   private:
     const ModelBuilder* mModel;
     std::multimap<uint32_t, uint32_t> mOperandToOperations;
     std::vector<uint32_t> mUnknownInputCount;  // For each operation
 };
 
-OperandTracker::OperandTracker(const ModelBuilder* model, OperationReadyCallback cb) :
-        mModel(model) {
+OperandTracker::OperandTracker(const ModelBuilder* model, OperationReadyCallback cb)
+    : mModel(model) {
     const auto& operations = mModel->getOperations();
     mUnknownInputCount.resize(operations.size());
     for (uint32_t operationIndex = 0; operationIndex < operations.size(); operationIndex++) {
@@ -319,9 +319,8 @@ int ExecutionStep::addOperand(uint32_t fromOperandIndex, uint32_t* toOperandInde
         } break;
         case OperandLifeTime::CONSTANT_REFERENCE: {
             const Memory* memory = fromModel.getMemories()[operand.location.poolIndex];
-            n = mSubModel.setOperandValueFromMemory(*toOperandIndex, memory,
-                                                     operand.location.offset,
-                                                     operand.location.length);
+            n = mSubModel.setOperandValueFromMemory(
+                    *toOperandIndex, memory, operand.location.offset, operand.location.length);
             if (n != ANEURALNETWORKS_NO_ERROR) {
                 LOG(ERROR) << "Previous error occurred when partitioning the graph";
                 return n;
@@ -355,7 +354,8 @@ int ExecutionStep::addOperand(uint32_t fromOperandIndex, uint32_t* toOperandInde
                 // The first time we've seen this operand is as an
                 // input.  That means it must be defined by a
                 // different partition, and is an input to this one.
-                mOutputsAsSubModelInputs.push_back(std::make_pair(fromOperandIndex, *toOperandIndex));
+                mOutputsAsSubModelInputs.push_back(
+                        std::make_pair(fromOperandIndex, *toOperandIndex));
             } else {
                 // The first time we've seen this operand is as an
                 // output.
@@ -396,8 +396,7 @@ int ExecutionStep::addOperation(int operationIndex, const ModelBuilder& fromMode
         for (uint32_t i = 0; i < operandCount; i++) {
             uint32_t localOperand = ~0U;
             int n = addOperand(globalOperands[i], &localOperand, fromModel, kind);
-            if (n != ANEURALNETWORKS_NO_ERROR)
-                return n;
+            if (n != ANEURALNETWORKS_NO_ERROR) return n;
             localOperands[i] = localOperand;
         }
         return ANEURALNETWORKS_NO_ERROR;
@@ -410,7 +409,7 @@ int ExecutionStep::addOperation(int operationIndex, const ModelBuilder& fromMode
     }
 
     return mSubModel.addOperation(static_cast<uint32_t>(operation.type), inputCount, inputs.data(),
-                                   outputCount, outputs.data());
+                                  outputCount, outputs.data());
 }
 
 void ExecutionStep::mapInputsAndOutputs(std::shared_ptr<StepExecutor> stepExecutor) const {
@@ -438,7 +437,7 @@ void ExecutionPlan::CompoundBody::findTempsAsSubModelOutputs() {
 void ExecutionStep::logSubModel() const {
     VLOG(COMPILATION) << "ExecutionStep::finishSubModel, step " << mIndex;
 
-    auto logRemapEntry = [](std::string &toLog, const std::pair<uint32_t, uint32_t>& e) {
+    auto logRemapEntry = [](std::string& toLog, const std::pair<uint32_t, uint32_t>& e) {
         if (!toLog.empty()) {
             toLog += ", ";
         }
@@ -475,13 +474,13 @@ static void convertModelInputsOrOutputs(
         // IN: mModel{Inputs|Outputs}
         const ExecutionStep::RemapVectorType& myModelInputsOrOutputs,
         // IN: fromModel->{input|output}Count()
-        uint32_t                              fromModelInputOrOutputCount,
+        uint32_t fromModelInputOrOutputCount,
         // IN: fromModel->get{Input|Output}OperandIndex
-        std::function<uint32_t(uint32_t)>     fromModelGetInputOrOutputOperandIndex,
+        std::function<uint32_t(uint32_t)> fromModelGetInputOrOutputOperandIndex,
         // OUT: for v : mModel{Inputs|Outputs} : v.second
-        std::vector<uint32_t>*                inputsOrOutputs,
+        std::vector<uint32_t>* inputsOrOutputs,
         // OUT: submodel input-or-output index to original model input-or-output index
-        std::vector<uint32_t>*                inputOrOutputIndexSubModelToFromModel) {
+        std::vector<uint32_t>* inputOrOutputIndexSubModelToFromModel) {
     std::map<uint32_t, uint32_t> fromModelIndexMap;  // operand index to input-or-output index
     for (uint32_t i = 0; i < fromModelInputOrOutputCount; i++) {
         fromModelIndexMap[fromModelGetInputOrOutputOperandIndex(i)] = i;
@@ -508,11 +507,10 @@ int ExecutionStep::finishSubModel(const ModelBuilder* fromModel, bool* hasOutput
     // ExecutionPlan::next() depends on these orderings.
 
     std::vector<uint32_t> inputs;
-    convertModelInputsOrOutputs(mModelInputs,
-                                fromModel->inputCount(),
-                                [=](uint32_t i) { return fromModel->getInputOperandIndex(i); },
-                                &inputs,
-                                &mInputIndexSubModelToFromModel);
+    convertModelInputsOrOutputs(
+            mModelInputs, fromModel->inputCount(),
+            [=](uint32_t i) { return fromModel->getInputOperandIndex(i); }, &inputs,
+            &mInputIndexSubModelToFromModel);
     for (const auto& subModelInput : mTempsAsSubModelInputs) {
         inputs.push_back(subModelInput.second);
     }
@@ -521,11 +519,10 @@ int ExecutionStep::finishSubModel(const ModelBuilder* fromModel, bool* hasOutput
     }
 
     std::vector<uint32_t> outputs;
-    convertModelInputsOrOutputs(mModelOutputs,
-                                fromModel->outputCount(),
-                                [=](uint32_t i) { return fromModel->getOutputOperandIndex(i); },
-                                &outputs,
-                                &mOutputIndexSubModelToFromModel);
+    convertModelInputsOrOutputs(
+            mModelOutputs, fromModel->outputCount(),
+            [=](uint32_t i) { return fromModel->getOutputOperandIndex(i); }, &outputs,
+            &mOutputIndexSubModelToFromModel);
     for (const auto& subModelOutput : mTempsAsSubModelOutputs) {
         outputs.push_back(subModelOutput.second);
         const Operand& operand = mSubModel.getOperand(subModelOutput.second);
@@ -546,7 +543,8 @@ int ExecutionStep::finishSubModel(const ModelBuilder* fromModel, bool* hasOutput
     }
 
     {
-        int n = mSubModel.identifyInputsAndOutputs(inputs.size(), &inputs[0], outputs.size(), &outputs[0]);
+        int n = mSubModel.identifyInputsAndOutputs(inputs.size(), &inputs[0], outputs.size(),
+                                                   &outputs[0]);
         if (n != ANEURALNETWORKS_NO_ERROR) {
             return n;
         }
@@ -601,7 +599,8 @@ int ExecutionPlan::CompoundBody::finish(const ModelBuilder* fromModel,
         }
     }
     if (mHasSubModelOutputOfUnknownSize) {
-        VLOG(COMPILATION) << "ExecutionPlan::CompoundBody::finish -- mHasSubModelOutputOfUnknownSize";
+        VLOG(COMPILATION)
+                << "ExecutionPlan::CompoundBody::finish -- mHasSubModelOutputOfUnknownSize";
         return ANEURALNETWORKS_OP_FAILED;
     }
 
@@ -709,7 +708,7 @@ std::shared_ptr<ExecutionPlan::Controller> ExecutionPlan::makeController(
     if (mState == COMPOUND) {
         const ModelBuilder* fromModel = executionBuilder->getModel();
         for (const auto& step : compound()->mSteps) {
-            for (const auto& output: step->getTempsAsSubModelOutputs()) {
+            for (const auto& output : step->getTempsAsSubModelOutputs()) {
                 const uint32_t fromModelOperandIndex = output.first;
                 const Operand& fromModelOperand = fromModel->getOperand(fromModelOperandIndex);
                 if (subModelInputsAndOutputs == nullptr) {
@@ -718,14 +717,14 @@ std::shared_ptr<ExecutionPlan::Controller> ExecutionPlan::makeController(
                 }
                 const uint32_t size = TypeManager::get()->getSizeOfData(fromModelOperand);
                 totalSizeOfTemporaries += alignBytesNeeded(totalSizeOfTemporaries, size);
-                subModelInputsAndOutputs->insert(std::make_pair(fromModelOperandIndex, totalSizeOfTemporaries));
+                subModelInputsAndOutputs->insert(
+                        std::make_pair(fromModelOperandIndex, totalSizeOfTemporaries));
                 totalSizeOfTemporaries += size;
             }
         }
         if (VLOG_IS_ON(EXECUTION) && (subModelInputsAndOutputs != nullptr)) {
             for (const auto& io : *subModelInputsAndOutputs) {
-                VLOG(EXECUTION) << "temp: origOpndIdx = " << io.first
-                                << ", offset = " << io.second;
+                VLOG(EXECUTION) << "temp: origOpndIdx = " << io.first << ", offset = " << io.second;
             }
         }
     }
@@ -734,7 +733,6 @@ std::shared_ptr<ExecutionPlan::Controller> ExecutionPlan::makeController(
                                                       subModelInputsAndOutputs,
                                                       totalSizeOfTemporaries));
 }
-
 
 // TODO: Find a better way to provide this functionality.
 int ExecutionPlan::fallback(std::shared_ptr<Controller> controller,
@@ -766,8 +764,7 @@ int ExecutionPlan::next(std::shared_ptr<Controller> controller,
         *burstController = nullptr;
     }
 
-    VLOG(EXECUTION) << "ExecutionPlan::next("
-                    << SHOW_IF_DEBUG(controller << ", " << executor)
+    VLOG(EXECUTION) << "ExecutionPlan::next(" << SHOW_IF_DEBUG(controller << ", " << executor)
                     << "): mNextStepIndex = " << controller->mNextStepIndex;
 
     if (controller->mNextStepIndex == Controller::kBadStepIndex) {
@@ -832,11 +829,10 @@ int ExecutionPlan::next(std::shared_ptr<Controller> controller,
             for (auto I = subModelOutputs.begin(), E = subModelOutputs.end(); I != E; I++, idx++) {
                 const uint32_t fromModelOperandIndex = I->first;
                 const uint32_t offsetOfTemporary =
-                    controller->mSubModelInputsAndOutputs->at(fromModelOperandIndex);
-                int n = (*executor)->setOutputFromTemporaryMemory(
-                    firstSubModelOutputIndex + idx,
-                    &controller->mTemporaries,
-                    offsetOfTemporary);
+                        controller->mSubModelInputsAndOutputs->at(fromModelOperandIndex);
+                int n = (*executor)->setOutputFromTemporaryMemory(firstSubModelOutputIndex + idx,
+                                                                  &controller->mTemporaries,
+                                                                  offsetOfTemporary);
                 if (n != ANEURALNETWORKS_NO_ERROR) {
                     controller->mNextStepIndex = Controller::kBadStepIndex;
                     return n;
@@ -853,11 +849,10 @@ int ExecutionPlan::next(std::shared_ptr<Controller> controller,
             for (auto I = subModelInputs.begin(), E = subModelInputs.end(); I != E; I++, idx++) {
                 const uint32_t fromModelOperandIndex = I->first;
                 const uint32_t offsetOfTemporary =
-                    controller->mSubModelInputsAndOutputs->at(fromModelOperandIndex);
-                int n = (*executor)->setInputFromTemporaryMemory(
-                    firstSubModelInputIndex + idx,
-                    &controller->mTemporaries,
-                    offsetOfTemporary);
+                        controller->mSubModelInputsAndOutputs->at(fromModelOperandIndex);
+                int n = (*executor)->setInputFromTemporaryMemory(firstSubModelInputIndex + idx,
+                                                                 &controller->mTemporaries,
+                                                                 offsetOfTemporary);
                 if (n != ANEURALNETWORKS_NO_ERROR) {
                     controller->mNextStepIndex = Controller::kBadStepIndex;
                     return n;
@@ -1057,7 +1052,7 @@ PerformanceInfo ModelBuilder::getPerformanceInfo(const std::shared_ptr<Device> d
     // currently the case but is not a safe assumption to make in the long term.
     const uint32_t operandIndex = operation.inputs[0];
     const OperandType operandType = mOperands[operandIndex].type;
-    switch(operandType) {
+    switch (operandType) {
         case OperandType::FLOAT32:
             if (mRelaxComputationFloat32toFloat16) {
                 return device->getRelaxedFloat32toFloat16PerformanceScalar();
@@ -1079,7 +1074,7 @@ namespace {
 
 // This class determines whether a given device can execute a given operation
 class CanDo {
-public:
+   public:
     CanDo() {}
 
     void initialize(const MetaModel& metaModel, std::shared_ptr<Device> device) {
@@ -1088,7 +1083,7 @@ public:
 
     bool check(size_t operationIndex) const { return mSupportsOperationByIndex[operationIndex]; }
 
-private:
+   private:
     hidl_vec<bool> mSupportsOperationByIndex;
 };
 
@@ -1116,8 +1111,8 @@ int ModelBuilder::findBestDeviceForEachOperation(
             if (canDo[deviceIndex].check(operationIndex)) {
                 const PerformanceInfo perf = getPerformanceInfo(device, operationIndex);
                 const float perfVal =
-                            (preference == ANEURALNETWORKS_PREFER_LOW_POWER ? perf.powerUsage
-                                                                            : perf.execTime);
+                        (preference == ANEURALNETWORKS_PREFER_LOW_POWER ? perf.powerUsage
+                                                                        : perf.execTime);
                 if (bestChoice < 0 || perfVal < bestPerfVal ||
                     (perfVal == bestPerfVal && device == DeviceManager::getCpuDevice())) {
                     bestChoice = deviceIndex;
@@ -1129,8 +1124,7 @@ int ModelBuilder::findBestDeviceForEachOperation(
                 // specific device.
                 // Logs O(operationCount * deviceCount) times, but
                 // typically deviceCount is very small.
-                VLOG(COMPILATION) << "Device " << device->getName()
-                                  << " can't do operation "
+                VLOG(COMPILATION) << "Device " << device->getName() << " can't do operation "
                                   << toString(getOperation(operationIndex).type);
             }
         }
@@ -1147,5 +1141,5 @@ int ModelBuilder::findBestDeviceForEachOperation(
     return ANEURALNETWORKS_NO_ERROR;
 }
 
-} // namespace nn
-} // namespace android
+}  // namespace nn
+}  // namespace android
