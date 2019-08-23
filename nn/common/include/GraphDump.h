@@ -45,8 +45,7 @@ namespace nn {
 // A model input or output (operand) is shown in "reverse colors" --
 // white text on a black background.
 //
-void graphDump(const char* name,
-               const ::android::hardware::neuralnetworks::V1_2::Model& model,
+void graphDump(const char* name, const ::android::hardware::neuralnetworks::V1_2::Model& model,
                std::ostream* outStream = nullptr);
 
 }  // namespace nn

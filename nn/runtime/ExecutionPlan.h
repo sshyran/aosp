@@ -51,7 +51,7 @@ class PreparedModel;
 class StepExecutor;
 
 class ExecutionStep {
-public:
+   public:
     typedef std::vector<std::pair<uint32_t, uint32_t>> RemapVectorType;
     typedef std::set<std::pair<uint32_t, uint32_t>> SubModelOutputSetType;
 
@@ -63,21 +63,13 @@ public:
                    const ModelBuilder& fromModel, OperandKind kind);
 
     // Each container entry is of the form (fromModel index, subModel index)
-    const RemapVectorType& getModelInputs() const {
-        return mModelInputs;
-    }
-    const RemapVectorType& getModelOutputs() const {
-        return mModelOutputs;
-    }
-    const RemapVectorType& getTempsAsSubModelInputs() const {
-        return mTempsAsSubModelInputs;
-    }
+    const RemapVectorType& getModelInputs() const { return mModelInputs; }
+    const RemapVectorType& getModelOutputs() const { return mModelOutputs; }
+    const RemapVectorType& getTempsAsSubModelInputs() const { return mTempsAsSubModelInputs; }
     const SubModelOutputSetType& getTempsAsSubModelOutputs() const {
         return mTempsAsSubModelOutputs;
     }
-    const RemapVectorType& getOutputsAsSubModelInputs() const {
-        return mOutputsAsSubModelInputs;
-    }
+    const RemapVectorType& getOutputsAsSubModelInputs() const { return mOutputsAsSubModelInputs; }
     const std::vector<uint32_t>& getOutputIndexSubModelToFromModel() const {
         return mOutputIndexSubModelToFromModel;
     }
@@ -170,11 +162,11 @@ public:
 };
 
 class ExecutionPlan {
-public:
+   public:
     ExecutionPlan(const ExecutionPlan&) = delete;
     ExecutionPlan& operator=(const ExecutionPlan&) = delete;
 
-    ExecutionPlan() { }
+    ExecutionPlan() {}
     ~ExecutionPlan() { delete mBody; }
 
     // Controller is part of the interface to a mechanism for
@@ -190,7 +182,8 @@ public:
     //   a problem has occurred.
     class Controller {
         friend class ExecutionPlan;
-    private:
+
+       private:
         Controller(const Controller&) = delete;
         Controller& operator=(const Controller&) = delete;
 
@@ -209,7 +202,8 @@ public:
         const ExecutionPlan* mPlan;
         ExecutionBuilder* mExecutionBuilder;
         const BurstBuilder* mBurstBuilder;
-        std::shared_ptr<const SubModelInputsAndOutputsType> mSubModelInputsAndOutputs;  // may be nullptr
+        std::shared_ptr<const SubModelInputsAndOutputsType>
+                mSubModelInputsAndOutputs;  // may be nullptr
         Memory mTemporaries;
         size_t mNextStepIndex;
     };
@@ -223,7 +217,8 @@ public:
              std::shared_ptr<ExecutionBurstController>* burstController = nullptr) const;
 
     // Create the same executor as the last one created by next().
-    int fallback(std::shared_ptr<Controller> controller, std::shared_ptr<StepExecutor>* executor) const;
+    int fallback(std::shared_ptr<Controller> controller,
+                 std::shared_ptr<StepExecutor>* executor) const;
 
     std::shared_ptr<ExecutionStep> createNewStep(const std::shared_ptr<Device> device);
 
@@ -310,7 +305,8 @@ public:
         std::unordered_map<uint32_t, uint32_t> mTemporaryToDefiningStep;
 
         bool mHasSubModelOutputOfUnknownSize = false;
-    private:
+
+       private:
         void findTempsAsSubModelOutputs();
     };
 

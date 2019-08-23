@@ -45,7 +45,7 @@ struct ModelToHalVersion<V1_2::Model> {
 };
 
 class MemoryAccessVerifier {
-public:
+   public:
     MemoryAccessVerifier(const hidl_vec<hidl_memory>& pools)
         : mPoolCount(pools.size()), mPoolSizes(mPoolCount) {
         for (size_t i = 0; i < mPoolCount; i++) {
@@ -68,7 +68,7 @@ public:
         return true;
     }
 
-private:
+   private:
     size_t mPoolCount;
     std::vector<size_t> mPoolSizes;
 };
@@ -567,10 +567,10 @@ static bool validateRequestArguments(const hidl_vec<RequestArgument>& requestArg
                 for (size_t i = 0; i < rank; i++) {
                     if (requestArgument.dimensions[i] != operand.dimensions[i] &&
                         operand.dimensions[i] != 0) {
-                        LOG(ERROR) << "Request " << type << " " << requestArgumentIndex
-                                   << " has dimension " << i << " of "
-                                   << requestArgument.dimensions[i]
-                                   << " different than the model's " << operand.dimensions[i];
+                        LOG(ERROR)
+                                << "Request " << type << " " << requestArgumentIndex
+                                << " has dimension " << i << " of " << requestArgument.dimensions[i]
+                                << " different than the model's " << operand.dimensions[i];
                         return false;
                     }
                     if (requestArgument.dimensions[i] == 0 && !allowUnspecified) {
