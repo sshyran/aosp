@@ -2,16 +2,17 @@
 // DO NOT EDIT
 // clang-format off
 #include "TestHarness.h"
-
 using namespace test_helper;
 
 namespace generated_tests::bbox_graph {
 
 const TestModel& get_test_model_zero_sized() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2, 3, 14},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({0.5f}),
@@ -452,6 +453,8 @@ const TestModel& get_test_model_zero_sized() {
     };
     return model;
 }
+
+const auto dummy_test_model_zero_sized = TestModelManager::get().add("bbox_graph_zero_sized", get_test_model_zero_sized());
 
 }  // namespace generated_tests::bbox_graph
 
@@ -459,9 +462,11 @@ namespace generated_tests::bbox_graph {
 
 const TestModel& get_test_model_zero_sized_relaxed() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2, 3, 14},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({0.5f}),
@@ -903,15 +908,19 @@ const TestModel& get_test_model_zero_sized_relaxed() {
     return model;
 }
 
+const auto dummy_test_model_zero_sized_relaxed = TestModelManager::get().add("bbox_graph_zero_sized_relaxed", get_test_model_zero_sized_relaxed());
+
 }  // namespace generated_tests::bbox_graph
 
 namespace generated_tests::bbox_graph {
 
 const TestModel& get_test_model_zero_sized_float16() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2, 3, 14},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({0.5f}),
@@ -1353,15 +1362,19 @@ const TestModel& get_test_model_zero_sized_float16() {
     return model;
 }
 
+const auto dummy_test_model_zero_sized_float16 = TestModelManager::get().add("bbox_graph_zero_sized_float16", get_test_model_zero_sized_float16());
+
 }  // namespace generated_tests::bbox_graph
 
 namespace generated_tests::bbox_graph {
 
 const TestModel& get_test_model_zero_sized_quant8() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2, 3, 14},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({133}),
@@ -1802,6 +1815,8 @@ const TestModel& get_test_model_zero_sized_quant8() {
     };
     return model;
 }
+
+const auto dummy_test_model_zero_sized_quant8 = TestModelManager::get().add("bbox_graph_zero_sized_quant8", get_test_model_zero_sized_quant8());
 
 }  // namespace generated_tests::bbox_graph
 

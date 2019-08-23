@@ -2,16 +2,17 @@
 // DO NOT EDIT
 // clang-format off
 #include "TestHarness.h"
-
 using namespace test_helper;
 
 namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_nhwc() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 1.0f, 1.0f, 1.0f, 0.5f, 1.0f, 1.0f, 1.0f, 1.0f}),
@@ -142,6 +143,8 @@ const TestModel& get_test_model_nhwc() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc = TestModelManager::get().add("conv2d_v1_2_nhwc", get_test_model_nhwc());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -149,9 +152,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_nhwc_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {12},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -316,6 +321,8 @@ const TestModel& get_test_model_nhwc_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_all_inputs_as_internal = TestModelManager::get().add("conv2d_v1_2_nhwc_all_inputs_as_internal", get_test_model_nhwc_all_inputs_as_internal());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -323,9 +330,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_nhwc_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 1.0f, 1.0f, 1.0f, 0.5f, 1.0f, 1.0f, 1.0f, 1.0f}),
@@ -456,6 +465,8 @@ const TestModel& get_test_model_nhwc_all_tensors_as_inputs() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_all_tensors_as_inputs = TestModelManager::get().add("conv2d_v1_2_nhwc_all_tensors_as_inputs", get_test_model_nhwc_all_tensors_as_inputs());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -463,9 +474,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_nhwc_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {12, 15, 18},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -698,6 +711,8 @@ const TestModel& get_test_model_nhwc_all_tensors_as_inputs_all_inputs_as_interna
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("conv2d_v1_2_nhwc_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_nhwc_all_tensors_as_inputs_all_inputs_as_internal());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -705,9 +720,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_nhwc_relaxed() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 1.0f, 1.0f, 1.0f, 0.5f, 1.0f, 1.0f, 1.0f, 1.0f}),
@@ -838,6 +855,8 @@ const TestModel& get_test_model_nhwc_relaxed() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_relaxed = TestModelManager::get().add("conv2d_v1_2_nhwc_relaxed", get_test_model_nhwc_relaxed());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -845,9 +864,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_nhwc_relaxed_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {12},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -1012,6 +1033,8 @@ const TestModel& get_test_model_nhwc_relaxed_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_relaxed_all_inputs_as_internal = TestModelManager::get().add("conv2d_v1_2_nhwc_relaxed_all_inputs_as_internal", get_test_model_nhwc_relaxed_all_inputs_as_internal());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -1019,9 +1042,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_nhwc_relaxed_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 1.0f, 1.0f, 1.0f, 0.5f, 1.0f, 1.0f, 1.0f, 1.0f}),
@@ -1152,6 +1177,8 @@ const TestModel& get_test_model_nhwc_relaxed_all_tensors_as_inputs() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_relaxed_all_tensors_as_inputs = TestModelManager::get().add("conv2d_v1_2_nhwc_relaxed_all_tensors_as_inputs", get_test_model_nhwc_relaxed_all_tensors_as_inputs());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -1159,9 +1186,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {12, 15, 18},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -1394,6 +1423,8 @@ const TestModel& get_test_model_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("conv2d_v1_2_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -1401,9 +1432,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_nhwc_quant8() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({2, 2, 2, 2, 1, 2, 2, 2, 2}),
@@ -1534,6 +1567,8 @@ const TestModel& get_test_model_nhwc_quant8() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_quant8 = TestModelManager::get().add("conv2d_v1_2_nhwc_quant8", get_test_model_nhwc_quant8());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -1541,9 +1576,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_nhwc_quant8_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {12},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -1708,6 +1745,8 @@ const TestModel& get_test_model_nhwc_quant8_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_quant8_all_inputs_as_internal = TestModelManager::get().add("conv2d_v1_2_nhwc_quant8_all_inputs_as_internal", get_test_model_nhwc_quant8_all_inputs_as_internal());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -1715,9 +1754,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_nhwc_quant8_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({2, 2, 2, 2, 1, 2, 2, 2, 2}),
@@ -1848,6 +1889,8 @@ const TestModel& get_test_model_nhwc_quant8_all_tensors_as_inputs() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_quant8_all_tensors_as_inputs = TestModelManager::get().add("conv2d_v1_2_nhwc_quant8_all_tensors_as_inputs", get_test_model_nhwc_quant8_all_tensors_as_inputs());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -1855,9 +1898,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {2, 12, 15},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -2056,6 +2101,8 @@ const TestModel& get_test_model_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("conv2d_v1_2_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -2063,9 +2110,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_nhwc_channelQuant8() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({2, 2, 2, 2, 1, 2, 2, 2, 2}),
@@ -2199,6 +2248,8 @@ const TestModel& get_test_model_nhwc_channelQuant8() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_channelQuant8 = TestModelManager::get().add("conv2d_v1_2_nhwc_channelQuant8", get_test_model_nhwc_channelQuant8());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -2206,9 +2257,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_nhwc_channelQuant8_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {12},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -2376,6 +2429,8 @@ const TestModel& get_test_model_nhwc_channelQuant8_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_channelQuant8_all_inputs_as_internal = TestModelManager::get().add("conv2d_v1_2_nhwc_channelQuant8_all_inputs_as_internal", get_test_model_nhwc_channelQuant8_all_inputs_as_internal());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -2383,9 +2438,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_nhwc_channelQuant8_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({2, 2, 2, 2, 1, 2, 2, 2, 2}),
@@ -2519,6 +2576,8 @@ const TestModel& get_test_model_nhwc_channelQuant8_all_tensors_as_inputs() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_channelQuant8_all_tensors_as_inputs = TestModelManager::get().add("conv2d_v1_2_nhwc_channelQuant8_all_tensors_as_inputs", get_test_model_nhwc_channelQuant8_all_tensors_as_inputs());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -2526,9 +2585,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_nhwc_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {1, 2, 12},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -2696,6 +2757,8 @@ const TestModel& get_test_model_nhwc_channelQuant8_all_tensors_as_inputs_all_inp
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("conv2d_v1_2_nhwc_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_nhwc_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -2703,9 +2766,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_nhwc_float16() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({1.0f, 1.0f, 1.0f, 1.0f, 0.5f, 1.0f, 1.0f, 1.0f, 1.0f}),
@@ -2836,6 +2901,8 @@ const TestModel& get_test_model_nhwc_float16() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_float16 = TestModelManager::get().add("conv2d_v1_2_nhwc_float16", get_test_model_nhwc_float16());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -2843,9 +2910,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_nhwc_float16_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {12},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -3010,6 +3079,8 @@ const TestModel& get_test_model_nhwc_float16_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_float16_all_inputs_as_internal = TestModelManager::get().add("conv2d_v1_2_nhwc_float16_all_inputs_as_internal", get_test_model_nhwc_float16_all_inputs_as_internal());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -3017,9 +3088,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_nhwc_float16_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({1.0f, 1.0f, 1.0f, 1.0f, 0.5f, 1.0f, 1.0f, 1.0f, 1.0f}),
@@ -3150,6 +3223,8 @@ const TestModel& get_test_model_nhwc_float16_all_tensors_as_inputs() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_float16_all_tensors_as_inputs = TestModelManager::get().add("conv2d_v1_2_nhwc_float16_all_tensors_as_inputs", get_test_model_nhwc_float16_all_tensors_as_inputs());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -3157,9 +3232,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {12, 15, 18},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -3392,6 +3469,8 @@ const TestModel& get_test_model_nhwc_float16_all_tensors_as_inputs_all_inputs_as
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("conv2d_v1_2_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -3399,9 +3478,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_nchw() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 1.0f, 1.0f, 1.0f, 0.5f, 1.0f, 1.0f, 1.0f, 1.0f}),
@@ -3532,6 +3613,8 @@ const TestModel& get_test_model_nchw() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw = TestModelManager::get().add("conv2d_v1_2_nchw", get_test_model_nchw());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -3539,9 +3622,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_nchw_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {12},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -3706,6 +3791,8 @@ const TestModel& get_test_model_nchw_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_all_inputs_as_internal = TestModelManager::get().add("conv2d_v1_2_nchw_all_inputs_as_internal", get_test_model_nchw_all_inputs_as_internal());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -3713,9 +3800,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_nchw_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 1.0f, 1.0f, 1.0f, 0.5f, 1.0f, 1.0f, 1.0f, 1.0f}),
@@ -3846,6 +3935,8 @@ const TestModel& get_test_model_nchw_all_tensors_as_inputs() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_all_tensors_as_inputs = TestModelManager::get().add("conv2d_v1_2_nchw_all_tensors_as_inputs", get_test_model_nchw_all_tensors_as_inputs());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -3853,9 +3944,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_nchw_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {12, 15, 18},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -4088,6 +4181,8 @@ const TestModel& get_test_model_nchw_all_tensors_as_inputs_all_inputs_as_interna
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("conv2d_v1_2_nchw_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_nchw_all_tensors_as_inputs_all_inputs_as_internal());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -4095,9 +4190,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_nchw_relaxed() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 1.0f, 1.0f, 1.0f, 0.5f, 1.0f, 1.0f, 1.0f, 1.0f}),
@@ -4228,6 +4325,8 @@ const TestModel& get_test_model_nchw_relaxed() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_relaxed = TestModelManager::get().add("conv2d_v1_2_nchw_relaxed", get_test_model_nchw_relaxed());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -4235,9 +4334,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_nchw_relaxed_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {12},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -4402,6 +4503,8 @@ const TestModel& get_test_model_nchw_relaxed_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_relaxed_all_inputs_as_internal = TestModelManager::get().add("conv2d_v1_2_nchw_relaxed_all_inputs_as_internal", get_test_model_nchw_relaxed_all_inputs_as_internal());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -4409,9 +4512,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_nchw_relaxed_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 1.0f, 1.0f, 1.0f, 0.5f, 1.0f, 1.0f, 1.0f, 1.0f}),
@@ -4542,6 +4647,8 @@ const TestModel& get_test_model_nchw_relaxed_all_tensors_as_inputs() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_relaxed_all_tensors_as_inputs = TestModelManager::get().add("conv2d_v1_2_nchw_relaxed_all_tensors_as_inputs", get_test_model_nchw_relaxed_all_tensors_as_inputs());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -4549,9 +4656,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {12, 15, 18},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -4785,15 +4894,19 @@ const TestModel& get_test_model_nchw_relaxed_all_tensors_as_inputs_all_inputs_as
     return model;
 }
 
+const auto dummy_test_model_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("conv2d_v1_2_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal());
+
 }  // namespace generated_tests::conv2d_v1_2
 
 namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_nchw_quant8() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({2, 2, 2, 2, 1, 2, 2, 2, 2}),
@@ -4924,6 +5037,8 @@ const TestModel& get_test_model_nchw_quant8() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_quant8 = TestModelManager::get().add("conv2d_v1_2_nchw_quant8", get_test_model_nchw_quant8());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -4931,9 +5046,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_nchw_quant8_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {12},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -5098,6 +5215,8 @@ const TestModel& get_test_model_nchw_quant8_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_quant8_all_inputs_as_internal = TestModelManager::get().add("conv2d_v1_2_nchw_quant8_all_inputs_as_internal", get_test_model_nchw_quant8_all_inputs_as_internal());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -5105,9 +5224,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_nchw_quant8_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({2, 2, 2, 2, 1, 2, 2, 2, 2}),
@@ -5238,6 +5359,8 @@ const TestModel& get_test_model_nchw_quant8_all_tensors_as_inputs() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_quant8_all_tensors_as_inputs = TestModelManager::get().add("conv2d_v1_2_nchw_quant8_all_tensors_as_inputs", get_test_model_nchw_quant8_all_tensors_as_inputs());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -5245,9 +5368,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {2, 12, 15},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -5447,15 +5572,19 @@ const TestModel& get_test_model_nchw_quant8_all_tensors_as_inputs_all_inputs_as_
     return model;
 }
 
+const auto dummy_test_model_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("conv2d_v1_2_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal());
+
 }  // namespace generated_tests::conv2d_v1_2
 
 namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_nchw_channelQuant8() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({2, 2, 2, 2, 1, 2, 2, 2, 2}),
@@ -5589,6 +5718,8 @@ const TestModel& get_test_model_nchw_channelQuant8() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_channelQuant8 = TestModelManager::get().add("conv2d_v1_2_nchw_channelQuant8", get_test_model_nchw_channelQuant8());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -5596,9 +5727,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_nchw_channelQuant8_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {12},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -5766,6 +5899,8 @@ const TestModel& get_test_model_nchw_channelQuant8_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_channelQuant8_all_inputs_as_internal = TestModelManager::get().add("conv2d_v1_2_nchw_channelQuant8_all_inputs_as_internal", get_test_model_nchw_channelQuant8_all_inputs_as_internal());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -5773,9 +5908,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_nchw_channelQuant8_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({2, 2, 2, 2, 1, 2, 2, 2, 2}),
@@ -5909,6 +6046,8 @@ const TestModel& get_test_model_nchw_channelQuant8_all_tensors_as_inputs() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_channelQuant8_all_tensors_as_inputs = TestModelManager::get().add("conv2d_v1_2_nchw_channelQuant8_all_tensors_as_inputs", get_test_model_nchw_channelQuant8_all_tensors_as_inputs());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -5916,9 +6055,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_nchw_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {1, 2, 12},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -6087,15 +6228,19 @@ const TestModel& get_test_model_nchw_channelQuant8_all_tensors_as_inputs_all_inp
     return model;
 }
 
+const auto dummy_test_model_nchw_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("conv2d_v1_2_nchw_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_nchw_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal());
+
 }  // namespace generated_tests::conv2d_v1_2
 
 namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_nchw_float16() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({1.0f, 1.0f, 1.0f, 1.0f, 0.5f, 1.0f, 1.0f, 1.0f, 1.0f}),
@@ -6226,6 +6371,8 @@ const TestModel& get_test_model_nchw_float16() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_float16 = TestModelManager::get().add("conv2d_v1_2_nchw_float16", get_test_model_nchw_float16());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -6233,9 +6380,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_nchw_float16_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {12},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -6400,6 +6549,8 @@ const TestModel& get_test_model_nchw_float16_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_float16_all_inputs_as_internal = TestModelManager::get().add("conv2d_v1_2_nchw_float16_all_inputs_as_internal", get_test_model_nchw_float16_all_inputs_as_internal());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -6407,9 +6558,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_nchw_float16_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({1.0f, 1.0f, 1.0f, 1.0f, 0.5f, 1.0f, 1.0f, 1.0f, 1.0f}),
@@ -6540,6 +6693,8 @@ const TestModel& get_test_model_nchw_float16_all_tensors_as_inputs() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_float16_all_tensors_as_inputs = TestModelManager::get().add("conv2d_v1_2_nchw_float16_all_tensors_as_inputs", get_test_model_nchw_float16_all_tensors_as_inputs());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -6547,9 +6702,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {12, 15, 18},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -6783,15 +6940,19 @@ const TestModel& get_test_model_nchw_float16_all_tensors_as_inputs_all_inputs_as
     return model;
 }
 
+const auto dummy_test_model_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("conv2d_v1_2_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal());
+
 }  // namespace generated_tests::conv2d_v1_2
 
 namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_nhwc_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f, 10.0f, 11.0f, 12.0f}),
@@ -6892,6 +7053,8 @@ const TestModel& get_test_model_nhwc_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_2 = TestModelManager::get().add("conv2d_v1_2_nhwc_2", get_test_model_nhwc_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -6899,9 +7062,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_nhwc_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {9},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -7036,6 +7201,8 @@ const TestModel& get_test_model_nhwc_all_inputs_as_internal_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_all_inputs_as_internal_2 = TestModelManager::get().add("conv2d_v1_2_nhwc_all_inputs_as_internal_2", get_test_model_nhwc_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -7043,9 +7210,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_nhwc_all_tensors_as_inputs_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f, 10.0f, 11.0f, 12.0f}),
@@ -7146,6 +7315,8 @@ const TestModel& get_test_model_nhwc_all_tensors_as_inputs_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_all_tensors_as_inputs_2 = TestModelManager::get().add("conv2d_v1_2_nhwc_all_tensors_as_inputs_2", get_test_model_nhwc_all_tensors_as_inputs_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -7153,9 +7324,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_nhwc_all_tensors_as_inputs_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {9, 12, 15},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -7358,6 +7531,8 @@ const TestModel& get_test_model_nhwc_all_tensors_as_inputs_all_inputs_as_interna
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("conv2d_v1_2_nhwc_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_nhwc_all_tensors_as_inputs_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -7365,9 +7540,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_nhwc_relaxed_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f, 10.0f, 11.0f, 12.0f}),
@@ -7468,6 +7645,8 @@ const TestModel& get_test_model_nhwc_relaxed_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_relaxed_2 = TestModelManager::get().add("conv2d_v1_2_nhwc_relaxed_2", get_test_model_nhwc_relaxed_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -7475,9 +7654,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_nhwc_relaxed_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {9},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -7612,6 +7793,8 @@ const TestModel& get_test_model_nhwc_relaxed_all_inputs_as_internal_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_relaxed_all_inputs_as_internal_2 = TestModelManager::get().add("conv2d_v1_2_nhwc_relaxed_all_inputs_as_internal_2", get_test_model_nhwc_relaxed_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -7619,9 +7802,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_nhwc_relaxed_all_tensors_as_inputs_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f, 10.0f, 11.0f, 12.0f}),
@@ -7722,6 +7907,8 @@ const TestModel& get_test_model_nhwc_relaxed_all_tensors_as_inputs_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_relaxed_all_tensors_as_inputs_2 = TestModelManager::get().add("conv2d_v1_2_nhwc_relaxed_all_tensors_as_inputs_2", get_test_model_nhwc_relaxed_all_tensors_as_inputs_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -7729,9 +7916,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {9, 12, 15},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -7934,6 +8123,8 @@ const TestModel& get_test_model_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("conv2d_v1_2_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -7941,9 +8132,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_nhwc_quant8_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({129, 131, 133, 135, 137, 139, 141, 143, 145, 147, 149, 151}),
@@ -8044,6 +8237,8 @@ const TestModel& get_test_model_nhwc_quant8_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_quant8_2 = TestModelManager::get().add("conv2d_v1_2_nhwc_quant8_2", get_test_model_nhwc_quant8_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -8051,9 +8246,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_nhwc_quant8_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {9},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -8188,6 +8385,8 @@ const TestModel& get_test_model_nhwc_quant8_all_inputs_as_internal_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_quant8_all_inputs_as_internal_2 = TestModelManager::get().add("conv2d_v1_2_nhwc_quant8_all_inputs_as_internal_2", get_test_model_nhwc_quant8_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -8195,9 +8394,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_nhwc_quant8_all_tensors_as_inputs_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({129, 131, 133, 135, 137, 139, 141, 143, 145, 147, 149, 151}),
@@ -8298,6 +8499,8 @@ const TestModel& get_test_model_nhwc_quant8_all_tensors_as_inputs_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_quant8_all_tensors_as_inputs_2 = TestModelManager::get().add("conv2d_v1_2_nhwc_quant8_all_tensors_as_inputs_2", get_test_model_nhwc_quant8_all_tensors_as_inputs_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -8305,9 +8508,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {2, 9, 12},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -8476,6 +8681,8 @@ const TestModel& get_test_model_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("conv2d_v1_2_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -8483,9 +8690,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_nhwc_channelQuant8_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({129, 131, 133, 135, 137, 139, 141, 143, 145, 147, 149, 151}),
@@ -8589,6 +8798,8 @@ const TestModel& get_test_model_nhwc_channelQuant8_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_channelQuant8_2 = TestModelManager::get().add("conv2d_v1_2_nhwc_channelQuant8_2", get_test_model_nhwc_channelQuant8_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -8596,9 +8807,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_nhwc_channelQuant8_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {9},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -8736,6 +8949,8 @@ const TestModel& get_test_model_nhwc_channelQuant8_all_inputs_as_internal_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_channelQuant8_all_inputs_as_internal_2 = TestModelManager::get().add("conv2d_v1_2_nhwc_channelQuant8_all_inputs_as_internal_2", get_test_model_nhwc_channelQuant8_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -8743,9 +8958,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_nhwc_channelQuant8_all_tensors_as_inputs_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({129, 131, 133, 135, 137, 139, 141, 143, 145, 147, 149, 151}),
@@ -8849,6 +9066,8 @@ const TestModel& get_test_model_nhwc_channelQuant8_all_tensors_as_inputs_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_channelQuant8_all_tensors_as_inputs_2 = TestModelManager::get().add("conv2d_v1_2_nhwc_channelQuant8_all_tensors_as_inputs_2", get_test_model_nhwc_channelQuant8_all_tensors_as_inputs_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -8856,9 +9075,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_nhwc_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {1, 2, 9},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -8996,6 +9217,8 @@ const TestModel& get_test_model_nhwc_channelQuant8_all_tensors_as_inputs_all_inp
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("conv2d_v1_2_nhwc_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_nhwc_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -9003,9 +9226,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_nhwc_float16_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f, 10.0f, 11.0f, 12.0f}),
@@ -9106,6 +9331,8 @@ const TestModel& get_test_model_nhwc_float16_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_float16_2 = TestModelManager::get().add("conv2d_v1_2_nhwc_float16_2", get_test_model_nhwc_float16_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -9113,9 +9340,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_nhwc_float16_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {9},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -9250,6 +9479,8 @@ const TestModel& get_test_model_nhwc_float16_all_inputs_as_internal_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_float16_all_inputs_as_internal_2 = TestModelManager::get().add("conv2d_v1_2_nhwc_float16_all_inputs_as_internal_2", get_test_model_nhwc_float16_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -9257,9 +9488,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_nhwc_float16_all_tensors_as_inputs_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f, 10.0f, 11.0f, 12.0f}),
@@ -9360,6 +9593,8 @@ const TestModel& get_test_model_nhwc_float16_all_tensors_as_inputs_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_float16_all_tensors_as_inputs_2 = TestModelManager::get().add("conv2d_v1_2_nhwc_float16_all_tensors_as_inputs_2", get_test_model_nhwc_float16_all_tensors_as_inputs_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -9367,9 +9602,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {9, 12, 15},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -9572,6 +9809,8 @@ const TestModel& get_test_model_nhwc_float16_all_tensors_as_inputs_all_inputs_as
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("conv2d_v1_2_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -9579,9 +9818,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_nchw_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f, 10.0f, 11.0f, 12.0f}),
@@ -9682,6 +9923,8 @@ const TestModel& get_test_model_nchw_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_2 = TestModelManager::get().add("conv2d_v1_2_nchw_2", get_test_model_nchw_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -9689,9 +9932,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_nchw_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {9},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -9826,6 +10071,8 @@ const TestModel& get_test_model_nchw_all_inputs_as_internal_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_all_inputs_as_internal_2 = TestModelManager::get().add("conv2d_v1_2_nchw_all_inputs_as_internal_2", get_test_model_nchw_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -9833,9 +10080,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_nchw_all_tensors_as_inputs_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f, 10.0f, 11.0f, 12.0f}),
@@ -9936,6 +10185,8 @@ const TestModel& get_test_model_nchw_all_tensors_as_inputs_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_all_tensors_as_inputs_2 = TestModelManager::get().add("conv2d_v1_2_nchw_all_tensors_as_inputs_2", get_test_model_nchw_all_tensors_as_inputs_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -9943,9 +10194,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_nchw_all_tensors_as_inputs_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {9, 12, 15},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -10148,6 +10401,8 @@ const TestModel& get_test_model_nchw_all_tensors_as_inputs_all_inputs_as_interna
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("conv2d_v1_2_nchw_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_nchw_all_tensors_as_inputs_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -10155,9 +10410,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_nchw_relaxed_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f, 10.0f, 11.0f, 12.0f}),
@@ -10258,6 +10515,8 @@ const TestModel& get_test_model_nchw_relaxed_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_relaxed_2 = TestModelManager::get().add("conv2d_v1_2_nchw_relaxed_2", get_test_model_nchw_relaxed_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -10265,9 +10524,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_nchw_relaxed_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {9},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -10402,6 +10663,8 @@ const TestModel& get_test_model_nchw_relaxed_all_inputs_as_internal_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_relaxed_all_inputs_as_internal_2 = TestModelManager::get().add("conv2d_v1_2_nchw_relaxed_all_inputs_as_internal_2", get_test_model_nchw_relaxed_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -10409,9 +10672,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_nchw_relaxed_all_tensors_as_inputs_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f, 10.0f, 11.0f, 12.0f}),
@@ -10512,6 +10777,8 @@ const TestModel& get_test_model_nchw_relaxed_all_tensors_as_inputs_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_relaxed_all_tensors_as_inputs_2 = TestModelManager::get().add("conv2d_v1_2_nchw_relaxed_all_tensors_as_inputs_2", get_test_model_nchw_relaxed_all_tensors_as_inputs_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -10519,9 +10786,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {9, 12, 15},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -10725,15 +10994,19 @@ const TestModel& get_test_model_nchw_relaxed_all_tensors_as_inputs_all_inputs_as
     return model;
 }
 
+const auto dummy_test_model_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("conv2d_v1_2_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::conv2d_v1_2
 
 namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_nchw_quant8_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({129, 131, 133, 135, 137, 139, 141, 143, 145, 147, 149, 151}),
@@ -10834,6 +11107,8 @@ const TestModel& get_test_model_nchw_quant8_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_quant8_2 = TestModelManager::get().add("conv2d_v1_2_nchw_quant8_2", get_test_model_nchw_quant8_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -10841,9 +11116,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_nchw_quant8_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {9},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -10978,6 +11255,8 @@ const TestModel& get_test_model_nchw_quant8_all_inputs_as_internal_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_quant8_all_inputs_as_internal_2 = TestModelManager::get().add("conv2d_v1_2_nchw_quant8_all_inputs_as_internal_2", get_test_model_nchw_quant8_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -10985,9 +11264,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_nchw_quant8_all_tensors_as_inputs_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({129, 131, 133, 135, 137, 139, 141, 143, 145, 147, 149, 151}),
@@ -11088,6 +11369,8 @@ const TestModel& get_test_model_nchw_quant8_all_tensors_as_inputs_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_quant8_all_tensors_as_inputs_2 = TestModelManager::get().add("conv2d_v1_2_nchw_quant8_all_tensors_as_inputs_2", get_test_model_nchw_quant8_all_tensors_as_inputs_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -11095,9 +11378,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {2, 9, 12},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -11267,15 +11552,19 @@ const TestModel& get_test_model_nchw_quant8_all_tensors_as_inputs_all_inputs_as_
     return model;
 }
 
+const auto dummy_test_model_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("conv2d_v1_2_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::conv2d_v1_2
 
 namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_nchw_channelQuant8_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({129, 131, 133, 135, 137, 139, 141, 143, 145, 147, 149, 151}),
@@ -11379,6 +11668,8 @@ const TestModel& get_test_model_nchw_channelQuant8_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_channelQuant8_2 = TestModelManager::get().add("conv2d_v1_2_nchw_channelQuant8_2", get_test_model_nchw_channelQuant8_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -11386,9 +11677,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_nchw_channelQuant8_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {9},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -11526,6 +11819,8 @@ const TestModel& get_test_model_nchw_channelQuant8_all_inputs_as_internal_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_channelQuant8_all_inputs_as_internal_2 = TestModelManager::get().add("conv2d_v1_2_nchw_channelQuant8_all_inputs_as_internal_2", get_test_model_nchw_channelQuant8_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -11533,9 +11828,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_nchw_channelQuant8_all_tensors_as_inputs_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({129, 131, 133, 135, 137, 139, 141, 143, 145, 147, 149, 151}),
@@ -11639,6 +11936,8 @@ const TestModel& get_test_model_nchw_channelQuant8_all_tensors_as_inputs_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_channelQuant8_all_tensors_as_inputs_2 = TestModelManager::get().add("conv2d_v1_2_nchw_channelQuant8_all_tensors_as_inputs_2", get_test_model_nchw_channelQuant8_all_tensors_as_inputs_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -11646,9 +11945,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_nchw_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {1, 2, 9},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -11787,15 +12088,19 @@ const TestModel& get_test_model_nchw_channelQuant8_all_tensors_as_inputs_all_inp
     return model;
 }
 
+const auto dummy_test_model_nchw_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("conv2d_v1_2_nchw_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_nchw_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::conv2d_v1_2
 
 namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_nchw_float16_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f, 10.0f, 11.0f, 12.0f}),
@@ -11896,6 +12201,8 @@ const TestModel& get_test_model_nchw_float16_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_float16_2 = TestModelManager::get().add("conv2d_v1_2_nchw_float16_2", get_test_model_nchw_float16_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -11903,9 +12210,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_nchw_float16_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {9},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -12040,6 +12349,8 @@ const TestModel& get_test_model_nchw_float16_all_inputs_as_internal_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_float16_all_inputs_as_internal_2 = TestModelManager::get().add("conv2d_v1_2_nchw_float16_all_inputs_as_internal_2", get_test_model_nchw_float16_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -12047,9 +12358,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_nchw_float16_all_tensors_as_inputs_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f, 10.0f, 11.0f, 12.0f}),
@@ -12150,6 +12463,8 @@ const TestModel& get_test_model_nchw_float16_all_tensors_as_inputs_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_float16_all_tensors_as_inputs_2 = TestModelManager::get().add("conv2d_v1_2_nchw_float16_all_tensors_as_inputs_2", get_test_model_nchw_float16_all_tensors_as_inputs_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -12157,9 +12472,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {9, 12, 15},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -12363,15 +12680,19 @@ const TestModel& get_test_model_nchw_float16_all_tensors_as_inputs_all_inputs_as
     return model;
 }
 
+const auto dummy_test_model_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("conv2d_v1_2_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::conv2d_v1_2
 
 namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_channel_nhwc() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({5.0f, 5.0f, 5.0f}),
@@ -12502,6 +12823,8 @@ const TestModel& get_test_model_channel_nhwc() {
     };
     return model;
 }
+
+const auto dummy_test_model_channel_nhwc = TestModelManager::get().add("conv2d_v1_2_channel_nhwc", get_test_model_channel_nhwc());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -12509,9 +12832,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_channel_nhwc_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {12},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -12676,6 +13001,8 @@ const TestModel& get_test_model_channel_nhwc_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_channel_nhwc_all_inputs_as_internal = TestModelManager::get().add("conv2d_v1_2_channel_nhwc_all_inputs_as_internal", get_test_model_channel_nhwc_all_inputs_as_internal());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -12683,9 +13010,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_channel_nhwc_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({5.0f, 5.0f, 5.0f}),
@@ -12816,6 +13145,8 @@ const TestModel& get_test_model_channel_nhwc_all_tensors_as_inputs() {
     };
     return model;
 }
+
+const auto dummy_test_model_channel_nhwc_all_tensors_as_inputs = TestModelManager::get().add("conv2d_v1_2_channel_nhwc_all_tensors_as_inputs", get_test_model_channel_nhwc_all_tensors_as_inputs());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -12823,9 +13154,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_channel_nhwc_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {12, 15, 18},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -13058,6 +13391,8 @@ const TestModel& get_test_model_channel_nhwc_all_tensors_as_inputs_all_inputs_as
     };
     return model;
 }
+
+const auto dummy_test_model_channel_nhwc_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("conv2d_v1_2_channel_nhwc_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_channel_nhwc_all_tensors_as_inputs_all_inputs_as_internal());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -13065,9 +13400,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_channel_nhwc_relaxed() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({5.0f, 5.0f, 5.0f}),
@@ -13198,6 +13535,8 @@ const TestModel& get_test_model_channel_nhwc_relaxed() {
     };
     return model;
 }
+
+const auto dummy_test_model_channel_nhwc_relaxed = TestModelManager::get().add("conv2d_v1_2_channel_nhwc_relaxed", get_test_model_channel_nhwc_relaxed());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -13205,9 +13544,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_channel_nhwc_relaxed_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {12},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -13372,6 +13713,8 @@ const TestModel& get_test_model_channel_nhwc_relaxed_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_channel_nhwc_relaxed_all_inputs_as_internal = TestModelManager::get().add("conv2d_v1_2_channel_nhwc_relaxed_all_inputs_as_internal", get_test_model_channel_nhwc_relaxed_all_inputs_as_internal());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -13379,9 +13722,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_channel_nhwc_relaxed_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({5.0f, 5.0f, 5.0f}),
@@ -13512,6 +13857,8 @@ const TestModel& get_test_model_channel_nhwc_relaxed_all_tensors_as_inputs() {
     };
     return model;
 }
+
+const auto dummy_test_model_channel_nhwc_relaxed_all_tensors_as_inputs = TestModelManager::get().add("conv2d_v1_2_channel_nhwc_relaxed_all_tensors_as_inputs", get_test_model_channel_nhwc_relaxed_all_tensors_as_inputs());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -13519,9 +13866,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_channel_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {12, 15, 18},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -13754,6 +14103,8 @@ const TestModel& get_test_model_channel_nhwc_relaxed_all_tensors_as_inputs_all_i
     };
     return model;
 }
+
+const auto dummy_test_model_channel_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("conv2d_v1_2_channel_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_channel_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -13761,9 +14112,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_channel_nhwc_quant8() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({10, 10, 10}),
@@ -13894,6 +14247,8 @@ const TestModel& get_test_model_channel_nhwc_quant8() {
     };
     return model;
 }
+
+const auto dummy_test_model_channel_nhwc_quant8 = TestModelManager::get().add("conv2d_v1_2_channel_nhwc_quant8", get_test_model_channel_nhwc_quant8());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -13901,9 +14256,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_channel_nhwc_quant8_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {12},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -14068,6 +14425,8 @@ const TestModel& get_test_model_channel_nhwc_quant8_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_channel_nhwc_quant8_all_inputs_as_internal = TestModelManager::get().add("conv2d_v1_2_channel_nhwc_quant8_all_inputs_as_internal", get_test_model_channel_nhwc_quant8_all_inputs_as_internal());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -14075,9 +14434,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_channel_nhwc_quant8_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({10, 10, 10}),
@@ -14208,6 +14569,8 @@ const TestModel& get_test_model_channel_nhwc_quant8_all_tensors_as_inputs() {
     };
     return model;
 }
+
+const auto dummy_test_model_channel_nhwc_quant8_all_tensors_as_inputs = TestModelManager::get().add("conv2d_v1_2_channel_nhwc_quant8_all_tensors_as_inputs", get_test_model_channel_nhwc_quant8_all_tensors_as_inputs());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -14215,9 +14578,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_channel_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {2, 12, 15},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -14416,6 +14781,8 @@ const TestModel& get_test_model_channel_nhwc_quant8_all_tensors_as_inputs_all_in
     };
     return model;
 }
+
+const auto dummy_test_model_channel_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("conv2d_v1_2_channel_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_channel_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -14423,9 +14790,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_channel_nhwc_channelQuant8() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({10, 10, 10}),
@@ -14559,6 +14928,8 @@ const TestModel& get_test_model_channel_nhwc_channelQuant8() {
     };
     return model;
 }
+
+const auto dummy_test_model_channel_nhwc_channelQuant8 = TestModelManager::get().add("conv2d_v1_2_channel_nhwc_channelQuant8", get_test_model_channel_nhwc_channelQuant8());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -14566,9 +14937,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_channel_nhwc_channelQuant8_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {12},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -14736,6 +15109,8 @@ const TestModel& get_test_model_channel_nhwc_channelQuant8_all_inputs_as_interna
     };
     return model;
 }
+
+const auto dummy_test_model_channel_nhwc_channelQuant8_all_inputs_as_internal = TestModelManager::get().add("conv2d_v1_2_channel_nhwc_channelQuant8_all_inputs_as_internal", get_test_model_channel_nhwc_channelQuant8_all_inputs_as_internal());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -14743,9 +15118,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_channel_nhwc_channelQuant8_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({10, 10, 10}),
@@ -14879,6 +15256,8 @@ const TestModel& get_test_model_channel_nhwc_channelQuant8_all_tensors_as_inputs
     };
     return model;
 }
+
+const auto dummy_test_model_channel_nhwc_channelQuant8_all_tensors_as_inputs = TestModelManager::get().add("conv2d_v1_2_channel_nhwc_channelQuant8_all_tensors_as_inputs", get_test_model_channel_nhwc_channelQuant8_all_tensors_as_inputs());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -14886,9 +15265,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_channel_nhwc_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {1, 2, 12},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -15056,6 +15437,8 @@ const TestModel& get_test_model_channel_nhwc_channelQuant8_all_tensors_as_inputs
     };
     return model;
 }
+
+const auto dummy_test_model_channel_nhwc_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("conv2d_v1_2_channel_nhwc_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_channel_nhwc_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -15063,9 +15446,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_channel_nhwc_float16() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({5.0f, 5.0f, 5.0f}),
@@ -15196,6 +15581,8 @@ const TestModel& get_test_model_channel_nhwc_float16() {
     };
     return model;
 }
+
+const auto dummy_test_model_channel_nhwc_float16 = TestModelManager::get().add("conv2d_v1_2_channel_nhwc_float16", get_test_model_channel_nhwc_float16());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -15203,9 +15590,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_channel_nhwc_float16_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {12},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -15370,6 +15759,8 @@ const TestModel& get_test_model_channel_nhwc_float16_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_channel_nhwc_float16_all_inputs_as_internal = TestModelManager::get().add("conv2d_v1_2_channel_nhwc_float16_all_inputs_as_internal", get_test_model_channel_nhwc_float16_all_inputs_as_internal());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -15377,9 +15768,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_channel_nhwc_float16_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({5.0f, 5.0f, 5.0f}),
@@ -15510,6 +15903,8 @@ const TestModel& get_test_model_channel_nhwc_float16_all_tensors_as_inputs() {
     };
     return model;
 }
+
+const auto dummy_test_model_channel_nhwc_float16_all_tensors_as_inputs = TestModelManager::get().add("conv2d_v1_2_channel_nhwc_float16_all_tensors_as_inputs", get_test_model_channel_nhwc_float16_all_tensors_as_inputs());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -15517,9 +15912,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_channel_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {12, 15, 18},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -15752,6 +16149,8 @@ const TestModel& get_test_model_channel_nhwc_float16_all_tensors_as_inputs_all_i
     };
     return model;
 }
+
+const auto dummy_test_model_channel_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("conv2d_v1_2_channel_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_channel_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -15759,9 +16158,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_channel_nchw() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({5.0f, 5.0f, 5.0f}),
@@ -15892,6 +16293,8 @@ const TestModel& get_test_model_channel_nchw() {
     };
     return model;
 }
+
+const auto dummy_test_model_channel_nchw = TestModelManager::get().add("conv2d_v1_2_channel_nchw", get_test_model_channel_nchw());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -15899,9 +16302,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_channel_nchw_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {12},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -16066,6 +16471,8 @@ const TestModel& get_test_model_channel_nchw_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_channel_nchw_all_inputs_as_internal = TestModelManager::get().add("conv2d_v1_2_channel_nchw_all_inputs_as_internal", get_test_model_channel_nchw_all_inputs_as_internal());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -16073,9 +16480,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_channel_nchw_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({5.0f, 5.0f, 5.0f}),
@@ -16206,6 +16615,8 @@ const TestModel& get_test_model_channel_nchw_all_tensors_as_inputs() {
     };
     return model;
 }
+
+const auto dummy_test_model_channel_nchw_all_tensors_as_inputs = TestModelManager::get().add("conv2d_v1_2_channel_nchw_all_tensors_as_inputs", get_test_model_channel_nchw_all_tensors_as_inputs());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -16213,9 +16624,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_channel_nchw_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {12, 15, 18},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -16448,6 +16861,8 @@ const TestModel& get_test_model_channel_nchw_all_tensors_as_inputs_all_inputs_as
     };
     return model;
 }
+
+const auto dummy_test_model_channel_nchw_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("conv2d_v1_2_channel_nchw_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_channel_nchw_all_tensors_as_inputs_all_inputs_as_internal());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -16455,9 +16870,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_channel_nchw_relaxed() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({5.0f, 5.0f, 5.0f}),
@@ -16588,6 +17005,8 @@ const TestModel& get_test_model_channel_nchw_relaxed() {
     };
     return model;
 }
+
+const auto dummy_test_model_channel_nchw_relaxed = TestModelManager::get().add("conv2d_v1_2_channel_nchw_relaxed", get_test_model_channel_nchw_relaxed());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -16595,9 +17014,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_channel_nchw_relaxed_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {12},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -16762,6 +17183,8 @@ const TestModel& get_test_model_channel_nchw_relaxed_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_channel_nchw_relaxed_all_inputs_as_internal = TestModelManager::get().add("conv2d_v1_2_channel_nchw_relaxed_all_inputs_as_internal", get_test_model_channel_nchw_relaxed_all_inputs_as_internal());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -16769,9 +17192,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_channel_nchw_relaxed_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({5.0f, 5.0f, 5.0f}),
@@ -16902,6 +17327,8 @@ const TestModel& get_test_model_channel_nchw_relaxed_all_tensors_as_inputs() {
     };
     return model;
 }
+
+const auto dummy_test_model_channel_nchw_relaxed_all_tensors_as_inputs = TestModelManager::get().add("conv2d_v1_2_channel_nchw_relaxed_all_tensors_as_inputs", get_test_model_channel_nchw_relaxed_all_tensors_as_inputs());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -16909,9 +17336,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_channel_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {12, 15, 18},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -17145,15 +17574,19 @@ const TestModel& get_test_model_channel_nchw_relaxed_all_tensors_as_inputs_all_i
     return model;
 }
 
+const auto dummy_test_model_channel_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("conv2d_v1_2_channel_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_channel_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal());
+
 }  // namespace generated_tests::conv2d_v1_2
 
 namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_channel_nchw_quant8() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({10, 10, 10}),
@@ -17284,6 +17717,8 @@ const TestModel& get_test_model_channel_nchw_quant8() {
     };
     return model;
 }
+
+const auto dummy_test_model_channel_nchw_quant8 = TestModelManager::get().add("conv2d_v1_2_channel_nchw_quant8", get_test_model_channel_nchw_quant8());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -17291,9 +17726,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_channel_nchw_quant8_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {12},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -17458,6 +17895,8 @@ const TestModel& get_test_model_channel_nchw_quant8_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_channel_nchw_quant8_all_inputs_as_internal = TestModelManager::get().add("conv2d_v1_2_channel_nchw_quant8_all_inputs_as_internal", get_test_model_channel_nchw_quant8_all_inputs_as_internal());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -17465,9 +17904,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_channel_nchw_quant8_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({10, 10, 10}),
@@ -17598,6 +18039,8 @@ const TestModel& get_test_model_channel_nchw_quant8_all_tensors_as_inputs() {
     };
     return model;
 }
+
+const auto dummy_test_model_channel_nchw_quant8_all_tensors_as_inputs = TestModelManager::get().add("conv2d_v1_2_channel_nchw_quant8_all_tensors_as_inputs", get_test_model_channel_nchw_quant8_all_tensors_as_inputs());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -17605,9 +18048,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_channel_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {2, 12, 15},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -17807,15 +18252,19 @@ const TestModel& get_test_model_channel_nchw_quant8_all_tensors_as_inputs_all_in
     return model;
 }
 
+const auto dummy_test_model_channel_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("conv2d_v1_2_channel_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_channel_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal());
+
 }  // namespace generated_tests::conv2d_v1_2
 
 namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_channel_nchw_channelQuant8() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({10, 10, 10}),
@@ -17949,6 +18398,8 @@ const TestModel& get_test_model_channel_nchw_channelQuant8() {
     };
     return model;
 }
+
+const auto dummy_test_model_channel_nchw_channelQuant8 = TestModelManager::get().add("conv2d_v1_2_channel_nchw_channelQuant8", get_test_model_channel_nchw_channelQuant8());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -17956,9 +18407,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_channel_nchw_channelQuant8_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {12},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -18126,6 +18579,8 @@ const TestModel& get_test_model_channel_nchw_channelQuant8_all_inputs_as_interna
     };
     return model;
 }
+
+const auto dummy_test_model_channel_nchw_channelQuant8_all_inputs_as_internal = TestModelManager::get().add("conv2d_v1_2_channel_nchw_channelQuant8_all_inputs_as_internal", get_test_model_channel_nchw_channelQuant8_all_inputs_as_internal());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -18133,9 +18588,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_channel_nchw_channelQuant8_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({10, 10, 10}),
@@ -18270,15 +18727,19 @@ const TestModel& get_test_model_channel_nchw_channelQuant8_all_tensors_as_inputs
     return model;
 }
 
+const auto dummy_test_model_channel_nchw_channelQuant8_all_tensors_as_inputs = TestModelManager::get().add("conv2d_v1_2_channel_nchw_channelQuant8_all_tensors_as_inputs", get_test_model_channel_nchw_channelQuant8_all_tensors_as_inputs());
+
 }  // namespace generated_tests::conv2d_v1_2
 
 namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_channel_nchw_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {1, 2, 12},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -18447,15 +18908,19 @@ const TestModel& get_test_model_channel_nchw_channelQuant8_all_tensors_as_inputs
     return model;
 }
 
+const auto dummy_test_model_channel_nchw_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("conv2d_v1_2_channel_nchw_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_channel_nchw_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal());
+
 }  // namespace generated_tests::conv2d_v1_2
 
 namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_channel_nchw_float16() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({5.0f, 5.0f, 5.0f}),
@@ -18586,6 +19051,8 @@ const TestModel& get_test_model_channel_nchw_float16() {
     };
     return model;
 }
+
+const auto dummy_test_model_channel_nchw_float16 = TestModelManager::get().add("conv2d_v1_2_channel_nchw_float16", get_test_model_channel_nchw_float16());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -18593,9 +19060,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_channel_nchw_float16_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {12},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -18760,6 +19229,8 @@ const TestModel& get_test_model_channel_nchw_float16_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_channel_nchw_float16_all_inputs_as_internal = TestModelManager::get().add("conv2d_v1_2_channel_nchw_float16_all_inputs_as_internal", get_test_model_channel_nchw_float16_all_inputs_as_internal());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -18767,9 +19238,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_channel_nchw_float16_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({5.0f, 5.0f, 5.0f}),
@@ -18900,6 +19373,8 @@ const TestModel& get_test_model_channel_nchw_float16_all_tensors_as_inputs() {
     };
     return model;
 }
+
+const auto dummy_test_model_channel_nchw_float16_all_tensors_as_inputs = TestModelManager::get().add("conv2d_v1_2_channel_nchw_float16_all_tensors_as_inputs", get_test_model_channel_nchw_float16_all_tensors_as_inputs());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -18907,9 +19382,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_channel_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {12, 15, 18},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -19143,15 +19620,19 @@ const TestModel& get_test_model_channel_nchw_float16_all_tensors_as_inputs_all_i
     return model;
 }
 
+const auto dummy_test_model_channel_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("conv2d_v1_2_channel_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_channel_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal());
+
 }  // namespace generated_tests::conv2d_v1_2
 
 namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_large_nhwc() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f, 10.0f, 11.0f, 12.0f, 13.0f, 14.0f, 15.0f, 16.0f, 17.0f, 18.0f}),
@@ -19282,6 +19763,8 @@ const TestModel& get_test_model_large_nhwc() {
     };
     return model;
 }
+
+const auto dummy_test_model_large_nhwc = TestModelManager::get().add("conv2d_v1_2_large_nhwc", get_test_model_large_nhwc());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -19289,9 +19772,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_large_nhwc_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {12},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -19456,6 +19941,8 @@ const TestModel& get_test_model_large_nhwc_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_large_nhwc_all_inputs_as_internal = TestModelManager::get().add("conv2d_v1_2_large_nhwc_all_inputs_as_internal", get_test_model_large_nhwc_all_inputs_as_internal());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -19463,9 +19950,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_large_nhwc_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f, 10.0f, 11.0f, 12.0f, 13.0f, 14.0f, 15.0f, 16.0f, 17.0f, 18.0f}),
@@ -19596,6 +20085,8 @@ const TestModel& get_test_model_large_nhwc_all_tensors_as_inputs() {
     };
     return model;
 }
+
+const auto dummy_test_model_large_nhwc_all_tensors_as_inputs = TestModelManager::get().add("conv2d_v1_2_large_nhwc_all_tensors_as_inputs", get_test_model_large_nhwc_all_tensors_as_inputs());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -19603,9 +20094,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_large_nhwc_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {12, 15, 18},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -19838,6 +20331,8 @@ const TestModel& get_test_model_large_nhwc_all_tensors_as_inputs_all_inputs_as_i
     };
     return model;
 }
+
+const auto dummy_test_model_large_nhwc_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("conv2d_v1_2_large_nhwc_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_large_nhwc_all_tensors_as_inputs_all_inputs_as_internal());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -19845,9 +20340,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_large_nhwc_relaxed() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f, 10.0f, 11.0f, 12.0f, 13.0f, 14.0f, 15.0f, 16.0f, 17.0f, 18.0f}),
@@ -19978,6 +20475,8 @@ const TestModel& get_test_model_large_nhwc_relaxed() {
     };
     return model;
 }
+
+const auto dummy_test_model_large_nhwc_relaxed = TestModelManager::get().add("conv2d_v1_2_large_nhwc_relaxed", get_test_model_large_nhwc_relaxed());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -19985,9 +20484,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_large_nhwc_relaxed_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {12},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -20152,6 +20653,8 @@ const TestModel& get_test_model_large_nhwc_relaxed_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_large_nhwc_relaxed_all_inputs_as_internal = TestModelManager::get().add("conv2d_v1_2_large_nhwc_relaxed_all_inputs_as_internal", get_test_model_large_nhwc_relaxed_all_inputs_as_internal());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -20159,9 +20662,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_large_nhwc_relaxed_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f, 10.0f, 11.0f, 12.0f, 13.0f, 14.0f, 15.0f, 16.0f, 17.0f, 18.0f}),
@@ -20292,6 +20797,8 @@ const TestModel& get_test_model_large_nhwc_relaxed_all_tensors_as_inputs() {
     };
     return model;
 }
+
+const auto dummy_test_model_large_nhwc_relaxed_all_tensors_as_inputs = TestModelManager::get().add("conv2d_v1_2_large_nhwc_relaxed_all_tensors_as_inputs", get_test_model_large_nhwc_relaxed_all_tensors_as_inputs());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -20299,9 +20806,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_large_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {12, 15, 18},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -20535,15 +21044,19 @@ const TestModel& get_test_model_large_nhwc_relaxed_all_tensors_as_inputs_all_inp
     return model;
 }
 
+const auto dummy_test_model_large_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("conv2d_v1_2_large_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_large_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal());
+
 }  // namespace generated_tests::conv2d_v1_2
 
 namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_large_nhwc_quant8() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({130, 132, 134, 136, 138, 140, 142, 144, 146, 148, 150, 152, 154, 156, 158, 160, 162, 164}),
@@ -20674,6 +21187,8 @@ const TestModel& get_test_model_large_nhwc_quant8() {
     };
     return model;
 }
+
+const auto dummy_test_model_large_nhwc_quant8 = TestModelManager::get().add("conv2d_v1_2_large_nhwc_quant8", get_test_model_large_nhwc_quant8());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -20681,9 +21196,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_large_nhwc_quant8_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {12},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -20848,6 +21365,8 @@ const TestModel& get_test_model_large_nhwc_quant8_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_large_nhwc_quant8_all_inputs_as_internal = TestModelManager::get().add("conv2d_v1_2_large_nhwc_quant8_all_inputs_as_internal", get_test_model_large_nhwc_quant8_all_inputs_as_internal());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -20855,9 +21374,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_large_nhwc_quant8_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({130, 132, 134, 136, 138, 140, 142, 144, 146, 148, 150, 152, 154, 156, 158, 160, 162, 164}),
@@ -20988,6 +21509,8 @@ const TestModel& get_test_model_large_nhwc_quant8_all_tensors_as_inputs() {
     };
     return model;
 }
+
+const auto dummy_test_model_large_nhwc_quant8_all_tensors_as_inputs = TestModelManager::get().add("conv2d_v1_2_large_nhwc_quant8_all_tensors_as_inputs", get_test_model_large_nhwc_quant8_all_tensors_as_inputs());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -20995,9 +21518,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_large_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {2, 12, 15},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -21196,6 +21721,8 @@ const TestModel& get_test_model_large_nhwc_quant8_all_tensors_as_inputs_all_inpu
     };
     return model;
 }
+
+const auto dummy_test_model_large_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("conv2d_v1_2_large_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_large_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -21203,9 +21730,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_large_nhwc_channelQuant8() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({130, 132, 134, 136, 138, 140, 142, 144, 146, 148, 150, 152, 154, 156, 158, 160, 162, 164}),
@@ -21339,6 +21868,8 @@ const TestModel& get_test_model_large_nhwc_channelQuant8() {
     };
     return model;
 }
+
+const auto dummy_test_model_large_nhwc_channelQuant8 = TestModelManager::get().add("conv2d_v1_2_large_nhwc_channelQuant8", get_test_model_large_nhwc_channelQuant8());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -21346,9 +21877,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_large_nhwc_channelQuant8_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {12},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -21516,6 +22049,8 @@ const TestModel& get_test_model_large_nhwc_channelQuant8_all_inputs_as_internal(
     };
     return model;
 }
+
+const auto dummy_test_model_large_nhwc_channelQuant8_all_inputs_as_internal = TestModelManager::get().add("conv2d_v1_2_large_nhwc_channelQuant8_all_inputs_as_internal", get_test_model_large_nhwc_channelQuant8_all_inputs_as_internal());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -21523,9 +22058,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_large_nhwc_channelQuant8_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({130, 132, 134, 136, 138, 140, 142, 144, 146, 148, 150, 152, 154, 156, 158, 160, 162, 164}),
@@ -21659,6 +22196,8 @@ const TestModel& get_test_model_large_nhwc_channelQuant8_all_tensors_as_inputs()
     };
     return model;
 }
+
+const auto dummy_test_model_large_nhwc_channelQuant8_all_tensors_as_inputs = TestModelManager::get().add("conv2d_v1_2_large_nhwc_channelQuant8_all_tensors_as_inputs", get_test_model_large_nhwc_channelQuant8_all_tensors_as_inputs());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -21666,9 +22205,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_large_nhwc_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {1, 2, 12},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -21837,15 +22378,19 @@ const TestModel& get_test_model_large_nhwc_channelQuant8_all_tensors_as_inputs_a
     return model;
 }
 
+const auto dummy_test_model_large_nhwc_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("conv2d_v1_2_large_nhwc_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_large_nhwc_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal());
+
 }  // namespace generated_tests::conv2d_v1_2
 
 namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_large_nhwc_channelQuant8_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 145}),
@@ -21979,6 +22524,8 @@ const TestModel& get_test_model_large_nhwc_channelQuant8_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_large_nhwc_channelQuant8_2 = TestModelManager::get().add("conv2d_v1_2_large_nhwc_channelQuant8_2", get_test_model_large_nhwc_channelQuant8_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -21986,9 +22533,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_large_nhwc_channelQuant8_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {12},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -22156,6 +22705,8 @@ const TestModel& get_test_model_large_nhwc_channelQuant8_all_inputs_as_internal_
     };
     return model;
 }
+
+const auto dummy_test_model_large_nhwc_channelQuant8_all_inputs_as_internal_2 = TestModelManager::get().add("conv2d_v1_2_large_nhwc_channelQuant8_all_inputs_as_internal_2", get_test_model_large_nhwc_channelQuant8_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -22163,9 +22714,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_large_nhwc_channelQuant8_all_tensors_as_inputs_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 145}),
@@ -22299,6 +22852,8 @@ const TestModel& get_test_model_large_nhwc_channelQuant8_all_tensors_as_inputs_2
     };
     return model;
 }
+
+const auto dummy_test_model_large_nhwc_channelQuant8_all_tensors_as_inputs_2 = TestModelManager::get().add("conv2d_v1_2_large_nhwc_channelQuant8_all_tensors_as_inputs_2", get_test_model_large_nhwc_channelQuant8_all_tensors_as_inputs_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -22306,9 +22861,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_large_nhwc_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {1, 2, 12},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -22477,15 +23034,19 @@ const TestModel& get_test_model_large_nhwc_channelQuant8_all_tensors_as_inputs_a
     return model;
 }
 
+const auto dummy_test_model_large_nhwc_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("conv2d_v1_2_large_nhwc_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_large_nhwc_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::conv2d_v1_2
 
 namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_large_nhwc_float16() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f, 10.0f, 11.0f, 12.0f, 13.0f, 14.0f, 15.0f, 16.0f, 17.0f, 18.0f}),
@@ -22616,6 +23177,8 @@ const TestModel& get_test_model_large_nhwc_float16() {
     };
     return model;
 }
+
+const auto dummy_test_model_large_nhwc_float16 = TestModelManager::get().add("conv2d_v1_2_large_nhwc_float16", get_test_model_large_nhwc_float16());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -22623,9 +23186,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_large_nhwc_float16_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {12},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -22790,6 +23355,8 @@ const TestModel& get_test_model_large_nhwc_float16_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_large_nhwc_float16_all_inputs_as_internal = TestModelManager::get().add("conv2d_v1_2_large_nhwc_float16_all_inputs_as_internal", get_test_model_large_nhwc_float16_all_inputs_as_internal());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -22797,9 +23364,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_large_nhwc_float16_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f, 10.0f, 11.0f, 12.0f, 13.0f, 14.0f, 15.0f, 16.0f, 17.0f, 18.0f}),
@@ -22930,6 +23499,8 @@ const TestModel& get_test_model_large_nhwc_float16_all_tensors_as_inputs() {
     };
     return model;
 }
+
+const auto dummy_test_model_large_nhwc_float16_all_tensors_as_inputs = TestModelManager::get().add("conv2d_v1_2_large_nhwc_float16_all_tensors_as_inputs", get_test_model_large_nhwc_float16_all_tensors_as_inputs());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -22937,9 +23508,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_large_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {12, 15, 18},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -23173,15 +23746,19 @@ const TestModel& get_test_model_large_nhwc_float16_all_tensors_as_inputs_all_inp
     return model;
 }
 
+const auto dummy_test_model_large_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("conv2d_v1_2_large_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_large_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal());
+
 }  // namespace generated_tests::conv2d_v1_2
 
 namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_large_nchw() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 4.0f, 7.0f, 10.0f, 13.0f, 16.0f, 2.0f, 5.0f, 8.0f, 11.0f, 14.0f, 17.0f, 3.0f, 6.0f, 9.0f, 12.0f, 15.0f, 18.0f}),
@@ -23312,6 +23889,8 @@ const TestModel& get_test_model_large_nchw() {
     };
     return model;
 }
+
+const auto dummy_test_model_large_nchw = TestModelManager::get().add("conv2d_v1_2_large_nchw", get_test_model_large_nchw());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -23319,9 +23898,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_large_nchw_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {12},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -23486,6 +24067,8 @@ const TestModel& get_test_model_large_nchw_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_large_nchw_all_inputs_as_internal = TestModelManager::get().add("conv2d_v1_2_large_nchw_all_inputs_as_internal", get_test_model_large_nchw_all_inputs_as_internal());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -23493,9 +24076,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_large_nchw_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 4.0f, 7.0f, 10.0f, 13.0f, 16.0f, 2.0f, 5.0f, 8.0f, 11.0f, 14.0f, 17.0f, 3.0f, 6.0f, 9.0f, 12.0f, 15.0f, 18.0f}),
@@ -23626,6 +24211,8 @@ const TestModel& get_test_model_large_nchw_all_tensors_as_inputs() {
     };
     return model;
 }
+
+const auto dummy_test_model_large_nchw_all_tensors_as_inputs = TestModelManager::get().add("conv2d_v1_2_large_nchw_all_tensors_as_inputs", get_test_model_large_nchw_all_tensors_as_inputs());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -23633,9 +24220,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_large_nchw_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {12, 15, 18},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -23868,6 +24457,8 @@ const TestModel& get_test_model_large_nchw_all_tensors_as_inputs_all_inputs_as_i
     };
     return model;
 }
+
+const auto dummy_test_model_large_nchw_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("conv2d_v1_2_large_nchw_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_large_nchw_all_tensors_as_inputs_all_inputs_as_internal());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -23875,9 +24466,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_large_nchw_relaxed() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 4.0f, 7.0f, 10.0f, 13.0f, 16.0f, 2.0f, 5.0f, 8.0f, 11.0f, 14.0f, 17.0f, 3.0f, 6.0f, 9.0f, 12.0f, 15.0f, 18.0f}),
@@ -24008,6 +24601,8 @@ const TestModel& get_test_model_large_nchw_relaxed() {
     };
     return model;
 }
+
+const auto dummy_test_model_large_nchw_relaxed = TestModelManager::get().add("conv2d_v1_2_large_nchw_relaxed", get_test_model_large_nchw_relaxed());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -24015,9 +24610,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_large_nchw_relaxed_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {12},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -24182,6 +24779,8 @@ const TestModel& get_test_model_large_nchw_relaxed_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_large_nchw_relaxed_all_inputs_as_internal = TestModelManager::get().add("conv2d_v1_2_large_nchw_relaxed_all_inputs_as_internal", get_test_model_large_nchw_relaxed_all_inputs_as_internal());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -24189,9 +24788,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_large_nchw_relaxed_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 4.0f, 7.0f, 10.0f, 13.0f, 16.0f, 2.0f, 5.0f, 8.0f, 11.0f, 14.0f, 17.0f, 3.0f, 6.0f, 9.0f, 12.0f, 15.0f, 18.0f}),
@@ -24322,6 +24923,8 @@ const TestModel& get_test_model_large_nchw_relaxed_all_tensors_as_inputs() {
     };
     return model;
 }
+
+const auto dummy_test_model_large_nchw_relaxed_all_tensors_as_inputs = TestModelManager::get().add("conv2d_v1_2_large_nchw_relaxed_all_tensors_as_inputs", get_test_model_large_nchw_relaxed_all_tensors_as_inputs());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -24329,9 +24932,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_large_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {12, 15, 18},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -24565,15 +25170,19 @@ const TestModel& get_test_model_large_nchw_relaxed_all_tensors_as_inputs_all_inp
     return model;
 }
 
+const auto dummy_test_model_large_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("conv2d_v1_2_large_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_large_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal());
+
 }  // namespace generated_tests::conv2d_v1_2
 
 namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_large_nchw_quant8() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({130, 136, 142, 148, 154, 160, 132, 138, 144, 150, 156, 162, 134, 140, 146, 152, 158, 164}),
@@ -24705,15 +25314,19 @@ const TestModel& get_test_model_large_nchw_quant8() {
     return model;
 }
 
+const auto dummy_test_model_large_nchw_quant8 = TestModelManager::get().add("conv2d_v1_2_large_nchw_quant8", get_test_model_large_nchw_quant8());
+
 }  // namespace generated_tests::conv2d_v1_2
 
 namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_large_nchw_quant8_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {12},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -24879,15 +25492,19 @@ const TestModel& get_test_model_large_nchw_quant8_all_inputs_as_internal() {
     return model;
 }
 
+const auto dummy_test_model_large_nchw_quant8_all_inputs_as_internal = TestModelManager::get().add("conv2d_v1_2_large_nchw_quant8_all_inputs_as_internal", get_test_model_large_nchw_quant8_all_inputs_as_internal());
+
 }  // namespace generated_tests::conv2d_v1_2
 
 namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_large_nchw_quant8_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({130, 136, 142, 148, 154, 160, 132, 138, 144, 150, 156, 162, 134, 140, 146, 152, 158, 164}),
@@ -25019,15 +25636,19 @@ const TestModel& get_test_model_large_nchw_quant8_all_tensors_as_inputs() {
     return model;
 }
 
+const auto dummy_test_model_large_nchw_quant8_all_tensors_as_inputs = TestModelManager::get().add("conv2d_v1_2_large_nchw_quant8_all_tensors_as_inputs", get_test_model_large_nchw_quant8_all_tensors_as_inputs());
+
 }  // namespace generated_tests::conv2d_v1_2
 
 namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_large_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {2, 12, 15},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -25227,15 +25848,19 @@ const TestModel& get_test_model_large_nchw_quant8_all_tensors_as_inputs_all_inpu
     return model;
 }
 
+const auto dummy_test_model_large_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("conv2d_v1_2_large_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_large_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal());
+
 }  // namespace generated_tests::conv2d_v1_2
 
 namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_large_nchw_channelQuant8() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({130, 136, 142, 148, 154, 160, 132, 138, 144, 150, 156, 162, 134, 140, 146, 152, 158, 164}),
@@ -25369,6 +25994,8 @@ const TestModel& get_test_model_large_nchw_channelQuant8() {
     };
     return model;
 }
+
+const auto dummy_test_model_large_nchw_channelQuant8 = TestModelManager::get().add("conv2d_v1_2_large_nchw_channelQuant8", get_test_model_large_nchw_channelQuant8());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -25376,9 +26003,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_large_nchw_channelQuant8_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {12},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -25546,6 +26175,8 @@ const TestModel& get_test_model_large_nchw_channelQuant8_all_inputs_as_internal(
     };
     return model;
 }
+
+const auto dummy_test_model_large_nchw_channelQuant8_all_inputs_as_internal = TestModelManager::get().add("conv2d_v1_2_large_nchw_channelQuant8_all_inputs_as_internal", get_test_model_large_nchw_channelQuant8_all_inputs_as_internal());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -25553,9 +26184,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_large_nchw_channelQuant8_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({130, 136, 142, 148, 154, 160, 132, 138, 144, 150, 156, 162, 134, 140, 146, 152, 158, 164}),
@@ -25690,15 +26323,19 @@ const TestModel& get_test_model_large_nchw_channelQuant8_all_tensors_as_inputs()
     return model;
 }
 
+const auto dummy_test_model_large_nchw_channelQuant8_all_tensors_as_inputs = TestModelManager::get().add("conv2d_v1_2_large_nchw_channelQuant8_all_tensors_as_inputs", get_test_model_large_nchw_channelQuant8_all_tensors_as_inputs());
+
 }  // namespace generated_tests::conv2d_v1_2
 
 namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_large_nchw_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {1, 2, 12},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -25867,15 +26504,19 @@ const TestModel& get_test_model_large_nchw_channelQuant8_all_tensors_as_inputs_a
     return model;
 }
 
+const auto dummy_test_model_large_nchw_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("conv2d_v1_2_large_nchw_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_large_nchw_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal());
+
 }  // namespace generated_tests::conv2d_v1_2
 
 namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_large_nchw_channelQuant8_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({128, 131, 134, 137, 140, 143, 129, 132, 135, 138, 141, 144, 130, 133, 136, 139, 142, 145}),
@@ -26009,6 +26650,8 @@ const TestModel& get_test_model_large_nchw_channelQuant8_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_large_nchw_channelQuant8_2 = TestModelManager::get().add("conv2d_v1_2_large_nchw_channelQuant8_2", get_test_model_large_nchw_channelQuant8_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -26016,9 +26659,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_large_nchw_channelQuant8_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {12},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -26186,6 +26831,8 @@ const TestModel& get_test_model_large_nchw_channelQuant8_all_inputs_as_internal_
     };
     return model;
 }
+
+const auto dummy_test_model_large_nchw_channelQuant8_all_inputs_as_internal_2 = TestModelManager::get().add("conv2d_v1_2_large_nchw_channelQuant8_all_inputs_as_internal_2", get_test_model_large_nchw_channelQuant8_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -26193,9 +26840,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_large_nchw_channelQuant8_all_tensors_as_inputs_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({128, 131, 134, 137, 140, 143, 129, 132, 135, 138, 141, 144, 130, 133, 136, 139, 142, 145}),
@@ -26330,15 +26979,19 @@ const TestModel& get_test_model_large_nchw_channelQuant8_all_tensors_as_inputs_2
     return model;
 }
 
+const auto dummy_test_model_large_nchw_channelQuant8_all_tensors_as_inputs_2 = TestModelManager::get().add("conv2d_v1_2_large_nchw_channelQuant8_all_tensors_as_inputs_2", get_test_model_large_nchw_channelQuant8_all_tensors_as_inputs_2());
+
 }  // namespace generated_tests::conv2d_v1_2
 
 namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_large_nchw_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {1, 2, 12},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -26507,15 +27160,19 @@ const TestModel& get_test_model_large_nchw_channelQuant8_all_tensors_as_inputs_a
     return model;
 }
 
+const auto dummy_test_model_large_nchw_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("conv2d_v1_2_large_nchw_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_large_nchw_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::conv2d_v1_2
 
 namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_large_nchw_float16() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({1.0f, 4.0f, 7.0f, 10.0f, 13.0f, 16.0f, 2.0f, 5.0f, 8.0f, 11.0f, 14.0f, 17.0f, 3.0f, 6.0f, 9.0f, 12.0f, 15.0f, 18.0f}),
@@ -26647,15 +27304,19 @@ const TestModel& get_test_model_large_nchw_float16() {
     return model;
 }
 
+const auto dummy_test_model_large_nchw_float16 = TestModelManager::get().add("conv2d_v1_2_large_nchw_float16", get_test_model_large_nchw_float16());
+
 }  // namespace generated_tests::conv2d_v1_2
 
 namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_large_nchw_float16_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {12},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -26821,15 +27482,19 @@ const TestModel& get_test_model_large_nchw_float16_all_inputs_as_internal() {
     return model;
 }
 
+const auto dummy_test_model_large_nchw_float16_all_inputs_as_internal = TestModelManager::get().add("conv2d_v1_2_large_nchw_float16_all_inputs_as_internal", get_test_model_large_nchw_float16_all_inputs_as_internal());
+
 }  // namespace generated_tests::conv2d_v1_2
 
 namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_large_nchw_float16_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({1.0f, 4.0f, 7.0f, 10.0f, 13.0f, 16.0f, 2.0f, 5.0f, 8.0f, 11.0f, 14.0f, 17.0f, 3.0f, 6.0f, 9.0f, 12.0f, 15.0f, 18.0f}),
@@ -26961,15 +27626,19 @@ const TestModel& get_test_model_large_nchw_float16_all_tensors_as_inputs() {
     return model;
 }
 
+const auto dummy_test_model_large_nchw_float16_all_tensors_as_inputs = TestModelManager::get().add("conv2d_v1_2_large_nchw_float16_all_tensors_as_inputs", get_test_model_large_nchw_float16_all_tensors_as_inputs());
+
 }  // namespace generated_tests::conv2d_v1_2
 
 namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_large_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {12, 15, 18},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -27203,15 +27872,19 @@ const TestModel& get_test_model_large_nchw_float16_all_tensors_as_inputs_all_inp
     return model;
 }
 
+const auto dummy_test_model_large_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("conv2d_v1_2_large_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_large_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal());
+
 }  // namespace generated_tests::conv2d_v1_2
 
 namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_1_H3_W2_SAME_nhwc() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-0.869931f, 0.644628f, -0.918393f, 0.153672f, 0.868562f, -0.358177f, -0.134931f, -0.247565f, 0.22174f, -0.259157f, -0.284296f, -0.538065f, 0.765559f, 0.41986f, -0.556241f, 0.658494f, 0.214355f, -0.850169f, -0.252893f, -0.478935f, 0.530526f, -0.0700663f, -0.988729f, -0.303061f, 0.150845f, 0.829915f, 0.476349f, 0.406537f, -0.355343f, 0.757145f, -0.356362f, 0.800482f, -0.713861f, 0.210483f, -0.634303f, 0.718236f, -0.752038f, 0.457547f, -0.550769f, -0.551178f, 0.446766f, -0.227462f, 0.216348f, -0.852806f, -0.351486f, 0.55906f, -0.668493f, -0.303493f, -0.363763f, -0.162837f, 0.0701012f, 0.756097f, -0.142269f, 0.329724f, -0.656317f, -0.998086f, -0.652949f, -0.40316f, -0.893682f, 0.432744f, 0.612362f, -0.869588f, -0.71327f, -0.398092f, -0.0423559f, 0.436576f, -0.925272f, 0.176549f, 0.822904f, 0.096833f, -0.296802f, -0.427195f, 0.031654f, -0.254479f, 0.244905f, 0.0948254f, 0.643769f, -0.90391f, 0.352665f, -0.901179f, 0.266159f, -0.968068f, -0.615401f, -0.388975f, 0.939052f, -0.116289f, 0.107523f, -0.0582711f, 0.435172f, 0.334675f, 0.459711f, 0.717436f, 0.496627f, -0.680175f, -0.415066f, 0.339848f, 0.506004f, -0.337808f, -0.107218f, -0.172496f, 0.870638f, 0.931872f, -0.953884f, 0.903042f, 0.760078f, 0.209727f, -0.285384f, -0.45514f, 0.113194f, 0.0756611f, 0.0924435f, -0.472863f, 0.960609f, -0.160385f, -0.839445f, 0.457097f, 0.163348f, 0.344867f, -0.131619f, 0.688715f, -0.540827f, 0.571259f, -0.95587f, 0.506164f, -0.155839f, 0.0789621f, 0.756772f, -0.662069f, 0.242908f, 0.460821f, 0.177872f, -0.289839f, -0.640603f, 0.702598f, -0.506406f, -0.568262f, -0.0713716f, 0.413792f, 0.159673f, -0.305208f, 0.133816f, -0.160254f, 0.787323f, -0.753244f, 0.600721f, 0.263186f, -0.162387f, 0.477962f, -0.702951f, -0.731036f, -0.939481f, -0.524519f, 0.934072f, -0.511637f, -0.503499f, 0.106236f, -0.323684f, 0.534444f, -0.843745f, 0.364171f, 0.0370358f, -0.168801f, -0.404559f, -0.814178f, 0.91745f, -0.334276f, 0.66925f, -0.801201f, 0.156511f, -0.427949f, 0.379153f, 0.818597f, -0.649902f, 0.427087f, -0.586015f, -0.559789f, -0.833923f, 0.0892409f, -0.621251f, 0.213826f, 0.465509f, 0.4704f, 0.380261f, 0.413067f, 0.180822f, 0.172866f, 0.59614f, 0.825575f, 0.662916f, -0.704381f, -0.297631f, 0.697778f}),
@@ -27312,6 +27985,8 @@ const TestModel& get_test_model_1_H3_W2_SAME_nhwc() {
     };
     return model;
 }
+
+const auto dummy_test_model_1_H3_W2_SAME_nhwc = TestModelManager::get().add("conv2d_v1_2_1_H3_W2_SAME_nhwc", get_test_model_1_H3_W2_SAME_nhwc());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -27319,9 +27994,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_1_H3_W2_SAME_nhwc_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {9},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -27456,6 +28133,8 @@ const TestModel& get_test_model_1_H3_W2_SAME_nhwc_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_1_H3_W2_SAME_nhwc_all_inputs_as_internal = TestModelManager::get().add("conv2d_v1_2_1_H3_W2_SAME_nhwc_all_inputs_as_internal", get_test_model_1_H3_W2_SAME_nhwc_all_inputs_as_internal());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -27463,9 +28142,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_1_H3_W2_SAME_nhwc_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-0.869931f, 0.644628f, -0.918393f, 0.153672f, 0.868562f, -0.358177f, -0.134931f, -0.247565f, 0.22174f, -0.259157f, -0.284296f, -0.538065f, 0.765559f, 0.41986f, -0.556241f, 0.658494f, 0.214355f, -0.850169f, -0.252893f, -0.478935f, 0.530526f, -0.0700663f, -0.988729f, -0.303061f, 0.150845f, 0.829915f, 0.476349f, 0.406537f, -0.355343f, 0.757145f, -0.356362f, 0.800482f, -0.713861f, 0.210483f, -0.634303f, 0.718236f, -0.752038f, 0.457547f, -0.550769f, -0.551178f, 0.446766f, -0.227462f, 0.216348f, -0.852806f, -0.351486f, 0.55906f, -0.668493f, -0.303493f, -0.363763f, -0.162837f, 0.0701012f, 0.756097f, -0.142269f, 0.329724f, -0.656317f, -0.998086f, -0.652949f, -0.40316f, -0.893682f, 0.432744f, 0.612362f, -0.869588f, -0.71327f, -0.398092f, -0.0423559f, 0.436576f, -0.925272f, 0.176549f, 0.822904f, 0.096833f, -0.296802f, -0.427195f, 0.031654f, -0.254479f, 0.244905f, 0.0948254f, 0.643769f, -0.90391f, 0.352665f, -0.901179f, 0.266159f, -0.968068f, -0.615401f, -0.388975f, 0.939052f, -0.116289f, 0.107523f, -0.0582711f, 0.435172f, 0.334675f, 0.459711f, 0.717436f, 0.496627f, -0.680175f, -0.415066f, 0.339848f, 0.506004f, -0.337808f, -0.107218f, -0.172496f, 0.870638f, 0.931872f, -0.953884f, 0.903042f, 0.760078f, 0.209727f, -0.285384f, -0.45514f, 0.113194f, 0.0756611f, 0.0924435f, -0.472863f, 0.960609f, -0.160385f, -0.839445f, 0.457097f, 0.163348f, 0.344867f, -0.131619f, 0.688715f, -0.540827f, 0.571259f, -0.95587f, 0.506164f, -0.155839f, 0.0789621f, 0.756772f, -0.662069f, 0.242908f, 0.460821f, 0.177872f, -0.289839f, -0.640603f, 0.702598f, -0.506406f, -0.568262f, -0.0713716f, 0.413792f, 0.159673f, -0.305208f, 0.133816f, -0.160254f, 0.787323f, -0.753244f, 0.600721f, 0.263186f, -0.162387f, 0.477962f, -0.702951f, -0.731036f, -0.939481f, -0.524519f, 0.934072f, -0.511637f, -0.503499f, 0.106236f, -0.323684f, 0.534444f, -0.843745f, 0.364171f, 0.0370358f, -0.168801f, -0.404559f, -0.814178f, 0.91745f, -0.334276f, 0.66925f, -0.801201f, 0.156511f, -0.427949f, 0.379153f, 0.818597f, -0.649902f, 0.427087f, -0.586015f, -0.559789f, -0.833923f, 0.0892409f, -0.621251f, 0.213826f, 0.465509f, 0.4704f, 0.380261f, 0.413067f, 0.180822f, 0.172866f, 0.59614f, 0.825575f, 0.662916f, -0.704381f, -0.297631f, 0.697778f}),
@@ -27566,6 +28247,8 @@ const TestModel& get_test_model_1_H3_W2_SAME_nhwc_all_tensors_as_inputs() {
     };
     return model;
 }
+
+const auto dummy_test_model_1_H3_W2_SAME_nhwc_all_tensors_as_inputs = TestModelManager::get().add("conv2d_v1_2_1_H3_W2_SAME_nhwc_all_tensors_as_inputs", get_test_model_1_H3_W2_SAME_nhwc_all_tensors_as_inputs());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -27573,9 +28256,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_1_H3_W2_SAME_nhwc_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {9, 12, 15},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -27778,6 +28463,8 @@ const TestModel& get_test_model_1_H3_W2_SAME_nhwc_all_tensors_as_inputs_all_inpu
     };
     return model;
 }
+
+const auto dummy_test_model_1_H3_W2_SAME_nhwc_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("conv2d_v1_2_1_H3_W2_SAME_nhwc_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_1_H3_W2_SAME_nhwc_all_tensors_as_inputs_all_inputs_as_internal());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -27785,9 +28472,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_1_H3_W2_SAME_nhwc_relaxed() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-0.869931f, 0.644628f, -0.918393f, 0.153672f, 0.868562f, -0.358177f, -0.134931f, -0.247565f, 0.22174f, -0.259157f, -0.284296f, -0.538065f, 0.765559f, 0.41986f, -0.556241f, 0.658494f, 0.214355f, -0.850169f, -0.252893f, -0.478935f, 0.530526f, -0.0700663f, -0.988729f, -0.303061f, 0.150845f, 0.829915f, 0.476349f, 0.406537f, -0.355343f, 0.757145f, -0.356362f, 0.800482f, -0.713861f, 0.210483f, -0.634303f, 0.718236f, -0.752038f, 0.457547f, -0.550769f, -0.551178f, 0.446766f, -0.227462f, 0.216348f, -0.852806f, -0.351486f, 0.55906f, -0.668493f, -0.303493f, -0.363763f, -0.162837f, 0.0701012f, 0.756097f, -0.142269f, 0.329724f, -0.656317f, -0.998086f, -0.652949f, -0.40316f, -0.893682f, 0.432744f, 0.612362f, -0.869588f, -0.71327f, -0.398092f, -0.0423559f, 0.436576f, -0.925272f, 0.176549f, 0.822904f, 0.096833f, -0.296802f, -0.427195f, 0.031654f, -0.254479f, 0.244905f, 0.0948254f, 0.643769f, -0.90391f, 0.352665f, -0.901179f, 0.266159f, -0.968068f, -0.615401f, -0.388975f, 0.939052f, -0.116289f, 0.107523f, -0.0582711f, 0.435172f, 0.334675f, 0.459711f, 0.717436f, 0.496627f, -0.680175f, -0.415066f, 0.339848f, 0.506004f, -0.337808f, -0.107218f, -0.172496f, 0.870638f, 0.931872f, -0.953884f, 0.903042f, 0.760078f, 0.209727f, -0.285384f, -0.45514f, 0.113194f, 0.0756611f, 0.0924435f, -0.472863f, 0.960609f, -0.160385f, -0.839445f, 0.457097f, 0.163348f, 0.344867f, -0.131619f, 0.688715f, -0.540827f, 0.571259f, -0.95587f, 0.506164f, -0.155839f, 0.0789621f, 0.756772f, -0.662069f, 0.242908f, 0.460821f, 0.177872f, -0.289839f, -0.640603f, 0.702598f, -0.506406f, -0.568262f, -0.0713716f, 0.413792f, 0.159673f, -0.305208f, 0.133816f, -0.160254f, 0.787323f, -0.753244f, 0.600721f, 0.263186f, -0.162387f, 0.477962f, -0.702951f, -0.731036f, -0.939481f, -0.524519f, 0.934072f, -0.511637f, -0.503499f, 0.106236f, -0.323684f, 0.534444f, -0.843745f, 0.364171f, 0.0370358f, -0.168801f, -0.404559f, -0.814178f, 0.91745f, -0.334276f, 0.66925f, -0.801201f, 0.156511f, -0.427949f, 0.379153f, 0.818597f, -0.649902f, 0.427087f, -0.586015f, -0.559789f, -0.833923f, 0.0892409f, -0.621251f, 0.213826f, 0.465509f, 0.4704f, 0.380261f, 0.413067f, 0.180822f, 0.172866f, 0.59614f, 0.825575f, 0.662916f, -0.704381f, -0.297631f, 0.697778f}),
@@ -27888,6 +28577,8 @@ const TestModel& get_test_model_1_H3_W2_SAME_nhwc_relaxed() {
     };
     return model;
 }
+
+const auto dummy_test_model_1_H3_W2_SAME_nhwc_relaxed = TestModelManager::get().add("conv2d_v1_2_1_H3_W2_SAME_nhwc_relaxed", get_test_model_1_H3_W2_SAME_nhwc_relaxed());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -27895,9 +28586,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_1_H3_W2_SAME_nhwc_relaxed_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {9},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -28032,6 +28725,8 @@ const TestModel& get_test_model_1_H3_W2_SAME_nhwc_relaxed_all_inputs_as_internal
     };
     return model;
 }
+
+const auto dummy_test_model_1_H3_W2_SAME_nhwc_relaxed_all_inputs_as_internal = TestModelManager::get().add("conv2d_v1_2_1_H3_W2_SAME_nhwc_relaxed_all_inputs_as_internal", get_test_model_1_H3_W2_SAME_nhwc_relaxed_all_inputs_as_internal());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -28039,9 +28734,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_1_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-0.869931f, 0.644628f, -0.918393f, 0.153672f, 0.868562f, -0.358177f, -0.134931f, -0.247565f, 0.22174f, -0.259157f, -0.284296f, -0.538065f, 0.765559f, 0.41986f, -0.556241f, 0.658494f, 0.214355f, -0.850169f, -0.252893f, -0.478935f, 0.530526f, -0.0700663f, -0.988729f, -0.303061f, 0.150845f, 0.829915f, 0.476349f, 0.406537f, -0.355343f, 0.757145f, -0.356362f, 0.800482f, -0.713861f, 0.210483f, -0.634303f, 0.718236f, -0.752038f, 0.457547f, -0.550769f, -0.551178f, 0.446766f, -0.227462f, 0.216348f, -0.852806f, -0.351486f, 0.55906f, -0.668493f, -0.303493f, -0.363763f, -0.162837f, 0.0701012f, 0.756097f, -0.142269f, 0.329724f, -0.656317f, -0.998086f, -0.652949f, -0.40316f, -0.893682f, 0.432744f, 0.612362f, -0.869588f, -0.71327f, -0.398092f, -0.0423559f, 0.436576f, -0.925272f, 0.176549f, 0.822904f, 0.096833f, -0.296802f, -0.427195f, 0.031654f, -0.254479f, 0.244905f, 0.0948254f, 0.643769f, -0.90391f, 0.352665f, -0.901179f, 0.266159f, -0.968068f, -0.615401f, -0.388975f, 0.939052f, -0.116289f, 0.107523f, -0.0582711f, 0.435172f, 0.334675f, 0.459711f, 0.717436f, 0.496627f, -0.680175f, -0.415066f, 0.339848f, 0.506004f, -0.337808f, -0.107218f, -0.172496f, 0.870638f, 0.931872f, -0.953884f, 0.903042f, 0.760078f, 0.209727f, -0.285384f, -0.45514f, 0.113194f, 0.0756611f, 0.0924435f, -0.472863f, 0.960609f, -0.160385f, -0.839445f, 0.457097f, 0.163348f, 0.344867f, -0.131619f, 0.688715f, -0.540827f, 0.571259f, -0.95587f, 0.506164f, -0.155839f, 0.0789621f, 0.756772f, -0.662069f, 0.242908f, 0.460821f, 0.177872f, -0.289839f, -0.640603f, 0.702598f, -0.506406f, -0.568262f, -0.0713716f, 0.413792f, 0.159673f, -0.305208f, 0.133816f, -0.160254f, 0.787323f, -0.753244f, 0.600721f, 0.263186f, -0.162387f, 0.477962f, -0.702951f, -0.731036f, -0.939481f, -0.524519f, 0.934072f, -0.511637f, -0.503499f, 0.106236f, -0.323684f, 0.534444f, -0.843745f, 0.364171f, 0.0370358f, -0.168801f, -0.404559f, -0.814178f, 0.91745f, -0.334276f, 0.66925f, -0.801201f, 0.156511f, -0.427949f, 0.379153f, 0.818597f, -0.649902f, 0.427087f, -0.586015f, -0.559789f, -0.833923f, 0.0892409f, -0.621251f, 0.213826f, 0.465509f, 0.4704f, 0.380261f, 0.413067f, 0.180822f, 0.172866f, 0.59614f, 0.825575f, 0.662916f, -0.704381f, -0.297631f, 0.697778f}),
@@ -28142,6 +28839,8 @@ const TestModel& get_test_model_1_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs(
     };
     return model;
 }
+
+const auto dummy_test_model_1_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs = TestModelManager::get().add("conv2d_v1_2_1_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs", get_test_model_1_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -28149,9 +28848,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_1_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {9, 12, 15},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -28354,6 +29055,8 @@ const TestModel& get_test_model_1_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_
     };
     return model;
 }
+
+const auto dummy_test_model_1_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("conv2d_v1_2_1_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_1_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -28361,9 +29064,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_1_H3_W2_SAME_nhwc_float16() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({-0.8699309825897217f, 0.6446279883384705f, -0.9183930158615112f, 0.153671994805336f, 0.8685619831085205f, -0.3581770062446594f, -0.13493099808692932f, -0.24756500124931335f, 0.2217400074005127f, -0.2591570019721985f, -0.2842960059642792f, -0.5380650162696838f, 0.7655590176582336f, 0.41986000537872314f, -0.556240975856781f, 0.6584939956665039f, 0.214355006814003f, -0.8501690030097961f, -0.25289300084114075f, -0.47893500328063965f, 0.5305259823799133f, -0.07006630301475525f, -0.9887290000915527f, -0.30306100845336914f, 0.150845006108284f, 0.8299149870872498f, 0.47634899616241455f, 0.4065369963645935f, -0.3553430140018463f, 0.7571449875831604f, -0.356361985206604f, 0.8004819750785828f, -0.7138609886169434f, 0.21048299968242645f, -0.6343029737472534f, 0.7182360291481018f, -0.7520380020141602f, 0.45754700899124146f, -0.5507689714431763f, -0.551177978515625f, 0.4467659890651703f, -0.22746199369430542f, 0.21634800732135773f, -0.8528059720993042f, -0.3514859974384308f, 0.5590599775314331f, -0.6684929728507996f, -0.3034929931163788f, -0.3637630045413971f, -0.16283699870109558f, 0.07010120153427124f, 0.7560970187187195f, -0.14226900041103363f, 0.3297240138053894f, -0.6563169956207275f, -0.9980859756469727f, -0.6529489755630493f, -0.4031600058078766f, -0.8936820030212402f, 0.43274399638175964f, 0.6123620271682739f, -0.8695880174636841f, -0.7132700085639954f, -0.39809200167655945f, -0.04235589876770973f, 0.4365760087966919f, -0.9252719879150391f, 0.1765490025281906f, 0.8229039907455444f, 0.0968329980969429f, -0.29680201411247253f, -0.4271950125694275f, 0.0316540002822876f, -0.25447899103164673f, 0.2449049949645996f, 0.09482540190219879f, 0.6437690258026123f, -0.9039099812507629f, 0.3526650071144104f, -0.9011790156364441f, 0.2661589980125427f, -0.96806800365448f, -0.615401029586792f, -0.38897499442100525f, 0.9390519857406616f, -0.11628899723291397f, 0.10752300173044205f, -0.058271098881959915f, 0.4351719915866852f, 0.33467501401901245f, 0.4597109854221344f, 0.7174360156059265f, 0.49662700295448303f, -0.6801750063896179f, -0.4150660037994385f, 0.33984801173210144f, 0.5060039758682251f, -0.3378080129623413f, -0.10721799731254578f, -0.1724960058927536f, 0.8706380128860474f, 0.9318720102310181f, -0.9538840055465698f, 0.9030420184135437f, 0.7600780129432678f, 0.20972700417041779f, -0.28538399934768677f, -0.45513999462127686f, 0.11319400370121002f, 0.07566110044717789f, 0.09244350343942642f, -0.47286298871040344f, 0.9606090188026428f, -0.16038499772548676f, -0.8394449949264526f, 0.45709699392318726f, 0.1633480042219162f, 0.3448669910430908f, -0.13161900639533997f, 0.6887149810791016f, -0.5408269762992859f, 0.5712590217590332f, -0.9558699727058411f, 0.506164014339447f, -0.1558389961719513f, 0.07896210253238678f, 0.756771981716156f, -0.6620690226554871f, 0.24290800094604492f, 0.4608210027217865f, 0.17787200212478638f, -0.2898389995098114f, -0.6406030058860779f, 0.702597975730896f, -0.5064060091972351f, -0.568261981010437f, -0.07137160003185272f, 0.4137920141220093f, 0.15967300534248352f, -0.3052079975605011f, 0.13381600379943848f, -0.16025400161743164f, 0.787322998046875f, -0.7532439827919006f, 0.600721001625061f, 0.2631860077381134f, -0.16238699853420258f, 0.4779619872570038f, -0.7029510140419006f, -0.7310360074043274f, -0.9394810199737549f, -0.5245190262794495f, 0.9340720176696777f, -0.5116369724273682f, -0.5034989714622498f, 0.10623600333929062f, -0.3236840069293976f, 0.5344439744949341f, -0.8437449932098389f, 0.36417099833488464f, 0.03703580051660538f, -0.16880099475383759f, -0.4045589864253998f, -0.8141779899597168f, 0.9174500107765198f, -0.3342759907245636f, 0.6692500114440918f, -0.8012009859085083f, 0.15651099383831024f, -0.4279490113258362f, 0.3791530132293701f, 0.8185970187187195f, -0.6499019861221313f, 0.4270870089530945f, -0.586014986038208f, -0.5597890019416809f, -0.8339229822158813f, 0.0892409011721611f, -0.6212509870529175f, 0.2138260006904602f, 0.46550899744033813f, 0.47040000557899475f, 0.38026100397109985f, 0.4130670130252838f, 0.1808219999074936f, 0.17286600172519684f, 0.5961400270462036f, 0.8255749940872192f, 0.6629160046577454f, -0.704380989074707f, -0.29763099551200867f, 0.6977779865264893f}),
@@ -28464,6 +29169,8 @@ const TestModel& get_test_model_1_H3_W2_SAME_nhwc_float16() {
     };
     return model;
 }
+
+const auto dummy_test_model_1_H3_W2_SAME_nhwc_float16 = TestModelManager::get().add("conv2d_v1_2_1_H3_W2_SAME_nhwc_float16", get_test_model_1_H3_W2_SAME_nhwc_float16());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -28471,9 +29178,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_1_H3_W2_SAME_nhwc_float16_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {9},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -28608,6 +29317,8 @@ const TestModel& get_test_model_1_H3_W2_SAME_nhwc_float16_all_inputs_as_internal
     };
     return model;
 }
+
+const auto dummy_test_model_1_H3_W2_SAME_nhwc_float16_all_inputs_as_internal = TestModelManager::get().add("conv2d_v1_2_1_H3_W2_SAME_nhwc_float16_all_inputs_as_internal", get_test_model_1_H3_W2_SAME_nhwc_float16_all_inputs_as_internal());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -28615,9 +29326,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_1_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({-0.8699309825897217f, 0.6446279883384705f, -0.9183930158615112f, 0.153671994805336f, 0.8685619831085205f, -0.3581770062446594f, -0.13493099808692932f, -0.24756500124931335f, 0.2217400074005127f, -0.2591570019721985f, -0.2842960059642792f, -0.5380650162696838f, 0.7655590176582336f, 0.41986000537872314f, -0.556240975856781f, 0.6584939956665039f, 0.214355006814003f, -0.8501690030097961f, -0.25289300084114075f, -0.47893500328063965f, 0.5305259823799133f, -0.07006630301475525f, -0.9887290000915527f, -0.30306100845336914f, 0.150845006108284f, 0.8299149870872498f, 0.47634899616241455f, 0.4065369963645935f, -0.3553430140018463f, 0.7571449875831604f, -0.356361985206604f, 0.8004819750785828f, -0.7138609886169434f, 0.21048299968242645f, -0.6343029737472534f, 0.7182360291481018f, -0.7520380020141602f, 0.45754700899124146f, -0.5507689714431763f, -0.551177978515625f, 0.4467659890651703f, -0.22746199369430542f, 0.21634800732135773f, -0.8528059720993042f, -0.3514859974384308f, 0.5590599775314331f, -0.6684929728507996f, -0.3034929931163788f, -0.3637630045413971f, -0.16283699870109558f, 0.07010120153427124f, 0.7560970187187195f, -0.14226900041103363f, 0.3297240138053894f, -0.6563169956207275f, -0.9980859756469727f, -0.6529489755630493f, -0.4031600058078766f, -0.8936820030212402f, 0.43274399638175964f, 0.6123620271682739f, -0.8695880174636841f, -0.7132700085639954f, -0.39809200167655945f, -0.04235589876770973f, 0.4365760087966919f, -0.9252719879150391f, 0.1765490025281906f, 0.8229039907455444f, 0.0968329980969429f, -0.29680201411247253f, -0.4271950125694275f, 0.0316540002822876f, -0.25447899103164673f, 0.2449049949645996f, 0.09482540190219879f, 0.6437690258026123f, -0.9039099812507629f, 0.3526650071144104f, -0.9011790156364441f, 0.2661589980125427f, -0.96806800365448f, -0.615401029586792f, -0.38897499442100525f, 0.9390519857406616f, -0.11628899723291397f, 0.10752300173044205f, -0.058271098881959915f, 0.4351719915866852f, 0.33467501401901245f, 0.4597109854221344f, 0.7174360156059265f, 0.49662700295448303f, -0.6801750063896179f, -0.4150660037994385f, 0.33984801173210144f, 0.5060039758682251f, -0.3378080129623413f, -0.10721799731254578f, -0.1724960058927536f, 0.8706380128860474f, 0.9318720102310181f, -0.9538840055465698f, 0.9030420184135437f, 0.7600780129432678f, 0.20972700417041779f, -0.28538399934768677f, -0.45513999462127686f, 0.11319400370121002f, 0.07566110044717789f, 0.09244350343942642f, -0.47286298871040344f, 0.9606090188026428f, -0.16038499772548676f, -0.8394449949264526f, 0.45709699392318726f, 0.1633480042219162f, 0.3448669910430908f, -0.13161900639533997f, 0.6887149810791016f, -0.5408269762992859f, 0.5712590217590332f, -0.9558699727058411f, 0.506164014339447f, -0.1558389961719513f, 0.07896210253238678f, 0.756771981716156f, -0.6620690226554871f, 0.24290800094604492f, 0.4608210027217865f, 0.17787200212478638f, -0.2898389995098114f, -0.6406030058860779f, 0.702597975730896f, -0.5064060091972351f, -0.568261981010437f, -0.07137160003185272f, 0.4137920141220093f, 0.15967300534248352f, -0.3052079975605011f, 0.13381600379943848f, -0.16025400161743164f, 0.787322998046875f, -0.7532439827919006f, 0.600721001625061f, 0.2631860077381134f, -0.16238699853420258f, 0.4779619872570038f, -0.7029510140419006f, -0.7310360074043274f, -0.9394810199737549f, -0.5245190262794495f, 0.9340720176696777f, -0.5116369724273682f, -0.5034989714622498f, 0.10623600333929062f, -0.3236840069293976f, 0.5344439744949341f, -0.8437449932098389f, 0.36417099833488464f, 0.03703580051660538f, -0.16880099475383759f, -0.4045589864253998f, -0.8141779899597168f, 0.9174500107765198f, -0.3342759907245636f, 0.6692500114440918f, -0.8012009859085083f, 0.15651099383831024f, -0.4279490113258362f, 0.3791530132293701f, 0.8185970187187195f, -0.6499019861221313f, 0.4270870089530945f, -0.586014986038208f, -0.5597890019416809f, -0.8339229822158813f, 0.0892409011721611f, -0.6212509870529175f, 0.2138260006904602f, 0.46550899744033813f, 0.47040000557899475f, 0.38026100397109985f, 0.4130670130252838f, 0.1808219999074936f, 0.17286600172519684f, 0.5961400270462036f, 0.8255749940872192f, 0.6629160046577454f, -0.704380989074707f, -0.29763099551200867f, 0.6977779865264893f}),
@@ -28718,6 +29431,8 @@ const TestModel& get_test_model_1_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs(
     };
     return model;
 }
+
+const auto dummy_test_model_1_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs = TestModelManager::get().add("conv2d_v1_2_1_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs", get_test_model_1_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -28725,9 +29440,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_1_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {9, 12, 15},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -28930,6 +29647,8 @@ const TestModel& get_test_model_1_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_
     };
     return model;
 }
+
+const auto dummy_test_model_1_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("conv2d_v1_2_1_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_1_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -28937,9 +29656,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_1_H3_W2_SAME_nchw() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-0.869931f, 0.153672f, -0.134931f, -0.259157f, 0.765559f, 0.658494f, -0.252893f, -0.0700663f, 0.150845f, 0.406537f, -0.356362f, 0.210483f, -0.752038f, -0.551178f, 0.216348f, 0.55906f, -0.363763f, 0.756097f, -0.656317f, -0.40316f, 0.612362f, -0.398092f, -0.925272f, 0.096833f, 0.031654f, 0.0948254f, 0.352665f, -0.968068f, 0.939052f, -0.0582711f, 0.459711f, -0.680175f, 0.506004f, -0.172496f, -0.953884f, 0.209727f, 0.113194f, -0.472863f, -0.839445f, 0.344867f, -0.540827f, 0.506164f, 0.756772f, 0.460821f, -0.640603f, -0.568262f, 0.159673f, -0.160254f, 0.600721f, 0.477962f, -0.939481f, -0.511637f, -0.323684f, 0.364171f, -0.404559f, -0.334276f, 0.156511f, 0.818597f, -0.586015f, 0.0892409f, 0.465509f, 0.413067f, 0.59614f, -0.704381f, 0.644628f, 0.868562f, -0.247565f, -0.284296f, 0.41986f, 0.214355f, -0.478935f, -0.988729f, 0.829915f, -0.355343f, 0.800482f, -0.634303f, 0.457547f, 0.446766f, -0.852806f, -0.668493f, -0.162837f, -0.142269f, -0.998086f, -0.893682f, -0.869588f, -0.0423559f, 0.176549f, -0.296802f, -0.254479f, 0.643769f, -0.901179f, -0.615401f, -0.116289f, 0.435172f, 0.717436f, -0.415066f, -0.337808f, 0.870638f, 0.903042f, -0.285384f, 0.0756611f, 0.960609f, 0.457097f, -0.131619f, 0.571259f, -0.155839f, -0.662069f, 0.177872f, 0.702598f, -0.0713716f, -0.305208f, 0.787323f, 0.263186f, -0.702951f, -0.524519f, -0.503499f, 0.534444f, 0.0370358f, -0.814178f, 0.66925f, -0.427949f, -0.649902f, -0.559789f, -0.621251f, 0.4704f, 0.180822f, 0.825575f, -0.297631f, -0.918393f, -0.358177f, 0.22174f, -0.538065f, -0.556241f, -0.850169f, 0.530526f, -0.303061f, 0.476349f, 0.757145f, -0.713861f, 0.718236f, -0.550769f, -0.227462f, -0.351486f, -0.303493f, 0.0701012f, 0.329724f, -0.652949f, 0.432744f, -0.71327f, 0.436576f, 0.822904f, -0.427195f, 0.244905f, -0.90391f, 0.266159f, -0.388975f, 0.107523f, 0.334675f, 0.496627f, 0.339848f, -0.107218f, 0.931872f, 0.760078f, -0.45514f, 0.0924435f, -0.160385f, 0.163348f, 0.688715f, -0.95587f, 0.0789621f, 0.242908f, -0.289839f, -0.506406f, 0.413792f, 0.133816f, -0.753244f, -0.162387f, -0.731036f, 0.934072f, 0.106236f, -0.843745f, -0.168801f, 0.91745f, -0.801201f, 0.379153f, 0.427087f, -0.833923f, 0.213826f, 0.380261f, 0.172866f, 0.662916f, 0.697778f}),
@@ -29040,6 +29761,8 @@ const TestModel& get_test_model_1_H3_W2_SAME_nchw() {
     };
     return model;
 }
+
+const auto dummy_test_model_1_H3_W2_SAME_nchw = TestModelManager::get().add("conv2d_v1_2_1_H3_W2_SAME_nchw", get_test_model_1_H3_W2_SAME_nchw());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -29047,9 +29770,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_1_H3_W2_SAME_nchw_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {9},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -29184,6 +29909,8 @@ const TestModel& get_test_model_1_H3_W2_SAME_nchw_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_1_H3_W2_SAME_nchw_all_inputs_as_internal = TestModelManager::get().add("conv2d_v1_2_1_H3_W2_SAME_nchw_all_inputs_as_internal", get_test_model_1_H3_W2_SAME_nchw_all_inputs_as_internal());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -29191,9 +29918,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_1_H3_W2_SAME_nchw_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-0.869931f, 0.153672f, -0.134931f, -0.259157f, 0.765559f, 0.658494f, -0.252893f, -0.0700663f, 0.150845f, 0.406537f, -0.356362f, 0.210483f, -0.752038f, -0.551178f, 0.216348f, 0.55906f, -0.363763f, 0.756097f, -0.656317f, -0.40316f, 0.612362f, -0.398092f, -0.925272f, 0.096833f, 0.031654f, 0.0948254f, 0.352665f, -0.968068f, 0.939052f, -0.0582711f, 0.459711f, -0.680175f, 0.506004f, -0.172496f, -0.953884f, 0.209727f, 0.113194f, -0.472863f, -0.839445f, 0.344867f, -0.540827f, 0.506164f, 0.756772f, 0.460821f, -0.640603f, -0.568262f, 0.159673f, -0.160254f, 0.600721f, 0.477962f, -0.939481f, -0.511637f, -0.323684f, 0.364171f, -0.404559f, -0.334276f, 0.156511f, 0.818597f, -0.586015f, 0.0892409f, 0.465509f, 0.413067f, 0.59614f, -0.704381f, 0.644628f, 0.868562f, -0.247565f, -0.284296f, 0.41986f, 0.214355f, -0.478935f, -0.988729f, 0.829915f, -0.355343f, 0.800482f, -0.634303f, 0.457547f, 0.446766f, -0.852806f, -0.668493f, -0.162837f, -0.142269f, -0.998086f, -0.893682f, -0.869588f, -0.0423559f, 0.176549f, -0.296802f, -0.254479f, 0.643769f, -0.901179f, -0.615401f, -0.116289f, 0.435172f, 0.717436f, -0.415066f, -0.337808f, 0.870638f, 0.903042f, -0.285384f, 0.0756611f, 0.960609f, 0.457097f, -0.131619f, 0.571259f, -0.155839f, -0.662069f, 0.177872f, 0.702598f, -0.0713716f, -0.305208f, 0.787323f, 0.263186f, -0.702951f, -0.524519f, -0.503499f, 0.534444f, 0.0370358f, -0.814178f, 0.66925f, -0.427949f, -0.649902f, -0.559789f, -0.621251f, 0.4704f, 0.180822f, 0.825575f, -0.297631f, -0.918393f, -0.358177f, 0.22174f, -0.538065f, -0.556241f, -0.850169f, 0.530526f, -0.303061f, 0.476349f, 0.757145f, -0.713861f, 0.718236f, -0.550769f, -0.227462f, -0.351486f, -0.303493f, 0.0701012f, 0.329724f, -0.652949f, 0.432744f, -0.71327f, 0.436576f, 0.822904f, -0.427195f, 0.244905f, -0.90391f, 0.266159f, -0.388975f, 0.107523f, 0.334675f, 0.496627f, 0.339848f, -0.107218f, 0.931872f, 0.760078f, -0.45514f, 0.0924435f, -0.160385f, 0.163348f, 0.688715f, -0.95587f, 0.0789621f, 0.242908f, -0.289839f, -0.506406f, 0.413792f, 0.133816f, -0.753244f, -0.162387f, -0.731036f, 0.934072f, 0.106236f, -0.843745f, -0.168801f, 0.91745f, -0.801201f, 0.379153f, 0.427087f, -0.833923f, 0.213826f, 0.380261f, 0.172866f, 0.662916f, 0.697778f}),
@@ -29294,6 +30023,8 @@ const TestModel& get_test_model_1_H3_W2_SAME_nchw_all_tensors_as_inputs() {
     };
     return model;
 }
+
+const auto dummy_test_model_1_H3_W2_SAME_nchw_all_tensors_as_inputs = TestModelManager::get().add("conv2d_v1_2_1_H3_W2_SAME_nchw_all_tensors_as_inputs", get_test_model_1_H3_W2_SAME_nchw_all_tensors_as_inputs());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -29301,9 +30032,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_1_H3_W2_SAME_nchw_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {9, 12, 15},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -29506,6 +30239,8 @@ const TestModel& get_test_model_1_H3_W2_SAME_nchw_all_tensors_as_inputs_all_inpu
     };
     return model;
 }
+
+const auto dummy_test_model_1_H3_W2_SAME_nchw_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("conv2d_v1_2_1_H3_W2_SAME_nchw_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_1_H3_W2_SAME_nchw_all_tensors_as_inputs_all_inputs_as_internal());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -29513,9 +30248,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_1_H3_W2_SAME_nchw_relaxed() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-0.869931f, 0.153672f, -0.134931f, -0.259157f, 0.765559f, 0.658494f, -0.252893f, -0.0700663f, 0.150845f, 0.406537f, -0.356362f, 0.210483f, -0.752038f, -0.551178f, 0.216348f, 0.55906f, -0.363763f, 0.756097f, -0.656317f, -0.40316f, 0.612362f, -0.398092f, -0.925272f, 0.096833f, 0.031654f, 0.0948254f, 0.352665f, -0.968068f, 0.939052f, -0.0582711f, 0.459711f, -0.680175f, 0.506004f, -0.172496f, -0.953884f, 0.209727f, 0.113194f, -0.472863f, -0.839445f, 0.344867f, -0.540827f, 0.506164f, 0.756772f, 0.460821f, -0.640603f, -0.568262f, 0.159673f, -0.160254f, 0.600721f, 0.477962f, -0.939481f, -0.511637f, -0.323684f, 0.364171f, -0.404559f, -0.334276f, 0.156511f, 0.818597f, -0.586015f, 0.0892409f, 0.465509f, 0.413067f, 0.59614f, -0.704381f, 0.644628f, 0.868562f, -0.247565f, -0.284296f, 0.41986f, 0.214355f, -0.478935f, -0.988729f, 0.829915f, -0.355343f, 0.800482f, -0.634303f, 0.457547f, 0.446766f, -0.852806f, -0.668493f, -0.162837f, -0.142269f, -0.998086f, -0.893682f, -0.869588f, -0.0423559f, 0.176549f, -0.296802f, -0.254479f, 0.643769f, -0.901179f, -0.615401f, -0.116289f, 0.435172f, 0.717436f, -0.415066f, -0.337808f, 0.870638f, 0.903042f, -0.285384f, 0.0756611f, 0.960609f, 0.457097f, -0.131619f, 0.571259f, -0.155839f, -0.662069f, 0.177872f, 0.702598f, -0.0713716f, -0.305208f, 0.787323f, 0.263186f, -0.702951f, -0.524519f, -0.503499f, 0.534444f, 0.0370358f, -0.814178f, 0.66925f, -0.427949f, -0.649902f, -0.559789f, -0.621251f, 0.4704f, 0.180822f, 0.825575f, -0.297631f, -0.918393f, -0.358177f, 0.22174f, -0.538065f, -0.556241f, -0.850169f, 0.530526f, -0.303061f, 0.476349f, 0.757145f, -0.713861f, 0.718236f, -0.550769f, -0.227462f, -0.351486f, -0.303493f, 0.0701012f, 0.329724f, -0.652949f, 0.432744f, -0.71327f, 0.436576f, 0.822904f, -0.427195f, 0.244905f, -0.90391f, 0.266159f, -0.388975f, 0.107523f, 0.334675f, 0.496627f, 0.339848f, -0.107218f, 0.931872f, 0.760078f, -0.45514f, 0.0924435f, -0.160385f, 0.163348f, 0.688715f, -0.95587f, 0.0789621f, 0.242908f, -0.289839f, -0.506406f, 0.413792f, 0.133816f, -0.753244f, -0.162387f, -0.731036f, 0.934072f, 0.106236f, -0.843745f, -0.168801f, 0.91745f, -0.801201f, 0.379153f, 0.427087f, -0.833923f, 0.213826f, 0.380261f, 0.172866f, 0.662916f, 0.697778f}),
@@ -29616,6 +30353,8 @@ const TestModel& get_test_model_1_H3_W2_SAME_nchw_relaxed() {
     };
     return model;
 }
+
+const auto dummy_test_model_1_H3_W2_SAME_nchw_relaxed = TestModelManager::get().add("conv2d_v1_2_1_H3_W2_SAME_nchw_relaxed", get_test_model_1_H3_W2_SAME_nchw_relaxed());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -29623,9 +30362,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_1_H3_W2_SAME_nchw_relaxed_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {9},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -29760,6 +30501,8 @@ const TestModel& get_test_model_1_H3_W2_SAME_nchw_relaxed_all_inputs_as_internal
     };
     return model;
 }
+
+const auto dummy_test_model_1_H3_W2_SAME_nchw_relaxed_all_inputs_as_internal = TestModelManager::get().add("conv2d_v1_2_1_H3_W2_SAME_nchw_relaxed_all_inputs_as_internal", get_test_model_1_H3_W2_SAME_nchw_relaxed_all_inputs_as_internal());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -29767,9 +30510,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_1_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-0.869931f, 0.153672f, -0.134931f, -0.259157f, 0.765559f, 0.658494f, -0.252893f, -0.0700663f, 0.150845f, 0.406537f, -0.356362f, 0.210483f, -0.752038f, -0.551178f, 0.216348f, 0.55906f, -0.363763f, 0.756097f, -0.656317f, -0.40316f, 0.612362f, -0.398092f, -0.925272f, 0.096833f, 0.031654f, 0.0948254f, 0.352665f, -0.968068f, 0.939052f, -0.0582711f, 0.459711f, -0.680175f, 0.506004f, -0.172496f, -0.953884f, 0.209727f, 0.113194f, -0.472863f, -0.839445f, 0.344867f, -0.540827f, 0.506164f, 0.756772f, 0.460821f, -0.640603f, -0.568262f, 0.159673f, -0.160254f, 0.600721f, 0.477962f, -0.939481f, -0.511637f, -0.323684f, 0.364171f, -0.404559f, -0.334276f, 0.156511f, 0.818597f, -0.586015f, 0.0892409f, 0.465509f, 0.413067f, 0.59614f, -0.704381f, 0.644628f, 0.868562f, -0.247565f, -0.284296f, 0.41986f, 0.214355f, -0.478935f, -0.988729f, 0.829915f, -0.355343f, 0.800482f, -0.634303f, 0.457547f, 0.446766f, -0.852806f, -0.668493f, -0.162837f, -0.142269f, -0.998086f, -0.893682f, -0.869588f, -0.0423559f, 0.176549f, -0.296802f, -0.254479f, 0.643769f, -0.901179f, -0.615401f, -0.116289f, 0.435172f, 0.717436f, -0.415066f, -0.337808f, 0.870638f, 0.903042f, -0.285384f, 0.0756611f, 0.960609f, 0.457097f, -0.131619f, 0.571259f, -0.155839f, -0.662069f, 0.177872f, 0.702598f, -0.0713716f, -0.305208f, 0.787323f, 0.263186f, -0.702951f, -0.524519f, -0.503499f, 0.534444f, 0.0370358f, -0.814178f, 0.66925f, -0.427949f, -0.649902f, -0.559789f, -0.621251f, 0.4704f, 0.180822f, 0.825575f, -0.297631f, -0.918393f, -0.358177f, 0.22174f, -0.538065f, -0.556241f, -0.850169f, 0.530526f, -0.303061f, 0.476349f, 0.757145f, -0.713861f, 0.718236f, -0.550769f, -0.227462f, -0.351486f, -0.303493f, 0.0701012f, 0.329724f, -0.652949f, 0.432744f, -0.71327f, 0.436576f, 0.822904f, -0.427195f, 0.244905f, -0.90391f, 0.266159f, -0.388975f, 0.107523f, 0.334675f, 0.496627f, 0.339848f, -0.107218f, 0.931872f, 0.760078f, -0.45514f, 0.0924435f, -0.160385f, 0.163348f, 0.688715f, -0.95587f, 0.0789621f, 0.242908f, -0.289839f, -0.506406f, 0.413792f, 0.133816f, -0.753244f, -0.162387f, -0.731036f, 0.934072f, 0.106236f, -0.843745f, -0.168801f, 0.91745f, -0.801201f, 0.379153f, 0.427087f, -0.833923f, 0.213826f, 0.380261f, 0.172866f, 0.662916f, 0.697778f}),
@@ -29870,6 +30615,8 @@ const TestModel& get_test_model_1_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs(
     };
     return model;
 }
+
+const auto dummy_test_model_1_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs = TestModelManager::get().add("conv2d_v1_2_1_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs", get_test_model_1_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -29877,9 +30624,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_1_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {9, 12, 15},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -30083,15 +30832,19 @@ const TestModel& get_test_model_1_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_
     return model;
 }
 
+const auto dummy_test_model_1_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("conv2d_v1_2_1_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_1_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal());
+
 }  // namespace generated_tests::conv2d_v1_2
 
 namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_1_H3_W2_SAME_nchw_float16() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({-0.8699309825897217f, 0.153671994805336f, -0.13493099808692932f, -0.2591570019721985f, 0.7655590176582336f, 0.6584939956665039f, -0.25289300084114075f, -0.07006630301475525f, 0.150845006108284f, 0.4065369963645935f, -0.356361985206604f, 0.21048299968242645f, -0.7520380020141602f, -0.551177978515625f, 0.21634800732135773f, 0.5590599775314331f, -0.3637630045413971f, 0.7560970187187195f, -0.6563169956207275f, -0.4031600058078766f, 0.6123620271682739f, -0.39809200167655945f, -0.9252719879150391f, 0.0968329980969429f, 0.0316540002822876f, 0.09482540190219879f, 0.3526650071144104f, -0.96806800365448f, 0.9390519857406616f, -0.058271098881959915f, 0.4597109854221344f, -0.6801750063896179f, 0.5060039758682251f, -0.1724960058927536f, -0.9538840055465698f, 0.20972700417041779f, 0.11319400370121002f, -0.47286298871040344f, -0.8394449949264526f, 0.3448669910430908f, -0.5408269762992859f, 0.506164014339447f, 0.756771981716156f, 0.4608210027217865f, -0.6406030058860779f, -0.568261981010437f, 0.15967300534248352f, -0.16025400161743164f, 0.600721001625061f, 0.4779619872570038f, -0.9394810199737549f, -0.5116369724273682f, -0.3236840069293976f, 0.36417099833488464f, -0.4045589864253998f, -0.3342759907245636f, 0.15651099383831024f, 0.8185970187187195f, -0.586014986038208f, 0.0892409011721611f, 0.46550899744033813f, 0.4130670130252838f, 0.5961400270462036f, -0.704380989074707f, 0.6446279883384705f, 0.8685619831085205f, -0.24756500124931335f, -0.2842960059642792f, 0.41986000537872314f, 0.214355006814003f, -0.47893500328063965f, -0.9887290000915527f, 0.8299149870872498f, -0.3553430140018463f, 0.8004819750785828f, -0.6343029737472534f, 0.45754700899124146f, 0.4467659890651703f, -0.8528059720993042f, -0.6684929728507996f, -0.16283699870109558f, -0.14226900041103363f, -0.9980859756469727f, -0.8936820030212402f, -0.8695880174636841f, -0.04235589876770973f, 0.1765490025281906f, -0.29680201411247253f, -0.25447899103164673f, 0.6437690258026123f, -0.9011790156364441f, -0.615401029586792f, -0.11628899723291397f, 0.4351719915866852f, 0.7174360156059265f, -0.4150660037994385f, -0.3378080129623413f, 0.8706380128860474f, 0.9030420184135437f, -0.28538399934768677f, 0.07566110044717789f, 0.9606090188026428f, 0.45709699392318726f, -0.13161900639533997f, 0.5712590217590332f, -0.1558389961719513f, -0.6620690226554871f, 0.17787200212478638f, 0.702597975730896f, -0.07137160003185272f, -0.3052079975605011f, 0.787322998046875f, 0.2631860077381134f, -0.7029510140419006f, -0.5245190262794495f, -0.5034989714622498f, 0.5344439744949341f, 0.03703580051660538f, -0.8141779899597168f, 0.6692500114440918f, -0.4279490113258362f, -0.6499019861221313f, -0.5597890019416809f, -0.6212509870529175f, 0.47040000557899475f, 0.1808219999074936f, 0.8255749940872192f, -0.29763099551200867f, -0.9183930158615112f, -0.3581770062446594f, 0.2217400074005127f, -0.5380650162696838f, -0.556240975856781f, -0.8501690030097961f, 0.5305259823799133f, -0.30306100845336914f, 0.47634899616241455f, 0.7571449875831604f, -0.7138609886169434f, 0.7182360291481018f, -0.5507689714431763f, -0.22746199369430542f, -0.3514859974384308f, -0.3034929931163788f, 0.07010120153427124f, 0.3297240138053894f, -0.6529489755630493f, 0.43274399638175964f, -0.7132700085639954f, 0.4365760087966919f, 0.8229039907455444f, -0.4271950125694275f, 0.2449049949645996f, -0.9039099812507629f, 0.2661589980125427f, -0.38897499442100525f, 0.10752300173044205f, 0.33467501401901245f, 0.49662700295448303f, 0.33984801173210144f, -0.10721799731254578f, 0.9318720102310181f, 0.7600780129432678f, -0.45513999462127686f, 0.09244350343942642f, -0.16038499772548676f, 0.1633480042219162f, 0.6887149810791016f, -0.9558699727058411f, 0.07896210253238678f, 0.24290800094604492f, -0.2898389995098114f, -0.5064060091972351f, 0.4137920141220093f, 0.13381600379943848f, -0.7532439827919006f, -0.16238699853420258f, -0.7310360074043274f, 0.9340720176696777f, 0.10623600333929062f, -0.8437449932098389f, -0.16880099475383759f, 0.9174500107765198f, -0.8012009859085083f, 0.3791530132293701f, 0.4270870089530945f, -0.8339229822158813f, 0.2138260006904602f, 0.38026100397109985f, 0.17286600172519684f, 0.6629160046577454f, 0.6977779865264893f}),
@@ -30192,6 +30945,8 @@ const TestModel& get_test_model_1_H3_W2_SAME_nchw_float16() {
     };
     return model;
 }
+
+const auto dummy_test_model_1_H3_W2_SAME_nchw_float16 = TestModelManager::get().add("conv2d_v1_2_1_H3_W2_SAME_nchw_float16", get_test_model_1_H3_W2_SAME_nchw_float16());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -30199,9 +30954,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_1_H3_W2_SAME_nchw_float16_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {9},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -30336,6 +31093,8 @@ const TestModel& get_test_model_1_H3_W2_SAME_nchw_float16_all_inputs_as_internal
     };
     return model;
 }
+
+const auto dummy_test_model_1_H3_W2_SAME_nchw_float16_all_inputs_as_internal = TestModelManager::get().add("conv2d_v1_2_1_H3_W2_SAME_nchw_float16_all_inputs_as_internal", get_test_model_1_H3_W2_SAME_nchw_float16_all_inputs_as_internal());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -30343,9 +31102,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_1_H3_W2_SAME_nchw_float16_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({-0.8699309825897217f, 0.153671994805336f, -0.13493099808692932f, -0.2591570019721985f, 0.7655590176582336f, 0.6584939956665039f, -0.25289300084114075f, -0.07006630301475525f, 0.150845006108284f, 0.4065369963645935f, -0.356361985206604f, 0.21048299968242645f, -0.7520380020141602f, -0.551177978515625f, 0.21634800732135773f, 0.5590599775314331f, -0.3637630045413971f, 0.7560970187187195f, -0.6563169956207275f, -0.4031600058078766f, 0.6123620271682739f, -0.39809200167655945f, -0.9252719879150391f, 0.0968329980969429f, 0.0316540002822876f, 0.09482540190219879f, 0.3526650071144104f, -0.96806800365448f, 0.9390519857406616f, -0.058271098881959915f, 0.4597109854221344f, -0.6801750063896179f, 0.5060039758682251f, -0.1724960058927536f, -0.9538840055465698f, 0.20972700417041779f, 0.11319400370121002f, -0.47286298871040344f, -0.8394449949264526f, 0.3448669910430908f, -0.5408269762992859f, 0.506164014339447f, 0.756771981716156f, 0.4608210027217865f, -0.6406030058860779f, -0.568261981010437f, 0.15967300534248352f, -0.16025400161743164f, 0.600721001625061f, 0.4779619872570038f, -0.9394810199737549f, -0.5116369724273682f, -0.3236840069293976f, 0.36417099833488464f, -0.4045589864253998f, -0.3342759907245636f, 0.15651099383831024f, 0.8185970187187195f, -0.586014986038208f, 0.0892409011721611f, 0.46550899744033813f, 0.4130670130252838f, 0.5961400270462036f, -0.704380989074707f, 0.6446279883384705f, 0.8685619831085205f, -0.24756500124931335f, -0.2842960059642792f, 0.41986000537872314f, 0.214355006814003f, -0.47893500328063965f, -0.9887290000915527f, 0.8299149870872498f, -0.3553430140018463f, 0.8004819750785828f, -0.6343029737472534f, 0.45754700899124146f, 0.4467659890651703f, -0.8528059720993042f, -0.6684929728507996f, -0.16283699870109558f, -0.14226900041103363f, -0.9980859756469727f, -0.8936820030212402f, -0.8695880174636841f, -0.04235589876770973f, 0.1765490025281906f, -0.29680201411247253f, -0.25447899103164673f, 0.6437690258026123f, -0.9011790156364441f, -0.615401029586792f, -0.11628899723291397f, 0.4351719915866852f, 0.7174360156059265f, -0.4150660037994385f, -0.3378080129623413f, 0.8706380128860474f, 0.9030420184135437f, -0.28538399934768677f, 0.07566110044717789f, 0.9606090188026428f, 0.45709699392318726f, -0.13161900639533997f, 0.5712590217590332f, -0.1558389961719513f, -0.6620690226554871f, 0.17787200212478638f, 0.702597975730896f, -0.07137160003185272f, -0.3052079975605011f, 0.787322998046875f, 0.2631860077381134f, -0.7029510140419006f, -0.5245190262794495f, -0.5034989714622498f, 0.5344439744949341f, 0.03703580051660538f, -0.8141779899597168f, 0.6692500114440918f, -0.4279490113258362f, -0.6499019861221313f, -0.5597890019416809f, -0.6212509870529175f, 0.47040000557899475f, 0.1808219999074936f, 0.8255749940872192f, -0.29763099551200867f, -0.9183930158615112f, -0.3581770062446594f, 0.2217400074005127f, -0.5380650162696838f, -0.556240975856781f, -0.8501690030097961f, 0.5305259823799133f, -0.30306100845336914f, 0.47634899616241455f, 0.7571449875831604f, -0.7138609886169434f, 0.7182360291481018f, -0.5507689714431763f, -0.22746199369430542f, -0.3514859974384308f, -0.3034929931163788f, 0.07010120153427124f, 0.3297240138053894f, -0.6529489755630493f, 0.43274399638175964f, -0.7132700085639954f, 0.4365760087966919f, 0.8229039907455444f, -0.4271950125694275f, 0.2449049949645996f, -0.9039099812507629f, 0.2661589980125427f, -0.38897499442100525f, 0.10752300173044205f, 0.33467501401901245f, 0.49662700295448303f, 0.33984801173210144f, -0.10721799731254578f, 0.9318720102310181f, 0.7600780129432678f, -0.45513999462127686f, 0.09244350343942642f, -0.16038499772548676f, 0.1633480042219162f, 0.6887149810791016f, -0.9558699727058411f, 0.07896210253238678f, 0.24290800094604492f, -0.2898389995098114f, -0.5064060091972351f, 0.4137920141220093f, 0.13381600379943848f, -0.7532439827919006f, -0.16238699853420258f, -0.7310360074043274f, 0.9340720176696777f, 0.10623600333929062f, -0.8437449932098389f, -0.16880099475383759f, 0.9174500107765198f, -0.8012009859085083f, 0.3791530132293701f, 0.4270870089530945f, -0.8339229822158813f, 0.2138260006904602f, 0.38026100397109985f, 0.17286600172519684f, 0.6629160046577454f, 0.6977779865264893f}),
@@ -30446,6 +31207,8 @@ const TestModel& get_test_model_1_H3_W2_SAME_nchw_float16_all_tensors_as_inputs(
     };
     return model;
 }
+
+const auto dummy_test_model_1_H3_W2_SAME_nchw_float16_all_tensors_as_inputs = TestModelManager::get().add("conv2d_v1_2_1_H3_W2_SAME_nchw_float16_all_tensors_as_inputs", get_test_model_1_H3_W2_SAME_nchw_float16_all_tensors_as_inputs());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -30453,9 +31216,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_1_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {9, 12, 15},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -30659,15 +31424,19 @@ const TestModel& get_test_model_1_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_
     return model;
 }
 
+const auto dummy_test_model_1_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("conv2d_v1_2_1_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_1_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal());
+
 }  // namespace generated_tests::conv2d_v1_2
 
 namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_1_H3_W2_SAME_nhwc_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-0.295335f, -0.00387601f, -0.552251f, 0.166084f, -0.28482f, -0.152143f, -0.719885f, -0.869386f, -0.745598f, 0.823947f, 0.473183f, -0.331337f, 0.187631f, 0.0426571f, -0.826897f, -0.755085f, -0.472453f, -0.0233656f, 0.0483436f, 0.933418f, -0.961974f, 0.0125783f, 0.219742f, 0.342604f, -0.15166f, 0.0934905f, 0.783221f, 0.129664f, 0.838844f, -0.271388f, 0.924519f, 0.342843f, 0.274418f, 0.350817f, 0.841638f, -0.543993f, -0.00283395f, -0.128467f, -0.682943f, -0.319117f, 0.84634f, 0.283003f, 0.32865f, 0.0293755f, -0.0335696f, 0.591266f, -0.0743476f, -0.741271f, 0.462056f, -0.583625f, -0.590183f, 0.6234f, 0.535269f, -0.670818f, -0.955642f, -0.770173f, 0.479986f, 0.664377f, 0.399445f, -0.968874f, -0.276263f, -0.901951f, 0.544104f, -0.958981f, 0.482658f, -0.807284f, 0.305369f, -0.947818f, 0.827498f, -0.382887f, -0.805741f, -0.796678f, -0.299804f, -0.229828f, 0.818783f, -0.103055f, -0.45568f, -0.227827f, 0.543743f, -0.96073f, 0.946747f, -0.857182f, -0.96426f, -0.292411f, -0.715614f, 0.765278f, -0.475043f, -0.590142f, -0.238507f, 0.673002f, -0.473357f, -0.319626f, 0.936014f, 0.486607f, 0.580844f, 0.425352f, -0.800994f, 0.290763f, -0.494953f, -0.441162f, 0.718677f, -0.828427f, 0.96965f, 7.53637e-05f, -0.699973f, -0.526886f, -0.352682f, 0.799466f, 0.332789f, 0.723389f, 0.407659f, -0.934084f, -0.284705f, 0.961484f, -0.700395f, -0.985808f, -0.595342f, -0.691721f, 0.49448f, -0.0842649f, 0.0390966f, 0.298938f, -0.128094f, -0.97158f, 0.86393f, 0.270606f, -0.468986f, -0.256605f, 0.47215f, -0.273117f, -0.590343f, -0.826529f, -0.725381f, -0.194821f, -0.259661f, -0.0949207f, -0.180302f, 0.0446834f, -0.222133f, -0.40393f, 0.295772f, -0.92949f, 0.580079f, -0.169856f, 0.330311f, 0.0173551f, -0.635823f, 0.475942f, 0.907175f, 0.242777f, -0.512208f, 0.362463f, 0.0496289f, 0.65171f, 0.990057f, 0.690733f, -0.469013f, -0.101311f, -0.68372f, -0.157841f, -0.677711f, -0.708224f, -0.659437f, -0.407607f, 0.677033f, 0.89032f, 0.228307f, -0.749514f, 0.772958f, 0.054701f, 0.551705f, 0.917052f, -0.895022f, -0.702397f, 0.484142f, 0.108648f, 0.833347f, 0.478872f, -0.984112f, 0.387176f, -0.73299f, 0.7526f, 0.443312f, -0.0987856f, 0.125415f, 0.10876f, -0.498108f, 0.43209f, 0.344609f, 0.928941f, -0.130732f, -0.0569167f}),
@@ -30768,6 +31537,8 @@ const TestModel& get_test_model_1_H3_W2_SAME_nhwc_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_1_H3_W2_SAME_nhwc_2 = TestModelManager::get().add("conv2d_v1_2_1_H3_W2_SAME_nhwc_2", get_test_model_1_H3_W2_SAME_nhwc_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -30775,9 +31546,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_1_H3_W2_SAME_nhwc_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {9},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -30912,6 +31685,8 @@ const TestModel& get_test_model_1_H3_W2_SAME_nhwc_all_inputs_as_internal_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_1_H3_W2_SAME_nhwc_all_inputs_as_internal_2 = TestModelManager::get().add("conv2d_v1_2_1_H3_W2_SAME_nhwc_all_inputs_as_internal_2", get_test_model_1_H3_W2_SAME_nhwc_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -30919,9 +31694,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_1_H3_W2_SAME_nhwc_all_tensors_as_inputs_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-0.295335f, -0.00387601f, -0.552251f, 0.166084f, -0.28482f, -0.152143f, -0.719885f, -0.869386f, -0.745598f, 0.823947f, 0.473183f, -0.331337f, 0.187631f, 0.0426571f, -0.826897f, -0.755085f, -0.472453f, -0.0233656f, 0.0483436f, 0.933418f, -0.961974f, 0.0125783f, 0.219742f, 0.342604f, -0.15166f, 0.0934905f, 0.783221f, 0.129664f, 0.838844f, -0.271388f, 0.924519f, 0.342843f, 0.274418f, 0.350817f, 0.841638f, -0.543993f, -0.00283395f, -0.128467f, -0.682943f, -0.319117f, 0.84634f, 0.283003f, 0.32865f, 0.0293755f, -0.0335696f, 0.591266f, -0.0743476f, -0.741271f, 0.462056f, -0.583625f, -0.590183f, 0.6234f, 0.535269f, -0.670818f, -0.955642f, -0.770173f, 0.479986f, 0.664377f, 0.399445f, -0.968874f, -0.276263f, -0.901951f, 0.544104f, -0.958981f, 0.482658f, -0.807284f, 0.305369f, -0.947818f, 0.827498f, -0.382887f, -0.805741f, -0.796678f, -0.299804f, -0.229828f, 0.818783f, -0.103055f, -0.45568f, -0.227827f, 0.543743f, -0.96073f, 0.946747f, -0.857182f, -0.96426f, -0.292411f, -0.715614f, 0.765278f, -0.475043f, -0.590142f, -0.238507f, 0.673002f, -0.473357f, -0.319626f, 0.936014f, 0.486607f, 0.580844f, 0.425352f, -0.800994f, 0.290763f, -0.494953f, -0.441162f, 0.718677f, -0.828427f, 0.96965f, 7.53637e-05f, -0.699973f, -0.526886f, -0.352682f, 0.799466f, 0.332789f, 0.723389f, 0.407659f, -0.934084f, -0.284705f, 0.961484f, -0.700395f, -0.985808f, -0.595342f, -0.691721f, 0.49448f, -0.0842649f, 0.0390966f, 0.298938f, -0.128094f, -0.97158f, 0.86393f, 0.270606f, -0.468986f, -0.256605f, 0.47215f, -0.273117f, -0.590343f, -0.826529f, -0.725381f, -0.194821f, -0.259661f, -0.0949207f, -0.180302f, 0.0446834f, -0.222133f, -0.40393f, 0.295772f, -0.92949f, 0.580079f, -0.169856f, 0.330311f, 0.0173551f, -0.635823f, 0.475942f, 0.907175f, 0.242777f, -0.512208f, 0.362463f, 0.0496289f, 0.65171f, 0.990057f, 0.690733f, -0.469013f, -0.101311f, -0.68372f, -0.157841f, -0.677711f, -0.708224f, -0.659437f, -0.407607f, 0.677033f, 0.89032f, 0.228307f, -0.749514f, 0.772958f, 0.054701f, 0.551705f, 0.917052f, -0.895022f, -0.702397f, 0.484142f, 0.108648f, 0.833347f, 0.478872f, -0.984112f, 0.387176f, -0.73299f, 0.7526f, 0.443312f, -0.0987856f, 0.125415f, 0.10876f, -0.498108f, 0.43209f, 0.344609f, 0.928941f, -0.130732f, -0.0569167f}),
@@ -31022,6 +31799,8 @@ const TestModel& get_test_model_1_H3_W2_SAME_nhwc_all_tensors_as_inputs_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_1_H3_W2_SAME_nhwc_all_tensors_as_inputs_2 = TestModelManager::get().add("conv2d_v1_2_1_H3_W2_SAME_nhwc_all_tensors_as_inputs_2", get_test_model_1_H3_W2_SAME_nhwc_all_tensors_as_inputs_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -31029,9 +31808,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_1_H3_W2_SAME_nhwc_all_tensors_as_inputs_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {9, 12, 15},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -31234,6 +32015,8 @@ const TestModel& get_test_model_1_H3_W2_SAME_nhwc_all_tensors_as_inputs_all_inpu
     };
     return model;
 }
+
+const auto dummy_test_model_1_H3_W2_SAME_nhwc_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("conv2d_v1_2_1_H3_W2_SAME_nhwc_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_1_H3_W2_SAME_nhwc_all_tensors_as_inputs_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -31241,9 +32024,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_1_H3_W2_SAME_nhwc_relaxed_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-0.295335f, -0.00387601f, -0.552251f, 0.166084f, -0.28482f, -0.152143f, -0.719885f, -0.869386f, -0.745598f, 0.823947f, 0.473183f, -0.331337f, 0.187631f, 0.0426571f, -0.826897f, -0.755085f, -0.472453f, -0.0233656f, 0.0483436f, 0.933418f, -0.961974f, 0.0125783f, 0.219742f, 0.342604f, -0.15166f, 0.0934905f, 0.783221f, 0.129664f, 0.838844f, -0.271388f, 0.924519f, 0.342843f, 0.274418f, 0.350817f, 0.841638f, -0.543993f, -0.00283395f, -0.128467f, -0.682943f, -0.319117f, 0.84634f, 0.283003f, 0.32865f, 0.0293755f, -0.0335696f, 0.591266f, -0.0743476f, -0.741271f, 0.462056f, -0.583625f, -0.590183f, 0.6234f, 0.535269f, -0.670818f, -0.955642f, -0.770173f, 0.479986f, 0.664377f, 0.399445f, -0.968874f, -0.276263f, -0.901951f, 0.544104f, -0.958981f, 0.482658f, -0.807284f, 0.305369f, -0.947818f, 0.827498f, -0.382887f, -0.805741f, -0.796678f, -0.299804f, -0.229828f, 0.818783f, -0.103055f, -0.45568f, -0.227827f, 0.543743f, -0.96073f, 0.946747f, -0.857182f, -0.96426f, -0.292411f, -0.715614f, 0.765278f, -0.475043f, -0.590142f, -0.238507f, 0.673002f, -0.473357f, -0.319626f, 0.936014f, 0.486607f, 0.580844f, 0.425352f, -0.800994f, 0.290763f, -0.494953f, -0.441162f, 0.718677f, -0.828427f, 0.96965f, 7.53637e-05f, -0.699973f, -0.526886f, -0.352682f, 0.799466f, 0.332789f, 0.723389f, 0.407659f, -0.934084f, -0.284705f, 0.961484f, -0.700395f, -0.985808f, -0.595342f, -0.691721f, 0.49448f, -0.0842649f, 0.0390966f, 0.298938f, -0.128094f, -0.97158f, 0.86393f, 0.270606f, -0.468986f, -0.256605f, 0.47215f, -0.273117f, -0.590343f, -0.826529f, -0.725381f, -0.194821f, -0.259661f, -0.0949207f, -0.180302f, 0.0446834f, -0.222133f, -0.40393f, 0.295772f, -0.92949f, 0.580079f, -0.169856f, 0.330311f, 0.0173551f, -0.635823f, 0.475942f, 0.907175f, 0.242777f, -0.512208f, 0.362463f, 0.0496289f, 0.65171f, 0.990057f, 0.690733f, -0.469013f, -0.101311f, -0.68372f, -0.157841f, -0.677711f, -0.708224f, -0.659437f, -0.407607f, 0.677033f, 0.89032f, 0.228307f, -0.749514f, 0.772958f, 0.054701f, 0.551705f, 0.917052f, -0.895022f, -0.702397f, 0.484142f, 0.108648f, 0.833347f, 0.478872f, -0.984112f, 0.387176f, -0.73299f, 0.7526f, 0.443312f, -0.0987856f, 0.125415f, 0.10876f, -0.498108f, 0.43209f, 0.344609f, 0.928941f, -0.130732f, -0.0569167f}),
@@ -31344,6 +32129,8 @@ const TestModel& get_test_model_1_H3_W2_SAME_nhwc_relaxed_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_1_H3_W2_SAME_nhwc_relaxed_2 = TestModelManager::get().add("conv2d_v1_2_1_H3_W2_SAME_nhwc_relaxed_2", get_test_model_1_H3_W2_SAME_nhwc_relaxed_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -31351,9 +32138,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_1_H3_W2_SAME_nhwc_relaxed_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {9},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -31488,6 +32277,8 @@ const TestModel& get_test_model_1_H3_W2_SAME_nhwc_relaxed_all_inputs_as_internal
     };
     return model;
 }
+
+const auto dummy_test_model_1_H3_W2_SAME_nhwc_relaxed_all_inputs_as_internal_2 = TestModelManager::get().add("conv2d_v1_2_1_H3_W2_SAME_nhwc_relaxed_all_inputs_as_internal_2", get_test_model_1_H3_W2_SAME_nhwc_relaxed_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -31495,9 +32286,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_1_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-0.295335f, -0.00387601f, -0.552251f, 0.166084f, -0.28482f, -0.152143f, -0.719885f, -0.869386f, -0.745598f, 0.823947f, 0.473183f, -0.331337f, 0.187631f, 0.0426571f, -0.826897f, -0.755085f, -0.472453f, -0.0233656f, 0.0483436f, 0.933418f, -0.961974f, 0.0125783f, 0.219742f, 0.342604f, -0.15166f, 0.0934905f, 0.783221f, 0.129664f, 0.838844f, -0.271388f, 0.924519f, 0.342843f, 0.274418f, 0.350817f, 0.841638f, -0.543993f, -0.00283395f, -0.128467f, -0.682943f, -0.319117f, 0.84634f, 0.283003f, 0.32865f, 0.0293755f, -0.0335696f, 0.591266f, -0.0743476f, -0.741271f, 0.462056f, -0.583625f, -0.590183f, 0.6234f, 0.535269f, -0.670818f, -0.955642f, -0.770173f, 0.479986f, 0.664377f, 0.399445f, -0.968874f, -0.276263f, -0.901951f, 0.544104f, -0.958981f, 0.482658f, -0.807284f, 0.305369f, -0.947818f, 0.827498f, -0.382887f, -0.805741f, -0.796678f, -0.299804f, -0.229828f, 0.818783f, -0.103055f, -0.45568f, -0.227827f, 0.543743f, -0.96073f, 0.946747f, -0.857182f, -0.96426f, -0.292411f, -0.715614f, 0.765278f, -0.475043f, -0.590142f, -0.238507f, 0.673002f, -0.473357f, -0.319626f, 0.936014f, 0.486607f, 0.580844f, 0.425352f, -0.800994f, 0.290763f, -0.494953f, -0.441162f, 0.718677f, -0.828427f, 0.96965f, 7.53637e-05f, -0.699973f, -0.526886f, -0.352682f, 0.799466f, 0.332789f, 0.723389f, 0.407659f, -0.934084f, -0.284705f, 0.961484f, -0.700395f, -0.985808f, -0.595342f, -0.691721f, 0.49448f, -0.0842649f, 0.0390966f, 0.298938f, -0.128094f, -0.97158f, 0.86393f, 0.270606f, -0.468986f, -0.256605f, 0.47215f, -0.273117f, -0.590343f, -0.826529f, -0.725381f, -0.194821f, -0.259661f, -0.0949207f, -0.180302f, 0.0446834f, -0.222133f, -0.40393f, 0.295772f, -0.92949f, 0.580079f, -0.169856f, 0.330311f, 0.0173551f, -0.635823f, 0.475942f, 0.907175f, 0.242777f, -0.512208f, 0.362463f, 0.0496289f, 0.65171f, 0.990057f, 0.690733f, -0.469013f, -0.101311f, -0.68372f, -0.157841f, -0.677711f, -0.708224f, -0.659437f, -0.407607f, 0.677033f, 0.89032f, 0.228307f, -0.749514f, 0.772958f, 0.054701f, 0.551705f, 0.917052f, -0.895022f, -0.702397f, 0.484142f, 0.108648f, 0.833347f, 0.478872f, -0.984112f, 0.387176f, -0.73299f, 0.7526f, 0.443312f, -0.0987856f, 0.125415f, 0.10876f, -0.498108f, 0.43209f, 0.344609f, 0.928941f, -0.130732f, -0.0569167f}),
@@ -31598,6 +32391,8 @@ const TestModel& get_test_model_1_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_
     };
     return model;
 }
+
+const auto dummy_test_model_1_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_2 = TestModelManager::get().add("conv2d_v1_2_1_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_2", get_test_model_1_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -31605,9 +32400,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_1_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {9, 12, 15},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -31810,6 +32607,8 @@ const TestModel& get_test_model_1_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_
     };
     return model;
 }
+
+const auto dummy_test_model_1_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("conv2d_v1_2_1_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_1_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -31817,9 +32616,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_1_H3_W2_SAME_nhwc_float16_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({-0.29533499479293823f, -0.0038760099560022354f, -0.5522509813308716f, 0.16608400642871857f, -0.28481999039649963f, -0.15214300155639648f, -0.719884991645813f, -0.8693860173225403f, -0.7455980181694031f, 0.823947012424469f, 0.4731830060482025f, -0.33133700489997864f, 0.18763099610805511f, 0.04265709966421127f, -0.8268970251083374f, -0.7550849914550781f, -0.4724529981613159f, -0.023365600034594536f, 0.04834359884262085f, 0.9334179759025574f, -0.961974024772644f, 0.012578300200402737f, 0.21974200010299683f, 0.34260401129722595f, -0.1516599953174591f, 0.09349049627780914f, 0.7832210063934326f, 0.12966400384902954f, 0.8388440012931824f, -0.2713879942893982f, 0.9245190024375916f, 0.3428429961204529f, 0.2744179964065552f, 0.3508169949054718f, 0.8416380286216736f, -0.5439929962158203f, -0.002833950100466609f, -0.12846699357032776f, -0.6829429864883423f, -0.31911700963974f, 0.846340000629425f, 0.2830030024051666f, 0.32864999771118164f, 0.029375499114394188f, -0.03356960043311119f, 0.5912659764289856f, -0.0743476003408432f, -0.7412710189819336f, 0.4620560109615326f, -0.5836250185966492f, -0.5901830196380615f, 0.6233999729156494f, 0.535269021987915f, -0.6708179712295532f, -0.9556419849395752f, -0.7701730132102966f, 0.4799860119819641f, 0.664376974105835f, 0.3994449973106384f, -0.9688739776611328f, -0.2762629985809326f, -0.901951014995575f, 0.5441039800643921f, -0.9589809775352478f, 0.4826579988002777f, -0.8072839975357056f, 0.30536898970603943f, -0.9478179812431335f, 0.8274980187416077f, -0.38288700580596924f, -0.805741012096405f, -0.7966780066490173f, -0.2998040020465851f, -0.22982800006866455f, 0.8187829852104187f, -0.10305500030517578f, -0.4556800127029419f, -0.22782699763774872f, 0.5437430143356323f, -0.9607300162315369f, 0.9467470049858093f, -0.8571820259094238f, -0.9642599821090698f, -0.2924109995365143f, -0.7156140208244324f, 0.7652779817581177f, -0.47504299879074097f, -0.590142011642456f, -0.2385070025920868f, 0.6730020046234131f, -0.4733569920063019f, -0.31962600350379944f, 0.9360139966011047f, 0.48660698533058167f, 0.580843985080719f, 0.42535200715065f, -0.8009939789772034f, 0.2907629907131195f, -0.4949530065059662f, -0.44116199016571045f, 0.7186769843101501f, -0.8284270167350769f, 0.9696499705314636f, 7.536369957961142e-05f, -0.6999729871749878f, -0.526885986328125f, -0.3526819944381714f, 0.7994660139083862f, 0.33278900384902954f, 0.7233890295028687f, 0.40765899419784546f, -0.9340839982032776f, -0.2847050130367279f, 0.9614840149879456f, -0.7003949880599976f, -0.9858080148696899f, -0.5953419804573059f, -0.6917210221290588f, 0.4944800138473511f, -0.08426489681005478f, 0.03909660130739212f, 0.29893800616264343f, -0.12809400260448456f, -0.9715800285339355f, 0.8639299869537354f, 0.27060601115226746f, -0.46898600459098816f, -0.25660499930381775f, 0.4721499979496002f, -0.2731170058250427f, -0.5903429985046387f, -0.8265290260314941f, -0.7253810167312622f, -0.19482100009918213f, -0.2596609890460968f, -0.09492070227861404f, -0.1803019940853119f, 0.04468340054154396f, -0.22213299572467804f, -0.40393000841140747f, 0.295771986246109f, -0.9294899702072144f, 0.5800790190696716f, -0.169855996966362f, 0.33031100034713745f, 0.017355099320411682f, -0.6358230113983154f, 0.4759419858455658f, 0.9071750044822693f, 0.2427770048379898f, -0.5122079849243164f, 0.36246299743652344f, 0.04962889850139618f, 0.6517099738121033f, 0.9900569915771484f, 0.690733015537262f, -0.4690130054950714f, -0.10131099820137024f, -0.6837199926376343f, -0.15784099698066711f, -0.677711009979248f, -0.7082239985466003f, -0.6594370007514954f, -0.40760698914527893f, 0.677033007144928f, 0.8903200030326843f, 0.22830699384212494f, -0.7495139837265015f, 0.772957980632782f, 0.054701000452041626f, 0.551705002784729f, 0.9170519709587097f, -0.8950219750404358f, -0.7023969888687134f, 0.484142005443573f, 0.10864800214767456f, 0.8333470225334167f, 0.47887200117111206f, -0.984112024307251f, 0.3871760070323944f, -0.732990026473999f, 0.7526000142097473f, 0.44331198930740356f, -0.09878560155630112f, 0.12541499733924866f, 0.10875999927520752f, -0.49810799956321716f, 0.43209001421928406f, 0.34460899233818054f, 0.928941011428833f, -0.130731999874115f, -0.056916698813438416f}),
@@ -31920,6 +32721,8 @@ const TestModel& get_test_model_1_H3_W2_SAME_nhwc_float16_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_1_H3_W2_SAME_nhwc_float16_2 = TestModelManager::get().add("conv2d_v1_2_1_H3_W2_SAME_nhwc_float16_2", get_test_model_1_H3_W2_SAME_nhwc_float16_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -31927,9 +32730,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_1_H3_W2_SAME_nhwc_float16_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {9},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -32064,6 +32869,8 @@ const TestModel& get_test_model_1_H3_W2_SAME_nhwc_float16_all_inputs_as_internal
     };
     return model;
 }
+
+const auto dummy_test_model_1_H3_W2_SAME_nhwc_float16_all_inputs_as_internal_2 = TestModelManager::get().add("conv2d_v1_2_1_H3_W2_SAME_nhwc_float16_all_inputs_as_internal_2", get_test_model_1_H3_W2_SAME_nhwc_float16_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -32071,9 +32878,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_1_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({-0.29533499479293823f, -0.0038760099560022354f, -0.5522509813308716f, 0.16608400642871857f, -0.28481999039649963f, -0.15214300155639648f, -0.719884991645813f, -0.8693860173225403f, -0.7455980181694031f, 0.823947012424469f, 0.4731830060482025f, -0.33133700489997864f, 0.18763099610805511f, 0.04265709966421127f, -0.8268970251083374f, -0.7550849914550781f, -0.4724529981613159f, -0.023365600034594536f, 0.04834359884262085f, 0.9334179759025574f, -0.961974024772644f, 0.012578300200402737f, 0.21974200010299683f, 0.34260401129722595f, -0.1516599953174591f, 0.09349049627780914f, 0.7832210063934326f, 0.12966400384902954f, 0.8388440012931824f, -0.2713879942893982f, 0.9245190024375916f, 0.3428429961204529f, 0.2744179964065552f, 0.3508169949054718f, 0.8416380286216736f, -0.5439929962158203f, -0.002833950100466609f, -0.12846699357032776f, -0.6829429864883423f, -0.31911700963974f, 0.846340000629425f, 0.2830030024051666f, 0.32864999771118164f, 0.029375499114394188f, -0.03356960043311119f, 0.5912659764289856f, -0.0743476003408432f, -0.7412710189819336f, 0.4620560109615326f, -0.5836250185966492f, -0.5901830196380615f, 0.6233999729156494f, 0.535269021987915f, -0.6708179712295532f, -0.9556419849395752f, -0.7701730132102966f, 0.4799860119819641f, 0.664376974105835f, 0.3994449973106384f, -0.9688739776611328f, -0.2762629985809326f, -0.901951014995575f, 0.5441039800643921f, -0.9589809775352478f, 0.4826579988002777f, -0.8072839975357056f, 0.30536898970603943f, -0.9478179812431335f, 0.8274980187416077f, -0.38288700580596924f, -0.805741012096405f, -0.7966780066490173f, -0.2998040020465851f, -0.22982800006866455f, 0.8187829852104187f, -0.10305500030517578f, -0.4556800127029419f, -0.22782699763774872f, 0.5437430143356323f, -0.9607300162315369f, 0.9467470049858093f, -0.8571820259094238f, -0.9642599821090698f, -0.2924109995365143f, -0.7156140208244324f, 0.7652779817581177f, -0.47504299879074097f, -0.590142011642456f, -0.2385070025920868f, 0.6730020046234131f, -0.4733569920063019f, -0.31962600350379944f, 0.9360139966011047f, 0.48660698533058167f, 0.580843985080719f, 0.42535200715065f, -0.8009939789772034f, 0.2907629907131195f, -0.4949530065059662f, -0.44116199016571045f, 0.7186769843101501f, -0.8284270167350769f, 0.9696499705314636f, 7.536369957961142e-05f, -0.6999729871749878f, -0.526885986328125f, -0.3526819944381714f, 0.7994660139083862f, 0.33278900384902954f, 0.7233890295028687f, 0.40765899419784546f, -0.9340839982032776f, -0.2847050130367279f, 0.9614840149879456f, -0.7003949880599976f, -0.9858080148696899f, -0.5953419804573059f, -0.6917210221290588f, 0.4944800138473511f, -0.08426489681005478f, 0.03909660130739212f, 0.29893800616264343f, -0.12809400260448456f, -0.9715800285339355f, 0.8639299869537354f, 0.27060601115226746f, -0.46898600459098816f, -0.25660499930381775f, 0.4721499979496002f, -0.2731170058250427f, -0.5903429985046387f, -0.8265290260314941f, -0.7253810167312622f, -0.19482100009918213f, -0.2596609890460968f, -0.09492070227861404f, -0.1803019940853119f, 0.04468340054154396f, -0.22213299572467804f, -0.40393000841140747f, 0.295771986246109f, -0.9294899702072144f, 0.5800790190696716f, -0.169855996966362f, 0.33031100034713745f, 0.017355099320411682f, -0.6358230113983154f, 0.4759419858455658f, 0.9071750044822693f, 0.2427770048379898f, -0.5122079849243164f, 0.36246299743652344f, 0.04962889850139618f, 0.6517099738121033f, 0.9900569915771484f, 0.690733015537262f, -0.4690130054950714f, -0.10131099820137024f, -0.6837199926376343f, -0.15784099698066711f, -0.677711009979248f, -0.7082239985466003f, -0.6594370007514954f, -0.40760698914527893f, 0.677033007144928f, 0.8903200030326843f, 0.22830699384212494f, -0.7495139837265015f, 0.772957980632782f, 0.054701000452041626f, 0.551705002784729f, 0.9170519709587097f, -0.8950219750404358f, -0.7023969888687134f, 0.484142005443573f, 0.10864800214767456f, 0.8333470225334167f, 0.47887200117111206f, -0.984112024307251f, 0.3871760070323944f, -0.732990026473999f, 0.7526000142097473f, 0.44331198930740356f, -0.09878560155630112f, 0.12541499733924866f, 0.10875999927520752f, -0.49810799956321716f, 0.43209001421928406f, 0.34460899233818054f, 0.928941011428833f, -0.130731999874115f, -0.056916698813438416f}),
@@ -32174,6 +32983,8 @@ const TestModel& get_test_model_1_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_
     };
     return model;
 }
+
+const auto dummy_test_model_1_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_2 = TestModelManager::get().add("conv2d_v1_2_1_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_2", get_test_model_1_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -32181,9 +32992,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_1_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {9, 12, 15},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -32387,15 +33200,19 @@ const TestModel& get_test_model_1_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_
     return model;
 }
 
+const auto dummy_test_model_1_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("conv2d_v1_2_1_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_1_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::conv2d_v1_2
 
 namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_1_H3_W2_SAME_nchw_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-0.295335f, 0.166084f, -0.719885f, 0.823947f, 0.187631f, -0.755085f, 0.0483436f, 0.0125783f, -0.15166f, 0.129664f, 0.924519f, 0.350817f, -0.00283395f, -0.319117f, 0.32865f, 0.591266f, 0.462056f, 0.6234f, -0.955642f, 0.664377f, -0.276263f, -0.958981f, 0.305369f, -0.382887f, -0.299804f, -0.103055f, 0.543743f, -0.857182f, -0.715614f, -0.590142f, -0.473357f, 0.486607f, -0.800994f, -0.441162f, 0.96965f, -0.526886f, 0.332789f, -0.934084f, -0.700395f, -0.691721f, 0.0390966f, -0.97158f, -0.468986f, -0.273117f, -0.725381f, -0.0949207f, -0.222133f, -0.92949f, 0.330311f, 0.475942f, -0.512208f, 0.65171f, -0.469013f, -0.157841f, -0.659437f, 0.89032f, 0.772958f, 0.917052f, 0.484142f, 0.478872f, -0.73299f, -0.0987856f, -0.498108f, 0.928941f, -0.00387601f, -0.28482f, -0.869386f, 0.473183f, 0.0426571f, -0.472453f, 0.933418f, 0.219742f, 0.0934905f, 0.838844f, 0.342843f, 0.841638f, -0.128467f, 0.84634f, 0.0293755f, -0.0743476f, -0.583625f, 0.535269f, -0.770173f, 0.399445f, -0.901951f, 0.482658f, -0.947818f, -0.805741f, -0.229828f, -0.45568f, -0.96073f, -0.96426f, 0.765278f, -0.238507f, -0.319626f, 0.580844f, 0.290763f, 0.718677f, 7.53637e-05f, -0.352682f, 0.723389f, -0.284705f, -0.985808f, 0.49448f, 0.298938f, 0.86393f, -0.256605f, -0.590343f, -0.194821f, -0.180302f, -0.40393f, 0.580079f, 0.0173551f, 0.907175f, 0.362463f, 0.990057f, -0.101311f, -0.677711f, -0.407607f, 0.228307f, 0.054701f, -0.895022f, 0.108648f, -0.984112f, 0.7526f, 0.125415f, 0.43209f, -0.130732f, -0.552251f, -0.152143f, -0.745598f, -0.331337f, -0.826897f, -0.0233656f, -0.961974f, 0.342604f, 0.783221f, -0.271388f, 0.274418f, -0.543993f, -0.682943f, 0.283003f, -0.0335696f, -0.741271f, -0.590183f, -0.670818f, 0.479986f, -0.968874f, 0.544104f, -0.807284f, 0.827498f, -0.796678f, 0.818783f, -0.227827f, 0.946747f, -0.292411f, -0.475043f, 0.673002f, 0.936014f, 0.425352f, -0.494953f, -0.828427f, -0.699973f, 0.799466f, 0.407659f, 0.961484f, -0.595342f, -0.0842649f, -0.128094f, 0.270606f, 0.47215f, -0.826529f, -0.259661f, 0.0446834f, 0.295772f, -0.169856f, -0.635823f, 0.242777f, 0.0496289f, 0.690733f, -0.68372f, -0.708224f, 0.677033f, -0.749514f, 0.551705f, -0.702397f, 0.833347f, 0.387176f, 0.443312f, 0.10876f, 0.344609f, -0.0569167f}),
@@ -32496,6 +33313,8 @@ const TestModel& get_test_model_1_H3_W2_SAME_nchw_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_1_H3_W2_SAME_nchw_2 = TestModelManager::get().add("conv2d_v1_2_1_H3_W2_SAME_nchw_2", get_test_model_1_H3_W2_SAME_nchw_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -32503,9 +33322,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_1_H3_W2_SAME_nchw_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {9},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -32640,6 +33461,8 @@ const TestModel& get_test_model_1_H3_W2_SAME_nchw_all_inputs_as_internal_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_1_H3_W2_SAME_nchw_all_inputs_as_internal_2 = TestModelManager::get().add("conv2d_v1_2_1_H3_W2_SAME_nchw_all_inputs_as_internal_2", get_test_model_1_H3_W2_SAME_nchw_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -32647,9 +33470,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_1_H3_W2_SAME_nchw_all_tensors_as_inputs_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-0.295335f, 0.166084f, -0.719885f, 0.823947f, 0.187631f, -0.755085f, 0.0483436f, 0.0125783f, -0.15166f, 0.129664f, 0.924519f, 0.350817f, -0.00283395f, -0.319117f, 0.32865f, 0.591266f, 0.462056f, 0.6234f, -0.955642f, 0.664377f, -0.276263f, -0.958981f, 0.305369f, -0.382887f, -0.299804f, -0.103055f, 0.543743f, -0.857182f, -0.715614f, -0.590142f, -0.473357f, 0.486607f, -0.800994f, -0.441162f, 0.96965f, -0.526886f, 0.332789f, -0.934084f, -0.700395f, -0.691721f, 0.0390966f, -0.97158f, -0.468986f, -0.273117f, -0.725381f, -0.0949207f, -0.222133f, -0.92949f, 0.330311f, 0.475942f, -0.512208f, 0.65171f, -0.469013f, -0.157841f, -0.659437f, 0.89032f, 0.772958f, 0.917052f, 0.484142f, 0.478872f, -0.73299f, -0.0987856f, -0.498108f, 0.928941f, -0.00387601f, -0.28482f, -0.869386f, 0.473183f, 0.0426571f, -0.472453f, 0.933418f, 0.219742f, 0.0934905f, 0.838844f, 0.342843f, 0.841638f, -0.128467f, 0.84634f, 0.0293755f, -0.0743476f, -0.583625f, 0.535269f, -0.770173f, 0.399445f, -0.901951f, 0.482658f, -0.947818f, -0.805741f, -0.229828f, -0.45568f, -0.96073f, -0.96426f, 0.765278f, -0.238507f, -0.319626f, 0.580844f, 0.290763f, 0.718677f, 7.53637e-05f, -0.352682f, 0.723389f, -0.284705f, -0.985808f, 0.49448f, 0.298938f, 0.86393f, -0.256605f, -0.590343f, -0.194821f, -0.180302f, -0.40393f, 0.580079f, 0.0173551f, 0.907175f, 0.362463f, 0.990057f, -0.101311f, -0.677711f, -0.407607f, 0.228307f, 0.054701f, -0.895022f, 0.108648f, -0.984112f, 0.7526f, 0.125415f, 0.43209f, -0.130732f, -0.552251f, -0.152143f, -0.745598f, -0.331337f, -0.826897f, -0.0233656f, -0.961974f, 0.342604f, 0.783221f, -0.271388f, 0.274418f, -0.543993f, -0.682943f, 0.283003f, -0.0335696f, -0.741271f, -0.590183f, -0.670818f, 0.479986f, -0.968874f, 0.544104f, -0.807284f, 0.827498f, -0.796678f, 0.818783f, -0.227827f, 0.946747f, -0.292411f, -0.475043f, 0.673002f, 0.936014f, 0.425352f, -0.494953f, -0.828427f, -0.699973f, 0.799466f, 0.407659f, 0.961484f, -0.595342f, -0.0842649f, -0.128094f, 0.270606f, 0.47215f, -0.826529f, -0.259661f, 0.0446834f, 0.295772f, -0.169856f, -0.635823f, 0.242777f, 0.0496289f, 0.690733f, -0.68372f, -0.708224f, 0.677033f, -0.749514f, 0.551705f, -0.702397f, 0.833347f, 0.387176f, 0.443312f, 0.10876f, 0.344609f, -0.0569167f}),
@@ -32750,6 +33575,8 @@ const TestModel& get_test_model_1_H3_W2_SAME_nchw_all_tensors_as_inputs_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_1_H3_W2_SAME_nchw_all_tensors_as_inputs_2 = TestModelManager::get().add("conv2d_v1_2_1_H3_W2_SAME_nchw_all_tensors_as_inputs_2", get_test_model_1_H3_W2_SAME_nchw_all_tensors_as_inputs_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -32757,9 +33584,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_1_H3_W2_SAME_nchw_all_tensors_as_inputs_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {9, 12, 15},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -32962,6 +33791,8 @@ const TestModel& get_test_model_1_H3_W2_SAME_nchw_all_tensors_as_inputs_all_inpu
     };
     return model;
 }
+
+const auto dummy_test_model_1_H3_W2_SAME_nchw_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("conv2d_v1_2_1_H3_W2_SAME_nchw_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_1_H3_W2_SAME_nchw_all_tensors_as_inputs_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -32969,9 +33800,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_1_H3_W2_SAME_nchw_relaxed_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-0.295335f, 0.166084f, -0.719885f, 0.823947f, 0.187631f, -0.755085f, 0.0483436f, 0.0125783f, -0.15166f, 0.129664f, 0.924519f, 0.350817f, -0.00283395f, -0.319117f, 0.32865f, 0.591266f, 0.462056f, 0.6234f, -0.955642f, 0.664377f, -0.276263f, -0.958981f, 0.305369f, -0.382887f, -0.299804f, -0.103055f, 0.543743f, -0.857182f, -0.715614f, -0.590142f, -0.473357f, 0.486607f, -0.800994f, -0.441162f, 0.96965f, -0.526886f, 0.332789f, -0.934084f, -0.700395f, -0.691721f, 0.0390966f, -0.97158f, -0.468986f, -0.273117f, -0.725381f, -0.0949207f, -0.222133f, -0.92949f, 0.330311f, 0.475942f, -0.512208f, 0.65171f, -0.469013f, -0.157841f, -0.659437f, 0.89032f, 0.772958f, 0.917052f, 0.484142f, 0.478872f, -0.73299f, -0.0987856f, -0.498108f, 0.928941f, -0.00387601f, -0.28482f, -0.869386f, 0.473183f, 0.0426571f, -0.472453f, 0.933418f, 0.219742f, 0.0934905f, 0.838844f, 0.342843f, 0.841638f, -0.128467f, 0.84634f, 0.0293755f, -0.0743476f, -0.583625f, 0.535269f, -0.770173f, 0.399445f, -0.901951f, 0.482658f, -0.947818f, -0.805741f, -0.229828f, -0.45568f, -0.96073f, -0.96426f, 0.765278f, -0.238507f, -0.319626f, 0.580844f, 0.290763f, 0.718677f, 7.53637e-05f, -0.352682f, 0.723389f, -0.284705f, -0.985808f, 0.49448f, 0.298938f, 0.86393f, -0.256605f, -0.590343f, -0.194821f, -0.180302f, -0.40393f, 0.580079f, 0.0173551f, 0.907175f, 0.362463f, 0.990057f, -0.101311f, -0.677711f, -0.407607f, 0.228307f, 0.054701f, -0.895022f, 0.108648f, -0.984112f, 0.7526f, 0.125415f, 0.43209f, -0.130732f, -0.552251f, -0.152143f, -0.745598f, -0.331337f, -0.826897f, -0.0233656f, -0.961974f, 0.342604f, 0.783221f, -0.271388f, 0.274418f, -0.543993f, -0.682943f, 0.283003f, -0.0335696f, -0.741271f, -0.590183f, -0.670818f, 0.479986f, -0.968874f, 0.544104f, -0.807284f, 0.827498f, -0.796678f, 0.818783f, -0.227827f, 0.946747f, -0.292411f, -0.475043f, 0.673002f, 0.936014f, 0.425352f, -0.494953f, -0.828427f, -0.699973f, 0.799466f, 0.407659f, 0.961484f, -0.595342f, -0.0842649f, -0.128094f, 0.270606f, 0.47215f, -0.826529f, -0.259661f, 0.0446834f, 0.295772f, -0.169856f, -0.635823f, 0.242777f, 0.0496289f, 0.690733f, -0.68372f, -0.708224f, 0.677033f, -0.749514f, 0.551705f, -0.702397f, 0.833347f, 0.387176f, 0.443312f, 0.10876f, 0.344609f, -0.0569167f}),
@@ -33072,6 +33905,8 @@ const TestModel& get_test_model_1_H3_W2_SAME_nchw_relaxed_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_1_H3_W2_SAME_nchw_relaxed_2 = TestModelManager::get().add("conv2d_v1_2_1_H3_W2_SAME_nchw_relaxed_2", get_test_model_1_H3_W2_SAME_nchw_relaxed_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -33079,9 +33914,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_1_H3_W2_SAME_nchw_relaxed_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {9},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -33216,6 +34053,8 @@ const TestModel& get_test_model_1_H3_W2_SAME_nchw_relaxed_all_inputs_as_internal
     };
     return model;
 }
+
+const auto dummy_test_model_1_H3_W2_SAME_nchw_relaxed_all_inputs_as_internal_2 = TestModelManager::get().add("conv2d_v1_2_1_H3_W2_SAME_nchw_relaxed_all_inputs_as_internal_2", get_test_model_1_H3_W2_SAME_nchw_relaxed_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -33223,9 +34062,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_1_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-0.295335f, 0.166084f, -0.719885f, 0.823947f, 0.187631f, -0.755085f, 0.0483436f, 0.0125783f, -0.15166f, 0.129664f, 0.924519f, 0.350817f, -0.00283395f, -0.319117f, 0.32865f, 0.591266f, 0.462056f, 0.6234f, -0.955642f, 0.664377f, -0.276263f, -0.958981f, 0.305369f, -0.382887f, -0.299804f, -0.103055f, 0.543743f, -0.857182f, -0.715614f, -0.590142f, -0.473357f, 0.486607f, -0.800994f, -0.441162f, 0.96965f, -0.526886f, 0.332789f, -0.934084f, -0.700395f, -0.691721f, 0.0390966f, -0.97158f, -0.468986f, -0.273117f, -0.725381f, -0.0949207f, -0.222133f, -0.92949f, 0.330311f, 0.475942f, -0.512208f, 0.65171f, -0.469013f, -0.157841f, -0.659437f, 0.89032f, 0.772958f, 0.917052f, 0.484142f, 0.478872f, -0.73299f, -0.0987856f, -0.498108f, 0.928941f, -0.00387601f, -0.28482f, -0.869386f, 0.473183f, 0.0426571f, -0.472453f, 0.933418f, 0.219742f, 0.0934905f, 0.838844f, 0.342843f, 0.841638f, -0.128467f, 0.84634f, 0.0293755f, -0.0743476f, -0.583625f, 0.535269f, -0.770173f, 0.399445f, -0.901951f, 0.482658f, -0.947818f, -0.805741f, -0.229828f, -0.45568f, -0.96073f, -0.96426f, 0.765278f, -0.238507f, -0.319626f, 0.580844f, 0.290763f, 0.718677f, 7.53637e-05f, -0.352682f, 0.723389f, -0.284705f, -0.985808f, 0.49448f, 0.298938f, 0.86393f, -0.256605f, -0.590343f, -0.194821f, -0.180302f, -0.40393f, 0.580079f, 0.0173551f, 0.907175f, 0.362463f, 0.990057f, -0.101311f, -0.677711f, -0.407607f, 0.228307f, 0.054701f, -0.895022f, 0.108648f, -0.984112f, 0.7526f, 0.125415f, 0.43209f, -0.130732f, -0.552251f, -0.152143f, -0.745598f, -0.331337f, -0.826897f, -0.0233656f, -0.961974f, 0.342604f, 0.783221f, -0.271388f, 0.274418f, -0.543993f, -0.682943f, 0.283003f, -0.0335696f, -0.741271f, -0.590183f, -0.670818f, 0.479986f, -0.968874f, 0.544104f, -0.807284f, 0.827498f, -0.796678f, 0.818783f, -0.227827f, 0.946747f, -0.292411f, -0.475043f, 0.673002f, 0.936014f, 0.425352f, -0.494953f, -0.828427f, -0.699973f, 0.799466f, 0.407659f, 0.961484f, -0.595342f, -0.0842649f, -0.128094f, 0.270606f, 0.47215f, -0.826529f, -0.259661f, 0.0446834f, 0.295772f, -0.169856f, -0.635823f, 0.242777f, 0.0496289f, 0.690733f, -0.68372f, -0.708224f, 0.677033f, -0.749514f, 0.551705f, -0.702397f, 0.833347f, 0.387176f, 0.443312f, 0.10876f, 0.344609f, -0.0569167f}),
@@ -33326,6 +34167,8 @@ const TestModel& get_test_model_1_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_
     };
     return model;
 }
+
+const auto dummy_test_model_1_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_2 = TestModelManager::get().add("conv2d_v1_2_1_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_2", get_test_model_1_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -33333,9 +34176,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_1_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {9, 12, 15},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -33539,15 +34384,19 @@ const TestModel& get_test_model_1_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_
     return model;
 }
 
+const auto dummy_test_model_1_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("conv2d_v1_2_1_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_1_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::conv2d_v1_2
 
 namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_1_H3_W2_SAME_nchw_float16_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({-0.29533499479293823f, 0.16608400642871857f, -0.719884991645813f, 0.823947012424469f, 0.18763099610805511f, -0.7550849914550781f, 0.04834359884262085f, 0.012578300200402737f, -0.1516599953174591f, 0.12966400384902954f, 0.9245190024375916f, 0.3508169949054718f, -0.002833950100466609f, -0.31911700963974f, 0.32864999771118164f, 0.5912659764289856f, 0.4620560109615326f, 0.6233999729156494f, -0.9556419849395752f, 0.664376974105835f, -0.2762629985809326f, -0.9589809775352478f, 0.30536898970603943f, -0.38288700580596924f, -0.2998040020465851f, -0.10305500030517578f, 0.5437430143356323f, -0.8571820259094238f, -0.7156140208244324f, -0.590142011642456f, -0.4733569920063019f, 0.48660698533058167f, -0.8009939789772034f, -0.44116199016571045f, 0.9696499705314636f, -0.526885986328125f, 0.33278900384902954f, -0.9340839982032776f, -0.7003949880599976f, -0.6917210221290588f, 0.03909660130739212f, -0.9715800285339355f, -0.46898600459098816f, -0.2731170058250427f, -0.7253810167312622f, -0.09492070227861404f, -0.22213299572467804f, -0.9294899702072144f, 0.33031100034713745f, 0.4759419858455658f, -0.5122079849243164f, 0.6517099738121033f, -0.4690130054950714f, -0.15784099698066711f, -0.6594370007514954f, 0.8903200030326843f, 0.772957980632782f, 0.9170519709587097f, 0.484142005443573f, 0.47887200117111206f, -0.732990026473999f, -0.09878560155630112f, -0.49810799956321716f, 0.928941011428833f, -0.0038760099560022354f, -0.28481999039649963f, -0.8693860173225403f, 0.4731830060482025f, 0.04265709966421127f, -0.4724529981613159f, 0.9334179759025574f, 0.21974200010299683f, 0.09349049627780914f, 0.8388440012931824f, 0.3428429961204529f, 0.8416380286216736f, -0.12846699357032776f, 0.846340000629425f, 0.029375499114394188f, -0.0743476003408432f, -0.5836250185966492f, 0.535269021987915f, -0.7701730132102966f, 0.3994449973106384f, -0.901951014995575f, 0.4826579988002777f, -0.9478179812431335f, -0.805741012096405f, -0.22982800006866455f, -0.4556800127029419f, -0.9607300162315369f, -0.9642599821090698f, 0.7652779817581177f, -0.2385070025920868f, -0.31962600350379944f, 0.580843985080719f, 0.2907629907131195f, 0.7186769843101501f, 7.536369957961142e-05f, -0.3526819944381714f, 0.7233890295028687f, -0.2847050130367279f, -0.9858080148696899f, 0.4944800138473511f, 0.29893800616264343f, 0.8639299869537354f, -0.25660499930381775f, -0.5903429985046387f, -0.19482100009918213f, -0.1803019940853119f, -0.40393000841140747f, 0.5800790190696716f, 0.017355099320411682f, 0.9071750044822693f, 0.36246299743652344f, 0.9900569915771484f, -0.10131099820137024f, -0.677711009979248f, -0.40760698914527893f, 0.22830699384212494f, 0.054701000452041626f, -0.8950219750404358f, 0.10864800214767456f, -0.984112024307251f, 0.7526000142097473f, 0.12541499733924866f, 0.43209001421928406f, -0.130731999874115f, -0.5522509813308716f, -0.15214300155639648f, -0.7455980181694031f, -0.33133700489997864f, -0.8268970251083374f, -0.023365600034594536f, -0.961974024772644f, 0.34260401129722595f, 0.7832210063934326f, -0.2713879942893982f, 0.2744179964065552f, -0.5439929962158203f, -0.6829429864883423f, 0.2830030024051666f, -0.03356960043311119f, -0.7412710189819336f, -0.5901830196380615f, -0.6708179712295532f, 0.4799860119819641f, -0.9688739776611328f, 0.5441039800643921f, -0.8072839975357056f, 0.8274980187416077f, -0.7966780066490173f, 0.8187829852104187f, -0.22782699763774872f, 0.9467470049858093f, -0.2924109995365143f, -0.47504299879074097f, 0.6730020046234131f, 0.9360139966011047f, 0.42535200715065f, -0.4949530065059662f, -0.8284270167350769f, -0.6999729871749878f, 0.7994660139083862f, 0.40765899419784546f, 0.9614840149879456f, -0.5953419804573059f, -0.08426489681005478f, -0.12809400260448456f, 0.27060601115226746f, 0.4721499979496002f, -0.8265290260314941f, -0.2596609890460968f, 0.04468340054154396f, 0.295771986246109f, -0.169855996966362f, -0.6358230113983154f, 0.2427770048379898f, 0.04962889850139618f, 0.690733015537262f, -0.6837199926376343f, -0.7082239985466003f, 0.677033007144928f, -0.7495139837265015f, 0.551705002784729f, -0.7023969888687134f, 0.8333470225334167f, 0.3871760070323944f, 0.44331198930740356f, 0.10875999927520752f, 0.34460899233818054f, -0.056916698813438416f}),
@@ -33648,6 +34497,8 @@ const TestModel& get_test_model_1_H3_W2_SAME_nchw_float16_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_1_H3_W2_SAME_nchw_float16_2 = TestModelManager::get().add("conv2d_v1_2_1_H3_W2_SAME_nchw_float16_2", get_test_model_1_H3_W2_SAME_nchw_float16_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -33655,9 +34506,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_1_H3_W2_SAME_nchw_float16_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {9},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -33792,6 +34645,8 @@ const TestModel& get_test_model_1_H3_W2_SAME_nchw_float16_all_inputs_as_internal
     };
     return model;
 }
+
+const auto dummy_test_model_1_H3_W2_SAME_nchw_float16_all_inputs_as_internal_2 = TestModelManager::get().add("conv2d_v1_2_1_H3_W2_SAME_nchw_float16_all_inputs_as_internal_2", get_test_model_1_H3_W2_SAME_nchw_float16_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -33799,9 +34654,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_1_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({-0.29533499479293823f, 0.16608400642871857f, -0.719884991645813f, 0.823947012424469f, 0.18763099610805511f, -0.7550849914550781f, 0.04834359884262085f, 0.012578300200402737f, -0.1516599953174591f, 0.12966400384902954f, 0.9245190024375916f, 0.3508169949054718f, -0.002833950100466609f, -0.31911700963974f, 0.32864999771118164f, 0.5912659764289856f, 0.4620560109615326f, 0.6233999729156494f, -0.9556419849395752f, 0.664376974105835f, -0.2762629985809326f, -0.9589809775352478f, 0.30536898970603943f, -0.38288700580596924f, -0.2998040020465851f, -0.10305500030517578f, 0.5437430143356323f, -0.8571820259094238f, -0.7156140208244324f, -0.590142011642456f, -0.4733569920063019f, 0.48660698533058167f, -0.8009939789772034f, -0.44116199016571045f, 0.9696499705314636f, -0.526885986328125f, 0.33278900384902954f, -0.9340839982032776f, -0.7003949880599976f, -0.6917210221290588f, 0.03909660130739212f, -0.9715800285339355f, -0.46898600459098816f, -0.2731170058250427f, -0.7253810167312622f, -0.09492070227861404f, -0.22213299572467804f, -0.9294899702072144f, 0.33031100034713745f, 0.4759419858455658f, -0.5122079849243164f, 0.6517099738121033f, -0.4690130054950714f, -0.15784099698066711f, -0.6594370007514954f, 0.8903200030326843f, 0.772957980632782f, 0.9170519709587097f, 0.484142005443573f, 0.47887200117111206f, -0.732990026473999f, -0.09878560155630112f, -0.49810799956321716f, 0.928941011428833f, -0.0038760099560022354f, -0.28481999039649963f, -0.8693860173225403f, 0.4731830060482025f, 0.04265709966421127f, -0.4724529981613159f, 0.9334179759025574f, 0.21974200010299683f, 0.09349049627780914f, 0.8388440012931824f, 0.3428429961204529f, 0.8416380286216736f, -0.12846699357032776f, 0.846340000629425f, 0.029375499114394188f, -0.0743476003408432f, -0.5836250185966492f, 0.535269021987915f, -0.7701730132102966f, 0.3994449973106384f, -0.901951014995575f, 0.4826579988002777f, -0.9478179812431335f, -0.805741012096405f, -0.22982800006866455f, -0.4556800127029419f, -0.9607300162315369f, -0.9642599821090698f, 0.7652779817581177f, -0.2385070025920868f, -0.31962600350379944f, 0.580843985080719f, 0.2907629907131195f, 0.7186769843101501f, 7.536369957961142e-05f, -0.3526819944381714f, 0.7233890295028687f, -0.2847050130367279f, -0.9858080148696899f, 0.4944800138473511f, 0.29893800616264343f, 0.8639299869537354f, -0.25660499930381775f, -0.5903429985046387f, -0.19482100009918213f, -0.1803019940853119f, -0.40393000841140747f, 0.5800790190696716f, 0.017355099320411682f, 0.9071750044822693f, 0.36246299743652344f, 0.9900569915771484f, -0.10131099820137024f, -0.677711009979248f, -0.40760698914527893f, 0.22830699384212494f, 0.054701000452041626f, -0.8950219750404358f, 0.10864800214767456f, -0.984112024307251f, 0.7526000142097473f, 0.12541499733924866f, 0.43209001421928406f, -0.130731999874115f, -0.5522509813308716f, -0.15214300155639648f, -0.7455980181694031f, -0.33133700489997864f, -0.8268970251083374f, -0.023365600034594536f, -0.961974024772644f, 0.34260401129722595f, 0.7832210063934326f, -0.2713879942893982f, 0.2744179964065552f, -0.5439929962158203f, -0.6829429864883423f, 0.2830030024051666f, -0.03356960043311119f, -0.7412710189819336f, -0.5901830196380615f, -0.6708179712295532f, 0.4799860119819641f, -0.9688739776611328f, 0.5441039800643921f, -0.8072839975357056f, 0.8274980187416077f, -0.7966780066490173f, 0.8187829852104187f, -0.22782699763774872f, 0.9467470049858093f, -0.2924109995365143f, -0.47504299879074097f, 0.6730020046234131f, 0.9360139966011047f, 0.42535200715065f, -0.4949530065059662f, -0.8284270167350769f, -0.6999729871749878f, 0.7994660139083862f, 0.40765899419784546f, 0.9614840149879456f, -0.5953419804573059f, -0.08426489681005478f, -0.12809400260448456f, 0.27060601115226746f, 0.4721499979496002f, -0.8265290260314941f, -0.2596609890460968f, 0.04468340054154396f, 0.295771986246109f, -0.169855996966362f, -0.6358230113983154f, 0.2427770048379898f, 0.04962889850139618f, 0.690733015537262f, -0.6837199926376343f, -0.7082239985466003f, 0.677033007144928f, -0.7495139837265015f, 0.551705002784729f, -0.7023969888687134f, 0.8333470225334167f, 0.3871760070323944f, 0.44331198930740356f, 0.10875999927520752f, 0.34460899233818054f, -0.056916698813438416f}),
@@ -33902,6 +34759,8 @@ const TestModel& get_test_model_1_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_
     };
     return model;
 }
+
+const auto dummy_test_model_1_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_2 = TestModelManager::get().add("conv2d_v1_2_1_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_2", get_test_model_1_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -33909,9 +34768,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_1_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {9, 12, 15},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -34115,15 +34976,19 @@ const TestModel& get_test_model_1_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_
     return model;
 }
 
+const auto dummy_test_model_1_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("conv2d_v1_2_1_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_1_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::conv2d_v1_2
 
 namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_1_H3_W2_VALID_nhwc() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-0.869931f, 0.644628f, -0.918393f, 0.153672f, 0.868562f, -0.358177f, -0.134931f, -0.247565f, 0.22174f, -0.259157f, -0.284296f, -0.538065f, 0.765559f, 0.41986f, -0.556241f, 0.658494f, 0.214355f, -0.850169f, -0.252893f, -0.478935f, 0.530526f, -0.0700663f, -0.988729f, -0.303061f, 0.150845f, 0.829915f, 0.476349f, 0.406537f, -0.355343f, 0.757145f, -0.356362f, 0.800482f, -0.713861f, 0.210483f, -0.634303f, 0.718236f, -0.752038f, 0.457547f, -0.550769f, -0.551178f, 0.446766f, -0.227462f, 0.216348f, -0.852806f, -0.351486f, 0.55906f, -0.668493f, -0.303493f, -0.363763f, -0.162837f, 0.0701012f, 0.756097f, -0.142269f, 0.329724f, -0.656317f, -0.998086f, -0.652949f, -0.40316f, -0.893682f, 0.432744f, 0.612362f, -0.869588f, -0.71327f, -0.398092f, -0.0423559f, 0.436576f, -0.925272f, 0.176549f, 0.822904f, 0.096833f, -0.296802f, -0.427195f, 0.031654f, -0.254479f, 0.244905f, 0.0948254f, 0.643769f, -0.90391f, 0.352665f, -0.901179f, 0.266159f, -0.968068f, -0.615401f, -0.388975f, 0.939052f, -0.116289f, 0.107523f, -0.0582711f, 0.435172f, 0.334675f, 0.459711f, 0.717436f, 0.496627f, -0.680175f, -0.415066f, 0.339848f, 0.506004f, -0.337808f, -0.107218f, -0.172496f, 0.870638f, 0.931872f, -0.953884f, 0.903042f, 0.760078f, 0.209727f, -0.285384f, -0.45514f, 0.113194f, 0.0756611f, 0.0924435f, -0.472863f, 0.960609f, -0.160385f, -0.839445f, 0.457097f, 0.163348f, 0.344867f, -0.131619f, 0.688715f, -0.540827f, 0.571259f, -0.95587f, 0.506164f, -0.155839f, 0.0789621f, 0.756772f, -0.662069f, 0.242908f, 0.460821f, 0.177872f, -0.289839f, -0.640603f, 0.702598f, -0.506406f, -0.568262f, -0.0713716f, 0.413792f, 0.159673f, -0.305208f, 0.133816f, -0.160254f, 0.787323f, -0.753244f, 0.600721f, 0.263186f, -0.162387f, 0.477962f, -0.702951f, -0.731036f, -0.939481f, -0.524519f, 0.934072f, -0.511637f, -0.503499f, 0.106236f, -0.323684f, 0.534444f, -0.843745f, 0.364171f, 0.0370358f, -0.168801f, -0.404559f, -0.814178f, 0.91745f, -0.334276f, 0.66925f, -0.801201f, 0.156511f, -0.427949f, 0.379153f, 0.818597f, -0.649902f, 0.427087f, -0.586015f, -0.559789f, -0.833923f, 0.0892409f, -0.621251f, 0.213826f, 0.465509f, 0.4704f, 0.380261f, 0.413067f, 0.180822f, 0.172866f, 0.59614f, 0.825575f, 0.662916f, -0.704381f, -0.297631f, 0.697778f}),
@@ -34224,6 +35089,8 @@ const TestModel& get_test_model_1_H3_W2_VALID_nhwc() {
     };
     return model;
 }
+
+const auto dummy_test_model_1_H3_W2_VALID_nhwc = TestModelManager::get().add("conv2d_v1_2_1_H3_W2_VALID_nhwc", get_test_model_1_H3_W2_VALID_nhwc());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -34231,9 +35098,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_1_H3_W2_VALID_nhwc_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {9},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -34368,6 +35237,8 @@ const TestModel& get_test_model_1_H3_W2_VALID_nhwc_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_1_H3_W2_VALID_nhwc_all_inputs_as_internal = TestModelManager::get().add("conv2d_v1_2_1_H3_W2_VALID_nhwc_all_inputs_as_internal", get_test_model_1_H3_W2_VALID_nhwc_all_inputs_as_internal());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -34375,9 +35246,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_1_H3_W2_VALID_nhwc_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-0.869931f, 0.644628f, -0.918393f, 0.153672f, 0.868562f, -0.358177f, -0.134931f, -0.247565f, 0.22174f, -0.259157f, -0.284296f, -0.538065f, 0.765559f, 0.41986f, -0.556241f, 0.658494f, 0.214355f, -0.850169f, -0.252893f, -0.478935f, 0.530526f, -0.0700663f, -0.988729f, -0.303061f, 0.150845f, 0.829915f, 0.476349f, 0.406537f, -0.355343f, 0.757145f, -0.356362f, 0.800482f, -0.713861f, 0.210483f, -0.634303f, 0.718236f, -0.752038f, 0.457547f, -0.550769f, -0.551178f, 0.446766f, -0.227462f, 0.216348f, -0.852806f, -0.351486f, 0.55906f, -0.668493f, -0.303493f, -0.363763f, -0.162837f, 0.0701012f, 0.756097f, -0.142269f, 0.329724f, -0.656317f, -0.998086f, -0.652949f, -0.40316f, -0.893682f, 0.432744f, 0.612362f, -0.869588f, -0.71327f, -0.398092f, -0.0423559f, 0.436576f, -0.925272f, 0.176549f, 0.822904f, 0.096833f, -0.296802f, -0.427195f, 0.031654f, -0.254479f, 0.244905f, 0.0948254f, 0.643769f, -0.90391f, 0.352665f, -0.901179f, 0.266159f, -0.968068f, -0.615401f, -0.388975f, 0.939052f, -0.116289f, 0.107523f, -0.0582711f, 0.435172f, 0.334675f, 0.459711f, 0.717436f, 0.496627f, -0.680175f, -0.415066f, 0.339848f, 0.506004f, -0.337808f, -0.107218f, -0.172496f, 0.870638f, 0.931872f, -0.953884f, 0.903042f, 0.760078f, 0.209727f, -0.285384f, -0.45514f, 0.113194f, 0.0756611f, 0.0924435f, -0.472863f, 0.960609f, -0.160385f, -0.839445f, 0.457097f, 0.163348f, 0.344867f, -0.131619f, 0.688715f, -0.540827f, 0.571259f, -0.95587f, 0.506164f, -0.155839f, 0.0789621f, 0.756772f, -0.662069f, 0.242908f, 0.460821f, 0.177872f, -0.289839f, -0.640603f, 0.702598f, -0.506406f, -0.568262f, -0.0713716f, 0.413792f, 0.159673f, -0.305208f, 0.133816f, -0.160254f, 0.787323f, -0.753244f, 0.600721f, 0.263186f, -0.162387f, 0.477962f, -0.702951f, -0.731036f, -0.939481f, -0.524519f, 0.934072f, -0.511637f, -0.503499f, 0.106236f, -0.323684f, 0.534444f, -0.843745f, 0.364171f, 0.0370358f, -0.168801f, -0.404559f, -0.814178f, 0.91745f, -0.334276f, 0.66925f, -0.801201f, 0.156511f, -0.427949f, 0.379153f, 0.818597f, -0.649902f, 0.427087f, -0.586015f, -0.559789f, -0.833923f, 0.0892409f, -0.621251f, 0.213826f, 0.465509f, 0.4704f, 0.380261f, 0.413067f, 0.180822f, 0.172866f, 0.59614f, 0.825575f, 0.662916f, -0.704381f, -0.297631f, 0.697778f}),
@@ -34478,6 +35351,8 @@ const TestModel& get_test_model_1_H3_W2_VALID_nhwc_all_tensors_as_inputs() {
     };
     return model;
 }
+
+const auto dummy_test_model_1_H3_W2_VALID_nhwc_all_tensors_as_inputs = TestModelManager::get().add("conv2d_v1_2_1_H3_W2_VALID_nhwc_all_tensors_as_inputs", get_test_model_1_H3_W2_VALID_nhwc_all_tensors_as_inputs());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -34485,9 +35360,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_1_H3_W2_VALID_nhwc_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {9, 12, 15},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -34690,6 +35567,8 @@ const TestModel& get_test_model_1_H3_W2_VALID_nhwc_all_tensors_as_inputs_all_inp
     };
     return model;
 }
+
+const auto dummy_test_model_1_H3_W2_VALID_nhwc_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("conv2d_v1_2_1_H3_W2_VALID_nhwc_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_1_H3_W2_VALID_nhwc_all_tensors_as_inputs_all_inputs_as_internal());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -34697,9 +35576,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_1_H3_W2_VALID_nhwc_relaxed() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-0.869931f, 0.644628f, -0.918393f, 0.153672f, 0.868562f, -0.358177f, -0.134931f, -0.247565f, 0.22174f, -0.259157f, -0.284296f, -0.538065f, 0.765559f, 0.41986f, -0.556241f, 0.658494f, 0.214355f, -0.850169f, -0.252893f, -0.478935f, 0.530526f, -0.0700663f, -0.988729f, -0.303061f, 0.150845f, 0.829915f, 0.476349f, 0.406537f, -0.355343f, 0.757145f, -0.356362f, 0.800482f, -0.713861f, 0.210483f, -0.634303f, 0.718236f, -0.752038f, 0.457547f, -0.550769f, -0.551178f, 0.446766f, -0.227462f, 0.216348f, -0.852806f, -0.351486f, 0.55906f, -0.668493f, -0.303493f, -0.363763f, -0.162837f, 0.0701012f, 0.756097f, -0.142269f, 0.329724f, -0.656317f, -0.998086f, -0.652949f, -0.40316f, -0.893682f, 0.432744f, 0.612362f, -0.869588f, -0.71327f, -0.398092f, -0.0423559f, 0.436576f, -0.925272f, 0.176549f, 0.822904f, 0.096833f, -0.296802f, -0.427195f, 0.031654f, -0.254479f, 0.244905f, 0.0948254f, 0.643769f, -0.90391f, 0.352665f, -0.901179f, 0.266159f, -0.968068f, -0.615401f, -0.388975f, 0.939052f, -0.116289f, 0.107523f, -0.0582711f, 0.435172f, 0.334675f, 0.459711f, 0.717436f, 0.496627f, -0.680175f, -0.415066f, 0.339848f, 0.506004f, -0.337808f, -0.107218f, -0.172496f, 0.870638f, 0.931872f, -0.953884f, 0.903042f, 0.760078f, 0.209727f, -0.285384f, -0.45514f, 0.113194f, 0.0756611f, 0.0924435f, -0.472863f, 0.960609f, -0.160385f, -0.839445f, 0.457097f, 0.163348f, 0.344867f, -0.131619f, 0.688715f, -0.540827f, 0.571259f, -0.95587f, 0.506164f, -0.155839f, 0.0789621f, 0.756772f, -0.662069f, 0.242908f, 0.460821f, 0.177872f, -0.289839f, -0.640603f, 0.702598f, -0.506406f, -0.568262f, -0.0713716f, 0.413792f, 0.159673f, -0.305208f, 0.133816f, -0.160254f, 0.787323f, -0.753244f, 0.600721f, 0.263186f, -0.162387f, 0.477962f, -0.702951f, -0.731036f, -0.939481f, -0.524519f, 0.934072f, -0.511637f, -0.503499f, 0.106236f, -0.323684f, 0.534444f, -0.843745f, 0.364171f, 0.0370358f, -0.168801f, -0.404559f, -0.814178f, 0.91745f, -0.334276f, 0.66925f, -0.801201f, 0.156511f, -0.427949f, 0.379153f, 0.818597f, -0.649902f, 0.427087f, -0.586015f, -0.559789f, -0.833923f, 0.0892409f, -0.621251f, 0.213826f, 0.465509f, 0.4704f, 0.380261f, 0.413067f, 0.180822f, 0.172866f, 0.59614f, 0.825575f, 0.662916f, -0.704381f, -0.297631f, 0.697778f}),
@@ -34800,6 +35681,8 @@ const TestModel& get_test_model_1_H3_W2_VALID_nhwc_relaxed() {
     };
     return model;
 }
+
+const auto dummy_test_model_1_H3_W2_VALID_nhwc_relaxed = TestModelManager::get().add("conv2d_v1_2_1_H3_W2_VALID_nhwc_relaxed", get_test_model_1_H3_W2_VALID_nhwc_relaxed());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -34807,9 +35690,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_1_H3_W2_VALID_nhwc_relaxed_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {9},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -34944,6 +35829,8 @@ const TestModel& get_test_model_1_H3_W2_VALID_nhwc_relaxed_all_inputs_as_interna
     };
     return model;
 }
+
+const auto dummy_test_model_1_H3_W2_VALID_nhwc_relaxed_all_inputs_as_internal = TestModelManager::get().add("conv2d_v1_2_1_H3_W2_VALID_nhwc_relaxed_all_inputs_as_internal", get_test_model_1_H3_W2_VALID_nhwc_relaxed_all_inputs_as_internal());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -34951,9 +35838,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_1_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-0.869931f, 0.644628f, -0.918393f, 0.153672f, 0.868562f, -0.358177f, -0.134931f, -0.247565f, 0.22174f, -0.259157f, -0.284296f, -0.538065f, 0.765559f, 0.41986f, -0.556241f, 0.658494f, 0.214355f, -0.850169f, -0.252893f, -0.478935f, 0.530526f, -0.0700663f, -0.988729f, -0.303061f, 0.150845f, 0.829915f, 0.476349f, 0.406537f, -0.355343f, 0.757145f, -0.356362f, 0.800482f, -0.713861f, 0.210483f, -0.634303f, 0.718236f, -0.752038f, 0.457547f, -0.550769f, -0.551178f, 0.446766f, -0.227462f, 0.216348f, -0.852806f, -0.351486f, 0.55906f, -0.668493f, -0.303493f, -0.363763f, -0.162837f, 0.0701012f, 0.756097f, -0.142269f, 0.329724f, -0.656317f, -0.998086f, -0.652949f, -0.40316f, -0.893682f, 0.432744f, 0.612362f, -0.869588f, -0.71327f, -0.398092f, -0.0423559f, 0.436576f, -0.925272f, 0.176549f, 0.822904f, 0.096833f, -0.296802f, -0.427195f, 0.031654f, -0.254479f, 0.244905f, 0.0948254f, 0.643769f, -0.90391f, 0.352665f, -0.901179f, 0.266159f, -0.968068f, -0.615401f, -0.388975f, 0.939052f, -0.116289f, 0.107523f, -0.0582711f, 0.435172f, 0.334675f, 0.459711f, 0.717436f, 0.496627f, -0.680175f, -0.415066f, 0.339848f, 0.506004f, -0.337808f, -0.107218f, -0.172496f, 0.870638f, 0.931872f, -0.953884f, 0.903042f, 0.760078f, 0.209727f, -0.285384f, -0.45514f, 0.113194f, 0.0756611f, 0.0924435f, -0.472863f, 0.960609f, -0.160385f, -0.839445f, 0.457097f, 0.163348f, 0.344867f, -0.131619f, 0.688715f, -0.540827f, 0.571259f, -0.95587f, 0.506164f, -0.155839f, 0.0789621f, 0.756772f, -0.662069f, 0.242908f, 0.460821f, 0.177872f, -0.289839f, -0.640603f, 0.702598f, -0.506406f, -0.568262f, -0.0713716f, 0.413792f, 0.159673f, -0.305208f, 0.133816f, -0.160254f, 0.787323f, -0.753244f, 0.600721f, 0.263186f, -0.162387f, 0.477962f, -0.702951f, -0.731036f, -0.939481f, -0.524519f, 0.934072f, -0.511637f, -0.503499f, 0.106236f, -0.323684f, 0.534444f, -0.843745f, 0.364171f, 0.0370358f, -0.168801f, -0.404559f, -0.814178f, 0.91745f, -0.334276f, 0.66925f, -0.801201f, 0.156511f, -0.427949f, 0.379153f, 0.818597f, -0.649902f, 0.427087f, -0.586015f, -0.559789f, -0.833923f, 0.0892409f, -0.621251f, 0.213826f, 0.465509f, 0.4704f, 0.380261f, 0.413067f, 0.180822f, 0.172866f, 0.59614f, 0.825575f, 0.662916f, -0.704381f, -0.297631f, 0.697778f}),
@@ -35054,6 +35943,8 @@ const TestModel& get_test_model_1_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs
     };
     return model;
 }
+
+const auto dummy_test_model_1_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs = TestModelManager::get().add("conv2d_v1_2_1_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs", get_test_model_1_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -35061,9 +35952,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_1_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {9, 12, 15},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -35266,6 +36159,8 @@ const TestModel& get_test_model_1_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs
     };
     return model;
 }
+
+const auto dummy_test_model_1_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("conv2d_v1_2_1_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_1_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -35273,9 +36168,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_1_H3_W2_VALID_nhwc_float16() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({-0.8699309825897217f, 0.6446279883384705f, -0.9183930158615112f, 0.153671994805336f, 0.8685619831085205f, -0.3581770062446594f, -0.13493099808692932f, -0.24756500124931335f, 0.2217400074005127f, -0.2591570019721985f, -0.2842960059642792f, -0.5380650162696838f, 0.7655590176582336f, 0.41986000537872314f, -0.556240975856781f, 0.6584939956665039f, 0.214355006814003f, -0.8501690030097961f, -0.25289300084114075f, -0.47893500328063965f, 0.5305259823799133f, -0.07006630301475525f, -0.9887290000915527f, -0.30306100845336914f, 0.150845006108284f, 0.8299149870872498f, 0.47634899616241455f, 0.4065369963645935f, -0.3553430140018463f, 0.7571449875831604f, -0.356361985206604f, 0.8004819750785828f, -0.7138609886169434f, 0.21048299968242645f, -0.6343029737472534f, 0.7182360291481018f, -0.7520380020141602f, 0.45754700899124146f, -0.5507689714431763f, -0.551177978515625f, 0.4467659890651703f, -0.22746199369430542f, 0.21634800732135773f, -0.8528059720993042f, -0.3514859974384308f, 0.5590599775314331f, -0.6684929728507996f, -0.3034929931163788f, -0.3637630045413971f, -0.16283699870109558f, 0.07010120153427124f, 0.7560970187187195f, -0.14226900041103363f, 0.3297240138053894f, -0.6563169956207275f, -0.9980859756469727f, -0.6529489755630493f, -0.4031600058078766f, -0.8936820030212402f, 0.43274399638175964f, 0.6123620271682739f, -0.8695880174636841f, -0.7132700085639954f, -0.39809200167655945f, -0.04235589876770973f, 0.4365760087966919f, -0.9252719879150391f, 0.1765490025281906f, 0.8229039907455444f, 0.0968329980969429f, -0.29680201411247253f, -0.4271950125694275f, 0.0316540002822876f, -0.25447899103164673f, 0.2449049949645996f, 0.09482540190219879f, 0.6437690258026123f, -0.9039099812507629f, 0.3526650071144104f, -0.9011790156364441f, 0.2661589980125427f, -0.96806800365448f, -0.615401029586792f, -0.38897499442100525f, 0.9390519857406616f, -0.11628899723291397f, 0.10752300173044205f, -0.058271098881959915f, 0.4351719915866852f, 0.33467501401901245f, 0.4597109854221344f, 0.7174360156059265f, 0.49662700295448303f, -0.6801750063896179f, -0.4150660037994385f, 0.33984801173210144f, 0.5060039758682251f, -0.3378080129623413f, -0.10721799731254578f, -0.1724960058927536f, 0.8706380128860474f, 0.9318720102310181f, -0.9538840055465698f, 0.9030420184135437f, 0.7600780129432678f, 0.20972700417041779f, -0.28538399934768677f, -0.45513999462127686f, 0.11319400370121002f, 0.07566110044717789f, 0.09244350343942642f, -0.47286298871040344f, 0.9606090188026428f, -0.16038499772548676f, -0.8394449949264526f, 0.45709699392318726f, 0.1633480042219162f, 0.3448669910430908f, -0.13161900639533997f, 0.6887149810791016f, -0.5408269762992859f, 0.5712590217590332f, -0.9558699727058411f, 0.506164014339447f, -0.1558389961719513f, 0.07896210253238678f, 0.756771981716156f, -0.6620690226554871f, 0.24290800094604492f, 0.4608210027217865f, 0.17787200212478638f, -0.2898389995098114f, -0.6406030058860779f, 0.702597975730896f, -0.5064060091972351f, -0.568261981010437f, -0.07137160003185272f, 0.4137920141220093f, 0.15967300534248352f, -0.3052079975605011f, 0.13381600379943848f, -0.16025400161743164f, 0.787322998046875f, -0.7532439827919006f, 0.600721001625061f, 0.2631860077381134f, -0.16238699853420258f, 0.4779619872570038f, -0.7029510140419006f, -0.7310360074043274f, -0.9394810199737549f, -0.5245190262794495f, 0.9340720176696777f, -0.5116369724273682f, -0.5034989714622498f, 0.10623600333929062f, -0.3236840069293976f, 0.5344439744949341f, -0.8437449932098389f, 0.36417099833488464f, 0.03703580051660538f, -0.16880099475383759f, -0.4045589864253998f, -0.8141779899597168f, 0.9174500107765198f, -0.3342759907245636f, 0.6692500114440918f, -0.8012009859085083f, 0.15651099383831024f, -0.4279490113258362f, 0.3791530132293701f, 0.8185970187187195f, -0.6499019861221313f, 0.4270870089530945f, -0.586014986038208f, -0.5597890019416809f, -0.8339229822158813f, 0.0892409011721611f, -0.6212509870529175f, 0.2138260006904602f, 0.46550899744033813f, 0.47040000557899475f, 0.38026100397109985f, 0.4130670130252838f, 0.1808219999074936f, 0.17286600172519684f, 0.5961400270462036f, 0.8255749940872192f, 0.6629160046577454f, -0.704380989074707f, -0.29763099551200867f, 0.6977779865264893f}),
@@ -35376,6 +36273,8 @@ const TestModel& get_test_model_1_H3_W2_VALID_nhwc_float16() {
     };
     return model;
 }
+
+const auto dummy_test_model_1_H3_W2_VALID_nhwc_float16 = TestModelManager::get().add("conv2d_v1_2_1_H3_W2_VALID_nhwc_float16", get_test_model_1_H3_W2_VALID_nhwc_float16());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -35383,9 +36282,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_1_H3_W2_VALID_nhwc_float16_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {9},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -35520,6 +36421,8 @@ const TestModel& get_test_model_1_H3_W2_VALID_nhwc_float16_all_inputs_as_interna
     };
     return model;
 }
+
+const auto dummy_test_model_1_H3_W2_VALID_nhwc_float16_all_inputs_as_internal = TestModelManager::get().add("conv2d_v1_2_1_H3_W2_VALID_nhwc_float16_all_inputs_as_internal", get_test_model_1_H3_W2_VALID_nhwc_float16_all_inputs_as_internal());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -35527,9 +36430,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_1_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({-0.8699309825897217f, 0.6446279883384705f, -0.9183930158615112f, 0.153671994805336f, 0.8685619831085205f, -0.3581770062446594f, -0.13493099808692932f, -0.24756500124931335f, 0.2217400074005127f, -0.2591570019721985f, -0.2842960059642792f, -0.5380650162696838f, 0.7655590176582336f, 0.41986000537872314f, -0.556240975856781f, 0.6584939956665039f, 0.214355006814003f, -0.8501690030097961f, -0.25289300084114075f, -0.47893500328063965f, 0.5305259823799133f, -0.07006630301475525f, -0.9887290000915527f, -0.30306100845336914f, 0.150845006108284f, 0.8299149870872498f, 0.47634899616241455f, 0.4065369963645935f, -0.3553430140018463f, 0.7571449875831604f, -0.356361985206604f, 0.8004819750785828f, -0.7138609886169434f, 0.21048299968242645f, -0.6343029737472534f, 0.7182360291481018f, -0.7520380020141602f, 0.45754700899124146f, -0.5507689714431763f, -0.551177978515625f, 0.4467659890651703f, -0.22746199369430542f, 0.21634800732135773f, -0.8528059720993042f, -0.3514859974384308f, 0.5590599775314331f, -0.6684929728507996f, -0.3034929931163788f, -0.3637630045413971f, -0.16283699870109558f, 0.07010120153427124f, 0.7560970187187195f, -0.14226900041103363f, 0.3297240138053894f, -0.6563169956207275f, -0.9980859756469727f, -0.6529489755630493f, -0.4031600058078766f, -0.8936820030212402f, 0.43274399638175964f, 0.6123620271682739f, -0.8695880174636841f, -0.7132700085639954f, -0.39809200167655945f, -0.04235589876770973f, 0.4365760087966919f, -0.9252719879150391f, 0.1765490025281906f, 0.8229039907455444f, 0.0968329980969429f, -0.29680201411247253f, -0.4271950125694275f, 0.0316540002822876f, -0.25447899103164673f, 0.2449049949645996f, 0.09482540190219879f, 0.6437690258026123f, -0.9039099812507629f, 0.3526650071144104f, -0.9011790156364441f, 0.2661589980125427f, -0.96806800365448f, -0.615401029586792f, -0.38897499442100525f, 0.9390519857406616f, -0.11628899723291397f, 0.10752300173044205f, -0.058271098881959915f, 0.4351719915866852f, 0.33467501401901245f, 0.4597109854221344f, 0.7174360156059265f, 0.49662700295448303f, -0.6801750063896179f, -0.4150660037994385f, 0.33984801173210144f, 0.5060039758682251f, -0.3378080129623413f, -0.10721799731254578f, -0.1724960058927536f, 0.8706380128860474f, 0.9318720102310181f, -0.9538840055465698f, 0.9030420184135437f, 0.7600780129432678f, 0.20972700417041779f, -0.28538399934768677f, -0.45513999462127686f, 0.11319400370121002f, 0.07566110044717789f, 0.09244350343942642f, -0.47286298871040344f, 0.9606090188026428f, -0.16038499772548676f, -0.8394449949264526f, 0.45709699392318726f, 0.1633480042219162f, 0.3448669910430908f, -0.13161900639533997f, 0.6887149810791016f, -0.5408269762992859f, 0.5712590217590332f, -0.9558699727058411f, 0.506164014339447f, -0.1558389961719513f, 0.07896210253238678f, 0.756771981716156f, -0.6620690226554871f, 0.24290800094604492f, 0.4608210027217865f, 0.17787200212478638f, -0.2898389995098114f, -0.6406030058860779f, 0.702597975730896f, -0.5064060091972351f, -0.568261981010437f, -0.07137160003185272f, 0.4137920141220093f, 0.15967300534248352f, -0.3052079975605011f, 0.13381600379943848f, -0.16025400161743164f, 0.787322998046875f, -0.7532439827919006f, 0.600721001625061f, 0.2631860077381134f, -0.16238699853420258f, 0.4779619872570038f, -0.7029510140419006f, -0.7310360074043274f, -0.9394810199737549f, -0.5245190262794495f, 0.9340720176696777f, -0.5116369724273682f, -0.5034989714622498f, 0.10623600333929062f, -0.3236840069293976f, 0.5344439744949341f, -0.8437449932098389f, 0.36417099833488464f, 0.03703580051660538f, -0.16880099475383759f, -0.4045589864253998f, -0.8141779899597168f, 0.9174500107765198f, -0.3342759907245636f, 0.6692500114440918f, -0.8012009859085083f, 0.15651099383831024f, -0.4279490113258362f, 0.3791530132293701f, 0.8185970187187195f, -0.6499019861221313f, 0.4270870089530945f, -0.586014986038208f, -0.5597890019416809f, -0.8339229822158813f, 0.0892409011721611f, -0.6212509870529175f, 0.2138260006904602f, 0.46550899744033813f, 0.47040000557899475f, 0.38026100397109985f, 0.4130670130252838f, 0.1808219999074936f, 0.17286600172519684f, 0.5961400270462036f, 0.8255749940872192f, 0.6629160046577454f, -0.704380989074707f, -0.29763099551200867f, 0.6977779865264893f}),
@@ -35630,6 +36535,8 @@ const TestModel& get_test_model_1_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs
     };
     return model;
 }
+
+const auto dummy_test_model_1_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs = TestModelManager::get().add("conv2d_v1_2_1_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs", get_test_model_1_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -35637,9 +36544,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_1_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {9, 12, 15},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -35842,6 +36751,8 @@ const TestModel& get_test_model_1_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs
     };
     return model;
 }
+
+const auto dummy_test_model_1_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("conv2d_v1_2_1_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_1_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -35849,9 +36760,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_1_H3_W2_VALID_nchw() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-0.869931f, 0.153672f, -0.134931f, -0.259157f, 0.765559f, 0.658494f, -0.252893f, -0.0700663f, 0.150845f, 0.406537f, -0.356362f, 0.210483f, -0.752038f, -0.551178f, 0.216348f, 0.55906f, -0.363763f, 0.756097f, -0.656317f, -0.40316f, 0.612362f, -0.398092f, -0.925272f, 0.096833f, 0.031654f, 0.0948254f, 0.352665f, -0.968068f, 0.939052f, -0.0582711f, 0.459711f, -0.680175f, 0.506004f, -0.172496f, -0.953884f, 0.209727f, 0.113194f, -0.472863f, -0.839445f, 0.344867f, -0.540827f, 0.506164f, 0.756772f, 0.460821f, -0.640603f, -0.568262f, 0.159673f, -0.160254f, 0.600721f, 0.477962f, -0.939481f, -0.511637f, -0.323684f, 0.364171f, -0.404559f, -0.334276f, 0.156511f, 0.818597f, -0.586015f, 0.0892409f, 0.465509f, 0.413067f, 0.59614f, -0.704381f, 0.644628f, 0.868562f, -0.247565f, -0.284296f, 0.41986f, 0.214355f, -0.478935f, -0.988729f, 0.829915f, -0.355343f, 0.800482f, -0.634303f, 0.457547f, 0.446766f, -0.852806f, -0.668493f, -0.162837f, -0.142269f, -0.998086f, -0.893682f, -0.869588f, -0.0423559f, 0.176549f, -0.296802f, -0.254479f, 0.643769f, -0.901179f, -0.615401f, -0.116289f, 0.435172f, 0.717436f, -0.415066f, -0.337808f, 0.870638f, 0.903042f, -0.285384f, 0.0756611f, 0.960609f, 0.457097f, -0.131619f, 0.571259f, -0.155839f, -0.662069f, 0.177872f, 0.702598f, -0.0713716f, -0.305208f, 0.787323f, 0.263186f, -0.702951f, -0.524519f, -0.503499f, 0.534444f, 0.0370358f, -0.814178f, 0.66925f, -0.427949f, -0.649902f, -0.559789f, -0.621251f, 0.4704f, 0.180822f, 0.825575f, -0.297631f, -0.918393f, -0.358177f, 0.22174f, -0.538065f, -0.556241f, -0.850169f, 0.530526f, -0.303061f, 0.476349f, 0.757145f, -0.713861f, 0.718236f, -0.550769f, -0.227462f, -0.351486f, -0.303493f, 0.0701012f, 0.329724f, -0.652949f, 0.432744f, -0.71327f, 0.436576f, 0.822904f, -0.427195f, 0.244905f, -0.90391f, 0.266159f, -0.388975f, 0.107523f, 0.334675f, 0.496627f, 0.339848f, -0.107218f, 0.931872f, 0.760078f, -0.45514f, 0.0924435f, -0.160385f, 0.163348f, 0.688715f, -0.95587f, 0.0789621f, 0.242908f, -0.289839f, -0.506406f, 0.413792f, 0.133816f, -0.753244f, -0.162387f, -0.731036f, 0.934072f, 0.106236f, -0.843745f, -0.168801f, 0.91745f, -0.801201f, 0.379153f, 0.427087f, -0.833923f, 0.213826f, 0.380261f, 0.172866f, 0.662916f, 0.697778f}),
@@ -35952,6 +36865,8 @@ const TestModel& get_test_model_1_H3_W2_VALID_nchw() {
     };
     return model;
 }
+
+const auto dummy_test_model_1_H3_W2_VALID_nchw = TestModelManager::get().add("conv2d_v1_2_1_H3_W2_VALID_nchw", get_test_model_1_H3_W2_VALID_nchw());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -35959,9 +36874,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_1_H3_W2_VALID_nchw_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {9},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -36096,6 +37013,8 @@ const TestModel& get_test_model_1_H3_W2_VALID_nchw_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_1_H3_W2_VALID_nchw_all_inputs_as_internal = TestModelManager::get().add("conv2d_v1_2_1_H3_W2_VALID_nchw_all_inputs_as_internal", get_test_model_1_H3_W2_VALID_nchw_all_inputs_as_internal());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -36103,9 +37022,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_1_H3_W2_VALID_nchw_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-0.869931f, 0.153672f, -0.134931f, -0.259157f, 0.765559f, 0.658494f, -0.252893f, -0.0700663f, 0.150845f, 0.406537f, -0.356362f, 0.210483f, -0.752038f, -0.551178f, 0.216348f, 0.55906f, -0.363763f, 0.756097f, -0.656317f, -0.40316f, 0.612362f, -0.398092f, -0.925272f, 0.096833f, 0.031654f, 0.0948254f, 0.352665f, -0.968068f, 0.939052f, -0.0582711f, 0.459711f, -0.680175f, 0.506004f, -0.172496f, -0.953884f, 0.209727f, 0.113194f, -0.472863f, -0.839445f, 0.344867f, -0.540827f, 0.506164f, 0.756772f, 0.460821f, -0.640603f, -0.568262f, 0.159673f, -0.160254f, 0.600721f, 0.477962f, -0.939481f, -0.511637f, -0.323684f, 0.364171f, -0.404559f, -0.334276f, 0.156511f, 0.818597f, -0.586015f, 0.0892409f, 0.465509f, 0.413067f, 0.59614f, -0.704381f, 0.644628f, 0.868562f, -0.247565f, -0.284296f, 0.41986f, 0.214355f, -0.478935f, -0.988729f, 0.829915f, -0.355343f, 0.800482f, -0.634303f, 0.457547f, 0.446766f, -0.852806f, -0.668493f, -0.162837f, -0.142269f, -0.998086f, -0.893682f, -0.869588f, -0.0423559f, 0.176549f, -0.296802f, -0.254479f, 0.643769f, -0.901179f, -0.615401f, -0.116289f, 0.435172f, 0.717436f, -0.415066f, -0.337808f, 0.870638f, 0.903042f, -0.285384f, 0.0756611f, 0.960609f, 0.457097f, -0.131619f, 0.571259f, -0.155839f, -0.662069f, 0.177872f, 0.702598f, -0.0713716f, -0.305208f, 0.787323f, 0.263186f, -0.702951f, -0.524519f, -0.503499f, 0.534444f, 0.0370358f, -0.814178f, 0.66925f, -0.427949f, -0.649902f, -0.559789f, -0.621251f, 0.4704f, 0.180822f, 0.825575f, -0.297631f, -0.918393f, -0.358177f, 0.22174f, -0.538065f, -0.556241f, -0.850169f, 0.530526f, -0.303061f, 0.476349f, 0.757145f, -0.713861f, 0.718236f, -0.550769f, -0.227462f, -0.351486f, -0.303493f, 0.0701012f, 0.329724f, -0.652949f, 0.432744f, -0.71327f, 0.436576f, 0.822904f, -0.427195f, 0.244905f, -0.90391f, 0.266159f, -0.388975f, 0.107523f, 0.334675f, 0.496627f, 0.339848f, -0.107218f, 0.931872f, 0.760078f, -0.45514f, 0.0924435f, -0.160385f, 0.163348f, 0.688715f, -0.95587f, 0.0789621f, 0.242908f, -0.289839f, -0.506406f, 0.413792f, 0.133816f, -0.753244f, -0.162387f, -0.731036f, 0.934072f, 0.106236f, -0.843745f, -0.168801f, 0.91745f, -0.801201f, 0.379153f, 0.427087f, -0.833923f, 0.213826f, 0.380261f, 0.172866f, 0.662916f, 0.697778f}),
@@ -36206,6 +37127,8 @@ const TestModel& get_test_model_1_H3_W2_VALID_nchw_all_tensors_as_inputs() {
     };
     return model;
 }
+
+const auto dummy_test_model_1_H3_W2_VALID_nchw_all_tensors_as_inputs = TestModelManager::get().add("conv2d_v1_2_1_H3_W2_VALID_nchw_all_tensors_as_inputs", get_test_model_1_H3_W2_VALID_nchw_all_tensors_as_inputs());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -36213,9 +37136,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_1_H3_W2_VALID_nchw_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {9, 12, 15},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -36418,6 +37343,8 @@ const TestModel& get_test_model_1_H3_W2_VALID_nchw_all_tensors_as_inputs_all_inp
     };
     return model;
 }
+
+const auto dummy_test_model_1_H3_W2_VALID_nchw_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("conv2d_v1_2_1_H3_W2_VALID_nchw_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_1_H3_W2_VALID_nchw_all_tensors_as_inputs_all_inputs_as_internal());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -36425,9 +37352,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_1_H3_W2_VALID_nchw_relaxed() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-0.869931f, 0.153672f, -0.134931f, -0.259157f, 0.765559f, 0.658494f, -0.252893f, -0.0700663f, 0.150845f, 0.406537f, -0.356362f, 0.210483f, -0.752038f, -0.551178f, 0.216348f, 0.55906f, -0.363763f, 0.756097f, -0.656317f, -0.40316f, 0.612362f, -0.398092f, -0.925272f, 0.096833f, 0.031654f, 0.0948254f, 0.352665f, -0.968068f, 0.939052f, -0.0582711f, 0.459711f, -0.680175f, 0.506004f, -0.172496f, -0.953884f, 0.209727f, 0.113194f, -0.472863f, -0.839445f, 0.344867f, -0.540827f, 0.506164f, 0.756772f, 0.460821f, -0.640603f, -0.568262f, 0.159673f, -0.160254f, 0.600721f, 0.477962f, -0.939481f, -0.511637f, -0.323684f, 0.364171f, -0.404559f, -0.334276f, 0.156511f, 0.818597f, -0.586015f, 0.0892409f, 0.465509f, 0.413067f, 0.59614f, -0.704381f, 0.644628f, 0.868562f, -0.247565f, -0.284296f, 0.41986f, 0.214355f, -0.478935f, -0.988729f, 0.829915f, -0.355343f, 0.800482f, -0.634303f, 0.457547f, 0.446766f, -0.852806f, -0.668493f, -0.162837f, -0.142269f, -0.998086f, -0.893682f, -0.869588f, -0.0423559f, 0.176549f, -0.296802f, -0.254479f, 0.643769f, -0.901179f, -0.615401f, -0.116289f, 0.435172f, 0.717436f, -0.415066f, -0.337808f, 0.870638f, 0.903042f, -0.285384f, 0.0756611f, 0.960609f, 0.457097f, -0.131619f, 0.571259f, -0.155839f, -0.662069f, 0.177872f, 0.702598f, -0.0713716f, -0.305208f, 0.787323f, 0.263186f, -0.702951f, -0.524519f, -0.503499f, 0.534444f, 0.0370358f, -0.814178f, 0.66925f, -0.427949f, -0.649902f, -0.559789f, -0.621251f, 0.4704f, 0.180822f, 0.825575f, -0.297631f, -0.918393f, -0.358177f, 0.22174f, -0.538065f, -0.556241f, -0.850169f, 0.530526f, -0.303061f, 0.476349f, 0.757145f, -0.713861f, 0.718236f, -0.550769f, -0.227462f, -0.351486f, -0.303493f, 0.0701012f, 0.329724f, -0.652949f, 0.432744f, -0.71327f, 0.436576f, 0.822904f, -0.427195f, 0.244905f, -0.90391f, 0.266159f, -0.388975f, 0.107523f, 0.334675f, 0.496627f, 0.339848f, -0.107218f, 0.931872f, 0.760078f, -0.45514f, 0.0924435f, -0.160385f, 0.163348f, 0.688715f, -0.95587f, 0.0789621f, 0.242908f, -0.289839f, -0.506406f, 0.413792f, 0.133816f, -0.753244f, -0.162387f, -0.731036f, 0.934072f, 0.106236f, -0.843745f, -0.168801f, 0.91745f, -0.801201f, 0.379153f, 0.427087f, -0.833923f, 0.213826f, 0.380261f, 0.172866f, 0.662916f, 0.697778f}),
@@ -36528,6 +37457,8 @@ const TestModel& get_test_model_1_H3_W2_VALID_nchw_relaxed() {
     };
     return model;
 }
+
+const auto dummy_test_model_1_H3_W2_VALID_nchw_relaxed = TestModelManager::get().add("conv2d_v1_2_1_H3_W2_VALID_nchw_relaxed", get_test_model_1_H3_W2_VALID_nchw_relaxed());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -36535,9 +37466,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_1_H3_W2_VALID_nchw_relaxed_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {9},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -36672,6 +37605,8 @@ const TestModel& get_test_model_1_H3_W2_VALID_nchw_relaxed_all_inputs_as_interna
     };
     return model;
 }
+
+const auto dummy_test_model_1_H3_W2_VALID_nchw_relaxed_all_inputs_as_internal = TestModelManager::get().add("conv2d_v1_2_1_H3_W2_VALID_nchw_relaxed_all_inputs_as_internal", get_test_model_1_H3_W2_VALID_nchw_relaxed_all_inputs_as_internal());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -36679,9 +37614,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_1_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-0.869931f, 0.153672f, -0.134931f, -0.259157f, 0.765559f, 0.658494f, -0.252893f, -0.0700663f, 0.150845f, 0.406537f, -0.356362f, 0.210483f, -0.752038f, -0.551178f, 0.216348f, 0.55906f, -0.363763f, 0.756097f, -0.656317f, -0.40316f, 0.612362f, -0.398092f, -0.925272f, 0.096833f, 0.031654f, 0.0948254f, 0.352665f, -0.968068f, 0.939052f, -0.0582711f, 0.459711f, -0.680175f, 0.506004f, -0.172496f, -0.953884f, 0.209727f, 0.113194f, -0.472863f, -0.839445f, 0.344867f, -0.540827f, 0.506164f, 0.756772f, 0.460821f, -0.640603f, -0.568262f, 0.159673f, -0.160254f, 0.600721f, 0.477962f, -0.939481f, -0.511637f, -0.323684f, 0.364171f, -0.404559f, -0.334276f, 0.156511f, 0.818597f, -0.586015f, 0.0892409f, 0.465509f, 0.413067f, 0.59614f, -0.704381f, 0.644628f, 0.868562f, -0.247565f, -0.284296f, 0.41986f, 0.214355f, -0.478935f, -0.988729f, 0.829915f, -0.355343f, 0.800482f, -0.634303f, 0.457547f, 0.446766f, -0.852806f, -0.668493f, -0.162837f, -0.142269f, -0.998086f, -0.893682f, -0.869588f, -0.0423559f, 0.176549f, -0.296802f, -0.254479f, 0.643769f, -0.901179f, -0.615401f, -0.116289f, 0.435172f, 0.717436f, -0.415066f, -0.337808f, 0.870638f, 0.903042f, -0.285384f, 0.0756611f, 0.960609f, 0.457097f, -0.131619f, 0.571259f, -0.155839f, -0.662069f, 0.177872f, 0.702598f, -0.0713716f, -0.305208f, 0.787323f, 0.263186f, -0.702951f, -0.524519f, -0.503499f, 0.534444f, 0.0370358f, -0.814178f, 0.66925f, -0.427949f, -0.649902f, -0.559789f, -0.621251f, 0.4704f, 0.180822f, 0.825575f, -0.297631f, -0.918393f, -0.358177f, 0.22174f, -0.538065f, -0.556241f, -0.850169f, 0.530526f, -0.303061f, 0.476349f, 0.757145f, -0.713861f, 0.718236f, -0.550769f, -0.227462f, -0.351486f, -0.303493f, 0.0701012f, 0.329724f, -0.652949f, 0.432744f, -0.71327f, 0.436576f, 0.822904f, -0.427195f, 0.244905f, -0.90391f, 0.266159f, -0.388975f, 0.107523f, 0.334675f, 0.496627f, 0.339848f, -0.107218f, 0.931872f, 0.760078f, -0.45514f, 0.0924435f, -0.160385f, 0.163348f, 0.688715f, -0.95587f, 0.0789621f, 0.242908f, -0.289839f, -0.506406f, 0.413792f, 0.133816f, -0.753244f, -0.162387f, -0.731036f, 0.934072f, 0.106236f, -0.843745f, -0.168801f, 0.91745f, -0.801201f, 0.379153f, 0.427087f, -0.833923f, 0.213826f, 0.380261f, 0.172866f, 0.662916f, 0.697778f}),
@@ -36782,6 +37719,8 @@ const TestModel& get_test_model_1_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs
     };
     return model;
 }
+
+const auto dummy_test_model_1_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs = TestModelManager::get().add("conv2d_v1_2_1_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs", get_test_model_1_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -36789,9 +37728,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_1_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {9, 12, 15},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -36995,15 +37936,19 @@ const TestModel& get_test_model_1_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs
     return model;
 }
 
+const auto dummy_test_model_1_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("conv2d_v1_2_1_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_1_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal());
+
 }  // namespace generated_tests::conv2d_v1_2
 
 namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_1_H3_W2_VALID_nchw_float16() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({-0.8699309825897217f, 0.153671994805336f, -0.13493099808692932f, -0.2591570019721985f, 0.7655590176582336f, 0.6584939956665039f, -0.25289300084114075f, -0.07006630301475525f, 0.150845006108284f, 0.4065369963645935f, -0.356361985206604f, 0.21048299968242645f, -0.7520380020141602f, -0.551177978515625f, 0.21634800732135773f, 0.5590599775314331f, -0.3637630045413971f, 0.7560970187187195f, -0.6563169956207275f, -0.4031600058078766f, 0.6123620271682739f, -0.39809200167655945f, -0.9252719879150391f, 0.0968329980969429f, 0.0316540002822876f, 0.09482540190219879f, 0.3526650071144104f, -0.96806800365448f, 0.9390519857406616f, -0.058271098881959915f, 0.4597109854221344f, -0.6801750063896179f, 0.5060039758682251f, -0.1724960058927536f, -0.9538840055465698f, 0.20972700417041779f, 0.11319400370121002f, -0.47286298871040344f, -0.8394449949264526f, 0.3448669910430908f, -0.5408269762992859f, 0.506164014339447f, 0.756771981716156f, 0.4608210027217865f, -0.6406030058860779f, -0.568261981010437f, 0.15967300534248352f, -0.16025400161743164f, 0.600721001625061f, 0.4779619872570038f, -0.9394810199737549f, -0.5116369724273682f, -0.3236840069293976f, 0.36417099833488464f, -0.4045589864253998f, -0.3342759907245636f, 0.15651099383831024f, 0.8185970187187195f, -0.586014986038208f, 0.0892409011721611f, 0.46550899744033813f, 0.4130670130252838f, 0.5961400270462036f, -0.704380989074707f, 0.6446279883384705f, 0.8685619831085205f, -0.24756500124931335f, -0.2842960059642792f, 0.41986000537872314f, 0.214355006814003f, -0.47893500328063965f, -0.9887290000915527f, 0.8299149870872498f, -0.3553430140018463f, 0.8004819750785828f, -0.6343029737472534f, 0.45754700899124146f, 0.4467659890651703f, -0.8528059720993042f, -0.6684929728507996f, -0.16283699870109558f, -0.14226900041103363f, -0.9980859756469727f, -0.8936820030212402f, -0.8695880174636841f, -0.04235589876770973f, 0.1765490025281906f, -0.29680201411247253f, -0.25447899103164673f, 0.6437690258026123f, -0.9011790156364441f, -0.615401029586792f, -0.11628899723291397f, 0.4351719915866852f, 0.7174360156059265f, -0.4150660037994385f, -0.3378080129623413f, 0.8706380128860474f, 0.9030420184135437f, -0.28538399934768677f, 0.07566110044717789f, 0.9606090188026428f, 0.45709699392318726f, -0.13161900639533997f, 0.5712590217590332f, -0.1558389961719513f, -0.6620690226554871f, 0.17787200212478638f, 0.702597975730896f, -0.07137160003185272f, -0.3052079975605011f, 0.787322998046875f, 0.2631860077381134f, -0.7029510140419006f, -0.5245190262794495f, -0.5034989714622498f, 0.5344439744949341f, 0.03703580051660538f, -0.8141779899597168f, 0.6692500114440918f, -0.4279490113258362f, -0.6499019861221313f, -0.5597890019416809f, -0.6212509870529175f, 0.47040000557899475f, 0.1808219999074936f, 0.8255749940872192f, -0.29763099551200867f, -0.9183930158615112f, -0.3581770062446594f, 0.2217400074005127f, -0.5380650162696838f, -0.556240975856781f, -0.8501690030097961f, 0.5305259823799133f, -0.30306100845336914f, 0.47634899616241455f, 0.7571449875831604f, -0.7138609886169434f, 0.7182360291481018f, -0.5507689714431763f, -0.22746199369430542f, -0.3514859974384308f, -0.3034929931163788f, 0.07010120153427124f, 0.3297240138053894f, -0.6529489755630493f, 0.43274399638175964f, -0.7132700085639954f, 0.4365760087966919f, 0.8229039907455444f, -0.4271950125694275f, 0.2449049949645996f, -0.9039099812507629f, 0.2661589980125427f, -0.38897499442100525f, 0.10752300173044205f, 0.33467501401901245f, 0.49662700295448303f, 0.33984801173210144f, -0.10721799731254578f, 0.9318720102310181f, 0.7600780129432678f, -0.45513999462127686f, 0.09244350343942642f, -0.16038499772548676f, 0.1633480042219162f, 0.6887149810791016f, -0.9558699727058411f, 0.07896210253238678f, 0.24290800094604492f, -0.2898389995098114f, -0.5064060091972351f, 0.4137920141220093f, 0.13381600379943848f, -0.7532439827919006f, -0.16238699853420258f, -0.7310360074043274f, 0.9340720176696777f, 0.10623600333929062f, -0.8437449932098389f, -0.16880099475383759f, 0.9174500107765198f, -0.8012009859085083f, 0.3791530132293701f, 0.4270870089530945f, -0.8339229822158813f, 0.2138260006904602f, 0.38026100397109985f, 0.17286600172519684f, 0.6629160046577454f, 0.6977779865264893f}),
@@ -37104,6 +38049,8 @@ const TestModel& get_test_model_1_H3_W2_VALID_nchw_float16() {
     };
     return model;
 }
+
+const auto dummy_test_model_1_H3_W2_VALID_nchw_float16 = TestModelManager::get().add("conv2d_v1_2_1_H3_W2_VALID_nchw_float16", get_test_model_1_H3_W2_VALID_nchw_float16());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -37111,9 +38058,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_1_H3_W2_VALID_nchw_float16_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {9},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -37248,6 +38197,8 @@ const TestModel& get_test_model_1_H3_W2_VALID_nchw_float16_all_inputs_as_interna
     };
     return model;
 }
+
+const auto dummy_test_model_1_H3_W2_VALID_nchw_float16_all_inputs_as_internal = TestModelManager::get().add("conv2d_v1_2_1_H3_W2_VALID_nchw_float16_all_inputs_as_internal", get_test_model_1_H3_W2_VALID_nchw_float16_all_inputs_as_internal());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -37255,9 +38206,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_1_H3_W2_VALID_nchw_float16_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({-0.8699309825897217f, 0.153671994805336f, -0.13493099808692932f, -0.2591570019721985f, 0.7655590176582336f, 0.6584939956665039f, -0.25289300084114075f, -0.07006630301475525f, 0.150845006108284f, 0.4065369963645935f, -0.356361985206604f, 0.21048299968242645f, -0.7520380020141602f, -0.551177978515625f, 0.21634800732135773f, 0.5590599775314331f, -0.3637630045413971f, 0.7560970187187195f, -0.6563169956207275f, -0.4031600058078766f, 0.6123620271682739f, -0.39809200167655945f, -0.9252719879150391f, 0.0968329980969429f, 0.0316540002822876f, 0.09482540190219879f, 0.3526650071144104f, -0.96806800365448f, 0.9390519857406616f, -0.058271098881959915f, 0.4597109854221344f, -0.6801750063896179f, 0.5060039758682251f, -0.1724960058927536f, -0.9538840055465698f, 0.20972700417041779f, 0.11319400370121002f, -0.47286298871040344f, -0.8394449949264526f, 0.3448669910430908f, -0.5408269762992859f, 0.506164014339447f, 0.756771981716156f, 0.4608210027217865f, -0.6406030058860779f, -0.568261981010437f, 0.15967300534248352f, -0.16025400161743164f, 0.600721001625061f, 0.4779619872570038f, -0.9394810199737549f, -0.5116369724273682f, -0.3236840069293976f, 0.36417099833488464f, -0.4045589864253998f, -0.3342759907245636f, 0.15651099383831024f, 0.8185970187187195f, -0.586014986038208f, 0.0892409011721611f, 0.46550899744033813f, 0.4130670130252838f, 0.5961400270462036f, -0.704380989074707f, 0.6446279883384705f, 0.8685619831085205f, -0.24756500124931335f, -0.2842960059642792f, 0.41986000537872314f, 0.214355006814003f, -0.47893500328063965f, -0.9887290000915527f, 0.8299149870872498f, -0.3553430140018463f, 0.8004819750785828f, -0.6343029737472534f, 0.45754700899124146f, 0.4467659890651703f, -0.8528059720993042f, -0.6684929728507996f, -0.16283699870109558f, -0.14226900041103363f, -0.9980859756469727f, -0.8936820030212402f, -0.8695880174636841f, -0.04235589876770973f, 0.1765490025281906f, -0.29680201411247253f, -0.25447899103164673f, 0.6437690258026123f, -0.9011790156364441f, -0.615401029586792f, -0.11628899723291397f, 0.4351719915866852f, 0.7174360156059265f, -0.4150660037994385f, -0.3378080129623413f, 0.8706380128860474f, 0.9030420184135437f, -0.28538399934768677f, 0.07566110044717789f, 0.9606090188026428f, 0.45709699392318726f, -0.13161900639533997f, 0.5712590217590332f, -0.1558389961719513f, -0.6620690226554871f, 0.17787200212478638f, 0.702597975730896f, -0.07137160003185272f, -0.3052079975605011f, 0.787322998046875f, 0.2631860077381134f, -0.7029510140419006f, -0.5245190262794495f, -0.5034989714622498f, 0.5344439744949341f, 0.03703580051660538f, -0.8141779899597168f, 0.6692500114440918f, -0.4279490113258362f, -0.6499019861221313f, -0.5597890019416809f, -0.6212509870529175f, 0.47040000557899475f, 0.1808219999074936f, 0.8255749940872192f, -0.29763099551200867f, -0.9183930158615112f, -0.3581770062446594f, 0.2217400074005127f, -0.5380650162696838f, -0.556240975856781f, -0.8501690030097961f, 0.5305259823799133f, -0.30306100845336914f, 0.47634899616241455f, 0.7571449875831604f, -0.7138609886169434f, 0.7182360291481018f, -0.5507689714431763f, -0.22746199369430542f, -0.3514859974384308f, -0.3034929931163788f, 0.07010120153427124f, 0.3297240138053894f, -0.6529489755630493f, 0.43274399638175964f, -0.7132700085639954f, 0.4365760087966919f, 0.8229039907455444f, -0.4271950125694275f, 0.2449049949645996f, -0.9039099812507629f, 0.2661589980125427f, -0.38897499442100525f, 0.10752300173044205f, 0.33467501401901245f, 0.49662700295448303f, 0.33984801173210144f, -0.10721799731254578f, 0.9318720102310181f, 0.7600780129432678f, -0.45513999462127686f, 0.09244350343942642f, -0.16038499772548676f, 0.1633480042219162f, 0.6887149810791016f, -0.9558699727058411f, 0.07896210253238678f, 0.24290800094604492f, -0.2898389995098114f, -0.5064060091972351f, 0.4137920141220093f, 0.13381600379943848f, -0.7532439827919006f, -0.16238699853420258f, -0.7310360074043274f, 0.9340720176696777f, 0.10623600333929062f, -0.8437449932098389f, -0.16880099475383759f, 0.9174500107765198f, -0.8012009859085083f, 0.3791530132293701f, 0.4270870089530945f, -0.8339229822158813f, 0.2138260006904602f, 0.38026100397109985f, 0.17286600172519684f, 0.6629160046577454f, 0.6977779865264893f}),
@@ -37358,6 +38311,8 @@ const TestModel& get_test_model_1_H3_W2_VALID_nchw_float16_all_tensors_as_inputs
     };
     return model;
 }
+
+const auto dummy_test_model_1_H3_W2_VALID_nchw_float16_all_tensors_as_inputs = TestModelManager::get().add("conv2d_v1_2_1_H3_W2_VALID_nchw_float16_all_tensors_as_inputs", get_test_model_1_H3_W2_VALID_nchw_float16_all_tensors_as_inputs());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -37365,9 +38320,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_1_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {9, 12, 15},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -37571,15 +38528,19 @@ const TestModel& get_test_model_1_H3_W2_VALID_nchw_float16_all_tensors_as_inputs
     return model;
 }
 
+const auto dummy_test_model_1_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("conv2d_v1_2_1_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_1_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal());
+
 }  // namespace generated_tests::conv2d_v1_2
 
 namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_1_H3_W2_VALID_nhwc_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-0.295335f, -0.00387601f, -0.552251f, 0.166084f, -0.28482f, -0.152143f, -0.719885f, -0.869386f, -0.745598f, 0.823947f, 0.473183f, -0.331337f, 0.187631f, 0.0426571f, -0.826897f, -0.755085f, -0.472453f, -0.0233656f, 0.0483436f, 0.933418f, -0.961974f, 0.0125783f, 0.219742f, 0.342604f, -0.15166f, 0.0934905f, 0.783221f, 0.129664f, 0.838844f, -0.271388f, 0.924519f, 0.342843f, 0.274418f, 0.350817f, 0.841638f, -0.543993f, -0.00283395f, -0.128467f, -0.682943f, -0.319117f, 0.84634f, 0.283003f, 0.32865f, 0.0293755f, -0.0335696f, 0.591266f, -0.0743476f, -0.741271f, 0.462056f, -0.583625f, -0.590183f, 0.6234f, 0.535269f, -0.670818f, -0.955642f, -0.770173f, 0.479986f, 0.664377f, 0.399445f, -0.968874f, -0.276263f, -0.901951f, 0.544104f, -0.958981f, 0.482658f, -0.807284f, 0.305369f, -0.947818f, 0.827498f, -0.382887f, -0.805741f, -0.796678f, -0.299804f, -0.229828f, 0.818783f, -0.103055f, -0.45568f, -0.227827f, 0.543743f, -0.96073f, 0.946747f, -0.857182f, -0.96426f, -0.292411f, -0.715614f, 0.765278f, -0.475043f, -0.590142f, -0.238507f, 0.673002f, -0.473357f, -0.319626f, 0.936014f, 0.486607f, 0.580844f, 0.425352f, -0.800994f, 0.290763f, -0.494953f, -0.441162f, 0.718677f, -0.828427f, 0.96965f, 7.53637e-05f, -0.699973f, -0.526886f, -0.352682f, 0.799466f, 0.332789f, 0.723389f, 0.407659f, -0.934084f, -0.284705f, 0.961484f, -0.700395f, -0.985808f, -0.595342f, -0.691721f, 0.49448f, -0.0842649f, 0.0390966f, 0.298938f, -0.128094f, -0.97158f, 0.86393f, 0.270606f, -0.468986f, -0.256605f, 0.47215f, -0.273117f, -0.590343f, -0.826529f, -0.725381f, -0.194821f, -0.259661f, -0.0949207f, -0.180302f, 0.0446834f, -0.222133f, -0.40393f, 0.295772f, -0.92949f, 0.580079f, -0.169856f, 0.330311f, 0.0173551f, -0.635823f, 0.475942f, 0.907175f, 0.242777f, -0.512208f, 0.362463f, 0.0496289f, 0.65171f, 0.990057f, 0.690733f, -0.469013f, -0.101311f, -0.68372f, -0.157841f, -0.677711f, -0.708224f, -0.659437f, -0.407607f, 0.677033f, 0.89032f, 0.228307f, -0.749514f, 0.772958f, 0.054701f, 0.551705f, 0.917052f, -0.895022f, -0.702397f, 0.484142f, 0.108648f, 0.833347f, 0.478872f, -0.984112f, 0.387176f, -0.73299f, 0.7526f, 0.443312f, -0.0987856f, 0.125415f, 0.10876f, -0.498108f, 0.43209f, 0.344609f, 0.928941f, -0.130732f, -0.0569167f}),
@@ -37680,6 +38641,8 @@ const TestModel& get_test_model_1_H3_W2_VALID_nhwc_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_1_H3_W2_VALID_nhwc_2 = TestModelManager::get().add("conv2d_v1_2_1_H3_W2_VALID_nhwc_2", get_test_model_1_H3_W2_VALID_nhwc_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -37687,9 +38650,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_1_H3_W2_VALID_nhwc_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {9},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -37824,6 +38789,8 @@ const TestModel& get_test_model_1_H3_W2_VALID_nhwc_all_inputs_as_internal_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_1_H3_W2_VALID_nhwc_all_inputs_as_internal_2 = TestModelManager::get().add("conv2d_v1_2_1_H3_W2_VALID_nhwc_all_inputs_as_internal_2", get_test_model_1_H3_W2_VALID_nhwc_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -37831,9 +38798,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_1_H3_W2_VALID_nhwc_all_tensors_as_inputs_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-0.295335f, -0.00387601f, -0.552251f, 0.166084f, -0.28482f, -0.152143f, -0.719885f, -0.869386f, -0.745598f, 0.823947f, 0.473183f, -0.331337f, 0.187631f, 0.0426571f, -0.826897f, -0.755085f, -0.472453f, -0.0233656f, 0.0483436f, 0.933418f, -0.961974f, 0.0125783f, 0.219742f, 0.342604f, -0.15166f, 0.0934905f, 0.783221f, 0.129664f, 0.838844f, -0.271388f, 0.924519f, 0.342843f, 0.274418f, 0.350817f, 0.841638f, -0.543993f, -0.00283395f, -0.128467f, -0.682943f, -0.319117f, 0.84634f, 0.283003f, 0.32865f, 0.0293755f, -0.0335696f, 0.591266f, -0.0743476f, -0.741271f, 0.462056f, -0.583625f, -0.590183f, 0.6234f, 0.535269f, -0.670818f, -0.955642f, -0.770173f, 0.479986f, 0.664377f, 0.399445f, -0.968874f, -0.276263f, -0.901951f, 0.544104f, -0.958981f, 0.482658f, -0.807284f, 0.305369f, -0.947818f, 0.827498f, -0.382887f, -0.805741f, -0.796678f, -0.299804f, -0.229828f, 0.818783f, -0.103055f, -0.45568f, -0.227827f, 0.543743f, -0.96073f, 0.946747f, -0.857182f, -0.96426f, -0.292411f, -0.715614f, 0.765278f, -0.475043f, -0.590142f, -0.238507f, 0.673002f, -0.473357f, -0.319626f, 0.936014f, 0.486607f, 0.580844f, 0.425352f, -0.800994f, 0.290763f, -0.494953f, -0.441162f, 0.718677f, -0.828427f, 0.96965f, 7.53637e-05f, -0.699973f, -0.526886f, -0.352682f, 0.799466f, 0.332789f, 0.723389f, 0.407659f, -0.934084f, -0.284705f, 0.961484f, -0.700395f, -0.985808f, -0.595342f, -0.691721f, 0.49448f, -0.0842649f, 0.0390966f, 0.298938f, -0.128094f, -0.97158f, 0.86393f, 0.270606f, -0.468986f, -0.256605f, 0.47215f, -0.273117f, -0.590343f, -0.826529f, -0.725381f, -0.194821f, -0.259661f, -0.0949207f, -0.180302f, 0.0446834f, -0.222133f, -0.40393f, 0.295772f, -0.92949f, 0.580079f, -0.169856f, 0.330311f, 0.0173551f, -0.635823f, 0.475942f, 0.907175f, 0.242777f, -0.512208f, 0.362463f, 0.0496289f, 0.65171f, 0.990057f, 0.690733f, -0.469013f, -0.101311f, -0.68372f, -0.157841f, -0.677711f, -0.708224f, -0.659437f, -0.407607f, 0.677033f, 0.89032f, 0.228307f, -0.749514f, 0.772958f, 0.054701f, 0.551705f, 0.917052f, -0.895022f, -0.702397f, 0.484142f, 0.108648f, 0.833347f, 0.478872f, -0.984112f, 0.387176f, -0.73299f, 0.7526f, 0.443312f, -0.0987856f, 0.125415f, 0.10876f, -0.498108f, 0.43209f, 0.344609f, 0.928941f, -0.130732f, -0.0569167f}),
@@ -37934,6 +38903,8 @@ const TestModel& get_test_model_1_H3_W2_VALID_nhwc_all_tensors_as_inputs_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_1_H3_W2_VALID_nhwc_all_tensors_as_inputs_2 = TestModelManager::get().add("conv2d_v1_2_1_H3_W2_VALID_nhwc_all_tensors_as_inputs_2", get_test_model_1_H3_W2_VALID_nhwc_all_tensors_as_inputs_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -37941,9 +38912,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_1_H3_W2_VALID_nhwc_all_tensors_as_inputs_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {9, 12, 15},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -38146,6 +39119,8 @@ const TestModel& get_test_model_1_H3_W2_VALID_nhwc_all_tensors_as_inputs_all_inp
     };
     return model;
 }
+
+const auto dummy_test_model_1_H3_W2_VALID_nhwc_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("conv2d_v1_2_1_H3_W2_VALID_nhwc_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_1_H3_W2_VALID_nhwc_all_tensors_as_inputs_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -38153,9 +39128,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_1_H3_W2_VALID_nhwc_relaxed_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-0.295335f, -0.00387601f, -0.552251f, 0.166084f, -0.28482f, -0.152143f, -0.719885f, -0.869386f, -0.745598f, 0.823947f, 0.473183f, -0.331337f, 0.187631f, 0.0426571f, -0.826897f, -0.755085f, -0.472453f, -0.0233656f, 0.0483436f, 0.933418f, -0.961974f, 0.0125783f, 0.219742f, 0.342604f, -0.15166f, 0.0934905f, 0.783221f, 0.129664f, 0.838844f, -0.271388f, 0.924519f, 0.342843f, 0.274418f, 0.350817f, 0.841638f, -0.543993f, -0.00283395f, -0.128467f, -0.682943f, -0.319117f, 0.84634f, 0.283003f, 0.32865f, 0.0293755f, -0.0335696f, 0.591266f, -0.0743476f, -0.741271f, 0.462056f, -0.583625f, -0.590183f, 0.6234f, 0.535269f, -0.670818f, -0.955642f, -0.770173f, 0.479986f, 0.664377f, 0.399445f, -0.968874f, -0.276263f, -0.901951f, 0.544104f, -0.958981f, 0.482658f, -0.807284f, 0.305369f, -0.947818f, 0.827498f, -0.382887f, -0.805741f, -0.796678f, -0.299804f, -0.229828f, 0.818783f, -0.103055f, -0.45568f, -0.227827f, 0.543743f, -0.96073f, 0.946747f, -0.857182f, -0.96426f, -0.292411f, -0.715614f, 0.765278f, -0.475043f, -0.590142f, -0.238507f, 0.673002f, -0.473357f, -0.319626f, 0.936014f, 0.486607f, 0.580844f, 0.425352f, -0.800994f, 0.290763f, -0.494953f, -0.441162f, 0.718677f, -0.828427f, 0.96965f, 7.53637e-05f, -0.699973f, -0.526886f, -0.352682f, 0.799466f, 0.332789f, 0.723389f, 0.407659f, -0.934084f, -0.284705f, 0.961484f, -0.700395f, -0.985808f, -0.595342f, -0.691721f, 0.49448f, -0.0842649f, 0.0390966f, 0.298938f, -0.128094f, -0.97158f, 0.86393f, 0.270606f, -0.468986f, -0.256605f, 0.47215f, -0.273117f, -0.590343f, -0.826529f, -0.725381f, -0.194821f, -0.259661f, -0.0949207f, -0.180302f, 0.0446834f, -0.222133f, -0.40393f, 0.295772f, -0.92949f, 0.580079f, -0.169856f, 0.330311f, 0.0173551f, -0.635823f, 0.475942f, 0.907175f, 0.242777f, -0.512208f, 0.362463f, 0.0496289f, 0.65171f, 0.990057f, 0.690733f, -0.469013f, -0.101311f, -0.68372f, -0.157841f, -0.677711f, -0.708224f, -0.659437f, -0.407607f, 0.677033f, 0.89032f, 0.228307f, -0.749514f, 0.772958f, 0.054701f, 0.551705f, 0.917052f, -0.895022f, -0.702397f, 0.484142f, 0.108648f, 0.833347f, 0.478872f, -0.984112f, 0.387176f, -0.73299f, 0.7526f, 0.443312f, -0.0987856f, 0.125415f, 0.10876f, -0.498108f, 0.43209f, 0.344609f, 0.928941f, -0.130732f, -0.0569167f}),
@@ -38256,6 +39233,8 @@ const TestModel& get_test_model_1_H3_W2_VALID_nhwc_relaxed_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_1_H3_W2_VALID_nhwc_relaxed_2 = TestModelManager::get().add("conv2d_v1_2_1_H3_W2_VALID_nhwc_relaxed_2", get_test_model_1_H3_W2_VALID_nhwc_relaxed_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -38263,9 +39242,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_1_H3_W2_VALID_nhwc_relaxed_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {9},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -38400,6 +39381,8 @@ const TestModel& get_test_model_1_H3_W2_VALID_nhwc_relaxed_all_inputs_as_interna
     };
     return model;
 }
+
+const auto dummy_test_model_1_H3_W2_VALID_nhwc_relaxed_all_inputs_as_internal_2 = TestModelManager::get().add("conv2d_v1_2_1_H3_W2_VALID_nhwc_relaxed_all_inputs_as_internal_2", get_test_model_1_H3_W2_VALID_nhwc_relaxed_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -38407,9 +39390,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_1_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-0.295335f, -0.00387601f, -0.552251f, 0.166084f, -0.28482f, -0.152143f, -0.719885f, -0.869386f, -0.745598f, 0.823947f, 0.473183f, -0.331337f, 0.187631f, 0.0426571f, -0.826897f, -0.755085f, -0.472453f, -0.0233656f, 0.0483436f, 0.933418f, -0.961974f, 0.0125783f, 0.219742f, 0.342604f, -0.15166f, 0.0934905f, 0.783221f, 0.129664f, 0.838844f, -0.271388f, 0.924519f, 0.342843f, 0.274418f, 0.350817f, 0.841638f, -0.543993f, -0.00283395f, -0.128467f, -0.682943f, -0.319117f, 0.84634f, 0.283003f, 0.32865f, 0.0293755f, -0.0335696f, 0.591266f, -0.0743476f, -0.741271f, 0.462056f, -0.583625f, -0.590183f, 0.6234f, 0.535269f, -0.670818f, -0.955642f, -0.770173f, 0.479986f, 0.664377f, 0.399445f, -0.968874f, -0.276263f, -0.901951f, 0.544104f, -0.958981f, 0.482658f, -0.807284f, 0.305369f, -0.947818f, 0.827498f, -0.382887f, -0.805741f, -0.796678f, -0.299804f, -0.229828f, 0.818783f, -0.103055f, -0.45568f, -0.227827f, 0.543743f, -0.96073f, 0.946747f, -0.857182f, -0.96426f, -0.292411f, -0.715614f, 0.765278f, -0.475043f, -0.590142f, -0.238507f, 0.673002f, -0.473357f, -0.319626f, 0.936014f, 0.486607f, 0.580844f, 0.425352f, -0.800994f, 0.290763f, -0.494953f, -0.441162f, 0.718677f, -0.828427f, 0.96965f, 7.53637e-05f, -0.699973f, -0.526886f, -0.352682f, 0.799466f, 0.332789f, 0.723389f, 0.407659f, -0.934084f, -0.284705f, 0.961484f, -0.700395f, -0.985808f, -0.595342f, -0.691721f, 0.49448f, -0.0842649f, 0.0390966f, 0.298938f, -0.128094f, -0.97158f, 0.86393f, 0.270606f, -0.468986f, -0.256605f, 0.47215f, -0.273117f, -0.590343f, -0.826529f, -0.725381f, -0.194821f, -0.259661f, -0.0949207f, -0.180302f, 0.0446834f, -0.222133f, -0.40393f, 0.295772f, -0.92949f, 0.580079f, -0.169856f, 0.330311f, 0.0173551f, -0.635823f, 0.475942f, 0.907175f, 0.242777f, -0.512208f, 0.362463f, 0.0496289f, 0.65171f, 0.990057f, 0.690733f, -0.469013f, -0.101311f, -0.68372f, -0.157841f, -0.677711f, -0.708224f, -0.659437f, -0.407607f, 0.677033f, 0.89032f, 0.228307f, -0.749514f, 0.772958f, 0.054701f, 0.551705f, 0.917052f, -0.895022f, -0.702397f, 0.484142f, 0.108648f, 0.833347f, 0.478872f, -0.984112f, 0.387176f, -0.73299f, 0.7526f, 0.443312f, -0.0987856f, 0.125415f, 0.10876f, -0.498108f, 0.43209f, 0.344609f, 0.928941f, -0.130732f, -0.0569167f}),
@@ -38510,6 +39495,8 @@ const TestModel& get_test_model_1_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs
     };
     return model;
 }
+
+const auto dummy_test_model_1_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs_2 = TestModelManager::get().add("conv2d_v1_2_1_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs_2", get_test_model_1_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -38517,9 +39504,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_1_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {9, 12, 15},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -38722,6 +39711,8 @@ const TestModel& get_test_model_1_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs
     };
     return model;
 }
+
+const auto dummy_test_model_1_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("conv2d_v1_2_1_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_1_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -38729,9 +39720,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_1_H3_W2_VALID_nhwc_float16_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({-0.29533499479293823f, -0.0038760099560022354f, -0.5522509813308716f, 0.16608400642871857f, -0.28481999039649963f, -0.15214300155639648f, -0.719884991645813f, -0.8693860173225403f, -0.7455980181694031f, 0.823947012424469f, 0.4731830060482025f, -0.33133700489997864f, 0.18763099610805511f, 0.04265709966421127f, -0.8268970251083374f, -0.7550849914550781f, -0.4724529981613159f, -0.023365600034594536f, 0.04834359884262085f, 0.9334179759025574f, -0.961974024772644f, 0.012578300200402737f, 0.21974200010299683f, 0.34260401129722595f, -0.1516599953174591f, 0.09349049627780914f, 0.7832210063934326f, 0.12966400384902954f, 0.8388440012931824f, -0.2713879942893982f, 0.9245190024375916f, 0.3428429961204529f, 0.2744179964065552f, 0.3508169949054718f, 0.8416380286216736f, -0.5439929962158203f, -0.002833950100466609f, -0.12846699357032776f, -0.6829429864883423f, -0.31911700963974f, 0.846340000629425f, 0.2830030024051666f, 0.32864999771118164f, 0.029375499114394188f, -0.03356960043311119f, 0.5912659764289856f, -0.0743476003408432f, -0.7412710189819336f, 0.4620560109615326f, -0.5836250185966492f, -0.5901830196380615f, 0.6233999729156494f, 0.535269021987915f, -0.6708179712295532f, -0.9556419849395752f, -0.7701730132102966f, 0.4799860119819641f, 0.664376974105835f, 0.3994449973106384f, -0.9688739776611328f, -0.2762629985809326f, -0.901951014995575f, 0.5441039800643921f, -0.9589809775352478f, 0.4826579988002777f, -0.8072839975357056f, 0.30536898970603943f, -0.9478179812431335f, 0.8274980187416077f, -0.38288700580596924f, -0.805741012096405f, -0.7966780066490173f, -0.2998040020465851f, -0.22982800006866455f, 0.8187829852104187f, -0.10305500030517578f, -0.4556800127029419f, -0.22782699763774872f, 0.5437430143356323f, -0.9607300162315369f, 0.9467470049858093f, -0.8571820259094238f, -0.9642599821090698f, -0.2924109995365143f, -0.7156140208244324f, 0.7652779817581177f, -0.47504299879074097f, -0.590142011642456f, -0.2385070025920868f, 0.6730020046234131f, -0.4733569920063019f, -0.31962600350379944f, 0.9360139966011047f, 0.48660698533058167f, 0.580843985080719f, 0.42535200715065f, -0.8009939789772034f, 0.2907629907131195f, -0.4949530065059662f, -0.44116199016571045f, 0.7186769843101501f, -0.8284270167350769f, 0.9696499705314636f, 7.536369957961142e-05f, -0.6999729871749878f, -0.526885986328125f, -0.3526819944381714f, 0.7994660139083862f, 0.33278900384902954f, 0.7233890295028687f, 0.40765899419784546f, -0.9340839982032776f, -0.2847050130367279f, 0.9614840149879456f, -0.7003949880599976f, -0.9858080148696899f, -0.5953419804573059f, -0.6917210221290588f, 0.4944800138473511f, -0.08426489681005478f, 0.03909660130739212f, 0.29893800616264343f, -0.12809400260448456f, -0.9715800285339355f, 0.8639299869537354f, 0.27060601115226746f, -0.46898600459098816f, -0.25660499930381775f, 0.4721499979496002f, -0.2731170058250427f, -0.5903429985046387f, -0.8265290260314941f, -0.7253810167312622f, -0.19482100009918213f, -0.2596609890460968f, -0.09492070227861404f, -0.1803019940853119f, 0.04468340054154396f, -0.22213299572467804f, -0.40393000841140747f, 0.295771986246109f, -0.9294899702072144f, 0.5800790190696716f, -0.169855996966362f, 0.33031100034713745f, 0.017355099320411682f, -0.6358230113983154f, 0.4759419858455658f, 0.9071750044822693f, 0.2427770048379898f, -0.5122079849243164f, 0.36246299743652344f, 0.04962889850139618f, 0.6517099738121033f, 0.9900569915771484f, 0.690733015537262f, -0.4690130054950714f, -0.10131099820137024f, -0.6837199926376343f, -0.15784099698066711f, -0.677711009979248f, -0.7082239985466003f, -0.6594370007514954f, -0.40760698914527893f, 0.677033007144928f, 0.8903200030326843f, 0.22830699384212494f, -0.7495139837265015f, 0.772957980632782f, 0.054701000452041626f, 0.551705002784729f, 0.9170519709587097f, -0.8950219750404358f, -0.7023969888687134f, 0.484142005443573f, 0.10864800214767456f, 0.8333470225334167f, 0.47887200117111206f, -0.984112024307251f, 0.3871760070323944f, -0.732990026473999f, 0.7526000142097473f, 0.44331198930740356f, -0.09878560155630112f, 0.12541499733924866f, 0.10875999927520752f, -0.49810799956321716f, 0.43209001421928406f, 0.34460899233818054f, 0.928941011428833f, -0.130731999874115f, -0.056916698813438416f}),
@@ -38832,6 +39825,8 @@ const TestModel& get_test_model_1_H3_W2_VALID_nhwc_float16_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_1_H3_W2_VALID_nhwc_float16_2 = TestModelManager::get().add("conv2d_v1_2_1_H3_W2_VALID_nhwc_float16_2", get_test_model_1_H3_W2_VALID_nhwc_float16_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -38839,9 +39834,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_1_H3_W2_VALID_nhwc_float16_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {9},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -38976,6 +39973,8 @@ const TestModel& get_test_model_1_H3_W2_VALID_nhwc_float16_all_inputs_as_interna
     };
     return model;
 }
+
+const auto dummy_test_model_1_H3_W2_VALID_nhwc_float16_all_inputs_as_internal_2 = TestModelManager::get().add("conv2d_v1_2_1_H3_W2_VALID_nhwc_float16_all_inputs_as_internal_2", get_test_model_1_H3_W2_VALID_nhwc_float16_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -38983,9 +39982,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_1_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({-0.29533499479293823f, -0.0038760099560022354f, -0.5522509813308716f, 0.16608400642871857f, -0.28481999039649963f, -0.15214300155639648f, -0.719884991645813f, -0.8693860173225403f, -0.7455980181694031f, 0.823947012424469f, 0.4731830060482025f, -0.33133700489997864f, 0.18763099610805511f, 0.04265709966421127f, -0.8268970251083374f, -0.7550849914550781f, -0.4724529981613159f, -0.023365600034594536f, 0.04834359884262085f, 0.9334179759025574f, -0.961974024772644f, 0.012578300200402737f, 0.21974200010299683f, 0.34260401129722595f, -0.1516599953174591f, 0.09349049627780914f, 0.7832210063934326f, 0.12966400384902954f, 0.8388440012931824f, -0.2713879942893982f, 0.9245190024375916f, 0.3428429961204529f, 0.2744179964065552f, 0.3508169949054718f, 0.8416380286216736f, -0.5439929962158203f, -0.002833950100466609f, -0.12846699357032776f, -0.6829429864883423f, -0.31911700963974f, 0.846340000629425f, 0.2830030024051666f, 0.32864999771118164f, 0.029375499114394188f, -0.03356960043311119f, 0.5912659764289856f, -0.0743476003408432f, -0.7412710189819336f, 0.4620560109615326f, -0.5836250185966492f, -0.5901830196380615f, 0.6233999729156494f, 0.535269021987915f, -0.6708179712295532f, -0.9556419849395752f, -0.7701730132102966f, 0.4799860119819641f, 0.664376974105835f, 0.3994449973106384f, -0.9688739776611328f, -0.2762629985809326f, -0.901951014995575f, 0.5441039800643921f, -0.9589809775352478f, 0.4826579988002777f, -0.8072839975357056f, 0.30536898970603943f, -0.9478179812431335f, 0.8274980187416077f, -0.38288700580596924f, -0.805741012096405f, -0.7966780066490173f, -0.2998040020465851f, -0.22982800006866455f, 0.8187829852104187f, -0.10305500030517578f, -0.4556800127029419f, -0.22782699763774872f, 0.5437430143356323f, -0.9607300162315369f, 0.9467470049858093f, -0.8571820259094238f, -0.9642599821090698f, -0.2924109995365143f, -0.7156140208244324f, 0.7652779817581177f, -0.47504299879074097f, -0.590142011642456f, -0.2385070025920868f, 0.6730020046234131f, -0.4733569920063019f, -0.31962600350379944f, 0.9360139966011047f, 0.48660698533058167f, 0.580843985080719f, 0.42535200715065f, -0.8009939789772034f, 0.2907629907131195f, -0.4949530065059662f, -0.44116199016571045f, 0.7186769843101501f, -0.8284270167350769f, 0.9696499705314636f, 7.536369957961142e-05f, -0.6999729871749878f, -0.526885986328125f, -0.3526819944381714f, 0.7994660139083862f, 0.33278900384902954f, 0.7233890295028687f, 0.40765899419784546f, -0.9340839982032776f, -0.2847050130367279f, 0.9614840149879456f, -0.7003949880599976f, -0.9858080148696899f, -0.5953419804573059f, -0.6917210221290588f, 0.4944800138473511f, -0.08426489681005478f, 0.03909660130739212f, 0.29893800616264343f, -0.12809400260448456f, -0.9715800285339355f, 0.8639299869537354f, 0.27060601115226746f, -0.46898600459098816f, -0.25660499930381775f, 0.4721499979496002f, -0.2731170058250427f, -0.5903429985046387f, -0.8265290260314941f, -0.7253810167312622f, -0.19482100009918213f, -0.2596609890460968f, -0.09492070227861404f, -0.1803019940853119f, 0.04468340054154396f, -0.22213299572467804f, -0.40393000841140747f, 0.295771986246109f, -0.9294899702072144f, 0.5800790190696716f, -0.169855996966362f, 0.33031100034713745f, 0.017355099320411682f, -0.6358230113983154f, 0.4759419858455658f, 0.9071750044822693f, 0.2427770048379898f, -0.5122079849243164f, 0.36246299743652344f, 0.04962889850139618f, 0.6517099738121033f, 0.9900569915771484f, 0.690733015537262f, -0.4690130054950714f, -0.10131099820137024f, -0.6837199926376343f, -0.15784099698066711f, -0.677711009979248f, -0.7082239985466003f, -0.6594370007514954f, -0.40760698914527893f, 0.677033007144928f, 0.8903200030326843f, 0.22830699384212494f, -0.7495139837265015f, 0.772957980632782f, 0.054701000452041626f, 0.551705002784729f, 0.9170519709587097f, -0.8950219750404358f, -0.7023969888687134f, 0.484142005443573f, 0.10864800214767456f, 0.8333470225334167f, 0.47887200117111206f, -0.984112024307251f, 0.3871760070323944f, -0.732990026473999f, 0.7526000142097473f, 0.44331198930740356f, -0.09878560155630112f, 0.12541499733924866f, 0.10875999927520752f, -0.49810799956321716f, 0.43209001421928406f, 0.34460899233818054f, 0.928941011428833f, -0.130731999874115f, -0.056916698813438416f}),
@@ -39086,6 +40087,8 @@ const TestModel& get_test_model_1_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs
     };
     return model;
 }
+
+const auto dummy_test_model_1_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_2 = TestModelManager::get().add("conv2d_v1_2_1_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_2", get_test_model_1_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -39093,9 +40096,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_1_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {9, 12, 15},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -39299,15 +40304,19 @@ const TestModel& get_test_model_1_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs
     return model;
 }
 
+const auto dummy_test_model_1_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("conv2d_v1_2_1_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_1_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::conv2d_v1_2
 
 namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_1_H3_W2_VALID_nchw_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-0.295335f, 0.166084f, -0.719885f, 0.823947f, 0.187631f, -0.755085f, 0.0483436f, 0.0125783f, -0.15166f, 0.129664f, 0.924519f, 0.350817f, -0.00283395f, -0.319117f, 0.32865f, 0.591266f, 0.462056f, 0.6234f, -0.955642f, 0.664377f, -0.276263f, -0.958981f, 0.305369f, -0.382887f, -0.299804f, -0.103055f, 0.543743f, -0.857182f, -0.715614f, -0.590142f, -0.473357f, 0.486607f, -0.800994f, -0.441162f, 0.96965f, -0.526886f, 0.332789f, -0.934084f, -0.700395f, -0.691721f, 0.0390966f, -0.97158f, -0.468986f, -0.273117f, -0.725381f, -0.0949207f, -0.222133f, -0.92949f, 0.330311f, 0.475942f, -0.512208f, 0.65171f, -0.469013f, -0.157841f, -0.659437f, 0.89032f, 0.772958f, 0.917052f, 0.484142f, 0.478872f, -0.73299f, -0.0987856f, -0.498108f, 0.928941f, -0.00387601f, -0.28482f, -0.869386f, 0.473183f, 0.0426571f, -0.472453f, 0.933418f, 0.219742f, 0.0934905f, 0.838844f, 0.342843f, 0.841638f, -0.128467f, 0.84634f, 0.0293755f, -0.0743476f, -0.583625f, 0.535269f, -0.770173f, 0.399445f, -0.901951f, 0.482658f, -0.947818f, -0.805741f, -0.229828f, -0.45568f, -0.96073f, -0.96426f, 0.765278f, -0.238507f, -0.319626f, 0.580844f, 0.290763f, 0.718677f, 7.53637e-05f, -0.352682f, 0.723389f, -0.284705f, -0.985808f, 0.49448f, 0.298938f, 0.86393f, -0.256605f, -0.590343f, -0.194821f, -0.180302f, -0.40393f, 0.580079f, 0.0173551f, 0.907175f, 0.362463f, 0.990057f, -0.101311f, -0.677711f, -0.407607f, 0.228307f, 0.054701f, -0.895022f, 0.108648f, -0.984112f, 0.7526f, 0.125415f, 0.43209f, -0.130732f, -0.552251f, -0.152143f, -0.745598f, -0.331337f, -0.826897f, -0.0233656f, -0.961974f, 0.342604f, 0.783221f, -0.271388f, 0.274418f, -0.543993f, -0.682943f, 0.283003f, -0.0335696f, -0.741271f, -0.590183f, -0.670818f, 0.479986f, -0.968874f, 0.544104f, -0.807284f, 0.827498f, -0.796678f, 0.818783f, -0.227827f, 0.946747f, -0.292411f, -0.475043f, 0.673002f, 0.936014f, 0.425352f, -0.494953f, -0.828427f, -0.699973f, 0.799466f, 0.407659f, 0.961484f, -0.595342f, -0.0842649f, -0.128094f, 0.270606f, 0.47215f, -0.826529f, -0.259661f, 0.0446834f, 0.295772f, -0.169856f, -0.635823f, 0.242777f, 0.0496289f, 0.690733f, -0.68372f, -0.708224f, 0.677033f, -0.749514f, 0.551705f, -0.702397f, 0.833347f, 0.387176f, 0.443312f, 0.10876f, 0.344609f, -0.0569167f}),
@@ -39408,6 +40417,8 @@ const TestModel& get_test_model_1_H3_W2_VALID_nchw_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_1_H3_W2_VALID_nchw_2 = TestModelManager::get().add("conv2d_v1_2_1_H3_W2_VALID_nchw_2", get_test_model_1_H3_W2_VALID_nchw_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -39415,9 +40426,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_1_H3_W2_VALID_nchw_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {9},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -39552,6 +40565,8 @@ const TestModel& get_test_model_1_H3_W2_VALID_nchw_all_inputs_as_internal_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_1_H3_W2_VALID_nchw_all_inputs_as_internal_2 = TestModelManager::get().add("conv2d_v1_2_1_H3_W2_VALID_nchw_all_inputs_as_internal_2", get_test_model_1_H3_W2_VALID_nchw_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -39559,9 +40574,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_1_H3_W2_VALID_nchw_all_tensors_as_inputs_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-0.295335f, 0.166084f, -0.719885f, 0.823947f, 0.187631f, -0.755085f, 0.0483436f, 0.0125783f, -0.15166f, 0.129664f, 0.924519f, 0.350817f, -0.00283395f, -0.319117f, 0.32865f, 0.591266f, 0.462056f, 0.6234f, -0.955642f, 0.664377f, -0.276263f, -0.958981f, 0.305369f, -0.382887f, -0.299804f, -0.103055f, 0.543743f, -0.857182f, -0.715614f, -0.590142f, -0.473357f, 0.486607f, -0.800994f, -0.441162f, 0.96965f, -0.526886f, 0.332789f, -0.934084f, -0.700395f, -0.691721f, 0.0390966f, -0.97158f, -0.468986f, -0.273117f, -0.725381f, -0.0949207f, -0.222133f, -0.92949f, 0.330311f, 0.475942f, -0.512208f, 0.65171f, -0.469013f, -0.157841f, -0.659437f, 0.89032f, 0.772958f, 0.917052f, 0.484142f, 0.478872f, -0.73299f, -0.0987856f, -0.498108f, 0.928941f, -0.00387601f, -0.28482f, -0.869386f, 0.473183f, 0.0426571f, -0.472453f, 0.933418f, 0.219742f, 0.0934905f, 0.838844f, 0.342843f, 0.841638f, -0.128467f, 0.84634f, 0.0293755f, -0.0743476f, -0.583625f, 0.535269f, -0.770173f, 0.399445f, -0.901951f, 0.482658f, -0.947818f, -0.805741f, -0.229828f, -0.45568f, -0.96073f, -0.96426f, 0.765278f, -0.238507f, -0.319626f, 0.580844f, 0.290763f, 0.718677f, 7.53637e-05f, -0.352682f, 0.723389f, -0.284705f, -0.985808f, 0.49448f, 0.298938f, 0.86393f, -0.256605f, -0.590343f, -0.194821f, -0.180302f, -0.40393f, 0.580079f, 0.0173551f, 0.907175f, 0.362463f, 0.990057f, -0.101311f, -0.677711f, -0.407607f, 0.228307f, 0.054701f, -0.895022f, 0.108648f, -0.984112f, 0.7526f, 0.125415f, 0.43209f, -0.130732f, -0.552251f, -0.152143f, -0.745598f, -0.331337f, -0.826897f, -0.0233656f, -0.961974f, 0.342604f, 0.783221f, -0.271388f, 0.274418f, -0.543993f, -0.682943f, 0.283003f, -0.0335696f, -0.741271f, -0.590183f, -0.670818f, 0.479986f, -0.968874f, 0.544104f, -0.807284f, 0.827498f, -0.796678f, 0.818783f, -0.227827f, 0.946747f, -0.292411f, -0.475043f, 0.673002f, 0.936014f, 0.425352f, -0.494953f, -0.828427f, -0.699973f, 0.799466f, 0.407659f, 0.961484f, -0.595342f, -0.0842649f, -0.128094f, 0.270606f, 0.47215f, -0.826529f, -0.259661f, 0.0446834f, 0.295772f, -0.169856f, -0.635823f, 0.242777f, 0.0496289f, 0.690733f, -0.68372f, -0.708224f, 0.677033f, -0.749514f, 0.551705f, -0.702397f, 0.833347f, 0.387176f, 0.443312f, 0.10876f, 0.344609f, -0.0569167f}),
@@ -39662,6 +40679,8 @@ const TestModel& get_test_model_1_H3_W2_VALID_nchw_all_tensors_as_inputs_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_1_H3_W2_VALID_nchw_all_tensors_as_inputs_2 = TestModelManager::get().add("conv2d_v1_2_1_H3_W2_VALID_nchw_all_tensors_as_inputs_2", get_test_model_1_H3_W2_VALID_nchw_all_tensors_as_inputs_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -39669,9 +40688,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_1_H3_W2_VALID_nchw_all_tensors_as_inputs_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {9, 12, 15},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -39874,6 +40895,8 @@ const TestModel& get_test_model_1_H3_W2_VALID_nchw_all_tensors_as_inputs_all_inp
     };
     return model;
 }
+
+const auto dummy_test_model_1_H3_W2_VALID_nchw_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("conv2d_v1_2_1_H3_W2_VALID_nchw_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_1_H3_W2_VALID_nchw_all_tensors_as_inputs_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -39881,9 +40904,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_1_H3_W2_VALID_nchw_relaxed_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-0.295335f, 0.166084f, -0.719885f, 0.823947f, 0.187631f, -0.755085f, 0.0483436f, 0.0125783f, -0.15166f, 0.129664f, 0.924519f, 0.350817f, -0.00283395f, -0.319117f, 0.32865f, 0.591266f, 0.462056f, 0.6234f, -0.955642f, 0.664377f, -0.276263f, -0.958981f, 0.305369f, -0.382887f, -0.299804f, -0.103055f, 0.543743f, -0.857182f, -0.715614f, -0.590142f, -0.473357f, 0.486607f, -0.800994f, -0.441162f, 0.96965f, -0.526886f, 0.332789f, -0.934084f, -0.700395f, -0.691721f, 0.0390966f, -0.97158f, -0.468986f, -0.273117f, -0.725381f, -0.0949207f, -0.222133f, -0.92949f, 0.330311f, 0.475942f, -0.512208f, 0.65171f, -0.469013f, -0.157841f, -0.659437f, 0.89032f, 0.772958f, 0.917052f, 0.484142f, 0.478872f, -0.73299f, -0.0987856f, -0.498108f, 0.928941f, -0.00387601f, -0.28482f, -0.869386f, 0.473183f, 0.0426571f, -0.472453f, 0.933418f, 0.219742f, 0.0934905f, 0.838844f, 0.342843f, 0.841638f, -0.128467f, 0.84634f, 0.0293755f, -0.0743476f, -0.583625f, 0.535269f, -0.770173f, 0.399445f, -0.901951f, 0.482658f, -0.947818f, -0.805741f, -0.229828f, -0.45568f, -0.96073f, -0.96426f, 0.765278f, -0.238507f, -0.319626f, 0.580844f, 0.290763f, 0.718677f, 7.53637e-05f, -0.352682f, 0.723389f, -0.284705f, -0.985808f, 0.49448f, 0.298938f, 0.86393f, -0.256605f, -0.590343f, -0.194821f, -0.180302f, -0.40393f, 0.580079f, 0.0173551f, 0.907175f, 0.362463f, 0.990057f, -0.101311f, -0.677711f, -0.407607f, 0.228307f, 0.054701f, -0.895022f, 0.108648f, -0.984112f, 0.7526f, 0.125415f, 0.43209f, -0.130732f, -0.552251f, -0.152143f, -0.745598f, -0.331337f, -0.826897f, -0.0233656f, -0.961974f, 0.342604f, 0.783221f, -0.271388f, 0.274418f, -0.543993f, -0.682943f, 0.283003f, -0.0335696f, -0.741271f, -0.590183f, -0.670818f, 0.479986f, -0.968874f, 0.544104f, -0.807284f, 0.827498f, -0.796678f, 0.818783f, -0.227827f, 0.946747f, -0.292411f, -0.475043f, 0.673002f, 0.936014f, 0.425352f, -0.494953f, -0.828427f, -0.699973f, 0.799466f, 0.407659f, 0.961484f, -0.595342f, -0.0842649f, -0.128094f, 0.270606f, 0.47215f, -0.826529f, -0.259661f, 0.0446834f, 0.295772f, -0.169856f, -0.635823f, 0.242777f, 0.0496289f, 0.690733f, -0.68372f, -0.708224f, 0.677033f, -0.749514f, 0.551705f, -0.702397f, 0.833347f, 0.387176f, 0.443312f, 0.10876f, 0.344609f, -0.0569167f}),
@@ -39984,6 +41009,8 @@ const TestModel& get_test_model_1_H3_W2_VALID_nchw_relaxed_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_1_H3_W2_VALID_nchw_relaxed_2 = TestModelManager::get().add("conv2d_v1_2_1_H3_W2_VALID_nchw_relaxed_2", get_test_model_1_H3_W2_VALID_nchw_relaxed_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -39991,9 +41018,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_1_H3_W2_VALID_nchw_relaxed_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {9},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -40128,6 +41157,8 @@ const TestModel& get_test_model_1_H3_W2_VALID_nchw_relaxed_all_inputs_as_interna
     };
     return model;
 }
+
+const auto dummy_test_model_1_H3_W2_VALID_nchw_relaxed_all_inputs_as_internal_2 = TestModelManager::get().add("conv2d_v1_2_1_H3_W2_VALID_nchw_relaxed_all_inputs_as_internal_2", get_test_model_1_H3_W2_VALID_nchw_relaxed_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -40135,9 +41166,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_1_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-0.295335f, 0.166084f, -0.719885f, 0.823947f, 0.187631f, -0.755085f, 0.0483436f, 0.0125783f, -0.15166f, 0.129664f, 0.924519f, 0.350817f, -0.00283395f, -0.319117f, 0.32865f, 0.591266f, 0.462056f, 0.6234f, -0.955642f, 0.664377f, -0.276263f, -0.958981f, 0.305369f, -0.382887f, -0.299804f, -0.103055f, 0.543743f, -0.857182f, -0.715614f, -0.590142f, -0.473357f, 0.486607f, -0.800994f, -0.441162f, 0.96965f, -0.526886f, 0.332789f, -0.934084f, -0.700395f, -0.691721f, 0.0390966f, -0.97158f, -0.468986f, -0.273117f, -0.725381f, -0.0949207f, -0.222133f, -0.92949f, 0.330311f, 0.475942f, -0.512208f, 0.65171f, -0.469013f, -0.157841f, -0.659437f, 0.89032f, 0.772958f, 0.917052f, 0.484142f, 0.478872f, -0.73299f, -0.0987856f, -0.498108f, 0.928941f, -0.00387601f, -0.28482f, -0.869386f, 0.473183f, 0.0426571f, -0.472453f, 0.933418f, 0.219742f, 0.0934905f, 0.838844f, 0.342843f, 0.841638f, -0.128467f, 0.84634f, 0.0293755f, -0.0743476f, -0.583625f, 0.535269f, -0.770173f, 0.399445f, -0.901951f, 0.482658f, -0.947818f, -0.805741f, -0.229828f, -0.45568f, -0.96073f, -0.96426f, 0.765278f, -0.238507f, -0.319626f, 0.580844f, 0.290763f, 0.718677f, 7.53637e-05f, -0.352682f, 0.723389f, -0.284705f, -0.985808f, 0.49448f, 0.298938f, 0.86393f, -0.256605f, -0.590343f, -0.194821f, -0.180302f, -0.40393f, 0.580079f, 0.0173551f, 0.907175f, 0.362463f, 0.990057f, -0.101311f, -0.677711f, -0.407607f, 0.228307f, 0.054701f, -0.895022f, 0.108648f, -0.984112f, 0.7526f, 0.125415f, 0.43209f, -0.130732f, -0.552251f, -0.152143f, -0.745598f, -0.331337f, -0.826897f, -0.0233656f, -0.961974f, 0.342604f, 0.783221f, -0.271388f, 0.274418f, -0.543993f, -0.682943f, 0.283003f, -0.0335696f, -0.741271f, -0.590183f, -0.670818f, 0.479986f, -0.968874f, 0.544104f, -0.807284f, 0.827498f, -0.796678f, 0.818783f, -0.227827f, 0.946747f, -0.292411f, -0.475043f, 0.673002f, 0.936014f, 0.425352f, -0.494953f, -0.828427f, -0.699973f, 0.799466f, 0.407659f, 0.961484f, -0.595342f, -0.0842649f, -0.128094f, 0.270606f, 0.47215f, -0.826529f, -0.259661f, 0.0446834f, 0.295772f, -0.169856f, -0.635823f, 0.242777f, 0.0496289f, 0.690733f, -0.68372f, -0.708224f, 0.677033f, -0.749514f, 0.551705f, -0.702397f, 0.833347f, 0.387176f, 0.443312f, 0.10876f, 0.344609f, -0.0569167f}),
@@ -40238,6 +41271,8 @@ const TestModel& get_test_model_1_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs
     };
     return model;
 }
+
+const auto dummy_test_model_1_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs_2 = TestModelManager::get().add("conv2d_v1_2_1_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs_2", get_test_model_1_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -40245,9 +41280,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_1_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {9, 12, 15},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -40451,15 +41488,19 @@ const TestModel& get_test_model_1_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs
     return model;
 }
 
+const auto dummy_test_model_1_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("conv2d_v1_2_1_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_1_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::conv2d_v1_2
 
 namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_1_H3_W2_VALID_nchw_float16_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({-0.29533499479293823f, 0.16608400642871857f, -0.719884991645813f, 0.823947012424469f, 0.18763099610805511f, -0.7550849914550781f, 0.04834359884262085f, 0.012578300200402737f, -0.1516599953174591f, 0.12966400384902954f, 0.9245190024375916f, 0.3508169949054718f, -0.002833950100466609f, -0.31911700963974f, 0.32864999771118164f, 0.5912659764289856f, 0.4620560109615326f, 0.6233999729156494f, -0.9556419849395752f, 0.664376974105835f, -0.2762629985809326f, -0.9589809775352478f, 0.30536898970603943f, -0.38288700580596924f, -0.2998040020465851f, -0.10305500030517578f, 0.5437430143356323f, -0.8571820259094238f, -0.7156140208244324f, -0.590142011642456f, -0.4733569920063019f, 0.48660698533058167f, -0.8009939789772034f, -0.44116199016571045f, 0.9696499705314636f, -0.526885986328125f, 0.33278900384902954f, -0.9340839982032776f, -0.7003949880599976f, -0.6917210221290588f, 0.03909660130739212f, -0.9715800285339355f, -0.46898600459098816f, -0.2731170058250427f, -0.7253810167312622f, -0.09492070227861404f, -0.22213299572467804f, -0.9294899702072144f, 0.33031100034713745f, 0.4759419858455658f, -0.5122079849243164f, 0.6517099738121033f, -0.4690130054950714f, -0.15784099698066711f, -0.6594370007514954f, 0.8903200030326843f, 0.772957980632782f, 0.9170519709587097f, 0.484142005443573f, 0.47887200117111206f, -0.732990026473999f, -0.09878560155630112f, -0.49810799956321716f, 0.928941011428833f, -0.0038760099560022354f, -0.28481999039649963f, -0.8693860173225403f, 0.4731830060482025f, 0.04265709966421127f, -0.4724529981613159f, 0.9334179759025574f, 0.21974200010299683f, 0.09349049627780914f, 0.8388440012931824f, 0.3428429961204529f, 0.8416380286216736f, -0.12846699357032776f, 0.846340000629425f, 0.029375499114394188f, -0.0743476003408432f, -0.5836250185966492f, 0.535269021987915f, -0.7701730132102966f, 0.3994449973106384f, -0.901951014995575f, 0.4826579988002777f, -0.9478179812431335f, -0.805741012096405f, -0.22982800006866455f, -0.4556800127029419f, -0.9607300162315369f, -0.9642599821090698f, 0.7652779817581177f, -0.2385070025920868f, -0.31962600350379944f, 0.580843985080719f, 0.2907629907131195f, 0.7186769843101501f, 7.536369957961142e-05f, -0.3526819944381714f, 0.7233890295028687f, -0.2847050130367279f, -0.9858080148696899f, 0.4944800138473511f, 0.29893800616264343f, 0.8639299869537354f, -0.25660499930381775f, -0.5903429985046387f, -0.19482100009918213f, -0.1803019940853119f, -0.40393000841140747f, 0.5800790190696716f, 0.017355099320411682f, 0.9071750044822693f, 0.36246299743652344f, 0.9900569915771484f, -0.10131099820137024f, -0.677711009979248f, -0.40760698914527893f, 0.22830699384212494f, 0.054701000452041626f, -0.8950219750404358f, 0.10864800214767456f, -0.984112024307251f, 0.7526000142097473f, 0.12541499733924866f, 0.43209001421928406f, -0.130731999874115f, -0.5522509813308716f, -0.15214300155639648f, -0.7455980181694031f, -0.33133700489997864f, -0.8268970251083374f, -0.023365600034594536f, -0.961974024772644f, 0.34260401129722595f, 0.7832210063934326f, -0.2713879942893982f, 0.2744179964065552f, -0.5439929962158203f, -0.6829429864883423f, 0.2830030024051666f, -0.03356960043311119f, -0.7412710189819336f, -0.5901830196380615f, -0.6708179712295532f, 0.4799860119819641f, -0.9688739776611328f, 0.5441039800643921f, -0.8072839975357056f, 0.8274980187416077f, -0.7966780066490173f, 0.8187829852104187f, -0.22782699763774872f, 0.9467470049858093f, -0.2924109995365143f, -0.47504299879074097f, 0.6730020046234131f, 0.9360139966011047f, 0.42535200715065f, -0.4949530065059662f, -0.8284270167350769f, -0.6999729871749878f, 0.7994660139083862f, 0.40765899419784546f, 0.9614840149879456f, -0.5953419804573059f, -0.08426489681005478f, -0.12809400260448456f, 0.27060601115226746f, 0.4721499979496002f, -0.8265290260314941f, -0.2596609890460968f, 0.04468340054154396f, 0.295771986246109f, -0.169855996966362f, -0.6358230113983154f, 0.2427770048379898f, 0.04962889850139618f, 0.690733015537262f, -0.6837199926376343f, -0.7082239985466003f, 0.677033007144928f, -0.7495139837265015f, 0.551705002784729f, -0.7023969888687134f, 0.8333470225334167f, 0.3871760070323944f, 0.44331198930740356f, 0.10875999927520752f, 0.34460899233818054f, -0.056916698813438416f}),
@@ -40560,6 +41601,8 @@ const TestModel& get_test_model_1_H3_W2_VALID_nchw_float16_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_1_H3_W2_VALID_nchw_float16_2 = TestModelManager::get().add("conv2d_v1_2_1_H3_W2_VALID_nchw_float16_2", get_test_model_1_H3_W2_VALID_nchw_float16_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -40567,9 +41610,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_1_H3_W2_VALID_nchw_float16_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {9},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -40704,6 +41749,8 @@ const TestModel& get_test_model_1_H3_W2_VALID_nchw_float16_all_inputs_as_interna
     };
     return model;
 }
+
+const auto dummy_test_model_1_H3_W2_VALID_nchw_float16_all_inputs_as_internal_2 = TestModelManager::get().add("conv2d_v1_2_1_H3_W2_VALID_nchw_float16_all_inputs_as_internal_2", get_test_model_1_H3_W2_VALID_nchw_float16_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -40711,9 +41758,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_1_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({-0.29533499479293823f, 0.16608400642871857f, -0.719884991645813f, 0.823947012424469f, 0.18763099610805511f, -0.7550849914550781f, 0.04834359884262085f, 0.012578300200402737f, -0.1516599953174591f, 0.12966400384902954f, 0.9245190024375916f, 0.3508169949054718f, -0.002833950100466609f, -0.31911700963974f, 0.32864999771118164f, 0.5912659764289856f, 0.4620560109615326f, 0.6233999729156494f, -0.9556419849395752f, 0.664376974105835f, -0.2762629985809326f, -0.9589809775352478f, 0.30536898970603943f, -0.38288700580596924f, -0.2998040020465851f, -0.10305500030517578f, 0.5437430143356323f, -0.8571820259094238f, -0.7156140208244324f, -0.590142011642456f, -0.4733569920063019f, 0.48660698533058167f, -0.8009939789772034f, -0.44116199016571045f, 0.9696499705314636f, -0.526885986328125f, 0.33278900384902954f, -0.9340839982032776f, -0.7003949880599976f, -0.6917210221290588f, 0.03909660130739212f, -0.9715800285339355f, -0.46898600459098816f, -0.2731170058250427f, -0.7253810167312622f, -0.09492070227861404f, -0.22213299572467804f, -0.9294899702072144f, 0.33031100034713745f, 0.4759419858455658f, -0.5122079849243164f, 0.6517099738121033f, -0.4690130054950714f, -0.15784099698066711f, -0.6594370007514954f, 0.8903200030326843f, 0.772957980632782f, 0.9170519709587097f, 0.484142005443573f, 0.47887200117111206f, -0.732990026473999f, -0.09878560155630112f, -0.49810799956321716f, 0.928941011428833f, -0.0038760099560022354f, -0.28481999039649963f, -0.8693860173225403f, 0.4731830060482025f, 0.04265709966421127f, -0.4724529981613159f, 0.9334179759025574f, 0.21974200010299683f, 0.09349049627780914f, 0.8388440012931824f, 0.3428429961204529f, 0.8416380286216736f, -0.12846699357032776f, 0.846340000629425f, 0.029375499114394188f, -0.0743476003408432f, -0.5836250185966492f, 0.535269021987915f, -0.7701730132102966f, 0.3994449973106384f, -0.901951014995575f, 0.4826579988002777f, -0.9478179812431335f, -0.805741012096405f, -0.22982800006866455f, -0.4556800127029419f, -0.9607300162315369f, -0.9642599821090698f, 0.7652779817581177f, -0.2385070025920868f, -0.31962600350379944f, 0.580843985080719f, 0.2907629907131195f, 0.7186769843101501f, 7.536369957961142e-05f, -0.3526819944381714f, 0.7233890295028687f, -0.2847050130367279f, -0.9858080148696899f, 0.4944800138473511f, 0.29893800616264343f, 0.8639299869537354f, -0.25660499930381775f, -0.5903429985046387f, -0.19482100009918213f, -0.1803019940853119f, -0.40393000841140747f, 0.5800790190696716f, 0.017355099320411682f, 0.9071750044822693f, 0.36246299743652344f, 0.9900569915771484f, -0.10131099820137024f, -0.677711009979248f, -0.40760698914527893f, 0.22830699384212494f, 0.054701000452041626f, -0.8950219750404358f, 0.10864800214767456f, -0.984112024307251f, 0.7526000142097473f, 0.12541499733924866f, 0.43209001421928406f, -0.130731999874115f, -0.5522509813308716f, -0.15214300155639648f, -0.7455980181694031f, -0.33133700489997864f, -0.8268970251083374f, -0.023365600034594536f, -0.961974024772644f, 0.34260401129722595f, 0.7832210063934326f, -0.2713879942893982f, 0.2744179964065552f, -0.5439929962158203f, -0.6829429864883423f, 0.2830030024051666f, -0.03356960043311119f, -0.7412710189819336f, -0.5901830196380615f, -0.6708179712295532f, 0.4799860119819641f, -0.9688739776611328f, 0.5441039800643921f, -0.8072839975357056f, 0.8274980187416077f, -0.7966780066490173f, 0.8187829852104187f, -0.22782699763774872f, 0.9467470049858093f, -0.2924109995365143f, -0.47504299879074097f, 0.6730020046234131f, 0.9360139966011047f, 0.42535200715065f, -0.4949530065059662f, -0.8284270167350769f, -0.6999729871749878f, 0.7994660139083862f, 0.40765899419784546f, 0.9614840149879456f, -0.5953419804573059f, -0.08426489681005478f, -0.12809400260448456f, 0.27060601115226746f, 0.4721499979496002f, -0.8265290260314941f, -0.2596609890460968f, 0.04468340054154396f, 0.295771986246109f, -0.169855996966362f, -0.6358230113983154f, 0.2427770048379898f, 0.04962889850139618f, 0.690733015537262f, -0.6837199926376343f, -0.7082239985466003f, 0.677033007144928f, -0.7495139837265015f, 0.551705002784729f, -0.7023969888687134f, 0.8333470225334167f, 0.3871760070323944f, 0.44331198930740356f, 0.10875999927520752f, 0.34460899233818054f, -0.056916698813438416f}),
@@ -40814,6 +41863,8 @@ const TestModel& get_test_model_1_H3_W2_VALID_nchw_float16_all_tensors_as_inputs
     };
     return model;
 }
+
+const auto dummy_test_model_1_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_2 = TestModelManager::get().add("conv2d_v1_2_1_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_2", get_test_model_1_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -40821,9 +41872,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_1_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {9, 12, 15},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -41027,15 +42080,19 @@ const TestModel& get_test_model_1_H3_W2_VALID_nchw_float16_all_tensors_as_inputs
     return model;
 }
 
+const auto dummy_test_model_1_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("conv2d_v1_2_1_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_1_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::conv2d_v1_2
 
 namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_3_H3_W2_SAME_nhwc() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-0.869931f, 0.644628f, -0.918393f, 0.153672f, 0.868562f, -0.358177f, -0.134931f, -0.247565f, 0.22174f, -0.259157f, -0.284296f, -0.538065f, 0.765559f, 0.41986f, -0.556241f, 0.658494f, 0.214355f, -0.850169f, -0.252893f, -0.478935f, 0.530526f, -0.0700663f, -0.988729f, -0.303061f, 0.150845f, 0.829915f, 0.476349f, 0.406537f, -0.355343f, 0.757145f, -0.356362f, 0.800482f, -0.713861f, 0.210483f, -0.634303f, 0.718236f, -0.752038f, 0.457547f, -0.550769f, -0.551178f, 0.446766f, -0.227462f, 0.216348f, -0.852806f, -0.351486f, 0.55906f, -0.668493f, -0.303493f, -0.363763f, -0.162837f, 0.0701012f, 0.756097f, -0.142269f, 0.329724f, -0.656317f, -0.998086f, -0.652949f, -0.40316f, -0.893682f, 0.432744f, 0.612362f, -0.869588f, -0.71327f, -0.398092f, -0.0423559f, 0.436576f, -0.925272f, 0.176549f, 0.822904f, 0.096833f, -0.296802f, -0.427195f, 0.031654f, -0.254479f, 0.244905f, 0.0948254f, 0.643769f, -0.90391f, 0.352665f, -0.901179f, 0.266159f, -0.968068f, -0.615401f, -0.388975f, 0.939052f, -0.116289f, 0.107523f, -0.0582711f, 0.435172f, 0.334675f, 0.459711f, 0.717436f, 0.496627f, -0.680175f, -0.415066f, 0.339848f, 0.506004f, -0.337808f, -0.107218f, -0.172496f, 0.870638f, 0.931872f, -0.953884f, 0.903042f, 0.760078f, 0.209727f, -0.285384f, -0.45514f, 0.113194f, 0.0756611f, 0.0924435f, -0.472863f, 0.960609f, -0.160385f, -0.839445f, 0.457097f, 0.163348f, 0.344867f, -0.131619f, 0.688715f, -0.540827f, 0.571259f, -0.95587f, 0.506164f, -0.155839f, 0.0789621f, 0.756772f, -0.662069f, 0.242908f, 0.460821f, 0.177872f, -0.289839f, -0.640603f, 0.702598f, -0.506406f, -0.568262f, -0.0713716f, 0.413792f, 0.159673f, -0.305208f, 0.133816f, -0.160254f, 0.787323f, -0.753244f, 0.600721f, 0.263186f, -0.162387f, 0.477962f, -0.702951f, -0.731036f, -0.939481f, -0.524519f, 0.934072f, -0.511637f, -0.503499f, 0.106236f, -0.323684f, 0.534444f, -0.843745f, 0.364171f, 0.0370358f, -0.168801f, -0.404559f, -0.814178f, 0.91745f, -0.334276f, 0.66925f, -0.801201f, 0.156511f, -0.427949f, 0.379153f, 0.818597f, -0.649902f, 0.427087f, -0.586015f, -0.559789f, -0.833923f, 0.0892409f, -0.621251f, 0.213826f, 0.465509f, 0.4704f, 0.380261f, 0.413067f, 0.180822f, 0.172866f, 0.59614f, 0.825575f, 0.662916f, -0.704381f, -0.297631f, 0.697778f}),
@@ -41136,6 +42193,8 @@ const TestModel& get_test_model_3_H3_W2_SAME_nhwc() {
     };
     return model;
 }
+
+const auto dummy_test_model_3_H3_W2_SAME_nhwc = TestModelManager::get().add("conv2d_v1_2_3_H3_W2_SAME_nhwc", get_test_model_3_H3_W2_SAME_nhwc());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -41143,9 +42202,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_3_H3_W2_SAME_nhwc_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {9},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -41280,6 +42341,8 @@ const TestModel& get_test_model_3_H3_W2_SAME_nhwc_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_3_H3_W2_SAME_nhwc_all_inputs_as_internal = TestModelManager::get().add("conv2d_v1_2_3_H3_W2_SAME_nhwc_all_inputs_as_internal", get_test_model_3_H3_W2_SAME_nhwc_all_inputs_as_internal());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -41287,9 +42350,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_3_H3_W2_SAME_nhwc_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-0.869931f, 0.644628f, -0.918393f, 0.153672f, 0.868562f, -0.358177f, -0.134931f, -0.247565f, 0.22174f, -0.259157f, -0.284296f, -0.538065f, 0.765559f, 0.41986f, -0.556241f, 0.658494f, 0.214355f, -0.850169f, -0.252893f, -0.478935f, 0.530526f, -0.0700663f, -0.988729f, -0.303061f, 0.150845f, 0.829915f, 0.476349f, 0.406537f, -0.355343f, 0.757145f, -0.356362f, 0.800482f, -0.713861f, 0.210483f, -0.634303f, 0.718236f, -0.752038f, 0.457547f, -0.550769f, -0.551178f, 0.446766f, -0.227462f, 0.216348f, -0.852806f, -0.351486f, 0.55906f, -0.668493f, -0.303493f, -0.363763f, -0.162837f, 0.0701012f, 0.756097f, -0.142269f, 0.329724f, -0.656317f, -0.998086f, -0.652949f, -0.40316f, -0.893682f, 0.432744f, 0.612362f, -0.869588f, -0.71327f, -0.398092f, -0.0423559f, 0.436576f, -0.925272f, 0.176549f, 0.822904f, 0.096833f, -0.296802f, -0.427195f, 0.031654f, -0.254479f, 0.244905f, 0.0948254f, 0.643769f, -0.90391f, 0.352665f, -0.901179f, 0.266159f, -0.968068f, -0.615401f, -0.388975f, 0.939052f, -0.116289f, 0.107523f, -0.0582711f, 0.435172f, 0.334675f, 0.459711f, 0.717436f, 0.496627f, -0.680175f, -0.415066f, 0.339848f, 0.506004f, -0.337808f, -0.107218f, -0.172496f, 0.870638f, 0.931872f, -0.953884f, 0.903042f, 0.760078f, 0.209727f, -0.285384f, -0.45514f, 0.113194f, 0.0756611f, 0.0924435f, -0.472863f, 0.960609f, -0.160385f, -0.839445f, 0.457097f, 0.163348f, 0.344867f, -0.131619f, 0.688715f, -0.540827f, 0.571259f, -0.95587f, 0.506164f, -0.155839f, 0.0789621f, 0.756772f, -0.662069f, 0.242908f, 0.460821f, 0.177872f, -0.289839f, -0.640603f, 0.702598f, -0.506406f, -0.568262f, -0.0713716f, 0.413792f, 0.159673f, -0.305208f, 0.133816f, -0.160254f, 0.787323f, -0.753244f, 0.600721f, 0.263186f, -0.162387f, 0.477962f, -0.702951f, -0.731036f, -0.939481f, -0.524519f, 0.934072f, -0.511637f, -0.503499f, 0.106236f, -0.323684f, 0.534444f, -0.843745f, 0.364171f, 0.0370358f, -0.168801f, -0.404559f, -0.814178f, 0.91745f, -0.334276f, 0.66925f, -0.801201f, 0.156511f, -0.427949f, 0.379153f, 0.818597f, -0.649902f, 0.427087f, -0.586015f, -0.559789f, -0.833923f, 0.0892409f, -0.621251f, 0.213826f, 0.465509f, 0.4704f, 0.380261f, 0.413067f, 0.180822f, 0.172866f, 0.59614f, 0.825575f, 0.662916f, -0.704381f, -0.297631f, 0.697778f}),
@@ -41390,6 +42455,8 @@ const TestModel& get_test_model_3_H3_W2_SAME_nhwc_all_tensors_as_inputs() {
     };
     return model;
 }
+
+const auto dummy_test_model_3_H3_W2_SAME_nhwc_all_tensors_as_inputs = TestModelManager::get().add("conv2d_v1_2_3_H3_W2_SAME_nhwc_all_tensors_as_inputs", get_test_model_3_H3_W2_SAME_nhwc_all_tensors_as_inputs());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -41397,9 +42464,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_3_H3_W2_SAME_nhwc_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {9, 12, 15},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -41602,6 +42671,8 @@ const TestModel& get_test_model_3_H3_W2_SAME_nhwc_all_tensors_as_inputs_all_inpu
     };
     return model;
 }
+
+const auto dummy_test_model_3_H3_W2_SAME_nhwc_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("conv2d_v1_2_3_H3_W2_SAME_nhwc_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_3_H3_W2_SAME_nhwc_all_tensors_as_inputs_all_inputs_as_internal());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -41609,9 +42680,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_3_H3_W2_SAME_nhwc_relaxed() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-0.869931f, 0.644628f, -0.918393f, 0.153672f, 0.868562f, -0.358177f, -0.134931f, -0.247565f, 0.22174f, -0.259157f, -0.284296f, -0.538065f, 0.765559f, 0.41986f, -0.556241f, 0.658494f, 0.214355f, -0.850169f, -0.252893f, -0.478935f, 0.530526f, -0.0700663f, -0.988729f, -0.303061f, 0.150845f, 0.829915f, 0.476349f, 0.406537f, -0.355343f, 0.757145f, -0.356362f, 0.800482f, -0.713861f, 0.210483f, -0.634303f, 0.718236f, -0.752038f, 0.457547f, -0.550769f, -0.551178f, 0.446766f, -0.227462f, 0.216348f, -0.852806f, -0.351486f, 0.55906f, -0.668493f, -0.303493f, -0.363763f, -0.162837f, 0.0701012f, 0.756097f, -0.142269f, 0.329724f, -0.656317f, -0.998086f, -0.652949f, -0.40316f, -0.893682f, 0.432744f, 0.612362f, -0.869588f, -0.71327f, -0.398092f, -0.0423559f, 0.436576f, -0.925272f, 0.176549f, 0.822904f, 0.096833f, -0.296802f, -0.427195f, 0.031654f, -0.254479f, 0.244905f, 0.0948254f, 0.643769f, -0.90391f, 0.352665f, -0.901179f, 0.266159f, -0.968068f, -0.615401f, -0.388975f, 0.939052f, -0.116289f, 0.107523f, -0.0582711f, 0.435172f, 0.334675f, 0.459711f, 0.717436f, 0.496627f, -0.680175f, -0.415066f, 0.339848f, 0.506004f, -0.337808f, -0.107218f, -0.172496f, 0.870638f, 0.931872f, -0.953884f, 0.903042f, 0.760078f, 0.209727f, -0.285384f, -0.45514f, 0.113194f, 0.0756611f, 0.0924435f, -0.472863f, 0.960609f, -0.160385f, -0.839445f, 0.457097f, 0.163348f, 0.344867f, -0.131619f, 0.688715f, -0.540827f, 0.571259f, -0.95587f, 0.506164f, -0.155839f, 0.0789621f, 0.756772f, -0.662069f, 0.242908f, 0.460821f, 0.177872f, -0.289839f, -0.640603f, 0.702598f, -0.506406f, -0.568262f, -0.0713716f, 0.413792f, 0.159673f, -0.305208f, 0.133816f, -0.160254f, 0.787323f, -0.753244f, 0.600721f, 0.263186f, -0.162387f, 0.477962f, -0.702951f, -0.731036f, -0.939481f, -0.524519f, 0.934072f, -0.511637f, -0.503499f, 0.106236f, -0.323684f, 0.534444f, -0.843745f, 0.364171f, 0.0370358f, -0.168801f, -0.404559f, -0.814178f, 0.91745f, -0.334276f, 0.66925f, -0.801201f, 0.156511f, -0.427949f, 0.379153f, 0.818597f, -0.649902f, 0.427087f, -0.586015f, -0.559789f, -0.833923f, 0.0892409f, -0.621251f, 0.213826f, 0.465509f, 0.4704f, 0.380261f, 0.413067f, 0.180822f, 0.172866f, 0.59614f, 0.825575f, 0.662916f, -0.704381f, -0.297631f, 0.697778f}),
@@ -41712,6 +42785,8 @@ const TestModel& get_test_model_3_H3_W2_SAME_nhwc_relaxed() {
     };
     return model;
 }
+
+const auto dummy_test_model_3_H3_W2_SAME_nhwc_relaxed = TestModelManager::get().add("conv2d_v1_2_3_H3_W2_SAME_nhwc_relaxed", get_test_model_3_H3_W2_SAME_nhwc_relaxed());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -41719,9 +42794,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_3_H3_W2_SAME_nhwc_relaxed_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {9},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -41856,6 +42933,8 @@ const TestModel& get_test_model_3_H3_W2_SAME_nhwc_relaxed_all_inputs_as_internal
     };
     return model;
 }
+
+const auto dummy_test_model_3_H3_W2_SAME_nhwc_relaxed_all_inputs_as_internal = TestModelManager::get().add("conv2d_v1_2_3_H3_W2_SAME_nhwc_relaxed_all_inputs_as_internal", get_test_model_3_H3_W2_SAME_nhwc_relaxed_all_inputs_as_internal());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -41863,9 +42942,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_3_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-0.869931f, 0.644628f, -0.918393f, 0.153672f, 0.868562f, -0.358177f, -0.134931f, -0.247565f, 0.22174f, -0.259157f, -0.284296f, -0.538065f, 0.765559f, 0.41986f, -0.556241f, 0.658494f, 0.214355f, -0.850169f, -0.252893f, -0.478935f, 0.530526f, -0.0700663f, -0.988729f, -0.303061f, 0.150845f, 0.829915f, 0.476349f, 0.406537f, -0.355343f, 0.757145f, -0.356362f, 0.800482f, -0.713861f, 0.210483f, -0.634303f, 0.718236f, -0.752038f, 0.457547f, -0.550769f, -0.551178f, 0.446766f, -0.227462f, 0.216348f, -0.852806f, -0.351486f, 0.55906f, -0.668493f, -0.303493f, -0.363763f, -0.162837f, 0.0701012f, 0.756097f, -0.142269f, 0.329724f, -0.656317f, -0.998086f, -0.652949f, -0.40316f, -0.893682f, 0.432744f, 0.612362f, -0.869588f, -0.71327f, -0.398092f, -0.0423559f, 0.436576f, -0.925272f, 0.176549f, 0.822904f, 0.096833f, -0.296802f, -0.427195f, 0.031654f, -0.254479f, 0.244905f, 0.0948254f, 0.643769f, -0.90391f, 0.352665f, -0.901179f, 0.266159f, -0.968068f, -0.615401f, -0.388975f, 0.939052f, -0.116289f, 0.107523f, -0.0582711f, 0.435172f, 0.334675f, 0.459711f, 0.717436f, 0.496627f, -0.680175f, -0.415066f, 0.339848f, 0.506004f, -0.337808f, -0.107218f, -0.172496f, 0.870638f, 0.931872f, -0.953884f, 0.903042f, 0.760078f, 0.209727f, -0.285384f, -0.45514f, 0.113194f, 0.0756611f, 0.0924435f, -0.472863f, 0.960609f, -0.160385f, -0.839445f, 0.457097f, 0.163348f, 0.344867f, -0.131619f, 0.688715f, -0.540827f, 0.571259f, -0.95587f, 0.506164f, -0.155839f, 0.0789621f, 0.756772f, -0.662069f, 0.242908f, 0.460821f, 0.177872f, -0.289839f, -0.640603f, 0.702598f, -0.506406f, -0.568262f, -0.0713716f, 0.413792f, 0.159673f, -0.305208f, 0.133816f, -0.160254f, 0.787323f, -0.753244f, 0.600721f, 0.263186f, -0.162387f, 0.477962f, -0.702951f, -0.731036f, -0.939481f, -0.524519f, 0.934072f, -0.511637f, -0.503499f, 0.106236f, -0.323684f, 0.534444f, -0.843745f, 0.364171f, 0.0370358f, -0.168801f, -0.404559f, -0.814178f, 0.91745f, -0.334276f, 0.66925f, -0.801201f, 0.156511f, -0.427949f, 0.379153f, 0.818597f, -0.649902f, 0.427087f, -0.586015f, -0.559789f, -0.833923f, 0.0892409f, -0.621251f, 0.213826f, 0.465509f, 0.4704f, 0.380261f, 0.413067f, 0.180822f, 0.172866f, 0.59614f, 0.825575f, 0.662916f, -0.704381f, -0.297631f, 0.697778f}),
@@ -41966,6 +43047,8 @@ const TestModel& get_test_model_3_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs(
     };
     return model;
 }
+
+const auto dummy_test_model_3_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs = TestModelManager::get().add("conv2d_v1_2_3_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs", get_test_model_3_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -41973,9 +43056,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_3_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {9, 12, 15},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -42179,15 +43264,19 @@ const TestModel& get_test_model_3_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_
     return model;
 }
 
+const auto dummy_test_model_3_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("conv2d_v1_2_3_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_3_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal());
+
 }  // namespace generated_tests::conv2d_v1_2
 
 namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_3_H3_W2_SAME_nhwc_float16() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({-0.8699309825897217f, 0.6446279883384705f, -0.9183930158615112f, 0.153671994805336f, 0.8685619831085205f, -0.3581770062446594f, -0.13493099808692932f, -0.24756500124931335f, 0.2217400074005127f, -0.2591570019721985f, -0.2842960059642792f, -0.5380650162696838f, 0.7655590176582336f, 0.41986000537872314f, -0.556240975856781f, 0.6584939956665039f, 0.214355006814003f, -0.8501690030097961f, -0.25289300084114075f, -0.47893500328063965f, 0.5305259823799133f, -0.07006630301475525f, -0.9887290000915527f, -0.30306100845336914f, 0.150845006108284f, 0.8299149870872498f, 0.47634899616241455f, 0.4065369963645935f, -0.3553430140018463f, 0.7571449875831604f, -0.356361985206604f, 0.8004819750785828f, -0.7138609886169434f, 0.21048299968242645f, -0.6343029737472534f, 0.7182360291481018f, -0.7520380020141602f, 0.45754700899124146f, -0.5507689714431763f, -0.551177978515625f, 0.4467659890651703f, -0.22746199369430542f, 0.21634800732135773f, -0.8528059720993042f, -0.3514859974384308f, 0.5590599775314331f, -0.6684929728507996f, -0.3034929931163788f, -0.3637630045413971f, -0.16283699870109558f, 0.07010120153427124f, 0.7560970187187195f, -0.14226900041103363f, 0.3297240138053894f, -0.6563169956207275f, -0.9980859756469727f, -0.6529489755630493f, -0.4031600058078766f, -0.8936820030212402f, 0.43274399638175964f, 0.6123620271682739f, -0.8695880174636841f, -0.7132700085639954f, -0.39809200167655945f, -0.04235589876770973f, 0.4365760087966919f, -0.9252719879150391f, 0.1765490025281906f, 0.8229039907455444f, 0.0968329980969429f, -0.29680201411247253f, -0.4271950125694275f, 0.0316540002822876f, -0.25447899103164673f, 0.2449049949645996f, 0.09482540190219879f, 0.6437690258026123f, -0.9039099812507629f, 0.3526650071144104f, -0.9011790156364441f, 0.2661589980125427f, -0.96806800365448f, -0.615401029586792f, -0.38897499442100525f, 0.9390519857406616f, -0.11628899723291397f, 0.10752300173044205f, -0.058271098881959915f, 0.4351719915866852f, 0.33467501401901245f, 0.4597109854221344f, 0.7174360156059265f, 0.49662700295448303f, -0.6801750063896179f, -0.4150660037994385f, 0.33984801173210144f, 0.5060039758682251f, -0.3378080129623413f, -0.10721799731254578f, -0.1724960058927536f, 0.8706380128860474f, 0.9318720102310181f, -0.9538840055465698f, 0.9030420184135437f, 0.7600780129432678f, 0.20972700417041779f, -0.28538399934768677f, -0.45513999462127686f, 0.11319400370121002f, 0.07566110044717789f, 0.09244350343942642f, -0.47286298871040344f, 0.9606090188026428f, -0.16038499772548676f, -0.8394449949264526f, 0.45709699392318726f, 0.1633480042219162f, 0.3448669910430908f, -0.13161900639533997f, 0.6887149810791016f, -0.5408269762992859f, 0.5712590217590332f, -0.9558699727058411f, 0.506164014339447f, -0.1558389961719513f, 0.07896210253238678f, 0.756771981716156f, -0.6620690226554871f, 0.24290800094604492f, 0.4608210027217865f, 0.17787200212478638f, -0.2898389995098114f, -0.6406030058860779f, 0.702597975730896f, -0.5064060091972351f, -0.568261981010437f, -0.07137160003185272f, 0.4137920141220093f, 0.15967300534248352f, -0.3052079975605011f, 0.13381600379943848f, -0.16025400161743164f, 0.787322998046875f, -0.7532439827919006f, 0.600721001625061f, 0.2631860077381134f, -0.16238699853420258f, 0.4779619872570038f, -0.7029510140419006f, -0.7310360074043274f, -0.9394810199737549f, -0.5245190262794495f, 0.9340720176696777f, -0.5116369724273682f, -0.5034989714622498f, 0.10623600333929062f, -0.3236840069293976f, 0.5344439744949341f, -0.8437449932098389f, 0.36417099833488464f, 0.03703580051660538f, -0.16880099475383759f, -0.4045589864253998f, -0.8141779899597168f, 0.9174500107765198f, -0.3342759907245636f, 0.6692500114440918f, -0.8012009859085083f, 0.15651099383831024f, -0.4279490113258362f, 0.3791530132293701f, 0.8185970187187195f, -0.6499019861221313f, 0.4270870089530945f, -0.586014986038208f, -0.5597890019416809f, -0.8339229822158813f, 0.0892409011721611f, -0.6212509870529175f, 0.2138260006904602f, 0.46550899744033813f, 0.47040000557899475f, 0.38026100397109985f, 0.4130670130252838f, 0.1808219999074936f, 0.17286600172519684f, 0.5961400270462036f, 0.8255749940872192f, 0.6629160046577454f, -0.704380989074707f, -0.29763099551200867f, 0.6977779865264893f}),
@@ -42288,6 +43377,8 @@ const TestModel& get_test_model_3_H3_W2_SAME_nhwc_float16() {
     };
     return model;
 }
+
+const auto dummy_test_model_3_H3_W2_SAME_nhwc_float16 = TestModelManager::get().add("conv2d_v1_2_3_H3_W2_SAME_nhwc_float16", get_test_model_3_H3_W2_SAME_nhwc_float16());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -42295,9 +43386,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_3_H3_W2_SAME_nhwc_float16_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {9},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -42432,6 +43525,8 @@ const TestModel& get_test_model_3_H3_W2_SAME_nhwc_float16_all_inputs_as_internal
     };
     return model;
 }
+
+const auto dummy_test_model_3_H3_W2_SAME_nhwc_float16_all_inputs_as_internal = TestModelManager::get().add("conv2d_v1_2_3_H3_W2_SAME_nhwc_float16_all_inputs_as_internal", get_test_model_3_H3_W2_SAME_nhwc_float16_all_inputs_as_internal());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -42439,9 +43534,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_3_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({-0.8699309825897217f, 0.6446279883384705f, -0.9183930158615112f, 0.153671994805336f, 0.8685619831085205f, -0.3581770062446594f, -0.13493099808692932f, -0.24756500124931335f, 0.2217400074005127f, -0.2591570019721985f, -0.2842960059642792f, -0.5380650162696838f, 0.7655590176582336f, 0.41986000537872314f, -0.556240975856781f, 0.6584939956665039f, 0.214355006814003f, -0.8501690030097961f, -0.25289300084114075f, -0.47893500328063965f, 0.5305259823799133f, -0.07006630301475525f, -0.9887290000915527f, -0.30306100845336914f, 0.150845006108284f, 0.8299149870872498f, 0.47634899616241455f, 0.4065369963645935f, -0.3553430140018463f, 0.7571449875831604f, -0.356361985206604f, 0.8004819750785828f, -0.7138609886169434f, 0.21048299968242645f, -0.6343029737472534f, 0.7182360291481018f, -0.7520380020141602f, 0.45754700899124146f, -0.5507689714431763f, -0.551177978515625f, 0.4467659890651703f, -0.22746199369430542f, 0.21634800732135773f, -0.8528059720993042f, -0.3514859974384308f, 0.5590599775314331f, -0.6684929728507996f, -0.3034929931163788f, -0.3637630045413971f, -0.16283699870109558f, 0.07010120153427124f, 0.7560970187187195f, -0.14226900041103363f, 0.3297240138053894f, -0.6563169956207275f, -0.9980859756469727f, -0.6529489755630493f, -0.4031600058078766f, -0.8936820030212402f, 0.43274399638175964f, 0.6123620271682739f, -0.8695880174636841f, -0.7132700085639954f, -0.39809200167655945f, -0.04235589876770973f, 0.4365760087966919f, -0.9252719879150391f, 0.1765490025281906f, 0.8229039907455444f, 0.0968329980969429f, -0.29680201411247253f, -0.4271950125694275f, 0.0316540002822876f, -0.25447899103164673f, 0.2449049949645996f, 0.09482540190219879f, 0.6437690258026123f, -0.9039099812507629f, 0.3526650071144104f, -0.9011790156364441f, 0.2661589980125427f, -0.96806800365448f, -0.615401029586792f, -0.38897499442100525f, 0.9390519857406616f, -0.11628899723291397f, 0.10752300173044205f, -0.058271098881959915f, 0.4351719915866852f, 0.33467501401901245f, 0.4597109854221344f, 0.7174360156059265f, 0.49662700295448303f, -0.6801750063896179f, -0.4150660037994385f, 0.33984801173210144f, 0.5060039758682251f, -0.3378080129623413f, -0.10721799731254578f, -0.1724960058927536f, 0.8706380128860474f, 0.9318720102310181f, -0.9538840055465698f, 0.9030420184135437f, 0.7600780129432678f, 0.20972700417041779f, -0.28538399934768677f, -0.45513999462127686f, 0.11319400370121002f, 0.07566110044717789f, 0.09244350343942642f, -0.47286298871040344f, 0.9606090188026428f, -0.16038499772548676f, -0.8394449949264526f, 0.45709699392318726f, 0.1633480042219162f, 0.3448669910430908f, -0.13161900639533997f, 0.6887149810791016f, -0.5408269762992859f, 0.5712590217590332f, -0.9558699727058411f, 0.506164014339447f, -0.1558389961719513f, 0.07896210253238678f, 0.756771981716156f, -0.6620690226554871f, 0.24290800094604492f, 0.4608210027217865f, 0.17787200212478638f, -0.2898389995098114f, -0.6406030058860779f, 0.702597975730896f, -0.5064060091972351f, -0.568261981010437f, -0.07137160003185272f, 0.4137920141220093f, 0.15967300534248352f, -0.3052079975605011f, 0.13381600379943848f, -0.16025400161743164f, 0.787322998046875f, -0.7532439827919006f, 0.600721001625061f, 0.2631860077381134f, -0.16238699853420258f, 0.4779619872570038f, -0.7029510140419006f, -0.7310360074043274f, -0.9394810199737549f, -0.5245190262794495f, 0.9340720176696777f, -0.5116369724273682f, -0.5034989714622498f, 0.10623600333929062f, -0.3236840069293976f, 0.5344439744949341f, -0.8437449932098389f, 0.36417099833488464f, 0.03703580051660538f, -0.16880099475383759f, -0.4045589864253998f, -0.8141779899597168f, 0.9174500107765198f, -0.3342759907245636f, 0.6692500114440918f, -0.8012009859085083f, 0.15651099383831024f, -0.4279490113258362f, 0.3791530132293701f, 0.8185970187187195f, -0.6499019861221313f, 0.4270870089530945f, -0.586014986038208f, -0.5597890019416809f, -0.8339229822158813f, 0.0892409011721611f, -0.6212509870529175f, 0.2138260006904602f, 0.46550899744033813f, 0.47040000557899475f, 0.38026100397109985f, 0.4130670130252838f, 0.1808219999074936f, 0.17286600172519684f, 0.5961400270462036f, 0.8255749940872192f, 0.6629160046577454f, -0.704380989074707f, -0.29763099551200867f, 0.6977779865264893f}),
@@ -42542,6 +43639,8 @@ const TestModel& get_test_model_3_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs(
     };
     return model;
 }
+
+const auto dummy_test_model_3_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs = TestModelManager::get().add("conv2d_v1_2_3_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs", get_test_model_3_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -42549,9 +43648,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_3_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {9, 12, 15},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -42755,15 +43856,19 @@ const TestModel& get_test_model_3_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_
     return model;
 }
 
+const auto dummy_test_model_3_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("conv2d_v1_2_3_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_3_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal());
+
 }  // namespace generated_tests::conv2d_v1_2
 
 namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_3_H3_W2_SAME_nchw() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-0.869931f, 0.153672f, -0.134931f, -0.259157f, 0.765559f, 0.658494f, -0.252893f, -0.0700663f, 0.150845f, 0.406537f, -0.356362f, 0.210483f, -0.752038f, -0.551178f, 0.216348f, 0.55906f, -0.363763f, 0.756097f, -0.656317f, -0.40316f, 0.612362f, -0.398092f, -0.925272f, 0.096833f, 0.031654f, 0.0948254f, 0.352665f, -0.968068f, 0.939052f, -0.0582711f, 0.459711f, -0.680175f, 0.506004f, -0.172496f, -0.953884f, 0.209727f, 0.113194f, -0.472863f, -0.839445f, 0.344867f, -0.540827f, 0.506164f, 0.756772f, 0.460821f, -0.640603f, -0.568262f, 0.159673f, -0.160254f, 0.600721f, 0.477962f, -0.939481f, -0.511637f, -0.323684f, 0.364171f, -0.404559f, -0.334276f, 0.156511f, 0.818597f, -0.586015f, 0.0892409f, 0.465509f, 0.413067f, 0.59614f, -0.704381f, 0.644628f, 0.868562f, -0.247565f, -0.284296f, 0.41986f, 0.214355f, -0.478935f, -0.988729f, 0.829915f, -0.355343f, 0.800482f, -0.634303f, 0.457547f, 0.446766f, -0.852806f, -0.668493f, -0.162837f, -0.142269f, -0.998086f, -0.893682f, -0.869588f, -0.0423559f, 0.176549f, -0.296802f, -0.254479f, 0.643769f, -0.901179f, -0.615401f, -0.116289f, 0.435172f, 0.717436f, -0.415066f, -0.337808f, 0.870638f, 0.903042f, -0.285384f, 0.0756611f, 0.960609f, 0.457097f, -0.131619f, 0.571259f, -0.155839f, -0.662069f, 0.177872f, 0.702598f, -0.0713716f, -0.305208f, 0.787323f, 0.263186f, -0.702951f, -0.524519f, -0.503499f, 0.534444f, 0.0370358f, -0.814178f, 0.66925f, -0.427949f, -0.649902f, -0.559789f, -0.621251f, 0.4704f, 0.180822f, 0.825575f, -0.297631f, -0.918393f, -0.358177f, 0.22174f, -0.538065f, -0.556241f, -0.850169f, 0.530526f, -0.303061f, 0.476349f, 0.757145f, -0.713861f, 0.718236f, -0.550769f, -0.227462f, -0.351486f, -0.303493f, 0.0701012f, 0.329724f, -0.652949f, 0.432744f, -0.71327f, 0.436576f, 0.822904f, -0.427195f, 0.244905f, -0.90391f, 0.266159f, -0.388975f, 0.107523f, 0.334675f, 0.496627f, 0.339848f, -0.107218f, 0.931872f, 0.760078f, -0.45514f, 0.0924435f, -0.160385f, 0.163348f, 0.688715f, -0.95587f, 0.0789621f, 0.242908f, -0.289839f, -0.506406f, 0.413792f, 0.133816f, -0.753244f, -0.162387f, -0.731036f, 0.934072f, 0.106236f, -0.843745f, -0.168801f, 0.91745f, -0.801201f, 0.379153f, 0.427087f, -0.833923f, 0.213826f, 0.380261f, 0.172866f, 0.662916f, 0.697778f}),
@@ -42864,6 +43969,8 @@ const TestModel& get_test_model_3_H3_W2_SAME_nchw() {
     };
     return model;
 }
+
+const auto dummy_test_model_3_H3_W2_SAME_nchw = TestModelManager::get().add("conv2d_v1_2_3_H3_W2_SAME_nchw", get_test_model_3_H3_W2_SAME_nchw());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -42871,9 +43978,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_3_H3_W2_SAME_nchw_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {9},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -43008,6 +44117,8 @@ const TestModel& get_test_model_3_H3_W2_SAME_nchw_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_3_H3_W2_SAME_nchw_all_inputs_as_internal = TestModelManager::get().add("conv2d_v1_2_3_H3_W2_SAME_nchw_all_inputs_as_internal", get_test_model_3_H3_W2_SAME_nchw_all_inputs_as_internal());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -43015,9 +44126,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_3_H3_W2_SAME_nchw_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-0.869931f, 0.153672f, -0.134931f, -0.259157f, 0.765559f, 0.658494f, -0.252893f, -0.0700663f, 0.150845f, 0.406537f, -0.356362f, 0.210483f, -0.752038f, -0.551178f, 0.216348f, 0.55906f, -0.363763f, 0.756097f, -0.656317f, -0.40316f, 0.612362f, -0.398092f, -0.925272f, 0.096833f, 0.031654f, 0.0948254f, 0.352665f, -0.968068f, 0.939052f, -0.0582711f, 0.459711f, -0.680175f, 0.506004f, -0.172496f, -0.953884f, 0.209727f, 0.113194f, -0.472863f, -0.839445f, 0.344867f, -0.540827f, 0.506164f, 0.756772f, 0.460821f, -0.640603f, -0.568262f, 0.159673f, -0.160254f, 0.600721f, 0.477962f, -0.939481f, -0.511637f, -0.323684f, 0.364171f, -0.404559f, -0.334276f, 0.156511f, 0.818597f, -0.586015f, 0.0892409f, 0.465509f, 0.413067f, 0.59614f, -0.704381f, 0.644628f, 0.868562f, -0.247565f, -0.284296f, 0.41986f, 0.214355f, -0.478935f, -0.988729f, 0.829915f, -0.355343f, 0.800482f, -0.634303f, 0.457547f, 0.446766f, -0.852806f, -0.668493f, -0.162837f, -0.142269f, -0.998086f, -0.893682f, -0.869588f, -0.0423559f, 0.176549f, -0.296802f, -0.254479f, 0.643769f, -0.901179f, -0.615401f, -0.116289f, 0.435172f, 0.717436f, -0.415066f, -0.337808f, 0.870638f, 0.903042f, -0.285384f, 0.0756611f, 0.960609f, 0.457097f, -0.131619f, 0.571259f, -0.155839f, -0.662069f, 0.177872f, 0.702598f, -0.0713716f, -0.305208f, 0.787323f, 0.263186f, -0.702951f, -0.524519f, -0.503499f, 0.534444f, 0.0370358f, -0.814178f, 0.66925f, -0.427949f, -0.649902f, -0.559789f, -0.621251f, 0.4704f, 0.180822f, 0.825575f, -0.297631f, -0.918393f, -0.358177f, 0.22174f, -0.538065f, -0.556241f, -0.850169f, 0.530526f, -0.303061f, 0.476349f, 0.757145f, -0.713861f, 0.718236f, -0.550769f, -0.227462f, -0.351486f, -0.303493f, 0.0701012f, 0.329724f, -0.652949f, 0.432744f, -0.71327f, 0.436576f, 0.822904f, -0.427195f, 0.244905f, -0.90391f, 0.266159f, -0.388975f, 0.107523f, 0.334675f, 0.496627f, 0.339848f, -0.107218f, 0.931872f, 0.760078f, -0.45514f, 0.0924435f, -0.160385f, 0.163348f, 0.688715f, -0.95587f, 0.0789621f, 0.242908f, -0.289839f, -0.506406f, 0.413792f, 0.133816f, -0.753244f, -0.162387f, -0.731036f, 0.934072f, 0.106236f, -0.843745f, -0.168801f, 0.91745f, -0.801201f, 0.379153f, 0.427087f, -0.833923f, 0.213826f, 0.380261f, 0.172866f, 0.662916f, 0.697778f}),
@@ -43118,6 +44231,8 @@ const TestModel& get_test_model_3_H3_W2_SAME_nchw_all_tensors_as_inputs() {
     };
     return model;
 }
+
+const auto dummy_test_model_3_H3_W2_SAME_nchw_all_tensors_as_inputs = TestModelManager::get().add("conv2d_v1_2_3_H3_W2_SAME_nchw_all_tensors_as_inputs", get_test_model_3_H3_W2_SAME_nchw_all_tensors_as_inputs());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -43125,9 +44240,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_3_H3_W2_SAME_nchw_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {9, 12, 15},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -43330,6 +44447,8 @@ const TestModel& get_test_model_3_H3_W2_SAME_nchw_all_tensors_as_inputs_all_inpu
     };
     return model;
 }
+
+const auto dummy_test_model_3_H3_W2_SAME_nchw_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("conv2d_v1_2_3_H3_W2_SAME_nchw_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_3_H3_W2_SAME_nchw_all_tensors_as_inputs_all_inputs_as_internal());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -43337,9 +44456,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_3_H3_W2_SAME_nchw_relaxed() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-0.869931f, 0.153672f, -0.134931f, -0.259157f, 0.765559f, 0.658494f, -0.252893f, -0.0700663f, 0.150845f, 0.406537f, -0.356362f, 0.210483f, -0.752038f, -0.551178f, 0.216348f, 0.55906f, -0.363763f, 0.756097f, -0.656317f, -0.40316f, 0.612362f, -0.398092f, -0.925272f, 0.096833f, 0.031654f, 0.0948254f, 0.352665f, -0.968068f, 0.939052f, -0.0582711f, 0.459711f, -0.680175f, 0.506004f, -0.172496f, -0.953884f, 0.209727f, 0.113194f, -0.472863f, -0.839445f, 0.344867f, -0.540827f, 0.506164f, 0.756772f, 0.460821f, -0.640603f, -0.568262f, 0.159673f, -0.160254f, 0.600721f, 0.477962f, -0.939481f, -0.511637f, -0.323684f, 0.364171f, -0.404559f, -0.334276f, 0.156511f, 0.818597f, -0.586015f, 0.0892409f, 0.465509f, 0.413067f, 0.59614f, -0.704381f, 0.644628f, 0.868562f, -0.247565f, -0.284296f, 0.41986f, 0.214355f, -0.478935f, -0.988729f, 0.829915f, -0.355343f, 0.800482f, -0.634303f, 0.457547f, 0.446766f, -0.852806f, -0.668493f, -0.162837f, -0.142269f, -0.998086f, -0.893682f, -0.869588f, -0.0423559f, 0.176549f, -0.296802f, -0.254479f, 0.643769f, -0.901179f, -0.615401f, -0.116289f, 0.435172f, 0.717436f, -0.415066f, -0.337808f, 0.870638f, 0.903042f, -0.285384f, 0.0756611f, 0.960609f, 0.457097f, -0.131619f, 0.571259f, -0.155839f, -0.662069f, 0.177872f, 0.702598f, -0.0713716f, -0.305208f, 0.787323f, 0.263186f, -0.702951f, -0.524519f, -0.503499f, 0.534444f, 0.0370358f, -0.814178f, 0.66925f, -0.427949f, -0.649902f, -0.559789f, -0.621251f, 0.4704f, 0.180822f, 0.825575f, -0.297631f, -0.918393f, -0.358177f, 0.22174f, -0.538065f, -0.556241f, -0.850169f, 0.530526f, -0.303061f, 0.476349f, 0.757145f, -0.713861f, 0.718236f, -0.550769f, -0.227462f, -0.351486f, -0.303493f, 0.0701012f, 0.329724f, -0.652949f, 0.432744f, -0.71327f, 0.436576f, 0.822904f, -0.427195f, 0.244905f, -0.90391f, 0.266159f, -0.388975f, 0.107523f, 0.334675f, 0.496627f, 0.339848f, -0.107218f, 0.931872f, 0.760078f, -0.45514f, 0.0924435f, -0.160385f, 0.163348f, 0.688715f, -0.95587f, 0.0789621f, 0.242908f, -0.289839f, -0.506406f, 0.413792f, 0.133816f, -0.753244f, -0.162387f, -0.731036f, 0.934072f, 0.106236f, -0.843745f, -0.168801f, 0.91745f, -0.801201f, 0.379153f, 0.427087f, -0.833923f, 0.213826f, 0.380261f, 0.172866f, 0.662916f, 0.697778f}),
@@ -43440,6 +44561,8 @@ const TestModel& get_test_model_3_H3_W2_SAME_nchw_relaxed() {
     };
     return model;
 }
+
+const auto dummy_test_model_3_H3_W2_SAME_nchw_relaxed = TestModelManager::get().add("conv2d_v1_2_3_H3_W2_SAME_nchw_relaxed", get_test_model_3_H3_W2_SAME_nchw_relaxed());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -43447,9 +44570,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_3_H3_W2_SAME_nchw_relaxed_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {9},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -43584,6 +44709,8 @@ const TestModel& get_test_model_3_H3_W2_SAME_nchw_relaxed_all_inputs_as_internal
     };
     return model;
 }
+
+const auto dummy_test_model_3_H3_W2_SAME_nchw_relaxed_all_inputs_as_internal = TestModelManager::get().add("conv2d_v1_2_3_H3_W2_SAME_nchw_relaxed_all_inputs_as_internal", get_test_model_3_H3_W2_SAME_nchw_relaxed_all_inputs_as_internal());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -43591,9 +44718,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_3_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-0.869931f, 0.153672f, -0.134931f, -0.259157f, 0.765559f, 0.658494f, -0.252893f, -0.0700663f, 0.150845f, 0.406537f, -0.356362f, 0.210483f, -0.752038f, -0.551178f, 0.216348f, 0.55906f, -0.363763f, 0.756097f, -0.656317f, -0.40316f, 0.612362f, -0.398092f, -0.925272f, 0.096833f, 0.031654f, 0.0948254f, 0.352665f, -0.968068f, 0.939052f, -0.0582711f, 0.459711f, -0.680175f, 0.506004f, -0.172496f, -0.953884f, 0.209727f, 0.113194f, -0.472863f, -0.839445f, 0.344867f, -0.540827f, 0.506164f, 0.756772f, 0.460821f, -0.640603f, -0.568262f, 0.159673f, -0.160254f, 0.600721f, 0.477962f, -0.939481f, -0.511637f, -0.323684f, 0.364171f, -0.404559f, -0.334276f, 0.156511f, 0.818597f, -0.586015f, 0.0892409f, 0.465509f, 0.413067f, 0.59614f, -0.704381f, 0.644628f, 0.868562f, -0.247565f, -0.284296f, 0.41986f, 0.214355f, -0.478935f, -0.988729f, 0.829915f, -0.355343f, 0.800482f, -0.634303f, 0.457547f, 0.446766f, -0.852806f, -0.668493f, -0.162837f, -0.142269f, -0.998086f, -0.893682f, -0.869588f, -0.0423559f, 0.176549f, -0.296802f, -0.254479f, 0.643769f, -0.901179f, -0.615401f, -0.116289f, 0.435172f, 0.717436f, -0.415066f, -0.337808f, 0.870638f, 0.903042f, -0.285384f, 0.0756611f, 0.960609f, 0.457097f, -0.131619f, 0.571259f, -0.155839f, -0.662069f, 0.177872f, 0.702598f, -0.0713716f, -0.305208f, 0.787323f, 0.263186f, -0.702951f, -0.524519f, -0.503499f, 0.534444f, 0.0370358f, -0.814178f, 0.66925f, -0.427949f, -0.649902f, -0.559789f, -0.621251f, 0.4704f, 0.180822f, 0.825575f, -0.297631f, -0.918393f, -0.358177f, 0.22174f, -0.538065f, -0.556241f, -0.850169f, 0.530526f, -0.303061f, 0.476349f, 0.757145f, -0.713861f, 0.718236f, -0.550769f, -0.227462f, -0.351486f, -0.303493f, 0.0701012f, 0.329724f, -0.652949f, 0.432744f, -0.71327f, 0.436576f, 0.822904f, -0.427195f, 0.244905f, -0.90391f, 0.266159f, -0.388975f, 0.107523f, 0.334675f, 0.496627f, 0.339848f, -0.107218f, 0.931872f, 0.760078f, -0.45514f, 0.0924435f, -0.160385f, 0.163348f, 0.688715f, -0.95587f, 0.0789621f, 0.242908f, -0.289839f, -0.506406f, 0.413792f, 0.133816f, -0.753244f, -0.162387f, -0.731036f, 0.934072f, 0.106236f, -0.843745f, -0.168801f, 0.91745f, -0.801201f, 0.379153f, 0.427087f, -0.833923f, 0.213826f, 0.380261f, 0.172866f, 0.662916f, 0.697778f}),
@@ -43694,6 +44823,8 @@ const TestModel& get_test_model_3_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs(
     };
     return model;
 }
+
+const auto dummy_test_model_3_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs = TestModelManager::get().add("conv2d_v1_2_3_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs", get_test_model_3_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -43701,9 +44832,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_3_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {9, 12, 15},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -43907,15 +45040,19 @@ const TestModel& get_test_model_3_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_
     return model;
 }
 
+const auto dummy_test_model_3_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("conv2d_v1_2_3_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_3_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal());
+
 }  // namespace generated_tests::conv2d_v1_2
 
 namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_3_H3_W2_SAME_nchw_float16() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({-0.8699309825897217f, 0.153671994805336f, -0.13493099808692932f, -0.2591570019721985f, 0.7655590176582336f, 0.6584939956665039f, -0.25289300084114075f, -0.07006630301475525f, 0.150845006108284f, 0.4065369963645935f, -0.356361985206604f, 0.21048299968242645f, -0.7520380020141602f, -0.551177978515625f, 0.21634800732135773f, 0.5590599775314331f, -0.3637630045413971f, 0.7560970187187195f, -0.6563169956207275f, -0.4031600058078766f, 0.6123620271682739f, -0.39809200167655945f, -0.9252719879150391f, 0.0968329980969429f, 0.0316540002822876f, 0.09482540190219879f, 0.3526650071144104f, -0.96806800365448f, 0.9390519857406616f, -0.058271098881959915f, 0.4597109854221344f, -0.6801750063896179f, 0.5060039758682251f, -0.1724960058927536f, -0.9538840055465698f, 0.20972700417041779f, 0.11319400370121002f, -0.47286298871040344f, -0.8394449949264526f, 0.3448669910430908f, -0.5408269762992859f, 0.506164014339447f, 0.756771981716156f, 0.4608210027217865f, -0.6406030058860779f, -0.568261981010437f, 0.15967300534248352f, -0.16025400161743164f, 0.600721001625061f, 0.4779619872570038f, -0.9394810199737549f, -0.5116369724273682f, -0.3236840069293976f, 0.36417099833488464f, -0.4045589864253998f, -0.3342759907245636f, 0.15651099383831024f, 0.8185970187187195f, -0.586014986038208f, 0.0892409011721611f, 0.46550899744033813f, 0.4130670130252838f, 0.5961400270462036f, -0.704380989074707f, 0.6446279883384705f, 0.8685619831085205f, -0.24756500124931335f, -0.2842960059642792f, 0.41986000537872314f, 0.214355006814003f, -0.47893500328063965f, -0.9887290000915527f, 0.8299149870872498f, -0.3553430140018463f, 0.8004819750785828f, -0.6343029737472534f, 0.45754700899124146f, 0.4467659890651703f, -0.8528059720993042f, -0.6684929728507996f, -0.16283699870109558f, -0.14226900041103363f, -0.9980859756469727f, -0.8936820030212402f, -0.8695880174636841f, -0.04235589876770973f, 0.1765490025281906f, -0.29680201411247253f, -0.25447899103164673f, 0.6437690258026123f, -0.9011790156364441f, -0.615401029586792f, -0.11628899723291397f, 0.4351719915866852f, 0.7174360156059265f, -0.4150660037994385f, -0.3378080129623413f, 0.8706380128860474f, 0.9030420184135437f, -0.28538399934768677f, 0.07566110044717789f, 0.9606090188026428f, 0.45709699392318726f, -0.13161900639533997f, 0.5712590217590332f, -0.1558389961719513f, -0.6620690226554871f, 0.17787200212478638f, 0.702597975730896f, -0.07137160003185272f, -0.3052079975605011f, 0.787322998046875f, 0.2631860077381134f, -0.7029510140419006f, -0.5245190262794495f, -0.5034989714622498f, 0.5344439744949341f, 0.03703580051660538f, -0.8141779899597168f, 0.6692500114440918f, -0.4279490113258362f, -0.6499019861221313f, -0.5597890019416809f, -0.6212509870529175f, 0.47040000557899475f, 0.1808219999074936f, 0.8255749940872192f, -0.29763099551200867f, -0.9183930158615112f, -0.3581770062446594f, 0.2217400074005127f, -0.5380650162696838f, -0.556240975856781f, -0.8501690030097961f, 0.5305259823799133f, -0.30306100845336914f, 0.47634899616241455f, 0.7571449875831604f, -0.7138609886169434f, 0.7182360291481018f, -0.5507689714431763f, -0.22746199369430542f, -0.3514859974384308f, -0.3034929931163788f, 0.07010120153427124f, 0.3297240138053894f, -0.6529489755630493f, 0.43274399638175964f, -0.7132700085639954f, 0.4365760087966919f, 0.8229039907455444f, -0.4271950125694275f, 0.2449049949645996f, -0.9039099812507629f, 0.2661589980125427f, -0.38897499442100525f, 0.10752300173044205f, 0.33467501401901245f, 0.49662700295448303f, 0.33984801173210144f, -0.10721799731254578f, 0.9318720102310181f, 0.7600780129432678f, -0.45513999462127686f, 0.09244350343942642f, -0.16038499772548676f, 0.1633480042219162f, 0.6887149810791016f, -0.9558699727058411f, 0.07896210253238678f, 0.24290800094604492f, -0.2898389995098114f, -0.5064060091972351f, 0.4137920141220093f, 0.13381600379943848f, -0.7532439827919006f, -0.16238699853420258f, -0.7310360074043274f, 0.9340720176696777f, 0.10623600333929062f, -0.8437449932098389f, -0.16880099475383759f, 0.9174500107765198f, -0.8012009859085083f, 0.3791530132293701f, 0.4270870089530945f, -0.8339229822158813f, 0.2138260006904602f, 0.38026100397109985f, 0.17286600172519684f, 0.6629160046577454f, 0.6977779865264893f}),
@@ -44016,6 +45153,8 @@ const TestModel& get_test_model_3_H3_W2_SAME_nchw_float16() {
     };
     return model;
 }
+
+const auto dummy_test_model_3_H3_W2_SAME_nchw_float16 = TestModelManager::get().add("conv2d_v1_2_3_H3_W2_SAME_nchw_float16", get_test_model_3_H3_W2_SAME_nchw_float16());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -44023,9 +45162,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_3_H3_W2_SAME_nchw_float16_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {9},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -44160,6 +45301,8 @@ const TestModel& get_test_model_3_H3_W2_SAME_nchw_float16_all_inputs_as_internal
     };
     return model;
 }
+
+const auto dummy_test_model_3_H3_W2_SAME_nchw_float16_all_inputs_as_internal = TestModelManager::get().add("conv2d_v1_2_3_H3_W2_SAME_nchw_float16_all_inputs_as_internal", get_test_model_3_H3_W2_SAME_nchw_float16_all_inputs_as_internal());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -44167,9 +45310,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_3_H3_W2_SAME_nchw_float16_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({-0.8699309825897217f, 0.153671994805336f, -0.13493099808692932f, -0.2591570019721985f, 0.7655590176582336f, 0.6584939956665039f, -0.25289300084114075f, -0.07006630301475525f, 0.150845006108284f, 0.4065369963645935f, -0.356361985206604f, 0.21048299968242645f, -0.7520380020141602f, -0.551177978515625f, 0.21634800732135773f, 0.5590599775314331f, -0.3637630045413971f, 0.7560970187187195f, -0.6563169956207275f, -0.4031600058078766f, 0.6123620271682739f, -0.39809200167655945f, -0.9252719879150391f, 0.0968329980969429f, 0.0316540002822876f, 0.09482540190219879f, 0.3526650071144104f, -0.96806800365448f, 0.9390519857406616f, -0.058271098881959915f, 0.4597109854221344f, -0.6801750063896179f, 0.5060039758682251f, -0.1724960058927536f, -0.9538840055465698f, 0.20972700417041779f, 0.11319400370121002f, -0.47286298871040344f, -0.8394449949264526f, 0.3448669910430908f, -0.5408269762992859f, 0.506164014339447f, 0.756771981716156f, 0.4608210027217865f, -0.6406030058860779f, -0.568261981010437f, 0.15967300534248352f, -0.16025400161743164f, 0.600721001625061f, 0.4779619872570038f, -0.9394810199737549f, -0.5116369724273682f, -0.3236840069293976f, 0.36417099833488464f, -0.4045589864253998f, -0.3342759907245636f, 0.15651099383831024f, 0.8185970187187195f, -0.586014986038208f, 0.0892409011721611f, 0.46550899744033813f, 0.4130670130252838f, 0.5961400270462036f, -0.704380989074707f, 0.6446279883384705f, 0.8685619831085205f, -0.24756500124931335f, -0.2842960059642792f, 0.41986000537872314f, 0.214355006814003f, -0.47893500328063965f, -0.9887290000915527f, 0.8299149870872498f, -0.3553430140018463f, 0.8004819750785828f, -0.6343029737472534f, 0.45754700899124146f, 0.4467659890651703f, -0.8528059720993042f, -0.6684929728507996f, -0.16283699870109558f, -0.14226900041103363f, -0.9980859756469727f, -0.8936820030212402f, -0.8695880174636841f, -0.04235589876770973f, 0.1765490025281906f, -0.29680201411247253f, -0.25447899103164673f, 0.6437690258026123f, -0.9011790156364441f, -0.615401029586792f, -0.11628899723291397f, 0.4351719915866852f, 0.7174360156059265f, -0.4150660037994385f, -0.3378080129623413f, 0.8706380128860474f, 0.9030420184135437f, -0.28538399934768677f, 0.07566110044717789f, 0.9606090188026428f, 0.45709699392318726f, -0.13161900639533997f, 0.5712590217590332f, -0.1558389961719513f, -0.6620690226554871f, 0.17787200212478638f, 0.702597975730896f, -0.07137160003185272f, -0.3052079975605011f, 0.787322998046875f, 0.2631860077381134f, -0.7029510140419006f, -0.5245190262794495f, -0.5034989714622498f, 0.5344439744949341f, 0.03703580051660538f, -0.8141779899597168f, 0.6692500114440918f, -0.4279490113258362f, -0.6499019861221313f, -0.5597890019416809f, -0.6212509870529175f, 0.47040000557899475f, 0.1808219999074936f, 0.8255749940872192f, -0.29763099551200867f, -0.9183930158615112f, -0.3581770062446594f, 0.2217400074005127f, -0.5380650162696838f, -0.556240975856781f, -0.8501690030097961f, 0.5305259823799133f, -0.30306100845336914f, 0.47634899616241455f, 0.7571449875831604f, -0.7138609886169434f, 0.7182360291481018f, -0.5507689714431763f, -0.22746199369430542f, -0.3514859974384308f, -0.3034929931163788f, 0.07010120153427124f, 0.3297240138053894f, -0.6529489755630493f, 0.43274399638175964f, -0.7132700085639954f, 0.4365760087966919f, 0.8229039907455444f, -0.4271950125694275f, 0.2449049949645996f, -0.9039099812507629f, 0.2661589980125427f, -0.38897499442100525f, 0.10752300173044205f, 0.33467501401901245f, 0.49662700295448303f, 0.33984801173210144f, -0.10721799731254578f, 0.9318720102310181f, 0.7600780129432678f, -0.45513999462127686f, 0.09244350343942642f, -0.16038499772548676f, 0.1633480042219162f, 0.6887149810791016f, -0.9558699727058411f, 0.07896210253238678f, 0.24290800094604492f, -0.2898389995098114f, -0.5064060091972351f, 0.4137920141220093f, 0.13381600379943848f, -0.7532439827919006f, -0.16238699853420258f, -0.7310360074043274f, 0.9340720176696777f, 0.10623600333929062f, -0.8437449932098389f, -0.16880099475383759f, 0.9174500107765198f, -0.8012009859085083f, 0.3791530132293701f, 0.4270870089530945f, -0.8339229822158813f, 0.2138260006904602f, 0.38026100397109985f, 0.17286600172519684f, 0.6629160046577454f, 0.6977779865264893f}),
@@ -44270,6 +45415,8 @@ const TestModel& get_test_model_3_H3_W2_SAME_nchw_float16_all_tensors_as_inputs(
     };
     return model;
 }
+
+const auto dummy_test_model_3_H3_W2_SAME_nchw_float16_all_tensors_as_inputs = TestModelManager::get().add("conv2d_v1_2_3_H3_W2_SAME_nchw_float16_all_tensors_as_inputs", get_test_model_3_H3_W2_SAME_nchw_float16_all_tensors_as_inputs());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -44277,9 +45424,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_3_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {9, 12, 15},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -44483,15 +45632,19 @@ const TestModel& get_test_model_3_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_
     return model;
 }
 
+const auto dummy_test_model_3_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("conv2d_v1_2_3_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_3_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal());
+
 }  // namespace generated_tests::conv2d_v1_2
 
 namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_3_H3_W2_SAME_nhwc_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-0.295335f, -0.00387601f, -0.552251f, 0.166084f, -0.28482f, -0.152143f, -0.719885f, -0.869386f, -0.745598f, 0.823947f, 0.473183f, -0.331337f, 0.187631f, 0.0426571f, -0.826897f, -0.755085f, -0.472453f, -0.0233656f, 0.0483436f, 0.933418f, -0.961974f, 0.0125783f, 0.219742f, 0.342604f, -0.15166f, 0.0934905f, 0.783221f, 0.129664f, 0.838844f, -0.271388f, 0.924519f, 0.342843f, 0.274418f, 0.350817f, 0.841638f, -0.543993f, -0.00283395f, -0.128467f, -0.682943f, -0.319117f, 0.84634f, 0.283003f, 0.32865f, 0.0293755f, -0.0335696f, 0.591266f, -0.0743476f, -0.741271f, 0.462056f, -0.583625f, -0.590183f, 0.6234f, 0.535269f, -0.670818f, -0.955642f, -0.770173f, 0.479986f, 0.664377f, 0.399445f, -0.968874f, -0.276263f, -0.901951f, 0.544104f, -0.958981f, 0.482658f, -0.807284f, 0.305369f, -0.947818f, 0.827498f, -0.382887f, -0.805741f, -0.796678f, -0.299804f, -0.229828f, 0.818783f, -0.103055f, -0.45568f, -0.227827f, 0.543743f, -0.96073f, 0.946747f, -0.857182f, -0.96426f, -0.292411f, -0.715614f, 0.765278f, -0.475043f, -0.590142f, -0.238507f, 0.673002f, -0.473357f, -0.319626f, 0.936014f, 0.486607f, 0.580844f, 0.425352f, -0.800994f, 0.290763f, -0.494953f, -0.441162f, 0.718677f, -0.828427f, 0.96965f, 7.53637e-05f, -0.699973f, -0.526886f, -0.352682f, 0.799466f, 0.332789f, 0.723389f, 0.407659f, -0.934084f, -0.284705f, 0.961484f, -0.700395f, -0.985808f, -0.595342f, -0.691721f, 0.49448f, -0.0842649f, 0.0390966f, 0.298938f, -0.128094f, -0.97158f, 0.86393f, 0.270606f, -0.468986f, -0.256605f, 0.47215f, -0.273117f, -0.590343f, -0.826529f, -0.725381f, -0.194821f, -0.259661f, -0.0949207f, -0.180302f, 0.0446834f, -0.222133f, -0.40393f, 0.295772f, -0.92949f, 0.580079f, -0.169856f, 0.330311f, 0.0173551f, -0.635823f, 0.475942f, 0.907175f, 0.242777f, -0.512208f, 0.362463f, 0.0496289f, 0.65171f, 0.990057f, 0.690733f, -0.469013f, -0.101311f, -0.68372f, -0.157841f, -0.677711f, -0.708224f, -0.659437f, -0.407607f, 0.677033f, 0.89032f, 0.228307f, -0.749514f, 0.772958f, 0.054701f, 0.551705f, 0.917052f, -0.895022f, -0.702397f, 0.484142f, 0.108648f, 0.833347f, 0.478872f, -0.984112f, 0.387176f, -0.73299f, 0.7526f, 0.443312f, -0.0987856f, 0.125415f, 0.10876f, -0.498108f, 0.43209f, 0.344609f, 0.928941f, -0.130732f, -0.0569167f}),
@@ -44592,6 +45745,8 @@ const TestModel& get_test_model_3_H3_W2_SAME_nhwc_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_3_H3_W2_SAME_nhwc_2 = TestModelManager::get().add("conv2d_v1_2_3_H3_W2_SAME_nhwc_2", get_test_model_3_H3_W2_SAME_nhwc_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -44599,9 +45754,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_3_H3_W2_SAME_nhwc_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {9},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -44736,6 +45893,8 @@ const TestModel& get_test_model_3_H3_W2_SAME_nhwc_all_inputs_as_internal_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_3_H3_W2_SAME_nhwc_all_inputs_as_internal_2 = TestModelManager::get().add("conv2d_v1_2_3_H3_W2_SAME_nhwc_all_inputs_as_internal_2", get_test_model_3_H3_W2_SAME_nhwc_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -44743,9 +45902,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_3_H3_W2_SAME_nhwc_all_tensors_as_inputs_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-0.295335f, -0.00387601f, -0.552251f, 0.166084f, -0.28482f, -0.152143f, -0.719885f, -0.869386f, -0.745598f, 0.823947f, 0.473183f, -0.331337f, 0.187631f, 0.0426571f, -0.826897f, -0.755085f, -0.472453f, -0.0233656f, 0.0483436f, 0.933418f, -0.961974f, 0.0125783f, 0.219742f, 0.342604f, -0.15166f, 0.0934905f, 0.783221f, 0.129664f, 0.838844f, -0.271388f, 0.924519f, 0.342843f, 0.274418f, 0.350817f, 0.841638f, -0.543993f, -0.00283395f, -0.128467f, -0.682943f, -0.319117f, 0.84634f, 0.283003f, 0.32865f, 0.0293755f, -0.0335696f, 0.591266f, -0.0743476f, -0.741271f, 0.462056f, -0.583625f, -0.590183f, 0.6234f, 0.535269f, -0.670818f, -0.955642f, -0.770173f, 0.479986f, 0.664377f, 0.399445f, -0.968874f, -0.276263f, -0.901951f, 0.544104f, -0.958981f, 0.482658f, -0.807284f, 0.305369f, -0.947818f, 0.827498f, -0.382887f, -0.805741f, -0.796678f, -0.299804f, -0.229828f, 0.818783f, -0.103055f, -0.45568f, -0.227827f, 0.543743f, -0.96073f, 0.946747f, -0.857182f, -0.96426f, -0.292411f, -0.715614f, 0.765278f, -0.475043f, -0.590142f, -0.238507f, 0.673002f, -0.473357f, -0.319626f, 0.936014f, 0.486607f, 0.580844f, 0.425352f, -0.800994f, 0.290763f, -0.494953f, -0.441162f, 0.718677f, -0.828427f, 0.96965f, 7.53637e-05f, -0.699973f, -0.526886f, -0.352682f, 0.799466f, 0.332789f, 0.723389f, 0.407659f, -0.934084f, -0.284705f, 0.961484f, -0.700395f, -0.985808f, -0.595342f, -0.691721f, 0.49448f, -0.0842649f, 0.0390966f, 0.298938f, -0.128094f, -0.97158f, 0.86393f, 0.270606f, -0.468986f, -0.256605f, 0.47215f, -0.273117f, -0.590343f, -0.826529f, -0.725381f, -0.194821f, -0.259661f, -0.0949207f, -0.180302f, 0.0446834f, -0.222133f, -0.40393f, 0.295772f, -0.92949f, 0.580079f, -0.169856f, 0.330311f, 0.0173551f, -0.635823f, 0.475942f, 0.907175f, 0.242777f, -0.512208f, 0.362463f, 0.0496289f, 0.65171f, 0.990057f, 0.690733f, -0.469013f, -0.101311f, -0.68372f, -0.157841f, -0.677711f, -0.708224f, -0.659437f, -0.407607f, 0.677033f, 0.89032f, 0.228307f, -0.749514f, 0.772958f, 0.054701f, 0.551705f, 0.917052f, -0.895022f, -0.702397f, 0.484142f, 0.108648f, 0.833347f, 0.478872f, -0.984112f, 0.387176f, -0.73299f, 0.7526f, 0.443312f, -0.0987856f, 0.125415f, 0.10876f, -0.498108f, 0.43209f, 0.344609f, 0.928941f, -0.130732f, -0.0569167f}),
@@ -44846,6 +46007,8 @@ const TestModel& get_test_model_3_H3_W2_SAME_nhwc_all_tensors_as_inputs_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_3_H3_W2_SAME_nhwc_all_tensors_as_inputs_2 = TestModelManager::get().add("conv2d_v1_2_3_H3_W2_SAME_nhwc_all_tensors_as_inputs_2", get_test_model_3_H3_W2_SAME_nhwc_all_tensors_as_inputs_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -44853,9 +46016,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_3_H3_W2_SAME_nhwc_all_tensors_as_inputs_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {9, 12, 15},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -45058,6 +46223,8 @@ const TestModel& get_test_model_3_H3_W2_SAME_nhwc_all_tensors_as_inputs_all_inpu
     };
     return model;
 }
+
+const auto dummy_test_model_3_H3_W2_SAME_nhwc_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("conv2d_v1_2_3_H3_W2_SAME_nhwc_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_3_H3_W2_SAME_nhwc_all_tensors_as_inputs_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -45065,9 +46232,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_3_H3_W2_SAME_nhwc_relaxed_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-0.295335f, -0.00387601f, -0.552251f, 0.166084f, -0.28482f, -0.152143f, -0.719885f, -0.869386f, -0.745598f, 0.823947f, 0.473183f, -0.331337f, 0.187631f, 0.0426571f, -0.826897f, -0.755085f, -0.472453f, -0.0233656f, 0.0483436f, 0.933418f, -0.961974f, 0.0125783f, 0.219742f, 0.342604f, -0.15166f, 0.0934905f, 0.783221f, 0.129664f, 0.838844f, -0.271388f, 0.924519f, 0.342843f, 0.274418f, 0.350817f, 0.841638f, -0.543993f, -0.00283395f, -0.128467f, -0.682943f, -0.319117f, 0.84634f, 0.283003f, 0.32865f, 0.0293755f, -0.0335696f, 0.591266f, -0.0743476f, -0.741271f, 0.462056f, -0.583625f, -0.590183f, 0.6234f, 0.535269f, -0.670818f, -0.955642f, -0.770173f, 0.479986f, 0.664377f, 0.399445f, -0.968874f, -0.276263f, -0.901951f, 0.544104f, -0.958981f, 0.482658f, -0.807284f, 0.305369f, -0.947818f, 0.827498f, -0.382887f, -0.805741f, -0.796678f, -0.299804f, -0.229828f, 0.818783f, -0.103055f, -0.45568f, -0.227827f, 0.543743f, -0.96073f, 0.946747f, -0.857182f, -0.96426f, -0.292411f, -0.715614f, 0.765278f, -0.475043f, -0.590142f, -0.238507f, 0.673002f, -0.473357f, -0.319626f, 0.936014f, 0.486607f, 0.580844f, 0.425352f, -0.800994f, 0.290763f, -0.494953f, -0.441162f, 0.718677f, -0.828427f, 0.96965f, 7.53637e-05f, -0.699973f, -0.526886f, -0.352682f, 0.799466f, 0.332789f, 0.723389f, 0.407659f, -0.934084f, -0.284705f, 0.961484f, -0.700395f, -0.985808f, -0.595342f, -0.691721f, 0.49448f, -0.0842649f, 0.0390966f, 0.298938f, -0.128094f, -0.97158f, 0.86393f, 0.270606f, -0.468986f, -0.256605f, 0.47215f, -0.273117f, -0.590343f, -0.826529f, -0.725381f, -0.194821f, -0.259661f, -0.0949207f, -0.180302f, 0.0446834f, -0.222133f, -0.40393f, 0.295772f, -0.92949f, 0.580079f, -0.169856f, 0.330311f, 0.0173551f, -0.635823f, 0.475942f, 0.907175f, 0.242777f, -0.512208f, 0.362463f, 0.0496289f, 0.65171f, 0.990057f, 0.690733f, -0.469013f, -0.101311f, -0.68372f, -0.157841f, -0.677711f, -0.708224f, -0.659437f, -0.407607f, 0.677033f, 0.89032f, 0.228307f, -0.749514f, 0.772958f, 0.054701f, 0.551705f, 0.917052f, -0.895022f, -0.702397f, 0.484142f, 0.108648f, 0.833347f, 0.478872f, -0.984112f, 0.387176f, -0.73299f, 0.7526f, 0.443312f, -0.0987856f, 0.125415f, 0.10876f, -0.498108f, 0.43209f, 0.344609f, 0.928941f, -0.130732f, -0.0569167f}),
@@ -45168,6 +46337,8 @@ const TestModel& get_test_model_3_H3_W2_SAME_nhwc_relaxed_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_3_H3_W2_SAME_nhwc_relaxed_2 = TestModelManager::get().add("conv2d_v1_2_3_H3_W2_SAME_nhwc_relaxed_2", get_test_model_3_H3_W2_SAME_nhwc_relaxed_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -45175,9 +46346,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_3_H3_W2_SAME_nhwc_relaxed_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {9},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -45312,6 +46485,8 @@ const TestModel& get_test_model_3_H3_W2_SAME_nhwc_relaxed_all_inputs_as_internal
     };
     return model;
 }
+
+const auto dummy_test_model_3_H3_W2_SAME_nhwc_relaxed_all_inputs_as_internal_2 = TestModelManager::get().add("conv2d_v1_2_3_H3_W2_SAME_nhwc_relaxed_all_inputs_as_internal_2", get_test_model_3_H3_W2_SAME_nhwc_relaxed_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -45319,9 +46494,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_3_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-0.295335f, -0.00387601f, -0.552251f, 0.166084f, -0.28482f, -0.152143f, -0.719885f, -0.869386f, -0.745598f, 0.823947f, 0.473183f, -0.331337f, 0.187631f, 0.0426571f, -0.826897f, -0.755085f, -0.472453f, -0.0233656f, 0.0483436f, 0.933418f, -0.961974f, 0.0125783f, 0.219742f, 0.342604f, -0.15166f, 0.0934905f, 0.783221f, 0.129664f, 0.838844f, -0.271388f, 0.924519f, 0.342843f, 0.274418f, 0.350817f, 0.841638f, -0.543993f, -0.00283395f, -0.128467f, -0.682943f, -0.319117f, 0.84634f, 0.283003f, 0.32865f, 0.0293755f, -0.0335696f, 0.591266f, -0.0743476f, -0.741271f, 0.462056f, -0.583625f, -0.590183f, 0.6234f, 0.535269f, -0.670818f, -0.955642f, -0.770173f, 0.479986f, 0.664377f, 0.399445f, -0.968874f, -0.276263f, -0.901951f, 0.544104f, -0.958981f, 0.482658f, -0.807284f, 0.305369f, -0.947818f, 0.827498f, -0.382887f, -0.805741f, -0.796678f, -0.299804f, -0.229828f, 0.818783f, -0.103055f, -0.45568f, -0.227827f, 0.543743f, -0.96073f, 0.946747f, -0.857182f, -0.96426f, -0.292411f, -0.715614f, 0.765278f, -0.475043f, -0.590142f, -0.238507f, 0.673002f, -0.473357f, -0.319626f, 0.936014f, 0.486607f, 0.580844f, 0.425352f, -0.800994f, 0.290763f, -0.494953f, -0.441162f, 0.718677f, -0.828427f, 0.96965f, 7.53637e-05f, -0.699973f, -0.526886f, -0.352682f, 0.799466f, 0.332789f, 0.723389f, 0.407659f, -0.934084f, -0.284705f, 0.961484f, -0.700395f, -0.985808f, -0.595342f, -0.691721f, 0.49448f, -0.0842649f, 0.0390966f, 0.298938f, -0.128094f, -0.97158f, 0.86393f, 0.270606f, -0.468986f, -0.256605f, 0.47215f, -0.273117f, -0.590343f, -0.826529f, -0.725381f, -0.194821f, -0.259661f, -0.0949207f, -0.180302f, 0.0446834f, -0.222133f, -0.40393f, 0.295772f, -0.92949f, 0.580079f, -0.169856f, 0.330311f, 0.0173551f, -0.635823f, 0.475942f, 0.907175f, 0.242777f, -0.512208f, 0.362463f, 0.0496289f, 0.65171f, 0.990057f, 0.690733f, -0.469013f, -0.101311f, -0.68372f, -0.157841f, -0.677711f, -0.708224f, -0.659437f, -0.407607f, 0.677033f, 0.89032f, 0.228307f, -0.749514f, 0.772958f, 0.054701f, 0.551705f, 0.917052f, -0.895022f, -0.702397f, 0.484142f, 0.108648f, 0.833347f, 0.478872f, -0.984112f, 0.387176f, -0.73299f, 0.7526f, 0.443312f, -0.0987856f, 0.125415f, 0.10876f, -0.498108f, 0.43209f, 0.344609f, 0.928941f, -0.130732f, -0.0569167f}),
@@ -45422,6 +46599,8 @@ const TestModel& get_test_model_3_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_
     };
     return model;
 }
+
+const auto dummy_test_model_3_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_2 = TestModelManager::get().add("conv2d_v1_2_3_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_2", get_test_model_3_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -45429,9 +46608,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_3_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {9, 12, 15},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -45635,15 +46816,19 @@ const TestModel& get_test_model_3_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_
     return model;
 }
 
+const auto dummy_test_model_3_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("conv2d_v1_2_3_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_3_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::conv2d_v1_2
 
 namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_3_H3_W2_SAME_nhwc_float16_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({-0.29533499479293823f, -0.0038760099560022354f, -0.5522509813308716f, 0.16608400642871857f, -0.28481999039649963f, -0.15214300155639648f, -0.719884991645813f, -0.8693860173225403f, -0.7455980181694031f, 0.823947012424469f, 0.4731830060482025f, -0.33133700489997864f, 0.18763099610805511f, 0.04265709966421127f, -0.8268970251083374f, -0.7550849914550781f, -0.4724529981613159f, -0.023365600034594536f, 0.04834359884262085f, 0.9334179759025574f, -0.961974024772644f, 0.012578300200402737f, 0.21974200010299683f, 0.34260401129722595f, -0.1516599953174591f, 0.09349049627780914f, 0.7832210063934326f, 0.12966400384902954f, 0.8388440012931824f, -0.2713879942893982f, 0.9245190024375916f, 0.3428429961204529f, 0.2744179964065552f, 0.3508169949054718f, 0.8416380286216736f, -0.5439929962158203f, -0.002833950100466609f, -0.12846699357032776f, -0.6829429864883423f, -0.31911700963974f, 0.846340000629425f, 0.2830030024051666f, 0.32864999771118164f, 0.029375499114394188f, -0.03356960043311119f, 0.5912659764289856f, -0.0743476003408432f, -0.7412710189819336f, 0.4620560109615326f, -0.5836250185966492f, -0.5901830196380615f, 0.6233999729156494f, 0.535269021987915f, -0.6708179712295532f, -0.9556419849395752f, -0.7701730132102966f, 0.4799860119819641f, 0.664376974105835f, 0.3994449973106384f, -0.9688739776611328f, -0.2762629985809326f, -0.901951014995575f, 0.5441039800643921f, -0.9589809775352478f, 0.4826579988002777f, -0.8072839975357056f, 0.30536898970603943f, -0.9478179812431335f, 0.8274980187416077f, -0.38288700580596924f, -0.805741012096405f, -0.7966780066490173f, -0.2998040020465851f, -0.22982800006866455f, 0.8187829852104187f, -0.10305500030517578f, -0.4556800127029419f, -0.22782699763774872f, 0.5437430143356323f, -0.9607300162315369f, 0.9467470049858093f, -0.8571820259094238f, -0.9642599821090698f, -0.2924109995365143f, -0.7156140208244324f, 0.7652779817581177f, -0.47504299879074097f, -0.590142011642456f, -0.2385070025920868f, 0.6730020046234131f, -0.4733569920063019f, -0.31962600350379944f, 0.9360139966011047f, 0.48660698533058167f, 0.580843985080719f, 0.42535200715065f, -0.8009939789772034f, 0.2907629907131195f, -0.4949530065059662f, -0.44116199016571045f, 0.7186769843101501f, -0.8284270167350769f, 0.9696499705314636f, 7.536369957961142e-05f, -0.6999729871749878f, -0.526885986328125f, -0.3526819944381714f, 0.7994660139083862f, 0.33278900384902954f, 0.7233890295028687f, 0.40765899419784546f, -0.9340839982032776f, -0.2847050130367279f, 0.9614840149879456f, -0.7003949880599976f, -0.9858080148696899f, -0.5953419804573059f, -0.6917210221290588f, 0.4944800138473511f, -0.08426489681005478f, 0.03909660130739212f, 0.29893800616264343f, -0.12809400260448456f, -0.9715800285339355f, 0.8639299869537354f, 0.27060601115226746f, -0.46898600459098816f, -0.25660499930381775f, 0.4721499979496002f, -0.2731170058250427f, -0.5903429985046387f, -0.8265290260314941f, -0.7253810167312622f, -0.19482100009918213f, -0.2596609890460968f, -0.09492070227861404f, -0.1803019940853119f, 0.04468340054154396f, -0.22213299572467804f, -0.40393000841140747f, 0.295771986246109f, -0.9294899702072144f, 0.5800790190696716f, -0.169855996966362f, 0.33031100034713745f, 0.017355099320411682f, -0.6358230113983154f, 0.4759419858455658f, 0.9071750044822693f, 0.2427770048379898f, -0.5122079849243164f, 0.36246299743652344f, 0.04962889850139618f, 0.6517099738121033f, 0.9900569915771484f, 0.690733015537262f, -0.4690130054950714f, -0.10131099820137024f, -0.6837199926376343f, -0.15784099698066711f, -0.677711009979248f, -0.7082239985466003f, -0.6594370007514954f, -0.40760698914527893f, 0.677033007144928f, 0.8903200030326843f, 0.22830699384212494f, -0.7495139837265015f, 0.772957980632782f, 0.054701000452041626f, 0.551705002784729f, 0.9170519709587097f, -0.8950219750404358f, -0.7023969888687134f, 0.484142005443573f, 0.10864800214767456f, 0.8333470225334167f, 0.47887200117111206f, -0.984112024307251f, 0.3871760070323944f, -0.732990026473999f, 0.7526000142097473f, 0.44331198930740356f, -0.09878560155630112f, 0.12541499733924866f, 0.10875999927520752f, -0.49810799956321716f, 0.43209001421928406f, 0.34460899233818054f, 0.928941011428833f, -0.130731999874115f, -0.056916698813438416f}),
@@ -45744,6 +46929,8 @@ const TestModel& get_test_model_3_H3_W2_SAME_nhwc_float16_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_3_H3_W2_SAME_nhwc_float16_2 = TestModelManager::get().add("conv2d_v1_2_3_H3_W2_SAME_nhwc_float16_2", get_test_model_3_H3_W2_SAME_nhwc_float16_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -45751,9 +46938,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_3_H3_W2_SAME_nhwc_float16_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {9},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -45888,6 +47077,8 @@ const TestModel& get_test_model_3_H3_W2_SAME_nhwc_float16_all_inputs_as_internal
     };
     return model;
 }
+
+const auto dummy_test_model_3_H3_W2_SAME_nhwc_float16_all_inputs_as_internal_2 = TestModelManager::get().add("conv2d_v1_2_3_H3_W2_SAME_nhwc_float16_all_inputs_as_internal_2", get_test_model_3_H3_W2_SAME_nhwc_float16_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -45895,9 +47086,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_3_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({-0.29533499479293823f, -0.0038760099560022354f, -0.5522509813308716f, 0.16608400642871857f, -0.28481999039649963f, -0.15214300155639648f, -0.719884991645813f, -0.8693860173225403f, -0.7455980181694031f, 0.823947012424469f, 0.4731830060482025f, -0.33133700489997864f, 0.18763099610805511f, 0.04265709966421127f, -0.8268970251083374f, -0.7550849914550781f, -0.4724529981613159f, -0.023365600034594536f, 0.04834359884262085f, 0.9334179759025574f, -0.961974024772644f, 0.012578300200402737f, 0.21974200010299683f, 0.34260401129722595f, -0.1516599953174591f, 0.09349049627780914f, 0.7832210063934326f, 0.12966400384902954f, 0.8388440012931824f, -0.2713879942893982f, 0.9245190024375916f, 0.3428429961204529f, 0.2744179964065552f, 0.3508169949054718f, 0.8416380286216736f, -0.5439929962158203f, -0.002833950100466609f, -0.12846699357032776f, -0.6829429864883423f, -0.31911700963974f, 0.846340000629425f, 0.2830030024051666f, 0.32864999771118164f, 0.029375499114394188f, -0.03356960043311119f, 0.5912659764289856f, -0.0743476003408432f, -0.7412710189819336f, 0.4620560109615326f, -0.5836250185966492f, -0.5901830196380615f, 0.6233999729156494f, 0.535269021987915f, -0.6708179712295532f, -0.9556419849395752f, -0.7701730132102966f, 0.4799860119819641f, 0.664376974105835f, 0.3994449973106384f, -0.9688739776611328f, -0.2762629985809326f, -0.901951014995575f, 0.5441039800643921f, -0.9589809775352478f, 0.4826579988002777f, -0.8072839975357056f, 0.30536898970603943f, -0.9478179812431335f, 0.8274980187416077f, -0.38288700580596924f, -0.805741012096405f, -0.7966780066490173f, -0.2998040020465851f, -0.22982800006866455f, 0.8187829852104187f, -0.10305500030517578f, -0.4556800127029419f, -0.22782699763774872f, 0.5437430143356323f, -0.9607300162315369f, 0.9467470049858093f, -0.8571820259094238f, -0.9642599821090698f, -0.2924109995365143f, -0.7156140208244324f, 0.7652779817581177f, -0.47504299879074097f, -0.590142011642456f, -0.2385070025920868f, 0.6730020046234131f, -0.4733569920063019f, -0.31962600350379944f, 0.9360139966011047f, 0.48660698533058167f, 0.580843985080719f, 0.42535200715065f, -0.8009939789772034f, 0.2907629907131195f, -0.4949530065059662f, -0.44116199016571045f, 0.7186769843101501f, -0.8284270167350769f, 0.9696499705314636f, 7.536369957961142e-05f, -0.6999729871749878f, -0.526885986328125f, -0.3526819944381714f, 0.7994660139083862f, 0.33278900384902954f, 0.7233890295028687f, 0.40765899419784546f, -0.9340839982032776f, -0.2847050130367279f, 0.9614840149879456f, -0.7003949880599976f, -0.9858080148696899f, -0.5953419804573059f, -0.6917210221290588f, 0.4944800138473511f, -0.08426489681005478f, 0.03909660130739212f, 0.29893800616264343f, -0.12809400260448456f, -0.9715800285339355f, 0.8639299869537354f, 0.27060601115226746f, -0.46898600459098816f, -0.25660499930381775f, 0.4721499979496002f, -0.2731170058250427f, -0.5903429985046387f, -0.8265290260314941f, -0.7253810167312622f, -0.19482100009918213f, -0.2596609890460968f, -0.09492070227861404f, -0.1803019940853119f, 0.04468340054154396f, -0.22213299572467804f, -0.40393000841140747f, 0.295771986246109f, -0.9294899702072144f, 0.5800790190696716f, -0.169855996966362f, 0.33031100034713745f, 0.017355099320411682f, -0.6358230113983154f, 0.4759419858455658f, 0.9071750044822693f, 0.2427770048379898f, -0.5122079849243164f, 0.36246299743652344f, 0.04962889850139618f, 0.6517099738121033f, 0.9900569915771484f, 0.690733015537262f, -0.4690130054950714f, -0.10131099820137024f, -0.6837199926376343f, -0.15784099698066711f, -0.677711009979248f, -0.7082239985466003f, -0.6594370007514954f, -0.40760698914527893f, 0.677033007144928f, 0.8903200030326843f, 0.22830699384212494f, -0.7495139837265015f, 0.772957980632782f, 0.054701000452041626f, 0.551705002784729f, 0.9170519709587097f, -0.8950219750404358f, -0.7023969888687134f, 0.484142005443573f, 0.10864800214767456f, 0.8333470225334167f, 0.47887200117111206f, -0.984112024307251f, 0.3871760070323944f, -0.732990026473999f, 0.7526000142097473f, 0.44331198930740356f, -0.09878560155630112f, 0.12541499733924866f, 0.10875999927520752f, -0.49810799956321716f, 0.43209001421928406f, 0.34460899233818054f, 0.928941011428833f, -0.130731999874115f, -0.056916698813438416f}),
@@ -45998,6 +47191,8 @@ const TestModel& get_test_model_3_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_
     };
     return model;
 }
+
+const auto dummy_test_model_3_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_2 = TestModelManager::get().add("conv2d_v1_2_3_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_2", get_test_model_3_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -46005,9 +47200,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_3_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {9, 12, 15},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -46211,15 +47408,19 @@ const TestModel& get_test_model_3_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_
     return model;
 }
 
+const auto dummy_test_model_3_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("conv2d_v1_2_3_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_3_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::conv2d_v1_2
 
 namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_3_H3_W2_SAME_nchw_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-0.295335f, 0.166084f, -0.719885f, 0.823947f, 0.187631f, -0.755085f, 0.0483436f, 0.0125783f, -0.15166f, 0.129664f, 0.924519f, 0.350817f, -0.00283395f, -0.319117f, 0.32865f, 0.591266f, 0.462056f, 0.6234f, -0.955642f, 0.664377f, -0.276263f, -0.958981f, 0.305369f, -0.382887f, -0.299804f, -0.103055f, 0.543743f, -0.857182f, -0.715614f, -0.590142f, -0.473357f, 0.486607f, -0.800994f, -0.441162f, 0.96965f, -0.526886f, 0.332789f, -0.934084f, -0.700395f, -0.691721f, 0.0390966f, -0.97158f, -0.468986f, -0.273117f, -0.725381f, -0.0949207f, -0.222133f, -0.92949f, 0.330311f, 0.475942f, -0.512208f, 0.65171f, -0.469013f, -0.157841f, -0.659437f, 0.89032f, 0.772958f, 0.917052f, 0.484142f, 0.478872f, -0.73299f, -0.0987856f, -0.498108f, 0.928941f, -0.00387601f, -0.28482f, -0.869386f, 0.473183f, 0.0426571f, -0.472453f, 0.933418f, 0.219742f, 0.0934905f, 0.838844f, 0.342843f, 0.841638f, -0.128467f, 0.84634f, 0.0293755f, -0.0743476f, -0.583625f, 0.535269f, -0.770173f, 0.399445f, -0.901951f, 0.482658f, -0.947818f, -0.805741f, -0.229828f, -0.45568f, -0.96073f, -0.96426f, 0.765278f, -0.238507f, -0.319626f, 0.580844f, 0.290763f, 0.718677f, 7.53637e-05f, -0.352682f, 0.723389f, -0.284705f, -0.985808f, 0.49448f, 0.298938f, 0.86393f, -0.256605f, -0.590343f, -0.194821f, -0.180302f, -0.40393f, 0.580079f, 0.0173551f, 0.907175f, 0.362463f, 0.990057f, -0.101311f, -0.677711f, -0.407607f, 0.228307f, 0.054701f, -0.895022f, 0.108648f, -0.984112f, 0.7526f, 0.125415f, 0.43209f, -0.130732f, -0.552251f, -0.152143f, -0.745598f, -0.331337f, -0.826897f, -0.0233656f, -0.961974f, 0.342604f, 0.783221f, -0.271388f, 0.274418f, -0.543993f, -0.682943f, 0.283003f, -0.0335696f, -0.741271f, -0.590183f, -0.670818f, 0.479986f, -0.968874f, 0.544104f, -0.807284f, 0.827498f, -0.796678f, 0.818783f, -0.227827f, 0.946747f, -0.292411f, -0.475043f, 0.673002f, 0.936014f, 0.425352f, -0.494953f, -0.828427f, -0.699973f, 0.799466f, 0.407659f, 0.961484f, -0.595342f, -0.0842649f, -0.128094f, 0.270606f, 0.47215f, -0.826529f, -0.259661f, 0.0446834f, 0.295772f, -0.169856f, -0.635823f, 0.242777f, 0.0496289f, 0.690733f, -0.68372f, -0.708224f, 0.677033f, -0.749514f, 0.551705f, -0.702397f, 0.833347f, 0.387176f, 0.443312f, 0.10876f, 0.344609f, -0.0569167f}),
@@ -46320,6 +47521,8 @@ const TestModel& get_test_model_3_H3_W2_SAME_nchw_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_3_H3_W2_SAME_nchw_2 = TestModelManager::get().add("conv2d_v1_2_3_H3_W2_SAME_nchw_2", get_test_model_3_H3_W2_SAME_nchw_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -46327,9 +47530,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_3_H3_W2_SAME_nchw_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {9},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -46464,6 +47669,8 @@ const TestModel& get_test_model_3_H3_W2_SAME_nchw_all_inputs_as_internal_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_3_H3_W2_SAME_nchw_all_inputs_as_internal_2 = TestModelManager::get().add("conv2d_v1_2_3_H3_W2_SAME_nchw_all_inputs_as_internal_2", get_test_model_3_H3_W2_SAME_nchw_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -46471,9 +47678,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_3_H3_W2_SAME_nchw_all_tensors_as_inputs_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-0.295335f, 0.166084f, -0.719885f, 0.823947f, 0.187631f, -0.755085f, 0.0483436f, 0.0125783f, -0.15166f, 0.129664f, 0.924519f, 0.350817f, -0.00283395f, -0.319117f, 0.32865f, 0.591266f, 0.462056f, 0.6234f, -0.955642f, 0.664377f, -0.276263f, -0.958981f, 0.305369f, -0.382887f, -0.299804f, -0.103055f, 0.543743f, -0.857182f, -0.715614f, -0.590142f, -0.473357f, 0.486607f, -0.800994f, -0.441162f, 0.96965f, -0.526886f, 0.332789f, -0.934084f, -0.700395f, -0.691721f, 0.0390966f, -0.97158f, -0.468986f, -0.273117f, -0.725381f, -0.0949207f, -0.222133f, -0.92949f, 0.330311f, 0.475942f, -0.512208f, 0.65171f, -0.469013f, -0.157841f, -0.659437f, 0.89032f, 0.772958f, 0.917052f, 0.484142f, 0.478872f, -0.73299f, -0.0987856f, -0.498108f, 0.928941f, -0.00387601f, -0.28482f, -0.869386f, 0.473183f, 0.0426571f, -0.472453f, 0.933418f, 0.219742f, 0.0934905f, 0.838844f, 0.342843f, 0.841638f, -0.128467f, 0.84634f, 0.0293755f, -0.0743476f, -0.583625f, 0.535269f, -0.770173f, 0.399445f, -0.901951f, 0.482658f, -0.947818f, -0.805741f, -0.229828f, -0.45568f, -0.96073f, -0.96426f, 0.765278f, -0.238507f, -0.319626f, 0.580844f, 0.290763f, 0.718677f, 7.53637e-05f, -0.352682f, 0.723389f, -0.284705f, -0.985808f, 0.49448f, 0.298938f, 0.86393f, -0.256605f, -0.590343f, -0.194821f, -0.180302f, -0.40393f, 0.580079f, 0.0173551f, 0.907175f, 0.362463f, 0.990057f, -0.101311f, -0.677711f, -0.407607f, 0.228307f, 0.054701f, -0.895022f, 0.108648f, -0.984112f, 0.7526f, 0.125415f, 0.43209f, -0.130732f, -0.552251f, -0.152143f, -0.745598f, -0.331337f, -0.826897f, -0.0233656f, -0.961974f, 0.342604f, 0.783221f, -0.271388f, 0.274418f, -0.543993f, -0.682943f, 0.283003f, -0.0335696f, -0.741271f, -0.590183f, -0.670818f, 0.479986f, -0.968874f, 0.544104f, -0.807284f, 0.827498f, -0.796678f, 0.818783f, -0.227827f, 0.946747f, -0.292411f, -0.475043f, 0.673002f, 0.936014f, 0.425352f, -0.494953f, -0.828427f, -0.699973f, 0.799466f, 0.407659f, 0.961484f, -0.595342f, -0.0842649f, -0.128094f, 0.270606f, 0.47215f, -0.826529f, -0.259661f, 0.0446834f, 0.295772f, -0.169856f, -0.635823f, 0.242777f, 0.0496289f, 0.690733f, -0.68372f, -0.708224f, 0.677033f, -0.749514f, 0.551705f, -0.702397f, 0.833347f, 0.387176f, 0.443312f, 0.10876f, 0.344609f, -0.0569167f}),
@@ -46574,6 +47783,8 @@ const TestModel& get_test_model_3_H3_W2_SAME_nchw_all_tensors_as_inputs_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_3_H3_W2_SAME_nchw_all_tensors_as_inputs_2 = TestModelManager::get().add("conv2d_v1_2_3_H3_W2_SAME_nchw_all_tensors_as_inputs_2", get_test_model_3_H3_W2_SAME_nchw_all_tensors_as_inputs_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -46581,9 +47792,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_3_H3_W2_SAME_nchw_all_tensors_as_inputs_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {9, 12, 15},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -46786,6 +47999,8 @@ const TestModel& get_test_model_3_H3_W2_SAME_nchw_all_tensors_as_inputs_all_inpu
     };
     return model;
 }
+
+const auto dummy_test_model_3_H3_W2_SAME_nchw_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("conv2d_v1_2_3_H3_W2_SAME_nchw_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_3_H3_W2_SAME_nchw_all_tensors_as_inputs_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -46793,9 +48008,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_3_H3_W2_SAME_nchw_relaxed_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-0.295335f, 0.166084f, -0.719885f, 0.823947f, 0.187631f, -0.755085f, 0.0483436f, 0.0125783f, -0.15166f, 0.129664f, 0.924519f, 0.350817f, -0.00283395f, -0.319117f, 0.32865f, 0.591266f, 0.462056f, 0.6234f, -0.955642f, 0.664377f, -0.276263f, -0.958981f, 0.305369f, -0.382887f, -0.299804f, -0.103055f, 0.543743f, -0.857182f, -0.715614f, -0.590142f, -0.473357f, 0.486607f, -0.800994f, -0.441162f, 0.96965f, -0.526886f, 0.332789f, -0.934084f, -0.700395f, -0.691721f, 0.0390966f, -0.97158f, -0.468986f, -0.273117f, -0.725381f, -0.0949207f, -0.222133f, -0.92949f, 0.330311f, 0.475942f, -0.512208f, 0.65171f, -0.469013f, -0.157841f, -0.659437f, 0.89032f, 0.772958f, 0.917052f, 0.484142f, 0.478872f, -0.73299f, -0.0987856f, -0.498108f, 0.928941f, -0.00387601f, -0.28482f, -0.869386f, 0.473183f, 0.0426571f, -0.472453f, 0.933418f, 0.219742f, 0.0934905f, 0.838844f, 0.342843f, 0.841638f, -0.128467f, 0.84634f, 0.0293755f, -0.0743476f, -0.583625f, 0.535269f, -0.770173f, 0.399445f, -0.901951f, 0.482658f, -0.947818f, -0.805741f, -0.229828f, -0.45568f, -0.96073f, -0.96426f, 0.765278f, -0.238507f, -0.319626f, 0.580844f, 0.290763f, 0.718677f, 7.53637e-05f, -0.352682f, 0.723389f, -0.284705f, -0.985808f, 0.49448f, 0.298938f, 0.86393f, -0.256605f, -0.590343f, -0.194821f, -0.180302f, -0.40393f, 0.580079f, 0.0173551f, 0.907175f, 0.362463f, 0.990057f, -0.101311f, -0.677711f, -0.407607f, 0.228307f, 0.054701f, -0.895022f, 0.108648f, -0.984112f, 0.7526f, 0.125415f, 0.43209f, -0.130732f, -0.552251f, -0.152143f, -0.745598f, -0.331337f, -0.826897f, -0.0233656f, -0.961974f, 0.342604f, 0.783221f, -0.271388f, 0.274418f, -0.543993f, -0.682943f, 0.283003f, -0.0335696f, -0.741271f, -0.590183f, -0.670818f, 0.479986f, -0.968874f, 0.544104f, -0.807284f, 0.827498f, -0.796678f, 0.818783f, -0.227827f, 0.946747f, -0.292411f, -0.475043f, 0.673002f, 0.936014f, 0.425352f, -0.494953f, -0.828427f, -0.699973f, 0.799466f, 0.407659f, 0.961484f, -0.595342f, -0.0842649f, -0.128094f, 0.270606f, 0.47215f, -0.826529f, -0.259661f, 0.0446834f, 0.295772f, -0.169856f, -0.635823f, 0.242777f, 0.0496289f, 0.690733f, -0.68372f, -0.708224f, 0.677033f, -0.749514f, 0.551705f, -0.702397f, 0.833347f, 0.387176f, 0.443312f, 0.10876f, 0.344609f, -0.0569167f}),
@@ -46896,6 +48113,8 @@ const TestModel& get_test_model_3_H3_W2_SAME_nchw_relaxed_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_3_H3_W2_SAME_nchw_relaxed_2 = TestModelManager::get().add("conv2d_v1_2_3_H3_W2_SAME_nchw_relaxed_2", get_test_model_3_H3_W2_SAME_nchw_relaxed_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -46903,9 +48122,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_3_H3_W2_SAME_nchw_relaxed_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {9},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -47040,6 +48261,8 @@ const TestModel& get_test_model_3_H3_W2_SAME_nchw_relaxed_all_inputs_as_internal
     };
     return model;
 }
+
+const auto dummy_test_model_3_H3_W2_SAME_nchw_relaxed_all_inputs_as_internal_2 = TestModelManager::get().add("conv2d_v1_2_3_H3_W2_SAME_nchw_relaxed_all_inputs_as_internal_2", get_test_model_3_H3_W2_SAME_nchw_relaxed_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -47047,9 +48270,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_3_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-0.295335f, 0.166084f, -0.719885f, 0.823947f, 0.187631f, -0.755085f, 0.0483436f, 0.0125783f, -0.15166f, 0.129664f, 0.924519f, 0.350817f, -0.00283395f, -0.319117f, 0.32865f, 0.591266f, 0.462056f, 0.6234f, -0.955642f, 0.664377f, -0.276263f, -0.958981f, 0.305369f, -0.382887f, -0.299804f, -0.103055f, 0.543743f, -0.857182f, -0.715614f, -0.590142f, -0.473357f, 0.486607f, -0.800994f, -0.441162f, 0.96965f, -0.526886f, 0.332789f, -0.934084f, -0.700395f, -0.691721f, 0.0390966f, -0.97158f, -0.468986f, -0.273117f, -0.725381f, -0.0949207f, -0.222133f, -0.92949f, 0.330311f, 0.475942f, -0.512208f, 0.65171f, -0.469013f, -0.157841f, -0.659437f, 0.89032f, 0.772958f, 0.917052f, 0.484142f, 0.478872f, -0.73299f, -0.0987856f, -0.498108f, 0.928941f, -0.00387601f, -0.28482f, -0.869386f, 0.473183f, 0.0426571f, -0.472453f, 0.933418f, 0.219742f, 0.0934905f, 0.838844f, 0.342843f, 0.841638f, -0.128467f, 0.84634f, 0.0293755f, -0.0743476f, -0.583625f, 0.535269f, -0.770173f, 0.399445f, -0.901951f, 0.482658f, -0.947818f, -0.805741f, -0.229828f, -0.45568f, -0.96073f, -0.96426f, 0.765278f, -0.238507f, -0.319626f, 0.580844f, 0.290763f, 0.718677f, 7.53637e-05f, -0.352682f, 0.723389f, -0.284705f, -0.985808f, 0.49448f, 0.298938f, 0.86393f, -0.256605f, -0.590343f, -0.194821f, -0.180302f, -0.40393f, 0.580079f, 0.0173551f, 0.907175f, 0.362463f, 0.990057f, -0.101311f, -0.677711f, -0.407607f, 0.228307f, 0.054701f, -0.895022f, 0.108648f, -0.984112f, 0.7526f, 0.125415f, 0.43209f, -0.130732f, -0.552251f, -0.152143f, -0.745598f, -0.331337f, -0.826897f, -0.0233656f, -0.961974f, 0.342604f, 0.783221f, -0.271388f, 0.274418f, -0.543993f, -0.682943f, 0.283003f, -0.0335696f, -0.741271f, -0.590183f, -0.670818f, 0.479986f, -0.968874f, 0.544104f, -0.807284f, 0.827498f, -0.796678f, 0.818783f, -0.227827f, 0.946747f, -0.292411f, -0.475043f, 0.673002f, 0.936014f, 0.425352f, -0.494953f, -0.828427f, -0.699973f, 0.799466f, 0.407659f, 0.961484f, -0.595342f, -0.0842649f, -0.128094f, 0.270606f, 0.47215f, -0.826529f, -0.259661f, 0.0446834f, 0.295772f, -0.169856f, -0.635823f, 0.242777f, 0.0496289f, 0.690733f, -0.68372f, -0.708224f, 0.677033f, -0.749514f, 0.551705f, -0.702397f, 0.833347f, 0.387176f, 0.443312f, 0.10876f, 0.344609f, -0.0569167f}),
@@ -47150,6 +48375,8 @@ const TestModel& get_test_model_3_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_
     };
     return model;
 }
+
+const auto dummy_test_model_3_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_2 = TestModelManager::get().add("conv2d_v1_2_3_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_2", get_test_model_3_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -47157,9 +48384,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_3_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {9, 12, 15},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -47363,15 +48592,19 @@ const TestModel& get_test_model_3_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_
     return model;
 }
 
+const auto dummy_test_model_3_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("conv2d_v1_2_3_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_3_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::conv2d_v1_2
 
 namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_3_H3_W2_SAME_nchw_float16_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({-0.29533499479293823f, 0.16608400642871857f, -0.719884991645813f, 0.823947012424469f, 0.18763099610805511f, -0.7550849914550781f, 0.04834359884262085f, 0.012578300200402737f, -0.1516599953174591f, 0.12966400384902954f, 0.9245190024375916f, 0.3508169949054718f, -0.002833950100466609f, -0.31911700963974f, 0.32864999771118164f, 0.5912659764289856f, 0.4620560109615326f, 0.6233999729156494f, -0.9556419849395752f, 0.664376974105835f, -0.2762629985809326f, -0.9589809775352478f, 0.30536898970603943f, -0.38288700580596924f, -0.2998040020465851f, -0.10305500030517578f, 0.5437430143356323f, -0.8571820259094238f, -0.7156140208244324f, -0.590142011642456f, -0.4733569920063019f, 0.48660698533058167f, -0.8009939789772034f, -0.44116199016571045f, 0.9696499705314636f, -0.526885986328125f, 0.33278900384902954f, -0.9340839982032776f, -0.7003949880599976f, -0.6917210221290588f, 0.03909660130739212f, -0.9715800285339355f, -0.46898600459098816f, -0.2731170058250427f, -0.7253810167312622f, -0.09492070227861404f, -0.22213299572467804f, -0.9294899702072144f, 0.33031100034713745f, 0.4759419858455658f, -0.5122079849243164f, 0.6517099738121033f, -0.4690130054950714f, -0.15784099698066711f, -0.6594370007514954f, 0.8903200030326843f, 0.772957980632782f, 0.9170519709587097f, 0.484142005443573f, 0.47887200117111206f, -0.732990026473999f, -0.09878560155630112f, -0.49810799956321716f, 0.928941011428833f, -0.0038760099560022354f, -0.28481999039649963f, -0.8693860173225403f, 0.4731830060482025f, 0.04265709966421127f, -0.4724529981613159f, 0.9334179759025574f, 0.21974200010299683f, 0.09349049627780914f, 0.8388440012931824f, 0.3428429961204529f, 0.8416380286216736f, -0.12846699357032776f, 0.846340000629425f, 0.029375499114394188f, -0.0743476003408432f, -0.5836250185966492f, 0.535269021987915f, -0.7701730132102966f, 0.3994449973106384f, -0.901951014995575f, 0.4826579988002777f, -0.9478179812431335f, -0.805741012096405f, -0.22982800006866455f, -0.4556800127029419f, -0.9607300162315369f, -0.9642599821090698f, 0.7652779817581177f, -0.2385070025920868f, -0.31962600350379944f, 0.580843985080719f, 0.2907629907131195f, 0.7186769843101501f, 7.536369957961142e-05f, -0.3526819944381714f, 0.7233890295028687f, -0.2847050130367279f, -0.9858080148696899f, 0.4944800138473511f, 0.29893800616264343f, 0.8639299869537354f, -0.25660499930381775f, -0.5903429985046387f, -0.19482100009918213f, -0.1803019940853119f, -0.40393000841140747f, 0.5800790190696716f, 0.017355099320411682f, 0.9071750044822693f, 0.36246299743652344f, 0.9900569915771484f, -0.10131099820137024f, -0.677711009979248f, -0.40760698914527893f, 0.22830699384212494f, 0.054701000452041626f, -0.8950219750404358f, 0.10864800214767456f, -0.984112024307251f, 0.7526000142097473f, 0.12541499733924866f, 0.43209001421928406f, -0.130731999874115f, -0.5522509813308716f, -0.15214300155639648f, -0.7455980181694031f, -0.33133700489997864f, -0.8268970251083374f, -0.023365600034594536f, -0.961974024772644f, 0.34260401129722595f, 0.7832210063934326f, -0.2713879942893982f, 0.2744179964065552f, -0.5439929962158203f, -0.6829429864883423f, 0.2830030024051666f, -0.03356960043311119f, -0.7412710189819336f, -0.5901830196380615f, -0.6708179712295532f, 0.4799860119819641f, -0.9688739776611328f, 0.5441039800643921f, -0.8072839975357056f, 0.8274980187416077f, -0.7966780066490173f, 0.8187829852104187f, -0.22782699763774872f, 0.9467470049858093f, -0.2924109995365143f, -0.47504299879074097f, 0.6730020046234131f, 0.9360139966011047f, 0.42535200715065f, -0.4949530065059662f, -0.8284270167350769f, -0.6999729871749878f, 0.7994660139083862f, 0.40765899419784546f, 0.9614840149879456f, -0.5953419804573059f, -0.08426489681005478f, -0.12809400260448456f, 0.27060601115226746f, 0.4721499979496002f, -0.8265290260314941f, -0.2596609890460968f, 0.04468340054154396f, 0.295771986246109f, -0.169855996966362f, -0.6358230113983154f, 0.2427770048379898f, 0.04962889850139618f, 0.690733015537262f, -0.6837199926376343f, -0.7082239985466003f, 0.677033007144928f, -0.7495139837265015f, 0.551705002784729f, -0.7023969888687134f, 0.8333470225334167f, 0.3871760070323944f, 0.44331198930740356f, 0.10875999927520752f, 0.34460899233818054f, -0.056916698813438416f}),
@@ -47472,6 +48705,8 @@ const TestModel& get_test_model_3_H3_W2_SAME_nchw_float16_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_3_H3_W2_SAME_nchw_float16_2 = TestModelManager::get().add("conv2d_v1_2_3_H3_W2_SAME_nchw_float16_2", get_test_model_3_H3_W2_SAME_nchw_float16_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -47479,9 +48714,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_3_H3_W2_SAME_nchw_float16_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {9},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -47616,6 +48853,8 @@ const TestModel& get_test_model_3_H3_W2_SAME_nchw_float16_all_inputs_as_internal
     };
     return model;
 }
+
+const auto dummy_test_model_3_H3_W2_SAME_nchw_float16_all_inputs_as_internal_2 = TestModelManager::get().add("conv2d_v1_2_3_H3_W2_SAME_nchw_float16_all_inputs_as_internal_2", get_test_model_3_H3_W2_SAME_nchw_float16_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -47623,9 +48862,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_3_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({-0.29533499479293823f, 0.16608400642871857f, -0.719884991645813f, 0.823947012424469f, 0.18763099610805511f, -0.7550849914550781f, 0.04834359884262085f, 0.012578300200402737f, -0.1516599953174591f, 0.12966400384902954f, 0.9245190024375916f, 0.3508169949054718f, -0.002833950100466609f, -0.31911700963974f, 0.32864999771118164f, 0.5912659764289856f, 0.4620560109615326f, 0.6233999729156494f, -0.9556419849395752f, 0.664376974105835f, -0.2762629985809326f, -0.9589809775352478f, 0.30536898970603943f, -0.38288700580596924f, -0.2998040020465851f, -0.10305500030517578f, 0.5437430143356323f, -0.8571820259094238f, -0.7156140208244324f, -0.590142011642456f, -0.4733569920063019f, 0.48660698533058167f, -0.8009939789772034f, -0.44116199016571045f, 0.9696499705314636f, -0.526885986328125f, 0.33278900384902954f, -0.9340839982032776f, -0.7003949880599976f, -0.6917210221290588f, 0.03909660130739212f, -0.9715800285339355f, -0.46898600459098816f, -0.2731170058250427f, -0.7253810167312622f, -0.09492070227861404f, -0.22213299572467804f, -0.9294899702072144f, 0.33031100034713745f, 0.4759419858455658f, -0.5122079849243164f, 0.6517099738121033f, -0.4690130054950714f, -0.15784099698066711f, -0.6594370007514954f, 0.8903200030326843f, 0.772957980632782f, 0.9170519709587097f, 0.484142005443573f, 0.47887200117111206f, -0.732990026473999f, -0.09878560155630112f, -0.49810799956321716f, 0.928941011428833f, -0.0038760099560022354f, -0.28481999039649963f, -0.8693860173225403f, 0.4731830060482025f, 0.04265709966421127f, -0.4724529981613159f, 0.9334179759025574f, 0.21974200010299683f, 0.09349049627780914f, 0.8388440012931824f, 0.3428429961204529f, 0.8416380286216736f, -0.12846699357032776f, 0.846340000629425f, 0.029375499114394188f, -0.0743476003408432f, -0.5836250185966492f, 0.535269021987915f, -0.7701730132102966f, 0.3994449973106384f, -0.901951014995575f, 0.4826579988002777f, -0.9478179812431335f, -0.805741012096405f, -0.22982800006866455f, -0.4556800127029419f, -0.9607300162315369f, -0.9642599821090698f, 0.7652779817581177f, -0.2385070025920868f, -0.31962600350379944f, 0.580843985080719f, 0.2907629907131195f, 0.7186769843101501f, 7.536369957961142e-05f, -0.3526819944381714f, 0.7233890295028687f, -0.2847050130367279f, -0.9858080148696899f, 0.4944800138473511f, 0.29893800616264343f, 0.8639299869537354f, -0.25660499930381775f, -0.5903429985046387f, -0.19482100009918213f, -0.1803019940853119f, -0.40393000841140747f, 0.5800790190696716f, 0.017355099320411682f, 0.9071750044822693f, 0.36246299743652344f, 0.9900569915771484f, -0.10131099820137024f, -0.677711009979248f, -0.40760698914527893f, 0.22830699384212494f, 0.054701000452041626f, -0.8950219750404358f, 0.10864800214767456f, -0.984112024307251f, 0.7526000142097473f, 0.12541499733924866f, 0.43209001421928406f, -0.130731999874115f, -0.5522509813308716f, -0.15214300155639648f, -0.7455980181694031f, -0.33133700489997864f, -0.8268970251083374f, -0.023365600034594536f, -0.961974024772644f, 0.34260401129722595f, 0.7832210063934326f, -0.2713879942893982f, 0.2744179964065552f, -0.5439929962158203f, -0.6829429864883423f, 0.2830030024051666f, -0.03356960043311119f, -0.7412710189819336f, -0.5901830196380615f, -0.6708179712295532f, 0.4799860119819641f, -0.9688739776611328f, 0.5441039800643921f, -0.8072839975357056f, 0.8274980187416077f, -0.7966780066490173f, 0.8187829852104187f, -0.22782699763774872f, 0.9467470049858093f, -0.2924109995365143f, -0.47504299879074097f, 0.6730020046234131f, 0.9360139966011047f, 0.42535200715065f, -0.4949530065059662f, -0.8284270167350769f, -0.6999729871749878f, 0.7994660139083862f, 0.40765899419784546f, 0.9614840149879456f, -0.5953419804573059f, -0.08426489681005478f, -0.12809400260448456f, 0.27060601115226746f, 0.4721499979496002f, -0.8265290260314941f, -0.2596609890460968f, 0.04468340054154396f, 0.295771986246109f, -0.169855996966362f, -0.6358230113983154f, 0.2427770048379898f, 0.04962889850139618f, 0.690733015537262f, -0.6837199926376343f, -0.7082239985466003f, 0.677033007144928f, -0.7495139837265015f, 0.551705002784729f, -0.7023969888687134f, 0.8333470225334167f, 0.3871760070323944f, 0.44331198930740356f, 0.10875999927520752f, 0.34460899233818054f, -0.056916698813438416f}),
@@ -47726,6 +48967,8 @@ const TestModel& get_test_model_3_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_
     };
     return model;
 }
+
+const auto dummy_test_model_3_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_2 = TestModelManager::get().add("conv2d_v1_2_3_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_2", get_test_model_3_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -47733,9 +48976,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_3_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {9, 12, 15},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -47939,15 +49184,19 @@ const TestModel& get_test_model_3_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_
     return model;
 }
 
+const auto dummy_test_model_3_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("conv2d_v1_2_3_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_3_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::conv2d_v1_2
 
 namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_3_H3_W2_VALID_nhwc() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-0.869931f, 0.644628f, -0.918393f, 0.153672f, 0.868562f, -0.358177f, -0.134931f, -0.247565f, 0.22174f, -0.259157f, -0.284296f, -0.538065f, 0.765559f, 0.41986f, -0.556241f, 0.658494f, 0.214355f, -0.850169f, -0.252893f, -0.478935f, 0.530526f, -0.0700663f, -0.988729f, -0.303061f, 0.150845f, 0.829915f, 0.476349f, 0.406537f, -0.355343f, 0.757145f, -0.356362f, 0.800482f, -0.713861f, 0.210483f, -0.634303f, 0.718236f, -0.752038f, 0.457547f, -0.550769f, -0.551178f, 0.446766f, -0.227462f, 0.216348f, -0.852806f, -0.351486f, 0.55906f, -0.668493f, -0.303493f, -0.363763f, -0.162837f, 0.0701012f, 0.756097f, -0.142269f, 0.329724f, -0.656317f, -0.998086f, -0.652949f, -0.40316f, -0.893682f, 0.432744f, 0.612362f, -0.869588f, -0.71327f, -0.398092f, -0.0423559f, 0.436576f, -0.925272f, 0.176549f, 0.822904f, 0.096833f, -0.296802f, -0.427195f, 0.031654f, -0.254479f, 0.244905f, 0.0948254f, 0.643769f, -0.90391f, 0.352665f, -0.901179f, 0.266159f, -0.968068f, -0.615401f, -0.388975f, 0.939052f, -0.116289f, 0.107523f, -0.0582711f, 0.435172f, 0.334675f, 0.459711f, 0.717436f, 0.496627f, -0.680175f, -0.415066f, 0.339848f, 0.506004f, -0.337808f, -0.107218f, -0.172496f, 0.870638f, 0.931872f, -0.953884f, 0.903042f, 0.760078f, 0.209727f, -0.285384f, -0.45514f, 0.113194f, 0.0756611f, 0.0924435f, -0.472863f, 0.960609f, -0.160385f, -0.839445f, 0.457097f, 0.163348f, 0.344867f, -0.131619f, 0.688715f, -0.540827f, 0.571259f, -0.95587f, 0.506164f, -0.155839f, 0.0789621f, 0.756772f, -0.662069f, 0.242908f, 0.460821f, 0.177872f, -0.289839f, -0.640603f, 0.702598f, -0.506406f, -0.568262f, -0.0713716f, 0.413792f, 0.159673f, -0.305208f, 0.133816f, -0.160254f, 0.787323f, -0.753244f, 0.600721f, 0.263186f, -0.162387f, 0.477962f, -0.702951f, -0.731036f, -0.939481f, -0.524519f, 0.934072f, -0.511637f, -0.503499f, 0.106236f, -0.323684f, 0.534444f, -0.843745f, 0.364171f, 0.0370358f, -0.168801f, -0.404559f, -0.814178f, 0.91745f, -0.334276f, 0.66925f, -0.801201f, 0.156511f, -0.427949f, 0.379153f, 0.818597f, -0.649902f, 0.427087f, -0.586015f, -0.559789f, -0.833923f, 0.0892409f, -0.621251f, 0.213826f, 0.465509f, 0.4704f, 0.380261f, 0.413067f, 0.180822f, 0.172866f, 0.59614f, 0.825575f, 0.662916f, -0.704381f, -0.297631f, 0.697778f}),
@@ -48048,6 +49297,8 @@ const TestModel& get_test_model_3_H3_W2_VALID_nhwc() {
     };
     return model;
 }
+
+const auto dummy_test_model_3_H3_W2_VALID_nhwc = TestModelManager::get().add("conv2d_v1_2_3_H3_W2_VALID_nhwc", get_test_model_3_H3_W2_VALID_nhwc());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -48055,9 +49306,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_3_H3_W2_VALID_nhwc_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {9},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -48192,6 +49445,8 @@ const TestModel& get_test_model_3_H3_W2_VALID_nhwc_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_3_H3_W2_VALID_nhwc_all_inputs_as_internal = TestModelManager::get().add("conv2d_v1_2_3_H3_W2_VALID_nhwc_all_inputs_as_internal", get_test_model_3_H3_W2_VALID_nhwc_all_inputs_as_internal());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -48199,9 +49454,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_3_H3_W2_VALID_nhwc_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-0.869931f, 0.644628f, -0.918393f, 0.153672f, 0.868562f, -0.358177f, -0.134931f, -0.247565f, 0.22174f, -0.259157f, -0.284296f, -0.538065f, 0.765559f, 0.41986f, -0.556241f, 0.658494f, 0.214355f, -0.850169f, -0.252893f, -0.478935f, 0.530526f, -0.0700663f, -0.988729f, -0.303061f, 0.150845f, 0.829915f, 0.476349f, 0.406537f, -0.355343f, 0.757145f, -0.356362f, 0.800482f, -0.713861f, 0.210483f, -0.634303f, 0.718236f, -0.752038f, 0.457547f, -0.550769f, -0.551178f, 0.446766f, -0.227462f, 0.216348f, -0.852806f, -0.351486f, 0.55906f, -0.668493f, -0.303493f, -0.363763f, -0.162837f, 0.0701012f, 0.756097f, -0.142269f, 0.329724f, -0.656317f, -0.998086f, -0.652949f, -0.40316f, -0.893682f, 0.432744f, 0.612362f, -0.869588f, -0.71327f, -0.398092f, -0.0423559f, 0.436576f, -0.925272f, 0.176549f, 0.822904f, 0.096833f, -0.296802f, -0.427195f, 0.031654f, -0.254479f, 0.244905f, 0.0948254f, 0.643769f, -0.90391f, 0.352665f, -0.901179f, 0.266159f, -0.968068f, -0.615401f, -0.388975f, 0.939052f, -0.116289f, 0.107523f, -0.0582711f, 0.435172f, 0.334675f, 0.459711f, 0.717436f, 0.496627f, -0.680175f, -0.415066f, 0.339848f, 0.506004f, -0.337808f, -0.107218f, -0.172496f, 0.870638f, 0.931872f, -0.953884f, 0.903042f, 0.760078f, 0.209727f, -0.285384f, -0.45514f, 0.113194f, 0.0756611f, 0.0924435f, -0.472863f, 0.960609f, -0.160385f, -0.839445f, 0.457097f, 0.163348f, 0.344867f, -0.131619f, 0.688715f, -0.540827f, 0.571259f, -0.95587f, 0.506164f, -0.155839f, 0.0789621f, 0.756772f, -0.662069f, 0.242908f, 0.460821f, 0.177872f, -0.289839f, -0.640603f, 0.702598f, -0.506406f, -0.568262f, -0.0713716f, 0.413792f, 0.159673f, -0.305208f, 0.133816f, -0.160254f, 0.787323f, -0.753244f, 0.600721f, 0.263186f, -0.162387f, 0.477962f, -0.702951f, -0.731036f, -0.939481f, -0.524519f, 0.934072f, -0.511637f, -0.503499f, 0.106236f, -0.323684f, 0.534444f, -0.843745f, 0.364171f, 0.0370358f, -0.168801f, -0.404559f, -0.814178f, 0.91745f, -0.334276f, 0.66925f, -0.801201f, 0.156511f, -0.427949f, 0.379153f, 0.818597f, -0.649902f, 0.427087f, -0.586015f, -0.559789f, -0.833923f, 0.0892409f, -0.621251f, 0.213826f, 0.465509f, 0.4704f, 0.380261f, 0.413067f, 0.180822f, 0.172866f, 0.59614f, 0.825575f, 0.662916f, -0.704381f, -0.297631f, 0.697778f}),
@@ -48302,6 +49559,8 @@ const TestModel& get_test_model_3_H3_W2_VALID_nhwc_all_tensors_as_inputs() {
     };
     return model;
 }
+
+const auto dummy_test_model_3_H3_W2_VALID_nhwc_all_tensors_as_inputs = TestModelManager::get().add("conv2d_v1_2_3_H3_W2_VALID_nhwc_all_tensors_as_inputs", get_test_model_3_H3_W2_VALID_nhwc_all_tensors_as_inputs());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -48309,9 +49568,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_3_H3_W2_VALID_nhwc_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {9, 12, 15},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -48514,6 +49775,8 @@ const TestModel& get_test_model_3_H3_W2_VALID_nhwc_all_tensors_as_inputs_all_inp
     };
     return model;
 }
+
+const auto dummy_test_model_3_H3_W2_VALID_nhwc_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("conv2d_v1_2_3_H3_W2_VALID_nhwc_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_3_H3_W2_VALID_nhwc_all_tensors_as_inputs_all_inputs_as_internal());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -48521,9 +49784,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_3_H3_W2_VALID_nhwc_relaxed() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-0.869931f, 0.644628f, -0.918393f, 0.153672f, 0.868562f, -0.358177f, -0.134931f, -0.247565f, 0.22174f, -0.259157f, -0.284296f, -0.538065f, 0.765559f, 0.41986f, -0.556241f, 0.658494f, 0.214355f, -0.850169f, -0.252893f, -0.478935f, 0.530526f, -0.0700663f, -0.988729f, -0.303061f, 0.150845f, 0.829915f, 0.476349f, 0.406537f, -0.355343f, 0.757145f, -0.356362f, 0.800482f, -0.713861f, 0.210483f, -0.634303f, 0.718236f, -0.752038f, 0.457547f, -0.550769f, -0.551178f, 0.446766f, -0.227462f, 0.216348f, -0.852806f, -0.351486f, 0.55906f, -0.668493f, -0.303493f, -0.363763f, -0.162837f, 0.0701012f, 0.756097f, -0.142269f, 0.329724f, -0.656317f, -0.998086f, -0.652949f, -0.40316f, -0.893682f, 0.432744f, 0.612362f, -0.869588f, -0.71327f, -0.398092f, -0.0423559f, 0.436576f, -0.925272f, 0.176549f, 0.822904f, 0.096833f, -0.296802f, -0.427195f, 0.031654f, -0.254479f, 0.244905f, 0.0948254f, 0.643769f, -0.90391f, 0.352665f, -0.901179f, 0.266159f, -0.968068f, -0.615401f, -0.388975f, 0.939052f, -0.116289f, 0.107523f, -0.0582711f, 0.435172f, 0.334675f, 0.459711f, 0.717436f, 0.496627f, -0.680175f, -0.415066f, 0.339848f, 0.506004f, -0.337808f, -0.107218f, -0.172496f, 0.870638f, 0.931872f, -0.953884f, 0.903042f, 0.760078f, 0.209727f, -0.285384f, -0.45514f, 0.113194f, 0.0756611f, 0.0924435f, -0.472863f, 0.960609f, -0.160385f, -0.839445f, 0.457097f, 0.163348f, 0.344867f, -0.131619f, 0.688715f, -0.540827f, 0.571259f, -0.95587f, 0.506164f, -0.155839f, 0.0789621f, 0.756772f, -0.662069f, 0.242908f, 0.460821f, 0.177872f, -0.289839f, -0.640603f, 0.702598f, -0.506406f, -0.568262f, -0.0713716f, 0.413792f, 0.159673f, -0.305208f, 0.133816f, -0.160254f, 0.787323f, -0.753244f, 0.600721f, 0.263186f, -0.162387f, 0.477962f, -0.702951f, -0.731036f, -0.939481f, -0.524519f, 0.934072f, -0.511637f, -0.503499f, 0.106236f, -0.323684f, 0.534444f, -0.843745f, 0.364171f, 0.0370358f, -0.168801f, -0.404559f, -0.814178f, 0.91745f, -0.334276f, 0.66925f, -0.801201f, 0.156511f, -0.427949f, 0.379153f, 0.818597f, -0.649902f, 0.427087f, -0.586015f, -0.559789f, -0.833923f, 0.0892409f, -0.621251f, 0.213826f, 0.465509f, 0.4704f, 0.380261f, 0.413067f, 0.180822f, 0.172866f, 0.59614f, 0.825575f, 0.662916f, -0.704381f, -0.297631f, 0.697778f}),
@@ -48624,6 +49889,8 @@ const TestModel& get_test_model_3_H3_W2_VALID_nhwc_relaxed() {
     };
     return model;
 }
+
+const auto dummy_test_model_3_H3_W2_VALID_nhwc_relaxed = TestModelManager::get().add("conv2d_v1_2_3_H3_W2_VALID_nhwc_relaxed", get_test_model_3_H3_W2_VALID_nhwc_relaxed());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -48631,9 +49898,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_3_H3_W2_VALID_nhwc_relaxed_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {9},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -48768,6 +50037,8 @@ const TestModel& get_test_model_3_H3_W2_VALID_nhwc_relaxed_all_inputs_as_interna
     };
     return model;
 }
+
+const auto dummy_test_model_3_H3_W2_VALID_nhwc_relaxed_all_inputs_as_internal = TestModelManager::get().add("conv2d_v1_2_3_H3_W2_VALID_nhwc_relaxed_all_inputs_as_internal", get_test_model_3_H3_W2_VALID_nhwc_relaxed_all_inputs_as_internal());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -48775,9 +50046,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_3_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-0.869931f, 0.644628f, -0.918393f, 0.153672f, 0.868562f, -0.358177f, -0.134931f, -0.247565f, 0.22174f, -0.259157f, -0.284296f, -0.538065f, 0.765559f, 0.41986f, -0.556241f, 0.658494f, 0.214355f, -0.850169f, -0.252893f, -0.478935f, 0.530526f, -0.0700663f, -0.988729f, -0.303061f, 0.150845f, 0.829915f, 0.476349f, 0.406537f, -0.355343f, 0.757145f, -0.356362f, 0.800482f, -0.713861f, 0.210483f, -0.634303f, 0.718236f, -0.752038f, 0.457547f, -0.550769f, -0.551178f, 0.446766f, -0.227462f, 0.216348f, -0.852806f, -0.351486f, 0.55906f, -0.668493f, -0.303493f, -0.363763f, -0.162837f, 0.0701012f, 0.756097f, -0.142269f, 0.329724f, -0.656317f, -0.998086f, -0.652949f, -0.40316f, -0.893682f, 0.432744f, 0.612362f, -0.869588f, -0.71327f, -0.398092f, -0.0423559f, 0.436576f, -0.925272f, 0.176549f, 0.822904f, 0.096833f, -0.296802f, -0.427195f, 0.031654f, -0.254479f, 0.244905f, 0.0948254f, 0.643769f, -0.90391f, 0.352665f, -0.901179f, 0.266159f, -0.968068f, -0.615401f, -0.388975f, 0.939052f, -0.116289f, 0.107523f, -0.0582711f, 0.435172f, 0.334675f, 0.459711f, 0.717436f, 0.496627f, -0.680175f, -0.415066f, 0.339848f, 0.506004f, -0.337808f, -0.107218f, -0.172496f, 0.870638f, 0.931872f, -0.953884f, 0.903042f, 0.760078f, 0.209727f, -0.285384f, -0.45514f, 0.113194f, 0.0756611f, 0.0924435f, -0.472863f, 0.960609f, -0.160385f, -0.839445f, 0.457097f, 0.163348f, 0.344867f, -0.131619f, 0.688715f, -0.540827f, 0.571259f, -0.95587f, 0.506164f, -0.155839f, 0.0789621f, 0.756772f, -0.662069f, 0.242908f, 0.460821f, 0.177872f, -0.289839f, -0.640603f, 0.702598f, -0.506406f, -0.568262f, -0.0713716f, 0.413792f, 0.159673f, -0.305208f, 0.133816f, -0.160254f, 0.787323f, -0.753244f, 0.600721f, 0.263186f, -0.162387f, 0.477962f, -0.702951f, -0.731036f, -0.939481f, -0.524519f, 0.934072f, -0.511637f, -0.503499f, 0.106236f, -0.323684f, 0.534444f, -0.843745f, 0.364171f, 0.0370358f, -0.168801f, -0.404559f, -0.814178f, 0.91745f, -0.334276f, 0.66925f, -0.801201f, 0.156511f, -0.427949f, 0.379153f, 0.818597f, -0.649902f, 0.427087f, -0.586015f, -0.559789f, -0.833923f, 0.0892409f, -0.621251f, 0.213826f, 0.465509f, 0.4704f, 0.380261f, 0.413067f, 0.180822f, 0.172866f, 0.59614f, 0.825575f, 0.662916f, -0.704381f, -0.297631f, 0.697778f}),
@@ -48878,6 +50151,8 @@ const TestModel& get_test_model_3_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs
     };
     return model;
 }
+
+const auto dummy_test_model_3_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs = TestModelManager::get().add("conv2d_v1_2_3_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs", get_test_model_3_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -48885,9 +50160,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_3_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {9, 12, 15},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -49091,15 +50368,19 @@ const TestModel& get_test_model_3_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs
     return model;
 }
 
+const auto dummy_test_model_3_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("conv2d_v1_2_3_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_3_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal());
+
 }  // namespace generated_tests::conv2d_v1_2
 
 namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_3_H3_W2_VALID_nhwc_float16() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({-0.8699309825897217f, 0.6446279883384705f, -0.9183930158615112f, 0.153671994805336f, 0.8685619831085205f, -0.3581770062446594f, -0.13493099808692932f, -0.24756500124931335f, 0.2217400074005127f, -0.2591570019721985f, -0.2842960059642792f, -0.5380650162696838f, 0.7655590176582336f, 0.41986000537872314f, -0.556240975856781f, 0.6584939956665039f, 0.214355006814003f, -0.8501690030097961f, -0.25289300084114075f, -0.47893500328063965f, 0.5305259823799133f, -0.07006630301475525f, -0.9887290000915527f, -0.30306100845336914f, 0.150845006108284f, 0.8299149870872498f, 0.47634899616241455f, 0.4065369963645935f, -0.3553430140018463f, 0.7571449875831604f, -0.356361985206604f, 0.8004819750785828f, -0.7138609886169434f, 0.21048299968242645f, -0.6343029737472534f, 0.7182360291481018f, -0.7520380020141602f, 0.45754700899124146f, -0.5507689714431763f, -0.551177978515625f, 0.4467659890651703f, -0.22746199369430542f, 0.21634800732135773f, -0.8528059720993042f, -0.3514859974384308f, 0.5590599775314331f, -0.6684929728507996f, -0.3034929931163788f, -0.3637630045413971f, -0.16283699870109558f, 0.07010120153427124f, 0.7560970187187195f, -0.14226900041103363f, 0.3297240138053894f, -0.6563169956207275f, -0.9980859756469727f, -0.6529489755630493f, -0.4031600058078766f, -0.8936820030212402f, 0.43274399638175964f, 0.6123620271682739f, -0.8695880174636841f, -0.7132700085639954f, -0.39809200167655945f, -0.04235589876770973f, 0.4365760087966919f, -0.9252719879150391f, 0.1765490025281906f, 0.8229039907455444f, 0.0968329980969429f, -0.29680201411247253f, -0.4271950125694275f, 0.0316540002822876f, -0.25447899103164673f, 0.2449049949645996f, 0.09482540190219879f, 0.6437690258026123f, -0.9039099812507629f, 0.3526650071144104f, -0.9011790156364441f, 0.2661589980125427f, -0.96806800365448f, -0.615401029586792f, -0.38897499442100525f, 0.9390519857406616f, -0.11628899723291397f, 0.10752300173044205f, -0.058271098881959915f, 0.4351719915866852f, 0.33467501401901245f, 0.4597109854221344f, 0.7174360156059265f, 0.49662700295448303f, -0.6801750063896179f, -0.4150660037994385f, 0.33984801173210144f, 0.5060039758682251f, -0.3378080129623413f, -0.10721799731254578f, -0.1724960058927536f, 0.8706380128860474f, 0.9318720102310181f, -0.9538840055465698f, 0.9030420184135437f, 0.7600780129432678f, 0.20972700417041779f, -0.28538399934768677f, -0.45513999462127686f, 0.11319400370121002f, 0.07566110044717789f, 0.09244350343942642f, -0.47286298871040344f, 0.9606090188026428f, -0.16038499772548676f, -0.8394449949264526f, 0.45709699392318726f, 0.1633480042219162f, 0.3448669910430908f, -0.13161900639533997f, 0.6887149810791016f, -0.5408269762992859f, 0.5712590217590332f, -0.9558699727058411f, 0.506164014339447f, -0.1558389961719513f, 0.07896210253238678f, 0.756771981716156f, -0.6620690226554871f, 0.24290800094604492f, 0.4608210027217865f, 0.17787200212478638f, -0.2898389995098114f, -0.6406030058860779f, 0.702597975730896f, -0.5064060091972351f, -0.568261981010437f, -0.07137160003185272f, 0.4137920141220093f, 0.15967300534248352f, -0.3052079975605011f, 0.13381600379943848f, -0.16025400161743164f, 0.787322998046875f, -0.7532439827919006f, 0.600721001625061f, 0.2631860077381134f, -0.16238699853420258f, 0.4779619872570038f, -0.7029510140419006f, -0.7310360074043274f, -0.9394810199737549f, -0.5245190262794495f, 0.9340720176696777f, -0.5116369724273682f, -0.5034989714622498f, 0.10623600333929062f, -0.3236840069293976f, 0.5344439744949341f, -0.8437449932098389f, 0.36417099833488464f, 0.03703580051660538f, -0.16880099475383759f, -0.4045589864253998f, -0.8141779899597168f, 0.9174500107765198f, -0.3342759907245636f, 0.6692500114440918f, -0.8012009859085083f, 0.15651099383831024f, -0.4279490113258362f, 0.3791530132293701f, 0.8185970187187195f, -0.6499019861221313f, 0.4270870089530945f, -0.586014986038208f, -0.5597890019416809f, -0.8339229822158813f, 0.0892409011721611f, -0.6212509870529175f, 0.2138260006904602f, 0.46550899744033813f, 0.47040000557899475f, 0.38026100397109985f, 0.4130670130252838f, 0.1808219999074936f, 0.17286600172519684f, 0.5961400270462036f, 0.8255749940872192f, 0.6629160046577454f, -0.704380989074707f, -0.29763099551200867f, 0.6977779865264893f}),
@@ -49200,6 +50481,8 @@ const TestModel& get_test_model_3_H3_W2_VALID_nhwc_float16() {
     };
     return model;
 }
+
+const auto dummy_test_model_3_H3_W2_VALID_nhwc_float16 = TestModelManager::get().add("conv2d_v1_2_3_H3_W2_VALID_nhwc_float16", get_test_model_3_H3_W2_VALID_nhwc_float16());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -49207,9 +50490,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_3_H3_W2_VALID_nhwc_float16_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {9},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -49344,6 +50629,8 @@ const TestModel& get_test_model_3_H3_W2_VALID_nhwc_float16_all_inputs_as_interna
     };
     return model;
 }
+
+const auto dummy_test_model_3_H3_W2_VALID_nhwc_float16_all_inputs_as_internal = TestModelManager::get().add("conv2d_v1_2_3_H3_W2_VALID_nhwc_float16_all_inputs_as_internal", get_test_model_3_H3_W2_VALID_nhwc_float16_all_inputs_as_internal());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -49351,9 +50638,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_3_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({-0.8699309825897217f, 0.6446279883384705f, -0.9183930158615112f, 0.153671994805336f, 0.8685619831085205f, -0.3581770062446594f, -0.13493099808692932f, -0.24756500124931335f, 0.2217400074005127f, -0.2591570019721985f, -0.2842960059642792f, -0.5380650162696838f, 0.7655590176582336f, 0.41986000537872314f, -0.556240975856781f, 0.6584939956665039f, 0.214355006814003f, -0.8501690030097961f, -0.25289300084114075f, -0.47893500328063965f, 0.5305259823799133f, -0.07006630301475525f, -0.9887290000915527f, -0.30306100845336914f, 0.150845006108284f, 0.8299149870872498f, 0.47634899616241455f, 0.4065369963645935f, -0.3553430140018463f, 0.7571449875831604f, -0.356361985206604f, 0.8004819750785828f, -0.7138609886169434f, 0.21048299968242645f, -0.6343029737472534f, 0.7182360291481018f, -0.7520380020141602f, 0.45754700899124146f, -0.5507689714431763f, -0.551177978515625f, 0.4467659890651703f, -0.22746199369430542f, 0.21634800732135773f, -0.8528059720993042f, -0.3514859974384308f, 0.5590599775314331f, -0.6684929728507996f, -0.3034929931163788f, -0.3637630045413971f, -0.16283699870109558f, 0.07010120153427124f, 0.7560970187187195f, -0.14226900041103363f, 0.3297240138053894f, -0.6563169956207275f, -0.9980859756469727f, -0.6529489755630493f, -0.4031600058078766f, -0.8936820030212402f, 0.43274399638175964f, 0.6123620271682739f, -0.8695880174636841f, -0.7132700085639954f, -0.39809200167655945f, -0.04235589876770973f, 0.4365760087966919f, -0.9252719879150391f, 0.1765490025281906f, 0.8229039907455444f, 0.0968329980969429f, -0.29680201411247253f, -0.4271950125694275f, 0.0316540002822876f, -0.25447899103164673f, 0.2449049949645996f, 0.09482540190219879f, 0.6437690258026123f, -0.9039099812507629f, 0.3526650071144104f, -0.9011790156364441f, 0.2661589980125427f, -0.96806800365448f, -0.615401029586792f, -0.38897499442100525f, 0.9390519857406616f, -0.11628899723291397f, 0.10752300173044205f, -0.058271098881959915f, 0.4351719915866852f, 0.33467501401901245f, 0.4597109854221344f, 0.7174360156059265f, 0.49662700295448303f, -0.6801750063896179f, -0.4150660037994385f, 0.33984801173210144f, 0.5060039758682251f, -0.3378080129623413f, -0.10721799731254578f, -0.1724960058927536f, 0.8706380128860474f, 0.9318720102310181f, -0.9538840055465698f, 0.9030420184135437f, 0.7600780129432678f, 0.20972700417041779f, -0.28538399934768677f, -0.45513999462127686f, 0.11319400370121002f, 0.07566110044717789f, 0.09244350343942642f, -0.47286298871040344f, 0.9606090188026428f, -0.16038499772548676f, -0.8394449949264526f, 0.45709699392318726f, 0.1633480042219162f, 0.3448669910430908f, -0.13161900639533997f, 0.6887149810791016f, -0.5408269762992859f, 0.5712590217590332f, -0.9558699727058411f, 0.506164014339447f, -0.1558389961719513f, 0.07896210253238678f, 0.756771981716156f, -0.6620690226554871f, 0.24290800094604492f, 0.4608210027217865f, 0.17787200212478638f, -0.2898389995098114f, -0.6406030058860779f, 0.702597975730896f, -0.5064060091972351f, -0.568261981010437f, -0.07137160003185272f, 0.4137920141220093f, 0.15967300534248352f, -0.3052079975605011f, 0.13381600379943848f, -0.16025400161743164f, 0.787322998046875f, -0.7532439827919006f, 0.600721001625061f, 0.2631860077381134f, -0.16238699853420258f, 0.4779619872570038f, -0.7029510140419006f, -0.7310360074043274f, -0.9394810199737549f, -0.5245190262794495f, 0.9340720176696777f, -0.5116369724273682f, -0.5034989714622498f, 0.10623600333929062f, -0.3236840069293976f, 0.5344439744949341f, -0.8437449932098389f, 0.36417099833488464f, 0.03703580051660538f, -0.16880099475383759f, -0.4045589864253998f, -0.8141779899597168f, 0.9174500107765198f, -0.3342759907245636f, 0.6692500114440918f, -0.8012009859085083f, 0.15651099383831024f, -0.4279490113258362f, 0.3791530132293701f, 0.8185970187187195f, -0.6499019861221313f, 0.4270870089530945f, -0.586014986038208f, -0.5597890019416809f, -0.8339229822158813f, 0.0892409011721611f, -0.6212509870529175f, 0.2138260006904602f, 0.46550899744033813f, 0.47040000557899475f, 0.38026100397109985f, 0.4130670130252838f, 0.1808219999074936f, 0.17286600172519684f, 0.5961400270462036f, 0.8255749940872192f, 0.6629160046577454f, -0.704380989074707f, -0.29763099551200867f, 0.6977779865264893f}),
@@ -49454,6 +50743,8 @@ const TestModel& get_test_model_3_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs
     };
     return model;
 }
+
+const auto dummy_test_model_3_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs = TestModelManager::get().add("conv2d_v1_2_3_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs", get_test_model_3_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -49461,9 +50752,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_3_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {9, 12, 15},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -49667,15 +50960,19 @@ const TestModel& get_test_model_3_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs
     return model;
 }
 
+const auto dummy_test_model_3_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("conv2d_v1_2_3_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_3_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal());
+
 }  // namespace generated_tests::conv2d_v1_2
 
 namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_3_H3_W2_VALID_nchw() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-0.869931f, 0.153672f, -0.134931f, -0.259157f, 0.765559f, 0.658494f, -0.252893f, -0.0700663f, 0.150845f, 0.406537f, -0.356362f, 0.210483f, -0.752038f, -0.551178f, 0.216348f, 0.55906f, -0.363763f, 0.756097f, -0.656317f, -0.40316f, 0.612362f, -0.398092f, -0.925272f, 0.096833f, 0.031654f, 0.0948254f, 0.352665f, -0.968068f, 0.939052f, -0.0582711f, 0.459711f, -0.680175f, 0.506004f, -0.172496f, -0.953884f, 0.209727f, 0.113194f, -0.472863f, -0.839445f, 0.344867f, -0.540827f, 0.506164f, 0.756772f, 0.460821f, -0.640603f, -0.568262f, 0.159673f, -0.160254f, 0.600721f, 0.477962f, -0.939481f, -0.511637f, -0.323684f, 0.364171f, -0.404559f, -0.334276f, 0.156511f, 0.818597f, -0.586015f, 0.0892409f, 0.465509f, 0.413067f, 0.59614f, -0.704381f, 0.644628f, 0.868562f, -0.247565f, -0.284296f, 0.41986f, 0.214355f, -0.478935f, -0.988729f, 0.829915f, -0.355343f, 0.800482f, -0.634303f, 0.457547f, 0.446766f, -0.852806f, -0.668493f, -0.162837f, -0.142269f, -0.998086f, -0.893682f, -0.869588f, -0.0423559f, 0.176549f, -0.296802f, -0.254479f, 0.643769f, -0.901179f, -0.615401f, -0.116289f, 0.435172f, 0.717436f, -0.415066f, -0.337808f, 0.870638f, 0.903042f, -0.285384f, 0.0756611f, 0.960609f, 0.457097f, -0.131619f, 0.571259f, -0.155839f, -0.662069f, 0.177872f, 0.702598f, -0.0713716f, -0.305208f, 0.787323f, 0.263186f, -0.702951f, -0.524519f, -0.503499f, 0.534444f, 0.0370358f, -0.814178f, 0.66925f, -0.427949f, -0.649902f, -0.559789f, -0.621251f, 0.4704f, 0.180822f, 0.825575f, -0.297631f, -0.918393f, -0.358177f, 0.22174f, -0.538065f, -0.556241f, -0.850169f, 0.530526f, -0.303061f, 0.476349f, 0.757145f, -0.713861f, 0.718236f, -0.550769f, -0.227462f, -0.351486f, -0.303493f, 0.0701012f, 0.329724f, -0.652949f, 0.432744f, -0.71327f, 0.436576f, 0.822904f, -0.427195f, 0.244905f, -0.90391f, 0.266159f, -0.388975f, 0.107523f, 0.334675f, 0.496627f, 0.339848f, -0.107218f, 0.931872f, 0.760078f, -0.45514f, 0.0924435f, -0.160385f, 0.163348f, 0.688715f, -0.95587f, 0.0789621f, 0.242908f, -0.289839f, -0.506406f, 0.413792f, 0.133816f, -0.753244f, -0.162387f, -0.731036f, 0.934072f, 0.106236f, -0.843745f, -0.168801f, 0.91745f, -0.801201f, 0.379153f, 0.427087f, -0.833923f, 0.213826f, 0.380261f, 0.172866f, 0.662916f, 0.697778f}),
@@ -49776,6 +51073,8 @@ const TestModel& get_test_model_3_H3_W2_VALID_nchw() {
     };
     return model;
 }
+
+const auto dummy_test_model_3_H3_W2_VALID_nchw = TestModelManager::get().add("conv2d_v1_2_3_H3_W2_VALID_nchw", get_test_model_3_H3_W2_VALID_nchw());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -49783,9 +51082,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_3_H3_W2_VALID_nchw_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {9},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -49920,6 +51221,8 @@ const TestModel& get_test_model_3_H3_W2_VALID_nchw_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_3_H3_W2_VALID_nchw_all_inputs_as_internal = TestModelManager::get().add("conv2d_v1_2_3_H3_W2_VALID_nchw_all_inputs_as_internal", get_test_model_3_H3_W2_VALID_nchw_all_inputs_as_internal());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -49927,9 +51230,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_3_H3_W2_VALID_nchw_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-0.869931f, 0.153672f, -0.134931f, -0.259157f, 0.765559f, 0.658494f, -0.252893f, -0.0700663f, 0.150845f, 0.406537f, -0.356362f, 0.210483f, -0.752038f, -0.551178f, 0.216348f, 0.55906f, -0.363763f, 0.756097f, -0.656317f, -0.40316f, 0.612362f, -0.398092f, -0.925272f, 0.096833f, 0.031654f, 0.0948254f, 0.352665f, -0.968068f, 0.939052f, -0.0582711f, 0.459711f, -0.680175f, 0.506004f, -0.172496f, -0.953884f, 0.209727f, 0.113194f, -0.472863f, -0.839445f, 0.344867f, -0.540827f, 0.506164f, 0.756772f, 0.460821f, -0.640603f, -0.568262f, 0.159673f, -0.160254f, 0.600721f, 0.477962f, -0.939481f, -0.511637f, -0.323684f, 0.364171f, -0.404559f, -0.334276f, 0.156511f, 0.818597f, -0.586015f, 0.0892409f, 0.465509f, 0.413067f, 0.59614f, -0.704381f, 0.644628f, 0.868562f, -0.247565f, -0.284296f, 0.41986f, 0.214355f, -0.478935f, -0.988729f, 0.829915f, -0.355343f, 0.800482f, -0.634303f, 0.457547f, 0.446766f, -0.852806f, -0.668493f, -0.162837f, -0.142269f, -0.998086f, -0.893682f, -0.869588f, -0.0423559f, 0.176549f, -0.296802f, -0.254479f, 0.643769f, -0.901179f, -0.615401f, -0.116289f, 0.435172f, 0.717436f, -0.415066f, -0.337808f, 0.870638f, 0.903042f, -0.285384f, 0.0756611f, 0.960609f, 0.457097f, -0.131619f, 0.571259f, -0.155839f, -0.662069f, 0.177872f, 0.702598f, -0.0713716f, -0.305208f, 0.787323f, 0.263186f, -0.702951f, -0.524519f, -0.503499f, 0.534444f, 0.0370358f, -0.814178f, 0.66925f, -0.427949f, -0.649902f, -0.559789f, -0.621251f, 0.4704f, 0.180822f, 0.825575f, -0.297631f, -0.918393f, -0.358177f, 0.22174f, -0.538065f, -0.556241f, -0.850169f, 0.530526f, -0.303061f, 0.476349f, 0.757145f, -0.713861f, 0.718236f, -0.550769f, -0.227462f, -0.351486f, -0.303493f, 0.0701012f, 0.329724f, -0.652949f, 0.432744f, -0.71327f, 0.436576f, 0.822904f, -0.427195f, 0.244905f, -0.90391f, 0.266159f, -0.388975f, 0.107523f, 0.334675f, 0.496627f, 0.339848f, -0.107218f, 0.931872f, 0.760078f, -0.45514f, 0.0924435f, -0.160385f, 0.163348f, 0.688715f, -0.95587f, 0.0789621f, 0.242908f, -0.289839f, -0.506406f, 0.413792f, 0.133816f, -0.753244f, -0.162387f, -0.731036f, 0.934072f, 0.106236f, -0.843745f, -0.168801f, 0.91745f, -0.801201f, 0.379153f, 0.427087f, -0.833923f, 0.213826f, 0.380261f, 0.172866f, 0.662916f, 0.697778f}),
@@ -50030,6 +51335,8 @@ const TestModel& get_test_model_3_H3_W2_VALID_nchw_all_tensors_as_inputs() {
     };
     return model;
 }
+
+const auto dummy_test_model_3_H3_W2_VALID_nchw_all_tensors_as_inputs = TestModelManager::get().add("conv2d_v1_2_3_H3_W2_VALID_nchw_all_tensors_as_inputs", get_test_model_3_H3_W2_VALID_nchw_all_tensors_as_inputs());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -50037,9 +51344,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_3_H3_W2_VALID_nchw_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {9, 12, 15},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -50242,6 +51551,8 @@ const TestModel& get_test_model_3_H3_W2_VALID_nchw_all_tensors_as_inputs_all_inp
     };
     return model;
 }
+
+const auto dummy_test_model_3_H3_W2_VALID_nchw_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("conv2d_v1_2_3_H3_W2_VALID_nchw_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_3_H3_W2_VALID_nchw_all_tensors_as_inputs_all_inputs_as_internal());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -50249,9 +51560,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_3_H3_W2_VALID_nchw_relaxed() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-0.869931f, 0.153672f, -0.134931f, -0.259157f, 0.765559f, 0.658494f, -0.252893f, -0.0700663f, 0.150845f, 0.406537f, -0.356362f, 0.210483f, -0.752038f, -0.551178f, 0.216348f, 0.55906f, -0.363763f, 0.756097f, -0.656317f, -0.40316f, 0.612362f, -0.398092f, -0.925272f, 0.096833f, 0.031654f, 0.0948254f, 0.352665f, -0.968068f, 0.939052f, -0.0582711f, 0.459711f, -0.680175f, 0.506004f, -0.172496f, -0.953884f, 0.209727f, 0.113194f, -0.472863f, -0.839445f, 0.344867f, -0.540827f, 0.506164f, 0.756772f, 0.460821f, -0.640603f, -0.568262f, 0.159673f, -0.160254f, 0.600721f, 0.477962f, -0.939481f, -0.511637f, -0.323684f, 0.364171f, -0.404559f, -0.334276f, 0.156511f, 0.818597f, -0.586015f, 0.0892409f, 0.465509f, 0.413067f, 0.59614f, -0.704381f, 0.644628f, 0.868562f, -0.247565f, -0.284296f, 0.41986f, 0.214355f, -0.478935f, -0.988729f, 0.829915f, -0.355343f, 0.800482f, -0.634303f, 0.457547f, 0.446766f, -0.852806f, -0.668493f, -0.162837f, -0.142269f, -0.998086f, -0.893682f, -0.869588f, -0.0423559f, 0.176549f, -0.296802f, -0.254479f, 0.643769f, -0.901179f, -0.615401f, -0.116289f, 0.435172f, 0.717436f, -0.415066f, -0.337808f, 0.870638f, 0.903042f, -0.285384f, 0.0756611f, 0.960609f, 0.457097f, -0.131619f, 0.571259f, -0.155839f, -0.662069f, 0.177872f, 0.702598f, -0.0713716f, -0.305208f, 0.787323f, 0.263186f, -0.702951f, -0.524519f, -0.503499f, 0.534444f, 0.0370358f, -0.814178f, 0.66925f, -0.427949f, -0.649902f, -0.559789f, -0.621251f, 0.4704f, 0.180822f, 0.825575f, -0.297631f, -0.918393f, -0.358177f, 0.22174f, -0.538065f, -0.556241f, -0.850169f, 0.530526f, -0.303061f, 0.476349f, 0.757145f, -0.713861f, 0.718236f, -0.550769f, -0.227462f, -0.351486f, -0.303493f, 0.0701012f, 0.329724f, -0.652949f, 0.432744f, -0.71327f, 0.436576f, 0.822904f, -0.427195f, 0.244905f, -0.90391f, 0.266159f, -0.388975f, 0.107523f, 0.334675f, 0.496627f, 0.339848f, -0.107218f, 0.931872f, 0.760078f, -0.45514f, 0.0924435f, -0.160385f, 0.163348f, 0.688715f, -0.95587f, 0.0789621f, 0.242908f, -0.289839f, -0.506406f, 0.413792f, 0.133816f, -0.753244f, -0.162387f, -0.731036f, 0.934072f, 0.106236f, -0.843745f, -0.168801f, 0.91745f, -0.801201f, 0.379153f, 0.427087f, -0.833923f, 0.213826f, 0.380261f, 0.172866f, 0.662916f, 0.697778f}),
@@ -50352,6 +51665,8 @@ const TestModel& get_test_model_3_H3_W2_VALID_nchw_relaxed() {
     };
     return model;
 }
+
+const auto dummy_test_model_3_H3_W2_VALID_nchw_relaxed = TestModelManager::get().add("conv2d_v1_2_3_H3_W2_VALID_nchw_relaxed", get_test_model_3_H3_W2_VALID_nchw_relaxed());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -50359,9 +51674,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_3_H3_W2_VALID_nchw_relaxed_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {9},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -50496,6 +51813,8 @@ const TestModel& get_test_model_3_H3_W2_VALID_nchw_relaxed_all_inputs_as_interna
     };
     return model;
 }
+
+const auto dummy_test_model_3_H3_W2_VALID_nchw_relaxed_all_inputs_as_internal = TestModelManager::get().add("conv2d_v1_2_3_H3_W2_VALID_nchw_relaxed_all_inputs_as_internal", get_test_model_3_H3_W2_VALID_nchw_relaxed_all_inputs_as_internal());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -50503,9 +51822,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_3_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-0.869931f, 0.153672f, -0.134931f, -0.259157f, 0.765559f, 0.658494f, -0.252893f, -0.0700663f, 0.150845f, 0.406537f, -0.356362f, 0.210483f, -0.752038f, -0.551178f, 0.216348f, 0.55906f, -0.363763f, 0.756097f, -0.656317f, -0.40316f, 0.612362f, -0.398092f, -0.925272f, 0.096833f, 0.031654f, 0.0948254f, 0.352665f, -0.968068f, 0.939052f, -0.0582711f, 0.459711f, -0.680175f, 0.506004f, -0.172496f, -0.953884f, 0.209727f, 0.113194f, -0.472863f, -0.839445f, 0.344867f, -0.540827f, 0.506164f, 0.756772f, 0.460821f, -0.640603f, -0.568262f, 0.159673f, -0.160254f, 0.600721f, 0.477962f, -0.939481f, -0.511637f, -0.323684f, 0.364171f, -0.404559f, -0.334276f, 0.156511f, 0.818597f, -0.586015f, 0.0892409f, 0.465509f, 0.413067f, 0.59614f, -0.704381f, 0.644628f, 0.868562f, -0.247565f, -0.284296f, 0.41986f, 0.214355f, -0.478935f, -0.988729f, 0.829915f, -0.355343f, 0.800482f, -0.634303f, 0.457547f, 0.446766f, -0.852806f, -0.668493f, -0.162837f, -0.142269f, -0.998086f, -0.893682f, -0.869588f, -0.0423559f, 0.176549f, -0.296802f, -0.254479f, 0.643769f, -0.901179f, -0.615401f, -0.116289f, 0.435172f, 0.717436f, -0.415066f, -0.337808f, 0.870638f, 0.903042f, -0.285384f, 0.0756611f, 0.960609f, 0.457097f, -0.131619f, 0.571259f, -0.155839f, -0.662069f, 0.177872f, 0.702598f, -0.0713716f, -0.305208f, 0.787323f, 0.263186f, -0.702951f, -0.524519f, -0.503499f, 0.534444f, 0.0370358f, -0.814178f, 0.66925f, -0.427949f, -0.649902f, -0.559789f, -0.621251f, 0.4704f, 0.180822f, 0.825575f, -0.297631f, -0.918393f, -0.358177f, 0.22174f, -0.538065f, -0.556241f, -0.850169f, 0.530526f, -0.303061f, 0.476349f, 0.757145f, -0.713861f, 0.718236f, -0.550769f, -0.227462f, -0.351486f, -0.303493f, 0.0701012f, 0.329724f, -0.652949f, 0.432744f, -0.71327f, 0.436576f, 0.822904f, -0.427195f, 0.244905f, -0.90391f, 0.266159f, -0.388975f, 0.107523f, 0.334675f, 0.496627f, 0.339848f, -0.107218f, 0.931872f, 0.760078f, -0.45514f, 0.0924435f, -0.160385f, 0.163348f, 0.688715f, -0.95587f, 0.0789621f, 0.242908f, -0.289839f, -0.506406f, 0.413792f, 0.133816f, -0.753244f, -0.162387f, -0.731036f, 0.934072f, 0.106236f, -0.843745f, -0.168801f, 0.91745f, -0.801201f, 0.379153f, 0.427087f, -0.833923f, 0.213826f, 0.380261f, 0.172866f, 0.662916f, 0.697778f}),
@@ -50606,6 +51927,8 @@ const TestModel& get_test_model_3_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs
     };
     return model;
 }
+
+const auto dummy_test_model_3_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs = TestModelManager::get().add("conv2d_v1_2_3_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs", get_test_model_3_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -50613,9 +51936,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_3_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {9, 12, 15},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -50819,15 +52144,19 @@ const TestModel& get_test_model_3_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs
     return model;
 }
 
+const auto dummy_test_model_3_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("conv2d_v1_2_3_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_3_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal());
+
 }  // namespace generated_tests::conv2d_v1_2
 
 namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_3_H3_W2_VALID_nchw_float16() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({-0.8699309825897217f, 0.153671994805336f, -0.13493099808692932f, -0.2591570019721985f, 0.7655590176582336f, 0.6584939956665039f, -0.25289300084114075f, -0.07006630301475525f, 0.150845006108284f, 0.4065369963645935f, -0.356361985206604f, 0.21048299968242645f, -0.7520380020141602f, -0.551177978515625f, 0.21634800732135773f, 0.5590599775314331f, -0.3637630045413971f, 0.7560970187187195f, -0.6563169956207275f, -0.4031600058078766f, 0.6123620271682739f, -0.39809200167655945f, -0.9252719879150391f, 0.0968329980969429f, 0.0316540002822876f, 0.09482540190219879f, 0.3526650071144104f, -0.96806800365448f, 0.9390519857406616f, -0.058271098881959915f, 0.4597109854221344f, -0.6801750063896179f, 0.5060039758682251f, -0.1724960058927536f, -0.9538840055465698f, 0.20972700417041779f, 0.11319400370121002f, -0.47286298871040344f, -0.8394449949264526f, 0.3448669910430908f, -0.5408269762992859f, 0.506164014339447f, 0.756771981716156f, 0.4608210027217865f, -0.6406030058860779f, -0.568261981010437f, 0.15967300534248352f, -0.16025400161743164f, 0.600721001625061f, 0.4779619872570038f, -0.9394810199737549f, -0.5116369724273682f, -0.3236840069293976f, 0.36417099833488464f, -0.4045589864253998f, -0.3342759907245636f, 0.15651099383831024f, 0.8185970187187195f, -0.586014986038208f, 0.0892409011721611f, 0.46550899744033813f, 0.4130670130252838f, 0.5961400270462036f, -0.704380989074707f, 0.6446279883384705f, 0.8685619831085205f, -0.24756500124931335f, -0.2842960059642792f, 0.41986000537872314f, 0.214355006814003f, -0.47893500328063965f, -0.9887290000915527f, 0.8299149870872498f, -0.3553430140018463f, 0.8004819750785828f, -0.6343029737472534f, 0.45754700899124146f, 0.4467659890651703f, -0.8528059720993042f, -0.6684929728507996f, -0.16283699870109558f, -0.14226900041103363f, -0.9980859756469727f, -0.8936820030212402f, -0.8695880174636841f, -0.04235589876770973f, 0.1765490025281906f, -0.29680201411247253f, -0.25447899103164673f, 0.6437690258026123f, -0.9011790156364441f, -0.615401029586792f, -0.11628899723291397f, 0.4351719915866852f, 0.7174360156059265f, -0.4150660037994385f, -0.3378080129623413f, 0.8706380128860474f, 0.9030420184135437f, -0.28538399934768677f, 0.07566110044717789f, 0.9606090188026428f, 0.45709699392318726f, -0.13161900639533997f, 0.5712590217590332f, -0.1558389961719513f, -0.6620690226554871f, 0.17787200212478638f, 0.702597975730896f, -0.07137160003185272f, -0.3052079975605011f, 0.787322998046875f, 0.2631860077381134f, -0.7029510140419006f, -0.5245190262794495f, -0.5034989714622498f, 0.5344439744949341f, 0.03703580051660538f, -0.8141779899597168f, 0.6692500114440918f, -0.4279490113258362f, -0.6499019861221313f, -0.5597890019416809f, -0.6212509870529175f, 0.47040000557899475f, 0.1808219999074936f, 0.8255749940872192f, -0.29763099551200867f, -0.9183930158615112f, -0.3581770062446594f, 0.2217400074005127f, -0.5380650162696838f, -0.556240975856781f, -0.8501690030097961f, 0.5305259823799133f, -0.30306100845336914f, 0.47634899616241455f, 0.7571449875831604f, -0.7138609886169434f, 0.7182360291481018f, -0.5507689714431763f, -0.22746199369430542f, -0.3514859974384308f, -0.3034929931163788f, 0.07010120153427124f, 0.3297240138053894f, -0.6529489755630493f, 0.43274399638175964f, -0.7132700085639954f, 0.4365760087966919f, 0.8229039907455444f, -0.4271950125694275f, 0.2449049949645996f, -0.9039099812507629f, 0.2661589980125427f, -0.38897499442100525f, 0.10752300173044205f, 0.33467501401901245f, 0.49662700295448303f, 0.33984801173210144f, -0.10721799731254578f, 0.9318720102310181f, 0.7600780129432678f, -0.45513999462127686f, 0.09244350343942642f, -0.16038499772548676f, 0.1633480042219162f, 0.6887149810791016f, -0.9558699727058411f, 0.07896210253238678f, 0.24290800094604492f, -0.2898389995098114f, -0.5064060091972351f, 0.4137920141220093f, 0.13381600379943848f, -0.7532439827919006f, -0.16238699853420258f, -0.7310360074043274f, 0.9340720176696777f, 0.10623600333929062f, -0.8437449932098389f, -0.16880099475383759f, 0.9174500107765198f, -0.8012009859085083f, 0.3791530132293701f, 0.4270870089530945f, -0.8339229822158813f, 0.2138260006904602f, 0.38026100397109985f, 0.17286600172519684f, 0.6629160046577454f, 0.6977779865264893f}),
@@ -50928,6 +52257,8 @@ const TestModel& get_test_model_3_H3_W2_VALID_nchw_float16() {
     };
     return model;
 }
+
+const auto dummy_test_model_3_H3_W2_VALID_nchw_float16 = TestModelManager::get().add("conv2d_v1_2_3_H3_W2_VALID_nchw_float16", get_test_model_3_H3_W2_VALID_nchw_float16());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -50935,9 +52266,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_3_H3_W2_VALID_nchw_float16_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {9},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -51072,6 +52405,8 @@ const TestModel& get_test_model_3_H3_W2_VALID_nchw_float16_all_inputs_as_interna
     };
     return model;
 }
+
+const auto dummy_test_model_3_H3_W2_VALID_nchw_float16_all_inputs_as_internal = TestModelManager::get().add("conv2d_v1_2_3_H3_W2_VALID_nchw_float16_all_inputs_as_internal", get_test_model_3_H3_W2_VALID_nchw_float16_all_inputs_as_internal());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -51079,9 +52414,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_3_H3_W2_VALID_nchw_float16_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({-0.8699309825897217f, 0.153671994805336f, -0.13493099808692932f, -0.2591570019721985f, 0.7655590176582336f, 0.6584939956665039f, -0.25289300084114075f, -0.07006630301475525f, 0.150845006108284f, 0.4065369963645935f, -0.356361985206604f, 0.21048299968242645f, -0.7520380020141602f, -0.551177978515625f, 0.21634800732135773f, 0.5590599775314331f, -0.3637630045413971f, 0.7560970187187195f, -0.6563169956207275f, -0.4031600058078766f, 0.6123620271682739f, -0.39809200167655945f, -0.9252719879150391f, 0.0968329980969429f, 0.0316540002822876f, 0.09482540190219879f, 0.3526650071144104f, -0.96806800365448f, 0.9390519857406616f, -0.058271098881959915f, 0.4597109854221344f, -0.6801750063896179f, 0.5060039758682251f, -0.1724960058927536f, -0.9538840055465698f, 0.20972700417041779f, 0.11319400370121002f, -0.47286298871040344f, -0.8394449949264526f, 0.3448669910430908f, -0.5408269762992859f, 0.506164014339447f, 0.756771981716156f, 0.4608210027217865f, -0.6406030058860779f, -0.568261981010437f, 0.15967300534248352f, -0.16025400161743164f, 0.600721001625061f, 0.4779619872570038f, -0.9394810199737549f, -0.5116369724273682f, -0.3236840069293976f, 0.36417099833488464f, -0.4045589864253998f, -0.3342759907245636f, 0.15651099383831024f, 0.8185970187187195f, -0.586014986038208f, 0.0892409011721611f, 0.46550899744033813f, 0.4130670130252838f, 0.5961400270462036f, -0.704380989074707f, 0.6446279883384705f, 0.8685619831085205f, -0.24756500124931335f, -0.2842960059642792f, 0.41986000537872314f, 0.214355006814003f, -0.47893500328063965f, -0.9887290000915527f, 0.8299149870872498f, -0.3553430140018463f, 0.8004819750785828f, -0.6343029737472534f, 0.45754700899124146f, 0.4467659890651703f, -0.8528059720993042f, -0.6684929728507996f, -0.16283699870109558f, -0.14226900041103363f, -0.9980859756469727f, -0.8936820030212402f, -0.8695880174636841f, -0.04235589876770973f, 0.1765490025281906f, -0.29680201411247253f, -0.25447899103164673f, 0.6437690258026123f, -0.9011790156364441f, -0.615401029586792f, -0.11628899723291397f, 0.4351719915866852f, 0.7174360156059265f, -0.4150660037994385f, -0.3378080129623413f, 0.8706380128860474f, 0.9030420184135437f, -0.28538399934768677f, 0.07566110044717789f, 0.9606090188026428f, 0.45709699392318726f, -0.13161900639533997f, 0.5712590217590332f, -0.1558389961719513f, -0.6620690226554871f, 0.17787200212478638f, 0.702597975730896f, -0.07137160003185272f, -0.3052079975605011f, 0.787322998046875f, 0.2631860077381134f, -0.7029510140419006f, -0.5245190262794495f, -0.5034989714622498f, 0.5344439744949341f, 0.03703580051660538f, -0.8141779899597168f, 0.6692500114440918f, -0.4279490113258362f, -0.6499019861221313f, -0.5597890019416809f, -0.6212509870529175f, 0.47040000557899475f, 0.1808219999074936f, 0.8255749940872192f, -0.29763099551200867f, -0.9183930158615112f, -0.3581770062446594f, 0.2217400074005127f, -0.5380650162696838f, -0.556240975856781f, -0.8501690030097961f, 0.5305259823799133f, -0.30306100845336914f, 0.47634899616241455f, 0.7571449875831604f, -0.7138609886169434f, 0.7182360291481018f, -0.5507689714431763f, -0.22746199369430542f, -0.3514859974384308f, -0.3034929931163788f, 0.07010120153427124f, 0.3297240138053894f, -0.6529489755630493f, 0.43274399638175964f, -0.7132700085639954f, 0.4365760087966919f, 0.8229039907455444f, -0.4271950125694275f, 0.2449049949645996f, -0.9039099812507629f, 0.2661589980125427f, -0.38897499442100525f, 0.10752300173044205f, 0.33467501401901245f, 0.49662700295448303f, 0.33984801173210144f, -0.10721799731254578f, 0.9318720102310181f, 0.7600780129432678f, -0.45513999462127686f, 0.09244350343942642f, -0.16038499772548676f, 0.1633480042219162f, 0.6887149810791016f, -0.9558699727058411f, 0.07896210253238678f, 0.24290800094604492f, -0.2898389995098114f, -0.5064060091972351f, 0.4137920141220093f, 0.13381600379943848f, -0.7532439827919006f, -0.16238699853420258f, -0.7310360074043274f, 0.9340720176696777f, 0.10623600333929062f, -0.8437449932098389f, -0.16880099475383759f, 0.9174500107765198f, -0.8012009859085083f, 0.3791530132293701f, 0.4270870089530945f, -0.8339229822158813f, 0.2138260006904602f, 0.38026100397109985f, 0.17286600172519684f, 0.6629160046577454f, 0.6977779865264893f}),
@@ -51182,6 +52519,8 @@ const TestModel& get_test_model_3_H3_W2_VALID_nchw_float16_all_tensors_as_inputs
     };
     return model;
 }
+
+const auto dummy_test_model_3_H3_W2_VALID_nchw_float16_all_tensors_as_inputs = TestModelManager::get().add("conv2d_v1_2_3_H3_W2_VALID_nchw_float16_all_tensors_as_inputs", get_test_model_3_H3_W2_VALID_nchw_float16_all_tensors_as_inputs());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -51189,9 +52528,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_3_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {9, 12, 15},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -51395,15 +52736,19 @@ const TestModel& get_test_model_3_H3_W2_VALID_nchw_float16_all_tensors_as_inputs
     return model;
 }
 
+const auto dummy_test_model_3_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("conv2d_v1_2_3_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_3_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal());
+
 }  // namespace generated_tests::conv2d_v1_2
 
 namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_3_H3_W2_VALID_nhwc_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-0.295335f, -0.00387601f, -0.552251f, 0.166084f, -0.28482f, -0.152143f, -0.719885f, -0.869386f, -0.745598f, 0.823947f, 0.473183f, -0.331337f, 0.187631f, 0.0426571f, -0.826897f, -0.755085f, -0.472453f, -0.0233656f, 0.0483436f, 0.933418f, -0.961974f, 0.0125783f, 0.219742f, 0.342604f, -0.15166f, 0.0934905f, 0.783221f, 0.129664f, 0.838844f, -0.271388f, 0.924519f, 0.342843f, 0.274418f, 0.350817f, 0.841638f, -0.543993f, -0.00283395f, -0.128467f, -0.682943f, -0.319117f, 0.84634f, 0.283003f, 0.32865f, 0.0293755f, -0.0335696f, 0.591266f, -0.0743476f, -0.741271f, 0.462056f, -0.583625f, -0.590183f, 0.6234f, 0.535269f, -0.670818f, -0.955642f, -0.770173f, 0.479986f, 0.664377f, 0.399445f, -0.968874f, -0.276263f, -0.901951f, 0.544104f, -0.958981f, 0.482658f, -0.807284f, 0.305369f, -0.947818f, 0.827498f, -0.382887f, -0.805741f, -0.796678f, -0.299804f, -0.229828f, 0.818783f, -0.103055f, -0.45568f, -0.227827f, 0.543743f, -0.96073f, 0.946747f, -0.857182f, -0.96426f, -0.292411f, -0.715614f, 0.765278f, -0.475043f, -0.590142f, -0.238507f, 0.673002f, -0.473357f, -0.319626f, 0.936014f, 0.486607f, 0.580844f, 0.425352f, -0.800994f, 0.290763f, -0.494953f, -0.441162f, 0.718677f, -0.828427f, 0.96965f, 7.53637e-05f, -0.699973f, -0.526886f, -0.352682f, 0.799466f, 0.332789f, 0.723389f, 0.407659f, -0.934084f, -0.284705f, 0.961484f, -0.700395f, -0.985808f, -0.595342f, -0.691721f, 0.49448f, -0.0842649f, 0.0390966f, 0.298938f, -0.128094f, -0.97158f, 0.86393f, 0.270606f, -0.468986f, -0.256605f, 0.47215f, -0.273117f, -0.590343f, -0.826529f, -0.725381f, -0.194821f, -0.259661f, -0.0949207f, -0.180302f, 0.0446834f, -0.222133f, -0.40393f, 0.295772f, -0.92949f, 0.580079f, -0.169856f, 0.330311f, 0.0173551f, -0.635823f, 0.475942f, 0.907175f, 0.242777f, -0.512208f, 0.362463f, 0.0496289f, 0.65171f, 0.990057f, 0.690733f, -0.469013f, -0.101311f, -0.68372f, -0.157841f, -0.677711f, -0.708224f, -0.659437f, -0.407607f, 0.677033f, 0.89032f, 0.228307f, -0.749514f, 0.772958f, 0.054701f, 0.551705f, 0.917052f, -0.895022f, -0.702397f, 0.484142f, 0.108648f, 0.833347f, 0.478872f, -0.984112f, 0.387176f, -0.73299f, 0.7526f, 0.443312f, -0.0987856f, 0.125415f, 0.10876f, -0.498108f, 0.43209f, 0.344609f, 0.928941f, -0.130732f, -0.0569167f}),
@@ -51504,6 +52849,8 @@ const TestModel& get_test_model_3_H3_W2_VALID_nhwc_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_3_H3_W2_VALID_nhwc_2 = TestModelManager::get().add("conv2d_v1_2_3_H3_W2_VALID_nhwc_2", get_test_model_3_H3_W2_VALID_nhwc_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -51511,9 +52858,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_3_H3_W2_VALID_nhwc_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {9},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -51648,6 +52997,8 @@ const TestModel& get_test_model_3_H3_W2_VALID_nhwc_all_inputs_as_internal_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_3_H3_W2_VALID_nhwc_all_inputs_as_internal_2 = TestModelManager::get().add("conv2d_v1_2_3_H3_W2_VALID_nhwc_all_inputs_as_internal_2", get_test_model_3_H3_W2_VALID_nhwc_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -51655,9 +53006,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_3_H3_W2_VALID_nhwc_all_tensors_as_inputs_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-0.295335f, -0.00387601f, -0.552251f, 0.166084f, -0.28482f, -0.152143f, -0.719885f, -0.869386f, -0.745598f, 0.823947f, 0.473183f, -0.331337f, 0.187631f, 0.0426571f, -0.826897f, -0.755085f, -0.472453f, -0.0233656f, 0.0483436f, 0.933418f, -0.961974f, 0.0125783f, 0.219742f, 0.342604f, -0.15166f, 0.0934905f, 0.783221f, 0.129664f, 0.838844f, -0.271388f, 0.924519f, 0.342843f, 0.274418f, 0.350817f, 0.841638f, -0.543993f, -0.00283395f, -0.128467f, -0.682943f, -0.319117f, 0.84634f, 0.283003f, 0.32865f, 0.0293755f, -0.0335696f, 0.591266f, -0.0743476f, -0.741271f, 0.462056f, -0.583625f, -0.590183f, 0.6234f, 0.535269f, -0.670818f, -0.955642f, -0.770173f, 0.479986f, 0.664377f, 0.399445f, -0.968874f, -0.276263f, -0.901951f, 0.544104f, -0.958981f, 0.482658f, -0.807284f, 0.305369f, -0.947818f, 0.827498f, -0.382887f, -0.805741f, -0.796678f, -0.299804f, -0.229828f, 0.818783f, -0.103055f, -0.45568f, -0.227827f, 0.543743f, -0.96073f, 0.946747f, -0.857182f, -0.96426f, -0.292411f, -0.715614f, 0.765278f, -0.475043f, -0.590142f, -0.238507f, 0.673002f, -0.473357f, -0.319626f, 0.936014f, 0.486607f, 0.580844f, 0.425352f, -0.800994f, 0.290763f, -0.494953f, -0.441162f, 0.718677f, -0.828427f, 0.96965f, 7.53637e-05f, -0.699973f, -0.526886f, -0.352682f, 0.799466f, 0.332789f, 0.723389f, 0.407659f, -0.934084f, -0.284705f, 0.961484f, -0.700395f, -0.985808f, -0.595342f, -0.691721f, 0.49448f, -0.0842649f, 0.0390966f, 0.298938f, -0.128094f, -0.97158f, 0.86393f, 0.270606f, -0.468986f, -0.256605f, 0.47215f, -0.273117f, -0.590343f, -0.826529f, -0.725381f, -0.194821f, -0.259661f, -0.0949207f, -0.180302f, 0.0446834f, -0.222133f, -0.40393f, 0.295772f, -0.92949f, 0.580079f, -0.169856f, 0.330311f, 0.0173551f, -0.635823f, 0.475942f, 0.907175f, 0.242777f, -0.512208f, 0.362463f, 0.0496289f, 0.65171f, 0.990057f, 0.690733f, -0.469013f, -0.101311f, -0.68372f, -0.157841f, -0.677711f, -0.708224f, -0.659437f, -0.407607f, 0.677033f, 0.89032f, 0.228307f, -0.749514f, 0.772958f, 0.054701f, 0.551705f, 0.917052f, -0.895022f, -0.702397f, 0.484142f, 0.108648f, 0.833347f, 0.478872f, -0.984112f, 0.387176f, -0.73299f, 0.7526f, 0.443312f, -0.0987856f, 0.125415f, 0.10876f, -0.498108f, 0.43209f, 0.344609f, 0.928941f, -0.130732f, -0.0569167f}),
@@ -51758,6 +53111,8 @@ const TestModel& get_test_model_3_H3_W2_VALID_nhwc_all_tensors_as_inputs_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_3_H3_W2_VALID_nhwc_all_tensors_as_inputs_2 = TestModelManager::get().add("conv2d_v1_2_3_H3_W2_VALID_nhwc_all_tensors_as_inputs_2", get_test_model_3_H3_W2_VALID_nhwc_all_tensors_as_inputs_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -51765,9 +53120,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_3_H3_W2_VALID_nhwc_all_tensors_as_inputs_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {9, 12, 15},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -51970,6 +53327,8 @@ const TestModel& get_test_model_3_H3_W2_VALID_nhwc_all_tensors_as_inputs_all_inp
     };
     return model;
 }
+
+const auto dummy_test_model_3_H3_W2_VALID_nhwc_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("conv2d_v1_2_3_H3_W2_VALID_nhwc_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_3_H3_W2_VALID_nhwc_all_tensors_as_inputs_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -51977,9 +53336,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_3_H3_W2_VALID_nhwc_relaxed_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-0.295335f, -0.00387601f, -0.552251f, 0.166084f, -0.28482f, -0.152143f, -0.719885f, -0.869386f, -0.745598f, 0.823947f, 0.473183f, -0.331337f, 0.187631f, 0.0426571f, -0.826897f, -0.755085f, -0.472453f, -0.0233656f, 0.0483436f, 0.933418f, -0.961974f, 0.0125783f, 0.219742f, 0.342604f, -0.15166f, 0.0934905f, 0.783221f, 0.129664f, 0.838844f, -0.271388f, 0.924519f, 0.342843f, 0.274418f, 0.350817f, 0.841638f, -0.543993f, -0.00283395f, -0.128467f, -0.682943f, -0.319117f, 0.84634f, 0.283003f, 0.32865f, 0.0293755f, -0.0335696f, 0.591266f, -0.0743476f, -0.741271f, 0.462056f, -0.583625f, -0.590183f, 0.6234f, 0.535269f, -0.670818f, -0.955642f, -0.770173f, 0.479986f, 0.664377f, 0.399445f, -0.968874f, -0.276263f, -0.901951f, 0.544104f, -0.958981f, 0.482658f, -0.807284f, 0.305369f, -0.947818f, 0.827498f, -0.382887f, -0.805741f, -0.796678f, -0.299804f, -0.229828f, 0.818783f, -0.103055f, -0.45568f, -0.227827f, 0.543743f, -0.96073f, 0.946747f, -0.857182f, -0.96426f, -0.292411f, -0.715614f, 0.765278f, -0.475043f, -0.590142f, -0.238507f, 0.673002f, -0.473357f, -0.319626f, 0.936014f, 0.486607f, 0.580844f, 0.425352f, -0.800994f, 0.290763f, -0.494953f, -0.441162f, 0.718677f, -0.828427f, 0.96965f, 7.53637e-05f, -0.699973f, -0.526886f, -0.352682f, 0.799466f, 0.332789f, 0.723389f, 0.407659f, -0.934084f, -0.284705f, 0.961484f, -0.700395f, -0.985808f, -0.595342f, -0.691721f, 0.49448f, -0.0842649f, 0.0390966f, 0.298938f, -0.128094f, -0.97158f, 0.86393f, 0.270606f, -0.468986f, -0.256605f, 0.47215f, -0.273117f, -0.590343f, -0.826529f, -0.725381f, -0.194821f, -0.259661f, -0.0949207f, -0.180302f, 0.0446834f, -0.222133f, -0.40393f, 0.295772f, -0.92949f, 0.580079f, -0.169856f, 0.330311f, 0.0173551f, -0.635823f, 0.475942f, 0.907175f, 0.242777f, -0.512208f, 0.362463f, 0.0496289f, 0.65171f, 0.990057f, 0.690733f, -0.469013f, -0.101311f, -0.68372f, -0.157841f, -0.677711f, -0.708224f, -0.659437f, -0.407607f, 0.677033f, 0.89032f, 0.228307f, -0.749514f, 0.772958f, 0.054701f, 0.551705f, 0.917052f, -0.895022f, -0.702397f, 0.484142f, 0.108648f, 0.833347f, 0.478872f, -0.984112f, 0.387176f, -0.73299f, 0.7526f, 0.443312f, -0.0987856f, 0.125415f, 0.10876f, -0.498108f, 0.43209f, 0.344609f, 0.928941f, -0.130732f, -0.0569167f}),
@@ -52080,6 +53441,8 @@ const TestModel& get_test_model_3_H3_W2_VALID_nhwc_relaxed_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_3_H3_W2_VALID_nhwc_relaxed_2 = TestModelManager::get().add("conv2d_v1_2_3_H3_W2_VALID_nhwc_relaxed_2", get_test_model_3_H3_W2_VALID_nhwc_relaxed_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -52087,9 +53450,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_3_H3_W2_VALID_nhwc_relaxed_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {9},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -52224,6 +53589,8 @@ const TestModel& get_test_model_3_H3_W2_VALID_nhwc_relaxed_all_inputs_as_interna
     };
     return model;
 }
+
+const auto dummy_test_model_3_H3_W2_VALID_nhwc_relaxed_all_inputs_as_internal_2 = TestModelManager::get().add("conv2d_v1_2_3_H3_W2_VALID_nhwc_relaxed_all_inputs_as_internal_2", get_test_model_3_H3_W2_VALID_nhwc_relaxed_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -52231,9 +53598,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_3_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-0.295335f, -0.00387601f, -0.552251f, 0.166084f, -0.28482f, -0.152143f, -0.719885f, -0.869386f, -0.745598f, 0.823947f, 0.473183f, -0.331337f, 0.187631f, 0.0426571f, -0.826897f, -0.755085f, -0.472453f, -0.0233656f, 0.0483436f, 0.933418f, -0.961974f, 0.0125783f, 0.219742f, 0.342604f, -0.15166f, 0.0934905f, 0.783221f, 0.129664f, 0.838844f, -0.271388f, 0.924519f, 0.342843f, 0.274418f, 0.350817f, 0.841638f, -0.543993f, -0.00283395f, -0.128467f, -0.682943f, -0.319117f, 0.84634f, 0.283003f, 0.32865f, 0.0293755f, -0.0335696f, 0.591266f, -0.0743476f, -0.741271f, 0.462056f, -0.583625f, -0.590183f, 0.6234f, 0.535269f, -0.670818f, -0.955642f, -0.770173f, 0.479986f, 0.664377f, 0.399445f, -0.968874f, -0.276263f, -0.901951f, 0.544104f, -0.958981f, 0.482658f, -0.807284f, 0.305369f, -0.947818f, 0.827498f, -0.382887f, -0.805741f, -0.796678f, -0.299804f, -0.229828f, 0.818783f, -0.103055f, -0.45568f, -0.227827f, 0.543743f, -0.96073f, 0.946747f, -0.857182f, -0.96426f, -0.292411f, -0.715614f, 0.765278f, -0.475043f, -0.590142f, -0.238507f, 0.673002f, -0.473357f, -0.319626f, 0.936014f, 0.486607f, 0.580844f, 0.425352f, -0.800994f, 0.290763f, -0.494953f, -0.441162f, 0.718677f, -0.828427f, 0.96965f, 7.53637e-05f, -0.699973f, -0.526886f, -0.352682f, 0.799466f, 0.332789f, 0.723389f, 0.407659f, -0.934084f, -0.284705f, 0.961484f, -0.700395f, -0.985808f, -0.595342f, -0.691721f, 0.49448f, -0.0842649f, 0.0390966f, 0.298938f, -0.128094f, -0.97158f, 0.86393f, 0.270606f, -0.468986f, -0.256605f, 0.47215f, -0.273117f, -0.590343f, -0.826529f, -0.725381f, -0.194821f, -0.259661f, -0.0949207f, -0.180302f, 0.0446834f, -0.222133f, -0.40393f, 0.295772f, -0.92949f, 0.580079f, -0.169856f, 0.330311f, 0.0173551f, -0.635823f, 0.475942f, 0.907175f, 0.242777f, -0.512208f, 0.362463f, 0.0496289f, 0.65171f, 0.990057f, 0.690733f, -0.469013f, -0.101311f, -0.68372f, -0.157841f, -0.677711f, -0.708224f, -0.659437f, -0.407607f, 0.677033f, 0.89032f, 0.228307f, -0.749514f, 0.772958f, 0.054701f, 0.551705f, 0.917052f, -0.895022f, -0.702397f, 0.484142f, 0.108648f, 0.833347f, 0.478872f, -0.984112f, 0.387176f, -0.73299f, 0.7526f, 0.443312f, -0.0987856f, 0.125415f, 0.10876f, -0.498108f, 0.43209f, 0.344609f, 0.928941f, -0.130732f, -0.0569167f}),
@@ -52334,6 +53703,8 @@ const TestModel& get_test_model_3_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs
     };
     return model;
 }
+
+const auto dummy_test_model_3_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs_2 = TestModelManager::get().add("conv2d_v1_2_3_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs_2", get_test_model_3_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -52341,9 +53712,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_3_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {9, 12, 15},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -52547,15 +53920,19 @@ const TestModel& get_test_model_3_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs
     return model;
 }
 
+const auto dummy_test_model_3_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("conv2d_v1_2_3_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_3_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::conv2d_v1_2
 
 namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_3_H3_W2_VALID_nhwc_float16_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({-0.29533499479293823f, -0.0038760099560022354f, -0.5522509813308716f, 0.16608400642871857f, -0.28481999039649963f, -0.15214300155639648f, -0.719884991645813f, -0.8693860173225403f, -0.7455980181694031f, 0.823947012424469f, 0.4731830060482025f, -0.33133700489997864f, 0.18763099610805511f, 0.04265709966421127f, -0.8268970251083374f, -0.7550849914550781f, -0.4724529981613159f, -0.023365600034594536f, 0.04834359884262085f, 0.9334179759025574f, -0.961974024772644f, 0.012578300200402737f, 0.21974200010299683f, 0.34260401129722595f, -0.1516599953174591f, 0.09349049627780914f, 0.7832210063934326f, 0.12966400384902954f, 0.8388440012931824f, -0.2713879942893982f, 0.9245190024375916f, 0.3428429961204529f, 0.2744179964065552f, 0.3508169949054718f, 0.8416380286216736f, -0.5439929962158203f, -0.002833950100466609f, -0.12846699357032776f, -0.6829429864883423f, -0.31911700963974f, 0.846340000629425f, 0.2830030024051666f, 0.32864999771118164f, 0.029375499114394188f, -0.03356960043311119f, 0.5912659764289856f, -0.0743476003408432f, -0.7412710189819336f, 0.4620560109615326f, -0.5836250185966492f, -0.5901830196380615f, 0.6233999729156494f, 0.535269021987915f, -0.6708179712295532f, -0.9556419849395752f, -0.7701730132102966f, 0.4799860119819641f, 0.664376974105835f, 0.3994449973106384f, -0.9688739776611328f, -0.2762629985809326f, -0.901951014995575f, 0.5441039800643921f, -0.9589809775352478f, 0.4826579988002777f, -0.8072839975357056f, 0.30536898970603943f, -0.9478179812431335f, 0.8274980187416077f, -0.38288700580596924f, -0.805741012096405f, -0.7966780066490173f, -0.2998040020465851f, -0.22982800006866455f, 0.8187829852104187f, -0.10305500030517578f, -0.4556800127029419f, -0.22782699763774872f, 0.5437430143356323f, -0.9607300162315369f, 0.9467470049858093f, -0.8571820259094238f, -0.9642599821090698f, -0.2924109995365143f, -0.7156140208244324f, 0.7652779817581177f, -0.47504299879074097f, -0.590142011642456f, -0.2385070025920868f, 0.6730020046234131f, -0.4733569920063019f, -0.31962600350379944f, 0.9360139966011047f, 0.48660698533058167f, 0.580843985080719f, 0.42535200715065f, -0.8009939789772034f, 0.2907629907131195f, -0.4949530065059662f, -0.44116199016571045f, 0.7186769843101501f, -0.8284270167350769f, 0.9696499705314636f, 7.536369957961142e-05f, -0.6999729871749878f, -0.526885986328125f, -0.3526819944381714f, 0.7994660139083862f, 0.33278900384902954f, 0.7233890295028687f, 0.40765899419784546f, -0.9340839982032776f, -0.2847050130367279f, 0.9614840149879456f, -0.7003949880599976f, -0.9858080148696899f, -0.5953419804573059f, -0.6917210221290588f, 0.4944800138473511f, -0.08426489681005478f, 0.03909660130739212f, 0.29893800616264343f, -0.12809400260448456f, -0.9715800285339355f, 0.8639299869537354f, 0.27060601115226746f, -0.46898600459098816f, -0.25660499930381775f, 0.4721499979496002f, -0.2731170058250427f, -0.5903429985046387f, -0.8265290260314941f, -0.7253810167312622f, -0.19482100009918213f, -0.2596609890460968f, -0.09492070227861404f, -0.1803019940853119f, 0.04468340054154396f, -0.22213299572467804f, -0.40393000841140747f, 0.295771986246109f, -0.9294899702072144f, 0.5800790190696716f, -0.169855996966362f, 0.33031100034713745f, 0.017355099320411682f, -0.6358230113983154f, 0.4759419858455658f, 0.9071750044822693f, 0.2427770048379898f, -0.5122079849243164f, 0.36246299743652344f, 0.04962889850139618f, 0.6517099738121033f, 0.9900569915771484f, 0.690733015537262f, -0.4690130054950714f, -0.10131099820137024f, -0.6837199926376343f, -0.15784099698066711f, -0.677711009979248f, -0.7082239985466003f, -0.6594370007514954f, -0.40760698914527893f, 0.677033007144928f, 0.8903200030326843f, 0.22830699384212494f, -0.7495139837265015f, 0.772957980632782f, 0.054701000452041626f, 0.551705002784729f, 0.9170519709587097f, -0.8950219750404358f, -0.7023969888687134f, 0.484142005443573f, 0.10864800214767456f, 0.8333470225334167f, 0.47887200117111206f, -0.984112024307251f, 0.3871760070323944f, -0.732990026473999f, 0.7526000142097473f, 0.44331198930740356f, -0.09878560155630112f, 0.12541499733924866f, 0.10875999927520752f, -0.49810799956321716f, 0.43209001421928406f, 0.34460899233818054f, 0.928941011428833f, -0.130731999874115f, -0.056916698813438416f}),
@@ -52656,6 +54033,8 @@ const TestModel& get_test_model_3_H3_W2_VALID_nhwc_float16_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_3_H3_W2_VALID_nhwc_float16_2 = TestModelManager::get().add("conv2d_v1_2_3_H3_W2_VALID_nhwc_float16_2", get_test_model_3_H3_W2_VALID_nhwc_float16_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -52663,9 +54042,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_3_H3_W2_VALID_nhwc_float16_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {9},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -52800,6 +54181,8 @@ const TestModel& get_test_model_3_H3_W2_VALID_nhwc_float16_all_inputs_as_interna
     };
     return model;
 }
+
+const auto dummy_test_model_3_H3_W2_VALID_nhwc_float16_all_inputs_as_internal_2 = TestModelManager::get().add("conv2d_v1_2_3_H3_W2_VALID_nhwc_float16_all_inputs_as_internal_2", get_test_model_3_H3_W2_VALID_nhwc_float16_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -52807,9 +54190,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_3_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({-0.29533499479293823f, -0.0038760099560022354f, -0.5522509813308716f, 0.16608400642871857f, -0.28481999039649963f, -0.15214300155639648f, -0.719884991645813f, -0.8693860173225403f, -0.7455980181694031f, 0.823947012424469f, 0.4731830060482025f, -0.33133700489997864f, 0.18763099610805511f, 0.04265709966421127f, -0.8268970251083374f, -0.7550849914550781f, -0.4724529981613159f, -0.023365600034594536f, 0.04834359884262085f, 0.9334179759025574f, -0.961974024772644f, 0.012578300200402737f, 0.21974200010299683f, 0.34260401129722595f, -0.1516599953174591f, 0.09349049627780914f, 0.7832210063934326f, 0.12966400384902954f, 0.8388440012931824f, -0.2713879942893982f, 0.9245190024375916f, 0.3428429961204529f, 0.2744179964065552f, 0.3508169949054718f, 0.8416380286216736f, -0.5439929962158203f, -0.002833950100466609f, -0.12846699357032776f, -0.6829429864883423f, -0.31911700963974f, 0.846340000629425f, 0.2830030024051666f, 0.32864999771118164f, 0.029375499114394188f, -0.03356960043311119f, 0.5912659764289856f, -0.0743476003408432f, -0.7412710189819336f, 0.4620560109615326f, -0.5836250185966492f, -0.5901830196380615f, 0.6233999729156494f, 0.535269021987915f, -0.6708179712295532f, -0.9556419849395752f, -0.7701730132102966f, 0.4799860119819641f, 0.664376974105835f, 0.3994449973106384f, -0.9688739776611328f, -0.2762629985809326f, -0.901951014995575f, 0.5441039800643921f, -0.9589809775352478f, 0.4826579988002777f, -0.8072839975357056f, 0.30536898970603943f, -0.9478179812431335f, 0.8274980187416077f, -0.38288700580596924f, -0.805741012096405f, -0.7966780066490173f, -0.2998040020465851f, -0.22982800006866455f, 0.8187829852104187f, -0.10305500030517578f, -0.4556800127029419f, -0.22782699763774872f, 0.5437430143356323f, -0.9607300162315369f, 0.9467470049858093f, -0.8571820259094238f, -0.9642599821090698f, -0.2924109995365143f, -0.7156140208244324f, 0.7652779817581177f, -0.47504299879074097f, -0.590142011642456f, -0.2385070025920868f, 0.6730020046234131f, -0.4733569920063019f, -0.31962600350379944f, 0.9360139966011047f, 0.48660698533058167f, 0.580843985080719f, 0.42535200715065f, -0.8009939789772034f, 0.2907629907131195f, -0.4949530065059662f, -0.44116199016571045f, 0.7186769843101501f, -0.8284270167350769f, 0.9696499705314636f, 7.536369957961142e-05f, -0.6999729871749878f, -0.526885986328125f, -0.3526819944381714f, 0.7994660139083862f, 0.33278900384902954f, 0.7233890295028687f, 0.40765899419784546f, -0.9340839982032776f, -0.2847050130367279f, 0.9614840149879456f, -0.7003949880599976f, -0.9858080148696899f, -0.5953419804573059f, -0.6917210221290588f, 0.4944800138473511f, -0.08426489681005478f, 0.03909660130739212f, 0.29893800616264343f, -0.12809400260448456f, -0.9715800285339355f, 0.8639299869537354f, 0.27060601115226746f, -0.46898600459098816f, -0.25660499930381775f, 0.4721499979496002f, -0.2731170058250427f, -0.5903429985046387f, -0.8265290260314941f, -0.7253810167312622f, -0.19482100009918213f, -0.2596609890460968f, -0.09492070227861404f, -0.1803019940853119f, 0.04468340054154396f, -0.22213299572467804f, -0.40393000841140747f, 0.295771986246109f, -0.9294899702072144f, 0.5800790190696716f, -0.169855996966362f, 0.33031100034713745f, 0.017355099320411682f, -0.6358230113983154f, 0.4759419858455658f, 0.9071750044822693f, 0.2427770048379898f, -0.5122079849243164f, 0.36246299743652344f, 0.04962889850139618f, 0.6517099738121033f, 0.9900569915771484f, 0.690733015537262f, -0.4690130054950714f, -0.10131099820137024f, -0.6837199926376343f, -0.15784099698066711f, -0.677711009979248f, -0.7082239985466003f, -0.6594370007514954f, -0.40760698914527893f, 0.677033007144928f, 0.8903200030326843f, 0.22830699384212494f, -0.7495139837265015f, 0.772957980632782f, 0.054701000452041626f, 0.551705002784729f, 0.9170519709587097f, -0.8950219750404358f, -0.7023969888687134f, 0.484142005443573f, 0.10864800214767456f, 0.8333470225334167f, 0.47887200117111206f, -0.984112024307251f, 0.3871760070323944f, -0.732990026473999f, 0.7526000142097473f, 0.44331198930740356f, -0.09878560155630112f, 0.12541499733924866f, 0.10875999927520752f, -0.49810799956321716f, 0.43209001421928406f, 0.34460899233818054f, 0.928941011428833f, -0.130731999874115f, -0.056916698813438416f}),
@@ -52910,6 +54295,8 @@ const TestModel& get_test_model_3_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs
     };
     return model;
 }
+
+const auto dummy_test_model_3_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_2 = TestModelManager::get().add("conv2d_v1_2_3_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_2", get_test_model_3_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -52917,9 +54304,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_3_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {9, 12, 15},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -53123,15 +54512,19 @@ const TestModel& get_test_model_3_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs
     return model;
 }
 
+const auto dummy_test_model_3_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("conv2d_v1_2_3_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_3_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::conv2d_v1_2
 
 namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_3_H3_W2_VALID_nchw_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-0.295335f, 0.166084f, -0.719885f, 0.823947f, 0.187631f, -0.755085f, 0.0483436f, 0.0125783f, -0.15166f, 0.129664f, 0.924519f, 0.350817f, -0.00283395f, -0.319117f, 0.32865f, 0.591266f, 0.462056f, 0.6234f, -0.955642f, 0.664377f, -0.276263f, -0.958981f, 0.305369f, -0.382887f, -0.299804f, -0.103055f, 0.543743f, -0.857182f, -0.715614f, -0.590142f, -0.473357f, 0.486607f, -0.800994f, -0.441162f, 0.96965f, -0.526886f, 0.332789f, -0.934084f, -0.700395f, -0.691721f, 0.0390966f, -0.97158f, -0.468986f, -0.273117f, -0.725381f, -0.0949207f, -0.222133f, -0.92949f, 0.330311f, 0.475942f, -0.512208f, 0.65171f, -0.469013f, -0.157841f, -0.659437f, 0.89032f, 0.772958f, 0.917052f, 0.484142f, 0.478872f, -0.73299f, -0.0987856f, -0.498108f, 0.928941f, -0.00387601f, -0.28482f, -0.869386f, 0.473183f, 0.0426571f, -0.472453f, 0.933418f, 0.219742f, 0.0934905f, 0.838844f, 0.342843f, 0.841638f, -0.128467f, 0.84634f, 0.0293755f, -0.0743476f, -0.583625f, 0.535269f, -0.770173f, 0.399445f, -0.901951f, 0.482658f, -0.947818f, -0.805741f, -0.229828f, -0.45568f, -0.96073f, -0.96426f, 0.765278f, -0.238507f, -0.319626f, 0.580844f, 0.290763f, 0.718677f, 7.53637e-05f, -0.352682f, 0.723389f, -0.284705f, -0.985808f, 0.49448f, 0.298938f, 0.86393f, -0.256605f, -0.590343f, -0.194821f, -0.180302f, -0.40393f, 0.580079f, 0.0173551f, 0.907175f, 0.362463f, 0.990057f, -0.101311f, -0.677711f, -0.407607f, 0.228307f, 0.054701f, -0.895022f, 0.108648f, -0.984112f, 0.7526f, 0.125415f, 0.43209f, -0.130732f, -0.552251f, -0.152143f, -0.745598f, -0.331337f, -0.826897f, -0.0233656f, -0.961974f, 0.342604f, 0.783221f, -0.271388f, 0.274418f, -0.543993f, -0.682943f, 0.283003f, -0.0335696f, -0.741271f, -0.590183f, -0.670818f, 0.479986f, -0.968874f, 0.544104f, -0.807284f, 0.827498f, -0.796678f, 0.818783f, -0.227827f, 0.946747f, -0.292411f, -0.475043f, 0.673002f, 0.936014f, 0.425352f, -0.494953f, -0.828427f, -0.699973f, 0.799466f, 0.407659f, 0.961484f, -0.595342f, -0.0842649f, -0.128094f, 0.270606f, 0.47215f, -0.826529f, -0.259661f, 0.0446834f, 0.295772f, -0.169856f, -0.635823f, 0.242777f, 0.0496289f, 0.690733f, -0.68372f, -0.708224f, 0.677033f, -0.749514f, 0.551705f, -0.702397f, 0.833347f, 0.387176f, 0.443312f, 0.10876f, 0.344609f, -0.0569167f}),
@@ -53232,6 +54625,8 @@ const TestModel& get_test_model_3_H3_W2_VALID_nchw_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_3_H3_W2_VALID_nchw_2 = TestModelManager::get().add("conv2d_v1_2_3_H3_W2_VALID_nchw_2", get_test_model_3_H3_W2_VALID_nchw_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -53239,9 +54634,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_3_H3_W2_VALID_nchw_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {9},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -53376,6 +54773,8 @@ const TestModel& get_test_model_3_H3_W2_VALID_nchw_all_inputs_as_internal_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_3_H3_W2_VALID_nchw_all_inputs_as_internal_2 = TestModelManager::get().add("conv2d_v1_2_3_H3_W2_VALID_nchw_all_inputs_as_internal_2", get_test_model_3_H3_W2_VALID_nchw_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -53383,9 +54782,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_3_H3_W2_VALID_nchw_all_tensors_as_inputs_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-0.295335f, 0.166084f, -0.719885f, 0.823947f, 0.187631f, -0.755085f, 0.0483436f, 0.0125783f, -0.15166f, 0.129664f, 0.924519f, 0.350817f, -0.00283395f, -0.319117f, 0.32865f, 0.591266f, 0.462056f, 0.6234f, -0.955642f, 0.664377f, -0.276263f, -0.958981f, 0.305369f, -0.382887f, -0.299804f, -0.103055f, 0.543743f, -0.857182f, -0.715614f, -0.590142f, -0.473357f, 0.486607f, -0.800994f, -0.441162f, 0.96965f, -0.526886f, 0.332789f, -0.934084f, -0.700395f, -0.691721f, 0.0390966f, -0.97158f, -0.468986f, -0.273117f, -0.725381f, -0.0949207f, -0.222133f, -0.92949f, 0.330311f, 0.475942f, -0.512208f, 0.65171f, -0.469013f, -0.157841f, -0.659437f, 0.89032f, 0.772958f, 0.917052f, 0.484142f, 0.478872f, -0.73299f, -0.0987856f, -0.498108f, 0.928941f, -0.00387601f, -0.28482f, -0.869386f, 0.473183f, 0.0426571f, -0.472453f, 0.933418f, 0.219742f, 0.0934905f, 0.838844f, 0.342843f, 0.841638f, -0.128467f, 0.84634f, 0.0293755f, -0.0743476f, -0.583625f, 0.535269f, -0.770173f, 0.399445f, -0.901951f, 0.482658f, -0.947818f, -0.805741f, -0.229828f, -0.45568f, -0.96073f, -0.96426f, 0.765278f, -0.238507f, -0.319626f, 0.580844f, 0.290763f, 0.718677f, 7.53637e-05f, -0.352682f, 0.723389f, -0.284705f, -0.985808f, 0.49448f, 0.298938f, 0.86393f, -0.256605f, -0.590343f, -0.194821f, -0.180302f, -0.40393f, 0.580079f, 0.0173551f, 0.907175f, 0.362463f, 0.990057f, -0.101311f, -0.677711f, -0.407607f, 0.228307f, 0.054701f, -0.895022f, 0.108648f, -0.984112f, 0.7526f, 0.125415f, 0.43209f, -0.130732f, -0.552251f, -0.152143f, -0.745598f, -0.331337f, -0.826897f, -0.0233656f, -0.961974f, 0.342604f, 0.783221f, -0.271388f, 0.274418f, -0.543993f, -0.682943f, 0.283003f, -0.0335696f, -0.741271f, -0.590183f, -0.670818f, 0.479986f, -0.968874f, 0.544104f, -0.807284f, 0.827498f, -0.796678f, 0.818783f, -0.227827f, 0.946747f, -0.292411f, -0.475043f, 0.673002f, 0.936014f, 0.425352f, -0.494953f, -0.828427f, -0.699973f, 0.799466f, 0.407659f, 0.961484f, -0.595342f, -0.0842649f, -0.128094f, 0.270606f, 0.47215f, -0.826529f, -0.259661f, 0.0446834f, 0.295772f, -0.169856f, -0.635823f, 0.242777f, 0.0496289f, 0.690733f, -0.68372f, -0.708224f, 0.677033f, -0.749514f, 0.551705f, -0.702397f, 0.833347f, 0.387176f, 0.443312f, 0.10876f, 0.344609f, -0.0569167f}),
@@ -53486,6 +54887,8 @@ const TestModel& get_test_model_3_H3_W2_VALID_nchw_all_tensors_as_inputs_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_3_H3_W2_VALID_nchw_all_tensors_as_inputs_2 = TestModelManager::get().add("conv2d_v1_2_3_H3_W2_VALID_nchw_all_tensors_as_inputs_2", get_test_model_3_H3_W2_VALID_nchw_all_tensors_as_inputs_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -53493,9 +54896,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_3_H3_W2_VALID_nchw_all_tensors_as_inputs_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {9, 12, 15},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -53698,6 +55103,8 @@ const TestModel& get_test_model_3_H3_W2_VALID_nchw_all_tensors_as_inputs_all_inp
     };
     return model;
 }
+
+const auto dummy_test_model_3_H3_W2_VALID_nchw_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("conv2d_v1_2_3_H3_W2_VALID_nchw_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_3_H3_W2_VALID_nchw_all_tensors_as_inputs_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -53705,9 +55112,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_3_H3_W2_VALID_nchw_relaxed_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-0.295335f, 0.166084f, -0.719885f, 0.823947f, 0.187631f, -0.755085f, 0.0483436f, 0.0125783f, -0.15166f, 0.129664f, 0.924519f, 0.350817f, -0.00283395f, -0.319117f, 0.32865f, 0.591266f, 0.462056f, 0.6234f, -0.955642f, 0.664377f, -0.276263f, -0.958981f, 0.305369f, -0.382887f, -0.299804f, -0.103055f, 0.543743f, -0.857182f, -0.715614f, -0.590142f, -0.473357f, 0.486607f, -0.800994f, -0.441162f, 0.96965f, -0.526886f, 0.332789f, -0.934084f, -0.700395f, -0.691721f, 0.0390966f, -0.97158f, -0.468986f, -0.273117f, -0.725381f, -0.0949207f, -0.222133f, -0.92949f, 0.330311f, 0.475942f, -0.512208f, 0.65171f, -0.469013f, -0.157841f, -0.659437f, 0.89032f, 0.772958f, 0.917052f, 0.484142f, 0.478872f, -0.73299f, -0.0987856f, -0.498108f, 0.928941f, -0.00387601f, -0.28482f, -0.869386f, 0.473183f, 0.0426571f, -0.472453f, 0.933418f, 0.219742f, 0.0934905f, 0.838844f, 0.342843f, 0.841638f, -0.128467f, 0.84634f, 0.0293755f, -0.0743476f, -0.583625f, 0.535269f, -0.770173f, 0.399445f, -0.901951f, 0.482658f, -0.947818f, -0.805741f, -0.229828f, -0.45568f, -0.96073f, -0.96426f, 0.765278f, -0.238507f, -0.319626f, 0.580844f, 0.290763f, 0.718677f, 7.53637e-05f, -0.352682f, 0.723389f, -0.284705f, -0.985808f, 0.49448f, 0.298938f, 0.86393f, -0.256605f, -0.590343f, -0.194821f, -0.180302f, -0.40393f, 0.580079f, 0.0173551f, 0.907175f, 0.362463f, 0.990057f, -0.101311f, -0.677711f, -0.407607f, 0.228307f, 0.054701f, -0.895022f, 0.108648f, -0.984112f, 0.7526f, 0.125415f, 0.43209f, -0.130732f, -0.552251f, -0.152143f, -0.745598f, -0.331337f, -0.826897f, -0.0233656f, -0.961974f, 0.342604f, 0.783221f, -0.271388f, 0.274418f, -0.543993f, -0.682943f, 0.283003f, -0.0335696f, -0.741271f, -0.590183f, -0.670818f, 0.479986f, -0.968874f, 0.544104f, -0.807284f, 0.827498f, -0.796678f, 0.818783f, -0.227827f, 0.946747f, -0.292411f, -0.475043f, 0.673002f, 0.936014f, 0.425352f, -0.494953f, -0.828427f, -0.699973f, 0.799466f, 0.407659f, 0.961484f, -0.595342f, -0.0842649f, -0.128094f, 0.270606f, 0.47215f, -0.826529f, -0.259661f, 0.0446834f, 0.295772f, -0.169856f, -0.635823f, 0.242777f, 0.0496289f, 0.690733f, -0.68372f, -0.708224f, 0.677033f, -0.749514f, 0.551705f, -0.702397f, 0.833347f, 0.387176f, 0.443312f, 0.10876f, 0.344609f, -0.0569167f}),
@@ -53808,6 +55217,8 @@ const TestModel& get_test_model_3_H3_W2_VALID_nchw_relaxed_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_3_H3_W2_VALID_nchw_relaxed_2 = TestModelManager::get().add("conv2d_v1_2_3_H3_W2_VALID_nchw_relaxed_2", get_test_model_3_H3_W2_VALID_nchw_relaxed_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -53815,9 +55226,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_3_H3_W2_VALID_nchw_relaxed_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {9},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -53952,6 +55365,8 @@ const TestModel& get_test_model_3_H3_W2_VALID_nchw_relaxed_all_inputs_as_interna
     };
     return model;
 }
+
+const auto dummy_test_model_3_H3_W2_VALID_nchw_relaxed_all_inputs_as_internal_2 = TestModelManager::get().add("conv2d_v1_2_3_H3_W2_VALID_nchw_relaxed_all_inputs_as_internal_2", get_test_model_3_H3_W2_VALID_nchw_relaxed_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -53959,9 +55374,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_3_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-0.295335f, 0.166084f, -0.719885f, 0.823947f, 0.187631f, -0.755085f, 0.0483436f, 0.0125783f, -0.15166f, 0.129664f, 0.924519f, 0.350817f, -0.00283395f, -0.319117f, 0.32865f, 0.591266f, 0.462056f, 0.6234f, -0.955642f, 0.664377f, -0.276263f, -0.958981f, 0.305369f, -0.382887f, -0.299804f, -0.103055f, 0.543743f, -0.857182f, -0.715614f, -0.590142f, -0.473357f, 0.486607f, -0.800994f, -0.441162f, 0.96965f, -0.526886f, 0.332789f, -0.934084f, -0.700395f, -0.691721f, 0.0390966f, -0.97158f, -0.468986f, -0.273117f, -0.725381f, -0.0949207f, -0.222133f, -0.92949f, 0.330311f, 0.475942f, -0.512208f, 0.65171f, -0.469013f, -0.157841f, -0.659437f, 0.89032f, 0.772958f, 0.917052f, 0.484142f, 0.478872f, -0.73299f, -0.0987856f, -0.498108f, 0.928941f, -0.00387601f, -0.28482f, -0.869386f, 0.473183f, 0.0426571f, -0.472453f, 0.933418f, 0.219742f, 0.0934905f, 0.838844f, 0.342843f, 0.841638f, -0.128467f, 0.84634f, 0.0293755f, -0.0743476f, -0.583625f, 0.535269f, -0.770173f, 0.399445f, -0.901951f, 0.482658f, -0.947818f, -0.805741f, -0.229828f, -0.45568f, -0.96073f, -0.96426f, 0.765278f, -0.238507f, -0.319626f, 0.580844f, 0.290763f, 0.718677f, 7.53637e-05f, -0.352682f, 0.723389f, -0.284705f, -0.985808f, 0.49448f, 0.298938f, 0.86393f, -0.256605f, -0.590343f, -0.194821f, -0.180302f, -0.40393f, 0.580079f, 0.0173551f, 0.907175f, 0.362463f, 0.990057f, -0.101311f, -0.677711f, -0.407607f, 0.228307f, 0.054701f, -0.895022f, 0.108648f, -0.984112f, 0.7526f, 0.125415f, 0.43209f, -0.130732f, -0.552251f, -0.152143f, -0.745598f, -0.331337f, -0.826897f, -0.0233656f, -0.961974f, 0.342604f, 0.783221f, -0.271388f, 0.274418f, -0.543993f, -0.682943f, 0.283003f, -0.0335696f, -0.741271f, -0.590183f, -0.670818f, 0.479986f, -0.968874f, 0.544104f, -0.807284f, 0.827498f, -0.796678f, 0.818783f, -0.227827f, 0.946747f, -0.292411f, -0.475043f, 0.673002f, 0.936014f, 0.425352f, -0.494953f, -0.828427f, -0.699973f, 0.799466f, 0.407659f, 0.961484f, -0.595342f, -0.0842649f, -0.128094f, 0.270606f, 0.47215f, -0.826529f, -0.259661f, 0.0446834f, 0.295772f, -0.169856f, -0.635823f, 0.242777f, 0.0496289f, 0.690733f, -0.68372f, -0.708224f, 0.677033f, -0.749514f, 0.551705f, -0.702397f, 0.833347f, 0.387176f, 0.443312f, 0.10876f, 0.344609f, -0.0569167f}),
@@ -54062,6 +55479,8 @@ const TestModel& get_test_model_3_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs
     };
     return model;
 }
+
+const auto dummy_test_model_3_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs_2 = TestModelManager::get().add("conv2d_v1_2_3_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs_2", get_test_model_3_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -54069,9 +55488,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_3_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {9, 12, 15},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -54275,15 +55696,19 @@ const TestModel& get_test_model_3_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs
     return model;
 }
 
+const auto dummy_test_model_3_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("conv2d_v1_2_3_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_3_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::conv2d_v1_2
 
 namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_3_H3_W2_VALID_nchw_float16_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({-0.29533499479293823f, 0.16608400642871857f, -0.719884991645813f, 0.823947012424469f, 0.18763099610805511f, -0.7550849914550781f, 0.04834359884262085f, 0.012578300200402737f, -0.1516599953174591f, 0.12966400384902954f, 0.9245190024375916f, 0.3508169949054718f, -0.002833950100466609f, -0.31911700963974f, 0.32864999771118164f, 0.5912659764289856f, 0.4620560109615326f, 0.6233999729156494f, -0.9556419849395752f, 0.664376974105835f, -0.2762629985809326f, -0.9589809775352478f, 0.30536898970603943f, -0.38288700580596924f, -0.2998040020465851f, -0.10305500030517578f, 0.5437430143356323f, -0.8571820259094238f, -0.7156140208244324f, -0.590142011642456f, -0.4733569920063019f, 0.48660698533058167f, -0.8009939789772034f, -0.44116199016571045f, 0.9696499705314636f, -0.526885986328125f, 0.33278900384902954f, -0.9340839982032776f, -0.7003949880599976f, -0.6917210221290588f, 0.03909660130739212f, -0.9715800285339355f, -0.46898600459098816f, -0.2731170058250427f, -0.7253810167312622f, -0.09492070227861404f, -0.22213299572467804f, -0.9294899702072144f, 0.33031100034713745f, 0.4759419858455658f, -0.5122079849243164f, 0.6517099738121033f, -0.4690130054950714f, -0.15784099698066711f, -0.6594370007514954f, 0.8903200030326843f, 0.772957980632782f, 0.9170519709587097f, 0.484142005443573f, 0.47887200117111206f, -0.732990026473999f, -0.09878560155630112f, -0.49810799956321716f, 0.928941011428833f, -0.0038760099560022354f, -0.28481999039649963f, -0.8693860173225403f, 0.4731830060482025f, 0.04265709966421127f, -0.4724529981613159f, 0.9334179759025574f, 0.21974200010299683f, 0.09349049627780914f, 0.8388440012931824f, 0.3428429961204529f, 0.8416380286216736f, -0.12846699357032776f, 0.846340000629425f, 0.029375499114394188f, -0.0743476003408432f, -0.5836250185966492f, 0.535269021987915f, -0.7701730132102966f, 0.3994449973106384f, -0.901951014995575f, 0.4826579988002777f, -0.9478179812431335f, -0.805741012096405f, -0.22982800006866455f, -0.4556800127029419f, -0.9607300162315369f, -0.9642599821090698f, 0.7652779817581177f, -0.2385070025920868f, -0.31962600350379944f, 0.580843985080719f, 0.2907629907131195f, 0.7186769843101501f, 7.536369957961142e-05f, -0.3526819944381714f, 0.7233890295028687f, -0.2847050130367279f, -0.9858080148696899f, 0.4944800138473511f, 0.29893800616264343f, 0.8639299869537354f, -0.25660499930381775f, -0.5903429985046387f, -0.19482100009918213f, -0.1803019940853119f, -0.40393000841140747f, 0.5800790190696716f, 0.017355099320411682f, 0.9071750044822693f, 0.36246299743652344f, 0.9900569915771484f, -0.10131099820137024f, -0.677711009979248f, -0.40760698914527893f, 0.22830699384212494f, 0.054701000452041626f, -0.8950219750404358f, 0.10864800214767456f, -0.984112024307251f, 0.7526000142097473f, 0.12541499733924866f, 0.43209001421928406f, -0.130731999874115f, -0.5522509813308716f, -0.15214300155639648f, -0.7455980181694031f, -0.33133700489997864f, -0.8268970251083374f, -0.023365600034594536f, -0.961974024772644f, 0.34260401129722595f, 0.7832210063934326f, -0.2713879942893982f, 0.2744179964065552f, -0.5439929962158203f, -0.6829429864883423f, 0.2830030024051666f, -0.03356960043311119f, -0.7412710189819336f, -0.5901830196380615f, -0.6708179712295532f, 0.4799860119819641f, -0.9688739776611328f, 0.5441039800643921f, -0.8072839975357056f, 0.8274980187416077f, -0.7966780066490173f, 0.8187829852104187f, -0.22782699763774872f, 0.9467470049858093f, -0.2924109995365143f, -0.47504299879074097f, 0.6730020046234131f, 0.9360139966011047f, 0.42535200715065f, -0.4949530065059662f, -0.8284270167350769f, -0.6999729871749878f, 0.7994660139083862f, 0.40765899419784546f, 0.9614840149879456f, -0.5953419804573059f, -0.08426489681005478f, -0.12809400260448456f, 0.27060601115226746f, 0.4721499979496002f, -0.8265290260314941f, -0.2596609890460968f, 0.04468340054154396f, 0.295771986246109f, -0.169855996966362f, -0.6358230113983154f, 0.2427770048379898f, 0.04962889850139618f, 0.690733015537262f, -0.6837199926376343f, -0.7082239985466003f, 0.677033007144928f, -0.7495139837265015f, 0.551705002784729f, -0.7023969888687134f, 0.8333470225334167f, 0.3871760070323944f, 0.44331198930740356f, 0.10875999927520752f, 0.34460899233818054f, -0.056916698813438416f}),
@@ -54385,15 +55810,19 @@ const TestModel& get_test_model_3_H3_W2_VALID_nchw_float16_2() {
     return model;
 }
 
+const auto dummy_test_model_3_H3_W2_VALID_nchw_float16_2 = TestModelManager::get().add("conv2d_v1_2_3_H3_W2_VALID_nchw_float16_2", get_test_model_3_H3_W2_VALID_nchw_float16_2());
+
 }  // namespace generated_tests::conv2d_v1_2
 
 namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_3_H3_W2_VALID_nchw_float16_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {9},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -54529,15 +55958,19 @@ const TestModel& get_test_model_3_H3_W2_VALID_nchw_float16_all_inputs_as_interna
     return model;
 }
 
+const auto dummy_test_model_3_H3_W2_VALID_nchw_float16_all_inputs_as_internal_2 = TestModelManager::get().add("conv2d_v1_2_3_H3_W2_VALID_nchw_float16_all_inputs_as_internal_2", get_test_model_3_H3_W2_VALID_nchw_float16_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::conv2d_v1_2
 
 namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_3_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({-0.29533499479293823f, 0.16608400642871857f, -0.719884991645813f, 0.823947012424469f, 0.18763099610805511f, -0.7550849914550781f, 0.04834359884262085f, 0.012578300200402737f, -0.1516599953174591f, 0.12966400384902954f, 0.9245190024375916f, 0.3508169949054718f, -0.002833950100466609f, -0.31911700963974f, 0.32864999771118164f, 0.5912659764289856f, 0.4620560109615326f, 0.6233999729156494f, -0.9556419849395752f, 0.664376974105835f, -0.2762629985809326f, -0.9589809775352478f, 0.30536898970603943f, -0.38288700580596924f, -0.2998040020465851f, -0.10305500030517578f, 0.5437430143356323f, -0.8571820259094238f, -0.7156140208244324f, -0.590142011642456f, -0.4733569920063019f, 0.48660698533058167f, -0.8009939789772034f, -0.44116199016571045f, 0.9696499705314636f, -0.526885986328125f, 0.33278900384902954f, -0.9340839982032776f, -0.7003949880599976f, -0.6917210221290588f, 0.03909660130739212f, -0.9715800285339355f, -0.46898600459098816f, -0.2731170058250427f, -0.7253810167312622f, -0.09492070227861404f, -0.22213299572467804f, -0.9294899702072144f, 0.33031100034713745f, 0.4759419858455658f, -0.5122079849243164f, 0.6517099738121033f, -0.4690130054950714f, -0.15784099698066711f, -0.6594370007514954f, 0.8903200030326843f, 0.772957980632782f, 0.9170519709587097f, 0.484142005443573f, 0.47887200117111206f, -0.732990026473999f, -0.09878560155630112f, -0.49810799956321716f, 0.928941011428833f, -0.0038760099560022354f, -0.28481999039649963f, -0.8693860173225403f, 0.4731830060482025f, 0.04265709966421127f, -0.4724529981613159f, 0.9334179759025574f, 0.21974200010299683f, 0.09349049627780914f, 0.8388440012931824f, 0.3428429961204529f, 0.8416380286216736f, -0.12846699357032776f, 0.846340000629425f, 0.029375499114394188f, -0.0743476003408432f, -0.5836250185966492f, 0.535269021987915f, -0.7701730132102966f, 0.3994449973106384f, -0.901951014995575f, 0.4826579988002777f, -0.9478179812431335f, -0.805741012096405f, -0.22982800006866455f, -0.4556800127029419f, -0.9607300162315369f, -0.9642599821090698f, 0.7652779817581177f, -0.2385070025920868f, -0.31962600350379944f, 0.580843985080719f, 0.2907629907131195f, 0.7186769843101501f, 7.536369957961142e-05f, -0.3526819944381714f, 0.7233890295028687f, -0.2847050130367279f, -0.9858080148696899f, 0.4944800138473511f, 0.29893800616264343f, 0.8639299869537354f, -0.25660499930381775f, -0.5903429985046387f, -0.19482100009918213f, -0.1803019940853119f, -0.40393000841140747f, 0.5800790190696716f, 0.017355099320411682f, 0.9071750044822693f, 0.36246299743652344f, 0.9900569915771484f, -0.10131099820137024f, -0.677711009979248f, -0.40760698914527893f, 0.22830699384212494f, 0.054701000452041626f, -0.8950219750404358f, 0.10864800214767456f, -0.984112024307251f, 0.7526000142097473f, 0.12541499733924866f, 0.43209001421928406f, -0.130731999874115f, -0.5522509813308716f, -0.15214300155639648f, -0.7455980181694031f, -0.33133700489997864f, -0.8268970251083374f, -0.023365600034594536f, -0.961974024772644f, 0.34260401129722595f, 0.7832210063934326f, -0.2713879942893982f, 0.2744179964065552f, -0.5439929962158203f, -0.6829429864883423f, 0.2830030024051666f, -0.03356960043311119f, -0.7412710189819336f, -0.5901830196380615f, -0.6708179712295532f, 0.4799860119819641f, -0.9688739776611328f, 0.5441039800643921f, -0.8072839975357056f, 0.8274980187416077f, -0.7966780066490173f, 0.8187829852104187f, -0.22782699763774872f, 0.9467470049858093f, -0.2924109995365143f, -0.47504299879074097f, 0.6730020046234131f, 0.9360139966011047f, 0.42535200715065f, -0.4949530065059662f, -0.8284270167350769f, -0.6999729871749878f, 0.7994660139083862f, 0.40765899419784546f, 0.9614840149879456f, -0.5953419804573059f, -0.08426489681005478f, -0.12809400260448456f, 0.27060601115226746f, 0.4721499979496002f, -0.8265290260314941f, -0.2596609890460968f, 0.04468340054154396f, 0.295771986246109f, -0.169855996966362f, -0.6358230113983154f, 0.2427770048379898f, 0.04962889850139618f, 0.690733015537262f, -0.6837199926376343f, -0.7082239985466003f, 0.677033007144928f, -0.7495139837265015f, 0.551705002784729f, -0.7023969888687134f, 0.8333470225334167f, 0.3871760070323944f, 0.44331198930740356f, 0.10875999927520752f, 0.34460899233818054f, -0.056916698813438416f}),
@@ -54639,15 +56072,19 @@ const TestModel& get_test_model_3_H3_W2_VALID_nchw_float16_all_tensors_as_inputs
     return model;
 }
 
+const auto dummy_test_model_3_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_2 = TestModelManager::get().add("conv2d_v1_2_3_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_2", get_test_model_3_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_2());
+
 }  // namespace generated_tests::conv2d_v1_2
 
 namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_3_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {9, 12, 15},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -54851,15 +56288,19 @@ const TestModel& get_test_model_3_H3_W2_VALID_nchw_float16_all_tensors_as_inputs
     return model;
 }
 
+const auto dummy_test_model_3_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("conv2d_v1_2_3_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_3_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::conv2d_v1_2
 
 namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_quant_output_multiplier_gt_1() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({129, 129, 129, 129, 130, 130, 130, 130, 129, 130, 131, 132, 129, 130, 131, 132}),
@@ -54950,6 +56391,8 @@ const TestModel& get_test_model_quant_output_multiplier_gt_1() {
     };
     return model;
 }
+
+const auto dummy_test_model_quant_output_multiplier_gt_1 = TestModelManager::get().add("conv2d_v1_2_quant_output_multiplier_gt_1", get_test_model_quant_output_multiplier_gt_1());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -54957,9 +56400,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_quant_output_multiplier_gt_1_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {8},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -55084,6 +56529,8 @@ const TestModel& get_test_model_quant_output_multiplier_gt_1_all_inputs_as_inter
     };
     return model;
 }
+
+const auto dummy_test_model_quant_output_multiplier_gt_1_all_inputs_as_internal = TestModelManager::get().add("conv2d_v1_2_quant_output_multiplier_gt_1_all_inputs_as_internal", get_test_model_quant_output_multiplier_gt_1_all_inputs_as_internal());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -55091,9 +56538,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_quant_output_multiplier_gt_1_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({129, 129, 129, 129, 130, 130, 130, 130, 129, 130, 131, 132, 129, 130, 131, 132}),
@@ -55184,6 +56633,8 @@ const TestModel& get_test_model_quant_output_multiplier_gt_1_all_tensors_as_inpu
     };
     return model;
 }
+
+const auto dummy_test_model_quant_output_multiplier_gt_1_all_tensors_as_inputs = TestModelManager::get().add("conv2d_v1_2_quant_output_multiplier_gt_1_all_tensors_as_inputs", get_test_model_quant_output_multiplier_gt_1_all_tensors_as_inputs());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -55191,9 +56642,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_quant_output_multiplier_gt_1_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {2, 8, 11},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -55352,6 +56805,8 @@ const TestModel& get_test_model_quant_output_multiplier_gt_1_all_tensors_as_inpu
     };
     return model;
 }
+
+const auto dummy_test_model_quant_output_multiplier_gt_1_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("conv2d_v1_2_quant_output_multiplier_gt_1_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_quant_output_multiplier_gt_1_all_tensors_as_inputs_all_inputs_as_internal());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -55359,9 +56814,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_quant_output_multiplier_gt_1_relaxed() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({129, 129, 129, 129, 130, 130, 130, 130, 129, 130, 131, 132, 129, 130, 131, 132}),
@@ -55453,15 +56910,19 @@ const TestModel& get_test_model_quant_output_multiplier_gt_1_relaxed() {
     return model;
 }
 
+const auto dummy_test_model_quant_output_multiplier_gt_1_relaxed = TestModelManager::get().add("conv2d_v1_2_quant_output_multiplier_gt_1_relaxed", get_test_model_quant_output_multiplier_gt_1_relaxed());
+
 }  // namespace generated_tests::conv2d_v1_2
 
 namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_quant_output_multiplier_gt_1_relaxed_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {8},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -55587,15 +57048,19 @@ const TestModel& get_test_model_quant_output_multiplier_gt_1_relaxed_all_inputs_
     return model;
 }
 
+const auto dummy_test_model_quant_output_multiplier_gt_1_relaxed_all_inputs_as_internal = TestModelManager::get().add("conv2d_v1_2_quant_output_multiplier_gt_1_relaxed_all_inputs_as_internal", get_test_model_quant_output_multiplier_gt_1_relaxed_all_inputs_as_internal());
+
 }  // namespace generated_tests::conv2d_v1_2
 
 namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_quant_output_multiplier_gt_1_relaxed_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({129, 129, 129, 129, 130, 130, 130, 130, 129, 130, 131, 132, 129, 130, 131, 132}),
@@ -55687,15 +57152,19 @@ const TestModel& get_test_model_quant_output_multiplier_gt_1_relaxed_all_tensors
     return model;
 }
 
+const auto dummy_test_model_quant_output_multiplier_gt_1_relaxed_all_tensors_as_inputs = TestModelManager::get().add("conv2d_v1_2_quant_output_multiplier_gt_1_relaxed_all_tensors_as_inputs", get_test_model_quant_output_multiplier_gt_1_relaxed_all_tensors_as_inputs());
+
 }  // namespace generated_tests::conv2d_v1_2
 
 namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_quant_output_multiplier_gt_1_relaxed_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {2, 8, 11},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -55855,15 +57324,19 @@ const TestModel& get_test_model_quant_output_multiplier_gt_1_relaxed_all_tensors
     return model;
 }
 
+const auto dummy_test_model_quant_output_multiplier_gt_1_relaxed_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("conv2d_v1_2_quant_output_multiplier_gt_1_relaxed_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_quant_output_multiplier_gt_1_relaxed_all_tensors_as_inputs_all_inputs_as_internal());
+
 }  // namespace generated_tests::conv2d_v1_2
 
 namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_zero_sized_nhwc() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({0.9f, 0.1f}),
@@ -56202,6 +57675,8 @@ const TestModel& get_test_model_zero_sized_nhwc() {
     };
     return model;
 }
+
+const auto dummy_test_model_zero_sized_nhwc = TestModelManager::get().add("conv2d_v1_2_zero_sized_nhwc", get_test_model_zero_sized_nhwc());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -56209,9 +57684,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_zero_sized_nhwc_relaxed() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({0.9f, 0.1f}),
@@ -56550,6 +58027,8 @@ const TestModel& get_test_model_zero_sized_nhwc_relaxed() {
     };
     return model;
 }
+
+const auto dummy_test_model_zero_sized_nhwc_relaxed = TestModelManager::get().add("conv2d_v1_2_zero_sized_nhwc_relaxed", get_test_model_zero_sized_nhwc_relaxed());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -56557,9 +58036,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_zero_sized_nhwc_quant8() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({137, 129}),
@@ -56898,6 +58379,8 @@ const TestModel& get_test_model_zero_sized_nhwc_quant8() {
     };
     return model;
 }
+
+const auto dummy_test_model_zero_sized_nhwc_quant8 = TestModelManager::get().add("conv2d_v1_2_zero_sized_nhwc_quant8", get_test_model_zero_sized_nhwc_quant8());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -56905,9 +58388,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_zero_sized_nhwc_float16() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({0.8999999761581421f, 0.10000000149011612f}),
@@ -57246,6 +58731,8 @@ const TestModel& get_test_model_zero_sized_nhwc_float16() {
     };
     return model;
 }
+
+const auto dummy_test_model_zero_sized_nhwc_float16 = TestModelManager::get().add("conv2d_v1_2_zero_sized_nhwc_float16", get_test_model_zero_sized_nhwc_float16());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -57253,9 +58740,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_zero_sized_nchw() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({0.9f, 0.1f}),
@@ -57594,6 +59083,8 @@ const TestModel& get_test_model_zero_sized_nchw() {
     };
     return model;
 }
+
+const auto dummy_test_model_zero_sized_nchw = TestModelManager::get().add("conv2d_v1_2_zero_sized_nchw", get_test_model_zero_sized_nchw());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -57601,9 +59092,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_zero_sized_nchw_relaxed() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({0.9f, 0.1f}),
@@ -57942,6 +59435,8 @@ const TestModel& get_test_model_zero_sized_nchw_relaxed() {
     };
     return model;
 }
+
+const auto dummy_test_model_zero_sized_nchw_relaxed = TestModelManager::get().add("conv2d_v1_2_zero_sized_nchw_relaxed", get_test_model_zero_sized_nchw_relaxed());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -57949,9 +59444,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_zero_sized_nchw_quant8() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({137, 129}),
@@ -58290,6 +59787,8 @@ const TestModel& get_test_model_zero_sized_nchw_quant8() {
     };
     return model;
 }
+
+const auto dummy_test_model_zero_sized_nchw_quant8 = TestModelManager::get().add("conv2d_v1_2_zero_sized_nchw_quant8", get_test_model_zero_sized_nchw_quant8());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -58297,9 +59796,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_zero_sized_nchw_float16() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({0.8999999761581421f, 0.10000000149011612f}),
@@ -58639,15 +60140,19 @@ const TestModel& get_test_model_zero_sized_nchw_float16() {
     return model;
 }
 
+const auto dummy_test_model_zero_sized_nchw_float16 = TestModelManager::get().add("conv2d_v1_2_zero_sized_nchw_float16", get_test_model_zero_sized_nchw_float16());
+
 }  // namespace generated_tests::conv2d_v1_2
 
 namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_zero_sized_nhwc_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({0.9f, 0.1f}),
@@ -58956,6 +60461,8 @@ const TestModel& get_test_model_zero_sized_nhwc_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_zero_sized_nhwc_2 = TestModelManager::get().add("conv2d_v1_2_zero_sized_nhwc_2", get_test_model_zero_sized_nhwc_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -58963,9 +60470,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_zero_sized_nhwc_relaxed_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({0.9f, 0.1f}),
@@ -59274,6 +60783,8 @@ const TestModel& get_test_model_zero_sized_nhwc_relaxed_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_zero_sized_nhwc_relaxed_2 = TestModelManager::get().add("conv2d_v1_2_zero_sized_nhwc_relaxed_2", get_test_model_zero_sized_nhwc_relaxed_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -59281,9 +60792,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_zero_sized_nhwc_quant8_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({137, 129}),
@@ -59592,6 +61105,8 @@ const TestModel& get_test_model_zero_sized_nhwc_quant8_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_zero_sized_nhwc_quant8_2 = TestModelManager::get().add("conv2d_v1_2_zero_sized_nhwc_quant8_2", get_test_model_zero_sized_nhwc_quant8_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -59599,9 +61114,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_zero_sized_nhwc_float16_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({0.8999999761581421f, 0.10000000149011612f}),
@@ -59911,15 +61428,19 @@ const TestModel& get_test_model_zero_sized_nhwc_float16_2() {
     return model;
 }
 
+const auto dummy_test_model_zero_sized_nhwc_float16_2 = TestModelManager::get().add("conv2d_v1_2_zero_sized_nhwc_float16_2", get_test_model_zero_sized_nhwc_float16_2());
+
 }  // namespace generated_tests::conv2d_v1_2
 
 namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_zero_sized_nchw_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({0.9f, 0.1f}),
@@ -60228,6 +61749,8 @@ const TestModel& get_test_model_zero_sized_nchw_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_zero_sized_nchw_2 = TestModelManager::get().add("conv2d_v1_2_zero_sized_nchw_2", get_test_model_zero_sized_nchw_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 
@@ -60235,9 +61758,11 @@ namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_zero_sized_nchw_relaxed_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({0.9f, 0.1f}),
@@ -60547,15 +62072,19 @@ const TestModel& get_test_model_zero_sized_nchw_relaxed_2() {
     return model;
 }
 
+const auto dummy_test_model_zero_sized_nchw_relaxed_2 = TestModelManager::get().add("conv2d_v1_2_zero_sized_nchw_relaxed_2", get_test_model_zero_sized_nchw_relaxed_2());
+
 }  // namespace generated_tests::conv2d_v1_2
 
 namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_zero_sized_nchw_quant8_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({137, 129}),
@@ -60865,15 +62394,19 @@ const TestModel& get_test_model_zero_sized_nchw_quant8_2() {
     return model;
 }
 
+const auto dummy_test_model_zero_sized_nchw_quant8_2 = TestModelManager::get().add("conv2d_v1_2_zero_sized_nchw_quant8_2", get_test_model_zero_sized_nchw_quant8_2());
+
 }  // namespace generated_tests::conv2d_v1_2
 
 namespace generated_tests::conv2d_v1_2 {
 
 const TestModel& get_test_model_zero_sized_nchw_float16_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({0.8999999761581421f, 0.10000000149011612f}),
@@ -61182,6 +62715,8 @@ const TestModel& get_test_model_zero_sized_nchw_float16_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_zero_sized_nchw_float16_2 = TestModelManager::get().add("conv2d_v1_2_zero_sized_nchw_float16_2", get_test_model_zero_sized_nchw_float16_2());
 
 }  // namespace generated_tests::conv2d_v1_2
 

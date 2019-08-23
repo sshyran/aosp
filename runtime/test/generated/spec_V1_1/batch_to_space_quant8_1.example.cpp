@@ -2,16 +2,17 @@
 // DO NOT EDIT
 // clang-format off
 #include "TestHarness.h"
-
 using namespace test_helper;
 
 namespace generated_tests::batch_to_space_quant8_1 {
 
 const TestModel& get_test_model() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_1,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16}),
@@ -52,6 +53,8 @@ const TestModel& get_test_model() {
     };
     return model;
 }
+
+const auto dummy_test_model = TestModelManager::get().add("batch_to_space_quant8_1", get_test_model());
 
 }  // namespace generated_tests::batch_to_space_quant8_1
 
@@ -59,9 +62,11 @@ namespace generated_tests::batch_to_space_quant8_1 {
 
 const TestModel& get_test_model_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {3},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_1,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -136,6 +141,8 @@ const TestModel& get_test_model_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_all_inputs_as_internal = TestModelManager::get().add("batch_to_space_quant8_1_all_inputs_as_internal", get_test_model_all_inputs_as_internal());
 
 }  // namespace generated_tests::batch_to_space_quant8_1
 
@@ -143,9 +150,11 @@ namespace generated_tests::batch_to_space_quant8_1 {
 
 const TestModel& get_test_model_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_1,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16}),
@@ -187,15 +196,19 @@ const TestModel& get_test_model_all_tensors_as_inputs() {
     return model;
 }
 
+const auto dummy_test_model_all_tensors_as_inputs = TestModelManager::get().add("batch_to_space_quant8_1_all_tensors_as_inputs", get_test_model_all_tensors_as_inputs());
+
 }  // namespace generated_tests::batch_to_space_quant8_1
 
 namespace generated_tests::batch_to_space_quant8_1 {
 
 const TestModel& get_test_model_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {1, 3},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_1,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -270,6 +283,8 @@ const TestModel& get_test_model_all_tensors_as_inputs_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("batch_to_space_quant8_1_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_all_tensors_as_inputs_all_inputs_as_internal());
 
 }  // namespace generated_tests::batch_to_space_quant8_1
 

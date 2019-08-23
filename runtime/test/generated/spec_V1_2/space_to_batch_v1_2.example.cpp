@@ -2,16 +2,17 @@
 // DO NOT EDIT
 // clang-format off
 #include "TestHarness.h"
-
 using namespace test_helper;
 
 namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nhwc() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.4f, 2.3f, 3.2f, 4.1f, 5.4f, 6.3f, 7.2f, 8.1f}),
@@ -72,6 +73,8 @@ const TestModel& get_test_model_nhwc() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc = TestModelManager::get().add("space_to_batch_v1_2_nhwc", get_test_model_nhwc());
 
 }  // namespace generated_tests::space_to_batch_v1_2
 
@@ -79,9 +82,11 @@ namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nhwc_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {5},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -176,6 +181,8 @@ const TestModel& get_test_model_nhwc_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_all_inputs_as_internal = TestModelManager::get().add("space_to_batch_v1_2_nhwc_all_inputs_as_internal", get_test_model_nhwc_all_inputs_as_internal());
 
 }  // namespace generated_tests::space_to_batch_v1_2
 
@@ -183,9 +190,11 @@ namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nhwc_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.4f, 2.3f, 3.2f, 4.1f, 5.4f, 6.3f, 7.2f, 8.1f}),
@@ -246,6 +255,8 @@ const TestModel& get_test_model_nhwc_all_tensors_as_inputs() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_all_tensors_as_inputs = TestModelManager::get().add("space_to_batch_v1_2_nhwc_all_tensors_as_inputs", get_test_model_nhwc_all_tensors_as_inputs());
 
 }  // namespace generated_tests::space_to_batch_v1_2
 
@@ -253,9 +264,11 @@ namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nhwc_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {2, 5},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -350,6 +363,8 @@ const TestModel& get_test_model_nhwc_all_tensors_as_inputs_all_inputs_as_interna
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("space_to_batch_v1_2_nhwc_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_nhwc_all_tensors_as_inputs_all_inputs_as_internal());
 
 }  // namespace generated_tests::space_to_batch_v1_2
 
@@ -357,9 +372,11 @@ namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nhwc_relaxed() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.4f, 2.3f, 3.2f, 4.1f, 5.4f, 6.3f, 7.2f, 8.1f}),
@@ -420,6 +437,8 @@ const TestModel& get_test_model_nhwc_relaxed() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_relaxed = TestModelManager::get().add("space_to_batch_v1_2_nhwc_relaxed", get_test_model_nhwc_relaxed());
 
 }  // namespace generated_tests::space_to_batch_v1_2
 
@@ -427,9 +446,11 @@ namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nhwc_relaxed_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {5},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -524,6 +545,8 @@ const TestModel& get_test_model_nhwc_relaxed_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_relaxed_all_inputs_as_internal = TestModelManager::get().add("space_to_batch_v1_2_nhwc_relaxed_all_inputs_as_internal", get_test_model_nhwc_relaxed_all_inputs_as_internal());
 
 }  // namespace generated_tests::space_to_batch_v1_2
 
@@ -531,9 +554,11 @@ namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nhwc_relaxed_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 2},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.4f, 2.3f, 3.2f, 4.1f, 5.4f, 6.3f, 7.2f, 8.1f}),
@@ -594,6 +619,8 @@ const TestModel& get_test_model_nhwc_relaxed_all_tensors_as_inputs() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_relaxed_all_tensors_as_inputs = TestModelManager::get().add("space_to_batch_v1_2_nhwc_relaxed_all_tensors_as_inputs", get_test_model_nhwc_relaxed_all_tensors_as_inputs());
 
 }  // namespace generated_tests::space_to_batch_v1_2
 
@@ -601,9 +628,11 @@ namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {2, 5},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -698,6 +727,8 @@ const TestModel& get_test_model_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("space_to_batch_v1_2_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal());
 
 }  // namespace generated_tests::space_to_batch_v1_2
 
@@ -705,9 +736,11 @@ namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nhwc_float16() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({1.399999976158142f, 2.299999952316284f, 3.200000047683716f, 4.099999904632568f, 5.400000095367432f, 6.300000190734863f, 7.199999809265137f, 8.100000381469727f}),
@@ -768,6 +801,8 @@ const TestModel& get_test_model_nhwc_float16() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_float16 = TestModelManager::get().add("space_to_batch_v1_2_nhwc_float16", get_test_model_nhwc_float16());
 
 }  // namespace generated_tests::space_to_batch_v1_2
 
@@ -775,9 +810,11 @@ namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nhwc_float16_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {5},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -872,6 +909,8 @@ const TestModel& get_test_model_nhwc_float16_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_float16_all_inputs_as_internal = TestModelManager::get().add("space_to_batch_v1_2_nhwc_float16_all_inputs_as_internal", get_test_model_nhwc_float16_all_inputs_as_internal());
 
 }  // namespace generated_tests::space_to_batch_v1_2
 
@@ -879,9 +918,11 @@ namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nhwc_float16_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({1.399999976158142f, 2.299999952316284f, 3.200000047683716f, 4.099999904632568f, 5.400000095367432f, 6.300000190734863f, 7.199999809265137f, 8.100000381469727f}),
@@ -942,6 +983,8 @@ const TestModel& get_test_model_nhwc_float16_all_tensors_as_inputs() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_float16_all_tensors_as_inputs = TestModelManager::get().add("space_to_batch_v1_2_nhwc_float16_all_tensors_as_inputs", get_test_model_nhwc_float16_all_tensors_as_inputs());
 
 }  // namespace generated_tests::space_to_batch_v1_2
 
@@ -949,9 +992,11 @@ namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {2, 5},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -1046,6 +1091,8 @@ const TestModel& get_test_model_nhwc_float16_all_tensors_as_inputs_all_inputs_as
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("space_to_batch_v1_2_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal());
 
 }  // namespace generated_tests::space_to_batch_v1_2
 
@@ -1053,9 +1100,11 @@ namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nhwc_quant8() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({14, 23, 32, 41, 54, 63, 72, 81}),
@@ -1116,6 +1165,8 @@ const TestModel& get_test_model_nhwc_quant8() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_quant8 = TestModelManager::get().add("space_to_batch_v1_2_nhwc_quant8", get_test_model_nhwc_quant8());
 
 }  // namespace generated_tests::space_to_batch_v1_2
 
@@ -1123,9 +1174,11 @@ namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nhwc_quant8_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {5},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -1220,6 +1273,8 @@ const TestModel& get_test_model_nhwc_quant8_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_quant8_all_inputs_as_internal = TestModelManager::get().add("space_to_batch_v1_2_nhwc_quant8_all_inputs_as_internal", get_test_model_nhwc_quant8_all_inputs_as_internal());
 
 }  // namespace generated_tests::space_to_batch_v1_2
 
@@ -1227,9 +1282,11 @@ namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nhwc_quant8_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({14, 23, 32, 41, 54, 63, 72, 81}),
@@ -1290,6 +1347,8 @@ const TestModel& get_test_model_nhwc_quant8_all_tensors_as_inputs() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_quant8_all_tensors_as_inputs = TestModelManager::get().add("space_to_batch_v1_2_nhwc_quant8_all_tensors_as_inputs", get_test_model_nhwc_quant8_all_tensors_as_inputs());
 
 }  // namespace generated_tests::space_to_batch_v1_2
 
@@ -1297,9 +1356,11 @@ namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {2, 5},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -1395,15 +1456,19 @@ const TestModel& get_test_model_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_
     return model;
 }
 
+const auto dummy_test_model_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("space_to_batch_v1_2_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal());
+
 }  // namespace generated_tests::space_to_batch_v1_2
 
 namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nchw() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.4f, 3.2f, 5.4f, 7.2f, 2.3f, 4.1f, 6.3f, 8.1f}),
@@ -1464,6 +1529,8 @@ const TestModel& get_test_model_nchw() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw = TestModelManager::get().add("space_to_batch_v1_2_nchw", get_test_model_nchw());
 
 }  // namespace generated_tests::space_to_batch_v1_2
 
@@ -1471,9 +1538,11 @@ namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nchw_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {5},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -1568,6 +1637,8 @@ const TestModel& get_test_model_nchw_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_all_inputs_as_internal = TestModelManager::get().add("space_to_batch_v1_2_nchw_all_inputs_as_internal", get_test_model_nchw_all_inputs_as_internal());
 
 }  // namespace generated_tests::space_to_batch_v1_2
 
@@ -1575,9 +1646,11 @@ namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nchw_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.4f, 3.2f, 5.4f, 7.2f, 2.3f, 4.1f, 6.3f, 8.1f}),
@@ -1638,6 +1711,8 @@ const TestModel& get_test_model_nchw_all_tensors_as_inputs() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_all_tensors_as_inputs = TestModelManager::get().add("space_to_batch_v1_2_nchw_all_tensors_as_inputs", get_test_model_nchw_all_tensors_as_inputs());
 
 }  // namespace generated_tests::space_to_batch_v1_2
 
@@ -1645,9 +1720,11 @@ namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nchw_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {2, 5},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -1742,6 +1819,8 @@ const TestModel& get_test_model_nchw_all_tensors_as_inputs_all_inputs_as_interna
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("space_to_batch_v1_2_nchw_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_nchw_all_tensors_as_inputs_all_inputs_as_internal());
 
 }  // namespace generated_tests::space_to_batch_v1_2
 
@@ -1749,9 +1828,11 @@ namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nchw_relaxed() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.4f, 3.2f, 5.4f, 7.2f, 2.3f, 4.1f, 6.3f, 8.1f}),
@@ -1812,6 +1893,8 @@ const TestModel& get_test_model_nchw_relaxed() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_relaxed = TestModelManager::get().add("space_to_batch_v1_2_nchw_relaxed", get_test_model_nchw_relaxed());
 
 }  // namespace generated_tests::space_to_batch_v1_2
 
@@ -1819,9 +1902,11 @@ namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nchw_relaxed_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {5},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -1916,6 +2001,8 @@ const TestModel& get_test_model_nchw_relaxed_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_relaxed_all_inputs_as_internal = TestModelManager::get().add("space_to_batch_v1_2_nchw_relaxed_all_inputs_as_internal", get_test_model_nchw_relaxed_all_inputs_as_internal());
 
 }  // namespace generated_tests::space_to_batch_v1_2
 
@@ -1923,9 +2010,11 @@ namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nchw_relaxed_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 2},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.4f, 3.2f, 5.4f, 7.2f, 2.3f, 4.1f, 6.3f, 8.1f}),
@@ -1986,6 +2075,8 @@ const TestModel& get_test_model_nchw_relaxed_all_tensors_as_inputs() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_relaxed_all_tensors_as_inputs = TestModelManager::get().add("space_to_batch_v1_2_nchw_relaxed_all_tensors_as_inputs", get_test_model_nchw_relaxed_all_tensors_as_inputs());
 
 }  // namespace generated_tests::space_to_batch_v1_2
 
@@ -1993,9 +2084,11 @@ namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {2, 5},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -2091,15 +2184,19 @@ const TestModel& get_test_model_nchw_relaxed_all_tensors_as_inputs_all_inputs_as
     return model;
 }
 
+const auto dummy_test_model_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("space_to_batch_v1_2_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal());
+
 }  // namespace generated_tests::space_to_batch_v1_2
 
 namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nchw_float16() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({1.399999976158142f, 3.200000047683716f, 5.400000095367432f, 7.199999809265137f, 2.299999952316284f, 4.099999904632568f, 6.300000190734863f, 8.100000381469727f}),
@@ -2160,6 +2257,8 @@ const TestModel& get_test_model_nchw_float16() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_float16 = TestModelManager::get().add("space_to_batch_v1_2_nchw_float16", get_test_model_nchw_float16());
 
 }  // namespace generated_tests::space_to_batch_v1_2
 
@@ -2167,9 +2266,11 @@ namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nchw_float16_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {5},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -2264,6 +2365,8 @@ const TestModel& get_test_model_nchw_float16_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_float16_all_inputs_as_internal = TestModelManager::get().add("space_to_batch_v1_2_nchw_float16_all_inputs_as_internal", get_test_model_nchw_float16_all_inputs_as_internal());
 
 }  // namespace generated_tests::space_to_batch_v1_2
 
@@ -2271,9 +2374,11 @@ namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nchw_float16_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({1.399999976158142f, 3.200000047683716f, 5.400000095367432f, 7.199999809265137f, 2.299999952316284f, 4.099999904632568f, 6.300000190734863f, 8.100000381469727f}),
@@ -2334,6 +2439,8 @@ const TestModel& get_test_model_nchw_float16_all_tensors_as_inputs() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_float16_all_tensors_as_inputs = TestModelManager::get().add("space_to_batch_v1_2_nchw_float16_all_tensors_as_inputs", get_test_model_nchw_float16_all_tensors_as_inputs());
 
 }  // namespace generated_tests::space_to_batch_v1_2
 
@@ -2341,9 +2448,11 @@ namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {2, 5},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -2439,15 +2548,19 @@ const TestModel& get_test_model_nchw_float16_all_tensors_as_inputs_all_inputs_as
     return model;
 }
 
+const auto dummy_test_model_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("space_to_batch_v1_2_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal());
+
 }  // namespace generated_tests::space_to_batch_v1_2
 
 namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nchw_quant8() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({14, 32, 54, 72, 23, 41, 63, 81}),
@@ -2508,6 +2621,8 @@ const TestModel& get_test_model_nchw_quant8() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_quant8 = TestModelManager::get().add("space_to_batch_v1_2_nchw_quant8", get_test_model_nchw_quant8());
 
 }  // namespace generated_tests::space_to_batch_v1_2
 
@@ -2515,9 +2630,11 @@ namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nchw_quant8_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {5},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -2612,6 +2729,8 @@ const TestModel& get_test_model_nchw_quant8_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_quant8_all_inputs_as_internal = TestModelManager::get().add("space_to_batch_v1_2_nchw_quant8_all_inputs_as_internal", get_test_model_nchw_quant8_all_inputs_as_internal());
 
 }  // namespace generated_tests::space_to_batch_v1_2
 
@@ -2619,9 +2738,11 @@ namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nchw_quant8_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({14, 32, 54, 72, 23, 41, 63, 81}),
@@ -2682,6 +2803,8 @@ const TestModel& get_test_model_nchw_quant8_all_tensors_as_inputs() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_quant8_all_tensors_as_inputs = TestModelManager::get().add("space_to_batch_v1_2_nchw_quant8_all_tensors_as_inputs", get_test_model_nchw_quant8_all_tensors_as_inputs());
 
 }  // namespace generated_tests::space_to_batch_v1_2
 
@@ -2689,9 +2812,11 @@ namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {2, 5},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -2787,15 +2912,19 @@ const TestModel& get_test_model_nchw_quant8_all_tensors_as_inputs_all_inputs_as_
     return model;
 }
 
+const auto dummy_test_model_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("space_to_batch_v1_2_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal());
+
 }  // namespace generated_tests::space_to_batch_v1_2
 
 namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nhwc_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f, 10.0f, 11.0f, 12.0f, 13.0f, 14.0f, 15.0f, 16.0f}),
@@ -2856,6 +2985,8 @@ const TestModel& get_test_model_nhwc_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_2 = TestModelManager::get().add("space_to_batch_v1_2_nhwc_2", get_test_model_nhwc_2());
 
 }  // namespace generated_tests::space_to_batch_v1_2
 
@@ -2863,9 +2994,11 @@ namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nhwc_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {5},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -2960,6 +3093,8 @@ const TestModel& get_test_model_nhwc_all_inputs_as_internal_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_all_inputs_as_internal_2 = TestModelManager::get().add("space_to_batch_v1_2_nhwc_all_inputs_as_internal_2", get_test_model_nhwc_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::space_to_batch_v1_2
 
@@ -2967,9 +3102,11 @@ namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nhwc_all_tensors_as_inputs_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f, 10.0f, 11.0f, 12.0f, 13.0f, 14.0f, 15.0f, 16.0f}),
@@ -3030,6 +3167,8 @@ const TestModel& get_test_model_nhwc_all_tensors_as_inputs_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_all_tensors_as_inputs_2 = TestModelManager::get().add("space_to_batch_v1_2_nhwc_all_tensors_as_inputs_2", get_test_model_nhwc_all_tensors_as_inputs_2());
 
 }  // namespace generated_tests::space_to_batch_v1_2
 
@@ -3037,9 +3176,11 @@ namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nhwc_all_tensors_as_inputs_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {2, 5},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -3134,6 +3275,8 @@ const TestModel& get_test_model_nhwc_all_tensors_as_inputs_all_inputs_as_interna
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("space_to_batch_v1_2_nhwc_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_nhwc_all_tensors_as_inputs_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::space_to_batch_v1_2
 
@@ -3141,9 +3284,11 @@ namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nhwc_relaxed_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f, 10.0f, 11.0f, 12.0f, 13.0f, 14.0f, 15.0f, 16.0f}),
@@ -3204,6 +3349,8 @@ const TestModel& get_test_model_nhwc_relaxed_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_relaxed_2 = TestModelManager::get().add("space_to_batch_v1_2_nhwc_relaxed_2", get_test_model_nhwc_relaxed_2());
 
 }  // namespace generated_tests::space_to_batch_v1_2
 
@@ -3211,9 +3358,11 @@ namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nhwc_relaxed_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {5},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -3308,6 +3457,8 @@ const TestModel& get_test_model_nhwc_relaxed_all_inputs_as_internal_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_relaxed_all_inputs_as_internal_2 = TestModelManager::get().add("space_to_batch_v1_2_nhwc_relaxed_all_inputs_as_internal_2", get_test_model_nhwc_relaxed_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::space_to_batch_v1_2
 
@@ -3315,9 +3466,11 @@ namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nhwc_relaxed_all_tensors_as_inputs_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 2},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f, 10.0f, 11.0f, 12.0f, 13.0f, 14.0f, 15.0f, 16.0f}),
@@ -3378,6 +3531,8 @@ const TestModel& get_test_model_nhwc_relaxed_all_tensors_as_inputs_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_relaxed_all_tensors_as_inputs_2 = TestModelManager::get().add("space_to_batch_v1_2_nhwc_relaxed_all_tensors_as_inputs_2", get_test_model_nhwc_relaxed_all_tensors_as_inputs_2());
 
 }  // namespace generated_tests::space_to_batch_v1_2
 
@@ -3385,9 +3540,11 @@ namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {2, 5},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -3482,6 +3639,8 @@ const TestModel& get_test_model_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("space_to_batch_v1_2_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::space_to_batch_v1_2
 
@@ -3489,9 +3648,11 @@ namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nhwc_float16_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f, 10.0f, 11.0f, 12.0f, 13.0f, 14.0f, 15.0f, 16.0f}),
@@ -3552,6 +3713,8 @@ const TestModel& get_test_model_nhwc_float16_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_float16_2 = TestModelManager::get().add("space_to_batch_v1_2_nhwc_float16_2", get_test_model_nhwc_float16_2());
 
 }  // namespace generated_tests::space_to_batch_v1_2
 
@@ -3559,9 +3722,11 @@ namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nhwc_float16_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {5},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -3656,6 +3821,8 @@ const TestModel& get_test_model_nhwc_float16_all_inputs_as_internal_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_float16_all_inputs_as_internal_2 = TestModelManager::get().add("space_to_batch_v1_2_nhwc_float16_all_inputs_as_internal_2", get_test_model_nhwc_float16_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::space_to_batch_v1_2
 
@@ -3663,9 +3830,11 @@ namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nhwc_float16_all_tensors_as_inputs_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f, 10.0f, 11.0f, 12.0f, 13.0f, 14.0f, 15.0f, 16.0f}),
@@ -3726,6 +3895,8 @@ const TestModel& get_test_model_nhwc_float16_all_tensors_as_inputs_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_float16_all_tensors_as_inputs_2 = TestModelManager::get().add("space_to_batch_v1_2_nhwc_float16_all_tensors_as_inputs_2", get_test_model_nhwc_float16_all_tensors_as_inputs_2());
 
 }  // namespace generated_tests::space_to_batch_v1_2
 
@@ -3733,9 +3904,11 @@ namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {2, 5},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -3830,6 +4003,8 @@ const TestModel& get_test_model_nhwc_float16_all_tensors_as_inputs_all_inputs_as
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("space_to_batch_v1_2_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::space_to_batch_v1_2
 
@@ -3837,9 +4012,11 @@ namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nhwc_quant8_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32}),
@@ -3900,6 +4077,8 @@ const TestModel& get_test_model_nhwc_quant8_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_quant8_2 = TestModelManager::get().add("space_to_batch_v1_2_nhwc_quant8_2", get_test_model_nhwc_quant8_2());
 
 }  // namespace generated_tests::space_to_batch_v1_2
 
@@ -3907,9 +4086,11 @@ namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nhwc_quant8_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {5},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -4004,6 +4185,8 @@ const TestModel& get_test_model_nhwc_quant8_all_inputs_as_internal_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_quant8_all_inputs_as_internal_2 = TestModelManager::get().add("space_to_batch_v1_2_nhwc_quant8_all_inputs_as_internal_2", get_test_model_nhwc_quant8_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::space_to_batch_v1_2
 
@@ -4011,9 +4194,11 @@ namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nhwc_quant8_all_tensors_as_inputs_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32}),
@@ -4074,6 +4259,8 @@ const TestModel& get_test_model_nhwc_quant8_all_tensors_as_inputs_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_quant8_all_tensors_as_inputs_2 = TestModelManager::get().add("space_to_batch_v1_2_nhwc_quant8_all_tensors_as_inputs_2", get_test_model_nhwc_quant8_all_tensors_as_inputs_2());
 
 }  // namespace generated_tests::space_to_batch_v1_2
 
@@ -4081,9 +4268,11 @@ namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {2, 5},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -4179,15 +4368,19 @@ const TestModel& get_test_model_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_
     return model;
 }
 
+const auto dummy_test_model_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("space_to_batch_v1_2_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::space_to_batch_v1_2
 
 namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nchw_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f, 10.0f, 11.0f, 12.0f, 13.0f, 14.0f, 15.0f, 16.0f}),
@@ -4248,6 +4441,8 @@ const TestModel& get_test_model_nchw_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_2 = TestModelManager::get().add("space_to_batch_v1_2_nchw_2", get_test_model_nchw_2());
 
 }  // namespace generated_tests::space_to_batch_v1_2
 
@@ -4255,9 +4450,11 @@ namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nchw_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {5},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -4352,6 +4549,8 @@ const TestModel& get_test_model_nchw_all_inputs_as_internal_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_all_inputs_as_internal_2 = TestModelManager::get().add("space_to_batch_v1_2_nchw_all_inputs_as_internal_2", get_test_model_nchw_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::space_to_batch_v1_2
 
@@ -4359,9 +4558,11 @@ namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nchw_all_tensors_as_inputs_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f, 10.0f, 11.0f, 12.0f, 13.0f, 14.0f, 15.0f, 16.0f}),
@@ -4422,6 +4623,8 @@ const TestModel& get_test_model_nchw_all_tensors_as_inputs_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_all_tensors_as_inputs_2 = TestModelManager::get().add("space_to_batch_v1_2_nchw_all_tensors_as_inputs_2", get_test_model_nchw_all_tensors_as_inputs_2());
 
 }  // namespace generated_tests::space_to_batch_v1_2
 
@@ -4429,9 +4632,11 @@ namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nchw_all_tensors_as_inputs_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {2, 5},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -4526,6 +4731,8 @@ const TestModel& get_test_model_nchw_all_tensors_as_inputs_all_inputs_as_interna
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("space_to_batch_v1_2_nchw_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_nchw_all_tensors_as_inputs_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::space_to_batch_v1_2
 
@@ -4533,9 +4740,11 @@ namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nchw_relaxed_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f, 10.0f, 11.0f, 12.0f, 13.0f, 14.0f, 15.0f, 16.0f}),
@@ -4596,6 +4805,8 @@ const TestModel& get_test_model_nchw_relaxed_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_relaxed_2 = TestModelManager::get().add("space_to_batch_v1_2_nchw_relaxed_2", get_test_model_nchw_relaxed_2());
 
 }  // namespace generated_tests::space_to_batch_v1_2
 
@@ -4603,9 +4814,11 @@ namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nchw_relaxed_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {5},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -4700,6 +4913,8 @@ const TestModel& get_test_model_nchw_relaxed_all_inputs_as_internal_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_relaxed_all_inputs_as_internal_2 = TestModelManager::get().add("space_to_batch_v1_2_nchw_relaxed_all_inputs_as_internal_2", get_test_model_nchw_relaxed_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::space_to_batch_v1_2
 
@@ -4707,9 +4922,11 @@ namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nchw_relaxed_all_tensors_as_inputs_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 2},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f, 10.0f, 11.0f, 12.0f, 13.0f, 14.0f, 15.0f, 16.0f}),
@@ -4770,6 +4987,8 @@ const TestModel& get_test_model_nchw_relaxed_all_tensors_as_inputs_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_relaxed_all_tensors_as_inputs_2 = TestModelManager::get().add("space_to_batch_v1_2_nchw_relaxed_all_tensors_as_inputs_2", get_test_model_nchw_relaxed_all_tensors_as_inputs_2());
 
 }  // namespace generated_tests::space_to_batch_v1_2
 
@@ -4777,9 +4996,11 @@ namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {2, 5},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -4875,15 +5096,19 @@ const TestModel& get_test_model_nchw_relaxed_all_tensors_as_inputs_all_inputs_as
     return model;
 }
 
+const auto dummy_test_model_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("space_to_batch_v1_2_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::space_to_batch_v1_2
 
 namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nchw_float16_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f, 10.0f, 11.0f, 12.0f, 13.0f, 14.0f, 15.0f, 16.0f}),
@@ -4944,6 +5169,8 @@ const TestModel& get_test_model_nchw_float16_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_float16_2 = TestModelManager::get().add("space_to_batch_v1_2_nchw_float16_2", get_test_model_nchw_float16_2());
 
 }  // namespace generated_tests::space_to_batch_v1_2
 
@@ -4951,9 +5178,11 @@ namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nchw_float16_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {5},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -5048,6 +5277,8 @@ const TestModel& get_test_model_nchw_float16_all_inputs_as_internal_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_float16_all_inputs_as_internal_2 = TestModelManager::get().add("space_to_batch_v1_2_nchw_float16_all_inputs_as_internal_2", get_test_model_nchw_float16_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::space_to_batch_v1_2
 
@@ -5055,9 +5286,11 @@ namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nchw_float16_all_tensors_as_inputs_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f, 10.0f, 11.0f, 12.0f, 13.0f, 14.0f, 15.0f, 16.0f}),
@@ -5118,6 +5351,8 @@ const TestModel& get_test_model_nchw_float16_all_tensors_as_inputs_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_float16_all_tensors_as_inputs_2 = TestModelManager::get().add("space_to_batch_v1_2_nchw_float16_all_tensors_as_inputs_2", get_test_model_nchw_float16_all_tensors_as_inputs_2());
 
 }  // namespace generated_tests::space_to_batch_v1_2
 
@@ -5125,9 +5360,11 @@ namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {2, 5},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -5223,15 +5460,19 @@ const TestModel& get_test_model_nchw_float16_all_tensors_as_inputs_all_inputs_as
     return model;
 }
 
+const auto dummy_test_model_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("space_to_batch_v1_2_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::space_to_batch_v1_2
 
 namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nchw_quant8_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32}),
@@ -5292,6 +5533,8 @@ const TestModel& get_test_model_nchw_quant8_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_quant8_2 = TestModelManager::get().add("space_to_batch_v1_2_nchw_quant8_2", get_test_model_nchw_quant8_2());
 
 }  // namespace generated_tests::space_to_batch_v1_2
 
@@ -5299,9 +5542,11 @@ namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nchw_quant8_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {5},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -5396,6 +5641,8 @@ const TestModel& get_test_model_nchw_quant8_all_inputs_as_internal_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_quant8_all_inputs_as_internal_2 = TestModelManager::get().add("space_to_batch_v1_2_nchw_quant8_all_inputs_as_internal_2", get_test_model_nchw_quant8_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::space_to_batch_v1_2
 
@@ -5403,9 +5650,11 @@ namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nchw_quant8_all_tensors_as_inputs_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32}),
@@ -5467,15 +5716,19 @@ const TestModel& get_test_model_nchw_quant8_all_tensors_as_inputs_2() {
     return model;
 }
 
+const auto dummy_test_model_nchw_quant8_all_tensors_as_inputs_2 = TestModelManager::get().add("space_to_batch_v1_2_nchw_quant8_all_tensors_as_inputs_2", get_test_model_nchw_quant8_all_tensors_as_inputs_2());
+
 }  // namespace generated_tests::space_to_batch_v1_2
 
 namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {2, 5},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -5571,15 +5824,19 @@ const TestModel& get_test_model_nchw_quant8_all_tensors_as_inputs_all_inputs_as_
     return model;
 }
 
+const auto dummy_test_model_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("space_to_batch_v1_2_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::space_to_batch_v1_2
 
 namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nhwc_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f, 10.0f}),
@@ -5640,6 +5897,8 @@ const TestModel& get_test_model_nhwc_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_3 = TestModelManager::get().add("space_to_batch_v1_2_nhwc_3", get_test_model_nhwc_3());
 
 }  // namespace generated_tests::space_to_batch_v1_2
 
@@ -5647,9 +5906,11 @@ namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nhwc_all_inputs_as_internal_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {5},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -5744,6 +6005,8 @@ const TestModel& get_test_model_nhwc_all_inputs_as_internal_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_all_inputs_as_internal_3 = TestModelManager::get().add("space_to_batch_v1_2_nhwc_all_inputs_as_internal_3", get_test_model_nhwc_all_inputs_as_internal_3());
 
 }  // namespace generated_tests::space_to_batch_v1_2
 
@@ -5751,9 +6014,11 @@ namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nhwc_all_tensors_as_inputs_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f, 10.0f}),
@@ -5814,6 +6079,8 @@ const TestModel& get_test_model_nhwc_all_tensors_as_inputs_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_all_tensors_as_inputs_3 = TestModelManager::get().add("space_to_batch_v1_2_nhwc_all_tensors_as_inputs_3", get_test_model_nhwc_all_tensors_as_inputs_3());
 
 }  // namespace generated_tests::space_to_batch_v1_2
 
@@ -5821,9 +6088,11 @@ namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nhwc_all_tensors_as_inputs_all_inputs_as_internal_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {2, 5},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -5918,6 +6187,8 @@ const TestModel& get_test_model_nhwc_all_tensors_as_inputs_all_inputs_as_interna
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_all_tensors_as_inputs_all_inputs_as_internal_3 = TestModelManager::get().add("space_to_batch_v1_2_nhwc_all_tensors_as_inputs_all_inputs_as_internal_3", get_test_model_nhwc_all_tensors_as_inputs_all_inputs_as_internal_3());
 
 }  // namespace generated_tests::space_to_batch_v1_2
 
@@ -5925,9 +6196,11 @@ namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nhwc_relaxed_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f, 10.0f}),
@@ -5988,6 +6261,8 @@ const TestModel& get_test_model_nhwc_relaxed_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_relaxed_3 = TestModelManager::get().add("space_to_batch_v1_2_nhwc_relaxed_3", get_test_model_nhwc_relaxed_3());
 
 }  // namespace generated_tests::space_to_batch_v1_2
 
@@ -5995,9 +6270,11 @@ namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nhwc_relaxed_all_inputs_as_internal_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {5},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -6092,6 +6369,8 @@ const TestModel& get_test_model_nhwc_relaxed_all_inputs_as_internal_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_relaxed_all_inputs_as_internal_3 = TestModelManager::get().add("space_to_batch_v1_2_nhwc_relaxed_all_inputs_as_internal_3", get_test_model_nhwc_relaxed_all_inputs_as_internal_3());
 
 }  // namespace generated_tests::space_to_batch_v1_2
 
@@ -6099,9 +6378,11 @@ namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nhwc_relaxed_all_tensors_as_inputs_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 2},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f, 10.0f}),
@@ -6162,6 +6443,8 @@ const TestModel& get_test_model_nhwc_relaxed_all_tensors_as_inputs_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_relaxed_all_tensors_as_inputs_3 = TestModelManager::get().add("space_to_batch_v1_2_nhwc_relaxed_all_tensors_as_inputs_3", get_test_model_nhwc_relaxed_all_tensors_as_inputs_3());
 
 }  // namespace generated_tests::space_to_batch_v1_2
 
@@ -6169,9 +6452,11 @@ namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {2, 5},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -6266,6 +6551,8 @@ const TestModel& get_test_model_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_3 = TestModelManager::get().add("space_to_batch_v1_2_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_3", get_test_model_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_3());
 
 }  // namespace generated_tests::space_to_batch_v1_2
 
@@ -6273,9 +6560,11 @@ namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nhwc_float16_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f, 10.0f}),
@@ -6336,6 +6625,8 @@ const TestModel& get_test_model_nhwc_float16_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_float16_3 = TestModelManager::get().add("space_to_batch_v1_2_nhwc_float16_3", get_test_model_nhwc_float16_3());
 
 }  // namespace generated_tests::space_to_batch_v1_2
 
@@ -6343,9 +6634,11 @@ namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nhwc_float16_all_inputs_as_internal_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {5},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -6440,6 +6733,8 @@ const TestModel& get_test_model_nhwc_float16_all_inputs_as_internal_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_float16_all_inputs_as_internal_3 = TestModelManager::get().add("space_to_batch_v1_2_nhwc_float16_all_inputs_as_internal_3", get_test_model_nhwc_float16_all_inputs_as_internal_3());
 
 }  // namespace generated_tests::space_to_batch_v1_2
 
@@ -6447,9 +6742,11 @@ namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nhwc_float16_all_tensors_as_inputs_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f, 10.0f}),
@@ -6510,6 +6807,8 @@ const TestModel& get_test_model_nhwc_float16_all_tensors_as_inputs_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_float16_all_tensors_as_inputs_3 = TestModelManager::get().add("space_to_batch_v1_2_nhwc_float16_all_tensors_as_inputs_3", get_test_model_nhwc_float16_all_tensors_as_inputs_3());
 
 }  // namespace generated_tests::space_to_batch_v1_2
 
@@ -6517,9 +6816,11 @@ namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {2, 5},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -6614,6 +6915,8 @@ const TestModel& get_test_model_nhwc_float16_all_tensors_as_inputs_all_inputs_as
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_3 = TestModelManager::get().add("space_to_batch_v1_2_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_3", get_test_model_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_3());
 
 }  // namespace generated_tests::space_to_batch_v1_2
 
@@ -6621,9 +6924,11 @@ namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nhwc_quant8_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({130, 132, 134, 136, 138, 140, 142, 144, 146, 148}),
@@ -6684,6 +6989,8 @@ const TestModel& get_test_model_nhwc_quant8_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_quant8_3 = TestModelManager::get().add("space_to_batch_v1_2_nhwc_quant8_3", get_test_model_nhwc_quant8_3());
 
 }  // namespace generated_tests::space_to_batch_v1_2
 
@@ -6691,9 +6998,11 @@ namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nhwc_quant8_all_inputs_as_internal_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {5},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -6788,6 +7097,8 @@ const TestModel& get_test_model_nhwc_quant8_all_inputs_as_internal_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_quant8_all_inputs_as_internal_3 = TestModelManager::get().add("space_to_batch_v1_2_nhwc_quant8_all_inputs_as_internal_3", get_test_model_nhwc_quant8_all_inputs_as_internal_3());
 
 }  // namespace generated_tests::space_to_batch_v1_2
 
@@ -6795,9 +7106,11 @@ namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nhwc_quant8_all_tensors_as_inputs_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({130, 132, 134, 136, 138, 140, 142, 144, 146, 148}),
@@ -6858,6 +7171,8 @@ const TestModel& get_test_model_nhwc_quant8_all_tensors_as_inputs_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_quant8_all_tensors_as_inputs_3 = TestModelManager::get().add("space_to_batch_v1_2_nhwc_quant8_all_tensors_as_inputs_3", get_test_model_nhwc_quant8_all_tensors_as_inputs_3());
 
 }  // namespace generated_tests::space_to_batch_v1_2
 
@@ -6865,9 +7180,11 @@ namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {2, 5},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -6963,15 +7280,19 @@ const TestModel& get_test_model_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_
     return model;
 }
 
+const auto dummy_test_model_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal_3 = TestModelManager::get().add("space_to_batch_v1_2_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal_3", get_test_model_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal_3());
+
 }  // namespace generated_tests::space_to_batch_v1_2
 
 namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nchw_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f, 10.0f}),
@@ -7032,6 +7353,8 @@ const TestModel& get_test_model_nchw_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_3 = TestModelManager::get().add("space_to_batch_v1_2_nchw_3", get_test_model_nchw_3());
 
 }  // namespace generated_tests::space_to_batch_v1_2
 
@@ -7039,9 +7362,11 @@ namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nchw_all_inputs_as_internal_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {5},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -7136,6 +7461,8 @@ const TestModel& get_test_model_nchw_all_inputs_as_internal_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_all_inputs_as_internal_3 = TestModelManager::get().add("space_to_batch_v1_2_nchw_all_inputs_as_internal_3", get_test_model_nchw_all_inputs_as_internal_3());
 
 }  // namespace generated_tests::space_to_batch_v1_2
 
@@ -7143,9 +7470,11 @@ namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nchw_all_tensors_as_inputs_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f, 10.0f}),
@@ -7206,6 +7535,8 @@ const TestModel& get_test_model_nchw_all_tensors_as_inputs_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_all_tensors_as_inputs_3 = TestModelManager::get().add("space_to_batch_v1_2_nchw_all_tensors_as_inputs_3", get_test_model_nchw_all_tensors_as_inputs_3());
 
 }  // namespace generated_tests::space_to_batch_v1_2
 
@@ -7213,9 +7544,11 @@ namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nchw_all_tensors_as_inputs_all_inputs_as_internal_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {2, 5},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -7310,6 +7643,8 @@ const TestModel& get_test_model_nchw_all_tensors_as_inputs_all_inputs_as_interna
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_all_tensors_as_inputs_all_inputs_as_internal_3 = TestModelManager::get().add("space_to_batch_v1_2_nchw_all_tensors_as_inputs_all_inputs_as_internal_3", get_test_model_nchw_all_tensors_as_inputs_all_inputs_as_internal_3());
 
 }  // namespace generated_tests::space_to_batch_v1_2
 
@@ -7317,9 +7652,11 @@ namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nchw_relaxed_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f, 10.0f}),
@@ -7380,6 +7717,8 @@ const TestModel& get_test_model_nchw_relaxed_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_relaxed_3 = TestModelManager::get().add("space_to_batch_v1_2_nchw_relaxed_3", get_test_model_nchw_relaxed_3());
 
 }  // namespace generated_tests::space_to_batch_v1_2
 
@@ -7387,9 +7726,11 @@ namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nchw_relaxed_all_inputs_as_internal_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {5},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -7484,6 +7825,8 @@ const TestModel& get_test_model_nchw_relaxed_all_inputs_as_internal_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_relaxed_all_inputs_as_internal_3 = TestModelManager::get().add("space_to_batch_v1_2_nchw_relaxed_all_inputs_as_internal_3", get_test_model_nchw_relaxed_all_inputs_as_internal_3());
 
 }  // namespace generated_tests::space_to_batch_v1_2
 
@@ -7491,9 +7834,11 @@ namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nchw_relaxed_all_tensors_as_inputs_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 2},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f, 10.0f}),
@@ -7554,6 +7899,8 @@ const TestModel& get_test_model_nchw_relaxed_all_tensors_as_inputs_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_relaxed_all_tensors_as_inputs_3 = TestModelManager::get().add("space_to_batch_v1_2_nchw_relaxed_all_tensors_as_inputs_3", get_test_model_nchw_relaxed_all_tensors_as_inputs_3());
 
 }  // namespace generated_tests::space_to_batch_v1_2
 
@@ -7561,9 +7908,11 @@ namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {2, 5},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -7659,15 +8008,19 @@ const TestModel& get_test_model_nchw_relaxed_all_tensors_as_inputs_all_inputs_as
     return model;
 }
 
+const auto dummy_test_model_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_3 = TestModelManager::get().add("space_to_batch_v1_2_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_3", get_test_model_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_3());
+
 }  // namespace generated_tests::space_to_batch_v1_2
 
 namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nchw_float16_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f, 10.0f}),
@@ -7728,6 +8081,8 @@ const TestModel& get_test_model_nchw_float16_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_float16_3 = TestModelManager::get().add("space_to_batch_v1_2_nchw_float16_3", get_test_model_nchw_float16_3());
 
 }  // namespace generated_tests::space_to_batch_v1_2
 
@@ -7735,9 +8090,11 @@ namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nchw_float16_all_inputs_as_internal_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {5},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -7832,6 +8189,8 @@ const TestModel& get_test_model_nchw_float16_all_inputs_as_internal_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_float16_all_inputs_as_internal_3 = TestModelManager::get().add("space_to_batch_v1_2_nchw_float16_all_inputs_as_internal_3", get_test_model_nchw_float16_all_inputs_as_internal_3());
 
 }  // namespace generated_tests::space_to_batch_v1_2
 
@@ -7839,9 +8198,11 @@ namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nchw_float16_all_tensors_as_inputs_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f, 10.0f}),
@@ -7902,6 +8263,8 @@ const TestModel& get_test_model_nchw_float16_all_tensors_as_inputs_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_float16_all_tensors_as_inputs_3 = TestModelManager::get().add("space_to_batch_v1_2_nchw_float16_all_tensors_as_inputs_3", get_test_model_nchw_float16_all_tensors_as_inputs_3());
 
 }  // namespace generated_tests::space_to_batch_v1_2
 
@@ -7909,9 +8272,11 @@ namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {2, 5},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -8007,15 +8372,19 @@ const TestModel& get_test_model_nchw_float16_all_tensors_as_inputs_all_inputs_as
     return model;
 }
 
+const auto dummy_test_model_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_3 = TestModelManager::get().add("space_to_batch_v1_2_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_3", get_test_model_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_3());
+
 }  // namespace generated_tests::space_to_batch_v1_2
 
 namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nchw_quant8_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({130, 132, 134, 136, 138, 140, 142, 144, 146, 148}),
@@ -8076,6 +8445,8 @@ const TestModel& get_test_model_nchw_quant8_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_quant8_3 = TestModelManager::get().add("space_to_batch_v1_2_nchw_quant8_3", get_test_model_nchw_quant8_3());
 
 }  // namespace generated_tests::space_to_batch_v1_2
 
@@ -8083,9 +8454,11 @@ namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nchw_quant8_all_inputs_as_internal_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {5},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -8180,6 +8553,8 @@ const TestModel& get_test_model_nchw_quant8_all_inputs_as_internal_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_quant8_all_inputs_as_internal_3 = TestModelManager::get().add("space_to_batch_v1_2_nchw_quant8_all_inputs_as_internal_3", get_test_model_nchw_quant8_all_inputs_as_internal_3());
 
 }  // namespace generated_tests::space_to_batch_v1_2
 
@@ -8187,9 +8562,11 @@ namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nchw_quant8_all_tensors_as_inputs_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({130, 132, 134, 136, 138, 140, 142, 144, 146, 148}),
@@ -8250,6 +8627,8 @@ const TestModel& get_test_model_nchw_quant8_all_tensors_as_inputs_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_quant8_all_tensors_as_inputs_3 = TestModelManager::get().add("space_to_batch_v1_2_nchw_quant8_all_tensors_as_inputs_3", get_test_model_nchw_quant8_all_tensors_as_inputs_3());
 
 }  // namespace generated_tests::space_to_batch_v1_2
 
@@ -8257,9 +8636,11 @@ namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {2, 5},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -8355,15 +8736,19 @@ const TestModel& get_test_model_nchw_quant8_all_tensors_as_inputs_all_inputs_as_
     return model;
 }
 
+const auto dummy_test_model_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal_3 = TestModelManager::get().add("space_to_batch_v1_2_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal_3", get_test_model_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal_3());
+
 }  // namespace generated_tests::space_to_batch_v1_2
 
 namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nhwc_4() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f}),
@@ -8424,6 +8809,8 @@ const TestModel& get_test_model_nhwc_4() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_4 = TestModelManager::get().add("space_to_batch_v1_2_nhwc_4", get_test_model_nhwc_4());
 
 }  // namespace generated_tests::space_to_batch_v1_2
 
@@ -8431,9 +8818,11 @@ namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nhwc_all_inputs_as_internal_4() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {5},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -8528,6 +8917,8 @@ const TestModel& get_test_model_nhwc_all_inputs_as_internal_4() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_all_inputs_as_internal_4 = TestModelManager::get().add("space_to_batch_v1_2_nhwc_all_inputs_as_internal_4", get_test_model_nhwc_all_inputs_as_internal_4());
 
 }  // namespace generated_tests::space_to_batch_v1_2
 
@@ -8535,9 +8926,11 @@ namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nhwc_all_tensors_as_inputs_4() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f}),
@@ -8598,6 +8991,8 @@ const TestModel& get_test_model_nhwc_all_tensors_as_inputs_4() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_all_tensors_as_inputs_4 = TestModelManager::get().add("space_to_batch_v1_2_nhwc_all_tensors_as_inputs_4", get_test_model_nhwc_all_tensors_as_inputs_4());
 
 }  // namespace generated_tests::space_to_batch_v1_2
 
@@ -8605,9 +9000,11 @@ namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nhwc_all_tensors_as_inputs_all_inputs_as_internal_4() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {2, 5},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -8702,6 +9099,8 @@ const TestModel& get_test_model_nhwc_all_tensors_as_inputs_all_inputs_as_interna
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_all_tensors_as_inputs_all_inputs_as_internal_4 = TestModelManager::get().add("space_to_batch_v1_2_nhwc_all_tensors_as_inputs_all_inputs_as_internal_4", get_test_model_nhwc_all_tensors_as_inputs_all_inputs_as_internal_4());
 
 }  // namespace generated_tests::space_to_batch_v1_2
 
@@ -8709,9 +9108,11 @@ namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nhwc_relaxed_4() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f}),
@@ -8772,6 +9173,8 @@ const TestModel& get_test_model_nhwc_relaxed_4() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_relaxed_4 = TestModelManager::get().add("space_to_batch_v1_2_nhwc_relaxed_4", get_test_model_nhwc_relaxed_4());
 
 }  // namespace generated_tests::space_to_batch_v1_2
 
@@ -8779,9 +9182,11 @@ namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nhwc_relaxed_all_inputs_as_internal_4() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {5},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -8876,6 +9281,8 @@ const TestModel& get_test_model_nhwc_relaxed_all_inputs_as_internal_4() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_relaxed_all_inputs_as_internal_4 = TestModelManager::get().add("space_to_batch_v1_2_nhwc_relaxed_all_inputs_as_internal_4", get_test_model_nhwc_relaxed_all_inputs_as_internal_4());
 
 }  // namespace generated_tests::space_to_batch_v1_2
 
@@ -8883,9 +9290,11 @@ namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nhwc_relaxed_all_tensors_as_inputs_4() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 2},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f}),
@@ -8946,6 +9355,8 @@ const TestModel& get_test_model_nhwc_relaxed_all_tensors_as_inputs_4() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_relaxed_all_tensors_as_inputs_4 = TestModelManager::get().add("space_to_batch_v1_2_nhwc_relaxed_all_tensors_as_inputs_4", get_test_model_nhwc_relaxed_all_tensors_as_inputs_4());
 
 }  // namespace generated_tests::space_to_batch_v1_2
 
@@ -8953,9 +9364,11 @@ namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_4() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {2, 5},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -9050,6 +9463,8 @@ const TestModel& get_test_model_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_4 = TestModelManager::get().add("space_to_batch_v1_2_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_4", get_test_model_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_4());
 
 }  // namespace generated_tests::space_to_batch_v1_2
 
@@ -9057,9 +9472,11 @@ namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nhwc_float16_4() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f}),
@@ -9120,6 +9537,8 @@ const TestModel& get_test_model_nhwc_float16_4() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_float16_4 = TestModelManager::get().add("space_to_batch_v1_2_nhwc_float16_4", get_test_model_nhwc_float16_4());
 
 }  // namespace generated_tests::space_to_batch_v1_2
 
@@ -9127,9 +9546,11 @@ namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nhwc_float16_all_inputs_as_internal_4() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {5},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -9224,6 +9645,8 @@ const TestModel& get_test_model_nhwc_float16_all_inputs_as_internal_4() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_float16_all_inputs_as_internal_4 = TestModelManager::get().add("space_to_batch_v1_2_nhwc_float16_all_inputs_as_internal_4", get_test_model_nhwc_float16_all_inputs_as_internal_4());
 
 }  // namespace generated_tests::space_to_batch_v1_2
 
@@ -9231,9 +9654,11 @@ namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nhwc_float16_all_tensors_as_inputs_4() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f}),
@@ -9294,6 +9719,8 @@ const TestModel& get_test_model_nhwc_float16_all_tensors_as_inputs_4() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_float16_all_tensors_as_inputs_4 = TestModelManager::get().add("space_to_batch_v1_2_nhwc_float16_all_tensors_as_inputs_4", get_test_model_nhwc_float16_all_tensors_as_inputs_4());
 
 }  // namespace generated_tests::space_to_batch_v1_2
 
@@ -9301,9 +9728,11 @@ namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_4() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {2, 5},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -9398,6 +9827,8 @@ const TestModel& get_test_model_nhwc_float16_all_tensors_as_inputs_all_inputs_as
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_4 = TestModelManager::get().add("space_to_batch_v1_2_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_4", get_test_model_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_4());
 
 }  // namespace generated_tests::space_to_batch_v1_2
 
@@ -9405,9 +9836,11 @@ namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nhwc_quant8_4() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({132, 136, 140, 144, 148, 152, 156, 160}),
@@ -9468,6 +9901,8 @@ const TestModel& get_test_model_nhwc_quant8_4() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_quant8_4 = TestModelManager::get().add("space_to_batch_v1_2_nhwc_quant8_4", get_test_model_nhwc_quant8_4());
 
 }  // namespace generated_tests::space_to_batch_v1_2
 
@@ -9475,9 +9910,11 @@ namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nhwc_quant8_all_inputs_as_internal_4() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {5},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -9572,6 +10009,8 @@ const TestModel& get_test_model_nhwc_quant8_all_inputs_as_internal_4() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_quant8_all_inputs_as_internal_4 = TestModelManager::get().add("space_to_batch_v1_2_nhwc_quant8_all_inputs_as_internal_4", get_test_model_nhwc_quant8_all_inputs_as_internal_4());
 
 }  // namespace generated_tests::space_to_batch_v1_2
 
@@ -9579,9 +10018,11 @@ namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nhwc_quant8_all_tensors_as_inputs_4() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({132, 136, 140, 144, 148, 152, 156, 160}),
@@ -9642,6 +10083,8 @@ const TestModel& get_test_model_nhwc_quant8_all_tensors_as_inputs_4() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_quant8_all_tensors_as_inputs_4 = TestModelManager::get().add("space_to_batch_v1_2_nhwc_quant8_all_tensors_as_inputs_4", get_test_model_nhwc_quant8_all_tensors_as_inputs_4());
 
 }  // namespace generated_tests::space_to_batch_v1_2
 
@@ -9649,9 +10092,11 @@ namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal_4() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {2, 5},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -9747,15 +10192,19 @@ const TestModel& get_test_model_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_
     return model;
 }
 
+const auto dummy_test_model_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal_4 = TestModelManager::get().add("space_to_batch_v1_2_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal_4", get_test_model_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal_4());
+
 }  // namespace generated_tests::space_to_batch_v1_2
 
 namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nchw_4() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f}),
@@ -9816,6 +10265,8 @@ const TestModel& get_test_model_nchw_4() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_4 = TestModelManager::get().add("space_to_batch_v1_2_nchw_4", get_test_model_nchw_4());
 
 }  // namespace generated_tests::space_to_batch_v1_2
 
@@ -9823,9 +10274,11 @@ namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nchw_all_inputs_as_internal_4() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {5},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -9920,6 +10373,8 @@ const TestModel& get_test_model_nchw_all_inputs_as_internal_4() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_all_inputs_as_internal_4 = TestModelManager::get().add("space_to_batch_v1_2_nchw_all_inputs_as_internal_4", get_test_model_nchw_all_inputs_as_internal_4());
 
 }  // namespace generated_tests::space_to_batch_v1_2
 
@@ -9927,9 +10382,11 @@ namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nchw_all_tensors_as_inputs_4() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f}),
@@ -9990,6 +10447,8 @@ const TestModel& get_test_model_nchw_all_tensors_as_inputs_4() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_all_tensors_as_inputs_4 = TestModelManager::get().add("space_to_batch_v1_2_nchw_all_tensors_as_inputs_4", get_test_model_nchw_all_tensors_as_inputs_4());
 
 }  // namespace generated_tests::space_to_batch_v1_2
 
@@ -9997,9 +10456,11 @@ namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nchw_all_tensors_as_inputs_all_inputs_as_internal_4() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {2, 5},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -10094,6 +10555,8 @@ const TestModel& get_test_model_nchw_all_tensors_as_inputs_all_inputs_as_interna
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_all_tensors_as_inputs_all_inputs_as_internal_4 = TestModelManager::get().add("space_to_batch_v1_2_nchw_all_tensors_as_inputs_all_inputs_as_internal_4", get_test_model_nchw_all_tensors_as_inputs_all_inputs_as_internal_4());
 
 }  // namespace generated_tests::space_to_batch_v1_2
 
@@ -10101,9 +10564,11 @@ namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nchw_relaxed_4() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f}),
@@ -10164,6 +10629,8 @@ const TestModel& get_test_model_nchw_relaxed_4() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_relaxed_4 = TestModelManager::get().add("space_to_batch_v1_2_nchw_relaxed_4", get_test_model_nchw_relaxed_4());
 
 }  // namespace generated_tests::space_to_batch_v1_2
 
@@ -10171,9 +10638,11 @@ namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nchw_relaxed_all_inputs_as_internal_4() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {5},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -10268,6 +10737,8 @@ const TestModel& get_test_model_nchw_relaxed_all_inputs_as_internal_4() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_relaxed_all_inputs_as_internal_4 = TestModelManager::get().add("space_to_batch_v1_2_nchw_relaxed_all_inputs_as_internal_4", get_test_model_nchw_relaxed_all_inputs_as_internal_4());
 
 }  // namespace generated_tests::space_to_batch_v1_2
 
@@ -10275,9 +10746,11 @@ namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nchw_relaxed_all_tensors_as_inputs_4() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 2},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f}),
@@ -10339,15 +10812,19 @@ const TestModel& get_test_model_nchw_relaxed_all_tensors_as_inputs_4() {
     return model;
 }
 
+const auto dummy_test_model_nchw_relaxed_all_tensors_as_inputs_4 = TestModelManager::get().add("space_to_batch_v1_2_nchw_relaxed_all_tensors_as_inputs_4", get_test_model_nchw_relaxed_all_tensors_as_inputs_4());
+
 }  // namespace generated_tests::space_to_batch_v1_2
 
 namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_4() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {2, 5},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -10443,15 +10920,19 @@ const TestModel& get_test_model_nchw_relaxed_all_tensors_as_inputs_all_inputs_as
     return model;
 }
 
+const auto dummy_test_model_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_4 = TestModelManager::get().add("space_to_batch_v1_2_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_4", get_test_model_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_4());
+
 }  // namespace generated_tests::space_to_batch_v1_2
 
 namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nchw_float16_4() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f}),
@@ -10512,6 +10993,8 @@ const TestModel& get_test_model_nchw_float16_4() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_float16_4 = TestModelManager::get().add("space_to_batch_v1_2_nchw_float16_4", get_test_model_nchw_float16_4());
 
 }  // namespace generated_tests::space_to_batch_v1_2
 
@@ -10519,9 +11002,11 @@ namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nchw_float16_all_inputs_as_internal_4() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {5},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -10616,6 +11101,8 @@ const TestModel& get_test_model_nchw_float16_all_inputs_as_internal_4() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_float16_all_inputs_as_internal_4 = TestModelManager::get().add("space_to_batch_v1_2_nchw_float16_all_inputs_as_internal_4", get_test_model_nchw_float16_all_inputs_as_internal_4());
 
 }  // namespace generated_tests::space_to_batch_v1_2
 
@@ -10623,9 +11110,11 @@ namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nchw_float16_all_tensors_as_inputs_4() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f}),
@@ -10687,15 +11176,19 @@ const TestModel& get_test_model_nchw_float16_all_tensors_as_inputs_4() {
     return model;
 }
 
+const auto dummy_test_model_nchw_float16_all_tensors_as_inputs_4 = TestModelManager::get().add("space_to_batch_v1_2_nchw_float16_all_tensors_as_inputs_4", get_test_model_nchw_float16_all_tensors_as_inputs_4());
+
 }  // namespace generated_tests::space_to_batch_v1_2
 
 namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_4() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {2, 5},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -10791,15 +11284,19 @@ const TestModel& get_test_model_nchw_float16_all_tensors_as_inputs_all_inputs_as
     return model;
 }
 
+const auto dummy_test_model_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_4 = TestModelManager::get().add("space_to_batch_v1_2_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_4", get_test_model_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_4());
+
 }  // namespace generated_tests::space_to_batch_v1_2
 
 namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nchw_quant8_4() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({132, 136, 140, 144, 148, 152, 156, 160}),
@@ -10860,6 +11357,8 @@ const TestModel& get_test_model_nchw_quant8_4() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_quant8_4 = TestModelManager::get().add("space_to_batch_v1_2_nchw_quant8_4", get_test_model_nchw_quant8_4());
 
 }  // namespace generated_tests::space_to_batch_v1_2
 
@@ -10867,9 +11366,11 @@ namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nchw_quant8_all_inputs_as_internal_4() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {5},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -10964,6 +11465,8 @@ const TestModel& get_test_model_nchw_quant8_all_inputs_as_internal_4() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_quant8_all_inputs_as_internal_4 = TestModelManager::get().add("space_to_batch_v1_2_nchw_quant8_all_inputs_as_internal_4", get_test_model_nchw_quant8_all_inputs_as_internal_4());
 
 }  // namespace generated_tests::space_to_batch_v1_2
 
@@ -10971,9 +11474,11 @@ namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nchw_quant8_all_tensors_as_inputs_4() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({132, 136, 140, 144, 148, 152, 156, 160}),
@@ -11035,15 +11540,19 @@ const TestModel& get_test_model_nchw_quant8_all_tensors_as_inputs_4() {
     return model;
 }
 
+const auto dummy_test_model_nchw_quant8_all_tensors_as_inputs_4 = TestModelManager::get().add("space_to_batch_v1_2_nchw_quant8_all_tensors_as_inputs_4", get_test_model_nchw_quant8_all_tensors_as_inputs_4());
+
 }  // namespace generated_tests::space_to_batch_v1_2
 
 namespace generated_tests::space_to_batch_v1_2 {
 
 const TestModel& get_test_model_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal_4() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {2, 5},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -11138,6 +11647,8 @@ const TestModel& get_test_model_nchw_quant8_all_tensors_as_inputs_all_inputs_as_
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal_4 = TestModelManager::get().add("space_to_batch_v1_2_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal_4", get_test_model_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal_4());
 
 }  // namespace generated_tests::space_to_batch_v1_2
 
