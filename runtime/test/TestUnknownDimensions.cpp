@@ -28,8 +28,8 @@ using namespace test_helper;
 namespace {
 
 const uint32_t INTENDED_SIZE = 3;
-const uint32_t OTHER_SIZE    = 2;
-const uint32_t UNKNOWN_SIZE  = 0;
+const uint32_t OTHER_SIZE = 2;
+const uint32_t UNKNOWN_SIZE = 0;
 
 // We test three basic scenarios for each tensor dimension:
 //     INTENDED_AT_COMPILE_AND_EXECUTE: set the dimension at compile
@@ -58,19 +58,21 @@ const uint32_t UNKNOWN_SIZE  = 0;
 // infrastructure to handle correctly. However, running all 16k in one test
 // makes the ASAN version take so long that the automatic test runner things the
 // command has become unresponsinve, so we split on the first level.
-enum class DimensionKind { INTENDED_AT_COMPILE_AND_EXECUTE,
-                           INTENDED_AT_COMPILE_NOT_SET_AT_EXECUTE,
-                           UNKNOWN_AT_COMPILE_INTENDED_AT_EXECUTE,
-                           UNKNOWN_AT_COMPILE_OTHER_AT_EXECUTE };
+enum class DimensionKind {
+    INTENDED_AT_COMPILE_AND_EXECUTE,
+    INTENDED_AT_COMPILE_NOT_SET_AT_EXECUTE,
+    UNKNOWN_AT_COMPILE_INTENDED_AT_EXECUTE,
+    UNKNOWN_AT_COMPILE_OTHER_AT_EXECUTE
+};
 typedef std::tuple<DimensionKind, DimensionKind> OperandParams;
 std::vector<DimensionKind> ioDimensionValues = {
-    DimensionKind::INTENDED_AT_COMPILE_AND_EXECUTE,
-    DimensionKind::INTENDED_AT_COMPILE_NOT_SET_AT_EXECUTE,
-    DimensionKind::UNKNOWN_AT_COMPILE_INTENDED_AT_EXECUTE,
-    DimensionKind::UNKNOWN_AT_COMPILE_OTHER_AT_EXECUTE };
+        DimensionKind::INTENDED_AT_COMPILE_AND_EXECUTE,
+        DimensionKind::INTENDED_AT_COMPILE_NOT_SET_AT_EXECUTE,
+        DimensionKind::UNKNOWN_AT_COMPILE_INTENDED_AT_EXECUTE,
+        DimensionKind::UNKNOWN_AT_COMPILE_OTHER_AT_EXECUTE};
 std::vector<DimensionKind> constantDimensionValues = {
         DimensionKind::INTENDED_AT_COMPILE_NOT_SET_AT_EXECUTE,
-        DimensionKind::UNKNOWN_AT_COMPILE_INTENDED_AT_EXECUTE };
+        DimensionKind::UNKNOWN_AT_COMPILE_INTENDED_AT_EXECUTE};
 std::vector<OperandParams> Combine(const std::vector<DimensionKind>& firsts,
                                    const std::vector<DimensionKind>& seconds);
 auto ioValues = Combine(ioDimensionValues, ioDimensionValues);
@@ -143,18 +145,20 @@ void UnknownDimensionsTest::CompareResults<_Float16>(std::map<int, std::vector<_
     EXPECT_EQ(size_t{0}, totalNumberOfErrors);
 }
 
-template<class T, Type TensorType> void UnknownDimensionsTest::TestOne(
-        const OperandParams& paramsForInput0, const OperandParams& paramsForInput1,
-        const OperandParams& paramsForConst, const OperandParams& paramsForOutput) {
+template <class T, Type TensorType>
+void UnknownDimensionsTest::TestOne(const OperandParams& paramsForInput0,
+                                    const OperandParams& paramsForInput1,
+                                    const OperandParams& paramsForConst,
+                                    const OperandParams& paramsForOutput) {
     typedef T IntendedMatrix[INTENDED_SIZE][INTENDED_SIZE];
-    static const IntendedMatrix ones = { { 1, 1, 1 }, { 1, 1, 1 }, { 1, 1, 1 } };
-    static const IntendedMatrix twos = { { 2, 2, 2 }, { 2, 2, 2 }, { 2, 2, 2 } };
-    static const IntendedMatrix fives = { { 5, 5, 5 }, { 5, 5, 5 }, { 5, 5, 5 } };
+    static const IntendedMatrix ones = {{1, 1, 1}, {1, 1, 1}, {1, 1, 1}};
+    static const IntendedMatrix twos = {{2, 2, 2}, {2, 2, 2}, {2, 2, 2}};
+    static const IntendedMatrix fives = {{5, 5, 5}, {5, 5, 5}, {5, 5, 5}};
     const float scale = TensorType == Type::TENSOR_QUANT8_ASYMM ? 1.f : 0.f;
 
     Model model;
-    std::string input0Scope("Input 0:"), input1Scope("Input 1:"),
-                constantScope("Constant:"), outputScope("Output:");
+    std::string input0Scope("Input 0:"), input1Scope("Input 1:"), constantScope("Constant:"),
+            outputScope("Output:");
 
     auto getDimForCompile = [](DimensionKind kind, std::string* scope) {
         switch (kind) {
@@ -176,8 +180,8 @@ template<class T, Type TensorType> void UnknownDimensionsTest::TestOne(
                                                          std::string* scope = nullptr) {
         OperandType matrixTypeWithPotentiallyUnknownDims(
                 TensorType,
-                { getDimForCompile(std::get<0>(params), scope),
-                  getDimForCompile(std::get<1>(params), scope) },
+                {getDimForCompile(std::get<0>(params), scope),
+                 getDimForCompile(std::get<1>(params), scope)},
                 scale);
         return model.addOperand(&matrixTypeWithPotentiallyUnknownDims);
     };
@@ -202,11 +206,9 @@ template<class T, Type TensorType> void UnknownDimensionsTest::TestOne(
 
     model.setOperandValue(activationOpd0, &activation, sizeof(activation));
     model.setOperandValue(constantOpd0, twos, sizeof(twos));
-    model.addOperation(ANEURALNETWORKS_ADD,
-                       {inputOpd0, inputOpd1, activationOpd0},
+    model.addOperation(ANEURALNETWORKS_ADD, {inputOpd0, inputOpd1, activationOpd0},
                        {intermediateOpd0});
-    model.addOperation(ANEURALNETWORKS_ADD,
-                       {intermediateOpd0, constantOpd0, activationOpd0},
+    model.addOperation(ANEURALNETWORKS_ADD, {intermediateOpd0, constantOpd0, activationOpd0},
                        {outputOpd0});
     model.identifyInputsAndOutputs({inputOpd0, inputOpd1}, {outputOpd0});
     if (std::get<0>(paramsForConst) == DimensionKind::INTENDED_AT_COMPILE_NOT_SET_AT_EXECUTE &&
@@ -224,7 +226,7 @@ template<class T, Type TensorType> void UnknownDimensionsTest::TestOne(
     Compilation compilation(&model);
     ASSERT_EQ(compilation.finish(), Result::NO_ERROR);
 
-    IntendedMatrix actual = { { 10, 10, 10 }, { 10, 10, 10 }, { 10, 10, 10 } };
+    IntendedMatrix actual = {{10, 10, 10}, {10, 10, 10}, {10, 10, 10}};
     Execution execution(&compilation);
 
     OperandType matrixTypeIntended(TensorType, {INTENDED_SIZE, INTENDED_SIZE}, scale);
@@ -261,19 +263,21 @@ template<class T, Type TensorType> void UnknownDimensionsTest::TestOne(
     // on OperandParams
     auto sizeAtSet = [](OperandParams params) {
         auto first = std::get<0>(params), second = std::get<1>(params);
-        size_t firstDim = (first == DimensionKind::UNKNOWN_AT_COMPILE_OTHER_AT_EXECUTE) ?
-            OTHER_SIZE : INTENDED_SIZE;
-        size_t secondDim = (second == DimensionKind::UNKNOWN_AT_COMPILE_OTHER_AT_EXECUTE) ?
-            OTHER_SIZE : INTENDED_SIZE;
+        size_t firstDim = (first == DimensionKind::UNKNOWN_AT_COMPILE_OTHER_AT_EXECUTE)
+                                  ? OTHER_SIZE
+                                  : INTENDED_SIZE;
+        size_t secondDim = (second == DimensionKind::UNKNOWN_AT_COMPILE_OTHER_AT_EXECUTE)
+                                   ? OTHER_SIZE
+                                   : INTENDED_SIZE;
         return firstDim * secondDim * sizeof(fives[0][0]);
     };
     ASSERT_EQ(execution.setInput(0, ones, sizeAtSet(paramsForInput0), typeAtSet(paramsForInput0)),
               Result::NO_ERROR);
     ASSERT_EQ(execution.setInput(1, twos, sizeAtSet(paramsForInput1), typeAtSet(paramsForInput1)),
               Result::NO_ERROR);
-    ASSERT_EQ(execution.setOutput(0, actual, sizeAtSet(paramsForOutput),
-                                  typeAtSet(paramsForOutput)),
-              Result::NO_ERROR);
+    ASSERT_EQ(
+            execution.setOutput(0, actual, sizeAtSet(paramsForOutput), typeAtSet(paramsForOutput)),
+            Result::NO_ERROR);
 
     if (allAreIntendedSizeAtExecution) {
         ASSERT_EQ(execution.compute(), Result::NO_ERROR);
@@ -295,21 +299,22 @@ template<class T, Type TensorType> void UnknownDimensionsTest::TestOne(
 std::vector<OperandParams> Combine(const std::vector<DimensionKind>& firsts,
                                    const std::vector<DimensionKind>& seconds) {
     std::vector<OperandParams> ret;
-    for (auto first: firsts) {
-        for (auto second: seconds) {
+    for (auto first : firsts) {
+        for (auto second : seconds) {
             ret.push_back({first, second});
         }
     }
     return ret;
 }
 
-template<class T, Type TensorType> void UnknownDimensionsTest::TestAll() {
+template <class T, Type TensorType>
+void UnknownDimensionsTest::TestAll() {
     const OperandParams paramsForInput0 = GetParam();
-    for (auto paramsForInput1: ioValues) {
-        for (auto paramsForConst: constantValues) {
-            for (auto paramsForOutput: ioValues) {
-                TestOne<T, TensorType>(paramsForInput0, paramsForInput1,
-                                       paramsForConst, paramsForOutput);
+    for (auto paramsForInput1 : ioValues) {
+        for (auto paramsForConst : constantValues) {
+            for (auto paramsForOutput : ioValues) {
+                TestOne<T, TensorType>(paramsForInput0, paramsForInput1, paramsForConst,
+                                       paramsForOutput);
             }
         }
     }
