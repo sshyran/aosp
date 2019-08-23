@@ -2,16 +2,17 @@
 // DO NOT EDIT
 // clang-format off
 #include "TestHarness.h"
-
 using namespace test_helper;
 
 namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255}),
@@ -62,6 +63,8 @@ const TestModel& get_test_model() {
     };
     return model;
 }
+
+const auto dummy_test_model = TestModelManager::get().add("sub_quantized_different_scales", get_test_model());
 
 }  // namespace generated_tests::sub_quantized_different_scales
 
@@ -69,9 +72,11 @@ namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4, 7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -190,6 +195,8 @@ const TestModel& get_test_model_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_all_inputs_as_internal = TestModelManager::get().add("sub_quantized_different_scales_all_inputs_as_internal", get_test_model_all_inputs_as_internal());
 
 }  // namespace generated_tests::sub_quantized_different_scales
 
@@ -197,9 +204,11 @@ namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255}),
@@ -250,6 +259,8 @@ const TestModel& get_test_model_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_2 = TestModelManager::get().add("sub_quantized_different_scales_2", get_test_model_2());
 
 }  // namespace generated_tests::sub_quantized_different_scales
 
@@ -257,9 +268,11 @@ namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4, 7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -378,6 +391,8 @@ const TestModel& get_test_model_all_inputs_as_internal_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_all_inputs_as_internal_2 = TestModelManager::get().add("sub_quantized_different_scales_all_inputs_as_internal_2", get_test_model_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::sub_quantized_different_scales
 
@@ -385,9 +400,11 @@ namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255}),
@@ -438,6 +455,8 @@ const TestModel& get_test_model_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_3 = TestModelManager::get().add("sub_quantized_different_scales_3", get_test_model_3());
 
 }  // namespace generated_tests::sub_quantized_different_scales
 
@@ -445,9 +464,11 @@ namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_all_inputs_as_internal_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4, 7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -566,6 +587,8 @@ const TestModel& get_test_model_all_inputs_as_internal_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_all_inputs_as_internal_3 = TestModelManager::get().add("sub_quantized_different_scales_all_inputs_as_internal_3", get_test_model_all_inputs_as_internal_3());
 
 }  // namespace generated_tests::sub_quantized_different_scales
 
@@ -573,9 +596,11 @@ namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_4() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255}),
@@ -626,6 +651,8 @@ const TestModel& get_test_model_4() {
     };
     return model;
 }
+
+const auto dummy_test_model_4 = TestModelManager::get().add("sub_quantized_different_scales_4", get_test_model_4());
 
 }  // namespace generated_tests::sub_quantized_different_scales
 
@@ -633,9 +660,11 @@ namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_all_inputs_as_internal_4() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4, 7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -754,6 +783,8 @@ const TestModel& get_test_model_all_inputs_as_internal_4() {
     };
     return model;
 }
+
+const auto dummy_test_model_all_inputs_as_internal_4 = TestModelManager::get().add("sub_quantized_different_scales_all_inputs_as_internal_4", get_test_model_all_inputs_as_internal_4());
 
 }  // namespace generated_tests::sub_quantized_different_scales
 
@@ -761,9 +792,11 @@ namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_5() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255}),
@@ -814,6 +847,8 @@ const TestModel& get_test_model_5() {
     };
     return model;
 }
+
+const auto dummy_test_model_5 = TestModelManager::get().add("sub_quantized_different_scales_5", get_test_model_5());
 
 }  // namespace generated_tests::sub_quantized_different_scales
 
@@ -821,9 +856,11 @@ namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_all_inputs_as_internal_5() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4, 7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -942,6 +979,8 @@ const TestModel& get_test_model_all_inputs_as_internal_5() {
     };
     return model;
 }
+
+const auto dummy_test_model_all_inputs_as_internal_5 = TestModelManager::get().add("sub_quantized_different_scales_all_inputs_as_internal_5", get_test_model_all_inputs_as_internal_5());
 
 }  // namespace generated_tests::sub_quantized_different_scales
 
@@ -949,9 +988,11 @@ namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_6() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255}),
@@ -1002,6 +1043,8 @@ const TestModel& get_test_model_6() {
     };
     return model;
 }
+
+const auto dummy_test_model_6 = TestModelManager::get().add("sub_quantized_different_scales_6", get_test_model_6());
 
 }  // namespace generated_tests::sub_quantized_different_scales
 
@@ -1009,9 +1052,11 @@ namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_all_inputs_as_internal_6() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4, 7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -1131,15 +1176,19 @@ const TestModel& get_test_model_all_inputs_as_internal_6() {
     return model;
 }
 
+const auto dummy_test_model_all_inputs_as_internal_6 = TestModelManager::get().add("sub_quantized_different_scales_all_inputs_as_internal_6", get_test_model_all_inputs_as_internal_6());
+
 }  // namespace generated_tests::sub_quantized_different_scales
 
 namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_7() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255}),
@@ -1190,6 +1239,8 @@ const TestModel& get_test_model_7() {
     };
     return model;
 }
+
+const auto dummy_test_model_7 = TestModelManager::get().add("sub_quantized_different_scales_7", get_test_model_7());
 
 }  // namespace generated_tests::sub_quantized_different_scales
 
@@ -1197,9 +1248,11 @@ namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_all_inputs_as_internal_7() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4, 7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -1319,15 +1372,19 @@ const TestModel& get_test_model_all_inputs_as_internal_7() {
     return model;
 }
 
+const auto dummy_test_model_all_inputs_as_internal_7 = TestModelManager::get().add("sub_quantized_different_scales_all_inputs_as_internal_7", get_test_model_all_inputs_as_internal_7());
+
 }  // namespace generated_tests::sub_quantized_different_scales
 
 namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_8() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255}),
@@ -1378,6 +1435,8 @@ const TestModel& get_test_model_8() {
     };
     return model;
 }
+
+const auto dummy_test_model_8 = TestModelManager::get().add("sub_quantized_different_scales_8", get_test_model_8());
 
 }  // namespace generated_tests::sub_quantized_different_scales
 
@@ -1385,9 +1444,11 @@ namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_all_inputs_as_internal_8() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4, 7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -1507,15 +1568,19 @@ const TestModel& get_test_model_all_inputs_as_internal_8() {
     return model;
 }
 
+const auto dummy_test_model_all_inputs_as_internal_8 = TestModelManager::get().add("sub_quantized_different_scales_all_inputs_as_internal_8", get_test_model_all_inputs_as_internal_8());
+
 }  // namespace generated_tests::sub_quantized_different_scales
 
 namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_9() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255}),
@@ -1566,6 +1631,8 @@ const TestModel& get_test_model_9() {
     };
     return model;
 }
+
+const auto dummy_test_model_9 = TestModelManager::get().add("sub_quantized_different_scales_9", get_test_model_9());
 
 }  // namespace generated_tests::sub_quantized_different_scales
 
@@ -1573,9 +1640,11 @@ namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_all_inputs_as_internal_9() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4, 7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -1694,6 +1763,8 @@ const TestModel& get_test_model_all_inputs_as_internal_9() {
     };
     return model;
 }
+
+const auto dummy_test_model_all_inputs_as_internal_9 = TestModelManager::get().add("sub_quantized_different_scales_all_inputs_as_internal_9", get_test_model_all_inputs_as_internal_9());
 
 }  // namespace generated_tests::sub_quantized_different_scales
 
@@ -1701,9 +1772,11 @@ namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_10() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255}),
@@ -1754,6 +1827,8 @@ const TestModel& get_test_model_10() {
     };
     return model;
 }
+
+const auto dummy_test_model_10 = TestModelManager::get().add("sub_quantized_different_scales_10", get_test_model_10());
 
 }  // namespace generated_tests::sub_quantized_different_scales
 
@@ -1761,9 +1836,11 @@ namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_all_inputs_as_internal_10() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4, 7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -1883,15 +1960,19 @@ const TestModel& get_test_model_all_inputs_as_internal_10() {
     return model;
 }
 
+const auto dummy_test_model_all_inputs_as_internal_10 = TestModelManager::get().add("sub_quantized_different_scales_all_inputs_as_internal_10", get_test_model_all_inputs_as_internal_10());
+
 }  // namespace generated_tests::sub_quantized_different_scales
 
 namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_11() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255}),
@@ -1942,6 +2023,8 @@ const TestModel& get_test_model_11() {
     };
     return model;
 }
+
+const auto dummy_test_model_11 = TestModelManager::get().add("sub_quantized_different_scales_11", get_test_model_11());
 
 }  // namespace generated_tests::sub_quantized_different_scales
 
@@ -1949,9 +2032,11 @@ namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_all_inputs_as_internal_11() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4, 7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -2071,15 +2156,19 @@ const TestModel& get_test_model_all_inputs_as_internal_11() {
     return model;
 }
 
+const auto dummy_test_model_all_inputs_as_internal_11 = TestModelManager::get().add("sub_quantized_different_scales_all_inputs_as_internal_11", get_test_model_all_inputs_as_internal_11());
+
 }  // namespace generated_tests::sub_quantized_different_scales
 
 namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_12() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255}),
@@ -2130,6 +2219,8 @@ const TestModel& get_test_model_12() {
     };
     return model;
 }
+
+const auto dummy_test_model_12 = TestModelManager::get().add("sub_quantized_different_scales_12", get_test_model_12());
 
 }  // namespace generated_tests::sub_quantized_different_scales
 
@@ -2137,9 +2228,11 @@ namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_all_inputs_as_internal_12() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4, 7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -2259,15 +2352,19 @@ const TestModel& get_test_model_all_inputs_as_internal_12() {
     return model;
 }
 
+const auto dummy_test_model_all_inputs_as_internal_12 = TestModelManager::get().add("sub_quantized_different_scales_all_inputs_as_internal_12", get_test_model_all_inputs_as_internal_12());
+
 }  // namespace generated_tests::sub_quantized_different_scales
 
 namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_13() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255}),
@@ -2318,6 +2415,8 @@ const TestModel& get_test_model_13() {
     };
     return model;
 }
+
+const auto dummy_test_model_13 = TestModelManager::get().add("sub_quantized_different_scales_13", get_test_model_13());
 
 }  // namespace generated_tests::sub_quantized_different_scales
 
@@ -2325,9 +2424,11 @@ namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_all_inputs_as_internal_13() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4, 7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -2446,6 +2547,8 @@ const TestModel& get_test_model_all_inputs_as_internal_13() {
     };
     return model;
 }
+
+const auto dummy_test_model_all_inputs_as_internal_13 = TestModelManager::get().add("sub_quantized_different_scales_all_inputs_as_internal_13", get_test_model_all_inputs_as_internal_13());
 
 }  // namespace generated_tests::sub_quantized_different_scales
 
@@ -2453,9 +2556,11 @@ namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_14() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255}),
@@ -2506,6 +2611,8 @@ const TestModel& get_test_model_14() {
     };
     return model;
 }
+
+const auto dummy_test_model_14 = TestModelManager::get().add("sub_quantized_different_scales_14", get_test_model_14());
 
 }  // namespace generated_tests::sub_quantized_different_scales
 
@@ -2513,9 +2620,11 @@ namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_all_inputs_as_internal_14() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4, 7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -2634,6 +2743,8 @@ const TestModel& get_test_model_all_inputs_as_internal_14() {
     };
     return model;
 }
+
+const auto dummy_test_model_all_inputs_as_internal_14 = TestModelManager::get().add("sub_quantized_different_scales_all_inputs_as_internal_14", get_test_model_all_inputs_as_internal_14());
 
 }  // namespace generated_tests::sub_quantized_different_scales
 
@@ -2641,9 +2752,11 @@ namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_15() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255}),
@@ -2694,6 +2807,8 @@ const TestModel& get_test_model_15() {
     };
     return model;
 }
+
+const auto dummy_test_model_15 = TestModelManager::get().add("sub_quantized_different_scales_15", get_test_model_15());
 
 }  // namespace generated_tests::sub_quantized_different_scales
 
@@ -2701,9 +2816,11 @@ namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_all_inputs_as_internal_15() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4, 7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -2822,6 +2939,8 @@ const TestModel& get_test_model_all_inputs_as_internal_15() {
     };
     return model;
 }
+
+const auto dummy_test_model_all_inputs_as_internal_15 = TestModelManager::get().add("sub_quantized_different_scales_all_inputs_as_internal_15", get_test_model_all_inputs_as_internal_15());
 
 }  // namespace generated_tests::sub_quantized_different_scales
 
@@ -2829,9 +2948,11 @@ namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_16() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255}),
@@ -2882,6 +3003,8 @@ const TestModel& get_test_model_16() {
     };
     return model;
 }
+
+const auto dummy_test_model_16 = TestModelManager::get().add("sub_quantized_different_scales_16", get_test_model_16());
 
 }  // namespace generated_tests::sub_quantized_different_scales
 
@@ -2889,9 +3012,11 @@ namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_all_inputs_as_internal_16() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4, 7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -3011,15 +3136,19 @@ const TestModel& get_test_model_all_inputs_as_internal_16() {
     return model;
 }
 
+const auto dummy_test_model_all_inputs_as_internal_16 = TestModelManager::get().add("sub_quantized_different_scales_all_inputs_as_internal_16", get_test_model_all_inputs_as_internal_16());
+
 }  // namespace generated_tests::sub_quantized_different_scales
 
 namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_17() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255}),
@@ -3070,6 +3199,8 @@ const TestModel& get_test_model_17() {
     };
     return model;
 }
+
+const auto dummy_test_model_17 = TestModelManager::get().add("sub_quantized_different_scales_17", get_test_model_17());
 
 }  // namespace generated_tests::sub_quantized_different_scales
 
@@ -3077,9 +3208,11 @@ namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_all_inputs_as_internal_17() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4, 7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -3199,15 +3332,19 @@ const TestModel& get_test_model_all_inputs_as_internal_17() {
     return model;
 }
 
+const auto dummy_test_model_all_inputs_as_internal_17 = TestModelManager::get().add("sub_quantized_different_scales_all_inputs_as_internal_17", get_test_model_all_inputs_as_internal_17());
+
 }  // namespace generated_tests::sub_quantized_different_scales
 
 namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_18() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255}),
@@ -3258,6 +3395,8 @@ const TestModel& get_test_model_18() {
     };
     return model;
 }
+
+const auto dummy_test_model_18 = TestModelManager::get().add("sub_quantized_different_scales_18", get_test_model_18());
 
 }  // namespace generated_tests::sub_quantized_different_scales
 
@@ -3265,9 +3404,11 @@ namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_all_inputs_as_internal_18() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4, 7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -3386,6 +3527,8 @@ const TestModel& get_test_model_all_inputs_as_internal_18() {
     };
     return model;
 }
+
+const auto dummy_test_model_all_inputs_as_internal_18 = TestModelManager::get().add("sub_quantized_different_scales_all_inputs_as_internal_18", get_test_model_all_inputs_as_internal_18());
 
 }  // namespace generated_tests::sub_quantized_different_scales
 
@@ -3393,9 +3536,11 @@ namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_19() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255}),
@@ -3446,6 +3591,8 @@ const TestModel& get_test_model_19() {
     };
     return model;
 }
+
+const auto dummy_test_model_19 = TestModelManager::get().add("sub_quantized_different_scales_19", get_test_model_19());
 
 }  // namespace generated_tests::sub_quantized_different_scales
 
@@ -3453,9 +3600,11 @@ namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_all_inputs_as_internal_19() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4, 7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -3575,15 +3724,19 @@ const TestModel& get_test_model_all_inputs_as_internal_19() {
     return model;
 }
 
+const auto dummy_test_model_all_inputs_as_internal_19 = TestModelManager::get().add("sub_quantized_different_scales_all_inputs_as_internal_19", get_test_model_all_inputs_as_internal_19());
+
 }  // namespace generated_tests::sub_quantized_different_scales
 
 namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_20() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255}),
@@ -3634,6 +3787,8 @@ const TestModel& get_test_model_20() {
     };
     return model;
 }
+
+const auto dummy_test_model_20 = TestModelManager::get().add("sub_quantized_different_scales_20", get_test_model_20());
 
 }  // namespace generated_tests::sub_quantized_different_scales
 
@@ -3641,9 +3796,11 @@ namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_all_inputs_as_internal_20() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4, 7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -3763,15 +3920,19 @@ const TestModel& get_test_model_all_inputs_as_internal_20() {
     return model;
 }
 
+const auto dummy_test_model_all_inputs_as_internal_20 = TestModelManager::get().add("sub_quantized_different_scales_all_inputs_as_internal_20", get_test_model_all_inputs_as_internal_20());
+
 }  // namespace generated_tests::sub_quantized_different_scales
 
 namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_21() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255}),
@@ -3822,6 +3983,8 @@ const TestModel& get_test_model_21() {
     };
     return model;
 }
+
+const auto dummy_test_model_21 = TestModelManager::get().add("sub_quantized_different_scales_21", get_test_model_21());
 
 }  // namespace generated_tests::sub_quantized_different_scales
 
@@ -3829,9 +3992,11 @@ namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_all_inputs_as_internal_21() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4, 7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -3951,15 +4116,19 @@ const TestModel& get_test_model_all_inputs_as_internal_21() {
     return model;
 }
 
+const auto dummy_test_model_all_inputs_as_internal_21 = TestModelManager::get().add("sub_quantized_different_scales_all_inputs_as_internal_21", get_test_model_all_inputs_as_internal_21());
+
 }  // namespace generated_tests::sub_quantized_different_scales
 
 namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_22() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255}),
@@ -4010,6 +4179,8 @@ const TestModel& get_test_model_22() {
     };
     return model;
 }
+
+const auto dummy_test_model_22 = TestModelManager::get().add("sub_quantized_different_scales_22", get_test_model_22());
 
 }  // namespace generated_tests::sub_quantized_different_scales
 
@@ -4017,9 +4188,11 @@ namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_all_inputs_as_internal_22() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4, 7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -4139,15 +4312,19 @@ const TestModel& get_test_model_all_inputs_as_internal_22() {
     return model;
 }
 
+const auto dummy_test_model_all_inputs_as_internal_22 = TestModelManager::get().add("sub_quantized_different_scales_all_inputs_as_internal_22", get_test_model_all_inputs_as_internal_22());
+
 }  // namespace generated_tests::sub_quantized_different_scales
 
 namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_23() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255}),
@@ -4198,6 +4375,8 @@ const TestModel& get_test_model_23() {
     };
     return model;
 }
+
+const auto dummy_test_model_23 = TestModelManager::get().add("sub_quantized_different_scales_23", get_test_model_23());
 
 }  // namespace generated_tests::sub_quantized_different_scales
 
@@ -4205,9 +4384,11 @@ namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_all_inputs_as_internal_23() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4, 7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -4327,15 +4508,19 @@ const TestModel& get_test_model_all_inputs_as_internal_23() {
     return model;
 }
 
+const auto dummy_test_model_all_inputs_as_internal_23 = TestModelManager::get().add("sub_quantized_different_scales_all_inputs_as_internal_23", get_test_model_all_inputs_as_internal_23());
+
 }  // namespace generated_tests::sub_quantized_different_scales
 
 namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_24() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255}),
@@ -4386,6 +4571,8 @@ const TestModel& get_test_model_24() {
     };
     return model;
 }
+
+const auto dummy_test_model_24 = TestModelManager::get().add("sub_quantized_different_scales_24", get_test_model_24());
 
 }  // namespace generated_tests::sub_quantized_different_scales
 
@@ -4393,9 +4580,11 @@ namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_all_inputs_as_internal_24() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4, 7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -4515,15 +4704,19 @@ const TestModel& get_test_model_all_inputs_as_internal_24() {
     return model;
 }
 
+const auto dummy_test_model_all_inputs_as_internal_24 = TestModelManager::get().add("sub_quantized_different_scales_all_inputs_as_internal_24", get_test_model_all_inputs_as_internal_24());
+
 }  // namespace generated_tests::sub_quantized_different_scales
 
 namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_25() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255}),
@@ -4574,6 +4767,8 @@ const TestModel& get_test_model_25() {
     };
     return model;
 }
+
+const auto dummy_test_model_25 = TestModelManager::get().add("sub_quantized_different_scales_25", get_test_model_25());
 
 }  // namespace generated_tests::sub_quantized_different_scales
 
@@ -4581,9 +4776,11 @@ namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_all_inputs_as_internal_25() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4, 7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -4703,15 +4900,19 @@ const TestModel& get_test_model_all_inputs_as_internal_25() {
     return model;
 }
 
+const auto dummy_test_model_all_inputs_as_internal_25 = TestModelManager::get().add("sub_quantized_different_scales_all_inputs_as_internal_25", get_test_model_all_inputs_as_internal_25());
+
 }  // namespace generated_tests::sub_quantized_different_scales
 
 namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_26() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255}),
@@ -4762,6 +4963,8 @@ const TestModel& get_test_model_26() {
     };
     return model;
 }
+
+const auto dummy_test_model_26 = TestModelManager::get().add("sub_quantized_different_scales_26", get_test_model_26());
 
 }  // namespace generated_tests::sub_quantized_different_scales
 
@@ -4769,9 +4972,11 @@ namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_all_inputs_as_internal_26() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4, 7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -4891,15 +5096,19 @@ const TestModel& get_test_model_all_inputs_as_internal_26() {
     return model;
 }
 
+const auto dummy_test_model_all_inputs_as_internal_26 = TestModelManager::get().add("sub_quantized_different_scales_all_inputs_as_internal_26", get_test_model_all_inputs_as_internal_26());
+
 }  // namespace generated_tests::sub_quantized_different_scales
 
 namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_27() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255}),
@@ -4950,6 +5159,8 @@ const TestModel& get_test_model_27() {
     };
     return model;
 }
+
+const auto dummy_test_model_27 = TestModelManager::get().add("sub_quantized_different_scales_27", get_test_model_27());
 
 }  // namespace generated_tests::sub_quantized_different_scales
 
@@ -4957,9 +5168,11 @@ namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_all_inputs_as_internal_27() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4, 7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -5079,15 +5292,19 @@ const TestModel& get_test_model_all_inputs_as_internal_27() {
     return model;
 }
 
+const auto dummy_test_model_all_inputs_as_internal_27 = TestModelManager::get().add("sub_quantized_different_scales_all_inputs_as_internal_27", get_test_model_all_inputs_as_internal_27());
+
 }  // namespace generated_tests::sub_quantized_different_scales
 
 namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_28() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255}),
@@ -5138,6 +5355,8 @@ const TestModel& get_test_model_28() {
     };
     return model;
 }
+
+const auto dummy_test_model_28 = TestModelManager::get().add("sub_quantized_different_scales_28", get_test_model_28());
 
 }  // namespace generated_tests::sub_quantized_different_scales
 
@@ -5145,9 +5364,11 @@ namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_all_inputs_as_internal_28() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4, 7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -5267,15 +5488,19 @@ const TestModel& get_test_model_all_inputs_as_internal_28() {
     return model;
 }
 
+const auto dummy_test_model_all_inputs_as_internal_28 = TestModelManager::get().add("sub_quantized_different_scales_all_inputs_as_internal_28", get_test_model_all_inputs_as_internal_28());
+
 }  // namespace generated_tests::sub_quantized_different_scales
 
 namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_29() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255}),
@@ -5326,6 +5551,8 @@ const TestModel& get_test_model_29() {
     };
     return model;
 }
+
+const auto dummy_test_model_29 = TestModelManager::get().add("sub_quantized_different_scales_29", get_test_model_29());
 
 }  // namespace generated_tests::sub_quantized_different_scales
 
@@ -5333,9 +5560,11 @@ namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_all_inputs_as_internal_29() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4, 7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -5454,6 +5683,8 @@ const TestModel& get_test_model_all_inputs_as_internal_29() {
     };
     return model;
 }
+
+const auto dummy_test_model_all_inputs_as_internal_29 = TestModelManager::get().add("sub_quantized_different_scales_all_inputs_as_internal_29", get_test_model_all_inputs_as_internal_29());
 
 }  // namespace generated_tests::sub_quantized_different_scales
 
@@ -5461,9 +5692,11 @@ namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_30() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255}),
@@ -5514,6 +5747,8 @@ const TestModel& get_test_model_30() {
     };
     return model;
 }
+
+const auto dummy_test_model_30 = TestModelManager::get().add("sub_quantized_different_scales_30", get_test_model_30());
 
 }  // namespace generated_tests::sub_quantized_different_scales
 
@@ -5521,9 +5756,11 @@ namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_all_inputs_as_internal_30() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4, 7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -5642,6 +5879,8 @@ const TestModel& get_test_model_all_inputs_as_internal_30() {
     };
     return model;
 }
+
+const auto dummy_test_model_all_inputs_as_internal_30 = TestModelManager::get().add("sub_quantized_different_scales_all_inputs_as_internal_30", get_test_model_all_inputs_as_internal_30());
 
 }  // namespace generated_tests::sub_quantized_different_scales
 
@@ -5649,9 +5888,11 @@ namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_31() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255}),
@@ -5702,6 +5943,8 @@ const TestModel& get_test_model_31() {
     };
     return model;
 }
+
+const auto dummy_test_model_31 = TestModelManager::get().add("sub_quantized_different_scales_31", get_test_model_31());
 
 }  // namespace generated_tests::sub_quantized_different_scales
 
@@ -5709,9 +5952,11 @@ namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_all_inputs_as_internal_31() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4, 7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -5830,6 +6075,8 @@ const TestModel& get_test_model_all_inputs_as_internal_31() {
     };
     return model;
 }
+
+const auto dummy_test_model_all_inputs_as_internal_31 = TestModelManager::get().add("sub_quantized_different_scales_all_inputs_as_internal_31", get_test_model_all_inputs_as_internal_31());
 
 }  // namespace generated_tests::sub_quantized_different_scales
 
@@ -5837,9 +6084,11 @@ namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_32() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255}),
@@ -5890,6 +6139,8 @@ const TestModel& get_test_model_32() {
     };
     return model;
 }
+
+const auto dummy_test_model_32 = TestModelManager::get().add("sub_quantized_different_scales_32", get_test_model_32());
 
 }  // namespace generated_tests::sub_quantized_different_scales
 
@@ -5897,9 +6148,11 @@ namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_all_inputs_as_internal_32() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4, 7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -6019,15 +6272,19 @@ const TestModel& get_test_model_all_inputs_as_internal_32() {
     return model;
 }
 
+const auto dummy_test_model_all_inputs_as_internal_32 = TestModelManager::get().add("sub_quantized_different_scales_all_inputs_as_internal_32", get_test_model_all_inputs_as_internal_32());
+
 }  // namespace generated_tests::sub_quantized_different_scales
 
 namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_33() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255}),
@@ -6078,6 +6335,8 @@ const TestModel& get_test_model_33() {
     };
     return model;
 }
+
+const auto dummy_test_model_33 = TestModelManager::get().add("sub_quantized_different_scales_33", get_test_model_33());
 
 }  // namespace generated_tests::sub_quantized_different_scales
 
@@ -6085,9 +6344,11 @@ namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_all_inputs_as_internal_33() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4, 7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -6207,15 +6468,19 @@ const TestModel& get_test_model_all_inputs_as_internal_33() {
     return model;
 }
 
+const auto dummy_test_model_all_inputs_as_internal_33 = TestModelManager::get().add("sub_quantized_different_scales_all_inputs_as_internal_33", get_test_model_all_inputs_as_internal_33());
+
 }  // namespace generated_tests::sub_quantized_different_scales
 
 namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_34() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255}),
@@ -6266,6 +6531,8 @@ const TestModel& get_test_model_34() {
     };
     return model;
 }
+
+const auto dummy_test_model_34 = TestModelManager::get().add("sub_quantized_different_scales_34", get_test_model_34());
 
 }  // namespace generated_tests::sub_quantized_different_scales
 
@@ -6273,9 +6540,11 @@ namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_all_inputs_as_internal_34() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4, 7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -6394,6 +6663,8 @@ const TestModel& get_test_model_all_inputs_as_internal_34() {
     };
     return model;
 }
+
+const auto dummy_test_model_all_inputs_as_internal_34 = TestModelManager::get().add("sub_quantized_different_scales_all_inputs_as_internal_34", get_test_model_all_inputs_as_internal_34());
 
 }  // namespace generated_tests::sub_quantized_different_scales
 
@@ -6401,9 +6672,11 @@ namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_35() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255}),
@@ -6454,6 +6727,8 @@ const TestModel& get_test_model_35() {
     };
     return model;
 }
+
+const auto dummy_test_model_35 = TestModelManager::get().add("sub_quantized_different_scales_35", get_test_model_35());
 
 }  // namespace generated_tests::sub_quantized_different_scales
 
@@ -6461,9 +6736,11 @@ namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_all_inputs_as_internal_35() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4, 7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -6583,15 +6860,19 @@ const TestModel& get_test_model_all_inputs_as_internal_35() {
     return model;
 }
 
+const auto dummy_test_model_all_inputs_as_internal_35 = TestModelManager::get().add("sub_quantized_different_scales_all_inputs_as_internal_35", get_test_model_all_inputs_as_internal_35());
+
 }  // namespace generated_tests::sub_quantized_different_scales
 
 namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_36() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255}),
@@ -6642,6 +6923,8 @@ const TestModel& get_test_model_36() {
     };
     return model;
 }
+
+const auto dummy_test_model_36 = TestModelManager::get().add("sub_quantized_different_scales_36", get_test_model_36());
 
 }  // namespace generated_tests::sub_quantized_different_scales
 
@@ -6649,9 +6932,11 @@ namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_all_inputs_as_internal_36() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4, 7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -6771,15 +7056,19 @@ const TestModel& get_test_model_all_inputs_as_internal_36() {
     return model;
 }
 
+const auto dummy_test_model_all_inputs_as_internal_36 = TestModelManager::get().add("sub_quantized_different_scales_all_inputs_as_internal_36", get_test_model_all_inputs_as_internal_36());
+
 }  // namespace generated_tests::sub_quantized_different_scales
 
 namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_37() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255}),
@@ -6830,6 +7119,8 @@ const TestModel& get_test_model_37() {
     };
     return model;
 }
+
+const auto dummy_test_model_37 = TestModelManager::get().add("sub_quantized_different_scales_37", get_test_model_37());
 
 }  // namespace generated_tests::sub_quantized_different_scales
 
@@ -6837,9 +7128,11 @@ namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_all_inputs_as_internal_37() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4, 7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -6959,15 +7252,19 @@ const TestModel& get_test_model_all_inputs_as_internal_37() {
     return model;
 }
 
+const auto dummy_test_model_all_inputs_as_internal_37 = TestModelManager::get().add("sub_quantized_different_scales_all_inputs_as_internal_37", get_test_model_all_inputs_as_internal_37());
+
 }  // namespace generated_tests::sub_quantized_different_scales
 
 namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_38() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255}),
@@ -7018,6 +7315,8 @@ const TestModel& get_test_model_38() {
     };
     return model;
 }
+
+const auto dummy_test_model_38 = TestModelManager::get().add("sub_quantized_different_scales_38", get_test_model_38());
 
 }  // namespace generated_tests::sub_quantized_different_scales
 
@@ -7025,9 +7324,11 @@ namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_all_inputs_as_internal_38() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4, 7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -7147,15 +7448,19 @@ const TestModel& get_test_model_all_inputs_as_internal_38() {
     return model;
 }
 
+const auto dummy_test_model_all_inputs_as_internal_38 = TestModelManager::get().add("sub_quantized_different_scales_all_inputs_as_internal_38", get_test_model_all_inputs_as_internal_38());
+
 }  // namespace generated_tests::sub_quantized_different_scales
 
 namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_39() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255}),
@@ -7206,6 +7511,8 @@ const TestModel& get_test_model_39() {
     };
     return model;
 }
+
+const auto dummy_test_model_39 = TestModelManager::get().add("sub_quantized_different_scales_39", get_test_model_39());
 
 }  // namespace generated_tests::sub_quantized_different_scales
 
@@ -7213,9 +7520,11 @@ namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_all_inputs_as_internal_39() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4, 7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -7335,15 +7644,19 @@ const TestModel& get_test_model_all_inputs_as_internal_39() {
     return model;
 }
 
+const auto dummy_test_model_all_inputs_as_internal_39 = TestModelManager::get().add("sub_quantized_different_scales_all_inputs_as_internal_39", get_test_model_all_inputs_as_internal_39());
+
 }  // namespace generated_tests::sub_quantized_different_scales
 
 namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_40() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255}),
@@ -7394,6 +7707,8 @@ const TestModel& get_test_model_40() {
     };
     return model;
 }
+
+const auto dummy_test_model_40 = TestModelManager::get().add("sub_quantized_different_scales_40", get_test_model_40());
 
 }  // namespace generated_tests::sub_quantized_different_scales
 
@@ -7401,9 +7716,11 @@ namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_all_inputs_as_internal_40() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4, 7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -7523,15 +7840,19 @@ const TestModel& get_test_model_all_inputs_as_internal_40() {
     return model;
 }
 
+const auto dummy_test_model_all_inputs_as_internal_40 = TestModelManager::get().add("sub_quantized_different_scales_all_inputs_as_internal_40", get_test_model_all_inputs_as_internal_40());
+
 }  // namespace generated_tests::sub_quantized_different_scales
 
 namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_41() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255}),
@@ -7582,6 +7903,8 @@ const TestModel& get_test_model_41() {
     };
     return model;
 }
+
+const auto dummy_test_model_41 = TestModelManager::get().add("sub_quantized_different_scales_41", get_test_model_41());
 
 }  // namespace generated_tests::sub_quantized_different_scales
 
@@ -7589,9 +7912,11 @@ namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_all_inputs_as_internal_41() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4, 7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -7711,15 +8036,19 @@ const TestModel& get_test_model_all_inputs_as_internal_41() {
     return model;
 }
 
+const auto dummy_test_model_all_inputs_as_internal_41 = TestModelManager::get().add("sub_quantized_different_scales_all_inputs_as_internal_41", get_test_model_all_inputs_as_internal_41());
+
 }  // namespace generated_tests::sub_quantized_different_scales
 
 namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_42() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255}),
@@ -7770,6 +8099,8 @@ const TestModel& get_test_model_42() {
     };
     return model;
 }
+
+const auto dummy_test_model_42 = TestModelManager::get().add("sub_quantized_different_scales_42", get_test_model_42());
 
 }  // namespace generated_tests::sub_quantized_different_scales
 
@@ -7777,9 +8108,11 @@ namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_all_inputs_as_internal_42() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4, 7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -7899,15 +8232,19 @@ const TestModel& get_test_model_all_inputs_as_internal_42() {
     return model;
 }
 
+const auto dummy_test_model_all_inputs_as_internal_42 = TestModelManager::get().add("sub_quantized_different_scales_all_inputs_as_internal_42", get_test_model_all_inputs_as_internal_42());
+
 }  // namespace generated_tests::sub_quantized_different_scales
 
 namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_43() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255}),
@@ -7958,6 +8295,8 @@ const TestModel& get_test_model_43() {
     };
     return model;
 }
+
+const auto dummy_test_model_43 = TestModelManager::get().add("sub_quantized_different_scales_43", get_test_model_43());
 
 }  // namespace generated_tests::sub_quantized_different_scales
 
@@ -7965,9 +8304,11 @@ namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_all_inputs_as_internal_43() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4, 7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -8086,6 +8427,8 @@ const TestModel& get_test_model_all_inputs_as_internal_43() {
     };
     return model;
 }
+
+const auto dummy_test_model_all_inputs_as_internal_43 = TestModelManager::get().add("sub_quantized_different_scales_all_inputs_as_internal_43", get_test_model_all_inputs_as_internal_43());
 
 }  // namespace generated_tests::sub_quantized_different_scales
 
@@ -8093,9 +8436,11 @@ namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_44() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255}),
@@ -8146,6 +8491,8 @@ const TestModel& get_test_model_44() {
     };
     return model;
 }
+
+const auto dummy_test_model_44 = TestModelManager::get().add("sub_quantized_different_scales_44", get_test_model_44());
 
 }  // namespace generated_tests::sub_quantized_different_scales
 
@@ -8153,9 +8500,11 @@ namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_all_inputs_as_internal_44() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4, 7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -8275,15 +8624,19 @@ const TestModel& get_test_model_all_inputs_as_internal_44() {
     return model;
 }
 
+const auto dummy_test_model_all_inputs_as_internal_44 = TestModelManager::get().add("sub_quantized_different_scales_all_inputs_as_internal_44", get_test_model_all_inputs_as_internal_44());
+
 }  // namespace generated_tests::sub_quantized_different_scales
 
 namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_45() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255}),
@@ -8334,6 +8687,8 @@ const TestModel& get_test_model_45() {
     };
     return model;
 }
+
+const auto dummy_test_model_45 = TestModelManager::get().add("sub_quantized_different_scales_45", get_test_model_45());
 
 }  // namespace generated_tests::sub_quantized_different_scales
 
@@ -8341,9 +8696,11 @@ namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_all_inputs_as_internal_45() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4, 7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -8462,6 +8819,8 @@ const TestModel& get_test_model_all_inputs_as_internal_45() {
     };
     return model;
 }
+
+const auto dummy_test_model_all_inputs_as_internal_45 = TestModelManager::get().add("sub_quantized_different_scales_all_inputs_as_internal_45", get_test_model_all_inputs_as_internal_45());
 
 }  // namespace generated_tests::sub_quantized_different_scales
 
@@ -8469,9 +8828,11 @@ namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_46() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255}),
@@ -8522,6 +8883,8 @@ const TestModel& get_test_model_46() {
     };
     return model;
 }
+
+const auto dummy_test_model_46 = TestModelManager::get().add("sub_quantized_different_scales_46", get_test_model_46());
 
 }  // namespace generated_tests::sub_quantized_different_scales
 
@@ -8529,9 +8892,11 @@ namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_all_inputs_as_internal_46() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4, 7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -8650,6 +9015,8 @@ const TestModel& get_test_model_all_inputs_as_internal_46() {
     };
     return model;
 }
+
+const auto dummy_test_model_all_inputs_as_internal_46 = TestModelManager::get().add("sub_quantized_different_scales_all_inputs_as_internal_46", get_test_model_all_inputs_as_internal_46());
 
 }  // namespace generated_tests::sub_quantized_different_scales
 
@@ -8657,9 +9024,11 @@ namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_47() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255}),
@@ -8710,6 +9079,8 @@ const TestModel& get_test_model_47() {
     };
     return model;
 }
+
+const auto dummy_test_model_47 = TestModelManager::get().add("sub_quantized_different_scales_47", get_test_model_47());
 
 }  // namespace generated_tests::sub_quantized_different_scales
 
@@ -8717,9 +9088,11 @@ namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_all_inputs_as_internal_47() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4, 7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -8839,15 +9212,19 @@ const TestModel& get_test_model_all_inputs_as_internal_47() {
     return model;
 }
 
+const auto dummy_test_model_all_inputs_as_internal_47 = TestModelManager::get().add("sub_quantized_different_scales_all_inputs_as_internal_47", get_test_model_all_inputs_as_internal_47());
+
 }  // namespace generated_tests::sub_quantized_different_scales
 
 namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_48() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255}),
@@ -8898,6 +9275,8 @@ const TestModel& get_test_model_48() {
     };
     return model;
 }
+
+const auto dummy_test_model_48 = TestModelManager::get().add("sub_quantized_different_scales_48", get_test_model_48());
 
 }  // namespace generated_tests::sub_quantized_different_scales
 
@@ -8905,9 +9284,11 @@ namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_all_inputs_as_internal_48() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4, 7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -9027,15 +9408,19 @@ const TestModel& get_test_model_all_inputs_as_internal_48() {
     return model;
 }
 
+const auto dummy_test_model_all_inputs_as_internal_48 = TestModelManager::get().add("sub_quantized_different_scales_all_inputs_as_internal_48", get_test_model_all_inputs_as_internal_48());
+
 }  // namespace generated_tests::sub_quantized_different_scales
 
 namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_49() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255}),
@@ -9086,6 +9471,8 @@ const TestModel& get_test_model_49() {
     };
     return model;
 }
+
+const auto dummy_test_model_49 = TestModelManager::get().add("sub_quantized_different_scales_49", get_test_model_49());
 
 }  // namespace generated_tests::sub_quantized_different_scales
 
@@ -9093,9 +9480,11 @@ namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_all_inputs_as_internal_49() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4, 7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -9214,6 +9603,8 @@ const TestModel& get_test_model_all_inputs_as_internal_49() {
     };
     return model;
 }
+
+const auto dummy_test_model_all_inputs_as_internal_49 = TestModelManager::get().add("sub_quantized_different_scales_all_inputs_as_internal_49", get_test_model_all_inputs_as_internal_49());
 
 }  // namespace generated_tests::sub_quantized_different_scales
 
@@ -9221,9 +9612,11 @@ namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_50() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255}),
@@ -9274,6 +9667,8 @@ const TestModel& get_test_model_50() {
     };
     return model;
 }
+
+const auto dummy_test_model_50 = TestModelManager::get().add("sub_quantized_different_scales_50", get_test_model_50());
 
 }  // namespace generated_tests::sub_quantized_different_scales
 
@@ -9281,9 +9676,11 @@ namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_all_inputs_as_internal_50() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4, 7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -9402,6 +9799,8 @@ const TestModel& get_test_model_all_inputs_as_internal_50() {
     };
     return model;
 }
+
+const auto dummy_test_model_all_inputs_as_internal_50 = TestModelManager::get().add("sub_quantized_different_scales_all_inputs_as_internal_50", get_test_model_all_inputs_as_internal_50());
 
 }  // namespace generated_tests::sub_quantized_different_scales
 
@@ -9409,9 +9808,11 @@ namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_51() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255}),
@@ -9462,6 +9863,8 @@ const TestModel& get_test_model_51() {
     };
     return model;
 }
+
+const auto dummy_test_model_51 = TestModelManager::get().add("sub_quantized_different_scales_51", get_test_model_51());
 
 }  // namespace generated_tests::sub_quantized_different_scales
 
@@ -9469,9 +9872,11 @@ namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_all_inputs_as_internal_51() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4, 7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -9590,6 +9995,8 @@ const TestModel& get_test_model_all_inputs_as_internal_51() {
     };
     return model;
 }
+
+const auto dummy_test_model_all_inputs_as_internal_51 = TestModelManager::get().add("sub_quantized_different_scales_all_inputs_as_internal_51", get_test_model_all_inputs_as_internal_51());
 
 }  // namespace generated_tests::sub_quantized_different_scales
 
@@ -9597,9 +10004,11 @@ namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_52() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255}),
@@ -9651,15 +10060,19 @@ const TestModel& get_test_model_52() {
     return model;
 }
 
+const auto dummy_test_model_52 = TestModelManager::get().add("sub_quantized_different_scales_52", get_test_model_52());
+
 }  // namespace generated_tests::sub_quantized_different_scales
 
 namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_all_inputs_as_internal_52() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4, 7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -9779,15 +10192,19 @@ const TestModel& get_test_model_all_inputs_as_internal_52() {
     return model;
 }
 
+const auto dummy_test_model_all_inputs_as_internal_52 = TestModelManager::get().add("sub_quantized_different_scales_all_inputs_as_internal_52", get_test_model_all_inputs_as_internal_52());
+
 }  // namespace generated_tests::sub_quantized_different_scales
 
 namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_53() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255}),
@@ -9838,6 +10255,8 @@ const TestModel& get_test_model_53() {
     };
     return model;
 }
+
+const auto dummy_test_model_53 = TestModelManager::get().add("sub_quantized_different_scales_53", get_test_model_53());
 
 }  // namespace generated_tests::sub_quantized_different_scales
 
@@ -9845,9 +10264,11 @@ namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_all_inputs_as_internal_53() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4, 7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -9966,6 +10387,8 @@ const TestModel& get_test_model_all_inputs_as_internal_53() {
     };
     return model;
 }
+
+const auto dummy_test_model_all_inputs_as_internal_53 = TestModelManager::get().add("sub_quantized_different_scales_all_inputs_as_internal_53", get_test_model_all_inputs_as_internal_53());
 
 }  // namespace generated_tests::sub_quantized_different_scales
 
@@ -9973,9 +10396,11 @@ namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_54() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255}),
@@ -10026,6 +10451,8 @@ const TestModel& get_test_model_54() {
     };
     return model;
 }
+
+const auto dummy_test_model_54 = TestModelManager::get().add("sub_quantized_different_scales_54", get_test_model_54());
 
 }  // namespace generated_tests::sub_quantized_different_scales
 
@@ -10033,9 +10460,11 @@ namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_all_inputs_as_internal_54() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4, 7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -10154,6 +10583,8 @@ const TestModel& get_test_model_all_inputs_as_internal_54() {
     };
     return model;
 }
+
+const auto dummy_test_model_all_inputs_as_internal_54 = TestModelManager::get().add("sub_quantized_different_scales_all_inputs_as_internal_54", get_test_model_all_inputs_as_internal_54());
 
 }  // namespace generated_tests::sub_quantized_different_scales
 
@@ -10161,9 +10592,11 @@ namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_55() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255}),
@@ -10214,6 +10647,8 @@ const TestModel& get_test_model_55() {
     };
     return model;
 }
+
+const auto dummy_test_model_55 = TestModelManager::get().add("sub_quantized_different_scales_55", get_test_model_55());
 
 }  // namespace generated_tests::sub_quantized_different_scales
 
@@ -10221,9 +10656,11 @@ namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_all_inputs_as_internal_55() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4, 7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -10342,6 +10779,8 @@ const TestModel& get_test_model_all_inputs_as_internal_55() {
     };
     return model;
 }
+
+const auto dummy_test_model_all_inputs_as_internal_55 = TestModelManager::get().add("sub_quantized_different_scales_all_inputs_as_internal_55", get_test_model_all_inputs_as_internal_55());
 
 }  // namespace generated_tests::sub_quantized_different_scales
 
@@ -10349,9 +10788,11 @@ namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_56() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255}),
@@ -10403,15 +10844,19 @@ const TestModel& get_test_model_56() {
     return model;
 }
 
+const auto dummy_test_model_56 = TestModelManager::get().add("sub_quantized_different_scales_56", get_test_model_56());
+
 }  // namespace generated_tests::sub_quantized_different_scales
 
 namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_all_inputs_as_internal_56() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4, 7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -10531,15 +10976,19 @@ const TestModel& get_test_model_all_inputs_as_internal_56() {
     return model;
 }
 
+const auto dummy_test_model_all_inputs_as_internal_56 = TestModelManager::get().add("sub_quantized_different_scales_all_inputs_as_internal_56", get_test_model_all_inputs_as_internal_56());
+
 }  // namespace generated_tests::sub_quantized_different_scales
 
 namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_57() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255}),
@@ -10590,6 +11039,8 @@ const TestModel& get_test_model_57() {
     };
     return model;
 }
+
+const auto dummy_test_model_57 = TestModelManager::get().add("sub_quantized_different_scales_57", get_test_model_57());
 
 }  // namespace generated_tests::sub_quantized_different_scales
 
@@ -10597,9 +11048,11 @@ namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_all_inputs_as_internal_57() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4, 7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -10718,6 +11171,8 @@ const TestModel& get_test_model_all_inputs_as_internal_57() {
     };
     return model;
 }
+
+const auto dummy_test_model_all_inputs_as_internal_57 = TestModelManager::get().add("sub_quantized_different_scales_all_inputs_as_internal_57", get_test_model_all_inputs_as_internal_57());
 
 }  // namespace generated_tests::sub_quantized_different_scales
 
@@ -10725,9 +11180,11 @@ namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_58() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255}),
@@ -10778,6 +11235,8 @@ const TestModel& get_test_model_58() {
     };
     return model;
 }
+
+const auto dummy_test_model_58 = TestModelManager::get().add("sub_quantized_different_scales_58", get_test_model_58());
 
 }  // namespace generated_tests::sub_quantized_different_scales
 
@@ -10785,9 +11244,11 @@ namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_all_inputs_as_internal_58() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4, 7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -10906,6 +11367,8 @@ const TestModel& get_test_model_all_inputs_as_internal_58() {
     };
     return model;
 }
+
+const auto dummy_test_model_all_inputs_as_internal_58 = TestModelManager::get().add("sub_quantized_different_scales_all_inputs_as_internal_58", get_test_model_all_inputs_as_internal_58());
 
 }  // namespace generated_tests::sub_quantized_different_scales
 
@@ -10913,9 +11376,11 @@ namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_59() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255}),
@@ -10966,6 +11431,8 @@ const TestModel& get_test_model_59() {
     };
     return model;
 }
+
+const auto dummy_test_model_59 = TestModelManager::get().add("sub_quantized_different_scales_59", get_test_model_59());
 
 }  // namespace generated_tests::sub_quantized_different_scales
 
@@ -10973,9 +11440,11 @@ namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_all_inputs_as_internal_59() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4, 7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -11095,15 +11564,19 @@ const TestModel& get_test_model_all_inputs_as_internal_59() {
     return model;
 }
 
+const auto dummy_test_model_all_inputs_as_internal_59 = TestModelManager::get().add("sub_quantized_different_scales_all_inputs_as_internal_59", get_test_model_all_inputs_as_internal_59());
+
 }  // namespace generated_tests::sub_quantized_different_scales
 
 namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_60() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255}),
@@ -11154,6 +11627,8 @@ const TestModel& get_test_model_60() {
     };
     return model;
 }
+
+const auto dummy_test_model_60 = TestModelManager::get().add("sub_quantized_different_scales_60", get_test_model_60());
 
 }  // namespace generated_tests::sub_quantized_different_scales
 
@@ -11161,9 +11636,11 @@ namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_all_inputs_as_internal_60() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4, 7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -11282,6 +11759,8 @@ const TestModel& get_test_model_all_inputs_as_internal_60() {
     };
     return model;
 }
+
+const auto dummy_test_model_all_inputs_as_internal_60 = TestModelManager::get().add("sub_quantized_different_scales_all_inputs_as_internal_60", get_test_model_all_inputs_as_internal_60());
 
 }  // namespace generated_tests::sub_quantized_different_scales
 
@@ -11289,9 +11768,11 @@ namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_61() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255}),
@@ -11342,6 +11823,8 @@ const TestModel& get_test_model_61() {
     };
     return model;
 }
+
+const auto dummy_test_model_61 = TestModelManager::get().add("sub_quantized_different_scales_61", get_test_model_61());
 
 }  // namespace generated_tests::sub_quantized_different_scales
 
@@ -11349,9 +11832,11 @@ namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_all_inputs_as_internal_61() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4, 7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -11471,15 +11956,19 @@ const TestModel& get_test_model_all_inputs_as_internal_61() {
     return model;
 }
 
+const auto dummy_test_model_all_inputs_as_internal_61 = TestModelManager::get().add("sub_quantized_different_scales_all_inputs_as_internal_61", get_test_model_all_inputs_as_internal_61());
+
 }  // namespace generated_tests::sub_quantized_different_scales
 
 namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_62() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255}),
@@ -11530,6 +12019,8 @@ const TestModel& get_test_model_62() {
     };
     return model;
 }
+
+const auto dummy_test_model_62 = TestModelManager::get().add("sub_quantized_different_scales_62", get_test_model_62());
 
 }  // namespace generated_tests::sub_quantized_different_scales
 
@@ -11537,9 +12028,11 @@ namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_all_inputs_as_internal_62() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4, 7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -11659,15 +12152,19 @@ const TestModel& get_test_model_all_inputs_as_internal_62() {
     return model;
 }
 
+const auto dummy_test_model_all_inputs_as_internal_62 = TestModelManager::get().add("sub_quantized_different_scales_all_inputs_as_internal_62", get_test_model_all_inputs_as_internal_62());
+
 }  // namespace generated_tests::sub_quantized_different_scales
 
 namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_63() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255}),
@@ -11718,6 +12215,8 @@ const TestModel& get_test_model_63() {
     };
     return model;
 }
+
+const auto dummy_test_model_63 = TestModelManager::get().add("sub_quantized_different_scales_63", get_test_model_63());
 
 }  // namespace generated_tests::sub_quantized_different_scales
 
@@ -11725,9 +12224,11 @@ namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_all_inputs_as_internal_63() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4, 7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -11847,15 +12348,19 @@ const TestModel& get_test_model_all_inputs_as_internal_63() {
     return model;
 }
 
+const auto dummy_test_model_all_inputs_as_internal_63 = TestModelManager::get().add("sub_quantized_different_scales_all_inputs_as_internal_63", get_test_model_all_inputs_as_internal_63());
+
 }  // namespace generated_tests::sub_quantized_different_scales
 
 namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_64() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 251, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 252, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 253, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255}),
@@ -11907,15 +12412,19 @@ const TestModel& get_test_model_64() {
     return model;
 }
 
+const auto dummy_test_model_64 = TestModelManager::get().add("sub_quantized_different_scales_64", get_test_model_64());
+
 }  // namespace generated_tests::sub_quantized_different_scales
 
 namespace generated_tests::sub_quantized_different_scales {
 
 const TestModel& get_test_model_all_inputs_as_internal_64() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4, 7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -12034,6 +12543,8 @@ const TestModel& get_test_model_all_inputs_as_internal_64() {
     };
     return model;
 }
+
+const auto dummy_test_model_all_inputs_as_internal_64 = TestModelManager::get().add("sub_quantized_different_scales_all_inputs_as_internal_64", get_test_model_all_inputs_as_internal_64());
 
 }  // namespace generated_tests::sub_quantized_different_scales
 

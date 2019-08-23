@@ -2,16 +2,17 @@
 // DO NOT EDIT
 // clang-format off
 #include "TestHarness.h"
-
 using namespace test_helper;
 
 namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_nhwc() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 1.0f, 1.0f, 1.0f, 0.5f, 1.0f, 1.0f, 1.0f, 1.0f}),
@@ -162,6 +163,8 @@ const TestModel& get_test_model_nhwc() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc = TestModelManager::get().add("conv2d_dilation_nhwc", get_test_model_nhwc());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -169,9 +172,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_nhwc_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {14},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -356,6 +361,8 @@ const TestModel& get_test_model_nhwc_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_all_inputs_as_internal = TestModelManager::get().add("conv2d_dilation_nhwc_all_inputs_as_internal", get_test_model_nhwc_all_inputs_as_internal());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -363,9 +370,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_nhwc_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 1.0f, 1.0f, 1.0f, 0.5f, 1.0f, 1.0f, 1.0f, 1.0f}),
@@ -516,6 +525,8 @@ const TestModel& get_test_model_nhwc_all_tensors_as_inputs() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_all_tensors_as_inputs = TestModelManager::get().add("conv2d_dilation_nhwc_all_tensors_as_inputs", get_test_model_nhwc_all_tensors_as_inputs());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -523,9 +534,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_nhwc_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {14, 17, 20},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -778,6 +791,8 @@ const TestModel& get_test_model_nhwc_all_tensors_as_inputs_all_inputs_as_interna
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("conv2d_dilation_nhwc_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_nhwc_all_tensors_as_inputs_all_inputs_as_internal());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -785,9 +800,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_nhwc_relaxed() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 1.0f, 1.0f, 1.0f, 0.5f, 1.0f, 1.0f, 1.0f, 1.0f}),
@@ -938,6 +955,8 @@ const TestModel& get_test_model_nhwc_relaxed() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_relaxed = TestModelManager::get().add("conv2d_dilation_nhwc_relaxed", get_test_model_nhwc_relaxed());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -945,9 +964,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_nhwc_relaxed_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {14},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -1132,6 +1153,8 @@ const TestModel& get_test_model_nhwc_relaxed_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_relaxed_all_inputs_as_internal = TestModelManager::get().add("conv2d_dilation_nhwc_relaxed_all_inputs_as_internal", get_test_model_nhwc_relaxed_all_inputs_as_internal());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -1139,9 +1162,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_nhwc_relaxed_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 1.0f, 1.0f, 1.0f, 0.5f, 1.0f, 1.0f, 1.0f, 1.0f}),
@@ -1292,6 +1317,8 @@ const TestModel& get_test_model_nhwc_relaxed_all_tensors_as_inputs() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_relaxed_all_tensors_as_inputs = TestModelManager::get().add("conv2d_dilation_nhwc_relaxed_all_tensors_as_inputs", get_test_model_nhwc_relaxed_all_tensors_as_inputs());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -1299,9 +1326,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {14, 17, 20},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -1554,6 +1583,8 @@ const TestModel& get_test_model_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("conv2d_dilation_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -1561,9 +1592,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_nhwc_quant8() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({2, 2, 2, 2, 1, 2, 2, 2, 2}),
@@ -1714,6 +1747,8 @@ const TestModel& get_test_model_nhwc_quant8() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_quant8 = TestModelManager::get().add("conv2d_dilation_nhwc_quant8", get_test_model_nhwc_quant8());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -1721,9 +1756,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_nhwc_quant8_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {14},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -1908,6 +1945,8 @@ const TestModel& get_test_model_nhwc_quant8_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_quant8_all_inputs_as_internal = TestModelManager::get().add("conv2d_dilation_nhwc_quant8_all_inputs_as_internal", get_test_model_nhwc_quant8_all_inputs_as_internal());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -1915,9 +1954,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_nhwc_quant8_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({2, 2, 2, 2, 1, 2, 2, 2, 2}),
@@ -2068,6 +2109,8 @@ const TestModel& get_test_model_nhwc_quant8_all_tensors_as_inputs() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_quant8_all_tensors_as_inputs = TestModelManager::get().add("conv2d_dilation_nhwc_quant8_all_tensors_as_inputs", get_test_model_nhwc_quant8_all_tensors_as_inputs());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -2075,9 +2118,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {2, 14, 17},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -2296,6 +2341,8 @@ const TestModel& get_test_model_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("conv2d_dilation_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -2303,9 +2350,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_nhwc_float16() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({1.0f, 1.0f, 1.0f, 1.0f, 0.5f, 1.0f, 1.0f, 1.0f, 1.0f}),
@@ -2456,6 +2505,8 @@ const TestModel& get_test_model_nhwc_float16() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_float16 = TestModelManager::get().add("conv2d_dilation_nhwc_float16", get_test_model_nhwc_float16());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -2463,9 +2514,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_nhwc_float16_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {14},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -2650,6 +2703,8 @@ const TestModel& get_test_model_nhwc_float16_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_float16_all_inputs_as_internal = TestModelManager::get().add("conv2d_dilation_nhwc_float16_all_inputs_as_internal", get_test_model_nhwc_float16_all_inputs_as_internal());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -2657,9 +2712,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_nhwc_float16_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({1.0f, 1.0f, 1.0f, 1.0f, 0.5f, 1.0f, 1.0f, 1.0f, 1.0f}),
@@ -2810,6 +2867,8 @@ const TestModel& get_test_model_nhwc_float16_all_tensors_as_inputs() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_float16_all_tensors_as_inputs = TestModelManager::get().add("conv2d_dilation_nhwc_float16_all_tensors_as_inputs", get_test_model_nhwc_float16_all_tensors_as_inputs());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -2817,9 +2876,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {14, 17, 20},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -3072,6 +3133,8 @@ const TestModel& get_test_model_nhwc_float16_all_tensors_as_inputs_all_inputs_as
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("conv2d_dilation_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -3079,9 +3142,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_nchw() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 1.0f, 1.0f, 1.0f, 0.5f, 1.0f, 1.0f, 1.0f, 1.0f}),
@@ -3232,6 +3297,8 @@ const TestModel& get_test_model_nchw() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw = TestModelManager::get().add("conv2d_dilation_nchw", get_test_model_nchw());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -3239,9 +3306,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_nchw_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {14},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -3426,6 +3495,8 @@ const TestModel& get_test_model_nchw_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_all_inputs_as_internal = TestModelManager::get().add("conv2d_dilation_nchw_all_inputs_as_internal", get_test_model_nchw_all_inputs_as_internal());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -3433,9 +3504,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_nchw_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 1.0f, 1.0f, 1.0f, 0.5f, 1.0f, 1.0f, 1.0f, 1.0f}),
@@ -3586,6 +3659,8 @@ const TestModel& get_test_model_nchw_all_tensors_as_inputs() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_all_tensors_as_inputs = TestModelManager::get().add("conv2d_dilation_nchw_all_tensors_as_inputs", get_test_model_nchw_all_tensors_as_inputs());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -3593,9 +3668,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_nchw_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {14, 17, 20},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -3848,6 +3925,8 @@ const TestModel& get_test_model_nchw_all_tensors_as_inputs_all_inputs_as_interna
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("conv2d_dilation_nchw_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_nchw_all_tensors_as_inputs_all_inputs_as_internal());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -3855,9 +3934,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_nchw_relaxed() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 1.0f, 1.0f, 1.0f, 0.5f, 1.0f, 1.0f, 1.0f, 1.0f}),
@@ -4008,6 +4089,8 @@ const TestModel& get_test_model_nchw_relaxed() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_relaxed = TestModelManager::get().add("conv2d_dilation_nchw_relaxed", get_test_model_nchw_relaxed());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -4015,9 +4098,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_nchw_relaxed_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {14},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -4202,6 +4287,8 @@ const TestModel& get_test_model_nchw_relaxed_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_relaxed_all_inputs_as_internal = TestModelManager::get().add("conv2d_dilation_nchw_relaxed_all_inputs_as_internal", get_test_model_nchw_relaxed_all_inputs_as_internal());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -4209,9 +4296,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_nchw_relaxed_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 1.0f, 1.0f, 1.0f, 0.5f, 1.0f, 1.0f, 1.0f, 1.0f}),
@@ -4362,6 +4451,8 @@ const TestModel& get_test_model_nchw_relaxed_all_tensors_as_inputs() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_relaxed_all_tensors_as_inputs = TestModelManager::get().add("conv2d_dilation_nchw_relaxed_all_tensors_as_inputs", get_test_model_nchw_relaxed_all_tensors_as_inputs());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -4369,9 +4460,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {14, 17, 20},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -4624,6 +4717,8 @@ const TestModel& get_test_model_nchw_relaxed_all_tensors_as_inputs_all_inputs_as
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("conv2d_dilation_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -4631,9 +4726,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_nchw_quant8() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({2, 2, 2, 2, 1, 2, 2, 2, 2}),
@@ -4784,6 +4881,8 @@ const TestModel& get_test_model_nchw_quant8() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_quant8 = TestModelManager::get().add("conv2d_dilation_nchw_quant8", get_test_model_nchw_quant8());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -4791,9 +4890,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_nchw_quant8_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {14},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -4978,6 +5079,8 @@ const TestModel& get_test_model_nchw_quant8_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_quant8_all_inputs_as_internal = TestModelManager::get().add("conv2d_dilation_nchw_quant8_all_inputs_as_internal", get_test_model_nchw_quant8_all_inputs_as_internal());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -4985,9 +5088,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_nchw_quant8_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({2, 2, 2, 2, 1, 2, 2, 2, 2}),
@@ -5138,6 +5243,8 @@ const TestModel& get_test_model_nchw_quant8_all_tensors_as_inputs() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_quant8_all_tensors_as_inputs = TestModelManager::get().add("conv2d_dilation_nchw_quant8_all_tensors_as_inputs", get_test_model_nchw_quant8_all_tensors_as_inputs());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -5145,9 +5252,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {2, 14, 17},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -5366,6 +5475,8 @@ const TestModel& get_test_model_nchw_quant8_all_tensors_as_inputs_all_inputs_as_
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("conv2d_dilation_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -5373,9 +5484,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_nchw_float16() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({1.0f, 1.0f, 1.0f, 1.0f, 0.5f, 1.0f, 1.0f, 1.0f, 1.0f}),
@@ -5526,6 +5639,8 @@ const TestModel& get_test_model_nchw_float16() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_float16 = TestModelManager::get().add("conv2d_dilation_nchw_float16", get_test_model_nchw_float16());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -5533,9 +5648,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_nchw_float16_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {14},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -5720,6 +5837,8 @@ const TestModel& get_test_model_nchw_float16_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_float16_all_inputs_as_internal = TestModelManager::get().add("conv2d_dilation_nchw_float16_all_inputs_as_internal", get_test_model_nchw_float16_all_inputs_as_internal());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -5727,9 +5846,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_nchw_float16_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({1.0f, 1.0f, 1.0f, 1.0f, 0.5f, 1.0f, 1.0f, 1.0f, 1.0f}),
@@ -5880,6 +6001,8 @@ const TestModel& get_test_model_nchw_float16_all_tensors_as_inputs() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_float16_all_tensors_as_inputs = TestModelManager::get().add("conv2d_dilation_nchw_float16_all_tensors_as_inputs", get_test_model_nchw_float16_all_tensors_as_inputs());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -5887,9 +6010,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {14, 17, 20},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -6142,6 +6267,8 @@ const TestModel& get_test_model_nchw_float16_all_tensors_as_inputs_all_inputs_as
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("conv2d_dilation_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -6149,9 +6276,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_nhwc_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f}),
@@ -6302,6 +6431,8 @@ const TestModel& get_test_model_nhwc_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_2 = TestModelManager::get().add("conv2d_dilation_nhwc_2", get_test_model_nhwc_2());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -6309,9 +6440,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_nhwc_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {14},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -6496,6 +6629,8 @@ const TestModel& get_test_model_nhwc_all_inputs_as_internal_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_all_inputs_as_internal_2 = TestModelManager::get().add("conv2d_dilation_nhwc_all_inputs_as_internal_2", get_test_model_nhwc_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -6503,9 +6638,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_nhwc_all_tensors_as_inputs_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f}),
@@ -6656,6 +6793,8 @@ const TestModel& get_test_model_nhwc_all_tensors_as_inputs_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_all_tensors_as_inputs_2 = TestModelManager::get().add("conv2d_dilation_nhwc_all_tensors_as_inputs_2", get_test_model_nhwc_all_tensors_as_inputs_2());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -6663,9 +6802,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_nhwc_all_tensors_as_inputs_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {14, 17, 20},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -6918,6 +7059,8 @@ const TestModel& get_test_model_nhwc_all_tensors_as_inputs_all_inputs_as_interna
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("conv2d_dilation_nhwc_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_nhwc_all_tensors_as_inputs_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -6925,9 +7068,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_nhwc_relaxed_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f}),
@@ -7078,6 +7223,8 @@ const TestModel& get_test_model_nhwc_relaxed_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_relaxed_2 = TestModelManager::get().add("conv2d_dilation_nhwc_relaxed_2", get_test_model_nhwc_relaxed_2());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -7085,9 +7232,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_nhwc_relaxed_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {14},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -7272,6 +7421,8 @@ const TestModel& get_test_model_nhwc_relaxed_all_inputs_as_internal_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_relaxed_all_inputs_as_internal_2 = TestModelManager::get().add("conv2d_dilation_nhwc_relaxed_all_inputs_as_internal_2", get_test_model_nhwc_relaxed_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -7279,9 +7430,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_nhwc_relaxed_all_tensors_as_inputs_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f}),
@@ -7432,6 +7585,8 @@ const TestModel& get_test_model_nhwc_relaxed_all_tensors_as_inputs_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_relaxed_all_tensors_as_inputs_2 = TestModelManager::get().add("conv2d_dilation_nhwc_relaxed_all_tensors_as_inputs_2", get_test_model_nhwc_relaxed_all_tensors_as_inputs_2());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -7439,9 +7594,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {14, 17, 20},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -7694,6 +7851,8 @@ const TestModel& get_test_model_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("conv2d_dilation_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -7701,9 +7860,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_nhwc_quant8_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}),
@@ -7854,6 +8015,8 @@ const TestModel& get_test_model_nhwc_quant8_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_quant8_2 = TestModelManager::get().add("conv2d_dilation_nhwc_quant8_2", get_test_model_nhwc_quant8_2());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -7861,9 +8024,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_nhwc_quant8_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {14},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -8048,6 +8213,8 @@ const TestModel& get_test_model_nhwc_quant8_all_inputs_as_internal_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_quant8_all_inputs_as_internal_2 = TestModelManager::get().add("conv2d_dilation_nhwc_quant8_all_inputs_as_internal_2", get_test_model_nhwc_quant8_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -8055,9 +8222,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_nhwc_quant8_all_tensors_as_inputs_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}),
@@ -8208,6 +8377,8 @@ const TestModel& get_test_model_nhwc_quant8_all_tensors_as_inputs_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_quant8_all_tensors_as_inputs_2 = TestModelManager::get().add("conv2d_dilation_nhwc_quant8_all_tensors_as_inputs_2", get_test_model_nhwc_quant8_all_tensors_as_inputs_2());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -8215,9 +8386,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {2, 14, 17},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -8436,6 +8609,8 @@ const TestModel& get_test_model_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("conv2d_dilation_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -8443,9 +8618,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_nhwc_float16_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f}),
@@ -8596,6 +8773,8 @@ const TestModel& get_test_model_nhwc_float16_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_float16_2 = TestModelManager::get().add("conv2d_dilation_nhwc_float16_2", get_test_model_nhwc_float16_2());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -8603,9 +8782,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_nhwc_float16_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {14},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -8790,6 +8971,8 @@ const TestModel& get_test_model_nhwc_float16_all_inputs_as_internal_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_float16_all_inputs_as_internal_2 = TestModelManager::get().add("conv2d_dilation_nhwc_float16_all_inputs_as_internal_2", get_test_model_nhwc_float16_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -8797,9 +8980,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_nhwc_float16_all_tensors_as_inputs_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f}),
@@ -8950,6 +9135,8 @@ const TestModel& get_test_model_nhwc_float16_all_tensors_as_inputs_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_float16_all_tensors_as_inputs_2 = TestModelManager::get().add("conv2d_dilation_nhwc_float16_all_tensors_as_inputs_2", get_test_model_nhwc_float16_all_tensors_as_inputs_2());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -8957,9 +9144,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {14, 17, 20},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -9212,6 +9401,8 @@ const TestModel& get_test_model_nhwc_float16_all_tensors_as_inputs_all_inputs_as
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("conv2d_dilation_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -9219,9 +9410,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_nchw_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f}),
@@ -9372,6 +9565,8 @@ const TestModel& get_test_model_nchw_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_2 = TestModelManager::get().add("conv2d_dilation_nchw_2", get_test_model_nchw_2());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -9379,9 +9574,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_nchw_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {14},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -9566,6 +9763,8 @@ const TestModel& get_test_model_nchw_all_inputs_as_internal_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_all_inputs_as_internal_2 = TestModelManager::get().add("conv2d_dilation_nchw_all_inputs_as_internal_2", get_test_model_nchw_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -9573,9 +9772,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_nchw_all_tensors_as_inputs_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f}),
@@ -9726,6 +9927,8 @@ const TestModel& get_test_model_nchw_all_tensors_as_inputs_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_all_tensors_as_inputs_2 = TestModelManager::get().add("conv2d_dilation_nchw_all_tensors_as_inputs_2", get_test_model_nchw_all_tensors_as_inputs_2());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -9733,9 +9936,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_nchw_all_tensors_as_inputs_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {14, 17, 20},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -9988,6 +10193,8 @@ const TestModel& get_test_model_nchw_all_tensors_as_inputs_all_inputs_as_interna
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("conv2d_dilation_nchw_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_nchw_all_tensors_as_inputs_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -9995,9 +10202,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_nchw_relaxed_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f}),
@@ -10148,6 +10357,8 @@ const TestModel& get_test_model_nchw_relaxed_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_relaxed_2 = TestModelManager::get().add("conv2d_dilation_nchw_relaxed_2", get_test_model_nchw_relaxed_2());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -10155,9 +10366,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_nchw_relaxed_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {14},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -10342,6 +10555,8 @@ const TestModel& get_test_model_nchw_relaxed_all_inputs_as_internal_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_relaxed_all_inputs_as_internal_2 = TestModelManager::get().add("conv2d_dilation_nchw_relaxed_all_inputs_as_internal_2", get_test_model_nchw_relaxed_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -10349,9 +10564,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_nchw_relaxed_all_tensors_as_inputs_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f}),
@@ -10502,6 +10719,8 @@ const TestModel& get_test_model_nchw_relaxed_all_tensors_as_inputs_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_relaxed_all_tensors_as_inputs_2 = TestModelManager::get().add("conv2d_dilation_nchw_relaxed_all_tensors_as_inputs_2", get_test_model_nchw_relaxed_all_tensors_as_inputs_2());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -10509,9 +10728,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {14, 17, 20},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -10764,6 +10985,8 @@ const TestModel& get_test_model_nchw_relaxed_all_tensors_as_inputs_all_inputs_as
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("conv2d_dilation_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -10771,9 +10994,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_nchw_quant8_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}),
@@ -10925,15 +11150,19 @@ const TestModel& get_test_model_nchw_quant8_2() {
     return model;
 }
 
+const auto dummy_test_model_nchw_quant8_2 = TestModelManager::get().add("conv2d_dilation_nchw_quant8_2", get_test_model_nchw_quant8_2());
+
 }  // namespace generated_tests::conv2d_dilation
 
 namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_nchw_quant8_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {14},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -11119,15 +11348,19 @@ const TestModel& get_test_model_nchw_quant8_all_inputs_as_internal_2() {
     return model;
 }
 
+const auto dummy_test_model_nchw_quant8_all_inputs_as_internal_2 = TestModelManager::get().add("conv2d_dilation_nchw_quant8_all_inputs_as_internal_2", get_test_model_nchw_quant8_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::conv2d_dilation
 
 namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_nchw_quant8_all_tensors_as_inputs_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}),
@@ -11279,15 +11512,19 @@ const TestModel& get_test_model_nchw_quant8_all_tensors_as_inputs_2() {
     return model;
 }
 
+const auto dummy_test_model_nchw_quant8_all_tensors_as_inputs_2 = TestModelManager::get().add("conv2d_dilation_nchw_quant8_all_tensors_as_inputs_2", get_test_model_nchw_quant8_all_tensors_as_inputs_2());
+
 }  // namespace generated_tests::conv2d_dilation
 
 namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {2, 14, 17},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -11507,15 +11744,19 @@ const TestModel& get_test_model_nchw_quant8_all_tensors_as_inputs_all_inputs_as_
     return model;
 }
 
+const auto dummy_test_model_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("conv2d_dilation_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::conv2d_dilation
 
 namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_nchw_float16_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f}),
@@ -11667,15 +11908,19 @@ const TestModel& get_test_model_nchw_float16_2() {
     return model;
 }
 
+const auto dummy_test_model_nchw_float16_2 = TestModelManager::get().add("conv2d_dilation_nchw_float16_2", get_test_model_nchw_float16_2());
+
 }  // namespace generated_tests::conv2d_dilation
 
 namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_nchw_float16_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {14},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -11861,15 +12106,19 @@ const TestModel& get_test_model_nchw_float16_all_inputs_as_internal_2() {
     return model;
 }
 
+const auto dummy_test_model_nchw_float16_all_inputs_as_internal_2 = TestModelManager::get().add("conv2d_dilation_nchw_float16_all_inputs_as_internal_2", get_test_model_nchw_float16_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::conv2d_dilation
 
 namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_nchw_float16_all_tensors_as_inputs_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f}),
@@ -12021,15 +12270,19 @@ const TestModel& get_test_model_nchw_float16_all_tensors_as_inputs_2() {
     return model;
 }
 
+const auto dummy_test_model_nchw_float16_all_tensors_as_inputs_2 = TestModelManager::get().add("conv2d_dilation_nchw_float16_all_tensors_as_inputs_2", get_test_model_nchw_float16_all_tensors_as_inputs_2());
+
 }  // namespace generated_tests::conv2d_dilation
 
 namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {14, 17, 20},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -12283,15 +12536,19 @@ const TestModel& get_test_model_nchw_float16_all_tensors_as_inputs_all_inputs_as
     return model;
 }
 
+const auto dummy_test_model_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("conv2d_dilation_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::conv2d_dilation
 
 namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_valid_padding_nhwc() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 1.0f, 1.0f, 1.0f, 0.5f, 1.0f, 1.0f, 1.0f, 1.0f}),
@@ -12412,6 +12669,8 @@ const TestModel& get_test_model_valid_padding_nhwc() {
     };
     return model;
 }
+
+const auto dummy_test_model_valid_padding_nhwc = TestModelManager::get().add("conv2d_dilation_valid_padding_nhwc", get_test_model_valid_padding_nhwc());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -12419,9 +12678,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_valid_padding_nhwc_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {11},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -12576,6 +12837,8 @@ const TestModel& get_test_model_valid_padding_nhwc_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_valid_padding_nhwc_all_inputs_as_internal = TestModelManager::get().add("conv2d_dilation_valid_padding_nhwc_all_inputs_as_internal", get_test_model_valid_padding_nhwc_all_inputs_as_internal());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -12583,9 +12846,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_valid_padding_nhwc_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 1.0f, 1.0f, 1.0f, 0.5f, 1.0f, 1.0f, 1.0f, 1.0f}),
@@ -12706,6 +12971,8 @@ const TestModel& get_test_model_valid_padding_nhwc_all_tensors_as_inputs() {
     };
     return model;
 }
+
+const auto dummy_test_model_valid_padding_nhwc_all_tensors_as_inputs = TestModelManager::get().add("conv2d_dilation_valid_padding_nhwc_all_tensors_as_inputs", get_test_model_valid_padding_nhwc_all_tensors_as_inputs());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -12713,9 +12980,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_valid_padding_nhwc_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {11, 14, 17},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -12938,6 +13207,8 @@ const TestModel& get_test_model_valid_padding_nhwc_all_tensors_as_inputs_all_inp
     };
     return model;
 }
+
+const auto dummy_test_model_valid_padding_nhwc_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("conv2d_dilation_valid_padding_nhwc_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_valid_padding_nhwc_all_tensors_as_inputs_all_inputs_as_internal());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -12945,9 +13216,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_valid_padding_nhwc_relaxed() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 1.0f, 1.0f, 1.0f, 0.5f, 1.0f, 1.0f, 1.0f, 1.0f}),
@@ -13068,6 +13341,8 @@ const TestModel& get_test_model_valid_padding_nhwc_relaxed() {
     };
     return model;
 }
+
+const auto dummy_test_model_valid_padding_nhwc_relaxed = TestModelManager::get().add("conv2d_dilation_valid_padding_nhwc_relaxed", get_test_model_valid_padding_nhwc_relaxed());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -13075,9 +13350,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_valid_padding_nhwc_relaxed_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {11},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -13232,6 +13509,8 @@ const TestModel& get_test_model_valid_padding_nhwc_relaxed_all_inputs_as_interna
     };
     return model;
 }
+
+const auto dummy_test_model_valid_padding_nhwc_relaxed_all_inputs_as_internal = TestModelManager::get().add("conv2d_dilation_valid_padding_nhwc_relaxed_all_inputs_as_internal", get_test_model_valid_padding_nhwc_relaxed_all_inputs_as_internal());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -13239,9 +13518,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_valid_padding_nhwc_relaxed_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 1.0f, 1.0f, 1.0f, 0.5f, 1.0f, 1.0f, 1.0f, 1.0f}),
@@ -13362,6 +13643,8 @@ const TestModel& get_test_model_valid_padding_nhwc_relaxed_all_tensors_as_inputs
     };
     return model;
 }
+
+const auto dummy_test_model_valid_padding_nhwc_relaxed_all_tensors_as_inputs = TestModelManager::get().add("conv2d_dilation_valid_padding_nhwc_relaxed_all_tensors_as_inputs", get_test_model_valid_padding_nhwc_relaxed_all_tensors_as_inputs());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -13369,9 +13652,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_valid_padding_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {11, 14, 17},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -13594,6 +13879,8 @@ const TestModel& get_test_model_valid_padding_nhwc_relaxed_all_tensors_as_inputs
     };
     return model;
 }
+
+const auto dummy_test_model_valid_padding_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("conv2d_dilation_valid_padding_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_valid_padding_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -13601,9 +13888,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_valid_padding_nhwc_quant8() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({2, 2, 2, 2, 1, 2, 2, 2, 2}),
@@ -13724,6 +14013,8 @@ const TestModel& get_test_model_valid_padding_nhwc_quant8() {
     };
     return model;
 }
+
+const auto dummy_test_model_valid_padding_nhwc_quant8 = TestModelManager::get().add("conv2d_dilation_valid_padding_nhwc_quant8", get_test_model_valid_padding_nhwc_quant8());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -13731,9 +14022,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_valid_padding_nhwc_quant8_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {11},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -13888,6 +14181,8 @@ const TestModel& get_test_model_valid_padding_nhwc_quant8_all_inputs_as_internal
     };
     return model;
 }
+
+const auto dummy_test_model_valid_padding_nhwc_quant8_all_inputs_as_internal = TestModelManager::get().add("conv2d_dilation_valid_padding_nhwc_quant8_all_inputs_as_internal", get_test_model_valid_padding_nhwc_quant8_all_inputs_as_internal());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -13895,9 +14190,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_valid_padding_nhwc_quant8_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({2, 2, 2, 2, 1, 2, 2, 2, 2}),
@@ -14018,6 +14315,8 @@ const TestModel& get_test_model_valid_padding_nhwc_quant8_all_tensors_as_inputs(
     };
     return model;
 }
+
+const auto dummy_test_model_valid_padding_nhwc_quant8_all_tensors_as_inputs = TestModelManager::get().add("conv2d_dilation_valid_padding_nhwc_quant8_all_tensors_as_inputs", get_test_model_valid_padding_nhwc_quant8_all_tensors_as_inputs());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -14025,9 +14324,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_valid_padding_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {2, 11, 14},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -14216,6 +14517,8 @@ const TestModel& get_test_model_valid_padding_nhwc_quant8_all_tensors_as_inputs_
     };
     return model;
 }
+
+const auto dummy_test_model_valid_padding_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("conv2d_dilation_valid_padding_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_valid_padding_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -14223,9 +14526,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_valid_padding_nhwc_float16() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({1.0f, 1.0f, 1.0f, 1.0f, 0.5f, 1.0f, 1.0f, 1.0f, 1.0f}),
@@ -14346,6 +14651,8 @@ const TestModel& get_test_model_valid_padding_nhwc_float16() {
     };
     return model;
 }
+
+const auto dummy_test_model_valid_padding_nhwc_float16 = TestModelManager::get().add("conv2d_dilation_valid_padding_nhwc_float16", get_test_model_valid_padding_nhwc_float16());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -14353,9 +14660,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_valid_padding_nhwc_float16_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {11},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -14510,6 +14819,8 @@ const TestModel& get_test_model_valid_padding_nhwc_float16_all_inputs_as_interna
     };
     return model;
 }
+
+const auto dummy_test_model_valid_padding_nhwc_float16_all_inputs_as_internal = TestModelManager::get().add("conv2d_dilation_valid_padding_nhwc_float16_all_inputs_as_internal", get_test_model_valid_padding_nhwc_float16_all_inputs_as_internal());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -14517,9 +14828,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_valid_padding_nhwc_float16_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({1.0f, 1.0f, 1.0f, 1.0f, 0.5f, 1.0f, 1.0f, 1.0f, 1.0f}),
@@ -14640,6 +14953,8 @@ const TestModel& get_test_model_valid_padding_nhwc_float16_all_tensors_as_inputs
     };
     return model;
 }
+
+const auto dummy_test_model_valid_padding_nhwc_float16_all_tensors_as_inputs = TestModelManager::get().add("conv2d_dilation_valid_padding_nhwc_float16_all_tensors_as_inputs", get_test_model_valid_padding_nhwc_float16_all_tensors_as_inputs());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -14647,9 +14962,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_valid_padding_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {11, 14, 17},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -14872,6 +15189,8 @@ const TestModel& get_test_model_valid_padding_nhwc_float16_all_tensors_as_inputs
     };
     return model;
 }
+
+const auto dummy_test_model_valid_padding_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("conv2d_dilation_valid_padding_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_valid_padding_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -14879,9 +15198,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_valid_padding_nchw() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 1.0f, 1.0f, 1.0f, 0.5f, 1.0f, 1.0f, 1.0f, 1.0f}),
@@ -15002,6 +15323,8 @@ const TestModel& get_test_model_valid_padding_nchw() {
     };
     return model;
 }
+
+const auto dummy_test_model_valid_padding_nchw = TestModelManager::get().add("conv2d_dilation_valid_padding_nchw", get_test_model_valid_padding_nchw());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -15009,9 +15332,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_valid_padding_nchw_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {11},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -15166,6 +15491,8 @@ const TestModel& get_test_model_valid_padding_nchw_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_valid_padding_nchw_all_inputs_as_internal = TestModelManager::get().add("conv2d_dilation_valid_padding_nchw_all_inputs_as_internal", get_test_model_valid_padding_nchw_all_inputs_as_internal());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -15173,9 +15500,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_valid_padding_nchw_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 1.0f, 1.0f, 1.0f, 0.5f, 1.0f, 1.0f, 1.0f, 1.0f}),
@@ -15296,6 +15625,8 @@ const TestModel& get_test_model_valid_padding_nchw_all_tensors_as_inputs() {
     };
     return model;
 }
+
+const auto dummy_test_model_valid_padding_nchw_all_tensors_as_inputs = TestModelManager::get().add("conv2d_dilation_valid_padding_nchw_all_tensors_as_inputs", get_test_model_valid_padding_nchw_all_tensors_as_inputs());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -15303,9 +15634,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_valid_padding_nchw_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {11, 14, 17},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -15528,6 +15861,8 @@ const TestModel& get_test_model_valid_padding_nchw_all_tensors_as_inputs_all_inp
     };
     return model;
 }
+
+const auto dummy_test_model_valid_padding_nchw_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("conv2d_dilation_valid_padding_nchw_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_valid_padding_nchw_all_tensors_as_inputs_all_inputs_as_internal());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -15535,9 +15870,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_valid_padding_nchw_relaxed() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 1.0f, 1.0f, 1.0f, 0.5f, 1.0f, 1.0f, 1.0f, 1.0f}),
@@ -15658,6 +15995,8 @@ const TestModel& get_test_model_valid_padding_nchw_relaxed() {
     };
     return model;
 }
+
+const auto dummy_test_model_valid_padding_nchw_relaxed = TestModelManager::get().add("conv2d_dilation_valid_padding_nchw_relaxed", get_test_model_valid_padding_nchw_relaxed());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -15665,9 +16004,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_valid_padding_nchw_relaxed_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {11},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -15822,6 +16163,8 @@ const TestModel& get_test_model_valid_padding_nchw_relaxed_all_inputs_as_interna
     };
     return model;
 }
+
+const auto dummy_test_model_valid_padding_nchw_relaxed_all_inputs_as_internal = TestModelManager::get().add("conv2d_dilation_valid_padding_nchw_relaxed_all_inputs_as_internal", get_test_model_valid_padding_nchw_relaxed_all_inputs_as_internal());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -15829,9 +16172,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_valid_padding_nchw_relaxed_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 1.0f, 1.0f, 1.0f, 0.5f, 1.0f, 1.0f, 1.0f, 1.0f}),
@@ -15952,6 +16297,8 @@ const TestModel& get_test_model_valid_padding_nchw_relaxed_all_tensors_as_inputs
     };
     return model;
 }
+
+const auto dummy_test_model_valid_padding_nchw_relaxed_all_tensors_as_inputs = TestModelManager::get().add("conv2d_dilation_valid_padding_nchw_relaxed_all_tensors_as_inputs", get_test_model_valid_padding_nchw_relaxed_all_tensors_as_inputs());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -15959,9 +16306,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_valid_padding_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {11, 14, 17},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -16185,15 +16534,19 @@ const TestModel& get_test_model_valid_padding_nchw_relaxed_all_tensors_as_inputs
     return model;
 }
 
+const auto dummy_test_model_valid_padding_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("conv2d_dilation_valid_padding_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_valid_padding_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal());
+
 }  // namespace generated_tests::conv2d_dilation
 
 namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_valid_padding_nchw_quant8() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({2, 2, 2, 2, 1, 2, 2, 2, 2}),
@@ -16314,6 +16667,8 @@ const TestModel& get_test_model_valid_padding_nchw_quant8() {
     };
     return model;
 }
+
+const auto dummy_test_model_valid_padding_nchw_quant8 = TestModelManager::get().add("conv2d_dilation_valid_padding_nchw_quant8", get_test_model_valid_padding_nchw_quant8());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -16321,9 +16676,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_valid_padding_nchw_quant8_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {11},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -16478,6 +16835,8 @@ const TestModel& get_test_model_valid_padding_nchw_quant8_all_inputs_as_internal
     };
     return model;
 }
+
+const auto dummy_test_model_valid_padding_nchw_quant8_all_inputs_as_internal = TestModelManager::get().add("conv2d_dilation_valid_padding_nchw_quant8_all_inputs_as_internal", get_test_model_valid_padding_nchw_quant8_all_inputs_as_internal());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -16485,9 +16844,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_valid_padding_nchw_quant8_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({2, 2, 2, 2, 1, 2, 2, 2, 2}),
@@ -16608,6 +16969,8 @@ const TestModel& get_test_model_valid_padding_nchw_quant8_all_tensors_as_inputs(
     };
     return model;
 }
+
+const auto dummy_test_model_valid_padding_nchw_quant8_all_tensors_as_inputs = TestModelManager::get().add("conv2d_dilation_valid_padding_nchw_quant8_all_tensors_as_inputs", get_test_model_valid_padding_nchw_quant8_all_tensors_as_inputs());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -16615,9 +16978,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_valid_padding_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {2, 11, 14},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -16807,15 +17172,19 @@ const TestModel& get_test_model_valid_padding_nchw_quant8_all_tensors_as_inputs_
     return model;
 }
 
+const auto dummy_test_model_valid_padding_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("conv2d_dilation_valid_padding_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_valid_padding_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal());
+
 }  // namespace generated_tests::conv2d_dilation
 
 namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_valid_padding_nchw_float16() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({1.0f, 1.0f, 1.0f, 1.0f, 0.5f, 1.0f, 1.0f, 1.0f, 1.0f}),
@@ -16936,6 +17305,8 @@ const TestModel& get_test_model_valid_padding_nchw_float16() {
     };
     return model;
 }
+
+const auto dummy_test_model_valid_padding_nchw_float16 = TestModelManager::get().add("conv2d_dilation_valid_padding_nchw_float16", get_test_model_valid_padding_nchw_float16());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -16943,9 +17314,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_valid_padding_nchw_float16_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {11},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -17100,6 +17473,8 @@ const TestModel& get_test_model_valid_padding_nchw_float16_all_inputs_as_interna
     };
     return model;
 }
+
+const auto dummy_test_model_valid_padding_nchw_float16_all_inputs_as_internal = TestModelManager::get().add("conv2d_dilation_valid_padding_nchw_float16_all_inputs_as_internal", get_test_model_valid_padding_nchw_float16_all_inputs_as_internal());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -17107,9 +17482,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_valid_padding_nchw_float16_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({1.0f, 1.0f, 1.0f, 1.0f, 0.5f, 1.0f, 1.0f, 1.0f, 1.0f}),
@@ -17230,6 +17607,8 @@ const TestModel& get_test_model_valid_padding_nchw_float16_all_tensors_as_inputs
     };
     return model;
 }
+
+const auto dummy_test_model_valid_padding_nchw_float16_all_tensors_as_inputs = TestModelManager::get().add("conv2d_dilation_valid_padding_nchw_float16_all_tensors_as_inputs", get_test_model_valid_padding_nchw_float16_all_tensors_as_inputs());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -17237,9 +17616,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_valid_padding_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {11, 14, 17},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -17463,15 +17844,19 @@ const TestModel& get_test_model_valid_padding_nchw_float16_all_tensors_as_inputs
     return model;
 }
 
+const auto dummy_test_model_valid_padding_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("conv2d_dilation_valid_padding_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_valid_padding_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal());
+
 }  // namespace generated_tests::conv2d_dilation
 
 namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_valid_padding_nhwc_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f}),
@@ -17592,6 +17977,8 @@ const TestModel& get_test_model_valid_padding_nhwc_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_valid_padding_nhwc_2 = TestModelManager::get().add("conv2d_dilation_valid_padding_nhwc_2", get_test_model_valid_padding_nhwc_2());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -17599,9 +17986,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_valid_padding_nhwc_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {11},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -17756,6 +18145,8 @@ const TestModel& get_test_model_valid_padding_nhwc_all_inputs_as_internal_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_valid_padding_nhwc_all_inputs_as_internal_2 = TestModelManager::get().add("conv2d_dilation_valid_padding_nhwc_all_inputs_as_internal_2", get_test_model_valid_padding_nhwc_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -17763,9 +18154,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_valid_padding_nhwc_all_tensors_as_inputs_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f}),
@@ -17886,6 +18279,8 @@ const TestModel& get_test_model_valid_padding_nhwc_all_tensors_as_inputs_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_valid_padding_nhwc_all_tensors_as_inputs_2 = TestModelManager::get().add("conv2d_dilation_valid_padding_nhwc_all_tensors_as_inputs_2", get_test_model_valid_padding_nhwc_all_tensors_as_inputs_2());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -17893,9 +18288,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_valid_padding_nhwc_all_tensors_as_inputs_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {11, 14, 17},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -18118,6 +18515,8 @@ const TestModel& get_test_model_valid_padding_nhwc_all_tensors_as_inputs_all_inp
     };
     return model;
 }
+
+const auto dummy_test_model_valid_padding_nhwc_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("conv2d_dilation_valid_padding_nhwc_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_valid_padding_nhwc_all_tensors_as_inputs_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -18125,9 +18524,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_valid_padding_nhwc_relaxed_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f}),
@@ -18248,6 +18649,8 @@ const TestModel& get_test_model_valid_padding_nhwc_relaxed_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_valid_padding_nhwc_relaxed_2 = TestModelManager::get().add("conv2d_dilation_valid_padding_nhwc_relaxed_2", get_test_model_valid_padding_nhwc_relaxed_2());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -18255,9 +18658,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_valid_padding_nhwc_relaxed_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {11},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -18412,6 +18817,8 @@ const TestModel& get_test_model_valid_padding_nhwc_relaxed_all_inputs_as_interna
     };
     return model;
 }
+
+const auto dummy_test_model_valid_padding_nhwc_relaxed_all_inputs_as_internal_2 = TestModelManager::get().add("conv2d_dilation_valid_padding_nhwc_relaxed_all_inputs_as_internal_2", get_test_model_valid_padding_nhwc_relaxed_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -18419,9 +18826,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_valid_padding_nhwc_relaxed_all_tensors_as_inputs_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f}),
@@ -18542,6 +18951,8 @@ const TestModel& get_test_model_valid_padding_nhwc_relaxed_all_tensors_as_inputs
     };
     return model;
 }
+
+const auto dummy_test_model_valid_padding_nhwc_relaxed_all_tensors_as_inputs_2 = TestModelManager::get().add("conv2d_dilation_valid_padding_nhwc_relaxed_all_tensors_as_inputs_2", get_test_model_valid_padding_nhwc_relaxed_all_tensors_as_inputs_2());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -18549,9 +18960,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_valid_padding_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {11, 14, 17},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -18774,6 +19187,8 @@ const TestModel& get_test_model_valid_padding_nhwc_relaxed_all_tensors_as_inputs
     };
     return model;
 }
+
+const auto dummy_test_model_valid_padding_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("conv2d_dilation_valid_padding_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_valid_padding_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -18781,9 +19196,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_valid_padding_nhwc_quant8_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}),
@@ -18904,6 +19321,8 @@ const TestModel& get_test_model_valid_padding_nhwc_quant8_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_valid_padding_nhwc_quant8_2 = TestModelManager::get().add("conv2d_dilation_valid_padding_nhwc_quant8_2", get_test_model_valid_padding_nhwc_quant8_2());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -18911,9 +19330,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_valid_padding_nhwc_quant8_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {11},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -19068,6 +19489,8 @@ const TestModel& get_test_model_valid_padding_nhwc_quant8_all_inputs_as_internal
     };
     return model;
 }
+
+const auto dummy_test_model_valid_padding_nhwc_quant8_all_inputs_as_internal_2 = TestModelManager::get().add("conv2d_dilation_valid_padding_nhwc_quant8_all_inputs_as_internal_2", get_test_model_valid_padding_nhwc_quant8_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -19075,9 +19498,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_valid_padding_nhwc_quant8_all_tensors_as_inputs_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}),
@@ -19198,6 +19623,8 @@ const TestModel& get_test_model_valid_padding_nhwc_quant8_all_tensors_as_inputs_
     };
     return model;
 }
+
+const auto dummy_test_model_valid_padding_nhwc_quant8_all_tensors_as_inputs_2 = TestModelManager::get().add("conv2d_dilation_valid_padding_nhwc_quant8_all_tensors_as_inputs_2", get_test_model_valid_padding_nhwc_quant8_all_tensors_as_inputs_2());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -19205,9 +19632,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_valid_padding_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {2, 11, 14},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -19396,6 +19825,8 @@ const TestModel& get_test_model_valid_padding_nhwc_quant8_all_tensors_as_inputs_
     };
     return model;
 }
+
+const auto dummy_test_model_valid_padding_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("conv2d_dilation_valid_padding_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_valid_padding_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -19403,9 +19834,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_valid_padding_nhwc_float16_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f}),
@@ -19526,6 +19959,8 @@ const TestModel& get_test_model_valid_padding_nhwc_float16_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_valid_padding_nhwc_float16_2 = TestModelManager::get().add("conv2d_dilation_valid_padding_nhwc_float16_2", get_test_model_valid_padding_nhwc_float16_2());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -19533,9 +19968,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_valid_padding_nhwc_float16_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {11},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -19690,6 +20127,8 @@ const TestModel& get_test_model_valid_padding_nhwc_float16_all_inputs_as_interna
     };
     return model;
 }
+
+const auto dummy_test_model_valid_padding_nhwc_float16_all_inputs_as_internal_2 = TestModelManager::get().add("conv2d_dilation_valid_padding_nhwc_float16_all_inputs_as_internal_2", get_test_model_valid_padding_nhwc_float16_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -19697,9 +20136,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_valid_padding_nhwc_float16_all_tensors_as_inputs_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f}),
@@ -19820,6 +20261,8 @@ const TestModel& get_test_model_valid_padding_nhwc_float16_all_tensors_as_inputs
     };
     return model;
 }
+
+const auto dummy_test_model_valid_padding_nhwc_float16_all_tensors_as_inputs_2 = TestModelManager::get().add("conv2d_dilation_valid_padding_nhwc_float16_all_tensors_as_inputs_2", get_test_model_valid_padding_nhwc_float16_all_tensors_as_inputs_2());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -19827,9 +20270,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_valid_padding_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {11, 14, 17},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -20052,6 +20497,8 @@ const TestModel& get_test_model_valid_padding_nhwc_float16_all_tensors_as_inputs
     };
     return model;
 }
+
+const auto dummy_test_model_valid_padding_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("conv2d_dilation_valid_padding_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_valid_padding_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -20059,9 +20506,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_valid_padding_nchw_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f}),
@@ -20182,6 +20631,8 @@ const TestModel& get_test_model_valid_padding_nchw_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_valid_padding_nchw_2 = TestModelManager::get().add("conv2d_dilation_valid_padding_nchw_2", get_test_model_valid_padding_nchw_2());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -20189,9 +20640,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_valid_padding_nchw_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {11},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -20346,6 +20799,8 @@ const TestModel& get_test_model_valid_padding_nchw_all_inputs_as_internal_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_valid_padding_nchw_all_inputs_as_internal_2 = TestModelManager::get().add("conv2d_dilation_valid_padding_nchw_all_inputs_as_internal_2", get_test_model_valid_padding_nchw_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -20353,9 +20808,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_valid_padding_nchw_all_tensors_as_inputs_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f}),
@@ -20476,6 +20933,8 @@ const TestModel& get_test_model_valid_padding_nchw_all_tensors_as_inputs_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_valid_padding_nchw_all_tensors_as_inputs_2 = TestModelManager::get().add("conv2d_dilation_valid_padding_nchw_all_tensors_as_inputs_2", get_test_model_valid_padding_nchw_all_tensors_as_inputs_2());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -20483,9 +20942,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_valid_padding_nchw_all_tensors_as_inputs_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {11, 14, 17},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -20708,6 +21169,8 @@ const TestModel& get_test_model_valid_padding_nchw_all_tensors_as_inputs_all_inp
     };
     return model;
 }
+
+const auto dummy_test_model_valid_padding_nchw_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("conv2d_dilation_valid_padding_nchw_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_valid_padding_nchw_all_tensors_as_inputs_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -20715,9 +21178,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_valid_padding_nchw_relaxed_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f}),
@@ -20838,6 +21303,8 @@ const TestModel& get_test_model_valid_padding_nchw_relaxed_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_valid_padding_nchw_relaxed_2 = TestModelManager::get().add("conv2d_dilation_valid_padding_nchw_relaxed_2", get_test_model_valid_padding_nchw_relaxed_2());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -20845,9 +21312,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_valid_padding_nchw_relaxed_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {11},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -21002,6 +21471,8 @@ const TestModel& get_test_model_valid_padding_nchw_relaxed_all_inputs_as_interna
     };
     return model;
 }
+
+const auto dummy_test_model_valid_padding_nchw_relaxed_all_inputs_as_internal_2 = TestModelManager::get().add("conv2d_dilation_valid_padding_nchw_relaxed_all_inputs_as_internal_2", get_test_model_valid_padding_nchw_relaxed_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -21009,9 +21480,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_valid_padding_nchw_relaxed_all_tensors_as_inputs_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f}),
@@ -21132,6 +21605,8 @@ const TestModel& get_test_model_valid_padding_nchw_relaxed_all_tensors_as_inputs
     };
     return model;
 }
+
+const auto dummy_test_model_valid_padding_nchw_relaxed_all_tensors_as_inputs_2 = TestModelManager::get().add("conv2d_dilation_valid_padding_nchw_relaxed_all_tensors_as_inputs_2", get_test_model_valid_padding_nchw_relaxed_all_tensors_as_inputs_2());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -21139,9 +21614,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_valid_padding_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {11, 14, 17},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -21365,15 +21842,19 @@ const TestModel& get_test_model_valid_padding_nchw_relaxed_all_tensors_as_inputs
     return model;
 }
 
+const auto dummy_test_model_valid_padding_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("conv2d_dilation_valid_padding_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_valid_padding_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::conv2d_dilation
 
 namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_valid_padding_nchw_quant8_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}),
@@ -21494,6 +21975,8 @@ const TestModel& get_test_model_valid_padding_nchw_quant8_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_valid_padding_nchw_quant8_2 = TestModelManager::get().add("conv2d_dilation_valid_padding_nchw_quant8_2", get_test_model_valid_padding_nchw_quant8_2());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -21501,9 +21984,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_valid_padding_nchw_quant8_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {11},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -21658,6 +22143,8 @@ const TestModel& get_test_model_valid_padding_nchw_quant8_all_inputs_as_internal
     };
     return model;
 }
+
+const auto dummy_test_model_valid_padding_nchw_quant8_all_inputs_as_internal_2 = TestModelManager::get().add("conv2d_dilation_valid_padding_nchw_quant8_all_inputs_as_internal_2", get_test_model_valid_padding_nchw_quant8_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -21665,9 +22152,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_valid_padding_nchw_quant8_all_tensors_as_inputs_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}),
@@ -21788,6 +22277,8 @@ const TestModel& get_test_model_valid_padding_nchw_quant8_all_tensors_as_inputs_
     };
     return model;
 }
+
+const auto dummy_test_model_valid_padding_nchw_quant8_all_tensors_as_inputs_2 = TestModelManager::get().add("conv2d_dilation_valid_padding_nchw_quant8_all_tensors_as_inputs_2", get_test_model_valid_padding_nchw_quant8_all_tensors_as_inputs_2());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -21795,9 +22286,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_valid_padding_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {2, 11, 14},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -21987,15 +22480,19 @@ const TestModel& get_test_model_valid_padding_nchw_quant8_all_tensors_as_inputs_
     return model;
 }
 
+const auto dummy_test_model_valid_padding_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("conv2d_dilation_valid_padding_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_valid_padding_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::conv2d_dilation
 
 namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_valid_padding_nchw_float16_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f}),
@@ -22116,6 +22613,8 @@ const TestModel& get_test_model_valid_padding_nchw_float16_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_valid_padding_nchw_float16_2 = TestModelManager::get().add("conv2d_dilation_valid_padding_nchw_float16_2", get_test_model_valid_padding_nchw_float16_2());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -22123,9 +22622,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_valid_padding_nchw_float16_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {11},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -22280,6 +22781,8 @@ const TestModel& get_test_model_valid_padding_nchw_float16_all_inputs_as_interna
     };
     return model;
 }
+
+const auto dummy_test_model_valid_padding_nchw_float16_all_inputs_as_internal_2 = TestModelManager::get().add("conv2d_dilation_valid_padding_nchw_float16_all_inputs_as_internal_2", get_test_model_valid_padding_nchw_float16_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -22287,9 +22790,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_valid_padding_nchw_float16_all_tensors_as_inputs_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f}),
@@ -22410,6 +22915,8 @@ const TestModel& get_test_model_valid_padding_nchw_float16_all_tensors_as_inputs
     };
     return model;
 }
+
+const auto dummy_test_model_valid_padding_nchw_float16_all_tensors_as_inputs_2 = TestModelManager::get().add("conv2d_dilation_valid_padding_nchw_float16_all_tensors_as_inputs_2", get_test_model_valid_padding_nchw_float16_all_tensors_as_inputs_2());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -22417,9 +22924,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_valid_padding_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {11, 14, 17},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -22643,15 +23152,19 @@ const TestModel& get_test_model_valid_padding_nchw_float16_all_tensors_as_inputs
     return model;
 }
 
+const auto dummy_test_model_valid_padding_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("conv2d_dilation_valid_padding_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_valid_padding_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::conv2d_dilation
 
 namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_nhwc_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 4.0f, 3.0f, 0.0f, 0.0f, 0.0f, 0.0f, 2.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f}),
@@ -22772,6 +23285,8 @@ const TestModel& get_test_model_nhwc_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_3 = TestModelManager::get().add("conv2d_dilation_nhwc_3", get_test_model_nhwc_3());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -22779,9 +23294,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_nhwc_all_inputs_as_internal_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {11},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -22936,6 +23453,8 @@ const TestModel& get_test_model_nhwc_all_inputs_as_internal_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_all_inputs_as_internal_3 = TestModelManager::get().add("conv2d_dilation_nhwc_all_inputs_as_internal_3", get_test_model_nhwc_all_inputs_as_internal_3());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -22943,9 +23462,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_nhwc_all_tensors_as_inputs_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 4.0f, 3.0f, 0.0f, 0.0f, 0.0f, 0.0f, 2.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f}),
@@ -23066,6 +23587,8 @@ const TestModel& get_test_model_nhwc_all_tensors_as_inputs_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_all_tensors_as_inputs_3 = TestModelManager::get().add("conv2d_dilation_nhwc_all_tensors_as_inputs_3", get_test_model_nhwc_all_tensors_as_inputs_3());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -23073,9 +23596,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_nhwc_all_tensors_as_inputs_all_inputs_as_internal_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {11, 14, 17},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -23298,6 +23823,8 @@ const TestModel& get_test_model_nhwc_all_tensors_as_inputs_all_inputs_as_interna
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_all_tensors_as_inputs_all_inputs_as_internal_3 = TestModelManager::get().add("conv2d_dilation_nhwc_all_tensors_as_inputs_all_inputs_as_internal_3", get_test_model_nhwc_all_tensors_as_inputs_all_inputs_as_internal_3());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -23305,9 +23832,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_nhwc_relaxed_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 4.0f, 3.0f, 0.0f, 0.0f, 0.0f, 0.0f, 2.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f}),
@@ -23428,6 +23957,8 @@ const TestModel& get_test_model_nhwc_relaxed_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_relaxed_3 = TestModelManager::get().add("conv2d_dilation_nhwc_relaxed_3", get_test_model_nhwc_relaxed_3());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -23435,9 +23966,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_nhwc_relaxed_all_inputs_as_internal_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {11},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -23592,6 +24125,8 @@ const TestModel& get_test_model_nhwc_relaxed_all_inputs_as_internal_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_relaxed_all_inputs_as_internal_3 = TestModelManager::get().add("conv2d_dilation_nhwc_relaxed_all_inputs_as_internal_3", get_test_model_nhwc_relaxed_all_inputs_as_internal_3());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -23599,9 +24134,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_nhwc_relaxed_all_tensors_as_inputs_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 4.0f, 3.0f, 0.0f, 0.0f, 0.0f, 0.0f, 2.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f}),
@@ -23722,6 +24259,8 @@ const TestModel& get_test_model_nhwc_relaxed_all_tensors_as_inputs_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_relaxed_all_tensors_as_inputs_3 = TestModelManager::get().add("conv2d_dilation_nhwc_relaxed_all_tensors_as_inputs_3", get_test_model_nhwc_relaxed_all_tensors_as_inputs_3());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -23729,9 +24268,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {11, 14, 17},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -23954,6 +24495,8 @@ const TestModel& get_test_model_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_3 = TestModelManager::get().add("conv2d_dilation_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_3", get_test_model_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_3());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -23961,9 +24504,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_nhwc_quant8_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 6, 0, 0, 0, 0, 4, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}),
@@ -24084,6 +24629,8 @@ const TestModel& get_test_model_nhwc_quant8_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_quant8_3 = TestModelManager::get().add("conv2d_dilation_nhwc_quant8_3", get_test_model_nhwc_quant8_3());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -24091,9 +24638,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_nhwc_quant8_all_inputs_as_internal_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {11},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -24248,6 +24797,8 @@ const TestModel& get_test_model_nhwc_quant8_all_inputs_as_internal_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_quant8_all_inputs_as_internal_3 = TestModelManager::get().add("conv2d_dilation_nhwc_quant8_all_inputs_as_internal_3", get_test_model_nhwc_quant8_all_inputs_as_internal_3());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -24255,9 +24806,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_nhwc_quant8_all_tensors_as_inputs_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 6, 0, 0, 0, 0, 4, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}),
@@ -24378,6 +24931,8 @@ const TestModel& get_test_model_nhwc_quant8_all_tensors_as_inputs_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_quant8_all_tensors_as_inputs_3 = TestModelManager::get().add("conv2d_dilation_nhwc_quant8_all_tensors_as_inputs_3", get_test_model_nhwc_quant8_all_tensors_as_inputs_3());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -24385,9 +24940,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {2, 11, 14},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -24576,6 +25133,8 @@ const TestModel& get_test_model_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal_3 = TestModelManager::get().add("conv2d_dilation_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal_3", get_test_model_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal_3());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -24583,9 +25142,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_nhwc_float16_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 4.0f, 3.0f, 0.0f, 0.0f, 0.0f, 0.0f, 2.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f}),
@@ -24706,6 +25267,8 @@ const TestModel& get_test_model_nhwc_float16_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_float16_3 = TestModelManager::get().add("conv2d_dilation_nhwc_float16_3", get_test_model_nhwc_float16_3());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -24713,9 +25276,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_nhwc_float16_all_inputs_as_internal_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {11},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -24870,6 +25435,8 @@ const TestModel& get_test_model_nhwc_float16_all_inputs_as_internal_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_float16_all_inputs_as_internal_3 = TestModelManager::get().add("conv2d_dilation_nhwc_float16_all_inputs_as_internal_3", get_test_model_nhwc_float16_all_inputs_as_internal_3());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -24877,9 +25444,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_nhwc_float16_all_tensors_as_inputs_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 4.0f, 3.0f, 0.0f, 0.0f, 0.0f, 0.0f, 2.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f}),
@@ -25000,6 +25569,8 @@ const TestModel& get_test_model_nhwc_float16_all_tensors_as_inputs_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_float16_all_tensors_as_inputs_3 = TestModelManager::get().add("conv2d_dilation_nhwc_float16_all_tensors_as_inputs_3", get_test_model_nhwc_float16_all_tensors_as_inputs_3());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -25007,9 +25578,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {11, 14, 17},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -25233,15 +25806,19 @@ const TestModel& get_test_model_nhwc_float16_all_tensors_as_inputs_all_inputs_as
     return model;
 }
 
+const auto dummy_test_model_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_3 = TestModelManager::get().add("conv2d_dilation_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_3", get_test_model_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_3());
+
 }  // namespace generated_tests::conv2d_dilation
 
 namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_nchw_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 4.0f, 3.0f, 0.0f, 0.0f, 0.0f, 0.0f, 2.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f}),
@@ -25362,6 +25939,8 @@ const TestModel& get_test_model_nchw_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_3 = TestModelManager::get().add("conv2d_dilation_nchw_3", get_test_model_nchw_3());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -25369,9 +25948,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_nchw_all_inputs_as_internal_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {11},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -25526,6 +26107,8 @@ const TestModel& get_test_model_nchw_all_inputs_as_internal_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_all_inputs_as_internal_3 = TestModelManager::get().add("conv2d_dilation_nchw_all_inputs_as_internal_3", get_test_model_nchw_all_inputs_as_internal_3());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -25533,9 +26116,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_nchw_all_tensors_as_inputs_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 4.0f, 3.0f, 0.0f, 0.0f, 0.0f, 0.0f, 2.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f}),
@@ -25656,6 +26241,8 @@ const TestModel& get_test_model_nchw_all_tensors_as_inputs_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_all_tensors_as_inputs_3 = TestModelManager::get().add("conv2d_dilation_nchw_all_tensors_as_inputs_3", get_test_model_nchw_all_tensors_as_inputs_3());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -25663,9 +26250,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_nchw_all_tensors_as_inputs_all_inputs_as_internal_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {11, 14, 17},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -25888,6 +26477,8 @@ const TestModel& get_test_model_nchw_all_tensors_as_inputs_all_inputs_as_interna
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_all_tensors_as_inputs_all_inputs_as_internal_3 = TestModelManager::get().add("conv2d_dilation_nchw_all_tensors_as_inputs_all_inputs_as_internal_3", get_test_model_nchw_all_tensors_as_inputs_all_inputs_as_internal_3());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -25895,9 +26486,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_nchw_relaxed_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 4.0f, 3.0f, 0.0f, 0.0f, 0.0f, 0.0f, 2.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f}),
@@ -26018,6 +26611,8 @@ const TestModel& get_test_model_nchw_relaxed_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_relaxed_3 = TestModelManager::get().add("conv2d_dilation_nchw_relaxed_3", get_test_model_nchw_relaxed_3());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -26025,9 +26620,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_nchw_relaxed_all_inputs_as_internal_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {11},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -26182,6 +26779,8 @@ const TestModel& get_test_model_nchw_relaxed_all_inputs_as_internal_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_relaxed_all_inputs_as_internal_3 = TestModelManager::get().add("conv2d_dilation_nchw_relaxed_all_inputs_as_internal_3", get_test_model_nchw_relaxed_all_inputs_as_internal_3());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -26189,9 +26788,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_nchw_relaxed_all_tensors_as_inputs_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 4.0f, 3.0f, 0.0f, 0.0f, 0.0f, 0.0f, 2.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f}),
@@ -26312,6 +26913,8 @@ const TestModel& get_test_model_nchw_relaxed_all_tensors_as_inputs_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_relaxed_all_tensors_as_inputs_3 = TestModelManager::get().add("conv2d_dilation_nchw_relaxed_all_tensors_as_inputs_3", get_test_model_nchw_relaxed_all_tensors_as_inputs_3());
 
 }  // namespace generated_tests::conv2d_dilation
 
@@ -26319,9 +26922,11 @@ namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {11, 14, 17},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -26545,15 +27150,19 @@ const TestModel& get_test_model_nchw_relaxed_all_tensors_as_inputs_all_inputs_as
     return model;
 }
 
+const auto dummy_test_model_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_3 = TestModelManager::get().add("conv2d_dilation_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_3", get_test_model_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_3());
+
 }  // namespace generated_tests::conv2d_dilation
 
 namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_nchw_quant8_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 6, 0, 0, 0, 0, 4, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}),
@@ -26675,15 +27284,19 @@ const TestModel& get_test_model_nchw_quant8_3() {
     return model;
 }
 
+const auto dummy_test_model_nchw_quant8_3 = TestModelManager::get().add("conv2d_dilation_nchw_quant8_3", get_test_model_nchw_quant8_3());
+
 }  // namespace generated_tests::conv2d_dilation
 
 namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_nchw_quant8_all_inputs_as_internal_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {11},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -26839,15 +27452,19 @@ const TestModel& get_test_model_nchw_quant8_all_inputs_as_internal_3() {
     return model;
 }
 
+const auto dummy_test_model_nchw_quant8_all_inputs_as_internal_3 = TestModelManager::get().add("conv2d_dilation_nchw_quant8_all_inputs_as_internal_3", get_test_model_nchw_quant8_all_inputs_as_internal_3());
+
 }  // namespace generated_tests::conv2d_dilation
 
 namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_nchw_quant8_all_tensors_as_inputs_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 6, 0, 0, 0, 0, 4, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}),
@@ -26969,15 +27586,19 @@ const TestModel& get_test_model_nchw_quant8_all_tensors_as_inputs_3() {
     return model;
 }
 
+const auto dummy_test_model_nchw_quant8_all_tensors_as_inputs_3 = TestModelManager::get().add("conv2d_dilation_nchw_quant8_all_tensors_as_inputs_3", get_test_model_nchw_quant8_all_tensors_as_inputs_3());
+
 }  // namespace generated_tests::conv2d_dilation
 
 namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {2, 11, 14},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -27167,15 +27788,19 @@ const TestModel& get_test_model_nchw_quant8_all_tensors_as_inputs_all_inputs_as_
     return model;
 }
 
+const auto dummy_test_model_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal_3 = TestModelManager::get().add("conv2d_dilation_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal_3", get_test_model_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal_3());
+
 }  // namespace generated_tests::conv2d_dilation
 
 namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_nchw_float16_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 4.0f, 3.0f, 0.0f, 0.0f, 0.0f, 0.0f, 2.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f}),
@@ -27297,15 +27922,19 @@ const TestModel& get_test_model_nchw_float16_3() {
     return model;
 }
 
+const auto dummy_test_model_nchw_float16_3 = TestModelManager::get().add("conv2d_dilation_nchw_float16_3", get_test_model_nchw_float16_3());
+
 }  // namespace generated_tests::conv2d_dilation
 
 namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_nchw_float16_all_inputs_as_internal_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {11},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -27461,15 +28090,19 @@ const TestModel& get_test_model_nchw_float16_all_inputs_as_internal_3() {
     return model;
 }
 
+const auto dummy_test_model_nchw_float16_all_inputs_as_internal_3 = TestModelManager::get().add("conv2d_dilation_nchw_float16_all_inputs_as_internal_3", get_test_model_nchw_float16_all_inputs_as_internal_3());
+
 }  // namespace generated_tests::conv2d_dilation
 
 namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_nchw_float16_all_tensors_as_inputs_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 4.0f, 3.0f, 0.0f, 0.0f, 0.0f, 0.0f, 2.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f}),
@@ -27591,15 +28224,19 @@ const TestModel& get_test_model_nchw_float16_all_tensors_as_inputs_3() {
     return model;
 }
 
+const auto dummy_test_model_nchw_float16_all_tensors_as_inputs_3 = TestModelManager::get().add("conv2d_dilation_nchw_float16_all_tensors_as_inputs_3", get_test_model_nchw_float16_all_tensors_as_inputs_3());
+
 }  // namespace generated_tests::conv2d_dilation
 
 namespace generated_tests::conv2d_dilation {
 
 const TestModel& get_test_model_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {11, 14, 17},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -27822,6 +28459,8 @@ const TestModel& get_test_model_nchw_float16_all_tensors_as_inputs_all_inputs_as
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_3 = TestModelManager::get().add("conv2d_dilation_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_3", get_test_model_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_3());
 
 }  // namespace generated_tests::conv2d_dilation
 
