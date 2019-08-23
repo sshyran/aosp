@@ -21,7 +21,7 @@ NNAPI_VERSIONS="V1_0 V1_1 V1_2"
 
 export NNAPI_BASE=$ANDROID_BUILD_TOP/frameworks/ml/nn
 : ${TEST_DIR:=frameworks/ml/nn/runtime/test}
-: ${FORCE:=""}
+FORCE=""
 
 # Process all test spec directory specified by NNAPI_VERSIONS.
 function generate_spec_dirs {
