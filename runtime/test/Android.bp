@@ -133,14 +133,14 @@ cc_defaults {
         "libneuralnetworks_private_headers",
         "neuralnetworks_test_vendor_fibonacci_extension",
     ],
-    test_suites: [
-        "general-tests",
-    ],
 }
 
 cc_test {
     name: "NeuralNetworksTest_static",
     defaults: ["NeuralNetworksTest_static_defaults"],
+    test_suites: [
+        "general-tests",
+    ],
 }
 
 cc_test {
