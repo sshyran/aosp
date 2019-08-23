@@ -14,9 +14,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""CTS testcase generator
+"""Example generator
 
-Implements CTS test backend. Invoked by ml/nn/runtime/test/specs/generate_tests.sh;
+Compiles spec files and generates the corresponding C++ TestModel definitions.
+Invoked by ml/nn/runtime/test/specs/generate_all_tests.sh;
 See that script for details on how this script is used.
 
 """
@@ -35,22 +36,20 @@ def ParseCmdLine():
     parser = tg.ArgumentParser()
     parser.add_argument("-e", "--example", help="the output example file or directory")
     args = tg.ParseArgs(parser)
-    tg.FileNames.InitializeFileLists(args.spec, args.example, args.test)
+    tg.FileNames.InitializeFileLists(args.spec, args.example)
 
 # Write headers for generated files, which are boilerplate codes only related to filenames
-def InitializeFiles(example_fd, test_fd):
+def InitializeFiles(example_fd):
     specFileBase = os.path.basename(tg.FileNames.specFile)
     fileHeader = """\
 // Generated from {spec_file}
 // DO NOT EDIT
 // clang-format off
-#include "{header}"
+#include "TestHarness.h"
+using namespace test_helper;
 """
-    if test_fd is not None:
-        print(fileHeader.format(spec_file=specFileBase, header="TestGenerated.h"), file=test_fd)
     if example_fd is not None:
-        print(fileHeader.format(spec_file=specFileBase, header="TestHarness.h"), file=example_fd)
-        print("using namespace test_helper;\n", file=example_fd)
+        print(fileHeader.format(spec_file=specFileBase), file=example_fd)
 
 def IndentedStr(s, indent):
     return ("\n" + " " * indent).join(s.split('\n'))
@@ -125,10 +124,14 @@ def GetModelStruct(example):
         "inputIndexes": [op.model_index for op in example.model.GetInputs()],
         "outputIndexes": [op.model_index for op in example.model.GetOutputs()],
         "isRelaxed": example.model.isRelaxed,
-        "expectedMultinomialDistributionTolerance": example.expectedMultinomialDistributionTolerance
+        "expectedMultinomialDistributionTolerance":
+                example.expectedMultinomialDistributionTolerance,
+        "expectFailure": example.expectFailure,
+        "minSupportedVersion": "TestHalVersion::%s" % (
+                example.model.version if example.model.version is not None else "UNKNOWN"),
     }
 
-def DumpCtsExample(example, example_fd):
+def DumpExample(example, example_fd):
     assert example.model.compiled
     template = """\
 namespace generated_tests::{spec_name} {{
@@ -138,66 +141,18 @@ const TestModel& get_{example_name}() {{
     return model;
 }}
 
+const auto dummy_{example_name} = TestModelManager::get().add("{test_name}", get_{example_name}());
+
 }}  // namespace generated_tests::{spec_name}
 """
     print(template.format(
             spec_name=tg.FileNames.specName,
+            test_name=str(example.testName),
             example_name=str(example.examplesName),
             aggregate_init=ToCpp(GetModelStruct(example), indent=4),
         ), file=example_fd)
 
 
-CTS_TEST_TEMPLATE_HEAD = """
-namespace {namespace} {{
-
-const ::test_helper::TestModel& get_{examples_name}();
-"""
-
-GENERATED_TEST_DEF = """
-TEST_F(GeneratedTests, {test_name}) {{ execute(get_{examples_name}()); }}
-"""
-
-DYNAMIC_OUTPUT_SHAPE_TEST_DEF = """
-TEST_F(DynamicOutputShapeTest, {test_name}) {{ execute(get_{examples_name}()); }}
-"""
-
-GENERATED_VALIDATION_TEST_DEF = """
-TEST_F(GeneratedValidationTests, {test_name}) {{ execute(get_{examples_name}()); }}
-"""
-
-COMPLIANCE_TEST_DEF = """
-TEST_AVAILABLE_SINCE({version}, {test_name}, {namespace}::get_{examples_name}());
-"""
-
-CTS_TEST_TEMPLATE_TAIL = """
-}} // namespace {namespace}
-"""
-
-def DumpCtsTest(example, test_fd):
-    namespace = "generated_tests::{spec_name}".format(spec_name=tg.FileNames.specName)
-
-    test_template = CTS_TEST_TEMPLATE_HEAD
-
-    if example.expectFailure:
-        test_template += GENERATED_VALIDATION_TEST_DEF
-    else:
-        test_template += GENERATED_TEST_DEF
-        if example.testDynamicOutputShape:
-            test_template += DYNAMIC_OUTPUT_SHAPE_TEST_DEF
-
-    test_template += CTS_TEST_TEMPLATE_TAIL
-
-    if example.model.version is not None and not example.expectFailure:
-        test_template += COMPLIANCE_TEST_DEF
-
-    print(test_template.format(
-        test_name=str(example.testName),
-        namespace=namespace,
-        examples_name=str(example.examplesName),
-        version=example.model.version), file=test_fd)
-
 if __name__ == '__main__':
     ParseCmdLine()
-    tg.Run(InitializeFiles=InitializeFiles,
-           DumpExample=DumpCtsExample,
-           DumpTest=DumpCtsTest)
+    tg.Run(InitializeFiles=InitializeFiles, DumpExample=DumpExample)
