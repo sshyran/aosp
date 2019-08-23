@@ -29,8 +29,7 @@ namespace nn {
 
 using namespace hal;
 
-SVDF::SVDF(const Operation& operation,
-           std::vector<RunTimeOperandInfo>& operands) {
+SVDF::SVDF(const Operation& operation, std::vector<RunTimeOperandInfo>& operands) {
     NNTRACE_TRANS("SVDF::SVDF");
     input_ = GetInput(operation, operands, kInputTensor);
     weights_feature_ = GetInput(operation, operands, kWeightsFeatureTensor);
@@ -39,62 +38,58 @@ SVDF::SVDF(const Operation& operation,
     state_in_ = GetInput(operation, operands, kStateInTensor);
 
     params_.rank_ = getScalarData<int>(*GetInput(operation, operands, kRankParam));
-    params_.activation_ = static_cast<TfLiteFusedActivation>(getScalarData<int>(
-        *GetInput(operation, operands, kActivationParam)));
+    params_.activation_ = static_cast<TfLiteFusedActivation>(
+            getScalarData<int>(*GetInput(operation, operands, kActivationParam)));
 
     state_out_ = GetOutput(operation, operands, kStateOutTensor);
     output_ = GetOutput(operation, operands, kOutputTensor);
 }
 
-bool SVDF::Prepare(const Operation &operation,
-                   std::vector<RunTimeOperandInfo> &operands,
-                   Shape *stateShape,
-                   Shape *outputShape) {
-  NNTRACE_TRANS("SVDF::Prepare");
-  // Check we have all the inputs and outputs we need.
-  const int num_inputs = NumInputsWithValues(operation, operands);
+bool SVDF::Prepare(const Operation& operation, std::vector<RunTimeOperandInfo>& operands,
+                   Shape* stateShape, Shape* outputShape) {
+    NNTRACE_TRANS("SVDF::Prepare");
+    // Check we have all the inputs and outputs we need.
+    const int num_inputs = NumInputsWithValues(operation, operands);
 
-  NN_CHECK(num_inputs == 6 || num_inputs == 7);
-  NN_CHECK_EQ(NumOutputs(operation), 2);
+    NN_CHECK(num_inputs == 6 || num_inputs == 7);
+    NN_CHECK_EQ(NumOutputs(operation), 2);
 
-  const RunTimeOperandInfo *input =
-      GetInput(operation, operands, SVDF::kInputTensor);
-  const RunTimeOperandInfo *weights_feature =
-      GetInput(operation, operands, SVDF::kWeightsFeatureTensor);
-  const RunTimeOperandInfo *weights_time =
-      GetInput(operation, operands, SVDF::kWeightsTimeTensor);
+    const RunTimeOperandInfo* input = GetInput(operation, operands, SVDF::kInputTensor);
+    const RunTimeOperandInfo* weights_feature =
+            GetInput(operation, operands, SVDF::kWeightsFeatureTensor);
+    const RunTimeOperandInfo* weights_time =
+            GetInput(operation, operands, SVDF::kWeightsTimeTensor);
 
-  // Check all the parameters of tensor match within themselves and match the
-  // input configuration.
-  const int rank = getScalarData<int>(*GetInput(operation, operands, kRankParam));
-  const uint32_t batch_size = SizeOfDimension(input, 0);
-  const uint32_t num_filters = SizeOfDimension(weights_feature, 0);
-  NN_CHECK_EQ(num_filters % rank, 0);
-  const uint32_t num_units = num_filters / rank;
-  const uint32_t memory_size = SizeOfDimension(weights_time, 1);
-  NN_CHECK_EQ(SizeOfDimension(input, 1), SizeOfDimension(weights_feature, 1));
-  NN_CHECK_EQ(SizeOfDimension(weights_time, 0), num_filters);
+    // Check all the parameters of tensor match within themselves and match the
+    // input configuration.
+    const int rank = getScalarData<int>(*GetInput(operation, operands, kRankParam));
+    const uint32_t batch_size = SizeOfDimension(input, 0);
+    const uint32_t num_filters = SizeOfDimension(weights_feature, 0);
+    NN_CHECK_EQ(num_filters % rank, 0);
+    const uint32_t num_units = num_filters / rank;
+    const uint32_t memory_size = SizeOfDimension(weights_time, 1);
+    NN_CHECK_EQ(SizeOfDimension(input, 1), SizeOfDimension(weights_feature, 1));
+    NN_CHECK_EQ(SizeOfDimension(weights_time, 0), num_filters);
 
-  const RunTimeOperandInfo *bias =
-      GetInput(operation, operands, kBiasTensor);
-  if (!IsNullInput(bias)) {
-    NN_CHECK_EQ(SizeOfDimension(bias, 0), num_units);
-  }
+    const RunTimeOperandInfo* bias = GetInput(operation, operands, kBiasTensor);
+    if (!IsNullInput(bias)) {
+        NN_CHECK_EQ(SizeOfDimension(bias, 0), num_units);
+    }
 
-  // Resize state.
-  const Shape &inputShape = input->shape();
-  stateShape->type = inputShape.type;
-  stateShape->dimensions = { batch_size, memory_size * num_filters };
-  stateShape->offset = inputShape.offset;
-  stateShape->scale = inputShape.scale;
+    // Resize state.
+    const Shape& inputShape = input->shape();
+    stateShape->type = inputShape.type;
+    stateShape->dimensions = {batch_size, memory_size * num_filters};
+    stateShape->offset = inputShape.offset;
+    stateShape->scale = inputShape.scale;
 
-  // Resize output.
-  outputShape->type = inputShape.type;
-  outputShape->dimensions = { batch_size, num_units };
-  outputShape->offset = inputShape.offset;
-  outputShape->scale = inputShape.scale;
+    // Resize output.
+    outputShape->type = inputShape.type;
+    outputShape->dimensions = {batch_size, num_units};
+    outputShape->offset = inputShape.offset;
+    outputShape->scale = inputShape.scale;
 
-  return true;
+    return true;
 }
 
 bool SVDF::Eval() {

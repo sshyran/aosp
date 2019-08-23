@@ -170,7 +170,6 @@ class ModelBuilder {
     // No further modifications are allowed to the model.
     bool mInvalidModel = false;
 
-
     // 'true' indicates TENSOR_FLOAT32 may be calculated with range and/or
     // precision as low as that of the IEEE 754 16-bit floating-point format.
     // 'false' indicates TENSOR_FLOAT32 must be calculated using at least the
