@@ -2,16 +2,17 @@
 // DO NOT EDIT
 // clang-format off
 #include "TestHarness.h"
-
 using namespace test_helper;
 
 namespace generated_tests::dequantize_v1_2 {
 
 const TestModel& get_test_model_1d_quant8_asymm() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_0,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({0, 1, 2, 3, 4, 251, 252, 253, 254, 255}),
@@ -42,6 +43,8 @@ const TestModel& get_test_model_1d_quant8_asymm() {
     };
     return model;
 }
+
+const auto dummy_test_model_1d_quant8_asymm = TestModelManager::get().add("dequantize_v1_2_1d_quant8_asymm", get_test_model_1d_quant8_asymm());
 
 }  // namespace generated_tests::dequantize_v1_2
 
@@ -49,9 +52,11 @@ namespace generated_tests::dequantize_v1_2 {
 
 const TestModel& get_test_model_1d_quant8_asymm_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_0,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -116,6 +121,8 @@ const TestModel& get_test_model_1d_quant8_asymm_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_1d_quant8_asymm_all_inputs_as_internal = TestModelManager::get().add("dequantize_v1_2_1d_quant8_asymm_all_inputs_as_internal", get_test_model_1d_quant8_asymm_all_inputs_as_internal());
 
 }  // namespace generated_tests::dequantize_v1_2
 
@@ -123,9 +130,11 @@ namespace generated_tests::dequantize_v1_2 {
 
 const TestModel& get_test_model_1d_quant8_asymm_relaxed() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({0, 1, 2, 3, 4, 251, 252, 253, 254, 255}),
@@ -156,6 +165,8 @@ const TestModel& get_test_model_1d_quant8_asymm_relaxed() {
     };
     return model;
 }
+
+const auto dummy_test_model_1d_quant8_asymm_relaxed = TestModelManager::get().add("dequantize_v1_2_1d_quant8_asymm_relaxed", get_test_model_1d_quant8_asymm_relaxed());
 
 }  // namespace generated_tests::dequantize_v1_2
 
@@ -163,9 +174,11 @@ namespace generated_tests::dequantize_v1_2 {
 
 const TestModel& get_test_model_1d_quant8_asymm_relaxed_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {2},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -230,6 +243,8 @@ const TestModel& get_test_model_1d_quant8_asymm_relaxed_all_inputs_as_internal()
     };
     return model;
 }
+
+const auto dummy_test_model_1d_quant8_asymm_relaxed_all_inputs_as_internal = TestModelManager::get().add("dequantize_v1_2_1d_quant8_asymm_relaxed_all_inputs_as_internal", get_test_model_1d_quant8_asymm_relaxed_all_inputs_as_internal());
 
 }  // namespace generated_tests::dequantize_v1_2
 
@@ -237,9 +252,11 @@ namespace generated_tests::dequantize_v1_2 {
 
 const TestModel& get_test_model_1d_quant8_asymm_float16() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({0, 1, 2, 3, 4, 251, 252, 253, 254, 255}),
@@ -270,6 +287,8 @@ const TestModel& get_test_model_1d_quant8_asymm_float16() {
     };
     return model;
 }
+
+const auto dummy_test_model_1d_quant8_asymm_float16 = TestModelManager::get().add("dequantize_v1_2_1d_quant8_asymm_float16", get_test_model_1d_quant8_asymm_float16());
 
 }  // namespace generated_tests::dequantize_v1_2
 
@@ -277,9 +296,11 @@ namespace generated_tests::dequantize_v1_2 {
 
 const TestModel& get_test_model_1d_quant8_asymm_float16_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -344,6 +365,8 @@ const TestModel& get_test_model_1d_quant8_asymm_float16_all_inputs_as_internal()
     };
     return model;
 }
+
+const auto dummy_test_model_1d_quant8_asymm_float16_all_inputs_as_internal = TestModelManager::get().add("dequantize_v1_2_1d_quant8_asymm_float16_all_inputs_as_internal", get_test_model_1d_quant8_asymm_float16_all_inputs_as_internal());
 
 }  // namespace generated_tests::dequantize_v1_2
 
@@ -351,9 +374,11 @@ namespace generated_tests::dequantize_v1_2 {
 
 const TestModel& get_test_model_2d_quant8_asymm() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_0,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({0, 1, 2, 3, 4, 251, 252, 253, 254, 255}),
@@ -384,6 +409,8 @@ const TestModel& get_test_model_2d_quant8_asymm() {
     };
     return model;
 }
+
+const auto dummy_test_model_2d_quant8_asymm = TestModelManager::get().add("dequantize_v1_2_2d_quant8_asymm", get_test_model_2d_quant8_asymm());
 
 }  // namespace generated_tests::dequantize_v1_2
 
@@ -391,9 +418,11 @@ namespace generated_tests::dequantize_v1_2 {
 
 const TestModel& get_test_model_2d_quant8_asymm_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_0,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -458,6 +487,8 @@ const TestModel& get_test_model_2d_quant8_asymm_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_2d_quant8_asymm_all_inputs_as_internal = TestModelManager::get().add("dequantize_v1_2_2d_quant8_asymm_all_inputs_as_internal", get_test_model_2d_quant8_asymm_all_inputs_as_internal());
 
 }  // namespace generated_tests::dequantize_v1_2
 
@@ -465,9 +496,11 @@ namespace generated_tests::dequantize_v1_2 {
 
 const TestModel& get_test_model_2d_quant8_asymm_relaxed() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({0, 1, 2, 3, 4, 251, 252, 253, 254, 255}),
@@ -498,6 +531,8 @@ const TestModel& get_test_model_2d_quant8_asymm_relaxed() {
     };
     return model;
 }
+
+const auto dummy_test_model_2d_quant8_asymm_relaxed = TestModelManager::get().add("dequantize_v1_2_2d_quant8_asymm_relaxed", get_test_model_2d_quant8_asymm_relaxed());
 
 }  // namespace generated_tests::dequantize_v1_2
 
@@ -505,9 +540,11 @@ namespace generated_tests::dequantize_v1_2 {
 
 const TestModel& get_test_model_2d_quant8_asymm_relaxed_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {2},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -573,15 +610,19 @@ const TestModel& get_test_model_2d_quant8_asymm_relaxed_all_inputs_as_internal()
     return model;
 }
 
+const auto dummy_test_model_2d_quant8_asymm_relaxed_all_inputs_as_internal = TestModelManager::get().add("dequantize_v1_2_2d_quant8_asymm_relaxed_all_inputs_as_internal", get_test_model_2d_quant8_asymm_relaxed_all_inputs_as_internal());
+
 }  // namespace generated_tests::dequantize_v1_2
 
 namespace generated_tests::dequantize_v1_2 {
 
 const TestModel& get_test_model_2d_quant8_asymm_float16() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({0, 1, 2, 3, 4, 251, 252, 253, 254, 255}),
@@ -613,15 +654,19 @@ const TestModel& get_test_model_2d_quant8_asymm_float16() {
     return model;
 }
 
+const auto dummy_test_model_2d_quant8_asymm_float16 = TestModelManager::get().add("dequantize_v1_2_2d_quant8_asymm_float16", get_test_model_2d_quant8_asymm_float16());
+
 }  // namespace generated_tests::dequantize_v1_2
 
 namespace generated_tests::dequantize_v1_2 {
 
 const TestModel& get_test_model_2d_quant8_asymm_float16_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -687,15 +732,19 @@ const TestModel& get_test_model_2d_quant8_asymm_float16_all_inputs_as_internal()
     return model;
 }
 
+const auto dummy_test_model_2d_quant8_asymm_float16_all_inputs_as_internal = TestModelManager::get().add("dequantize_v1_2_2d_quant8_asymm_float16_all_inputs_as_internal", get_test_model_2d_quant8_asymm_float16_all_inputs_as_internal());
+
 }  // namespace generated_tests::dequantize_v1_2
 
 namespace generated_tests::dequantize_v1_2 {
 
 const TestModel& get_test_model_3d_quant8_symm() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<int8_t>({-128, -127, -126, -125, 124, 125, 126, 127}),
@@ -726,6 +775,8 @@ const TestModel& get_test_model_3d_quant8_symm() {
     };
     return model;
 }
+
+const auto dummy_test_model_3d_quant8_symm = TestModelManager::get().add("dequantize_v1_2_3d_quant8_symm", get_test_model_3d_quant8_symm());
 
 }  // namespace generated_tests::dequantize_v1_2
 
@@ -733,9 +784,11 @@ namespace generated_tests::dequantize_v1_2 {
 
 const TestModel& get_test_model_3d_quant8_symm_relaxed() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<int8_t>({-128, -127, -126, -125, 124, 125, 126, 127}),
@@ -766,6 +819,8 @@ const TestModel& get_test_model_3d_quant8_symm_relaxed() {
     };
     return model;
 }
+
+const auto dummy_test_model_3d_quant8_symm_relaxed = TestModelManager::get().add("dequantize_v1_2_3d_quant8_symm_relaxed", get_test_model_3d_quant8_symm_relaxed());
 
 }  // namespace generated_tests::dequantize_v1_2
 
@@ -773,9 +828,11 @@ namespace generated_tests::dequantize_v1_2 {
 
 const TestModel& get_test_model_3d_quant8_symm_float16() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<int8_t>({-128, -127, -126, -125, 124, 125, 126, 127}),
@@ -806,6 +863,8 @@ const TestModel& get_test_model_3d_quant8_symm_float16() {
     };
     return model;
 }
+
+const auto dummy_test_model_3d_quant8_symm_float16 = TestModelManager::get().add("dequantize_v1_2_3d_quant8_symm_float16", get_test_model_3d_quant8_symm_float16());
 
 }  // namespace generated_tests::dequantize_v1_2
 
@@ -813,9 +872,11 @@ namespace generated_tests::dequantize_v1_2 {
 
 const TestModel& get_test_model_4d_quant8_symm() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<int8_t>({-128, -127, -126, -125, 124, 125, 126, 127}),
@@ -846,6 +907,8 @@ const TestModel& get_test_model_4d_quant8_symm() {
     };
     return model;
 }
+
+const auto dummy_test_model_4d_quant8_symm = TestModelManager::get().add("dequantize_v1_2_4d_quant8_symm", get_test_model_4d_quant8_symm());
 
 }  // namespace generated_tests::dequantize_v1_2
 
@@ -853,9 +916,11 @@ namespace generated_tests::dequantize_v1_2 {
 
 const TestModel& get_test_model_4d_quant8_symm_relaxed() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<int8_t>({-128, -127, -126, -125, 124, 125, 126, 127}),
@@ -887,15 +952,19 @@ const TestModel& get_test_model_4d_quant8_symm_relaxed() {
     return model;
 }
 
+const auto dummy_test_model_4d_quant8_symm_relaxed = TestModelManager::get().add("dequantize_v1_2_4d_quant8_symm_relaxed", get_test_model_4d_quant8_symm_relaxed());
+
 }  // namespace generated_tests::dequantize_v1_2
 
 namespace generated_tests::dequantize_v1_2 {
 
 const TestModel& get_test_model_4d_quant8_symm_float16() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<int8_t>({-128, -127, -126, -125, 124, 125, 126, 127}),
@@ -927,15 +996,19 @@ const TestModel& get_test_model_4d_quant8_symm_float16() {
     return model;
 }
 
+const auto dummy_test_model_4d_quant8_symm_float16 = TestModelManager::get().add("dequantize_v1_2_4d_quant8_symm_float16", get_test_model_4d_quant8_symm_float16());
+
 }  // namespace generated_tests::dequantize_v1_2
 
 namespace generated_tests::dequantize_v1_2 {
 
 const TestModel& get_test_model_3d_per_channel_first_dim() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {
                             .channelDim = 0,
@@ -969,6 +1042,8 @@ const TestModel& get_test_model_3d_per_channel_first_dim() {
     };
     return model;
 }
+
+const auto dummy_test_model_3d_per_channel_first_dim = TestModelManager::get().add("dequantize_v1_2_3d_per_channel_first_dim", get_test_model_3d_per_channel_first_dim());
 
 }  // namespace generated_tests::dequantize_v1_2
 
@@ -976,9 +1051,11 @@ namespace generated_tests::dequantize_v1_2 {
 
 const TestModel& get_test_model_3d_per_channel_first_dim_relaxed() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {
                             .channelDim = 0,
@@ -1013,15 +1090,19 @@ const TestModel& get_test_model_3d_per_channel_first_dim_relaxed() {
     return model;
 }
 
+const auto dummy_test_model_3d_per_channel_first_dim_relaxed = TestModelManager::get().add("dequantize_v1_2_3d_per_channel_first_dim_relaxed", get_test_model_3d_per_channel_first_dim_relaxed());
+
 }  // namespace generated_tests::dequantize_v1_2
 
 namespace generated_tests::dequantize_v1_2 {
 
 const TestModel& get_test_model_3d_per_channel_first_dim_float16() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {
                             .channelDim = 0,
@@ -1056,15 +1137,19 @@ const TestModel& get_test_model_3d_per_channel_first_dim_float16() {
     return model;
 }
 
+const auto dummy_test_model_3d_per_channel_first_dim_float16 = TestModelManager::get().add("dequantize_v1_2_3d_per_channel_first_dim_float16", get_test_model_3d_per_channel_first_dim_float16());
+
 }  // namespace generated_tests::dequantize_v1_2
 
 namespace generated_tests::dequantize_v1_2 {
 
 const TestModel& get_test_model_3d_per_channel_second_dim() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {
                             .channelDim = 1,
@@ -1098,6 +1183,8 @@ const TestModel& get_test_model_3d_per_channel_second_dim() {
     };
     return model;
 }
+
+const auto dummy_test_model_3d_per_channel_second_dim = TestModelManager::get().add("dequantize_v1_2_3d_per_channel_second_dim", get_test_model_3d_per_channel_second_dim());
 
 }  // namespace generated_tests::dequantize_v1_2
 
@@ -1105,9 +1192,11 @@ namespace generated_tests::dequantize_v1_2 {
 
 const TestModel& get_test_model_3d_per_channel_second_dim_relaxed() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {
                             .channelDim = 1,
@@ -1142,15 +1231,19 @@ const TestModel& get_test_model_3d_per_channel_second_dim_relaxed() {
     return model;
 }
 
+const auto dummy_test_model_3d_per_channel_second_dim_relaxed = TestModelManager::get().add("dequantize_v1_2_3d_per_channel_second_dim_relaxed", get_test_model_3d_per_channel_second_dim_relaxed());
+
 }  // namespace generated_tests::dequantize_v1_2
 
 namespace generated_tests::dequantize_v1_2 {
 
 const TestModel& get_test_model_3d_per_channel_second_dim_float16() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {
                             .channelDim = 1,
@@ -1185,15 +1278,19 @@ const TestModel& get_test_model_3d_per_channel_second_dim_float16() {
     return model;
 }
 
+const auto dummy_test_model_3d_per_channel_second_dim_float16 = TestModelManager::get().add("dequantize_v1_2_3d_per_channel_second_dim_float16", get_test_model_3d_per_channel_second_dim_float16());
+
 }  // namespace generated_tests::dequantize_v1_2
 
 namespace generated_tests::dequantize_v1_2 {
 
 const TestModel& get_test_model() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({0, 32, 128, 255}),
@@ -1225,15 +1322,19 @@ const TestModel& get_test_model() {
     return model;
 }
 
+const auto dummy_test_model = TestModelManager::get().add("dequantize_v1_2", get_test_model());
+
 }  // namespace generated_tests::dequantize_v1_2
 
 namespace generated_tests::dequantize_v1_2 {
 
 const TestModel& get_test_model_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -1299,15 +1400,19 @@ const TestModel& get_test_model_all_inputs_as_internal() {
     return model;
 }
 
+const auto dummy_test_model_all_inputs_as_internal = TestModelManager::get().add("dequantize_v1_2_all_inputs_as_internal", get_test_model_all_inputs_as_internal());
+
 }  // namespace generated_tests::dequantize_v1_2
 
 namespace generated_tests::dequantize_v1_2 {
 
 const TestModel& get_test_model_zero_sized() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({137, 129}),
@@ -1556,6 +1661,8 @@ const TestModel& get_test_model_zero_sized() {
     };
     return model;
 }
+
+const auto dummy_test_model_zero_sized = TestModelManager::get().add("dequantize_v1_2_zero_sized", get_test_model_zero_sized());
 
 }  // namespace generated_tests::dequantize_v1_2
 
@@ -1563,9 +1670,11 @@ namespace generated_tests::dequantize_v1_2 {
 
 const TestModel& get_test_model_zero_sized_relaxed() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({137, 129}),
@@ -1815,15 +1924,19 @@ const TestModel& get_test_model_zero_sized_relaxed() {
     return model;
 }
 
+const auto dummy_test_model_zero_sized_relaxed = TestModelManager::get().add("dequantize_v1_2_zero_sized_relaxed", get_test_model_zero_sized_relaxed());
+
 }  // namespace generated_tests::dequantize_v1_2
 
 namespace generated_tests::dequantize_v1_2 {
 
 const TestModel& get_test_model_zero_sized_float16() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({137, 129}),
@@ -2072,6 +2185,8 @@ const TestModel& get_test_model_zero_sized_float16() {
     };
     return model;
 }
+
+const auto dummy_test_model_zero_sized_float16 = TestModelManager::get().add("dequantize_v1_2_zero_sized_float16", get_test_model_zero_sized_float16());
 
 }  // namespace generated_tests::dequantize_v1_2
 
