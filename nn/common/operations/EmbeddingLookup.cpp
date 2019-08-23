@@ -31,30 +31,29 @@ using namespace hal;
 
 EmbeddingLookup::EmbeddingLookup(const Operation& operation,
                                  std::vector<RunTimeOperandInfo>& operands) {
-  value_ = GetInput(operation, operands, kValueTensor);
-  lookup_ = GetInput(operation, operands, kLookupTensor);
+    value_ = GetInput(operation, operands, kValueTensor);
+    lookup_ = GetInput(operation, operands, kLookupTensor);
 
-  output_ = GetOutput(operation, operands, kOutputTensor);
+    output_ = GetOutput(operation, operands, kOutputTensor);
 }
 
 bool EmbeddingLookup::Eval() {
-  NNTRACE_COMP("EmbeddingLookup::Eval");
-  const int row_size = value_->shape().dimensions[0];
-  const int total_bytes = nonExtensionOperandSizeOfData(value_->type, value_->dimensions);
-  const int row_bytes = total_bytes/row_size;
+    NNTRACE_COMP("EmbeddingLookup::Eval");
+    const int row_size = value_->shape().dimensions[0];
+    const int total_bytes = nonExtensionOperandSizeOfData(value_->type, value_->dimensions);
+    const int row_bytes = total_bytes / row_size;
 
-  for (uint32_t i = 0; i < lookup_->shape().dimensions[0]; i++) {
-    int idx = (reinterpret_cast<int*>(lookup_->buffer))[i];
-    if (idx >= row_size || idx < 0) {
-      LOG(ERROR) << "Embedding Lookup: index out of bounds.";
-      return false;
-    } else {
-      memcpy(output_->buffer + i * row_bytes, value_->buffer + idx * row_bytes,
-             row_bytes);
+    for (uint32_t i = 0; i < lookup_->shape().dimensions[0]; i++) {
+        int idx = (reinterpret_cast<int*>(lookup_->buffer))[i];
+        if (idx >= row_size || idx < 0) {
+            LOG(ERROR) << "Embedding Lookup: index out of bounds.";
+            return false;
+        } else {
+            memcpy(output_->buffer + i * row_bytes, value_->buffer + idx * row_bytes, row_bytes);
+        }
     }
-  }
 
-  return true;
+    return true;
 }
 
 }  // namespace nn
