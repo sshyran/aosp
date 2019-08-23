@@ -224,8 +224,7 @@ void filter_internal(const std::map<int, std::vector<T>>& golden,
     });
 }
 
-inline MixedTyped filter(const MixedTyped& golden,
-                         std::function<bool(int)> is_ignored) {
+inline MixedTyped filter(const MixedTyped& golden, std::function<bool(int)> is_ignored) {
     MixedTyped filtered;
     filter_internal(golden.operandDimensions, &filtered.operandDimensions, is_ignored);
     filter_internal(golden.float32Operands, &filtered.float32Operands, is_ignored);
@@ -275,8 +274,8 @@ inline int getQuant8AllowedError() {
     }
 }
 
-inline void compare(const MixedTyped& golden, const MixedTyped& test,
-                    float fpAtol = 1e-5f, float fpRtol = 1e-5f) {
+inline void compare(const MixedTyped& golden, const MixedTyped& test, float fpAtol = 1e-5f,
+                    float fpRtol = 1e-5f) {
     int quant8AllowedError = getQuant8AllowedError();
     for_each<uint32_t>(
             golden.operandDimensions, test.operandDimensions,

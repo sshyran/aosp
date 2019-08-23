@@ -237,9 +237,7 @@ uint32_t lookupOperation(std::function<const Operation&(uint32_t)> getOperation,
                 (input2.lifetime == OperandLifeTime::CONSTANT_COPY)) {
                 int32_t value;
                 CHECK_EQ(sizeof(value), input2.location.length);
-                memcpy(&value,
-                       getValue(input2.location.offset),
-                       input2.location.length);
+                memcpy(&value, getValue(input2.location.offset), input2.location.length);
                 return value + operationToFirstEncoding.at(operation.type);
             }
             break;
@@ -257,14 +255,9 @@ uint32_t lookupOperation(std::function<const Operation&(uint32_t)> getOperation,
 
 uint32_t lookupOperation(const HidlModel& model, uint32_t operationIndex) {
     return lookupOperation(
-        [&model](uint32_t index) -> const Operation& {
-            return model.operations[index];
-        },
-        [&model](uint32_t index) -> const Operand& {
-            return model.operands[index];
-        },
-        [&model](uint32_t offset) {return &model.operandValues[offset];},
-        operationIndex);
+            [&model](uint32_t index) -> const Operation& { return model.operations[index]; },
+            [&model](uint32_t index) -> const Operand& { return model.operands[index]; },
+            [&model](uint32_t offset) { return &model.operandValues[offset]; }, operationIndex);
 }
 
 #ifdef VERBOSE
@@ -287,32 +280,33 @@ void dump(const char* name, const ModelBuilder* model) {
 // operation.  The subset is represented with a bitmask, in which
 // operation kind K corresponds to the bit (1 << K).
 class PartitioningDriver : public SampleDriver {
-private:
+   private:
     // Dummy class -- a prepared model must not be nullptr.
     class PartitioningPreparedModel : public IPreparedModel {
-    public:
-     Return<ErrorStatus> execute(const Request&, const sp<V1_0::IExecutionCallback>&) override {
-         return ErrorStatus::DEVICE_UNAVAILABLE;
-     }
-     Return<ErrorStatus> execute_1_2(const Request&, MeasureTiming,
-                                     const sp<V1_2::IExecutionCallback>&) override {
-         return ErrorStatus::DEVICE_UNAVAILABLE;
-     }
-     Return<void> executeSynchronously(const Request&, MeasureTiming,
-                                       executeSynchronously_cb cb) override {
-         cb(ErrorStatus::DEVICE_UNAVAILABLE, {}, kBadTiming);
-         return Void();
-     }
-     Return<void> configureExecutionBurst(
-             const sp<V1_2::IBurstCallback>& /*callback*/,
-             const MQDescriptorSync<V1_2::FmqRequestDatum>& /*requestChannel*/,
-             const MQDescriptorSync<V1_2::FmqResultDatum>& /*resultChannel*/,
-             configureExecutionBurst_cb cb) override {
-         cb(ErrorStatus::DEVICE_UNAVAILABLE, nullptr);
-         return Void();
-     }
+       public:
+        Return<ErrorStatus> execute(const Request&, const sp<V1_0::IExecutionCallback>&) override {
+            return ErrorStatus::DEVICE_UNAVAILABLE;
+        }
+        Return<ErrorStatus> execute_1_2(const Request&, MeasureTiming,
+                                        const sp<V1_2::IExecutionCallback>&) override {
+            return ErrorStatus::DEVICE_UNAVAILABLE;
+        }
+        Return<void> executeSynchronously(const Request&, MeasureTiming,
+                                          executeSynchronously_cb cb) override {
+            cb(ErrorStatus::DEVICE_UNAVAILABLE, {}, kBadTiming);
+            return Void();
+        }
+        Return<void> configureExecutionBurst(
+                const sp<V1_2::IBurstCallback>& /*callback*/,
+                const MQDescriptorSync<V1_2::FmqRequestDatum>& /*requestChannel*/,
+                const MQDescriptorSync<V1_2::FmqResultDatum>& /*resultChannel*/,
+                configureExecutionBurst_cb cb) override {
+            cb(ErrorStatus::DEVICE_UNAVAILABLE, nullptr);
+            return Void();
+        }
     };
-public:
+
+   public:
     enum OEM {
         OEMNo,          // rejected by getSupportedOperations and prepareModel
         OEMIndecisive,  // accepted by getSupportedOperations but not prepareModel
@@ -350,9 +344,7 @@ public:
         return status;
     }
 
-    Return<DeviceStatus> getStatus() override {
-        return DeviceStatus::AVAILABLE;
-    }
+    Return<DeviceStatus> getStatus() override { return DeviceStatus::AVAILABLE; }
 
     Return<void> getCapabilities_1_2(getCapabilities_1_2_cb cb) override {
         cb(ErrorStatus::NONE, mCapabilities);
@@ -567,15 +559,15 @@ class PartitioningModel : private WrapperModel {
     uint32_t addOperationOEM1To1(const uint32_t input,
                                  Dimensioned dimensionedOutput = Dimensioned::YES) {
         uint32_t output = addOperandOfSameType(input, dimensionedOutput);
-        addOperation(ANEURALNETWORKS_OEM_OPERATION, { input }, { output });
+        addOperation(ANEURALNETWORKS_OEM_OPERATION, {input}, {output});
         return output;
     }
 
     // Run the partitioning algorithm to create an ExecutionPlan.
     int partitionTheWork(const std::vector<std::shared_ptr<Device>>& devices,
                          ExecutePreference preference, ExecutionPlan* plan) {
-        return reinterpret_cast<ModelBuilder*>(getHandle())->partitionTheWork(
-            devices, static_cast<uint32_t>(preference), plan);
+        return reinterpret_cast<ModelBuilder*>(getHandle())
+                ->partitionTheWork(devices, static_cast<uint32_t>(preference), plan);
     }
 
 #ifdef VERBOSE
@@ -586,34 +578,34 @@ class PartitioningModel : private WrapperModel {
     }
 #endif
 
-private:
- // Create an operation with two inputs and one output, specifying
- // the operation kind and the input operand indexes.
- // Returns the output operand index.
- uint32_t addOperation2To1(uint32_t operation, const uint32_t input0, const uint32_t input1,
-                           Dimensioned dimensionedOutput = Dimensioned::YES) {
-     auto it = firstEncodingToOperation.lower_bound(operation);
-     CHECK(it != firstEncodingToOperation.end());
-     ANeuralNetworksOperationType type = it->second.first;
-     if (it->second.second) {
-         int32_t fuseCode = operation - it->first;
-         uint32_t input2 = addIntOperand(fuseCode);
-         uint32_t output = addOperandOfSameType(input0, dimensionedOutput);
-         addOperation(type, {input0, input1, input2}, {output});
-         return output;
-     } else {
-         uint32_t output = addOperandOfSameType(input0, dimensionedOutput);
-         addOperation(type, {input0, input1}, {output});
-         return output;
-     }
- }
+   private:
+    // Create an operation with two inputs and one output, specifying
+    // the operation kind and the input operand indexes.
+    // Returns the output operand index.
+    uint32_t addOperation2To1(uint32_t operation, const uint32_t input0, const uint32_t input1,
+                              Dimensioned dimensionedOutput = Dimensioned::YES) {
+        auto it = firstEncodingToOperation.lower_bound(operation);
+        CHECK(it != firstEncodingToOperation.end());
+        ANeuralNetworksOperationType type = it->second.first;
+        if (it->second.second) {
+            int32_t fuseCode = operation - it->first;
+            uint32_t input2 = addIntOperand(fuseCode);
+            uint32_t output = addOperandOfSameType(input0, dimensionedOutput);
+            addOperation(type, {input0, input1, input2}, {output});
+            return output;
+        } else {
+            uint32_t output = addOperandOfSameType(input0, dimensionedOutput);
+            addOperation(type, {input0, input1}, {output});
+            return output;
+        }
+    }
 
- // Create a scalar integer operand of the specified value, and
- // return the corresponding operand index.
- uint32_t addIntOperand(int32_t value) {
-     uint32_t operand = addOperand(WrapperType::INT32);
-     setOperandValue(operand, &value, sizeof(value));
-     return operand;
+    // Create a scalar integer operand of the specified value, and
+    // return the corresponding operand index.
+    uint32_t addIntOperand(int32_t value) {
+        uint32_t operand = addOperand(WrapperType::INT32);
+        setOperandValue(operand, &value, sizeof(value));
+        return operand;
     }
 
     // Create an operand of the same type as the specified operand,
@@ -633,30 +625,26 @@ private:
 
 // This class adds some utilities on top of WrapperCompilation.
 class PartitioningCompilation : public WrapperCompilation {
-public:
- PartitioningCompilation(const PartitioningModel* model,
-                         const std::vector<std::shared_ptr<Device>>& devices) {
-     ModelBuilder* m = reinterpret_cast<ModelBuilder*>(model->getHandle());
-     CompilationBuilder* c = nullptr;
-     int result = m->createCompilation(&c, devices);
-     EXPECT_EQ(result, 0);
-     mCompilation = reinterpret_cast<ANeuralNetworksCompilation*>(c);
- }
+   public:
+    PartitioningCompilation(const PartitioningModel* model,
+                            const std::vector<std::shared_ptr<Device>>& devices) {
+        ModelBuilder* m = reinterpret_cast<ModelBuilder*>(model->getHandle());
+        CompilationBuilder* c = nullptr;
+        int result = m->createCompilation(&c, devices);
+        EXPECT_EQ(result, 0);
+        mCompilation = reinterpret_cast<ANeuralNetworksCompilation*>(c);
+    }
 
- Result setPartitioning(uint32_t partitioning) {
-     return static_cast<Result>(builder()->setPartitioning(partitioning));
+    Result setPartitioning(uint32_t partitioning) {
+        return static_cast<Result>(builder()->setPartitioning(partitioning));
     }
 
     using WrapperCompilation::finish;
 
-    const ExecutionPlan& getExecutionPlan() const {
-        return builder()->forTest_getExecutionPlan();
-    }
+    const ExecutionPlan& getExecutionPlan() const { return builder()->forTest_getExecutionPlan(); }
 
-private:
-    CompilationBuilder* builder() {
-        return reinterpret_cast<CompilationBuilder*>(getHandle());
-    }
+   private:
+    CompilationBuilder* builder() { return reinterpret_cast<CompilationBuilder*>(getHandle()); }
 
     const CompilationBuilder* builder() const {
         return reinterpret_cast<const CompilationBuilder*>(getHandle());
@@ -664,16 +652,14 @@ private:
 };
 
 #ifdef VERBOSE
-#define RETURN_TRUE()                                                          \
-    {                                                                          \
-        std::cerr << "returning true from " << __LINE__ << std::endl;          \
-        return true;                                                           \
+#define RETURN_TRUE()                                                 \
+    {                                                                 \
+        std::cerr << "returning true from " << __LINE__ << std::endl; \
+        return true;                                                  \
     }
 #else
-#define RETURN_TRUE()                                                          \
-    {                                                                          \
-        return true;                                                           \
-    }
+#define RETURN_TRUE() \
+    { return true; }
 #endif
 #ifdef VERBOSE
 #define RETURN_FALSE(MESSAGE)                                                  \
@@ -682,19 +668,16 @@ private:
         return false;                                                          \
     }
 #else
-#define RETURN_FALSE(MESSAGE)                                                  \
-    {                                                                          \
-        return false;                                                          \
-    }
+#define RETURN_FALSE(MESSAGE) \
+    { return false; }
 #endif
 
 class PartitioningTest : public ::testing::Test {
-protected:
+   protected:
     using RemapVectorType = ExecutionStep::RemapVectorType;
     using SubModelOutputSetType = ExecutionStep::SubModelOutputSetType;
 
-    virtual void SetUp() {
-    }
+    virtual void SetUp() {}
 
     // From a vector of DeviceSpecification, create a vector of
     // Devices.
@@ -841,21 +824,20 @@ protected:
     // within its scope (actual operations, inputs, constants).
 
     enum PseudoDefiningOperationEncodings : uint32_t {
-        kPseudoDefiningOperationModelInput0   = 0x80000000U,
+        kPseudoDefiningOperationModelInput0 = 0x80000000U,
         kPseudoDefiningOperationConstantCopy0 = 0x90000000U,
-        kPseudoDefiningOperationNoValue       = 0xeeeeeeeeU,
+        kPseudoDefiningOperationNoValue = 0xeeeeeeeeU,
 
         // lowest value for special encoding
-        kPseudoDefiningOperationBase          = 0x80000000U,
+        kPseudoDefiningOperationBase = 0x80000000U,
 
         // range of encoded input or constant
-        kPseudoDefiningOperationRange         = 0x10000000U,
+        kPseudoDefiningOperationRange = 0x10000000U,
     };
 
     // Build a map from operand to defining operation.
     // TODO: Replace map with vector?
-    void buildDefinitionMap(const ModelBuilder* model,
-                            std::map<uint32_t, uint32_t>* defMap) {
+    void buildDefinitionMap(const ModelBuilder* model, std::map<uint32_t, uint32_t>* defMap) {
         // actual definitions
         ASSERT_LT(model->operationCount(), kPseudoDefiningOperationBase);
         for (uint32_t i = 0, e = model->operationCount(); i < e; i++) {
@@ -879,7 +861,8 @@ protected:
                 case OperandLifeTime::CONSTANT_COPY: {
                     ASSERT_EQ(operand.location.length, sizeof(uint32_t));
                     uint32_t value;
-                    memcpy(&value, model->getPointerToOperandValue(operand.location.offset), sizeof(uint32_t));
+                    memcpy(&value, model->getPointerToOperandValue(operand.location.offset),
+                           sizeof(uint32_t));
                     ASSERT_LT(value, kPseudoDefiningOperationNoValue);
                     (*defMap)[i] = kPseudoDefiningOperationConstantCopy0 + value;
                     break;
@@ -927,11 +910,9 @@ protected:
 #endif
 
     bool compare(const Operand& operandA, const Operand& operandB) {
-        if (operandA.type != operandB.type ||
-            operandA.dimensions != operandB.dimensions ||
+        if (operandA.type != operandB.type || operandA.dimensions != operandB.dimensions ||
             operandA.numberOfConsumers != operandB.numberOfConsumers ||
-            operandA.scale != operandB.scale ||
-            operandA.zeroPoint != operandB.zeroPoint) {
+            operandA.scale != operandB.scale || operandA.zeroPoint != operandB.zeroPoint) {
             return false;
         }
         return true;
@@ -980,10 +961,10 @@ protected:
         ::dump("compare(B)", modelB);
 #endif
 
-        if (modelA->operandCount()   != modelB->operandCount()   ||
+        if (modelA->operandCount() != modelB->operandCount() ||
             modelA->operationCount() != modelB->operationCount() ||
-            modelA->inputCount()     != modelB->inputCount()     ||
-            modelA->outputCount()    != modelB->outputCount()) {
+            modelA->inputCount() != modelB->inputCount() ||
+            modelA->outputCount() != modelB->outputCount()) {
             RETURN_FALSE();
         }
 
@@ -1093,8 +1074,7 @@ protected:
         }
 
         // Sanity check
-        if (modelA->operandCount() != defsA.size() ||
-            modelA->operandCount() != defsB.size() ||
+        if (modelA->operandCount() != defsA.size() || modelA->operandCount() != defsB.size() ||
             modelA->operandCount() != equivalentOperandsAToB.size() ||
             modelA->operationCount() + pseudoDefinitionCount != equivalentOperationsAToB.size()) {
             RETURN_FALSE();
@@ -1180,7 +1160,7 @@ TEST_F(PartitioningTest, SimpleModel) {
     uint32_t opnd2 = model.addOperation2To1V1_0(0, opnd0, opnd1);
     uint32_t opnd3 = model.addFloatOperand();
     uint32_t opnd4 = model.addOperation2To1V1_0(1, opnd2, opnd3);
-    model.identifyInputsAndOutputs({ opnd0, opnd1, opnd3 }, { opnd4 });
+    model.identifyInputsAndOutputs({opnd0, opnd1, opnd3}, {opnd4});
     model.finish();
     ASSERT_TRUE(model.isValid());
 
@@ -1222,7 +1202,7 @@ TEST_F(PartitioningTest, SimpleModel) {
         uint32_t b0Opnd0 = modelB0.addFloatOperand();
         uint32_t b0Opnd1 = modelB0.addFloatOperand();
         uint32_t b0Opnd2 = modelB0.addOperation2To1V1_0(0, b0Opnd0, b0Opnd1);
-        modelB0.identifyInputsAndOutputs({ b0Opnd0, b0Opnd1 }, { b0Opnd2 });
+        modelB0.identifyInputsAndOutputs({b0Opnd0, b0Opnd1}, {b0Opnd2});
         modelB0.finish();
         ASSERT_TRUE(modelB0.isValid());
 
@@ -1245,7 +1225,7 @@ TEST_F(PartitioningTest, SimpleModel) {
         // an input; so in the submodel "modelB1", the corresponding
         // input b1Opnd2 is a submodel input, and must follow the
         // model input b1Opnd3.
-        modelB1.identifyInputsAndOutputs({ b1Opnd3, b1Opnd2 }, { b1Opnd4 });
+        modelB1.identifyInputsAndOutputs({b1Opnd3, b1Opnd2}, {b1Opnd4});
         modelB1.finish();
         ASSERT_TRUE(modelB1.isValid());
 
@@ -1410,7 +1390,7 @@ TEST_F(PartitioningTest, Cpu) {
     uint32_t opnd7 = model.addOperation2To1V1_0(kDevOp, opnd3, opnd5);
     uint32_t opnd8 = model.addOperation2To1V1_0(kDevOp, opnd6, opnd7);
 
-    model.identifyInputsAndOutputs({ opnd0, opnd1, opnd6 }, { opnd4, opnd8 });
+    model.identifyInputsAndOutputs({opnd0, opnd1, opnd6}, {opnd4, opnd8});
     model.finish();
     ASSERT_TRUE(model.isValid());
 
@@ -1429,7 +1409,7 @@ TEST_F(PartitioningTest, Cpu) {
         uint32_t m0Opnd1 = model0.addFloatOperand();
         uint32_t m0Opnd2 = model0.addOperation2To1V1_0(kDevOp, m0Opnd0, m0Opnd1);
         uint32_t m0Opnd3 = model0.addOperation2To1V1_0(kDevOp, m0Opnd0, m0Opnd2);
-        model0.identifyInputsAndOutputs({ m0Opnd0, m0Opnd1 }, { m0Opnd2, m0Opnd3 });
+        model0.identifyInputsAndOutputs({m0Opnd0, m0Opnd1}, {m0Opnd2, m0Opnd3});
         model0.finish();
         ASSERT_TRUE(model0.isValid());
 
@@ -1452,7 +1432,7 @@ TEST_F(PartitioningTest, Cpu) {
         uint32_t m1Opnd4 = model1.addOperation2To1V1_0(kCpuOp, m1Opnd0, m1Opnd3);
         uint32_t m1Opnd2 = model1.addFloatOperand();
         uint32_t m1Opnd5 = model1.addOperation2To1V1_0(kCpuOp, m1Opnd2, m1Opnd4);
-        model1.identifyInputsAndOutputs({ m1Opnd0, m1Opnd3, m1Opnd2 }, { m1Opnd4, m1Opnd5 });
+        model1.identifyInputsAndOutputs({m1Opnd0, m1Opnd3, m1Opnd2}, {m1Opnd4, m1Opnd5});
         model1.finish();
         ASSERT_TRUE(model1.isValid());
 
@@ -1474,7 +1454,7 @@ TEST_F(PartitioningTest, Cpu) {
         uint32_t m2Opnd7 = model2.addOperation2To1V1_0(kDevOp, m2Opnd3, m2Opnd5);
         uint32_t m2Opnd6 = model2.addFloatOperand();
         uint32_t m2Opnd8 = model2.addOperation2To1V1_0(kDevOp, m2Opnd6, m2Opnd7);
-        model2.identifyInputsAndOutputs({ m2Opnd6, m2Opnd3, m2Opnd5 }, { m2Opnd8 });
+        model2.identifyInputsAndOutputs({m2Opnd6, m2Opnd3, m2Opnd5}, {m2Opnd8});
         model2.finish();
         ASSERT_TRUE(model2.isValid());
 
@@ -1495,7 +1475,7 @@ TEST_F(PartitioningTest, SetPartitioning) {
             model.addOperation2To1V1_0(0, opnd0, opnd1, PartitioningModel::Dimensioned::NO);
     uint32_t opnd3 = model.addFloatOperand();
     uint32_t opnd4 = model.addOperation2To1V1_0(1, opnd2, opnd3);
-    model.identifyInputsAndOutputs({ opnd0, opnd1, opnd3 }, { opnd4 });
+    model.identifyInputsAndOutputs({opnd0, opnd1, opnd3}, {opnd4});
     model.finish();
     ASSERT_TRUE(model.isValid());
 
@@ -1524,7 +1504,8 @@ TEST_F(PartitioningTest, SetPartitioning) {
     // No need to compare the original model to the model from the plan -- we
     // didn't actually do any partitioning.
     PartitioningCompilation cPWithFallback(&model, devices);
-    ASSERT_EQ(cPWithFallback.setPartitioning(DeviceManager::kPartitioningWithFallback), Result::NO_ERROR);
+    ASSERT_EQ(cPWithFallback.setPartitioning(DeviceManager::kPartitioningWithFallback),
+              Result::NO_ERROR);
     ASSERT_EQ(cPWithFallback.finish(), Result::NO_ERROR);
     ASSERT_EQ(cPWithFallback.getExecutionPlan().forTest_getKind(), ExecutionPlan::Kind::SIMPLE);
     ASSERT_EQ(cPWithFallback.getExecutionPlan().forTest_simpleGetDevice(),
@@ -1533,21 +1514,23 @@ TEST_F(PartitioningTest, SetPartitioning) {
     // Test kPartitioningWithoutFallback.  We should attempt
     // partitioning, and fail.
     PartitioningCompilation cPWithoutFallback(&model, devices);
-    ASSERT_EQ(cPWithoutFallback.setPartitioning(DeviceManager::kPartitioningWithoutFallback), Result::NO_ERROR);
+    ASSERT_EQ(cPWithoutFallback.setPartitioning(DeviceManager::kPartitioningWithoutFallback),
+              Result::NO_ERROR);
     ASSERT_EQ(cPWithoutFallback.finish(), Result::OP_FAILED);
     ASSERT_TRUE(cPWithoutFallback.getExecutionPlan().forTest_hasSubModelOutputsOfUnknownSize());
     ASSERT_EQ(cPWithoutFallback.getExecutionPlan().forTest_getKind(), ExecutionPlan::Kind::ERROR);
 }
 
 // Regression test for http://b/69166603:
-//     "partitioned compilation and execution yields wrong results when model output is submodel input"
+//     "partitioned compilation and execution yields wrong results when model output is submodel
+//     input"
 TEST_F(PartitioningTest, ModelOutputAsSubmodelInput) {
     PartitioningModel model;
     uint32_t opnd0 = model.addFloatOperand();
     uint32_t opnd1 = model.addFloatOperand();
     uint32_t opnd2 = model.addOperation2To1V1_0(0, opnd0, opnd1);
     uint32_t opnd3 = model.addOperation2To1V1_0(1, opnd2, opnd2);
-    model.identifyInputsAndOutputs({ opnd0, opnd1 }, { opnd2, opnd3 });
+    model.identifyInputsAndOutputs({opnd0, opnd1}, {opnd2, opnd3});
     model.finish();
     ASSERT_TRUE(model.isValid());
 
@@ -1568,7 +1551,7 @@ TEST_F(PartitioningTest, ModelOutputAsSubmodelInput) {
         uint32_t m0Opnd0 = model0.addFloatOperand();
         uint32_t m0Opnd1 = model0.addFloatOperand();
         uint32_t m0Opnd2 = model0.addOperation2To1V1_0(0, m0Opnd0, m0Opnd1);
-        model0.identifyInputsAndOutputs({ m0Opnd0, m0Opnd1 }, { m0Opnd2 });
+        model0.identifyInputsAndOutputs({m0Opnd0, m0Opnd1}, {m0Opnd2});
         model0.finish();
         ASSERT_TRUE(model0.isValid());
         ASSERT_NO_FATAL_FAILURE(
@@ -1584,7 +1567,7 @@ TEST_F(PartitioningTest, ModelOutputAsSubmodelInput) {
         PartitioningModel model1;
         uint32_t m1Opnd2 = model1.addFloatOperand();
         uint32_t m1Opnd3 = model1.addOperation2To1V1_0(1, m1Opnd2, m1Opnd2);
-        model1.identifyInputsAndOutputs({ m1Opnd2 }, { m1Opnd3 });
+        model1.identifyInputsAndOutputs({m1Opnd2}, {m1Opnd3});
         model1.finish();
         ASSERT_TRUE(model1.isValid());
 
@@ -1602,7 +1585,7 @@ TEST_F(PartitioningTest, OemOperations) {
     PartitioningModel model;
     uint32_t opndIn = model.addFloatOperand();
     uint32_t opndOut = model.addOperationOEM1To1(opndIn);
-    model.identifyInputsAndOutputs({ opndIn }, { opndOut });
+    model.identifyInputsAndOutputs({opndIn}, {opndOut});
     model.finish();
     ASSERT_TRUE(model.isValid());
 
@@ -1649,7 +1632,7 @@ TEST_F(PartitioningTest, RelaxedFP) {
         uint32_t opnd0 = model.addFloatOperand();
         uint32_t opnd1 = model.addFloatOperand();
         uint32_t opnd2 = model.addOperation2To1V1_0(0, opnd0, opnd1);
-        model.identifyInputsAndOutputs({ opnd0, opnd1 }, { opnd2 });
+        model.identifyInputsAndOutputs({opnd0, opnd1}, {opnd2});
         model.relaxComputationFloat32toFloat16(doRelax);
         model.finish();
         ASSERT_TRUE(model.isValid());
