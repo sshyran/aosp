@@ -27,7 +27,7 @@ typedef float Matrix3x4[3][4];
 typedef float Matrix4[4];
 
 class TrivialTest : public ::testing::Test {
-protected:
+   protected:
     virtual void SetUp() {}
 
     const Matrix3x4 matrix1 = {{1.f, 2.f, 3.f, 4.f}, {5.f, 6.f, 7.f, 8.f}, {9.f, 10.f, 11.f, 12.f}};
@@ -35,9 +35,8 @@ protected:
                                {500.f, 600.f, 700.f, 800.f},
                                {900.f, 1000.f, 1100.f, 1200.f}};
     const Matrix4 matrix2b = {100.f, 200.f, 300.f, 400.f};
-    const Matrix3x4 matrix3 = {{20.f, 30.f, 40.f, 50.f},
-                               {21.f, 22.f, 23.f, 24.f},
-                               {31.f, 32.f, 33.f, 34.f}};
+    const Matrix3x4 matrix3 = {
+            {20.f, 30.f, 40.f, 50.f}, {21.f, 22.f, 23.f, 24.f}, {31.f, 32.f, 33.f, 34.f}};
     const Matrix3x4 expected2 = {{101.f, 202.f, 303.f, 404.f},
                                  {505.f, 606.f, 707.f, 808.f},
                                  {909.f, 1010.f, 1111.f, 1212.f}};
@@ -51,9 +50,8 @@ protected:
     const Matrix3x4 expected3 = {{121.f, 232.f, 343.f, 454.f},
                                  {526.f, 628.f, 730.f, 832.f},
                                  {940.f, 1042.f, 1144.f, 1246.f}};
-    const Matrix3x4 expected3b = {{22.f, 34.f, 46.f, 58.f},
-                                  {31.f, 34.f, 37.f, 40.f},
-                                  {49.f, 52.f, 55.f, 58.f}};
+    const Matrix3x4 expected3b = {
+            {22.f, 34.f, 46.f, 58.f}, {31.f, 34.f, 37.f, 40.f}, {49.f, 52.f, 55.f, 58.f}};
 };
 
 // Create a model that can add two tensors using a one node graph.
