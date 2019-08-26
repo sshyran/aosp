@@ -55,6 +55,7 @@ cc_defaults {
         //
         // Changes to this list must be reflected in the "CtsNNAPITests_static"
         // library to ensure CTS tests coverage.
+        "TestAssertions.cpp",
         "TestFree.cpp",
         "TestGenerated.cpp",
         "TestMemory.cpp",
