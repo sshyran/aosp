@@ -150,9 +150,9 @@ class GeneratedComplianceTest : public generated_tests::GeneratedTestBase {};
 
 TEST_P(GeneratedComplianceTest, Test) {
     const auto createModel = [this](WrapperModel* model) {
-        generated_tests::createModel(*mTestModel, model);
+        generated_tests::createModel(testModel, model);
     };
-    switch (mTestModel->minSupportedVersion) {
+    switch (testModel.minSupportedVersion) {
         case TestHalVersion::V1_0:
             testAvailableSinceV1_0(createModel);
             break;
