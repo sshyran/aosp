@@ -24,6 +24,7 @@
 
 #include <android-base/macros.h>
 #include <ui/GraphicBuffer.h>
+
 #include <algorithm>
 #include <memory>
 #include <optional>
@@ -108,7 +109,7 @@ class RunTimePoolInfo {
     static RunTimePoolInfo createFromExistingBuffer(uint8_t* buffer);
 
     uint8_t* getBuffer() const;
-    bool update() const;
+    bool flush() const;
     hal::hidl_memory getHidlMemory() const;
 
    private:
