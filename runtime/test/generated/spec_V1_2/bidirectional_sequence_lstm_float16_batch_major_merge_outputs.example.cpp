@@ -2,16 +2,17 @@
 // DO NOT EDIT
 // clang-format off
 #include "TestHarness.h"
-
 using namespace test_helper;
 
 namespace generated_tests::bidirectional_sequence_lstm_float16_batch_major_merge_outputs {
 
 const TestModel& get_test_model_blackbox() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 53, 54, 55, 56, 57, 58, 59, 60},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({2.0f, 3.0f, 3.0f, 4.0f, 1.0f, 1.0f}),
@@ -643,15 +644,19 @@ const TestModel& get_test_model_blackbox() {
     return model;
 }
 
+const auto dummy_test_model_blackbox = TestModelManager::get().add("bidirectional_sequence_lstm_float16_batch_major_merge_outputs_blackbox", get_test_model_blackbox());
+
 }  // namespace generated_tests::bidirectional_sequence_lstm_float16_batch_major_merge_outputs
 
 namespace generated_tests::bidirectional_sequence_lstm_float16_batch_major_merge_outputs {
 
 const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {9, 10, 11, 16, 17, 26, 27, 28, 33, 34, 39, 40, 41, 42, 43, 44, 45, 46, 47, 53, 54, 55, 56, 57, 58, 59, 60, 62, 65, 68, 71, 74, 77, 80, 83, 86, 89, 92, 95, 98, 101, 104, 107, 110, 113, 116, 119, 122, 125, 128, 131, 134, 137, 140, 143, 146},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -2268,6 +2273,8 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_blackbox_all_inputs_as_internal = TestModelManager::get().add("bidirectional_sequence_lstm_float16_batch_major_merge_outputs_blackbox_all_inputs_as_internal", get_test_model_blackbox_all_inputs_as_internal());
 
 }  // namespace generated_tests::bidirectional_sequence_lstm_float16_batch_major_merge_outputs
 

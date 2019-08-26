@@ -2,16 +2,17 @@
 // DO NOT EDIT
 // clang-format off
 #include "TestHarness.h"
-
 using namespace test_helper;
 
 namespace generated_tests::pad_low_rank {
 
 const TestModel& get_test_model() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_1,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f}),
@@ -52,6 +53,8 @@ const TestModel& get_test_model() {
     };
     return model;
 }
+
+const auto dummy_test_model = TestModelManager::get().add("pad_low_rank", get_test_model());
 
 }  // namespace generated_tests::pad_low_rank
 
@@ -59,9 +62,11 @@ namespace generated_tests::pad_low_rank {
 
 const TestModel& get_test_model_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {3},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_1,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -136,6 +141,8 @@ const TestModel& get_test_model_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_all_inputs_as_internal = TestModelManager::get().add("pad_low_rank_all_inputs_as_internal", get_test_model_all_inputs_as_internal());
 
 }  // namespace generated_tests::pad_low_rank
 
@@ -143,9 +150,11 @@ namespace generated_tests::pad_low_rank {
 
 const TestModel& get_test_model_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_1,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f}),
@@ -187,15 +196,19 @@ const TestModel& get_test_model_all_tensors_as_inputs() {
     return model;
 }
 
+const auto dummy_test_model_all_tensors_as_inputs = TestModelManager::get().add("pad_low_rank_all_tensors_as_inputs", get_test_model_all_tensors_as_inputs());
+
 }  // namespace generated_tests::pad_low_rank
 
 namespace generated_tests::pad_low_rank {
 
 const TestModel& get_test_model_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {1, 3},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_1,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -271,15 +284,19 @@ const TestModel& get_test_model_all_tensors_as_inputs_all_inputs_as_internal() {
     return model;
 }
 
+const auto dummy_test_model_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("pad_low_rank_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_all_tensors_as_inputs_all_inputs_as_internal());
+
 }  // namespace generated_tests::pad_low_rank
 
 namespace generated_tests::pad_low_rank {
 
 const TestModel& get_test_model_float16() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({1.0f, 2.0f, 3.0f}),
@@ -320,6 +337,8 @@ const TestModel& get_test_model_float16() {
     };
     return model;
 }
+
+const auto dummy_test_model_float16 = TestModelManager::get().add("pad_low_rank_float16", get_test_model_float16());
 
 }  // namespace generated_tests::pad_low_rank
 
@@ -327,9 +346,11 @@ namespace generated_tests::pad_low_rank {
 
 const TestModel& get_test_model_float16_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {3},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -404,6 +425,8 @@ const TestModel& get_test_model_float16_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_float16_all_inputs_as_internal = TestModelManager::get().add("pad_low_rank_float16_all_inputs_as_internal", get_test_model_float16_all_inputs_as_internal());
 
 }  // namespace generated_tests::pad_low_rank
 
@@ -411,9 +434,11 @@ namespace generated_tests::pad_low_rank {
 
 const TestModel& get_test_model_float16_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({1.0f, 2.0f, 3.0f}),
@@ -455,15 +480,19 @@ const TestModel& get_test_model_float16_all_tensors_as_inputs() {
     return model;
 }
 
+const auto dummy_test_model_float16_all_tensors_as_inputs = TestModelManager::get().add("pad_low_rank_float16_all_tensors_as_inputs", get_test_model_float16_all_tensors_as_inputs());
+
 }  // namespace generated_tests::pad_low_rank
 
 namespace generated_tests::pad_low_rank {
 
 const TestModel& get_test_model_float16_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {1, 3},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -538,6 +567,8 @@ const TestModel& get_test_model_float16_all_tensors_as_inputs_all_inputs_as_inte
     };
     return model;
 }
+
+const auto dummy_test_model_float16_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("pad_low_rank_float16_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_float16_all_tensors_as_inputs_all_inputs_as_internal());
 
 }  // namespace generated_tests::pad_low_rank
 

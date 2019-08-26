@@ -2,16 +2,17 @@
 // DO NOT EDIT
 // clang-format off
 #include "TestHarness.h"
-
 using namespace test_helper;
 
 namespace generated_tests::rnn_float16 {
 
 const TestModel& get_test_model() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2, 3, 4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({0.23689353f, 0.285385f, 0.037029743f, -0.19858193f, -0.27569133f, 0.43773448f, 0.60379338f, 0.35562468f, 0.23689353f, 0.285385f, 0.037029743f, -0.19858193f, -0.27569133f, 0.43773448f, 0.60379338f, 0.35562468f}),
@@ -103,15 +104,19 @@ const TestModel& get_test_model() {
     return model;
 }
 
+const auto dummy_test_model = TestModelManager::get().add("rnn_float16", get_test_model());
+
 }  // namespace generated_tests::rnn_float16
 
 namespace generated_tests::rnn_float16 {
 
 const TestModel& get_test_model_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {8, 11, 14, 17, 20},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -372,6 +377,8 @@ const TestModel& get_test_model_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_all_inputs_as_internal = TestModelManager::get().add("rnn_float16_all_inputs_as_internal", get_test_model_all_inputs_as_internal());
 
 }  // namespace generated_tests::rnn_float16
 

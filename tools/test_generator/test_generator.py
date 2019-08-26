@@ -19,7 +19,7 @@
 Contain classes definition and utilify functions for compiling models and
 examples into NDK-based CTS and VTS unit tests.
 
-Used by cts_generator.py, vts_generator.py, and spec_visualizer.py
+Used by example_generator.py and spec_visualizer.py
 """
 
 from __future__ import absolute_import
@@ -1156,16 +1156,14 @@ class FileNames:
     specFiles = []
     specNames = []
     exampleFiles = []
-    testFiles = []
     specFile = ""
     specName = ""
     exampleFile = ""
-    testFile = ""
     version = ""
     fileIndex = 0
 
     @staticmethod
-    def InitializeFileLists(spec, example, test):
+    def InitializeFileLists(spec, example):
         # get all spec files and target files
         if os.path.isfile(spec):
             FileNames.specFiles = [os.path.abspath(spec)]
@@ -1177,7 +1175,6 @@ class FileNames:
         FileNames.specNames = [re.sub(r"\..*", "", os.path.basename(f))
             for f in FileNames.specFiles]
         FileNames.exampleFiles = FileNames.ParseTargetFiles(example, ".example.cpp")
-        FileNames.testFiles = FileNames.ParseTargetFiles(test, ".test.cpp")
 
     @staticmethod
     def ParseTargetFiles(arg, ext):
@@ -1200,7 +1197,6 @@ class FileNames:
         FileNames.specFile = FileNames.specFiles[FileNames.fileIndex]
         FileNames.specName = FileNames.specNames[FileNames.fileIndex]
         FileNames.exampleFile = FileNames.exampleFiles[FileNames.fileIndex]
-        FileNames.testFile = FileNames.testFiles[FileNames.fileIndex]
         FileNames.fileIndex += 1
         NamedObject.existingNames = set()
         NamedVariable.existingNames = set()
@@ -1227,7 +1223,7 @@ class Configuration:
         return Configuration.use_shm_for_weights
 
 def GetTestGeneratorMTime():
-    tgFiles = ['test_generator.py', 'cts_generator.py', 'vts_generator.py']
+    tgFiles = ['test_generator.py', 'example_generator.py']
     tgDir = os.path.dirname(__file__)
     return max(os.path.getmtime(os.path.join(tgDir, filename))
                for filename in tgFiles)
@@ -1235,8 +1231,8 @@ def GetTestGeneratorMTime():
 def MightNeedRegeneration():
     specTime = os.path.getmtime(FileNames.specFile)
     tgTime = GetTestGeneratorMTime()
-    return any(not os.path.exists(filename) or os.path.getmtime(filename) <= max(specTime, tgTime)
-               for filename in [FileNames.exampleFile, FileNames.testFile] if filename is not None)
+    return not os.path.exists(FileNames.exampleFile) or \
+           os.path.getmtime(FileNames.exampleFile) <= max(specTime, tgTime)
 
 def Read(filename):
     with open(filename) as reader:
@@ -1282,7 +1278,6 @@ def ArgumentParser():
     parser = argparse.ArgumentParser()
     parser.add_argument("spec", help="the spec file or directory")
     parser.add_argument("--hook", help="hook mode", action='store_true')
-    parser.add_argument("-t", "--test", help="the output test file or directory")
     return parser
 
 def ParseArgs(parser):
@@ -1290,7 +1285,7 @@ def ParseArgs(parser):
     Configuration.hook_mode = args.hook
     return args
 
-def Run(InitializeFiles=None, DumpExample=None, DumpTest=None):
+def Run(InitializeFiles=None, DumpExample=None):
     exec_scope = GetExecScope()
     while FileNames.NextFile():
         try:
@@ -1298,28 +1293,20 @@ def Run(InitializeFiles=None, DumpExample=None, DumpTest=None):
                 continue
             exec(Read(FileNames.specFile), exec_scope)
             example_buf = io.StringIO() if FileNames.exampleFile else None
-            test_buf = io.StringIO() if FileNames.testFile else None
-            InitializeFiles(example_fd=example_buf,
-                            test_fd=test_buf)
-            Example.DumpAllExamples(
-                DumpExample=DumpExample, example_fd=example_buf,
-                DumpTest=DumpTest, test_fd=test_buf)
-            for buf, filename in [
-                    (example_buf, FileNames.exampleFile),
-                    (test_buf, FileNames.testFile),
-            ]:
-                if filename is None:
-                    continue
-                if Configuration.hook_mode and (not os.path.exists(filename) or
-                                                Read(filename) != buf.getvalue()):
-                    print(('\n{filename} is out of date. '
-                           'Please run {generate_all_tests_sh} before uploading.\n').format(
-                                   filename=filename,
-                                   generate_all_tests_sh=os.path.abspath(os.path.join(
-                                           os.path.dirname(__file__), '..', '..', 'runtime', 'test',
-                                           'specs', 'generate_all_tests.sh'))))
-                    sys.exit(1)
-                AtomicWrite(filename, buf.getvalue())
+            InitializeFiles(example_fd=example_buf)
+            Example.DumpAllExamples(DumpExample=DumpExample, example_fd=example_buf)
+            if FileNames.exampleFile is None:
+                continue
+            if Configuration.hook_mode and (not os.path.exists(FileNames.exampleFile) or
+                                            Read(FileNames.exampleFile) != example_buf.getvalue()):
+                print(('\n{filename} is out of date. '
+                        'Please run {generate_all_tests_sh} before uploading.\n').format(
+                                filename=FileNames.exampleFile,
+                                generate_all_tests_sh=os.path.abspath(os.path.join(
+                                        os.path.dirname(__file__), '..', '..', 'runtime', 'test',
+                                        'specs', 'generate_all_tests.sh'))))
+                sys.exit(1)
+            AtomicWrite(FileNames.exampleFile, example_buf.getvalue())
         except Exception:
             traceback.print_exc()
             sys.exit("Exception raised when processing {}".format(FileNames.specFile))

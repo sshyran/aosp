@@ -2,16 +2,17 @@
 // DO NOT EDIT
 // clang-format off
 #include "TestHarness.h"
-
 using namespace test_helper;
 
 namespace generated_tests::resize_bilinear_v1_2 {
 
 const TestModel& get_test_model_shape_nhwc() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 1.0f, 2.0f, 2.0f}),
@@ -72,6 +73,8 @@ const TestModel& get_test_model_shape_nhwc() {
     };
     return model;
 }
+
+const auto dummy_test_model_shape_nhwc = TestModelManager::get().add("resize_bilinear_v1_2_shape_nhwc", get_test_model_shape_nhwc());
 
 }  // namespace generated_tests::resize_bilinear_v1_2
 
@@ -79,9 +82,11 @@ namespace generated_tests::resize_bilinear_v1_2 {
 
 const TestModel& get_test_model_shape_nhwc_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {5},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -176,6 +181,8 @@ const TestModel& get_test_model_shape_nhwc_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_shape_nhwc_all_inputs_as_internal = TestModelManager::get().add("resize_bilinear_v1_2_shape_nhwc_all_inputs_as_internal", get_test_model_shape_nhwc_all_inputs_as_internal());
 
 }  // namespace generated_tests::resize_bilinear_v1_2
 
@@ -183,9 +190,11 @@ namespace generated_tests::resize_bilinear_v1_2 {
 
 const TestModel& get_test_model_shape_nhwc_relaxed() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 1.0f, 2.0f, 2.0f}),
@@ -246,6 +255,8 @@ const TestModel& get_test_model_shape_nhwc_relaxed() {
     };
     return model;
 }
+
+const auto dummy_test_model_shape_nhwc_relaxed = TestModelManager::get().add("resize_bilinear_v1_2_shape_nhwc_relaxed", get_test_model_shape_nhwc_relaxed());
 
 }  // namespace generated_tests::resize_bilinear_v1_2
 
@@ -253,9 +264,11 @@ namespace generated_tests::resize_bilinear_v1_2 {
 
 const TestModel& get_test_model_shape_nhwc_relaxed_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {5},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -350,6 +363,8 @@ const TestModel& get_test_model_shape_nhwc_relaxed_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_shape_nhwc_relaxed_all_inputs_as_internal = TestModelManager::get().add("resize_bilinear_v1_2_shape_nhwc_relaxed_all_inputs_as_internal", get_test_model_shape_nhwc_relaxed_all_inputs_as_internal());
 
 }  // namespace generated_tests::resize_bilinear_v1_2
 
@@ -357,9 +372,11 @@ namespace generated_tests::resize_bilinear_v1_2 {
 
 const TestModel& get_test_model_shape_nhwc_float16() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({1.0f, 1.0f, 2.0f, 2.0f}),
@@ -420,6 +437,8 @@ const TestModel& get_test_model_shape_nhwc_float16() {
     };
     return model;
 }
+
+const auto dummy_test_model_shape_nhwc_float16 = TestModelManager::get().add("resize_bilinear_v1_2_shape_nhwc_float16", get_test_model_shape_nhwc_float16());
 
 }  // namespace generated_tests::resize_bilinear_v1_2
 
@@ -427,9 +446,11 @@ namespace generated_tests::resize_bilinear_v1_2 {
 
 const TestModel& get_test_model_shape_nhwc_float16_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {5},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -524,6 +545,8 @@ const TestModel& get_test_model_shape_nhwc_float16_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_shape_nhwc_float16_all_inputs_as_internal = TestModelManager::get().add("resize_bilinear_v1_2_shape_nhwc_float16_all_inputs_as_internal", get_test_model_shape_nhwc_float16_all_inputs_as_internal());
 
 }  // namespace generated_tests::resize_bilinear_v1_2
 
@@ -531,9 +554,11 @@ namespace generated_tests::resize_bilinear_v1_2 {
 
 const TestModel& get_test_model_shape_nhwc_quant8() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({100, 100, 200, 200}),
@@ -594,6 +619,8 @@ const TestModel& get_test_model_shape_nhwc_quant8() {
     };
     return model;
 }
+
+const auto dummy_test_model_shape_nhwc_quant8 = TestModelManager::get().add("resize_bilinear_v1_2_shape_nhwc_quant8", get_test_model_shape_nhwc_quant8());
 
 }  // namespace generated_tests::resize_bilinear_v1_2
 
@@ -601,9 +628,11 @@ namespace generated_tests::resize_bilinear_v1_2 {
 
 const TestModel& get_test_model_shape_nhwc_quant8_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {5},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -698,6 +727,8 @@ const TestModel& get_test_model_shape_nhwc_quant8_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_shape_nhwc_quant8_all_inputs_as_internal = TestModelManager::get().add("resize_bilinear_v1_2_shape_nhwc_quant8_all_inputs_as_internal", get_test_model_shape_nhwc_quant8_all_inputs_as_internal());
 
 }  // namespace generated_tests::resize_bilinear_v1_2
 
@@ -705,9 +736,11 @@ namespace generated_tests::resize_bilinear_v1_2 {
 
 const TestModel& get_test_model_shape_nchw() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 1.0f, 2.0f, 2.0f}),
@@ -768,6 +801,8 @@ const TestModel& get_test_model_shape_nchw() {
     };
     return model;
 }
+
+const auto dummy_test_model_shape_nchw = TestModelManager::get().add("resize_bilinear_v1_2_shape_nchw", get_test_model_shape_nchw());
 
 }  // namespace generated_tests::resize_bilinear_v1_2
 
@@ -775,9 +810,11 @@ namespace generated_tests::resize_bilinear_v1_2 {
 
 const TestModel& get_test_model_shape_nchw_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {5},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -872,6 +909,8 @@ const TestModel& get_test_model_shape_nchw_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_shape_nchw_all_inputs_as_internal = TestModelManager::get().add("resize_bilinear_v1_2_shape_nchw_all_inputs_as_internal", get_test_model_shape_nchw_all_inputs_as_internal());
 
 }  // namespace generated_tests::resize_bilinear_v1_2
 
@@ -879,9 +918,11 @@ namespace generated_tests::resize_bilinear_v1_2 {
 
 const TestModel& get_test_model_shape_nchw_relaxed() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 1.0f, 2.0f, 2.0f}),
@@ -942,6 +983,8 @@ const TestModel& get_test_model_shape_nchw_relaxed() {
     };
     return model;
 }
+
+const auto dummy_test_model_shape_nchw_relaxed = TestModelManager::get().add("resize_bilinear_v1_2_shape_nchw_relaxed", get_test_model_shape_nchw_relaxed());
 
 }  // namespace generated_tests::resize_bilinear_v1_2
 
@@ -949,9 +992,11 @@ namespace generated_tests::resize_bilinear_v1_2 {
 
 const TestModel& get_test_model_shape_nchw_relaxed_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {5},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -1046,6 +1091,8 @@ const TestModel& get_test_model_shape_nchw_relaxed_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_shape_nchw_relaxed_all_inputs_as_internal = TestModelManager::get().add("resize_bilinear_v1_2_shape_nchw_relaxed_all_inputs_as_internal", get_test_model_shape_nchw_relaxed_all_inputs_as_internal());
 
 }  // namespace generated_tests::resize_bilinear_v1_2
 
@@ -1053,9 +1100,11 @@ namespace generated_tests::resize_bilinear_v1_2 {
 
 const TestModel& get_test_model_shape_nchw_float16() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({1.0f, 1.0f, 2.0f, 2.0f}),
@@ -1116,6 +1165,8 @@ const TestModel& get_test_model_shape_nchw_float16() {
     };
     return model;
 }
+
+const auto dummy_test_model_shape_nchw_float16 = TestModelManager::get().add("resize_bilinear_v1_2_shape_nchw_float16", get_test_model_shape_nchw_float16());
 
 }  // namespace generated_tests::resize_bilinear_v1_2
 
@@ -1123,9 +1174,11 @@ namespace generated_tests::resize_bilinear_v1_2 {
 
 const TestModel& get_test_model_shape_nchw_float16_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {5},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -1220,6 +1273,8 @@ const TestModel& get_test_model_shape_nchw_float16_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_shape_nchw_float16_all_inputs_as_internal = TestModelManager::get().add("resize_bilinear_v1_2_shape_nchw_float16_all_inputs_as_internal", get_test_model_shape_nchw_float16_all_inputs_as_internal());
 
 }  // namespace generated_tests::resize_bilinear_v1_2
 
@@ -1227,9 +1282,11 @@ namespace generated_tests::resize_bilinear_v1_2 {
 
 const TestModel& get_test_model_shape_nchw_quant8() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({100, 100, 200, 200}),
@@ -1290,6 +1347,8 @@ const TestModel& get_test_model_shape_nchw_quant8() {
     };
     return model;
 }
+
+const auto dummy_test_model_shape_nchw_quant8 = TestModelManager::get().add("resize_bilinear_v1_2_shape_nchw_quant8", get_test_model_shape_nchw_quant8());
 
 }  // namespace generated_tests::resize_bilinear_v1_2
 
@@ -1297,9 +1356,11 @@ namespace generated_tests::resize_bilinear_v1_2 {
 
 const TestModel& get_test_model_shape_nchw_quant8_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {5},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -1394,6 +1455,8 @@ const TestModel& get_test_model_shape_nchw_quant8_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_shape_nchw_quant8_all_inputs_as_internal = TestModelManager::get().add("resize_bilinear_v1_2_shape_nchw_quant8_all_inputs_as_internal", get_test_model_shape_nchw_quant8_all_inputs_as_internal());
 
 }  // namespace generated_tests::resize_bilinear_v1_2
 
@@ -1401,9 +1464,11 @@ namespace generated_tests::resize_bilinear_v1_2 {
 
 const TestModel& get_test_model_scale_nhwc() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 1.0f, 2.0f, 2.0f}),
@@ -1464,6 +1529,8 @@ const TestModel& get_test_model_scale_nhwc() {
     };
     return model;
 }
+
+const auto dummy_test_model_scale_nhwc = TestModelManager::get().add("resize_bilinear_v1_2_scale_nhwc", get_test_model_scale_nhwc());
 
 }  // namespace generated_tests::resize_bilinear_v1_2
 
@@ -1471,9 +1538,11 @@ namespace generated_tests::resize_bilinear_v1_2 {
 
 const TestModel& get_test_model_scale_nhwc_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {5},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -1568,6 +1637,8 @@ const TestModel& get_test_model_scale_nhwc_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_scale_nhwc_all_inputs_as_internal = TestModelManager::get().add("resize_bilinear_v1_2_scale_nhwc_all_inputs_as_internal", get_test_model_scale_nhwc_all_inputs_as_internal());
 
 }  // namespace generated_tests::resize_bilinear_v1_2
 
@@ -1575,9 +1646,11 @@ namespace generated_tests::resize_bilinear_v1_2 {
 
 const TestModel& get_test_model_scale_nhwc_relaxed() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 1.0f, 2.0f, 2.0f}),
@@ -1638,6 +1711,8 @@ const TestModel& get_test_model_scale_nhwc_relaxed() {
     };
     return model;
 }
+
+const auto dummy_test_model_scale_nhwc_relaxed = TestModelManager::get().add("resize_bilinear_v1_2_scale_nhwc_relaxed", get_test_model_scale_nhwc_relaxed());
 
 }  // namespace generated_tests::resize_bilinear_v1_2
 
@@ -1645,9 +1720,11 @@ namespace generated_tests::resize_bilinear_v1_2 {
 
 const TestModel& get_test_model_scale_nhwc_relaxed_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {5},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -1742,6 +1819,8 @@ const TestModel& get_test_model_scale_nhwc_relaxed_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_scale_nhwc_relaxed_all_inputs_as_internal = TestModelManager::get().add("resize_bilinear_v1_2_scale_nhwc_relaxed_all_inputs_as_internal", get_test_model_scale_nhwc_relaxed_all_inputs_as_internal());
 
 }  // namespace generated_tests::resize_bilinear_v1_2
 
@@ -1749,9 +1828,11 @@ namespace generated_tests::resize_bilinear_v1_2 {
 
 const TestModel& get_test_model_scale_nhwc_float16() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({1.0f, 1.0f, 2.0f, 2.0f}),
@@ -1812,6 +1893,8 @@ const TestModel& get_test_model_scale_nhwc_float16() {
     };
     return model;
 }
+
+const auto dummy_test_model_scale_nhwc_float16 = TestModelManager::get().add("resize_bilinear_v1_2_scale_nhwc_float16", get_test_model_scale_nhwc_float16());
 
 }  // namespace generated_tests::resize_bilinear_v1_2
 
@@ -1819,9 +1902,11 @@ namespace generated_tests::resize_bilinear_v1_2 {
 
 const TestModel& get_test_model_scale_nhwc_float16_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {5},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -1916,6 +2001,8 @@ const TestModel& get_test_model_scale_nhwc_float16_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_scale_nhwc_float16_all_inputs_as_internal = TestModelManager::get().add("resize_bilinear_v1_2_scale_nhwc_float16_all_inputs_as_internal", get_test_model_scale_nhwc_float16_all_inputs_as_internal());
 
 }  // namespace generated_tests::resize_bilinear_v1_2
 
@@ -1923,9 +2010,11 @@ namespace generated_tests::resize_bilinear_v1_2 {
 
 const TestModel& get_test_model_scale_nhwc_quant8() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({100, 100, 200, 200}),
@@ -1986,6 +2075,8 @@ const TestModel& get_test_model_scale_nhwc_quant8() {
     };
     return model;
 }
+
+const auto dummy_test_model_scale_nhwc_quant8 = TestModelManager::get().add("resize_bilinear_v1_2_scale_nhwc_quant8", get_test_model_scale_nhwc_quant8());
 
 }  // namespace generated_tests::resize_bilinear_v1_2
 
@@ -1993,9 +2084,11 @@ namespace generated_tests::resize_bilinear_v1_2 {
 
 const TestModel& get_test_model_scale_nhwc_quant8_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {5},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -2090,6 +2183,8 @@ const TestModel& get_test_model_scale_nhwc_quant8_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_scale_nhwc_quant8_all_inputs_as_internal = TestModelManager::get().add("resize_bilinear_v1_2_scale_nhwc_quant8_all_inputs_as_internal", get_test_model_scale_nhwc_quant8_all_inputs_as_internal());
 
 }  // namespace generated_tests::resize_bilinear_v1_2
 
@@ -2097,9 +2192,11 @@ namespace generated_tests::resize_bilinear_v1_2 {
 
 const TestModel& get_test_model_scale_nchw() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 1.0f, 2.0f, 2.0f}),
@@ -2160,6 +2257,8 @@ const TestModel& get_test_model_scale_nchw() {
     };
     return model;
 }
+
+const auto dummy_test_model_scale_nchw = TestModelManager::get().add("resize_bilinear_v1_2_scale_nchw", get_test_model_scale_nchw());
 
 }  // namespace generated_tests::resize_bilinear_v1_2
 
@@ -2167,9 +2266,11 @@ namespace generated_tests::resize_bilinear_v1_2 {
 
 const TestModel& get_test_model_scale_nchw_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {5},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -2264,6 +2365,8 @@ const TestModel& get_test_model_scale_nchw_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_scale_nchw_all_inputs_as_internal = TestModelManager::get().add("resize_bilinear_v1_2_scale_nchw_all_inputs_as_internal", get_test_model_scale_nchw_all_inputs_as_internal());
 
 }  // namespace generated_tests::resize_bilinear_v1_2
 
@@ -2271,9 +2374,11 @@ namespace generated_tests::resize_bilinear_v1_2 {
 
 const TestModel& get_test_model_scale_nchw_relaxed() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 1.0f, 2.0f, 2.0f}),
@@ -2334,6 +2439,8 @@ const TestModel& get_test_model_scale_nchw_relaxed() {
     };
     return model;
 }
+
+const auto dummy_test_model_scale_nchw_relaxed = TestModelManager::get().add("resize_bilinear_v1_2_scale_nchw_relaxed", get_test_model_scale_nchw_relaxed());
 
 }  // namespace generated_tests::resize_bilinear_v1_2
 
@@ -2341,9 +2448,11 @@ namespace generated_tests::resize_bilinear_v1_2 {
 
 const TestModel& get_test_model_scale_nchw_relaxed_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {5},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -2439,15 +2548,19 @@ const TestModel& get_test_model_scale_nchw_relaxed_all_inputs_as_internal() {
     return model;
 }
 
+const auto dummy_test_model_scale_nchw_relaxed_all_inputs_as_internal = TestModelManager::get().add("resize_bilinear_v1_2_scale_nchw_relaxed_all_inputs_as_internal", get_test_model_scale_nchw_relaxed_all_inputs_as_internal());
+
 }  // namespace generated_tests::resize_bilinear_v1_2
 
 namespace generated_tests::resize_bilinear_v1_2 {
 
 const TestModel& get_test_model_scale_nchw_float16() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({1.0f, 1.0f, 2.0f, 2.0f}),
@@ -2508,6 +2621,8 @@ const TestModel& get_test_model_scale_nchw_float16() {
     };
     return model;
 }
+
+const auto dummy_test_model_scale_nchw_float16 = TestModelManager::get().add("resize_bilinear_v1_2_scale_nchw_float16", get_test_model_scale_nchw_float16());
 
 }  // namespace generated_tests::resize_bilinear_v1_2
 
@@ -2515,9 +2630,11 @@ namespace generated_tests::resize_bilinear_v1_2 {
 
 const TestModel& get_test_model_scale_nchw_float16_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {5},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -2612,6 +2729,8 @@ const TestModel& get_test_model_scale_nchw_float16_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_scale_nchw_float16_all_inputs_as_internal = TestModelManager::get().add("resize_bilinear_v1_2_scale_nchw_float16_all_inputs_as_internal", get_test_model_scale_nchw_float16_all_inputs_as_internal());
 
 }  // namespace generated_tests::resize_bilinear_v1_2
 
@@ -2619,9 +2738,11 @@ namespace generated_tests::resize_bilinear_v1_2 {
 
 const TestModel& get_test_model_scale_nchw_quant8() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({100, 100, 200, 200}),
@@ -2682,6 +2803,8 @@ const TestModel& get_test_model_scale_nchw_quant8() {
     };
     return model;
 }
+
+const auto dummy_test_model_scale_nchw_quant8 = TestModelManager::get().add("resize_bilinear_v1_2_scale_nchw_quant8", get_test_model_scale_nchw_quant8());
 
 }  // namespace generated_tests::resize_bilinear_v1_2
 
@@ -2689,9 +2812,11 @@ namespace generated_tests::resize_bilinear_v1_2 {
 
 const TestModel& get_test_model_scale_nchw_quant8_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {5},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -2787,15 +2912,19 @@ const TestModel& get_test_model_scale_nchw_quant8_all_inputs_as_internal() {
     return model;
 }
 
+const auto dummy_test_model_scale_nchw_quant8_all_inputs_as_internal = TestModelManager::get().add("resize_bilinear_v1_2_scale_nchw_quant8_all_inputs_as_internal", get_test_model_scale_nchw_quant8_all_inputs_as_internal());
+
 }  // namespace generated_tests::resize_bilinear_v1_2
 
 namespace generated_tests::resize_bilinear_v1_2 {
 
 const TestModel& get_test_model_shape_nhwc_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({3.0f, 4.0f, 6.0f, 10.0f, 9.0f, 10.0f, 12.0f, 16.0f}),
@@ -2856,6 +2985,8 @@ const TestModel& get_test_model_shape_nhwc_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_shape_nhwc_2 = TestModelManager::get().add("resize_bilinear_v1_2_shape_nhwc_2", get_test_model_shape_nhwc_2());
 
 }  // namespace generated_tests::resize_bilinear_v1_2
 
@@ -2863,9 +2994,11 @@ namespace generated_tests::resize_bilinear_v1_2 {
 
 const TestModel& get_test_model_shape_nhwc_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {5},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -2960,6 +3093,8 @@ const TestModel& get_test_model_shape_nhwc_all_inputs_as_internal_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_shape_nhwc_all_inputs_as_internal_2 = TestModelManager::get().add("resize_bilinear_v1_2_shape_nhwc_all_inputs_as_internal_2", get_test_model_shape_nhwc_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::resize_bilinear_v1_2
 
@@ -2967,9 +3102,11 @@ namespace generated_tests::resize_bilinear_v1_2 {
 
 const TestModel& get_test_model_shape_nhwc_relaxed_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({3.0f, 4.0f, 6.0f, 10.0f, 9.0f, 10.0f, 12.0f, 16.0f}),
@@ -3030,6 +3167,8 @@ const TestModel& get_test_model_shape_nhwc_relaxed_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_shape_nhwc_relaxed_2 = TestModelManager::get().add("resize_bilinear_v1_2_shape_nhwc_relaxed_2", get_test_model_shape_nhwc_relaxed_2());
 
 }  // namespace generated_tests::resize_bilinear_v1_2
 
@@ -3037,9 +3176,11 @@ namespace generated_tests::resize_bilinear_v1_2 {
 
 const TestModel& get_test_model_shape_nhwc_relaxed_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {5},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -3134,6 +3275,8 @@ const TestModel& get_test_model_shape_nhwc_relaxed_all_inputs_as_internal_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_shape_nhwc_relaxed_all_inputs_as_internal_2 = TestModelManager::get().add("resize_bilinear_v1_2_shape_nhwc_relaxed_all_inputs_as_internal_2", get_test_model_shape_nhwc_relaxed_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::resize_bilinear_v1_2
 
@@ -3141,9 +3284,11 @@ namespace generated_tests::resize_bilinear_v1_2 {
 
 const TestModel& get_test_model_shape_nhwc_float16_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({3.0f, 4.0f, 6.0f, 10.0f, 9.0f, 10.0f, 12.0f, 16.0f}),
@@ -3204,6 +3349,8 @@ const TestModel& get_test_model_shape_nhwc_float16_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_shape_nhwc_float16_2 = TestModelManager::get().add("resize_bilinear_v1_2_shape_nhwc_float16_2", get_test_model_shape_nhwc_float16_2());
 
 }  // namespace generated_tests::resize_bilinear_v1_2
 
@@ -3211,9 +3358,11 @@ namespace generated_tests::resize_bilinear_v1_2 {
 
 const TestModel& get_test_model_shape_nhwc_float16_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {5},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -3308,6 +3457,8 @@ const TestModel& get_test_model_shape_nhwc_float16_all_inputs_as_internal_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_shape_nhwc_float16_all_inputs_as_internal_2 = TestModelManager::get().add("resize_bilinear_v1_2_shape_nhwc_float16_all_inputs_as_internal_2", get_test_model_shape_nhwc_float16_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::resize_bilinear_v1_2
 
@@ -3315,9 +3466,11 @@ namespace generated_tests::resize_bilinear_v1_2 {
 
 const TestModel& get_test_model_shape_nhwc_quant8_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({12, 16, 24, 40, 36, 40, 48, 64}),
@@ -3378,6 +3531,8 @@ const TestModel& get_test_model_shape_nhwc_quant8_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_shape_nhwc_quant8_2 = TestModelManager::get().add("resize_bilinear_v1_2_shape_nhwc_quant8_2", get_test_model_shape_nhwc_quant8_2());
 
 }  // namespace generated_tests::resize_bilinear_v1_2
 
@@ -3385,9 +3540,11 @@ namespace generated_tests::resize_bilinear_v1_2 {
 
 const TestModel& get_test_model_shape_nhwc_quant8_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {5},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -3482,6 +3639,8 @@ const TestModel& get_test_model_shape_nhwc_quant8_all_inputs_as_internal_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_shape_nhwc_quant8_all_inputs_as_internal_2 = TestModelManager::get().add("resize_bilinear_v1_2_shape_nhwc_quant8_all_inputs_as_internal_2", get_test_model_shape_nhwc_quant8_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::resize_bilinear_v1_2
 
@@ -3489,9 +3648,11 @@ namespace generated_tests::resize_bilinear_v1_2 {
 
 const TestModel& get_test_model_shape_nchw_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({3.0f, 6.0f, 9.0f, 12.0f, 4.0f, 10.0f, 10.0f, 16.0f}),
@@ -3552,6 +3713,8 @@ const TestModel& get_test_model_shape_nchw_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_shape_nchw_2 = TestModelManager::get().add("resize_bilinear_v1_2_shape_nchw_2", get_test_model_shape_nchw_2());
 
 }  // namespace generated_tests::resize_bilinear_v1_2
 
@@ -3559,9 +3722,11 @@ namespace generated_tests::resize_bilinear_v1_2 {
 
 const TestModel& get_test_model_shape_nchw_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {5},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -3656,6 +3821,8 @@ const TestModel& get_test_model_shape_nchw_all_inputs_as_internal_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_shape_nchw_all_inputs_as_internal_2 = TestModelManager::get().add("resize_bilinear_v1_2_shape_nchw_all_inputs_as_internal_2", get_test_model_shape_nchw_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::resize_bilinear_v1_2
 
@@ -3663,9 +3830,11 @@ namespace generated_tests::resize_bilinear_v1_2 {
 
 const TestModel& get_test_model_shape_nchw_relaxed_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({3.0f, 6.0f, 9.0f, 12.0f, 4.0f, 10.0f, 10.0f, 16.0f}),
@@ -3726,6 +3895,8 @@ const TestModel& get_test_model_shape_nchw_relaxed_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_shape_nchw_relaxed_2 = TestModelManager::get().add("resize_bilinear_v1_2_shape_nchw_relaxed_2", get_test_model_shape_nchw_relaxed_2());
 
 }  // namespace generated_tests::resize_bilinear_v1_2
 
@@ -3733,9 +3904,11 @@ namespace generated_tests::resize_bilinear_v1_2 {
 
 const TestModel& get_test_model_shape_nchw_relaxed_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {5},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -3830,6 +4003,8 @@ const TestModel& get_test_model_shape_nchw_relaxed_all_inputs_as_internal_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_shape_nchw_relaxed_all_inputs_as_internal_2 = TestModelManager::get().add("resize_bilinear_v1_2_shape_nchw_relaxed_all_inputs_as_internal_2", get_test_model_shape_nchw_relaxed_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::resize_bilinear_v1_2
 
@@ -3837,9 +4012,11 @@ namespace generated_tests::resize_bilinear_v1_2 {
 
 const TestModel& get_test_model_shape_nchw_float16_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({3.0f, 6.0f, 9.0f, 12.0f, 4.0f, 10.0f, 10.0f, 16.0f}),
@@ -3900,6 +4077,8 @@ const TestModel& get_test_model_shape_nchw_float16_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_shape_nchw_float16_2 = TestModelManager::get().add("resize_bilinear_v1_2_shape_nchw_float16_2", get_test_model_shape_nchw_float16_2());
 
 }  // namespace generated_tests::resize_bilinear_v1_2
 
@@ -3907,9 +4086,11 @@ namespace generated_tests::resize_bilinear_v1_2 {
 
 const TestModel& get_test_model_shape_nchw_float16_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {5},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -4004,6 +4185,8 @@ const TestModel& get_test_model_shape_nchw_float16_all_inputs_as_internal_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_shape_nchw_float16_all_inputs_as_internal_2 = TestModelManager::get().add("resize_bilinear_v1_2_shape_nchw_float16_all_inputs_as_internal_2", get_test_model_shape_nchw_float16_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::resize_bilinear_v1_2
 
@@ -4011,9 +4194,11 @@ namespace generated_tests::resize_bilinear_v1_2 {
 
 const TestModel& get_test_model_shape_nchw_quant8_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({12, 24, 36, 48, 16, 40, 40, 64}),
@@ -4074,6 +4259,8 @@ const TestModel& get_test_model_shape_nchw_quant8_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_shape_nchw_quant8_2 = TestModelManager::get().add("resize_bilinear_v1_2_shape_nchw_quant8_2", get_test_model_shape_nchw_quant8_2());
 
 }  // namespace generated_tests::resize_bilinear_v1_2
 
@@ -4081,9 +4268,11 @@ namespace generated_tests::resize_bilinear_v1_2 {
 
 const TestModel& get_test_model_shape_nchw_quant8_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {5},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -4178,6 +4367,8 @@ const TestModel& get_test_model_shape_nchw_quant8_all_inputs_as_internal_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_shape_nchw_quant8_all_inputs_as_internal_2 = TestModelManager::get().add("resize_bilinear_v1_2_shape_nchw_quant8_all_inputs_as_internal_2", get_test_model_shape_nchw_quant8_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::resize_bilinear_v1_2
 
@@ -4185,9 +4376,11 @@ namespace generated_tests::resize_bilinear_v1_2 {
 
 const TestModel& get_test_model_scale_nhwc_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({3.0f, 4.0f, 6.0f, 10.0f, 9.0f, 10.0f, 12.0f, 16.0f}),
@@ -4248,6 +4441,8 @@ const TestModel& get_test_model_scale_nhwc_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_scale_nhwc_2 = TestModelManager::get().add("resize_bilinear_v1_2_scale_nhwc_2", get_test_model_scale_nhwc_2());
 
 }  // namespace generated_tests::resize_bilinear_v1_2
 
@@ -4255,9 +4450,11 @@ namespace generated_tests::resize_bilinear_v1_2 {
 
 const TestModel& get_test_model_scale_nhwc_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {5},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -4352,6 +4549,8 @@ const TestModel& get_test_model_scale_nhwc_all_inputs_as_internal_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_scale_nhwc_all_inputs_as_internal_2 = TestModelManager::get().add("resize_bilinear_v1_2_scale_nhwc_all_inputs_as_internal_2", get_test_model_scale_nhwc_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::resize_bilinear_v1_2
 
@@ -4359,9 +4558,11 @@ namespace generated_tests::resize_bilinear_v1_2 {
 
 const TestModel& get_test_model_scale_nhwc_relaxed_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({3.0f, 4.0f, 6.0f, 10.0f, 9.0f, 10.0f, 12.0f, 16.0f}),
@@ -4422,6 +4623,8 @@ const TestModel& get_test_model_scale_nhwc_relaxed_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_scale_nhwc_relaxed_2 = TestModelManager::get().add("resize_bilinear_v1_2_scale_nhwc_relaxed_2", get_test_model_scale_nhwc_relaxed_2());
 
 }  // namespace generated_tests::resize_bilinear_v1_2
 
@@ -4429,9 +4632,11 @@ namespace generated_tests::resize_bilinear_v1_2 {
 
 const TestModel& get_test_model_scale_nhwc_relaxed_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {5},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -4527,15 +4732,19 @@ const TestModel& get_test_model_scale_nhwc_relaxed_all_inputs_as_internal_2() {
     return model;
 }
 
+const auto dummy_test_model_scale_nhwc_relaxed_all_inputs_as_internal_2 = TestModelManager::get().add("resize_bilinear_v1_2_scale_nhwc_relaxed_all_inputs_as_internal_2", get_test_model_scale_nhwc_relaxed_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::resize_bilinear_v1_2
 
 namespace generated_tests::resize_bilinear_v1_2 {
 
 const TestModel& get_test_model_scale_nhwc_float16_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({3.0f, 4.0f, 6.0f, 10.0f, 9.0f, 10.0f, 12.0f, 16.0f}),
@@ -4596,6 +4805,8 @@ const TestModel& get_test_model_scale_nhwc_float16_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_scale_nhwc_float16_2 = TestModelManager::get().add("resize_bilinear_v1_2_scale_nhwc_float16_2", get_test_model_scale_nhwc_float16_2());
 
 }  // namespace generated_tests::resize_bilinear_v1_2
 
@@ -4603,9 +4814,11 @@ namespace generated_tests::resize_bilinear_v1_2 {
 
 const TestModel& get_test_model_scale_nhwc_float16_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {5},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -4701,15 +4914,19 @@ const TestModel& get_test_model_scale_nhwc_float16_all_inputs_as_internal_2() {
     return model;
 }
 
+const auto dummy_test_model_scale_nhwc_float16_all_inputs_as_internal_2 = TestModelManager::get().add("resize_bilinear_v1_2_scale_nhwc_float16_all_inputs_as_internal_2", get_test_model_scale_nhwc_float16_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::resize_bilinear_v1_2
 
 namespace generated_tests::resize_bilinear_v1_2 {
 
 const TestModel& get_test_model_scale_nhwc_quant8_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({12, 16, 24, 40, 36, 40, 48, 64}),
@@ -4770,6 +4987,8 @@ const TestModel& get_test_model_scale_nhwc_quant8_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_scale_nhwc_quant8_2 = TestModelManager::get().add("resize_bilinear_v1_2_scale_nhwc_quant8_2", get_test_model_scale_nhwc_quant8_2());
 
 }  // namespace generated_tests::resize_bilinear_v1_2
 
@@ -4777,9 +4996,11 @@ namespace generated_tests::resize_bilinear_v1_2 {
 
 const TestModel& get_test_model_scale_nhwc_quant8_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {5},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -4875,15 +5096,19 @@ const TestModel& get_test_model_scale_nhwc_quant8_all_inputs_as_internal_2() {
     return model;
 }
 
+const auto dummy_test_model_scale_nhwc_quant8_all_inputs_as_internal_2 = TestModelManager::get().add("resize_bilinear_v1_2_scale_nhwc_quant8_all_inputs_as_internal_2", get_test_model_scale_nhwc_quant8_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::resize_bilinear_v1_2
 
 namespace generated_tests::resize_bilinear_v1_2 {
 
 const TestModel& get_test_model_scale_nchw_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({3.0f, 6.0f, 9.0f, 12.0f, 4.0f, 10.0f, 10.0f, 16.0f}),
@@ -4944,6 +5169,8 @@ const TestModel& get_test_model_scale_nchw_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_scale_nchw_2 = TestModelManager::get().add("resize_bilinear_v1_2_scale_nchw_2", get_test_model_scale_nchw_2());
 
 }  // namespace generated_tests::resize_bilinear_v1_2
 
@@ -4951,9 +5178,11 @@ namespace generated_tests::resize_bilinear_v1_2 {
 
 const TestModel& get_test_model_scale_nchw_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {5},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -5048,6 +5277,8 @@ const TestModel& get_test_model_scale_nchw_all_inputs_as_internal_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_scale_nchw_all_inputs_as_internal_2 = TestModelManager::get().add("resize_bilinear_v1_2_scale_nchw_all_inputs_as_internal_2", get_test_model_scale_nchw_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::resize_bilinear_v1_2
 
@@ -5055,9 +5286,11 @@ namespace generated_tests::resize_bilinear_v1_2 {
 
 const TestModel& get_test_model_scale_nchw_relaxed_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({3.0f, 6.0f, 9.0f, 12.0f, 4.0f, 10.0f, 10.0f, 16.0f}),
@@ -5119,15 +5352,19 @@ const TestModel& get_test_model_scale_nchw_relaxed_2() {
     return model;
 }
 
+const auto dummy_test_model_scale_nchw_relaxed_2 = TestModelManager::get().add("resize_bilinear_v1_2_scale_nchw_relaxed_2", get_test_model_scale_nchw_relaxed_2());
+
 }  // namespace generated_tests::resize_bilinear_v1_2
 
 namespace generated_tests::resize_bilinear_v1_2 {
 
 const TestModel& get_test_model_scale_nchw_relaxed_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {5},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -5223,15 +5460,19 @@ const TestModel& get_test_model_scale_nchw_relaxed_all_inputs_as_internal_2() {
     return model;
 }
 
+const auto dummy_test_model_scale_nchw_relaxed_all_inputs_as_internal_2 = TestModelManager::get().add("resize_bilinear_v1_2_scale_nchw_relaxed_all_inputs_as_internal_2", get_test_model_scale_nchw_relaxed_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::resize_bilinear_v1_2
 
 namespace generated_tests::resize_bilinear_v1_2 {
 
 const TestModel& get_test_model_scale_nchw_float16_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({3.0f, 6.0f, 9.0f, 12.0f, 4.0f, 10.0f, 10.0f, 16.0f}),
@@ -5292,6 +5533,8 @@ const TestModel& get_test_model_scale_nchw_float16_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_scale_nchw_float16_2 = TestModelManager::get().add("resize_bilinear_v1_2_scale_nchw_float16_2", get_test_model_scale_nchw_float16_2());
 
 }  // namespace generated_tests::resize_bilinear_v1_2
 
@@ -5299,9 +5542,11 @@ namespace generated_tests::resize_bilinear_v1_2 {
 
 const TestModel& get_test_model_scale_nchw_float16_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {5},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -5397,15 +5642,19 @@ const TestModel& get_test_model_scale_nchw_float16_all_inputs_as_internal_2() {
     return model;
 }
 
+const auto dummy_test_model_scale_nchw_float16_all_inputs_as_internal_2 = TestModelManager::get().add("resize_bilinear_v1_2_scale_nchw_float16_all_inputs_as_internal_2", get_test_model_scale_nchw_float16_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::resize_bilinear_v1_2
 
 namespace generated_tests::resize_bilinear_v1_2 {
 
 const TestModel& get_test_model_scale_nchw_quant8_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({12, 24, 36, 48, 16, 40, 40, 64}),
@@ -5467,15 +5716,19 @@ const TestModel& get_test_model_scale_nchw_quant8_2() {
     return model;
 }
 
+const auto dummy_test_model_scale_nchw_quant8_2 = TestModelManager::get().add("resize_bilinear_v1_2_scale_nchw_quant8_2", get_test_model_scale_nchw_quant8_2());
+
 }  // namespace generated_tests::resize_bilinear_v1_2
 
 namespace generated_tests::resize_bilinear_v1_2 {
 
 const TestModel& get_test_model_scale_nchw_quant8_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {5},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -5571,15 +5824,19 @@ const TestModel& get_test_model_scale_nchw_quant8_all_inputs_as_internal_2() {
     return model;
 }
 
+const auto dummy_test_model_scale_nchw_quant8_all_inputs_as_internal_2 = TestModelManager::get().add("resize_bilinear_v1_2_scale_nchw_quant8_all_inputs_as_internal_2", get_test_model_scale_nchw_quant8_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::resize_bilinear_v1_2
 
 namespace generated_tests::resize_bilinear_v1_2 {
 
 const TestModel& get_test_model_shape_float16() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({1.0f, 1.0f, 2.0f, 2.0f}),
@@ -5630,6 +5887,8 @@ const TestModel& get_test_model_shape_float16() {
     };
     return model;
 }
+
+const auto dummy_test_model_shape_float16 = TestModelManager::get().add("resize_bilinear_v1_2_shape_float16", get_test_model_shape_float16());
 
 }  // namespace generated_tests::resize_bilinear_v1_2
 
@@ -5637,9 +5896,11 @@ namespace generated_tests::resize_bilinear_v1_2 {
 
 const TestModel& get_test_model_shape_float16_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -5724,6 +5985,8 @@ const TestModel& get_test_model_shape_float16_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_shape_float16_all_inputs_as_internal = TestModelManager::get().add("resize_bilinear_v1_2_shape_float16_all_inputs_as_internal", get_test_model_shape_float16_all_inputs_as_internal());
 
 }  // namespace generated_tests::resize_bilinear_v1_2
 
@@ -5731,9 +5994,11 @@ namespace generated_tests::resize_bilinear_v1_2 {
 
 const TestModel& get_test_model_shape_quant8() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({100, 100, 200, 200}),
@@ -5785,15 +6050,19 @@ const TestModel& get_test_model_shape_quant8() {
     return model;
 }
 
+const auto dummy_test_model_shape_quant8 = TestModelManager::get().add("resize_bilinear_v1_2_shape_quant8", get_test_model_shape_quant8());
+
 }  // namespace generated_tests::resize_bilinear_v1_2
 
 namespace generated_tests::resize_bilinear_v1_2 {
 
 const TestModel& get_test_model_shape_quant8_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -5879,15 +6148,19 @@ const TestModel& get_test_model_shape_quant8_all_inputs_as_internal() {
     return model;
 }
 
+const auto dummy_test_model_shape_quant8_all_inputs_as_internal = TestModelManager::get().add("resize_bilinear_v1_2_shape_quant8_all_inputs_as_internal", get_test_model_shape_quant8_all_inputs_as_internal());
+
 }  // namespace generated_tests::resize_bilinear_v1_2
 
 namespace generated_tests::resize_bilinear_v1_2 {
 
 const TestModel& get_test_model_scale_float16() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({1.0f, 1.0f, 2.0f, 2.0f}),
@@ -5939,15 +6212,19 @@ const TestModel& get_test_model_scale_float16() {
     return model;
 }
 
+const auto dummy_test_model_scale_float16 = TestModelManager::get().add("resize_bilinear_v1_2_scale_float16", get_test_model_scale_float16());
+
 }  // namespace generated_tests::resize_bilinear_v1_2
 
 namespace generated_tests::resize_bilinear_v1_2 {
 
 const TestModel& get_test_model_scale_float16_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -6033,15 +6310,19 @@ const TestModel& get_test_model_scale_float16_all_inputs_as_internal() {
     return model;
 }
 
+const auto dummy_test_model_scale_float16_all_inputs_as_internal = TestModelManager::get().add("resize_bilinear_v1_2_scale_float16_all_inputs_as_internal", get_test_model_scale_float16_all_inputs_as_internal());
+
 }  // namespace generated_tests::resize_bilinear_v1_2
 
 namespace generated_tests::resize_bilinear_v1_2 {
 
 const TestModel& get_test_model_scale_quant8() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({100, 100, 200, 200}),
@@ -6093,15 +6374,19 @@ const TestModel& get_test_model_scale_quant8() {
     return model;
 }
 
+const auto dummy_test_model_scale_quant8 = TestModelManager::get().add("resize_bilinear_v1_2_scale_quant8", get_test_model_scale_quant8());
+
 }  // namespace generated_tests::resize_bilinear_v1_2
 
 namespace generated_tests::resize_bilinear_v1_2 {
 
 const TestModel& get_test_model_scale_quant8_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -6187,15 +6472,19 @@ const TestModel& get_test_model_scale_quant8_all_inputs_as_internal() {
     return model;
 }
 
+const auto dummy_test_model_scale_quant8_all_inputs_as_internal = TestModelManager::get().add("resize_bilinear_v1_2_scale_quant8_all_inputs_as_internal", get_test_model_scale_quant8_all_inputs_as_internal());
+
 }  // namespace generated_tests::resize_bilinear_v1_2
 
 namespace generated_tests::resize_bilinear_v1_2 {
 
 const TestModel& get_test_model_zero_sized_nhwc() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({0.9f, 0.1f}),
@@ -6464,6 +6753,8 @@ const TestModel& get_test_model_zero_sized_nhwc() {
     };
     return model;
 }
+
+const auto dummy_test_model_zero_sized_nhwc = TestModelManager::get().add("resize_bilinear_v1_2_zero_sized_nhwc", get_test_model_zero_sized_nhwc());
 
 }  // namespace generated_tests::resize_bilinear_v1_2
 
@@ -6471,9 +6762,11 @@ namespace generated_tests::resize_bilinear_v1_2 {
 
 const TestModel& get_test_model_zero_sized_nhwc_relaxed() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({0.9f, 0.1f}),
@@ -6742,6 +7035,8 @@ const TestModel& get_test_model_zero_sized_nhwc_relaxed() {
     };
     return model;
 }
+
+const auto dummy_test_model_zero_sized_nhwc_relaxed = TestModelManager::get().add("resize_bilinear_v1_2_zero_sized_nhwc_relaxed", get_test_model_zero_sized_nhwc_relaxed());
 
 }  // namespace generated_tests::resize_bilinear_v1_2
 
@@ -6749,9 +7044,11 @@ namespace generated_tests::resize_bilinear_v1_2 {
 
 const TestModel& get_test_model_zero_sized_nhwc_quant8() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({137, 129}),
@@ -7020,6 +7317,8 @@ const TestModel& get_test_model_zero_sized_nhwc_quant8() {
     };
     return model;
 }
+
+const auto dummy_test_model_zero_sized_nhwc_quant8 = TestModelManager::get().add("resize_bilinear_v1_2_zero_sized_nhwc_quant8", get_test_model_zero_sized_nhwc_quant8());
 
 }  // namespace generated_tests::resize_bilinear_v1_2
 
@@ -7027,9 +7326,11 @@ namespace generated_tests::resize_bilinear_v1_2 {
 
 const TestModel& get_test_model_zero_sized_nhwc_float16() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({0.8999999761581421f, 0.10000000149011612f}),
@@ -7298,6 +7599,8 @@ const TestModel& get_test_model_zero_sized_nhwc_float16() {
     };
     return model;
 }
+
+const auto dummy_test_model_zero_sized_nhwc_float16 = TestModelManager::get().add("resize_bilinear_v1_2_zero_sized_nhwc_float16", get_test_model_zero_sized_nhwc_float16());
 
 }  // namespace generated_tests::resize_bilinear_v1_2
 
@@ -7305,9 +7608,11 @@ namespace generated_tests::resize_bilinear_v1_2 {
 
 const TestModel& get_test_model_zero_sized_nchw() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({0.9f, 0.1f}),
@@ -7576,6 +7881,8 @@ const TestModel& get_test_model_zero_sized_nchw() {
     };
     return model;
 }
+
+const auto dummy_test_model_zero_sized_nchw = TestModelManager::get().add("resize_bilinear_v1_2_zero_sized_nchw", get_test_model_zero_sized_nchw());
 
 }  // namespace generated_tests::resize_bilinear_v1_2
 
@@ -7583,9 +7890,11 @@ namespace generated_tests::resize_bilinear_v1_2 {
 
 const TestModel& get_test_model_zero_sized_nchw_relaxed() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({0.9f, 0.1f}),
@@ -7854,6 +8163,8 @@ const TestModel& get_test_model_zero_sized_nchw_relaxed() {
     };
     return model;
 }
+
+const auto dummy_test_model_zero_sized_nchw_relaxed = TestModelManager::get().add("resize_bilinear_v1_2_zero_sized_nchw_relaxed", get_test_model_zero_sized_nchw_relaxed());
 
 }  // namespace generated_tests::resize_bilinear_v1_2
 
@@ -7861,9 +8172,11 @@ namespace generated_tests::resize_bilinear_v1_2 {
 
 const TestModel& get_test_model_zero_sized_nchw_quant8() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({137, 129}),
@@ -8132,6 +8445,8 @@ const TestModel& get_test_model_zero_sized_nchw_quant8() {
     };
     return model;
 }
+
+const auto dummy_test_model_zero_sized_nchw_quant8 = TestModelManager::get().add("resize_bilinear_v1_2_zero_sized_nchw_quant8", get_test_model_zero_sized_nchw_quant8());
 
 }  // namespace generated_tests::resize_bilinear_v1_2
 
@@ -8139,9 +8454,11 @@ namespace generated_tests::resize_bilinear_v1_2 {
 
 const TestModel& get_test_model_zero_sized_nchw_float16() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({0.8999999761581421f, 0.10000000149011612f}),
@@ -8410,6 +8727,8 @@ const TestModel& get_test_model_zero_sized_nchw_float16() {
     };
     return model;
 }
+
+const auto dummy_test_model_zero_sized_nchw_float16 = TestModelManager::get().add("resize_bilinear_v1_2_zero_sized_nchw_float16", get_test_model_zero_sized_nchw_float16());
 
 }  // namespace generated_tests::resize_bilinear_v1_2
 
@@ -8417,9 +8736,11 @@ namespace generated_tests::resize_bilinear_v1_2 {
 
 const TestModel& get_test_model_zero_sized_nhwc_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({0.9f, 0.1f}),
@@ -8688,6 +9009,8 @@ const TestModel& get_test_model_zero_sized_nhwc_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_zero_sized_nhwc_2 = TestModelManager::get().add("resize_bilinear_v1_2_zero_sized_nhwc_2", get_test_model_zero_sized_nhwc_2());
 
 }  // namespace generated_tests::resize_bilinear_v1_2
 
@@ -8695,9 +9018,11 @@ namespace generated_tests::resize_bilinear_v1_2 {
 
 const TestModel& get_test_model_zero_sized_nhwc_relaxed_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({0.9f, 0.1f}),
@@ -8966,6 +9291,8 @@ const TestModel& get_test_model_zero_sized_nhwc_relaxed_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_zero_sized_nhwc_relaxed_2 = TestModelManager::get().add("resize_bilinear_v1_2_zero_sized_nhwc_relaxed_2", get_test_model_zero_sized_nhwc_relaxed_2());
 
 }  // namespace generated_tests::resize_bilinear_v1_2
 
@@ -8973,9 +9300,11 @@ namespace generated_tests::resize_bilinear_v1_2 {
 
 const TestModel& get_test_model_zero_sized_nhwc_quant8_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({137, 129}),
@@ -9244,6 +9573,8 @@ const TestModel& get_test_model_zero_sized_nhwc_quant8_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_zero_sized_nhwc_quant8_2 = TestModelManager::get().add("resize_bilinear_v1_2_zero_sized_nhwc_quant8_2", get_test_model_zero_sized_nhwc_quant8_2());
 
 }  // namespace generated_tests::resize_bilinear_v1_2
 
@@ -9251,9 +9582,11 @@ namespace generated_tests::resize_bilinear_v1_2 {
 
 const TestModel& get_test_model_zero_sized_nhwc_float16_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({0.8999999761581421f, 0.10000000149011612f}),
@@ -9523,15 +9856,19 @@ const TestModel& get_test_model_zero_sized_nhwc_float16_2() {
     return model;
 }
 
+const auto dummy_test_model_zero_sized_nhwc_float16_2 = TestModelManager::get().add("resize_bilinear_v1_2_zero_sized_nhwc_float16_2", get_test_model_zero_sized_nhwc_float16_2());
+
 }  // namespace generated_tests::resize_bilinear_v1_2
 
 namespace generated_tests::resize_bilinear_v1_2 {
 
 const TestModel& get_test_model_zero_sized_nchw_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({0.9f, 0.1f}),
@@ -9800,6 +10137,8 @@ const TestModel& get_test_model_zero_sized_nchw_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_zero_sized_nchw_2 = TestModelManager::get().add("resize_bilinear_v1_2_zero_sized_nchw_2", get_test_model_zero_sized_nchw_2());
 
 }  // namespace generated_tests::resize_bilinear_v1_2
 
@@ -9807,9 +10146,11 @@ namespace generated_tests::resize_bilinear_v1_2 {
 
 const TestModel& get_test_model_zero_sized_nchw_relaxed_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({0.9f, 0.1f}),
@@ -10079,15 +10420,19 @@ const TestModel& get_test_model_zero_sized_nchw_relaxed_2() {
     return model;
 }
 
+const auto dummy_test_model_zero_sized_nchw_relaxed_2 = TestModelManager::get().add("resize_bilinear_v1_2_zero_sized_nchw_relaxed_2", get_test_model_zero_sized_nchw_relaxed_2());
+
 }  // namespace generated_tests::resize_bilinear_v1_2
 
 namespace generated_tests::resize_bilinear_v1_2 {
 
 const TestModel& get_test_model_zero_sized_nchw_quant8_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({137, 129}),
@@ -10357,15 +10702,19 @@ const TestModel& get_test_model_zero_sized_nchw_quant8_2() {
     return model;
 }
 
+const auto dummy_test_model_zero_sized_nchw_quant8_2 = TestModelManager::get().add("resize_bilinear_v1_2_zero_sized_nchw_quant8_2", get_test_model_zero_sized_nchw_quant8_2());
+
 }  // namespace generated_tests::resize_bilinear_v1_2
 
 namespace generated_tests::resize_bilinear_v1_2 {
 
 const TestModel& get_test_model_zero_sized_nchw_float16_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({0.8999999761581421f, 0.10000000149011612f}),
@@ -10634,6 +10983,8 @@ const TestModel& get_test_model_zero_sized_nchw_float16_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_zero_sized_nchw_float16_2 = TestModelManager::get().add("resize_bilinear_v1_2_zero_sized_nchw_float16_2", get_test_model_zero_sized_nchw_float16_2());
 
 }  // namespace generated_tests::resize_bilinear_v1_2
 
