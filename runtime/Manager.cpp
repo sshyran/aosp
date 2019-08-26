@@ -370,9 +370,9 @@ int DriverPreparedModel::execute(const std::shared_ptr<ExecutionBurstController>
     *synchronizationCallback = nullptr;
 
     NNTRACE_RT(NNTRACE_PHASE_INPUTS_AND_OUTPUTS, "DriverPreparedModel::execute");
-    // We separate the input & output pools so that we reduce the copying done if we
-    // do an eventual remoting (hidl_memory->update()).  We could also use it to set
-    // protection on read only memory but that's not currently done.
+    // We separate the input & output pools so accelerators only need to copy
+    // the contents of the input pools. We could also use it to set protection
+    // on read only memory but that's not currently done.
     Memory inputPointerArguments;
     Memory outputPointerArguments;
 
@@ -381,7 +381,6 @@ int DriverPreparedModel::execute(const std::shared_ptr<ExecutionBurstController>
     NN_RETURN_IF_ERROR(allocatePointerArgumentsToPool(memories, outputs, &outputPointerArguments));
 
     // Copy the input data that was specified via a pointer.
-    // inputPointerArguments.update();
     for (auto& info : *inputs) {
         if (info.state == ModelArgumentInfo::POINTER) {
             DataLocation& loc = info.locationAndLength;
@@ -390,7 +389,6 @@ int DriverPreparedModel::execute(const std::shared_ptr<ExecutionBurstController>
             memcpy(data + loc.offset, info.buffer, loc.length);
         }
     }
-    // TODO: Add inputPointerArguments.commit() and .update() at all the right places
 
     Request request;
     setRequestArgumentArray(*inputs, &request.inputs);
@@ -487,7 +485,6 @@ int DriverPreparedModel::execute(const std::shared_ptr<ExecutionBurstController>
     // Copy the output data from shared memory to the output buffers.
     // TODO: Move this block of code somewhere else. It should not be in the
     // startCompute function.
-    // TODO: outputMemory->update(); outputMemory->commit()
     NNTRACE_RT_SWITCH(NNTRACE_PHASE_RESULTS, "DriverPreparedModel::execute");
     for (auto& info : *outputs) {
         if (info.state == ModelArgumentInfo::POINTER) {
