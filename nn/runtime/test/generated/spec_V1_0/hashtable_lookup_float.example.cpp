@@ -2,16 +2,17 @@
 // DO NOT EDIT
 // clang-format off
 #include "TestHarness.h"
-
 using namespace test_helper;
 
 namespace generated_tests::hashtable_lookup_float {
 
 const TestModel& get_test_model() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_0,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<int32_t>({1234, -292, -11, 0}),
@@ -73,15 +74,19 @@ const TestModel& get_test_model() {
     return model;
 }
 
+const auto dummy_test_model = TestModelManager::get().add("hashtable_lookup_float", get_test_model());
+
 }  // namespace generated_tests::hashtable_lookup_float
 
 namespace generated_tests::hashtable_lookup_float {
 
 const TestModel& get_test_model_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 5},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_0,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<int32_t>({1234, -292, -11, 0}),
@@ -176,6 +181,8 @@ const TestModel& get_test_model_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_all_inputs_as_internal = TestModelManager::get().add("hashtable_lookup_float_all_inputs_as_internal", get_test_model_all_inputs_as_internal());
 
 }  // namespace generated_tests::hashtable_lookup_float
 
