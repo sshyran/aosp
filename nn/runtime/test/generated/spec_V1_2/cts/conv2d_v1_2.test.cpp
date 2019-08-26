@@ -20,6 +20,107 @@ TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_nhwc, generated_tests::conv2d_v1_2::Creat
 
 namespace generated_tests::conv2d_v1_2 {
 
+void CreateModel_nhwc_dynamic_output_shape(Model *model);
+bool is_ignored_nhwc_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_nhwc_dynamic_output_shape) {
+    execute(CreateModel_nhwc_dynamic_output_shape,
+            is_ignored_nhwc_dynamic_output_shape,
+            get_examples_nhwc_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_nhwc_all_inputs_as_internal(Model *model);
+bool is_ignored_nhwc_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_all_inputs_as_internal();
+
+TEST_F(GeneratedTests, conv2d_v1_2_nhwc_all_inputs_as_internal) {
+    execute(CreateModel_nhwc_all_inputs_as_internal,
+            is_ignored_nhwc_all_inputs_as_internal,
+            get_examples_nhwc_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_nhwc_all_inputs_as_internal, generated_tests::conv2d_v1_2::CreateModel_nhwc_all_inputs_as_internal)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_nhwc_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_nhwc_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_nhwc_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_nhwc_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_nhwc_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_nhwc_all_inputs_as_internal_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_nhwc_all_tensors_as_inputs(Model *model);
+bool is_ignored_nhwc_all_tensors_as_inputs(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_all_tensors_as_inputs();
+
+TEST_F(GeneratedTests, conv2d_v1_2_nhwc_all_tensors_as_inputs) {
+    execute(CreateModel_nhwc_all_tensors_as_inputs,
+            is_ignored_nhwc_all_tensors_as_inputs,
+            get_examples_nhwc_all_tensors_as_inputs());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_nhwc_all_tensors_as_inputs, generated_tests::conv2d_v1_2::CreateModel_nhwc_all_tensors_as_inputs)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_nhwc_all_tensors_as_inputs_dynamic_output_shape(Model *model);
+bool is_ignored_nhwc_all_tensors_as_inputs_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_all_tensors_as_inputs_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_nhwc_all_tensors_as_inputs_dynamic_output_shape) {
+    execute(CreateModel_nhwc_all_tensors_as_inputs_dynamic_output_shape,
+            is_ignored_nhwc_all_tensors_as_inputs_dynamic_output_shape,
+            get_examples_nhwc_all_tensors_as_inputs_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_nhwc_all_tensors_as_inputs_all_inputs_as_internal(Model *model);
+bool is_ignored_nhwc_all_tensors_as_inputs_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_all_tensors_as_inputs_all_inputs_as_internal();
+
+TEST_F(GeneratedTests, conv2d_v1_2_nhwc_all_tensors_as_inputs_all_inputs_as_internal) {
+    execute(CreateModel_nhwc_all_tensors_as_inputs_all_inputs_as_internal,
+            is_ignored_nhwc_all_tensors_as_inputs_all_inputs_as_internal,
+            get_examples_nhwc_all_tensors_as_inputs_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_nhwc_all_tensors_as_inputs_all_inputs_as_internal, generated_tests::conv2d_v1_2::CreateModel_nhwc_all_tensors_as_inputs_all_inputs_as_internal)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_nhwc_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_nhwc_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_nhwc_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_nhwc_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_nhwc_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_nhwc_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
 void CreateModel_nhwc_relaxed(Model *model);
 bool is_ignored_nhwc_relaxed(int);
 std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_relaxed();
@@ -28,6 +129,104 @@ TEST_F(GeneratedTests, conv2d_v1_2_nhwc_relaxed) {
     execute(CreateModel_nhwc_relaxed,
             is_ignored_nhwc_relaxed,
             get_examples_nhwc_relaxed());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_nhwc_relaxed_dynamic_output_shape(Model *model);
+bool is_ignored_nhwc_relaxed_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_relaxed_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_nhwc_relaxed_dynamic_output_shape) {
+    execute(CreateModel_nhwc_relaxed_dynamic_output_shape,
+            is_ignored_nhwc_relaxed_dynamic_output_shape,
+            get_examples_nhwc_relaxed_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_nhwc_relaxed_all_inputs_as_internal(Model *model);
+bool is_ignored_nhwc_relaxed_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_relaxed_all_inputs_as_internal();
+
+TEST_F(GeneratedTests, conv2d_v1_2_nhwc_relaxed_all_inputs_as_internal) {
+    execute(CreateModel_nhwc_relaxed_all_inputs_as_internal,
+            is_ignored_nhwc_relaxed_all_inputs_as_internal,
+            get_examples_nhwc_relaxed_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_nhwc_relaxed_all_tensors_as_inputs(Model *model);
+bool is_ignored_nhwc_relaxed_all_tensors_as_inputs(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_relaxed_all_tensors_as_inputs();
+
+TEST_F(GeneratedTests, conv2d_v1_2_nhwc_relaxed_all_tensors_as_inputs) {
+    execute(CreateModel_nhwc_relaxed_all_tensors_as_inputs,
+            is_ignored_nhwc_relaxed_all_tensors_as_inputs,
+            get_examples_nhwc_relaxed_all_tensors_as_inputs());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_nhwc_relaxed_all_tensors_as_inputs_dynamic_output_shape(Model *model);
+bool is_ignored_nhwc_relaxed_all_tensors_as_inputs_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_relaxed_all_tensors_as_inputs_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_nhwc_relaxed_all_tensors_as_inputs_dynamic_output_shape) {
+    execute(CreateModel_nhwc_relaxed_all_tensors_as_inputs_dynamic_output_shape,
+            is_ignored_nhwc_relaxed_all_tensors_as_inputs_dynamic_output_shape,
+            get_examples_nhwc_relaxed_all_tensors_as_inputs_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal(Model *model);
+bool is_ignored_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal();
+
+TEST_F(GeneratedTests, conv2d_v1_2_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal) {
+    execute(CreateModel_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal,
+            is_ignored_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal,
+            get_examples_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape());
 }
 
 } // namespace generated_tests::conv2d_v1_2
@@ -49,6 +248,107 @@ TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_nhwc_quant8, generated_tests::conv2d_v1_2
 
 namespace generated_tests::conv2d_v1_2 {
 
+void CreateModel_nhwc_quant8_dynamic_output_shape(Model *model);
+bool is_ignored_nhwc_quant8_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_quant8_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_nhwc_quant8_dynamic_output_shape) {
+    execute(CreateModel_nhwc_quant8_dynamic_output_shape,
+            is_ignored_nhwc_quant8_dynamic_output_shape,
+            get_examples_nhwc_quant8_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_nhwc_quant8_all_inputs_as_internal(Model *model);
+bool is_ignored_nhwc_quant8_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_quant8_all_inputs_as_internal();
+
+TEST_F(GeneratedTests, conv2d_v1_2_nhwc_quant8_all_inputs_as_internal) {
+    execute(CreateModel_nhwc_quant8_all_inputs_as_internal,
+            is_ignored_nhwc_quant8_all_inputs_as_internal,
+            get_examples_nhwc_quant8_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_nhwc_quant8_all_inputs_as_internal, generated_tests::conv2d_v1_2::CreateModel_nhwc_quant8_all_inputs_as_internal)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_nhwc_quant8_all_tensors_as_inputs(Model *model);
+bool is_ignored_nhwc_quant8_all_tensors_as_inputs(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_quant8_all_tensors_as_inputs();
+
+TEST_F(GeneratedTests, conv2d_v1_2_nhwc_quant8_all_tensors_as_inputs) {
+    execute(CreateModel_nhwc_quant8_all_tensors_as_inputs,
+            is_ignored_nhwc_quant8_all_tensors_as_inputs,
+            get_examples_nhwc_quant8_all_tensors_as_inputs());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_nhwc_quant8_all_tensors_as_inputs, generated_tests::conv2d_v1_2::CreateModel_nhwc_quant8_all_tensors_as_inputs)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_nhwc_quant8_all_tensors_as_inputs_dynamic_output_shape(Model *model);
+bool is_ignored_nhwc_quant8_all_tensors_as_inputs_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_quant8_all_tensors_as_inputs_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_nhwc_quant8_all_tensors_as_inputs_dynamic_output_shape) {
+    execute(CreateModel_nhwc_quant8_all_tensors_as_inputs_dynamic_output_shape,
+            is_ignored_nhwc_quant8_all_tensors_as_inputs_dynamic_output_shape,
+            get_examples_nhwc_quant8_all_tensors_as_inputs_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal(Model *model);
+bool is_ignored_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal();
+
+TEST_F(GeneratedTests, conv2d_v1_2_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal) {
+    execute(CreateModel_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal,
+            is_ignored_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal,
+            get_examples_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal, generated_tests::conv2d_v1_2::CreateModel_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
 void CreateModel_nhwc_channelQuant8(Model *model);
 bool is_ignored_nhwc_channelQuant8(int);
 std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_channelQuant8();
@@ -61,6 +361,107 @@ TEST_F(GeneratedTests, conv2d_v1_2_nhwc_channelQuant8) {
 
 } // namespace generated_tests::conv2d_v1_2
 TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_nhwc_channelQuant8, generated_tests::conv2d_v1_2::CreateModel_nhwc_channelQuant8)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_nhwc_channelQuant8_dynamic_output_shape(Model *model);
+bool is_ignored_nhwc_channelQuant8_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_channelQuant8_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_nhwc_channelQuant8_dynamic_output_shape) {
+    execute(CreateModel_nhwc_channelQuant8_dynamic_output_shape,
+            is_ignored_nhwc_channelQuant8_dynamic_output_shape,
+            get_examples_nhwc_channelQuant8_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_nhwc_channelQuant8_all_inputs_as_internal(Model *model);
+bool is_ignored_nhwc_channelQuant8_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_channelQuant8_all_inputs_as_internal();
+
+TEST_F(GeneratedTests, conv2d_v1_2_nhwc_channelQuant8_all_inputs_as_internal) {
+    execute(CreateModel_nhwc_channelQuant8_all_inputs_as_internal,
+            is_ignored_nhwc_channelQuant8_all_inputs_as_internal,
+            get_examples_nhwc_channelQuant8_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_nhwc_channelQuant8_all_inputs_as_internal, generated_tests::conv2d_v1_2::CreateModel_nhwc_channelQuant8_all_inputs_as_internal)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_nhwc_channelQuant8_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_nhwc_channelQuant8_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_channelQuant8_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_nhwc_channelQuant8_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_nhwc_channelQuant8_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_nhwc_channelQuant8_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_nhwc_channelQuant8_all_inputs_as_internal_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_nhwc_channelQuant8_all_tensors_as_inputs(Model *model);
+bool is_ignored_nhwc_channelQuant8_all_tensors_as_inputs(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_channelQuant8_all_tensors_as_inputs();
+
+TEST_F(GeneratedTests, conv2d_v1_2_nhwc_channelQuant8_all_tensors_as_inputs) {
+    execute(CreateModel_nhwc_channelQuant8_all_tensors_as_inputs,
+            is_ignored_nhwc_channelQuant8_all_tensors_as_inputs,
+            get_examples_nhwc_channelQuant8_all_tensors_as_inputs());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_nhwc_channelQuant8_all_tensors_as_inputs, generated_tests::conv2d_v1_2::CreateModel_nhwc_channelQuant8_all_tensors_as_inputs)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_nhwc_channelQuant8_all_tensors_as_inputs_dynamic_output_shape(Model *model);
+bool is_ignored_nhwc_channelQuant8_all_tensors_as_inputs_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_channelQuant8_all_tensors_as_inputs_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_nhwc_channelQuant8_all_tensors_as_inputs_dynamic_output_shape) {
+    execute(CreateModel_nhwc_channelQuant8_all_tensors_as_inputs_dynamic_output_shape,
+            is_ignored_nhwc_channelQuant8_all_tensors_as_inputs_dynamic_output_shape,
+            get_examples_nhwc_channelQuant8_all_tensors_as_inputs_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_nhwc_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal(Model *model);
+bool is_ignored_nhwc_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal();
+
+TEST_F(GeneratedTests, conv2d_v1_2_nhwc_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal) {
+    execute(CreateModel_nhwc_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal,
+            is_ignored_nhwc_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal,
+            get_examples_nhwc_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_nhwc_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal, generated_tests::conv2d_v1_2::CreateModel_nhwc_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_nhwc_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_nhwc_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_nhwc_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_nhwc_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_nhwc_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_nhwc_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
 
 namespace generated_tests::conv2d_v1_2 {
 
@@ -79,77 +480,104 @@ TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_nhwc_float16, generated_tests::conv2d_v1_
 
 namespace generated_tests::conv2d_v1_2 {
 
-void CreateModel_nhwc_weight_as_input(Model *model);
-bool is_ignored_nhwc_weight_as_input(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_weight_as_input();
+void CreateModel_nhwc_float16_dynamic_output_shape(Model *model);
+bool is_ignored_nhwc_float16_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_float16_dynamic_output_shape();
 
-TEST_F(GeneratedTests, conv2d_v1_2_nhwc_weight_as_input) {
-    execute(CreateModel_nhwc_weight_as_input,
-            is_ignored_nhwc_weight_as_input,
-            get_examples_nhwc_weight_as_input());
-}
-
-} // namespace generated_tests::conv2d_v1_2
-TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_nhwc_weight_as_input, generated_tests::conv2d_v1_2::CreateModel_nhwc_weight_as_input)
-
-namespace generated_tests::conv2d_v1_2 {
-
-void CreateModel_nhwc_weight_as_input_relaxed(Model *model);
-bool is_ignored_nhwc_weight_as_input_relaxed(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_weight_as_input_relaxed();
-
-TEST_F(GeneratedTests, conv2d_v1_2_nhwc_weight_as_input_relaxed) {
-    execute(CreateModel_nhwc_weight_as_input_relaxed,
-            is_ignored_nhwc_weight_as_input_relaxed,
-            get_examples_nhwc_weight_as_input_relaxed());
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_nhwc_float16_dynamic_output_shape) {
+    execute(CreateModel_nhwc_float16_dynamic_output_shape,
+            is_ignored_nhwc_float16_dynamic_output_shape,
+            get_examples_nhwc_float16_dynamic_output_shape());
 }
 
 } // namespace generated_tests::conv2d_v1_2
 
 namespace generated_tests::conv2d_v1_2 {
 
-void CreateModel_nhwc_weight_as_input_quant8(Model *model);
-bool is_ignored_nhwc_weight_as_input_quant8(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_weight_as_input_quant8();
+void CreateModel_nhwc_float16_all_inputs_as_internal(Model *model);
+bool is_ignored_nhwc_float16_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_float16_all_inputs_as_internal();
 
-TEST_F(GeneratedTests, conv2d_v1_2_nhwc_weight_as_input_quant8) {
-    execute(CreateModel_nhwc_weight_as_input_quant8,
-            is_ignored_nhwc_weight_as_input_quant8,
-            get_examples_nhwc_weight_as_input_quant8());
+TEST_F(GeneratedTests, conv2d_v1_2_nhwc_float16_all_inputs_as_internal) {
+    execute(CreateModel_nhwc_float16_all_inputs_as_internal,
+            is_ignored_nhwc_float16_all_inputs_as_internal,
+            get_examples_nhwc_float16_all_inputs_as_internal());
 }
 
 } // namespace generated_tests::conv2d_v1_2
-TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_nhwc_weight_as_input_quant8, generated_tests::conv2d_v1_2::CreateModel_nhwc_weight_as_input_quant8)
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_nhwc_float16_all_inputs_as_internal, generated_tests::conv2d_v1_2::CreateModel_nhwc_float16_all_inputs_as_internal)
 
 namespace generated_tests::conv2d_v1_2 {
 
-void CreateModel_nhwc_weight_as_input_channelQuant8(Model *model);
-bool is_ignored_nhwc_weight_as_input_channelQuant8(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_weight_as_input_channelQuant8();
+void CreateModel_nhwc_float16_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_nhwc_float16_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_float16_all_inputs_as_internal_dynamic_output_shape();
 
-TEST_F(GeneratedTests, conv2d_v1_2_nhwc_weight_as_input_channelQuant8) {
-    execute(CreateModel_nhwc_weight_as_input_channelQuant8,
-            is_ignored_nhwc_weight_as_input_channelQuant8,
-            get_examples_nhwc_weight_as_input_channelQuant8());
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_nhwc_float16_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_nhwc_float16_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_nhwc_float16_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_nhwc_float16_all_inputs_as_internal_dynamic_output_shape());
 }
 
 } // namespace generated_tests::conv2d_v1_2
-TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_nhwc_weight_as_input_channelQuant8, generated_tests::conv2d_v1_2::CreateModel_nhwc_weight_as_input_channelQuant8)
 
 namespace generated_tests::conv2d_v1_2 {
 
-void CreateModel_nhwc_weight_as_input_float16(Model *model);
-bool is_ignored_nhwc_weight_as_input_float16(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_weight_as_input_float16();
+void CreateModel_nhwc_float16_all_tensors_as_inputs(Model *model);
+bool is_ignored_nhwc_float16_all_tensors_as_inputs(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_float16_all_tensors_as_inputs();
 
-TEST_F(GeneratedTests, conv2d_v1_2_nhwc_weight_as_input_float16) {
-    execute(CreateModel_nhwc_weight_as_input_float16,
-            is_ignored_nhwc_weight_as_input_float16,
-            get_examples_nhwc_weight_as_input_float16());
+TEST_F(GeneratedTests, conv2d_v1_2_nhwc_float16_all_tensors_as_inputs) {
+    execute(CreateModel_nhwc_float16_all_tensors_as_inputs,
+            is_ignored_nhwc_float16_all_tensors_as_inputs,
+            get_examples_nhwc_float16_all_tensors_as_inputs());
 }
 
 } // namespace generated_tests::conv2d_v1_2
-TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_nhwc_weight_as_input_float16, generated_tests::conv2d_v1_2::CreateModel_nhwc_weight_as_input_float16)
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_nhwc_float16_all_tensors_as_inputs, generated_tests::conv2d_v1_2::CreateModel_nhwc_float16_all_tensors_as_inputs)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_nhwc_float16_all_tensors_as_inputs_dynamic_output_shape(Model *model);
+bool is_ignored_nhwc_float16_all_tensors_as_inputs_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_float16_all_tensors_as_inputs_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_nhwc_float16_all_tensors_as_inputs_dynamic_output_shape) {
+    execute(CreateModel_nhwc_float16_all_tensors_as_inputs_dynamic_output_shape,
+            is_ignored_nhwc_float16_all_tensors_as_inputs_dynamic_output_shape,
+            get_examples_nhwc_float16_all_tensors_as_inputs_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal(Model *model);
+bool is_ignored_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal();
+
+TEST_F(GeneratedTests, conv2d_v1_2_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal) {
+    execute(CreateModel_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal,
+            is_ignored_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal,
+            get_examples_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal, generated_tests::conv2d_v1_2::CreateModel_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
 
 namespace generated_tests::conv2d_v1_2 {
 
@@ -168,6 +596,107 @@ TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_nchw, generated_tests::conv2d_v1_2::Creat
 
 namespace generated_tests::conv2d_v1_2 {
 
+void CreateModel_nchw_dynamic_output_shape(Model *model);
+bool is_ignored_nchw_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_nchw_dynamic_output_shape) {
+    execute(CreateModel_nchw_dynamic_output_shape,
+            is_ignored_nchw_dynamic_output_shape,
+            get_examples_nchw_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_nchw_all_inputs_as_internal(Model *model);
+bool is_ignored_nchw_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_all_inputs_as_internal();
+
+TEST_F(GeneratedTests, conv2d_v1_2_nchw_all_inputs_as_internal) {
+    execute(CreateModel_nchw_all_inputs_as_internal,
+            is_ignored_nchw_all_inputs_as_internal,
+            get_examples_nchw_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_nchw_all_inputs_as_internal, generated_tests::conv2d_v1_2::CreateModel_nchw_all_inputs_as_internal)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_nchw_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_nchw_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_nchw_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_nchw_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_nchw_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_nchw_all_inputs_as_internal_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_nchw_all_tensors_as_inputs(Model *model);
+bool is_ignored_nchw_all_tensors_as_inputs(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_all_tensors_as_inputs();
+
+TEST_F(GeneratedTests, conv2d_v1_2_nchw_all_tensors_as_inputs) {
+    execute(CreateModel_nchw_all_tensors_as_inputs,
+            is_ignored_nchw_all_tensors_as_inputs,
+            get_examples_nchw_all_tensors_as_inputs());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_nchw_all_tensors_as_inputs, generated_tests::conv2d_v1_2::CreateModel_nchw_all_tensors_as_inputs)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_nchw_all_tensors_as_inputs_dynamic_output_shape(Model *model);
+bool is_ignored_nchw_all_tensors_as_inputs_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_all_tensors_as_inputs_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_nchw_all_tensors_as_inputs_dynamic_output_shape) {
+    execute(CreateModel_nchw_all_tensors_as_inputs_dynamic_output_shape,
+            is_ignored_nchw_all_tensors_as_inputs_dynamic_output_shape,
+            get_examples_nchw_all_tensors_as_inputs_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_nchw_all_tensors_as_inputs_all_inputs_as_internal(Model *model);
+bool is_ignored_nchw_all_tensors_as_inputs_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_all_tensors_as_inputs_all_inputs_as_internal();
+
+TEST_F(GeneratedTests, conv2d_v1_2_nchw_all_tensors_as_inputs_all_inputs_as_internal) {
+    execute(CreateModel_nchw_all_tensors_as_inputs_all_inputs_as_internal,
+            is_ignored_nchw_all_tensors_as_inputs_all_inputs_as_internal,
+            get_examples_nchw_all_tensors_as_inputs_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_nchw_all_tensors_as_inputs_all_inputs_as_internal, generated_tests::conv2d_v1_2::CreateModel_nchw_all_tensors_as_inputs_all_inputs_as_internal)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_nchw_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_nchw_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_nchw_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_nchw_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_nchw_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_nchw_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
 void CreateModel_nchw_relaxed(Model *model);
 bool is_ignored_nchw_relaxed(int);
 std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_relaxed();
@@ -176,6 +705,104 @@ TEST_F(GeneratedTests, conv2d_v1_2_nchw_relaxed) {
     execute(CreateModel_nchw_relaxed,
             is_ignored_nchw_relaxed,
             get_examples_nchw_relaxed());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_nchw_relaxed_dynamic_output_shape(Model *model);
+bool is_ignored_nchw_relaxed_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_relaxed_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_nchw_relaxed_dynamic_output_shape) {
+    execute(CreateModel_nchw_relaxed_dynamic_output_shape,
+            is_ignored_nchw_relaxed_dynamic_output_shape,
+            get_examples_nchw_relaxed_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_nchw_relaxed_all_inputs_as_internal(Model *model);
+bool is_ignored_nchw_relaxed_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_relaxed_all_inputs_as_internal();
+
+TEST_F(GeneratedTests, conv2d_v1_2_nchw_relaxed_all_inputs_as_internal) {
+    execute(CreateModel_nchw_relaxed_all_inputs_as_internal,
+            is_ignored_nchw_relaxed_all_inputs_as_internal,
+            get_examples_nchw_relaxed_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_nchw_relaxed_all_tensors_as_inputs(Model *model);
+bool is_ignored_nchw_relaxed_all_tensors_as_inputs(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_relaxed_all_tensors_as_inputs();
+
+TEST_F(GeneratedTests, conv2d_v1_2_nchw_relaxed_all_tensors_as_inputs) {
+    execute(CreateModel_nchw_relaxed_all_tensors_as_inputs,
+            is_ignored_nchw_relaxed_all_tensors_as_inputs,
+            get_examples_nchw_relaxed_all_tensors_as_inputs());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_nchw_relaxed_all_tensors_as_inputs_dynamic_output_shape(Model *model);
+bool is_ignored_nchw_relaxed_all_tensors_as_inputs_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_relaxed_all_tensors_as_inputs_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_nchw_relaxed_all_tensors_as_inputs_dynamic_output_shape) {
+    execute(CreateModel_nchw_relaxed_all_tensors_as_inputs_dynamic_output_shape,
+            is_ignored_nchw_relaxed_all_tensors_as_inputs_dynamic_output_shape,
+            get_examples_nchw_relaxed_all_tensors_as_inputs_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal(Model *model);
+bool is_ignored_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal();
+
+TEST_F(GeneratedTests, conv2d_v1_2_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal) {
+    execute(CreateModel_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal,
+            is_ignored_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal,
+            get_examples_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape());
 }
 
 } // namespace generated_tests::conv2d_v1_2
@@ -197,6 +824,107 @@ TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_nchw_quant8, generated_tests::conv2d_v1_2
 
 namespace generated_tests::conv2d_v1_2 {
 
+void CreateModel_nchw_quant8_dynamic_output_shape(Model *model);
+bool is_ignored_nchw_quant8_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_quant8_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_nchw_quant8_dynamic_output_shape) {
+    execute(CreateModel_nchw_quant8_dynamic_output_shape,
+            is_ignored_nchw_quant8_dynamic_output_shape,
+            get_examples_nchw_quant8_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_nchw_quant8_all_inputs_as_internal(Model *model);
+bool is_ignored_nchw_quant8_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_quant8_all_inputs_as_internal();
+
+TEST_F(GeneratedTests, conv2d_v1_2_nchw_quant8_all_inputs_as_internal) {
+    execute(CreateModel_nchw_quant8_all_inputs_as_internal,
+            is_ignored_nchw_quant8_all_inputs_as_internal,
+            get_examples_nchw_quant8_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_nchw_quant8_all_inputs_as_internal, generated_tests::conv2d_v1_2::CreateModel_nchw_quant8_all_inputs_as_internal)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_nchw_quant8_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_nchw_quant8_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_quant8_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_nchw_quant8_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_nchw_quant8_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_nchw_quant8_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_nchw_quant8_all_inputs_as_internal_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_nchw_quant8_all_tensors_as_inputs(Model *model);
+bool is_ignored_nchw_quant8_all_tensors_as_inputs(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_quant8_all_tensors_as_inputs();
+
+TEST_F(GeneratedTests, conv2d_v1_2_nchw_quant8_all_tensors_as_inputs) {
+    execute(CreateModel_nchw_quant8_all_tensors_as_inputs,
+            is_ignored_nchw_quant8_all_tensors_as_inputs,
+            get_examples_nchw_quant8_all_tensors_as_inputs());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_nchw_quant8_all_tensors_as_inputs, generated_tests::conv2d_v1_2::CreateModel_nchw_quant8_all_tensors_as_inputs)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_nchw_quant8_all_tensors_as_inputs_dynamic_output_shape(Model *model);
+bool is_ignored_nchw_quant8_all_tensors_as_inputs_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_quant8_all_tensors_as_inputs_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_nchw_quant8_all_tensors_as_inputs_dynamic_output_shape) {
+    execute(CreateModel_nchw_quant8_all_tensors_as_inputs_dynamic_output_shape,
+            is_ignored_nchw_quant8_all_tensors_as_inputs_dynamic_output_shape,
+            get_examples_nchw_quant8_all_tensors_as_inputs_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal(Model *model);
+bool is_ignored_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal();
+
+TEST_F(GeneratedTests, conv2d_v1_2_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal) {
+    execute(CreateModel_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal,
+            is_ignored_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal,
+            get_examples_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal, generated_tests::conv2d_v1_2::CreateModel_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
 void CreateModel_nchw_channelQuant8(Model *model);
 bool is_ignored_nchw_channelQuant8(int);
 std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_channelQuant8();
@@ -209,6 +937,107 @@ TEST_F(GeneratedTests, conv2d_v1_2_nchw_channelQuant8) {
 
 } // namespace generated_tests::conv2d_v1_2
 TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_nchw_channelQuant8, generated_tests::conv2d_v1_2::CreateModel_nchw_channelQuant8)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_nchw_channelQuant8_dynamic_output_shape(Model *model);
+bool is_ignored_nchw_channelQuant8_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_channelQuant8_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_nchw_channelQuant8_dynamic_output_shape) {
+    execute(CreateModel_nchw_channelQuant8_dynamic_output_shape,
+            is_ignored_nchw_channelQuant8_dynamic_output_shape,
+            get_examples_nchw_channelQuant8_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_nchw_channelQuant8_all_inputs_as_internal(Model *model);
+bool is_ignored_nchw_channelQuant8_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_channelQuant8_all_inputs_as_internal();
+
+TEST_F(GeneratedTests, conv2d_v1_2_nchw_channelQuant8_all_inputs_as_internal) {
+    execute(CreateModel_nchw_channelQuant8_all_inputs_as_internal,
+            is_ignored_nchw_channelQuant8_all_inputs_as_internal,
+            get_examples_nchw_channelQuant8_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_nchw_channelQuant8_all_inputs_as_internal, generated_tests::conv2d_v1_2::CreateModel_nchw_channelQuant8_all_inputs_as_internal)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_nchw_channelQuant8_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_nchw_channelQuant8_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_channelQuant8_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_nchw_channelQuant8_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_nchw_channelQuant8_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_nchw_channelQuant8_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_nchw_channelQuant8_all_inputs_as_internal_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_nchw_channelQuant8_all_tensors_as_inputs(Model *model);
+bool is_ignored_nchw_channelQuant8_all_tensors_as_inputs(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_channelQuant8_all_tensors_as_inputs();
+
+TEST_F(GeneratedTests, conv2d_v1_2_nchw_channelQuant8_all_tensors_as_inputs) {
+    execute(CreateModel_nchw_channelQuant8_all_tensors_as_inputs,
+            is_ignored_nchw_channelQuant8_all_tensors_as_inputs,
+            get_examples_nchw_channelQuant8_all_tensors_as_inputs());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_nchw_channelQuant8_all_tensors_as_inputs, generated_tests::conv2d_v1_2::CreateModel_nchw_channelQuant8_all_tensors_as_inputs)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_nchw_channelQuant8_all_tensors_as_inputs_dynamic_output_shape(Model *model);
+bool is_ignored_nchw_channelQuant8_all_tensors_as_inputs_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_channelQuant8_all_tensors_as_inputs_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_nchw_channelQuant8_all_tensors_as_inputs_dynamic_output_shape) {
+    execute(CreateModel_nchw_channelQuant8_all_tensors_as_inputs_dynamic_output_shape,
+            is_ignored_nchw_channelQuant8_all_tensors_as_inputs_dynamic_output_shape,
+            get_examples_nchw_channelQuant8_all_tensors_as_inputs_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_nchw_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal(Model *model);
+bool is_ignored_nchw_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal();
+
+TEST_F(GeneratedTests, conv2d_v1_2_nchw_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal) {
+    execute(CreateModel_nchw_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal,
+            is_ignored_nchw_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal,
+            get_examples_nchw_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_nchw_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal, generated_tests::conv2d_v1_2::CreateModel_nchw_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_nchw_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_nchw_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_nchw_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_nchw_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_nchw_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_nchw_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
 
 namespace generated_tests::conv2d_v1_2 {
 
@@ -227,354 +1056,101 @@ TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_nchw_float16, generated_tests::conv2d_v1_
 
 namespace generated_tests::conv2d_v1_2 {
 
-void CreateModel_nchw_weight_as_input(Model *model);
-bool is_ignored_nchw_weight_as_input(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_weight_as_input();
+void CreateModel_nchw_float16_dynamic_output_shape(Model *model);
+bool is_ignored_nchw_float16_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_float16_dynamic_output_shape();
 
-TEST_F(GeneratedTests, conv2d_v1_2_nchw_weight_as_input) {
-    execute(CreateModel_nchw_weight_as_input,
-            is_ignored_nchw_weight_as_input,
-            get_examples_nchw_weight_as_input());
-}
-
-} // namespace generated_tests::conv2d_v1_2
-TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_nchw_weight_as_input, generated_tests::conv2d_v1_2::CreateModel_nchw_weight_as_input)
-
-namespace generated_tests::conv2d_v1_2 {
-
-void CreateModel_nchw_weight_as_input_relaxed(Model *model);
-bool is_ignored_nchw_weight_as_input_relaxed(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_weight_as_input_relaxed();
-
-TEST_F(GeneratedTests, conv2d_v1_2_nchw_weight_as_input_relaxed) {
-    execute(CreateModel_nchw_weight_as_input_relaxed,
-            is_ignored_nchw_weight_as_input_relaxed,
-            get_examples_nchw_weight_as_input_relaxed());
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_nchw_float16_dynamic_output_shape) {
+    execute(CreateModel_nchw_float16_dynamic_output_shape,
+            is_ignored_nchw_float16_dynamic_output_shape,
+            get_examples_nchw_float16_dynamic_output_shape());
 }
 
 } // namespace generated_tests::conv2d_v1_2
 
 namespace generated_tests::conv2d_v1_2 {
 
-void CreateModel_nchw_weight_as_input_quant8(Model *model);
-bool is_ignored_nchw_weight_as_input_quant8(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_weight_as_input_quant8();
+void CreateModel_nchw_float16_all_inputs_as_internal(Model *model);
+bool is_ignored_nchw_float16_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_float16_all_inputs_as_internal();
 
-TEST_F(GeneratedTests, conv2d_v1_2_nchw_weight_as_input_quant8) {
-    execute(CreateModel_nchw_weight_as_input_quant8,
-            is_ignored_nchw_weight_as_input_quant8,
-            get_examples_nchw_weight_as_input_quant8());
+TEST_F(GeneratedTests, conv2d_v1_2_nchw_float16_all_inputs_as_internal) {
+    execute(CreateModel_nchw_float16_all_inputs_as_internal,
+            is_ignored_nchw_float16_all_inputs_as_internal,
+            get_examples_nchw_float16_all_inputs_as_internal());
 }
 
 } // namespace generated_tests::conv2d_v1_2
-TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_nchw_weight_as_input_quant8, generated_tests::conv2d_v1_2::CreateModel_nchw_weight_as_input_quant8)
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_nchw_float16_all_inputs_as_internal, generated_tests::conv2d_v1_2::CreateModel_nchw_float16_all_inputs_as_internal)
 
 namespace generated_tests::conv2d_v1_2 {
 
-void CreateModel_nchw_weight_as_input_channelQuant8(Model *model);
-bool is_ignored_nchw_weight_as_input_channelQuant8(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_weight_as_input_channelQuant8();
+void CreateModel_nchw_float16_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_nchw_float16_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_float16_all_inputs_as_internal_dynamic_output_shape();
 
-TEST_F(GeneratedTests, conv2d_v1_2_nchw_weight_as_input_channelQuant8) {
-    execute(CreateModel_nchw_weight_as_input_channelQuant8,
-            is_ignored_nchw_weight_as_input_channelQuant8,
-            get_examples_nchw_weight_as_input_channelQuant8());
-}
-
-} // namespace generated_tests::conv2d_v1_2
-TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_nchw_weight_as_input_channelQuant8, generated_tests::conv2d_v1_2::CreateModel_nchw_weight_as_input_channelQuant8)
-
-namespace generated_tests::conv2d_v1_2 {
-
-void CreateModel_nchw_weight_as_input_float16(Model *model);
-bool is_ignored_nchw_weight_as_input_float16(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_weight_as_input_float16();
-
-TEST_F(GeneratedTests, conv2d_v1_2_nchw_weight_as_input_float16) {
-    execute(CreateModel_nchw_weight_as_input_float16,
-            is_ignored_nchw_weight_as_input_float16,
-            get_examples_nchw_weight_as_input_float16());
-}
-
-} // namespace generated_tests::conv2d_v1_2
-TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_nchw_weight_as_input_float16, generated_tests::conv2d_v1_2::CreateModel_nchw_weight_as_input_float16)
-
-namespace generated_tests::conv2d_v1_2 {
-
-void CreateModel_dynamic_output_shape_nhwc(Model *model);
-bool is_ignored_dynamic_output_shape_nhwc(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_nhwc();
-
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_dynamic_output_shape_nhwc) {
-    execute(CreateModel_dynamic_output_shape_nhwc,
-            is_ignored_dynamic_output_shape_nhwc,
-            get_examples_dynamic_output_shape_nhwc());
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_nchw_float16_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_nchw_float16_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_nchw_float16_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_nchw_float16_all_inputs_as_internal_dynamic_output_shape());
 }
 
 } // namespace generated_tests::conv2d_v1_2
 
 namespace generated_tests::conv2d_v1_2 {
 
-void CreateModel_dynamic_output_shape_nhwc_relaxed(Model *model);
-bool is_ignored_dynamic_output_shape_nhwc_relaxed(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_nhwc_relaxed();
+void CreateModel_nchw_float16_all_tensors_as_inputs(Model *model);
+bool is_ignored_nchw_float16_all_tensors_as_inputs(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_float16_all_tensors_as_inputs();
 
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_dynamic_output_shape_nhwc_relaxed) {
-    execute(CreateModel_dynamic_output_shape_nhwc_relaxed,
-            is_ignored_dynamic_output_shape_nhwc_relaxed,
-            get_examples_dynamic_output_shape_nhwc_relaxed());
+TEST_F(GeneratedTests, conv2d_v1_2_nchw_float16_all_tensors_as_inputs) {
+    execute(CreateModel_nchw_float16_all_tensors_as_inputs,
+            is_ignored_nchw_float16_all_tensors_as_inputs,
+            get_examples_nchw_float16_all_tensors_as_inputs());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_nchw_float16_all_tensors_as_inputs, generated_tests::conv2d_v1_2::CreateModel_nchw_float16_all_tensors_as_inputs)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_nchw_float16_all_tensors_as_inputs_dynamic_output_shape(Model *model);
+bool is_ignored_nchw_float16_all_tensors_as_inputs_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_float16_all_tensors_as_inputs_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_nchw_float16_all_tensors_as_inputs_dynamic_output_shape) {
+    execute(CreateModel_nchw_float16_all_tensors_as_inputs_dynamic_output_shape,
+            is_ignored_nchw_float16_all_tensors_as_inputs_dynamic_output_shape,
+            get_examples_nchw_float16_all_tensors_as_inputs_dynamic_output_shape());
 }
 
 } // namespace generated_tests::conv2d_v1_2
 
 namespace generated_tests::conv2d_v1_2 {
 
-void CreateModel_dynamic_output_shape_nhwc_quant8(Model *model);
-bool is_ignored_dynamic_output_shape_nhwc_quant8(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_nhwc_quant8();
+void CreateModel_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal(Model *model);
+bool is_ignored_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal();
 
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_dynamic_output_shape_nhwc_quant8) {
-    execute(CreateModel_dynamic_output_shape_nhwc_quant8,
-            is_ignored_dynamic_output_shape_nhwc_quant8,
-            get_examples_dynamic_output_shape_nhwc_quant8());
+TEST_F(GeneratedTests, conv2d_v1_2_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal) {
+    execute(CreateModel_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal,
+            is_ignored_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal,
+            get_examples_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal());
 }
 
 } // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal, generated_tests::conv2d_v1_2::CreateModel_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal)
 
 namespace generated_tests::conv2d_v1_2 {
 
-void CreateModel_dynamic_output_shape_nhwc_channelQuant8(Model *model);
-bool is_ignored_dynamic_output_shape_nhwc_channelQuant8(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_nhwc_channelQuant8();
-
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_dynamic_output_shape_nhwc_channelQuant8) {
-    execute(CreateModel_dynamic_output_shape_nhwc_channelQuant8,
-            is_ignored_dynamic_output_shape_nhwc_channelQuant8,
-            get_examples_dynamic_output_shape_nhwc_channelQuant8());
-}
-
-} // namespace generated_tests::conv2d_v1_2
-
-namespace generated_tests::conv2d_v1_2 {
-
-void CreateModel_dynamic_output_shape_nhwc_float16(Model *model);
-bool is_ignored_dynamic_output_shape_nhwc_float16(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_nhwc_float16();
-
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_dynamic_output_shape_nhwc_float16) {
-    execute(CreateModel_dynamic_output_shape_nhwc_float16,
-            is_ignored_dynamic_output_shape_nhwc_float16,
-            get_examples_dynamic_output_shape_nhwc_float16());
-}
-
-} // namespace generated_tests::conv2d_v1_2
-
-namespace generated_tests::conv2d_v1_2 {
-
-void CreateModel_dynamic_output_shape_nhwc_weight_as_input(Model *model);
-bool is_ignored_dynamic_output_shape_nhwc_weight_as_input(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_nhwc_weight_as_input();
-
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_dynamic_output_shape_nhwc_weight_as_input) {
-    execute(CreateModel_dynamic_output_shape_nhwc_weight_as_input,
-            is_ignored_dynamic_output_shape_nhwc_weight_as_input,
-            get_examples_dynamic_output_shape_nhwc_weight_as_input());
-}
-
-} // namespace generated_tests::conv2d_v1_2
-
-namespace generated_tests::conv2d_v1_2 {
-
-void CreateModel_dynamic_output_shape_nhwc_weight_as_input_relaxed(Model *model);
-bool is_ignored_dynamic_output_shape_nhwc_weight_as_input_relaxed(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_nhwc_weight_as_input_relaxed();
-
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_dynamic_output_shape_nhwc_weight_as_input_relaxed) {
-    execute(CreateModel_dynamic_output_shape_nhwc_weight_as_input_relaxed,
-            is_ignored_dynamic_output_shape_nhwc_weight_as_input_relaxed,
-            get_examples_dynamic_output_shape_nhwc_weight_as_input_relaxed());
-}
-
-} // namespace generated_tests::conv2d_v1_2
-
-namespace generated_tests::conv2d_v1_2 {
-
-void CreateModel_dynamic_output_shape_nhwc_weight_as_input_quant8(Model *model);
-bool is_ignored_dynamic_output_shape_nhwc_weight_as_input_quant8(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_nhwc_weight_as_input_quant8();
-
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_dynamic_output_shape_nhwc_weight_as_input_quant8) {
-    execute(CreateModel_dynamic_output_shape_nhwc_weight_as_input_quant8,
-            is_ignored_dynamic_output_shape_nhwc_weight_as_input_quant8,
-            get_examples_dynamic_output_shape_nhwc_weight_as_input_quant8());
-}
-
-} // namespace generated_tests::conv2d_v1_2
-
-namespace generated_tests::conv2d_v1_2 {
-
-void CreateModel_dynamic_output_shape_nhwc_weight_as_input_channelQuant8(Model *model);
-bool is_ignored_dynamic_output_shape_nhwc_weight_as_input_channelQuant8(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_nhwc_weight_as_input_channelQuant8();
-
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_dynamic_output_shape_nhwc_weight_as_input_channelQuant8) {
-    execute(CreateModel_dynamic_output_shape_nhwc_weight_as_input_channelQuant8,
-            is_ignored_dynamic_output_shape_nhwc_weight_as_input_channelQuant8,
-            get_examples_dynamic_output_shape_nhwc_weight_as_input_channelQuant8());
-}
-
-} // namespace generated_tests::conv2d_v1_2
-
-namespace generated_tests::conv2d_v1_2 {
-
-void CreateModel_dynamic_output_shape_nhwc_weight_as_input_float16(Model *model);
-bool is_ignored_dynamic_output_shape_nhwc_weight_as_input_float16(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_nhwc_weight_as_input_float16();
-
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_dynamic_output_shape_nhwc_weight_as_input_float16) {
-    execute(CreateModel_dynamic_output_shape_nhwc_weight_as_input_float16,
-            is_ignored_dynamic_output_shape_nhwc_weight_as_input_float16,
-            get_examples_dynamic_output_shape_nhwc_weight_as_input_float16());
-}
-
-} // namespace generated_tests::conv2d_v1_2
-
-namespace generated_tests::conv2d_v1_2 {
-
-void CreateModel_dynamic_output_shape_nchw(Model *model);
-bool is_ignored_dynamic_output_shape_nchw(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_nchw();
-
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_dynamic_output_shape_nchw) {
-    execute(CreateModel_dynamic_output_shape_nchw,
-            is_ignored_dynamic_output_shape_nchw,
-            get_examples_dynamic_output_shape_nchw());
-}
-
-} // namespace generated_tests::conv2d_v1_2
-
-namespace generated_tests::conv2d_v1_2 {
-
-void CreateModel_dynamic_output_shape_nchw_relaxed(Model *model);
-bool is_ignored_dynamic_output_shape_nchw_relaxed(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_nchw_relaxed();
-
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_dynamic_output_shape_nchw_relaxed) {
-    execute(CreateModel_dynamic_output_shape_nchw_relaxed,
-            is_ignored_dynamic_output_shape_nchw_relaxed,
-            get_examples_dynamic_output_shape_nchw_relaxed());
-}
-
-} // namespace generated_tests::conv2d_v1_2
-
-namespace generated_tests::conv2d_v1_2 {
-
-void CreateModel_dynamic_output_shape_nchw_quant8(Model *model);
-bool is_ignored_dynamic_output_shape_nchw_quant8(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_nchw_quant8();
-
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_dynamic_output_shape_nchw_quant8) {
-    execute(CreateModel_dynamic_output_shape_nchw_quant8,
-            is_ignored_dynamic_output_shape_nchw_quant8,
-            get_examples_dynamic_output_shape_nchw_quant8());
-}
-
-} // namespace generated_tests::conv2d_v1_2
-
-namespace generated_tests::conv2d_v1_2 {
-
-void CreateModel_dynamic_output_shape_nchw_channelQuant8(Model *model);
-bool is_ignored_dynamic_output_shape_nchw_channelQuant8(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_nchw_channelQuant8();
-
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_dynamic_output_shape_nchw_channelQuant8) {
-    execute(CreateModel_dynamic_output_shape_nchw_channelQuant8,
-            is_ignored_dynamic_output_shape_nchw_channelQuant8,
-            get_examples_dynamic_output_shape_nchw_channelQuant8());
-}
-
-} // namespace generated_tests::conv2d_v1_2
-
-namespace generated_tests::conv2d_v1_2 {
-
-void CreateModel_dynamic_output_shape_nchw_float16(Model *model);
-bool is_ignored_dynamic_output_shape_nchw_float16(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_nchw_float16();
-
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_dynamic_output_shape_nchw_float16) {
-    execute(CreateModel_dynamic_output_shape_nchw_float16,
-            is_ignored_dynamic_output_shape_nchw_float16,
-            get_examples_dynamic_output_shape_nchw_float16());
-}
-
-} // namespace generated_tests::conv2d_v1_2
-
-namespace generated_tests::conv2d_v1_2 {
-
-void CreateModel_dynamic_output_shape_nchw_weight_as_input(Model *model);
-bool is_ignored_dynamic_output_shape_nchw_weight_as_input(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_nchw_weight_as_input();
-
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_dynamic_output_shape_nchw_weight_as_input) {
-    execute(CreateModel_dynamic_output_shape_nchw_weight_as_input,
-            is_ignored_dynamic_output_shape_nchw_weight_as_input,
-            get_examples_dynamic_output_shape_nchw_weight_as_input());
-}
-
-} // namespace generated_tests::conv2d_v1_2
-
-namespace generated_tests::conv2d_v1_2 {
-
-void CreateModel_dynamic_output_shape_nchw_weight_as_input_relaxed(Model *model);
-bool is_ignored_dynamic_output_shape_nchw_weight_as_input_relaxed(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_nchw_weight_as_input_relaxed();
-
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_dynamic_output_shape_nchw_weight_as_input_relaxed) {
-    execute(CreateModel_dynamic_output_shape_nchw_weight_as_input_relaxed,
-            is_ignored_dynamic_output_shape_nchw_weight_as_input_relaxed,
-            get_examples_dynamic_output_shape_nchw_weight_as_input_relaxed());
-}
-
-} // namespace generated_tests::conv2d_v1_2
-
-namespace generated_tests::conv2d_v1_2 {
-
-void CreateModel_dynamic_output_shape_nchw_weight_as_input_quant8(Model *model);
-bool is_ignored_dynamic_output_shape_nchw_weight_as_input_quant8(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_nchw_weight_as_input_quant8();
-
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_dynamic_output_shape_nchw_weight_as_input_quant8) {
-    execute(CreateModel_dynamic_output_shape_nchw_weight_as_input_quant8,
-            is_ignored_dynamic_output_shape_nchw_weight_as_input_quant8,
-            get_examples_dynamic_output_shape_nchw_weight_as_input_quant8());
-}
-
-} // namespace generated_tests::conv2d_v1_2
-
-namespace generated_tests::conv2d_v1_2 {
-
-void CreateModel_dynamic_output_shape_nchw_weight_as_input_channelQuant8(Model *model);
-bool is_ignored_dynamic_output_shape_nchw_weight_as_input_channelQuant8(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_nchw_weight_as_input_channelQuant8();
-
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_dynamic_output_shape_nchw_weight_as_input_channelQuant8) {
-    execute(CreateModel_dynamic_output_shape_nchw_weight_as_input_channelQuant8,
-            is_ignored_dynamic_output_shape_nchw_weight_as_input_channelQuant8,
-            get_examples_dynamic_output_shape_nchw_weight_as_input_channelQuant8());
-}
-
-} // namespace generated_tests::conv2d_v1_2
-
-namespace generated_tests::conv2d_v1_2 {
-
-void CreateModel_dynamic_output_shape_nchw_weight_as_input_float16(Model *model);
-bool is_ignored_dynamic_output_shape_nchw_weight_as_input_float16(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_nchw_weight_as_input_float16();
-
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_dynamic_output_shape_nchw_weight_as_input_float16) {
-    execute(CreateModel_dynamic_output_shape_nchw_weight_as_input_float16,
-            is_ignored_dynamic_output_shape_nchw_weight_as_input_float16,
-            get_examples_dynamic_output_shape_nchw_weight_as_input_float16());
+void CreateModel_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape());
 }
 
 } // namespace generated_tests::conv2d_v1_2
@@ -596,6 +1172,107 @@ TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_nhwc_2, generated_tests::conv2d_v1_2::Cre
 
 namespace generated_tests::conv2d_v1_2 {
 
+void CreateModel_nhwc_dynamic_output_shape_2(Model *model);
+bool is_ignored_nhwc_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_nhwc_dynamic_output_shape_2) {
+    execute(CreateModel_nhwc_dynamic_output_shape_2,
+            is_ignored_nhwc_dynamic_output_shape_2,
+            get_examples_nhwc_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_nhwc_all_inputs_as_internal_2(Model *model);
+bool is_ignored_nhwc_all_inputs_as_internal_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_all_inputs_as_internal_2();
+
+TEST_F(GeneratedTests, conv2d_v1_2_nhwc_all_inputs_as_internal_2) {
+    execute(CreateModel_nhwc_all_inputs_as_internal_2,
+            is_ignored_nhwc_all_inputs_as_internal_2,
+            get_examples_nhwc_all_inputs_as_internal_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_nhwc_all_inputs_as_internal_2, generated_tests::conv2d_v1_2::CreateModel_nhwc_all_inputs_as_internal_2)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_nhwc_all_inputs_as_internal_dynamic_output_shape_2(Model *model);
+bool is_ignored_nhwc_all_inputs_as_internal_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_all_inputs_as_internal_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_nhwc_all_inputs_as_internal_dynamic_output_shape_2) {
+    execute(CreateModel_nhwc_all_inputs_as_internal_dynamic_output_shape_2,
+            is_ignored_nhwc_all_inputs_as_internal_dynamic_output_shape_2,
+            get_examples_nhwc_all_inputs_as_internal_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_nhwc_all_tensors_as_inputs_2(Model *model);
+bool is_ignored_nhwc_all_tensors_as_inputs_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_all_tensors_as_inputs_2();
+
+TEST_F(GeneratedTests, conv2d_v1_2_nhwc_all_tensors_as_inputs_2) {
+    execute(CreateModel_nhwc_all_tensors_as_inputs_2,
+            is_ignored_nhwc_all_tensors_as_inputs_2,
+            get_examples_nhwc_all_tensors_as_inputs_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_nhwc_all_tensors_as_inputs_2, generated_tests::conv2d_v1_2::CreateModel_nhwc_all_tensors_as_inputs_2)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_nhwc_all_tensors_as_inputs_dynamic_output_shape_2(Model *model);
+bool is_ignored_nhwc_all_tensors_as_inputs_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_all_tensors_as_inputs_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_nhwc_all_tensors_as_inputs_dynamic_output_shape_2) {
+    execute(CreateModel_nhwc_all_tensors_as_inputs_dynamic_output_shape_2,
+            is_ignored_nhwc_all_tensors_as_inputs_dynamic_output_shape_2,
+            get_examples_nhwc_all_tensors_as_inputs_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_nhwc_all_tensors_as_inputs_all_inputs_as_internal_2(Model *model);
+bool is_ignored_nhwc_all_tensors_as_inputs_all_inputs_as_internal_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_all_tensors_as_inputs_all_inputs_as_internal_2();
+
+TEST_F(GeneratedTests, conv2d_v1_2_nhwc_all_tensors_as_inputs_all_inputs_as_internal_2) {
+    execute(CreateModel_nhwc_all_tensors_as_inputs_all_inputs_as_internal_2,
+            is_ignored_nhwc_all_tensors_as_inputs_all_inputs_as_internal_2,
+            get_examples_nhwc_all_tensors_as_inputs_all_inputs_as_internal_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_nhwc_all_tensors_as_inputs_all_inputs_as_internal_2, generated_tests::conv2d_v1_2::CreateModel_nhwc_all_tensors_as_inputs_all_inputs_as_internal_2)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_nhwc_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2(Model *model);
+bool is_ignored_nhwc_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_nhwc_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2) {
+    execute(CreateModel_nhwc_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2,
+            is_ignored_nhwc_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2,
+            get_examples_nhwc_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
 void CreateModel_nhwc_relaxed_2(Model *model);
 bool is_ignored_nhwc_relaxed_2(int);
 std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_relaxed_2();
@@ -604,6 +1281,104 @@ TEST_F(GeneratedTests, conv2d_v1_2_nhwc_relaxed_2) {
     execute(CreateModel_nhwc_relaxed_2,
             is_ignored_nhwc_relaxed_2,
             get_examples_nhwc_relaxed_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_nhwc_relaxed_dynamic_output_shape_2(Model *model);
+bool is_ignored_nhwc_relaxed_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_relaxed_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_nhwc_relaxed_dynamic_output_shape_2) {
+    execute(CreateModel_nhwc_relaxed_dynamic_output_shape_2,
+            is_ignored_nhwc_relaxed_dynamic_output_shape_2,
+            get_examples_nhwc_relaxed_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_nhwc_relaxed_all_inputs_as_internal_2(Model *model);
+bool is_ignored_nhwc_relaxed_all_inputs_as_internal_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_relaxed_all_inputs_as_internal_2();
+
+TEST_F(GeneratedTests, conv2d_v1_2_nhwc_relaxed_all_inputs_as_internal_2) {
+    execute(CreateModel_nhwc_relaxed_all_inputs_as_internal_2,
+            is_ignored_nhwc_relaxed_all_inputs_as_internal_2,
+            get_examples_nhwc_relaxed_all_inputs_as_internal_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_2(Model *model);
+bool is_ignored_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_2) {
+    execute(CreateModel_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_2,
+            is_ignored_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_2,
+            get_examples_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_nhwc_relaxed_all_tensors_as_inputs_2(Model *model);
+bool is_ignored_nhwc_relaxed_all_tensors_as_inputs_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_relaxed_all_tensors_as_inputs_2();
+
+TEST_F(GeneratedTests, conv2d_v1_2_nhwc_relaxed_all_tensors_as_inputs_2) {
+    execute(CreateModel_nhwc_relaxed_all_tensors_as_inputs_2,
+            is_ignored_nhwc_relaxed_all_tensors_as_inputs_2,
+            get_examples_nhwc_relaxed_all_tensors_as_inputs_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_nhwc_relaxed_all_tensors_as_inputs_dynamic_output_shape_2(Model *model);
+bool is_ignored_nhwc_relaxed_all_tensors_as_inputs_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_relaxed_all_tensors_as_inputs_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_nhwc_relaxed_all_tensors_as_inputs_dynamic_output_shape_2) {
+    execute(CreateModel_nhwc_relaxed_all_tensors_as_inputs_dynamic_output_shape_2,
+            is_ignored_nhwc_relaxed_all_tensors_as_inputs_dynamic_output_shape_2,
+            get_examples_nhwc_relaxed_all_tensors_as_inputs_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2(Model *model);
+bool is_ignored_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2();
+
+TEST_F(GeneratedTests, conv2d_v1_2_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2) {
+    execute(CreateModel_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2,
+            is_ignored_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2,
+            get_examples_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2(Model *model);
+bool is_ignored_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2) {
+    execute(CreateModel_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2,
+            is_ignored_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2,
+            get_examples_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2());
 }
 
 } // namespace generated_tests::conv2d_v1_2
@@ -625,6 +1400,107 @@ TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_nhwc_quant8_2, generated_tests::conv2d_v1
 
 namespace generated_tests::conv2d_v1_2 {
 
+void CreateModel_nhwc_quant8_dynamic_output_shape_2(Model *model);
+bool is_ignored_nhwc_quant8_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_quant8_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_nhwc_quant8_dynamic_output_shape_2) {
+    execute(CreateModel_nhwc_quant8_dynamic_output_shape_2,
+            is_ignored_nhwc_quant8_dynamic_output_shape_2,
+            get_examples_nhwc_quant8_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_nhwc_quant8_all_inputs_as_internal_2(Model *model);
+bool is_ignored_nhwc_quant8_all_inputs_as_internal_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_quant8_all_inputs_as_internal_2();
+
+TEST_F(GeneratedTests, conv2d_v1_2_nhwc_quant8_all_inputs_as_internal_2) {
+    execute(CreateModel_nhwc_quant8_all_inputs_as_internal_2,
+            is_ignored_nhwc_quant8_all_inputs_as_internal_2,
+            get_examples_nhwc_quant8_all_inputs_as_internal_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_nhwc_quant8_all_inputs_as_internal_2, generated_tests::conv2d_v1_2::CreateModel_nhwc_quant8_all_inputs_as_internal_2)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_2(Model *model);
+bool is_ignored_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_2) {
+    execute(CreateModel_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_2,
+            is_ignored_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_2,
+            get_examples_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_nhwc_quant8_all_tensors_as_inputs_2(Model *model);
+bool is_ignored_nhwc_quant8_all_tensors_as_inputs_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_quant8_all_tensors_as_inputs_2();
+
+TEST_F(GeneratedTests, conv2d_v1_2_nhwc_quant8_all_tensors_as_inputs_2) {
+    execute(CreateModel_nhwc_quant8_all_tensors_as_inputs_2,
+            is_ignored_nhwc_quant8_all_tensors_as_inputs_2,
+            get_examples_nhwc_quant8_all_tensors_as_inputs_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_nhwc_quant8_all_tensors_as_inputs_2, generated_tests::conv2d_v1_2::CreateModel_nhwc_quant8_all_tensors_as_inputs_2)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_nhwc_quant8_all_tensors_as_inputs_dynamic_output_shape_2(Model *model);
+bool is_ignored_nhwc_quant8_all_tensors_as_inputs_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_quant8_all_tensors_as_inputs_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_nhwc_quant8_all_tensors_as_inputs_dynamic_output_shape_2) {
+    execute(CreateModel_nhwc_quant8_all_tensors_as_inputs_dynamic_output_shape_2,
+            is_ignored_nhwc_quant8_all_tensors_as_inputs_dynamic_output_shape_2,
+            get_examples_nhwc_quant8_all_tensors_as_inputs_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal_2(Model *model);
+bool is_ignored_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal_2();
+
+TEST_F(GeneratedTests, conv2d_v1_2_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal_2) {
+    execute(CreateModel_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal_2,
+            is_ignored_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal_2,
+            get_examples_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal_2, generated_tests::conv2d_v1_2::CreateModel_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal_2)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2(Model *model);
+bool is_ignored_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2) {
+    execute(CreateModel_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2,
+            is_ignored_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2,
+            get_examples_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
 void CreateModel_nhwc_channelQuant8_2(Model *model);
 bool is_ignored_nhwc_channelQuant8_2(int);
 std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_channelQuant8_2();
@@ -637,6 +1513,107 @@ TEST_F(GeneratedTests, conv2d_v1_2_nhwc_channelQuant8_2) {
 
 } // namespace generated_tests::conv2d_v1_2
 TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_nhwc_channelQuant8_2, generated_tests::conv2d_v1_2::CreateModel_nhwc_channelQuant8_2)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_nhwc_channelQuant8_dynamic_output_shape_2(Model *model);
+bool is_ignored_nhwc_channelQuant8_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_channelQuant8_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_nhwc_channelQuant8_dynamic_output_shape_2) {
+    execute(CreateModel_nhwc_channelQuant8_dynamic_output_shape_2,
+            is_ignored_nhwc_channelQuant8_dynamic_output_shape_2,
+            get_examples_nhwc_channelQuant8_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_nhwc_channelQuant8_all_inputs_as_internal_2(Model *model);
+bool is_ignored_nhwc_channelQuant8_all_inputs_as_internal_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_channelQuant8_all_inputs_as_internal_2();
+
+TEST_F(GeneratedTests, conv2d_v1_2_nhwc_channelQuant8_all_inputs_as_internal_2) {
+    execute(CreateModel_nhwc_channelQuant8_all_inputs_as_internal_2,
+            is_ignored_nhwc_channelQuant8_all_inputs_as_internal_2,
+            get_examples_nhwc_channelQuant8_all_inputs_as_internal_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_nhwc_channelQuant8_all_inputs_as_internal_2, generated_tests::conv2d_v1_2::CreateModel_nhwc_channelQuant8_all_inputs_as_internal_2)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_nhwc_channelQuant8_all_inputs_as_internal_dynamic_output_shape_2(Model *model);
+bool is_ignored_nhwc_channelQuant8_all_inputs_as_internal_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_channelQuant8_all_inputs_as_internal_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_nhwc_channelQuant8_all_inputs_as_internal_dynamic_output_shape_2) {
+    execute(CreateModel_nhwc_channelQuant8_all_inputs_as_internal_dynamic_output_shape_2,
+            is_ignored_nhwc_channelQuant8_all_inputs_as_internal_dynamic_output_shape_2,
+            get_examples_nhwc_channelQuant8_all_inputs_as_internal_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_nhwc_channelQuant8_all_tensors_as_inputs_2(Model *model);
+bool is_ignored_nhwc_channelQuant8_all_tensors_as_inputs_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_channelQuant8_all_tensors_as_inputs_2();
+
+TEST_F(GeneratedTests, conv2d_v1_2_nhwc_channelQuant8_all_tensors_as_inputs_2) {
+    execute(CreateModel_nhwc_channelQuant8_all_tensors_as_inputs_2,
+            is_ignored_nhwc_channelQuant8_all_tensors_as_inputs_2,
+            get_examples_nhwc_channelQuant8_all_tensors_as_inputs_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_nhwc_channelQuant8_all_tensors_as_inputs_2, generated_tests::conv2d_v1_2::CreateModel_nhwc_channelQuant8_all_tensors_as_inputs_2)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_nhwc_channelQuant8_all_tensors_as_inputs_dynamic_output_shape_2(Model *model);
+bool is_ignored_nhwc_channelQuant8_all_tensors_as_inputs_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_channelQuant8_all_tensors_as_inputs_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_nhwc_channelQuant8_all_tensors_as_inputs_dynamic_output_shape_2) {
+    execute(CreateModel_nhwc_channelQuant8_all_tensors_as_inputs_dynamic_output_shape_2,
+            is_ignored_nhwc_channelQuant8_all_tensors_as_inputs_dynamic_output_shape_2,
+            get_examples_nhwc_channelQuant8_all_tensors_as_inputs_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_nhwc_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_2(Model *model);
+bool is_ignored_nhwc_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_2();
+
+TEST_F(GeneratedTests, conv2d_v1_2_nhwc_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_2) {
+    execute(CreateModel_nhwc_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_2,
+            is_ignored_nhwc_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_2,
+            get_examples_nhwc_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_nhwc_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_2, generated_tests::conv2d_v1_2::CreateModel_nhwc_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_2)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_nhwc_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2(Model *model);
+bool is_ignored_nhwc_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_nhwc_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2) {
+    execute(CreateModel_nhwc_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2,
+            is_ignored_nhwc_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2,
+            get_examples_nhwc_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
 
 namespace generated_tests::conv2d_v1_2 {
 
@@ -655,77 +1632,104 @@ TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_nhwc_float16_2, generated_tests::conv2d_v
 
 namespace generated_tests::conv2d_v1_2 {
 
-void CreateModel_nhwc_weight_as_input_2(Model *model);
-bool is_ignored_nhwc_weight_as_input_2(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_weight_as_input_2();
+void CreateModel_nhwc_float16_dynamic_output_shape_2(Model *model);
+bool is_ignored_nhwc_float16_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_float16_dynamic_output_shape_2();
 
-TEST_F(GeneratedTests, conv2d_v1_2_nhwc_weight_as_input_2) {
-    execute(CreateModel_nhwc_weight_as_input_2,
-            is_ignored_nhwc_weight_as_input_2,
-            get_examples_nhwc_weight_as_input_2());
-}
-
-} // namespace generated_tests::conv2d_v1_2
-TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_nhwc_weight_as_input_2, generated_tests::conv2d_v1_2::CreateModel_nhwc_weight_as_input_2)
-
-namespace generated_tests::conv2d_v1_2 {
-
-void CreateModel_nhwc_weight_as_input_relaxed_2(Model *model);
-bool is_ignored_nhwc_weight_as_input_relaxed_2(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_weight_as_input_relaxed_2();
-
-TEST_F(GeneratedTests, conv2d_v1_2_nhwc_weight_as_input_relaxed_2) {
-    execute(CreateModel_nhwc_weight_as_input_relaxed_2,
-            is_ignored_nhwc_weight_as_input_relaxed_2,
-            get_examples_nhwc_weight_as_input_relaxed_2());
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_nhwc_float16_dynamic_output_shape_2) {
+    execute(CreateModel_nhwc_float16_dynamic_output_shape_2,
+            is_ignored_nhwc_float16_dynamic_output_shape_2,
+            get_examples_nhwc_float16_dynamic_output_shape_2());
 }
 
 } // namespace generated_tests::conv2d_v1_2
 
 namespace generated_tests::conv2d_v1_2 {
 
-void CreateModel_nhwc_weight_as_input_quant8_2(Model *model);
-bool is_ignored_nhwc_weight_as_input_quant8_2(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_weight_as_input_quant8_2();
+void CreateModel_nhwc_float16_all_inputs_as_internal_2(Model *model);
+bool is_ignored_nhwc_float16_all_inputs_as_internal_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_float16_all_inputs_as_internal_2();
 
-TEST_F(GeneratedTests, conv2d_v1_2_nhwc_weight_as_input_quant8_2) {
-    execute(CreateModel_nhwc_weight_as_input_quant8_2,
-            is_ignored_nhwc_weight_as_input_quant8_2,
-            get_examples_nhwc_weight_as_input_quant8_2());
+TEST_F(GeneratedTests, conv2d_v1_2_nhwc_float16_all_inputs_as_internal_2) {
+    execute(CreateModel_nhwc_float16_all_inputs_as_internal_2,
+            is_ignored_nhwc_float16_all_inputs_as_internal_2,
+            get_examples_nhwc_float16_all_inputs_as_internal_2());
 }
 
 } // namespace generated_tests::conv2d_v1_2
-TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_nhwc_weight_as_input_quant8_2, generated_tests::conv2d_v1_2::CreateModel_nhwc_weight_as_input_quant8_2)
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_nhwc_float16_all_inputs_as_internal_2, generated_tests::conv2d_v1_2::CreateModel_nhwc_float16_all_inputs_as_internal_2)
 
 namespace generated_tests::conv2d_v1_2 {
 
-void CreateModel_nhwc_weight_as_input_channelQuant8_2(Model *model);
-bool is_ignored_nhwc_weight_as_input_channelQuant8_2(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_weight_as_input_channelQuant8_2();
+void CreateModel_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_2(Model *model);
+bool is_ignored_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_2();
 
-TEST_F(GeneratedTests, conv2d_v1_2_nhwc_weight_as_input_channelQuant8_2) {
-    execute(CreateModel_nhwc_weight_as_input_channelQuant8_2,
-            is_ignored_nhwc_weight_as_input_channelQuant8_2,
-            get_examples_nhwc_weight_as_input_channelQuant8_2());
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_2) {
+    execute(CreateModel_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_2,
+            is_ignored_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_2,
+            get_examples_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_2());
 }
 
 } // namespace generated_tests::conv2d_v1_2
-TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_nhwc_weight_as_input_channelQuant8_2, generated_tests::conv2d_v1_2::CreateModel_nhwc_weight_as_input_channelQuant8_2)
 
 namespace generated_tests::conv2d_v1_2 {
 
-void CreateModel_nhwc_weight_as_input_float16_2(Model *model);
-bool is_ignored_nhwc_weight_as_input_float16_2(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_weight_as_input_float16_2();
+void CreateModel_nhwc_float16_all_tensors_as_inputs_2(Model *model);
+bool is_ignored_nhwc_float16_all_tensors_as_inputs_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_float16_all_tensors_as_inputs_2();
 
-TEST_F(GeneratedTests, conv2d_v1_2_nhwc_weight_as_input_float16_2) {
-    execute(CreateModel_nhwc_weight_as_input_float16_2,
-            is_ignored_nhwc_weight_as_input_float16_2,
-            get_examples_nhwc_weight_as_input_float16_2());
+TEST_F(GeneratedTests, conv2d_v1_2_nhwc_float16_all_tensors_as_inputs_2) {
+    execute(CreateModel_nhwc_float16_all_tensors_as_inputs_2,
+            is_ignored_nhwc_float16_all_tensors_as_inputs_2,
+            get_examples_nhwc_float16_all_tensors_as_inputs_2());
 }
 
 } // namespace generated_tests::conv2d_v1_2
-TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_nhwc_weight_as_input_float16_2, generated_tests::conv2d_v1_2::CreateModel_nhwc_weight_as_input_float16_2)
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_nhwc_float16_all_tensors_as_inputs_2, generated_tests::conv2d_v1_2::CreateModel_nhwc_float16_all_tensors_as_inputs_2)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_nhwc_float16_all_tensors_as_inputs_dynamic_output_shape_2(Model *model);
+bool is_ignored_nhwc_float16_all_tensors_as_inputs_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_float16_all_tensors_as_inputs_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_nhwc_float16_all_tensors_as_inputs_dynamic_output_shape_2) {
+    execute(CreateModel_nhwc_float16_all_tensors_as_inputs_dynamic_output_shape_2,
+            is_ignored_nhwc_float16_all_tensors_as_inputs_dynamic_output_shape_2,
+            get_examples_nhwc_float16_all_tensors_as_inputs_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_2(Model *model);
+bool is_ignored_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_2();
+
+TEST_F(GeneratedTests, conv2d_v1_2_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_2) {
+    execute(CreateModel_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_2,
+            is_ignored_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_2,
+            get_examples_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_2, generated_tests::conv2d_v1_2::CreateModel_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_2)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2(Model *model);
+bool is_ignored_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2) {
+    execute(CreateModel_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2,
+            is_ignored_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2,
+            get_examples_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
 
 namespace generated_tests::conv2d_v1_2 {
 
@@ -744,6 +1748,107 @@ TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_nchw_2, generated_tests::conv2d_v1_2::Cre
 
 namespace generated_tests::conv2d_v1_2 {
 
+void CreateModel_nchw_dynamic_output_shape_2(Model *model);
+bool is_ignored_nchw_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_nchw_dynamic_output_shape_2) {
+    execute(CreateModel_nchw_dynamic_output_shape_2,
+            is_ignored_nchw_dynamic_output_shape_2,
+            get_examples_nchw_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_nchw_all_inputs_as_internal_2(Model *model);
+bool is_ignored_nchw_all_inputs_as_internal_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_all_inputs_as_internal_2();
+
+TEST_F(GeneratedTests, conv2d_v1_2_nchw_all_inputs_as_internal_2) {
+    execute(CreateModel_nchw_all_inputs_as_internal_2,
+            is_ignored_nchw_all_inputs_as_internal_2,
+            get_examples_nchw_all_inputs_as_internal_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_nchw_all_inputs_as_internal_2, generated_tests::conv2d_v1_2::CreateModel_nchw_all_inputs_as_internal_2)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_nchw_all_inputs_as_internal_dynamic_output_shape_2(Model *model);
+bool is_ignored_nchw_all_inputs_as_internal_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_all_inputs_as_internal_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_nchw_all_inputs_as_internal_dynamic_output_shape_2) {
+    execute(CreateModel_nchw_all_inputs_as_internal_dynamic_output_shape_2,
+            is_ignored_nchw_all_inputs_as_internal_dynamic_output_shape_2,
+            get_examples_nchw_all_inputs_as_internal_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_nchw_all_tensors_as_inputs_2(Model *model);
+bool is_ignored_nchw_all_tensors_as_inputs_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_all_tensors_as_inputs_2();
+
+TEST_F(GeneratedTests, conv2d_v1_2_nchw_all_tensors_as_inputs_2) {
+    execute(CreateModel_nchw_all_tensors_as_inputs_2,
+            is_ignored_nchw_all_tensors_as_inputs_2,
+            get_examples_nchw_all_tensors_as_inputs_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_nchw_all_tensors_as_inputs_2, generated_tests::conv2d_v1_2::CreateModel_nchw_all_tensors_as_inputs_2)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_nchw_all_tensors_as_inputs_dynamic_output_shape_2(Model *model);
+bool is_ignored_nchw_all_tensors_as_inputs_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_all_tensors_as_inputs_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_nchw_all_tensors_as_inputs_dynamic_output_shape_2) {
+    execute(CreateModel_nchw_all_tensors_as_inputs_dynamic_output_shape_2,
+            is_ignored_nchw_all_tensors_as_inputs_dynamic_output_shape_2,
+            get_examples_nchw_all_tensors_as_inputs_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_nchw_all_tensors_as_inputs_all_inputs_as_internal_2(Model *model);
+bool is_ignored_nchw_all_tensors_as_inputs_all_inputs_as_internal_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_all_tensors_as_inputs_all_inputs_as_internal_2();
+
+TEST_F(GeneratedTests, conv2d_v1_2_nchw_all_tensors_as_inputs_all_inputs_as_internal_2) {
+    execute(CreateModel_nchw_all_tensors_as_inputs_all_inputs_as_internal_2,
+            is_ignored_nchw_all_tensors_as_inputs_all_inputs_as_internal_2,
+            get_examples_nchw_all_tensors_as_inputs_all_inputs_as_internal_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_nchw_all_tensors_as_inputs_all_inputs_as_internal_2, generated_tests::conv2d_v1_2::CreateModel_nchw_all_tensors_as_inputs_all_inputs_as_internal_2)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_nchw_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2(Model *model);
+bool is_ignored_nchw_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_nchw_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2) {
+    execute(CreateModel_nchw_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2,
+            is_ignored_nchw_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2,
+            get_examples_nchw_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
 void CreateModel_nchw_relaxed_2(Model *model);
 bool is_ignored_nchw_relaxed_2(int);
 std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_relaxed_2();
@@ -752,6 +1857,104 @@ TEST_F(GeneratedTests, conv2d_v1_2_nchw_relaxed_2) {
     execute(CreateModel_nchw_relaxed_2,
             is_ignored_nchw_relaxed_2,
             get_examples_nchw_relaxed_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_nchw_relaxed_dynamic_output_shape_2(Model *model);
+bool is_ignored_nchw_relaxed_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_relaxed_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_nchw_relaxed_dynamic_output_shape_2) {
+    execute(CreateModel_nchw_relaxed_dynamic_output_shape_2,
+            is_ignored_nchw_relaxed_dynamic_output_shape_2,
+            get_examples_nchw_relaxed_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_nchw_relaxed_all_inputs_as_internal_2(Model *model);
+bool is_ignored_nchw_relaxed_all_inputs_as_internal_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_relaxed_all_inputs_as_internal_2();
+
+TEST_F(GeneratedTests, conv2d_v1_2_nchw_relaxed_all_inputs_as_internal_2) {
+    execute(CreateModel_nchw_relaxed_all_inputs_as_internal_2,
+            is_ignored_nchw_relaxed_all_inputs_as_internal_2,
+            get_examples_nchw_relaxed_all_inputs_as_internal_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_2(Model *model);
+bool is_ignored_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_2) {
+    execute(CreateModel_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_2,
+            is_ignored_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_2,
+            get_examples_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_nchw_relaxed_all_tensors_as_inputs_2(Model *model);
+bool is_ignored_nchw_relaxed_all_tensors_as_inputs_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_relaxed_all_tensors_as_inputs_2();
+
+TEST_F(GeneratedTests, conv2d_v1_2_nchw_relaxed_all_tensors_as_inputs_2) {
+    execute(CreateModel_nchw_relaxed_all_tensors_as_inputs_2,
+            is_ignored_nchw_relaxed_all_tensors_as_inputs_2,
+            get_examples_nchw_relaxed_all_tensors_as_inputs_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_nchw_relaxed_all_tensors_as_inputs_dynamic_output_shape_2(Model *model);
+bool is_ignored_nchw_relaxed_all_tensors_as_inputs_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_relaxed_all_tensors_as_inputs_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_nchw_relaxed_all_tensors_as_inputs_dynamic_output_shape_2) {
+    execute(CreateModel_nchw_relaxed_all_tensors_as_inputs_dynamic_output_shape_2,
+            is_ignored_nchw_relaxed_all_tensors_as_inputs_dynamic_output_shape_2,
+            get_examples_nchw_relaxed_all_tensors_as_inputs_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2(Model *model);
+bool is_ignored_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2();
+
+TEST_F(GeneratedTests, conv2d_v1_2_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2) {
+    execute(CreateModel_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2,
+            is_ignored_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2,
+            get_examples_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2(Model *model);
+bool is_ignored_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2) {
+    execute(CreateModel_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2,
+            is_ignored_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2,
+            get_examples_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2());
 }
 
 } // namespace generated_tests::conv2d_v1_2
@@ -773,6 +1976,107 @@ TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_nchw_quant8_2, generated_tests::conv2d_v1
 
 namespace generated_tests::conv2d_v1_2 {
 
+void CreateModel_nchw_quant8_dynamic_output_shape_2(Model *model);
+bool is_ignored_nchw_quant8_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_quant8_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_nchw_quant8_dynamic_output_shape_2) {
+    execute(CreateModel_nchw_quant8_dynamic_output_shape_2,
+            is_ignored_nchw_quant8_dynamic_output_shape_2,
+            get_examples_nchw_quant8_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_nchw_quant8_all_inputs_as_internal_2(Model *model);
+bool is_ignored_nchw_quant8_all_inputs_as_internal_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_quant8_all_inputs_as_internal_2();
+
+TEST_F(GeneratedTests, conv2d_v1_2_nchw_quant8_all_inputs_as_internal_2) {
+    execute(CreateModel_nchw_quant8_all_inputs_as_internal_2,
+            is_ignored_nchw_quant8_all_inputs_as_internal_2,
+            get_examples_nchw_quant8_all_inputs_as_internal_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_nchw_quant8_all_inputs_as_internal_2, generated_tests::conv2d_v1_2::CreateModel_nchw_quant8_all_inputs_as_internal_2)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_2(Model *model);
+bool is_ignored_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_2) {
+    execute(CreateModel_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_2,
+            is_ignored_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_2,
+            get_examples_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_nchw_quant8_all_tensors_as_inputs_2(Model *model);
+bool is_ignored_nchw_quant8_all_tensors_as_inputs_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_quant8_all_tensors_as_inputs_2();
+
+TEST_F(GeneratedTests, conv2d_v1_2_nchw_quant8_all_tensors_as_inputs_2) {
+    execute(CreateModel_nchw_quant8_all_tensors_as_inputs_2,
+            is_ignored_nchw_quant8_all_tensors_as_inputs_2,
+            get_examples_nchw_quant8_all_tensors_as_inputs_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_nchw_quant8_all_tensors_as_inputs_2, generated_tests::conv2d_v1_2::CreateModel_nchw_quant8_all_tensors_as_inputs_2)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_nchw_quant8_all_tensors_as_inputs_dynamic_output_shape_2(Model *model);
+bool is_ignored_nchw_quant8_all_tensors_as_inputs_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_quant8_all_tensors_as_inputs_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_nchw_quant8_all_tensors_as_inputs_dynamic_output_shape_2) {
+    execute(CreateModel_nchw_quant8_all_tensors_as_inputs_dynamic_output_shape_2,
+            is_ignored_nchw_quant8_all_tensors_as_inputs_dynamic_output_shape_2,
+            get_examples_nchw_quant8_all_tensors_as_inputs_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal_2(Model *model);
+bool is_ignored_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal_2();
+
+TEST_F(GeneratedTests, conv2d_v1_2_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal_2) {
+    execute(CreateModel_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal_2,
+            is_ignored_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal_2,
+            get_examples_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal_2, generated_tests::conv2d_v1_2::CreateModel_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal_2)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2(Model *model);
+bool is_ignored_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2) {
+    execute(CreateModel_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2,
+            is_ignored_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2,
+            get_examples_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
 void CreateModel_nchw_channelQuant8_2(Model *model);
 bool is_ignored_nchw_channelQuant8_2(int);
 std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_channelQuant8_2();
@@ -785,6 +2089,107 @@ TEST_F(GeneratedTests, conv2d_v1_2_nchw_channelQuant8_2) {
 
 } // namespace generated_tests::conv2d_v1_2
 TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_nchw_channelQuant8_2, generated_tests::conv2d_v1_2::CreateModel_nchw_channelQuant8_2)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_nchw_channelQuant8_dynamic_output_shape_2(Model *model);
+bool is_ignored_nchw_channelQuant8_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_channelQuant8_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_nchw_channelQuant8_dynamic_output_shape_2) {
+    execute(CreateModel_nchw_channelQuant8_dynamic_output_shape_2,
+            is_ignored_nchw_channelQuant8_dynamic_output_shape_2,
+            get_examples_nchw_channelQuant8_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_nchw_channelQuant8_all_inputs_as_internal_2(Model *model);
+bool is_ignored_nchw_channelQuant8_all_inputs_as_internal_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_channelQuant8_all_inputs_as_internal_2();
+
+TEST_F(GeneratedTests, conv2d_v1_2_nchw_channelQuant8_all_inputs_as_internal_2) {
+    execute(CreateModel_nchw_channelQuant8_all_inputs_as_internal_2,
+            is_ignored_nchw_channelQuant8_all_inputs_as_internal_2,
+            get_examples_nchw_channelQuant8_all_inputs_as_internal_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_nchw_channelQuant8_all_inputs_as_internal_2, generated_tests::conv2d_v1_2::CreateModel_nchw_channelQuant8_all_inputs_as_internal_2)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_nchw_channelQuant8_all_inputs_as_internal_dynamic_output_shape_2(Model *model);
+bool is_ignored_nchw_channelQuant8_all_inputs_as_internal_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_channelQuant8_all_inputs_as_internal_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_nchw_channelQuant8_all_inputs_as_internal_dynamic_output_shape_2) {
+    execute(CreateModel_nchw_channelQuant8_all_inputs_as_internal_dynamic_output_shape_2,
+            is_ignored_nchw_channelQuant8_all_inputs_as_internal_dynamic_output_shape_2,
+            get_examples_nchw_channelQuant8_all_inputs_as_internal_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_nchw_channelQuant8_all_tensors_as_inputs_2(Model *model);
+bool is_ignored_nchw_channelQuant8_all_tensors_as_inputs_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_channelQuant8_all_tensors_as_inputs_2();
+
+TEST_F(GeneratedTests, conv2d_v1_2_nchw_channelQuant8_all_tensors_as_inputs_2) {
+    execute(CreateModel_nchw_channelQuant8_all_tensors_as_inputs_2,
+            is_ignored_nchw_channelQuant8_all_tensors_as_inputs_2,
+            get_examples_nchw_channelQuant8_all_tensors_as_inputs_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_nchw_channelQuant8_all_tensors_as_inputs_2, generated_tests::conv2d_v1_2::CreateModel_nchw_channelQuant8_all_tensors_as_inputs_2)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_nchw_channelQuant8_all_tensors_as_inputs_dynamic_output_shape_2(Model *model);
+bool is_ignored_nchw_channelQuant8_all_tensors_as_inputs_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_channelQuant8_all_tensors_as_inputs_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_nchw_channelQuant8_all_tensors_as_inputs_dynamic_output_shape_2) {
+    execute(CreateModel_nchw_channelQuant8_all_tensors_as_inputs_dynamic_output_shape_2,
+            is_ignored_nchw_channelQuant8_all_tensors_as_inputs_dynamic_output_shape_2,
+            get_examples_nchw_channelQuant8_all_tensors_as_inputs_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_nchw_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_2(Model *model);
+bool is_ignored_nchw_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_2();
+
+TEST_F(GeneratedTests, conv2d_v1_2_nchw_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_2) {
+    execute(CreateModel_nchw_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_2,
+            is_ignored_nchw_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_2,
+            get_examples_nchw_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_nchw_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_2, generated_tests::conv2d_v1_2::CreateModel_nchw_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_2)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_nchw_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2(Model *model);
+bool is_ignored_nchw_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_nchw_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2) {
+    execute(CreateModel_nchw_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2,
+            is_ignored_nchw_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2,
+            get_examples_nchw_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
 
 namespace generated_tests::conv2d_v1_2 {
 
@@ -803,354 +2208,101 @@ TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_nchw_float16_2, generated_tests::conv2d_v
 
 namespace generated_tests::conv2d_v1_2 {
 
-void CreateModel_nchw_weight_as_input_2(Model *model);
-bool is_ignored_nchw_weight_as_input_2(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_weight_as_input_2();
+void CreateModel_nchw_float16_dynamic_output_shape_2(Model *model);
+bool is_ignored_nchw_float16_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_float16_dynamic_output_shape_2();
 
-TEST_F(GeneratedTests, conv2d_v1_2_nchw_weight_as_input_2) {
-    execute(CreateModel_nchw_weight_as_input_2,
-            is_ignored_nchw_weight_as_input_2,
-            get_examples_nchw_weight_as_input_2());
-}
-
-} // namespace generated_tests::conv2d_v1_2
-TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_nchw_weight_as_input_2, generated_tests::conv2d_v1_2::CreateModel_nchw_weight_as_input_2)
-
-namespace generated_tests::conv2d_v1_2 {
-
-void CreateModel_nchw_weight_as_input_relaxed_2(Model *model);
-bool is_ignored_nchw_weight_as_input_relaxed_2(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_weight_as_input_relaxed_2();
-
-TEST_F(GeneratedTests, conv2d_v1_2_nchw_weight_as_input_relaxed_2) {
-    execute(CreateModel_nchw_weight_as_input_relaxed_2,
-            is_ignored_nchw_weight_as_input_relaxed_2,
-            get_examples_nchw_weight_as_input_relaxed_2());
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_nchw_float16_dynamic_output_shape_2) {
+    execute(CreateModel_nchw_float16_dynamic_output_shape_2,
+            is_ignored_nchw_float16_dynamic_output_shape_2,
+            get_examples_nchw_float16_dynamic_output_shape_2());
 }
 
 } // namespace generated_tests::conv2d_v1_2
 
 namespace generated_tests::conv2d_v1_2 {
 
-void CreateModel_nchw_weight_as_input_quant8_2(Model *model);
-bool is_ignored_nchw_weight_as_input_quant8_2(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_weight_as_input_quant8_2();
+void CreateModel_nchw_float16_all_inputs_as_internal_2(Model *model);
+bool is_ignored_nchw_float16_all_inputs_as_internal_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_float16_all_inputs_as_internal_2();
 
-TEST_F(GeneratedTests, conv2d_v1_2_nchw_weight_as_input_quant8_2) {
-    execute(CreateModel_nchw_weight_as_input_quant8_2,
-            is_ignored_nchw_weight_as_input_quant8_2,
-            get_examples_nchw_weight_as_input_quant8_2());
+TEST_F(GeneratedTests, conv2d_v1_2_nchw_float16_all_inputs_as_internal_2) {
+    execute(CreateModel_nchw_float16_all_inputs_as_internal_2,
+            is_ignored_nchw_float16_all_inputs_as_internal_2,
+            get_examples_nchw_float16_all_inputs_as_internal_2());
 }
 
 } // namespace generated_tests::conv2d_v1_2
-TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_nchw_weight_as_input_quant8_2, generated_tests::conv2d_v1_2::CreateModel_nchw_weight_as_input_quant8_2)
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_nchw_float16_all_inputs_as_internal_2, generated_tests::conv2d_v1_2::CreateModel_nchw_float16_all_inputs_as_internal_2)
 
 namespace generated_tests::conv2d_v1_2 {
 
-void CreateModel_nchw_weight_as_input_channelQuant8_2(Model *model);
-bool is_ignored_nchw_weight_as_input_channelQuant8_2(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_weight_as_input_channelQuant8_2();
+void CreateModel_nchw_float16_all_inputs_as_internal_dynamic_output_shape_2(Model *model);
+bool is_ignored_nchw_float16_all_inputs_as_internal_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_float16_all_inputs_as_internal_dynamic_output_shape_2();
 
-TEST_F(GeneratedTests, conv2d_v1_2_nchw_weight_as_input_channelQuant8_2) {
-    execute(CreateModel_nchw_weight_as_input_channelQuant8_2,
-            is_ignored_nchw_weight_as_input_channelQuant8_2,
-            get_examples_nchw_weight_as_input_channelQuant8_2());
-}
-
-} // namespace generated_tests::conv2d_v1_2
-TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_nchw_weight_as_input_channelQuant8_2, generated_tests::conv2d_v1_2::CreateModel_nchw_weight_as_input_channelQuant8_2)
-
-namespace generated_tests::conv2d_v1_2 {
-
-void CreateModel_nchw_weight_as_input_float16_2(Model *model);
-bool is_ignored_nchw_weight_as_input_float16_2(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_weight_as_input_float16_2();
-
-TEST_F(GeneratedTests, conv2d_v1_2_nchw_weight_as_input_float16_2) {
-    execute(CreateModel_nchw_weight_as_input_float16_2,
-            is_ignored_nchw_weight_as_input_float16_2,
-            get_examples_nchw_weight_as_input_float16_2());
-}
-
-} // namespace generated_tests::conv2d_v1_2
-TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_nchw_weight_as_input_float16_2, generated_tests::conv2d_v1_2::CreateModel_nchw_weight_as_input_float16_2)
-
-namespace generated_tests::conv2d_v1_2 {
-
-void CreateModel_dynamic_output_shape_nhwc_2(Model *model);
-bool is_ignored_dynamic_output_shape_nhwc_2(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_nhwc_2();
-
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_dynamic_output_shape_nhwc_2) {
-    execute(CreateModel_dynamic_output_shape_nhwc_2,
-            is_ignored_dynamic_output_shape_nhwc_2,
-            get_examples_dynamic_output_shape_nhwc_2());
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_nchw_float16_all_inputs_as_internal_dynamic_output_shape_2) {
+    execute(CreateModel_nchw_float16_all_inputs_as_internal_dynamic_output_shape_2,
+            is_ignored_nchw_float16_all_inputs_as_internal_dynamic_output_shape_2,
+            get_examples_nchw_float16_all_inputs_as_internal_dynamic_output_shape_2());
 }
 
 } // namespace generated_tests::conv2d_v1_2
 
 namespace generated_tests::conv2d_v1_2 {
 
-void CreateModel_dynamic_output_shape_nhwc_relaxed_2(Model *model);
-bool is_ignored_dynamic_output_shape_nhwc_relaxed_2(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_nhwc_relaxed_2();
+void CreateModel_nchw_float16_all_tensors_as_inputs_2(Model *model);
+bool is_ignored_nchw_float16_all_tensors_as_inputs_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_float16_all_tensors_as_inputs_2();
 
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_dynamic_output_shape_nhwc_relaxed_2) {
-    execute(CreateModel_dynamic_output_shape_nhwc_relaxed_2,
-            is_ignored_dynamic_output_shape_nhwc_relaxed_2,
-            get_examples_dynamic_output_shape_nhwc_relaxed_2());
+TEST_F(GeneratedTests, conv2d_v1_2_nchw_float16_all_tensors_as_inputs_2) {
+    execute(CreateModel_nchw_float16_all_tensors_as_inputs_2,
+            is_ignored_nchw_float16_all_tensors_as_inputs_2,
+            get_examples_nchw_float16_all_tensors_as_inputs_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_nchw_float16_all_tensors_as_inputs_2, generated_tests::conv2d_v1_2::CreateModel_nchw_float16_all_tensors_as_inputs_2)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_nchw_float16_all_tensors_as_inputs_dynamic_output_shape_2(Model *model);
+bool is_ignored_nchw_float16_all_tensors_as_inputs_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_float16_all_tensors_as_inputs_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_nchw_float16_all_tensors_as_inputs_dynamic_output_shape_2) {
+    execute(CreateModel_nchw_float16_all_tensors_as_inputs_dynamic_output_shape_2,
+            is_ignored_nchw_float16_all_tensors_as_inputs_dynamic_output_shape_2,
+            get_examples_nchw_float16_all_tensors_as_inputs_dynamic_output_shape_2());
 }
 
 } // namespace generated_tests::conv2d_v1_2
 
 namespace generated_tests::conv2d_v1_2 {
 
-void CreateModel_dynamic_output_shape_nhwc_quant8_2(Model *model);
-bool is_ignored_dynamic_output_shape_nhwc_quant8_2(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_nhwc_quant8_2();
+void CreateModel_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_2(Model *model);
+bool is_ignored_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_2();
 
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_dynamic_output_shape_nhwc_quant8_2) {
-    execute(CreateModel_dynamic_output_shape_nhwc_quant8_2,
-            is_ignored_dynamic_output_shape_nhwc_quant8_2,
-            get_examples_dynamic_output_shape_nhwc_quant8_2());
+TEST_F(GeneratedTests, conv2d_v1_2_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_2) {
+    execute(CreateModel_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_2,
+            is_ignored_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_2,
+            get_examples_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_2());
 }
 
 } // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_2, generated_tests::conv2d_v1_2::CreateModel_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_2)
 
 namespace generated_tests::conv2d_v1_2 {
 
-void CreateModel_dynamic_output_shape_nhwc_channelQuant8_2(Model *model);
-bool is_ignored_dynamic_output_shape_nhwc_channelQuant8_2(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_nhwc_channelQuant8_2();
-
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_dynamic_output_shape_nhwc_channelQuant8_2) {
-    execute(CreateModel_dynamic_output_shape_nhwc_channelQuant8_2,
-            is_ignored_dynamic_output_shape_nhwc_channelQuant8_2,
-            get_examples_dynamic_output_shape_nhwc_channelQuant8_2());
-}
-
-} // namespace generated_tests::conv2d_v1_2
-
-namespace generated_tests::conv2d_v1_2 {
-
-void CreateModel_dynamic_output_shape_nhwc_float16_2(Model *model);
-bool is_ignored_dynamic_output_shape_nhwc_float16_2(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_nhwc_float16_2();
-
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_dynamic_output_shape_nhwc_float16_2) {
-    execute(CreateModel_dynamic_output_shape_nhwc_float16_2,
-            is_ignored_dynamic_output_shape_nhwc_float16_2,
-            get_examples_dynamic_output_shape_nhwc_float16_2());
-}
-
-} // namespace generated_tests::conv2d_v1_2
-
-namespace generated_tests::conv2d_v1_2 {
-
-void CreateModel_dynamic_output_shape_nhwc_weight_as_input_2(Model *model);
-bool is_ignored_dynamic_output_shape_nhwc_weight_as_input_2(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_nhwc_weight_as_input_2();
-
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_dynamic_output_shape_nhwc_weight_as_input_2) {
-    execute(CreateModel_dynamic_output_shape_nhwc_weight_as_input_2,
-            is_ignored_dynamic_output_shape_nhwc_weight_as_input_2,
-            get_examples_dynamic_output_shape_nhwc_weight_as_input_2());
-}
-
-} // namespace generated_tests::conv2d_v1_2
-
-namespace generated_tests::conv2d_v1_2 {
-
-void CreateModel_dynamic_output_shape_nhwc_weight_as_input_relaxed_2(Model *model);
-bool is_ignored_dynamic_output_shape_nhwc_weight_as_input_relaxed_2(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_nhwc_weight_as_input_relaxed_2();
-
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_dynamic_output_shape_nhwc_weight_as_input_relaxed_2) {
-    execute(CreateModel_dynamic_output_shape_nhwc_weight_as_input_relaxed_2,
-            is_ignored_dynamic_output_shape_nhwc_weight_as_input_relaxed_2,
-            get_examples_dynamic_output_shape_nhwc_weight_as_input_relaxed_2());
-}
-
-} // namespace generated_tests::conv2d_v1_2
-
-namespace generated_tests::conv2d_v1_2 {
-
-void CreateModel_dynamic_output_shape_nhwc_weight_as_input_quant8_2(Model *model);
-bool is_ignored_dynamic_output_shape_nhwc_weight_as_input_quant8_2(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_nhwc_weight_as_input_quant8_2();
-
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_dynamic_output_shape_nhwc_weight_as_input_quant8_2) {
-    execute(CreateModel_dynamic_output_shape_nhwc_weight_as_input_quant8_2,
-            is_ignored_dynamic_output_shape_nhwc_weight_as_input_quant8_2,
-            get_examples_dynamic_output_shape_nhwc_weight_as_input_quant8_2());
-}
-
-} // namespace generated_tests::conv2d_v1_2
-
-namespace generated_tests::conv2d_v1_2 {
-
-void CreateModel_dynamic_output_shape_nhwc_weight_as_input_channelQuant8_2(Model *model);
-bool is_ignored_dynamic_output_shape_nhwc_weight_as_input_channelQuant8_2(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_nhwc_weight_as_input_channelQuant8_2();
-
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_dynamic_output_shape_nhwc_weight_as_input_channelQuant8_2) {
-    execute(CreateModel_dynamic_output_shape_nhwc_weight_as_input_channelQuant8_2,
-            is_ignored_dynamic_output_shape_nhwc_weight_as_input_channelQuant8_2,
-            get_examples_dynamic_output_shape_nhwc_weight_as_input_channelQuant8_2());
-}
-
-} // namespace generated_tests::conv2d_v1_2
-
-namespace generated_tests::conv2d_v1_2 {
-
-void CreateModel_dynamic_output_shape_nhwc_weight_as_input_float16_2(Model *model);
-bool is_ignored_dynamic_output_shape_nhwc_weight_as_input_float16_2(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_nhwc_weight_as_input_float16_2();
-
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_dynamic_output_shape_nhwc_weight_as_input_float16_2) {
-    execute(CreateModel_dynamic_output_shape_nhwc_weight_as_input_float16_2,
-            is_ignored_dynamic_output_shape_nhwc_weight_as_input_float16_2,
-            get_examples_dynamic_output_shape_nhwc_weight_as_input_float16_2());
-}
-
-} // namespace generated_tests::conv2d_v1_2
-
-namespace generated_tests::conv2d_v1_2 {
-
-void CreateModel_dynamic_output_shape_nchw_2(Model *model);
-bool is_ignored_dynamic_output_shape_nchw_2(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_nchw_2();
-
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_dynamic_output_shape_nchw_2) {
-    execute(CreateModel_dynamic_output_shape_nchw_2,
-            is_ignored_dynamic_output_shape_nchw_2,
-            get_examples_dynamic_output_shape_nchw_2());
-}
-
-} // namespace generated_tests::conv2d_v1_2
-
-namespace generated_tests::conv2d_v1_2 {
-
-void CreateModel_dynamic_output_shape_nchw_relaxed_2(Model *model);
-bool is_ignored_dynamic_output_shape_nchw_relaxed_2(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_nchw_relaxed_2();
-
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_dynamic_output_shape_nchw_relaxed_2) {
-    execute(CreateModel_dynamic_output_shape_nchw_relaxed_2,
-            is_ignored_dynamic_output_shape_nchw_relaxed_2,
-            get_examples_dynamic_output_shape_nchw_relaxed_2());
-}
-
-} // namespace generated_tests::conv2d_v1_2
-
-namespace generated_tests::conv2d_v1_2 {
-
-void CreateModel_dynamic_output_shape_nchw_quant8_2(Model *model);
-bool is_ignored_dynamic_output_shape_nchw_quant8_2(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_nchw_quant8_2();
-
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_dynamic_output_shape_nchw_quant8_2) {
-    execute(CreateModel_dynamic_output_shape_nchw_quant8_2,
-            is_ignored_dynamic_output_shape_nchw_quant8_2,
-            get_examples_dynamic_output_shape_nchw_quant8_2());
-}
-
-} // namespace generated_tests::conv2d_v1_2
-
-namespace generated_tests::conv2d_v1_2 {
-
-void CreateModel_dynamic_output_shape_nchw_channelQuant8_2(Model *model);
-bool is_ignored_dynamic_output_shape_nchw_channelQuant8_2(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_nchw_channelQuant8_2();
-
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_dynamic_output_shape_nchw_channelQuant8_2) {
-    execute(CreateModel_dynamic_output_shape_nchw_channelQuant8_2,
-            is_ignored_dynamic_output_shape_nchw_channelQuant8_2,
-            get_examples_dynamic_output_shape_nchw_channelQuant8_2());
-}
-
-} // namespace generated_tests::conv2d_v1_2
-
-namespace generated_tests::conv2d_v1_2 {
-
-void CreateModel_dynamic_output_shape_nchw_float16_2(Model *model);
-bool is_ignored_dynamic_output_shape_nchw_float16_2(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_nchw_float16_2();
-
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_dynamic_output_shape_nchw_float16_2) {
-    execute(CreateModel_dynamic_output_shape_nchw_float16_2,
-            is_ignored_dynamic_output_shape_nchw_float16_2,
-            get_examples_dynamic_output_shape_nchw_float16_2());
-}
-
-} // namespace generated_tests::conv2d_v1_2
-
-namespace generated_tests::conv2d_v1_2 {
-
-void CreateModel_dynamic_output_shape_nchw_weight_as_input_2(Model *model);
-bool is_ignored_dynamic_output_shape_nchw_weight_as_input_2(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_nchw_weight_as_input_2();
-
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_dynamic_output_shape_nchw_weight_as_input_2) {
-    execute(CreateModel_dynamic_output_shape_nchw_weight_as_input_2,
-            is_ignored_dynamic_output_shape_nchw_weight_as_input_2,
-            get_examples_dynamic_output_shape_nchw_weight_as_input_2());
-}
-
-} // namespace generated_tests::conv2d_v1_2
-
-namespace generated_tests::conv2d_v1_2 {
-
-void CreateModel_dynamic_output_shape_nchw_weight_as_input_relaxed_2(Model *model);
-bool is_ignored_dynamic_output_shape_nchw_weight_as_input_relaxed_2(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_nchw_weight_as_input_relaxed_2();
-
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_dynamic_output_shape_nchw_weight_as_input_relaxed_2) {
-    execute(CreateModel_dynamic_output_shape_nchw_weight_as_input_relaxed_2,
-            is_ignored_dynamic_output_shape_nchw_weight_as_input_relaxed_2,
-            get_examples_dynamic_output_shape_nchw_weight_as_input_relaxed_2());
-}
-
-} // namespace generated_tests::conv2d_v1_2
-
-namespace generated_tests::conv2d_v1_2 {
-
-void CreateModel_dynamic_output_shape_nchw_weight_as_input_quant8_2(Model *model);
-bool is_ignored_dynamic_output_shape_nchw_weight_as_input_quant8_2(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_nchw_weight_as_input_quant8_2();
-
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_dynamic_output_shape_nchw_weight_as_input_quant8_2) {
-    execute(CreateModel_dynamic_output_shape_nchw_weight_as_input_quant8_2,
-            is_ignored_dynamic_output_shape_nchw_weight_as_input_quant8_2,
-            get_examples_dynamic_output_shape_nchw_weight_as_input_quant8_2());
-}
-
-} // namespace generated_tests::conv2d_v1_2
-
-namespace generated_tests::conv2d_v1_2 {
-
-void CreateModel_dynamic_output_shape_nchw_weight_as_input_channelQuant8_2(Model *model);
-bool is_ignored_dynamic_output_shape_nchw_weight_as_input_channelQuant8_2(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_nchw_weight_as_input_channelQuant8_2();
-
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_dynamic_output_shape_nchw_weight_as_input_channelQuant8_2) {
-    execute(CreateModel_dynamic_output_shape_nchw_weight_as_input_channelQuant8_2,
-            is_ignored_dynamic_output_shape_nchw_weight_as_input_channelQuant8_2,
-            get_examples_dynamic_output_shape_nchw_weight_as_input_channelQuant8_2());
-}
-
-} // namespace generated_tests::conv2d_v1_2
-
-namespace generated_tests::conv2d_v1_2 {
-
-void CreateModel_dynamic_output_shape_nchw_weight_as_input_float16_2(Model *model);
-bool is_ignored_dynamic_output_shape_nchw_weight_as_input_float16_2(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape_nchw_weight_as_input_float16_2();
-
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_dynamic_output_shape_nchw_weight_as_input_float16_2) {
-    execute(CreateModel_dynamic_output_shape_nchw_weight_as_input_float16_2,
-            is_ignored_dynamic_output_shape_nchw_weight_as_input_float16_2,
-            get_examples_dynamic_output_shape_nchw_weight_as_input_float16_2());
+void CreateModel_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2(Model *model);
+bool is_ignored_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2) {
+    execute(CreateModel_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2,
+            is_ignored_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2,
+            get_examples_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2());
 }
 
 } // namespace generated_tests::conv2d_v1_2
@@ -1172,6 +2324,107 @@ TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_channel_nhwc, generated_tests::conv2d_v1_
 
 namespace generated_tests::conv2d_v1_2 {
 
+void CreateModel_channel_nhwc_dynamic_output_shape(Model *model);
+bool is_ignored_channel_nhwc_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_channel_nhwc_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_channel_nhwc_dynamic_output_shape) {
+    execute(CreateModel_channel_nhwc_dynamic_output_shape,
+            is_ignored_channel_nhwc_dynamic_output_shape,
+            get_examples_channel_nhwc_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_channel_nhwc_all_inputs_as_internal(Model *model);
+bool is_ignored_channel_nhwc_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_channel_nhwc_all_inputs_as_internal();
+
+TEST_F(GeneratedTests, conv2d_v1_2_channel_nhwc_all_inputs_as_internal) {
+    execute(CreateModel_channel_nhwc_all_inputs_as_internal,
+            is_ignored_channel_nhwc_all_inputs_as_internal,
+            get_examples_channel_nhwc_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_channel_nhwc_all_inputs_as_internal, generated_tests::conv2d_v1_2::CreateModel_channel_nhwc_all_inputs_as_internal)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_channel_nhwc_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_channel_nhwc_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_channel_nhwc_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_channel_nhwc_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_channel_nhwc_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_channel_nhwc_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_channel_nhwc_all_inputs_as_internal_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_channel_nhwc_all_tensors_as_inputs(Model *model);
+bool is_ignored_channel_nhwc_all_tensors_as_inputs(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_channel_nhwc_all_tensors_as_inputs();
+
+TEST_F(GeneratedTests, conv2d_v1_2_channel_nhwc_all_tensors_as_inputs) {
+    execute(CreateModel_channel_nhwc_all_tensors_as_inputs,
+            is_ignored_channel_nhwc_all_tensors_as_inputs,
+            get_examples_channel_nhwc_all_tensors_as_inputs());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_channel_nhwc_all_tensors_as_inputs, generated_tests::conv2d_v1_2::CreateModel_channel_nhwc_all_tensors_as_inputs)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_channel_nhwc_all_tensors_as_inputs_dynamic_output_shape(Model *model);
+bool is_ignored_channel_nhwc_all_tensors_as_inputs_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_channel_nhwc_all_tensors_as_inputs_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_channel_nhwc_all_tensors_as_inputs_dynamic_output_shape) {
+    execute(CreateModel_channel_nhwc_all_tensors_as_inputs_dynamic_output_shape,
+            is_ignored_channel_nhwc_all_tensors_as_inputs_dynamic_output_shape,
+            get_examples_channel_nhwc_all_tensors_as_inputs_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_channel_nhwc_all_tensors_as_inputs_all_inputs_as_internal(Model *model);
+bool is_ignored_channel_nhwc_all_tensors_as_inputs_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_channel_nhwc_all_tensors_as_inputs_all_inputs_as_internal();
+
+TEST_F(GeneratedTests, conv2d_v1_2_channel_nhwc_all_tensors_as_inputs_all_inputs_as_internal) {
+    execute(CreateModel_channel_nhwc_all_tensors_as_inputs_all_inputs_as_internal,
+            is_ignored_channel_nhwc_all_tensors_as_inputs_all_inputs_as_internal,
+            get_examples_channel_nhwc_all_tensors_as_inputs_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_channel_nhwc_all_tensors_as_inputs_all_inputs_as_internal, generated_tests::conv2d_v1_2::CreateModel_channel_nhwc_all_tensors_as_inputs_all_inputs_as_internal)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_channel_nhwc_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_channel_nhwc_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_channel_nhwc_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_channel_nhwc_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_channel_nhwc_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_channel_nhwc_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_channel_nhwc_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
 void CreateModel_channel_nhwc_relaxed(Model *model);
 bool is_ignored_channel_nhwc_relaxed(int);
 std::vector<::test_helper::MixedTypedExample>& get_examples_channel_nhwc_relaxed();
@@ -1180,6 +2433,104 @@ TEST_F(GeneratedTests, conv2d_v1_2_channel_nhwc_relaxed) {
     execute(CreateModel_channel_nhwc_relaxed,
             is_ignored_channel_nhwc_relaxed,
             get_examples_channel_nhwc_relaxed());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_channel_nhwc_relaxed_dynamic_output_shape(Model *model);
+bool is_ignored_channel_nhwc_relaxed_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_channel_nhwc_relaxed_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_channel_nhwc_relaxed_dynamic_output_shape) {
+    execute(CreateModel_channel_nhwc_relaxed_dynamic_output_shape,
+            is_ignored_channel_nhwc_relaxed_dynamic_output_shape,
+            get_examples_channel_nhwc_relaxed_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_channel_nhwc_relaxed_all_inputs_as_internal(Model *model);
+bool is_ignored_channel_nhwc_relaxed_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_channel_nhwc_relaxed_all_inputs_as_internal();
+
+TEST_F(GeneratedTests, conv2d_v1_2_channel_nhwc_relaxed_all_inputs_as_internal) {
+    execute(CreateModel_channel_nhwc_relaxed_all_inputs_as_internal,
+            is_ignored_channel_nhwc_relaxed_all_inputs_as_internal,
+            get_examples_channel_nhwc_relaxed_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_channel_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_channel_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_channel_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_channel_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_channel_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_channel_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_channel_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_channel_nhwc_relaxed_all_tensors_as_inputs(Model *model);
+bool is_ignored_channel_nhwc_relaxed_all_tensors_as_inputs(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_channel_nhwc_relaxed_all_tensors_as_inputs();
+
+TEST_F(GeneratedTests, conv2d_v1_2_channel_nhwc_relaxed_all_tensors_as_inputs) {
+    execute(CreateModel_channel_nhwc_relaxed_all_tensors_as_inputs,
+            is_ignored_channel_nhwc_relaxed_all_tensors_as_inputs,
+            get_examples_channel_nhwc_relaxed_all_tensors_as_inputs());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_channel_nhwc_relaxed_all_tensors_as_inputs_dynamic_output_shape(Model *model);
+bool is_ignored_channel_nhwc_relaxed_all_tensors_as_inputs_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_channel_nhwc_relaxed_all_tensors_as_inputs_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_channel_nhwc_relaxed_all_tensors_as_inputs_dynamic_output_shape) {
+    execute(CreateModel_channel_nhwc_relaxed_all_tensors_as_inputs_dynamic_output_shape,
+            is_ignored_channel_nhwc_relaxed_all_tensors_as_inputs_dynamic_output_shape,
+            get_examples_channel_nhwc_relaxed_all_tensors_as_inputs_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_channel_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal(Model *model);
+bool is_ignored_channel_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_channel_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal();
+
+TEST_F(GeneratedTests, conv2d_v1_2_channel_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal) {
+    execute(CreateModel_channel_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal,
+            is_ignored_channel_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal,
+            get_examples_channel_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_channel_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_channel_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_channel_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_channel_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_channel_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_channel_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_channel_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape());
 }
 
 } // namespace generated_tests::conv2d_v1_2
@@ -1201,6 +2552,107 @@ TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_channel_nhwc_quant8, generated_tests::con
 
 namespace generated_tests::conv2d_v1_2 {
 
+void CreateModel_channel_nhwc_quant8_dynamic_output_shape(Model *model);
+bool is_ignored_channel_nhwc_quant8_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_channel_nhwc_quant8_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_channel_nhwc_quant8_dynamic_output_shape) {
+    execute(CreateModel_channel_nhwc_quant8_dynamic_output_shape,
+            is_ignored_channel_nhwc_quant8_dynamic_output_shape,
+            get_examples_channel_nhwc_quant8_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_channel_nhwc_quant8_all_inputs_as_internal(Model *model);
+bool is_ignored_channel_nhwc_quant8_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_channel_nhwc_quant8_all_inputs_as_internal();
+
+TEST_F(GeneratedTests, conv2d_v1_2_channel_nhwc_quant8_all_inputs_as_internal) {
+    execute(CreateModel_channel_nhwc_quant8_all_inputs_as_internal,
+            is_ignored_channel_nhwc_quant8_all_inputs_as_internal,
+            get_examples_channel_nhwc_quant8_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_channel_nhwc_quant8_all_inputs_as_internal, generated_tests::conv2d_v1_2::CreateModel_channel_nhwc_quant8_all_inputs_as_internal)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_channel_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_channel_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_channel_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_channel_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_channel_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_channel_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_channel_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_channel_nhwc_quant8_all_tensors_as_inputs(Model *model);
+bool is_ignored_channel_nhwc_quant8_all_tensors_as_inputs(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_channel_nhwc_quant8_all_tensors_as_inputs();
+
+TEST_F(GeneratedTests, conv2d_v1_2_channel_nhwc_quant8_all_tensors_as_inputs) {
+    execute(CreateModel_channel_nhwc_quant8_all_tensors_as_inputs,
+            is_ignored_channel_nhwc_quant8_all_tensors_as_inputs,
+            get_examples_channel_nhwc_quant8_all_tensors_as_inputs());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_channel_nhwc_quant8_all_tensors_as_inputs, generated_tests::conv2d_v1_2::CreateModel_channel_nhwc_quant8_all_tensors_as_inputs)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_channel_nhwc_quant8_all_tensors_as_inputs_dynamic_output_shape(Model *model);
+bool is_ignored_channel_nhwc_quant8_all_tensors_as_inputs_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_channel_nhwc_quant8_all_tensors_as_inputs_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_channel_nhwc_quant8_all_tensors_as_inputs_dynamic_output_shape) {
+    execute(CreateModel_channel_nhwc_quant8_all_tensors_as_inputs_dynamic_output_shape,
+            is_ignored_channel_nhwc_quant8_all_tensors_as_inputs_dynamic_output_shape,
+            get_examples_channel_nhwc_quant8_all_tensors_as_inputs_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_channel_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal(Model *model);
+bool is_ignored_channel_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_channel_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal();
+
+TEST_F(GeneratedTests, conv2d_v1_2_channel_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal) {
+    execute(CreateModel_channel_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal,
+            is_ignored_channel_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal,
+            get_examples_channel_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_channel_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal, generated_tests::conv2d_v1_2::CreateModel_channel_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_channel_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_channel_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_channel_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_channel_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_channel_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_channel_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_channel_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
 void CreateModel_channel_nhwc_channelQuant8(Model *model);
 bool is_ignored_channel_nhwc_channelQuant8(int);
 std::vector<::test_helper::MixedTypedExample>& get_examples_channel_nhwc_channelQuant8();
@@ -1213,6 +2665,107 @@ TEST_F(GeneratedTests, conv2d_v1_2_channel_nhwc_channelQuant8) {
 
 } // namespace generated_tests::conv2d_v1_2
 TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_channel_nhwc_channelQuant8, generated_tests::conv2d_v1_2::CreateModel_channel_nhwc_channelQuant8)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_channel_nhwc_channelQuant8_dynamic_output_shape(Model *model);
+bool is_ignored_channel_nhwc_channelQuant8_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_channel_nhwc_channelQuant8_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_channel_nhwc_channelQuant8_dynamic_output_shape) {
+    execute(CreateModel_channel_nhwc_channelQuant8_dynamic_output_shape,
+            is_ignored_channel_nhwc_channelQuant8_dynamic_output_shape,
+            get_examples_channel_nhwc_channelQuant8_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_channel_nhwc_channelQuant8_all_inputs_as_internal(Model *model);
+bool is_ignored_channel_nhwc_channelQuant8_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_channel_nhwc_channelQuant8_all_inputs_as_internal();
+
+TEST_F(GeneratedTests, conv2d_v1_2_channel_nhwc_channelQuant8_all_inputs_as_internal) {
+    execute(CreateModel_channel_nhwc_channelQuant8_all_inputs_as_internal,
+            is_ignored_channel_nhwc_channelQuant8_all_inputs_as_internal,
+            get_examples_channel_nhwc_channelQuant8_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_channel_nhwc_channelQuant8_all_inputs_as_internal, generated_tests::conv2d_v1_2::CreateModel_channel_nhwc_channelQuant8_all_inputs_as_internal)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_channel_nhwc_channelQuant8_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_channel_nhwc_channelQuant8_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_channel_nhwc_channelQuant8_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_channel_nhwc_channelQuant8_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_channel_nhwc_channelQuant8_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_channel_nhwc_channelQuant8_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_channel_nhwc_channelQuant8_all_inputs_as_internal_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_channel_nhwc_channelQuant8_all_tensors_as_inputs(Model *model);
+bool is_ignored_channel_nhwc_channelQuant8_all_tensors_as_inputs(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_channel_nhwc_channelQuant8_all_tensors_as_inputs();
+
+TEST_F(GeneratedTests, conv2d_v1_2_channel_nhwc_channelQuant8_all_tensors_as_inputs) {
+    execute(CreateModel_channel_nhwc_channelQuant8_all_tensors_as_inputs,
+            is_ignored_channel_nhwc_channelQuant8_all_tensors_as_inputs,
+            get_examples_channel_nhwc_channelQuant8_all_tensors_as_inputs());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_channel_nhwc_channelQuant8_all_tensors_as_inputs, generated_tests::conv2d_v1_2::CreateModel_channel_nhwc_channelQuant8_all_tensors_as_inputs)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_channel_nhwc_channelQuant8_all_tensors_as_inputs_dynamic_output_shape(Model *model);
+bool is_ignored_channel_nhwc_channelQuant8_all_tensors_as_inputs_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_channel_nhwc_channelQuant8_all_tensors_as_inputs_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_channel_nhwc_channelQuant8_all_tensors_as_inputs_dynamic_output_shape) {
+    execute(CreateModel_channel_nhwc_channelQuant8_all_tensors_as_inputs_dynamic_output_shape,
+            is_ignored_channel_nhwc_channelQuant8_all_tensors_as_inputs_dynamic_output_shape,
+            get_examples_channel_nhwc_channelQuant8_all_tensors_as_inputs_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_channel_nhwc_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal(Model *model);
+bool is_ignored_channel_nhwc_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_channel_nhwc_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal();
+
+TEST_F(GeneratedTests, conv2d_v1_2_channel_nhwc_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal) {
+    execute(CreateModel_channel_nhwc_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal,
+            is_ignored_channel_nhwc_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal,
+            get_examples_channel_nhwc_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_channel_nhwc_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal, generated_tests::conv2d_v1_2::CreateModel_channel_nhwc_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_channel_nhwc_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_channel_nhwc_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_channel_nhwc_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_channel_nhwc_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_channel_nhwc_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_channel_nhwc_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_channel_nhwc_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
 
 namespace generated_tests::conv2d_v1_2 {
 
@@ -1231,77 +2784,104 @@ TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_channel_nhwc_float16, generated_tests::co
 
 namespace generated_tests::conv2d_v1_2 {
 
-void CreateModel_channel_nhwc_weight_as_input(Model *model);
-bool is_ignored_channel_nhwc_weight_as_input(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_channel_nhwc_weight_as_input();
+void CreateModel_channel_nhwc_float16_dynamic_output_shape(Model *model);
+bool is_ignored_channel_nhwc_float16_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_channel_nhwc_float16_dynamic_output_shape();
 
-TEST_F(GeneratedTests, conv2d_v1_2_channel_nhwc_weight_as_input) {
-    execute(CreateModel_channel_nhwc_weight_as_input,
-            is_ignored_channel_nhwc_weight_as_input,
-            get_examples_channel_nhwc_weight_as_input());
-}
-
-} // namespace generated_tests::conv2d_v1_2
-TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_channel_nhwc_weight_as_input, generated_tests::conv2d_v1_2::CreateModel_channel_nhwc_weight_as_input)
-
-namespace generated_tests::conv2d_v1_2 {
-
-void CreateModel_channel_nhwc_weight_as_input_relaxed(Model *model);
-bool is_ignored_channel_nhwc_weight_as_input_relaxed(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_channel_nhwc_weight_as_input_relaxed();
-
-TEST_F(GeneratedTests, conv2d_v1_2_channel_nhwc_weight_as_input_relaxed) {
-    execute(CreateModel_channel_nhwc_weight_as_input_relaxed,
-            is_ignored_channel_nhwc_weight_as_input_relaxed,
-            get_examples_channel_nhwc_weight_as_input_relaxed());
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_channel_nhwc_float16_dynamic_output_shape) {
+    execute(CreateModel_channel_nhwc_float16_dynamic_output_shape,
+            is_ignored_channel_nhwc_float16_dynamic_output_shape,
+            get_examples_channel_nhwc_float16_dynamic_output_shape());
 }
 
 } // namespace generated_tests::conv2d_v1_2
 
 namespace generated_tests::conv2d_v1_2 {
 
-void CreateModel_channel_nhwc_weight_as_input_quant8(Model *model);
-bool is_ignored_channel_nhwc_weight_as_input_quant8(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_channel_nhwc_weight_as_input_quant8();
+void CreateModel_channel_nhwc_float16_all_inputs_as_internal(Model *model);
+bool is_ignored_channel_nhwc_float16_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_channel_nhwc_float16_all_inputs_as_internal();
 
-TEST_F(GeneratedTests, conv2d_v1_2_channel_nhwc_weight_as_input_quant8) {
-    execute(CreateModel_channel_nhwc_weight_as_input_quant8,
-            is_ignored_channel_nhwc_weight_as_input_quant8,
-            get_examples_channel_nhwc_weight_as_input_quant8());
+TEST_F(GeneratedTests, conv2d_v1_2_channel_nhwc_float16_all_inputs_as_internal) {
+    execute(CreateModel_channel_nhwc_float16_all_inputs_as_internal,
+            is_ignored_channel_nhwc_float16_all_inputs_as_internal,
+            get_examples_channel_nhwc_float16_all_inputs_as_internal());
 }
 
 } // namespace generated_tests::conv2d_v1_2
-TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_channel_nhwc_weight_as_input_quant8, generated_tests::conv2d_v1_2::CreateModel_channel_nhwc_weight_as_input_quant8)
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_channel_nhwc_float16_all_inputs_as_internal, generated_tests::conv2d_v1_2::CreateModel_channel_nhwc_float16_all_inputs_as_internal)
 
 namespace generated_tests::conv2d_v1_2 {
 
-void CreateModel_channel_nhwc_weight_as_input_channelQuant8(Model *model);
-bool is_ignored_channel_nhwc_weight_as_input_channelQuant8(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_channel_nhwc_weight_as_input_channelQuant8();
+void CreateModel_channel_nhwc_float16_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_channel_nhwc_float16_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_channel_nhwc_float16_all_inputs_as_internal_dynamic_output_shape();
 
-TEST_F(GeneratedTests, conv2d_v1_2_channel_nhwc_weight_as_input_channelQuant8) {
-    execute(CreateModel_channel_nhwc_weight_as_input_channelQuant8,
-            is_ignored_channel_nhwc_weight_as_input_channelQuant8,
-            get_examples_channel_nhwc_weight_as_input_channelQuant8());
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_channel_nhwc_float16_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_channel_nhwc_float16_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_channel_nhwc_float16_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_channel_nhwc_float16_all_inputs_as_internal_dynamic_output_shape());
 }
 
 } // namespace generated_tests::conv2d_v1_2
-TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_channel_nhwc_weight_as_input_channelQuant8, generated_tests::conv2d_v1_2::CreateModel_channel_nhwc_weight_as_input_channelQuant8)
 
 namespace generated_tests::conv2d_v1_2 {
 
-void CreateModel_channel_nhwc_weight_as_input_float16(Model *model);
-bool is_ignored_channel_nhwc_weight_as_input_float16(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_channel_nhwc_weight_as_input_float16();
+void CreateModel_channel_nhwc_float16_all_tensors_as_inputs(Model *model);
+bool is_ignored_channel_nhwc_float16_all_tensors_as_inputs(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_channel_nhwc_float16_all_tensors_as_inputs();
 
-TEST_F(GeneratedTests, conv2d_v1_2_channel_nhwc_weight_as_input_float16) {
-    execute(CreateModel_channel_nhwc_weight_as_input_float16,
-            is_ignored_channel_nhwc_weight_as_input_float16,
-            get_examples_channel_nhwc_weight_as_input_float16());
+TEST_F(GeneratedTests, conv2d_v1_2_channel_nhwc_float16_all_tensors_as_inputs) {
+    execute(CreateModel_channel_nhwc_float16_all_tensors_as_inputs,
+            is_ignored_channel_nhwc_float16_all_tensors_as_inputs,
+            get_examples_channel_nhwc_float16_all_tensors_as_inputs());
 }
 
 } // namespace generated_tests::conv2d_v1_2
-TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_channel_nhwc_weight_as_input_float16, generated_tests::conv2d_v1_2::CreateModel_channel_nhwc_weight_as_input_float16)
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_channel_nhwc_float16_all_tensors_as_inputs, generated_tests::conv2d_v1_2::CreateModel_channel_nhwc_float16_all_tensors_as_inputs)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_channel_nhwc_float16_all_tensors_as_inputs_dynamic_output_shape(Model *model);
+bool is_ignored_channel_nhwc_float16_all_tensors_as_inputs_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_channel_nhwc_float16_all_tensors_as_inputs_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_channel_nhwc_float16_all_tensors_as_inputs_dynamic_output_shape) {
+    execute(CreateModel_channel_nhwc_float16_all_tensors_as_inputs_dynamic_output_shape,
+            is_ignored_channel_nhwc_float16_all_tensors_as_inputs_dynamic_output_shape,
+            get_examples_channel_nhwc_float16_all_tensors_as_inputs_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_channel_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal(Model *model);
+bool is_ignored_channel_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_channel_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal();
+
+TEST_F(GeneratedTests, conv2d_v1_2_channel_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal) {
+    execute(CreateModel_channel_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal,
+            is_ignored_channel_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal,
+            get_examples_channel_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_channel_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal, generated_tests::conv2d_v1_2::CreateModel_channel_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_channel_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_channel_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_channel_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_channel_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_channel_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_channel_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_channel_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
 
 namespace generated_tests::conv2d_v1_2 {
 
@@ -1320,6 +2900,107 @@ TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_channel_nchw, generated_tests::conv2d_v1_
 
 namespace generated_tests::conv2d_v1_2 {
 
+void CreateModel_channel_nchw_dynamic_output_shape(Model *model);
+bool is_ignored_channel_nchw_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_channel_nchw_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_channel_nchw_dynamic_output_shape) {
+    execute(CreateModel_channel_nchw_dynamic_output_shape,
+            is_ignored_channel_nchw_dynamic_output_shape,
+            get_examples_channel_nchw_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_channel_nchw_all_inputs_as_internal(Model *model);
+bool is_ignored_channel_nchw_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_channel_nchw_all_inputs_as_internal();
+
+TEST_F(GeneratedTests, conv2d_v1_2_channel_nchw_all_inputs_as_internal) {
+    execute(CreateModel_channel_nchw_all_inputs_as_internal,
+            is_ignored_channel_nchw_all_inputs_as_internal,
+            get_examples_channel_nchw_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_channel_nchw_all_inputs_as_internal, generated_tests::conv2d_v1_2::CreateModel_channel_nchw_all_inputs_as_internal)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_channel_nchw_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_channel_nchw_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_channel_nchw_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_channel_nchw_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_channel_nchw_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_channel_nchw_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_channel_nchw_all_inputs_as_internal_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_channel_nchw_all_tensors_as_inputs(Model *model);
+bool is_ignored_channel_nchw_all_tensors_as_inputs(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_channel_nchw_all_tensors_as_inputs();
+
+TEST_F(GeneratedTests, conv2d_v1_2_channel_nchw_all_tensors_as_inputs) {
+    execute(CreateModel_channel_nchw_all_tensors_as_inputs,
+            is_ignored_channel_nchw_all_tensors_as_inputs,
+            get_examples_channel_nchw_all_tensors_as_inputs());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_channel_nchw_all_tensors_as_inputs, generated_tests::conv2d_v1_2::CreateModel_channel_nchw_all_tensors_as_inputs)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_channel_nchw_all_tensors_as_inputs_dynamic_output_shape(Model *model);
+bool is_ignored_channel_nchw_all_tensors_as_inputs_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_channel_nchw_all_tensors_as_inputs_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_channel_nchw_all_tensors_as_inputs_dynamic_output_shape) {
+    execute(CreateModel_channel_nchw_all_tensors_as_inputs_dynamic_output_shape,
+            is_ignored_channel_nchw_all_tensors_as_inputs_dynamic_output_shape,
+            get_examples_channel_nchw_all_tensors_as_inputs_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_channel_nchw_all_tensors_as_inputs_all_inputs_as_internal(Model *model);
+bool is_ignored_channel_nchw_all_tensors_as_inputs_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_channel_nchw_all_tensors_as_inputs_all_inputs_as_internal();
+
+TEST_F(GeneratedTests, conv2d_v1_2_channel_nchw_all_tensors_as_inputs_all_inputs_as_internal) {
+    execute(CreateModel_channel_nchw_all_tensors_as_inputs_all_inputs_as_internal,
+            is_ignored_channel_nchw_all_tensors_as_inputs_all_inputs_as_internal,
+            get_examples_channel_nchw_all_tensors_as_inputs_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_channel_nchw_all_tensors_as_inputs_all_inputs_as_internal, generated_tests::conv2d_v1_2::CreateModel_channel_nchw_all_tensors_as_inputs_all_inputs_as_internal)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_channel_nchw_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_channel_nchw_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_channel_nchw_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_channel_nchw_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_channel_nchw_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_channel_nchw_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_channel_nchw_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
 void CreateModel_channel_nchw_relaxed(Model *model);
 bool is_ignored_channel_nchw_relaxed(int);
 std::vector<::test_helper::MixedTypedExample>& get_examples_channel_nchw_relaxed();
@@ -1328,6 +3009,104 @@ TEST_F(GeneratedTests, conv2d_v1_2_channel_nchw_relaxed) {
     execute(CreateModel_channel_nchw_relaxed,
             is_ignored_channel_nchw_relaxed,
             get_examples_channel_nchw_relaxed());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_channel_nchw_relaxed_dynamic_output_shape(Model *model);
+bool is_ignored_channel_nchw_relaxed_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_channel_nchw_relaxed_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_channel_nchw_relaxed_dynamic_output_shape) {
+    execute(CreateModel_channel_nchw_relaxed_dynamic_output_shape,
+            is_ignored_channel_nchw_relaxed_dynamic_output_shape,
+            get_examples_channel_nchw_relaxed_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_channel_nchw_relaxed_all_inputs_as_internal(Model *model);
+bool is_ignored_channel_nchw_relaxed_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_channel_nchw_relaxed_all_inputs_as_internal();
+
+TEST_F(GeneratedTests, conv2d_v1_2_channel_nchw_relaxed_all_inputs_as_internal) {
+    execute(CreateModel_channel_nchw_relaxed_all_inputs_as_internal,
+            is_ignored_channel_nchw_relaxed_all_inputs_as_internal,
+            get_examples_channel_nchw_relaxed_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_channel_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_channel_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_channel_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_channel_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_channel_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_channel_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_channel_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_channel_nchw_relaxed_all_tensors_as_inputs(Model *model);
+bool is_ignored_channel_nchw_relaxed_all_tensors_as_inputs(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_channel_nchw_relaxed_all_tensors_as_inputs();
+
+TEST_F(GeneratedTests, conv2d_v1_2_channel_nchw_relaxed_all_tensors_as_inputs) {
+    execute(CreateModel_channel_nchw_relaxed_all_tensors_as_inputs,
+            is_ignored_channel_nchw_relaxed_all_tensors_as_inputs,
+            get_examples_channel_nchw_relaxed_all_tensors_as_inputs());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_channel_nchw_relaxed_all_tensors_as_inputs_dynamic_output_shape(Model *model);
+bool is_ignored_channel_nchw_relaxed_all_tensors_as_inputs_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_channel_nchw_relaxed_all_tensors_as_inputs_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_channel_nchw_relaxed_all_tensors_as_inputs_dynamic_output_shape) {
+    execute(CreateModel_channel_nchw_relaxed_all_tensors_as_inputs_dynamic_output_shape,
+            is_ignored_channel_nchw_relaxed_all_tensors_as_inputs_dynamic_output_shape,
+            get_examples_channel_nchw_relaxed_all_tensors_as_inputs_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_channel_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal(Model *model);
+bool is_ignored_channel_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_channel_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal();
+
+TEST_F(GeneratedTests, conv2d_v1_2_channel_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal) {
+    execute(CreateModel_channel_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal,
+            is_ignored_channel_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal,
+            get_examples_channel_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_channel_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_channel_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_channel_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_channel_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_channel_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_channel_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_channel_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape());
 }
 
 } // namespace generated_tests::conv2d_v1_2
@@ -1349,6 +3128,107 @@ TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_channel_nchw_quant8, generated_tests::con
 
 namespace generated_tests::conv2d_v1_2 {
 
+void CreateModel_channel_nchw_quant8_dynamic_output_shape(Model *model);
+bool is_ignored_channel_nchw_quant8_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_channel_nchw_quant8_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_channel_nchw_quant8_dynamic_output_shape) {
+    execute(CreateModel_channel_nchw_quant8_dynamic_output_shape,
+            is_ignored_channel_nchw_quant8_dynamic_output_shape,
+            get_examples_channel_nchw_quant8_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_channel_nchw_quant8_all_inputs_as_internal(Model *model);
+bool is_ignored_channel_nchw_quant8_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_channel_nchw_quant8_all_inputs_as_internal();
+
+TEST_F(GeneratedTests, conv2d_v1_2_channel_nchw_quant8_all_inputs_as_internal) {
+    execute(CreateModel_channel_nchw_quant8_all_inputs_as_internal,
+            is_ignored_channel_nchw_quant8_all_inputs_as_internal,
+            get_examples_channel_nchw_quant8_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_channel_nchw_quant8_all_inputs_as_internal, generated_tests::conv2d_v1_2::CreateModel_channel_nchw_quant8_all_inputs_as_internal)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_channel_nchw_quant8_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_channel_nchw_quant8_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_channel_nchw_quant8_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_channel_nchw_quant8_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_channel_nchw_quant8_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_channel_nchw_quant8_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_channel_nchw_quant8_all_inputs_as_internal_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_channel_nchw_quant8_all_tensors_as_inputs(Model *model);
+bool is_ignored_channel_nchw_quant8_all_tensors_as_inputs(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_channel_nchw_quant8_all_tensors_as_inputs();
+
+TEST_F(GeneratedTests, conv2d_v1_2_channel_nchw_quant8_all_tensors_as_inputs) {
+    execute(CreateModel_channel_nchw_quant8_all_tensors_as_inputs,
+            is_ignored_channel_nchw_quant8_all_tensors_as_inputs,
+            get_examples_channel_nchw_quant8_all_tensors_as_inputs());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_channel_nchw_quant8_all_tensors_as_inputs, generated_tests::conv2d_v1_2::CreateModel_channel_nchw_quant8_all_tensors_as_inputs)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_channel_nchw_quant8_all_tensors_as_inputs_dynamic_output_shape(Model *model);
+bool is_ignored_channel_nchw_quant8_all_tensors_as_inputs_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_channel_nchw_quant8_all_tensors_as_inputs_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_channel_nchw_quant8_all_tensors_as_inputs_dynamic_output_shape) {
+    execute(CreateModel_channel_nchw_quant8_all_tensors_as_inputs_dynamic_output_shape,
+            is_ignored_channel_nchw_quant8_all_tensors_as_inputs_dynamic_output_shape,
+            get_examples_channel_nchw_quant8_all_tensors_as_inputs_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_channel_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal(Model *model);
+bool is_ignored_channel_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_channel_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal();
+
+TEST_F(GeneratedTests, conv2d_v1_2_channel_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal) {
+    execute(CreateModel_channel_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal,
+            is_ignored_channel_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal,
+            get_examples_channel_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_channel_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal, generated_tests::conv2d_v1_2::CreateModel_channel_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_channel_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_channel_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_channel_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_channel_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_channel_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_channel_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_channel_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
 void CreateModel_channel_nchw_channelQuant8(Model *model);
 bool is_ignored_channel_nchw_channelQuant8(int);
 std::vector<::test_helper::MixedTypedExample>& get_examples_channel_nchw_channelQuant8();
@@ -1361,6 +3241,107 @@ TEST_F(GeneratedTests, conv2d_v1_2_channel_nchw_channelQuant8) {
 
 } // namespace generated_tests::conv2d_v1_2
 TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_channel_nchw_channelQuant8, generated_tests::conv2d_v1_2::CreateModel_channel_nchw_channelQuant8)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_channel_nchw_channelQuant8_dynamic_output_shape(Model *model);
+bool is_ignored_channel_nchw_channelQuant8_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_channel_nchw_channelQuant8_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_channel_nchw_channelQuant8_dynamic_output_shape) {
+    execute(CreateModel_channel_nchw_channelQuant8_dynamic_output_shape,
+            is_ignored_channel_nchw_channelQuant8_dynamic_output_shape,
+            get_examples_channel_nchw_channelQuant8_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_channel_nchw_channelQuant8_all_inputs_as_internal(Model *model);
+bool is_ignored_channel_nchw_channelQuant8_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_channel_nchw_channelQuant8_all_inputs_as_internal();
+
+TEST_F(GeneratedTests, conv2d_v1_2_channel_nchw_channelQuant8_all_inputs_as_internal) {
+    execute(CreateModel_channel_nchw_channelQuant8_all_inputs_as_internal,
+            is_ignored_channel_nchw_channelQuant8_all_inputs_as_internal,
+            get_examples_channel_nchw_channelQuant8_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_channel_nchw_channelQuant8_all_inputs_as_internal, generated_tests::conv2d_v1_2::CreateModel_channel_nchw_channelQuant8_all_inputs_as_internal)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_channel_nchw_channelQuant8_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_channel_nchw_channelQuant8_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_channel_nchw_channelQuant8_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_channel_nchw_channelQuant8_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_channel_nchw_channelQuant8_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_channel_nchw_channelQuant8_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_channel_nchw_channelQuant8_all_inputs_as_internal_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_channel_nchw_channelQuant8_all_tensors_as_inputs(Model *model);
+bool is_ignored_channel_nchw_channelQuant8_all_tensors_as_inputs(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_channel_nchw_channelQuant8_all_tensors_as_inputs();
+
+TEST_F(GeneratedTests, conv2d_v1_2_channel_nchw_channelQuant8_all_tensors_as_inputs) {
+    execute(CreateModel_channel_nchw_channelQuant8_all_tensors_as_inputs,
+            is_ignored_channel_nchw_channelQuant8_all_tensors_as_inputs,
+            get_examples_channel_nchw_channelQuant8_all_tensors_as_inputs());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_channel_nchw_channelQuant8_all_tensors_as_inputs, generated_tests::conv2d_v1_2::CreateModel_channel_nchw_channelQuant8_all_tensors_as_inputs)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_channel_nchw_channelQuant8_all_tensors_as_inputs_dynamic_output_shape(Model *model);
+bool is_ignored_channel_nchw_channelQuant8_all_tensors_as_inputs_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_channel_nchw_channelQuant8_all_tensors_as_inputs_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_channel_nchw_channelQuant8_all_tensors_as_inputs_dynamic_output_shape) {
+    execute(CreateModel_channel_nchw_channelQuant8_all_tensors_as_inputs_dynamic_output_shape,
+            is_ignored_channel_nchw_channelQuant8_all_tensors_as_inputs_dynamic_output_shape,
+            get_examples_channel_nchw_channelQuant8_all_tensors_as_inputs_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_channel_nchw_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal(Model *model);
+bool is_ignored_channel_nchw_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_channel_nchw_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal();
+
+TEST_F(GeneratedTests, conv2d_v1_2_channel_nchw_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal) {
+    execute(CreateModel_channel_nchw_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal,
+            is_ignored_channel_nchw_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal,
+            get_examples_channel_nchw_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_channel_nchw_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal, generated_tests::conv2d_v1_2::CreateModel_channel_nchw_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_channel_nchw_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_channel_nchw_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_channel_nchw_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_channel_nchw_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_channel_nchw_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_channel_nchw_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_channel_nchw_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
 
 namespace generated_tests::conv2d_v1_2 {
 
@@ -1379,354 +3360,101 @@ TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_channel_nchw_float16, generated_tests::co
 
 namespace generated_tests::conv2d_v1_2 {
 
-void CreateModel_channel_nchw_weight_as_input(Model *model);
-bool is_ignored_channel_nchw_weight_as_input(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_channel_nchw_weight_as_input();
+void CreateModel_channel_nchw_float16_dynamic_output_shape(Model *model);
+bool is_ignored_channel_nchw_float16_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_channel_nchw_float16_dynamic_output_shape();
 
-TEST_F(GeneratedTests, conv2d_v1_2_channel_nchw_weight_as_input) {
-    execute(CreateModel_channel_nchw_weight_as_input,
-            is_ignored_channel_nchw_weight_as_input,
-            get_examples_channel_nchw_weight_as_input());
-}
-
-} // namespace generated_tests::conv2d_v1_2
-TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_channel_nchw_weight_as_input, generated_tests::conv2d_v1_2::CreateModel_channel_nchw_weight_as_input)
-
-namespace generated_tests::conv2d_v1_2 {
-
-void CreateModel_channel_nchw_weight_as_input_relaxed(Model *model);
-bool is_ignored_channel_nchw_weight_as_input_relaxed(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_channel_nchw_weight_as_input_relaxed();
-
-TEST_F(GeneratedTests, conv2d_v1_2_channel_nchw_weight_as_input_relaxed) {
-    execute(CreateModel_channel_nchw_weight_as_input_relaxed,
-            is_ignored_channel_nchw_weight_as_input_relaxed,
-            get_examples_channel_nchw_weight_as_input_relaxed());
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_channel_nchw_float16_dynamic_output_shape) {
+    execute(CreateModel_channel_nchw_float16_dynamic_output_shape,
+            is_ignored_channel_nchw_float16_dynamic_output_shape,
+            get_examples_channel_nchw_float16_dynamic_output_shape());
 }
 
 } // namespace generated_tests::conv2d_v1_2
 
 namespace generated_tests::conv2d_v1_2 {
 
-void CreateModel_channel_nchw_weight_as_input_quant8(Model *model);
-bool is_ignored_channel_nchw_weight_as_input_quant8(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_channel_nchw_weight_as_input_quant8();
+void CreateModel_channel_nchw_float16_all_inputs_as_internal(Model *model);
+bool is_ignored_channel_nchw_float16_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_channel_nchw_float16_all_inputs_as_internal();
 
-TEST_F(GeneratedTests, conv2d_v1_2_channel_nchw_weight_as_input_quant8) {
-    execute(CreateModel_channel_nchw_weight_as_input_quant8,
-            is_ignored_channel_nchw_weight_as_input_quant8,
-            get_examples_channel_nchw_weight_as_input_quant8());
+TEST_F(GeneratedTests, conv2d_v1_2_channel_nchw_float16_all_inputs_as_internal) {
+    execute(CreateModel_channel_nchw_float16_all_inputs_as_internal,
+            is_ignored_channel_nchw_float16_all_inputs_as_internal,
+            get_examples_channel_nchw_float16_all_inputs_as_internal());
 }
 
 } // namespace generated_tests::conv2d_v1_2
-TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_channel_nchw_weight_as_input_quant8, generated_tests::conv2d_v1_2::CreateModel_channel_nchw_weight_as_input_quant8)
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_channel_nchw_float16_all_inputs_as_internal, generated_tests::conv2d_v1_2::CreateModel_channel_nchw_float16_all_inputs_as_internal)
 
 namespace generated_tests::conv2d_v1_2 {
 
-void CreateModel_channel_nchw_weight_as_input_channelQuant8(Model *model);
-bool is_ignored_channel_nchw_weight_as_input_channelQuant8(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_channel_nchw_weight_as_input_channelQuant8();
+void CreateModel_channel_nchw_float16_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_channel_nchw_float16_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_channel_nchw_float16_all_inputs_as_internal_dynamic_output_shape();
 
-TEST_F(GeneratedTests, conv2d_v1_2_channel_nchw_weight_as_input_channelQuant8) {
-    execute(CreateModel_channel_nchw_weight_as_input_channelQuant8,
-            is_ignored_channel_nchw_weight_as_input_channelQuant8,
-            get_examples_channel_nchw_weight_as_input_channelQuant8());
-}
-
-} // namespace generated_tests::conv2d_v1_2
-TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_channel_nchw_weight_as_input_channelQuant8, generated_tests::conv2d_v1_2::CreateModel_channel_nchw_weight_as_input_channelQuant8)
-
-namespace generated_tests::conv2d_v1_2 {
-
-void CreateModel_channel_nchw_weight_as_input_float16(Model *model);
-bool is_ignored_channel_nchw_weight_as_input_float16(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_channel_nchw_weight_as_input_float16();
-
-TEST_F(GeneratedTests, conv2d_v1_2_channel_nchw_weight_as_input_float16) {
-    execute(CreateModel_channel_nchw_weight_as_input_float16,
-            is_ignored_channel_nchw_weight_as_input_float16,
-            get_examples_channel_nchw_weight_as_input_float16());
-}
-
-} // namespace generated_tests::conv2d_v1_2
-TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_channel_nchw_weight_as_input_float16, generated_tests::conv2d_v1_2::CreateModel_channel_nchw_weight_as_input_float16)
-
-namespace generated_tests::conv2d_v1_2 {
-
-void CreateModel_channel_dynamic_output_shape_nhwc(Model *model);
-bool is_ignored_channel_dynamic_output_shape_nhwc(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_channel_dynamic_output_shape_nhwc();
-
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_channel_dynamic_output_shape_nhwc) {
-    execute(CreateModel_channel_dynamic_output_shape_nhwc,
-            is_ignored_channel_dynamic_output_shape_nhwc,
-            get_examples_channel_dynamic_output_shape_nhwc());
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_channel_nchw_float16_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_channel_nchw_float16_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_channel_nchw_float16_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_channel_nchw_float16_all_inputs_as_internal_dynamic_output_shape());
 }
 
 } // namespace generated_tests::conv2d_v1_2
 
 namespace generated_tests::conv2d_v1_2 {
 
-void CreateModel_channel_dynamic_output_shape_nhwc_relaxed(Model *model);
-bool is_ignored_channel_dynamic_output_shape_nhwc_relaxed(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_channel_dynamic_output_shape_nhwc_relaxed();
+void CreateModel_channel_nchw_float16_all_tensors_as_inputs(Model *model);
+bool is_ignored_channel_nchw_float16_all_tensors_as_inputs(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_channel_nchw_float16_all_tensors_as_inputs();
 
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_channel_dynamic_output_shape_nhwc_relaxed) {
-    execute(CreateModel_channel_dynamic_output_shape_nhwc_relaxed,
-            is_ignored_channel_dynamic_output_shape_nhwc_relaxed,
-            get_examples_channel_dynamic_output_shape_nhwc_relaxed());
+TEST_F(GeneratedTests, conv2d_v1_2_channel_nchw_float16_all_tensors_as_inputs) {
+    execute(CreateModel_channel_nchw_float16_all_tensors_as_inputs,
+            is_ignored_channel_nchw_float16_all_tensors_as_inputs,
+            get_examples_channel_nchw_float16_all_tensors_as_inputs());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_channel_nchw_float16_all_tensors_as_inputs, generated_tests::conv2d_v1_2::CreateModel_channel_nchw_float16_all_tensors_as_inputs)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_channel_nchw_float16_all_tensors_as_inputs_dynamic_output_shape(Model *model);
+bool is_ignored_channel_nchw_float16_all_tensors_as_inputs_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_channel_nchw_float16_all_tensors_as_inputs_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_channel_nchw_float16_all_tensors_as_inputs_dynamic_output_shape) {
+    execute(CreateModel_channel_nchw_float16_all_tensors_as_inputs_dynamic_output_shape,
+            is_ignored_channel_nchw_float16_all_tensors_as_inputs_dynamic_output_shape,
+            get_examples_channel_nchw_float16_all_tensors_as_inputs_dynamic_output_shape());
 }
 
 } // namespace generated_tests::conv2d_v1_2
 
 namespace generated_tests::conv2d_v1_2 {
 
-void CreateModel_channel_dynamic_output_shape_nhwc_quant8(Model *model);
-bool is_ignored_channel_dynamic_output_shape_nhwc_quant8(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_channel_dynamic_output_shape_nhwc_quant8();
+void CreateModel_channel_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal(Model *model);
+bool is_ignored_channel_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_channel_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal();
 
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_channel_dynamic_output_shape_nhwc_quant8) {
-    execute(CreateModel_channel_dynamic_output_shape_nhwc_quant8,
-            is_ignored_channel_dynamic_output_shape_nhwc_quant8,
-            get_examples_channel_dynamic_output_shape_nhwc_quant8());
+TEST_F(GeneratedTests, conv2d_v1_2_channel_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal) {
+    execute(CreateModel_channel_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal,
+            is_ignored_channel_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal,
+            get_examples_channel_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal());
 }
 
 } // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_channel_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal, generated_tests::conv2d_v1_2::CreateModel_channel_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal)
 
 namespace generated_tests::conv2d_v1_2 {
 
-void CreateModel_channel_dynamic_output_shape_nhwc_channelQuant8(Model *model);
-bool is_ignored_channel_dynamic_output_shape_nhwc_channelQuant8(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_channel_dynamic_output_shape_nhwc_channelQuant8();
-
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_channel_dynamic_output_shape_nhwc_channelQuant8) {
-    execute(CreateModel_channel_dynamic_output_shape_nhwc_channelQuant8,
-            is_ignored_channel_dynamic_output_shape_nhwc_channelQuant8,
-            get_examples_channel_dynamic_output_shape_nhwc_channelQuant8());
-}
-
-} // namespace generated_tests::conv2d_v1_2
-
-namespace generated_tests::conv2d_v1_2 {
-
-void CreateModel_channel_dynamic_output_shape_nhwc_float16(Model *model);
-bool is_ignored_channel_dynamic_output_shape_nhwc_float16(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_channel_dynamic_output_shape_nhwc_float16();
-
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_channel_dynamic_output_shape_nhwc_float16) {
-    execute(CreateModel_channel_dynamic_output_shape_nhwc_float16,
-            is_ignored_channel_dynamic_output_shape_nhwc_float16,
-            get_examples_channel_dynamic_output_shape_nhwc_float16());
-}
-
-} // namespace generated_tests::conv2d_v1_2
-
-namespace generated_tests::conv2d_v1_2 {
-
-void CreateModel_channel_dynamic_output_shape_nhwc_weight_as_input(Model *model);
-bool is_ignored_channel_dynamic_output_shape_nhwc_weight_as_input(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_channel_dynamic_output_shape_nhwc_weight_as_input();
-
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_channel_dynamic_output_shape_nhwc_weight_as_input) {
-    execute(CreateModel_channel_dynamic_output_shape_nhwc_weight_as_input,
-            is_ignored_channel_dynamic_output_shape_nhwc_weight_as_input,
-            get_examples_channel_dynamic_output_shape_nhwc_weight_as_input());
-}
-
-} // namespace generated_tests::conv2d_v1_2
-
-namespace generated_tests::conv2d_v1_2 {
-
-void CreateModel_channel_dynamic_output_shape_nhwc_weight_as_input_relaxed(Model *model);
-bool is_ignored_channel_dynamic_output_shape_nhwc_weight_as_input_relaxed(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_channel_dynamic_output_shape_nhwc_weight_as_input_relaxed();
-
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_channel_dynamic_output_shape_nhwc_weight_as_input_relaxed) {
-    execute(CreateModel_channel_dynamic_output_shape_nhwc_weight_as_input_relaxed,
-            is_ignored_channel_dynamic_output_shape_nhwc_weight_as_input_relaxed,
-            get_examples_channel_dynamic_output_shape_nhwc_weight_as_input_relaxed());
-}
-
-} // namespace generated_tests::conv2d_v1_2
-
-namespace generated_tests::conv2d_v1_2 {
-
-void CreateModel_channel_dynamic_output_shape_nhwc_weight_as_input_quant8(Model *model);
-bool is_ignored_channel_dynamic_output_shape_nhwc_weight_as_input_quant8(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_channel_dynamic_output_shape_nhwc_weight_as_input_quant8();
-
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_channel_dynamic_output_shape_nhwc_weight_as_input_quant8) {
-    execute(CreateModel_channel_dynamic_output_shape_nhwc_weight_as_input_quant8,
-            is_ignored_channel_dynamic_output_shape_nhwc_weight_as_input_quant8,
-            get_examples_channel_dynamic_output_shape_nhwc_weight_as_input_quant8());
-}
-
-} // namespace generated_tests::conv2d_v1_2
-
-namespace generated_tests::conv2d_v1_2 {
-
-void CreateModel_channel_dynamic_output_shape_nhwc_weight_as_input_channelQuant8(Model *model);
-bool is_ignored_channel_dynamic_output_shape_nhwc_weight_as_input_channelQuant8(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_channel_dynamic_output_shape_nhwc_weight_as_input_channelQuant8();
-
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_channel_dynamic_output_shape_nhwc_weight_as_input_channelQuant8) {
-    execute(CreateModel_channel_dynamic_output_shape_nhwc_weight_as_input_channelQuant8,
-            is_ignored_channel_dynamic_output_shape_nhwc_weight_as_input_channelQuant8,
-            get_examples_channel_dynamic_output_shape_nhwc_weight_as_input_channelQuant8());
-}
-
-} // namespace generated_tests::conv2d_v1_2
-
-namespace generated_tests::conv2d_v1_2 {
-
-void CreateModel_channel_dynamic_output_shape_nhwc_weight_as_input_float16(Model *model);
-bool is_ignored_channel_dynamic_output_shape_nhwc_weight_as_input_float16(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_channel_dynamic_output_shape_nhwc_weight_as_input_float16();
-
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_channel_dynamic_output_shape_nhwc_weight_as_input_float16) {
-    execute(CreateModel_channel_dynamic_output_shape_nhwc_weight_as_input_float16,
-            is_ignored_channel_dynamic_output_shape_nhwc_weight_as_input_float16,
-            get_examples_channel_dynamic_output_shape_nhwc_weight_as_input_float16());
-}
-
-} // namespace generated_tests::conv2d_v1_2
-
-namespace generated_tests::conv2d_v1_2 {
-
-void CreateModel_channel_dynamic_output_shape_nchw(Model *model);
-bool is_ignored_channel_dynamic_output_shape_nchw(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_channel_dynamic_output_shape_nchw();
-
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_channel_dynamic_output_shape_nchw) {
-    execute(CreateModel_channel_dynamic_output_shape_nchw,
-            is_ignored_channel_dynamic_output_shape_nchw,
-            get_examples_channel_dynamic_output_shape_nchw());
-}
-
-} // namespace generated_tests::conv2d_v1_2
-
-namespace generated_tests::conv2d_v1_2 {
-
-void CreateModel_channel_dynamic_output_shape_nchw_relaxed(Model *model);
-bool is_ignored_channel_dynamic_output_shape_nchw_relaxed(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_channel_dynamic_output_shape_nchw_relaxed();
-
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_channel_dynamic_output_shape_nchw_relaxed) {
-    execute(CreateModel_channel_dynamic_output_shape_nchw_relaxed,
-            is_ignored_channel_dynamic_output_shape_nchw_relaxed,
-            get_examples_channel_dynamic_output_shape_nchw_relaxed());
-}
-
-} // namespace generated_tests::conv2d_v1_2
-
-namespace generated_tests::conv2d_v1_2 {
-
-void CreateModel_channel_dynamic_output_shape_nchw_quant8(Model *model);
-bool is_ignored_channel_dynamic_output_shape_nchw_quant8(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_channel_dynamic_output_shape_nchw_quant8();
-
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_channel_dynamic_output_shape_nchw_quant8) {
-    execute(CreateModel_channel_dynamic_output_shape_nchw_quant8,
-            is_ignored_channel_dynamic_output_shape_nchw_quant8,
-            get_examples_channel_dynamic_output_shape_nchw_quant8());
-}
-
-} // namespace generated_tests::conv2d_v1_2
-
-namespace generated_tests::conv2d_v1_2 {
-
-void CreateModel_channel_dynamic_output_shape_nchw_channelQuant8(Model *model);
-bool is_ignored_channel_dynamic_output_shape_nchw_channelQuant8(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_channel_dynamic_output_shape_nchw_channelQuant8();
-
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_channel_dynamic_output_shape_nchw_channelQuant8) {
-    execute(CreateModel_channel_dynamic_output_shape_nchw_channelQuant8,
-            is_ignored_channel_dynamic_output_shape_nchw_channelQuant8,
-            get_examples_channel_dynamic_output_shape_nchw_channelQuant8());
-}
-
-} // namespace generated_tests::conv2d_v1_2
-
-namespace generated_tests::conv2d_v1_2 {
-
-void CreateModel_channel_dynamic_output_shape_nchw_float16(Model *model);
-bool is_ignored_channel_dynamic_output_shape_nchw_float16(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_channel_dynamic_output_shape_nchw_float16();
-
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_channel_dynamic_output_shape_nchw_float16) {
-    execute(CreateModel_channel_dynamic_output_shape_nchw_float16,
-            is_ignored_channel_dynamic_output_shape_nchw_float16,
-            get_examples_channel_dynamic_output_shape_nchw_float16());
-}
-
-} // namespace generated_tests::conv2d_v1_2
-
-namespace generated_tests::conv2d_v1_2 {
-
-void CreateModel_channel_dynamic_output_shape_nchw_weight_as_input(Model *model);
-bool is_ignored_channel_dynamic_output_shape_nchw_weight_as_input(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_channel_dynamic_output_shape_nchw_weight_as_input();
-
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_channel_dynamic_output_shape_nchw_weight_as_input) {
-    execute(CreateModel_channel_dynamic_output_shape_nchw_weight_as_input,
-            is_ignored_channel_dynamic_output_shape_nchw_weight_as_input,
-            get_examples_channel_dynamic_output_shape_nchw_weight_as_input());
-}
-
-} // namespace generated_tests::conv2d_v1_2
-
-namespace generated_tests::conv2d_v1_2 {
-
-void CreateModel_channel_dynamic_output_shape_nchw_weight_as_input_relaxed(Model *model);
-bool is_ignored_channel_dynamic_output_shape_nchw_weight_as_input_relaxed(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_channel_dynamic_output_shape_nchw_weight_as_input_relaxed();
-
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_channel_dynamic_output_shape_nchw_weight_as_input_relaxed) {
-    execute(CreateModel_channel_dynamic_output_shape_nchw_weight_as_input_relaxed,
-            is_ignored_channel_dynamic_output_shape_nchw_weight_as_input_relaxed,
-            get_examples_channel_dynamic_output_shape_nchw_weight_as_input_relaxed());
-}
-
-} // namespace generated_tests::conv2d_v1_2
-
-namespace generated_tests::conv2d_v1_2 {
-
-void CreateModel_channel_dynamic_output_shape_nchw_weight_as_input_quant8(Model *model);
-bool is_ignored_channel_dynamic_output_shape_nchw_weight_as_input_quant8(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_channel_dynamic_output_shape_nchw_weight_as_input_quant8();
-
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_channel_dynamic_output_shape_nchw_weight_as_input_quant8) {
-    execute(CreateModel_channel_dynamic_output_shape_nchw_weight_as_input_quant8,
-            is_ignored_channel_dynamic_output_shape_nchw_weight_as_input_quant8,
-            get_examples_channel_dynamic_output_shape_nchw_weight_as_input_quant8());
-}
-
-} // namespace generated_tests::conv2d_v1_2
-
-namespace generated_tests::conv2d_v1_2 {
-
-void CreateModel_channel_dynamic_output_shape_nchw_weight_as_input_channelQuant8(Model *model);
-bool is_ignored_channel_dynamic_output_shape_nchw_weight_as_input_channelQuant8(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_channel_dynamic_output_shape_nchw_weight_as_input_channelQuant8();
-
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_channel_dynamic_output_shape_nchw_weight_as_input_channelQuant8) {
-    execute(CreateModel_channel_dynamic_output_shape_nchw_weight_as_input_channelQuant8,
-            is_ignored_channel_dynamic_output_shape_nchw_weight_as_input_channelQuant8,
-            get_examples_channel_dynamic_output_shape_nchw_weight_as_input_channelQuant8());
-}
-
-} // namespace generated_tests::conv2d_v1_2
-
-namespace generated_tests::conv2d_v1_2 {
-
-void CreateModel_channel_dynamic_output_shape_nchw_weight_as_input_float16(Model *model);
-bool is_ignored_channel_dynamic_output_shape_nchw_weight_as_input_float16(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_channel_dynamic_output_shape_nchw_weight_as_input_float16();
-
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_channel_dynamic_output_shape_nchw_weight_as_input_float16) {
-    execute(CreateModel_channel_dynamic_output_shape_nchw_weight_as_input_float16,
-            is_ignored_channel_dynamic_output_shape_nchw_weight_as_input_float16,
-            get_examples_channel_dynamic_output_shape_nchw_weight_as_input_float16());
+void CreateModel_channel_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_channel_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_channel_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_channel_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_channel_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_channel_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_channel_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape());
 }
 
 } // namespace generated_tests::conv2d_v1_2
@@ -1748,6 +3476,107 @@ TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_large_nhwc, generated_tests::conv2d_v1_2:
 
 namespace generated_tests::conv2d_v1_2 {
 
+void CreateModel_large_nhwc_dynamic_output_shape(Model *model);
+bool is_ignored_large_nhwc_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_large_nhwc_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_large_nhwc_dynamic_output_shape) {
+    execute(CreateModel_large_nhwc_dynamic_output_shape,
+            is_ignored_large_nhwc_dynamic_output_shape,
+            get_examples_large_nhwc_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_large_nhwc_all_inputs_as_internal(Model *model);
+bool is_ignored_large_nhwc_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_large_nhwc_all_inputs_as_internal();
+
+TEST_F(GeneratedTests, conv2d_v1_2_large_nhwc_all_inputs_as_internal) {
+    execute(CreateModel_large_nhwc_all_inputs_as_internal,
+            is_ignored_large_nhwc_all_inputs_as_internal,
+            get_examples_large_nhwc_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_large_nhwc_all_inputs_as_internal, generated_tests::conv2d_v1_2::CreateModel_large_nhwc_all_inputs_as_internal)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_large_nhwc_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_large_nhwc_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_large_nhwc_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_large_nhwc_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_large_nhwc_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_large_nhwc_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_large_nhwc_all_inputs_as_internal_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_large_nhwc_all_tensors_as_inputs(Model *model);
+bool is_ignored_large_nhwc_all_tensors_as_inputs(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_large_nhwc_all_tensors_as_inputs();
+
+TEST_F(GeneratedTests, conv2d_v1_2_large_nhwc_all_tensors_as_inputs) {
+    execute(CreateModel_large_nhwc_all_tensors_as_inputs,
+            is_ignored_large_nhwc_all_tensors_as_inputs,
+            get_examples_large_nhwc_all_tensors_as_inputs());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_large_nhwc_all_tensors_as_inputs, generated_tests::conv2d_v1_2::CreateModel_large_nhwc_all_tensors_as_inputs)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_large_nhwc_all_tensors_as_inputs_dynamic_output_shape(Model *model);
+bool is_ignored_large_nhwc_all_tensors_as_inputs_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_large_nhwc_all_tensors_as_inputs_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_large_nhwc_all_tensors_as_inputs_dynamic_output_shape) {
+    execute(CreateModel_large_nhwc_all_tensors_as_inputs_dynamic_output_shape,
+            is_ignored_large_nhwc_all_tensors_as_inputs_dynamic_output_shape,
+            get_examples_large_nhwc_all_tensors_as_inputs_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_large_nhwc_all_tensors_as_inputs_all_inputs_as_internal(Model *model);
+bool is_ignored_large_nhwc_all_tensors_as_inputs_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_large_nhwc_all_tensors_as_inputs_all_inputs_as_internal();
+
+TEST_F(GeneratedTests, conv2d_v1_2_large_nhwc_all_tensors_as_inputs_all_inputs_as_internal) {
+    execute(CreateModel_large_nhwc_all_tensors_as_inputs_all_inputs_as_internal,
+            is_ignored_large_nhwc_all_tensors_as_inputs_all_inputs_as_internal,
+            get_examples_large_nhwc_all_tensors_as_inputs_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_large_nhwc_all_tensors_as_inputs_all_inputs_as_internal, generated_tests::conv2d_v1_2::CreateModel_large_nhwc_all_tensors_as_inputs_all_inputs_as_internal)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_large_nhwc_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_large_nhwc_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_large_nhwc_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_large_nhwc_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_large_nhwc_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_large_nhwc_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_large_nhwc_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
 void CreateModel_large_nhwc_relaxed(Model *model);
 bool is_ignored_large_nhwc_relaxed(int);
 std::vector<::test_helper::MixedTypedExample>& get_examples_large_nhwc_relaxed();
@@ -1756,6 +3585,104 @@ TEST_F(GeneratedTests, conv2d_v1_2_large_nhwc_relaxed) {
     execute(CreateModel_large_nhwc_relaxed,
             is_ignored_large_nhwc_relaxed,
             get_examples_large_nhwc_relaxed());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_large_nhwc_relaxed_dynamic_output_shape(Model *model);
+bool is_ignored_large_nhwc_relaxed_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_large_nhwc_relaxed_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_large_nhwc_relaxed_dynamic_output_shape) {
+    execute(CreateModel_large_nhwc_relaxed_dynamic_output_shape,
+            is_ignored_large_nhwc_relaxed_dynamic_output_shape,
+            get_examples_large_nhwc_relaxed_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_large_nhwc_relaxed_all_inputs_as_internal(Model *model);
+bool is_ignored_large_nhwc_relaxed_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_large_nhwc_relaxed_all_inputs_as_internal();
+
+TEST_F(GeneratedTests, conv2d_v1_2_large_nhwc_relaxed_all_inputs_as_internal) {
+    execute(CreateModel_large_nhwc_relaxed_all_inputs_as_internal,
+            is_ignored_large_nhwc_relaxed_all_inputs_as_internal,
+            get_examples_large_nhwc_relaxed_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_large_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_large_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_large_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_large_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_large_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_large_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_large_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_large_nhwc_relaxed_all_tensors_as_inputs(Model *model);
+bool is_ignored_large_nhwc_relaxed_all_tensors_as_inputs(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_large_nhwc_relaxed_all_tensors_as_inputs();
+
+TEST_F(GeneratedTests, conv2d_v1_2_large_nhwc_relaxed_all_tensors_as_inputs) {
+    execute(CreateModel_large_nhwc_relaxed_all_tensors_as_inputs,
+            is_ignored_large_nhwc_relaxed_all_tensors_as_inputs,
+            get_examples_large_nhwc_relaxed_all_tensors_as_inputs());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_large_nhwc_relaxed_all_tensors_as_inputs_dynamic_output_shape(Model *model);
+bool is_ignored_large_nhwc_relaxed_all_tensors_as_inputs_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_large_nhwc_relaxed_all_tensors_as_inputs_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_large_nhwc_relaxed_all_tensors_as_inputs_dynamic_output_shape) {
+    execute(CreateModel_large_nhwc_relaxed_all_tensors_as_inputs_dynamic_output_shape,
+            is_ignored_large_nhwc_relaxed_all_tensors_as_inputs_dynamic_output_shape,
+            get_examples_large_nhwc_relaxed_all_tensors_as_inputs_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_large_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal(Model *model);
+bool is_ignored_large_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_large_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal();
+
+TEST_F(GeneratedTests, conv2d_v1_2_large_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal) {
+    execute(CreateModel_large_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal,
+            is_ignored_large_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal,
+            get_examples_large_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_large_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_large_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_large_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_large_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_large_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_large_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_large_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape());
 }
 
 } // namespace generated_tests::conv2d_v1_2
@@ -1777,6 +3704,107 @@ TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_large_nhwc_quant8, generated_tests::conv2
 
 namespace generated_tests::conv2d_v1_2 {
 
+void CreateModel_large_nhwc_quant8_dynamic_output_shape(Model *model);
+bool is_ignored_large_nhwc_quant8_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_large_nhwc_quant8_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_large_nhwc_quant8_dynamic_output_shape) {
+    execute(CreateModel_large_nhwc_quant8_dynamic_output_shape,
+            is_ignored_large_nhwc_quant8_dynamic_output_shape,
+            get_examples_large_nhwc_quant8_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_large_nhwc_quant8_all_inputs_as_internal(Model *model);
+bool is_ignored_large_nhwc_quant8_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_large_nhwc_quant8_all_inputs_as_internal();
+
+TEST_F(GeneratedTests, conv2d_v1_2_large_nhwc_quant8_all_inputs_as_internal) {
+    execute(CreateModel_large_nhwc_quant8_all_inputs_as_internal,
+            is_ignored_large_nhwc_quant8_all_inputs_as_internal,
+            get_examples_large_nhwc_quant8_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_large_nhwc_quant8_all_inputs_as_internal, generated_tests::conv2d_v1_2::CreateModel_large_nhwc_quant8_all_inputs_as_internal)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_large_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_large_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_large_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_large_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_large_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_large_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_large_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_large_nhwc_quant8_all_tensors_as_inputs(Model *model);
+bool is_ignored_large_nhwc_quant8_all_tensors_as_inputs(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_large_nhwc_quant8_all_tensors_as_inputs();
+
+TEST_F(GeneratedTests, conv2d_v1_2_large_nhwc_quant8_all_tensors_as_inputs) {
+    execute(CreateModel_large_nhwc_quant8_all_tensors_as_inputs,
+            is_ignored_large_nhwc_quant8_all_tensors_as_inputs,
+            get_examples_large_nhwc_quant8_all_tensors_as_inputs());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_large_nhwc_quant8_all_tensors_as_inputs, generated_tests::conv2d_v1_2::CreateModel_large_nhwc_quant8_all_tensors_as_inputs)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_large_nhwc_quant8_all_tensors_as_inputs_dynamic_output_shape(Model *model);
+bool is_ignored_large_nhwc_quant8_all_tensors_as_inputs_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_large_nhwc_quant8_all_tensors_as_inputs_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_large_nhwc_quant8_all_tensors_as_inputs_dynamic_output_shape) {
+    execute(CreateModel_large_nhwc_quant8_all_tensors_as_inputs_dynamic_output_shape,
+            is_ignored_large_nhwc_quant8_all_tensors_as_inputs_dynamic_output_shape,
+            get_examples_large_nhwc_quant8_all_tensors_as_inputs_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_large_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal(Model *model);
+bool is_ignored_large_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_large_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal();
+
+TEST_F(GeneratedTests, conv2d_v1_2_large_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal) {
+    execute(CreateModel_large_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal,
+            is_ignored_large_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal,
+            get_examples_large_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_large_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal, generated_tests::conv2d_v1_2::CreateModel_large_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_large_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_large_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_large_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_large_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_large_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_large_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_large_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
 void CreateModel_large_nhwc_channelQuant8(Model *model);
 bool is_ignored_large_nhwc_channelQuant8(int);
 std::vector<::test_helper::MixedTypedExample>& get_examples_large_nhwc_channelQuant8();
@@ -1789,6 +3817,107 @@ TEST_F(GeneratedTests, conv2d_v1_2_large_nhwc_channelQuant8) {
 
 } // namespace generated_tests::conv2d_v1_2
 TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_large_nhwc_channelQuant8, generated_tests::conv2d_v1_2::CreateModel_large_nhwc_channelQuant8)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_large_nhwc_channelQuant8_dynamic_output_shape(Model *model);
+bool is_ignored_large_nhwc_channelQuant8_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_large_nhwc_channelQuant8_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_large_nhwc_channelQuant8_dynamic_output_shape) {
+    execute(CreateModel_large_nhwc_channelQuant8_dynamic_output_shape,
+            is_ignored_large_nhwc_channelQuant8_dynamic_output_shape,
+            get_examples_large_nhwc_channelQuant8_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_large_nhwc_channelQuant8_all_inputs_as_internal(Model *model);
+bool is_ignored_large_nhwc_channelQuant8_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_large_nhwc_channelQuant8_all_inputs_as_internal();
+
+TEST_F(GeneratedTests, conv2d_v1_2_large_nhwc_channelQuant8_all_inputs_as_internal) {
+    execute(CreateModel_large_nhwc_channelQuant8_all_inputs_as_internal,
+            is_ignored_large_nhwc_channelQuant8_all_inputs_as_internal,
+            get_examples_large_nhwc_channelQuant8_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_large_nhwc_channelQuant8_all_inputs_as_internal, generated_tests::conv2d_v1_2::CreateModel_large_nhwc_channelQuant8_all_inputs_as_internal)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_large_nhwc_channelQuant8_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_large_nhwc_channelQuant8_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_large_nhwc_channelQuant8_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_large_nhwc_channelQuant8_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_large_nhwc_channelQuant8_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_large_nhwc_channelQuant8_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_large_nhwc_channelQuant8_all_inputs_as_internal_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_large_nhwc_channelQuant8_all_tensors_as_inputs(Model *model);
+bool is_ignored_large_nhwc_channelQuant8_all_tensors_as_inputs(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_large_nhwc_channelQuant8_all_tensors_as_inputs();
+
+TEST_F(GeneratedTests, conv2d_v1_2_large_nhwc_channelQuant8_all_tensors_as_inputs) {
+    execute(CreateModel_large_nhwc_channelQuant8_all_tensors_as_inputs,
+            is_ignored_large_nhwc_channelQuant8_all_tensors_as_inputs,
+            get_examples_large_nhwc_channelQuant8_all_tensors_as_inputs());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_large_nhwc_channelQuant8_all_tensors_as_inputs, generated_tests::conv2d_v1_2::CreateModel_large_nhwc_channelQuant8_all_tensors_as_inputs)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_large_nhwc_channelQuant8_all_tensors_as_inputs_dynamic_output_shape(Model *model);
+bool is_ignored_large_nhwc_channelQuant8_all_tensors_as_inputs_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_large_nhwc_channelQuant8_all_tensors_as_inputs_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_large_nhwc_channelQuant8_all_tensors_as_inputs_dynamic_output_shape) {
+    execute(CreateModel_large_nhwc_channelQuant8_all_tensors_as_inputs_dynamic_output_shape,
+            is_ignored_large_nhwc_channelQuant8_all_tensors_as_inputs_dynamic_output_shape,
+            get_examples_large_nhwc_channelQuant8_all_tensors_as_inputs_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_large_nhwc_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal(Model *model);
+bool is_ignored_large_nhwc_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_large_nhwc_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal();
+
+TEST_F(GeneratedTests, conv2d_v1_2_large_nhwc_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal) {
+    execute(CreateModel_large_nhwc_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal,
+            is_ignored_large_nhwc_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal,
+            get_examples_large_nhwc_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_large_nhwc_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal, generated_tests::conv2d_v1_2::CreateModel_large_nhwc_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_large_nhwc_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_large_nhwc_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_large_nhwc_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_large_nhwc_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_large_nhwc_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_large_nhwc_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_large_nhwc_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
 
 namespace generated_tests::conv2d_v1_2 {
 
@@ -1807,6 +3936,107 @@ TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_large_nhwc_channelQuant8_2, generated_tes
 
 namespace generated_tests::conv2d_v1_2 {
 
+void CreateModel_large_nhwc_channelQuant8_dynamic_output_shape_2(Model *model);
+bool is_ignored_large_nhwc_channelQuant8_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_large_nhwc_channelQuant8_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_large_nhwc_channelQuant8_dynamic_output_shape_2) {
+    execute(CreateModel_large_nhwc_channelQuant8_dynamic_output_shape_2,
+            is_ignored_large_nhwc_channelQuant8_dynamic_output_shape_2,
+            get_examples_large_nhwc_channelQuant8_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_large_nhwc_channelQuant8_all_inputs_as_internal_2(Model *model);
+bool is_ignored_large_nhwc_channelQuant8_all_inputs_as_internal_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_large_nhwc_channelQuant8_all_inputs_as_internal_2();
+
+TEST_F(GeneratedTests, conv2d_v1_2_large_nhwc_channelQuant8_all_inputs_as_internal_2) {
+    execute(CreateModel_large_nhwc_channelQuant8_all_inputs_as_internal_2,
+            is_ignored_large_nhwc_channelQuant8_all_inputs_as_internal_2,
+            get_examples_large_nhwc_channelQuant8_all_inputs_as_internal_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_large_nhwc_channelQuant8_all_inputs_as_internal_2, generated_tests::conv2d_v1_2::CreateModel_large_nhwc_channelQuant8_all_inputs_as_internal_2)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_large_nhwc_channelQuant8_all_inputs_as_internal_dynamic_output_shape_2(Model *model);
+bool is_ignored_large_nhwc_channelQuant8_all_inputs_as_internal_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_large_nhwc_channelQuant8_all_inputs_as_internal_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_large_nhwc_channelQuant8_all_inputs_as_internal_dynamic_output_shape_2) {
+    execute(CreateModel_large_nhwc_channelQuant8_all_inputs_as_internal_dynamic_output_shape_2,
+            is_ignored_large_nhwc_channelQuant8_all_inputs_as_internal_dynamic_output_shape_2,
+            get_examples_large_nhwc_channelQuant8_all_inputs_as_internal_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_large_nhwc_channelQuant8_all_tensors_as_inputs_2(Model *model);
+bool is_ignored_large_nhwc_channelQuant8_all_tensors_as_inputs_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_large_nhwc_channelQuant8_all_tensors_as_inputs_2();
+
+TEST_F(GeneratedTests, conv2d_v1_2_large_nhwc_channelQuant8_all_tensors_as_inputs_2) {
+    execute(CreateModel_large_nhwc_channelQuant8_all_tensors_as_inputs_2,
+            is_ignored_large_nhwc_channelQuant8_all_tensors_as_inputs_2,
+            get_examples_large_nhwc_channelQuant8_all_tensors_as_inputs_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_large_nhwc_channelQuant8_all_tensors_as_inputs_2, generated_tests::conv2d_v1_2::CreateModel_large_nhwc_channelQuant8_all_tensors_as_inputs_2)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_large_nhwc_channelQuant8_all_tensors_as_inputs_dynamic_output_shape_2(Model *model);
+bool is_ignored_large_nhwc_channelQuant8_all_tensors_as_inputs_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_large_nhwc_channelQuant8_all_tensors_as_inputs_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_large_nhwc_channelQuant8_all_tensors_as_inputs_dynamic_output_shape_2) {
+    execute(CreateModel_large_nhwc_channelQuant8_all_tensors_as_inputs_dynamic_output_shape_2,
+            is_ignored_large_nhwc_channelQuant8_all_tensors_as_inputs_dynamic_output_shape_2,
+            get_examples_large_nhwc_channelQuant8_all_tensors_as_inputs_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_large_nhwc_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_2(Model *model);
+bool is_ignored_large_nhwc_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_large_nhwc_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_2();
+
+TEST_F(GeneratedTests, conv2d_v1_2_large_nhwc_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_2) {
+    execute(CreateModel_large_nhwc_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_2,
+            is_ignored_large_nhwc_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_2,
+            get_examples_large_nhwc_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_large_nhwc_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_2, generated_tests::conv2d_v1_2::CreateModel_large_nhwc_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_2)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_large_nhwc_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2(Model *model);
+bool is_ignored_large_nhwc_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_large_nhwc_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_large_nhwc_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2) {
+    execute(CreateModel_large_nhwc_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2,
+            is_ignored_large_nhwc_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2,
+            get_examples_large_nhwc_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
 void CreateModel_large_nhwc_float16(Model *model);
 bool is_ignored_large_nhwc_float16(int);
 std::vector<::test_helper::MixedTypedExample>& get_examples_large_nhwc_float16();
@@ -1822,92 +4052,104 @@ TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_large_nhwc_float16, generated_tests::conv
 
 namespace generated_tests::conv2d_v1_2 {
 
-void CreateModel_large_nhwc_weight_as_input(Model *model);
-bool is_ignored_large_nhwc_weight_as_input(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_large_nhwc_weight_as_input();
+void CreateModel_large_nhwc_float16_dynamic_output_shape(Model *model);
+bool is_ignored_large_nhwc_float16_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_large_nhwc_float16_dynamic_output_shape();
 
-TEST_F(GeneratedTests, conv2d_v1_2_large_nhwc_weight_as_input) {
-    execute(CreateModel_large_nhwc_weight_as_input,
-            is_ignored_large_nhwc_weight_as_input,
-            get_examples_large_nhwc_weight_as_input());
-}
-
-} // namespace generated_tests::conv2d_v1_2
-TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_large_nhwc_weight_as_input, generated_tests::conv2d_v1_2::CreateModel_large_nhwc_weight_as_input)
-
-namespace generated_tests::conv2d_v1_2 {
-
-void CreateModel_large_nhwc_weight_as_input_relaxed(Model *model);
-bool is_ignored_large_nhwc_weight_as_input_relaxed(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_large_nhwc_weight_as_input_relaxed();
-
-TEST_F(GeneratedTests, conv2d_v1_2_large_nhwc_weight_as_input_relaxed) {
-    execute(CreateModel_large_nhwc_weight_as_input_relaxed,
-            is_ignored_large_nhwc_weight_as_input_relaxed,
-            get_examples_large_nhwc_weight_as_input_relaxed());
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_large_nhwc_float16_dynamic_output_shape) {
+    execute(CreateModel_large_nhwc_float16_dynamic_output_shape,
+            is_ignored_large_nhwc_float16_dynamic_output_shape,
+            get_examples_large_nhwc_float16_dynamic_output_shape());
 }
 
 } // namespace generated_tests::conv2d_v1_2
 
 namespace generated_tests::conv2d_v1_2 {
 
-void CreateModel_large_nhwc_weight_as_input_quant8(Model *model);
-bool is_ignored_large_nhwc_weight_as_input_quant8(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_large_nhwc_weight_as_input_quant8();
+void CreateModel_large_nhwc_float16_all_inputs_as_internal(Model *model);
+bool is_ignored_large_nhwc_float16_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_large_nhwc_float16_all_inputs_as_internal();
 
-TEST_F(GeneratedTests, conv2d_v1_2_large_nhwc_weight_as_input_quant8) {
-    execute(CreateModel_large_nhwc_weight_as_input_quant8,
-            is_ignored_large_nhwc_weight_as_input_quant8,
-            get_examples_large_nhwc_weight_as_input_quant8());
+TEST_F(GeneratedTests, conv2d_v1_2_large_nhwc_float16_all_inputs_as_internal) {
+    execute(CreateModel_large_nhwc_float16_all_inputs_as_internal,
+            is_ignored_large_nhwc_float16_all_inputs_as_internal,
+            get_examples_large_nhwc_float16_all_inputs_as_internal());
 }
 
 } // namespace generated_tests::conv2d_v1_2
-TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_large_nhwc_weight_as_input_quant8, generated_tests::conv2d_v1_2::CreateModel_large_nhwc_weight_as_input_quant8)
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_large_nhwc_float16_all_inputs_as_internal, generated_tests::conv2d_v1_2::CreateModel_large_nhwc_float16_all_inputs_as_internal)
 
 namespace generated_tests::conv2d_v1_2 {
 
-void CreateModel_large_nhwc_weight_as_input_channelQuant8(Model *model);
-bool is_ignored_large_nhwc_weight_as_input_channelQuant8(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_large_nhwc_weight_as_input_channelQuant8();
+void CreateModel_large_nhwc_float16_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_large_nhwc_float16_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_large_nhwc_float16_all_inputs_as_internal_dynamic_output_shape();
 
-TEST_F(GeneratedTests, conv2d_v1_2_large_nhwc_weight_as_input_channelQuant8) {
-    execute(CreateModel_large_nhwc_weight_as_input_channelQuant8,
-            is_ignored_large_nhwc_weight_as_input_channelQuant8,
-            get_examples_large_nhwc_weight_as_input_channelQuant8());
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_large_nhwc_float16_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_large_nhwc_float16_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_large_nhwc_float16_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_large_nhwc_float16_all_inputs_as_internal_dynamic_output_shape());
 }
 
 } // namespace generated_tests::conv2d_v1_2
-TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_large_nhwc_weight_as_input_channelQuant8, generated_tests::conv2d_v1_2::CreateModel_large_nhwc_weight_as_input_channelQuant8)
 
 namespace generated_tests::conv2d_v1_2 {
 
-void CreateModel_large_nhwc_weight_as_input_channelQuant8_2(Model *model);
-bool is_ignored_large_nhwc_weight_as_input_channelQuant8_2(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_large_nhwc_weight_as_input_channelQuant8_2();
+void CreateModel_large_nhwc_float16_all_tensors_as_inputs(Model *model);
+bool is_ignored_large_nhwc_float16_all_tensors_as_inputs(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_large_nhwc_float16_all_tensors_as_inputs();
 
-TEST_F(GeneratedTests, conv2d_v1_2_large_nhwc_weight_as_input_channelQuant8_2) {
-    execute(CreateModel_large_nhwc_weight_as_input_channelQuant8_2,
-            is_ignored_large_nhwc_weight_as_input_channelQuant8_2,
-            get_examples_large_nhwc_weight_as_input_channelQuant8_2());
+TEST_F(GeneratedTests, conv2d_v1_2_large_nhwc_float16_all_tensors_as_inputs) {
+    execute(CreateModel_large_nhwc_float16_all_tensors_as_inputs,
+            is_ignored_large_nhwc_float16_all_tensors_as_inputs,
+            get_examples_large_nhwc_float16_all_tensors_as_inputs());
 }
 
 } // namespace generated_tests::conv2d_v1_2
-TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_large_nhwc_weight_as_input_channelQuant8_2, generated_tests::conv2d_v1_2::CreateModel_large_nhwc_weight_as_input_channelQuant8_2)
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_large_nhwc_float16_all_tensors_as_inputs, generated_tests::conv2d_v1_2::CreateModel_large_nhwc_float16_all_tensors_as_inputs)
 
 namespace generated_tests::conv2d_v1_2 {
 
-void CreateModel_large_nhwc_weight_as_input_float16(Model *model);
-bool is_ignored_large_nhwc_weight_as_input_float16(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_large_nhwc_weight_as_input_float16();
+void CreateModel_large_nhwc_float16_all_tensors_as_inputs_dynamic_output_shape(Model *model);
+bool is_ignored_large_nhwc_float16_all_tensors_as_inputs_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_large_nhwc_float16_all_tensors_as_inputs_dynamic_output_shape();
 
-TEST_F(GeneratedTests, conv2d_v1_2_large_nhwc_weight_as_input_float16) {
-    execute(CreateModel_large_nhwc_weight_as_input_float16,
-            is_ignored_large_nhwc_weight_as_input_float16,
-            get_examples_large_nhwc_weight_as_input_float16());
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_large_nhwc_float16_all_tensors_as_inputs_dynamic_output_shape) {
+    execute(CreateModel_large_nhwc_float16_all_tensors_as_inputs_dynamic_output_shape,
+            is_ignored_large_nhwc_float16_all_tensors_as_inputs_dynamic_output_shape,
+            get_examples_large_nhwc_float16_all_tensors_as_inputs_dynamic_output_shape());
 }
 
 } // namespace generated_tests::conv2d_v1_2
-TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_large_nhwc_weight_as_input_float16, generated_tests::conv2d_v1_2::CreateModel_large_nhwc_weight_as_input_float16)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_large_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal(Model *model);
+bool is_ignored_large_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_large_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal();
+
+TEST_F(GeneratedTests, conv2d_v1_2_large_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal) {
+    execute(CreateModel_large_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal,
+            is_ignored_large_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal,
+            get_examples_large_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_large_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal, generated_tests::conv2d_v1_2::CreateModel_large_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_large_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_large_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_large_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_large_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_large_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_large_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_large_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
 
 namespace generated_tests::conv2d_v1_2 {
 
@@ -1926,6 +4168,107 @@ TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_large_nchw, generated_tests::conv2d_v1_2:
 
 namespace generated_tests::conv2d_v1_2 {
 
+void CreateModel_large_nchw_dynamic_output_shape(Model *model);
+bool is_ignored_large_nchw_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_large_nchw_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_large_nchw_dynamic_output_shape) {
+    execute(CreateModel_large_nchw_dynamic_output_shape,
+            is_ignored_large_nchw_dynamic_output_shape,
+            get_examples_large_nchw_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_large_nchw_all_inputs_as_internal(Model *model);
+bool is_ignored_large_nchw_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_large_nchw_all_inputs_as_internal();
+
+TEST_F(GeneratedTests, conv2d_v1_2_large_nchw_all_inputs_as_internal) {
+    execute(CreateModel_large_nchw_all_inputs_as_internal,
+            is_ignored_large_nchw_all_inputs_as_internal,
+            get_examples_large_nchw_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_large_nchw_all_inputs_as_internal, generated_tests::conv2d_v1_2::CreateModel_large_nchw_all_inputs_as_internal)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_large_nchw_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_large_nchw_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_large_nchw_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_large_nchw_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_large_nchw_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_large_nchw_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_large_nchw_all_inputs_as_internal_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_large_nchw_all_tensors_as_inputs(Model *model);
+bool is_ignored_large_nchw_all_tensors_as_inputs(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_large_nchw_all_tensors_as_inputs();
+
+TEST_F(GeneratedTests, conv2d_v1_2_large_nchw_all_tensors_as_inputs) {
+    execute(CreateModel_large_nchw_all_tensors_as_inputs,
+            is_ignored_large_nchw_all_tensors_as_inputs,
+            get_examples_large_nchw_all_tensors_as_inputs());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_large_nchw_all_tensors_as_inputs, generated_tests::conv2d_v1_2::CreateModel_large_nchw_all_tensors_as_inputs)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_large_nchw_all_tensors_as_inputs_dynamic_output_shape(Model *model);
+bool is_ignored_large_nchw_all_tensors_as_inputs_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_large_nchw_all_tensors_as_inputs_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_large_nchw_all_tensors_as_inputs_dynamic_output_shape) {
+    execute(CreateModel_large_nchw_all_tensors_as_inputs_dynamic_output_shape,
+            is_ignored_large_nchw_all_tensors_as_inputs_dynamic_output_shape,
+            get_examples_large_nchw_all_tensors_as_inputs_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_large_nchw_all_tensors_as_inputs_all_inputs_as_internal(Model *model);
+bool is_ignored_large_nchw_all_tensors_as_inputs_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_large_nchw_all_tensors_as_inputs_all_inputs_as_internal();
+
+TEST_F(GeneratedTests, conv2d_v1_2_large_nchw_all_tensors_as_inputs_all_inputs_as_internal) {
+    execute(CreateModel_large_nchw_all_tensors_as_inputs_all_inputs_as_internal,
+            is_ignored_large_nchw_all_tensors_as_inputs_all_inputs_as_internal,
+            get_examples_large_nchw_all_tensors_as_inputs_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_large_nchw_all_tensors_as_inputs_all_inputs_as_internal, generated_tests::conv2d_v1_2::CreateModel_large_nchw_all_tensors_as_inputs_all_inputs_as_internal)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_large_nchw_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_large_nchw_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_large_nchw_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_large_nchw_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_large_nchw_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_large_nchw_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_large_nchw_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
 void CreateModel_large_nchw_relaxed(Model *model);
 bool is_ignored_large_nchw_relaxed(int);
 std::vector<::test_helper::MixedTypedExample>& get_examples_large_nchw_relaxed();
@@ -1934,6 +4277,104 @@ TEST_F(GeneratedTests, conv2d_v1_2_large_nchw_relaxed) {
     execute(CreateModel_large_nchw_relaxed,
             is_ignored_large_nchw_relaxed,
             get_examples_large_nchw_relaxed());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_large_nchw_relaxed_dynamic_output_shape(Model *model);
+bool is_ignored_large_nchw_relaxed_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_large_nchw_relaxed_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_large_nchw_relaxed_dynamic_output_shape) {
+    execute(CreateModel_large_nchw_relaxed_dynamic_output_shape,
+            is_ignored_large_nchw_relaxed_dynamic_output_shape,
+            get_examples_large_nchw_relaxed_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_large_nchw_relaxed_all_inputs_as_internal(Model *model);
+bool is_ignored_large_nchw_relaxed_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_large_nchw_relaxed_all_inputs_as_internal();
+
+TEST_F(GeneratedTests, conv2d_v1_2_large_nchw_relaxed_all_inputs_as_internal) {
+    execute(CreateModel_large_nchw_relaxed_all_inputs_as_internal,
+            is_ignored_large_nchw_relaxed_all_inputs_as_internal,
+            get_examples_large_nchw_relaxed_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_large_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_large_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_large_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_large_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_large_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_large_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_large_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_large_nchw_relaxed_all_tensors_as_inputs(Model *model);
+bool is_ignored_large_nchw_relaxed_all_tensors_as_inputs(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_large_nchw_relaxed_all_tensors_as_inputs();
+
+TEST_F(GeneratedTests, conv2d_v1_2_large_nchw_relaxed_all_tensors_as_inputs) {
+    execute(CreateModel_large_nchw_relaxed_all_tensors_as_inputs,
+            is_ignored_large_nchw_relaxed_all_tensors_as_inputs,
+            get_examples_large_nchw_relaxed_all_tensors_as_inputs());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_large_nchw_relaxed_all_tensors_as_inputs_dynamic_output_shape(Model *model);
+bool is_ignored_large_nchw_relaxed_all_tensors_as_inputs_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_large_nchw_relaxed_all_tensors_as_inputs_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_large_nchw_relaxed_all_tensors_as_inputs_dynamic_output_shape) {
+    execute(CreateModel_large_nchw_relaxed_all_tensors_as_inputs_dynamic_output_shape,
+            is_ignored_large_nchw_relaxed_all_tensors_as_inputs_dynamic_output_shape,
+            get_examples_large_nchw_relaxed_all_tensors_as_inputs_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_large_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal(Model *model);
+bool is_ignored_large_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_large_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal();
+
+TEST_F(GeneratedTests, conv2d_v1_2_large_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal) {
+    execute(CreateModel_large_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal,
+            is_ignored_large_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal,
+            get_examples_large_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_large_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_large_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_large_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_large_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_large_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_large_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_large_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape());
 }
 
 } // namespace generated_tests::conv2d_v1_2
@@ -1955,6 +4396,107 @@ TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_large_nchw_quant8, generated_tests::conv2
 
 namespace generated_tests::conv2d_v1_2 {
 
+void CreateModel_large_nchw_quant8_dynamic_output_shape(Model *model);
+bool is_ignored_large_nchw_quant8_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_large_nchw_quant8_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_large_nchw_quant8_dynamic_output_shape) {
+    execute(CreateModel_large_nchw_quant8_dynamic_output_shape,
+            is_ignored_large_nchw_quant8_dynamic_output_shape,
+            get_examples_large_nchw_quant8_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_large_nchw_quant8_all_inputs_as_internal(Model *model);
+bool is_ignored_large_nchw_quant8_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_large_nchw_quant8_all_inputs_as_internal();
+
+TEST_F(GeneratedTests, conv2d_v1_2_large_nchw_quant8_all_inputs_as_internal) {
+    execute(CreateModel_large_nchw_quant8_all_inputs_as_internal,
+            is_ignored_large_nchw_quant8_all_inputs_as_internal,
+            get_examples_large_nchw_quant8_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_large_nchw_quant8_all_inputs_as_internal, generated_tests::conv2d_v1_2::CreateModel_large_nchw_quant8_all_inputs_as_internal)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_large_nchw_quant8_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_large_nchw_quant8_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_large_nchw_quant8_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_large_nchw_quant8_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_large_nchw_quant8_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_large_nchw_quant8_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_large_nchw_quant8_all_inputs_as_internal_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_large_nchw_quant8_all_tensors_as_inputs(Model *model);
+bool is_ignored_large_nchw_quant8_all_tensors_as_inputs(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_large_nchw_quant8_all_tensors_as_inputs();
+
+TEST_F(GeneratedTests, conv2d_v1_2_large_nchw_quant8_all_tensors_as_inputs) {
+    execute(CreateModel_large_nchw_quant8_all_tensors_as_inputs,
+            is_ignored_large_nchw_quant8_all_tensors_as_inputs,
+            get_examples_large_nchw_quant8_all_tensors_as_inputs());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_large_nchw_quant8_all_tensors_as_inputs, generated_tests::conv2d_v1_2::CreateModel_large_nchw_quant8_all_tensors_as_inputs)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_large_nchw_quant8_all_tensors_as_inputs_dynamic_output_shape(Model *model);
+bool is_ignored_large_nchw_quant8_all_tensors_as_inputs_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_large_nchw_quant8_all_tensors_as_inputs_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_large_nchw_quant8_all_tensors_as_inputs_dynamic_output_shape) {
+    execute(CreateModel_large_nchw_quant8_all_tensors_as_inputs_dynamic_output_shape,
+            is_ignored_large_nchw_quant8_all_tensors_as_inputs_dynamic_output_shape,
+            get_examples_large_nchw_quant8_all_tensors_as_inputs_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_large_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal(Model *model);
+bool is_ignored_large_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_large_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal();
+
+TEST_F(GeneratedTests, conv2d_v1_2_large_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal) {
+    execute(CreateModel_large_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal,
+            is_ignored_large_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal,
+            get_examples_large_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_large_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal, generated_tests::conv2d_v1_2::CreateModel_large_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_large_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_large_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_large_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_large_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_large_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_large_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_large_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
 void CreateModel_large_nchw_channelQuant8(Model *model);
 bool is_ignored_large_nchw_channelQuant8(int);
 std::vector<::test_helper::MixedTypedExample>& get_examples_large_nchw_channelQuant8();
@@ -1967,6 +4509,107 @@ TEST_F(GeneratedTests, conv2d_v1_2_large_nchw_channelQuant8) {
 
 } // namespace generated_tests::conv2d_v1_2
 TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_large_nchw_channelQuant8, generated_tests::conv2d_v1_2::CreateModel_large_nchw_channelQuant8)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_large_nchw_channelQuant8_dynamic_output_shape(Model *model);
+bool is_ignored_large_nchw_channelQuant8_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_large_nchw_channelQuant8_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_large_nchw_channelQuant8_dynamic_output_shape) {
+    execute(CreateModel_large_nchw_channelQuant8_dynamic_output_shape,
+            is_ignored_large_nchw_channelQuant8_dynamic_output_shape,
+            get_examples_large_nchw_channelQuant8_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_large_nchw_channelQuant8_all_inputs_as_internal(Model *model);
+bool is_ignored_large_nchw_channelQuant8_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_large_nchw_channelQuant8_all_inputs_as_internal();
+
+TEST_F(GeneratedTests, conv2d_v1_2_large_nchw_channelQuant8_all_inputs_as_internal) {
+    execute(CreateModel_large_nchw_channelQuant8_all_inputs_as_internal,
+            is_ignored_large_nchw_channelQuant8_all_inputs_as_internal,
+            get_examples_large_nchw_channelQuant8_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_large_nchw_channelQuant8_all_inputs_as_internal, generated_tests::conv2d_v1_2::CreateModel_large_nchw_channelQuant8_all_inputs_as_internal)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_large_nchw_channelQuant8_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_large_nchw_channelQuant8_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_large_nchw_channelQuant8_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_large_nchw_channelQuant8_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_large_nchw_channelQuant8_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_large_nchw_channelQuant8_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_large_nchw_channelQuant8_all_inputs_as_internal_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_large_nchw_channelQuant8_all_tensors_as_inputs(Model *model);
+bool is_ignored_large_nchw_channelQuant8_all_tensors_as_inputs(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_large_nchw_channelQuant8_all_tensors_as_inputs();
+
+TEST_F(GeneratedTests, conv2d_v1_2_large_nchw_channelQuant8_all_tensors_as_inputs) {
+    execute(CreateModel_large_nchw_channelQuant8_all_tensors_as_inputs,
+            is_ignored_large_nchw_channelQuant8_all_tensors_as_inputs,
+            get_examples_large_nchw_channelQuant8_all_tensors_as_inputs());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_large_nchw_channelQuant8_all_tensors_as_inputs, generated_tests::conv2d_v1_2::CreateModel_large_nchw_channelQuant8_all_tensors_as_inputs)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_large_nchw_channelQuant8_all_tensors_as_inputs_dynamic_output_shape(Model *model);
+bool is_ignored_large_nchw_channelQuant8_all_tensors_as_inputs_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_large_nchw_channelQuant8_all_tensors_as_inputs_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_large_nchw_channelQuant8_all_tensors_as_inputs_dynamic_output_shape) {
+    execute(CreateModel_large_nchw_channelQuant8_all_tensors_as_inputs_dynamic_output_shape,
+            is_ignored_large_nchw_channelQuant8_all_tensors_as_inputs_dynamic_output_shape,
+            get_examples_large_nchw_channelQuant8_all_tensors_as_inputs_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_large_nchw_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal(Model *model);
+bool is_ignored_large_nchw_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_large_nchw_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal();
+
+TEST_F(GeneratedTests, conv2d_v1_2_large_nchw_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal) {
+    execute(CreateModel_large_nchw_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal,
+            is_ignored_large_nchw_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal,
+            get_examples_large_nchw_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_large_nchw_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal, generated_tests::conv2d_v1_2::CreateModel_large_nchw_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_large_nchw_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_large_nchw_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_large_nchw_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_large_nchw_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_large_nchw_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_large_nchw_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_large_nchw_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
 
 namespace generated_tests::conv2d_v1_2 {
 
@@ -1985,6 +4628,107 @@ TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_large_nchw_channelQuant8_2, generated_tes
 
 namespace generated_tests::conv2d_v1_2 {
 
+void CreateModel_large_nchw_channelQuant8_dynamic_output_shape_2(Model *model);
+bool is_ignored_large_nchw_channelQuant8_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_large_nchw_channelQuant8_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_large_nchw_channelQuant8_dynamic_output_shape_2) {
+    execute(CreateModel_large_nchw_channelQuant8_dynamic_output_shape_2,
+            is_ignored_large_nchw_channelQuant8_dynamic_output_shape_2,
+            get_examples_large_nchw_channelQuant8_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_large_nchw_channelQuant8_all_inputs_as_internal_2(Model *model);
+bool is_ignored_large_nchw_channelQuant8_all_inputs_as_internal_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_large_nchw_channelQuant8_all_inputs_as_internal_2();
+
+TEST_F(GeneratedTests, conv2d_v1_2_large_nchw_channelQuant8_all_inputs_as_internal_2) {
+    execute(CreateModel_large_nchw_channelQuant8_all_inputs_as_internal_2,
+            is_ignored_large_nchw_channelQuant8_all_inputs_as_internal_2,
+            get_examples_large_nchw_channelQuant8_all_inputs_as_internal_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_large_nchw_channelQuant8_all_inputs_as_internal_2, generated_tests::conv2d_v1_2::CreateModel_large_nchw_channelQuant8_all_inputs_as_internal_2)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_large_nchw_channelQuant8_all_inputs_as_internal_dynamic_output_shape_2(Model *model);
+bool is_ignored_large_nchw_channelQuant8_all_inputs_as_internal_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_large_nchw_channelQuant8_all_inputs_as_internal_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_large_nchw_channelQuant8_all_inputs_as_internal_dynamic_output_shape_2) {
+    execute(CreateModel_large_nchw_channelQuant8_all_inputs_as_internal_dynamic_output_shape_2,
+            is_ignored_large_nchw_channelQuant8_all_inputs_as_internal_dynamic_output_shape_2,
+            get_examples_large_nchw_channelQuant8_all_inputs_as_internal_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_large_nchw_channelQuant8_all_tensors_as_inputs_2(Model *model);
+bool is_ignored_large_nchw_channelQuant8_all_tensors_as_inputs_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_large_nchw_channelQuant8_all_tensors_as_inputs_2();
+
+TEST_F(GeneratedTests, conv2d_v1_2_large_nchw_channelQuant8_all_tensors_as_inputs_2) {
+    execute(CreateModel_large_nchw_channelQuant8_all_tensors_as_inputs_2,
+            is_ignored_large_nchw_channelQuant8_all_tensors_as_inputs_2,
+            get_examples_large_nchw_channelQuant8_all_tensors_as_inputs_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_large_nchw_channelQuant8_all_tensors_as_inputs_2, generated_tests::conv2d_v1_2::CreateModel_large_nchw_channelQuant8_all_tensors_as_inputs_2)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_large_nchw_channelQuant8_all_tensors_as_inputs_dynamic_output_shape_2(Model *model);
+bool is_ignored_large_nchw_channelQuant8_all_tensors_as_inputs_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_large_nchw_channelQuant8_all_tensors_as_inputs_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_large_nchw_channelQuant8_all_tensors_as_inputs_dynamic_output_shape_2) {
+    execute(CreateModel_large_nchw_channelQuant8_all_tensors_as_inputs_dynamic_output_shape_2,
+            is_ignored_large_nchw_channelQuant8_all_tensors_as_inputs_dynamic_output_shape_2,
+            get_examples_large_nchw_channelQuant8_all_tensors_as_inputs_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_large_nchw_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_2(Model *model);
+bool is_ignored_large_nchw_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_large_nchw_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_2();
+
+TEST_F(GeneratedTests, conv2d_v1_2_large_nchw_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_2) {
+    execute(CreateModel_large_nchw_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_2,
+            is_ignored_large_nchw_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_2,
+            get_examples_large_nchw_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_large_nchw_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_2, generated_tests::conv2d_v1_2::CreateModel_large_nchw_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_2)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_large_nchw_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2(Model *model);
+bool is_ignored_large_nchw_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_large_nchw_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_large_nchw_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2) {
+    execute(CreateModel_large_nchw_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2,
+            is_ignored_large_nchw_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2,
+            get_examples_large_nchw_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
 void CreateModel_large_nchw_float16(Model *model);
 bool is_ignored_large_nchw_float16(int);
 std::vector<::test_helper::MixedTypedExample>& get_examples_large_nchw_float16();
@@ -2000,425 +4744,101 @@ TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_large_nchw_float16, generated_tests::conv
 
 namespace generated_tests::conv2d_v1_2 {
 
-void CreateModel_large_nchw_weight_as_input(Model *model);
-bool is_ignored_large_nchw_weight_as_input(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_large_nchw_weight_as_input();
+void CreateModel_large_nchw_float16_dynamic_output_shape(Model *model);
+bool is_ignored_large_nchw_float16_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_large_nchw_float16_dynamic_output_shape();
 
-TEST_F(GeneratedTests, conv2d_v1_2_large_nchw_weight_as_input) {
-    execute(CreateModel_large_nchw_weight_as_input,
-            is_ignored_large_nchw_weight_as_input,
-            get_examples_large_nchw_weight_as_input());
-}
-
-} // namespace generated_tests::conv2d_v1_2
-TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_large_nchw_weight_as_input, generated_tests::conv2d_v1_2::CreateModel_large_nchw_weight_as_input)
-
-namespace generated_tests::conv2d_v1_2 {
-
-void CreateModel_large_nchw_weight_as_input_relaxed(Model *model);
-bool is_ignored_large_nchw_weight_as_input_relaxed(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_large_nchw_weight_as_input_relaxed();
-
-TEST_F(GeneratedTests, conv2d_v1_2_large_nchw_weight_as_input_relaxed) {
-    execute(CreateModel_large_nchw_weight_as_input_relaxed,
-            is_ignored_large_nchw_weight_as_input_relaxed,
-            get_examples_large_nchw_weight_as_input_relaxed());
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_large_nchw_float16_dynamic_output_shape) {
+    execute(CreateModel_large_nchw_float16_dynamic_output_shape,
+            is_ignored_large_nchw_float16_dynamic_output_shape,
+            get_examples_large_nchw_float16_dynamic_output_shape());
 }
 
 } // namespace generated_tests::conv2d_v1_2
 
 namespace generated_tests::conv2d_v1_2 {
 
-void CreateModel_large_nchw_weight_as_input_quant8(Model *model);
-bool is_ignored_large_nchw_weight_as_input_quant8(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_large_nchw_weight_as_input_quant8();
+void CreateModel_large_nchw_float16_all_inputs_as_internal(Model *model);
+bool is_ignored_large_nchw_float16_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_large_nchw_float16_all_inputs_as_internal();
 
-TEST_F(GeneratedTests, conv2d_v1_2_large_nchw_weight_as_input_quant8) {
-    execute(CreateModel_large_nchw_weight_as_input_quant8,
-            is_ignored_large_nchw_weight_as_input_quant8,
-            get_examples_large_nchw_weight_as_input_quant8());
+TEST_F(GeneratedTests, conv2d_v1_2_large_nchw_float16_all_inputs_as_internal) {
+    execute(CreateModel_large_nchw_float16_all_inputs_as_internal,
+            is_ignored_large_nchw_float16_all_inputs_as_internal,
+            get_examples_large_nchw_float16_all_inputs_as_internal());
 }
 
 } // namespace generated_tests::conv2d_v1_2
-TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_large_nchw_weight_as_input_quant8, generated_tests::conv2d_v1_2::CreateModel_large_nchw_weight_as_input_quant8)
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_large_nchw_float16_all_inputs_as_internal, generated_tests::conv2d_v1_2::CreateModel_large_nchw_float16_all_inputs_as_internal)
 
 namespace generated_tests::conv2d_v1_2 {
 
-void CreateModel_large_nchw_weight_as_input_channelQuant8(Model *model);
-bool is_ignored_large_nchw_weight_as_input_channelQuant8(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_large_nchw_weight_as_input_channelQuant8();
+void CreateModel_large_nchw_float16_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_large_nchw_float16_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_large_nchw_float16_all_inputs_as_internal_dynamic_output_shape();
 
-TEST_F(GeneratedTests, conv2d_v1_2_large_nchw_weight_as_input_channelQuant8) {
-    execute(CreateModel_large_nchw_weight_as_input_channelQuant8,
-            is_ignored_large_nchw_weight_as_input_channelQuant8,
-            get_examples_large_nchw_weight_as_input_channelQuant8());
-}
-
-} // namespace generated_tests::conv2d_v1_2
-TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_large_nchw_weight_as_input_channelQuant8, generated_tests::conv2d_v1_2::CreateModel_large_nchw_weight_as_input_channelQuant8)
-
-namespace generated_tests::conv2d_v1_2 {
-
-void CreateModel_large_nchw_weight_as_input_channelQuant8_2(Model *model);
-bool is_ignored_large_nchw_weight_as_input_channelQuant8_2(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_large_nchw_weight_as_input_channelQuant8_2();
-
-TEST_F(GeneratedTests, conv2d_v1_2_large_nchw_weight_as_input_channelQuant8_2) {
-    execute(CreateModel_large_nchw_weight_as_input_channelQuant8_2,
-            is_ignored_large_nchw_weight_as_input_channelQuant8_2,
-            get_examples_large_nchw_weight_as_input_channelQuant8_2());
-}
-
-} // namespace generated_tests::conv2d_v1_2
-TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_large_nchw_weight_as_input_channelQuant8_2, generated_tests::conv2d_v1_2::CreateModel_large_nchw_weight_as_input_channelQuant8_2)
-
-namespace generated_tests::conv2d_v1_2 {
-
-void CreateModel_large_nchw_weight_as_input_float16(Model *model);
-bool is_ignored_large_nchw_weight_as_input_float16(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_large_nchw_weight_as_input_float16();
-
-TEST_F(GeneratedTests, conv2d_v1_2_large_nchw_weight_as_input_float16) {
-    execute(CreateModel_large_nchw_weight_as_input_float16,
-            is_ignored_large_nchw_weight_as_input_float16,
-            get_examples_large_nchw_weight_as_input_float16());
-}
-
-} // namespace generated_tests::conv2d_v1_2
-TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_large_nchw_weight_as_input_float16, generated_tests::conv2d_v1_2::CreateModel_large_nchw_weight_as_input_float16)
-
-namespace generated_tests::conv2d_v1_2 {
-
-void CreateModel_large_dynamic_output_shape_nhwc(Model *model);
-bool is_ignored_large_dynamic_output_shape_nhwc(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_large_dynamic_output_shape_nhwc();
-
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_large_dynamic_output_shape_nhwc) {
-    execute(CreateModel_large_dynamic_output_shape_nhwc,
-            is_ignored_large_dynamic_output_shape_nhwc,
-            get_examples_large_dynamic_output_shape_nhwc());
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_large_nchw_float16_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_large_nchw_float16_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_large_nchw_float16_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_large_nchw_float16_all_inputs_as_internal_dynamic_output_shape());
 }
 
 } // namespace generated_tests::conv2d_v1_2
 
 namespace generated_tests::conv2d_v1_2 {
 
-void CreateModel_large_dynamic_output_shape_nhwc_relaxed(Model *model);
-bool is_ignored_large_dynamic_output_shape_nhwc_relaxed(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_large_dynamic_output_shape_nhwc_relaxed();
+void CreateModel_large_nchw_float16_all_tensors_as_inputs(Model *model);
+bool is_ignored_large_nchw_float16_all_tensors_as_inputs(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_large_nchw_float16_all_tensors_as_inputs();
 
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_large_dynamic_output_shape_nhwc_relaxed) {
-    execute(CreateModel_large_dynamic_output_shape_nhwc_relaxed,
-            is_ignored_large_dynamic_output_shape_nhwc_relaxed,
-            get_examples_large_dynamic_output_shape_nhwc_relaxed());
+TEST_F(GeneratedTests, conv2d_v1_2_large_nchw_float16_all_tensors_as_inputs) {
+    execute(CreateModel_large_nchw_float16_all_tensors_as_inputs,
+            is_ignored_large_nchw_float16_all_tensors_as_inputs,
+            get_examples_large_nchw_float16_all_tensors_as_inputs());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_large_nchw_float16_all_tensors_as_inputs, generated_tests::conv2d_v1_2::CreateModel_large_nchw_float16_all_tensors_as_inputs)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_large_nchw_float16_all_tensors_as_inputs_dynamic_output_shape(Model *model);
+bool is_ignored_large_nchw_float16_all_tensors_as_inputs_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_large_nchw_float16_all_tensors_as_inputs_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_large_nchw_float16_all_tensors_as_inputs_dynamic_output_shape) {
+    execute(CreateModel_large_nchw_float16_all_tensors_as_inputs_dynamic_output_shape,
+            is_ignored_large_nchw_float16_all_tensors_as_inputs_dynamic_output_shape,
+            get_examples_large_nchw_float16_all_tensors_as_inputs_dynamic_output_shape());
 }
 
 } // namespace generated_tests::conv2d_v1_2
 
 namespace generated_tests::conv2d_v1_2 {
 
-void CreateModel_large_dynamic_output_shape_nhwc_quant8(Model *model);
-bool is_ignored_large_dynamic_output_shape_nhwc_quant8(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_large_dynamic_output_shape_nhwc_quant8();
+void CreateModel_large_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal(Model *model);
+bool is_ignored_large_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_large_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal();
 
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_large_dynamic_output_shape_nhwc_quant8) {
-    execute(CreateModel_large_dynamic_output_shape_nhwc_quant8,
-            is_ignored_large_dynamic_output_shape_nhwc_quant8,
-            get_examples_large_dynamic_output_shape_nhwc_quant8());
+TEST_F(GeneratedTests, conv2d_v1_2_large_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal) {
+    execute(CreateModel_large_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal,
+            is_ignored_large_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal,
+            get_examples_large_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal());
 }
 
 } // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_large_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal, generated_tests::conv2d_v1_2::CreateModel_large_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal)
 
 namespace generated_tests::conv2d_v1_2 {
 
-void CreateModel_large_dynamic_output_shape_nhwc_channelQuant8(Model *model);
-bool is_ignored_large_dynamic_output_shape_nhwc_channelQuant8(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_large_dynamic_output_shape_nhwc_channelQuant8();
-
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_large_dynamic_output_shape_nhwc_channelQuant8) {
-    execute(CreateModel_large_dynamic_output_shape_nhwc_channelQuant8,
-            is_ignored_large_dynamic_output_shape_nhwc_channelQuant8,
-            get_examples_large_dynamic_output_shape_nhwc_channelQuant8());
-}
-
-} // namespace generated_tests::conv2d_v1_2
-
-namespace generated_tests::conv2d_v1_2 {
-
-void CreateModel_large_dynamic_output_shape_nhwc_channelQuant8_2(Model *model);
-bool is_ignored_large_dynamic_output_shape_nhwc_channelQuant8_2(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_large_dynamic_output_shape_nhwc_channelQuant8_2();
-
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_large_dynamic_output_shape_nhwc_channelQuant8_2) {
-    execute(CreateModel_large_dynamic_output_shape_nhwc_channelQuant8_2,
-            is_ignored_large_dynamic_output_shape_nhwc_channelQuant8_2,
-            get_examples_large_dynamic_output_shape_nhwc_channelQuant8_2());
-}
-
-} // namespace generated_tests::conv2d_v1_2
-
-namespace generated_tests::conv2d_v1_2 {
-
-void CreateModel_large_dynamic_output_shape_nhwc_float16(Model *model);
-bool is_ignored_large_dynamic_output_shape_nhwc_float16(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_large_dynamic_output_shape_nhwc_float16();
-
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_large_dynamic_output_shape_nhwc_float16) {
-    execute(CreateModel_large_dynamic_output_shape_nhwc_float16,
-            is_ignored_large_dynamic_output_shape_nhwc_float16,
-            get_examples_large_dynamic_output_shape_nhwc_float16());
-}
-
-} // namespace generated_tests::conv2d_v1_2
-
-namespace generated_tests::conv2d_v1_2 {
-
-void CreateModel_large_dynamic_output_shape_nhwc_weight_as_input(Model *model);
-bool is_ignored_large_dynamic_output_shape_nhwc_weight_as_input(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_large_dynamic_output_shape_nhwc_weight_as_input();
-
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_large_dynamic_output_shape_nhwc_weight_as_input) {
-    execute(CreateModel_large_dynamic_output_shape_nhwc_weight_as_input,
-            is_ignored_large_dynamic_output_shape_nhwc_weight_as_input,
-            get_examples_large_dynamic_output_shape_nhwc_weight_as_input());
-}
-
-} // namespace generated_tests::conv2d_v1_2
-
-namespace generated_tests::conv2d_v1_2 {
-
-void CreateModel_large_dynamic_output_shape_nhwc_weight_as_input_relaxed(Model *model);
-bool is_ignored_large_dynamic_output_shape_nhwc_weight_as_input_relaxed(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_large_dynamic_output_shape_nhwc_weight_as_input_relaxed();
-
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_large_dynamic_output_shape_nhwc_weight_as_input_relaxed) {
-    execute(CreateModel_large_dynamic_output_shape_nhwc_weight_as_input_relaxed,
-            is_ignored_large_dynamic_output_shape_nhwc_weight_as_input_relaxed,
-            get_examples_large_dynamic_output_shape_nhwc_weight_as_input_relaxed());
-}
-
-} // namespace generated_tests::conv2d_v1_2
-
-namespace generated_tests::conv2d_v1_2 {
-
-void CreateModel_large_dynamic_output_shape_nhwc_weight_as_input_quant8(Model *model);
-bool is_ignored_large_dynamic_output_shape_nhwc_weight_as_input_quant8(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_large_dynamic_output_shape_nhwc_weight_as_input_quant8();
-
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_large_dynamic_output_shape_nhwc_weight_as_input_quant8) {
-    execute(CreateModel_large_dynamic_output_shape_nhwc_weight_as_input_quant8,
-            is_ignored_large_dynamic_output_shape_nhwc_weight_as_input_quant8,
-            get_examples_large_dynamic_output_shape_nhwc_weight_as_input_quant8());
-}
-
-} // namespace generated_tests::conv2d_v1_2
-
-namespace generated_tests::conv2d_v1_2 {
-
-void CreateModel_large_dynamic_output_shape_nhwc_weight_as_input_channelQuant8(Model *model);
-bool is_ignored_large_dynamic_output_shape_nhwc_weight_as_input_channelQuant8(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_large_dynamic_output_shape_nhwc_weight_as_input_channelQuant8();
-
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_large_dynamic_output_shape_nhwc_weight_as_input_channelQuant8) {
-    execute(CreateModel_large_dynamic_output_shape_nhwc_weight_as_input_channelQuant8,
-            is_ignored_large_dynamic_output_shape_nhwc_weight_as_input_channelQuant8,
-            get_examples_large_dynamic_output_shape_nhwc_weight_as_input_channelQuant8());
-}
-
-} // namespace generated_tests::conv2d_v1_2
-
-namespace generated_tests::conv2d_v1_2 {
-
-void CreateModel_large_dynamic_output_shape_nhwc_weight_as_input_channelQuant8_2(Model *model);
-bool is_ignored_large_dynamic_output_shape_nhwc_weight_as_input_channelQuant8_2(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_large_dynamic_output_shape_nhwc_weight_as_input_channelQuant8_2();
-
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_large_dynamic_output_shape_nhwc_weight_as_input_channelQuant8_2) {
-    execute(CreateModel_large_dynamic_output_shape_nhwc_weight_as_input_channelQuant8_2,
-            is_ignored_large_dynamic_output_shape_nhwc_weight_as_input_channelQuant8_2,
-            get_examples_large_dynamic_output_shape_nhwc_weight_as_input_channelQuant8_2());
-}
-
-} // namespace generated_tests::conv2d_v1_2
-
-namespace generated_tests::conv2d_v1_2 {
-
-void CreateModel_large_dynamic_output_shape_nhwc_weight_as_input_float16(Model *model);
-bool is_ignored_large_dynamic_output_shape_nhwc_weight_as_input_float16(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_large_dynamic_output_shape_nhwc_weight_as_input_float16();
-
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_large_dynamic_output_shape_nhwc_weight_as_input_float16) {
-    execute(CreateModel_large_dynamic_output_shape_nhwc_weight_as_input_float16,
-            is_ignored_large_dynamic_output_shape_nhwc_weight_as_input_float16,
-            get_examples_large_dynamic_output_shape_nhwc_weight_as_input_float16());
-}
-
-} // namespace generated_tests::conv2d_v1_2
-
-namespace generated_tests::conv2d_v1_2 {
-
-void CreateModel_large_dynamic_output_shape_nchw(Model *model);
-bool is_ignored_large_dynamic_output_shape_nchw(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_large_dynamic_output_shape_nchw();
-
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_large_dynamic_output_shape_nchw) {
-    execute(CreateModel_large_dynamic_output_shape_nchw,
-            is_ignored_large_dynamic_output_shape_nchw,
-            get_examples_large_dynamic_output_shape_nchw());
-}
-
-} // namespace generated_tests::conv2d_v1_2
-
-namespace generated_tests::conv2d_v1_2 {
-
-void CreateModel_large_dynamic_output_shape_nchw_relaxed(Model *model);
-bool is_ignored_large_dynamic_output_shape_nchw_relaxed(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_large_dynamic_output_shape_nchw_relaxed();
-
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_large_dynamic_output_shape_nchw_relaxed) {
-    execute(CreateModel_large_dynamic_output_shape_nchw_relaxed,
-            is_ignored_large_dynamic_output_shape_nchw_relaxed,
-            get_examples_large_dynamic_output_shape_nchw_relaxed());
-}
-
-} // namespace generated_tests::conv2d_v1_2
-
-namespace generated_tests::conv2d_v1_2 {
-
-void CreateModel_large_dynamic_output_shape_nchw_quant8(Model *model);
-bool is_ignored_large_dynamic_output_shape_nchw_quant8(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_large_dynamic_output_shape_nchw_quant8();
-
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_large_dynamic_output_shape_nchw_quant8) {
-    execute(CreateModel_large_dynamic_output_shape_nchw_quant8,
-            is_ignored_large_dynamic_output_shape_nchw_quant8,
-            get_examples_large_dynamic_output_shape_nchw_quant8());
-}
-
-} // namespace generated_tests::conv2d_v1_2
-
-namespace generated_tests::conv2d_v1_2 {
-
-void CreateModel_large_dynamic_output_shape_nchw_channelQuant8(Model *model);
-bool is_ignored_large_dynamic_output_shape_nchw_channelQuant8(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_large_dynamic_output_shape_nchw_channelQuant8();
-
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_large_dynamic_output_shape_nchw_channelQuant8) {
-    execute(CreateModel_large_dynamic_output_shape_nchw_channelQuant8,
-            is_ignored_large_dynamic_output_shape_nchw_channelQuant8,
-            get_examples_large_dynamic_output_shape_nchw_channelQuant8());
-}
-
-} // namespace generated_tests::conv2d_v1_2
-
-namespace generated_tests::conv2d_v1_2 {
-
-void CreateModel_large_dynamic_output_shape_nchw_channelQuant8_2(Model *model);
-bool is_ignored_large_dynamic_output_shape_nchw_channelQuant8_2(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_large_dynamic_output_shape_nchw_channelQuant8_2();
-
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_large_dynamic_output_shape_nchw_channelQuant8_2) {
-    execute(CreateModel_large_dynamic_output_shape_nchw_channelQuant8_2,
-            is_ignored_large_dynamic_output_shape_nchw_channelQuant8_2,
-            get_examples_large_dynamic_output_shape_nchw_channelQuant8_2());
-}
-
-} // namespace generated_tests::conv2d_v1_2
-
-namespace generated_tests::conv2d_v1_2 {
-
-void CreateModel_large_dynamic_output_shape_nchw_float16(Model *model);
-bool is_ignored_large_dynamic_output_shape_nchw_float16(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_large_dynamic_output_shape_nchw_float16();
-
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_large_dynamic_output_shape_nchw_float16) {
-    execute(CreateModel_large_dynamic_output_shape_nchw_float16,
-            is_ignored_large_dynamic_output_shape_nchw_float16,
-            get_examples_large_dynamic_output_shape_nchw_float16());
-}
-
-} // namespace generated_tests::conv2d_v1_2
-
-namespace generated_tests::conv2d_v1_2 {
-
-void CreateModel_large_dynamic_output_shape_nchw_weight_as_input(Model *model);
-bool is_ignored_large_dynamic_output_shape_nchw_weight_as_input(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_large_dynamic_output_shape_nchw_weight_as_input();
-
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_large_dynamic_output_shape_nchw_weight_as_input) {
-    execute(CreateModel_large_dynamic_output_shape_nchw_weight_as_input,
-            is_ignored_large_dynamic_output_shape_nchw_weight_as_input,
-            get_examples_large_dynamic_output_shape_nchw_weight_as_input());
-}
-
-} // namespace generated_tests::conv2d_v1_2
-
-namespace generated_tests::conv2d_v1_2 {
-
-void CreateModel_large_dynamic_output_shape_nchw_weight_as_input_relaxed(Model *model);
-bool is_ignored_large_dynamic_output_shape_nchw_weight_as_input_relaxed(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_large_dynamic_output_shape_nchw_weight_as_input_relaxed();
-
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_large_dynamic_output_shape_nchw_weight_as_input_relaxed) {
-    execute(CreateModel_large_dynamic_output_shape_nchw_weight_as_input_relaxed,
-            is_ignored_large_dynamic_output_shape_nchw_weight_as_input_relaxed,
-            get_examples_large_dynamic_output_shape_nchw_weight_as_input_relaxed());
-}
-
-} // namespace generated_tests::conv2d_v1_2
-
-namespace generated_tests::conv2d_v1_2 {
-
-void CreateModel_large_dynamic_output_shape_nchw_weight_as_input_quant8(Model *model);
-bool is_ignored_large_dynamic_output_shape_nchw_weight_as_input_quant8(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_large_dynamic_output_shape_nchw_weight_as_input_quant8();
-
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_large_dynamic_output_shape_nchw_weight_as_input_quant8) {
-    execute(CreateModel_large_dynamic_output_shape_nchw_weight_as_input_quant8,
-            is_ignored_large_dynamic_output_shape_nchw_weight_as_input_quant8,
-            get_examples_large_dynamic_output_shape_nchw_weight_as_input_quant8());
-}
-
-} // namespace generated_tests::conv2d_v1_2
-
-namespace generated_tests::conv2d_v1_2 {
-
-void CreateModel_large_dynamic_output_shape_nchw_weight_as_input_channelQuant8(Model *model);
-bool is_ignored_large_dynamic_output_shape_nchw_weight_as_input_channelQuant8(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_large_dynamic_output_shape_nchw_weight_as_input_channelQuant8();
-
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_large_dynamic_output_shape_nchw_weight_as_input_channelQuant8) {
-    execute(CreateModel_large_dynamic_output_shape_nchw_weight_as_input_channelQuant8,
-            is_ignored_large_dynamic_output_shape_nchw_weight_as_input_channelQuant8,
-            get_examples_large_dynamic_output_shape_nchw_weight_as_input_channelQuant8());
-}
-
-} // namespace generated_tests::conv2d_v1_2
-
-namespace generated_tests::conv2d_v1_2 {
-
-void CreateModel_large_dynamic_output_shape_nchw_weight_as_input_channelQuant8_2(Model *model);
-bool is_ignored_large_dynamic_output_shape_nchw_weight_as_input_channelQuant8_2(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_large_dynamic_output_shape_nchw_weight_as_input_channelQuant8_2();
-
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_large_dynamic_output_shape_nchw_weight_as_input_channelQuant8_2) {
-    execute(CreateModel_large_dynamic_output_shape_nchw_weight_as_input_channelQuant8_2,
-            is_ignored_large_dynamic_output_shape_nchw_weight_as_input_channelQuant8_2,
-            get_examples_large_dynamic_output_shape_nchw_weight_as_input_channelQuant8_2());
-}
-
-} // namespace generated_tests::conv2d_v1_2
-
-namespace generated_tests::conv2d_v1_2 {
-
-void CreateModel_large_dynamic_output_shape_nchw_weight_as_input_float16(Model *model);
-bool is_ignored_large_dynamic_output_shape_nchw_weight_as_input_float16(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_large_dynamic_output_shape_nchw_weight_as_input_float16();
-
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_large_dynamic_output_shape_nchw_weight_as_input_float16) {
-    execute(CreateModel_large_dynamic_output_shape_nchw_weight_as_input_float16,
-            is_ignored_large_dynamic_output_shape_nchw_weight_as_input_float16,
-            get_examples_large_dynamic_output_shape_nchw_weight_as_input_float16());
+void CreateModel_large_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_large_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_large_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_large_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_large_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_large_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_large_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape());
 }
 
 } // namespace generated_tests::conv2d_v1_2
@@ -2440,6 +4860,107 @@ TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_1_H3_W2_SAME_nhwc, generated_tests::conv2
 
 namespace generated_tests::conv2d_v1_2 {
 
+void CreateModel_1_H3_W2_SAME_nhwc_dynamic_output_shape(Model *model);
+bool is_ignored_1_H3_W2_SAME_nhwc_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_SAME_nhwc_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_1_H3_W2_SAME_nhwc_dynamic_output_shape) {
+    execute(CreateModel_1_H3_W2_SAME_nhwc_dynamic_output_shape,
+            is_ignored_1_H3_W2_SAME_nhwc_dynamic_output_shape,
+            get_examples_1_H3_W2_SAME_nhwc_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_SAME_nhwc_all_inputs_as_internal(Model *model);
+bool is_ignored_1_H3_W2_SAME_nhwc_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_SAME_nhwc_all_inputs_as_internal();
+
+TEST_F(GeneratedTests, conv2d_v1_2_1_H3_W2_SAME_nhwc_all_inputs_as_internal) {
+    execute(CreateModel_1_H3_W2_SAME_nhwc_all_inputs_as_internal,
+            is_ignored_1_H3_W2_SAME_nhwc_all_inputs_as_internal,
+            get_examples_1_H3_W2_SAME_nhwc_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_1_H3_W2_SAME_nhwc_all_inputs_as_internal, generated_tests::conv2d_v1_2::CreateModel_1_H3_W2_SAME_nhwc_all_inputs_as_internal)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_SAME_nhwc_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_1_H3_W2_SAME_nhwc_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_SAME_nhwc_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_1_H3_W2_SAME_nhwc_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_1_H3_W2_SAME_nhwc_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_1_H3_W2_SAME_nhwc_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_1_H3_W2_SAME_nhwc_all_inputs_as_internal_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_SAME_nhwc_all_tensors_as_inputs(Model *model);
+bool is_ignored_1_H3_W2_SAME_nhwc_all_tensors_as_inputs(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_SAME_nhwc_all_tensors_as_inputs();
+
+TEST_F(GeneratedTests, conv2d_v1_2_1_H3_W2_SAME_nhwc_all_tensors_as_inputs) {
+    execute(CreateModel_1_H3_W2_SAME_nhwc_all_tensors_as_inputs,
+            is_ignored_1_H3_W2_SAME_nhwc_all_tensors_as_inputs,
+            get_examples_1_H3_W2_SAME_nhwc_all_tensors_as_inputs());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_1_H3_W2_SAME_nhwc_all_tensors_as_inputs, generated_tests::conv2d_v1_2::CreateModel_1_H3_W2_SAME_nhwc_all_tensors_as_inputs)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_SAME_nhwc_all_tensors_as_inputs_dynamic_output_shape(Model *model);
+bool is_ignored_1_H3_W2_SAME_nhwc_all_tensors_as_inputs_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_SAME_nhwc_all_tensors_as_inputs_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_1_H3_W2_SAME_nhwc_all_tensors_as_inputs_dynamic_output_shape) {
+    execute(CreateModel_1_H3_W2_SAME_nhwc_all_tensors_as_inputs_dynamic_output_shape,
+            is_ignored_1_H3_W2_SAME_nhwc_all_tensors_as_inputs_dynamic_output_shape,
+            get_examples_1_H3_W2_SAME_nhwc_all_tensors_as_inputs_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_SAME_nhwc_all_tensors_as_inputs_all_inputs_as_internal(Model *model);
+bool is_ignored_1_H3_W2_SAME_nhwc_all_tensors_as_inputs_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_SAME_nhwc_all_tensors_as_inputs_all_inputs_as_internal();
+
+TEST_F(GeneratedTests, conv2d_v1_2_1_H3_W2_SAME_nhwc_all_tensors_as_inputs_all_inputs_as_internal) {
+    execute(CreateModel_1_H3_W2_SAME_nhwc_all_tensors_as_inputs_all_inputs_as_internal,
+            is_ignored_1_H3_W2_SAME_nhwc_all_tensors_as_inputs_all_inputs_as_internal,
+            get_examples_1_H3_W2_SAME_nhwc_all_tensors_as_inputs_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_1_H3_W2_SAME_nhwc_all_tensors_as_inputs_all_inputs_as_internal, generated_tests::conv2d_v1_2::CreateModel_1_H3_W2_SAME_nhwc_all_tensors_as_inputs_all_inputs_as_internal)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_SAME_nhwc_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_1_H3_W2_SAME_nhwc_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_SAME_nhwc_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_1_H3_W2_SAME_nhwc_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_1_H3_W2_SAME_nhwc_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_1_H3_W2_SAME_nhwc_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_1_H3_W2_SAME_nhwc_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
 void CreateModel_1_H3_W2_SAME_nhwc_relaxed(Model *model);
 bool is_ignored_1_H3_W2_SAME_nhwc_relaxed(int);
 std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_SAME_nhwc_relaxed();
@@ -2448,6 +4969,104 @@ TEST_F(GeneratedTests, conv2d_v1_2_1_H3_W2_SAME_nhwc_relaxed) {
     execute(CreateModel_1_H3_W2_SAME_nhwc_relaxed,
             is_ignored_1_H3_W2_SAME_nhwc_relaxed,
             get_examples_1_H3_W2_SAME_nhwc_relaxed());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_SAME_nhwc_relaxed_dynamic_output_shape(Model *model);
+bool is_ignored_1_H3_W2_SAME_nhwc_relaxed_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_SAME_nhwc_relaxed_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_1_H3_W2_SAME_nhwc_relaxed_dynamic_output_shape) {
+    execute(CreateModel_1_H3_W2_SAME_nhwc_relaxed_dynamic_output_shape,
+            is_ignored_1_H3_W2_SAME_nhwc_relaxed_dynamic_output_shape,
+            get_examples_1_H3_W2_SAME_nhwc_relaxed_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_SAME_nhwc_relaxed_all_inputs_as_internal(Model *model);
+bool is_ignored_1_H3_W2_SAME_nhwc_relaxed_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_SAME_nhwc_relaxed_all_inputs_as_internal();
+
+TEST_F(GeneratedTests, conv2d_v1_2_1_H3_W2_SAME_nhwc_relaxed_all_inputs_as_internal) {
+    execute(CreateModel_1_H3_W2_SAME_nhwc_relaxed_all_inputs_as_internal,
+            is_ignored_1_H3_W2_SAME_nhwc_relaxed_all_inputs_as_internal,
+            get_examples_1_H3_W2_SAME_nhwc_relaxed_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_SAME_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_1_H3_W2_SAME_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_SAME_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_1_H3_W2_SAME_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_1_H3_W2_SAME_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_1_H3_W2_SAME_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_1_H3_W2_SAME_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs(Model *model);
+bool is_ignored_1_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs();
+
+TEST_F(GeneratedTests, conv2d_v1_2_1_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs) {
+    execute(CreateModel_1_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs,
+            is_ignored_1_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs,
+            get_examples_1_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_dynamic_output_shape(Model *model);
+bool is_ignored_1_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_1_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_dynamic_output_shape) {
+    execute(CreateModel_1_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_dynamic_output_shape,
+            is_ignored_1_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_dynamic_output_shape,
+            get_examples_1_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal(Model *model);
+bool is_ignored_1_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal();
+
+TEST_F(GeneratedTests, conv2d_v1_2_1_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal) {
+    execute(CreateModel_1_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal,
+            is_ignored_1_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal,
+            get_examples_1_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_1_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_1_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_1_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_1_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_1_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape());
 }
 
 } // namespace generated_tests::conv2d_v1_2
@@ -2469,6 +5088,107 @@ TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_1_H3_W2_SAME_nhwc_float16, generated_test
 
 namespace generated_tests::conv2d_v1_2 {
 
+void CreateModel_1_H3_W2_SAME_nhwc_float16_dynamic_output_shape(Model *model);
+bool is_ignored_1_H3_W2_SAME_nhwc_float16_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_SAME_nhwc_float16_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_1_H3_W2_SAME_nhwc_float16_dynamic_output_shape) {
+    execute(CreateModel_1_H3_W2_SAME_nhwc_float16_dynamic_output_shape,
+            is_ignored_1_H3_W2_SAME_nhwc_float16_dynamic_output_shape,
+            get_examples_1_H3_W2_SAME_nhwc_float16_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_SAME_nhwc_float16_all_inputs_as_internal(Model *model);
+bool is_ignored_1_H3_W2_SAME_nhwc_float16_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_SAME_nhwc_float16_all_inputs_as_internal();
+
+TEST_F(GeneratedTests, conv2d_v1_2_1_H3_W2_SAME_nhwc_float16_all_inputs_as_internal) {
+    execute(CreateModel_1_H3_W2_SAME_nhwc_float16_all_inputs_as_internal,
+            is_ignored_1_H3_W2_SAME_nhwc_float16_all_inputs_as_internal,
+            get_examples_1_H3_W2_SAME_nhwc_float16_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_1_H3_W2_SAME_nhwc_float16_all_inputs_as_internal, generated_tests::conv2d_v1_2::CreateModel_1_H3_W2_SAME_nhwc_float16_all_inputs_as_internal)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_SAME_nhwc_float16_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_1_H3_W2_SAME_nhwc_float16_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_SAME_nhwc_float16_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_1_H3_W2_SAME_nhwc_float16_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_1_H3_W2_SAME_nhwc_float16_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_1_H3_W2_SAME_nhwc_float16_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_1_H3_W2_SAME_nhwc_float16_all_inputs_as_internal_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs(Model *model);
+bool is_ignored_1_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs();
+
+TEST_F(GeneratedTests, conv2d_v1_2_1_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs) {
+    execute(CreateModel_1_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs,
+            is_ignored_1_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs,
+            get_examples_1_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_1_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs, generated_tests::conv2d_v1_2::CreateModel_1_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_dynamic_output_shape(Model *model);
+bool is_ignored_1_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_1_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_dynamic_output_shape) {
+    execute(CreateModel_1_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_dynamic_output_shape,
+            is_ignored_1_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_dynamic_output_shape,
+            get_examples_1_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal(Model *model);
+bool is_ignored_1_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal();
+
+TEST_F(GeneratedTests, conv2d_v1_2_1_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal) {
+    execute(CreateModel_1_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal,
+            is_ignored_1_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal,
+            get_examples_1_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_1_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal, generated_tests::conv2d_v1_2::CreateModel_1_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_1_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_1_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_1_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_1_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_1_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
 void CreateModel_1_H3_W2_SAME_nchw(Model *model);
 bool is_ignored_1_H3_W2_SAME_nchw(int);
 std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_SAME_nchw();
@@ -2484,6 +5204,107 @@ TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_1_H3_W2_SAME_nchw, generated_tests::conv2
 
 namespace generated_tests::conv2d_v1_2 {
 
+void CreateModel_1_H3_W2_SAME_nchw_dynamic_output_shape(Model *model);
+bool is_ignored_1_H3_W2_SAME_nchw_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_SAME_nchw_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_1_H3_W2_SAME_nchw_dynamic_output_shape) {
+    execute(CreateModel_1_H3_W2_SAME_nchw_dynamic_output_shape,
+            is_ignored_1_H3_W2_SAME_nchw_dynamic_output_shape,
+            get_examples_1_H3_W2_SAME_nchw_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_SAME_nchw_all_inputs_as_internal(Model *model);
+bool is_ignored_1_H3_W2_SAME_nchw_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_SAME_nchw_all_inputs_as_internal();
+
+TEST_F(GeneratedTests, conv2d_v1_2_1_H3_W2_SAME_nchw_all_inputs_as_internal) {
+    execute(CreateModel_1_H3_W2_SAME_nchw_all_inputs_as_internal,
+            is_ignored_1_H3_W2_SAME_nchw_all_inputs_as_internal,
+            get_examples_1_H3_W2_SAME_nchw_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_1_H3_W2_SAME_nchw_all_inputs_as_internal, generated_tests::conv2d_v1_2::CreateModel_1_H3_W2_SAME_nchw_all_inputs_as_internal)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_SAME_nchw_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_1_H3_W2_SAME_nchw_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_SAME_nchw_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_1_H3_W2_SAME_nchw_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_1_H3_W2_SAME_nchw_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_1_H3_W2_SAME_nchw_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_1_H3_W2_SAME_nchw_all_inputs_as_internal_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_SAME_nchw_all_tensors_as_inputs(Model *model);
+bool is_ignored_1_H3_W2_SAME_nchw_all_tensors_as_inputs(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_SAME_nchw_all_tensors_as_inputs();
+
+TEST_F(GeneratedTests, conv2d_v1_2_1_H3_W2_SAME_nchw_all_tensors_as_inputs) {
+    execute(CreateModel_1_H3_W2_SAME_nchw_all_tensors_as_inputs,
+            is_ignored_1_H3_W2_SAME_nchw_all_tensors_as_inputs,
+            get_examples_1_H3_W2_SAME_nchw_all_tensors_as_inputs());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_1_H3_W2_SAME_nchw_all_tensors_as_inputs, generated_tests::conv2d_v1_2::CreateModel_1_H3_W2_SAME_nchw_all_tensors_as_inputs)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_SAME_nchw_all_tensors_as_inputs_dynamic_output_shape(Model *model);
+bool is_ignored_1_H3_W2_SAME_nchw_all_tensors_as_inputs_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_SAME_nchw_all_tensors_as_inputs_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_1_H3_W2_SAME_nchw_all_tensors_as_inputs_dynamic_output_shape) {
+    execute(CreateModel_1_H3_W2_SAME_nchw_all_tensors_as_inputs_dynamic_output_shape,
+            is_ignored_1_H3_W2_SAME_nchw_all_tensors_as_inputs_dynamic_output_shape,
+            get_examples_1_H3_W2_SAME_nchw_all_tensors_as_inputs_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_SAME_nchw_all_tensors_as_inputs_all_inputs_as_internal(Model *model);
+bool is_ignored_1_H3_W2_SAME_nchw_all_tensors_as_inputs_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_SAME_nchw_all_tensors_as_inputs_all_inputs_as_internal();
+
+TEST_F(GeneratedTests, conv2d_v1_2_1_H3_W2_SAME_nchw_all_tensors_as_inputs_all_inputs_as_internal) {
+    execute(CreateModel_1_H3_W2_SAME_nchw_all_tensors_as_inputs_all_inputs_as_internal,
+            is_ignored_1_H3_W2_SAME_nchw_all_tensors_as_inputs_all_inputs_as_internal,
+            get_examples_1_H3_W2_SAME_nchw_all_tensors_as_inputs_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_1_H3_W2_SAME_nchw_all_tensors_as_inputs_all_inputs_as_internal, generated_tests::conv2d_v1_2::CreateModel_1_H3_W2_SAME_nchw_all_tensors_as_inputs_all_inputs_as_internal)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_SAME_nchw_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_1_H3_W2_SAME_nchw_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_SAME_nchw_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_1_H3_W2_SAME_nchw_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_1_H3_W2_SAME_nchw_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_1_H3_W2_SAME_nchw_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_1_H3_W2_SAME_nchw_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
 void CreateModel_1_H3_W2_SAME_nchw_relaxed(Model *model);
 bool is_ignored_1_H3_W2_SAME_nchw_relaxed(int);
 std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_SAME_nchw_relaxed();
@@ -2492,6 +5313,104 @@ TEST_F(GeneratedTests, conv2d_v1_2_1_H3_W2_SAME_nchw_relaxed) {
     execute(CreateModel_1_H3_W2_SAME_nchw_relaxed,
             is_ignored_1_H3_W2_SAME_nchw_relaxed,
             get_examples_1_H3_W2_SAME_nchw_relaxed());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_SAME_nchw_relaxed_dynamic_output_shape(Model *model);
+bool is_ignored_1_H3_W2_SAME_nchw_relaxed_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_SAME_nchw_relaxed_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_1_H3_W2_SAME_nchw_relaxed_dynamic_output_shape) {
+    execute(CreateModel_1_H3_W2_SAME_nchw_relaxed_dynamic_output_shape,
+            is_ignored_1_H3_W2_SAME_nchw_relaxed_dynamic_output_shape,
+            get_examples_1_H3_W2_SAME_nchw_relaxed_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_SAME_nchw_relaxed_all_inputs_as_internal(Model *model);
+bool is_ignored_1_H3_W2_SAME_nchw_relaxed_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_SAME_nchw_relaxed_all_inputs_as_internal();
+
+TEST_F(GeneratedTests, conv2d_v1_2_1_H3_W2_SAME_nchw_relaxed_all_inputs_as_internal) {
+    execute(CreateModel_1_H3_W2_SAME_nchw_relaxed_all_inputs_as_internal,
+            is_ignored_1_H3_W2_SAME_nchw_relaxed_all_inputs_as_internal,
+            get_examples_1_H3_W2_SAME_nchw_relaxed_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_SAME_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_1_H3_W2_SAME_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_SAME_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_1_H3_W2_SAME_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_1_H3_W2_SAME_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_1_H3_W2_SAME_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_1_H3_W2_SAME_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs(Model *model);
+bool is_ignored_1_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs();
+
+TEST_F(GeneratedTests, conv2d_v1_2_1_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs) {
+    execute(CreateModel_1_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs,
+            is_ignored_1_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs,
+            get_examples_1_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_dynamic_output_shape(Model *model);
+bool is_ignored_1_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_1_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_dynamic_output_shape) {
+    execute(CreateModel_1_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_dynamic_output_shape,
+            is_ignored_1_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_dynamic_output_shape,
+            get_examples_1_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal(Model *model);
+bool is_ignored_1_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal();
+
+TEST_F(GeneratedTests, conv2d_v1_2_1_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal) {
+    execute(CreateModel_1_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal,
+            is_ignored_1_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal,
+            get_examples_1_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_1_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_1_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_1_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_1_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_1_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape());
 }
 
 } // namespace generated_tests::conv2d_v1_2
@@ -2513,84 +5432,789 @@ TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_1_H3_W2_SAME_nchw_float16, generated_test
 
 namespace generated_tests::conv2d_v1_2 {
 
-void CreateModel_1_H3_W2_SAME_dynamic_output_shape_nhwc(Model *model);
-bool is_ignored_1_H3_W2_SAME_dynamic_output_shape_nhwc(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_SAME_dynamic_output_shape_nhwc();
+void CreateModel_1_H3_W2_SAME_nchw_float16_dynamic_output_shape(Model *model);
+bool is_ignored_1_H3_W2_SAME_nchw_float16_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_SAME_nchw_float16_dynamic_output_shape();
 
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_1_H3_W2_SAME_dynamic_output_shape_nhwc) {
-    execute(CreateModel_1_H3_W2_SAME_dynamic_output_shape_nhwc,
-            is_ignored_1_H3_W2_SAME_dynamic_output_shape_nhwc,
-            get_examples_1_H3_W2_SAME_dynamic_output_shape_nhwc());
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_1_H3_W2_SAME_nchw_float16_dynamic_output_shape) {
+    execute(CreateModel_1_H3_W2_SAME_nchw_float16_dynamic_output_shape,
+            is_ignored_1_H3_W2_SAME_nchw_float16_dynamic_output_shape,
+            get_examples_1_H3_W2_SAME_nchw_float16_dynamic_output_shape());
 }
 
 } // namespace generated_tests::conv2d_v1_2
 
 namespace generated_tests::conv2d_v1_2 {
 
-void CreateModel_1_H3_W2_SAME_dynamic_output_shape_nhwc_relaxed(Model *model);
-bool is_ignored_1_H3_W2_SAME_dynamic_output_shape_nhwc_relaxed(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_SAME_dynamic_output_shape_nhwc_relaxed();
+void CreateModel_1_H3_W2_SAME_nchw_float16_all_inputs_as_internal(Model *model);
+bool is_ignored_1_H3_W2_SAME_nchw_float16_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_SAME_nchw_float16_all_inputs_as_internal();
 
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_1_H3_W2_SAME_dynamic_output_shape_nhwc_relaxed) {
-    execute(CreateModel_1_H3_W2_SAME_dynamic_output_shape_nhwc_relaxed,
-            is_ignored_1_H3_W2_SAME_dynamic_output_shape_nhwc_relaxed,
-            get_examples_1_H3_W2_SAME_dynamic_output_shape_nhwc_relaxed());
+TEST_F(GeneratedTests, conv2d_v1_2_1_H3_W2_SAME_nchw_float16_all_inputs_as_internal) {
+    execute(CreateModel_1_H3_W2_SAME_nchw_float16_all_inputs_as_internal,
+            is_ignored_1_H3_W2_SAME_nchw_float16_all_inputs_as_internal,
+            get_examples_1_H3_W2_SAME_nchw_float16_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_1_H3_W2_SAME_nchw_float16_all_inputs_as_internal, generated_tests::conv2d_v1_2::CreateModel_1_H3_W2_SAME_nchw_float16_all_inputs_as_internal)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_SAME_nchw_float16_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_1_H3_W2_SAME_nchw_float16_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_SAME_nchw_float16_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_1_H3_W2_SAME_nchw_float16_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_1_H3_W2_SAME_nchw_float16_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_1_H3_W2_SAME_nchw_float16_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_1_H3_W2_SAME_nchw_float16_all_inputs_as_internal_dynamic_output_shape());
 }
 
 } // namespace generated_tests::conv2d_v1_2
 
 namespace generated_tests::conv2d_v1_2 {
 
-void CreateModel_1_H3_W2_SAME_dynamic_output_shape_nhwc_float16(Model *model);
-bool is_ignored_1_H3_W2_SAME_dynamic_output_shape_nhwc_float16(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_SAME_dynamic_output_shape_nhwc_float16();
+void CreateModel_1_H3_W2_SAME_nchw_float16_all_tensors_as_inputs(Model *model);
+bool is_ignored_1_H3_W2_SAME_nchw_float16_all_tensors_as_inputs(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_SAME_nchw_float16_all_tensors_as_inputs();
 
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_1_H3_W2_SAME_dynamic_output_shape_nhwc_float16) {
-    execute(CreateModel_1_H3_W2_SAME_dynamic_output_shape_nhwc_float16,
-            is_ignored_1_H3_W2_SAME_dynamic_output_shape_nhwc_float16,
-            get_examples_1_H3_W2_SAME_dynamic_output_shape_nhwc_float16());
+TEST_F(GeneratedTests, conv2d_v1_2_1_H3_W2_SAME_nchw_float16_all_tensors_as_inputs) {
+    execute(CreateModel_1_H3_W2_SAME_nchw_float16_all_tensors_as_inputs,
+            is_ignored_1_H3_W2_SAME_nchw_float16_all_tensors_as_inputs,
+            get_examples_1_H3_W2_SAME_nchw_float16_all_tensors_as_inputs());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_1_H3_W2_SAME_nchw_float16_all_tensors_as_inputs, generated_tests::conv2d_v1_2::CreateModel_1_H3_W2_SAME_nchw_float16_all_tensors_as_inputs)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_dynamic_output_shape(Model *model);
+bool is_ignored_1_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_1_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_dynamic_output_shape) {
+    execute(CreateModel_1_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_dynamic_output_shape,
+            is_ignored_1_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_dynamic_output_shape,
+            get_examples_1_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_dynamic_output_shape());
 }
 
 } // namespace generated_tests::conv2d_v1_2
 
 namespace generated_tests::conv2d_v1_2 {
 
-void CreateModel_1_H3_W2_SAME_dynamic_output_shape_nchw(Model *model);
-bool is_ignored_1_H3_W2_SAME_dynamic_output_shape_nchw(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_SAME_dynamic_output_shape_nchw();
+void CreateModel_1_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal(Model *model);
+bool is_ignored_1_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal();
 
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_1_H3_W2_SAME_dynamic_output_shape_nchw) {
-    execute(CreateModel_1_H3_W2_SAME_dynamic_output_shape_nchw,
-            is_ignored_1_H3_W2_SAME_dynamic_output_shape_nchw,
-            get_examples_1_H3_W2_SAME_dynamic_output_shape_nchw());
+TEST_F(GeneratedTests, conv2d_v1_2_1_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal) {
+    execute(CreateModel_1_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal,
+            is_ignored_1_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal,
+            get_examples_1_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_1_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal, generated_tests::conv2d_v1_2::CreateModel_1_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_1_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_1_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_1_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_1_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_1_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape());
 }
 
 } // namespace generated_tests::conv2d_v1_2
 
 namespace generated_tests::conv2d_v1_2 {
 
-void CreateModel_1_H3_W2_SAME_dynamic_output_shape_nchw_relaxed(Model *model);
-bool is_ignored_1_H3_W2_SAME_dynamic_output_shape_nchw_relaxed(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_SAME_dynamic_output_shape_nchw_relaxed();
+void CreateModel_1_H3_W2_SAME_nhwc_2(Model *model);
+bool is_ignored_1_H3_W2_SAME_nhwc_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_SAME_nhwc_2();
 
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_1_H3_W2_SAME_dynamic_output_shape_nchw_relaxed) {
-    execute(CreateModel_1_H3_W2_SAME_dynamic_output_shape_nchw_relaxed,
-            is_ignored_1_H3_W2_SAME_dynamic_output_shape_nchw_relaxed,
-            get_examples_1_H3_W2_SAME_dynamic_output_shape_nchw_relaxed());
+TEST_F(GeneratedTests, conv2d_v1_2_1_H3_W2_SAME_nhwc_2) {
+    execute(CreateModel_1_H3_W2_SAME_nhwc_2,
+            is_ignored_1_H3_W2_SAME_nhwc_2,
+            get_examples_1_H3_W2_SAME_nhwc_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_1_H3_W2_SAME_nhwc_2, generated_tests::conv2d_v1_2::CreateModel_1_H3_W2_SAME_nhwc_2)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_SAME_nhwc_dynamic_output_shape_2(Model *model);
+bool is_ignored_1_H3_W2_SAME_nhwc_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_SAME_nhwc_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_1_H3_W2_SAME_nhwc_dynamic_output_shape_2) {
+    execute(CreateModel_1_H3_W2_SAME_nhwc_dynamic_output_shape_2,
+            is_ignored_1_H3_W2_SAME_nhwc_dynamic_output_shape_2,
+            get_examples_1_H3_W2_SAME_nhwc_dynamic_output_shape_2());
 }
 
 } // namespace generated_tests::conv2d_v1_2
 
 namespace generated_tests::conv2d_v1_2 {
 
-void CreateModel_1_H3_W2_SAME_dynamic_output_shape_nchw_float16(Model *model);
-bool is_ignored_1_H3_W2_SAME_dynamic_output_shape_nchw_float16(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_SAME_dynamic_output_shape_nchw_float16();
+void CreateModel_1_H3_W2_SAME_nhwc_all_inputs_as_internal_2(Model *model);
+bool is_ignored_1_H3_W2_SAME_nhwc_all_inputs_as_internal_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_SAME_nhwc_all_inputs_as_internal_2();
 
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_1_H3_W2_SAME_dynamic_output_shape_nchw_float16) {
-    execute(CreateModel_1_H3_W2_SAME_dynamic_output_shape_nchw_float16,
-            is_ignored_1_H3_W2_SAME_dynamic_output_shape_nchw_float16,
-            get_examples_1_H3_W2_SAME_dynamic_output_shape_nchw_float16());
+TEST_F(GeneratedTests, conv2d_v1_2_1_H3_W2_SAME_nhwc_all_inputs_as_internal_2) {
+    execute(CreateModel_1_H3_W2_SAME_nhwc_all_inputs_as_internal_2,
+            is_ignored_1_H3_W2_SAME_nhwc_all_inputs_as_internal_2,
+            get_examples_1_H3_W2_SAME_nhwc_all_inputs_as_internal_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_1_H3_W2_SAME_nhwc_all_inputs_as_internal_2, generated_tests::conv2d_v1_2::CreateModel_1_H3_W2_SAME_nhwc_all_inputs_as_internal_2)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_SAME_nhwc_all_inputs_as_internal_dynamic_output_shape_2(Model *model);
+bool is_ignored_1_H3_W2_SAME_nhwc_all_inputs_as_internal_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_SAME_nhwc_all_inputs_as_internal_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_1_H3_W2_SAME_nhwc_all_inputs_as_internal_dynamic_output_shape_2) {
+    execute(CreateModel_1_H3_W2_SAME_nhwc_all_inputs_as_internal_dynamic_output_shape_2,
+            is_ignored_1_H3_W2_SAME_nhwc_all_inputs_as_internal_dynamic_output_shape_2,
+            get_examples_1_H3_W2_SAME_nhwc_all_inputs_as_internal_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_SAME_nhwc_all_tensors_as_inputs_2(Model *model);
+bool is_ignored_1_H3_W2_SAME_nhwc_all_tensors_as_inputs_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_SAME_nhwc_all_tensors_as_inputs_2();
+
+TEST_F(GeneratedTests, conv2d_v1_2_1_H3_W2_SAME_nhwc_all_tensors_as_inputs_2) {
+    execute(CreateModel_1_H3_W2_SAME_nhwc_all_tensors_as_inputs_2,
+            is_ignored_1_H3_W2_SAME_nhwc_all_tensors_as_inputs_2,
+            get_examples_1_H3_W2_SAME_nhwc_all_tensors_as_inputs_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_1_H3_W2_SAME_nhwc_all_tensors_as_inputs_2, generated_tests::conv2d_v1_2::CreateModel_1_H3_W2_SAME_nhwc_all_tensors_as_inputs_2)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_SAME_nhwc_all_tensors_as_inputs_dynamic_output_shape_2(Model *model);
+bool is_ignored_1_H3_W2_SAME_nhwc_all_tensors_as_inputs_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_SAME_nhwc_all_tensors_as_inputs_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_1_H3_W2_SAME_nhwc_all_tensors_as_inputs_dynamic_output_shape_2) {
+    execute(CreateModel_1_H3_W2_SAME_nhwc_all_tensors_as_inputs_dynamic_output_shape_2,
+            is_ignored_1_H3_W2_SAME_nhwc_all_tensors_as_inputs_dynamic_output_shape_2,
+            get_examples_1_H3_W2_SAME_nhwc_all_tensors_as_inputs_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_SAME_nhwc_all_tensors_as_inputs_all_inputs_as_internal_2(Model *model);
+bool is_ignored_1_H3_W2_SAME_nhwc_all_tensors_as_inputs_all_inputs_as_internal_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_SAME_nhwc_all_tensors_as_inputs_all_inputs_as_internal_2();
+
+TEST_F(GeneratedTests, conv2d_v1_2_1_H3_W2_SAME_nhwc_all_tensors_as_inputs_all_inputs_as_internal_2) {
+    execute(CreateModel_1_H3_W2_SAME_nhwc_all_tensors_as_inputs_all_inputs_as_internal_2,
+            is_ignored_1_H3_W2_SAME_nhwc_all_tensors_as_inputs_all_inputs_as_internal_2,
+            get_examples_1_H3_W2_SAME_nhwc_all_tensors_as_inputs_all_inputs_as_internal_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_1_H3_W2_SAME_nhwc_all_tensors_as_inputs_all_inputs_as_internal_2, generated_tests::conv2d_v1_2::CreateModel_1_H3_W2_SAME_nhwc_all_tensors_as_inputs_all_inputs_as_internal_2)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_SAME_nhwc_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2(Model *model);
+bool is_ignored_1_H3_W2_SAME_nhwc_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_SAME_nhwc_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_1_H3_W2_SAME_nhwc_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2) {
+    execute(CreateModel_1_H3_W2_SAME_nhwc_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2,
+            is_ignored_1_H3_W2_SAME_nhwc_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2,
+            get_examples_1_H3_W2_SAME_nhwc_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_SAME_nhwc_relaxed_2(Model *model);
+bool is_ignored_1_H3_W2_SAME_nhwc_relaxed_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_SAME_nhwc_relaxed_2();
+
+TEST_F(GeneratedTests, conv2d_v1_2_1_H3_W2_SAME_nhwc_relaxed_2) {
+    execute(CreateModel_1_H3_W2_SAME_nhwc_relaxed_2,
+            is_ignored_1_H3_W2_SAME_nhwc_relaxed_2,
+            get_examples_1_H3_W2_SAME_nhwc_relaxed_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_SAME_nhwc_relaxed_dynamic_output_shape_2(Model *model);
+bool is_ignored_1_H3_W2_SAME_nhwc_relaxed_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_SAME_nhwc_relaxed_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_1_H3_W2_SAME_nhwc_relaxed_dynamic_output_shape_2) {
+    execute(CreateModel_1_H3_W2_SAME_nhwc_relaxed_dynamic_output_shape_2,
+            is_ignored_1_H3_W2_SAME_nhwc_relaxed_dynamic_output_shape_2,
+            get_examples_1_H3_W2_SAME_nhwc_relaxed_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_SAME_nhwc_relaxed_all_inputs_as_internal_2(Model *model);
+bool is_ignored_1_H3_W2_SAME_nhwc_relaxed_all_inputs_as_internal_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_SAME_nhwc_relaxed_all_inputs_as_internal_2();
+
+TEST_F(GeneratedTests, conv2d_v1_2_1_H3_W2_SAME_nhwc_relaxed_all_inputs_as_internal_2) {
+    execute(CreateModel_1_H3_W2_SAME_nhwc_relaxed_all_inputs_as_internal_2,
+            is_ignored_1_H3_W2_SAME_nhwc_relaxed_all_inputs_as_internal_2,
+            get_examples_1_H3_W2_SAME_nhwc_relaxed_all_inputs_as_internal_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_SAME_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_2(Model *model);
+bool is_ignored_1_H3_W2_SAME_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_SAME_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_1_H3_W2_SAME_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_2) {
+    execute(CreateModel_1_H3_W2_SAME_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_2,
+            is_ignored_1_H3_W2_SAME_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_2,
+            get_examples_1_H3_W2_SAME_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_2(Model *model);
+bool is_ignored_1_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_2();
+
+TEST_F(GeneratedTests, conv2d_v1_2_1_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_2) {
+    execute(CreateModel_1_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_2,
+            is_ignored_1_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_2,
+            get_examples_1_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_dynamic_output_shape_2(Model *model);
+bool is_ignored_1_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_1_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_dynamic_output_shape_2) {
+    execute(CreateModel_1_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_dynamic_output_shape_2,
+            is_ignored_1_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_dynamic_output_shape_2,
+            get_examples_1_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2(Model *model);
+bool is_ignored_1_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2();
+
+TEST_F(GeneratedTests, conv2d_v1_2_1_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2) {
+    execute(CreateModel_1_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2,
+            is_ignored_1_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2,
+            get_examples_1_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2(Model *model);
+bool is_ignored_1_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_1_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2) {
+    execute(CreateModel_1_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2,
+            is_ignored_1_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2,
+            get_examples_1_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_SAME_nhwc_float16_2(Model *model);
+bool is_ignored_1_H3_W2_SAME_nhwc_float16_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_SAME_nhwc_float16_2();
+
+TEST_F(GeneratedTests, conv2d_v1_2_1_H3_W2_SAME_nhwc_float16_2) {
+    execute(CreateModel_1_H3_W2_SAME_nhwc_float16_2,
+            is_ignored_1_H3_W2_SAME_nhwc_float16_2,
+            get_examples_1_H3_W2_SAME_nhwc_float16_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_1_H3_W2_SAME_nhwc_float16_2, generated_tests::conv2d_v1_2::CreateModel_1_H3_W2_SAME_nhwc_float16_2)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_SAME_nhwc_float16_dynamic_output_shape_2(Model *model);
+bool is_ignored_1_H3_W2_SAME_nhwc_float16_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_SAME_nhwc_float16_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_1_H3_W2_SAME_nhwc_float16_dynamic_output_shape_2) {
+    execute(CreateModel_1_H3_W2_SAME_nhwc_float16_dynamic_output_shape_2,
+            is_ignored_1_H3_W2_SAME_nhwc_float16_dynamic_output_shape_2,
+            get_examples_1_H3_W2_SAME_nhwc_float16_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_SAME_nhwc_float16_all_inputs_as_internal_2(Model *model);
+bool is_ignored_1_H3_W2_SAME_nhwc_float16_all_inputs_as_internal_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_SAME_nhwc_float16_all_inputs_as_internal_2();
+
+TEST_F(GeneratedTests, conv2d_v1_2_1_H3_W2_SAME_nhwc_float16_all_inputs_as_internal_2) {
+    execute(CreateModel_1_H3_W2_SAME_nhwc_float16_all_inputs_as_internal_2,
+            is_ignored_1_H3_W2_SAME_nhwc_float16_all_inputs_as_internal_2,
+            get_examples_1_H3_W2_SAME_nhwc_float16_all_inputs_as_internal_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_1_H3_W2_SAME_nhwc_float16_all_inputs_as_internal_2, generated_tests::conv2d_v1_2::CreateModel_1_H3_W2_SAME_nhwc_float16_all_inputs_as_internal_2)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_SAME_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_2(Model *model);
+bool is_ignored_1_H3_W2_SAME_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_SAME_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_1_H3_W2_SAME_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_2) {
+    execute(CreateModel_1_H3_W2_SAME_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_2,
+            is_ignored_1_H3_W2_SAME_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_2,
+            get_examples_1_H3_W2_SAME_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_2(Model *model);
+bool is_ignored_1_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_2();
+
+TEST_F(GeneratedTests, conv2d_v1_2_1_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_2) {
+    execute(CreateModel_1_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_2,
+            is_ignored_1_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_2,
+            get_examples_1_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_1_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_2, generated_tests::conv2d_v1_2::CreateModel_1_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_2)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_dynamic_output_shape_2(Model *model);
+bool is_ignored_1_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_1_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_dynamic_output_shape_2) {
+    execute(CreateModel_1_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_dynamic_output_shape_2,
+            is_ignored_1_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_dynamic_output_shape_2,
+            get_examples_1_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_2(Model *model);
+bool is_ignored_1_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_2();
+
+TEST_F(GeneratedTests, conv2d_v1_2_1_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_2) {
+    execute(CreateModel_1_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_2,
+            is_ignored_1_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_2,
+            get_examples_1_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_1_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_2, generated_tests::conv2d_v1_2::CreateModel_1_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_2)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2(Model *model);
+bool is_ignored_1_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_1_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2) {
+    execute(CreateModel_1_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2,
+            is_ignored_1_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2,
+            get_examples_1_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_SAME_nchw_2(Model *model);
+bool is_ignored_1_H3_W2_SAME_nchw_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_SAME_nchw_2();
+
+TEST_F(GeneratedTests, conv2d_v1_2_1_H3_W2_SAME_nchw_2) {
+    execute(CreateModel_1_H3_W2_SAME_nchw_2,
+            is_ignored_1_H3_W2_SAME_nchw_2,
+            get_examples_1_H3_W2_SAME_nchw_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_1_H3_W2_SAME_nchw_2, generated_tests::conv2d_v1_2::CreateModel_1_H3_W2_SAME_nchw_2)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_SAME_nchw_dynamic_output_shape_2(Model *model);
+bool is_ignored_1_H3_W2_SAME_nchw_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_SAME_nchw_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_1_H3_W2_SAME_nchw_dynamic_output_shape_2) {
+    execute(CreateModel_1_H3_W2_SAME_nchw_dynamic_output_shape_2,
+            is_ignored_1_H3_W2_SAME_nchw_dynamic_output_shape_2,
+            get_examples_1_H3_W2_SAME_nchw_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_SAME_nchw_all_inputs_as_internal_2(Model *model);
+bool is_ignored_1_H3_W2_SAME_nchw_all_inputs_as_internal_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_SAME_nchw_all_inputs_as_internal_2();
+
+TEST_F(GeneratedTests, conv2d_v1_2_1_H3_W2_SAME_nchw_all_inputs_as_internal_2) {
+    execute(CreateModel_1_H3_W2_SAME_nchw_all_inputs_as_internal_2,
+            is_ignored_1_H3_W2_SAME_nchw_all_inputs_as_internal_2,
+            get_examples_1_H3_W2_SAME_nchw_all_inputs_as_internal_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_1_H3_W2_SAME_nchw_all_inputs_as_internal_2, generated_tests::conv2d_v1_2::CreateModel_1_H3_W2_SAME_nchw_all_inputs_as_internal_2)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_SAME_nchw_all_inputs_as_internal_dynamic_output_shape_2(Model *model);
+bool is_ignored_1_H3_W2_SAME_nchw_all_inputs_as_internal_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_SAME_nchw_all_inputs_as_internal_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_1_H3_W2_SAME_nchw_all_inputs_as_internal_dynamic_output_shape_2) {
+    execute(CreateModel_1_H3_W2_SAME_nchw_all_inputs_as_internal_dynamic_output_shape_2,
+            is_ignored_1_H3_W2_SAME_nchw_all_inputs_as_internal_dynamic_output_shape_2,
+            get_examples_1_H3_W2_SAME_nchw_all_inputs_as_internal_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_SAME_nchw_all_tensors_as_inputs_2(Model *model);
+bool is_ignored_1_H3_W2_SAME_nchw_all_tensors_as_inputs_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_SAME_nchw_all_tensors_as_inputs_2();
+
+TEST_F(GeneratedTests, conv2d_v1_2_1_H3_W2_SAME_nchw_all_tensors_as_inputs_2) {
+    execute(CreateModel_1_H3_W2_SAME_nchw_all_tensors_as_inputs_2,
+            is_ignored_1_H3_W2_SAME_nchw_all_tensors_as_inputs_2,
+            get_examples_1_H3_W2_SAME_nchw_all_tensors_as_inputs_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_1_H3_W2_SAME_nchw_all_tensors_as_inputs_2, generated_tests::conv2d_v1_2::CreateModel_1_H3_W2_SAME_nchw_all_tensors_as_inputs_2)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_SAME_nchw_all_tensors_as_inputs_dynamic_output_shape_2(Model *model);
+bool is_ignored_1_H3_W2_SAME_nchw_all_tensors_as_inputs_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_SAME_nchw_all_tensors_as_inputs_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_1_H3_W2_SAME_nchw_all_tensors_as_inputs_dynamic_output_shape_2) {
+    execute(CreateModel_1_H3_W2_SAME_nchw_all_tensors_as_inputs_dynamic_output_shape_2,
+            is_ignored_1_H3_W2_SAME_nchw_all_tensors_as_inputs_dynamic_output_shape_2,
+            get_examples_1_H3_W2_SAME_nchw_all_tensors_as_inputs_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_SAME_nchw_all_tensors_as_inputs_all_inputs_as_internal_2(Model *model);
+bool is_ignored_1_H3_W2_SAME_nchw_all_tensors_as_inputs_all_inputs_as_internal_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_SAME_nchw_all_tensors_as_inputs_all_inputs_as_internal_2();
+
+TEST_F(GeneratedTests, conv2d_v1_2_1_H3_W2_SAME_nchw_all_tensors_as_inputs_all_inputs_as_internal_2) {
+    execute(CreateModel_1_H3_W2_SAME_nchw_all_tensors_as_inputs_all_inputs_as_internal_2,
+            is_ignored_1_H3_W2_SAME_nchw_all_tensors_as_inputs_all_inputs_as_internal_2,
+            get_examples_1_H3_W2_SAME_nchw_all_tensors_as_inputs_all_inputs_as_internal_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_1_H3_W2_SAME_nchw_all_tensors_as_inputs_all_inputs_as_internal_2, generated_tests::conv2d_v1_2::CreateModel_1_H3_W2_SAME_nchw_all_tensors_as_inputs_all_inputs_as_internal_2)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_SAME_nchw_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2(Model *model);
+bool is_ignored_1_H3_W2_SAME_nchw_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_SAME_nchw_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_1_H3_W2_SAME_nchw_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2) {
+    execute(CreateModel_1_H3_W2_SAME_nchw_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2,
+            is_ignored_1_H3_W2_SAME_nchw_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2,
+            get_examples_1_H3_W2_SAME_nchw_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_SAME_nchw_relaxed_2(Model *model);
+bool is_ignored_1_H3_W2_SAME_nchw_relaxed_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_SAME_nchw_relaxed_2();
+
+TEST_F(GeneratedTests, conv2d_v1_2_1_H3_W2_SAME_nchw_relaxed_2) {
+    execute(CreateModel_1_H3_W2_SAME_nchw_relaxed_2,
+            is_ignored_1_H3_W2_SAME_nchw_relaxed_2,
+            get_examples_1_H3_W2_SAME_nchw_relaxed_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_SAME_nchw_relaxed_dynamic_output_shape_2(Model *model);
+bool is_ignored_1_H3_W2_SAME_nchw_relaxed_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_SAME_nchw_relaxed_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_1_H3_W2_SAME_nchw_relaxed_dynamic_output_shape_2) {
+    execute(CreateModel_1_H3_W2_SAME_nchw_relaxed_dynamic_output_shape_2,
+            is_ignored_1_H3_W2_SAME_nchw_relaxed_dynamic_output_shape_2,
+            get_examples_1_H3_W2_SAME_nchw_relaxed_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_SAME_nchw_relaxed_all_inputs_as_internal_2(Model *model);
+bool is_ignored_1_H3_W2_SAME_nchw_relaxed_all_inputs_as_internal_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_SAME_nchw_relaxed_all_inputs_as_internal_2();
+
+TEST_F(GeneratedTests, conv2d_v1_2_1_H3_W2_SAME_nchw_relaxed_all_inputs_as_internal_2) {
+    execute(CreateModel_1_H3_W2_SAME_nchw_relaxed_all_inputs_as_internal_2,
+            is_ignored_1_H3_W2_SAME_nchw_relaxed_all_inputs_as_internal_2,
+            get_examples_1_H3_W2_SAME_nchw_relaxed_all_inputs_as_internal_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_SAME_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_2(Model *model);
+bool is_ignored_1_H3_W2_SAME_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_SAME_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_1_H3_W2_SAME_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_2) {
+    execute(CreateModel_1_H3_W2_SAME_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_2,
+            is_ignored_1_H3_W2_SAME_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_2,
+            get_examples_1_H3_W2_SAME_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_2(Model *model);
+bool is_ignored_1_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_2();
+
+TEST_F(GeneratedTests, conv2d_v1_2_1_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_2) {
+    execute(CreateModel_1_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_2,
+            is_ignored_1_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_2,
+            get_examples_1_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_dynamic_output_shape_2(Model *model);
+bool is_ignored_1_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_1_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_dynamic_output_shape_2) {
+    execute(CreateModel_1_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_dynamic_output_shape_2,
+            is_ignored_1_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_dynamic_output_shape_2,
+            get_examples_1_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2(Model *model);
+bool is_ignored_1_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2();
+
+TEST_F(GeneratedTests, conv2d_v1_2_1_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2) {
+    execute(CreateModel_1_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2,
+            is_ignored_1_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2,
+            get_examples_1_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2(Model *model);
+bool is_ignored_1_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_1_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2) {
+    execute(CreateModel_1_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2,
+            is_ignored_1_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2,
+            get_examples_1_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_SAME_nchw_float16_2(Model *model);
+bool is_ignored_1_H3_W2_SAME_nchw_float16_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_SAME_nchw_float16_2();
+
+TEST_F(GeneratedTests, conv2d_v1_2_1_H3_W2_SAME_nchw_float16_2) {
+    execute(CreateModel_1_H3_W2_SAME_nchw_float16_2,
+            is_ignored_1_H3_W2_SAME_nchw_float16_2,
+            get_examples_1_H3_W2_SAME_nchw_float16_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_1_H3_W2_SAME_nchw_float16_2, generated_tests::conv2d_v1_2::CreateModel_1_H3_W2_SAME_nchw_float16_2)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_SAME_nchw_float16_dynamic_output_shape_2(Model *model);
+bool is_ignored_1_H3_W2_SAME_nchw_float16_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_SAME_nchw_float16_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_1_H3_W2_SAME_nchw_float16_dynamic_output_shape_2) {
+    execute(CreateModel_1_H3_W2_SAME_nchw_float16_dynamic_output_shape_2,
+            is_ignored_1_H3_W2_SAME_nchw_float16_dynamic_output_shape_2,
+            get_examples_1_H3_W2_SAME_nchw_float16_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_SAME_nchw_float16_all_inputs_as_internal_2(Model *model);
+bool is_ignored_1_H3_W2_SAME_nchw_float16_all_inputs_as_internal_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_SAME_nchw_float16_all_inputs_as_internal_2();
+
+TEST_F(GeneratedTests, conv2d_v1_2_1_H3_W2_SAME_nchw_float16_all_inputs_as_internal_2) {
+    execute(CreateModel_1_H3_W2_SAME_nchw_float16_all_inputs_as_internal_2,
+            is_ignored_1_H3_W2_SAME_nchw_float16_all_inputs_as_internal_2,
+            get_examples_1_H3_W2_SAME_nchw_float16_all_inputs_as_internal_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_1_H3_W2_SAME_nchw_float16_all_inputs_as_internal_2, generated_tests::conv2d_v1_2::CreateModel_1_H3_W2_SAME_nchw_float16_all_inputs_as_internal_2)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_SAME_nchw_float16_all_inputs_as_internal_dynamic_output_shape_2(Model *model);
+bool is_ignored_1_H3_W2_SAME_nchw_float16_all_inputs_as_internal_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_SAME_nchw_float16_all_inputs_as_internal_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_1_H3_W2_SAME_nchw_float16_all_inputs_as_internal_dynamic_output_shape_2) {
+    execute(CreateModel_1_H3_W2_SAME_nchw_float16_all_inputs_as_internal_dynamic_output_shape_2,
+            is_ignored_1_H3_W2_SAME_nchw_float16_all_inputs_as_internal_dynamic_output_shape_2,
+            get_examples_1_H3_W2_SAME_nchw_float16_all_inputs_as_internal_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_2(Model *model);
+bool is_ignored_1_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_2();
+
+TEST_F(GeneratedTests, conv2d_v1_2_1_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_2) {
+    execute(CreateModel_1_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_2,
+            is_ignored_1_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_2,
+            get_examples_1_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_1_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_2, generated_tests::conv2d_v1_2::CreateModel_1_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_2)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_dynamic_output_shape_2(Model *model);
+bool is_ignored_1_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_1_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_dynamic_output_shape_2) {
+    execute(CreateModel_1_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_dynamic_output_shape_2,
+            is_ignored_1_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_dynamic_output_shape_2,
+            get_examples_1_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_2(Model *model);
+bool is_ignored_1_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_2();
+
+TEST_F(GeneratedTests, conv2d_v1_2_1_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_2) {
+    execute(CreateModel_1_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_2,
+            is_ignored_1_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_2,
+            get_examples_1_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_1_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_2, generated_tests::conv2d_v1_2::CreateModel_1_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_2)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2(Model *model);
+bool is_ignored_1_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_1_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2) {
+    execute(CreateModel_1_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2,
+            is_ignored_1_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2,
+            get_examples_1_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2());
 }
 
 } // namespace generated_tests::conv2d_v1_2
@@ -2612,6 +6236,107 @@ TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_1_H3_W2_VALID_nhwc, generated_tests::conv
 
 namespace generated_tests::conv2d_v1_2 {
 
+void CreateModel_1_H3_W2_VALID_nhwc_dynamic_output_shape(Model *model);
+bool is_ignored_1_H3_W2_VALID_nhwc_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_VALID_nhwc_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_1_H3_W2_VALID_nhwc_dynamic_output_shape) {
+    execute(CreateModel_1_H3_W2_VALID_nhwc_dynamic_output_shape,
+            is_ignored_1_H3_W2_VALID_nhwc_dynamic_output_shape,
+            get_examples_1_H3_W2_VALID_nhwc_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_VALID_nhwc_all_inputs_as_internal(Model *model);
+bool is_ignored_1_H3_W2_VALID_nhwc_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_VALID_nhwc_all_inputs_as_internal();
+
+TEST_F(GeneratedTests, conv2d_v1_2_1_H3_W2_VALID_nhwc_all_inputs_as_internal) {
+    execute(CreateModel_1_H3_W2_VALID_nhwc_all_inputs_as_internal,
+            is_ignored_1_H3_W2_VALID_nhwc_all_inputs_as_internal,
+            get_examples_1_H3_W2_VALID_nhwc_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_1_H3_W2_VALID_nhwc_all_inputs_as_internal, generated_tests::conv2d_v1_2::CreateModel_1_H3_W2_VALID_nhwc_all_inputs_as_internal)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_VALID_nhwc_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_1_H3_W2_VALID_nhwc_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_VALID_nhwc_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_1_H3_W2_VALID_nhwc_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_1_H3_W2_VALID_nhwc_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_1_H3_W2_VALID_nhwc_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_1_H3_W2_VALID_nhwc_all_inputs_as_internal_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_VALID_nhwc_all_tensors_as_inputs(Model *model);
+bool is_ignored_1_H3_W2_VALID_nhwc_all_tensors_as_inputs(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_VALID_nhwc_all_tensors_as_inputs();
+
+TEST_F(GeneratedTests, conv2d_v1_2_1_H3_W2_VALID_nhwc_all_tensors_as_inputs) {
+    execute(CreateModel_1_H3_W2_VALID_nhwc_all_tensors_as_inputs,
+            is_ignored_1_H3_W2_VALID_nhwc_all_tensors_as_inputs,
+            get_examples_1_H3_W2_VALID_nhwc_all_tensors_as_inputs());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_1_H3_W2_VALID_nhwc_all_tensors_as_inputs, generated_tests::conv2d_v1_2::CreateModel_1_H3_W2_VALID_nhwc_all_tensors_as_inputs)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_VALID_nhwc_all_tensors_as_inputs_dynamic_output_shape(Model *model);
+bool is_ignored_1_H3_W2_VALID_nhwc_all_tensors_as_inputs_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_VALID_nhwc_all_tensors_as_inputs_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_1_H3_W2_VALID_nhwc_all_tensors_as_inputs_dynamic_output_shape) {
+    execute(CreateModel_1_H3_W2_VALID_nhwc_all_tensors_as_inputs_dynamic_output_shape,
+            is_ignored_1_H3_W2_VALID_nhwc_all_tensors_as_inputs_dynamic_output_shape,
+            get_examples_1_H3_W2_VALID_nhwc_all_tensors_as_inputs_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_VALID_nhwc_all_tensors_as_inputs_all_inputs_as_internal(Model *model);
+bool is_ignored_1_H3_W2_VALID_nhwc_all_tensors_as_inputs_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_VALID_nhwc_all_tensors_as_inputs_all_inputs_as_internal();
+
+TEST_F(GeneratedTests, conv2d_v1_2_1_H3_W2_VALID_nhwc_all_tensors_as_inputs_all_inputs_as_internal) {
+    execute(CreateModel_1_H3_W2_VALID_nhwc_all_tensors_as_inputs_all_inputs_as_internal,
+            is_ignored_1_H3_W2_VALID_nhwc_all_tensors_as_inputs_all_inputs_as_internal,
+            get_examples_1_H3_W2_VALID_nhwc_all_tensors_as_inputs_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_1_H3_W2_VALID_nhwc_all_tensors_as_inputs_all_inputs_as_internal, generated_tests::conv2d_v1_2::CreateModel_1_H3_W2_VALID_nhwc_all_tensors_as_inputs_all_inputs_as_internal)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_VALID_nhwc_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_1_H3_W2_VALID_nhwc_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_VALID_nhwc_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_1_H3_W2_VALID_nhwc_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_1_H3_W2_VALID_nhwc_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_1_H3_W2_VALID_nhwc_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_1_H3_W2_VALID_nhwc_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
 void CreateModel_1_H3_W2_VALID_nhwc_relaxed(Model *model);
 bool is_ignored_1_H3_W2_VALID_nhwc_relaxed(int);
 std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_VALID_nhwc_relaxed();
@@ -2620,6 +6345,104 @@ TEST_F(GeneratedTests, conv2d_v1_2_1_H3_W2_VALID_nhwc_relaxed) {
     execute(CreateModel_1_H3_W2_VALID_nhwc_relaxed,
             is_ignored_1_H3_W2_VALID_nhwc_relaxed,
             get_examples_1_H3_W2_VALID_nhwc_relaxed());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_VALID_nhwc_relaxed_dynamic_output_shape(Model *model);
+bool is_ignored_1_H3_W2_VALID_nhwc_relaxed_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_VALID_nhwc_relaxed_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_1_H3_W2_VALID_nhwc_relaxed_dynamic_output_shape) {
+    execute(CreateModel_1_H3_W2_VALID_nhwc_relaxed_dynamic_output_shape,
+            is_ignored_1_H3_W2_VALID_nhwc_relaxed_dynamic_output_shape,
+            get_examples_1_H3_W2_VALID_nhwc_relaxed_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_VALID_nhwc_relaxed_all_inputs_as_internal(Model *model);
+bool is_ignored_1_H3_W2_VALID_nhwc_relaxed_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_VALID_nhwc_relaxed_all_inputs_as_internal();
+
+TEST_F(GeneratedTests, conv2d_v1_2_1_H3_W2_VALID_nhwc_relaxed_all_inputs_as_internal) {
+    execute(CreateModel_1_H3_W2_VALID_nhwc_relaxed_all_inputs_as_internal,
+            is_ignored_1_H3_W2_VALID_nhwc_relaxed_all_inputs_as_internal,
+            get_examples_1_H3_W2_VALID_nhwc_relaxed_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_VALID_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_1_H3_W2_VALID_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_VALID_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_1_H3_W2_VALID_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_1_H3_W2_VALID_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_1_H3_W2_VALID_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_1_H3_W2_VALID_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs(Model *model);
+bool is_ignored_1_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs();
+
+TEST_F(GeneratedTests, conv2d_v1_2_1_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs) {
+    execute(CreateModel_1_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs,
+            is_ignored_1_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs,
+            get_examples_1_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs_dynamic_output_shape(Model *model);
+bool is_ignored_1_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_1_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs_dynamic_output_shape) {
+    execute(CreateModel_1_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs_dynamic_output_shape,
+            is_ignored_1_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs_dynamic_output_shape,
+            get_examples_1_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal(Model *model);
+bool is_ignored_1_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal();
+
+TEST_F(GeneratedTests, conv2d_v1_2_1_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal) {
+    execute(CreateModel_1_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal,
+            is_ignored_1_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal,
+            get_examples_1_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_1_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_1_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_1_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_1_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_1_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape());
 }
 
 } // namespace generated_tests::conv2d_v1_2
@@ -2641,6 +6464,107 @@ TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_1_H3_W2_VALID_nhwc_float16, generated_tes
 
 namespace generated_tests::conv2d_v1_2 {
 
+void CreateModel_1_H3_W2_VALID_nhwc_float16_dynamic_output_shape(Model *model);
+bool is_ignored_1_H3_W2_VALID_nhwc_float16_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_VALID_nhwc_float16_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_1_H3_W2_VALID_nhwc_float16_dynamic_output_shape) {
+    execute(CreateModel_1_H3_W2_VALID_nhwc_float16_dynamic_output_shape,
+            is_ignored_1_H3_W2_VALID_nhwc_float16_dynamic_output_shape,
+            get_examples_1_H3_W2_VALID_nhwc_float16_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_VALID_nhwc_float16_all_inputs_as_internal(Model *model);
+bool is_ignored_1_H3_W2_VALID_nhwc_float16_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_VALID_nhwc_float16_all_inputs_as_internal();
+
+TEST_F(GeneratedTests, conv2d_v1_2_1_H3_W2_VALID_nhwc_float16_all_inputs_as_internal) {
+    execute(CreateModel_1_H3_W2_VALID_nhwc_float16_all_inputs_as_internal,
+            is_ignored_1_H3_W2_VALID_nhwc_float16_all_inputs_as_internal,
+            get_examples_1_H3_W2_VALID_nhwc_float16_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_1_H3_W2_VALID_nhwc_float16_all_inputs_as_internal, generated_tests::conv2d_v1_2::CreateModel_1_H3_W2_VALID_nhwc_float16_all_inputs_as_internal)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_VALID_nhwc_float16_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_1_H3_W2_VALID_nhwc_float16_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_VALID_nhwc_float16_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_1_H3_W2_VALID_nhwc_float16_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_1_H3_W2_VALID_nhwc_float16_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_1_H3_W2_VALID_nhwc_float16_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_1_H3_W2_VALID_nhwc_float16_all_inputs_as_internal_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs(Model *model);
+bool is_ignored_1_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs();
+
+TEST_F(GeneratedTests, conv2d_v1_2_1_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs) {
+    execute(CreateModel_1_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs,
+            is_ignored_1_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs,
+            get_examples_1_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_1_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs, generated_tests::conv2d_v1_2::CreateModel_1_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_dynamic_output_shape(Model *model);
+bool is_ignored_1_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_1_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_dynamic_output_shape) {
+    execute(CreateModel_1_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_dynamic_output_shape,
+            is_ignored_1_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_dynamic_output_shape,
+            get_examples_1_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal(Model *model);
+bool is_ignored_1_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal();
+
+TEST_F(GeneratedTests, conv2d_v1_2_1_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal) {
+    execute(CreateModel_1_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal,
+            is_ignored_1_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal,
+            get_examples_1_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_1_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal, generated_tests::conv2d_v1_2::CreateModel_1_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_1_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_1_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_1_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_1_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_1_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
 void CreateModel_1_H3_W2_VALID_nchw(Model *model);
 bool is_ignored_1_H3_W2_VALID_nchw(int);
 std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_VALID_nchw();
@@ -2656,6 +6580,107 @@ TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_1_H3_W2_VALID_nchw, generated_tests::conv
 
 namespace generated_tests::conv2d_v1_2 {
 
+void CreateModel_1_H3_W2_VALID_nchw_dynamic_output_shape(Model *model);
+bool is_ignored_1_H3_W2_VALID_nchw_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_VALID_nchw_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_1_H3_W2_VALID_nchw_dynamic_output_shape) {
+    execute(CreateModel_1_H3_W2_VALID_nchw_dynamic_output_shape,
+            is_ignored_1_H3_W2_VALID_nchw_dynamic_output_shape,
+            get_examples_1_H3_W2_VALID_nchw_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_VALID_nchw_all_inputs_as_internal(Model *model);
+bool is_ignored_1_H3_W2_VALID_nchw_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_VALID_nchw_all_inputs_as_internal();
+
+TEST_F(GeneratedTests, conv2d_v1_2_1_H3_W2_VALID_nchw_all_inputs_as_internal) {
+    execute(CreateModel_1_H3_W2_VALID_nchw_all_inputs_as_internal,
+            is_ignored_1_H3_W2_VALID_nchw_all_inputs_as_internal,
+            get_examples_1_H3_W2_VALID_nchw_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_1_H3_W2_VALID_nchw_all_inputs_as_internal, generated_tests::conv2d_v1_2::CreateModel_1_H3_W2_VALID_nchw_all_inputs_as_internal)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_VALID_nchw_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_1_H3_W2_VALID_nchw_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_VALID_nchw_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_1_H3_W2_VALID_nchw_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_1_H3_W2_VALID_nchw_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_1_H3_W2_VALID_nchw_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_1_H3_W2_VALID_nchw_all_inputs_as_internal_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_VALID_nchw_all_tensors_as_inputs(Model *model);
+bool is_ignored_1_H3_W2_VALID_nchw_all_tensors_as_inputs(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_VALID_nchw_all_tensors_as_inputs();
+
+TEST_F(GeneratedTests, conv2d_v1_2_1_H3_W2_VALID_nchw_all_tensors_as_inputs) {
+    execute(CreateModel_1_H3_W2_VALID_nchw_all_tensors_as_inputs,
+            is_ignored_1_H3_W2_VALID_nchw_all_tensors_as_inputs,
+            get_examples_1_H3_W2_VALID_nchw_all_tensors_as_inputs());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_1_H3_W2_VALID_nchw_all_tensors_as_inputs, generated_tests::conv2d_v1_2::CreateModel_1_H3_W2_VALID_nchw_all_tensors_as_inputs)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_VALID_nchw_all_tensors_as_inputs_dynamic_output_shape(Model *model);
+bool is_ignored_1_H3_W2_VALID_nchw_all_tensors_as_inputs_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_VALID_nchw_all_tensors_as_inputs_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_1_H3_W2_VALID_nchw_all_tensors_as_inputs_dynamic_output_shape) {
+    execute(CreateModel_1_H3_W2_VALID_nchw_all_tensors_as_inputs_dynamic_output_shape,
+            is_ignored_1_H3_W2_VALID_nchw_all_tensors_as_inputs_dynamic_output_shape,
+            get_examples_1_H3_W2_VALID_nchw_all_tensors_as_inputs_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_VALID_nchw_all_tensors_as_inputs_all_inputs_as_internal(Model *model);
+bool is_ignored_1_H3_W2_VALID_nchw_all_tensors_as_inputs_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_VALID_nchw_all_tensors_as_inputs_all_inputs_as_internal();
+
+TEST_F(GeneratedTests, conv2d_v1_2_1_H3_W2_VALID_nchw_all_tensors_as_inputs_all_inputs_as_internal) {
+    execute(CreateModel_1_H3_W2_VALID_nchw_all_tensors_as_inputs_all_inputs_as_internal,
+            is_ignored_1_H3_W2_VALID_nchw_all_tensors_as_inputs_all_inputs_as_internal,
+            get_examples_1_H3_W2_VALID_nchw_all_tensors_as_inputs_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_1_H3_W2_VALID_nchw_all_tensors_as_inputs_all_inputs_as_internal, generated_tests::conv2d_v1_2::CreateModel_1_H3_W2_VALID_nchw_all_tensors_as_inputs_all_inputs_as_internal)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_VALID_nchw_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_1_H3_W2_VALID_nchw_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_VALID_nchw_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_1_H3_W2_VALID_nchw_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_1_H3_W2_VALID_nchw_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_1_H3_W2_VALID_nchw_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_1_H3_W2_VALID_nchw_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
 void CreateModel_1_H3_W2_VALID_nchw_relaxed(Model *model);
 bool is_ignored_1_H3_W2_VALID_nchw_relaxed(int);
 std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_VALID_nchw_relaxed();
@@ -2664,6 +6689,104 @@ TEST_F(GeneratedTests, conv2d_v1_2_1_H3_W2_VALID_nchw_relaxed) {
     execute(CreateModel_1_H3_W2_VALID_nchw_relaxed,
             is_ignored_1_H3_W2_VALID_nchw_relaxed,
             get_examples_1_H3_W2_VALID_nchw_relaxed());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_VALID_nchw_relaxed_dynamic_output_shape(Model *model);
+bool is_ignored_1_H3_W2_VALID_nchw_relaxed_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_VALID_nchw_relaxed_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_1_H3_W2_VALID_nchw_relaxed_dynamic_output_shape) {
+    execute(CreateModel_1_H3_W2_VALID_nchw_relaxed_dynamic_output_shape,
+            is_ignored_1_H3_W2_VALID_nchw_relaxed_dynamic_output_shape,
+            get_examples_1_H3_W2_VALID_nchw_relaxed_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_VALID_nchw_relaxed_all_inputs_as_internal(Model *model);
+bool is_ignored_1_H3_W2_VALID_nchw_relaxed_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_VALID_nchw_relaxed_all_inputs_as_internal();
+
+TEST_F(GeneratedTests, conv2d_v1_2_1_H3_W2_VALID_nchw_relaxed_all_inputs_as_internal) {
+    execute(CreateModel_1_H3_W2_VALID_nchw_relaxed_all_inputs_as_internal,
+            is_ignored_1_H3_W2_VALID_nchw_relaxed_all_inputs_as_internal,
+            get_examples_1_H3_W2_VALID_nchw_relaxed_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_VALID_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_1_H3_W2_VALID_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_VALID_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_1_H3_W2_VALID_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_1_H3_W2_VALID_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_1_H3_W2_VALID_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_1_H3_W2_VALID_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs(Model *model);
+bool is_ignored_1_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs();
+
+TEST_F(GeneratedTests, conv2d_v1_2_1_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs) {
+    execute(CreateModel_1_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs,
+            is_ignored_1_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs,
+            get_examples_1_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs_dynamic_output_shape(Model *model);
+bool is_ignored_1_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_1_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs_dynamic_output_shape) {
+    execute(CreateModel_1_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs_dynamic_output_shape,
+            is_ignored_1_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs_dynamic_output_shape,
+            get_examples_1_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal(Model *model);
+bool is_ignored_1_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal();
+
+TEST_F(GeneratedTests, conv2d_v1_2_1_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal) {
+    execute(CreateModel_1_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal,
+            is_ignored_1_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal,
+            get_examples_1_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_1_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_1_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_1_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_1_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_1_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape());
 }
 
 } // namespace generated_tests::conv2d_v1_2
@@ -2685,84 +6808,789 @@ TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_1_H3_W2_VALID_nchw_float16, generated_tes
 
 namespace generated_tests::conv2d_v1_2 {
 
-void CreateModel_1_H3_W2_VALID_dynamic_output_shape_nhwc(Model *model);
-bool is_ignored_1_H3_W2_VALID_dynamic_output_shape_nhwc(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_VALID_dynamic_output_shape_nhwc();
+void CreateModel_1_H3_W2_VALID_nchw_float16_dynamic_output_shape(Model *model);
+bool is_ignored_1_H3_W2_VALID_nchw_float16_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_VALID_nchw_float16_dynamic_output_shape();
 
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_1_H3_W2_VALID_dynamic_output_shape_nhwc) {
-    execute(CreateModel_1_H3_W2_VALID_dynamic_output_shape_nhwc,
-            is_ignored_1_H3_W2_VALID_dynamic_output_shape_nhwc,
-            get_examples_1_H3_W2_VALID_dynamic_output_shape_nhwc());
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_1_H3_W2_VALID_nchw_float16_dynamic_output_shape) {
+    execute(CreateModel_1_H3_W2_VALID_nchw_float16_dynamic_output_shape,
+            is_ignored_1_H3_W2_VALID_nchw_float16_dynamic_output_shape,
+            get_examples_1_H3_W2_VALID_nchw_float16_dynamic_output_shape());
 }
 
 } // namespace generated_tests::conv2d_v1_2
 
 namespace generated_tests::conv2d_v1_2 {
 
-void CreateModel_1_H3_W2_VALID_dynamic_output_shape_nhwc_relaxed(Model *model);
-bool is_ignored_1_H3_W2_VALID_dynamic_output_shape_nhwc_relaxed(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_VALID_dynamic_output_shape_nhwc_relaxed();
+void CreateModel_1_H3_W2_VALID_nchw_float16_all_inputs_as_internal(Model *model);
+bool is_ignored_1_H3_W2_VALID_nchw_float16_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_VALID_nchw_float16_all_inputs_as_internal();
 
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_1_H3_W2_VALID_dynamic_output_shape_nhwc_relaxed) {
-    execute(CreateModel_1_H3_W2_VALID_dynamic_output_shape_nhwc_relaxed,
-            is_ignored_1_H3_W2_VALID_dynamic_output_shape_nhwc_relaxed,
-            get_examples_1_H3_W2_VALID_dynamic_output_shape_nhwc_relaxed());
+TEST_F(GeneratedTests, conv2d_v1_2_1_H3_W2_VALID_nchw_float16_all_inputs_as_internal) {
+    execute(CreateModel_1_H3_W2_VALID_nchw_float16_all_inputs_as_internal,
+            is_ignored_1_H3_W2_VALID_nchw_float16_all_inputs_as_internal,
+            get_examples_1_H3_W2_VALID_nchw_float16_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_1_H3_W2_VALID_nchw_float16_all_inputs_as_internal, generated_tests::conv2d_v1_2::CreateModel_1_H3_W2_VALID_nchw_float16_all_inputs_as_internal)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_VALID_nchw_float16_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_1_H3_W2_VALID_nchw_float16_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_VALID_nchw_float16_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_1_H3_W2_VALID_nchw_float16_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_1_H3_W2_VALID_nchw_float16_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_1_H3_W2_VALID_nchw_float16_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_1_H3_W2_VALID_nchw_float16_all_inputs_as_internal_dynamic_output_shape());
 }
 
 } // namespace generated_tests::conv2d_v1_2
 
 namespace generated_tests::conv2d_v1_2 {
 
-void CreateModel_1_H3_W2_VALID_dynamic_output_shape_nhwc_float16(Model *model);
-bool is_ignored_1_H3_W2_VALID_dynamic_output_shape_nhwc_float16(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_VALID_dynamic_output_shape_nhwc_float16();
+void CreateModel_1_H3_W2_VALID_nchw_float16_all_tensors_as_inputs(Model *model);
+bool is_ignored_1_H3_W2_VALID_nchw_float16_all_tensors_as_inputs(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_VALID_nchw_float16_all_tensors_as_inputs();
 
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_1_H3_W2_VALID_dynamic_output_shape_nhwc_float16) {
-    execute(CreateModel_1_H3_W2_VALID_dynamic_output_shape_nhwc_float16,
-            is_ignored_1_H3_W2_VALID_dynamic_output_shape_nhwc_float16,
-            get_examples_1_H3_W2_VALID_dynamic_output_shape_nhwc_float16());
+TEST_F(GeneratedTests, conv2d_v1_2_1_H3_W2_VALID_nchw_float16_all_tensors_as_inputs) {
+    execute(CreateModel_1_H3_W2_VALID_nchw_float16_all_tensors_as_inputs,
+            is_ignored_1_H3_W2_VALID_nchw_float16_all_tensors_as_inputs,
+            get_examples_1_H3_W2_VALID_nchw_float16_all_tensors_as_inputs());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_1_H3_W2_VALID_nchw_float16_all_tensors_as_inputs, generated_tests::conv2d_v1_2::CreateModel_1_H3_W2_VALID_nchw_float16_all_tensors_as_inputs)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_dynamic_output_shape(Model *model);
+bool is_ignored_1_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_1_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_dynamic_output_shape) {
+    execute(CreateModel_1_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_dynamic_output_shape,
+            is_ignored_1_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_dynamic_output_shape,
+            get_examples_1_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_dynamic_output_shape());
 }
 
 } // namespace generated_tests::conv2d_v1_2
 
 namespace generated_tests::conv2d_v1_2 {
 
-void CreateModel_1_H3_W2_VALID_dynamic_output_shape_nchw(Model *model);
-bool is_ignored_1_H3_W2_VALID_dynamic_output_shape_nchw(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_VALID_dynamic_output_shape_nchw();
+void CreateModel_1_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal(Model *model);
+bool is_ignored_1_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal();
 
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_1_H3_W2_VALID_dynamic_output_shape_nchw) {
-    execute(CreateModel_1_H3_W2_VALID_dynamic_output_shape_nchw,
-            is_ignored_1_H3_W2_VALID_dynamic_output_shape_nchw,
-            get_examples_1_H3_W2_VALID_dynamic_output_shape_nchw());
+TEST_F(GeneratedTests, conv2d_v1_2_1_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal) {
+    execute(CreateModel_1_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal,
+            is_ignored_1_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal,
+            get_examples_1_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_1_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal, generated_tests::conv2d_v1_2::CreateModel_1_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_1_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_1_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_1_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_1_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_1_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape());
 }
 
 } // namespace generated_tests::conv2d_v1_2
 
 namespace generated_tests::conv2d_v1_2 {
 
-void CreateModel_1_H3_W2_VALID_dynamic_output_shape_nchw_relaxed(Model *model);
-bool is_ignored_1_H3_W2_VALID_dynamic_output_shape_nchw_relaxed(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_VALID_dynamic_output_shape_nchw_relaxed();
+void CreateModel_1_H3_W2_VALID_nhwc_2(Model *model);
+bool is_ignored_1_H3_W2_VALID_nhwc_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_VALID_nhwc_2();
 
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_1_H3_W2_VALID_dynamic_output_shape_nchw_relaxed) {
-    execute(CreateModel_1_H3_W2_VALID_dynamic_output_shape_nchw_relaxed,
-            is_ignored_1_H3_W2_VALID_dynamic_output_shape_nchw_relaxed,
-            get_examples_1_H3_W2_VALID_dynamic_output_shape_nchw_relaxed());
+TEST_F(GeneratedTests, conv2d_v1_2_1_H3_W2_VALID_nhwc_2) {
+    execute(CreateModel_1_H3_W2_VALID_nhwc_2,
+            is_ignored_1_H3_W2_VALID_nhwc_2,
+            get_examples_1_H3_W2_VALID_nhwc_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_1_H3_W2_VALID_nhwc_2, generated_tests::conv2d_v1_2::CreateModel_1_H3_W2_VALID_nhwc_2)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_VALID_nhwc_dynamic_output_shape_2(Model *model);
+bool is_ignored_1_H3_W2_VALID_nhwc_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_VALID_nhwc_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_1_H3_W2_VALID_nhwc_dynamic_output_shape_2) {
+    execute(CreateModel_1_H3_W2_VALID_nhwc_dynamic_output_shape_2,
+            is_ignored_1_H3_W2_VALID_nhwc_dynamic_output_shape_2,
+            get_examples_1_H3_W2_VALID_nhwc_dynamic_output_shape_2());
 }
 
 } // namespace generated_tests::conv2d_v1_2
 
 namespace generated_tests::conv2d_v1_2 {
 
-void CreateModel_1_H3_W2_VALID_dynamic_output_shape_nchw_float16(Model *model);
-bool is_ignored_1_H3_W2_VALID_dynamic_output_shape_nchw_float16(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_VALID_dynamic_output_shape_nchw_float16();
+void CreateModel_1_H3_W2_VALID_nhwc_all_inputs_as_internal_2(Model *model);
+bool is_ignored_1_H3_W2_VALID_nhwc_all_inputs_as_internal_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_VALID_nhwc_all_inputs_as_internal_2();
 
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_1_H3_W2_VALID_dynamic_output_shape_nchw_float16) {
-    execute(CreateModel_1_H3_W2_VALID_dynamic_output_shape_nchw_float16,
-            is_ignored_1_H3_W2_VALID_dynamic_output_shape_nchw_float16,
-            get_examples_1_H3_W2_VALID_dynamic_output_shape_nchw_float16());
+TEST_F(GeneratedTests, conv2d_v1_2_1_H3_W2_VALID_nhwc_all_inputs_as_internal_2) {
+    execute(CreateModel_1_H3_W2_VALID_nhwc_all_inputs_as_internal_2,
+            is_ignored_1_H3_W2_VALID_nhwc_all_inputs_as_internal_2,
+            get_examples_1_H3_W2_VALID_nhwc_all_inputs_as_internal_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_1_H3_W2_VALID_nhwc_all_inputs_as_internal_2, generated_tests::conv2d_v1_2::CreateModel_1_H3_W2_VALID_nhwc_all_inputs_as_internal_2)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_VALID_nhwc_all_inputs_as_internal_dynamic_output_shape_2(Model *model);
+bool is_ignored_1_H3_W2_VALID_nhwc_all_inputs_as_internal_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_VALID_nhwc_all_inputs_as_internal_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_1_H3_W2_VALID_nhwc_all_inputs_as_internal_dynamic_output_shape_2) {
+    execute(CreateModel_1_H3_W2_VALID_nhwc_all_inputs_as_internal_dynamic_output_shape_2,
+            is_ignored_1_H3_W2_VALID_nhwc_all_inputs_as_internal_dynamic_output_shape_2,
+            get_examples_1_H3_W2_VALID_nhwc_all_inputs_as_internal_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_VALID_nhwc_all_tensors_as_inputs_2(Model *model);
+bool is_ignored_1_H3_W2_VALID_nhwc_all_tensors_as_inputs_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_VALID_nhwc_all_tensors_as_inputs_2();
+
+TEST_F(GeneratedTests, conv2d_v1_2_1_H3_W2_VALID_nhwc_all_tensors_as_inputs_2) {
+    execute(CreateModel_1_H3_W2_VALID_nhwc_all_tensors_as_inputs_2,
+            is_ignored_1_H3_W2_VALID_nhwc_all_tensors_as_inputs_2,
+            get_examples_1_H3_W2_VALID_nhwc_all_tensors_as_inputs_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_1_H3_W2_VALID_nhwc_all_tensors_as_inputs_2, generated_tests::conv2d_v1_2::CreateModel_1_H3_W2_VALID_nhwc_all_tensors_as_inputs_2)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_VALID_nhwc_all_tensors_as_inputs_dynamic_output_shape_2(Model *model);
+bool is_ignored_1_H3_W2_VALID_nhwc_all_tensors_as_inputs_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_VALID_nhwc_all_tensors_as_inputs_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_1_H3_W2_VALID_nhwc_all_tensors_as_inputs_dynamic_output_shape_2) {
+    execute(CreateModel_1_H3_W2_VALID_nhwc_all_tensors_as_inputs_dynamic_output_shape_2,
+            is_ignored_1_H3_W2_VALID_nhwc_all_tensors_as_inputs_dynamic_output_shape_2,
+            get_examples_1_H3_W2_VALID_nhwc_all_tensors_as_inputs_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_VALID_nhwc_all_tensors_as_inputs_all_inputs_as_internal_2(Model *model);
+bool is_ignored_1_H3_W2_VALID_nhwc_all_tensors_as_inputs_all_inputs_as_internal_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_VALID_nhwc_all_tensors_as_inputs_all_inputs_as_internal_2();
+
+TEST_F(GeneratedTests, conv2d_v1_2_1_H3_W2_VALID_nhwc_all_tensors_as_inputs_all_inputs_as_internal_2) {
+    execute(CreateModel_1_H3_W2_VALID_nhwc_all_tensors_as_inputs_all_inputs_as_internal_2,
+            is_ignored_1_H3_W2_VALID_nhwc_all_tensors_as_inputs_all_inputs_as_internal_2,
+            get_examples_1_H3_W2_VALID_nhwc_all_tensors_as_inputs_all_inputs_as_internal_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_1_H3_W2_VALID_nhwc_all_tensors_as_inputs_all_inputs_as_internal_2, generated_tests::conv2d_v1_2::CreateModel_1_H3_W2_VALID_nhwc_all_tensors_as_inputs_all_inputs_as_internal_2)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_VALID_nhwc_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2(Model *model);
+bool is_ignored_1_H3_W2_VALID_nhwc_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_VALID_nhwc_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_1_H3_W2_VALID_nhwc_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2) {
+    execute(CreateModel_1_H3_W2_VALID_nhwc_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2,
+            is_ignored_1_H3_W2_VALID_nhwc_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2,
+            get_examples_1_H3_W2_VALID_nhwc_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_VALID_nhwc_relaxed_2(Model *model);
+bool is_ignored_1_H3_W2_VALID_nhwc_relaxed_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_VALID_nhwc_relaxed_2();
+
+TEST_F(GeneratedTests, conv2d_v1_2_1_H3_W2_VALID_nhwc_relaxed_2) {
+    execute(CreateModel_1_H3_W2_VALID_nhwc_relaxed_2,
+            is_ignored_1_H3_W2_VALID_nhwc_relaxed_2,
+            get_examples_1_H3_W2_VALID_nhwc_relaxed_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_VALID_nhwc_relaxed_dynamic_output_shape_2(Model *model);
+bool is_ignored_1_H3_W2_VALID_nhwc_relaxed_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_VALID_nhwc_relaxed_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_1_H3_W2_VALID_nhwc_relaxed_dynamic_output_shape_2) {
+    execute(CreateModel_1_H3_W2_VALID_nhwc_relaxed_dynamic_output_shape_2,
+            is_ignored_1_H3_W2_VALID_nhwc_relaxed_dynamic_output_shape_2,
+            get_examples_1_H3_W2_VALID_nhwc_relaxed_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_VALID_nhwc_relaxed_all_inputs_as_internal_2(Model *model);
+bool is_ignored_1_H3_W2_VALID_nhwc_relaxed_all_inputs_as_internal_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_VALID_nhwc_relaxed_all_inputs_as_internal_2();
+
+TEST_F(GeneratedTests, conv2d_v1_2_1_H3_W2_VALID_nhwc_relaxed_all_inputs_as_internal_2) {
+    execute(CreateModel_1_H3_W2_VALID_nhwc_relaxed_all_inputs_as_internal_2,
+            is_ignored_1_H3_W2_VALID_nhwc_relaxed_all_inputs_as_internal_2,
+            get_examples_1_H3_W2_VALID_nhwc_relaxed_all_inputs_as_internal_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_VALID_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_2(Model *model);
+bool is_ignored_1_H3_W2_VALID_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_VALID_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_1_H3_W2_VALID_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_2) {
+    execute(CreateModel_1_H3_W2_VALID_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_2,
+            is_ignored_1_H3_W2_VALID_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_2,
+            get_examples_1_H3_W2_VALID_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs_2(Model *model);
+bool is_ignored_1_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs_2();
+
+TEST_F(GeneratedTests, conv2d_v1_2_1_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs_2) {
+    execute(CreateModel_1_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs_2,
+            is_ignored_1_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs_2,
+            get_examples_1_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs_dynamic_output_shape_2(Model *model);
+bool is_ignored_1_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_1_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs_dynamic_output_shape_2) {
+    execute(CreateModel_1_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs_dynamic_output_shape_2,
+            is_ignored_1_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs_dynamic_output_shape_2,
+            get_examples_1_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2(Model *model);
+bool is_ignored_1_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2();
+
+TEST_F(GeneratedTests, conv2d_v1_2_1_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2) {
+    execute(CreateModel_1_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2,
+            is_ignored_1_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2,
+            get_examples_1_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2(Model *model);
+bool is_ignored_1_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_1_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2) {
+    execute(CreateModel_1_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2,
+            is_ignored_1_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2,
+            get_examples_1_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_VALID_nhwc_float16_2(Model *model);
+bool is_ignored_1_H3_W2_VALID_nhwc_float16_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_VALID_nhwc_float16_2();
+
+TEST_F(GeneratedTests, conv2d_v1_2_1_H3_W2_VALID_nhwc_float16_2) {
+    execute(CreateModel_1_H3_W2_VALID_nhwc_float16_2,
+            is_ignored_1_H3_W2_VALID_nhwc_float16_2,
+            get_examples_1_H3_W2_VALID_nhwc_float16_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_1_H3_W2_VALID_nhwc_float16_2, generated_tests::conv2d_v1_2::CreateModel_1_H3_W2_VALID_nhwc_float16_2)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_VALID_nhwc_float16_dynamic_output_shape_2(Model *model);
+bool is_ignored_1_H3_W2_VALID_nhwc_float16_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_VALID_nhwc_float16_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_1_H3_W2_VALID_nhwc_float16_dynamic_output_shape_2) {
+    execute(CreateModel_1_H3_W2_VALID_nhwc_float16_dynamic_output_shape_2,
+            is_ignored_1_H3_W2_VALID_nhwc_float16_dynamic_output_shape_2,
+            get_examples_1_H3_W2_VALID_nhwc_float16_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_VALID_nhwc_float16_all_inputs_as_internal_2(Model *model);
+bool is_ignored_1_H3_W2_VALID_nhwc_float16_all_inputs_as_internal_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_VALID_nhwc_float16_all_inputs_as_internal_2();
+
+TEST_F(GeneratedTests, conv2d_v1_2_1_H3_W2_VALID_nhwc_float16_all_inputs_as_internal_2) {
+    execute(CreateModel_1_H3_W2_VALID_nhwc_float16_all_inputs_as_internal_2,
+            is_ignored_1_H3_W2_VALID_nhwc_float16_all_inputs_as_internal_2,
+            get_examples_1_H3_W2_VALID_nhwc_float16_all_inputs_as_internal_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_1_H3_W2_VALID_nhwc_float16_all_inputs_as_internal_2, generated_tests::conv2d_v1_2::CreateModel_1_H3_W2_VALID_nhwc_float16_all_inputs_as_internal_2)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_VALID_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_2(Model *model);
+bool is_ignored_1_H3_W2_VALID_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_VALID_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_1_H3_W2_VALID_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_2) {
+    execute(CreateModel_1_H3_W2_VALID_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_2,
+            is_ignored_1_H3_W2_VALID_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_2,
+            get_examples_1_H3_W2_VALID_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_2(Model *model);
+bool is_ignored_1_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_2();
+
+TEST_F(GeneratedTests, conv2d_v1_2_1_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_2) {
+    execute(CreateModel_1_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_2,
+            is_ignored_1_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_2,
+            get_examples_1_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_1_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_2, generated_tests::conv2d_v1_2::CreateModel_1_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_2)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_dynamic_output_shape_2(Model *model);
+bool is_ignored_1_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_1_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_dynamic_output_shape_2) {
+    execute(CreateModel_1_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_dynamic_output_shape_2,
+            is_ignored_1_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_dynamic_output_shape_2,
+            get_examples_1_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_2(Model *model);
+bool is_ignored_1_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_2();
+
+TEST_F(GeneratedTests, conv2d_v1_2_1_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_2) {
+    execute(CreateModel_1_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_2,
+            is_ignored_1_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_2,
+            get_examples_1_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_1_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_2, generated_tests::conv2d_v1_2::CreateModel_1_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_2)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2(Model *model);
+bool is_ignored_1_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_1_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2) {
+    execute(CreateModel_1_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2,
+            is_ignored_1_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2,
+            get_examples_1_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_VALID_nchw_2(Model *model);
+bool is_ignored_1_H3_W2_VALID_nchw_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_VALID_nchw_2();
+
+TEST_F(GeneratedTests, conv2d_v1_2_1_H3_W2_VALID_nchw_2) {
+    execute(CreateModel_1_H3_W2_VALID_nchw_2,
+            is_ignored_1_H3_W2_VALID_nchw_2,
+            get_examples_1_H3_W2_VALID_nchw_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_1_H3_W2_VALID_nchw_2, generated_tests::conv2d_v1_2::CreateModel_1_H3_W2_VALID_nchw_2)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_VALID_nchw_dynamic_output_shape_2(Model *model);
+bool is_ignored_1_H3_W2_VALID_nchw_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_VALID_nchw_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_1_H3_W2_VALID_nchw_dynamic_output_shape_2) {
+    execute(CreateModel_1_H3_W2_VALID_nchw_dynamic_output_shape_2,
+            is_ignored_1_H3_W2_VALID_nchw_dynamic_output_shape_2,
+            get_examples_1_H3_W2_VALID_nchw_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_VALID_nchw_all_inputs_as_internal_2(Model *model);
+bool is_ignored_1_H3_W2_VALID_nchw_all_inputs_as_internal_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_VALID_nchw_all_inputs_as_internal_2();
+
+TEST_F(GeneratedTests, conv2d_v1_2_1_H3_W2_VALID_nchw_all_inputs_as_internal_2) {
+    execute(CreateModel_1_H3_W2_VALID_nchw_all_inputs_as_internal_2,
+            is_ignored_1_H3_W2_VALID_nchw_all_inputs_as_internal_2,
+            get_examples_1_H3_W2_VALID_nchw_all_inputs_as_internal_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_1_H3_W2_VALID_nchw_all_inputs_as_internal_2, generated_tests::conv2d_v1_2::CreateModel_1_H3_W2_VALID_nchw_all_inputs_as_internal_2)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_VALID_nchw_all_inputs_as_internal_dynamic_output_shape_2(Model *model);
+bool is_ignored_1_H3_W2_VALID_nchw_all_inputs_as_internal_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_VALID_nchw_all_inputs_as_internal_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_1_H3_W2_VALID_nchw_all_inputs_as_internal_dynamic_output_shape_2) {
+    execute(CreateModel_1_H3_W2_VALID_nchw_all_inputs_as_internal_dynamic_output_shape_2,
+            is_ignored_1_H3_W2_VALID_nchw_all_inputs_as_internal_dynamic_output_shape_2,
+            get_examples_1_H3_W2_VALID_nchw_all_inputs_as_internal_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_VALID_nchw_all_tensors_as_inputs_2(Model *model);
+bool is_ignored_1_H3_W2_VALID_nchw_all_tensors_as_inputs_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_VALID_nchw_all_tensors_as_inputs_2();
+
+TEST_F(GeneratedTests, conv2d_v1_2_1_H3_W2_VALID_nchw_all_tensors_as_inputs_2) {
+    execute(CreateModel_1_H3_W2_VALID_nchw_all_tensors_as_inputs_2,
+            is_ignored_1_H3_W2_VALID_nchw_all_tensors_as_inputs_2,
+            get_examples_1_H3_W2_VALID_nchw_all_tensors_as_inputs_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_1_H3_W2_VALID_nchw_all_tensors_as_inputs_2, generated_tests::conv2d_v1_2::CreateModel_1_H3_W2_VALID_nchw_all_tensors_as_inputs_2)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_VALID_nchw_all_tensors_as_inputs_dynamic_output_shape_2(Model *model);
+bool is_ignored_1_H3_W2_VALID_nchw_all_tensors_as_inputs_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_VALID_nchw_all_tensors_as_inputs_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_1_H3_W2_VALID_nchw_all_tensors_as_inputs_dynamic_output_shape_2) {
+    execute(CreateModel_1_H3_W2_VALID_nchw_all_tensors_as_inputs_dynamic_output_shape_2,
+            is_ignored_1_H3_W2_VALID_nchw_all_tensors_as_inputs_dynamic_output_shape_2,
+            get_examples_1_H3_W2_VALID_nchw_all_tensors_as_inputs_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_VALID_nchw_all_tensors_as_inputs_all_inputs_as_internal_2(Model *model);
+bool is_ignored_1_H3_W2_VALID_nchw_all_tensors_as_inputs_all_inputs_as_internal_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_VALID_nchw_all_tensors_as_inputs_all_inputs_as_internal_2();
+
+TEST_F(GeneratedTests, conv2d_v1_2_1_H3_W2_VALID_nchw_all_tensors_as_inputs_all_inputs_as_internal_2) {
+    execute(CreateModel_1_H3_W2_VALID_nchw_all_tensors_as_inputs_all_inputs_as_internal_2,
+            is_ignored_1_H3_W2_VALID_nchw_all_tensors_as_inputs_all_inputs_as_internal_2,
+            get_examples_1_H3_W2_VALID_nchw_all_tensors_as_inputs_all_inputs_as_internal_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_1_H3_W2_VALID_nchw_all_tensors_as_inputs_all_inputs_as_internal_2, generated_tests::conv2d_v1_2::CreateModel_1_H3_W2_VALID_nchw_all_tensors_as_inputs_all_inputs_as_internal_2)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_VALID_nchw_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2(Model *model);
+bool is_ignored_1_H3_W2_VALID_nchw_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_VALID_nchw_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_1_H3_W2_VALID_nchw_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2) {
+    execute(CreateModel_1_H3_W2_VALID_nchw_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2,
+            is_ignored_1_H3_W2_VALID_nchw_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2,
+            get_examples_1_H3_W2_VALID_nchw_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_VALID_nchw_relaxed_2(Model *model);
+bool is_ignored_1_H3_W2_VALID_nchw_relaxed_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_VALID_nchw_relaxed_2();
+
+TEST_F(GeneratedTests, conv2d_v1_2_1_H3_W2_VALID_nchw_relaxed_2) {
+    execute(CreateModel_1_H3_W2_VALID_nchw_relaxed_2,
+            is_ignored_1_H3_W2_VALID_nchw_relaxed_2,
+            get_examples_1_H3_W2_VALID_nchw_relaxed_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_VALID_nchw_relaxed_dynamic_output_shape_2(Model *model);
+bool is_ignored_1_H3_W2_VALID_nchw_relaxed_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_VALID_nchw_relaxed_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_1_H3_W2_VALID_nchw_relaxed_dynamic_output_shape_2) {
+    execute(CreateModel_1_H3_W2_VALID_nchw_relaxed_dynamic_output_shape_2,
+            is_ignored_1_H3_W2_VALID_nchw_relaxed_dynamic_output_shape_2,
+            get_examples_1_H3_W2_VALID_nchw_relaxed_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_VALID_nchw_relaxed_all_inputs_as_internal_2(Model *model);
+bool is_ignored_1_H3_W2_VALID_nchw_relaxed_all_inputs_as_internal_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_VALID_nchw_relaxed_all_inputs_as_internal_2();
+
+TEST_F(GeneratedTests, conv2d_v1_2_1_H3_W2_VALID_nchw_relaxed_all_inputs_as_internal_2) {
+    execute(CreateModel_1_H3_W2_VALID_nchw_relaxed_all_inputs_as_internal_2,
+            is_ignored_1_H3_W2_VALID_nchw_relaxed_all_inputs_as_internal_2,
+            get_examples_1_H3_W2_VALID_nchw_relaxed_all_inputs_as_internal_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_VALID_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_2(Model *model);
+bool is_ignored_1_H3_W2_VALID_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_VALID_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_1_H3_W2_VALID_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_2) {
+    execute(CreateModel_1_H3_W2_VALID_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_2,
+            is_ignored_1_H3_W2_VALID_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_2,
+            get_examples_1_H3_W2_VALID_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs_2(Model *model);
+bool is_ignored_1_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs_2();
+
+TEST_F(GeneratedTests, conv2d_v1_2_1_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs_2) {
+    execute(CreateModel_1_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs_2,
+            is_ignored_1_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs_2,
+            get_examples_1_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs_dynamic_output_shape_2(Model *model);
+bool is_ignored_1_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_1_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs_dynamic_output_shape_2) {
+    execute(CreateModel_1_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs_dynamic_output_shape_2,
+            is_ignored_1_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs_dynamic_output_shape_2,
+            get_examples_1_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2(Model *model);
+bool is_ignored_1_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2();
+
+TEST_F(GeneratedTests, conv2d_v1_2_1_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2) {
+    execute(CreateModel_1_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2,
+            is_ignored_1_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2,
+            get_examples_1_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2(Model *model);
+bool is_ignored_1_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_1_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2) {
+    execute(CreateModel_1_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2,
+            is_ignored_1_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2,
+            get_examples_1_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_VALID_nchw_float16_2(Model *model);
+bool is_ignored_1_H3_W2_VALID_nchw_float16_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_VALID_nchw_float16_2();
+
+TEST_F(GeneratedTests, conv2d_v1_2_1_H3_W2_VALID_nchw_float16_2) {
+    execute(CreateModel_1_H3_W2_VALID_nchw_float16_2,
+            is_ignored_1_H3_W2_VALID_nchw_float16_2,
+            get_examples_1_H3_W2_VALID_nchw_float16_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_1_H3_W2_VALID_nchw_float16_2, generated_tests::conv2d_v1_2::CreateModel_1_H3_W2_VALID_nchw_float16_2)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_VALID_nchw_float16_dynamic_output_shape_2(Model *model);
+bool is_ignored_1_H3_W2_VALID_nchw_float16_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_VALID_nchw_float16_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_1_H3_W2_VALID_nchw_float16_dynamic_output_shape_2) {
+    execute(CreateModel_1_H3_W2_VALID_nchw_float16_dynamic_output_shape_2,
+            is_ignored_1_H3_W2_VALID_nchw_float16_dynamic_output_shape_2,
+            get_examples_1_H3_W2_VALID_nchw_float16_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_VALID_nchw_float16_all_inputs_as_internal_2(Model *model);
+bool is_ignored_1_H3_W2_VALID_nchw_float16_all_inputs_as_internal_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_VALID_nchw_float16_all_inputs_as_internal_2();
+
+TEST_F(GeneratedTests, conv2d_v1_2_1_H3_W2_VALID_nchw_float16_all_inputs_as_internal_2) {
+    execute(CreateModel_1_H3_W2_VALID_nchw_float16_all_inputs_as_internal_2,
+            is_ignored_1_H3_W2_VALID_nchw_float16_all_inputs_as_internal_2,
+            get_examples_1_H3_W2_VALID_nchw_float16_all_inputs_as_internal_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_1_H3_W2_VALID_nchw_float16_all_inputs_as_internal_2, generated_tests::conv2d_v1_2::CreateModel_1_H3_W2_VALID_nchw_float16_all_inputs_as_internal_2)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_VALID_nchw_float16_all_inputs_as_internal_dynamic_output_shape_2(Model *model);
+bool is_ignored_1_H3_W2_VALID_nchw_float16_all_inputs_as_internal_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_VALID_nchw_float16_all_inputs_as_internal_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_1_H3_W2_VALID_nchw_float16_all_inputs_as_internal_dynamic_output_shape_2) {
+    execute(CreateModel_1_H3_W2_VALID_nchw_float16_all_inputs_as_internal_dynamic_output_shape_2,
+            is_ignored_1_H3_W2_VALID_nchw_float16_all_inputs_as_internal_dynamic_output_shape_2,
+            get_examples_1_H3_W2_VALID_nchw_float16_all_inputs_as_internal_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_2(Model *model);
+bool is_ignored_1_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_2();
+
+TEST_F(GeneratedTests, conv2d_v1_2_1_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_2) {
+    execute(CreateModel_1_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_2,
+            is_ignored_1_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_2,
+            get_examples_1_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_1_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_2, generated_tests::conv2d_v1_2::CreateModel_1_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_2)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_dynamic_output_shape_2(Model *model);
+bool is_ignored_1_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_1_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_dynamic_output_shape_2) {
+    execute(CreateModel_1_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_dynamic_output_shape_2,
+            is_ignored_1_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_dynamic_output_shape_2,
+            get_examples_1_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_2(Model *model);
+bool is_ignored_1_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_2();
+
+TEST_F(GeneratedTests, conv2d_v1_2_1_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_2) {
+    execute(CreateModel_1_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_2,
+            is_ignored_1_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_2,
+            get_examples_1_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_1_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_2, generated_tests::conv2d_v1_2::CreateModel_1_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_2)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_1_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2(Model *model);
+bool is_ignored_1_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_1_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_1_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2) {
+    execute(CreateModel_1_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2,
+            is_ignored_1_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2,
+            get_examples_1_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2());
 }
 
 } // namespace generated_tests::conv2d_v1_2
@@ -2784,6 +7612,107 @@ TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_3_H3_W2_SAME_nhwc, generated_tests::conv2
 
 namespace generated_tests::conv2d_v1_2 {
 
+void CreateModel_3_H3_W2_SAME_nhwc_dynamic_output_shape(Model *model);
+bool is_ignored_3_H3_W2_SAME_nhwc_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_SAME_nhwc_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_3_H3_W2_SAME_nhwc_dynamic_output_shape) {
+    execute(CreateModel_3_H3_W2_SAME_nhwc_dynamic_output_shape,
+            is_ignored_3_H3_W2_SAME_nhwc_dynamic_output_shape,
+            get_examples_3_H3_W2_SAME_nhwc_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_SAME_nhwc_all_inputs_as_internal(Model *model);
+bool is_ignored_3_H3_W2_SAME_nhwc_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_SAME_nhwc_all_inputs_as_internal();
+
+TEST_F(GeneratedTests, conv2d_v1_2_3_H3_W2_SAME_nhwc_all_inputs_as_internal) {
+    execute(CreateModel_3_H3_W2_SAME_nhwc_all_inputs_as_internal,
+            is_ignored_3_H3_W2_SAME_nhwc_all_inputs_as_internal,
+            get_examples_3_H3_W2_SAME_nhwc_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_3_H3_W2_SAME_nhwc_all_inputs_as_internal, generated_tests::conv2d_v1_2::CreateModel_3_H3_W2_SAME_nhwc_all_inputs_as_internal)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_SAME_nhwc_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_3_H3_W2_SAME_nhwc_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_SAME_nhwc_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_3_H3_W2_SAME_nhwc_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_3_H3_W2_SAME_nhwc_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_3_H3_W2_SAME_nhwc_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_3_H3_W2_SAME_nhwc_all_inputs_as_internal_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_SAME_nhwc_all_tensors_as_inputs(Model *model);
+bool is_ignored_3_H3_W2_SAME_nhwc_all_tensors_as_inputs(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_SAME_nhwc_all_tensors_as_inputs();
+
+TEST_F(GeneratedTests, conv2d_v1_2_3_H3_W2_SAME_nhwc_all_tensors_as_inputs) {
+    execute(CreateModel_3_H3_W2_SAME_nhwc_all_tensors_as_inputs,
+            is_ignored_3_H3_W2_SAME_nhwc_all_tensors_as_inputs,
+            get_examples_3_H3_W2_SAME_nhwc_all_tensors_as_inputs());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_3_H3_W2_SAME_nhwc_all_tensors_as_inputs, generated_tests::conv2d_v1_2::CreateModel_3_H3_W2_SAME_nhwc_all_tensors_as_inputs)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_SAME_nhwc_all_tensors_as_inputs_dynamic_output_shape(Model *model);
+bool is_ignored_3_H3_W2_SAME_nhwc_all_tensors_as_inputs_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_SAME_nhwc_all_tensors_as_inputs_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_3_H3_W2_SAME_nhwc_all_tensors_as_inputs_dynamic_output_shape) {
+    execute(CreateModel_3_H3_W2_SAME_nhwc_all_tensors_as_inputs_dynamic_output_shape,
+            is_ignored_3_H3_W2_SAME_nhwc_all_tensors_as_inputs_dynamic_output_shape,
+            get_examples_3_H3_W2_SAME_nhwc_all_tensors_as_inputs_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_SAME_nhwc_all_tensors_as_inputs_all_inputs_as_internal(Model *model);
+bool is_ignored_3_H3_W2_SAME_nhwc_all_tensors_as_inputs_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_SAME_nhwc_all_tensors_as_inputs_all_inputs_as_internal();
+
+TEST_F(GeneratedTests, conv2d_v1_2_3_H3_W2_SAME_nhwc_all_tensors_as_inputs_all_inputs_as_internal) {
+    execute(CreateModel_3_H3_W2_SAME_nhwc_all_tensors_as_inputs_all_inputs_as_internal,
+            is_ignored_3_H3_W2_SAME_nhwc_all_tensors_as_inputs_all_inputs_as_internal,
+            get_examples_3_H3_W2_SAME_nhwc_all_tensors_as_inputs_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_3_H3_W2_SAME_nhwc_all_tensors_as_inputs_all_inputs_as_internal, generated_tests::conv2d_v1_2::CreateModel_3_H3_W2_SAME_nhwc_all_tensors_as_inputs_all_inputs_as_internal)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_SAME_nhwc_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_3_H3_W2_SAME_nhwc_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_SAME_nhwc_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_3_H3_W2_SAME_nhwc_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_3_H3_W2_SAME_nhwc_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_3_H3_W2_SAME_nhwc_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_3_H3_W2_SAME_nhwc_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
 void CreateModel_3_H3_W2_SAME_nhwc_relaxed(Model *model);
 bool is_ignored_3_H3_W2_SAME_nhwc_relaxed(int);
 std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_SAME_nhwc_relaxed();
@@ -2792,6 +7721,104 @@ TEST_F(GeneratedTests, conv2d_v1_2_3_H3_W2_SAME_nhwc_relaxed) {
     execute(CreateModel_3_H3_W2_SAME_nhwc_relaxed,
             is_ignored_3_H3_W2_SAME_nhwc_relaxed,
             get_examples_3_H3_W2_SAME_nhwc_relaxed());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_SAME_nhwc_relaxed_dynamic_output_shape(Model *model);
+bool is_ignored_3_H3_W2_SAME_nhwc_relaxed_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_SAME_nhwc_relaxed_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_3_H3_W2_SAME_nhwc_relaxed_dynamic_output_shape) {
+    execute(CreateModel_3_H3_W2_SAME_nhwc_relaxed_dynamic_output_shape,
+            is_ignored_3_H3_W2_SAME_nhwc_relaxed_dynamic_output_shape,
+            get_examples_3_H3_W2_SAME_nhwc_relaxed_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_SAME_nhwc_relaxed_all_inputs_as_internal(Model *model);
+bool is_ignored_3_H3_W2_SAME_nhwc_relaxed_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_SAME_nhwc_relaxed_all_inputs_as_internal();
+
+TEST_F(GeneratedTests, conv2d_v1_2_3_H3_W2_SAME_nhwc_relaxed_all_inputs_as_internal) {
+    execute(CreateModel_3_H3_W2_SAME_nhwc_relaxed_all_inputs_as_internal,
+            is_ignored_3_H3_W2_SAME_nhwc_relaxed_all_inputs_as_internal,
+            get_examples_3_H3_W2_SAME_nhwc_relaxed_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_SAME_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_3_H3_W2_SAME_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_SAME_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_3_H3_W2_SAME_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_3_H3_W2_SAME_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_3_H3_W2_SAME_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_3_H3_W2_SAME_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs(Model *model);
+bool is_ignored_3_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs();
+
+TEST_F(GeneratedTests, conv2d_v1_2_3_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs) {
+    execute(CreateModel_3_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs,
+            is_ignored_3_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs,
+            get_examples_3_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_dynamic_output_shape(Model *model);
+bool is_ignored_3_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_3_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_dynamic_output_shape) {
+    execute(CreateModel_3_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_dynamic_output_shape,
+            is_ignored_3_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_dynamic_output_shape,
+            get_examples_3_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal(Model *model);
+bool is_ignored_3_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal();
+
+TEST_F(GeneratedTests, conv2d_v1_2_3_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal) {
+    execute(CreateModel_3_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal,
+            is_ignored_3_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal,
+            get_examples_3_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_3_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_3_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_3_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_3_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_3_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape());
 }
 
 } // namespace generated_tests::conv2d_v1_2
@@ -2813,6 +7840,107 @@ TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_3_H3_W2_SAME_nhwc_float16, generated_test
 
 namespace generated_tests::conv2d_v1_2 {
 
+void CreateModel_3_H3_W2_SAME_nhwc_float16_dynamic_output_shape(Model *model);
+bool is_ignored_3_H3_W2_SAME_nhwc_float16_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_SAME_nhwc_float16_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_3_H3_W2_SAME_nhwc_float16_dynamic_output_shape) {
+    execute(CreateModel_3_H3_W2_SAME_nhwc_float16_dynamic_output_shape,
+            is_ignored_3_H3_W2_SAME_nhwc_float16_dynamic_output_shape,
+            get_examples_3_H3_W2_SAME_nhwc_float16_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_SAME_nhwc_float16_all_inputs_as_internal(Model *model);
+bool is_ignored_3_H3_W2_SAME_nhwc_float16_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_SAME_nhwc_float16_all_inputs_as_internal();
+
+TEST_F(GeneratedTests, conv2d_v1_2_3_H3_W2_SAME_nhwc_float16_all_inputs_as_internal) {
+    execute(CreateModel_3_H3_W2_SAME_nhwc_float16_all_inputs_as_internal,
+            is_ignored_3_H3_W2_SAME_nhwc_float16_all_inputs_as_internal,
+            get_examples_3_H3_W2_SAME_nhwc_float16_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_3_H3_W2_SAME_nhwc_float16_all_inputs_as_internal, generated_tests::conv2d_v1_2::CreateModel_3_H3_W2_SAME_nhwc_float16_all_inputs_as_internal)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_SAME_nhwc_float16_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_3_H3_W2_SAME_nhwc_float16_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_SAME_nhwc_float16_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_3_H3_W2_SAME_nhwc_float16_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_3_H3_W2_SAME_nhwc_float16_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_3_H3_W2_SAME_nhwc_float16_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_3_H3_W2_SAME_nhwc_float16_all_inputs_as_internal_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs(Model *model);
+bool is_ignored_3_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs();
+
+TEST_F(GeneratedTests, conv2d_v1_2_3_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs) {
+    execute(CreateModel_3_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs,
+            is_ignored_3_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs,
+            get_examples_3_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_3_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs, generated_tests::conv2d_v1_2::CreateModel_3_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_dynamic_output_shape(Model *model);
+bool is_ignored_3_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_3_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_dynamic_output_shape) {
+    execute(CreateModel_3_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_dynamic_output_shape,
+            is_ignored_3_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_dynamic_output_shape,
+            get_examples_3_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal(Model *model);
+bool is_ignored_3_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal();
+
+TEST_F(GeneratedTests, conv2d_v1_2_3_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal) {
+    execute(CreateModel_3_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal,
+            is_ignored_3_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal,
+            get_examples_3_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_3_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal, generated_tests::conv2d_v1_2::CreateModel_3_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_3_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_3_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_3_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_3_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_3_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
 void CreateModel_3_H3_W2_SAME_nchw(Model *model);
 bool is_ignored_3_H3_W2_SAME_nchw(int);
 std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_SAME_nchw();
@@ -2828,6 +7956,107 @@ TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_3_H3_W2_SAME_nchw, generated_tests::conv2
 
 namespace generated_tests::conv2d_v1_2 {
 
+void CreateModel_3_H3_W2_SAME_nchw_dynamic_output_shape(Model *model);
+bool is_ignored_3_H3_W2_SAME_nchw_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_SAME_nchw_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_3_H3_W2_SAME_nchw_dynamic_output_shape) {
+    execute(CreateModel_3_H3_W2_SAME_nchw_dynamic_output_shape,
+            is_ignored_3_H3_W2_SAME_nchw_dynamic_output_shape,
+            get_examples_3_H3_W2_SAME_nchw_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_SAME_nchw_all_inputs_as_internal(Model *model);
+bool is_ignored_3_H3_W2_SAME_nchw_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_SAME_nchw_all_inputs_as_internal();
+
+TEST_F(GeneratedTests, conv2d_v1_2_3_H3_W2_SAME_nchw_all_inputs_as_internal) {
+    execute(CreateModel_3_H3_W2_SAME_nchw_all_inputs_as_internal,
+            is_ignored_3_H3_W2_SAME_nchw_all_inputs_as_internal,
+            get_examples_3_H3_W2_SAME_nchw_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_3_H3_W2_SAME_nchw_all_inputs_as_internal, generated_tests::conv2d_v1_2::CreateModel_3_H3_W2_SAME_nchw_all_inputs_as_internal)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_SAME_nchw_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_3_H3_W2_SAME_nchw_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_SAME_nchw_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_3_H3_W2_SAME_nchw_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_3_H3_W2_SAME_nchw_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_3_H3_W2_SAME_nchw_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_3_H3_W2_SAME_nchw_all_inputs_as_internal_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_SAME_nchw_all_tensors_as_inputs(Model *model);
+bool is_ignored_3_H3_W2_SAME_nchw_all_tensors_as_inputs(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_SAME_nchw_all_tensors_as_inputs();
+
+TEST_F(GeneratedTests, conv2d_v1_2_3_H3_W2_SAME_nchw_all_tensors_as_inputs) {
+    execute(CreateModel_3_H3_W2_SAME_nchw_all_tensors_as_inputs,
+            is_ignored_3_H3_W2_SAME_nchw_all_tensors_as_inputs,
+            get_examples_3_H3_W2_SAME_nchw_all_tensors_as_inputs());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_3_H3_W2_SAME_nchw_all_tensors_as_inputs, generated_tests::conv2d_v1_2::CreateModel_3_H3_W2_SAME_nchw_all_tensors_as_inputs)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_SAME_nchw_all_tensors_as_inputs_dynamic_output_shape(Model *model);
+bool is_ignored_3_H3_W2_SAME_nchw_all_tensors_as_inputs_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_SAME_nchw_all_tensors_as_inputs_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_3_H3_W2_SAME_nchw_all_tensors_as_inputs_dynamic_output_shape) {
+    execute(CreateModel_3_H3_W2_SAME_nchw_all_tensors_as_inputs_dynamic_output_shape,
+            is_ignored_3_H3_W2_SAME_nchw_all_tensors_as_inputs_dynamic_output_shape,
+            get_examples_3_H3_W2_SAME_nchw_all_tensors_as_inputs_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_SAME_nchw_all_tensors_as_inputs_all_inputs_as_internal(Model *model);
+bool is_ignored_3_H3_W2_SAME_nchw_all_tensors_as_inputs_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_SAME_nchw_all_tensors_as_inputs_all_inputs_as_internal();
+
+TEST_F(GeneratedTests, conv2d_v1_2_3_H3_W2_SAME_nchw_all_tensors_as_inputs_all_inputs_as_internal) {
+    execute(CreateModel_3_H3_W2_SAME_nchw_all_tensors_as_inputs_all_inputs_as_internal,
+            is_ignored_3_H3_W2_SAME_nchw_all_tensors_as_inputs_all_inputs_as_internal,
+            get_examples_3_H3_W2_SAME_nchw_all_tensors_as_inputs_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_3_H3_W2_SAME_nchw_all_tensors_as_inputs_all_inputs_as_internal, generated_tests::conv2d_v1_2::CreateModel_3_H3_W2_SAME_nchw_all_tensors_as_inputs_all_inputs_as_internal)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_SAME_nchw_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_3_H3_W2_SAME_nchw_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_SAME_nchw_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_3_H3_W2_SAME_nchw_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_3_H3_W2_SAME_nchw_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_3_H3_W2_SAME_nchw_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_3_H3_W2_SAME_nchw_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
 void CreateModel_3_H3_W2_SAME_nchw_relaxed(Model *model);
 bool is_ignored_3_H3_W2_SAME_nchw_relaxed(int);
 std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_SAME_nchw_relaxed();
@@ -2836,6 +8065,104 @@ TEST_F(GeneratedTests, conv2d_v1_2_3_H3_W2_SAME_nchw_relaxed) {
     execute(CreateModel_3_H3_W2_SAME_nchw_relaxed,
             is_ignored_3_H3_W2_SAME_nchw_relaxed,
             get_examples_3_H3_W2_SAME_nchw_relaxed());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_SAME_nchw_relaxed_dynamic_output_shape(Model *model);
+bool is_ignored_3_H3_W2_SAME_nchw_relaxed_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_SAME_nchw_relaxed_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_3_H3_W2_SAME_nchw_relaxed_dynamic_output_shape) {
+    execute(CreateModel_3_H3_W2_SAME_nchw_relaxed_dynamic_output_shape,
+            is_ignored_3_H3_W2_SAME_nchw_relaxed_dynamic_output_shape,
+            get_examples_3_H3_W2_SAME_nchw_relaxed_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_SAME_nchw_relaxed_all_inputs_as_internal(Model *model);
+bool is_ignored_3_H3_W2_SAME_nchw_relaxed_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_SAME_nchw_relaxed_all_inputs_as_internal();
+
+TEST_F(GeneratedTests, conv2d_v1_2_3_H3_W2_SAME_nchw_relaxed_all_inputs_as_internal) {
+    execute(CreateModel_3_H3_W2_SAME_nchw_relaxed_all_inputs_as_internal,
+            is_ignored_3_H3_W2_SAME_nchw_relaxed_all_inputs_as_internal,
+            get_examples_3_H3_W2_SAME_nchw_relaxed_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_SAME_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_3_H3_W2_SAME_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_SAME_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_3_H3_W2_SAME_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_3_H3_W2_SAME_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_3_H3_W2_SAME_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_3_H3_W2_SAME_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs(Model *model);
+bool is_ignored_3_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs();
+
+TEST_F(GeneratedTests, conv2d_v1_2_3_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs) {
+    execute(CreateModel_3_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs,
+            is_ignored_3_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs,
+            get_examples_3_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_dynamic_output_shape(Model *model);
+bool is_ignored_3_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_3_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_dynamic_output_shape) {
+    execute(CreateModel_3_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_dynamic_output_shape,
+            is_ignored_3_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_dynamic_output_shape,
+            get_examples_3_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal(Model *model);
+bool is_ignored_3_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal();
+
+TEST_F(GeneratedTests, conv2d_v1_2_3_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal) {
+    execute(CreateModel_3_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal,
+            is_ignored_3_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal,
+            get_examples_3_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_3_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_3_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_3_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_3_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_3_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape());
 }
 
 } // namespace generated_tests::conv2d_v1_2
@@ -2857,84 +8184,789 @@ TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_3_H3_W2_SAME_nchw_float16, generated_test
 
 namespace generated_tests::conv2d_v1_2 {
 
-void CreateModel_3_H3_W2_SAME_dynamic_output_shape_nhwc(Model *model);
-bool is_ignored_3_H3_W2_SAME_dynamic_output_shape_nhwc(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_SAME_dynamic_output_shape_nhwc();
+void CreateModel_3_H3_W2_SAME_nchw_float16_dynamic_output_shape(Model *model);
+bool is_ignored_3_H3_W2_SAME_nchw_float16_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_SAME_nchw_float16_dynamic_output_shape();
 
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_3_H3_W2_SAME_dynamic_output_shape_nhwc) {
-    execute(CreateModel_3_H3_W2_SAME_dynamic_output_shape_nhwc,
-            is_ignored_3_H3_W2_SAME_dynamic_output_shape_nhwc,
-            get_examples_3_H3_W2_SAME_dynamic_output_shape_nhwc());
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_3_H3_W2_SAME_nchw_float16_dynamic_output_shape) {
+    execute(CreateModel_3_H3_W2_SAME_nchw_float16_dynamic_output_shape,
+            is_ignored_3_H3_W2_SAME_nchw_float16_dynamic_output_shape,
+            get_examples_3_H3_W2_SAME_nchw_float16_dynamic_output_shape());
 }
 
 } // namespace generated_tests::conv2d_v1_2
 
 namespace generated_tests::conv2d_v1_2 {
 
-void CreateModel_3_H3_W2_SAME_dynamic_output_shape_nhwc_relaxed(Model *model);
-bool is_ignored_3_H3_W2_SAME_dynamic_output_shape_nhwc_relaxed(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_SAME_dynamic_output_shape_nhwc_relaxed();
+void CreateModel_3_H3_W2_SAME_nchw_float16_all_inputs_as_internal(Model *model);
+bool is_ignored_3_H3_W2_SAME_nchw_float16_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_SAME_nchw_float16_all_inputs_as_internal();
 
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_3_H3_W2_SAME_dynamic_output_shape_nhwc_relaxed) {
-    execute(CreateModel_3_H3_W2_SAME_dynamic_output_shape_nhwc_relaxed,
-            is_ignored_3_H3_W2_SAME_dynamic_output_shape_nhwc_relaxed,
-            get_examples_3_H3_W2_SAME_dynamic_output_shape_nhwc_relaxed());
+TEST_F(GeneratedTests, conv2d_v1_2_3_H3_W2_SAME_nchw_float16_all_inputs_as_internal) {
+    execute(CreateModel_3_H3_W2_SAME_nchw_float16_all_inputs_as_internal,
+            is_ignored_3_H3_W2_SAME_nchw_float16_all_inputs_as_internal,
+            get_examples_3_H3_W2_SAME_nchw_float16_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_3_H3_W2_SAME_nchw_float16_all_inputs_as_internal, generated_tests::conv2d_v1_2::CreateModel_3_H3_W2_SAME_nchw_float16_all_inputs_as_internal)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_SAME_nchw_float16_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_3_H3_W2_SAME_nchw_float16_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_SAME_nchw_float16_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_3_H3_W2_SAME_nchw_float16_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_3_H3_W2_SAME_nchw_float16_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_3_H3_W2_SAME_nchw_float16_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_3_H3_W2_SAME_nchw_float16_all_inputs_as_internal_dynamic_output_shape());
 }
 
 } // namespace generated_tests::conv2d_v1_2
 
 namespace generated_tests::conv2d_v1_2 {
 
-void CreateModel_3_H3_W2_SAME_dynamic_output_shape_nhwc_float16(Model *model);
-bool is_ignored_3_H3_W2_SAME_dynamic_output_shape_nhwc_float16(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_SAME_dynamic_output_shape_nhwc_float16();
+void CreateModel_3_H3_W2_SAME_nchw_float16_all_tensors_as_inputs(Model *model);
+bool is_ignored_3_H3_W2_SAME_nchw_float16_all_tensors_as_inputs(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_SAME_nchw_float16_all_tensors_as_inputs();
 
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_3_H3_W2_SAME_dynamic_output_shape_nhwc_float16) {
-    execute(CreateModel_3_H3_W2_SAME_dynamic_output_shape_nhwc_float16,
-            is_ignored_3_H3_W2_SAME_dynamic_output_shape_nhwc_float16,
-            get_examples_3_H3_W2_SAME_dynamic_output_shape_nhwc_float16());
+TEST_F(GeneratedTests, conv2d_v1_2_3_H3_W2_SAME_nchw_float16_all_tensors_as_inputs) {
+    execute(CreateModel_3_H3_W2_SAME_nchw_float16_all_tensors_as_inputs,
+            is_ignored_3_H3_W2_SAME_nchw_float16_all_tensors_as_inputs,
+            get_examples_3_H3_W2_SAME_nchw_float16_all_tensors_as_inputs());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_3_H3_W2_SAME_nchw_float16_all_tensors_as_inputs, generated_tests::conv2d_v1_2::CreateModel_3_H3_W2_SAME_nchw_float16_all_tensors_as_inputs)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_dynamic_output_shape(Model *model);
+bool is_ignored_3_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_3_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_dynamic_output_shape) {
+    execute(CreateModel_3_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_dynamic_output_shape,
+            is_ignored_3_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_dynamic_output_shape,
+            get_examples_3_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_dynamic_output_shape());
 }
 
 } // namespace generated_tests::conv2d_v1_2
 
 namespace generated_tests::conv2d_v1_2 {
 
-void CreateModel_3_H3_W2_SAME_dynamic_output_shape_nchw(Model *model);
-bool is_ignored_3_H3_W2_SAME_dynamic_output_shape_nchw(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_SAME_dynamic_output_shape_nchw();
+void CreateModel_3_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal(Model *model);
+bool is_ignored_3_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal();
 
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_3_H3_W2_SAME_dynamic_output_shape_nchw) {
-    execute(CreateModel_3_H3_W2_SAME_dynamic_output_shape_nchw,
-            is_ignored_3_H3_W2_SAME_dynamic_output_shape_nchw,
-            get_examples_3_H3_W2_SAME_dynamic_output_shape_nchw());
+TEST_F(GeneratedTests, conv2d_v1_2_3_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal) {
+    execute(CreateModel_3_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal,
+            is_ignored_3_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal,
+            get_examples_3_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_3_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal, generated_tests::conv2d_v1_2::CreateModel_3_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_3_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_3_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_3_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_3_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_3_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape());
 }
 
 } // namespace generated_tests::conv2d_v1_2
 
 namespace generated_tests::conv2d_v1_2 {
 
-void CreateModel_3_H3_W2_SAME_dynamic_output_shape_nchw_relaxed(Model *model);
-bool is_ignored_3_H3_W2_SAME_dynamic_output_shape_nchw_relaxed(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_SAME_dynamic_output_shape_nchw_relaxed();
+void CreateModel_3_H3_W2_SAME_nhwc_2(Model *model);
+bool is_ignored_3_H3_W2_SAME_nhwc_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_SAME_nhwc_2();
 
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_3_H3_W2_SAME_dynamic_output_shape_nchw_relaxed) {
-    execute(CreateModel_3_H3_W2_SAME_dynamic_output_shape_nchw_relaxed,
-            is_ignored_3_H3_W2_SAME_dynamic_output_shape_nchw_relaxed,
-            get_examples_3_H3_W2_SAME_dynamic_output_shape_nchw_relaxed());
+TEST_F(GeneratedTests, conv2d_v1_2_3_H3_W2_SAME_nhwc_2) {
+    execute(CreateModel_3_H3_W2_SAME_nhwc_2,
+            is_ignored_3_H3_W2_SAME_nhwc_2,
+            get_examples_3_H3_W2_SAME_nhwc_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_3_H3_W2_SAME_nhwc_2, generated_tests::conv2d_v1_2::CreateModel_3_H3_W2_SAME_nhwc_2)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_SAME_nhwc_dynamic_output_shape_2(Model *model);
+bool is_ignored_3_H3_W2_SAME_nhwc_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_SAME_nhwc_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_3_H3_W2_SAME_nhwc_dynamic_output_shape_2) {
+    execute(CreateModel_3_H3_W2_SAME_nhwc_dynamic_output_shape_2,
+            is_ignored_3_H3_W2_SAME_nhwc_dynamic_output_shape_2,
+            get_examples_3_H3_W2_SAME_nhwc_dynamic_output_shape_2());
 }
 
 } // namespace generated_tests::conv2d_v1_2
 
 namespace generated_tests::conv2d_v1_2 {
 
-void CreateModel_3_H3_W2_SAME_dynamic_output_shape_nchw_float16(Model *model);
-bool is_ignored_3_H3_W2_SAME_dynamic_output_shape_nchw_float16(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_SAME_dynamic_output_shape_nchw_float16();
+void CreateModel_3_H3_W2_SAME_nhwc_all_inputs_as_internal_2(Model *model);
+bool is_ignored_3_H3_W2_SAME_nhwc_all_inputs_as_internal_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_SAME_nhwc_all_inputs_as_internal_2();
 
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_3_H3_W2_SAME_dynamic_output_shape_nchw_float16) {
-    execute(CreateModel_3_H3_W2_SAME_dynamic_output_shape_nchw_float16,
-            is_ignored_3_H3_W2_SAME_dynamic_output_shape_nchw_float16,
-            get_examples_3_H3_W2_SAME_dynamic_output_shape_nchw_float16());
+TEST_F(GeneratedTests, conv2d_v1_2_3_H3_W2_SAME_nhwc_all_inputs_as_internal_2) {
+    execute(CreateModel_3_H3_W2_SAME_nhwc_all_inputs_as_internal_2,
+            is_ignored_3_H3_W2_SAME_nhwc_all_inputs_as_internal_2,
+            get_examples_3_H3_W2_SAME_nhwc_all_inputs_as_internal_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_3_H3_W2_SAME_nhwc_all_inputs_as_internal_2, generated_tests::conv2d_v1_2::CreateModel_3_H3_W2_SAME_nhwc_all_inputs_as_internal_2)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_SAME_nhwc_all_inputs_as_internal_dynamic_output_shape_2(Model *model);
+bool is_ignored_3_H3_W2_SAME_nhwc_all_inputs_as_internal_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_SAME_nhwc_all_inputs_as_internal_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_3_H3_W2_SAME_nhwc_all_inputs_as_internal_dynamic_output_shape_2) {
+    execute(CreateModel_3_H3_W2_SAME_nhwc_all_inputs_as_internal_dynamic_output_shape_2,
+            is_ignored_3_H3_W2_SAME_nhwc_all_inputs_as_internal_dynamic_output_shape_2,
+            get_examples_3_H3_W2_SAME_nhwc_all_inputs_as_internal_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_SAME_nhwc_all_tensors_as_inputs_2(Model *model);
+bool is_ignored_3_H3_W2_SAME_nhwc_all_tensors_as_inputs_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_SAME_nhwc_all_tensors_as_inputs_2();
+
+TEST_F(GeneratedTests, conv2d_v1_2_3_H3_W2_SAME_nhwc_all_tensors_as_inputs_2) {
+    execute(CreateModel_3_H3_W2_SAME_nhwc_all_tensors_as_inputs_2,
+            is_ignored_3_H3_W2_SAME_nhwc_all_tensors_as_inputs_2,
+            get_examples_3_H3_W2_SAME_nhwc_all_tensors_as_inputs_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_3_H3_W2_SAME_nhwc_all_tensors_as_inputs_2, generated_tests::conv2d_v1_2::CreateModel_3_H3_W2_SAME_nhwc_all_tensors_as_inputs_2)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_SAME_nhwc_all_tensors_as_inputs_dynamic_output_shape_2(Model *model);
+bool is_ignored_3_H3_W2_SAME_nhwc_all_tensors_as_inputs_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_SAME_nhwc_all_tensors_as_inputs_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_3_H3_W2_SAME_nhwc_all_tensors_as_inputs_dynamic_output_shape_2) {
+    execute(CreateModel_3_H3_W2_SAME_nhwc_all_tensors_as_inputs_dynamic_output_shape_2,
+            is_ignored_3_H3_W2_SAME_nhwc_all_tensors_as_inputs_dynamic_output_shape_2,
+            get_examples_3_H3_W2_SAME_nhwc_all_tensors_as_inputs_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_SAME_nhwc_all_tensors_as_inputs_all_inputs_as_internal_2(Model *model);
+bool is_ignored_3_H3_W2_SAME_nhwc_all_tensors_as_inputs_all_inputs_as_internal_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_SAME_nhwc_all_tensors_as_inputs_all_inputs_as_internal_2();
+
+TEST_F(GeneratedTests, conv2d_v1_2_3_H3_W2_SAME_nhwc_all_tensors_as_inputs_all_inputs_as_internal_2) {
+    execute(CreateModel_3_H3_W2_SAME_nhwc_all_tensors_as_inputs_all_inputs_as_internal_2,
+            is_ignored_3_H3_W2_SAME_nhwc_all_tensors_as_inputs_all_inputs_as_internal_2,
+            get_examples_3_H3_W2_SAME_nhwc_all_tensors_as_inputs_all_inputs_as_internal_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_3_H3_W2_SAME_nhwc_all_tensors_as_inputs_all_inputs_as_internal_2, generated_tests::conv2d_v1_2::CreateModel_3_H3_W2_SAME_nhwc_all_tensors_as_inputs_all_inputs_as_internal_2)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_SAME_nhwc_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2(Model *model);
+bool is_ignored_3_H3_W2_SAME_nhwc_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_SAME_nhwc_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_3_H3_W2_SAME_nhwc_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2) {
+    execute(CreateModel_3_H3_W2_SAME_nhwc_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2,
+            is_ignored_3_H3_W2_SAME_nhwc_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2,
+            get_examples_3_H3_W2_SAME_nhwc_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_SAME_nhwc_relaxed_2(Model *model);
+bool is_ignored_3_H3_W2_SAME_nhwc_relaxed_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_SAME_nhwc_relaxed_2();
+
+TEST_F(GeneratedTests, conv2d_v1_2_3_H3_W2_SAME_nhwc_relaxed_2) {
+    execute(CreateModel_3_H3_W2_SAME_nhwc_relaxed_2,
+            is_ignored_3_H3_W2_SAME_nhwc_relaxed_2,
+            get_examples_3_H3_W2_SAME_nhwc_relaxed_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_SAME_nhwc_relaxed_dynamic_output_shape_2(Model *model);
+bool is_ignored_3_H3_W2_SAME_nhwc_relaxed_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_SAME_nhwc_relaxed_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_3_H3_W2_SAME_nhwc_relaxed_dynamic_output_shape_2) {
+    execute(CreateModel_3_H3_W2_SAME_nhwc_relaxed_dynamic_output_shape_2,
+            is_ignored_3_H3_W2_SAME_nhwc_relaxed_dynamic_output_shape_2,
+            get_examples_3_H3_W2_SAME_nhwc_relaxed_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_SAME_nhwc_relaxed_all_inputs_as_internal_2(Model *model);
+bool is_ignored_3_H3_W2_SAME_nhwc_relaxed_all_inputs_as_internal_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_SAME_nhwc_relaxed_all_inputs_as_internal_2();
+
+TEST_F(GeneratedTests, conv2d_v1_2_3_H3_W2_SAME_nhwc_relaxed_all_inputs_as_internal_2) {
+    execute(CreateModel_3_H3_W2_SAME_nhwc_relaxed_all_inputs_as_internal_2,
+            is_ignored_3_H3_W2_SAME_nhwc_relaxed_all_inputs_as_internal_2,
+            get_examples_3_H3_W2_SAME_nhwc_relaxed_all_inputs_as_internal_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_SAME_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_2(Model *model);
+bool is_ignored_3_H3_W2_SAME_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_SAME_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_3_H3_W2_SAME_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_2) {
+    execute(CreateModel_3_H3_W2_SAME_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_2,
+            is_ignored_3_H3_W2_SAME_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_2,
+            get_examples_3_H3_W2_SAME_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_2(Model *model);
+bool is_ignored_3_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_2();
+
+TEST_F(GeneratedTests, conv2d_v1_2_3_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_2) {
+    execute(CreateModel_3_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_2,
+            is_ignored_3_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_2,
+            get_examples_3_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_dynamic_output_shape_2(Model *model);
+bool is_ignored_3_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_3_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_dynamic_output_shape_2) {
+    execute(CreateModel_3_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_dynamic_output_shape_2,
+            is_ignored_3_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_dynamic_output_shape_2,
+            get_examples_3_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2(Model *model);
+bool is_ignored_3_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2();
+
+TEST_F(GeneratedTests, conv2d_v1_2_3_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2) {
+    execute(CreateModel_3_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2,
+            is_ignored_3_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2,
+            get_examples_3_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2(Model *model);
+bool is_ignored_3_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_3_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2) {
+    execute(CreateModel_3_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2,
+            is_ignored_3_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2,
+            get_examples_3_H3_W2_SAME_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_SAME_nhwc_float16_2(Model *model);
+bool is_ignored_3_H3_W2_SAME_nhwc_float16_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_SAME_nhwc_float16_2();
+
+TEST_F(GeneratedTests, conv2d_v1_2_3_H3_W2_SAME_nhwc_float16_2) {
+    execute(CreateModel_3_H3_W2_SAME_nhwc_float16_2,
+            is_ignored_3_H3_W2_SAME_nhwc_float16_2,
+            get_examples_3_H3_W2_SAME_nhwc_float16_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_3_H3_W2_SAME_nhwc_float16_2, generated_tests::conv2d_v1_2::CreateModel_3_H3_W2_SAME_nhwc_float16_2)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_SAME_nhwc_float16_dynamic_output_shape_2(Model *model);
+bool is_ignored_3_H3_W2_SAME_nhwc_float16_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_SAME_nhwc_float16_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_3_H3_W2_SAME_nhwc_float16_dynamic_output_shape_2) {
+    execute(CreateModel_3_H3_W2_SAME_nhwc_float16_dynamic_output_shape_2,
+            is_ignored_3_H3_W2_SAME_nhwc_float16_dynamic_output_shape_2,
+            get_examples_3_H3_W2_SAME_nhwc_float16_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_SAME_nhwc_float16_all_inputs_as_internal_2(Model *model);
+bool is_ignored_3_H3_W2_SAME_nhwc_float16_all_inputs_as_internal_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_SAME_nhwc_float16_all_inputs_as_internal_2();
+
+TEST_F(GeneratedTests, conv2d_v1_2_3_H3_W2_SAME_nhwc_float16_all_inputs_as_internal_2) {
+    execute(CreateModel_3_H3_W2_SAME_nhwc_float16_all_inputs_as_internal_2,
+            is_ignored_3_H3_W2_SAME_nhwc_float16_all_inputs_as_internal_2,
+            get_examples_3_H3_W2_SAME_nhwc_float16_all_inputs_as_internal_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_3_H3_W2_SAME_nhwc_float16_all_inputs_as_internal_2, generated_tests::conv2d_v1_2::CreateModel_3_H3_W2_SAME_nhwc_float16_all_inputs_as_internal_2)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_SAME_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_2(Model *model);
+bool is_ignored_3_H3_W2_SAME_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_SAME_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_3_H3_W2_SAME_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_2) {
+    execute(CreateModel_3_H3_W2_SAME_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_2,
+            is_ignored_3_H3_W2_SAME_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_2,
+            get_examples_3_H3_W2_SAME_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_2(Model *model);
+bool is_ignored_3_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_2();
+
+TEST_F(GeneratedTests, conv2d_v1_2_3_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_2) {
+    execute(CreateModel_3_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_2,
+            is_ignored_3_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_2,
+            get_examples_3_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_3_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_2, generated_tests::conv2d_v1_2::CreateModel_3_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_2)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_dynamic_output_shape_2(Model *model);
+bool is_ignored_3_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_3_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_dynamic_output_shape_2) {
+    execute(CreateModel_3_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_dynamic_output_shape_2,
+            is_ignored_3_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_dynamic_output_shape_2,
+            get_examples_3_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_2(Model *model);
+bool is_ignored_3_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_2();
+
+TEST_F(GeneratedTests, conv2d_v1_2_3_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_2) {
+    execute(CreateModel_3_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_2,
+            is_ignored_3_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_2,
+            get_examples_3_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_3_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_2, generated_tests::conv2d_v1_2::CreateModel_3_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_2)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2(Model *model);
+bool is_ignored_3_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_3_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2) {
+    execute(CreateModel_3_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2,
+            is_ignored_3_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2,
+            get_examples_3_H3_W2_SAME_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_SAME_nchw_2(Model *model);
+bool is_ignored_3_H3_W2_SAME_nchw_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_SAME_nchw_2();
+
+TEST_F(GeneratedTests, conv2d_v1_2_3_H3_W2_SAME_nchw_2) {
+    execute(CreateModel_3_H3_W2_SAME_nchw_2,
+            is_ignored_3_H3_W2_SAME_nchw_2,
+            get_examples_3_H3_W2_SAME_nchw_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_3_H3_W2_SAME_nchw_2, generated_tests::conv2d_v1_2::CreateModel_3_H3_W2_SAME_nchw_2)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_SAME_nchw_dynamic_output_shape_2(Model *model);
+bool is_ignored_3_H3_W2_SAME_nchw_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_SAME_nchw_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_3_H3_W2_SAME_nchw_dynamic_output_shape_2) {
+    execute(CreateModel_3_H3_W2_SAME_nchw_dynamic_output_shape_2,
+            is_ignored_3_H3_W2_SAME_nchw_dynamic_output_shape_2,
+            get_examples_3_H3_W2_SAME_nchw_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_SAME_nchw_all_inputs_as_internal_2(Model *model);
+bool is_ignored_3_H3_W2_SAME_nchw_all_inputs_as_internal_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_SAME_nchw_all_inputs_as_internal_2();
+
+TEST_F(GeneratedTests, conv2d_v1_2_3_H3_W2_SAME_nchw_all_inputs_as_internal_2) {
+    execute(CreateModel_3_H3_W2_SAME_nchw_all_inputs_as_internal_2,
+            is_ignored_3_H3_W2_SAME_nchw_all_inputs_as_internal_2,
+            get_examples_3_H3_W2_SAME_nchw_all_inputs_as_internal_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_3_H3_W2_SAME_nchw_all_inputs_as_internal_2, generated_tests::conv2d_v1_2::CreateModel_3_H3_W2_SAME_nchw_all_inputs_as_internal_2)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_SAME_nchw_all_inputs_as_internal_dynamic_output_shape_2(Model *model);
+bool is_ignored_3_H3_W2_SAME_nchw_all_inputs_as_internal_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_SAME_nchw_all_inputs_as_internal_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_3_H3_W2_SAME_nchw_all_inputs_as_internal_dynamic_output_shape_2) {
+    execute(CreateModel_3_H3_W2_SAME_nchw_all_inputs_as_internal_dynamic_output_shape_2,
+            is_ignored_3_H3_W2_SAME_nchw_all_inputs_as_internal_dynamic_output_shape_2,
+            get_examples_3_H3_W2_SAME_nchw_all_inputs_as_internal_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_SAME_nchw_all_tensors_as_inputs_2(Model *model);
+bool is_ignored_3_H3_W2_SAME_nchw_all_tensors_as_inputs_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_SAME_nchw_all_tensors_as_inputs_2();
+
+TEST_F(GeneratedTests, conv2d_v1_2_3_H3_W2_SAME_nchw_all_tensors_as_inputs_2) {
+    execute(CreateModel_3_H3_W2_SAME_nchw_all_tensors_as_inputs_2,
+            is_ignored_3_H3_W2_SAME_nchw_all_tensors_as_inputs_2,
+            get_examples_3_H3_W2_SAME_nchw_all_tensors_as_inputs_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_3_H3_W2_SAME_nchw_all_tensors_as_inputs_2, generated_tests::conv2d_v1_2::CreateModel_3_H3_W2_SAME_nchw_all_tensors_as_inputs_2)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_SAME_nchw_all_tensors_as_inputs_dynamic_output_shape_2(Model *model);
+bool is_ignored_3_H3_W2_SAME_nchw_all_tensors_as_inputs_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_SAME_nchw_all_tensors_as_inputs_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_3_H3_W2_SAME_nchw_all_tensors_as_inputs_dynamic_output_shape_2) {
+    execute(CreateModel_3_H3_W2_SAME_nchw_all_tensors_as_inputs_dynamic_output_shape_2,
+            is_ignored_3_H3_W2_SAME_nchw_all_tensors_as_inputs_dynamic_output_shape_2,
+            get_examples_3_H3_W2_SAME_nchw_all_tensors_as_inputs_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_SAME_nchw_all_tensors_as_inputs_all_inputs_as_internal_2(Model *model);
+bool is_ignored_3_H3_W2_SAME_nchw_all_tensors_as_inputs_all_inputs_as_internal_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_SAME_nchw_all_tensors_as_inputs_all_inputs_as_internal_2();
+
+TEST_F(GeneratedTests, conv2d_v1_2_3_H3_W2_SAME_nchw_all_tensors_as_inputs_all_inputs_as_internal_2) {
+    execute(CreateModel_3_H3_W2_SAME_nchw_all_tensors_as_inputs_all_inputs_as_internal_2,
+            is_ignored_3_H3_W2_SAME_nchw_all_tensors_as_inputs_all_inputs_as_internal_2,
+            get_examples_3_H3_W2_SAME_nchw_all_tensors_as_inputs_all_inputs_as_internal_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_3_H3_W2_SAME_nchw_all_tensors_as_inputs_all_inputs_as_internal_2, generated_tests::conv2d_v1_2::CreateModel_3_H3_W2_SAME_nchw_all_tensors_as_inputs_all_inputs_as_internal_2)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_SAME_nchw_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2(Model *model);
+bool is_ignored_3_H3_W2_SAME_nchw_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_SAME_nchw_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_3_H3_W2_SAME_nchw_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2) {
+    execute(CreateModel_3_H3_W2_SAME_nchw_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2,
+            is_ignored_3_H3_W2_SAME_nchw_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2,
+            get_examples_3_H3_W2_SAME_nchw_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_SAME_nchw_relaxed_2(Model *model);
+bool is_ignored_3_H3_W2_SAME_nchw_relaxed_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_SAME_nchw_relaxed_2();
+
+TEST_F(GeneratedTests, conv2d_v1_2_3_H3_W2_SAME_nchw_relaxed_2) {
+    execute(CreateModel_3_H3_W2_SAME_nchw_relaxed_2,
+            is_ignored_3_H3_W2_SAME_nchw_relaxed_2,
+            get_examples_3_H3_W2_SAME_nchw_relaxed_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_SAME_nchw_relaxed_dynamic_output_shape_2(Model *model);
+bool is_ignored_3_H3_W2_SAME_nchw_relaxed_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_SAME_nchw_relaxed_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_3_H3_W2_SAME_nchw_relaxed_dynamic_output_shape_2) {
+    execute(CreateModel_3_H3_W2_SAME_nchw_relaxed_dynamic_output_shape_2,
+            is_ignored_3_H3_W2_SAME_nchw_relaxed_dynamic_output_shape_2,
+            get_examples_3_H3_W2_SAME_nchw_relaxed_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_SAME_nchw_relaxed_all_inputs_as_internal_2(Model *model);
+bool is_ignored_3_H3_W2_SAME_nchw_relaxed_all_inputs_as_internal_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_SAME_nchw_relaxed_all_inputs_as_internal_2();
+
+TEST_F(GeneratedTests, conv2d_v1_2_3_H3_W2_SAME_nchw_relaxed_all_inputs_as_internal_2) {
+    execute(CreateModel_3_H3_W2_SAME_nchw_relaxed_all_inputs_as_internal_2,
+            is_ignored_3_H3_W2_SAME_nchw_relaxed_all_inputs_as_internal_2,
+            get_examples_3_H3_W2_SAME_nchw_relaxed_all_inputs_as_internal_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_SAME_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_2(Model *model);
+bool is_ignored_3_H3_W2_SAME_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_SAME_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_3_H3_W2_SAME_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_2) {
+    execute(CreateModel_3_H3_W2_SAME_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_2,
+            is_ignored_3_H3_W2_SAME_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_2,
+            get_examples_3_H3_W2_SAME_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_2(Model *model);
+bool is_ignored_3_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_2();
+
+TEST_F(GeneratedTests, conv2d_v1_2_3_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_2) {
+    execute(CreateModel_3_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_2,
+            is_ignored_3_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_2,
+            get_examples_3_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_dynamic_output_shape_2(Model *model);
+bool is_ignored_3_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_3_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_dynamic_output_shape_2) {
+    execute(CreateModel_3_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_dynamic_output_shape_2,
+            is_ignored_3_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_dynamic_output_shape_2,
+            get_examples_3_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2(Model *model);
+bool is_ignored_3_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2();
+
+TEST_F(GeneratedTests, conv2d_v1_2_3_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2) {
+    execute(CreateModel_3_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2,
+            is_ignored_3_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2,
+            get_examples_3_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2(Model *model);
+bool is_ignored_3_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_3_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2) {
+    execute(CreateModel_3_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2,
+            is_ignored_3_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2,
+            get_examples_3_H3_W2_SAME_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_SAME_nchw_float16_2(Model *model);
+bool is_ignored_3_H3_W2_SAME_nchw_float16_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_SAME_nchw_float16_2();
+
+TEST_F(GeneratedTests, conv2d_v1_2_3_H3_W2_SAME_nchw_float16_2) {
+    execute(CreateModel_3_H3_W2_SAME_nchw_float16_2,
+            is_ignored_3_H3_W2_SAME_nchw_float16_2,
+            get_examples_3_H3_W2_SAME_nchw_float16_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_3_H3_W2_SAME_nchw_float16_2, generated_tests::conv2d_v1_2::CreateModel_3_H3_W2_SAME_nchw_float16_2)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_SAME_nchw_float16_dynamic_output_shape_2(Model *model);
+bool is_ignored_3_H3_W2_SAME_nchw_float16_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_SAME_nchw_float16_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_3_H3_W2_SAME_nchw_float16_dynamic_output_shape_2) {
+    execute(CreateModel_3_H3_W2_SAME_nchw_float16_dynamic_output_shape_2,
+            is_ignored_3_H3_W2_SAME_nchw_float16_dynamic_output_shape_2,
+            get_examples_3_H3_W2_SAME_nchw_float16_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_SAME_nchw_float16_all_inputs_as_internal_2(Model *model);
+bool is_ignored_3_H3_W2_SAME_nchw_float16_all_inputs_as_internal_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_SAME_nchw_float16_all_inputs_as_internal_2();
+
+TEST_F(GeneratedTests, conv2d_v1_2_3_H3_W2_SAME_nchw_float16_all_inputs_as_internal_2) {
+    execute(CreateModel_3_H3_W2_SAME_nchw_float16_all_inputs_as_internal_2,
+            is_ignored_3_H3_W2_SAME_nchw_float16_all_inputs_as_internal_2,
+            get_examples_3_H3_W2_SAME_nchw_float16_all_inputs_as_internal_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_3_H3_W2_SAME_nchw_float16_all_inputs_as_internal_2, generated_tests::conv2d_v1_2::CreateModel_3_H3_W2_SAME_nchw_float16_all_inputs_as_internal_2)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_SAME_nchw_float16_all_inputs_as_internal_dynamic_output_shape_2(Model *model);
+bool is_ignored_3_H3_W2_SAME_nchw_float16_all_inputs_as_internal_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_SAME_nchw_float16_all_inputs_as_internal_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_3_H3_W2_SAME_nchw_float16_all_inputs_as_internal_dynamic_output_shape_2) {
+    execute(CreateModel_3_H3_W2_SAME_nchw_float16_all_inputs_as_internal_dynamic_output_shape_2,
+            is_ignored_3_H3_W2_SAME_nchw_float16_all_inputs_as_internal_dynamic_output_shape_2,
+            get_examples_3_H3_W2_SAME_nchw_float16_all_inputs_as_internal_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_2(Model *model);
+bool is_ignored_3_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_2();
+
+TEST_F(GeneratedTests, conv2d_v1_2_3_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_2) {
+    execute(CreateModel_3_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_2,
+            is_ignored_3_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_2,
+            get_examples_3_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_3_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_2, generated_tests::conv2d_v1_2::CreateModel_3_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_2)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_dynamic_output_shape_2(Model *model);
+bool is_ignored_3_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_3_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_dynamic_output_shape_2) {
+    execute(CreateModel_3_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_dynamic_output_shape_2,
+            is_ignored_3_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_dynamic_output_shape_2,
+            get_examples_3_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_2(Model *model);
+bool is_ignored_3_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_2();
+
+TEST_F(GeneratedTests, conv2d_v1_2_3_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_2) {
+    execute(CreateModel_3_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_2,
+            is_ignored_3_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_2,
+            get_examples_3_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_3_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_2, generated_tests::conv2d_v1_2::CreateModel_3_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_2)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2(Model *model);
+bool is_ignored_3_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_3_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2) {
+    execute(CreateModel_3_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2,
+            is_ignored_3_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2,
+            get_examples_3_H3_W2_SAME_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2());
 }
 
 } // namespace generated_tests::conv2d_v1_2
@@ -2956,6 +8988,107 @@ TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_3_H3_W2_VALID_nhwc, generated_tests::conv
 
 namespace generated_tests::conv2d_v1_2 {
 
+void CreateModel_3_H3_W2_VALID_nhwc_dynamic_output_shape(Model *model);
+bool is_ignored_3_H3_W2_VALID_nhwc_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_VALID_nhwc_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_3_H3_W2_VALID_nhwc_dynamic_output_shape) {
+    execute(CreateModel_3_H3_W2_VALID_nhwc_dynamic_output_shape,
+            is_ignored_3_H3_W2_VALID_nhwc_dynamic_output_shape,
+            get_examples_3_H3_W2_VALID_nhwc_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_VALID_nhwc_all_inputs_as_internal(Model *model);
+bool is_ignored_3_H3_W2_VALID_nhwc_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_VALID_nhwc_all_inputs_as_internal();
+
+TEST_F(GeneratedTests, conv2d_v1_2_3_H3_W2_VALID_nhwc_all_inputs_as_internal) {
+    execute(CreateModel_3_H3_W2_VALID_nhwc_all_inputs_as_internal,
+            is_ignored_3_H3_W2_VALID_nhwc_all_inputs_as_internal,
+            get_examples_3_H3_W2_VALID_nhwc_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_3_H3_W2_VALID_nhwc_all_inputs_as_internal, generated_tests::conv2d_v1_2::CreateModel_3_H3_W2_VALID_nhwc_all_inputs_as_internal)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_VALID_nhwc_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_3_H3_W2_VALID_nhwc_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_VALID_nhwc_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_3_H3_W2_VALID_nhwc_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_3_H3_W2_VALID_nhwc_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_3_H3_W2_VALID_nhwc_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_3_H3_W2_VALID_nhwc_all_inputs_as_internal_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_VALID_nhwc_all_tensors_as_inputs(Model *model);
+bool is_ignored_3_H3_W2_VALID_nhwc_all_tensors_as_inputs(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_VALID_nhwc_all_tensors_as_inputs();
+
+TEST_F(GeneratedTests, conv2d_v1_2_3_H3_W2_VALID_nhwc_all_tensors_as_inputs) {
+    execute(CreateModel_3_H3_W2_VALID_nhwc_all_tensors_as_inputs,
+            is_ignored_3_H3_W2_VALID_nhwc_all_tensors_as_inputs,
+            get_examples_3_H3_W2_VALID_nhwc_all_tensors_as_inputs());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_3_H3_W2_VALID_nhwc_all_tensors_as_inputs, generated_tests::conv2d_v1_2::CreateModel_3_H3_W2_VALID_nhwc_all_tensors_as_inputs)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_VALID_nhwc_all_tensors_as_inputs_dynamic_output_shape(Model *model);
+bool is_ignored_3_H3_W2_VALID_nhwc_all_tensors_as_inputs_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_VALID_nhwc_all_tensors_as_inputs_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_3_H3_W2_VALID_nhwc_all_tensors_as_inputs_dynamic_output_shape) {
+    execute(CreateModel_3_H3_W2_VALID_nhwc_all_tensors_as_inputs_dynamic_output_shape,
+            is_ignored_3_H3_W2_VALID_nhwc_all_tensors_as_inputs_dynamic_output_shape,
+            get_examples_3_H3_W2_VALID_nhwc_all_tensors_as_inputs_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_VALID_nhwc_all_tensors_as_inputs_all_inputs_as_internal(Model *model);
+bool is_ignored_3_H3_W2_VALID_nhwc_all_tensors_as_inputs_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_VALID_nhwc_all_tensors_as_inputs_all_inputs_as_internal();
+
+TEST_F(GeneratedTests, conv2d_v1_2_3_H3_W2_VALID_nhwc_all_tensors_as_inputs_all_inputs_as_internal) {
+    execute(CreateModel_3_H3_W2_VALID_nhwc_all_tensors_as_inputs_all_inputs_as_internal,
+            is_ignored_3_H3_W2_VALID_nhwc_all_tensors_as_inputs_all_inputs_as_internal,
+            get_examples_3_H3_W2_VALID_nhwc_all_tensors_as_inputs_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_3_H3_W2_VALID_nhwc_all_tensors_as_inputs_all_inputs_as_internal, generated_tests::conv2d_v1_2::CreateModel_3_H3_W2_VALID_nhwc_all_tensors_as_inputs_all_inputs_as_internal)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_VALID_nhwc_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_3_H3_W2_VALID_nhwc_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_VALID_nhwc_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_3_H3_W2_VALID_nhwc_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_3_H3_W2_VALID_nhwc_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_3_H3_W2_VALID_nhwc_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_3_H3_W2_VALID_nhwc_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
 void CreateModel_3_H3_W2_VALID_nhwc_relaxed(Model *model);
 bool is_ignored_3_H3_W2_VALID_nhwc_relaxed(int);
 std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_VALID_nhwc_relaxed();
@@ -2964,6 +9097,104 @@ TEST_F(GeneratedTests, conv2d_v1_2_3_H3_W2_VALID_nhwc_relaxed) {
     execute(CreateModel_3_H3_W2_VALID_nhwc_relaxed,
             is_ignored_3_H3_W2_VALID_nhwc_relaxed,
             get_examples_3_H3_W2_VALID_nhwc_relaxed());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_VALID_nhwc_relaxed_dynamic_output_shape(Model *model);
+bool is_ignored_3_H3_W2_VALID_nhwc_relaxed_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_VALID_nhwc_relaxed_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_3_H3_W2_VALID_nhwc_relaxed_dynamic_output_shape) {
+    execute(CreateModel_3_H3_W2_VALID_nhwc_relaxed_dynamic_output_shape,
+            is_ignored_3_H3_W2_VALID_nhwc_relaxed_dynamic_output_shape,
+            get_examples_3_H3_W2_VALID_nhwc_relaxed_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_VALID_nhwc_relaxed_all_inputs_as_internal(Model *model);
+bool is_ignored_3_H3_W2_VALID_nhwc_relaxed_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_VALID_nhwc_relaxed_all_inputs_as_internal();
+
+TEST_F(GeneratedTests, conv2d_v1_2_3_H3_W2_VALID_nhwc_relaxed_all_inputs_as_internal) {
+    execute(CreateModel_3_H3_W2_VALID_nhwc_relaxed_all_inputs_as_internal,
+            is_ignored_3_H3_W2_VALID_nhwc_relaxed_all_inputs_as_internal,
+            get_examples_3_H3_W2_VALID_nhwc_relaxed_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_VALID_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_3_H3_W2_VALID_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_VALID_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_3_H3_W2_VALID_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_3_H3_W2_VALID_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_3_H3_W2_VALID_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_3_H3_W2_VALID_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs(Model *model);
+bool is_ignored_3_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs();
+
+TEST_F(GeneratedTests, conv2d_v1_2_3_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs) {
+    execute(CreateModel_3_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs,
+            is_ignored_3_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs,
+            get_examples_3_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs_dynamic_output_shape(Model *model);
+bool is_ignored_3_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_3_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs_dynamic_output_shape) {
+    execute(CreateModel_3_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs_dynamic_output_shape,
+            is_ignored_3_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs_dynamic_output_shape,
+            get_examples_3_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal(Model *model);
+bool is_ignored_3_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal();
+
+TEST_F(GeneratedTests, conv2d_v1_2_3_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal) {
+    execute(CreateModel_3_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal,
+            is_ignored_3_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal,
+            get_examples_3_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_3_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_3_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_3_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_3_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_3_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape());
 }
 
 } // namespace generated_tests::conv2d_v1_2
@@ -2985,6 +9216,107 @@ TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_3_H3_W2_VALID_nhwc_float16, generated_tes
 
 namespace generated_tests::conv2d_v1_2 {
 
+void CreateModel_3_H3_W2_VALID_nhwc_float16_dynamic_output_shape(Model *model);
+bool is_ignored_3_H3_W2_VALID_nhwc_float16_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_VALID_nhwc_float16_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_3_H3_W2_VALID_nhwc_float16_dynamic_output_shape) {
+    execute(CreateModel_3_H3_W2_VALID_nhwc_float16_dynamic_output_shape,
+            is_ignored_3_H3_W2_VALID_nhwc_float16_dynamic_output_shape,
+            get_examples_3_H3_W2_VALID_nhwc_float16_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_VALID_nhwc_float16_all_inputs_as_internal(Model *model);
+bool is_ignored_3_H3_W2_VALID_nhwc_float16_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_VALID_nhwc_float16_all_inputs_as_internal();
+
+TEST_F(GeneratedTests, conv2d_v1_2_3_H3_W2_VALID_nhwc_float16_all_inputs_as_internal) {
+    execute(CreateModel_3_H3_W2_VALID_nhwc_float16_all_inputs_as_internal,
+            is_ignored_3_H3_W2_VALID_nhwc_float16_all_inputs_as_internal,
+            get_examples_3_H3_W2_VALID_nhwc_float16_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_3_H3_W2_VALID_nhwc_float16_all_inputs_as_internal, generated_tests::conv2d_v1_2::CreateModel_3_H3_W2_VALID_nhwc_float16_all_inputs_as_internal)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_VALID_nhwc_float16_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_3_H3_W2_VALID_nhwc_float16_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_VALID_nhwc_float16_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_3_H3_W2_VALID_nhwc_float16_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_3_H3_W2_VALID_nhwc_float16_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_3_H3_W2_VALID_nhwc_float16_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_3_H3_W2_VALID_nhwc_float16_all_inputs_as_internal_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs(Model *model);
+bool is_ignored_3_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs();
+
+TEST_F(GeneratedTests, conv2d_v1_2_3_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs) {
+    execute(CreateModel_3_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs,
+            is_ignored_3_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs,
+            get_examples_3_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_3_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs, generated_tests::conv2d_v1_2::CreateModel_3_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_dynamic_output_shape(Model *model);
+bool is_ignored_3_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_3_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_dynamic_output_shape) {
+    execute(CreateModel_3_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_dynamic_output_shape,
+            is_ignored_3_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_dynamic_output_shape,
+            get_examples_3_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal(Model *model);
+bool is_ignored_3_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal();
+
+TEST_F(GeneratedTests, conv2d_v1_2_3_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal) {
+    execute(CreateModel_3_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal,
+            is_ignored_3_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal,
+            get_examples_3_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_3_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal, generated_tests::conv2d_v1_2::CreateModel_3_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_3_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_3_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_3_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_3_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_3_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
 void CreateModel_3_H3_W2_VALID_nchw(Model *model);
 bool is_ignored_3_H3_W2_VALID_nchw(int);
 std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_VALID_nchw();
@@ -3000,6 +9332,107 @@ TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_3_H3_W2_VALID_nchw, generated_tests::conv
 
 namespace generated_tests::conv2d_v1_2 {
 
+void CreateModel_3_H3_W2_VALID_nchw_dynamic_output_shape(Model *model);
+bool is_ignored_3_H3_W2_VALID_nchw_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_VALID_nchw_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_3_H3_W2_VALID_nchw_dynamic_output_shape) {
+    execute(CreateModel_3_H3_W2_VALID_nchw_dynamic_output_shape,
+            is_ignored_3_H3_W2_VALID_nchw_dynamic_output_shape,
+            get_examples_3_H3_W2_VALID_nchw_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_VALID_nchw_all_inputs_as_internal(Model *model);
+bool is_ignored_3_H3_W2_VALID_nchw_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_VALID_nchw_all_inputs_as_internal();
+
+TEST_F(GeneratedTests, conv2d_v1_2_3_H3_W2_VALID_nchw_all_inputs_as_internal) {
+    execute(CreateModel_3_H3_W2_VALID_nchw_all_inputs_as_internal,
+            is_ignored_3_H3_W2_VALID_nchw_all_inputs_as_internal,
+            get_examples_3_H3_W2_VALID_nchw_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_3_H3_W2_VALID_nchw_all_inputs_as_internal, generated_tests::conv2d_v1_2::CreateModel_3_H3_W2_VALID_nchw_all_inputs_as_internal)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_VALID_nchw_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_3_H3_W2_VALID_nchw_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_VALID_nchw_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_3_H3_W2_VALID_nchw_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_3_H3_W2_VALID_nchw_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_3_H3_W2_VALID_nchw_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_3_H3_W2_VALID_nchw_all_inputs_as_internal_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_VALID_nchw_all_tensors_as_inputs(Model *model);
+bool is_ignored_3_H3_W2_VALID_nchw_all_tensors_as_inputs(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_VALID_nchw_all_tensors_as_inputs();
+
+TEST_F(GeneratedTests, conv2d_v1_2_3_H3_W2_VALID_nchw_all_tensors_as_inputs) {
+    execute(CreateModel_3_H3_W2_VALID_nchw_all_tensors_as_inputs,
+            is_ignored_3_H3_W2_VALID_nchw_all_tensors_as_inputs,
+            get_examples_3_H3_W2_VALID_nchw_all_tensors_as_inputs());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_3_H3_W2_VALID_nchw_all_tensors_as_inputs, generated_tests::conv2d_v1_2::CreateModel_3_H3_W2_VALID_nchw_all_tensors_as_inputs)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_VALID_nchw_all_tensors_as_inputs_dynamic_output_shape(Model *model);
+bool is_ignored_3_H3_W2_VALID_nchw_all_tensors_as_inputs_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_VALID_nchw_all_tensors_as_inputs_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_3_H3_W2_VALID_nchw_all_tensors_as_inputs_dynamic_output_shape) {
+    execute(CreateModel_3_H3_W2_VALID_nchw_all_tensors_as_inputs_dynamic_output_shape,
+            is_ignored_3_H3_W2_VALID_nchw_all_tensors_as_inputs_dynamic_output_shape,
+            get_examples_3_H3_W2_VALID_nchw_all_tensors_as_inputs_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_VALID_nchw_all_tensors_as_inputs_all_inputs_as_internal(Model *model);
+bool is_ignored_3_H3_W2_VALID_nchw_all_tensors_as_inputs_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_VALID_nchw_all_tensors_as_inputs_all_inputs_as_internal();
+
+TEST_F(GeneratedTests, conv2d_v1_2_3_H3_W2_VALID_nchw_all_tensors_as_inputs_all_inputs_as_internal) {
+    execute(CreateModel_3_H3_W2_VALID_nchw_all_tensors_as_inputs_all_inputs_as_internal,
+            is_ignored_3_H3_W2_VALID_nchw_all_tensors_as_inputs_all_inputs_as_internal,
+            get_examples_3_H3_W2_VALID_nchw_all_tensors_as_inputs_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_3_H3_W2_VALID_nchw_all_tensors_as_inputs_all_inputs_as_internal, generated_tests::conv2d_v1_2::CreateModel_3_H3_W2_VALID_nchw_all_tensors_as_inputs_all_inputs_as_internal)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_VALID_nchw_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_3_H3_W2_VALID_nchw_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_VALID_nchw_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_3_H3_W2_VALID_nchw_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_3_H3_W2_VALID_nchw_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_3_H3_W2_VALID_nchw_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_3_H3_W2_VALID_nchw_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
 void CreateModel_3_H3_W2_VALID_nchw_relaxed(Model *model);
 bool is_ignored_3_H3_W2_VALID_nchw_relaxed(int);
 std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_VALID_nchw_relaxed();
@@ -3008,6 +9441,104 @@ TEST_F(GeneratedTests, conv2d_v1_2_3_H3_W2_VALID_nchw_relaxed) {
     execute(CreateModel_3_H3_W2_VALID_nchw_relaxed,
             is_ignored_3_H3_W2_VALID_nchw_relaxed,
             get_examples_3_H3_W2_VALID_nchw_relaxed());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_VALID_nchw_relaxed_dynamic_output_shape(Model *model);
+bool is_ignored_3_H3_W2_VALID_nchw_relaxed_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_VALID_nchw_relaxed_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_3_H3_W2_VALID_nchw_relaxed_dynamic_output_shape) {
+    execute(CreateModel_3_H3_W2_VALID_nchw_relaxed_dynamic_output_shape,
+            is_ignored_3_H3_W2_VALID_nchw_relaxed_dynamic_output_shape,
+            get_examples_3_H3_W2_VALID_nchw_relaxed_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_VALID_nchw_relaxed_all_inputs_as_internal(Model *model);
+bool is_ignored_3_H3_W2_VALID_nchw_relaxed_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_VALID_nchw_relaxed_all_inputs_as_internal();
+
+TEST_F(GeneratedTests, conv2d_v1_2_3_H3_W2_VALID_nchw_relaxed_all_inputs_as_internal) {
+    execute(CreateModel_3_H3_W2_VALID_nchw_relaxed_all_inputs_as_internal,
+            is_ignored_3_H3_W2_VALID_nchw_relaxed_all_inputs_as_internal,
+            get_examples_3_H3_W2_VALID_nchw_relaxed_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_VALID_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_3_H3_W2_VALID_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_VALID_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_3_H3_W2_VALID_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_3_H3_W2_VALID_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_3_H3_W2_VALID_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_3_H3_W2_VALID_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs(Model *model);
+bool is_ignored_3_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs();
+
+TEST_F(GeneratedTests, conv2d_v1_2_3_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs) {
+    execute(CreateModel_3_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs,
+            is_ignored_3_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs,
+            get_examples_3_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs_dynamic_output_shape(Model *model);
+bool is_ignored_3_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_3_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs_dynamic_output_shape) {
+    execute(CreateModel_3_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs_dynamic_output_shape,
+            is_ignored_3_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs_dynamic_output_shape,
+            get_examples_3_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal(Model *model);
+bool is_ignored_3_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal();
+
+TEST_F(GeneratedTests, conv2d_v1_2_3_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal) {
+    execute(CreateModel_3_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal,
+            is_ignored_3_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal,
+            get_examples_3_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_3_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_3_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_3_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_3_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_3_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape());
 }
 
 } // namespace generated_tests::conv2d_v1_2
@@ -3029,84 +9560,789 @@ TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_3_H3_W2_VALID_nchw_float16, generated_tes
 
 namespace generated_tests::conv2d_v1_2 {
 
-void CreateModel_3_H3_W2_VALID_dynamic_output_shape_nhwc(Model *model);
-bool is_ignored_3_H3_W2_VALID_dynamic_output_shape_nhwc(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_VALID_dynamic_output_shape_nhwc();
+void CreateModel_3_H3_W2_VALID_nchw_float16_dynamic_output_shape(Model *model);
+bool is_ignored_3_H3_W2_VALID_nchw_float16_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_VALID_nchw_float16_dynamic_output_shape();
 
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_3_H3_W2_VALID_dynamic_output_shape_nhwc) {
-    execute(CreateModel_3_H3_W2_VALID_dynamic_output_shape_nhwc,
-            is_ignored_3_H3_W2_VALID_dynamic_output_shape_nhwc,
-            get_examples_3_H3_W2_VALID_dynamic_output_shape_nhwc());
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_3_H3_W2_VALID_nchw_float16_dynamic_output_shape) {
+    execute(CreateModel_3_H3_W2_VALID_nchw_float16_dynamic_output_shape,
+            is_ignored_3_H3_W2_VALID_nchw_float16_dynamic_output_shape,
+            get_examples_3_H3_W2_VALID_nchw_float16_dynamic_output_shape());
 }
 
 } // namespace generated_tests::conv2d_v1_2
 
 namespace generated_tests::conv2d_v1_2 {
 
-void CreateModel_3_H3_W2_VALID_dynamic_output_shape_nhwc_relaxed(Model *model);
-bool is_ignored_3_H3_W2_VALID_dynamic_output_shape_nhwc_relaxed(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_VALID_dynamic_output_shape_nhwc_relaxed();
+void CreateModel_3_H3_W2_VALID_nchw_float16_all_inputs_as_internal(Model *model);
+bool is_ignored_3_H3_W2_VALID_nchw_float16_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_VALID_nchw_float16_all_inputs_as_internal();
 
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_3_H3_W2_VALID_dynamic_output_shape_nhwc_relaxed) {
-    execute(CreateModel_3_H3_W2_VALID_dynamic_output_shape_nhwc_relaxed,
-            is_ignored_3_H3_W2_VALID_dynamic_output_shape_nhwc_relaxed,
-            get_examples_3_H3_W2_VALID_dynamic_output_shape_nhwc_relaxed());
+TEST_F(GeneratedTests, conv2d_v1_2_3_H3_W2_VALID_nchw_float16_all_inputs_as_internal) {
+    execute(CreateModel_3_H3_W2_VALID_nchw_float16_all_inputs_as_internal,
+            is_ignored_3_H3_W2_VALID_nchw_float16_all_inputs_as_internal,
+            get_examples_3_H3_W2_VALID_nchw_float16_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_3_H3_W2_VALID_nchw_float16_all_inputs_as_internal, generated_tests::conv2d_v1_2::CreateModel_3_H3_W2_VALID_nchw_float16_all_inputs_as_internal)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_VALID_nchw_float16_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_3_H3_W2_VALID_nchw_float16_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_VALID_nchw_float16_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_3_H3_W2_VALID_nchw_float16_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_3_H3_W2_VALID_nchw_float16_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_3_H3_W2_VALID_nchw_float16_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_3_H3_W2_VALID_nchw_float16_all_inputs_as_internal_dynamic_output_shape());
 }
 
 } // namespace generated_tests::conv2d_v1_2
 
 namespace generated_tests::conv2d_v1_2 {
 
-void CreateModel_3_H3_W2_VALID_dynamic_output_shape_nhwc_float16(Model *model);
-bool is_ignored_3_H3_W2_VALID_dynamic_output_shape_nhwc_float16(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_VALID_dynamic_output_shape_nhwc_float16();
+void CreateModel_3_H3_W2_VALID_nchw_float16_all_tensors_as_inputs(Model *model);
+bool is_ignored_3_H3_W2_VALID_nchw_float16_all_tensors_as_inputs(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_VALID_nchw_float16_all_tensors_as_inputs();
 
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_3_H3_W2_VALID_dynamic_output_shape_nhwc_float16) {
-    execute(CreateModel_3_H3_W2_VALID_dynamic_output_shape_nhwc_float16,
-            is_ignored_3_H3_W2_VALID_dynamic_output_shape_nhwc_float16,
-            get_examples_3_H3_W2_VALID_dynamic_output_shape_nhwc_float16());
+TEST_F(GeneratedTests, conv2d_v1_2_3_H3_W2_VALID_nchw_float16_all_tensors_as_inputs) {
+    execute(CreateModel_3_H3_W2_VALID_nchw_float16_all_tensors_as_inputs,
+            is_ignored_3_H3_W2_VALID_nchw_float16_all_tensors_as_inputs,
+            get_examples_3_H3_W2_VALID_nchw_float16_all_tensors_as_inputs());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_3_H3_W2_VALID_nchw_float16_all_tensors_as_inputs, generated_tests::conv2d_v1_2::CreateModel_3_H3_W2_VALID_nchw_float16_all_tensors_as_inputs)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_dynamic_output_shape(Model *model);
+bool is_ignored_3_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_3_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_dynamic_output_shape) {
+    execute(CreateModel_3_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_dynamic_output_shape,
+            is_ignored_3_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_dynamic_output_shape,
+            get_examples_3_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_dynamic_output_shape());
 }
 
 } // namespace generated_tests::conv2d_v1_2
 
 namespace generated_tests::conv2d_v1_2 {
 
-void CreateModel_3_H3_W2_VALID_dynamic_output_shape_nchw(Model *model);
-bool is_ignored_3_H3_W2_VALID_dynamic_output_shape_nchw(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_VALID_dynamic_output_shape_nchw();
+void CreateModel_3_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal(Model *model);
+bool is_ignored_3_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal();
 
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_3_H3_W2_VALID_dynamic_output_shape_nchw) {
-    execute(CreateModel_3_H3_W2_VALID_dynamic_output_shape_nchw,
-            is_ignored_3_H3_W2_VALID_dynamic_output_shape_nchw,
-            get_examples_3_H3_W2_VALID_dynamic_output_shape_nchw());
+TEST_F(GeneratedTests, conv2d_v1_2_3_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal) {
+    execute(CreateModel_3_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal,
+            is_ignored_3_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal,
+            get_examples_3_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_3_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal, generated_tests::conv2d_v1_2::CreateModel_3_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_3_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_3_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_3_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_3_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_3_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape());
 }
 
 } // namespace generated_tests::conv2d_v1_2
 
 namespace generated_tests::conv2d_v1_2 {
 
-void CreateModel_3_H3_W2_VALID_dynamic_output_shape_nchw_relaxed(Model *model);
-bool is_ignored_3_H3_W2_VALID_dynamic_output_shape_nchw_relaxed(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_VALID_dynamic_output_shape_nchw_relaxed();
+void CreateModel_3_H3_W2_VALID_nhwc_2(Model *model);
+bool is_ignored_3_H3_W2_VALID_nhwc_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_VALID_nhwc_2();
 
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_3_H3_W2_VALID_dynamic_output_shape_nchw_relaxed) {
-    execute(CreateModel_3_H3_W2_VALID_dynamic_output_shape_nchw_relaxed,
-            is_ignored_3_H3_W2_VALID_dynamic_output_shape_nchw_relaxed,
-            get_examples_3_H3_W2_VALID_dynamic_output_shape_nchw_relaxed());
+TEST_F(GeneratedTests, conv2d_v1_2_3_H3_W2_VALID_nhwc_2) {
+    execute(CreateModel_3_H3_W2_VALID_nhwc_2,
+            is_ignored_3_H3_W2_VALID_nhwc_2,
+            get_examples_3_H3_W2_VALID_nhwc_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_3_H3_W2_VALID_nhwc_2, generated_tests::conv2d_v1_2::CreateModel_3_H3_W2_VALID_nhwc_2)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_VALID_nhwc_dynamic_output_shape_2(Model *model);
+bool is_ignored_3_H3_W2_VALID_nhwc_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_VALID_nhwc_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_3_H3_W2_VALID_nhwc_dynamic_output_shape_2) {
+    execute(CreateModel_3_H3_W2_VALID_nhwc_dynamic_output_shape_2,
+            is_ignored_3_H3_W2_VALID_nhwc_dynamic_output_shape_2,
+            get_examples_3_H3_W2_VALID_nhwc_dynamic_output_shape_2());
 }
 
 } // namespace generated_tests::conv2d_v1_2
 
 namespace generated_tests::conv2d_v1_2 {
 
-void CreateModel_3_H3_W2_VALID_dynamic_output_shape_nchw_float16(Model *model);
-bool is_ignored_3_H3_W2_VALID_dynamic_output_shape_nchw_float16(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_VALID_dynamic_output_shape_nchw_float16();
+void CreateModel_3_H3_W2_VALID_nhwc_all_inputs_as_internal_2(Model *model);
+bool is_ignored_3_H3_W2_VALID_nhwc_all_inputs_as_internal_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_VALID_nhwc_all_inputs_as_internal_2();
 
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_3_H3_W2_VALID_dynamic_output_shape_nchw_float16) {
-    execute(CreateModel_3_H3_W2_VALID_dynamic_output_shape_nchw_float16,
-            is_ignored_3_H3_W2_VALID_dynamic_output_shape_nchw_float16,
-            get_examples_3_H3_W2_VALID_dynamic_output_shape_nchw_float16());
+TEST_F(GeneratedTests, conv2d_v1_2_3_H3_W2_VALID_nhwc_all_inputs_as_internal_2) {
+    execute(CreateModel_3_H3_W2_VALID_nhwc_all_inputs_as_internal_2,
+            is_ignored_3_H3_W2_VALID_nhwc_all_inputs_as_internal_2,
+            get_examples_3_H3_W2_VALID_nhwc_all_inputs_as_internal_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_3_H3_W2_VALID_nhwc_all_inputs_as_internal_2, generated_tests::conv2d_v1_2::CreateModel_3_H3_W2_VALID_nhwc_all_inputs_as_internal_2)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_VALID_nhwc_all_inputs_as_internal_dynamic_output_shape_2(Model *model);
+bool is_ignored_3_H3_W2_VALID_nhwc_all_inputs_as_internal_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_VALID_nhwc_all_inputs_as_internal_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_3_H3_W2_VALID_nhwc_all_inputs_as_internal_dynamic_output_shape_2) {
+    execute(CreateModel_3_H3_W2_VALID_nhwc_all_inputs_as_internal_dynamic_output_shape_2,
+            is_ignored_3_H3_W2_VALID_nhwc_all_inputs_as_internal_dynamic_output_shape_2,
+            get_examples_3_H3_W2_VALID_nhwc_all_inputs_as_internal_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_VALID_nhwc_all_tensors_as_inputs_2(Model *model);
+bool is_ignored_3_H3_W2_VALID_nhwc_all_tensors_as_inputs_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_VALID_nhwc_all_tensors_as_inputs_2();
+
+TEST_F(GeneratedTests, conv2d_v1_2_3_H3_W2_VALID_nhwc_all_tensors_as_inputs_2) {
+    execute(CreateModel_3_H3_W2_VALID_nhwc_all_tensors_as_inputs_2,
+            is_ignored_3_H3_W2_VALID_nhwc_all_tensors_as_inputs_2,
+            get_examples_3_H3_W2_VALID_nhwc_all_tensors_as_inputs_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_3_H3_W2_VALID_nhwc_all_tensors_as_inputs_2, generated_tests::conv2d_v1_2::CreateModel_3_H3_W2_VALID_nhwc_all_tensors_as_inputs_2)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_VALID_nhwc_all_tensors_as_inputs_dynamic_output_shape_2(Model *model);
+bool is_ignored_3_H3_W2_VALID_nhwc_all_tensors_as_inputs_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_VALID_nhwc_all_tensors_as_inputs_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_3_H3_W2_VALID_nhwc_all_tensors_as_inputs_dynamic_output_shape_2) {
+    execute(CreateModel_3_H3_W2_VALID_nhwc_all_tensors_as_inputs_dynamic_output_shape_2,
+            is_ignored_3_H3_W2_VALID_nhwc_all_tensors_as_inputs_dynamic_output_shape_2,
+            get_examples_3_H3_W2_VALID_nhwc_all_tensors_as_inputs_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_VALID_nhwc_all_tensors_as_inputs_all_inputs_as_internal_2(Model *model);
+bool is_ignored_3_H3_W2_VALID_nhwc_all_tensors_as_inputs_all_inputs_as_internal_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_VALID_nhwc_all_tensors_as_inputs_all_inputs_as_internal_2();
+
+TEST_F(GeneratedTests, conv2d_v1_2_3_H3_W2_VALID_nhwc_all_tensors_as_inputs_all_inputs_as_internal_2) {
+    execute(CreateModel_3_H3_W2_VALID_nhwc_all_tensors_as_inputs_all_inputs_as_internal_2,
+            is_ignored_3_H3_W2_VALID_nhwc_all_tensors_as_inputs_all_inputs_as_internal_2,
+            get_examples_3_H3_W2_VALID_nhwc_all_tensors_as_inputs_all_inputs_as_internal_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_3_H3_W2_VALID_nhwc_all_tensors_as_inputs_all_inputs_as_internal_2, generated_tests::conv2d_v1_2::CreateModel_3_H3_W2_VALID_nhwc_all_tensors_as_inputs_all_inputs_as_internal_2)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_VALID_nhwc_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2(Model *model);
+bool is_ignored_3_H3_W2_VALID_nhwc_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_VALID_nhwc_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_3_H3_W2_VALID_nhwc_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2) {
+    execute(CreateModel_3_H3_W2_VALID_nhwc_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2,
+            is_ignored_3_H3_W2_VALID_nhwc_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2,
+            get_examples_3_H3_W2_VALID_nhwc_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_VALID_nhwc_relaxed_2(Model *model);
+bool is_ignored_3_H3_W2_VALID_nhwc_relaxed_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_VALID_nhwc_relaxed_2();
+
+TEST_F(GeneratedTests, conv2d_v1_2_3_H3_W2_VALID_nhwc_relaxed_2) {
+    execute(CreateModel_3_H3_W2_VALID_nhwc_relaxed_2,
+            is_ignored_3_H3_W2_VALID_nhwc_relaxed_2,
+            get_examples_3_H3_W2_VALID_nhwc_relaxed_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_VALID_nhwc_relaxed_dynamic_output_shape_2(Model *model);
+bool is_ignored_3_H3_W2_VALID_nhwc_relaxed_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_VALID_nhwc_relaxed_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_3_H3_W2_VALID_nhwc_relaxed_dynamic_output_shape_2) {
+    execute(CreateModel_3_H3_W2_VALID_nhwc_relaxed_dynamic_output_shape_2,
+            is_ignored_3_H3_W2_VALID_nhwc_relaxed_dynamic_output_shape_2,
+            get_examples_3_H3_W2_VALID_nhwc_relaxed_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_VALID_nhwc_relaxed_all_inputs_as_internal_2(Model *model);
+bool is_ignored_3_H3_W2_VALID_nhwc_relaxed_all_inputs_as_internal_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_VALID_nhwc_relaxed_all_inputs_as_internal_2();
+
+TEST_F(GeneratedTests, conv2d_v1_2_3_H3_W2_VALID_nhwc_relaxed_all_inputs_as_internal_2) {
+    execute(CreateModel_3_H3_W2_VALID_nhwc_relaxed_all_inputs_as_internal_2,
+            is_ignored_3_H3_W2_VALID_nhwc_relaxed_all_inputs_as_internal_2,
+            get_examples_3_H3_W2_VALID_nhwc_relaxed_all_inputs_as_internal_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_VALID_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_2(Model *model);
+bool is_ignored_3_H3_W2_VALID_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_VALID_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_3_H3_W2_VALID_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_2) {
+    execute(CreateModel_3_H3_W2_VALID_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_2,
+            is_ignored_3_H3_W2_VALID_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_2,
+            get_examples_3_H3_W2_VALID_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs_2(Model *model);
+bool is_ignored_3_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs_2();
+
+TEST_F(GeneratedTests, conv2d_v1_2_3_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs_2) {
+    execute(CreateModel_3_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs_2,
+            is_ignored_3_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs_2,
+            get_examples_3_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs_dynamic_output_shape_2(Model *model);
+bool is_ignored_3_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_3_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs_dynamic_output_shape_2) {
+    execute(CreateModel_3_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs_dynamic_output_shape_2,
+            is_ignored_3_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs_dynamic_output_shape_2,
+            get_examples_3_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2(Model *model);
+bool is_ignored_3_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2();
+
+TEST_F(GeneratedTests, conv2d_v1_2_3_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2) {
+    execute(CreateModel_3_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2,
+            is_ignored_3_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2,
+            get_examples_3_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2(Model *model);
+bool is_ignored_3_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_3_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2) {
+    execute(CreateModel_3_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2,
+            is_ignored_3_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2,
+            get_examples_3_H3_W2_VALID_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_VALID_nhwc_float16_2(Model *model);
+bool is_ignored_3_H3_W2_VALID_nhwc_float16_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_VALID_nhwc_float16_2();
+
+TEST_F(GeneratedTests, conv2d_v1_2_3_H3_W2_VALID_nhwc_float16_2) {
+    execute(CreateModel_3_H3_W2_VALID_nhwc_float16_2,
+            is_ignored_3_H3_W2_VALID_nhwc_float16_2,
+            get_examples_3_H3_W2_VALID_nhwc_float16_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_3_H3_W2_VALID_nhwc_float16_2, generated_tests::conv2d_v1_2::CreateModel_3_H3_W2_VALID_nhwc_float16_2)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_VALID_nhwc_float16_dynamic_output_shape_2(Model *model);
+bool is_ignored_3_H3_W2_VALID_nhwc_float16_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_VALID_nhwc_float16_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_3_H3_W2_VALID_nhwc_float16_dynamic_output_shape_2) {
+    execute(CreateModel_3_H3_W2_VALID_nhwc_float16_dynamic_output_shape_2,
+            is_ignored_3_H3_W2_VALID_nhwc_float16_dynamic_output_shape_2,
+            get_examples_3_H3_W2_VALID_nhwc_float16_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_VALID_nhwc_float16_all_inputs_as_internal_2(Model *model);
+bool is_ignored_3_H3_W2_VALID_nhwc_float16_all_inputs_as_internal_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_VALID_nhwc_float16_all_inputs_as_internal_2();
+
+TEST_F(GeneratedTests, conv2d_v1_2_3_H3_W2_VALID_nhwc_float16_all_inputs_as_internal_2) {
+    execute(CreateModel_3_H3_W2_VALID_nhwc_float16_all_inputs_as_internal_2,
+            is_ignored_3_H3_W2_VALID_nhwc_float16_all_inputs_as_internal_2,
+            get_examples_3_H3_W2_VALID_nhwc_float16_all_inputs_as_internal_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_3_H3_W2_VALID_nhwc_float16_all_inputs_as_internal_2, generated_tests::conv2d_v1_2::CreateModel_3_H3_W2_VALID_nhwc_float16_all_inputs_as_internal_2)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_VALID_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_2(Model *model);
+bool is_ignored_3_H3_W2_VALID_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_VALID_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_3_H3_W2_VALID_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_2) {
+    execute(CreateModel_3_H3_W2_VALID_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_2,
+            is_ignored_3_H3_W2_VALID_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_2,
+            get_examples_3_H3_W2_VALID_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_2(Model *model);
+bool is_ignored_3_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_2();
+
+TEST_F(GeneratedTests, conv2d_v1_2_3_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_2) {
+    execute(CreateModel_3_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_2,
+            is_ignored_3_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_2,
+            get_examples_3_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_3_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_2, generated_tests::conv2d_v1_2::CreateModel_3_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_2)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_dynamic_output_shape_2(Model *model);
+bool is_ignored_3_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_3_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_dynamic_output_shape_2) {
+    execute(CreateModel_3_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_dynamic_output_shape_2,
+            is_ignored_3_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_dynamic_output_shape_2,
+            get_examples_3_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_2(Model *model);
+bool is_ignored_3_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_2();
+
+TEST_F(GeneratedTests, conv2d_v1_2_3_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_2) {
+    execute(CreateModel_3_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_2,
+            is_ignored_3_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_2,
+            get_examples_3_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_3_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_2, generated_tests::conv2d_v1_2::CreateModel_3_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_2)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2(Model *model);
+bool is_ignored_3_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_3_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2) {
+    execute(CreateModel_3_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2,
+            is_ignored_3_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2,
+            get_examples_3_H3_W2_VALID_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_VALID_nchw_2(Model *model);
+bool is_ignored_3_H3_W2_VALID_nchw_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_VALID_nchw_2();
+
+TEST_F(GeneratedTests, conv2d_v1_2_3_H3_W2_VALID_nchw_2) {
+    execute(CreateModel_3_H3_W2_VALID_nchw_2,
+            is_ignored_3_H3_W2_VALID_nchw_2,
+            get_examples_3_H3_W2_VALID_nchw_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_3_H3_W2_VALID_nchw_2, generated_tests::conv2d_v1_2::CreateModel_3_H3_W2_VALID_nchw_2)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_VALID_nchw_dynamic_output_shape_2(Model *model);
+bool is_ignored_3_H3_W2_VALID_nchw_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_VALID_nchw_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_3_H3_W2_VALID_nchw_dynamic_output_shape_2) {
+    execute(CreateModel_3_H3_W2_VALID_nchw_dynamic_output_shape_2,
+            is_ignored_3_H3_W2_VALID_nchw_dynamic_output_shape_2,
+            get_examples_3_H3_W2_VALID_nchw_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_VALID_nchw_all_inputs_as_internal_2(Model *model);
+bool is_ignored_3_H3_W2_VALID_nchw_all_inputs_as_internal_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_VALID_nchw_all_inputs_as_internal_2();
+
+TEST_F(GeneratedTests, conv2d_v1_2_3_H3_W2_VALID_nchw_all_inputs_as_internal_2) {
+    execute(CreateModel_3_H3_W2_VALID_nchw_all_inputs_as_internal_2,
+            is_ignored_3_H3_W2_VALID_nchw_all_inputs_as_internal_2,
+            get_examples_3_H3_W2_VALID_nchw_all_inputs_as_internal_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_3_H3_W2_VALID_nchw_all_inputs_as_internal_2, generated_tests::conv2d_v1_2::CreateModel_3_H3_W2_VALID_nchw_all_inputs_as_internal_2)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_VALID_nchw_all_inputs_as_internal_dynamic_output_shape_2(Model *model);
+bool is_ignored_3_H3_W2_VALID_nchw_all_inputs_as_internal_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_VALID_nchw_all_inputs_as_internal_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_3_H3_W2_VALID_nchw_all_inputs_as_internal_dynamic_output_shape_2) {
+    execute(CreateModel_3_H3_W2_VALID_nchw_all_inputs_as_internal_dynamic_output_shape_2,
+            is_ignored_3_H3_W2_VALID_nchw_all_inputs_as_internal_dynamic_output_shape_2,
+            get_examples_3_H3_W2_VALID_nchw_all_inputs_as_internal_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_VALID_nchw_all_tensors_as_inputs_2(Model *model);
+bool is_ignored_3_H3_W2_VALID_nchw_all_tensors_as_inputs_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_VALID_nchw_all_tensors_as_inputs_2();
+
+TEST_F(GeneratedTests, conv2d_v1_2_3_H3_W2_VALID_nchw_all_tensors_as_inputs_2) {
+    execute(CreateModel_3_H3_W2_VALID_nchw_all_tensors_as_inputs_2,
+            is_ignored_3_H3_W2_VALID_nchw_all_tensors_as_inputs_2,
+            get_examples_3_H3_W2_VALID_nchw_all_tensors_as_inputs_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_3_H3_W2_VALID_nchw_all_tensors_as_inputs_2, generated_tests::conv2d_v1_2::CreateModel_3_H3_W2_VALID_nchw_all_tensors_as_inputs_2)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_VALID_nchw_all_tensors_as_inputs_dynamic_output_shape_2(Model *model);
+bool is_ignored_3_H3_W2_VALID_nchw_all_tensors_as_inputs_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_VALID_nchw_all_tensors_as_inputs_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_3_H3_W2_VALID_nchw_all_tensors_as_inputs_dynamic_output_shape_2) {
+    execute(CreateModel_3_H3_W2_VALID_nchw_all_tensors_as_inputs_dynamic_output_shape_2,
+            is_ignored_3_H3_W2_VALID_nchw_all_tensors_as_inputs_dynamic_output_shape_2,
+            get_examples_3_H3_W2_VALID_nchw_all_tensors_as_inputs_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_VALID_nchw_all_tensors_as_inputs_all_inputs_as_internal_2(Model *model);
+bool is_ignored_3_H3_W2_VALID_nchw_all_tensors_as_inputs_all_inputs_as_internal_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_VALID_nchw_all_tensors_as_inputs_all_inputs_as_internal_2();
+
+TEST_F(GeneratedTests, conv2d_v1_2_3_H3_W2_VALID_nchw_all_tensors_as_inputs_all_inputs_as_internal_2) {
+    execute(CreateModel_3_H3_W2_VALID_nchw_all_tensors_as_inputs_all_inputs_as_internal_2,
+            is_ignored_3_H3_W2_VALID_nchw_all_tensors_as_inputs_all_inputs_as_internal_2,
+            get_examples_3_H3_W2_VALID_nchw_all_tensors_as_inputs_all_inputs_as_internal_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_3_H3_W2_VALID_nchw_all_tensors_as_inputs_all_inputs_as_internal_2, generated_tests::conv2d_v1_2::CreateModel_3_H3_W2_VALID_nchw_all_tensors_as_inputs_all_inputs_as_internal_2)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_VALID_nchw_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2(Model *model);
+bool is_ignored_3_H3_W2_VALID_nchw_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_VALID_nchw_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_3_H3_W2_VALID_nchw_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2) {
+    execute(CreateModel_3_H3_W2_VALID_nchw_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2,
+            is_ignored_3_H3_W2_VALID_nchw_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2,
+            get_examples_3_H3_W2_VALID_nchw_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_VALID_nchw_relaxed_2(Model *model);
+bool is_ignored_3_H3_W2_VALID_nchw_relaxed_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_VALID_nchw_relaxed_2();
+
+TEST_F(GeneratedTests, conv2d_v1_2_3_H3_W2_VALID_nchw_relaxed_2) {
+    execute(CreateModel_3_H3_W2_VALID_nchw_relaxed_2,
+            is_ignored_3_H3_W2_VALID_nchw_relaxed_2,
+            get_examples_3_H3_W2_VALID_nchw_relaxed_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_VALID_nchw_relaxed_dynamic_output_shape_2(Model *model);
+bool is_ignored_3_H3_W2_VALID_nchw_relaxed_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_VALID_nchw_relaxed_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_3_H3_W2_VALID_nchw_relaxed_dynamic_output_shape_2) {
+    execute(CreateModel_3_H3_W2_VALID_nchw_relaxed_dynamic_output_shape_2,
+            is_ignored_3_H3_W2_VALID_nchw_relaxed_dynamic_output_shape_2,
+            get_examples_3_H3_W2_VALID_nchw_relaxed_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_VALID_nchw_relaxed_all_inputs_as_internal_2(Model *model);
+bool is_ignored_3_H3_W2_VALID_nchw_relaxed_all_inputs_as_internal_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_VALID_nchw_relaxed_all_inputs_as_internal_2();
+
+TEST_F(GeneratedTests, conv2d_v1_2_3_H3_W2_VALID_nchw_relaxed_all_inputs_as_internal_2) {
+    execute(CreateModel_3_H3_W2_VALID_nchw_relaxed_all_inputs_as_internal_2,
+            is_ignored_3_H3_W2_VALID_nchw_relaxed_all_inputs_as_internal_2,
+            get_examples_3_H3_W2_VALID_nchw_relaxed_all_inputs_as_internal_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_VALID_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_2(Model *model);
+bool is_ignored_3_H3_W2_VALID_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_VALID_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_3_H3_W2_VALID_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_2) {
+    execute(CreateModel_3_H3_W2_VALID_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_2,
+            is_ignored_3_H3_W2_VALID_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_2,
+            get_examples_3_H3_W2_VALID_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs_2(Model *model);
+bool is_ignored_3_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs_2();
+
+TEST_F(GeneratedTests, conv2d_v1_2_3_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs_2) {
+    execute(CreateModel_3_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs_2,
+            is_ignored_3_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs_2,
+            get_examples_3_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs_dynamic_output_shape_2(Model *model);
+bool is_ignored_3_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_3_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs_dynamic_output_shape_2) {
+    execute(CreateModel_3_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs_dynamic_output_shape_2,
+            is_ignored_3_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs_dynamic_output_shape_2,
+            get_examples_3_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2(Model *model);
+bool is_ignored_3_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2();
+
+TEST_F(GeneratedTests, conv2d_v1_2_3_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2) {
+    execute(CreateModel_3_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2,
+            is_ignored_3_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2,
+            get_examples_3_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2(Model *model);
+bool is_ignored_3_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_3_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2) {
+    execute(CreateModel_3_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2,
+            is_ignored_3_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2,
+            get_examples_3_H3_W2_VALID_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_VALID_nchw_float16_2(Model *model);
+bool is_ignored_3_H3_W2_VALID_nchw_float16_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_VALID_nchw_float16_2();
+
+TEST_F(GeneratedTests, conv2d_v1_2_3_H3_W2_VALID_nchw_float16_2) {
+    execute(CreateModel_3_H3_W2_VALID_nchw_float16_2,
+            is_ignored_3_H3_W2_VALID_nchw_float16_2,
+            get_examples_3_H3_W2_VALID_nchw_float16_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_3_H3_W2_VALID_nchw_float16_2, generated_tests::conv2d_v1_2::CreateModel_3_H3_W2_VALID_nchw_float16_2)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_VALID_nchw_float16_dynamic_output_shape_2(Model *model);
+bool is_ignored_3_H3_W2_VALID_nchw_float16_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_VALID_nchw_float16_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_3_H3_W2_VALID_nchw_float16_dynamic_output_shape_2) {
+    execute(CreateModel_3_H3_W2_VALID_nchw_float16_dynamic_output_shape_2,
+            is_ignored_3_H3_W2_VALID_nchw_float16_dynamic_output_shape_2,
+            get_examples_3_H3_W2_VALID_nchw_float16_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_VALID_nchw_float16_all_inputs_as_internal_2(Model *model);
+bool is_ignored_3_H3_W2_VALID_nchw_float16_all_inputs_as_internal_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_VALID_nchw_float16_all_inputs_as_internal_2();
+
+TEST_F(GeneratedTests, conv2d_v1_2_3_H3_W2_VALID_nchw_float16_all_inputs_as_internal_2) {
+    execute(CreateModel_3_H3_W2_VALID_nchw_float16_all_inputs_as_internal_2,
+            is_ignored_3_H3_W2_VALID_nchw_float16_all_inputs_as_internal_2,
+            get_examples_3_H3_W2_VALID_nchw_float16_all_inputs_as_internal_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_3_H3_W2_VALID_nchw_float16_all_inputs_as_internal_2, generated_tests::conv2d_v1_2::CreateModel_3_H3_W2_VALID_nchw_float16_all_inputs_as_internal_2)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_VALID_nchw_float16_all_inputs_as_internal_dynamic_output_shape_2(Model *model);
+bool is_ignored_3_H3_W2_VALID_nchw_float16_all_inputs_as_internal_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_VALID_nchw_float16_all_inputs_as_internal_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_3_H3_W2_VALID_nchw_float16_all_inputs_as_internal_dynamic_output_shape_2) {
+    execute(CreateModel_3_H3_W2_VALID_nchw_float16_all_inputs_as_internal_dynamic_output_shape_2,
+            is_ignored_3_H3_W2_VALID_nchw_float16_all_inputs_as_internal_dynamic_output_shape_2,
+            get_examples_3_H3_W2_VALID_nchw_float16_all_inputs_as_internal_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_2(Model *model);
+bool is_ignored_3_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_2();
+
+TEST_F(GeneratedTests, conv2d_v1_2_3_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_2) {
+    execute(CreateModel_3_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_2,
+            is_ignored_3_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_2,
+            get_examples_3_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_3_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_2, generated_tests::conv2d_v1_2::CreateModel_3_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_2)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_dynamic_output_shape_2(Model *model);
+bool is_ignored_3_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_3_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_dynamic_output_shape_2) {
+    execute(CreateModel_3_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_dynamic_output_shape_2,
+            is_ignored_3_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_dynamic_output_shape_2,
+            get_examples_3_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_2(Model *model);
+bool is_ignored_3_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_2();
+
+TEST_F(GeneratedTests, conv2d_v1_2_3_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_2) {
+    execute(CreateModel_3_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_2,
+            is_ignored_3_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_2,
+            get_examples_3_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_3_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_2, generated_tests::conv2d_v1_2::CreateModel_3_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_2)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_3_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2(Model *model);
+bool is_ignored_3_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_3_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_3_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2) {
+    execute(CreateModel_3_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2,
+            is_ignored_3_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2,
+            get_examples_3_H3_W2_VALID_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape_2());
 }
 
 } // namespace generated_tests::conv2d_v1_2
@@ -3128,49 +10364,6 @@ TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_quant_output_multiplier_gt_1, generated_t
 
 namespace generated_tests::conv2d_v1_2 {
 
-void CreateModel_quant_output_multiplier_gt_1_relaxed(Model *model);
-bool is_ignored_quant_output_multiplier_gt_1_relaxed(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_quant_output_multiplier_gt_1_relaxed();
-
-TEST_F(GeneratedTests, conv2d_v1_2_quant_output_multiplier_gt_1_relaxed) {
-    execute(CreateModel_quant_output_multiplier_gt_1_relaxed,
-            is_ignored_quant_output_multiplier_gt_1_relaxed,
-            get_examples_quant_output_multiplier_gt_1_relaxed());
-}
-
-} // namespace generated_tests::conv2d_v1_2
-
-namespace generated_tests::conv2d_v1_2 {
-
-void CreateModel_quant_output_multiplier_gt_1_weight_as_input(Model *model);
-bool is_ignored_quant_output_multiplier_gt_1_weight_as_input(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_quant_output_multiplier_gt_1_weight_as_input();
-
-TEST_F(GeneratedTests, conv2d_v1_2_quant_output_multiplier_gt_1_weight_as_input) {
-    execute(CreateModel_quant_output_multiplier_gt_1_weight_as_input,
-            is_ignored_quant_output_multiplier_gt_1_weight_as_input,
-            get_examples_quant_output_multiplier_gt_1_weight_as_input());
-}
-
-} // namespace generated_tests::conv2d_v1_2
-TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_quant_output_multiplier_gt_1_weight_as_input, generated_tests::conv2d_v1_2::CreateModel_quant_output_multiplier_gt_1_weight_as_input)
-
-namespace generated_tests::conv2d_v1_2 {
-
-void CreateModel_quant_output_multiplier_gt_1_weight_as_input_relaxed(Model *model);
-bool is_ignored_quant_output_multiplier_gt_1_weight_as_input_relaxed(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_quant_output_multiplier_gt_1_weight_as_input_relaxed();
-
-TEST_F(GeneratedTests, conv2d_v1_2_quant_output_multiplier_gt_1_weight_as_input_relaxed) {
-    execute(CreateModel_quant_output_multiplier_gt_1_weight_as_input_relaxed,
-            is_ignored_quant_output_multiplier_gt_1_weight_as_input_relaxed,
-            get_examples_quant_output_multiplier_gt_1_weight_as_input_relaxed());
-}
-
-} // namespace generated_tests::conv2d_v1_2
-
-namespace generated_tests::conv2d_v1_2 {
-
 void CreateModel_quant_output_multiplier_gt_1_dynamic_output_shape(Model *model);
 bool is_ignored_quant_output_multiplier_gt_1_dynamic_output_shape(int);
 std::vector<::test_helper::MixedTypedExample>& get_examples_quant_output_multiplier_gt_1_dynamic_output_shape();
@@ -3185,42 +10378,199 @@ TEST_F(DynamicOutputShapeTest, conv2d_v1_2_quant_output_multiplier_gt_1_dynamic_
 
 namespace generated_tests::conv2d_v1_2 {
 
-void CreateModel_quant_output_multiplier_gt_1_dynamic_output_shape_relaxed(Model *model);
-bool is_ignored_quant_output_multiplier_gt_1_dynamic_output_shape_relaxed(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_quant_output_multiplier_gt_1_dynamic_output_shape_relaxed();
+void CreateModel_quant_output_multiplier_gt_1_all_inputs_as_internal(Model *model);
+bool is_ignored_quant_output_multiplier_gt_1_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_quant_output_multiplier_gt_1_all_inputs_as_internal();
 
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_quant_output_multiplier_gt_1_dynamic_output_shape_relaxed) {
-    execute(CreateModel_quant_output_multiplier_gt_1_dynamic_output_shape_relaxed,
-            is_ignored_quant_output_multiplier_gt_1_dynamic_output_shape_relaxed,
-            get_examples_quant_output_multiplier_gt_1_dynamic_output_shape_relaxed());
+TEST_F(GeneratedTests, conv2d_v1_2_quant_output_multiplier_gt_1_all_inputs_as_internal) {
+    execute(CreateModel_quant_output_multiplier_gt_1_all_inputs_as_internal,
+            is_ignored_quant_output_multiplier_gt_1_all_inputs_as_internal,
+            get_examples_quant_output_multiplier_gt_1_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_quant_output_multiplier_gt_1_all_inputs_as_internal, generated_tests::conv2d_v1_2::CreateModel_quant_output_multiplier_gt_1_all_inputs_as_internal)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_quant_output_multiplier_gt_1_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_quant_output_multiplier_gt_1_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_quant_output_multiplier_gt_1_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_quant_output_multiplier_gt_1_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_quant_output_multiplier_gt_1_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_quant_output_multiplier_gt_1_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_quant_output_multiplier_gt_1_all_inputs_as_internal_dynamic_output_shape());
 }
 
 } // namespace generated_tests::conv2d_v1_2
 
 namespace generated_tests::conv2d_v1_2 {
 
-void CreateModel_quant_output_multiplier_gt_1_dynamic_output_shape_weight_as_input(Model *model);
-bool is_ignored_quant_output_multiplier_gt_1_dynamic_output_shape_weight_as_input(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_quant_output_multiplier_gt_1_dynamic_output_shape_weight_as_input();
+void CreateModel_quant_output_multiplier_gt_1_all_tensors_as_inputs(Model *model);
+bool is_ignored_quant_output_multiplier_gt_1_all_tensors_as_inputs(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_quant_output_multiplier_gt_1_all_tensors_as_inputs();
 
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_quant_output_multiplier_gt_1_dynamic_output_shape_weight_as_input) {
-    execute(CreateModel_quant_output_multiplier_gt_1_dynamic_output_shape_weight_as_input,
-            is_ignored_quant_output_multiplier_gt_1_dynamic_output_shape_weight_as_input,
-            get_examples_quant_output_multiplier_gt_1_dynamic_output_shape_weight_as_input());
+TEST_F(GeneratedTests, conv2d_v1_2_quant_output_multiplier_gt_1_all_tensors_as_inputs) {
+    execute(CreateModel_quant_output_multiplier_gt_1_all_tensors_as_inputs,
+            is_ignored_quant_output_multiplier_gt_1_all_tensors_as_inputs,
+            get_examples_quant_output_multiplier_gt_1_all_tensors_as_inputs());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_quant_output_multiplier_gt_1_all_tensors_as_inputs, generated_tests::conv2d_v1_2::CreateModel_quant_output_multiplier_gt_1_all_tensors_as_inputs)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_quant_output_multiplier_gt_1_all_tensors_as_inputs_dynamic_output_shape(Model *model);
+bool is_ignored_quant_output_multiplier_gt_1_all_tensors_as_inputs_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_quant_output_multiplier_gt_1_all_tensors_as_inputs_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_quant_output_multiplier_gt_1_all_tensors_as_inputs_dynamic_output_shape) {
+    execute(CreateModel_quant_output_multiplier_gt_1_all_tensors_as_inputs_dynamic_output_shape,
+            is_ignored_quant_output_multiplier_gt_1_all_tensors_as_inputs_dynamic_output_shape,
+            get_examples_quant_output_multiplier_gt_1_all_tensors_as_inputs_dynamic_output_shape());
 }
 
 } // namespace generated_tests::conv2d_v1_2
 
 namespace generated_tests::conv2d_v1_2 {
 
-void CreateModel_quant_output_multiplier_gt_1_dynamic_output_shape_weight_as_input_relaxed(Model *model);
-bool is_ignored_quant_output_multiplier_gt_1_dynamic_output_shape_weight_as_input_relaxed(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_quant_output_multiplier_gt_1_dynamic_output_shape_weight_as_input_relaxed();
+void CreateModel_quant_output_multiplier_gt_1_all_tensors_as_inputs_all_inputs_as_internal(Model *model);
+bool is_ignored_quant_output_multiplier_gt_1_all_tensors_as_inputs_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_quant_output_multiplier_gt_1_all_tensors_as_inputs_all_inputs_as_internal();
 
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_quant_output_multiplier_gt_1_dynamic_output_shape_weight_as_input_relaxed) {
-    execute(CreateModel_quant_output_multiplier_gt_1_dynamic_output_shape_weight_as_input_relaxed,
-            is_ignored_quant_output_multiplier_gt_1_dynamic_output_shape_weight_as_input_relaxed,
-            get_examples_quant_output_multiplier_gt_1_dynamic_output_shape_weight_as_input_relaxed());
+TEST_F(GeneratedTests, conv2d_v1_2_quant_output_multiplier_gt_1_all_tensors_as_inputs_all_inputs_as_internal) {
+    execute(CreateModel_quant_output_multiplier_gt_1_all_tensors_as_inputs_all_inputs_as_internal,
+            is_ignored_quant_output_multiplier_gt_1_all_tensors_as_inputs_all_inputs_as_internal,
+            get_examples_quant_output_multiplier_gt_1_all_tensors_as_inputs_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_quant_output_multiplier_gt_1_all_tensors_as_inputs_all_inputs_as_internal, generated_tests::conv2d_v1_2::CreateModel_quant_output_multiplier_gt_1_all_tensors_as_inputs_all_inputs_as_internal)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_quant_output_multiplier_gt_1_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_quant_output_multiplier_gt_1_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_quant_output_multiplier_gt_1_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_quant_output_multiplier_gt_1_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_quant_output_multiplier_gt_1_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_quant_output_multiplier_gt_1_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_quant_output_multiplier_gt_1_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_quant_output_multiplier_gt_1_relaxed(Model *model);
+bool is_ignored_quant_output_multiplier_gt_1_relaxed(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_quant_output_multiplier_gt_1_relaxed();
+
+TEST_F(GeneratedTests, conv2d_v1_2_quant_output_multiplier_gt_1_relaxed) {
+    execute(CreateModel_quant_output_multiplier_gt_1_relaxed,
+            is_ignored_quant_output_multiplier_gt_1_relaxed,
+            get_examples_quant_output_multiplier_gt_1_relaxed());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_quant_output_multiplier_gt_1_relaxed_dynamic_output_shape(Model *model);
+bool is_ignored_quant_output_multiplier_gt_1_relaxed_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_quant_output_multiplier_gt_1_relaxed_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_quant_output_multiplier_gt_1_relaxed_dynamic_output_shape) {
+    execute(CreateModel_quant_output_multiplier_gt_1_relaxed_dynamic_output_shape,
+            is_ignored_quant_output_multiplier_gt_1_relaxed_dynamic_output_shape,
+            get_examples_quant_output_multiplier_gt_1_relaxed_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_quant_output_multiplier_gt_1_relaxed_all_inputs_as_internal(Model *model);
+bool is_ignored_quant_output_multiplier_gt_1_relaxed_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_quant_output_multiplier_gt_1_relaxed_all_inputs_as_internal();
+
+TEST_F(GeneratedTests, conv2d_v1_2_quant_output_multiplier_gt_1_relaxed_all_inputs_as_internal) {
+    execute(CreateModel_quant_output_multiplier_gt_1_relaxed_all_inputs_as_internal,
+            is_ignored_quant_output_multiplier_gt_1_relaxed_all_inputs_as_internal,
+            get_examples_quant_output_multiplier_gt_1_relaxed_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_quant_output_multiplier_gt_1_relaxed_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_quant_output_multiplier_gt_1_relaxed_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_quant_output_multiplier_gt_1_relaxed_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_quant_output_multiplier_gt_1_relaxed_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_quant_output_multiplier_gt_1_relaxed_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_quant_output_multiplier_gt_1_relaxed_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_quant_output_multiplier_gt_1_relaxed_all_inputs_as_internal_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_quant_output_multiplier_gt_1_relaxed_all_tensors_as_inputs(Model *model);
+bool is_ignored_quant_output_multiplier_gt_1_relaxed_all_tensors_as_inputs(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_quant_output_multiplier_gt_1_relaxed_all_tensors_as_inputs();
+
+TEST_F(GeneratedTests, conv2d_v1_2_quant_output_multiplier_gt_1_relaxed_all_tensors_as_inputs) {
+    execute(CreateModel_quant_output_multiplier_gt_1_relaxed_all_tensors_as_inputs,
+            is_ignored_quant_output_multiplier_gt_1_relaxed_all_tensors_as_inputs,
+            get_examples_quant_output_multiplier_gt_1_relaxed_all_tensors_as_inputs());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_quant_output_multiplier_gt_1_relaxed_all_tensors_as_inputs_dynamic_output_shape(Model *model);
+bool is_ignored_quant_output_multiplier_gt_1_relaxed_all_tensors_as_inputs_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_quant_output_multiplier_gt_1_relaxed_all_tensors_as_inputs_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_quant_output_multiplier_gt_1_relaxed_all_tensors_as_inputs_dynamic_output_shape) {
+    execute(CreateModel_quant_output_multiplier_gt_1_relaxed_all_tensors_as_inputs_dynamic_output_shape,
+            is_ignored_quant_output_multiplier_gt_1_relaxed_all_tensors_as_inputs_dynamic_output_shape,
+            get_examples_quant_output_multiplier_gt_1_relaxed_all_tensors_as_inputs_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_quant_output_multiplier_gt_1_relaxed_all_tensors_as_inputs_all_inputs_as_internal(Model *model);
+bool is_ignored_quant_output_multiplier_gt_1_relaxed_all_tensors_as_inputs_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_quant_output_multiplier_gt_1_relaxed_all_tensors_as_inputs_all_inputs_as_internal();
+
+TEST_F(GeneratedTests, conv2d_v1_2_quant_output_multiplier_gt_1_relaxed_all_tensors_as_inputs_all_inputs_as_internal) {
+    execute(CreateModel_quant_output_multiplier_gt_1_relaxed_all_tensors_as_inputs_all_inputs_as_internal,
+            is_ignored_quant_output_multiplier_gt_1_relaxed_all_tensors_as_inputs_all_inputs_as_internal,
+            get_examples_quant_output_multiplier_gt_1_relaxed_all_tensors_as_inputs_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_quant_output_multiplier_gt_1_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_quant_output_multiplier_gt_1_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_quant_output_multiplier_gt_1_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_quant_output_multiplier_gt_1_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_quant_output_multiplier_gt_1_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_quant_output_multiplier_gt_1_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_quant_output_multiplier_gt_1_relaxed_all_tensors_as_inputs_all_inputs_as_internal_dynamic_output_shape());
 }
 
 } // namespace generated_tests::conv2d_v1_2
@@ -3242,6 +10592,20 @@ TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_zero_sized_nhwc, generated_tests::conv2d_
 
 namespace generated_tests::conv2d_v1_2 {
 
+void CreateModel_zero_sized_nhwc_dynamic_output_shape(Model *model);
+bool is_ignored_zero_sized_nhwc_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_nhwc_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_zero_sized_nhwc_dynamic_output_shape) {
+    execute(CreateModel_zero_sized_nhwc_dynamic_output_shape,
+            is_ignored_zero_sized_nhwc_dynamic_output_shape,
+            get_examples_zero_sized_nhwc_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
 void CreateModel_zero_sized_nhwc_relaxed(Model *model);
 bool is_ignored_zero_sized_nhwc_relaxed(int);
 std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_nhwc_relaxed();
@@ -3250,6 +10614,20 @@ TEST_F(GeneratedTests, conv2d_v1_2_zero_sized_nhwc_relaxed) {
     execute(CreateModel_zero_sized_nhwc_relaxed,
             is_ignored_zero_sized_nhwc_relaxed,
             get_examples_zero_sized_nhwc_relaxed());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_zero_sized_nhwc_relaxed_dynamic_output_shape(Model *model);
+bool is_ignored_zero_sized_nhwc_relaxed_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_nhwc_relaxed_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_zero_sized_nhwc_relaxed_dynamic_output_shape) {
+    execute(CreateModel_zero_sized_nhwc_relaxed_dynamic_output_shape,
+            is_ignored_zero_sized_nhwc_relaxed_dynamic_output_shape,
+            get_examples_zero_sized_nhwc_relaxed_dynamic_output_shape());
 }
 
 } // namespace generated_tests::conv2d_v1_2
@@ -3271,6 +10649,20 @@ TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_zero_sized_nhwc_quant8, generated_tests::
 
 namespace generated_tests::conv2d_v1_2 {
 
+void CreateModel_zero_sized_nhwc_quant8_dynamic_output_shape(Model *model);
+bool is_ignored_zero_sized_nhwc_quant8_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_nhwc_quant8_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_zero_sized_nhwc_quant8_dynamic_output_shape) {
+    execute(CreateModel_zero_sized_nhwc_quant8_dynamic_output_shape,
+            is_ignored_zero_sized_nhwc_quant8_dynamic_output_shape,
+            get_examples_zero_sized_nhwc_quant8_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
 void CreateModel_zero_sized_nhwc_float16(Model *model);
 bool is_ignored_zero_sized_nhwc_float16(int);
 std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_nhwc_float16();
@@ -3283,6 +10675,20 @@ TEST_F(GeneratedTests, conv2d_v1_2_zero_sized_nhwc_float16) {
 
 } // namespace generated_tests::conv2d_v1_2
 TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_zero_sized_nhwc_float16, generated_tests::conv2d_v1_2::CreateModel_zero_sized_nhwc_float16)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_zero_sized_nhwc_float16_dynamic_output_shape(Model *model);
+bool is_ignored_zero_sized_nhwc_float16_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_nhwc_float16_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_zero_sized_nhwc_float16_dynamic_output_shape) {
+    execute(CreateModel_zero_sized_nhwc_float16_dynamic_output_shape,
+            is_ignored_zero_sized_nhwc_float16_dynamic_output_shape,
+            get_examples_zero_sized_nhwc_float16_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
 
 namespace generated_tests::conv2d_v1_2 {
 
@@ -3301,6 +10707,20 @@ TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_zero_sized_nchw, generated_tests::conv2d_
 
 namespace generated_tests::conv2d_v1_2 {
 
+void CreateModel_zero_sized_nchw_dynamic_output_shape(Model *model);
+bool is_ignored_zero_sized_nchw_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_nchw_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_zero_sized_nchw_dynamic_output_shape) {
+    execute(CreateModel_zero_sized_nchw_dynamic_output_shape,
+            is_ignored_zero_sized_nchw_dynamic_output_shape,
+            get_examples_zero_sized_nchw_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
 void CreateModel_zero_sized_nchw_relaxed(Model *model);
 bool is_ignored_zero_sized_nchw_relaxed(int);
 std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_nchw_relaxed();
@@ -3309,6 +10729,20 @@ TEST_F(GeneratedTests, conv2d_v1_2_zero_sized_nchw_relaxed) {
     execute(CreateModel_zero_sized_nchw_relaxed,
             is_ignored_zero_sized_nchw_relaxed,
             get_examples_zero_sized_nchw_relaxed());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_zero_sized_nchw_relaxed_dynamic_output_shape(Model *model);
+bool is_ignored_zero_sized_nchw_relaxed_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_nchw_relaxed_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_zero_sized_nchw_relaxed_dynamic_output_shape) {
+    execute(CreateModel_zero_sized_nchw_relaxed_dynamic_output_shape,
+            is_ignored_zero_sized_nchw_relaxed_dynamic_output_shape,
+            get_examples_zero_sized_nchw_relaxed_dynamic_output_shape());
 }
 
 } // namespace generated_tests::conv2d_v1_2
@@ -3330,6 +10764,20 @@ TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_zero_sized_nchw_quant8, generated_tests::
 
 namespace generated_tests::conv2d_v1_2 {
 
+void CreateModel_zero_sized_nchw_quant8_dynamic_output_shape(Model *model);
+bool is_ignored_zero_sized_nchw_quant8_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_nchw_quant8_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_zero_sized_nchw_quant8_dynamic_output_shape) {
+    execute(CreateModel_zero_sized_nchw_quant8_dynamic_output_shape,
+            is_ignored_zero_sized_nchw_quant8_dynamic_output_shape,
+            get_examples_zero_sized_nchw_quant8_dynamic_output_shape());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
 void CreateModel_zero_sized_nchw_float16(Model *model);
 bool is_ignored_zero_sized_nchw_float16(int);
 std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_nchw_float16();
@@ -3345,112 +10793,14 @@ TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_zero_sized_nchw_float16, generated_tests:
 
 namespace generated_tests::conv2d_v1_2 {
 
-void CreateModel_zero_sized_dynamic_output_shape_nhwc(Model *model);
-bool is_ignored_zero_sized_dynamic_output_shape_nhwc(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_dynamic_output_shape_nhwc();
+void CreateModel_zero_sized_nchw_float16_dynamic_output_shape(Model *model);
+bool is_ignored_zero_sized_nchw_float16_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_nchw_float16_dynamic_output_shape();
 
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_zero_sized_dynamic_output_shape_nhwc) {
-    execute(CreateModel_zero_sized_dynamic_output_shape_nhwc,
-            is_ignored_zero_sized_dynamic_output_shape_nhwc,
-            get_examples_zero_sized_dynamic_output_shape_nhwc());
-}
-
-} // namespace generated_tests::conv2d_v1_2
-
-namespace generated_tests::conv2d_v1_2 {
-
-void CreateModel_zero_sized_dynamic_output_shape_nhwc_relaxed(Model *model);
-bool is_ignored_zero_sized_dynamic_output_shape_nhwc_relaxed(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_dynamic_output_shape_nhwc_relaxed();
-
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_zero_sized_dynamic_output_shape_nhwc_relaxed) {
-    execute(CreateModel_zero_sized_dynamic_output_shape_nhwc_relaxed,
-            is_ignored_zero_sized_dynamic_output_shape_nhwc_relaxed,
-            get_examples_zero_sized_dynamic_output_shape_nhwc_relaxed());
-}
-
-} // namespace generated_tests::conv2d_v1_2
-
-namespace generated_tests::conv2d_v1_2 {
-
-void CreateModel_zero_sized_dynamic_output_shape_nhwc_quant8(Model *model);
-bool is_ignored_zero_sized_dynamic_output_shape_nhwc_quant8(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_dynamic_output_shape_nhwc_quant8();
-
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_zero_sized_dynamic_output_shape_nhwc_quant8) {
-    execute(CreateModel_zero_sized_dynamic_output_shape_nhwc_quant8,
-            is_ignored_zero_sized_dynamic_output_shape_nhwc_quant8,
-            get_examples_zero_sized_dynamic_output_shape_nhwc_quant8());
-}
-
-} // namespace generated_tests::conv2d_v1_2
-
-namespace generated_tests::conv2d_v1_2 {
-
-void CreateModel_zero_sized_dynamic_output_shape_nhwc_float16(Model *model);
-bool is_ignored_zero_sized_dynamic_output_shape_nhwc_float16(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_dynamic_output_shape_nhwc_float16();
-
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_zero_sized_dynamic_output_shape_nhwc_float16) {
-    execute(CreateModel_zero_sized_dynamic_output_shape_nhwc_float16,
-            is_ignored_zero_sized_dynamic_output_shape_nhwc_float16,
-            get_examples_zero_sized_dynamic_output_shape_nhwc_float16());
-}
-
-} // namespace generated_tests::conv2d_v1_2
-
-namespace generated_tests::conv2d_v1_2 {
-
-void CreateModel_zero_sized_dynamic_output_shape_nchw(Model *model);
-bool is_ignored_zero_sized_dynamic_output_shape_nchw(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_dynamic_output_shape_nchw();
-
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_zero_sized_dynamic_output_shape_nchw) {
-    execute(CreateModel_zero_sized_dynamic_output_shape_nchw,
-            is_ignored_zero_sized_dynamic_output_shape_nchw,
-            get_examples_zero_sized_dynamic_output_shape_nchw());
-}
-
-} // namespace generated_tests::conv2d_v1_2
-
-namespace generated_tests::conv2d_v1_2 {
-
-void CreateModel_zero_sized_dynamic_output_shape_nchw_relaxed(Model *model);
-bool is_ignored_zero_sized_dynamic_output_shape_nchw_relaxed(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_dynamic_output_shape_nchw_relaxed();
-
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_zero_sized_dynamic_output_shape_nchw_relaxed) {
-    execute(CreateModel_zero_sized_dynamic_output_shape_nchw_relaxed,
-            is_ignored_zero_sized_dynamic_output_shape_nchw_relaxed,
-            get_examples_zero_sized_dynamic_output_shape_nchw_relaxed());
-}
-
-} // namespace generated_tests::conv2d_v1_2
-
-namespace generated_tests::conv2d_v1_2 {
-
-void CreateModel_zero_sized_dynamic_output_shape_nchw_quant8(Model *model);
-bool is_ignored_zero_sized_dynamic_output_shape_nchw_quant8(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_dynamic_output_shape_nchw_quant8();
-
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_zero_sized_dynamic_output_shape_nchw_quant8) {
-    execute(CreateModel_zero_sized_dynamic_output_shape_nchw_quant8,
-            is_ignored_zero_sized_dynamic_output_shape_nchw_quant8,
-            get_examples_zero_sized_dynamic_output_shape_nchw_quant8());
-}
-
-} // namespace generated_tests::conv2d_v1_2
-
-namespace generated_tests::conv2d_v1_2 {
-
-void CreateModel_zero_sized_dynamic_output_shape_nchw_float16(Model *model);
-bool is_ignored_zero_sized_dynamic_output_shape_nchw_float16(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_dynamic_output_shape_nchw_float16();
-
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_zero_sized_dynamic_output_shape_nchw_float16) {
-    execute(CreateModel_zero_sized_dynamic_output_shape_nchw_float16,
-            is_ignored_zero_sized_dynamic_output_shape_nchw_float16,
-            get_examples_zero_sized_dynamic_output_shape_nchw_float16());
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_zero_sized_nchw_float16_dynamic_output_shape) {
+    execute(CreateModel_zero_sized_nchw_float16_dynamic_output_shape,
+            is_ignored_zero_sized_nchw_float16_dynamic_output_shape,
+            get_examples_zero_sized_nchw_float16_dynamic_output_shape());
 }
 
 } // namespace generated_tests::conv2d_v1_2
@@ -3472,6 +10822,20 @@ TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_zero_sized_nhwc_2, generated_tests::conv2
 
 namespace generated_tests::conv2d_v1_2 {
 
+void CreateModel_zero_sized_nhwc_dynamic_output_shape_2(Model *model);
+bool is_ignored_zero_sized_nhwc_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_nhwc_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_zero_sized_nhwc_dynamic_output_shape_2) {
+    execute(CreateModel_zero_sized_nhwc_dynamic_output_shape_2,
+            is_ignored_zero_sized_nhwc_dynamic_output_shape_2,
+            get_examples_zero_sized_nhwc_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
 void CreateModel_zero_sized_nhwc_relaxed_2(Model *model);
 bool is_ignored_zero_sized_nhwc_relaxed_2(int);
 std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_nhwc_relaxed_2();
@@ -3480,6 +10844,20 @@ TEST_F(GeneratedTests, conv2d_v1_2_zero_sized_nhwc_relaxed_2) {
     execute(CreateModel_zero_sized_nhwc_relaxed_2,
             is_ignored_zero_sized_nhwc_relaxed_2,
             get_examples_zero_sized_nhwc_relaxed_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_zero_sized_nhwc_relaxed_dynamic_output_shape_2(Model *model);
+bool is_ignored_zero_sized_nhwc_relaxed_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_nhwc_relaxed_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_zero_sized_nhwc_relaxed_dynamic_output_shape_2) {
+    execute(CreateModel_zero_sized_nhwc_relaxed_dynamic_output_shape_2,
+            is_ignored_zero_sized_nhwc_relaxed_dynamic_output_shape_2,
+            get_examples_zero_sized_nhwc_relaxed_dynamic_output_shape_2());
 }
 
 } // namespace generated_tests::conv2d_v1_2
@@ -3501,6 +10879,20 @@ TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_zero_sized_nhwc_quant8_2, generated_tests
 
 namespace generated_tests::conv2d_v1_2 {
 
+void CreateModel_zero_sized_nhwc_quant8_dynamic_output_shape_2(Model *model);
+bool is_ignored_zero_sized_nhwc_quant8_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_nhwc_quant8_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_zero_sized_nhwc_quant8_dynamic_output_shape_2) {
+    execute(CreateModel_zero_sized_nhwc_quant8_dynamic_output_shape_2,
+            is_ignored_zero_sized_nhwc_quant8_dynamic_output_shape_2,
+            get_examples_zero_sized_nhwc_quant8_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
 void CreateModel_zero_sized_nhwc_float16_2(Model *model);
 bool is_ignored_zero_sized_nhwc_float16_2(int);
 std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_nhwc_float16_2();
@@ -3513,6 +10905,20 @@ TEST_F(GeneratedTests, conv2d_v1_2_zero_sized_nhwc_float16_2) {
 
 } // namespace generated_tests::conv2d_v1_2
 TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_zero_sized_nhwc_float16_2, generated_tests::conv2d_v1_2::CreateModel_zero_sized_nhwc_float16_2)
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_zero_sized_nhwc_float16_dynamic_output_shape_2(Model *model);
+bool is_ignored_zero_sized_nhwc_float16_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_nhwc_float16_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_zero_sized_nhwc_float16_dynamic_output_shape_2) {
+    execute(CreateModel_zero_sized_nhwc_float16_dynamic_output_shape_2,
+            is_ignored_zero_sized_nhwc_float16_dynamic_output_shape_2,
+            get_examples_zero_sized_nhwc_float16_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
 
 namespace generated_tests::conv2d_v1_2 {
 
@@ -3531,6 +10937,20 @@ TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_zero_sized_nchw_2, generated_tests::conv2
 
 namespace generated_tests::conv2d_v1_2 {
 
+void CreateModel_zero_sized_nchw_dynamic_output_shape_2(Model *model);
+bool is_ignored_zero_sized_nchw_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_nchw_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_zero_sized_nchw_dynamic_output_shape_2) {
+    execute(CreateModel_zero_sized_nchw_dynamic_output_shape_2,
+            is_ignored_zero_sized_nchw_dynamic_output_shape_2,
+            get_examples_zero_sized_nchw_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
 void CreateModel_zero_sized_nchw_relaxed_2(Model *model);
 bool is_ignored_zero_sized_nchw_relaxed_2(int);
 std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_nchw_relaxed_2();
@@ -3539,6 +10959,20 @@ TEST_F(GeneratedTests, conv2d_v1_2_zero_sized_nchw_relaxed_2) {
     execute(CreateModel_zero_sized_nchw_relaxed_2,
             is_ignored_zero_sized_nchw_relaxed_2,
             get_examples_zero_sized_nchw_relaxed_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
+void CreateModel_zero_sized_nchw_relaxed_dynamic_output_shape_2(Model *model);
+bool is_ignored_zero_sized_nchw_relaxed_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_nchw_relaxed_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_zero_sized_nchw_relaxed_dynamic_output_shape_2) {
+    execute(CreateModel_zero_sized_nchw_relaxed_dynamic_output_shape_2,
+            is_ignored_zero_sized_nchw_relaxed_dynamic_output_shape_2,
+            get_examples_zero_sized_nchw_relaxed_dynamic_output_shape_2());
 }
 
 } // namespace generated_tests::conv2d_v1_2
@@ -3560,6 +10994,20 @@ TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_zero_sized_nchw_quant8_2, generated_tests
 
 namespace generated_tests::conv2d_v1_2 {
 
+void CreateModel_zero_sized_nchw_quant8_dynamic_output_shape_2(Model *model);
+bool is_ignored_zero_sized_nchw_quant8_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_nchw_quant8_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_zero_sized_nchw_quant8_dynamic_output_shape_2) {
+    execute(CreateModel_zero_sized_nchw_quant8_dynamic_output_shape_2,
+            is_ignored_zero_sized_nchw_quant8_dynamic_output_shape_2,
+            get_examples_zero_sized_nchw_quant8_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::conv2d_v1_2
+
+namespace generated_tests::conv2d_v1_2 {
+
 void CreateModel_zero_sized_nchw_float16_2(Model *model);
 bool is_ignored_zero_sized_nchw_float16_2(int);
 std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_nchw_float16_2();
@@ -3575,112 +11023,14 @@ TEST_AVAILABLE_SINCE(V1_2, conv2d_v1_2_zero_sized_nchw_float16_2, generated_test
 
 namespace generated_tests::conv2d_v1_2 {
 
-void CreateModel_zero_sized_dynamic_output_shape_nhwc_2(Model *model);
-bool is_ignored_zero_sized_dynamic_output_shape_nhwc_2(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_dynamic_output_shape_nhwc_2();
+void CreateModel_zero_sized_nchw_float16_dynamic_output_shape_2(Model *model);
+bool is_ignored_zero_sized_nchw_float16_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_nchw_float16_dynamic_output_shape_2();
 
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_zero_sized_dynamic_output_shape_nhwc_2) {
-    execute(CreateModel_zero_sized_dynamic_output_shape_nhwc_2,
-            is_ignored_zero_sized_dynamic_output_shape_nhwc_2,
-            get_examples_zero_sized_dynamic_output_shape_nhwc_2());
-}
-
-} // namespace generated_tests::conv2d_v1_2
-
-namespace generated_tests::conv2d_v1_2 {
-
-void CreateModel_zero_sized_dynamic_output_shape_nhwc_relaxed_2(Model *model);
-bool is_ignored_zero_sized_dynamic_output_shape_nhwc_relaxed_2(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_dynamic_output_shape_nhwc_relaxed_2();
-
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_zero_sized_dynamic_output_shape_nhwc_relaxed_2) {
-    execute(CreateModel_zero_sized_dynamic_output_shape_nhwc_relaxed_2,
-            is_ignored_zero_sized_dynamic_output_shape_nhwc_relaxed_2,
-            get_examples_zero_sized_dynamic_output_shape_nhwc_relaxed_2());
-}
-
-} // namespace generated_tests::conv2d_v1_2
-
-namespace generated_tests::conv2d_v1_2 {
-
-void CreateModel_zero_sized_dynamic_output_shape_nhwc_quant8_2(Model *model);
-bool is_ignored_zero_sized_dynamic_output_shape_nhwc_quant8_2(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_dynamic_output_shape_nhwc_quant8_2();
-
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_zero_sized_dynamic_output_shape_nhwc_quant8_2) {
-    execute(CreateModel_zero_sized_dynamic_output_shape_nhwc_quant8_2,
-            is_ignored_zero_sized_dynamic_output_shape_nhwc_quant8_2,
-            get_examples_zero_sized_dynamic_output_shape_nhwc_quant8_2());
-}
-
-} // namespace generated_tests::conv2d_v1_2
-
-namespace generated_tests::conv2d_v1_2 {
-
-void CreateModel_zero_sized_dynamic_output_shape_nhwc_float16_2(Model *model);
-bool is_ignored_zero_sized_dynamic_output_shape_nhwc_float16_2(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_dynamic_output_shape_nhwc_float16_2();
-
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_zero_sized_dynamic_output_shape_nhwc_float16_2) {
-    execute(CreateModel_zero_sized_dynamic_output_shape_nhwc_float16_2,
-            is_ignored_zero_sized_dynamic_output_shape_nhwc_float16_2,
-            get_examples_zero_sized_dynamic_output_shape_nhwc_float16_2());
-}
-
-} // namespace generated_tests::conv2d_v1_2
-
-namespace generated_tests::conv2d_v1_2 {
-
-void CreateModel_zero_sized_dynamic_output_shape_nchw_2(Model *model);
-bool is_ignored_zero_sized_dynamic_output_shape_nchw_2(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_dynamic_output_shape_nchw_2();
-
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_zero_sized_dynamic_output_shape_nchw_2) {
-    execute(CreateModel_zero_sized_dynamic_output_shape_nchw_2,
-            is_ignored_zero_sized_dynamic_output_shape_nchw_2,
-            get_examples_zero_sized_dynamic_output_shape_nchw_2());
-}
-
-} // namespace generated_tests::conv2d_v1_2
-
-namespace generated_tests::conv2d_v1_2 {
-
-void CreateModel_zero_sized_dynamic_output_shape_nchw_relaxed_2(Model *model);
-bool is_ignored_zero_sized_dynamic_output_shape_nchw_relaxed_2(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_dynamic_output_shape_nchw_relaxed_2();
-
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_zero_sized_dynamic_output_shape_nchw_relaxed_2) {
-    execute(CreateModel_zero_sized_dynamic_output_shape_nchw_relaxed_2,
-            is_ignored_zero_sized_dynamic_output_shape_nchw_relaxed_2,
-            get_examples_zero_sized_dynamic_output_shape_nchw_relaxed_2());
-}
-
-} // namespace generated_tests::conv2d_v1_2
-
-namespace generated_tests::conv2d_v1_2 {
-
-void CreateModel_zero_sized_dynamic_output_shape_nchw_quant8_2(Model *model);
-bool is_ignored_zero_sized_dynamic_output_shape_nchw_quant8_2(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_dynamic_output_shape_nchw_quant8_2();
-
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_zero_sized_dynamic_output_shape_nchw_quant8_2) {
-    execute(CreateModel_zero_sized_dynamic_output_shape_nchw_quant8_2,
-            is_ignored_zero_sized_dynamic_output_shape_nchw_quant8_2,
-            get_examples_zero_sized_dynamic_output_shape_nchw_quant8_2());
-}
-
-} // namespace generated_tests::conv2d_v1_2
-
-namespace generated_tests::conv2d_v1_2 {
-
-void CreateModel_zero_sized_dynamic_output_shape_nchw_float16_2(Model *model);
-bool is_ignored_zero_sized_dynamic_output_shape_nchw_float16_2(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_dynamic_output_shape_nchw_float16_2();
-
-TEST_F(DynamicOutputShapeTest, conv2d_v1_2_zero_sized_dynamic_output_shape_nchw_float16_2) {
-    execute(CreateModel_zero_sized_dynamic_output_shape_nchw_float16_2,
-            is_ignored_zero_sized_dynamic_output_shape_nchw_float16_2,
-            get_examples_zero_sized_dynamic_output_shape_nchw_float16_2());
+TEST_F(DynamicOutputShapeTest, conv2d_v1_2_zero_sized_nchw_float16_dynamic_output_shape_2) {
+    execute(CreateModel_zero_sized_nchw_float16_dynamic_output_shape_2,
+            is_ignored_zero_sized_nchw_float16_dynamic_output_shape_2,
+            get_examples_zero_sized_nchw_float16_dynamic_output_shape_2());
 }
 
 } // namespace generated_tests::conv2d_v1_2
