@@ -26,6 +26,7 @@
 #include "ValidateHal.h"
 
 #include <map>
+#include <memory>
 #include <utility>
 
 namespace android {
@@ -253,17 +254,12 @@ int ModelBuilder::copyLargeValuesToSharedMemory() {
             poolSize += operand.location.length;
         }
 
-        // Allocated the shared memory.
-        int n = mLargeValueMemory.create(poolSize);
-        if (n != ANEURALNETWORKS_NO_ERROR) {
-            return n;
-        }
-        uint8_t* memoryPointer = nullptr;
-        n = mLargeValueMemory.getPointer(&memoryPointer);
-        if (n != ANEURALNETWORKS_NO_ERROR) {
-            return n;
-        }
-        uint32_t poolIndex = mMemories.add(&mLargeValueMemory);
+        // Allocate the shared memory.
+        int n;
+        std::tie(n, mLargeValueMemory) = MemoryAshmem::create(poolSize);
+        NN_RETURN_IF_ERROR(n);
+        uint8_t* memoryPointer = mLargeValueMemory->getPointer();
+        uint32_t poolIndex = mMemories.add(mLargeValueMemory.get());
         VLOG(MODEL) << "Allocated large value pool of size " << poolSize << " at index "
                     << poolIndex;
 
