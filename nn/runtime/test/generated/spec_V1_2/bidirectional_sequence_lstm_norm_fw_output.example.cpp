@@ -123,3 +123,123 @@ return examples_blackbox_dynamic_output_shape;
 };
 
 } // namespace generated_tests::bidirectional_sequence_lstm_norm_fw_output
+namespace generated_tests::bidirectional_sequence_lstm_norm_fw_output {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_blackbox_all_inputs_as_internal() {
+static std::vector<::test_helper::MixedTypedExample> examples_blackbox_all_inputs_as_internal = {
+// Begin of an example
+{
+.operands = {
+//Input(s)
+{ // See tools/test_generator/include/TestHarness.h:MixedTyped
+  // int -> Dimensions map
+  .operandDimensions = {{0, {3}}, {1, {3}}, {2, {3, 2, 5}}, {3, {4, 5}}, {4, {4, 5}}, {5, {4, 5}}, {6, {4, 5}}, {7, {4, 5}}, {8, {4, 5}}, {9, {4, 5}}, {10, {4, 5}}, {11, {3, 2, 5}}, {12, {4, 5}}, {13, {4, 5}}, {14, {4, 5}}, {15, {4, 5}}, {16, {4, 3}}, {17, {4, 3}}, {18, {4, 3}}, {19, {4, 3}}, {20, {4}}, {21, {4}}, {22, {4}}, {23, {4}}, {24, {4}}, {25, {4}}, {26, {4}}, {27, {3, 4}}, {28, {4, 5}}, {29, {4, 5}}, {30, {4, 5}}, {31, {4, 5}}, {32, {4, 3}}, {33, {4, 3}}, {34, {4, 3}}, {35, {4, 3}}, {36, {4}}, {37, {4}}, {38, {4}}, {39, {4}}, {40, {4}}, {41, {4}}, {42, {4}}, {43, {3, 4}}, {44, {2, 3}}, {45, {2, 4}}, {46, {2, 3}}, {47, {2, 4}}, {48, {4}}, {49, {4}}, {50, {4}}, {51, {4}}, {52, {4}}, {53, {4}}, {54, {4}}, {55, {4}}},
+  // int -> FLOAT32 map
+  .float32Operands = {{0, {}}, {1, {}}, {2, {}}, {3, {}}, {4, {}}, {5, {}}, {6, {}}, {7, {}}, {8, {}}, {9, {}}, {10, {}}, {11, {0.7f, 0.8f, 0.1f, 0.2f, 0.3f, 0.3f, 0.2f, 0.9f, 0.8f, 0.1f, 0.8f, 0.1f, 0.2f, 0.4f, 0.5f, 0.1f, 0.5f, 0.2f, 0.4f, 0.2f, 0.2f, 0.7f, 0.7f, 0.1f, 0.7f, 0.6f, 0.9f, 0.2f, 0.5f, 0.7f}}, {12, {0.5f, 0.6f, 0.7f, -0.8f, -0.9f, 0.1f, 0.2f, 0.3f, -0.4f, 0.5f, -0.8f, 0.7f, -0.6f, 0.5f, -0.4f, -0.5f, -0.4f, -0.3f, -0.2f, -0.1f}}, {13, {-0.6f, -0.1f, 0.3f, 0.2f, 0.9f, -0.5f, -0.2f, -0.4f, 0.3f, -0.8f, -0.4f, 0.3f, -0.5f, -0.4f, -0.6f, 0.3f, -0.4f, -0.6f, -0.5f, -0.5f}}, {14, {-0.4f, -0.3f, -0.2f, -0.1f, -0.5f, 0.5f, -0.2f, -0.3f, -0.2f, -0.6f, 0.6f, -0.1f, -0.4f, -0.3f, -0.7f, 0.7f, -0.9f, -0.5f, 0.8f, 0.6f}}, {15, {-0.8f, -0.4f, -0.2f, -0.9f, -0.1f, -0.7f, 0.3f, -0.3f, -0.8f, -0.2f, 0.6f, -0.2f, 0.4f, -0.7f, -0.3f, -0.5f, 0.1f, 0.5f, -0.6f, -0.4f}}, {16, {-0.2f, -0.3f, 0.4f, 0.1f, -0.5f, 0.9f, -0.2f, -0.3f, -0.7f, 0.05f, -0.2f, -0.6f}}, {17, {-0.5f, -0.3f, -0.5f, -0.2f, 0.6f, 0.4f, 0.9f, 0.3f, -0.1f, 0.2f, 0.5f, 0.2f}}, {18, {-0.3f, 0.2f, 0.1f, -0.3f, 0.8f, -0.08f, -0.2f, 0.3f, 0.8f, -0.6f, -0.1f, 0.2f}}, {19, {0.3f, -0.1f, 0.1f, -0.2f, -0.5f, -0.7f, -0.2f, -0.6f, -0.1f, -0.4f, -0.7f, -0.2f}}, {20, {0.05f, 0.1f, 0.25f, 0.15f}}, {21, {-0.02f, -0.15f, -0.25f, -0.03f}}, {22, {0.1f, -0.1f, -0.5f, 0.05f}}, {23, {0.03f, 0.15f, 0.22f, 0.38f}}, {24, {0.1f, -0.3f, -0.2f, 0.1f}}, {25, {-0.05f, 0.72f, 0.25f, 0.08f}}, {26, {0.05f, -0.01f, 0.2f, 0.1f}}, {27, {-0.1f, 0.2f, 0.01f, -0.2f, 0.1f, 0.5f, 0.3f, 0.08f, 0.07f, 0.2f, -0.4f, 0.2f}}, {28, {0.5f, 0.6f, 0.7f, -0.8f, -0.9f, 0.1f, 0.2f, 0.3f, -0.4f, 0.5f, -0.8f, 0.7f, -0.6f, 0.5f, -0.4f, -0.5f, -0.4f, -0.3f, -0.2f, -0.1f}}, {29, {-0.6f, -0.1f, 0.3f, 0.2f, 0.9f, -0.5f, -0.2f, -0.4f, 0.3f, -0.8f, -0.4f, 0.3f, -0.5f, -0.4f, -0.6f, 0.3f, -0.4f, -0.6f, -0.5f, -0.5f}}, {30, {-0.4f, -0.3f, -0.2f, -0.1f, -0.5f, 0.5f, -0.2f, -0.3f, -0.2f, -0.6f, 0.6f, -0.1f, -0.4f, -0.3f, -0.7f, 0.7f, -0.9f, -0.5f, 0.8f, 0.6f}}, {31, {-0.8f, -0.4f, -0.2f, -0.9f, -0.1f, -0.7f, 0.3f, -0.3f, -0.8f, -0.2f, 0.6f, -0.2f, 0.4f, -0.7f, -0.3f, -0.5f, 0.1f, 0.5f, -0.6f, -0.4f}}, {32, {-0.2f, -0.3f, 0.4f, 0.1f, -0.5f, 0.9f, -0.2f, -0.3f, -0.7f, 0.05f, -0.2f, -0.6f}}, {33, {-0.5f, -0.3f, -0.5f, -0.2f, 0.6f, 0.4f, 0.9f, 0.3f, -0.1f, 0.2f, 0.5f, 0.2f}}, {34, {-0.3f, 0.2f, 0.1f, -0.3f, 0.8f, -0.08f, -0.2f, 0.3f, 0.8f, -0.6f, -0.1f, 0.2f}}, {35, {0.3f, -0.1f, 0.1f, -0.2f, -0.5f, -0.7f, -0.2f, -0.6f, -0.1f, -0.4f, -0.7f, -0.2f}}, {36, {0.05f, 0.1f, 0.25f, 0.15f}}, {37, {-0.02f, -0.15f, -0.25f, -0.03f}}, {38, {0.1f, -0.1f, -0.5f, 0.05f}}, {39, {0.03f, 0.15f, 0.22f, 0.38f}}, {40, {0.1f, -0.3f, -0.2f, 0.1f}}, {41, {-0.05f, 0.72f, 0.25f, 0.08f}}, {42, {0.05f, -0.01f, 0.2f, 0.1f}}, {43, {-0.1f, 0.2f, 0.01f, -0.2f, 0.1f, 0.5f, 0.3f, 0.08f, 0.07f, 0.2f, -0.4f, 0.2f}}, {44, {0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f}}, {45, {0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f}}, {46, {0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f}}, {47, {0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f}}, {48, {0.1f, 0.2f, 0.3f, 0.5f}}, {49, {0.2f, 0.2f, 0.4f, 0.3f}}, {50, {0.7f, 0.2f, 0.3f, 0.8f}}, {51, {0.6f, 0.2f, 0.2f, 0.5f}}, {52, {0.1f, 0.2f, 0.3f, 0.5f}}, {53, {0.2f, 0.2f, 0.4f, 0.3f}}, {54, {0.7f, 0.2f, 0.3f, 0.8f}}, {55, {0.6f, 0.2f, 0.2f, 0.5f}}},
+  // int -> INT32 map
+  .int32Operands = {},
+  // int -> QUANT8_ASYMM map
+  .quant8AsymmOperands = {},
+  // int -> QUANT16_SYMM map
+  .quant16SymmOperands = {},
+  // int -> FLOAT16 map
+  .float16Operands = {},
+  // int -> BOOL8 map
+  .bool8Operands = {},
+  // int -> QUANT8_SYMM_PER_CHANNEL map
+  .quant8ChannelOperands = {},
+  // int -> QUANT16_ASYMM map
+  .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
+},
+//Output(s)
+{ // See tools/test_generator/include/TestHarness.h:MixedTyped
+  // int -> Dimensions map
+  .operandDimensions = {{0, {3, 2, 3}}, {1, {3, 2, 3}}},
+  // int -> FLOAT32 map
+  .float32Operands = {{0, {0.0244077f, 0.128027f, -0.00170918f, -0.00692428f, 0.0848741f, 0.063445f, 0.0137642f, 0.140751f, 0.0395835f, -0.00403912f, 0.139963f, 0.072681f, -0.00459231f, 0.155278f, 0.0837377f, 0.00752706f, 0.161903f, 0.0561371f}}, {1, {0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f}}},
+  // int -> INT32 map
+  .int32Operands = {},
+  // int -> QUANT8_ASYMM map
+  .quant8AsymmOperands = {},
+  // int -> QUANT16_SYMM map
+  .quant16SymmOperands = {},
+  // int -> FLOAT16 map
+  .float16Operands = {},
+  // int -> BOOL8 map
+  .bool8Operands = {},
+  // int -> QUANT8_SYMM_PER_CHANNEL map
+  .quant8ChannelOperands = {},
+  // int -> QUANT16_ASYMM map
+  .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
+}
+},
+}, // End of an example
+};
+return examples_blackbox_all_inputs_as_internal;
+};
+
+} // namespace generated_tests::bidirectional_sequence_lstm_norm_fw_output
+namespace generated_tests::bidirectional_sequence_lstm_norm_fw_output {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_blackbox_all_inputs_as_internal_dynamic_output_shape() {
+static std::vector<::test_helper::MixedTypedExample> examples_blackbox_all_inputs_as_internal_dynamic_output_shape = {
+// Begin of an example
+{
+.operands = {
+//Input(s)
+{ // See tools/test_generator/include/TestHarness.h:MixedTyped
+  // int -> Dimensions map
+  .operandDimensions = {{0, {3}}, {1, {3}}, {2, {3, 2, 5}}, {3, {4, 5}}, {4, {4, 5}}, {5, {4, 5}}, {6, {4, 5}}, {7, {4, 5}}, {8, {4, 5}}, {9, {4, 5}}, {10, {4, 5}}, {11, {3, 2, 5}}, {12, {4, 5}}, {13, {4, 5}}, {14, {4, 5}}, {15, {4, 5}}, {16, {4, 3}}, {17, {4, 3}}, {18, {4, 3}}, {19, {4, 3}}, {20, {4}}, {21, {4}}, {22, {4}}, {23, {4}}, {24, {4}}, {25, {4}}, {26, {4}}, {27, {3, 4}}, {28, {4, 5}}, {29, {4, 5}}, {30, {4, 5}}, {31, {4, 5}}, {32, {4, 3}}, {33, {4, 3}}, {34, {4, 3}}, {35, {4, 3}}, {36, {4}}, {37, {4}}, {38, {4}}, {39, {4}}, {40, {4}}, {41, {4}}, {42, {4}}, {43, {3, 4}}, {44, {2, 3}}, {45, {2, 4}}, {46, {2, 3}}, {47, {2, 4}}, {48, {4}}, {49, {4}}, {50, {4}}, {51, {4}}, {52, {4}}, {53, {4}}, {54, {4}}, {55, {4}}},
+  // int -> FLOAT32 map
+  .float32Operands = {{0, {}}, {1, {}}, {2, {}}, {3, {}}, {4, {}}, {5, {}}, {6, {}}, {7, {}}, {8, {}}, {9, {}}, {10, {}}, {11, {0.7f, 0.8f, 0.1f, 0.2f, 0.3f, 0.3f, 0.2f, 0.9f, 0.8f, 0.1f, 0.8f, 0.1f, 0.2f, 0.4f, 0.5f, 0.1f, 0.5f, 0.2f, 0.4f, 0.2f, 0.2f, 0.7f, 0.7f, 0.1f, 0.7f, 0.6f, 0.9f, 0.2f, 0.5f, 0.7f}}, {12, {0.5f, 0.6f, 0.7f, -0.8f, -0.9f, 0.1f, 0.2f, 0.3f, -0.4f, 0.5f, -0.8f, 0.7f, -0.6f, 0.5f, -0.4f, -0.5f, -0.4f, -0.3f, -0.2f, -0.1f}}, {13, {-0.6f, -0.1f, 0.3f, 0.2f, 0.9f, -0.5f, -0.2f, -0.4f, 0.3f, -0.8f, -0.4f, 0.3f, -0.5f, -0.4f, -0.6f, 0.3f, -0.4f, -0.6f, -0.5f, -0.5f}}, {14, {-0.4f, -0.3f, -0.2f, -0.1f, -0.5f, 0.5f, -0.2f, -0.3f, -0.2f, -0.6f, 0.6f, -0.1f, -0.4f, -0.3f, -0.7f, 0.7f, -0.9f, -0.5f, 0.8f, 0.6f}}, {15, {-0.8f, -0.4f, -0.2f, -0.9f, -0.1f, -0.7f, 0.3f, -0.3f, -0.8f, -0.2f, 0.6f, -0.2f, 0.4f, -0.7f, -0.3f, -0.5f, 0.1f, 0.5f, -0.6f, -0.4f}}, {16, {-0.2f, -0.3f, 0.4f, 0.1f, -0.5f, 0.9f, -0.2f, -0.3f, -0.7f, 0.05f, -0.2f, -0.6f}}, {17, {-0.5f, -0.3f, -0.5f, -0.2f, 0.6f, 0.4f, 0.9f, 0.3f, -0.1f, 0.2f, 0.5f, 0.2f}}, {18, {-0.3f, 0.2f, 0.1f, -0.3f, 0.8f, -0.08f, -0.2f, 0.3f, 0.8f, -0.6f, -0.1f, 0.2f}}, {19, {0.3f, -0.1f, 0.1f, -0.2f, -0.5f, -0.7f, -0.2f, -0.6f, -0.1f, -0.4f, -0.7f, -0.2f}}, {20, {0.05f, 0.1f, 0.25f, 0.15f}}, {21, {-0.02f, -0.15f, -0.25f, -0.03f}}, {22, {0.1f, -0.1f, -0.5f, 0.05f}}, {23, {0.03f, 0.15f, 0.22f, 0.38f}}, {24, {0.1f, -0.3f, -0.2f, 0.1f}}, {25, {-0.05f, 0.72f, 0.25f, 0.08f}}, {26, {0.05f, -0.01f, 0.2f, 0.1f}}, {27, {-0.1f, 0.2f, 0.01f, -0.2f, 0.1f, 0.5f, 0.3f, 0.08f, 0.07f, 0.2f, -0.4f, 0.2f}}, {28, {0.5f, 0.6f, 0.7f, -0.8f, -0.9f, 0.1f, 0.2f, 0.3f, -0.4f, 0.5f, -0.8f, 0.7f, -0.6f, 0.5f, -0.4f, -0.5f, -0.4f, -0.3f, -0.2f, -0.1f}}, {29, {-0.6f, -0.1f, 0.3f, 0.2f, 0.9f, -0.5f, -0.2f, -0.4f, 0.3f, -0.8f, -0.4f, 0.3f, -0.5f, -0.4f, -0.6f, 0.3f, -0.4f, -0.6f, -0.5f, -0.5f}}, {30, {-0.4f, -0.3f, -0.2f, -0.1f, -0.5f, 0.5f, -0.2f, -0.3f, -0.2f, -0.6f, 0.6f, -0.1f, -0.4f, -0.3f, -0.7f, 0.7f, -0.9f, -0.5f, 0.8f, 0.6f}}, {31, {-0.8f, -0.4f, -0.2f, -0.9f, -0.1f, -0.7f, 0.3f, -0.3f, -0.8f, -0.2f, 0.6f, -0.2f, 0.4f, -0.7f, -0.3f, -0.5f, 0.1f, 0.5f, -0.6f, -0.4f}}, {32, {-0.2f, -0.3f, 0.4f, 0.1f, -0.5f, 0.9f, -0.2f, -0.3f, -0.7f, 0.05f, -0.2f, -0.6f}}, {33, {-0.5f, -0.3f, -0.5f, -0.2f, 0.6f, 0.4f, 0.9f, 0.3f, -0.1f, 0.2f, 0.5f, 0.2f}}, {34, {-0.3f, 0.2f, 0.1f, -0.3f, 0.8f, -0.08f, -0.2f, 0.3f, 0.8f, -0.6f, -0.1f, 0.2f}}, {35, {0.3f, -0.1f, 0.1f, -0.2f, -0.5f, -0.7f, -0.2f, -0.6f, -0.1f, -0.4f, -0.7f, -0.2f}}, {36, {0.05f, 0.1f, 0.25f, 0.15f}}, {37, {-0.02f, -0.15f, -0.25f, -0.03f}}, {38, {0.1f, -0.1f, -0.5f, 0.05f}}, {39, {0.03f, 0.15f, 0.22f, 0.38f}}, {40, {0.1f, -0.3f, -0.2f, 0.1f}}, {41, {-0.05f, 0.72f, 0.25f, 0.08f}}, {42, {0.05f, -0.01f, 0.2f, 0.1f}}, {43, {-0.1f, 0.2f, 0.01f, -0.2f, 0.1f, 0.5f, 0.3f, 0.08f, 0.07f, 0.2f, -0.4f, 0.2f}}, {44, {0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f}}, {45, {0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f}}, {46, {0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f}}, {47, {0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f}}, {48, {0.1f, 0.2f, 0.3f, 0.5f}}, {49, {0.2f, 0.2f, 0.4f, 0.3f}}, {50, {0.7f, 0.2f, 0.3f, 0.8f}}, {51, {0.6f, 0.2f, 0.2f, 0.5f}}, {52, {0.1f, 0.2f, 0.3f, 0.5f}}, {53, {0.2f, 0.2f, 0.4f, 0.3f}}, {54, {0.7f, 0.2f, 0.3f, 0.8f}}, {55, {0.6f, 0.2f, 0.2f, 0.5f}}},
+  // int -> INT32 map
+  .int32Operands = {},
+  // int -> QUANT8_ASYMM map
+  .quant8AsymmOperands = {},
+  // int -> QUANT16_SYMM map
+  .quant16SymmOperands = {},
+  // int -> FLOAT16 map
+  .float16Operands = {},
+  // int -> BOOL8 map
+  .bool8Operands = {},
+  // int -> QUANT8_SYMM_PER_CHANNEL map
+  .quant8ChannelOperands = {},
+  // int -> QUANT16_ASYMM map
+  .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
+},
+//Output(s)
+{ // See tools/test_generator/include/TestHarness.h:MixedTyped
+  // int -> Dimensions map
+  .operandDimensions = {{0, {3, 2, 3}}, {1, {3, 2, 3}}},
+  // int -> FLOAT32 map
+  .float32Operands = {{0, {0.0244077f, 0.128027f, -0.00170918f, -0.00692428f, 0.0848741f, 0.063445f, 0.0137642f, 0.140751f, 0.0395835f, -0.00403912f, 0.139963f, 0.072681f, -0.00459231f, 0.155278f, 0.0837377f, 0.00752706f, 0.161903f, 0.0561371f}}, {1, {0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f}}},
+  // int -> INT32 map
+  .int32Operands = {},
+  // int -> QUANT8_ASYMM map
+  .quant8AsymmOperands = {},
+  // int -> QUANT16_SYMM map
+  .quant16SymmOperands = {},
+  // int -> FLOAT16 map
+  .float16Operands = {},
+  // int -> BOOL8 map
+  .bool8Operands = {},
+  // int -> QUANT8_SYMM_PER_CHANNEL map
+  .quant8ChannelOperands = {},
+  // int -> QUANT16_ASYMM map
+  .quant16AsymmOperands = {},
+  // int -> QUANT8_SYMM map
+  .quant8SymmOperands = {},
+}
+},
+}, // End of an example
+};
+return examples_blackbox_all_inputs_as_internal_dynamic_output_shape;
+};
+
+} // namespace generated_tests::bidirectional_sequence_lstm_norm_fw_output

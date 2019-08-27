@@ -20,6 +20,49 @@ TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_shape_nhwc, generated_tests::
 
 namespace generated_tests::resize_nearest_neighbor {
 
+void CreateModel_shape_nhwc_dynamic_output_shape(Model *model);
+bool is_ignored_shape_nhwc_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nhwc_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nhwc_dynamic_output_shape) {
+    execute(CreateModel_shape_nhwc_dynamic_output_shape,
+            is_ignored_shape_nhwc_dynamic_output_shape,
+            get_examples_shape_nhwc_dynamic_output_shape());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nhwc_all_inputs_as_internal(Model *model);
+bool is_ignored_shape_nhwc_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nhwc_all_inputs_as_internal();
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_shape_nhwc_all_inputs_as_internal) {
+    execute(CreateModel_shape_nhwc_all_inputs_as_internal,
+            is_ignored_shape_nhwc_all_inputs_as_internal,
+            get_examples_shape_nhwc_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_shape_nhwc_all_inputs_as_internal, generated_tests::resize_nearest_neighbor::CreateModel_shape_nhwc_all_inputs_as_internal)
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nhwc_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_shape_nhwc_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nhwc_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nhwc_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_shape_nhwc_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_shape_nhwc_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_shape_nhwc_all_inputs_as_internal_dynamic_output_shape());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
 void CreateModel_shape_nhwc_relaxed(Model *model);
 bool is_ignored_shape_nhwc_relaxed(int);
 std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nhwc_relaxed();
@@ -28,6 +71,48 @@ TEST_F(GeneratedTests, resize_nearest_neighbor_shape_nhwc_relaxed) {
     execute(CreateModel_shape_nhwc_relaxed,
             is_ignored_shape_nhwc_relaxed,
             get_examples_shape_nhwc_relaxed());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nhwc_relaxed_dynamic_output_shape(Model *model);
+bool is_ignored_shape_nhwc_relaxed_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nhwc_relaxed_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nhwc_relaxed_dynamic_output_shape) {
+    execute(CreateModel_shape_nhwc_relaxed_dynamic_output_shape,
+            is_ignored_shape_nhwc_relaxed_dynamic_output_shape,
+            get_examples_shape_nhwc_relaxed_dynamic_output_shape());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nhwc_relaxed_all_inputs_as_internal(Model *model);
+bool is_ignored_shape_nhwc_relaxed_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nhwc_relaxed_all_inputs_as_internal();
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_shape_nhwc_relaxed_all_inputs_as_internal) {
+    execute(CreateModel_shape_nhwc_relaxed_all_inputs_as_internal,
+            is_ignored_shape_nhwc_relaxed_all_inputs_as_internal,
+            get_examples_shape_nhwc_relaxed_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_shape_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_shape_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_shape_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_shape_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape());
 }
 
 } // namespace generated_tests::resize_nearest_neighbor
@@ -49,6 +134,49 @@ TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_shape_nhwc_quant8, generated_
 
 namespace generated_tests::resize_nearest_neighbor {
 
+void CreateModel_shape_nhwc_quant8_dynamic_output_shape(Model *model);
+bool is_ignored_shape_nhwc_quant8_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nhwc_quant8_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nhwc_quant8_dynamic_output_shape) {
+    execute(CreateModel_shape_nhwc_quant8_dynamic_output_shape,
+            is_ignored_shape_nhwc_quant8_dynamic_output_shape,
+            get_examples_shape_nhwc_quant8_dynamic_output_shape());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nhwc_quant8_all_inputs_as_internal(Model *model);
+bool is_ignored_shape_nhwc_quant8_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nhwc_quant8_all_inputs_as_internal();
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_shape_nhwc_quant8_all_inputs_as_internal) {
+    execute(CreateModel_shape_nhwc_quant8_all_inputs_as_internal,
+            is_ignored_shape_nhwc_quant8_all_inputs_as_internal,
+            get_examples_shape_nhwc_quant8_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_shape_nhwc_quant8_all_inputs_as_internal, generated_tests::resize_nearest_neighbor::CreateModel_shape_nhwc_quant8_all_inputs_as_internal)
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_shape_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_shape_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_shape_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_shape_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
 void CreateModel_shape_nhwc_float16(Model *model);
 bool is_ignored_shape_nhwc_float16(int);
 std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nhwc_float16();
@@ -61,6 +189,49 @@ TEST_F(GeneratedTests, resize_nearest_neighbor_shape_nhwc_float16) {
 
 } // namespace generated_tests::resize_nearest_neighbor
 TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_shape_nhwc_float16, generated_tests::resize_nearest_neighbor::CreateModel_shape_nhwc_float16)
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nhwc_float16_dynamic_output_shape(Model *model);
+bool is_ignored_shape_nhwc_float16_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nhwc_float16_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nhwc_float16_dynamic_output_shape) {
+    execute(CreateModel_shape_nhwc_float16_dynamic_output_shape,
+            is_ignored_shape_nhwc_float16_dynamic_output_shape,
+            get_examples_shape_nhwc_float16_dynamic_output_shape());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nhwc_float16_all_inputs_as_internal(Model *model);
+bool is_ignored_shape_nhwc_float16_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nhwc_float16_all_inputs_as_internal();
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_shape_nhwc_float16_all_inputs_as_internal) {
+    execute(CreateModel_shape_nhwc_float16_all_inputs_as_internal,
+            is_ignored_shape_nhwc_float16_all_inputs_as_internal,
+            get_examples_shape_nhwc_float16_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_shape_nhwc_float16_all_inputs_as_internal, generated_tests::resize_nearest_neighbor::CreateModel_shape_nhwc_float16_all_inputs_as_internal)
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nhwc_float16_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_shape_nhwc_float16_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nhwc_float16_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nhwc_float16_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_shape_nhwc_float16_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_shape_nhwc_float16_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_shape_nhwc_float16_all_inputs_as_internal_dynamic_output_shape());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
 
 namespace generated_tests::resize_nearest_neighbor {
 
@@ -79,6 +250,49 @@ TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_shape_nchw, generated_tests::
 
 namespace generated_tests::resize_nearest_neighbor {
 
+void CreateModel_shape_nchw_dynamic_output_shape(Model *model);
+bool is_ignored_shape_nchw_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nchw_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nchw_dynamic_output_shape) {
+    execute(CreateModel_shape_nchw_dynamic_output_shape,
+            is_ignored_shape_nchw_dynamic_output_shape,
+            get_examples_shape_nchw_dynamic_output_shape());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nchw_all_inputs_as_internal(Model *model);
+bool is_ignored_shape_nchw_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nchw_all_inputs_as_internal();
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_shape_nchw_all_inputs_as_internal) {
+    execute(CreateModel_shape_nchw_all_inputs_as_internal,
+            is_ignored_shape_nchw_all_inputs_as_internal,
+            get_examples_shape_nchw_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_shape_nchw_all_inputs_as_internal, generated_tests::resize_nearest_neighbor::CreateModel_shape_nchw_all_inputs_as_internal)
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nchw_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_shape_nchw_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nchw_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nchw_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_shape_nchw_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_shape_nchw_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_shape_nchw_all_inputs_as_internal_dynamic_output_shape());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
 void CreateModel_shape_nchw_relaxed(Model *model);
 bool is_ignored_shape_nchw_relaxed(int);
 std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nchw_relaxed();
@@ -87,6 +301,48 @@ TEST_F(GeneratedTests, resize_nearest_neighbor_shape_nchw_relaxed) {
     execute(CreateModel_shape_nchw_relaxed,
             is_ignored_shape_nchw_relaxed,
             get_examples_shape_nchw_relaxed());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nchw_relaxed_dynamic_output_shape(Model *model);
+bool is_ignored_shape_nchw_relaxed_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nchw_relaxed_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nchw_relaxed_dynamic_output_shape) {
+    execute(CreateModel_shape_nchw_relaxed_dynamic_output_shape,
+            is_ignored_shape_nchw_relaxed_dynamic_output_shape,
+            get_examples_shape_nchw_relaxed_dynamic_output_shape());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nchw_relaxed_all_inputs_as_internal(Model *model);
+bool is_ignored_shape_nchw_relaxed_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nchw_relaxed_all_inputs_as_internal();
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_shape_nchw_relaxed_all_inputs_as_internal) {
+    execute(CreateModel_shape_nchw_relaxed_all_inputs_as_internal,
+            is_ignored_shape_nchw_relaxed_all_inputs_as_internal,
+            get_examples_shape_nchw_relaxed_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_shape_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_shape_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_shape_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_shape_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape());
 }
 
 } // namespace generated_tests::resize_nearest_neighbor
@@ -108,6 +364,49 @@ TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_shape_nchw_quant8, generated_
 
 namespace generated_tests::resize_nearest_neighbor {
 
+void CreateModel_shape_nchw_quant8_dynamic_output_shape(Model *model);
+bool is_ignored_shape_nchw_quant8_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nchw_quant8_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nchw_quant8_dynamic_output_shape) {
+    execute(CreateModel_shape_nchw_quant8_dynamic_output_shape,
+            is_ignored_shape_nchw_quant8_dynamic_output_shape,
+            get_examples_shape_nchw_quant8_dynamic_output_shape());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nchw_quant8_all_inputs_as_internal(Model *model);
+bool is_ignored_shape_nchw_quant8_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nchw_quant8_all_inputs_as_internal();
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_shape_nchw_quant8_all_inputs_as_internal) {
+    execute(CreateModel_shape_nchw_quant8_all_inputs_as_internal,
+            is_ignored_shape_nchw_quant8_all_inputs_as_internal,
+            get_examples_shape_nchw_quant8_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_shape_nchw_quant8_all_inputs_as_internal, generated_tests::resize_nearest_neighbor::CreateModel_shape_nchw_quant8_all_inputs_as_internal)
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nchw_quant8_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_shape_nchw_quant8_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nchw_quant8_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nchw_quant8_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_shape_nchw_quant8_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_shape_nchw_quant8_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_shape_nchw_quant8_all_inputs_as_internal_dynamic_output_shape());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
 void CreateModel_shape_nchw_float16(Model *model);
 bool is_ignored_shape_nchw_float16(int);
 std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nchw_float16();
@@ -123,112 +422,43 @@ TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_shape_nchw_float16, generated
 
 namespace generated_tests::resize_nearest_neighbor {
 
-void CreateModel_shape_dynamic_output_shape_nhwc(Model *model);
-bool is_ignored_shape_dynamic_output_shape_nhwc(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_shape_dynamic_output_shape_nhwc();
+void CreateModel_shape_nchw_float16_dynamic_output_shape(Model *model);
+bool is_ignored_shape_nchw_float16_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nchw_float16_dynamic_output_shape();
 
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_dynamic_output_shape_nhwc) {
-    execute(CreateModel_shape_dynamic_output_shape_nhwc,
-            is_ignored_shape_dynamic_output_shape_nhwc,
-            get_examples_shape_dynamic_output_shape_nhwc());
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nchw_float16_dynamic_output_shape) {
+    execute(CreateModel_shape_nchw_float16_dynamic_output_shape,
+            is_ignored_shape_nchw_float16_dynamic_output_shape,
+            get_examples_shape_nchw_float16_dynamic_output_shape());
 }
 
 } // namespace generated_tests::resize_nearest_neighbor
 
 namespace generated_tests::resize_nearest_neighbor {
 
-void CreateModel_shape_dynamic_output_shape_nhwc_relaxed(Model *model);
-bool is_ignored_shape_dynamic_output_shape_nhwc_relaxed(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_shape_dynamic_output_shape_nhwc_relaxed();
+void CreateModel_shape_nchw_float16_all_inputs_as_internal(Model *model);
+bool is_ignored_shape_nchw_float16_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nchw_float16_all_inputs_as_internal();
 
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_dynamic_output_shape_nhwc_relaxed) {
-    execute(CreateModel_shape_dynamic_output_shape_nhwc_relaxed,
-            is_ignored_shape_dynamic_output_shape_nhwc_relaxed,
-            get_examples_shape_dynamic_output_shape_nhwc_relaxed());
+TEST_F(GeneratedTests, resize_nearest_neighbor_shape_nchw_float16_all_inputs_as_internal) {
+    execute(CreateModel_shape_nchw_float16_all_inputs_as_internal,
+            is_ignored_shape_nchw_float16_all_inputs_as_internal,
+            get_examples_shape_nchw_float16_all_inputs_as_internal());
 }
 
 } // namespace generated_tests::resize_nearest_neighbor
+TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_shape_nchw_float16_all_inputs_as_internal, generated_tests::resize_nearest_neighbor::CreateModel_shape_nchw_float16_all_inputs_as_internal)
 
 namespace generated_tests::resize_nearest_neighbor {
 
-void CreateModel_shape_dynamic_output_shape_nhwc_quant8(Model *model);
-bool is_ignored_shape_dynamic_output_shape_nhwc_quant8(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_shape_dynamic_output_shape_nhwc_quant8();
+void CreateModel_shape_nchw_float16_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_shape_nchw_float16_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nchw_float16_all_inputs_as_internal_dynamic_output_shape();
 
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_dynamic_output_shape_nhwc_quant8) {
-    execute(CreateModel_shape_dynamic_output_shape_nhwc_quant8,
-            is_ignored_shape_dynamic_output_shape_nhwc_quant8,
-            get_examples_shape_dynamic_output_shape_nhwc_quant8());
-}
-
-} // namespace generated_tests::resize_nearest_neighbor
-
-namespace generated_tests::resize_nearest_neighbor {
-
-void CreateModel_shape_dynamic_output_shape_nhwc_float16(Model *model);
-bool is_ignored_shape_dynamic_output_shape_nhwc_float16(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_shape_dynamic_output_shape_nhwc_float16();
-
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_dynamic_output_shape_nhwc_float16) {
-    execute(CreateModel_shape_dynamic_output_shape_nhwc_float16,
-            is_ignored_shape_dynamic_output_shape_nhwc_float16,
-            get_examples_shape_dynamic_output_shape_nhwc_float16());
-}
-
-} // namespace generated_tests::resize_nearest_neighbor
-
-namespace generated_tests::resize_nearest_neighbor {
-
-void CreateModel_shape_dynamic_output_shape_nchw(Model *model);
-bool is_ignored_shape_dynamic_output_shape_nchw(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_shape_dynamic_output_shape_nchw();
-
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_dynamic_output_shape_nchw) {
-    execute(CreateModel_shape_dynamic_output_shape_nchw,
-            is_ignored_shape_dynamic_output_shape_nchw,
-            get_examples_shape_dynamic_output_shape_nchw());
-}
-
-} // namespace generated_tests::resize_nearest_neighbor
-
-namespace generated_tests::resize_nearest_neighbor {
-
-void CreateModel_shape_dynamic_output_shape_nchw_relaxed(Model *model);
-bool is_ignored_shape_dynamic_output_shape_nchw_relaxed(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_shape_dynamic_output_shape_nchw_relaxed();
-
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_dynamic_output_shape_nchw_relaxed) {
-    execute(CreateModel_shape_dynamic_output_shape_nchw_relaxed,
-            is_ignored_shape_dynamic_output_shape_nchw_relaxed,
-            get_examples_shape_dynamic_output_shape_nchw_relaxed());
-}
-
-} // namespace generated_tests::resize_nearest_neighbor
-
-namespace generated_tests::resize_nearest_neighbor {
-
-void CreateModel_shape_dynamic_output_shape_nchw_quant8(Model *model);
-bool is_ignored_shape_dynamic_output_shape_nchw_quant8(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_shape_dynamic_output_shape_nchw_quant8();
-
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_dynamic_output_shape_nchw_quant8) {
-    execute(CreateModel_shape_dynamic_output_shape_nchw_quant8,
-            is_ignored_shape_dynamic_output_shape_nchw_quant8,
-            get_examples_shape_dynamic_output_shape_nchw_quant8());
-}
-
-} // namespace generated_tests::resize_nearest_neighbor
-
-namespace generated_tests::resize_nearest_neighbor {
-
-void CreateModel_shape_dynamic_output_shape_nchw_float16(Model *model);
-bool is_ignored_shape_dynamic_output_shape_nchw_float16(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_shape_dynamic_output_shape_nchw_float16();
-
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_dynamic_output_shape_nchw_float16) {
-    execute(CreateModel_shape_dynamic_output_shape_nchw_float16,
-            is_ignored_shape_dynamic_output_shape_nchw_float16,
-            get_examples_shape_dynamic_output_shape_nchw_float16());
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nchw_float16_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_shape_nchw_float16_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_shape_nchw_float16_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_shape_nchw_float16_all_inputs_as_internal_dynamic_output_shape());
 }
 
 } // namespace generated_tests::resize_nearest_neighbor
@@ -250,6 +480,49 @@ TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_scale_nhwc, generated_tests::
 
 namespace generated_tests::resize_nearest_neighbor {
 
+void CreateModel_scale_nhwc_dynamic_output_shape(Model *model);
+bool is_ignored_scale_nhwc_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nhwc_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nhwc_dynamic_output_shape) {
+    execute(CreateModel_scale_nhwc_dynamic_output_shape,
+            is_ignored_scale_nhwc_dynamic_output_shape,
+            get_examples_scale_nhwc_dynamic_output_shape());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nhwc_all_inputs_as_internal(Model *model);
+bool is_ignored_scale_nhwc_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nhwc_all_inputs_as_internal();
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_scale_nhwc_all_inputs_as_internal) {
+    execute(CreateModel_scale_nhwc_all_inputs_as_internal,
+            is_ignored_scale_nhwc_all_inputs_as_internal,
+            get_examples_scale_nhwc_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_scale_nhwc_all_inputs_as_internal, generated_tests::resize_nearest_neighbor::CreateModel_scale_nhwc_all_inputs_as_internal)
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nhwc_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_scale_nhwc_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nhwc_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nhwc_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_scale_nhwc_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_scale_nhwc_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_scale_nhwc_all_inputs_as_internal_dynamic_output_shape());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
 void CreateModel_scale_nhwc_relaxed(Model *model);
 bool is_ignored_scale_nhwc_relaxed(int);
 std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nhwc_relaxed();
@@ -258,6 +531,48 @@ TEST_F(GeneratedTests, resize_nearest_neighbor_scale_nhwc_relaxed) {
     execute(CreateModel_scale_nhwc_relaxed,
             is_ignored_scale_nhwc_relaxed,
             get_examples_scale_nhwc_relaxed());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nhwc_relaxed_dynamic_output_shape(Model *model);
+bool is_ignored_scale_nhwc_relaxed_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nhwc_relaxed_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nhwc_relaxed_dynamic_output_shape) {
+    execute(CreateModel_scale_nhwc_relaxed_dynamic_output_shape,
+            is_ignored_scale_nhwc_relaxed_dynamic_output_shape,
+            get_examples_scale_nhwc_relaxed_dynamic_output_shape());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nhwc_relaxed_all_inputs_as_internal(Model *model);
+bool is_ignored_scale_nhwc_relaxed_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nhwc_relaxed_all_inputs_as_internal();
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_scale_nhwc_relaxed_all_inputs_as_internal) {
+    execute(CreateModel_scale_nhwc_relaxed_all_inputs_as_internal,
+            is_ignored_scale_nhwc_relaxed_all_inputs_as_internal,
+            get_examples_scale_nhwc_relaxed_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_scale_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_scale_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_scale_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_scale_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape());
 }
 
 } // namespace generated_tests::resize_nearest_neighbor
@@ -279,6 +594,49 @@ TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_scale_nhwc_quant8, generated_
 
 namespace generated_tests::resize_nearest_neighbor {
 
+void CreateModel_scale_nhwc_quant8_dynamic_output_shape(Model *model);
+bool is_ignored_scale_nhwc_quant8_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nhwc_quant8_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nhwc_quant8_dynamic_output_shape) {
+    execute(CreateModel_scale_nhwc_quant8_dynamic_output_shape,
+            is_ignored_scale_nhwc_quant8_dynamic_output_shape,
+            get_examples_scale_nhwc_quant8_dynamic_output_shape());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nhwc_quant8_all_inputs_as_internal(Model *model);
+bool is_ignored_scale_nhwc_quant8_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nhwc_quant8_all_inputs_as_internal();
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_scale_nhwc_quant8_all_inputs_as_internal) {
+    execute(CreateModel_scale_nhwc_quant8_all_inputs_as_internal,
+            is_ignored_scale_nhwc_quant8_all_inputs_as_internal,
+            get_examples_scale_nhwc_quant8_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_scale_nhwc_quant8_all_inputs_as_internal, generated_tests::resize_nearest_neighbor::CreateModel_scale_nhwc_quant8_all_inputs_as_internal)
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_scale_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_scale_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_scale_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_scale_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
 void CreateModel_scale_nhwc_float16(Model *model);
 bool is_ignored_scale_nhwc_float16(int);
 std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nhwc_float16();
@@ -291,6 +649,49 @@ TEST_F(GeneratedTests, resize_nearest_neighbor_scale_nhwc_float16) {
 
 } // namespace generated_tests::resize_nearest_neighbor
 TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_scale_nhwc_float16, generated_tests::resize_nearest_neighbor::CreateModel_scale_nhwc_float16)
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nhwc_float16_dynamic_output_shape(Model *model);
+bool is_ignored_scale_nhwc_float16_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nhwc_float16_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nhwc_float16_dynamic_output_shape) {
+    execute(CreateModel_scale_nhwc_float16_dynamic_output_shape,
+            is_ignored_scale_nhwc_float16_dynamic_output_shape,
+            get_examples_scale_nhwc_float16_dynamic_output_shape());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nhwc_float16_all_inputs_as_internal(Model *model);
+bool is_ignored_scale_nhwc_float16_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nhwc_float16_all_inputs_as_internal();
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_scale_nhwc_float16_all_inputs_as_internal) {
+    execute(CreateModel_scale_nhwc_float16_all_inputs_as_internal,
+            is_ignored_scale_nhwc_float16_all_inputs_as_internal,
+            get_examples_scale_nhwc_float16_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_scale_nhwc_float16_all_inputs_as_internal, generated_tests::resize_nearest_neighbor::CreateModel_scale_nhwc_float16_all_inputs_as_internal)
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nhwc_float16_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_scale_nhwc_float16_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nhwc_float16_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nhwc_float16_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_scale_nhwc_float16_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_scale_nhwc_float16_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_scale_nhwc_float16_all_inputs_as_internal_dynamic_output_shape());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
 
 namespace generated_tests::resize_nearest_neighbor {
 
@@ -309,6 +710,49 @@ TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_scale_nchw, generated_tests::
 
 namespace generated_tests::resize_nearest_neighbor {
 
+void CreateModel_scale_nchw_dynamic_output_shape(Model *model);
+bool is_ignored_scale_nchw_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nchw_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nchw_dynamic_output_shape) {
+    execute(CreateModel_scale_nchw_dynamic_output_shape,
+            is_ignored_scale_nchw_dynamic_output_shape,
+            get_examples_scale_nchw_dynamic_output_shape());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nchw_all_inputs_as_internal(Model *model);
+bool is_ignored_scale_nchw_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nchw_all_inputs_as_internal();
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_scale_nchw_all_inputs_as_internal) {
+    execute(CreateModel_scale_nchw_all_inputs_as_internal,
+            is_ignored_scale_nchw_all_inputs_as_internal,
+            get_examples_scale_nchw_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_scale_nchw_all_inputs_as_internal, generated_tests::resize_nearest_neighbor::CreateModel_scale_nchw_all_inputs_as_internal)
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nchw_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_scale_nchw_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nchw_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nchw_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_scale_nchw_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_scale_nchw_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_scale_nchw_all_inputs_as_internal_dynamic_output_shape());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
 void CreateModel_scale_nchw_relaxed(Model *model);
 bool is_ignored_scale_nchw_relaxed(int);
 std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nchw_relaxed();
@@ -317,6 +761,48 @@ TEST_F(GeneratedTests, resize_nearest_neighbor_scale_nchw_relaxed) {
     execute(CreateModel_scale_nchw_relaxed,
             is_ignored_scale_nchw_relaxed,
             get_examples_scale_nchw_relaxed());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nchw_relaxed_dynamic_output_shape(Model *model);
+bool is_ignored_scale_nchw_relaxed_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nchw_relaxed_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nchw_relaxed_dynamic_output_shape) {
+    execute(CreateModel_scale_nchw_relaxed_dynamic_output_shape,
+            is_ignored_scale_nchw_relaxed_dynamic_output_shape,
+            get_examples_scale_nchw_relaxed_dynamic_output_shape());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nchw_relaxed_all_inputs_as_internal(Model *model);
+bool is_ignored_scale_nchw_relaxed_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nchw_relaxed_all_inputs_as_internal();
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_scale_nchw_relaxed_all_inputs_as_internal) {
+    execute(CreateModel_scale_nchw_relaxed_all_inputs_as_internal,
+            is_ignored_scale_nchw_relaxed_all_inputs_as_internal,
+            get_examples_scale_nchw_relaxed_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_scale_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_scale_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_scale_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_scale_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape());
 }
 
 } // namespace generated_tests::resize_nearest_neighbor
@@ -338,6 +824,49 @@ TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_scale_nchw_quant8, generated_
 
 namespace generated_tests::resize_nearest_neighbor {
 
+void CreateModel_scale_nchw_quant8_dynamic_output_shape(Model *model);
+bool is_ignored_scale_nchw_quant8_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nchw_quant8_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nchw_quant8_dynamic_output_shape) {
+    execute(CreateModel_scale_nchw_quant8_dynamic_output_shape,
+            is_ignored_scale_nchw_quant8_dynamic_output_shape,
+            get_examples_scale_nchw_quant8_dynamic_output_shape());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nchw_quant8_all_inputs_as_internal(Model *model);
+bool is_ignored_scale_nchw_quant8_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nchw_quant8_all_inputs_as_internal();
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_scale_nchw_quant8_all_inputs_as_internal) {
+    execute(CreateModel_scale_nchw_quant8_all_inputs_as_internal,
+            is_ignored_scale_nchw_quant8_all_inputs_as_internal,
+            get_examples_scale_nchw_quant8_all_inputs_as_internal());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_scale_nchw_quant8_all_inputs_as_internal, generated_tests::resize_nearest_neighbor::CreateModel_scale_nchw_quant8_all_inputs_as_internal)
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nchw_quant8_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_scale_nchw_quant8_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nchw_quant8_all_inputs_as_internal_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nchw_quant8_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_scale_nchw_quant8_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_scale_nchw_quant8_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_scale_nchw_quant8_all_inputs_as_internal_dynamic_output_shape());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
 void CreateModel_scale_nchw_float16(Model *model);
 bool is_ignored_scale_nchw_float16(int);
 std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nchw_float16();
@@ -353,112 +882,43 @@ TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_scale_nchw_float16, generated
 
 namespace generated_tests::resize_nearest_neighbor {
 
-void CreateModel_scale_dynamic_output_shape_nhwc(Model *model);
-bool is_ignored_scale_dynamic_output_shape_nhwc(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_scale_dynamic_output_shape_nhwc();
+void CreateModel_scale_nchw_float16_dynamic_output_shape(Model *model);
+bool is_ignored_scale_nchw_float16_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nchw_float16_dynamic_output_shape();
 
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_dynamic_output_shape_nhwc) {
-    execute(CreateModel_scale_dynamic_output_shape_nhwc,
-            is_ignored_scale_dynamic_output_shape_nhwc,
-            get_examples_scale_dynamic_output_shape_nhwc());
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nchw_float16_dynamic_output_shape) {
+    execute(CreateModel_scale_nchw_float16_dynamic_output_shape,
+            is_ignored_scale_nchw_float16_dynamic_output_shape,
+            get_examples_scale_nchw_float16_dynamic_output_shape());
 }
 
 } // namespace generated_tests::resize_nearest_neighbor
 
 namespace generated_tests::resize_nearest_neighbor {
 
-void CreateModel_scale_dynamic_output_shape_nhwc_relaxed(Model *model);
-bool is_ignored_scale_dynamic_output_shape_nhwc_relaxed(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_scale_dynamic_output_shape_nhwc_relaxed();
+void CreateModel_scale_nchw_float16_all_inputs_as_internal(Model *model);
+bool is_ignored_scale_nchw_float16_all_inputs_as_internal(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nchw_float16_all_inputs_as_internal();
 
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_dynamic_output_shape_nhwc_relaxed) {
-    execute(CreateModel_scale_dynamic_output_shape_nhwc_relaxed,
-            is_ignored_scale_dynamic_output_shape_nhwc_relaxed,
-            get_examples_scale_dynamic_output_shape_nhwc_relaxed());
+TEST_F(GeneratedTests, resize_nearest_neighbor_scale_nchw_float16_all_inputs_as_internal) {
+    execute(CreateModel_scale_nchw_float16_all_inputs_as_internal,
+            is_ignored_scale_nchw_float16_all_inputs_as_internal,
+            get_examples_scale_nchw_float16_all_inputs_as_internal());
 }
 
 } // namespace generated_tests::resize_nearest_neighbor
+TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_scale_nchw_float16_all_inputs_as_internal, generated_tests::resize_nearest_neighbor::CreateModel_scale_nchw_float16_all_inputs_as_internal)
 
 namespace generated_tests::resize_nearest_neighbor {
 
-void CreateModel_scale_dynamic_output_shape_nhwc_quant8(Model *model);
-bool is_ignored_scale_dynamic_output_shape_nhwc_quant8(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_scale_dynamic_output_shape_nhwc_quant8();
+void CreateModel_scale_nchw_float16_all_inputs_as_internal_dynamic_output_shape(Model *model);
+bool is_ignored_scale_nchw_float16_all_inputs_as_internal_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nchw_float16_all_inputs_as_internal_dynamic_output_shape();
 
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_dynamic_output_shape_nhwc_quant8) {
-    execute(CreateModel_scale_dynamic_output_shape_nhwc_quant8,
-            is_ignored_scale_dynamic_output_shape_nhwc_quant8,
-            get_examples_scale_dynamic_output_shape_nhwc_quant8());
-}
-
-} // namespace generated_tests::resize_nearest_neighbor
-
-namespace generated_tests::resize_nearest_neighbor {
-
-void CreateModel_scale_dynamic_output_shape_nhwc_float16(Model *model);
-bool is_ignored_scale_dynamic_output_shape_nhwc_float16(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_scale_dynamic_output_shape_nhwc_float16();
-
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_dynamic_output_shape_nhwc_float16) {
-    execute(CreateModel_scale_dynamic_output_shape_nhwc_float16,
-            is_ignored_scale_dynamic_output_shape_nhwc_float16,
-            get_examples_scale_dynamic_output_shape_nhwc_float16());
-}
-
-} // namespace generated_tests::resize_nearest_neighbor
-
-namespace generated_tests::resize_nearest_neighbor {
-
-void CreateModel_scale_dynamic_output_shape_nchw(Model *model);
-bool is_ignored_scale_dynamic_output_shape_nchw(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_scale_dynamic_output_shape_nchw();
-
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_dynamic_output_shape_nchw) {
-    execute(CreateModel_scale_dynamic_output_shape_nchw,
-            is_ignored_scale_dynamic_output_shape_nchw,
-            get_examples_scale_dynamic_output_shape_nchw());
-}
-
-} // namespace generated_tests::resize_nearest_neighbor
-
-namespace generated_tests::resize_nearest_neighbor {
-
-void CreateModel_scale_dynamic_output_shape_nchw_relaxed(Model *model);
-bool is_ignored_scale_dynamic_output_shape_nchw_relaxed(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_scale_dynamic_output_shape_nchw_relaxed();
-
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_dynamic_output_shape_nchw_relaxed) {
-    execute(CreateModel_scale_dynamic_output_shape_nchw_relaxed,
-            is_ignored_scale_dynamic_output_shape_nchw_relaxed,
-            get_examples_scale_dynamic_output_shape_nchw_relaxed());
-}
-
-} // namespace generated_tests::resize_nearest_neighbor
-
-namespace generated_tests::resize_nearest_neighbor {
-
-void CreateModel_scale_dynamic_output_shape_nchw_quant8(Model *model);
-bool is_ignored_scale_dynamic_output_shape_nchw_quant8(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_scale_dynamic_output_shape_nchw_quant8();
-
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_dynamic_output_shape_nchw_quant8) {
-    execute(CreateModel_scale_dynamic_output_shape_nchw_quant8,
-            is_ignored_scale_dynamic_output_shape_nchw_quant8,
-            get_examples_scale_dynamic_output_shape_nchw_quant8());
-}
-
-} // namespace generated_tests::resize_nearest_neighbor
-
-namespace generated_tests::resize_nearest_neighbor {
-
-void CreateModel_scale_dynamic_output_shape_nchw_float16(Model *model);
-bool is_ignored_scale_dynamic_output_shape_nchw_float16(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_scale_dynamic_output_shape_nchw_float16();
-
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_dynamic_output_shape_nchw_float16) {
-    execute(CreateModel_scale_dynamic_output_shape_nchw_float16,
-            is_ignored_scale_dynamic_output_shape_nchw_float16,
-            get_examples_scale_dynamic_output_shape_nchw_float16());
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nchw_float16_all_inputs_as_internal_dynamic_output_shape) {
+    execute(CreateModel_scale_nchw_float16_all_inputs_as_internal_dynamic_output_shape,
+            is_ignored_scale_nchw_float16_all_inputs_as_internal_dynamic_output_shape,
+            get_examples_scale_nchw_float16_all_inputs_as_internal_dynamic_output_shape());
 }
 
 } // namespace generated_tests::resize_nearest_neighbor
@@ -480,6 +940,49 @@ TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_shape_nhwc_2, generated_tests
 
 namespace generated_tests::resize_nearest_neighbor {
 
+void CreateModel_shape_nhwc_dynamic_output_shape_2(Model *model);
+bool is_ignored_shape_nhwc_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nhwc_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nhwc_dynamic_output_shape_2) {
+    execute(CreateModel_shape_nhwc_dynamic_output_shape_2,
+            is_ignored_shape_nhwc_dynamic_output_shape_2,
+            get_examples_shape_nhwc_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nhwc_all_inputs_as_internal_2(Model *model);
+bool is_ignored_shape_nhwc_all_inputs_as_internal_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nhwc_all_inputs_as_internal_2();
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_shape_nhwc_all_inputs_as_internal_2) {
+    execute(CreateModel_shape_nhwc_all_inputs_as_internal_2,
+            is_ignored_shape_nhwc_all_inputs_as_internal_2,
+            get_examples_shape_nhwc_all_inputs_as_internal_2());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_shape_nhwc_all_inputs_as_internal_2, generated_tests::resize_nearest_neighbor::CreateModel_shape_nhwc_all_inputs_as_internal_2)
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nhwc_all_inputs_as_internal_dynamic_output_shape_2(Model *model);
+bool is_ignored_shape_nhwc_all_inputs_as_internal_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nhwc_all_inputs_as_internal_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nhwc_all_inputs_as_internal_dynamic_output_shape_2) {
+    execute(CreateModel_shape_nhwc_all_inputs_as_internal_dynamic_output_shape_2,
+            is_ignored_shape_nhwc_all_inputs_as_internal_dynamic_output_shape_2,
+            get_examples_shape_nhwc_all_inputs_as_internal_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
 void CreateModel_shape_nhwc_relaxed_2(Model *model);
 bool is_ignored_shape_nhwc_relaxed_2(int);
 std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nhwc_relaxed_2();
@@ -488,6 +991,48 @@ TEST_F(GeneratedTests, resize_nearest_neighbor_shape_nhwc_relaxed_2) {
     execute(CreateModel_shape_nhwc_relaxed_2,
             is_ignored_shape_nhwc_relaxed_2,
             get_examples_shape_nhwc_relaxed_2());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nhwc_relaxed_dynamic_output_shape_2(Model *model);
+bool is_ignored_shape_nhwc_relaxed_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nhwc_relaxed_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nhwc_relaxed_dynamic_output_shape_2) {
+    execute(CreateModel_shape_nhwc_relaxed_dynamic_output_shape_2,
+            is_ignored_shape_nhwc_relaxed_dynamic_output_shape_2,
+            get_examples_shape_nhwc_relaxed_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nhwc_relaxed_all_inputs_as_internal_2(Model *model);
+bool is_ignored_shape_nhwc_relaxed_all_inputs_as_internal_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nhwc_relaxed_all_inputs_as_internal_2();
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_shape_nhwc_relaxed_all_inputs_as_internal_2) {
+    execute(CreateModel_shape_nhwc_relaxed_all_inputs_as_internal_2,
+            is_ignored_shape_nhwc_relaxed_all_inputs_as_internal_2,
+            get_examples_shape_nhwc_relaxed_all_inputs_as_internal_2());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_2(Model *model);
+bool is_ignored_shape_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_2) {
+    execute(CreateModel_shape_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_2,
+            is_ignored_shape_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_2,
+            get_examples_shape_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_2());
 }
 
 } // namespace generated_tests::resize_nearest_neighbor
@@ -509,6 +1054,49 @@ TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_shape_nhwc_quant8_2, generate
 
 namespace generated_tests::resize_nearest_neighbor {
 
+void CreateModel_shape_nhwc_quant8_dynamic_output_shape_2(Model *model);
+bool is_ignored_shape_nhwc_quant8_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nhwc_quant8_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nhwc_quant8_dynamic_output_shape_2) {
+    execute(CreateModel_shape_nhwc_quant8_dynamic_output_shape_2,
+            is_ignored_shape_nhwc_quant8_dynamic_output_shape_2,
+            get_examples_shape_nhwc_quant8_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nhwc_quant8_all_inputs_as_internal_2(Model *model);
+bool is_ignored_shape_nhwc_quant8_all_inputs_as_internal_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nhwc_quant8_all_inputs_as_internal_2();
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_shape_nhwc_quant8_all_inputs_as_internal_2) {
+    execute(CreateModel_shape_nhwc_quant8_all_inputs_as_internal_2,
+            is_ignored_shape_nhwc_quant8_all_inputs_as_internal_2,
+            get_examples_shape_nhwc_quant8_all_inputs_as_internal_2());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_shape_nhwc_quant8_all_inputs_as_internal_2, generated_tests::resize_nearest_neighbor::CreateModel_shape_nhwc_quant8_all_inputs_as_internal_2)
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_2(Model *model);
+bool is_ignored_shape_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_2) {
+    execute(CreateModel_shape_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_2,
+            is_ignored_shape_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_2,
+            get_examples_shape_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
 void CreateModel_shape_nhwc_float16_2(Model *model);
 bool is_ignored_shape_nhwc_float16_2(int);
 std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nhwc_float16_2();
@@ -521,6 +1109,49 @@ TEST_F(GeneratedTests, resize_nearest_neighbor_shape_nhwc_float16_2) {
 
 } // namespace generated_tests::resize_nearest_neighbor
 TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_shape_nhwc_float16_2, generated_tests::resize_nearest_neighbor::CreateModel_shape_nhwc_float16_2)
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nhwc_float16_dynamic_output_shape_2(Model *model);
+bool is_ignored_shape_nhwc_float16_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nhwc_float16_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nhwc_float16_dynamic_output_shape_2) {
+    execute(CreateModel_shape_nhwc_float16_dynamic_output_shape_2,
+            is_ignored_shape_nhwc_float16_dynamic_output_shape_2,
+            get_examples_shape_nhwc_float16_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nhwc_float16_all_inputs_as_internal_2(Model *model);
+bool is_ignored_shape_nhwc_float16_all_inputs_as_internal_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nhwc_float16_all_inputs_as_internal_2();
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_shape_nhwc_float16_all_inputs_as_internal_2) {
+    execute(CreateModel_shape_nhwc_float16_all_inputs_as_internal_2,
+            is_ignored_shape_nhwc_float16_all_inputs_as_internal_2,
+            get_examples_shape_nhwc_float16_all_inputs_as_internal_2());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_shape_nhwc_float16_all_inputs_as_internal_2, generated_tests::resize_nearest_neighbor::CreateModel_shape_nhwc_float16_all_inputs_as_internal_2)
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_2(Model *model);
+bool is_ignored_shape_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_2) {
+    execute(CreateModel_shape_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_2,
+            is_ignored_shape_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_2,
+            get_examples_shape_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
 
 namespace generated_tests::resize_nearest_neighbor {
 
@@ -539,6 +1170,49 @@ TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_shape_nchw_2, generated_tests
 
 namespace generated_tests::resize_nearest_neighbor {
 
+void CreateModel_shape_nchw_dynamic_output_shape_2(Model *model);
+bool is_ignored_shape_nchw_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nchw_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nchw_dynamic_output_shape_2) {
+    execute(CreateModel_shape_nchw_dynamic_output_shape_2,
+            is_ignored_shape_nchw_dynamic_output_shape_2,
+            get_examples_shape_nchw_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nchw_all_inputs_as_internal_2(Model *model);
+bool is_ignored_shape_nchw_all_inputs_as_internal_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nchw_all_inputs_as_internal_2();
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_shape_nchw_all_inputs_as_internal_2) {
+    execute(CreateModel_shape_nchw_all_inputs_as_internal_2,
+            is_ignored_shape_nchw_all_inputs_as_internal_2,
+            get_examples_shape_nchw_all_inputs_as_internal_2());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_shape_nchw_all_inputs_as_internal_2, generated_tests::resize_nearest_neighbor::CreateModel_shape_nchw_all_inputs_as_internal_2)
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nchw_all_inputs_as_internal_dynamic_output_shape_2(Model *model);
+bool is_ignored_shape_nchw_all_inputs_as_internal_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nchw_all_inputs_as_internal_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nchw_all_inputs_as_internal_dynamic_output_shape_2) {
+    execute(CreateModel_shape_nchw_all_inputs_as_internal_dynamic_output_shape_2,
+            is_ignored_shape_nchw_all_inputs_as_internal_dynamic_output_shape_2,
+            get_examples_shape_nchw_all_inputs_as_internal_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
 void CreateModel_shape_nchw_relaxed_2(Model *model);
 bool is_ignored_shape_nchw_relaxed_2(int);
 std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nchw_relaxed_2();
@@ -547,6 +1221,48 @@ TEST_F(GeneratedTests, resize_nearest_neighbor_shape_nchw_relaxed_2) {
     execute(CreateModel_shape_nchw_relaxed_2,
             is_ignored_shape_nchw_relaxed_2,
             get_examples_shape_nchw_relaxed_2());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nchw_relaxed_dynamic_output_shape_2(Model *model);
+bool is_ignored_shape_nchw_relaxed_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nchw_relaxed_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nchw_relaxed_dynamic_output_shape_2) {
+    execute(CreateModel_shape_nchw_relaxed_dynamic_output_shape_2,
+            is_ignored_shape_nchw_relaxed_dynamic_output_shape_2,
+            get_examples_shape_nchw_relaxed_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nchw_relaxed_all_inputs_as_internal_2(Model *model);
+bool is_ignored_shape_nchw_relaxed_all_inputs_as_internal_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nchw_relaxed_all_inputs_as_internal_2();
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_shape_nchw_relaxed_all_inputs_as_internal_2) {
+    execute(CreateModel_shape_nchw_relaxed_all_inputs_as_internal_2,
+            is_ignored_shape_nchw_relaxed_all_inputs_as_internal_2,
+            get_examples_shape_nchw_relaxed_all_inputs_as_internal_2());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_2(Model *model);
+bool is_ignored_shape_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_2) {
+    execute(CreateModel_shape_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_2,
+            is_ignored_shape_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_2,
+            get_examples_shape_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_2());
 }
 
 } // namespace generated_tests::resize_nearest_neighbor
@@ -568,6 +1284,49 @@ TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_shape_nchw_quant8_2, generate
 
 namespace generated_tests::resize_nearest_neighbor {
 
+void CreateModel_shape_nchw_quant8_dynamic_output_shape_2(Model *model);
+bool is_ignored_shape_nchw_quant8_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nchw_quant8_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nchw_quant8_dynamic_output_shape_2) {
+    execute(CreateModel_shape_nchw_quant8_dynamic_output_shape_2,
+            is_ignored_shape_nchw_quant8_dynamic_output_shape_2,
+            get_examples_shape_nchw_quant8_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nchw_quant8_all_inputs_as_internal_2(Model *model);
+bool is_ignored_shape_nchw_quant8_all_inputs_as_internal_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nchw_quant8_all_inputs_as_internal_2();
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_shape_nchw_quant8_all_inputs_as_internal_2) {
+    execute(CreateModel_shape_nchw_quant8_all_inputs_as_internal_2,
+            is_ignored_shape_nchw_quant8_all_inputs_as_internal_2,
+            get_examples_shape_nchw_quant8_all_inputs_as_internal_2());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_shape_nchw_quant8_all_inputs_as_internal_2, generated_tests::resize_nearest_neighbor::CreateModel_shape_nchw_quant8_all_inputs_as_internal_2)
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_2(Model *model);
+bool is_ignored_shape_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_2) {
+    execute(CreateModel_shape_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_2,
+            is_ignored_shape_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_2,
+            get_examples_shape_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
 void CreateModel_shape_nchw_float16_2(Model *model);
 bool is_ignored_shape_nchw_float16_2(int);
 std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nchw_float16_2();
@@ -583,112 +1342,43 @@ TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_shape_nchw_float16_2, generat
 
 namespace generated_tests::resize_nearest_neighbor {
 
-void CreateModel_shape_dynamic_output_shape_nhwc_2(Model *model);
-bool is_ignored_shape_dynamic_output_shape_nhwc_2(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_shape_dynamic_output_shape_nhwc_2();
+void CreateModel_shape_nchw_float16_dynamic_output_shape_2(Model *model);
+bool is_ignored_shape_nchw_float16_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nchw_float16_dynamic_output_shape_2();
 
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_dynamic_output_shape_nhwc_2) {
-    execute(CreateModel_shape_dynamic_output_shape_nhwc_2,
-            is_ignored_shape_dynamic_output_shape_nhwc_2,
-            get_examples_shape_dynamic_output_shape_nhwc_2());
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nchw_float16_dynamic_output_shape_2) {
+    execute(CreateModel_shape_nchw_float16_dynamic_output_shape_2,
+            is_ignored_shape_nchw_float16_dynamic_output_shape_2,
+            get_examples_shape_nchw_float16_dynamic_output_shape_2());
 }
 
 } // namespace generated_tests::resize_nearest_neighbor
 
 namespace generated_tests::resize_nearest_neighbor {
 
-void CreateModel_shape_dynamic_output_shape_nhwc_relaxed_2(Model *model);
-bool is_ignored_shape_dynamic_output_shape_nhwc_relaxed_2(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_shape_dynamic_output_shape_nhwc_relaxed_2();
+void CreateModel_shape_nchw_float16_all_inputs_as_internal_2(Model *model);
+bool is_ignored_shape_nchw_float16_all_inputs_as_internal_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nchw_float16_all_inputs_as_internal_2();
 
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_dynamic_output_shape_nhwc_relaxed_2) {
-    execute(CreateModel_shape_dynamic_output_shape_nhwc_relaxed_2,
-            is_ignored_shape_dynamic_output_shape_nhwc_relaxed_2,
-            get_examples_shape_dynamic_output_shape_nhwc_relaxed_2());
+TEST_F(GeneratedTests, resize_nearest_neighbor_shape_nchw_float16_all_inputs_as_internal_2) {
+    execute(CreateModel_shape_nchw_float16_all_inputs_as_internal_2,
+            is_ignored_shape_nchw_float16_all_inputs_as_internal_2,
+            get_examples_shape_nchw_float16_all_inputs_as_internal_2());
 }
 
 } // namespace generated_tests::resize_nearest_neighbor
+TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_shape_nchw_float16_all_inputs_as_internal_2, generated_tests::resize_nearest_neighbor::CreateModel_shape_nchw_float16_all_inputs_as_internal_2)
 
 namespace generated_tests::resize_nearest_neighbor {
 
-void CreateModel_shape_dynamic_output_shape_nhwc_quant8_2(Model *model);
-bool is_ignored_shape_dynamic_output_shape_nhwc_quant8_2(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_shape_dynamic_output_shape_nhwc_quant8_2();
+void CreateModel_shape_nchw_float16_all_inputs_as_internal_dynamic_output_shape_2(Model *model);
+bool is_ignored_shape_nchw_float16_all_inputs_as_internal_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nchw_float16_all_inputs_as_internal_dynamic_output_shape_2();
 
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_dynamic_output_shape_nhwc_quant8_2) {
-    execute(CreateModel_shape_dynamic_output_shape_nhwc_quant8_2,
-            is_ignored_shape_dynamic_output_shape_nhwc_quant8_2,
-            get_examples_shape_dynamic_output_shape_nhwc_quant8_2());
-}
-
-} // namespace generated_tests::resize_nearest_neighbor
-
-namespace generated_tests::resize_nearest_neighbor {
-
-void CreateModel_shape_dynamic_output_shape_nhwc_float16_2(Model *model);
-bool is_ignored_shape_dynamic_output_shape_nhwc_float16_2(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_shape_dynamic_output_shape_nhwc_float16_2();
-
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_dynamic_output_shape_nhwc_float16_2) {
-    execute(CreateModel_shape_dynamic_output_shape_nhwc_float16_2,
-            is_ignored_shape_dynamic_output_shape_nhwc_float16_2,
-            get_examples_shape_dynamic_output_shape_nhwc_float16_2());
-}
-
-} // namespace generated_tests::resize_nearest_neighbor
-
-namespace generated_tests::resize_nearest_neighbor {
-
-void CreateModel_shape_dynamic_output_shape_nchw_2(Model *model);
-bool is_ignored_shape_dynamic_output_shape_nchw_2(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_shape_dynamic_output_shape_nchw_2();
-
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_dynamic_output_shape_nchw_2) {
-    execute(CreateModel_shape_dynamic_output_shape_nchw_2,
-            is_ignored_shape_dynamic_output_shape_nchw_2,
-            get_examples_shape_dynamic_output_shape_nchw_2());
-}
-
-} // namespace generated_tests::resize_nearest_neighbor
-
-namespace generated_tests::resize_nearest_neighbor {
-
-void CreateModel_shape_dynamic_output_shape_nchw_relaxed_2(Model *model);
-bool is_ignored_shape_dynamic_output_shape_nchw_relaxed_2(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_shape_dynamic_output_shape_nchw_relaxed_2();
-
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_dynamic_output_shape_nchw_relaxed_2) {
-    execute(CreateModel_shape_dynamic_output_shape_nchw_relaxed_2,
-            is_ignored_shape_dynamic_output_shape_nchw_relaxed_2,
-            get_examples_shape_dynamic_output_shape_nchw_relaxed_2());
-}
-
-} // namespace generated_tests::resize_nearest_neighbor
-
-namespace generated_tests::resize_nearest_neighbor {
-
-void CreateModel_shape_dynamic_output_shape_nchw_quant8_2(Model *model);
-bool is_ignored_shape_dynamic_output_shape_nchw_quant8_2(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_shape_dynamic_output_shape_nchw_quant8_2();
-
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_dynamic_output_shape_nchw_quant8_2) {
-    execute(CreateModel_shape_dynamic_output_shape_nchw_quant8_2,
-            is_ignored_shape_dynamic_output_shape_nchw_quant8_2,
-            get_examples_shape_dynamic_output_shape_nchw_quant8_2());
-}
-
-} // namespace generated_tests::resize_nearest_neighbor
-
-namespace generated_tests::resize_nearest_neighbor {
-
-void CreateModel_shape_dynamic_output_shape_nchw_float16_2(Model *model);
-bool is_ignored_shape_dynamic_output_shape_nchw_float16_2(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_shape_dynamic_output_shape_nchw_float16_2();
-
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_dynamic_output_shape_nchw_float16_2) {
-    execute(CreateModel_shape_dynamic_output_shape_nchw_float16_2,
-            is_ignored_shape_dynamic_output_shape_nchw_float16_2,
-            get_examples_shape_dynamic_output_shape_nchw_float16_2());
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nchw_float16_all_inputs_as_internal_dynamic_output_shape_2) {
+    execute(CreateModel_shape_nchw_float16_all_inputs_as_internal_dynamic_output_shape_2,
+            is_ignored_shape_nchw_float16_all_inputs_as_internal_dynamic_output_shape_2,
+            get_examples_shape_nchw_float16_all_inputs_as_internal_dynamic_output_shape_2());
 }
 
 } // namespace generated_tests::resize_nearest_neighbor
@@ -710,6 +1400,49 @@ TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_scale_nhwc_2, generated_tests
 
 namespace generated_tests::resize_nearest_neighbor {
 
+void CreateModel_scale_nhwc_dynamic_output_shape_2(Model *model);
+bool is_ignored_scale_nhwc_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nhwc_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nhwc_dynamic_output_shape_2) {
+    execute(CreateModel_scale_nhwc_dynamic_output_shape_2,
+            is_ignored_scale_nhwc_dynamic_output_shape_2,
+            get_examples_scale_nhwc_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nhwc_all_inputs_as_internal_2(Model *model);
+bool is_ignored_scale_nhwc_all_inputs_as_internal_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nhwc_all_inputs_as_internal_2();
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_scale_nhwc_all_inputs_as_internal_2) {
+    execute(CreateModel_scale_nhwc_all_inputs_as_internal_2,
+            is_ignored_scale_nhwc_all_inputs_as_internal_2,
+            get_examples_scale_nhwc_all_inputs_as_internal_2());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_scale_nhwc_all_inputs_as_internal_2, generated_tests::resize_nearest_neighbor::CreateModel_scale_nhwc_all_inputs_as_internal_2)
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nhwc_all_inputs_as_internal_dynamic_output_shape_2(Model *model);
+bool is_ignored_scale_nhwc_all_inputs_as_internal_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nhwc_all_inputs_as_internal_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nhwc_all_inputs_as_internal_dynamic_output_shape_2) {
+    execute(CreateModel_scale_nhwc_all_inputs_as_internal_dynamic_output_shape_2,
+            is_ignored_scale_nhwc_all_inputs_as_internal_dynamic_output_shape_2,
+            get_examples_scale_nhwc_all_inputs_as_internal_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
 void CreateModel_scale_nhwc_relaxed_2(Model *model);
 bool is_ignored_scale_nhwc_relaxed_2(int);
 std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nhwc_relaxed_2();
@@ -718,6 +1451,48 @@ TEST_F(GeneratedTests, resize_nearest_neighbor_scale_nhwc_relaxed_2) {
     execute(CreateModel_scale_nhwc_relaxed_2,
             is_ignored_scale_nhwc_relaxed_2,
             get_examples_scale_nhwc_relaxed_2());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nhwc_relaxed_dynamic_output_shape_2(Model *model);
+bool is_ignored_scale_nhwc_relaxed_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nhwc_relaxed_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nhwc_relaxed_dynamic_output_shape_2) {
+    execute(CreateModel_scale_nhwc_relaxed_dynamic_output_shape_2,
+            is_ignored_scale_nhwc_relaxed_dynamic_output_shape_2,
+            get_examples_scale_nhwc_relaxed_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nhwc_relaxed_all_inputs_as_internal_2(Model *model);
+bool is_ignored_scale_nhwc_relaxed_all_inputs_as_internal_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nhwc_relaxed_all_inputs_as_internal_2();
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_scale_nhwc_relaxed_all_inputs_as_internal_2) {
+    execute(CreateModel_scale_nhwc_relaxed_all_inputs_as_internal_2,
+            is_ignored_scale_nhwc_relaxed_all_inputs_as_internal_2,
+            get_examples_scale_nhwc_relaxed_all_inputs_as_internal_2());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_2(Model *model);
+bool is_ignored_scale_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_2) {
+    execute(CreateModel_scale_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_2,
+            is_ignored_scale_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_2,
+            get_examples_scale_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_2());
 }
 
 } // namespace generated_tests::resize_nearest_neighbor
@@ -739,6 +1514,49 @@ TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_scale_nhwc_quant8_2, generate
 
 namespace generated_tests::resize_nearest_neighbor {
 
+void CreateModel_scale_nhwc_quant8_dynamic_output_shape_2(Model *model);
+bool is_ignored_scale_nhwc_quant8_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nhwc_quant8_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nhwc_quant8_dynamic_output_shape_2) {
+    execute(CreateModel_scale_nhwc_quant8_dynamic_output_shape_2,
+            is_ignored_scale_nhwc_quant8_dynamic_output_shape_2,
+            get_examples_scale_nhwc_quant8_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nhwc_quant8_all_inputs_as_internal_2(Model *model);
+bool is_ignored_scale_nhwc_quant8_all_inputs_as_internal_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nhwc_quant8_all_inputs_as_internal_2();
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_scale_nhwc_quant8_all_inputs_as_internal_2) {
+    execute(CreateModel_scale_nhwc_quant8_all_inputs_as_internal_2,
+            is_ignored_scale_nhwc_quant8_all_inputs_as_internal_2,
+            get_examples_scale_nhwc_quant8_all_inputs_as_internal_2());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_scale_nhwc_quant8_all_inputs_as_internal_2, generated_tests::resize_nearest_neighbor::CreateModel_scale_nhwc_quant8_all_inputs_as_internal_2)
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_2(Model *model);
+bool is_ignored_scale_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_2) {
+    execute(CreateModel_scale_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_2,
+            is_ignored_scale_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_2,
+            get_examples_scale_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
 void CreateModel_scale_nhwc_float16_2(Model *model);
 bool is_ignored_scale_nhwc_float16_2(int);
 std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nhwc_float16_2();
@@ -751,6 +1569,49 @@ TEST_F(GeneratedTests, resize_nearest_neighbor_scale_nhwc_float16_2) {
 
 } // namespace generated_tests::resize_nearest_neighbor
 TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_scale_nhwc_float16_2, generated_tests::resize_nearest_neighbor::CreateModel_scale_nhwc_float16_2)
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nhwc_float16_dynamic_output_shape_2(Model *model);
+bool is_ignored_scale_nhwc_float16_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nhwc_float16_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nhwc_float16_dynamic_output_shape_2) {
+    execute(CreateModel_scale_nhwc_float16_dynamic_output_shape_2,
+            is_ignored_scale_nhwc_float16_dynamic_output_shape_2,
+            get_examples_scale_nhwc_float16_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nhwc_float16_all_inputs_as_internal_2(Model *model);
+bool is_ignored_scale_nhwc_float16_all_inputs_as_internal_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nhwc_float16_all_inputs_as_internal_2();
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_scale_nhwc_float16_all_inputs_as_internal_2) {
+    execute(CreateModel_scale_nhwc_float16_all_inputs_as_internal_2,
+            is_ignored_scale_nhwc_float16_all_inputs_as_internal_2,
+            get_examples_scale_nhwc_float16_all_inputs_as_internal_2());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_scale_nhwc_float16_all_inputs_as_internal_2, generated_tests::resize_nearest_neighbor::CreateModel_scale_nhwc_float16_all_inputs_as_internal_2)
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_2(Model *model);
+bool is_ignored_scale_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_2) {
+    execute(CreateModel_scale_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_2,
+            is_ignored_scale_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_2,
+            get_examples_scale_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
 
 namespace generated_tests::resize_nearest_neighbor {
 
@@ -769,6 +1630,49 @@ TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_scale_nchw_2, generated_tests
 
 namespace generated_tests::resize_nearest_neighbor {
 
+void CreateModel_scale_nchw_dynamic_output_shape_2(Model *model);
+bool is_ignored_scale_nchw_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nchw_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nchw_dynamic_output_shape_2) {
+    execute(CreateModel_scale_nchw_dynamic_output_shape_2,
+            is_ignored_scale_nchw_dynamic_output_shape_2,
+            get_examples_scale_nchw_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nchw_all_inputs_as_internal_2(Model *model);
+bool is_ignored_scale_nchw_all_inputs_as_internal_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nchw_all_inputs_as_internal_2();
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_scale_nchw_all_inputs_as_internal_2) {
+    execute(CreateModel_scale_nchw_all_inputs_as_internal_2,
+            is_ignored_scale_nchw_all_inputs_as_internal_2,
+            get_examples_scale_nchw_all_inputs_as_internal_2());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_scale_nchw_all_inputs_as_internal_2, generated_tests::resize_nearest_neighbor::CreateModel_scale_nchw_all_inputs_as_internal_2)
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nchw_all_inputs_as_internal_dynamic_output_shape_2(Model *model);
+bool is_ignored_scale_nchw_all_inputs_as_internal_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nchw_all_inputs_as_internal_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nchw_all_inputs_as_internal_dynamic_output_shape_2) {
+    execute(CreateModel_scale_nchw_all_inputs_as_internal_dynamic_output_shape_2,
+            is_ignored_scale_nchw_all_inputs_as_internal_dynamic_output_shape_2,
+            get_examples_scale_nchw_all_inputs_as_internal_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
 void CreateModel_scale_nchw_relaxed_2(Model *model);
 bool is_ignored_scale_nchw_relaxed_2(int);
 std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nchw_relaxed_2();
@@ -777,6 +1681,48 @@ TEST_F(GeneratedTests, resize_nearest_neighbor_scale_nchw_relaxed_2) {
     execute(CreateModel_scale_nchw_relaxed_2,
             is_ignored_scale_nchw_relaxed_2,
             get_examples_scale_nchw_relaxed_2());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nchw_relaxed_dynamic_output_shape_2(Model *model);
+bool is_ignored_scale_nchw_relaxed_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nchw_relaxed_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nchw_relaxed_dynamic_output_shape_2) {
+    execute(CreateModel_scale_nchw_relaxed_dynamic_output_shape_2,
+            is_ignored_scale_nchw_relaxed_dynamic_output_shape_2,
+            get_examples_scale_nchw_relaxed_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nchw_relaxed_all_inputs_as_internal_2(Model *model);
+bool is_ignored_scale_nchw_relaxed_all_inputs_as_internal_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nchw_relaxed_all_inputs_as_internal_2();
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_scale_nchw_relaxed_all_inputs_as_internal_2) {
+    execute(CreateModel_scale_nchw_relaxed_all_inputs_as_internal_2,
+            is_ignored_scale_nchw_relaxed_all_inputs_as_internal_2,
+            get_examples_scale_nchw_relaxed_all_inputs_as_internal_2());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_2(Model *model);
+bool is_ignored_scale_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_2) {
+    execute(CreateModel_scale_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_2,
+            is_ignored_scale_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_2,
+            get_examples_scale_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_2());
 }
 
 } // namespace generated_tests::resize_nearest_neighbor
@@ -798,6 +1744,49 @@ TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_scale_nchw_quant8_2, generate
 
 namespace generated_tests::resize_nearest_neighbor {
 
+void CreateModel_scale_nchw_quant8_dynamic_output_shape_2(Model *model);
+bool is_ignored_scale_nchw_quant8_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nchw_quant8_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nchw_quant8_dynamic_output_shape_2) {
+    execute(CreateModel_scale_nchw_quant8_dynamic_output_shape_2,
+            is_ignored_scale_nchw_quant8_dynamic_output_shape_2,
+            get_examples_scale_nchw_quant8_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nchw_quant8_all_inputs_as_internal_2(Model *model);
+bool is_ignored_scale_nchw_quant8_all_inputs_as_internal_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nchw_quant8_all_inputs_as_internal_2();
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_scale_nchw_quant8_all_inputs_as_internal_2) {
+    execute(CreateModel_scale_nchw_quant8_all_inputs_as_internal_2,
+            is_ignored_scale_nchw_quant8_all_inputs_as_internal_2,
+            get_examples_scale_nchw_quant8_all_inputs_as_internal_2());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_scale_nchw_quant8_all_inputs_as_internal_2, generated_tests::resize_nearest_neighbor::CreateModel_scale_nchw_quant8_all_inputs_as_internal_2)
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_2(Model *model);
+bool is_ignored_scale_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_2) {
+    execute(CreateModel_scale_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_2,
+            is_ignored_scale_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_2,
+            get_examples_scale_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
 void CreateModel_scale_nchw_float16_2(Model *model);
 bool is_ignored_scale_nchw_float16_2(int);
 std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nchw_float16_2();
@@ -813,112 +1802,43 @@ TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_scale_nchw_float16_2, generat
 
 namespace generated_tests::resize_nearest_neighbor {
 
-void CreateModel_scale_dynamic_output_shape_nhwc_2(Model *model);
-bool is_ignored_scale_dynamic_output_shape_nhwc_2(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_scale_dynamic_output_shape_nhwc_2();
+void CreateModel_scale_nchw_float16_dynamic_output_shape_2(Model *model);
+bool is_ignored_scale_nchw_float16_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nchw_float16_dynamic_output_shape_2();
 
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_dynamic_output_shape_nhwc_2) {
-    execute(CreateModel_scale_dynamic_output_shape_nhwc_2,
-            is_ignored_scale_dynamic_output_shape_nhwc_2,
-            get_examples_scale_dynamic_output_shape_nhwc_2());
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nchw_float16_dynamic_output_shape_2) {
+    execute(CreateModel_scale_nchw_float16_dynamic_output_shape_2,
+            is_ignored_scale_nchw_float16_dynamic_output_shape_2,
+            get_examples_scale_nchw_float16_dynamic_output_shape_2());
 }
 
 } // namespace generated_tests::resize_nearest_neighbor
 
 namespace generated_tests::resize_nearest_neighbor {
 
-void CreateModel_scale_dynamic_output_shape_nhwc_relaxed_2(Model *model);
-bool is_ignored_scale_dynamic_output_shape_nhwc_relaxed_2(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_scale_dynamic_output_shape_nhwc_relaxed_2();
+void CreateModel_scale_nchw_float16_all_inputs_as_internal_2(Model *model);
+bool is_ignored_scale_nchw_float16_all_inputs_as_internal_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nchw_float16_all_inputs_as_internal_2();
 
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_dynamic_output_shape_nhwc_relaxed_2) {
-    execute(CreateModel_scale_dynamic_output_shape_nhwc_relaxed_2,
-            is_ignored_scale_dynamic_output_shape_nhwc_relaxed_2,
-            get_examples_scale_dynamic_output_shape_nhwc_relaxed_2());
+TEST_F(GeneratedTests, resize_nearest_neighbor_scale_nchw_float16_all_inputs_as_internal_2) {
+    execute(CreateModel_scale_nchw_float16_all_inputs_as_internal_2,
+            is_ignored_scale_nchw_float16_all_inputs_as_internal_2,
+            get_examples_scale_nchw_float16_all_inputs_as_internal_2());
 }
 
 } // namespace generated_tests::resize_nearest_neighbor
+TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_scale_nchw_float16_all_inputs_as_internal_2, generated_tests::resize_nearest_neighbor::CreateModel_scale_nchw_float16_all_inputs_as_internal_2)
 
 namespace generated_tests::resize_nearest_neighbor {
 
-void CreateModel_scale_dynamic_output_shape_nhwc_quant8_2(Model *model);
-bool is_ignored_scale_dynamic_output_shape_nhwc_quant8_2(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_scale_dynamic_output_shape_nhwc_quant8_2();
+void CreateModel_scale_nchw_float16_all_inputs_as_internal_dynamic_output_shape_2(Model *model);
+bool is_ignored_scale_nchw_float16_all_inputs_as_internal_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nchw_float16_all_inputs_as_internal_dynamic_output_shape_2();
 
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_dynamic_output_shape_nhwc_quant8_2) {
-    execute(CreateModel_scale_dynamic_output_shape_nhwc_quant8_2,
-            is_ignored_scale_dynamic_output_shape_nhwc_quant8_2,
-            get_examples_scale_dynamic_output_shape_nhwc_quant8_2());
-}
-
-} // namespace generated_tests::resize_nearest_neighbor
-
-namespace generated_tests::resize_nearest_neighbor {
-
-void CreateModel_scale_dynamic_output_shape_nhwc_float16_2(Model *model);
-bool is_ignored_scale_dynamic_output_shape_nhwc_float16_2(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_scale_dynamic_output_shape_nhwc_float16_2();
-
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_dynamic_output_shape_nhwc_float16_2) {
-    execute(CreateModel_scale_dynamic_output_shape_nhwc_float16_2,
-            is_ignored_scale_dynamic_output_shape_nhwc_float16_2,
-            get_examples_scale_dynamic_output_shape_nhwc_float16_2());
-}
-
-} // namespace generated_tests::resize_nearest_neighbor
-
-namespace generated_tests::resize_nearest_neighbor {
-
-void CreateModel_scale_dynamic_output_shape_nchw_2(Model *model);
-bool is_ignored_scale_dynamic_output_shape_nchw_2(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_scale_dynamic_output_shape_nchw_2();
-
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_dynamic_output_shape_nchw_2) {
-    execute(CreateModel_scale_dynamic_output_shape_nchw_2,
-            is_ignored_scale_dynamic_output_shape_nchw_2,
-            get_examples_scale_dynamic_output_shape_nchw_2());
-}
-
-} // namespace generated_tests::resize_nearest_neighbor
-
-namespace generated_tests::resize_nearest_neighbor {
-
-void CreateModel_scale_dynamic_output_shape_nchw_relaxed_2(Model *model);
-bool is_ignored_scale_dynamic_output_shape_nchw_relaxed_2(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_scale_dynamic_output_shape_nchw_relaxed_2();
-
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_dynamic_output_shape_nchw_relaxed_2) {
-    execute(CreateModel_scale_dynamic_output_shape_nchw_relaxed_2,
-            is_ignored_scale_dynamic_output_shape_nchw_relaxed_2,
-            get_examples_scale_dynamic_output_shape_nchw_relaxed_2());
-}
-
-} // namespace generated_tests::resize_nearest_neighbor
-
-namespace generated_tests::resize_nearest_neighbor {
-
-void CreateModel_scale_dynamic_output_shape_nchw_quant8_2(Model *model);
-bool is_ignored_scale_dynamic_output_shape_nchw_quant8_2(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_scale_dynamic_output_shape_nchw_quant8_2();
-
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_dynamic_output_shape_nchw_quant8_2) {
-    execute(CreateModel_scale_dynamic_output_shape_nchw_quant8_2,
-            is_ignored_scale_dynamic_output_shape_nchw_quant8_2,
-            get_examples_scale_dynamic_output_shape_nchw_quant8_2());
-}
-
-} // namespace generated_tests::resize_nearest_neighbor
-
-namespace generated_tests::resize_nearest_neighbor {
-
-void CreateModel_scale_dynamic_output_shape_nchw_float16_2(Model *model);
-bool is_ignored_scale_dynamic_output_shape_nchw_float16_2(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_scale_dynamic_output_shape_nchw_float16_2();
-
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_dynamic_output_shape_nchw_float16_2) {
-    execute(CreateModel_scale_dynamic_output_shape_nchw_float16_2,
-            is_ignored_scale_dynamic_output_shape_nchw_float16_2,
-            get_examples_scale_dynamic_output_shape_nchw_float16_2());
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nchw_float16_all_inputs_as_internal_dynamic_output_shape_2) {
+    execute(CreateModel_scale_nchw_float16_all_inputs_as_internal_dynamic_output_shape_2,
+            is_ignored_scale_nchw_float16_all_inputs_as_internal_dynamic_output_shape_2,
+            get_examples_scale_nchw_float16_all_inputs_as_internal_dynamic_output_shape_2());
 }
 
 } // namespace generated_tests::resize_nearest_neighbor
@@ -940,6 +1860,49 @@ TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_shape_nhwc_3, generated_tests
 
 namespace generated_tests::resize_nearest_neighbor {
 
+void CreateModel_shape_nhwc_dynamic_output_shape_3(Model *model);
+bool is_ignored_shape_nhwc_dynamic_output_shape_3(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nhwc_dynamic_output_shape_3();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nhwc_dynamic_output_shape_3) {
+    execute(CreateModel_shape_nhwc_dynamic_output_shape_3,
+            is_ignored_shape_nhwc_dynamic_output_shape_3,
+            get_examples_shape_nhwc_dynamic_output_shape_3());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nhwc_all_inputs_as_internal_3(Model *model);
+bool is_ignored_shape_nhwc_all_inputs_as_internal_3(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nhwc_all_inputs_as_internal_3();
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_shape_nhwc_all_inputs_as_internal_3) {
+    execute(CreateModel_shape_nhwc_all_inputs_as_internal_3,
+            is_ignored_shape_nhwc_all_inputs_as_internal_3,
+            get_examples_shape_nhwc_all_inputs_as_internal_3());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_shape_nhwc_all_inputs_as_internal_3, generated_tests::resize_nearest_neighbor::CreateModel_shape_nhwc_all_inputs_as_internal_3)
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nhwc_all_inputs_as_internal_dynamic_output_shape_3(Model *model);
+bool is_ignored_shape_nhwc_all_inputs_as_internal_dynamic_output_shape_3(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nhwc_all_inputs_as_internal_dynamic_output_shape_3();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nhwc_all_inputs_as_internal_dynamic_output_shape_3) {
+    execute(CreateModel_shape_nhwc_all_inputs_as_internal_dynamic_output_shape_3,
+            is_ignored_shape_nhwc_all_inputs_as_internal_dynamic_output_shape_3,
+            get_examples_shape_nhwc_all_inputs_as_internal_dynamic_output_shape_3());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
 void CreateModel_shape_nhwc_relaxed_3(Model *model);
 bool is_ignored_shape_nhwc_relaxed_3(int);
 std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nhwc_relaxed_3();
@@ -948,6 +1911,48 @@ TEST_F(GeneratedTests, resize_nearest_neighbor_shape_nhwc_relaxed_3) {
     execute(CreateModel_shape_nhwc_relaxed_3,
             is_ignored_shape_nhwc_relaxed_3,
             get_examples_shape_nhwc_relaxed_3());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nhwc_relaxed_dynamic_output_shape_3(Model *model);
+bool is_ignored_shape_nhwc_relaxed_dynamic_output_shape_3(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nhwc_relaxed_dynamic_output_shape_3();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nhwc_relaxed_dynamic_output_shape_3) {
+    execute(CreateModel_shape_nhwc_relaxed_dynamic_output_shape_3,
+            is_ignored_shape_nhwc_relaxed_dynamic_output_shape_3,
+            get_examples_shape_nhwc_relaxed_dynamic_output_shape_3());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nhwc_relaxed_all_inputs_as_internal_3(Model *model);
+bool is_ignored_shape_nhwc_relaxed_all_inputs_as_internal_3(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nhwc_relaxed_all_inputs_as_internal_3();
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_shape_nhwc_relaxed_all_inputs_as_internal_3) {
+    execute(CreateModel_shape_nhwc_relaxed_all_inputs_as_internal_3,
+            is_ignored_shape_nhwc_relaxed_all_inputs_as_internal_3,
+            get_examples_shape_nhwc_relaxed_all_inputs_as_internal_3());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_3(Model *model);
+bool is_ignored_shape_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_3(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_3();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_3) {
+    execute(CreateModel_shape_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_3,
+            is_ignored_shape_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_3,
+            get_examples_shape_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_3());
 }
 
 } // namespace generated_tests::resize_nearest_neighbor
@@ -969,6 +1974,49 @@ TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_shape_nhwc_quant8_3, generate
 
 namespace generated_tests::resize_nearest_neighbor {
 
+void CreateModel_shape_nhwc_quant8_dynamic_output_shape_3(Model *model);
+bool is_ignored_shape_nhwc_quant8_dynamic_output_shape_3(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nhwc_quant8_dynamic_output_shape_3();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nhwc_quant8_dynamic_output_shape_3) {
+    execute(CreateModel_shape_nhwc_quant8_dynamic_output_shape_3,
+            is_ignored_shape_nhwc_quant8_dynamic_output_shape_3,
+            get_examples_shape_nhwc_quant8_dynamic_output_shape_3());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nhwc_quant8_all_inputs_as_internal_3(Model *model);
+bool is_ignored_shape_nhwc_quant8_all_inputs_as_internal_3(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nhwc_quant8_all_inputs_as_internal_3();
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_shape_nhwc_quant8_all_inputs_as_internal_3) {
+    execute(CreateModel_shape_nhwc_quant8_all_inputs_as_internal_3,
+            is_ignored_shape_nhwc_quant8_all_inputs_as_internal_3,
+            get_examples_shape_nhwc_quant8_all_inputs_as_internal_3());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_shape_nhwc_quant8_all_inputs_as_internal_3, generated_tests::resize_nearest_neighbor::CreateModel_shape_nhwc_quant8_all_inputs_as_internal_3)
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_3(Model *model);
+bool is_ignored_shape_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_3(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_3();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_3) {
+    execute(CreateModel_shape_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_3,
+            is_ignored_shape_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_3,
+            get_examples_shape_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_3());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
 void CreateModel_shape_nhwc_float16_3(Model *model);
 bool is_ignored_shape_nhwc_float16_3(int);
 std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nhwc_float16_3();
@@ -981,6 +2029,49 @@ TEST_F(GeneratedTests, resize_nearest_neighbor_shape_nhwc_float16_3) {
 
 } // namespace generated_tests::resize_nearest_neighbor
 TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_shape_nhwc_float16_3, generated_tests::resize_nearest_neighbor::CreateModel_shape_nhwc_float16_3)
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nhwc_float16_dynamic_output_shape_3(Model *model);
+bool is_ignored_shape_nhwc_float16_dynamic_output_shape_3(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nhwc_float16_dynamic_output_shape_3();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nhwc_float16_dynamic_output_shape_3) {
+    execute(CreateModel_shape_nhwc_float16_dynamic_output_shape_3,
+            is_ignored_shape_nhwc_float16_dynamic_output_shape_3,
+            get_examples_shape_nhwc_float16_dynamic_output_shape_3());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nhwc_float16_all_inputs_as_internal_3(Model *model);
+bool is_ignored_shape_nhwc_float16_all_inputs_as_internal_3(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nhwc_float16_all_inputs_as_internal_3();
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_shape_nhwc_float16_all_inputs_as_internal_3) {
+    execute(CreateModel_shape_nhwc_float16_all_inputs_as_internal_3,
+            is_ignored_shape_nhwc_float16_all_inputs_as_internal_3,
+            get_examples_shape_nhwc_float16_all_inputs_as_internal_3());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_shape_nhwc_float16_all_inputs_as_internal_3, generated_tests::resize_nearest_neighbor::CreateModel_shape_nhwc_float16_all_inputs_as_internal_3)
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_3(Model *model);
+bool is_ignored_shape_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_3(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_3();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_3) {
+    execute(CreateModel_shape_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_3,
+            is_ignored_shape_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_3,
+            get_examples_shape_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_3());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
 
 namespace generated_tests::resize_nearest_neighbor {
 
@@ -999,6 +2090,49 @@ TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_shape_nchw_3, generated_tests
 
 namespace generated_tests::resize_nearest_neighbor {
 
+void CreateModel_shape_nchw_dynamic_output_shape_3(Model *model);
+bool is_ignored_shape_nchw_dynamic_output_shape_3(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nchw_dynamic_output_shape_3();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nchw_dynamic_output_shape_3) {
+    execute(CreateModel_shape_nchw_dynamic_output_shape_3,
+            is_ignored_shape_nchw_dynamic_output_shape_3,
+            get_examples_shape_nchw_dynamic_output_shape_3());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nchw_all_inputs_as_internal_3(Model *model);
+bool is_ignored_shape_nchw_all_inputs_as_internal_3(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nchw_all_inputs_as_internal_3();
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_shape_nchw_all_inputs_as_internal_3) {
+    execute(CreateModel_shape_nchw_all_inputs_as_internal_3,
+            is_ignored_shape_nchw_all_inputs_as_internal_3,
+            get_examples_shape_nchw_all_inputs_as_internal_3());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_shape_nchw_all_inputs_as_internal_3, generated_tests::resize_nearest_neighbor::CreateModel_shape_nchw_all_inputs_as_internal_3)
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nchw_all_inputs_as_internal_dynamic_output_shape_3(Model *model);
+bool is_ignored_shape_nchw_all_inputs_as_internal_dynamic_output_shape_3(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nchw_all_inputs_as_internal_dynamic_output_shape_3();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nchw_all_inputs_as_internal_dynamic_output_shape_3) {
+    execute(CreateModel_shape_nchw_all_inputs_as_internal_dynamic_output_shape_3,
+            is_ignored_shape_nchw_all_inputs_as_internal_dynamic_output_shape_3,
+            get_examples_shape_nchw_all_inputs_as_internal_dynamic_output_shape_3());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
 void CreateModel_shape_nchw_relaxed_3(Model *model);
 bool is_ignored_shape_nchw_relaxed_3(int);
 std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nchw_relaxed_3();
@@ -1007,6 +2141,48 @@ TEST_F(GeneratedTests, resize_nearest_neighbor_shape_nchw_relaxed_3) {
     execute(CreateModel_shape_nchw_relaxed_3,
             is_ignored_shape_nchw_relaxed_3,
             get_examples_shape_nchw_relaxed_3());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nchw_relaxed_dynamic_output_shape_3(Model *model);
+bool is_ignored_shape_nchw_relaxed_dynamic_output_shape_3(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nchw_relaxed_dynamic_output_shape_3();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nchw_relaxed_dynamic_output_shape_3) {
+    execute(CreateModel_shape_nchw_relaxed_dynamic_output_shape_3,
+            is_ignored_shape_nchw_relaxed_dynamic_output_shape_3,
+            get_examples_shape_nchw_relaxed_dynamic_output_shape_3());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nchw_relaxed_all_inputs_as_internal_3(Model *model);
+bool is_ignored_shape_nchw_relaxed_all_inputs_as_internal_3(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nchw_relaxed_all_inputs_as_internal_3();
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_shape_nchw_relaxed_all_inputs_as_internal_3) {
+    execute(CreateModel_shape_nchw_relaxed_all_inputs_as_internal_3,
+            is_ignored_shape_nchw_relaxed_all_inputs_as_internal_3,
+            get_examples_shape_nchw_relaxed_all_inputs_as_internal_3());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_3(Model *model);
+bool is_ignored_shape_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_3(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_3();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_3) {
+    execute(CreateModel_shape_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_3,
+            is_ignored_shape_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_3,
+            get_examples_shape_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_3());
 }
 
 } // namespace generated_tests::resize_nearest_neighbor
@@ -1028,6 +2204,49 @@ TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_shape_nchw_quant8_3, generate
 
 namespace generated_tests::resize_nearest_neighbor {
 
+void CreateModel_shape_nchw_quant8_dynamic_output_shape_3(Model *model);
+bool is_ignored_shape_nchw_quant8_dynamic_output_shape_3(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nchw_quant8_dynamic_output_shape_3();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nchw_quant8_dynamic_output_shape_3) {
+    execute(CreateModel_shape_nchw_quant8_dynamic_output_shape_3,
+            is_ignored_shape_nchw_quant8_dynamic_output_shape_3,
+            get_examples_shape_nchw_quant8_dynamic_output_shape_3());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nchw_quant8_all_inputs_as_internal_3(Model *model);
+bool is_ignored_shape_nchw_quant8_all_inputs_as_internal_3(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nchw_quant8_all_inputs_as_internal_3();
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_shape_nchw_quant8_all_inputs_as_internal_3) {
+    execute(CreateModel_shape_nchw_quant8_all_inputs_as_internal_3,
+            is_ignored_shape_nchw_quant8_all_inputs_as_internal_3,
+            get_examples_shape_nchw_quant8_all_inputs_as_internal_3());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_shape_nchw_quant8_all_inputs_as_internal_3, generated_tests::resize_nearest_neighbor::CreateModel_shape_nchw_quant8_all_inputs_as_internal_3)
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_3(Model *model);
+bool is_ignored_shape_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_3(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_3();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_3) {
+    execute(CreateModel_shape_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_3,
+            is_ignored_shape_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_3,
+            get_examples_shape_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_3());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
 void CreateModel_shape_nchw_float16_3(Model *model);
 bool is_ignored_shape_nchw_float16_3(int);
 std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nchw_float16_3();
@@ -1043,112 +2262,43 @@ TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_shape_nchw_float16_3, generat
 
 namespace generated_tests::resize_nearest_neighbor {
 
-void CreateModel_shape_dynamic_output_shape_nhwc_3(Model *model);
-bool is_ignored_shape_dynamic_output_shape_nhwc_3(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_shape_dynamic_output_shape_nhwc_3();
+void CreateModel_shape_nchw_float16_dynamic_output_shape_3(Model *model);
+bool is_ignored_shape_nchw_float16_dynamic_output_shape_3(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nchw_float16_dynamic_output_shape_3();
 
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_dynamic_output_shape_nhwc_3) {
-    execute(CreateModel_shape_dynamic_output_shape_nhwc_3,
-            is_ignored_shape_dynamic_output_shape_nhwc_3,
-            get_examples_shape_dynamic_output_shape_nhwc_3());
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nchw_float16_dynamic_output_shape_3) {
+    execute(CreateModel_shape_nchw_float16_dynamic_output_shape_3,
+            is_ignored_shape_nchw_float16_dynamic_output_shape_3,
+            get_examples_shape_nchw_float16_dynamic_output_shape_3());
 }
 
 } // namespace generated_tests::resize_nearest_neighbor
 
 namespace generated_tests::resize_nearest_neighbor {
 
-void CreateModel_shape_dynamic_output_shape_nhwc_relaxed_3(Model *model);
-bool is_ignored_shape_dynamic_output_shape_nhwc_relaxed_3(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_shape_dynamic_output_shape_nhwc_relaxed_3();
+void CreateModel_shape_nchw_float16_all_inputs_as_internal_3(Model *model);
+bool is_ignored_shape_nchw_float16_all_inputs_as_internal_3(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nchw_float16_all_inputs_as_internal_3();
 
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_dynamic_output_shape_nhwc_relaxed_3) {
-    execute(CreateModel_shape_dynamic_output_shape_nhwc_relaxed_3,
-            is_ignored_shape_dynamic_output_shape_nhwc_relaxed_3,
-            get_examples_shape_dynamic_output_shape_nhwc_relaxed_3());
+TEST_F(GeneratedTests, resize_nearest_neighbor_shape_nchw_float16_all_inputs_as_internal_3) {
+    execute(CreateModel_shape_nchw_float16_all_inputs_as_internal_3,
+            is_ignored_shape_nchw_float16_all_inputs_as_internal_3,
+            get_examples_shape_nchw_float16_all_inputs_as_internal_3());
 }
 
 } // namespace generated_tests::resize_nearest_neighbor
+TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_shape_nchw_float16_all_inputs_as_internal_3, generated_tests::resize_nearest_neighbor::CreateModel_shape_nchw_float16_all_inputs_as_internal_3)
 
 namespace generated_tests::resize_nearest_neighbor {
 
-void CreateModel_shape_dynamic_output_shape_nhwc_quant8_3(Model *model);
-bool is_ignored_shape_dynamic_output_shape_nhwc_quant8_3(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_shape_dynamic_output_shape_nhwc_quant8_3();
+void CreateModel_shape_nchw_float16_all_inputs_as_internal_dynamic_output_shape_3(Model *model);
+bool is_ignored_shape_nchw_float16_all_inputs_as_internal_dynamic_output_shape_3(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nchw_float16_all_inputs_as_internal_dynamic_output_shape_3();
 
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_dynamic_output_shape_nhwc_quant8_3) {
-    execute(CreateModel_shape_dynamic_output_shape_nhwc_quant8_3,
-            is_ignored_shape_dynamic_output_shape_nhwc_quant8_3,
-            get_examples_shape_dynamic_output_shape_nhwc_quant8_3());
-}
-
-} // namespace generated_tests::resize_nearest_neighbor
-
-namespace generated_tests::resize_nearest_neighbor {
-
-void CreateModel_shape_dynamic_output_shape_nhwc_float16_3(Model *model);
-bool is_ignored_shape_dynamic_output_shape_nhwc_float16_3(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_shape_dynamic_output_shape_nhwc_float16_3();
-
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_dynamic_output_shape_nhwc_float16_3) {
-    execute(CreateModel_shape_dynamic_output_shape_nhwc_float16_3,
-            is_ignored_shape_dynamic_output_shape_nhwc_float16_3,
-            get_examples_shape_dynamic_output_shape_nhwc_float16_3());
-}
-
-} // namespace generated_tests::resize_nearest_neighbor
-
-namespace generated_tests::resize_nearest_neighbor {
-
-void CreateModel_shape_dynamic_output_shape_nchw_3(Model *model);
-bool is_ignored_shape_dynamic_output_shape_nchw_3(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_shape_dynamic_output_shape_nchw_3();
-
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_dynamic_output_shape_nchw_3) {
-    execute(CreateModel_shape_dynamic_output_shape_nchw_3,
-            is_ignored_shape_dynamic_output_shape_nchw_3,
-            get_examples_shape_dynamic_output_shape_nchw_3());
-}
-
-} // namespace generated_tests::resize_nearest_neighbor
-
-namespace generated_tests::resize_nearest_neighbor {
-
-void CreateModel_shape_dynamic_output_shape_nchw_relaxed_3(Model *model);
-bool is_ignored_shape_dynamic_output_shape_nchw_relaxed_3(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_shape_dynamic_output_shape_nchw_relaxed_3();
-
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_dynamic_output_shape_nchw_relaxed_3) {
-    execute(CreateModel_shape_dynamic_output_shape_nchw_relaxed_3,
-            is_ignored_shape_dynamic_output_shape_nchw_relaxed_3,
-            get_examples_shape_dynamic_output_shape_nchw_relaxed_3());
-}
-
-} // namespace generated_tests::resize_nearest_neighbor
-
-namespace generated_tests::resize_nearest_neighbor {
-
-void CreateModel_shape_dynamic_output_shape_nchw_quant8_3(Model *model);
-bool is_ignored_shape_dynamic_output_shape_nchw_quant8_3(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_shape_dynamic_output_shape_nchw_quant8_3();
-
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_dynamic_output_shape_nchw_quant8_3) {
-    execute(CreateModel_shape_dynamic_output_shape_nchw_quant8_3,
-            is_ignored_shape_dynamic_output_shape_nchw_quant8_3,
-            get_examples_shape_dynamic_output_shape_nchw_quant8_3());
-}
-
-} // namespace generated_tests::resize_nearest_neighbor
-
-namespace generated_tests::resize_nearest_neighbor {
-
-void CreateModel_shape_dynamic_output_shape_nchw_float16_3(Model *model);
-bool is_ignored_shape_dynamic_output_shape_nchw_float16_3(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_shape_dynamic_output_shape_nchw_float16_3();
-
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_dynamic_output_shape_nchw_float16_3) {
-    execute(CreateModel_shape_dynamic_output_shape_nchw_float16_3,
-            is_ignored_shape_dynamic_output_shape_nchw_float16_3,
-            get_examples_shape_dynamic_output_shape_nchw_float16_3());
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nchw_float16_all_inputs_as_internal_dynamic_output_shape_3) {
+    execute(CreateModel_shape_nchw_float16_all_inputs_as_internal_dynamic_output_shape_3,
+            is_ignored_shape_nchw_float16_all_inputs_as_internal_dynamic_output_shape_3,
+            get_examples_shape_nchw_float16_all_inputs_as_internal_dynamic_output_shape_3());
 }
 
 } // namespace generated_tests::resize_nearest_neighbor
@@ -1170,6 +2320,49 @@ TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_scale_nhwc_3, generated_tests
 
 namespace generated_tests::resize_nearest_neighbor {
 
+void CreateModel_scale_nhwc_dynamic_output_shape_3(Model *model);
+bool is_ignored_scale_nhwc_dynamic_output_shape_3(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nhwc_dynamic_output_shape_3();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nhwc_dynamic_output_shape_3) {
+    execute(CreateModel_scale_nhwc_dynamic_output_shape_3,
+            is_ignored_scale_nhwc_dynamic_output_shape_3,
+            get_examples_scale_nhwc_dynamic_output_shape_3());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nhwc_all_inputs_as_internal_3(Model *model);
+bool is_ignored_scale_nhwc_all_inputs_as_internal_3(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nhwc_all_inputs_as_internal_3();
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_scale_nhwc_all_inputs_as_internal_3) {
+    execute(CreateModel_scale_nhwc_all_inputs_as_internal_3,
+            is_ignored_scale_nhwc_all_inputs_as_internal_3,
+            get_examples_scale_nhwc_all_inputs_as_internal_3());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_scale_nhwc_all_inputs_as_internal_3, generated_tests::resize_nearest_neighbor::CreateModel_scale_nhwc_all_inputs_as_internal_3)
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nhwc_all_inputs_as_internal_dynamic_output_shape_3(Model *model);
+bool is_ignored_scale_nhwc_all_inputs_as_internal_dynamic_output_shape_3(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nhwc_all_inputs_as_internal_dynamic_output_shape_3();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nhwc_all_inputs_as_internal_dynamic_output_shape_3) {
+    execute(CreateModel_scale_nhwc_all_inputs_as_internal_dynamic_output_shape_3,
+            is_ignored_scale_nhwc_all_inputs_as_internal_dynamic_output_shape_3,
+            get_examples_scale_nhwc_all_inputs_as_internal_dynamic_output_shape_3());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
 void CreateModel_scale_nhwc_relaxed_3(Model *model);
 bool is_ignored_scale_nhwc_relaxed_3(int);
 std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nhwc_relaxed_3();
@@ -1178,6 +2371,48 @@ TEST_F(GeneratedTests, resize_nearest_neighbor_scale_nhwc_relaxed_3) {
     execute(CreateModel_scale_nhwc_relaxed_3,
             is_ignored_scale_nhwc_relaxed_3,
             get_examples_scale_nhwc_relaxed_3());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nhwc_relaxed_dynamic_output_shape_3(Model *model);
+bool is_ignored_scale_nhwc_relaxed_dynamic_output_shape_3(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nhwc_relaxed_dynamic_output_shape_3();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nhwc_relaxed_dynamic_output_shape_3) {
+    execute(CreateModel_scale_nhwc_relaxed_dynamic_output_shape_3,
+            is_ignored_scale_nhwc_relaxed_dynamic_output_shape_3,
+            get_examples_scale_nhwc_relaxed_dynamic_output_shape_3());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nhwc_relaxed_all_inputs_as_internal_3(Model *model);
+bool is_ignored_scale_nhwc_relaxed_all_inputs_as_internal_3(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nhwc_relaxed_all_inputs_as_internal_3();
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_scale_nhwc_relaxed_all_inputs_as_internal_3) {
+    execute(CreateModel_scale_nhwc_relaxed_all_inputs_as_internal_3,
+            is_ignored_scale_nhwc_relaxed_all_inputs_as_internal_3,
+            get_examples_scale_nhwc_relaxed_all_inputs_as_internal_3());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_3(Model *model);
+bool is_ignored_scale_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_3(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_3();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_3) {
+    execute(CreateModel_scale_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_3,
+            is_ignored_scale_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_3,
+            get_examples_scale_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_3());
 }
 
 } // namespace generated_tests::resize_nearest_neighbor
@@ -1199,6 +2434,49 @@ TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_scale_nhwc_quant8_3, generate
 
 namespace generated_tests::resize_nearest_neighbor {
 
+void CreateModel_scale_nhwc_quant8_dynamic_output_shape_3(Model *model);
+bool is_ignored_scale_nhwc_quant8_dynamic_output_shape_3(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nhwc_quant8_dynamic_output_shape_3();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nhwc_quant8_dynamic_output_shape_3) {
+    execute(CreateModel_scale_nhwc_quant8_dynamic_output_shape_3,
+            is_ignored_scale_nhwc_quant8_dynamic_output_shape_3,
+            get_examples_scale_nhwc_quant8_dynamic_output_shape_3());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nhwc_quant8_all_inputs_as_internal_3(Model *model);
+bool is_ignored_scale_nhwc_quant8_all_inputs_as_internal_3(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nhwc_quant8_all_inputs_as_internal_3();
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_scale_nhwc_quant8_all_inputs_as_internal_3) {
+    execute(CreateModel_scale_nhwc_quant8_all_inputs_as_internal_3,
+            is_ignored_scale_nhwc_quant8_all_inputs_as_internal_3,
+            get_examples_scale_nhwc_quant8_all_inputs_as_internal_3());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_scale_nhwc_quant8_all_inputs_as_internal_3, generated_tests::resize_nearest_neighbor::CreateModel_scale_nhwc_quant8_all_inputs_as_internal_3)
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_3(Model *model);
+bool is_ignored_scale_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_3(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_3();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_3) {
+    execute(CreateModel_scale_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_3,
+            is_ignored_scale_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_3,
+            get_examples_scale_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_3());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
 void CreateModel_scale_nhwc_float16_3(Model *model);
 bool is_ignored_scale_nhwc_float16_3(int);
 std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nhwc_float16_3();
@@ -1211,6 +2489,49 @@ TEST_F(GeneratedTests, resize_nearest_neighbor_scale_nhwc_float16_3) {
 
 } // namespace generated_tests::resize_nearest_neighbor
 TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_scale_nhwc_float16_3, generated_tests::resize_nearest_neighbor::CreateModel_scale_nhwc_float16_3)
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nhwc_float16_dynamic_output_shape_3(Model *model);
+bool is_ignored_scale_nhwc_float16_dynamic_output_shape_3(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nhwc_float16_dynamic_output_shape_3();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nhwc_float16_dynamic_output_shape_3) {
+    execute(CreateModel_scale_nhwc_float16_dynamic_output_shape_3,
+            is_ignored_scale_nhwc_float16_dynamic_output_shape_3,
+            get_examples_scale_nhwc_float16_dynamic_output_shape_3());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nhwc_float16_all_inputs_as_internal_3(Model *model);
+bool is_ignored_scale_nhwc_float16_all_inputs_as_internal_3(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nhwc_float16_all_inputs_as_internal_3();
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_scale_nhwc_float16_all_inputs_as_internal_3) {
+    execute(CreateModel_scale_nhwc_float16_all_inputs_as_internal_3,
+            is_ignored_scale_nhwc_float16_all_inputs_as_internal_3,
+            get_examples_scale_nhwc_float16_all_inputs_as_internal_3());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_scale_nhwc_float16_all_inputs_as_internal_3, generated_tests::resize_nearest_neighbor::CreateModel_scale_nhwc_float16_all_inputs_as_internal_3)
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_3(Model *model);
+bool is_ignored_scale_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_3(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_3();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_3) {
+    execute(CreateModel_scale_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_3,
+            is_ignored_scale_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_3,
+            get_examples_scale_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_3());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
 
 namespace generated_tests::resize_nearest_neighbor {
 
@@ -1229,6 +2550,49 @@ TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_scale_nchw_3, generated_tests
 
 namespace generated_tests::resize_nearest_neighbor {
 
+void CreateModel_scale_nchw_dynamic_output_shape_3(Model *model);
+bool is_ignored_scale_nchw_dynamic_output_shape_3(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nchw_dynamic_output_shape_3();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nchw_dynamic_output_shape_3) {
+    execute(CreateModel_scale_nchw_dynamic_output_shape_3,
+            is_ignored_scale_nchw_dynamic_output_shape_3,
+            get_examples_scale_nchw_dynamic_output_shape_3());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nchw_all_inputs_as_internal_3(Model *model);
+bool is_ignored_scale_nchw_all_inputs_as_internal_3(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nchw_all_inputs_as_internal_3();
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_scale_nchw_all_inputs_as_internal_3) {
+    execute(CreateModel_scale_nchw_all_inputs_as_internal_3,
+            is_ignored_scale_nchw_all_inputs_as_internal_3,
+            get_examples_scale_nchw_all_inputs_as_internal_3());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_scale_nchw_all_inputs_as_internal_3, generated_tests::resize_nearest_neighbor::CreateModel_scale_nchw_all_inputs_as_internal_3)
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nchw_all_inputs_as_internal_dynamic_output_shape_3(Model *model);
+bool is_ignored_scale_nchw_all_inputs_as_internal_dynamic_output_shape_3(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nchw_all_inputs_as_internal_dynamic_output_shape_3();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nchw_all_inputs_as_internal_dynamic_output_shape_3) {
+    execute(CreateModel_scale_nchw_all_inputs_as_internal_dynamic_output_shape_3,
+            is_ignored_scale_nchw_all_inputs_as_internal_dynamic_output_shape_3,
+            get_examples_scale_nchw_all_inputs_as_internal_dynamic_output_shape_3());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
 void CreateModel_scale_nchw_relaxed_3(Model *model);
 bool is_ignored_scale_nchw_relaxed_3(int);
 std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nchw_relaxed_3();
@@ -1237,6 +2601,48 @@ TEST_F(GeneratedTests, resize_nearest_neighbor_scale_nchw_relaxed_3) {
     execute(CreateModel_scale_nchw_relaxed_3,
             is_ignored_scale_nchw_relaxed_3,
             get_examples_scale_nchw_relaxed_3());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nchw_relaxed_dynamic_output_shape_3(Model *model);
+bool is_ignored_scale_nchw_relaxed_dynamic_output_shape_3(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nchw_relaxed_dynamic_output_shape_3();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nchw_relaxed_dynamic_output_shape_3) {
+    execute(CreateModel_scale_nchw_relaxed_dynamic_output_shape_3,
+            is_ignored_scale_nchw_relaxed_dynamic_output_shape_3,
+            get_examples_scale_nchw_relaxed_dynamic_output_shape_3());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nchw_relaxed_all_inputs_as_internal_3(Model *model);
+bool is_ignored_scale_nchw_relaxed_all_inputs_as_internal_3(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nchw_relaxed_all_inputs_as_internal_3();
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_scale_nchw_relaxed_all_inputs_as_internal_3) {
+    execute(CreateModel_scale_nchw_relaxed_all_inputs_as_internal_3,
+            is_ignored_scale_nchw_relaxed_all_inputs_as_internal_3,
+            get_examples_scale_nchw_relaxed_all_inputs_as_internal_3());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_3(Model *model);
+bool is_ignored_scale_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_3(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_3();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_3) {
+    execute(CreateModel_scale_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_3,
+            is_ignored_scale_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_3,
+            get_examples_scale_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_3());
 }
 
 } // namespace generated_tests::resize_nearest_neighbor
@@ -1258,6 +2664,49 @@ TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_scale_nchw_quant8_3, generate
 
 namespace generated_tests::resize_nearest_neighbor {
 
+void CreateModel_scale_nchw_quant8_dynamic_output_shape_3(Model *model);
+bool is_ignored_scale_nchw_quant8_dynamic_output_shape_3(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nchw_quant8_dynamic_output_shape_3();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nchw_quant8_dynamic_output_shape_3) {
+    execute(CreateModel_scale_nchw_quant8_dynamic_output_shape_3,
+            is_ignored_scale_nchw_quant8_dynamic_output_shape_3,
+            get_examples_scale_nchw_quant8_dynamic_output_shape_3());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nchw_quant8_all_inputs_as_internal_3(Model *model);
+bool is_ignored_scale_nchw_quant8_all_inputs_as_internal_3(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nchw_quant8_all_inputs_as_internal_3();
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_scale_nchw_quant8_all_inputs_as_internal_3) {
+    execute(CreateModel_scale_nchw_quant8_all_inputs_as_internal_3,
+            is_ignored_scale_nchw_quant8_all_inputs_as_internal_3,
+            get_examples_scale_nchw_quant8_all_inputs_as_internal_3());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_scale_nchw_quant8_all_inputs_as_internal_3, generated_tests::resize_nearest_neighbor::CreateModel_scale_nchw_quant8_all_inputs_as_internal_3)
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_3(Model *model);
+bool is_ignored_scale_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_3(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_3();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_3) {
+    execute(CreateModel_scale_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_3,
+            is_ignored_scale_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_3,
+            get_examples_scale_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_3());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
 void CreateModel_scale_nchw_float16_3(Model *model);
 bool is_ignored_scale_nchw_float16_3(int);
 std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nchw_float16_3();
@@ -1273,112 +2722,43 @@ TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_scale_nchw_float16_3, generat
 
 namespace generated_tests::resize_nearest_neighbor {
 
-void CreateModel_scale_dynamic_output_shape_nhwc_3(Model *model);
-bool is_ignored_scale_dynamic_output_shape_nhwc_3(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_scale_dynamic_output_shape_nhwc_3();
+void CreateModel_scale_nchw_float16_dynamic_output_shape_3(Model *model);
+bool is_ignored_scale_nchw_float16_dynamic_output_shape_3(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nchw_float16_dynamic_output_shape_3();
 
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_dynamic_output_shape_nhwc_3) {
-    execute(CreateModel_scale_dynamic_output_shape_nhwc_3,
-            is_ignored_scale_dynamic_output_shape_nhwc_3,
-            get_examples_scale_dynamic_output_shape_nhwc_3());
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nchw_float16_dynamic_output_shape_3) {
+    execute(CreateModel_scale_nchw_float16_dynamic_output_shape_3,
+            is_ignored_scale_nchw_float16_dynamic_output_shape_3,
+            get_examples_scale_nchw_float16_dynamic_output_shape_3());
 }
 
 } // namespace generated_tests::resize_nearest_neighbor
 
 namespace generated_tests::resize_nearest_neighbor {
 
-void CreateModel_scale_dynamic_output_shape_nhwc_relaxed_3(Model *model);
-bool is_ignored_scale_dynamic_output_shape_nhwc_relaxed_3(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_scale_dynamic_output_shape_nhwc_relaxed_3();
+void CreateModel_scale_nchw_float16_all_inputs_as_internal_3(Model *model);
+bool is_ignored_scale_nchw_float16_all_inputs_as_internal_3(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nchw_float16_all_inputs_as_internal_3();
 
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_dynamic_output_shape_nhwc_relaxed_3) {
-    execute(CreateModel_scale_dynamic_output_shape_nhwc_relaxed_3,
-            is_ignored_scale_dynamic_output_shape_nhwc_relaxed_3,
-            get_examples_scale_dynamic_output_shape_nhwc_relaxed_3());
+TEST_F(GeneratedTests, resize_nearest_neighbor_scale_nchw_float16_all_inputs_as_internal_3) {
+    execute(CreateModel_scale_nchw_float16_all_inputs_as_internal_3,
+            is_ignored_scale_nchw_float16_all_inputs_as_internal_3,
+            get_examples_scale_nchw_float16_all_inputs_as_internal_3());
 }
 
 } // namespace generated_tests::resize_nearest_neighbor
+TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_scale_nchw_float16_all_inputs_as_internal_3, generated_tests::resize_nearest_neighbor::CreateModel_scale_nchw_float16_all_inputs_as_internal_3)
 
 namespace generated_tests::resize_nearest_neighbor {
 
-void CreateModel_scale_dynamic_output_shape_nhwc_quant8_3(Model *model);
-bool is_ignored_scale_dynamic_output_shape_nhwc_quant8_3(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_scale_dynamic_output_shape_nhwc_quant8_3();
+void CreateModel_scale_nchw_float16_all_inputs_as_internal_dynamic_output_shape_3(Model *model);
+bool is_ignored_scale_nchw_float16_all_inputs_as_internal_dynamic_output_shape_3(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nchw_float16_all_inputs_as_internal_dynamic_output_shape_3();
 
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_dynamic_output_shape_nhwc_quant8_3) {
-    execute(CreateModel_scale_dynamic_output_shape_nhwc_quant8_3,
-            is_ignored_scale_dynamic_output_shape_nhwc_quant8_3,
-            get_examples_scale_dynamic_output_shape_nhwc_quant8_3());
-}
-
-} // namespace generated_tests::resize_nearest_neighbor
-
-namespace generated_tests::resize_nearest_neighbor {
-
-void CreateModel_scale_dynamic_output_shape_nhwc_float16_3(Model *model);
-bool is_ignored_scale_dynamic_output_shape_nhwc_float16_3(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_scale_dynamic_output_shape_nhwc_float16_3();
-
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_dynamic_output_shape_nhwc_float16_3) {
-    execute(CreateModel_scale_dynamic_output_shape_nhwc_float16_3,
-            is_ignored_scale_dynamic_output_shape_nhwc_float16_3,
-            get_examples_scale_dynamic_output_shape_nhwc_float16_3());
-}
-
-} // namespace generated_tests::resize_nearest_neighbor
-
-namespace generated_tests::resize_nearest_neighbor {
-
-void CreateModel_scale_dynamic_output_shape_nchw_3(Model *model);
-bool is_ignored_scale_dynamic_output_shape_nchw_3(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_scale_dynamic_output_shape_nchw_3();
-
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_dynamic_output_shape_nchw_3) {
-    execute(CreateModel_scale_dynamic_output_shape_nchw_3,
-            is_ignored_scale_dynamic_output_shape_nchw_3,
-            get_examples_scale_dynamic_output_shape_nchw_3());
-}
-
-} // namespace generated_tests::resize_nearest_neighbor
-
-namespace generated_tests::resize_nearest_neighbor {
-
-void CreateModel_scale_dynamic_output_shape_nchw_relaxed_3(Model *model);
-bool is_ignored_scale_dynamic_output_shape_nchw_relaxed_3(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_scale_dynamic_output_shape_nchw_relaxed_3();
-
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_dynamic_output_shape_nchw_relaxed_3) {
-    execute(CreateModel_scale_dynamic_output_shape_nchw_relaxed_3,
-            is_ignored_scale_dynamic_output_shape_nchw_relaxed_3,
-            get_examples_scale_dynamic_output_shape_nchw_relaxed_3());
-}
-
-} // namespace generated_tests::resize_nearest_neighbor
-
-namespace generated_tests::resize_nearest_neighbor {
-
-void CreateModel_scale_dynamic_output_shape_nchw_quant8_3(Model *model);
-bool is_ignored_scale_dynamic_output_shape_nchw_quant8_3(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_scale_dynamic_output_shape_nchw_quant8_3();
-
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_dynamic_output_shape_nchw_quant8_3) {
-    execute(CreateModel_scale_dynamic_output_shape_nchw_quant8_3,
-            is_ignored_scale_dynamic_output_shape_nchw_quant8_3,
-            get_examples_scale_dynamic_output_shape_nchw_quant8_3());
-}
-
-} // namespace generated_tests::resize_nearest_neighbor
-
-namespace generated_tests::resize_nearest_neighbor {
-
-void CreateModel_scale_dynamic_output_shape_nchw_float16_3(Model *model);
-bool is_ignored_scale_dynamic_output_shape_nchw_float16_3(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_scale_dynamic_output_shape_nchw_float16_3();
-
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_dynamic_output_shape_nchw_float16_3) {
-    execute(CreateModel_scale_dynamic_output_shape_nchw_float16_3,
-            is_ignored_scale_dynamic_output_shape_nchw_float16_3,
-            get_examples_scale_dynamic_output_shape_nchw_float16_3());
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nchw_float16_all_inputs_as_internal_dynamic_output_shape_3) {
+    execute(CreateModel_scale_nchw_float16_all_inputs_as_internal_dynamic_output_shape_3,
+            is_ignored_scale_nchw_float16_all_inputs_as_internal_dynamic_output_shape_3,
+            get_examples_scale_nchw_float16_all_inputs_as_internal_dynamic_output_shape_3());
 }
 
 } // namespace generated_tests::resize_nearest_neighbor
@@ -1400,6 +2780,49 @@ TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_shape_nhwc_4, generated_tests
 
 namespace generated_tests::resize_nearest_neighbor {
 
+void CreateModel_shape_nhwc_dynamic_output_shape_4(Model *model);
+bool is_ignored_shape_nhwc_dynamic_output_shape_4(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nhwc_dynamic_output_shape_4();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nhwc_dynamic_output_shape_4) {
+    execute(CreateModel_shape_nhwc_dynamic_output_shape_4,
+            is_ignored_shape_nhwc_dynamic_output_shape_4,
+            get_examples_shape_nhwc_dynamic_output_shape_4());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nhwc_all_inputs_as_internal_4(Model *model);
+bool is_ignored_shape_nhwc_all_inputs_as_internal_4(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nhwc_all_inputs_as_internal_4();
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_shape_nhwc_all_inputs_as_internal_4) {
+    execute(CreateModel_shape_nhwc_all_inputs_as_internal_4,
+            is_ignored_shape_nhwc_all_inputs_as_internal_4,
+            get_examples_shape_nhwc_all_inputs_as_internal_4());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_shape_nhwc_all_inputs_as_internal_4, generated_tests::resize_nearest_neighbor::CreateModel_shape_nhwc_all_inputs_as_internal_4)
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nhwc_all_inputs_as_internal_dynamic_output_shape_4(Model *model);
+bool is_ignored_shape_nhwc_all_inputs_as_internal_dynamic_output_shape_4(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nhwc_all_inputs_as_internal_dynamic_output_shape_4();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nhwc_all_inputs_as_internal_dynamic_output_shape_4) {
+    execute(CreateModel_shape_nhwc_all_inputs_as_internal_dynamic_output_shape_4,
+            is_ignored_shape_nhwc_all_inputs_as_internal_dynamic_output_shape_4,
+            get_examples_shape_nhwc_all_inputs_as_internal_dynamic_output_shape_4());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
 void CreateModel_shape_nhwc_relaxed_4(Model *model);
 bool is_ignored_shape_nhwc_relaxed_4(int);
 std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nhwc_relaxed_4();
@@ -1408,6 +2831,48 @@ TEST_F(GeneratedTests, resize_nearest_neighbor_shape_nhwc_relaxed_4) {
     execute(CreateModel_shape_nhwc_relaxed_4,
             is_ignored_shape_nhwc_relaxed_4,
             get_examples_shape_nhwc_relaxed_4());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nhwc_relaxed_dynamic_output_shape_4(Model *model);
+bool is_ignored_shape_nhwc_relaxed_dynamic_output_shape_4(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nhwc_relaxed_dynamic_output_shape_4();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nhwc_relaxed_dynamic_output_shape_4) {
+    execute(CreateModel_shape_nhwc_relaxed_dynamic_output_shape_4,
+            is_ignored_shape_nhwc_relaxed_dynamic_output_shape_4,
+            get_examples_shape_nhwc_relaxed_dynamic_output_shape_4());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nhwc_relaxed_all_inputs_as_internal_4(Model *model);
+bool is_ignored_shape_nhwc_relaxed_all_inputs_as_internal_4(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nhwc_relaxed_all_inputs_as_internal_4();
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_shape_nhwc_relaxed_all_inputs_as_internal_4) {
+    execute(CreateModel_shape_nhwc_relaxed_all_inputs_as_internal_4,
+            is_ignored_shape_nhwc_relaxed_all_inputs_as_internal_4,
+            get_examples_shape_nhwc_relaxed_all_inputs_as_internal_4());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_4(Model *model);
+bool is_ignored_shape_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_4(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_4();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_4) {
+    execute(CreateModel_shape_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_4,
+            is_ignored_shape_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_4,
+            get_examples_shape_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_4());
 }
 
 } // namespace generated_tests::resize_nearest_neighbor
@@ -1429,6 +2894,49 @@ TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_shape_nhwc_quant8_4, generate
 
 namespace generated_tests::resize_nearest_neighbor {
 
+void CreateModel_shape_nhwc_quant8_dynamic_output_shape_4(Model *model);
+bool is_ignored_shape_nhwc_quant8_dynamic_output_shape_4(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nhwc_quant8_dynamic_output_shape_4();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nhwc_quant8_dynamic_output_shape_4) {
+    execute(CreateModel_shape_nhwc_quant8_dynamic_output_shape_4,
+            is_ignored_shape_nhwc_quant8_dynamic_output_shape_4,
+            get_examples_shape_nhwc_quant8_dynamic_output_shape_4());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nhwc_quant8_all_inputs_as_internal_4(Model *model);
+bool is_ignored_shape_nhwc_quant8_all_inputs_as_internal_4(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nhwc_quant8_all_inputs_as_internal_4();
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_shape_nhwc_quant8_all_inputs_as_internal_4) {
+    execute(CreateModel_shape_nhwc_quant8_all_inputs_as_internal_4,
+            is_ignored_shape_nhwc_quant8_all_inputs_as_internal_4,
+            get_examples_shape_nhwc_quant8_all_inputs_as_internal_4());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_shape_nhwc_quant8_all_inputs_as_internal_4, generated_tests::resize_nearest_neighbor::CreateModel_shape_nhwc_quant8_all_inputs_as_internal_4)
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_4(Model *model);
+bool is_ignored_shape_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_4(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_4();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_4) {
+    execute(CreateModel_shape_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_4,
+            is_ignored_shape_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_4,
+            get_examples_shape_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_4());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
 void CreateModel_shape_nhwc_float16_4(Model *model);
 bool is_ignored_shape_nhwc_float16_4(int);
 std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nhwc_float16_4();
@@ -1441,6 +2949,49 @@ TEST_F(GeneratedTests, resize_nearest_neighbor_shape_nhwc_float16_4) {
 
 } // namespace generated_tests::resize_nearest_neighbor
 TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_shape_nhwc_float16_4, generated_tests::resize_nearest_neighbor::CreateModel_shape_nhwc_float16_4)
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nhwc_float16_dynamic_output_shape_4(Model *model);
+bool is_ignored_shape_nhwc_float16_dynamic_output_shape_4(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nhwc_float16_dynamic_output_shape_4();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nhwc_float16_dynamic_output_shape_4) {
+    execute(CreateModel_shape_nhwc_float16_dynamic_output_shape_4,
+            is_ignored_shape_nhwc_float16_dynamic_output_shape_4,
+            get_examples_shape_nhwc_float16_dynamic_output_shape_4());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nhwc_float16_all_inputs_as_internal_4(Model *model);
+bool is_ignored_shape_nhwc_float16_all_inputs_as_internal_4(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nhwc_float16_all_inputs_as_internal_4();
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_shape_nhwc_float16_all_inputs_as_internal_4) {
+    execute(CreateModel_shape_nhwc_float16_all_inputs_as_internal_4,
+            is_ignored_shape_nhwc_float16_all_inputs_as_internal_4,
+            get_examples_shape_nhwc_float16_all_inputs_as_internal_4());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_shape_nhwc_float16_all_inputs_as_internal_4, generated_tests::resize_nearest_neighbor::CreateModel_shape_nhwc_float16_all_inputs_as_internal_4)
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_4(Model *model);
+bool is_ignored_shape_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_4(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_4();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_4) {
+    execute(CreateModel_shape_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_4,
+            is_ignored_shape_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_4,
+            get_examples_shape_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_4());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
 
 namespace generated_tests::resize_nearest_neighbor {
 
@@ -1459,6 +3010,49 @@ TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_shape_nchw_4, generated_tests
 
 namespace generated_tests::resize_nearest_neighbor {
 
+void CreateModel_shape_nchw_dynamic_output_shape_4(Model *model);
+bool is_ignored_shape_nchw_dynamic_output_shape_4(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nchw_dynamic_output_shape_4();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nchw_dynamic_output_shape_4) {
+    execute(CreateModel_shape_nchw_dynamic_output_shape_4,
+            is_ignored_shape_nchw_dynamic_output_shape_4,
+            get_examples_shape_nchw_dynamic_output_shape_4());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nchw_all_inputs_as_internal_4(Model *model);
+bool is_ignored_shape_nchw_all_inputs_as_internal_4(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nchw_all_inputs_as_internal_4();
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_shape_nchw_all_inputs_as_internal_4) {
+    execute(CreateModel_shape_nchw_all_inputs_as_internal_4,
+            is_ignored_shape_nchw_all_inputs_as_internal_4,
+            get_examples_shape_nchw_all_inputs_as_internal_4());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_shape_nchw_all_inputs_as_internal_4, generated_tests::resize_nearest_neighbor::CreateModel_shape_nchw_all_inputs_as_internal_4)
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nchw_all_inputs_as_internal_dynamic_output_shape_4(Model *model);
+bool is_ignored_shape_nchw_all_inputs_as_internal_dynamic_output_shape_4(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nchw_all_inputs_as_internal_dynamic_output_shape_4();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nchw_all_inputs_as_internal_dynamic_output_shape_4) {
+    execute(CreateModel_shape_nchw_all_inputs_as_internal_dynamic_output_shape_4,
+            is_ignored_shape_nchw_all_inputs_as_internal_dynamic_output_shape_4,
+            get_examples_shape_nchw_all_inputs_as_internal_dynamic_output_shape_4());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
 void CreateModel_shape_nchw_relaxed_4(Model *model);
 bool is_ignored_shape_nchw_relaxed_4(int);
 std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nchw_relaxed_4();
@@ -1467,6 +3061,48 @@ TEST_F(GeneratedTests, resize_nearest_neighbor_shape_nchw_relaxed_4) {
     execute(CreateModel_shape_nchw_relaxed_4,
             is_ignored_shape_nchw_relaxed_4,
             get_examples_shape_nchw_relaxed_4());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nchw_relaxed_dynamic_output_shape_4(Model *model);
+bool is_ignored_shape_nchw_relaxed_dynamic_output_shape_4(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nchw_relaxed_dynamic_output_shape_4();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nchw_relaxed_dynamic_output_shape_4) {
+    execute(CreateModel_shape_nchw_relaxed_dynamic_output_shape_4,
+            is_ignored_shape_nchw_relaxed_dynamic_output_shape_4,
+            get_examples_shape_nchw_relaxed_dynamic_output_shape_4());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nchw_relaxed_all_inputs_as_internal_4(Model *model);
+bool is_ignored_shape_nchw_relaxed_all_inputs_as_internal_4(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nchw_relaxed_all_inputs_as_internal_4();
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_shape_nchw_relaxed_all_inputs_as_internal_4) {
+    execute(CreateModel_shape_nchw_relaxed_all_inputs_as_internal_4,
+            is_ignored_shape_nchw_relaxed_all_inputs_as_internal_4,
+            get_examples_shape_nchw_relaxed_all_inputs_as_internal_4());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_4(Model *model);
+bool is_ignored_shape_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_4(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_4();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_4) {
+    execute(CreateModel_shape_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_4,
+            is_ignored_shape_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_4,
+            get_examples_shape_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_4());
 }
 
 } // namespace generated_tests::resize_nearest_neighbor
@@ -1488,6 +3124,49 @@ TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_shape_nchw_quant8_4, generate
 
 namespace generated_tests::resize_nearest_neighbor {
 
+void CreateModel_shape_nchw_quant8_dynamic_output_shape_4(Model *model);
+bool is_ignored_shape_nchw_quant8_dynamic_output_shape_4(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nchw_quant8_dynamic_output_shape_4();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nchw_quant8_dynamic_output_shape_4) {
+    execute(CreateModel_shape_nchw_quant8_dynamic_output_shape_4,
+            is_ignored_shape_nchw_quant8_dynamic_output_shape_4,
+            get_examples_shape_nchw_quant8_dynamic_output_shape_4());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nchw_quant8_all_inputs_as_internal_4(Model *model);
+bool is_ignored_shape_nchw_quant8_all_inputs_as_internal_4(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nchw_quant8_all_inputs_as_internal_4();
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_shape_nchw_quant8_all_inputs_as_internal_4) {
+    execute(CreateModel_shape_nchw_quant8_all_inputs_as_internal_4,
+            is_ignored_shape_nchw_quant8_all_inputs_as_internal_4,
+            get_examples_shape_nchw_quant8_all_inputs_as_internal_4());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_shape_nchw_quant8_all_inputs_as_internal_4, generated_tests::resize_nearest_neighbor::CreateModel_shape_nchw_quant8_all_inputs_as_internal_4)
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_4(Model *model);
+bool is_ignored_shape_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_4(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_4();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_4) {
+    execute(CreateModel_shape_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_4,
+            is_ignored_shape_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_4,
+            get_examples_shape_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_4());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
 void CreateModel_shape_nchw_float16_4(Model *model);
 bool is_ignored_shape_nchw_float16_4(int);
 std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nchw_float16_4();
@@ -1503,112 +3182,43 @@ TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_shape_nchw_float16_4, generat
 
 namespace generated_tests::resize_nearest_neighbor {
 
-void CreateModel_shape_dynamic_output_shape_nhwc_4(Model *model);
-bool is_ignored_shape_dynamic_output_shape_nhwc_4(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_shape_dynamic_output_shape_nhwc_4();
+void CreateModel_shape_nchw_float16_dynamic_output_shape_4(Model *model);
+bool is_ignored_shape_nchw_float16_dynamic_output_shape_4(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nchw_float16_dynamic_output_shape_4();
 
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_dynamic_output_shape_nhwc_4) {
-    execute(CreateModel_shape_dynamic_output_shape_nhwc_4,
-            is_ignored_shape_dynamic_output_shape_nhwc_4,
-            get_examples_shape_dynamic_output_shape_nhwc_4());
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nchw_float16_dynamic_output_shape_4) {
+    execute(CreateModel_shape_nchw_float16_dynamic_output_shape_4,
+            is_ignored_shape_nchw_float16_dynamic_output_shape_4,
+            get_examples_shape_nchw_float16_dynamic_output_shape_4());
 }
 
 } // namespace generated_tests::resize_nearest_neighbor
 
 namespace generated_tests::resize_nearest_neighbor {
 
-void CreateModel_shape_dynamic_output_shape_nhwc_relaxed_4(Model *model);
-bool is_ignored_shape_dynamic_output_shape_nhwc_relaxed_4(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_shape_dynamic_output_shape_nhwc_relaxed_4();
+void CreateModel_shape_nchw_float16_all_inputs_as_internal_4(Model *model);
+bool is_ignored_shape_nchw_float16_all_inputs_as_internal_4(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nchw_float16_all_inputs_as_internal_4();
 
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_dynamic_output_shape_nhwc_relaxed_4) {
-    execute(CreateModel_shape_dynamic_output_shape_nhwc_relaxed_4,
-            is_ignored_shape_dynamic_output_shape_nhwc_relaxed_4,
-            get_examples_shape_dynamic_output_shape_nhwc_relaxed_4());
+TEST_F(GeneratedTests, resize_nearest_neighbor_shape_nchw_float16_all_inputs_as_internal_4) {
+    execute(CreateModel_shape_nchw_float16_all_inputs_as_internal_4,
+            is_ignored_shape_nchw_float16_all_inputs_as_internal_4,
+            get_examples_shape_nchw_float16_all_inputs_as_internal_4());
 }
 
 } // namespace generated_tests::resize_nearest_neighbor
+TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_shape_nchw_float16_all_inputs_as_internal_4, generated_tests::resize_nearest_neighbor::CreateModel_shape_nchw_float16_all_inputs_as_internal_4)
 
 namespace generated_tests::resize_nearest_neighbor {
 
-void CreateModel_shape_dynamic_output_shape_nhwc_quant8_4(Model *model);
-bool is_ignored_shape_dynamic_output_shape_nhwc_quant8_4(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_shape_dynamic_output_shape_nhwc_quant8_4();
+void CreateModel_shape_nchw_float16_all_inputs_as_internal_dynamic_output_shape_4(Model *model);
+bool is_ignored_shape_nchw_float16_all_inputs_as_internal_dynamic_output_shape_4(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nchw_float16_all_inputs_as_internal_dynamic_output_shape_4();
 
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_dynamic_output_shape_nhwc_quant8_4) {
-    execute(CreateModel_shape_dynamic_output_shape_nhwc_quant8_4,
-            is_ignored_shape_dynamic_output_shape_nhwc_quant8_4,
-            get_examples_shape_dynamic_output_shape_nhwc_quant8_4());
-}
-
-} // namespace generated_tests::resize_nearest_neighbor
-
-namespace generated_tests::resize_nearest_neighbor {
-
-void CreateModel_shape_dynamic_output_shape_nhwc_float16_4(Model *model);
-bool is_ignored_shape_dynamic_output_shape_nhwc_float16_4(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_shape_dynamic_output_shape_nhwc_float16_4();
-
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_dynamic_output_shape_nhwc_float16_4) {
-    execute(CreateModel_shape_dynamic_output_shape_nhwc_float16_4,
-            is_ignored_shape_dynamic_output_shape_nhwc_float16_4,
-            get_examples_shape_dynamic_output_shape_nhwc_float16_4());
-}
-
-} // namespace generated_tests::resize_nearest_neighbor
-
-namespace generated_tests::resize_nearest_neighbor {
-
-void CreateModel_shape_dynamic_output_shape_nchw_4(Model *model);
-bool is_ignored_shape_dynamic_output_shape_nchw_4(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_shape_dynamic_output_shape_nchw_4();
-
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_dynamic_output_shape_nchw_4) {
-    execute(CreateModel_shape_dynamic_output_shape_nchw_4,
-            is_ignored_shape_dynamic_output_shape_nchw_4,
-            get_examples_shape_dynamic_output_shape_nchw_4());
-}
-
-} // namespace generated_tests::resize_nearest_neighbor
-
-namespace generated_tests::resize_nearest_neighbor {
-
-void CreateModel_shape_dynamic_output_shape_nchw_relaxed_4(Model *model);
-bool is_ignored_shape_dynamic_output_shape_nchw_relaxed_4(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_shape_dynamic_output_shape_nchw_relaxed_4();
-
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_dynamic_output_shape_nchw_relaxed_4) {
-    execute(CreateModel_shape_dynamic_output_shape_nchw_relaxed_4,
-            is_ignored_shape_dynamic_output_shape_nchw_relaxed_4,
-            get_examples_shape_dynamic_output_shape_nchw_relaxed_4());
-}
-
-} // namespace generated_tests::resize_nearest_neighbor
-
-namespace generated_tests::resize_nearest_neighbor {
-
-void CreateModel_shape_dynamic_output_shape_nchw_quant8_4(Model *model);
-bool is_ignored_shape_dynamic_output_shape_nchw_quant8_4(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_shape_dynamic_output_shape_nchw_quant8_4();
-
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_dynamic_output_shape_nchw_quant8_4) {
-    execute(CreateModel_shape_dynamic_output_shape_nchw_quant8_4,
-            is_ignored_shape_dynamic_output_shape_nchw_quant8_4,
-            get_examples_shape_dynamic_output_shape_nchw_quant8_4());
-}
-
-} // namespace generated_tests::resize_nearest_neighbor
-
-namespace generated_tests::resize_nearest_neighbor {
-
-void CreateModel_shape_dynamic_output_shape_nchw_float16_4(Model *model);
-bool is_ignored_shape_dynamic_output_shape_nchw_float16_4(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_shape_dynamic_output_shape_nchw_float16_4();
-
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_dynamic_output_shape_nchw_float16_4) {
-    execute(CreateModel_shape_dynamic_output_shape_nchw_float16_4,
-            is_ignored_shape_dynamic_output_shape_nchw_float16_4,
-            get_examples_shape_dynamic_output_shape_nchw_float16_4());
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nchw_float16_all_inputs_as_internal_dynamic_output_shape_4) {
+    execute(CreateModel_shape_nchw_float16_all_inputs_as_internal_dynamic_output_shape_4,
+            is_ignored_shape_nchw_float16_all_inputs_as_internal_dynamic_output_shape_4,
+            get_examples_shape_nchw_float16_all_inputs_as_internal_dynamic_output_shape_4());
 }
 
 } // namespace generated_tests::resize_nearest_neighbor
@@ -1630,6 +3240,49 @@ TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_scale_nhwc_4, generated_tests
 
 namespace generated_tests::resize_nearest_neighbor {
 
+void CreateModel_scale_nhwc_dynamic_output_shape_4(Model *model);
+bool is_ignored_scale_nhwc_dynamic_output_shape_4(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nhwc_dynamic_output_shape_4();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nhwc_dynamic_output_shape_4) {
+    execute(CreateModel_scale_nhwc_dynamic_output_shape_4,
+            is_ignored_scale_nhwc_dynamic_output_shape_4,
+            get_examples_scale_nhwc_dynamic_output_shape_4());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nhwc_all_inputs_as_internal_4(Model *model);
+bool is_ignored_scale_nhwc_all_inputs_as_internal_4(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nhwc_all_inputs_as_internal_4();
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_scale_nhwc_all_inputs_as_internal_4) {
+    execute(CreateModel_scale_nhwc_all_inputs_as_internal_4,
+            is_ignored_scale_nhwc_all_inputs_as_internal_4,
+            get_examples_scale_nhwc_all_inputs_as_internal_4());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_scale_nhwc_all_inputs_as_internal_4, generated_tests::resize_nearest_neighbor::CreateModel_scale_nhwc_all_inputs_as_internal_4)
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nhwc_all_inputs_as_internal_dynamic_output_shape_4(Model *model);
+bool is_ignored_scale_nhwc_all_inputs_as_internal_dynamic_output_shape_4(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nhwc_all_inputs_as_internal_dynamic_output_shape_4();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nhwc_all_inputs_as_internal_dynamic_output_shape_4) {
+    execute(CreateModel_scale_nhwc_all_inputs_as_internal_dynamic_output_shape_4,
+            is_ignored_scale_nhwc_all_inputs_as_internal_dynamic_output_shape_4,
+            get_examples_scale_nhwc_all_inputs_as_internal_dynamic_output_shape_4());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
 void CreateModel_scale_nhwc_relaxed_4(Model *model);
 bool is_ignored_scale_nhwc_relaxed_4(int);
 std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nhwc_relaxed_4();
@@ -1638,6 +3291,48 @@ TEST_F(GeneratedTests, resize_nearest_neighbor_scale_nhwc_relaxed_4) {
     execute(CreateModel_scale_nhwc_relaxed_4,
             is_ignored_scale_nhwc_relaxed_4,
             get_examples_scale_nhwc_relaxed_4());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nhwc_relaxed_dynamic_output_shape_4(Model *model);
+bool is_ignored_scale_nhwc_relaxed_dynamic_output_shape_4(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nhwc_relaxed_dynamic_output_shape_4();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nhwc_relaxed_dynamic_output_shape_4) {
+    execute(CreateModel_scale_nhwc_relaxed_dynamic_output_shape_4,
+            is_ignored_scale_nhwc_relaxed_dynamic_output_shape_4,
+            get_examples_scale_nhwc_relaxed_dynamic_output_shape_4());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nhwc_relaxed_all_inputs_as_internal_4(Model *model);
+bool is_ignored_scale_nhwc_relaxed_all_inputs_as_internal_4(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nhwc_relaxed_all_inputs_as_internal_4();
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_scale_nhwc_relaxed_all_inputs_as_internal_4) {
+    execute(CreateModel_scale_nhwc_relaxed_all_inputs_as_internal_4,
+            is_ignored_scale_nhwc_relaxed_all_inputs_as_internal_4,
+            get_examples_scale_nhwc_relaxed_all_inputs_as_internal_4());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_4(Model *model);
+bool is_ignored_scale_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_4(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_4();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_4) {
+    execute(CreateModel_scale_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_4,
+            is_ignored_scale_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_4,
+            get_examples_scale_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_4());
 }
 
 } // namespace generated_tests::resize_nearest_neighbor
@@ -1659,6 +3354,49 @@ TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_scale_nhwc_quant8_4, generate
 
 namespace generated_tests::resize_nearest_neighbor {
 
+void CreateModel_scale_nhwc_quant8_dynamic_output_shape_4(Model *model);
+bool is_ignored_scale_nhwc_quant8_dynamic_output_shape_4(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nhwc_quant8_dynamic_output_shape_4();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nhwc_quant8_dynamic_output_shape_4) {
+    execute(CreateModel_scale_nhwc_quant8_dynamic_output_shape_4,
+            is_ignored_scale_nhwc_quant8_dynamic_output_shape_4,
+            get_examples_scale_nhwc_quant8_dynamic_output_shape_4());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nhwc_quant8_all_inputs_as_internal_4(Model *model);
+bool is_ignored_scale_nhwc_quant8_all_inputs_as_internal_4(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nhwc_quant8_all_inputs_as_internal_4();
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_scale_nhwc_quant8_all_inputs_as_internal_4) {
+    execute(CreateModel_scale_nhwc_quant8_all_inputs_as_internal_4,
+            is_ignored_scale_nhwc_quant8_all_inputs_as_internal_4,
+            get_examples_scale_nhwc_quant8_all_inputs_as_internal_4());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_scale_nhwc_quant8_all_inputs_as_internal_4, generated_tests::resize_nearest_neighbor::CreateModel_scale_nhwc_quant8_all_inputs_as_internal_4)
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_4(Model *model);
+bool is_ignored_scale_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_4(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_4();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_4) {
+    execute(CreateModel_scale_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_4,
+            is_ignored_scale_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_4,
+            get_examples_scale_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_4());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
 void CreateModel_scale_nhwc_float16_4(Model *model);
 bool is_ignored_scale_nhwc_float16_4(int);
 std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nhwc_float16_4();
@@ -1671,6 +3409,49 @@ TEST_F(GeneratedTests, resize_nearest_neighbor_scale_nhwc_float16_4) {
 
 } // namespace generated_tests::resize_nearest_neighbor
 TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_scale_nhwc_float16_4, generated_tests::resize_nearest_neighbor::CreateModel_scale_nhwc_float16_4)
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nhwc_float16_dynamic_output_shape_4(Model *model);
+bool is_ignored_scale_nhwc_float16_dynamic_output_shape_4(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nhwc_float16_dynamic_output_shape_4();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nhwc_float16_dynamic_output_shape_4) {
+    execute(CreateModel_scale_nhwc_float16_dynamic_output_shape_4,
+            is_ignored_scale_nhwc_float16_dynamic_output_shape_4,
+            get_examples_scale_nhwc_float16_dynamic_output_shape_4());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nhwc_float16_all_inputs_as_internal_4(Model *model);
+bool is_ignored_scale_nhwc_float16_all_inputs_as_internal_4(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nhwc_float16_all_inputs_as_internal_4();
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_scale_nhwc_float16_all_inputs_as_internal_4) {
+    execute(CreateModel_scale_nhwc_float16_all_inputs_as_internal_4,
+            is_ignored_scale_nhwc_float16_all_inputs_as_internal_4,
+            get_examples_scale_nhwc_float16_all_inputs_as_internal_4());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_scale_nhwc_float16_all_inputs_as_internal_4, generated_tests::resize_nearest_neighbor::CreateModel_scale_nhwc_float16_all_inputs_as_internal_4)
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_4(Model *model);
+bool is_ignored_scale_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_4(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_4();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_4) {
+    execute(CreateModel_scale_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_4,
+            is_ignored_scale_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_4,
+            get_examples_scale_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_4());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
 
 namespace generated_tests::resize_nearest_neighbor {
 
@@ -1689,6 +3470,49 @@ TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_scale_nchw_4, generated_tests
 
 namespace generated_tests::resize_nearest_neighbor {
 
+void CreateModel_scale_nchw_dynamic_output_shape_4(Model *model);
+bool is_ignored_scale_nchw_dynamic_output_shape_4(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nchw_dynamic_output_shape_4();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nchw_dynamic_output_shape_4) {
+    execute(CreateModel_scale_nchw_dynamic_output_shape_4,
+            is_ignored_scale_nchw_dynamic_output_shape_4,
+            get_examples_scale_nchw_dynamic_output_shape_4());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nchw_all_inputs_as_internal_4(Model *model);
+bool is_ignored_scale_nchw_all_inputs_as_internal_4(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nchw_all_inputs_as_internal_4();
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_scale_nchw_all_inputs_as_internal_4) {
+    execute(CreateModel_scale_nchw_all_inputs_as_internal_4,
+            is_ignored_scale_nchw_all_inputs_as_internal_4,
+            get_examples_scale_nchw_all_inputs_as_internal_4());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_scale_nchw_all_inputs_as_internal_4, generated_tests::resize_nearest_neighbor::CreateModel_scale_nchw_all_inputs_as_internal_4)
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nchw_all_inputs_as_internal_dynamic_output_shape_4(Model *model);
+bool is_ignored_scale_nchw_all_inputs_as_internal_dynamic_output_shape_4(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nchw_all_inputs_as_internal_dynamic_output_shape_4();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nchw_all_inputs_as_internal_dynamic_output_shape_4) {
+    execute(CreateModel_scale_nchw_all_inputs_as_internal_dynamic_output_shape_4,
+            is_ignored_scale_nchw_all_inputs_as_internal_dynamic_output_shape_4,
+            get_examples_scale_nchw_all_inputs_as_internal_dynamic_output_shape_4());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
 void CreateModel_scale_nchw_relaxed_4(Model *model);
 bool is_ignored_scale_nchw_relaxed_4(int);
 std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nchw_relaxed_4();
@@ -1697,6 +3521,48 @@ TEST_F(GeneratedTests, resize_nearest_neighbor_scale_nchw_relaxed_4) {
     execute(CreateModel_scale_nchw_relaxed_4,
             is_ignored_scale_nchw_relaxed_4,
             get_examples_scale_nchw_relaxed_4());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nchw_relaxed_dynamic_output_shape_4(Model *model);
+bool is_ignored_scale_nchw_relaxed_dynamic_output_shape_4(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nchw_relaxed_dynamic_output_shape_4();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nchw_relaxed_dynamic_output_shape_4) {
+    execute(CreateModel_scale_nchw_relaxed_dynamic_output_shape_4,
+            is_ignored_scale_nchw_relaxed_dynamic_output_shape_4,
+            get_examples_scale_nchw_relaxed_dynamic_output_shape_4());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nchw_relaxed_all_inputs_as_internal_4(Model *model);
+bool is_ignored_scale_nchw_relaxed_all_inputs_as_internal_4(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nchw_relaxed_all_inputs_as_internal_4();
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_scale_nchw_relaxed_all_inputs_as_internal_4) {
+    execute(CreateModel_scale_nchw_relaxed_all_inputs_as_internal_4,
+            is_ignored_scale_nchw_relaxed_all_inputs_as_internal_4,
+            get_examples_scale_nchw_relaxed_all_inputs_as_internal_4());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_4(Model *model);
+bool is_ignored_scale_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_4(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_4();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_4) {
+    execute(CreateModel_scale_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_4,
+            is_ignored_scale_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_4,
+            get_examples_scale_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_4());
 }
 
 } // namespace generated_tests::resize_nearest_neighbor
@@ -1718,6 +3584,49 @@ TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_scale_nchw_quant8_4, generate
 
 namespace generated_tests::resize_nearest_neighbor {
 
+void CreateModel_scale_nchw_quant8_dynamic_output_shape_4(Model *model);
+bool is_ignored_scale_nchw_quant8_dynamic_output_shape_4(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nchw_quant8_dynamic_output_shape_4();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nchw_quant8_dynamic_output_shape_4) {
+    execute(CreateModel_scale_nchw_quant8_dynamic_output_shape_4,
+            is_ignored_scale_nchw_quant8_dynamic_output_shape_4,
+            get_examples_scale_nchw_quant8_dynamic_output_shape_4());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nchw_quant8_all_inputs_as_internal_4(Model *model);
+bool is_ignored_scale_nchw_quant8_all_inputs_as_internal_4(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nchw_quant8_all_inputs_as_internal_4();
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_scale_nchw_quant8_all_inputs_as_internal_4) {
+    execute(CreateModel_scale_nchw_quant8_all_inputs_as_internal_4,
+            is_ignored_scale_nchw_quant8_all_inputs_as_internal_4,
+            get_examples_scale_nchw_quant8_all_inputs_as_internal_4());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_scale_nchw_quant8_all_inputs_as_internal_4, generated_tests::resize_nearest_neighbor::CreateModel_scale_nchw_quant8_all_inputs_as_internal_4)
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_4(Model *model);
+bool is_ignored_scale_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_4(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_4();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_4) {
+    execute(CreateModel_scale_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_4,
+            is_ignored_scale_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_4,
+            get_examples_scale_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_4());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
 void CreateModel_scale_nchw_float16_4(Model *model);
 bool is_ignored_scale_nchw_float16_4(int);
 std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nchw_float16_4();
@@ -1733,112 +3642,43 @@ TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_scale_nchw_float16_4, generat
 
 namespace generated_tests::resize_nearest_neighbor {
 
-void CreateModel_scale_dynamic_output_shape_nhwc_4(Model *model);
-bool is_ignored_scale_dynamic_output_shape_nhwc_4(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_scale_dynamic_output_shape_nhwc_4();
+void CreateModel_scale_nchw_float16_dynamic_output_shape_4(Model *model);
+bool is_ignored_scale_nchw_float16_dynamic_output_shape_4(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nchw_float16_dynamic_output_shape_4();
 
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_dynamic_output_shape_nhwc_4) {
-    execute(CreateModel_scale_dynamic_output_shape_nhwc_4,
-            is_ignored_scale_dynamic_output_shape_nhwc_4,
-            get_examples_scale_dynamic_output_shape_nhwc_4());
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nchw_float16_dynamic_output_shape_4) {
+    execute(CreateModel_scale_nchw_float16_dynamic_output_shape_4,
+            is_ignored_scale_nchw_float16_dynamic_output_shape_4,
+            get_examples_scale_nchw_float16_dynamic_output_shape_4());
 }
 
 } // namespace generated_tests::resize_nearest_neighbor
 
 namespace generated_tests::resize_nearest_neighbor {
 
-void CreateModel_scale_dynamic_output_shape_nhwc_relaxed_4(Model *model);
-bool is_ignored_scale_dynamic_output_shape_nhwc_relaxed_4(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_scale_dynamic_output_shape_nhwc_relaxed_4();
+void CreateModel_scale_nchw_float16_all_inputs_as_internal_4(Model *model);
+bool is_ignored_scale_nchw_float16_all_inputs_as_internal_4(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nchw_float16_all_inputs_as_internal_4();
 
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_dynamic_output_shape_nhwc_relaxed_4) {
-    execute(CreateModel_scale_dynamic_output_shape_nhwc_relaxed_4,
-            is_ignored_scale_dynamic_output_shape_nhwc_relaxed_4,
-            get_examples_scale_dynamic_output_shape_nhwc_relaxed_4());
+TEST_F(GeneratedTests, resize_nearest_neighbor_scale_nchw_float16_all_inputs_as_internal_4) {
+    execute(CreateModel_scale_nchw_float16_all_inputs_as_internal_4,
+            is_ignored_scale_nchw_float16_all_inputs_as_internal_4,
+            get_examples_scale_nchw_float16_all_inputs_as_internal_4());
 }
 
 } // namespace generated_tests::resize_nearest_neighbor
+TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_scale_nchw_float16_all_inputs_as_internal_4, generated_tests::resize_nearest_neighbor::CreateModel_scale_nchw_float16_all_inputs_as_internal_4)
 
 namespace generated_tests::resize_nearest_neighbor {
 
-void CreateModel_scale_dynamic_output_shape_nhwc_quant8_4(Model *model);
-bool is_ignored_scale_dynamic_output_shape_nhwc_quant8_4(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_scale_dynamic_output_shape_nhwc_quant8_4();
+void CreateModel_scale_nchw_float16_all_inputs_as_internal_dynamic_output_shape_4(Model *model);
+bool is_ignored_scale_nchw_float16_all_inputs_as_internal_dynamic_output_shape_4(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nchw_float16_all_inputs_as_internal_dynamic_output_shape_4();
 
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_dynamic_output_shape_nhwc_quant8_4) {
-    execute(CreateModel_scale_dynamic_output_shape_nhwc_quant8_4,
-            is_ignored_scale_dynamic_output_shape_nhwc_quant8_4,
-            get_examples_scale_dynamic_output_shape_nhwc_quant8_4());
-}
-
-} // namespace generated_tests::resize_nearest_neighbor
-
-namespace generated_tests::resize_nearest_neighbor {
-
-void CreateModel_scale_dynamic_output_shape_nhwc_float16_4(Model *model);
-bool is_ignored_scale_dynamic_output_shape_nhwc_float16_4(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_scale_dynamic_output_shape_nhwc_float16_4();
-
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_dynamic_output_shape_nhwc_float16_4) {
-    execute(CreateModel_scale_dynamic_output_shape_nhwc_float16_4,
-            is_ignored_scale_dynamic_output_shape_nhwc_float16_4,
-            get_examples_scale_dynamic_output_shape_nhwc_float16_4());
-}
-
-} // namespace generated_tests::resize_nearest_neighbor
-
-namespace generated_tests::resize_nearest_neighbor {
-
-void CreateModel_scale_dynamic_output_shape_nchw_4(Model *model);
-bool is_ignored_scale_dynamic_output_shape_nchw_4(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_scale_dynamic_output_shape_nchw_4();
-
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_dynamic_output_shape_nchw_4) {
-    execute(CreateModel_scale_dynamic_output_shape_nchw_4,
-            is_ignored_scale_dynamic_output_shape_nchw_4,
-            get_examples_scale_dynamic_output_shape_nchw_4());
-}
-
-} // namespace generated_tests::resize_nearest_neighbor
-
-namespace generated_tests::resize_nearest_neighbor {
-
-void CreateModel_scale_dynamic_output_shape_nchw_relaxed_4(Model *model);
-bool is_ignored_scale_dynamic_output_shape_nchw_relaxed_4(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_scale_dynamic_output_shape_nchw_relaxed_4();
-
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_dynamic_output_shape_nchw_relaxed_4) {
-    execute(CreateModel_scale_dynamic_output_shape_nchw_relaxed_4,
-            is_ignored_scale_dynamic_output_shape_nchw_relaxed_4,
-            get_examples_scale_dynamic_output_shape_nchw_relaxed_4());
-}
-
-} // namespace generated_tests::resize_nearest_neighbor
-
-namespace generated_tests::resize_nearest_neighbor {
-
-void CreateModel_scale_dynamic_output_shape_nchw_quant8_4(Model *model);
-bool is_ignored_scale_dynamic_output_shape_nchw_quant8_4(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_scale_dynamic_output_shape_nchw_quant8_4();
-
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_dynamic_output_shape_nchw_quant8_4) {
-    execute(CreateModel_scale_dynamic_output_shape_nchw_quant8_4,
-            is_ignored_scale_dynamic_output_shape_nchw_quant8_4,
-            get_examples_scale_dynamic_output_shape_nchw_quant8_4());
-}
-
-} // namespace generated_tests::resize_nearest_neighbor
-
-namespace generated_tests::resize_nearest_neighbor {
-
-void CreateModel_scale_dynamic_output_shape_nchw_float16_4(Model *model);
-bool is_ignored_scale_dynamic_output_shape_nchw_float16_4(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_scale_dynamic_output_shape_nchw_float16_4();
-
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_dynamic_output_shape_nchw_float16_4) {
-    execute(CreateModel_scale_dynamic_output_shape_nchw_float16_4,
-            is_ignored_scale_dynamic_output_shape_nchw_float16_4,
-            get_examples_scale_dynamic_output_shape_nchw_float16_4());
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nchw_float16_all_inputs_as_internal_dynamic_output_shape_4) {
+    execute(CreateModel_scale_nchw_float16_all_inputs_as_internal_dynamic_output_shape_4,
+            is_ignored_scale_nchw_float16_all_inputs_as_internal_dynamic_output_shape_4,
+            get_examples_scale_nchw_float16_all_inputs_as_internal_dynamic_output_shape_4());
 }
 
 } // namespace generated_tests::resize_nearest_neighbor
@@ -1860,6 +3700,49 @@ TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_shape_nhwc_5, generated_tests
 
 namespace generated_tests::resize_nearest_neighbor {
 
+void CreateModel_shape_nhwc_dynamic_output_shape_5(Model *model);
+bool is_ignored_shape_nhwc_dynamic_output_shape_5(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nhwc_dynamic_output_shape_5();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nhwc_dynamic_output_shape_5) {
+    execute(CreateModel_shape_nhwc_dynamic_output_shape_5,
+            is_ignored_shape_nhwc_dynamic_output_shape_5,
+            get_examples_shape_nhwc_dynamic_output_shape_5());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nhwc_all_inputs_as_internal_5(Model *model);
+bool is_ignored_shape_nhwc_all_inputs_as_internal_5(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nhwc_all_inputs_as_internal_5();
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_shape_nhwc_all_inputs_as_internal_5) {
+    execute(CreateModel_shape_nhwc_all_inputs_as_internal_5,
+            is_ignored_shape_nhwc_all_inputs_as_internal_5,
+            get_examples_shape_nhwc_all_inputs_as_internal_5());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_shape_nhwc_all_inputs_as_internal_5, generated_tests::resize_nearest_neighbor::CreateModel_shape_nhwc_all_inputs_as_internal_5)
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nhwc_all_inputs_as_internal_dynamic_output_shape_5(Model *model);
+bool is_ignored_shape_nhwc_all_inputs_as_internal_dynamic_output_shape_5(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nhwc_all_inputs_as_internal_dynamic_output_shape_5();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nhwc_all_inputs_as_internal_dynamic_output_shape_5) {
+    execute(CreateModel_shape_nhwc_all_inputs_as_internal_dynamic_output_shape_5,
+            is_ignored_shape_nhwc_all_inputs_as_internal_dynamic_output_shape_5,
+            get_examples_shape_nhwc_all_inputs_as_internal_dynamic_output_shape_5());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
 void CreateModel_shape_nhwc_relaxed_5(Model *model);
 bool is_ignored_shape_nhwc_relaxed_5(int);
 std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nhwc_relaxed_5();
@@ -1868,6 +3751,48 @@ TEST_F(GeneratedTests, resize_nearest_neighbor_shape_nhwc_relaxed_5) {
     execute(CreateModel_shape_nhwc_relaxed_5,
             is_ignored_shape_nhwc_relaxed_5,
             get_examples_shape_nhwc_relaxed_5());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nhwc_relaxed_dynamic_output_shape_5(Model *model);
+bool is_ignored_shape_nhwc_relaxed_dynamic_output_shape_5(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nhwc_relaxed_dynamic_output_shape_5();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nhwc_relaxed_dynamic_output_shape_5) {
+    execute(CreateModel_shape_nhwc_relaxed_dynamic_output_shape_5,
+            is_ignored_shape_nhwc_relaxed_dynamic_output_shape_5,
+            get_examples_shape_nhwc_relaxed_dynamic_output_shape_5());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nhwc_relaxed_all_inputs_as_internal_5(Model *model);
+bool is_ignored_shape_nhwc_relaxed_all_inputs_as_internal_5(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nhwc_relaxed_all_inputs_as_internal_5();
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_shape_nhwc_relaxed_all_inputs_as_internal_5) {
+    execute(CreateModel_shape_nhwc_relaxed_all_inputs_as_internal_5,
+            is_ignored_shape_nhwc_relaxed_all_inputs_as_internal_5,
+            get_examples_shape_nhwc_relaxed_all_inputs_as_internal_5());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_5(Model *model);
+bool is_ignored_shape_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_5(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_5();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_5) {
+    execute(CreateModel_shape_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_5,
+            is_ignored_shape_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_5,
+            get_examples_shape_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_5());
 }
 
 } // namespace generated_tests::resize_nearest_neighbor
@@ -1889,6 +3814,49 @@ TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_shape_nhwc_quant8_5, generate
 
 namespace generated_tests::resize_nearest_neighbor {
 
+void CreateModel_shape_nhwc_quant8_dynamic_output_shape_5(Model *model);
+bool is_ignored_shape_nhwc_quant8_dynamic_output_shape_5(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nhwc_quant8_dynamic_output_shape_5();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nhwc_quant8_dynamic_output_shape_5) {
+    execute(CreateModel_shape_nhwc_quant8_dynamic_output_shape_5,
+            is_ignored_shape_nhwc_quant8_dynamic_output_shape_5,
+            get_examples_shape_nhwc_quant8_dynamic_output_shape_5());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nhwc_quant8_all_inputs_as_internal_5(Model *model);
+bool is_ignored_shape_nhwc_quant8_all_inputs_as_internal_5(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nhwc_quant8_all_inputs_as_internal_5();
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_shape_nhwc_quant8_all_inputs_as_internal_5) {
+    execute(CreateModel_shape_nhwc_quant8_all_inputs_as_internal_5,
+            is_ignored_shape_nhwc_quant8_all_inputs_as_internal_5,
+            get_examples_shape_nhwc_quant8_all_inputs_as_internal_5());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_shape_nhwc_quant8_all_inputs_as_internal_5, generated_tests::resize_nearest_neighbor::CreateModel_shape_nhwc_quant8_all_inputs_as_internal_5)
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_5(Model *model);
+bool is_ignored_shape_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_5(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_5();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_5) {
+    execute(CreateModel_shape_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_5,
+            is_ignored_shape_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_5,
+            get_examples_shape_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_5());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
 void CreateModel_shape_nhwc_float16_5(Model *model);
 bool is_ignored_shape_nhwc_float16_5(int);
 std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nhwc_float16_5();
@@ -1901,6 +3869,49 @@ TEST_F(GeneratedTests, resize_nearest_neighbor_shape_nhwc_float16_5) {
 
 } // namespace generated_tests::resize_nearest_neighbor
 TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_shape_nhwc_float16_5, generated_tests::resize_nearest_neighbor::CreateModel_shape_nhwc_float16_5)
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nhwc_float16_dynamic_output_shape_5(Model *model);
+bool is_ignored_shape_nhwc_float16_dynamic_output_shape_5(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nhwc_float16_dynamic_output_shape_5();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nhwc_float16_dynamic_output_shape_5) {
+    execute(CreateModel_shape_nhwc_float16_dynamic_output_shape_5,
+            is_ignored_shape_nhwc_float16_dynamic_output_shape_5,
+            get_examples_shape_nhwc_float16_dynamic_output_shape_5());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nhwc_float16_all_inputs_as_internal_5(Model *model);
+bool is_ignored_shape_nhwc_float16_all_inputs_as_internal_5(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nhwc_float16_all_inputs_as_internal_5();
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_shape_nhwc_float16_all_inputs_as_internal_5) {
+    execute(CreateModel_shape_nhwc_float16_all_inputs_as_internal_5,
+            is_ignored_shape_nhwc_float16_all_inputs_as_internal_5,
+            get_examples_shape_nhwc_float16_all_inputs_as_internal_5());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_shape_nhwc_float16_all_inputs_as_internal_5, generated_tests::resize_nearest_neighbor::CreateModel_shape_nhwc_float16_all_inputs_as_internal_5)
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_5(Model *model);
+bool is_ignored_shape_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_5(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_5();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_5) {
+    execute(CreateModel_shape_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_5,
+            is_ignored_shape_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_5,
+            get_examples_shape_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_5());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
 
 namespace generated_tests::resize_nearest_neighbor {
 
@@ -1919,6 +3930,49 @@ TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_shape_nchw_5, generated_tests
 
 namespace generated_tests::resize_nearest_neighbor {
 
+void CreateModel_shape_nchw_dynamic_output_shape_5(Model *model);
+bool is_ignored_shape_nchw_dynamic_output_shape_5(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nchw_dynamic_output_shape_5();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nchw_dynamic_output_shape_5) {
+    execute(CreateModel_shape_nchw_dynamic_output_shape_5,
+            is_ignored_shape_nchw_dynamic_output_shape_5,
+            get_examples_shape_nchw_dynamic_output_shape_5());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nchw_all_inputs_as_internal_5(Model *model);
+bool is_ignored_shape_nchw_all_inputs_as_internal_5(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nchw_all_inputs_as_internal_5();
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_shape_nchw_all_inputs_as_internal_5) {
+    execute(CreateModel_shape_nchw_all_inputs_as_internal_5,
+            is_ignored_shape_nchw_all_inputs_as_internal_5,
+            get_examples_shape_nchw_all_inputs_as_internal_5());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_shape_nchw_all_inputs_as_internal_5, generated_tests::resize_nearest_neighbor::CreateModel_shape_nchw_all_inputs_as_internal_5)
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nchw_all_inputs_as_internal_dynamic_output_shape_5(Model *model);
+bool is_ignored_shape_nchw_all_inputs_as_internal_dynamic_output_shape_5(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nchw_all_inputs_as_internal_dynamic_output_shape_5();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nchw_all_inputs_as_internal_dynamic_output_shape_5) {
+    execute(CreateModel_shape_nchw_all_inputs_as_internal_dynamic_output_shape_5,
+            is_ignored_shape_nchw_all_inputs_as_internal_dynamic_output_shape_5,
+            get_examples_shape_nchw_all_inputs_as_internal_dynamic_output_shape_5());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
 void CreateModel_shape_nchw_relaxed_5(Model *model);
 bool is_ignored_shape_nchw_relaxed_5(int);
 std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nchw_relaxed_5();
@@ -1927,6 +3981,48 @@ TEST_F(GeneratedTests, resize_nearest_neighbor_shape_nchw_relaxed_5) {
     execute(CreateModel_shape_nchw_relaxed_5,
             is_ignored_shape_nchw_relaxed_5,
             get_examples_shape_nchw_relaxed_5());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nchw_relaxed_dynamic_output_shape_5(Model *model);
+bool is_ignored_shape_nchw_relaxed_dynamic_output_shape_5(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nchw_relaxed_dynamic_output_shape_5();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nchw_relaxed_dynamic_output_shape_5) {
+    execute(CreateModel_shape_nchw_relaxed_dynamic_output_shape_5,
+            is_ignored_shape_nchw_relaxed_dynamic_output_shape_5,
+            get_examples_shape_nchw_relaxed_dynamic_output_shape_5());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nchw_relaxed_all_inputs_as_internal_5(Model *model);
+bool is_ignored_shape_nchw_relaxed_all_inputs_as_internal_5(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nchw_relaxed_all_inputs_as_internal_5();
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_shape_nchw_relaxed_all_inputs_as_internal_5) {
+    execute(CreateModel_shape_nchw_relaxed_all_inputs_as_internal_5,
+            is_ignored_shape_nchw_relaxed_all_inputs_as_internal_5,
+            get_examples_shape_nchw_relaxed_all_inputs_as_internal_5());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_5(Model *model);
+bool is_ignored_shape_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_5(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_5();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_5) {
+    execute(CreateModel_shape_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_5,
+            is_ignored_shape_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_5,
+            get_examples_shape_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_5());
 }
 
 } // namespace generated_tests::resize_nearest_neighbor
@@ -1948,6 +4044,49 @@ TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_shape_nchw_quant8_5, generate
 
 namespace generated_tests::resize_nearest_neighbor {
 
+void CreateModel_shape_nchw_quant8_dynamic_output_shape_5(Model *model);
+bool is_ignored_shape_nchw_quant8_dynamic_output_shape_5(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nchw_quant8_dynamic_output_shape_5();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nchw_quant8_dynamic_output_shape_5) {
+    execute(CreateModel_shape_nchw_quant8_dynamic_output_shape_5,
+            is_ignored_shape_nchw_quant8_dynamic_output_shape_5,
+            get_examples_shape_nchw_quant8_dynamic_output_shape_5());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nchw_quant8_all_inputs_as_internal_5(Model *model);
+bool is_ignored_shape_nchw_quant8_all_inputs_as_internal_5(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nchw_quant8_all_inputs_as_internal_5();
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_shape_nchw_quant8_all_inputs_as_internal_5) {
+    execute(CreateModel_shape_nchw_quant8_all_inputs_as_internal_5,
+            is_ignored_shape_nchw_quant8_all_inputs_as_internal_5,
+            get_examples_shape_nchw_quant8_all_inputs_as_internal_5());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_shape_nchw_quant8_all_inputs_as_internal_5, generated_tests::resize_nearest_neighbor::CreateModel_shape_nchw_quant8_all_inputs_as_internal_5)
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_5(Model *model);
+bool is_ignored_shape_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_5(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_5();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_5) {
+    execute(CreateModel_shape_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_5,
+            is_ignored_shape_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_5,
+            get_examples_shape_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_5());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
 void CreateModel_shape_nchw_float16_5(Model *model);
 bool is_ignored_shape_nchw_float16_5(int);
 std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nchw_float16_5();
@@ -1963,112 +4102,43 @@ TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_shape_nchw_float16_5, generat
 
 namespace generated_tests::resize_nearest_neighbor {
 
-void CreateModel_shape_dynamic_output_shape_nhwc_5(Model *model);
-bool is_ignored_shape_dynamic_output_shape_nhwc_5(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_shape_dynamic_output_shape_nhwc_5();
+void CreateModel_shape_nchw_float16_dynamic_output_shape_5(Model *model);
+bool is_ignored_shape_nchw_float16_dynamic_output_shape_5(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nchw_float16_dynamic_output_shape_5();
 
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_dynamic_output_shape_nhwc_5) {
-    execute(CreateModel_shape_dynamic_output_shape_nhwc_5,
-            is_ignored_shape_dynamic_output_shape_nhwc_5,
-            get_examples_shape_dynamic_output_shape_nhwc_5());
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nchw_float16_dynamic_output_shape_5) {
+    execute(CreateModel_shape_nchw_float16_dynamic_output_shape_5,
+            is_ignored_shape_nchw_float16_dynamic_output_shape_5,
+            get_examples_shape_nchw_float16_dynamic_output_shape_5());
 }
 
 } // namespace generated_tests::resize_nearest_neighbor
 
 namespace generated_tests::resize_nearest_neighbor {
 
-void CreateModel_shape_dynamic_output_shape_nhwc_relaxed_5(Model *model);
-bool is_ignored_shape_dynamic_output_shape_nhwc_relaxed_5(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_shape_dynamic_output_shape_nhwc_relaxed_5();
+void CreateModel_shape_nchw_float16_all_inputs_as_internal_5(Model *model);
+bool is_ignored_shape_nchw_float16_all_inputs_as_internal_5(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nchw_float16_all_inputs_as_internal_5();
 
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_dynamic_output_shape_nhwc_relaxed_5) {
-    execute(CreateModel_shape_dynamic_output_shape_nhwc_relaxed_5,
-            is_ignored_shape_dynamic_output_shape_nhwc_relaxed_5,
-            get_examples_shape_dynamic_output_shape_nhwc_relaxed_5());
+TEST_F(GeneratedTests, resize_nearest_neighbor_shape_nchw_float16_all_inputs_as_internal_5) {
+    execute(CreateModel_shape_nchw_float16_all_inputs_as_internal_5,
+            is_ignored_shape_nchw_float16_all_inputs_as_internal_5,
+            get_examples_shape_nchw_float16_all_inputs_as_internal_5());
 }
 
 } // namespace generated_tests::resize_nearest_neighbor
+TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_shape_nchw_float16_all_inputs_as_internal_5, generated_tests::resize_nearest_neighbor::CreateModel_shape_nchw_float16_all_inputs_as_internal_5)
 
 namespace generated_tests::resize_nearest_neighbor {
 
-void CreateModel_shape_dynamic_output_shape_nhwc_quant8_5(Model *model);
-bool is_ignored_shape_dynamic_output_shape_nhwc_quant8_5(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_shape_dynamic_output_shape_nhwc_quant8_5();
+void CreateModel_shape_nchw_float16_all_inputs_as_internal_dynamic_output_shape_5(Model *model);
+bool is_ignored_shape_nchw_float16_all_inputs_as_internal_dynamic_output_shape_5(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nchw_float16_all_inputs_as_internal_dynamic_output_shape_5();
 
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_dynamic_output_shape_nhwc_quant8_5) {
-    execute(CreateModel_shape_dynamic_output_shape_nhwc_quant8_5,
-            is_ignored_shape_dynamic_output_shape_nhwc_quant8_5,
-            get_examples_shape_dynamic_output_shape_nhwc_quant8_5());
-}
-
-} // namespace generated_tests::resize_nearest_neighbor
-
-namespace generated_tests::resize_nearest_neighbor {
-
-void CreateModel_shape_dynamic_output_shape_nhwc_float16_5(Model *model);
-bool is_ignored_shape_dynamic_output_shape_nhwc_float16_5(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_shape_dynamic_output_shape_nhwc_float16_5();
-
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_dynamic_output_shape_nhwc_float16_5) {
-    execute(CreateModel_shape_dynamic_output_shape_nhwc_float16_5,
-            is_ignored_shape_dynamic_output_shape_nhwc_float16_5,
-            get_examples_shape_dynamic_output_shape_nhwc_float16_5());
-}
-
-} // namespace generated_tests::resize_nearest_neighbor
-
-namespace generated_tests::resize_nearest_neighbor {
-
-void CreateModel_shape_dynamic_output_shape_nchw_5(Model *model);
-bool is_ignored_shape_dynamic_output_shape_nchw_5(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_shape_dynamic_output_shape_nchw_5();
-
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_dynamic_output_shape_nchw_5) {
-    execute(CreateModel_shape_dynamic_output_shape_nchw_5,
-            is_ignored_shape_dynamic_output_shape_nchw_5,
-            get_examples_shape_dynamic_output_shape_nchw_5());
-}
-
-} // namespace generated_tests::resize_nearest_neighbor
-
-namespace generated_tests::resize_nearest_neighbor {
-
-void CreateModel_shape_dynamic_output_shape_nchw_relaxed_5(Model *model);
-bool is_ignored_shape_dynamic_output_shape_nchw_relaxed_5(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_shape_dynamic_output_shape_nchw_relaxed_5();
-
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_dynamic_output_shape_nchw_relaxed_5) {
-    execute(CreateModel_shape_dynamic_output_shape_nchw_relaxed_5,
-            is_ignored_shape_dynamic_output_shape_nchw_relaxed_5,
-            get_examples_shape_dynamic_output_shape_nchw_relaxed_5());
-}
-
-} // namespace generated_tests::resize_nearest_neighbor
-
-namespace generated_tests::resize_nearest_neighbor {
-
-void CreateModel_shape_dynamic_output_shape_nchw_quant8_5(Model *model);
-bool is_ignored_shape_dynamic_output_shape_nchw_quant8_5(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_shape_dynamic_output_shape_nchw_quant8_5();
-
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_dynamic_output_shape_nchw_quant8_5) {
-    execute(CreateModel_shape_dynamic_output_shape_nchw_quant8_5,
-            is_ignored_shape_dynamic_output_shape_nchw_quant8_5,
-            get_examples_shape_dynamic_output_shape_nchw_quant8_5());
-}
-
-} // namespace generated_tests::resize_nearest_neighbor
-
-namespace generated_tests::resize_nearest_neighbor {
-
-void CreateModel_shape_dynamic_output_shape_nchw_float16_5(Model *model);
-bool is_ignored_shape_dynamic_output_shape_nchw_float16_5(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_shape_dynamic_output_shape_nchw_float16_5();
-
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_dynamic_output_shape_nchw_float16_5) {
-    execute(CreateModel_shape_dynamic_output_shape_nchw_float16_5,
-            is_ignored_shape_dynamic_output_shape_nchw_float16_5,
-            get_examples_shape_dynamic_output_shape_nchw_float16_5());
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nchw_float16_all_inputs_as_internal_dynamic_output_shape_5) {
+    execute(CreateModel_shape_nchw_float16_all_inputs_as_internal_dynamic_output_shape_5,
+            is_ignored_shape_nchw_float16_all_inputs_as_internal_dynamic_output_shape_5,
+            get_examples_shape_nchw_float16_all_inputs_as_internal_dynamic_output_shape_5());
 }
 
 } // namespace generated_tests::resize_nearest_neighbor
@@ -2090,6 +4160,49 @@ TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_scale_nhwc_5, generated_tests
 
 namespace generated_tests::resize_nearest_neighbor {
 
+void CreateModel_scale_nhwc_dynamic_output_shape_5(Model *model);
+bool is_ignored_scale_nhwc_dynamic_output_shape_5(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nhwc_dynamic_output_shape_5();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nhwc_dynamic_output_shape_5) {
+    execute(CreateModel_scale_nhwc_dynamic_output_shape_5,
+            is_ignored_scale_nhwc_dynamic_output_shape_5,
+            get_examples_scale_nhwc_dynamic_output_shape_5());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nhwc_all_inputs_as_internal_5(Model *model);
+bool is_ignored_scale_nhwc_all_inputs_as_internal_5(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nhwc_all_inputs_as_internal_5();
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_scale_nhwc_all_inputs_as_internal_5) {
+    execute(CreateModel_scale_nhwc_all_inputs_as_internal_5,
+            is_ignored_scale_nhwc_all_inputs_as_internal_5,
+            get_examples_scale_nhwc_all_inputs_as_internal_5());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_scale_nhwc_all_inputs_as_internal_5, generated_tests::resize_nearest_neighbor::CreateModel_scale_nhwc_all_inputs_as_internal_5)
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nhwc_all_inputs_as_internal_dynamic_output_shape_5(Model *model);
+bool is_ignored_scale_nhwc_all_inputs_as_internal_dynamic_output_shape_5(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nhwc_all_inputs_as_internal_dynamic_output_shape_5();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nhwc_all_inputs_as_internal_dynamic_output_shape_5) {
+    execute(CreateModel_scale_nhwc_all_inputs_as_internal_dynamic_output_shape_5,
+            is_ignored_scale_nhwc_all_inputs_as_internal_dynamic_output_shape_5,
+            get_examples_scale_nhwc_all_inputs_as_internal_dynamic_output_shape_5());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
 void CreateModel_scale_nhwc_relaxed_5(Model *model);
 bool is_ignored_scale_nhwc_relaxed_5(int);
 std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nhwc_relaxed_5();
@@ -2098,6 +4211,48 @@ TEST_F(GeneratedTests, resize_nearest_neighbor_scale_nhwc_relaxed_5) {
     execute(CreateModel_scale_nhwc_relaxed_5,
             is_ignored_scale_nhwc_relaxed_5,
             get_examples_scale_nhwc_relaxed_5());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nhwc_relaxed_dynamic_output_shape_5(Model *model);
+bool is_ignored_scale_nhwc_relaxed_dynamic_output_shape_5(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nhwc_relaxed_dynamic_output_shape_5();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nhwc_relaxed_dynamic_output_shape_5) {
+    execute(CreateModel_scale_nhwc_relaxed_dynamic_output_shape_5,
+            is_ignored_scale_nhwc_relaxed_dynamic_output_shape_5,
+            get_examples_scale_nhwc_relaxed_dynamic_output_shape_5());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nhwc_relaxed_all_inputs_as_internal_5(Model *model);
+bool is_ignored_scale_nhwc_relaxed_all_inputs_as_internal_5(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nhwc_relaxed_all_inputs_as_internal_5();
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_scale_nhwc_relaxed_all_inputs_as_internal_5) {
+    execute(CreateModel_scale_nhwc_relaxed_all_inputs_as_internal_5,
+            is_ignored_scale_nhwc_relaxed_all_inputs_as_internal_5,
+            get_examples_scale_nhwc_relaxed_all_inputs_as_internal_5());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_5(Model *model);
+bool is_ignored_scale_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_5(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_5();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_5) {
+    execute(CreateModel_scale_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_5,
+            is_ignored_scale_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_5,
+            get_examples_scale_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_5());
 }
 
 } // namespace generated_tests::resize_nearest_neighbor
@@ -2119,6 +4274,49 @@ TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_scale_nhwc_quant8_5, generate
 
 namespace generated_tests::resize_nearest_neighbor {
 
+void CreateModel_scale_nhwc_quant8_dynamic_output_shape_5(Model *model);
+bool is_ignored_scale_nhwc_quant8_dynamic_output_shape_5(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nhwc_quant8_dynamic_output_shape_5();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nhwc_quant8_dynamic_output_shape_5) {
+    execute(CreateModel_scale_nhwc_quant8_dynamic_output_shape_5,
+            is_ignored_scale_nhwc_quant8_dynamic_output_shape_5,
+            get_examples_scale_nhwc_quant8_dynamic_output_shape_5());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nhwc_quant8_all_inputs_as_internal_5(Model *model);
+bool is_ignored_scale_nhwc_quant8_all_inputs_as_internal_5(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nhwc_quant8_all_inputs_as_internal_5();
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_scale_nhwc_quant8_all_inputs_as_internal_5) {
+    execute(CreateModel_scale_nhwc_quant8_all_inputs_as_internal_5,
+            is_ignored_scale_nhwc_quant8_all_inputs_as_internal_5,
+            get_examples_scale_nhwc_quant8_all_inputs_as_internal_5());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_scale_nhwc_quant8_all_inputs_as_internal_5, generated_tests::resize_nearest_neighbor::CreateModel_scale_nhwc_quant8_all_inputs_as_internal_5)
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_5(Model *model);
+bool is_ignored_scale_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_5(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_5();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_5) {
+    execute(CreateModel_scale_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_5,
+            is_ignored_scale_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_5,
+            get_examples_scale_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_5());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
 void CreateModel_scale_nhwc_float16_5(Model *model);
 bool is_ignored_scale_nhwc_float16_5(int);
 std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nhwc_float16_5();
@@ -2131,6 +4329,49 @@ TEST_F(GeneratedTests, resize_nearest_neighbor_scale_nhwc_float16_5) {
 
 } // namespace generated_tests::resize_nearest_neighbor
 TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_scale_nhwc_float16_5, generated_tests::resize_nearest_neighbor::CreateModel_scale_nhwc_float16_5)
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nhwc_float16_dynamic_output_shape_5(Model *model);
+bool is_ignored_scale_nhwc_float16_dynamic_output_shape_5(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nhwc_float16_dynamic_output_shape_5();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nhwc_float16_dynamic_output_shape_5) {
+    execute(CreateModel_scale_nhwc_float16_dynamic_output_shape_5,
+            is_ignored_scale_nhwc_float16_dynamic_output_shape_5,
+            get_examples_scale_nhwc_float16_dynamic_output_shape_5());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nhwc_float16_all_inputs_as_internal_5(Model *model);
+bool is_ignored_scale_nhwc_float16_all_inputs_as_internal_5(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nhwc_float16_all_inputs_as_internal_5();
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_scale_nhwc_float16_all_inputs_as_internal_5) {
+    execute(CreateModel_scale_nhwc_float16_all_inputs_as_internal_5,
+            is_ignored_scale_nhwc_float16_all_inputs_as_internal_5,
+            get_examples_scale_nhwc_float16_all_inputs_as_internal_5());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_scale_nhwc_float16_all_inputs_as_internal_5, generated_tests::resize_nearest_neighbor::CreateModel_scale_nhwc_float16_all_inputs_as_internal_5)
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_5(Model *model);
+bool is_ignored_scale_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_5(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_5();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_5) {
+    execute(CreateModel_scale_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_5,
+            is_ignored_scale_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_5,
+            get_examples_scale_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_5());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
 
 namespace generated_tests::resize_nearest_neighbor {
 
@@ -2149,6 +4390,49 @@ TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_scale_nchw_5, generated_tests
 
 namespace generated_tests::resize_nearest_neighbor {
 
+void CreateModel_scale_nchw_dynamic_output_shape_5(Model *model);
+bool is_ignored_scale_nchw_dynamic_output_shape_5(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nchw_dynamic_output_shape_5();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nchw_dynamic_output_shape_5) {
+    execute(CreateModel_scale_nchw_dynamic_output_shape_5,
+            is_ignored_scale_nchw_dynamic_output_shape_5,
+            get_examples_scale_nchw_dynamic_output_shape_5());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nchw_all_inputs_as_internal_5(Model *model);
+bool is_ignored_scale_nchw_all_inputs_as_internal_5(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nchw_all_inputs_as_internal_5();
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_scale_nchw_all_inputs_as_internal_5) {
+    execute(CreateModel_scale_nchw_all_inputs_as_internal_5,
+            is_ignored_scale_nchw_all_inputs_as_internal_5,
+            get_examples_scale_nchw_all_inputs_as_internal_5());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_scale_nchw_all_inputs_as_internal_5, generated_tests::resize_nearest_neighbor::CreateModel_scale_nchw_all_inputs_as_internal_5)
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nchw_all_inputs_as_internal_dynamic_output_shape_5(Model *model);
+bool is_ignored_scale_nchw_all_inputs_as_internal_dynamic_output_shape_5(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nchw_all_inputs_as_internal_dynamic_output_shape_5();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nchw_all_inputs_as_internal_dynamic_output_shape_5) {
+    execute(CreateModel_scale_nchw_all_inputs_as_internal_dynamic_output_shape_5,
+            is_ignored_scale_nchw_all_inputs_as_internal_dynamic_output_shape_5,
+            get_examples_scale_nchw_all_inputs_as_internal_dynamic_output_shape_5());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
 void CreateModel_scale_nchw_relaxed_5(Model *model);
 bool is_ignored_scale_nchw_relaxed_5(int);
 std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nchw_relaxed_5();
@@ -2157,6 +4441,48 @@ TEST_F(GeneratedTests, resize_nearest_neighbor_scale_nchw_relaxed_5) {
     execute(CreateModel_scale_nchw_relaxed_5,
             is_ignored_scale_nchw_relaxed_5,
             get_examples_scale_nchw_relaxed_5());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nchw_relaxed_dynamic_output_shape_5(Model *model);
+bool is_ignored_scale_nchw_relaxed_dynamic_output_shape_5(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nchw_relaxed_dynamic_output_shape_5();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nchw_relaxed_dynamic_output_shape_5) {
+    execute(CreateModel_scale_nchw_relaxed_dynamic_output_shape_5,
+            is_ignored_scale_nchw_relaxed_dynamic_output_shape_5,
+            get_examples_scale_nchw_relaxed_dynamic_output_shape_5());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nchw_relaxed_all_inputs_as_internal_5(Model *model);
+bool is_ignored_scale_nchw_relaxed_all_inputs_as_internal_5(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nchw_relaxed_all_inputs_as_internal_5();
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_scale_nchw_relaxed_all_inputs_as_internal_5) {
+    execute(CreateModel_scale_nchw_relaxed_all_inputs_as_internal_5,
+            is_ignored_scale_nchw_relaxed_all_inputs_as_internal_5,
+            get_examples_scale_nchw_relaxed_all_inputs_as_internal_5());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_5(Model *model);
+bool is_ignored_scale_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_5(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_5();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_5) {
+    execute(CreateModel_scale_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_5,
+            is_ignored_scale_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_5,
+            get_examples_scale_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_5());
 }
 
 } // namespace generated_tests::resize_nearest_neighbor
@@ -2178,6 +4504,49 @@ TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_scale_nchw_quant8_5, generate
 
 namespace generated_tests::resize_nearest_neighbor {
 
+void CreateModel_scale_nchw_quant8_dynamic_output_shape_5(Model *model);
+bool is_ignored_scale_nchw_quant8_dynamic_output_shape_5(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nchw_quant8_dynamic_output_shape_5();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nchw_quant8_dynamic_output_shape_5) {
+    execute(CreateModel_scale_nchw_quant8_dynamic_output_shape_5,
+            is_ignored_scale_nchw_quant8_dynamic_output_shape_5,
+            get_examples_scale_nchw_quant8_dynamic_output_shape_5());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nchw_quant8_all_inputs_as_internal_5(Model *model);
+bool is_ignored_scale_nchw_quant8_all_inputs_as_internal_5(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nchw_quant8_all_inputs_as_internal_5();
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_scale_nchw_quant8_all_inputs_as_internal_5) {
+    execute(CreateModel_scale_nchw_quant8_all_inputs_as_internal_5,
+            is_ignored_scale_nchw_quant8_all_inputs_as_internal_5,
+            get_examples_scale_nchw_quant8_all_inputs_as_internal_5());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_scale_nchw_quant8_all_inputs_as_internal_5, generated_tests::resize_nearest_neighbor::CreateModel_scale_nchw_quant8_all_inputs_as_internal_5)
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_5(Model *model);
+bool is_ignored_scale_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_5(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_5();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_5) {
+    execute(CreateModel_scale_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_5,
+            is_ignored_scale_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_5,
+            get_examples_scale_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_5());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
 void CreateModel_scale_nchw_float16_5(Model *model);
 bool is_ignored_scale_nchw_float16_5(int);
 std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nchw_float16_5();
@@ -2193,112 +4562,43 @@ TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_scale_nchw_float16_5, generat
 
 namespace generated_tests::resize_nearest_neighbor {
 
-void CreateModel_scale_dynamic_output_shape_nhwc_5(Model *model);
-bool is_ignored_scale_dynamic_output_shape_nhwc_5(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_scale_dynamic_output_shape_nhwc_5();
+void CreateModel_scale_nchw_float16_dynamic_output_shape_5(Model *model);
+bool is_ignored_scale_nchw_float16_dynamic_output_shape_5(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nchw_float16_dynamic_output_shape_5();
 
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_dynamic_output_shape_nhwc_5) {
-    execute(CreateModel_scale_dynamic_output_shape_nhwc_5,
-            is_ignored_scale_dynamic_output_shape_nhwc_5,
-            get_examples_scale_dynamic_output_shape_nhwc_5());
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nchw_float16_dynamic_output_shape_5) {
+    execute(CreateModel_scale_nchw_float16_dynamic_output_shape_5,
+            is_ignored_scale_nchw_float16_dynamic_output_shape_5,
+            get_examples_scale_nchw_float16_dynamic_output_shape_5());
 }
 
 } // namespace generated_tests::resize_nearest_neighbor
 
 namespace generated_tests::resize_nearest_neighbor {
 
-void CreateModel_scale_dynamic_output_shape_nhwc_relaxed_5(Model *model);
-bool is_ignored_scale_dynamic_output_shape_nhwc_relaxed_5(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_scale_dynamic_output_shape_nhwc_relaxed_5();
+void CreateModel_scale_nchw_float16_all_inputs_as_internal_5(Model *model);
+bool is_ignored_scale_nchw_float16_all_inputs_as_internal_5(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nchw_float16_all_inputs_as_internal_5();
 
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_dynamic_output_shape_nhwc_relaxed_5) {
-    execute(CreateModel_scale_dynamic_output_shape_nhwc_relaxed_5,
-            is_ignored_scale_dynamic_output_shape_nhwc_relaxed_5,
-            get_examples_scale_dynamic_output_shape_nhwc_relaxed_5());
+TEST_F(GeneratedTests, resize_nearest_neighbor_scale_nchw_float16_all_inputs_as_internal_5) {
+    execute(CreateModel_scale_nchw_float16_all_inputs_as_internal_5,
+            is_ignored_scale_nchw_float16_all_inputs_as_internal_5,
+            get_examples_scale_nchw_float16_all_inputs_as_internal_5());
 }
 
 } // namespace generated_tests::resize_nearest_neighbor
+TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_scale_nchw_float16_all_inputs_as_internal_5, generated_tests::resize_nearest_neighbor::CreateModel_scale_nchw_float16_all_inputs_as_internal_5)
 
 namespace generated_tests::resize_nearest_neighbor {
 
-void CreateModel_scale_dynamic_output_shape_nhwc_quant8_5(Model *model);
-bool is_ignored_scale_dynamic_output_shape_nhwc_quant8_5(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_scale_dynamic_output_shape_nhwc_quant8_5();
+void CreateModel_scale_nchw_float16_all_inputs_as_internal_dynamic_output_shape_5(Model *model);
+bool is_ignored_scale_nchw_float16_all_inputs_as_internal_dynamic_output_shape_5(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nchw_float16_all_inputs_as_internal_dynamic_output_shape_5();
 
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_dynamic_output_shape_nhwc_quant8_5) {
-    execute(CreateModel_scale_dynamic_output_shape_nhwc_quant8_5,
-            is_ignored_scale_dynamic_output_shape_nhwc_quant8_5,
-            get_examples_scale_dynamic_output_shape_nhwc_quant8_5());
-}
-
-} // namespace generated_tests::resize_nearest_neighbor
-
-namespace generated_tests::resize_nearest_neighbor {
-
-void CreateModel_scale_dynamic_output_shape_nhwc_float16_5(Model *model);
-bool is_ignored_scale_dynamic_output_shape_nhwc_float16_5(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_scale_dynamic_output_shape_nhwc_float16_5();
-
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_dynamic_output_shape_nhwc_float16_5) {
-    execute(CreateModel_scale_dynamic_output_shape_nhwc_float16_5,
-            is_ignored_scale_dynamic_output_shape_nhwc_float16_5,
-            get_examples_scale_dynamic_output_shape_nhwc_float16_5());
-}
-
-} // namespace generated_tests::resize_nearest_neighbor
-
-namespace generated_tests::resize_nearest_neighbor {
-
-void CreateModel_scale_dynamic_output_shape_nchw_5(Model *model);
-bool is_ignored_scale_dynamic_output_shape_nchw_5(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_scale_dynamic_output_shape_nchw_5();
-
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_dynamic_output_shape_nchw_5) {
-    execute(CreateModel_scale_dynamic_output_shape_nchw_5,
-            is_ignored_scale_dynamic_output_shape_nchw_5,
-            get_examples_scale_dynamic_output_shape_nchw_5());
-}
-
-} // namespace generated_tests::resize_nearest_neighbor
-
-namespace generated_tests::resize_nearest_neighbor {
-
-void CreateModel_scale_dynamic_output_shape_nchw_relaxed_5(Model *model);
-bool is_ignored_scale_dynamic_output_shape_nchw_relaxed_5(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_scale_dynamic_output_shape_nchw_relaxed_5();
-
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_dynamic_output_shape_nchw_relaxed_5) {
-    execute(CreateModel_scale_dynamic_output_shape_nchw_relaxed_5,
-            is_ignored_scale_dynamic_output_shape_nchw_relaxed_5,
-            get_examples_scale_dynamic_output_shape_nchw_relaxed_5());
-}
-
-} // namespace generated_tests::resize_nearest_neighbor
-
-namespace generated_tests::resize_nearest_neighbor {
-
-void CreateModel_scale_dynamic_output_shape_nchw_quant8_5(Model *model);
-bool is_ignored_scale_dynamic_output_shape_nchw_quant8_5(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_scale_dynamic_output_shape_nchw_quant8_5();
-
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_dynamic_output_shape_nchw_quant8_5) {
-    execute(CreateModel_scale_dynamic_output_shape_nchw_quant8_5,
-            is_ignored_scale_dynamic_output_shape_nchw_quant8_5,
-            get_examples_scale_dynamic_output_shape_nchw_quant8_5());
-}
-
-} // namespace generated_tests::resize_nearest_neighbor
-
-namespace generated_tests::resize_nearest_neighbor {
-
-void CreateModel_scale_dynamic_output_shape_nchw_float16_5(Model *model);
-bool is_ignored_scale_dynamic_output_shape_nchw_float16_5(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_scale_dynamic_output_shape_nchw_float16_5();
-
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_dynamic_output_shape_nchw_float16_5) {
-    execute(CreateModel_scale_dynamic_output_shape_nchw_float16_5,
-            is_ignored_scale_dynamic_output_shape_nchw_float16_5,
-            get_examples_scale_dynamic_output_shape_nchw_float16_5());
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nchw_float16_all_inputs_as_internal_dynamic_output_shape_5) {
+    execute(CreateModel_scale_nchw_float16_all_inputs_as_internal_dynamic_output_shape_5,
+            is_ignored_scale_nchw_float16_all_inputs_as_internal_dynamic_output_shape_5,
+            get_examples_scale_nchw_float16_all_inputs_as_internal_dynamic_output_shape_5());
 }
 
 } // namespace generated_tests::resize_nearest_neighbor
@@ -2320,6 +4620,49 @@ TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_shape_nhwc_6, generated_tests
 
 namespace generated_tests::resize_nearest_neighbor {
 
+void CreateModel_shape_nhwc_dynamic_output_shape_6(Model *model);
+bool is_ignored_shape_nhwc_dynamic_output_shape_6(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nhwc_dynamic_output_shape_6();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nhwc_dynamic_output_shape_6) {
+    execute(CreateModel_shape_nhwc_dynamic_output_shape_6,
+            is_ignored_shape_nhwc_dynamic_output_shape_6,
+            get_examples_shape_nhwc_dynamic_output_shape_6());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nhwc_all_inputs_as_internal_6(Model *model);
+bool is_ignored_shape_nhwc_all_inputs_as_internal_6(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nhwc_all_inputs_as_internal_6();
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_shape_nhwc_all_inputs_as_internal_6) {
+    execute(CreateModel_shape_nhwc_all_inputs_as_internal_6,
+            is_ignored_shape_nhwc_all_inputs_as_internal_6,
+            get_examples_shape_nhwc_all_inputs_as_internal_6());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_shape_nhwc_all_inputs_as_internal_6, generated_tests::resize_nearest_neighbor::CreateModel_shape_nhwc_all_inputs_as_internal_6)
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nhwc_all_inputs_as_internal_dynamic_output_shape_6(Model *model);
+bool is_ignored_shape_nhwc_all_inputs_as_internal_dynamic_output_shape_6(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nhwc_all_inputs_as_internal_dynamic_output_shape_6();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nhwc_all_inputs_as_internal_dynamic_output_shape_6) {
+    execute(CreateModel_shape_nhwc_all_inputs_as_internal_dynamic_output_shape_6,
+            is_ignored_shape_nhwc_all_inputs_as_internal_dynamic_output_shape_6,
+            get_examples_shape_nhwc_all_inputs_as_internal_dynamic_output_shape_6());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
 void CreateModel_shape_nhwc_relaxed_6(Model *model);
 bool is_ignored_shape_nhwc_relaxed_6(int);
 std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nhwc_relaxed_6();
@@ -2328,6 +4671,48 @@ TEST_F(GeneratedTests, resize_nearest_neighbor_shape_nhwc_relaxed_6) {
     execute(CreateModel_shape_nhwc_relaxed_6,
             is_ignored_shape_nhwc_relaxed_6,
             get_examples_shape_nhwc_relaxed_6());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nhwc_relaxed_dynamic_output_shape_6(Model *model);
+bool is_ignored_shape_nhwc_relaxed_dynamic_output_shape_6(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nhwc_relaxed_dynamic_output_shape_6();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nhwc_relaxed_dynamic_output_shape_6) {
+    execute(CreateModel_shape_nhwc_relaxed_dynamic_output_shape_6,
+            is_ignored_shape_nhwc_relaxed_dynamic_output_shape_6,
+            get_examples_shape_nhwc_relaxed_dynamic_output_shape_6());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nhwc_relaxed_all_inputs_as_internal_6(Model *model);
+bool is_ignored_shape_nhwc_relaxed_all_inputs_as_internal_6(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nhwc_relaxed_all_inputs_as_internal_6();
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_shape_nhwc_relaxed_all_inputs_as_internal_6) {
+    execute(CreateModel_shape_nhwc_relaxed_all_inputs_as_internal_6,
+            is_ignored_shape_nhwc_relaxed_all_inputs_as_internal_6,
+            get_examples_shape_nhwc_relaxed_all_inputs_as_internal_6());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_6(Model *model);
+bool is_ignored_shape_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_6(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_6();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_6) {
+    execute(CreateModel_shape_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_6,
+            is_ignored_shape_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_6,
+            get_examples_shape_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_6());
 }
 
 } // namespace generated_tests::resize_nearest_neighbor
@@ -2349,6 +4734,49 @@ TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_shape_nhwc_quant8_6, generate
 
 namespace generated_tests::resize_nearest_neighbor {
 
+void CreateModel_shape_nhwc_quant8_dynamic_output_shape_6(Model *model);
+bool is_ignored_shape_nhwc_quant8_dynamic_output_shape_6(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nhwc_quant8_dynamic_output_shape_6();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nhwc_quant8_dynamic_output_shape_6) {
+    execute(CreateModel_shape_nhwc_quant8_dynamic_output_shape_6,
+            is_ignored_shape_nhwc_quant8_dynamic_output_shape_6,
+            get_examples_shape_nhwc_quant8_dynamic_output_shape_6());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nhwc_quant8_all_inputs_as_internal_6(Model *model);
+bool is_ignored_shape_nhwc_quant8_all_inputs_as_internal_6(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nhwc_quant8_all_inputs_as_internal_6();
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_shape_nhwc_quant8_all_inputs_as_internal_6) {
+    execute(CreateModel_shape_nhwc_quant8_all_inputs_as_internal_6,
+            is_ignored_shape_nhwc_quant8_all_inputs_as_internal_6,
+            get_examples_shape_nhwc_quant8_all_inputs_as_internal_6());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_shape_nhwc_quant8_all_inputs_as_internal_6, generated_tests::resize_nearest_neighbor::CreateModel_shape_nhwc_quant8_all_inputs_as_internal_6)
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_6(Model *model);
+bool is_ignored_shape_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_6(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_6();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_6) {
+    execute(CreateModel_shape_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_6,
+            is_ignored_shape_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_6,
+            get_examples_shape_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_6());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
 void CreateModel_shape_nhwc_float16_6(Model *model);
 bool is_ignored_shape_nhwc_float16_6(int);
 std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nhwc_float16_6();
@@ -2361,6 +4789,49 @@ TEST_F(GeneratedTests, resize_nearest_neighbor_shape_nhwc_float16_6) {
 
 } // namespace generated_tests::resize_nearest_neighbor
 TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_shape_nhwc_float16_6, generated_tests::resize_nearest_neighbor::CreateModel_shape_nhwc_float16_6)
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nhwc_float16_dynamic_output_shape_6(Model *model);
+bool is_ignored_shape_nhwc_float16_dynamic_output_shape_6(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nhwc_float16_dynamic_output_shape_6();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nhwc_float16_dynamic_output_shape_6) {
+    execute(CreateModel_shape_nhwc_float16_dynamic_output_shape_6,
+            is_ignored_shape_nhwc_float16_dynamic_output_shape_6,
+            get_examples_shape_nhwc_float16_dynamic_output_shape_6());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nhwc_float16_all_inputs_as_internal_6(Model *model);
+bool is_ignored_shape_nhwc_float16_all_inputs_as_internal_6(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nhwc_float16_all_inputs_as_internal_6();
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_shape_nhwc_float16_all_inputs_as_internal_6) {
+    execute(CreateModel_shape_nhwc_float16_all_inputs_as_internal_6,
+            is_ignored_shape_nhwc_float16_all_inputs_as_internal_6,
+            get_examples_shape_nhwc_float16_all_inputs_as_internal_6());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_shape_nhwc_float16_all_inputs_as_internal_6, generated_tests::resize_nearest_neighbor::CreateModel_shape_nhwc_float16_all_inputs_as_internal_6)
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_6(Model *model);
+bool is_ignored_shape_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_6(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_6();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_6) {
+    execute(CreateModel_shape_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_6,
+            is_ignored_shape_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_6,
+            get_examples_shape_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_6());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
 
 namespace generated_tests::resize_nearest_neighbor {
 
@@ -2379,6 +4850,49 @@ TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_shape_nchw_6, generated_tests
 
 namespace generated_tests::resize_nearest_neighbor {
 
+void CreateModel_shape_nchw_dynamic_output_shape_6(Model *model);
+bool is_ignored_shape_nchw_dynamic_output_shape_6(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nchw_dynamic_output_shape_6();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nchw_dynamic_output_shape_6) {
+    execute(CreateModel_shape_nchw_dynamic_output_shape_6,
+            is_ignored_shape_nchw_dynamic_output_shape_6,
+            get_examples_shape_nchw_dynamic_output_shape_6());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nchw_all_inputs_as_internal_6(Model *model);
+bool is_ignored_shape_nchw_all_inputs_as_internal_6(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nchw_all_inputs_as_internal_6();
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_shape_nchw_all_inputs_as_internal_6) {
+    execute(CreateModel_shape_nchw_all_inputs_as_internal_6,
+            is_ignored_shape_nchw_all_inputs_as_internal_6,
+            get_examples_shape_nchw_all_inputs_as_internal_6());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_shape_nchw_all_inputs_as_internal_6, generated_tests::resize_nearest_neighbor::CreateModel_shape_nchw_all_inputs_as_internal_6)
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nchw_all_inputs_as_internal_dynamic_output_shape_6(Model *model);
+bool is_ignored_shape_nchw_all_inputs_as_internal_dynamic_output_shape_6(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nchw_all_inputs_as_internal_dynamic_output_shape_6();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nchw_all_inputs_as_internal_dynamic_output_shape_6) {
+    execute(CreateModel_shape_nchw_all_inputs_as_internal_dynamic_output_shape_6,
+            is_ignored_shape_nchw_all_inputs_as_internal_dynamic_output_shape_6,
+            get_examples_shape_nchw_all_inputs_as_internal_dynamic_output_shape_6());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
 void CreateModel_shape_nchw_relaxed_6(Model *model);
 bool is_ignored_shape_nchw_relaxed_6(int);
 std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nchw_relaxed_6();
@@ -2387,6 +4901,48 @@ TEST_F(GeneratedTests, resize_nearest_neighbor_shape_nchw_relaxed_6) {
     execute(CreateModel_shape_nchw_relaxed_6,
             is_ignored_shape_nchw_relaxed_6,
             get_examples_shape_nchw_relaxed_6());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nchw_relaxed_dynamic_output_shape_6(Model *model);
+bool is_ignored_shape_nchw_relaxed_dynamic_output_shape_6(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nchw_relaxed_dynamic_output_shape_6();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nchw_relaxed_dynamic_output_shape_6) {
+    execute(CreateModel_shape_nchw_relaxed_dynamic_output_shape_6,
+            is_ignored_shape_nchw_relaxed_dynamic_output_shape_6,
+            get_examples_shape_nchw_relaxed_dynamic_output_shape_6());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nchw_relaxed_all_inputs_as_internal_6(Model *model);
+bool is_ignored_shape_nchw_relaxed_all_inputs_as_internal_6(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nchw_relaxed_all_inputs_as_internal_6();
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_shape_nchw_relaxed_all_inputs_as_internal_6) {
+    execute(CreateModel_shape_nchw_relaxed_all_inputs_as_internal_6,
+            is_ignored_shape_nchw_relaxed_all_inputs_as_internal_6,
+            get_examples_shape_nchw_relaxed_all_inputs_as_internal_6());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_6(Model *model);
+bool is_ignored_shape_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_6(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_6();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_6) {
+    execute(CreateModel_shape_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_6,
+            is_ignored_shape_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_6,
+            get_examples_shape_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_6());
 }
 
 } // namespace generated_tests::resize_nearest_neighbor
@@ -2408,6 +4964,49 @@ TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_shape_nchw_quant8_6, generate
 
 namespace generated_tests::resize_nearest_neighbor {
 
+void CreateModel_shape_nchw_quant8_dynamic_output_shape_6(Model *model);
+bool is_ignored_shape_nchw_quant8_dynamic_output_shape_6(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nchw_quant8_dynamic_output_shape_6();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nchw_quant8_dynamic_output_shape_6) {
+    execute(CreateModel_shape_nchw_quant8_dynamic_output_shape_6,
+            is_ignored_shape_nchw_quant8_dynamic_output_shape_6,
+            get_examples_shape_nchw_quant8_dynamic_output_shape_6());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nchw_quant8_all_inputs_as_internal_6(Model *model);
+bool is_ignored_shape_nchw_quant8_all_inputs_as_internal_6(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nchw_quant8_all_inputs_as_internal_6();
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_shape_nchw_quant8_all_inputs_as_internal_6) {
+    execute(CreateModel_shape_nchw_quant8_all_inputs_as_internal_6,
+            is_ignored_shape_nchw_quant8_all_inputs_as_internal_6,
+            get_examples_shape_nchw_quant8_all_inputs_as_internal_6());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_shape_nchw_quant8_all_inputs_as_internal_6, generated_tests::resize_nearest_neighbor::CreateModel_shape_nchw_quant8_all_inputs_as_internal_6)
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_6(Model *model);
+bool is_ignored_shape_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_6(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_6();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_6) {
+    execute(CreateModel_shape_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_6,
+            is_ignored_shape_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_6,
+            get_examples_shape_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_6());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
 void CreateModel_shape_nchw_float16_6(Model *model);
 bool is_ignored_shape_nchw_float16_6(int);
 std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nchw_float16_6();
@@ -2423,112 +5022,43 @@ TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_shape_nchw_float16_6, generat
 
 namespace generated_tests::resize_nearest_neighbor {
 
-void CreateModel_shape_dynamic_output_shape_nhwc_6(Model *model);
-bool is_ignored_shape_dynamic_output_shape_nhwc_6(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_shape_dynamic_output_shape_nhwc_6();
+void CreateModel_shape_nchw_float16_dynamic_output_shape_6(Model *model);
+bool is_ignored_shape_nchw_float16_dynamic_output_shape_6(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nchw_float16_dynamic_output_shape_6();
 
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_dynamic_output_shape_nhwc_6) {
-    execute(CreateModel_shape_dynamic_output_shape_nhwc_6,
-            is_ignored_shape_dynamic_output_shape_nhwc_6,
-            get_examples_shape_dynamic_output_shape_nhwc_6());
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nchw_float16_dynamic_output_shape_6) {
+    execute(CreateModel_shape_nchw_float16_dynamic_output_shape_6,
+            is_ignored_shape_nchw_float16_dynamic_output_shape_6,
+            get_examples_shape_nchw_float16_dynamic_output_shape_6());
 }
 
 } // namespace generated_tests::resize_nearest_neighbor
 
 namespace generated_tests::resize_nearest_neighbor {
 
-void CreateModel_shape_dynamic_output_shape_nhwc_relaxed_6(Model *model);
-bool is_ignored_shape_dynamic_output_shape_nhwc_relaxed_6(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_shape_dynamic_output_shape_nhwc_relaxed_6();
+void CreateModel_shape_nchw_float16_all_inputs_as_internal_6(Model *model);
+bool is_ignored_shape_nchw_float16_all_inputs_as_internal_6(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nchw_float16_all_inputs_as_internal_6();
 
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_dynamic_output_shape_nhwc_relaxed_6) {
-    execute(CreateModel_shape_dynamic_output_shape_nhwc_relaxed_6,
-            is_ignored_shape_dynamic_output_shape_nhwc_relaxed_6,
-            get_examples_shape_dynamic_output_shape_nhwc_relaxed_6());
+TEST_F(GeneratedTests, resize_nearest_neighbor_shape_nchw_float16_all_inputs_as_internal_6) {
+    execute(CreateModel_shape_nchw_float16_all_inputs_as_internal_6,
+            is_ignored_shape_nchw_float16_all_inputs_as_internal_6,
+            get_examples_shape_nchw_float16_all_inputs_as_internal_6());
 }
 
 } // namespace generated_tests::resize_nearest_neighbor
+TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_shape_nchw_float16_all_inputs_as_internal_6, generated_tests::resize_nearest_neighbor::CreateModel_shape_nchw_float16_all_inputs_as_internal_6)
 
 namespace generated_tests::resize_nearest_neighbor {
 
-void CreateModel_shape_dynamic_output_shape_nhwc_quant8_6(Model *model);
-bool is_ignored_shape_dynamic_output_shape_nhwc_quant8_6(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_shape_dynamic_output_shape_nhwc_quant8_6();
+void CreateModel_shape_nchw_float16_all_inputs_as_internal_dynamic_output_shape_6(Model *model);
+bool is_ignored_shape_nchw_float16_all_inputs_as_internal_dynamic_output_shape_6(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nchw_float16_all_inputs_as_internal_dynamic_output_shape_6();
 
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_dynamic_output_shape_nhwc_quant8_6) {
-    execute(CreateModel_shape_dynamic_output_shape_nhwc_quant8_6,
-            is_ignored_shape_dynamic_output_shape_nhwc_quant8_6,
-            get_examples_shape_dynamic_output_shape_nhwc_quant8_6());
-}
-
-} // namespace generated_tests::resize_nearest_neighbor
-
-namespace generated_tests::resize_nearest_neighbor {
-
-void CreateModel_shape_dynamic_output_shape_nhwc_float16_6(Model *model);
-bool is_ignored_shape_dynamic_output_shape_nhwc_float16_6(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_shape_dynamic_output_shape_nhwc_float16_6();
-
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_dynamic_output_shape_nhwc_float16_6) {
-    execute(CreateModel_shape_dynamic_output_shape_nhwc_float16_6,
-            is_ignored_shape_dynamic_output_shape_nhwc_float16_6,
-            get_examples_shape_dynamic_output_shape_nhwc_float16_6());
-}
-
-} // namespace generated_tests::resize_nearest_neighbor
-
-namespace generated_tests::resize_nearest_neighbor {
-
-void CreateModel_shape_dynamic_output_shape_nchw_6(Model *model);
-bool is_ignored_shape_dynamic_output_shape_nchw_6(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_shape_dynamic_output_shape_nchw_6();
-
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_dynamic_output_shape_nchw_6) {
-    execute(CreateModel_shape_dynamic_output_shape_nchw_6,
-            is_ignored_shape_dynamic_output_shape_nchw_6,
-            get_examples_shape_dynamic_output_shape_nchw_6());
-}
-
-} // namespace generated_tests::resize_nearest_neighbor
-
-namespace generated_tests::resize_nearest_neighbor {
-
-void CreateModel_shape_dynamic_output_shape_nchw_relaxed_6(Model *model);
-bool is_ignored_shape_dynamic_output_shape_nchw_relaxed_6(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_shape_dynamic_output_shape_nchw_relaxed_6();
-
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_dynamic_output_shape_nchw_relaxed_6) {
-    execute(CreateModel_shape_dynamic_output_shape_nchw_relaxed_6,
-            is_ignored_shape_dynamic_output_shape_nchw_relaxed_6,
-            get_examples_shape_dynamic_output_shape_nchw_relaxed_6());
-}
-
-} // namespace generated_tests::resize_nearest_neighbor
-
-namespace generated_tests::resize_nearest_neighbor {
-
-void CreateModel_shape_dynamic_output_shape_nchw_quant8_6(Model *model);
-bool is_ignored_shape_dynamic_output_shape_nchw_quant8_6(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_shape_dynamic_output_shape_nchw_quant8_6();
-
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_dynamic_output_shape_nchw_quant8_6) {
-    execute(CreateModel_shape_dynamic_output_shape_nchw_quant8_6,
-            is_ignored_shape_dynamic_output_shape_nchw_quant8_6,
-            get_examples_shape_dynamic_output_shape_nchw_quant8_6());
-}
-
-} // namespace generated_tests::resize_nearest_neighbor
-
-namespace generated_tests::resize_nearest_neighbor {
-
-void CreateModel_shape_dynamic_output_shape_nchw_float16_6(Model *model);
-bool is_ignored_shape_dynamic_output_shape_nchw_float16_6(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_shape_dynamic_output_shape_nchw_float16_6();
-
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_dynamic_output_shape_nchw_float16_6) {
-    execute(CreateModel_shape_dynamic_output_shape_nchw_float16_6,
-            is_ignored_shape_dynamic_output_shape_nchw_float16_6,
-            get_examples_shape_dynamic_output_shape_nchw_float16_6());
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nchw_float16_all_inputs_as_internal_dynamic_output_shape_6) {
+    execute(CreateModel_shape_nchw_float16_all_inputs_as_internal_dynamic_output_shape_6,
+            is_ignored_shape_nchw_float16_all_inputs_as_internal_dynamic_output_shape_6,
+            get_examples_shape_nchw_float16_all_inputs_as_internal_dynamic_output_shape_6());
 }
 
 } // namespace generated_tests::resize_nearest_neighbor
@@ -2550,6 +5080,49 @@ TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_scale_nhwc_6, generated_tests
 
 namespace generated_tests::resize_nearest_neighbor {
 
+void CreateModel_scale_nhwc_dynamic_output_shape_6(Model *model);
+bool is_ignored_scale_nhwc_dynamic_output_shape_6(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nhwc_dynamic_output_shape_6();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nhwc_dynamic_output_shape_6) {
+    execute(CreateModel_scale_nhwc_dynamic_output_shape_6,
+            is_ignored_scale_nhwc_dynamic_output_shape_6,
+            get_examples_scale_nhwc_dynamic_output_shape_6());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nhwc_all_inputs_as_internal_6(Model *model);
+bool is_ignored_scale_nhwc_all_inputs_as_internal_6(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nhwc_all_inputs_as_internal_6();
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_scale_nhwc_all_inputs_as_internal_6) {
+    execute(CreateModel_scale_nhwc_all_inputs_as_internal_6,
+            is_ignored_scale_nhwc_all_inputs_as_internal_6,
+            get_examples_scale_nhwc_all_inputs_as_internal_6());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_scale_nhwc_all_inputs_as_internal_6, generated_tests::resize_nearest_neighbor::CreateModel_scale_nhwc_all_inputs_as_internal_6)
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nhwc_all_inputs_as_internal_dynamic_output_shape_6(Model *model);
+bool is_ignored_scale_nhwc_all_inputs_as_internal_dynamic_output_shape_6(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nhwc_all_inputs_as_internal_dynamic_output_shape_6();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nhwc_all_inputs_as_internal_dynamic_output_shape_6) {
+    execute(CreateModel_scale_nhwc_all_inputs_as_internal_dynamic_output_shape_6,
+            is_ignored_scale_nhwc_all_inputs_as_internal_dynamic_output_shape_6,
+            get_examples_scale_nhwc_all_inputs_as_internal_dynamic_output_shape_6());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
 void CreateModel_scale_nhwc_relaxed_6(Model *model);
 bool is_ignored_scale_nhwc_relaxed_6(int);
 std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nhwc_relaxed_6();
@@ -2558,6 +5131,48 @@ TEST_F(GeneratedTests, resize_nearest_neighbor_scale_nhwc_relaxed_6) {
     execute(CreateModel_scale_nhwc_relaxed_6,
             is_ignored_scale_nhwc_relaxed_6,
             get_examples_scale_nhwc_relaxed_6());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nhwc_relaxed_dynamic_output_shape_6(Model *model);
+bool is_ignored_scale_nhwc_relaxed_dynamic_output_shape_6(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nhwc_relaxed_dynamic_output_shape_6();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nhwc_relaxed_dynamic_output_shape_6) {
+    execute(CreateModel_scale_nhwc_relaxed_dynamic_output_shape_6,
+            is_ignored_scale_nhwc_relaxed_dynamic_output_shape_6,
+            get_examples_scale_nhwc_relaxed_dynamic_output_shape_6());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nhwc_relaxed_all_inputs_as_internal_6(Model *model);
+bool is_ignored_scale_nhwc_relaxed_all_inputs_as_internal_6(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nhwc_relaxed_all_inputs_as_internal_6();
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_scale_nhwc_relaxed_all_inputs_as_internal_6) {
+    execute(CreateModel_scale_nhwc_relaxed_all_inputs_as_internal_6,
+            is_ignored_scale_nhwc_relaxed_all_inputs_as_internal_6,
+            get_examples_scale_nhwc_relaxed_all_inputs_as_internal_6());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_6(Model *model);
+bool is_ignored_scale_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_6(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_6();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_6) {
+    execute(CreateModel_scale_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_6,
+            is_ignored_scale_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_6,
+            get_examples_scale_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_6());
 }
 
 } // namespace generated_tests::resize_nearest_neighbor
@@ -2579,6 +5194,49 @@ TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_scale_nhwc_quant8_6, generate
 
 namespace generated_tests::resize_nearest_neighbor {
 
+void CreateModel_scale_nhwc_quant8_dynamic_output_shape_6(Model *model);
+bool is_ignored_scale_nhwc_quant8_dynamic_output_shape_6(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nhwc_quant8_dynamic_output_shape_6();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nhwc_quant8_dynamic_output_shape_6) {
+    execute(CreateModel_scale_nhwc_quant8_dynamic_output_shape_6,
+            is_ignored_scale_nhwc_quant8_dynamic_output_shape_6,
+            get_examples_scale_nhwc_quant8_dynamic_output_shape_6());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nhwc_quant8_all_inputs_as_internal_6(Model *model);
+bool is_ignored_scale_nhwc_quant8_all_inputs_as_internal_6(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nhwc_quant8_all_inputs_as_internal_6();
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_scale_nhwc_quant8_all_inputs_as_internal_6) {
+    execute(CreateModel_scale_nhwc_quant8_all_inputs_as_internal_6,
+            is_ignored_scale_nhwc_quant8_all_inputs_as_internal_6,
+            get_examples_scale_nhwc_quant8_all_inputs_as_internal_6());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_scale_nhwc_quant8_all_inputs_as_internal_6, generated_tests::resize_nearest_neighbor::CreateModel_scale_nhwc_quant8_all_inputs_as_internal_6)
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_6(Model *model);
+bool is_ignored_scale_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_6(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_6();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_6) {
+    execute(CreateModel_scale_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_6,
+            is_ignored_scale_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_6,
+            get_examples_scale_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_6());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
 void CreateModel_scale_nhwc_float16_6(Model *model);
 bool is_ignored_scale_nhwc_float16_6(int);
 std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nhwc_float16_6();
@@ -2591,6 +5249,49 @@ TEST_F(GeneratedTests, resize_nearest_neighbor_scale_nhwc_float16_6) {
 
 } // namespace generated_tests::resize_nearest_neighbor
 TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_scale_nhwc_float16_6, generated_tests::resize_nearest_neighbor::CreateModel_scale_nhwc_float16_6)
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nhwc_float16_dynamic_output_shape_6(Model *model);
+bool is_ignored_scale_nhwc_float16_dynamic_output_shape_6(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nhwc_float16_dynamic_output_shape_6();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nhwc_float16_dynamic_output_shape_6) {
+    execute(CreateModel_scale_nhwc_float16_dynamic_output_shape_6,
+            is_ignored_scale_nhwc_float16_dynamic_output_shape_6,
+            get_examples_scale_nhwc_float16_dynamic_output_shape_6());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nhwc_float16_all_inputs_as_internal_6(Model *model);
+bool is_ignored_scale_nhwc_float16_all_inputs_as_internal_6(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nhwc_float16_all_inputs_as_internal_6();
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_scale_nhwc_float16_all_inputs_as_internal_6) {
+    execute(CreateModel_scale_nhwc_float16_all_inputs_as_internal_6,
+            is_ignored_scale_nhwc_float16_all_inputs_as_internal_6,
+            get_examples_scale_nhwc_float16_all_inputs_as_internal_6());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_scale_nhwc_float16_all_inputs_as_internal_6, generated_tests::resize_nearest_neighbor::CreateModel_scale_nhwc_float16_all_inputs_as_internal_6)
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_6(Model *model);
+bool is_ignored_scale_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_6(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_6();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_6) {
+    execute(CreateModel_scale_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_6,
+            is_ignored_scale_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_6,
+            get_examples_scale_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_6());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
 
 namespace generated_tests::resize_nearest_neighbor {
 
@@ -2609,6 +5310,49 @@ TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_scale_nchw_6, generated_tests
 
 namespace generated_tests::resize_nearest_neighbor {
 
+void CreateModel_scale_nchw_dynamic_output_shape_6(Model *model);
+bool is_ignored_scale_nchw_dynamic_output_shape_6(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nchw_dynamic_output_shape_6();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nchw_dynamic_output_shape_6) {
+    execute(CreateModel_scale_nchw_dynamic_output_shape_6,
+            is_ignored_scale_nchw_dynamic_output_shape_6,
+            get_examples_scale_nchw_dynamic_output_shape_6());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nchw_all_inputs_as_internal_6(Model *model);
+bool is_ignored_scale_nchw_all_inputs_as_internal_6(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nchw_all_inputs_as_internal_6();
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_scale_nchw_all_inputs_as_internal_6) {
+    execute(CreateModel_scale_nchw_all_inputs_as_internal_6,
+            is_ignored_scale_nchw_all_inputs_as_internal_6,
+            get_examples_scale_nchw_all_inputs_as_internal_6());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_scale_nchw_all_inputs_as_internal_6, generated_tests::resize_nearest_neighbor::CreateModel_scale_nchw_all_inputs_as_internal_6)
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nchw_all_inputs_as_internal_dynamic_output_shape_6(Model *model);
+bool is_ignored_scale_nchw_all_inputs_as_internal_dynamic_output_shape_6(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nchw_all_inputs_as_internal_dynamic_output_shape_6();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nchw_all_inputs_as_internal_dynamic_output_shape_6) {
+    execute(CreateModel_scale_nchw_all_inputs_as_internal_dynamic_output_shape_6,
+            is_ignored_scale_nchw_all_inputs_as_internal_dynamic_output_shape_6,
+            get_examples_scale_nchw_all_inputs_as_internal_dynamic_output_shape_6());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
 void CreateModel_scale_nchw_relaxed_6(Model *model);
 bool is_ignored_scale_nchw_relaxed_6(int);
 std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nchw_relaxed_6();
@@ -2617,6 +5361,48 @@ TEST_F(GeneratedTests, resize_nearest_neighbor_scale_nchw_relaxed_6) {
     execute(CreateModel_scale_nchw_relaxed_6,
             is_ignored_scale_nchw_relaxed_6,
             get_examples_scale_nchw_relaxed_6());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nchw_relaxed_dynamic_output_shape_6(Model *model);
+bool is_ignored_scale_nchw_relaxed_dynamic_output_shape_6(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nchw_relaxed_dynamic_output_shape_6();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nchw_relaxed_dynamic_output_shape_6) {
+    execute(CreateModel_scale_nchw_relaxed_dynamic_output_shape_6,
+            is_ignored_scale_nchw_relaxed_dynamic_output_shape_6,
+            get_examples_scale_nchw_relaxed_dynamic_output_shape_6());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nchw_relaxed_all_inputs_as_internal_6(Model *model);
+bool is_ignored_scale_nchw_relaxed_all_inputs_as_internal_6(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nchw_relaxed_all_inputs_as_internal_6();
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_scale_nchw_relaxed_all_inputs_as_internal_6) {
+    execute(CreateModel_scale_nchw_relaxed_all_inputs_as_internal_6,
+            is_ignored_scale_nchw_relaxed_all_inputs_as_internal_6,
+            get_examples_scale_nchw_relaxed_all_inputs_as_internal_6());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_6(Model *model);
+bool is_ignored_scale_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_6(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_6();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_6) {
+    execute(CreateModel_scale_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_6,
+            is_ignored_scale_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_6,
+            get_examples_scale_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_6());
 }
 
 } // namespace generated_tests::resize_nearest_neighbor
@@ -2638,6 +5424,49 @@ TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_scale_nchw_quant8_6, generate
 
 namespace generated_tests::resize_nearest_neighbor {
 
+void CreateModel_scale_nchw_quant8_dynamic_output_shape_6(Model *model);
+bool is_ignored_scale_nchw_quant8_dynamic_output_shape_6(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nchw_quant8_dynamic_output_shape_6();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nchw_quant8_dynamic_output_shape_6) {
+    execute(CreateModel_scale_nchw_quant8_dynamic_output_shape_6,
+            is_ignored_scale_nchw_quant8_dynamic_output_shape_6,
+            get_examples_scale_nchw_quant8_dynamic_output_shape_6());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nchw_quant8_all_inputs_as_internal_6(Model *model);
+bool is_ignored_scale_nchw_quant8_all_inputs_as_internal_6(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nchw_quant8_all_inputs_as_internal_6();
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_scale_nchw_quant8_all_inputs_as_internal_6) {
+    execute(CreateModel_scale_nchw_quant8_all_inputs_as_internal_6,
+            is_ignored_scale_nchw_quant8_all_inputs_as_internal_6,
+            get_examples_scale_nchw_quant8_all_inputs_as_internal_6());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_scale_nchw_quant8_all_inputs_as_internal_6, generated_tests::resize_nearest_neighbor::CreateModel_scale_nchw_quant8_all_inputs_as_internal_6)
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_6(Model *model);
+bool is_ignored_scale_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_6(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_6();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_6) {
+    execute(CreateModel_scale_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_6,
+            is_ignored_scale_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_6,
+            get_examples_scale_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_6());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
 void CreateModel_scale_nchw_float16_6(Model *model);
 bool is_ignored_scale_nchw_float16_6(int);
 std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nchw_float16_6();
@@ -2653,112 +5482,43 @@ TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_scale_nchw_float16_6, generat
 
 namespace generated_tests::resize_nearest_neighbor {
 
-void CreateModel_scale_dynamic_output_shape_nhwc_6(Model *model);
-bool is_ignored_scale_dynamic_output_shape_nhwc_6(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_scale_dynamic_output_shape_nhwc_6();
+void CreateModel_scale_nchw_float16_dynamic_output_shape_6(Model *model);
+bool is_ignored_scale_nchw_float16_dynamic_output_shape_6(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nchw_float16_dynamic_output_shape_6();
 
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_dynamic_output_shape_nhwc_6) {
-    execute(CreateModel_scale_dynamic_output_shape_nhwc_6,
-            is_ignored_scale_dynamic_output_shape_nhwc_6,
-            get_examples_scale_dynamic_output_shape_nhwc_6());
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nchw_float16_dynamic_output_shape_6) {
+    execute(CreateModel_scale_nchw_float16_dynamic_output_shape_6,
+            is_ignored_scale_nchw_float16_dynamic_output_shape_6,
+            get_examples_scale_nchw_float16_dynamic_output_shape_6());
 }
 
 } // namespace generated_tests::resize_nearest_neighbor
 
 namespace generated_tests::resize_nearest_neighbor {
 
-void CreateModel_scale_dynamic_output_shape_nhwc_relaxed_6(Model *model);
-bool is_ignored_scale_dynamic_output_shape_nhwc_relaxed_6(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_scale_dynamic_output_shape_nhwc_relaxed_6();
+void CreateModel_scale_nchw_float16_all_inputs_as_internal_6(Model *model);
+bool is_ignored_scale_nchw_float16_all_inputs_as_internal_6(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nchw_float16_all_inputs_as_internal_6();
 
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_dynamic_output_shape_nhwc_relaxed_6) {
-    execute(CreateModel_scale_dynamic_output_shape_nhwc_relaxed_6,
-            is_ignored_scale_dynamic_output_shape_nhwc_relaxed_6,
-            get_examples_scale_dynamic_output_shape_nhwc_relaxed_6());
+TEST_F(GeneratedTests, resize_nearest_neighbor_scale_nchw_float16_all_inputs_as_internal_6) {
+    execute(CreateModel_scale_nchw_float16_all_inputs_as_internal_6,
+            is_ignored_scale_nchw_float16_all_inputs_as_internal_6,
+            get_examples_scale_nchw_float16_all_inputs_as_internal_6());
 }
 
 } // namespace generated_tests::resize_nearest_neighbor
+TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_scale_nchw_float16_all_inputs_as_internal_6, generated_tests::resize_nearest_neighbor::CreateModel_scale_nchw_float16_all_inputs_as_internal_6)
 
 namespace generated_tests::resize_nearest_neighbor {
 
-void CreateModel_scale_dynamic_output_shape_nhwc_quant8_6(Model *model);
-bool is_ignored_scale_dynamic_output_shape_nhwc_quant8_6(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_scale_dynamic_output_shape_nhwc_quant8_6();
+void CreateModel_scale_nchw_float16_all_inputs_as_internal_dynamic_output_shape_6(Model *model);
+bool is_ignored_scale_nchw_float16_all_inputs_as_internal_dynamic_output_shape_6(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nchw_float16_all_inputs_as_internal_dynamic_output_shape_6();
 
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_dynamic_output_shape_nhwc_quant8_6) {
-    execute(CreateModel_scale_dynamic_output_shape_nhwc_quant8_6,
-            is_ignored_scale_dynamic_output_shape_nhwc_quant8_6,
-            get_examples_scale_dynamic_output_shape_nhwc_quant8_6());
-}
-
-} // namespace generated_tests::resize_nearest_neighbor
-
-namespace generated_tests::resize_nearest_neighbor {
-
-void CreateModel_scale_dynamic_output_shape_nhwc_float16_6(Model *model);
-bool is_ignored_scale_dynamic_output_shape_nhwc_float16_6(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_scale_dynamic_output_shape_nhwc_float16_6();
-
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_dynamic_output_shape_nhwc_float16_6) {
-    execute(CreateModel_scale_dynamic_output_shape_nhwc_float16_6,
-            is_ignored_scale_dynamic_output_shape_nhwc_float16_6,
-            get_examples_scale_dynamic_output_shape_nhwc_float16_6());
-}
-
-} // namespace generated_tests::resize_nearest_neighbor
-
-namespace generated_tests::resize_nearest_neighbor {
-
-void CreateModel_scale_dynamic_output_shape_nchw_6(Model *model);
-bool is_ignored_scale_dynamic_output_shape_nchw_6(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_scale_dynamic_output_shape_nchw_6();
-
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_dynamic_output_shape_nchw_6) {
-    execute(CreateModel_scale_dynamic_output_shape_nchw_6,
-            is_ignored_scale_dynamic_output_shape_nchw_6,
-            get_examples_scale_dynamic_output_shape_nchw_6());
-}
-
-} // namespace generated_tests::resize_nearest_neighbor
-
-namespace generated_tests::resize_nearest_neighbor {
-
-void CreateModel_scale_dynamic_output_shape_nchw_relaxed_6(Model *model);
-bool is_ignored_scale_dynamic_output_shape_nchw_relaxed_6(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_scale_dynamic_output_shape_nchw_relaxed_6();
-
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_dynamic_output_shape_nchw_relaxed_6) {
-    execute(CreateModel_scale_dynamic_output_shape_nchw_relaxed_6,
-            is_ignored_scale_dynamic_output_shape_nchw_relaxed_6,
-            get_examples_scale_dynamic_output_shape_nchw_relaxed_6());
-}
-
-} // namespace generated_tests::resize_nearest_neighbor
-
-namespace generated_tests::resize_nearest_neighbor {
-
-void CreateModel_scale_dynamic_output_shape_nchw_quant8_6(Model *model);
-bool is_ignored_scale_dynamic_output_shape_nchw_quant8_6(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_scale_dynamic_output_shape_nchw_quant8_6();
-
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_dynamic_output_shape_nchw_quant8_6) {
-    execute(CreateModel_scale_dynamic_output_shape_nchw_quant8_6,
-            is_ignored_scale_dynamic_output_shape_nchw_quant8_6,
-            get_examples_scale_dynamic_output_shape_nchw_quant8_6());
-}
-
-} // namespace generated_tests::resize_nearest_neighbor
-
-namespace generated_tests::resize_nearest_neighbor {
-
-void CreateModel_scale_dynamic_output_shape_nchw_float16_6(Model *model);
-bool is_ignored_scale_dynamic_output_shape_nchw_float16_6(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_scale_dynamic_output_shape_nchw_float16_6();
-
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_dynamic_output_shape_nchw_float16_6) {
-    execute(CreateModel_scale_dynamic_output_shape_nchw_float16_6,
-            is_ignored_scale_dynamic_output_shape_nchw_float16_6,
-            get_examples_scale_dynamic_output_shape_nchw_float16_6());
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nchw_float16_all_inputs_as_internal_dynamic_output_shape_6) {
+    execute(CreateModel_scale_nchw_float16_all_inputs_as_internal_dynamic_output_shape_6,
+            is_ignored_scale_nchw_float16_all_inputs_as_internal_dynamic_output_shape_6,
+            get_examples_scale_nchw_float16_all_inputs_as_internal_dynamic_output_shape_6());
 }
 
 } // namespace generated_tests::resize_nearest_neighbor
@@ -2780,6 +5540,49 @@ TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_shape_nhwc_7, generated_tests
 
 namespace generated_tests::resize_nearest_neighbor {
 
+void CreateModel_shape_nhwc_dynamic_output_shape_7(Model *model);
+bool is_ignored_shape_nhwc_dynamic_output_shape_7(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nhwc_dynamic_output_shape_7();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nhwc_dynamic_output_shape_7) {
+    execute(CreateModel_shape_nhwc_dynamic_output_shape_7,
+            is_ignored_shape_nhwc_dynamic_output_shape_7,
+            get_examples_shape_nhwc_dynamic_output_shape_7());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nhwc_all_inputs_as_internal_7(Model *model);
+bool is_ignored_shape_nhwc_all_inputs_as_internal_7(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nhwc_all_inputs_as_internal_7();
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_shape_nhwc_all_inputs_as_internal_7) {
+    execute(CreateModel_shape_nhwc_all_inputs_as_internal_7,
+            is_ignored_shape_nhwc_all_inputs_as_internal_7,
+            get_examples_shape_nhwc_all_inputs_as_internal_7());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_shape_nhwc_all_inputs_as_internal_7, generated_tests::resize_nearest_neighbor::CreateModel_shape_nhwc_all_inputs_as_internal_7)
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nhwc_all_inputs_as_internal_dynamic_output_shape_7(Model *model);
+bool is_ignored_shape_nhwc_all_inputs_as_internal_dynamic_output_shape_7(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nhwc_all_inputs_as_internal_dynamic_output_shape_7();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nhwc_all_inputs_as_internal_dynamic_output_shape_7) {
+    execute(CreateModel_shape_nhwc_all_inputs_as_internal_dynamic_output_shape_7,
+            is_ignored_shape_nhwc_all_inputs_as_internal_dynamic_output_shape_7,
+            get_examples_shape_nhwc_all_inputs_as_internal_dynamic_output_shape_7());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
 void CreateModel_shape_nhwc_relaxed_7(Model *model);
 bool is_ignored_shape_nhwc_relaxed_7(int);
 std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nhwc_relaxed_7();
@@ -2788,6 +5591,48 @@ TEST_F(GeneratedTests, resize_nearest_neighbor_shape_nhwc_relaxed_7) {
     execute(CreateModel_shape_nhwc_relaxed_7,
             is_ignored_shape_nhwc_relaxed_7,
             get_examples_shape_nhwc_relaxed_7());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nhwc_relaxed_dynamic_output_shape_7(Model *model);
+bool is_ignored_shape_nhwc_relaxed_dynamic_output_shape_7(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nhwc_relaxed_dynamic_output_shape_7();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nhwc_relaxed_dynamic_output_shape_7) {
+    execute(CreateModel_shape_nhwc_relaxed_dynamic_output_shape_7,
+            is_ignored_shape_nhwc_relaxed_dynamic_output_shape_7,
+            get_examples_shape_nhwc_relaxed_dynamic_output_shape_7());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nhwc_relaxed_all_inputs_as_internal_7(Model *model);
+bool is_ignored_shape_nhwc_relaxed_all_inputs_as_internal_7(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nhwc_relaxed_all_inputs_as_internal_7();
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_shape_nhwc_relaxed_all_inputs_as_internal_7) {
+    execute(CreateModel_shape_nhwc_relaxed_all_inputs_as_internal_7,
+            is_ignored_shape_nhwc_relaxed_all_inputs_as_internal_7,
+            get_examples_shape_nhwc_relaxed_all_inputs_as_internal_7());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_7(Model *model);
+bool is_ignored_shape_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_7(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_7();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_7) {
+    execute(CreateModel_shape_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_7,
+            is_ignored_shape_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_7,
+            get_examples_shape_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_7());
 }
 
 } // namespace generated_tests::resize_nearest_neighbor
@@ -2809,6 +5654,49 @@ TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_shape_nhwc_quant8_7, generate
 
 namespace generated_tests::resize_nearest_neighbor {
 
+void CreateModel_shape_nhwc_quant8_dynamic_output_shape_7(Model *model);
+bool is_ignored_shape_nhwc_quant8_dynamic_output_shape_7(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nhwc_quant8_dynamic_output_shape_7();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nhwc_quant8_dynamic_output_shape_7) {
+    execute(CreateModel_shape_nhwc_quant8_dynamic_output_shape_7,
+            is_ignored_shape_nhwc_quant8_dynamic_output_shape_7,
+            get_examples_shape_nhwc_quant8_dynamic_output_shape_7());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nhwc_quant8_all_inputs_as_internal_7(Model *model);
+bool is_ignored_shape_nhwc_quant8_all_inputs_as_internal_7(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nhwc_quant8_all_inputs_as_internal_7();
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_shape_nhwc_quant8_all_inputs_as_internal_7) {
+    execute(CreateModel_shape_nhwc_quant8_all_inputs_as_internal_7,
+            is_ignored_shape_nhwc_quant8_all_inputs_as_internal_7,
+            get_examples_shape_nhwc_quant8_all_inputs_as_internal_7());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_shape_nhwc_quant8_all_inputs_as_internal_7, generated_tests::resize_nearest_neighbor::CreateModel_shape_nhwc_quant8_all_inputs_as_internal_7)
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_7(Model *model);
+bool is_ignored_shape_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_7(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_7();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_7) {
+    execute(CreateModel_shape_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_7,
+            is_ignored_shape_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_7,
+            get_examples_shape_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_7());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
 void CreateModel_shape_nhwc_float16_7(Model *model);
 bool is_ignored_shape_nhwc_float16_7(int);
 std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nhwc_float16_7();
@@ -2821,6 +5709,49 @@ TEST_F(GeneratedTests, resize_nearest_neighbor_shape_nhwc_float16_7) {
 
 } // namespace generated_tests::resize_nearest_neighbor
 TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_shape_nhwc_float16_7, generated_tests::resize_nearest_neighbor::CreateModel_shape_nhwc_float16_7)
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nhwc_float16_dynamic_output_shape_7(Model *model);
+bool is_ignored_shape_nhwc_float16_dynamic_output_shape_7(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nhwc_float16_dynamic_output_shape_7();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nhwc_float16_dynamic_output_shape_7) {
+    execute(CreateModel_shape_nhwc_float16_dynamic_output_shape_7,
+            is_ignored_shape_nhwc_float16_dynamic_output_shape_7,
+            get_examples_shape_nhwc_float16_dynamic_output_shape_7());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nhwc_float16_all_inputs_as_internal_7(Model *model);
+bool is_ignored_shape_nhwc_float16_all_inputs_as_internal_7(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nhwc_float16_all_inputs_as_internal_7();
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_shape_nhwc_float16_all_inputs_as_internal_7) {
+    execute(CreateModel_shape_nhwc_float16_all_inputs_as_internal_7,
+            is_ignored_shape_nhwc_float16_all_inputs_as_internal_7,
+            get_examples_shape_nhwc_float16_all_inputs_as_internal_7());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_shape_nhwc_float16_all_inputs_as_internal_7, generated_tests::resize_nearest_neighbor::CreateModel_shape_nhwc_float16_all_inputs_as_internal_7)
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_7(Model *model);
+bool is_ignored_shape_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_7(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_7();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_7) {
+    execute(CreateModel_shape_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_7,
+            is_ignored_shape_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_7,
+            get_examples_shape_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_7());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
 
 namespace generated_tests::resize_nearest_neighbor {
 
@@ -2839,6 +5770,49 @@ TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_shape_nchw_7, generated_tests
 
 namespace generated_tests::resize_nearest_neighbor {
 
+void CreateModel_shape_nchw_dynamic_output_shape_7(Model *model);
+bool is_ignored_shape_nchw_dynamic_output_shape_7(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nchw_dynamic_output_shape_7();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nchw_dynamic_output_shape_7) {
+    execute(CreateModel_shape_nchw_dynamic_output_shape_7,
+            is_ignored_shape_nchw_dynamic_output_shape_7,
+            get_examples_shape_nchw_dynamic_output_shape_7());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nchw_all_inputs_as_internal_7(Model *model);
+bool is_ignored_shape_nchw_all_inputs_as_internal_7(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nchw_all_inputs_as_internal_7();
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_shape_nchw_all_inputs_as_internal_7) {
+    execute(CreateModel_shape_nchw_all_inputs_as_internal_7,
+            is_ignored_shape_nchw_all_inputs_as_internal_7,
+            get_examples_shape_nchw_all_inputs_as_internal_7());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_shape_nchw_all_inputs_as_internal_7, generated_tests::resize_nearest_neighbor::CreateModel_shape_nchw_all_inputs_as_internal_7)
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nchw_all_inputs_as_internal_dynamic_output_shape_7(Model *model);
+bool is_ignored_shape_nchw_all_inputs_as_internal_dynamic_output_shape_7(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nchw_all_inputs_as_internal_dynamic_output_shape_7();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nchw_all_inputs_as_internal_dynamic_output_shape_7) {
+    execute(CreateModel_shape_nchw_all_inputs_as_internal_dynamic_output_shape_7,
+            is_ignored_shape_nchw_all_inputs_as_internal_dynamic_output_shape_7,
+            get_examples_shape_nchw_all_inputs_as_internal_dynamic_output_shape_7());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
 void CreateModel_shape_nchw_relaxed_7(Model *model);
 bool is_ignored_shape_nchw_relaxed_7(int);
 std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nchw_relaxed_7();
@@ -2847,6 +5821,48 @@ TEST_F(GeneratedTests, resize_nearest_neighbor_shape_nchw_relaxed_7) {
     execute(CreateModel_shape_nchw_relaxed_7,
             is_ignored_shape_nchw_relaxed_7,
             get_examples_shape_nchw_relaxed_7());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nchw_relaxed_dynamic_output_shape_7(Model *model);
+bool is_ignored_shape_nchw_relaxed_dynamic_output_shape_7(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nchw_relaxed_dynamic_output_shape_7();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nchw_relaxed_dynamic_output_shape_7) {
+    execute(CreateModel_shape_nchw_relaxed_dynamic_output_shape_7,
+            is_ignored_shape_nchw_relaxed_dynamic_output_shape_7,
+            get_examples_shape_nchw_relaxed_dynamic_output_shape_7());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nchw_relaxed_all_inputs_as_internal_7(Model *model);
+bool is_ignored_shape_nchw_relaxed_all_inputs_as_internal_7(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nchw_relaxed_all_inputs_as_internal_7();
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_shape_nchw_relaxed_all_inputs_as_internal_7) {
+    execute(CreateModel_shape_nchw_relaxed_all_inputs_as_internal_7,
+            is_ignored_shape_nchw_relaxed_all_inputs_as_internal_7,
+            get_examples_shape_nchw_relaxed_all_inputs_as_internal_7());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_7(Model *model);
+bool is_ignored_shape_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_7(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_7();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_7) {
+    execute(CreateModel_shape_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_7,
+            is_ignored_shape_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_7,
+            get_examples_shape_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_7());
 }
 
 } // namespace generated_tests::resize_nearest_neighbor
@@ -2868,6 +5884,49 @@ TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_shape_nchw_quant8_7, generate
 
 namespace generated_tests::resize_nearest_neighbor {
 
+void CreateModel_shape_nchw_quant8_dynamic_output_shape_7(Model *model);
+bool is_ignored_shape_nchw_quant8_dynamic_output_shape_7(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nchw_quant8_dynamic_output_shape_7();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nchw_quant8_dynamic_output_shape_7) {
+    execute(CreateModel_shape_nchw_quant8_dynamic_output_shape_7,
+            is_ignored_shape_nchw_quant8_dynamic_output_shape_7,
+            get_examples_shape_nchw_quant8_dynamic_output_shape_7());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nchw_quant8_all_inputs_as_internal_7(Model *model);
+bool is_ignored_shape_nchw_quant8_all_inputs_as_internal_7(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nchw_quant8_all_inputs_as_internal_7();
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_shape_nchw_quant8_all_inputs_as_internal_7) {
+    execute(CreateModel_shape_nchw_quant8_all_inputs_as_internal_7,
+            is_ignored_shape_nchw_quant8_all_inputs_as_internal_7,
+            get_examples_shape_nchw_quant8_all_inputs_as_internal_7());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_shape_nchw_quant8_all_inputs_as_internal_7, generated_tests::resize_nearest_neighbor::CreateModel_shape_nchw_quant8_all_inputs_as_internal_7)
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_7(Model *model);
+bool is_ignored_shape_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_7(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_7();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_7) {
+    execute(CreateModel_shape_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_7,
+            is_ignored_shape_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_7,
+            get_examples_shape_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_7());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
 void CreateModel_shape_nchw_float16_7(Model *model);
 bool is_ignored_shape_nchw_float16_7(int);
 std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nchw_float16_7();
@@ -2883,112 +5942,43 @@ TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_shape_nchw_float16_7, generat
 
 namespace generated_tests::resize_nearest_neighbor {
 
-void CreateModel_shape_dynamic_output_shape_nhwc_7(Model *model);
-bool is_ignored_shape_dynamic_output_shape_nhwc_7(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_shape_dynamic_output_shape_nhwc_7();
+void CreateModel_shape_nchw_float16_dynamic_output_shape_7(Model *model);
+bool is_ignored_shape_nchw_float16_dynamic_output_shape_7(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nchw_float16_dynamic_output_shape_7();
 
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_dynamic_output_shape_nhwc_7) {
-    execute(CreateModel_shape_dynamic_output_shape_nhwc_7,
-            is_ignored_shape_dynamic_output_shape_nhwc_7,
-            get_examples_shape_dynamic_output_shape_nhwc_7());
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nchw_float16_dynamic_output_shape_7) {
+    execute(CreateModel_shape_nchw_float16_dynamic_output_shape_7,
+            is_ignored_shape_nchw_float16_dynamic_output_shape_7,
+            get_examples_shape_nchw_float16_dynamic_output_shape_7());
 }
 
 } // namespace generated_tests::resize_nearest_neighbor
 
 namespace generated_tests::resize_nearest_neighbor {
 
-void CreateModel_shape_dynamic_output_shape_nhwc_relaxed_7(Model *model);
-bool is_ignored_shape_dynamic_output_shape_nhwc_relaxed_7(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_shape_dynamic_output_shape_nhwc_relaxed_7();
+void CreateModel_shape_nchw_float16_all_inputs_as_internal_7(Model *model);
+bool is_ignored_shape_nchw_float16_all_inputs_as_internal_7(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nchw_float16_all_inputs_as_internal_7();
 
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_dynamic_output_shape_nhwc_relaxed_7) {
-    execute(CreateModel_shape_dynamic_output_shape_nhwc_relaxed_7,
-            is_ignored_shape_dynamic_output_shape_nhwc_relaxed_7,
-            get_examples_shape_dynamic_output_shape_nhwc_relaxed_7());
+TEST_F(GeneratedTests, resize_nearest_neighbor_shape_nchw_float16_all_inputs_as_internal_7) {
+    execute(CreateModel_shape_nchw_float16_all_inputs_as_internal_7,
+            is_ignored_shape_nchw_float16_all_inputs_as_internal_7,
+            get_examples_shape_nchw_float16_all_inputs_as_internal_7());
 }
 
 } // namespace generated_tests::resize_nearest_neighbor
+TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_shape_nchw_float16_all_inputs_as_internal_7, generated_tests::resize_nearest_neighbor::CreateModel_shape_nchw_float16_all_inputs_as_internal_7)
 
 namespace generated_tests::resize_nearest_neighbor {
 
-void CreateModel_shape_dynamic_output_shape_nhwc_quant8_7(Model *model);
-bool is_ignored_shape_dynamic_output_shape_nhwc_quant8_7(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_shape_dynamic_output_shape_nhwc_quant8_7();
+void CreateModel_shape_nchw_float16_all_inputs_as_internal_dynamic_output_shape_7(Model *model);
+bool is_ignored_shape_nchw_float16_all_inputs_as_internal_dynamic_output_shape_7(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nchw_float16_all_inputs_as_internal_dynamic_output_shape_7();
 
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_dynamic_output_shape_nhwc_quant8_7) {
-    execute(CreateModel_shape_dynamic_output_shape_nhwc_quant8_7,
-            is_ignored_shape_dynamic_output_shape_nhwc_quant8_7,
-            get_examples_shape_dynamic_output_shape_nhwc_quant8_7());
-}
-
-} // namespace generated_tests::resize_nearest_neighbor
-
-namespace generated_tests::resize_nearest_neighbor {
-
-void CreateModel_shape_dynamic_output_shape_nhwc_float16_7(Model *model);
-bool is_ignored_shape_dynamic_output_shape_nhwc_float16_7(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_shape_dynamic_output_shape_nhwc_float16_7();
-
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_dynamic_output_shape_nhwc_float16_7) {
-    execute(CreateModel_shape_dynamic_output_shape_nhwc_float16_7,
-            is_ignored_shape_dynamic_output_shape_nhwc_float16_7,
-            get_examples_shape_dynamic_output_shape_nhwc_float16_7());
-}
-
-} // namespace generated_tests::resize_nearest_neighbor
-
-namespace generated_tests::resize_nearest_neighbor {
-
-void CreateModel_shape_dynamic_output_shape_nchw_7(Model *model);
-bool is_ignored_shape_dynamic_output_shape_nchw_7(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_shape_dynamic_output_shape_nchw_7();
-
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_dynamic_output_shape_nchw_7) {
-    execute(CreateModel_shape_dynamic_output_shape_nchw_7,
-            is_ignored_shape_dynamic_output_shape_nchw_7,
-            get_examples_shape_dynamic_output_shape_nchw_7());
-}
-
-} // namespace generated_tests::resize_nearest_neighbor
-
-namespace generated_tests::resize_nearest_neighbor {
-
-void CreateModel_shape_dynamic_output_shape_nchw_relaxed_7(Model *model);
-bool is_ignored_shape_dynamic_output_shape_nchw_relaxed_7(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_shape_dynamic_output_shape_nchw_relaxed_7();
-
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_dynamic_output_shape_nchw_relaxed_7) {
-    execute(CreateModel_shape_dynamic_output_shape_nchw_relaxed_7,
-            is_ignored_shape_dynamic_output_shape_nchw_relaxed_7,
-            get_examples_shape_dynamic_output_shape_nchw_relaxed_7());
-}
-
-} // namespace generated_tests::resize_nearest_neighbor
-
-namespace generated_tests::resize_nearest_neighbor {
-
-void CreateModel_shape_dynamic_output_shape_nchw_quant8_7(Model *model);
-bool is_ignored_shape_dynamic_output_shape_nchw_quant8_7(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_shape_dynamic_output_shape_nchw_quant8_7();
-
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_dynamic_output_shape_nchw_quant8_7) {
-    execute(CreateModel_shape_dynamic_output_shape_nchw_quant8_7,
-            is_ignored_shape_dynamic_output_shape_nchw_quant8_7,
-            get_examples_shape_dynamic_output_shape_nchw_quant8_7());
-}
-
-} // namespace generated_tests::resize_nearest_neighbor
-
-namespace generated_tests::resize_nearest_neighbor {
-
-void CreateModel_shape_dynamic_output_shape_nchw_float16_7(Model *model);
-bool is_ignored_shape_dynamic_output_shape_nchw_float16_7(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_shape_dynamic_output_shape_nchw_float16_7();
-
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_dynamic_output_shape_nchw_float16_7) {
-    execute(CreateModel_shape_dynamic_output_shape_nchw_float16_7,
-            is_ignored_shape_dynamic_output_shape_nchw_float16_7,
-            get_examples_shape_dynamic_output_shape_nchw_float16_7());
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nchw_float16_all_inputs_as_internal_dynamic_output_shape_7) {
+    execute(CreateModel_shape_nchw_float16_all_inputs_as_internal_dynamic_output_shape_7,
+            is_ignored_shape_nchw_float16_all_inputs_as_internal_dynamic_output_shape_7,
+            get_examples_shape_nchw_float16_all_inputs_as_internal_dynamic_output_shape_7());
 }
 
 } // namespace generated_tests::resize_nearest_neighbor
@@ -3010,6 +6000,49 @@ TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_scale_nhwc_7, generated_tests
 
 namespace generated_tests::resize_nearest_neighbor {
 
+void CreateModel_scale_nhwc_dynamic_output_shape_7(Model *model);
+bool is_ignored_scale_nhwc_dynamic_output_shape_7(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nhwc_dynamic_output_shape_7();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nhwc_dynamic_output_shape_7) {
+    execute(CreateModel_scale_nhwc_dynamic_output_shape_7,
+            is_ignored_scale_nhwc_dynamic_output_shape_7,
+            get_examples_scale_nhwc_dynamic_output_shape_7());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nhwc_all_inputs_as_internal_7(Model *model);
+bool is_ignored_scale_nhwc_all_inputs_as_internal_7(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nhwc_all_inputs_as_internal_7();
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_scale_nhwc_all_inputs_as_internal_7) {
+    execute(CreateModel_scale_nhwc_all_inputs_as_internal_7,
+            is_ignored_scale_nhwc_all_inputs_as_internal_7,
+            get_examples_scale_nhwc_all_inputs_as_internal_7());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_scale_nhwc_all_inputs_as_internal_7, generated_tests::resize_nearest_neighbor::CreateModel_scale_nhwc_all_inputs_as_internal_7)
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nhwc_all_inputs_as_internal_dynamic_output_shape_7(Model *model);
+bool is_ignored_scale_nhwc_all_inputs_as_internal_dynamic_output_shape_7(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nhwc_all_inputs_as_internal_dynamic_output_shape_7();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nhwc_all_inputs_as_internal_dynamic_output_shape_7) {
+    execute(CreateModel_scale_nhwc_all_inputs_as_internal_dynamic_output_shape_7,
+            is_ignored_scale_nhwc_all_inputs_as_internal_dynamic_output_shape_7,
+            get_examples_scale_nhwc_all_inputs_as_internal_dynamic_output_shape_7());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
 void CreateModel_scale_nhwc_relaxed_7(Model *model);
 bool is_ignored_scale_nhwc_relaxed_7(int);
 std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nhwc_relaxed_7();
@@ -3018,6 +6051,48 @@ TEST_F(GeneratedTests, resize_nearest_neighbor_scale_nhwc_relaxed_7) {
     execute(CreateModel_scale_nhwc_relaxed_7,
             is_ignored_scale_nhwc_relaxed_7,
             get_examples_scale_nhwc_relaxed_7());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nhwc_relaxed_dynamic_output_shape_7(Model *model);
+bool is_ignored_scale_nhwc_relaxed_dynamic_output_shape_7(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nhwc_relaxed_dynamic_output_shape_7();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nhwc_relaxed_dynamic_output_shape_7) {
+    execute(CreateModel_scale_nhwc_relaxed_dynamic_output_shape_7,
+            is_ignored_scale_nhwc_relaxed_dynamic_output_shape_7,
+            get_examples_scale_nhwc_relaxed_dynamic_output_shape_7());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nhwc_relaxed_all_inputs_as_internal_7(Model *model);
+bool is_ignored_scale_nhwc_relaxed_all_inputs_as_internal_7(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nhwc_relaxed_all_inputs_as_internal_7();
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_scale_nhwc_relaxed_all_inputs_as_internal_7) {
+    execute(CreateModel_scale_nhwc_relaxed_all_inputs_as_internal_7,
+            is_ignored_scale_nhwc_relaxed_all_inputs_as_internal_7,
+            get_examples_scale_nhwc_relaxed_all_inputs_as_internal_7());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_7(Model *model);
+bool is_ignored_scale_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_7(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_7();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_7) {
+    execute(CreateModel_scale_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_7,
+            is_ignored_scale_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_7,
+            get_examples_scale_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_7());
 }
 
 } // namespace generated_tests::resize_nearest_neighbor
@@ -3039,6 +6114,49 @@ TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_scale_nhwc_quant8_7, generate
 
 namespace generated_tests::resize_nearest_neighbor {
 
+void CreateModel_scale_nhwc_quant8_dynamic_output_shape_7(Model *model);
+bool is_ignored_scale_nhwc_quant8_dynamic_output_shape_7(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nhwc_quant8_dynamic_output_shape_7();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nhwc_quant8_dynamic_output_shape_7) {
+    execute(CreateModel_scale_nhwc_quant8_dynamic_output_shape_7,
+            is_ignored_scale_nhwc_quant8_dynamic_output_shape_7,
+            get_examples_scale_nhwc_quant8_dynamic_output_shape_7());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nhwc_quant8_all_inputs_as_internal_7(Model *model);
+bool is_ignored_scale_nhwc_quant8_all_inputs_as_internal_7(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nhwc_quant8_all_inputs_as_internal_7();
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_scale_nhwc_quant8_all_inputs_as_internal_7) {
+    execute(CreateModel_scale_nhwc_quant8_all_inputs_as_internal_7,
+            is_ignored_scale_nhwc_quant8_all_inputs_as_internal_7,
+            get_examples_scale_nhwc_quant8_all_inputs_as_internal_7());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_scale_nhwc_quant8_all_inputs_as_internal_7, generated_tests::resize_nearest_neighbor::CreateModel_scale_nhwc_quant8_all_inputs_as_internal_7)
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_7(Model *model);
+bool is_ignored_scale_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_7(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_7();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_7) {
+    execute(CreateModel_scale_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_7,
+            is_ignored_scale_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_7,
+            get_examples_scale_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_7());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
 void CreateModel_scale_nhwc_float16_7(Model *model);
 bool is_ignored_scale_nhwc_float16_7(int);
 std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nhwc_float16_7();
@@ -3051,6 +6169,49 @@ TEST_F(GeneratedTests, resize_nearest_neighbor_scale_nhwc_float16_7) {
 
 } // namespace generated_tests::resize_nearest_neighbor
 TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_scale_nhwc_float16_7, generated_tests::resize_nearest_neighbor::CreateModel_scale_nhwc_float16_7)
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nhwc_float16_dynamic_output_shape_7(Model *model);
+bool is_ignored_scale_nhwc_float16_dynamic_output_shape_7(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nhwc_float16_dynamic_output_shape_7();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nhwc_float16_dynamic_output_shape_7) {
+    execute(CreateModel_scale_nhwc_float16_dynamic_output_shape_7,
+            is_ignored_scale_nhwc_float16_dynamic_output_shape_7,
+            get_examples_scale_nhwc_float16_dynamic_output_shape_7());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nhwc_float16_all_inputs_as_internal_7(Model *model);
+bool is_ignored_scale_nhwc_float16_all_inputs_as_internal_7(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nhwc_float16_all_inputs_as_internal_7();
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_scale_nhwc_float16_all_inputs_as_internal_7) {
+    execute(CreateModel_scale_nhwc_float16_all_inputs_as_internal_7,
+            is_ignored_scale_nhwc_float16_all_inputs_as_internal_7,
+            get_examples_scale_nhwc_float16_all_inputs_as_internal_7());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_scale_nhwc_float16_all_inputs_as_internal_7, generated_tests::resize_nearest_neighbor::CreateModel_scale_nhwc_float16_all_inputs_as_internal_7)
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_7(Model *model);
+bool is_ignored_scale_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_7(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_7();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_7) {
+    execute(CreateModel_scale_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_7,
+            is_ignored_scale_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_7,
+            get_examples_scale_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_7());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
 
 namespace generated_tests::resize_nearest_neighbor {
 
@@ -3069,6 +6230,49 @@ TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_scale_nchw_7, generated_tests
 
 namespace generated_tests::resize_nearest_neighbor {
 
+void CreateModel_scale_nchw_dynamic_output_shape_7(Model *model);
+bool is_ignored_scale_nchw_dynamic_output_shape_7(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nchw_dynamic_output_shape_7();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nchw_dynamic_output_shape_7) {
+    execute(CreateModel_scale_nchw_dynamic_output_shape_7,
+            is_ignored_scale_nchw_dynamic_output_shape_7,
+            get_examples_scale_nchw_dynamic_output_shape_7());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nchw_all_inputs_as_internal_7(Model *model);
+bool is_ignored_scale_nchw_all_inputs_as_internal_7(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nchw_all_inputs_as_internal_7();
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_scale_nchw_all_inputs_as_internal_7) {
+    execute(CreateModel_scale_nchw_all_inputs_as_internal_7,
+            is_ignored_scale_nchw_all_inputs_as_internal_7,
+            get_examples_scale_nchw_all_inputs_as_internal_7());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_scale_nchw_all_inputs_as_internal_7, generated_tests::resize_nearest_neighbor::CreateModel_scale_nchw_all_inputs_as_internal_7)
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nchw_all_inputs_as_internal_dynamic_output_shape_7(Model *model);
+bool is_ignored_scale_nchw_all_inputs_as_internal_dynamic_output_shape_7(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nchw_all_inputs_as_internal_dynamic_output_shape_7();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nchw_all_inputs_as_internal_dynamic_output_shape_7) {
+    execute(CreateModel_scale_nchw_all_inputs_as_internal_dynamic_output_shape_7,
+            is_ignored_scale_nchw_all_inputs_as_internal_dynamic_output_shape_7,
+            get_examples_scale_nchw_all_inputs_as_internal_dynamic_output_shape_7());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
 void CreateModel_scale_nchw_relaxed_7(Model *model);
 bool is_ignored_scale_nchw_relaxed_7(int);
 std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nchw_relaxed_7();
@@ -3077,6 +6281,48 @@ TEST_F(GeneratedTests, resize_nearest_neighbor_scale_nchw_relaxed_7) {
     execute(CreateModel_scale_nchw_relaxed_7,
             is_ignored_scale_nchw_relaxed_7,
             get_examples_scale_nchw_relaxed_7());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nchw_relaxed_dynamic_output_shape_7(Model *model);
+bool is_ignored_scale_nchw_relaxed_dynamic_output_shape_7(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nchw_relaxed_dynamic_output_shape_7();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nchw_relaxed_dynamic_output_shape_7) {
+    execute(CreateModel_scale_nchw_relaxed_dynamic_output_shape_7,
+            is_ignored_scale_nchw_relaxed_dynamic_output_shape_7,
+            get_examples_scale_nchw_relaxed_dynamic_output_shape_7());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nchw_relaxed_all_inputs_as_internal_7(Model *model);
+bool is_ignored_scale_nchw_relaxed_all_inputs_as_internal_7(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nchw_relaxed_all_inputs_as_internal_7();
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_scale_nchw_relaxed_all_inputs_as_internal_7) {
+    execute(CreateModel_scale_nchw_relaxed_all_inputs_as_internal_7,
+            is_ignored_scale_nchw_relaxed_all_inputs_as_internal_7,
+            get_examples_scale_nchw_relaxed_all_inputs_as_internal_7());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_7(Model *model);
+bool is_ignored_scale_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_7(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_7();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_7) {
+    execute(CreateModel_scale_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_7,
+            is_ignored_scale_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_7,
+            get_examples_scale_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_7());
 }
 
 } // namespace generated_tests::resize_nearest_neighbor
@@ -3098,6 +6344,49 @@ TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_scale_nchw_quant8_7, generate
 
 namespace generated_tests::resize_nearest_neighbor {
 
+void CreateModel_scale_nchw_quant8_dynamic_output_shape_7(Model *model);
+bool is_ignored_scale_nchw_quant8_dynamic_output_shape_7(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nchw_quant8_dynamic_output_shape_7();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nchw_quant8_dynamic_output_shape_7) {
+    execute(CreateModel_scale_nchw_quant8_dynamic_output_shape_7,
+            is_ignored_scale_nchw_quant8_dynamic_output_shape_7,
+            get_examples_scale_nchw_quant8_dynamic_output_shape_7());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nchw_quant8_all_inputs_as_internal_7(Model *model);
+bool is_ignored_scale_nchw_quant8_all_inputs_as_internal_7(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nchw_quant8_all_inputs_as_internal_7();
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_scale_nchw_quant8_all_inputs_as_internal_7) {
+    execute(CreateModel_scale_nchw_quant8_all_inputs_as_internal_7,
+            is_ignored_scale_nchw_quant8_all_inputs_as_internal_7,
+            get_examples_scale_nchw_quant8_all_inputs_as_internal_7());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_scale_nchw_quant8_all_inputs_as_internal_7, generated_tests::resize_nearest_neighbor::CreateModel_scale_nchw_quant8_all_inputs_as_internal_7)
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_7(Model *model);
+bool is_ignored_scale_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_7(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_7();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_7) {
+    execute(CreateModel_scale_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_7,
+            is_ignored_scale_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_7,
+            get_examples_scale_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_7());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
 void CreateModel_scale_nchw_float16_7(Model *model);
 bool is_ignored_scale_nchw_float16_7(int);
 std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nchw_float16_7();
@@ -3113,112 +6402,43 @@ TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_scale_nchw_float16_7, generat
 
 namespace generated_tests::resize_nearest_neighbor {
 
-void CreateModel_scale_dynamic_output_shape_nhwc_7(Model *model);
-bool is_ignored_scale_dynamic_output_shape_nhwc_7(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_scale_dynamic_output_shape_nhwc_7();
+void CreateModel_scale_nchw_float16_dynamic_output_shape_7(Model *model);
+bool is_ignored_scale_nchw_float16_dynamic_output_shape_7(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nchw_float16_dynamic_output_shape_7();
 
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_dynamic_output_shape_nhwc_7) {
-    execute(CreateModel_scale_dynamic_output_shape_nhwc_7,
-            is_ignored_scale_dynamic_output_shape_nhwc_7,
-            get_examples_scale_dynamic_output_shape_nhwc_7());
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nchw_float16_dynamic_output_shape_7) {
+    execute(CreateModel_scale_nchw_float16_dynamic_output_shape_7,
+            is_ignored_scale_nchw_float16_dynamic_output_shape_7,
+            get_examples_scale_nchw_float16_dynamic_output_shape_7());
 }
 
 } // namespace generated_tests::resize_nearest_neighbor
 
 namespace generated_tests::resize_nearest_neighbor {
 
-void CreateModel_scale_dynamic_output_shape_nhwc_relaxed_7(Model *model);
-bool is_ignored_scale_dynamic_output_shape_nhwc_relaxed_7(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_scale_dynamic_output_shape_nhwc_relaxed_7();
+void CreateModel_scale_nchw_float16_all_inputs_as_internal_7(Model *model);
+bool is_ignored_scale_nchw_float16_all_inputs_as_internal_7(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nchw_float16_all_inputs_as_internal_7();
 
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_dynamic_output_shape_nhwc_relaxed_7) {
-    execute(CreateModel_scale_dynamic_output_shape_nhwc_relaxed_7,
-            is_ignored_scale_dynamic_output_shape_nhwc_relaxed_7,
-            get_examples_scale_dynamic_output_shape_nhwc_relaxed_7());
+TEST_F(GeneratedTests, resize_nearest_neighbor_scale_nchw_float16_all_inputs_as_internal_7) {
+    execute(CreateModel_scale_nchw_float16_all_inputs_as_internal_7,
+            is_ignored_scale_nchw_float16_all_inputs_as_internal_7,
+            get_examples_scale_nchw_float16_all_inputs_as_internal_7());
 }
 
 } // namespace generated_tests::resize_nearest_neighbor
+TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_scale_nchw_float16_all_inputs_as_internal_7, generated_tests::resize_nearest_neighbor::CreateModel_scale_nchw_float16_all_inputs_as_internal_7)
 
 namespace generated_tests::resize_nearest_neighbor {
 
-void CreateModel_scale_dynamic_output_shape_nhwc_quant8_7(Model *model);
-bool is_ignored_scale_dynamic_output_shape_nhwc_quant8_7(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_scale_dynamic_output_shape_nhwc_quant8_7();
+void CreateModel_scale_nchw_float16_all_inputs_as_internal_dynamic_output_shape_7(Model *model);
+bool is_ignored_scale_nchw_float16_all_inputs_as_internal_dynamic_output_shape_7(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nchw_float16_all_inputs_as_internal_dynamic_output_shape_7();
 
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_dynamic_output_shape_nhwc_quant8_7) {
-    execute(CreateModel_scale_dynamic_output_shape_nhwc_quant8_7,
-            is_ignored_scale_dynamic_output_shape_nhwc_quant8_7,
-            get_examples_scale_dynamic_output_shape_nhwc_quant8_7());
-}
-
-} // namespace generated_tests::resize_nearest_neighbor
-
-namespace generated_tests::resize_nearest_neighbor {
-
-void CreateModel_scale_dynamic_output_shape_nhwc_float16_7(Model *model);
-bool is_ignored_scale_dynamic_output_shape_nhwc_float16_7(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_scale_dynamic_output_shape_nhwc_float16_7();
-
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_dynamic_output_shape_nhwc_float16_7) {
-    execute(CreateModel_scale_dynamic_output_shape_nhwc_float16_7,
-            is_ignored_scale_dynamic_output_shape_nhwc_float16_7,
-            get_examples_scale_dynamic_output_shape_nhwc_float16_7());
-}
-
-} // namespace generated_tests::resize_nearest_neighbor
-
-namespace generated_tests::resize_nearest_neighbor {
-
-void CreateModel_scale_dynamic_output_shape_nchw_7(Model *model);
-bool is_ignored_scale_dynamic_output_shape_nchw_7(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_scale_dynamic_output_shape_nchw_7();
-
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_dynamic_output_shape_nchw_7) {
-    execute(CreateModel_scale_dynamic_output_shape_nchw_7,
-            is_ignored_scale_dynamic_output_shape_nchw_7,
-            get_examples_scale_dynamic_output_shape_nchw_7());
-}
-
-} // namespace generated_tests::resize_nearest_neighbor
-
-namespace generated_tests::resize_nearest_neighbor {
-
-void CreateModel_scale_dynamic_output_shape_nchw_relaxed_7(Model *model);
-bool is_ignored_scale_dynamic_output_shape_nchw_relaxed_7(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_scale_dynamic_output_shape_nchw_relaxed_7();
-
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_dynamic_output_shape_nchw_relaxed_7) {
-    execute(CreateModel_scale_dynamic_output_shape_nchw_relaxed_7,
-            is_ignored_scale_dynamic_output_shape_nchw_relaxed_7,
-            get_examples_scale_dynamic_output_shape_nchw_relaxed_7());
-}
-
-} // namespace generated_tests::resize_nearest_neighbor
-
-namespace generated_tests::resize_nearest_neighbor {
-
-void CreateModel_scale_dynamic_output_shape_nchw_quant8_7(Model *model);
-bool is_ignored_scale_dynamic_output_shape_nchw_quant8_7(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_scale_dynamic_output_shape_nchw_quant8_7();
-
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_dynamic_output_shape_nchw_quant8_7) {
-    execute(CreateModel_scale_dynamic_output_shape_nchw_quant8_7,
-            is_ignored_scale_dynamic_output_shape_nchw_quant8_7,
-            get_examples_scale_dynamic_output_shape_nchw_quant8_7());
-}
-
-} // namespace generated_tests::resize_nearest_neighbor
-
-namespace generated_tests::resize_nearest_neighbor {
-
-void CreateModel_scale_dynamic_output_shape_nchw_float16_7(Model *model);
-bool is_ignored_scale_dynamic_output_shape_nchw_float16_7(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_scale_dynamic_output_shape_nchw_float16_7();
-
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_dynamic_output_shape_nchw_float16_7) {
-    execute(CreateModel_scale_dynamic_output_shape_nchw_float16_7,
-            is_ignored_scale_dynamic_output_shape_nchw_float16_7,
-            get_examples_scale_dynamic_output_shape_nchw_float16_7());
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nchw_float16_all_inputs_as_internal_dynamic_output_shape_7) {
+    execute(CreateModel_scale_nchw_float16_all_inputs_as_internal_dynamic_output_shape_7,
+            is_ignored_scale_nchw_float16_all_inputs_as_internal_dynamic_output_shape_7,
+            get_examples_scale_nchw_float16_all_inputs_as_internal_dynamic_output_shape_7());
 }
 
 } // namespace generated_tests::resize_nearest_neighbor
@@ -3240,6 +6460,49 @@ TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_shape_nhwc_8, generated_tests
 
 namespace generated_tests::resize_nearest_neighbor {
 
+void CreateModel_shape_nhwc_dynamic_output_shape_8(Model *model);
+bool is_ignored_shape_nhwc_dynamic_output_shape_8(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nhwc_dynamic_output_shape_8();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nhwc_dynamic_output_shape_8) {
+    execute(CreateModel_shape_nhwc_dynamic_output_shape_8,
+            is_ignored_shape_nhwc_dynamic_output_shape_8,
+            get_examples_shape_nhwc_dynamic_output_shape_8());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nhwc_all_inputs_as_internal_8(Model *model);
+bool is_ignored_shape_nhwc_all_inputs_as_internal_8(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nhwc_all_inputs_as_internal_8();
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_shape_nhwc_all_inputs_as_internal_8) {
+    execute(CreateModel_shape_nhwc_all_inputs_as_internal_8,
+            is_ignored_shape_nhwc_all_inputs_as_internal_8,
+            get_examples_shape_nhwc_all_inputs_as_internal_8());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_shape_nhwc_all_inputs_as_internal_8, generated_tests::resize_nearest_neighbor::CreateModel_shape_nhwc_all_inputs_as_internal_8)
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nhwc_all_inputs_as_internal_dynamic_output_shape_8(Model *model);
+bool is_ignored_shape_nhwc_all_inputs_as_internal_dynamic_output_shape_8(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nhwc_all_inputs_as_internal_dynamic_output_shape_8();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nhwc_all_inputs_as_internal_dynamic_output_shape_8) {
+    execute(CreateModel_shape_nhwc_all_inputs_as_internal_dynamic_output_shape_8,
+            is_ignored_shape_nhwc_all_inputs_as_internal_dynamic_output_shape_8,
+            get_examples_shape_nhwc_all_inputs_as_internal_dynamic_output_shape_8());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
 void CreateModel_shape_nhwc_relaxed_8(Model *model);
 bool is_ignored_shape_nhwc_relaxed_8(int);
 std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nhwc_relaxed_8();
@@ -3248,6 +6511,48 @@ TEST_F(GeneratedTests, resize_nearest_neighbor_shape_nhwc_relaxed_8) {
     execute(CreateModel_shape_nhwc_relaxed_8,
             is_ignored_shape_nhwc_relaxed_8,
             get_examples_shape_nhwc_relaxed_8());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nhwc_relaxed_dynamic_output_shape_8(Model *model);
+bool is_ignored_shape_nhwc_relaxed_dynamic_output_shape_8(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nhwc_relaxed_dynamic_output_shape_8();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nhwc_relaxed_dynamic_output_shape_8) {
+    execute(CreateModel_shape_nhwc_relaxed_dynamic_output_shape_8,
+            is_ignored_shape_nhwc_relaxed_dynamic_output_shape_8,
+            get_examples_shape_nhwc_relaxed_dynamic_output_shape_8());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nhwc_relaxed_all_inputs_as_internal_8(Model *model);
+bool is_ignored_shape_nhwc_relaxed_all_inputs_as_internal_8(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nhwc_relaxed_all_inputs_as_internal_8();
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_shape_nhwc_relaxed_all_inputs_as_internal_8) {
+    execute(CreateModel_shape_nhwc_relaxed_all_inputs_as_internal_8,
+            is_ignored_shape_nhwc_relaxed_all_inputs_as_internal_8,
+            get_examples_shape_nhwc_relaxed_all_inputs_as_internal_8());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_8(Model *model);
+bool is_ignored_shape_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_8(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_8();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_8) {
+    execute(CreateModel_shape_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_8,
+            is_ignored_shape_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_8,
+            get_examples_shape_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_8());
 }
 
 } // namespace generated_tests::resize_nearest_neighbor
@@ -3269,6 +6574,49 @@ TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_shape_nhwc_quant8_8, generate
 
 namespace generated_tests::resize_nearest_neighbor {
 
+void CreateModel_shape_nhwc_quant8_dynamic_output_shape_8(Model *model);
+bool is_ignored_shape_nhwc_quant8_dynamic_output_shape_8(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nhwc_quant8_dynamic_output_shape_8();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nhwc_quant8_dynamic_output_shape_8) {
+    execute(CreateModel_shape_nhwc_quant8_dynamic_output_shape_8,
+            is_ignored_shape_nhwc_quant8_dynamic_output_shape_8,
+            get_examples_shape_nhwc_quant8_dynamic_output_shape_8());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nhwc_quant8_all_inputs_as_internal_8(Model *model);
+bool is_ignored_shape_nhwc_quant8_all_inputs_as_internal_8(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nhwc_quant8_all_inputs_as_internal_8();
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_shape_nhwc_quant8_all_inputs_as_internal_8) {
+    execute(CreateModel_shape_nhwc_quant8_all_inputs_as_internal_8,
+            is_ignored_shape_nhwc_quant8_all_inputs_as_internal_8,
+            get_examples_shape_nhwc_quant8_all_inputs_as_internal_8());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_shape_nhwc_quant8_all_inputs_as_internal_8, generated_tests::resize_nearest_neighbor::CreateModel_shape_nhwc_quant8_all_inputs_as_internal_8)
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_8(Model *model);
+bool is_ignored_shape_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_8(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_8();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_8) {
+    execute(CreateModel_shape_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_8,
+            is_ignored_shape_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_8,
+            get_examples_shape_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_8());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
 void CreateModel_shape_nhwc_float16_8(Model *model);
 bool is_ignored_shape_nhwc_float16_8(int);
 std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nhwc_float16_8();
@@ -3281,6 +6629,49 @@ TEST_F(GeneratedTests, resize_nearest_neighbor_shape_nhwc_float16_8) {
 
 } // namespace generated_tests::resize_nearest_neighbor
 TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_shape_nhwc_float16_8, generated_tests::resize_nearest_neighbor::CreateModel_shape_nhwc_float16_8)
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nhwc_float16_dynamic_output_shape_8(Model *model);
+bool is_ignored_shape_nhwc_float16_dynamic_output_shape_8(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nhwc_float16_dynamic_output_shape_8();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nhwc_float16_dynamic_output_shape_8) {
+    execute(CreateModel_shape_nhwc_float16_dynamic_output_shape_8,
+            is_ignored_shape_nhwc_float16_dynamic_output_shape_8,
+            get_examples_shape_nhwc_float16_dynamic_output_shape_8());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nhwc_float16_all_inputs_as_internal_8(Model *model);
+bool is_ignored_shape_nhwc_float16_all_inputs_as_internal_8(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nhwc_float16_all_inputs_as_internal_8();
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_shape_nhwc_float16_all_inputs_as_internal_8) {
+    execute(CreateModel_shape_nhwc_float16_all_inputs_as_internal_8,
+            is_ignored_shape_nhwc_float16_all_inputs_as_internal_8,
+            get_examples_shape_nhwc_float16_all_inputs_as_internal_8());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_shape_nhwc_float16_all_inputs_as_internal_8, generated_tests::resize_nearest_neighbor::CreateModel_shape_nhwc_float16_all_inputs_as_internal_8)
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_8(Model *model);
+bool is_ignored_shape_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_8(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_8();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_8) {
+    execute(CreateModel_shape_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_8,
+            is_ignored_shape_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_8,
+            get_examples_shape_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_8());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
 
 namespace generated_tests::resize_nearest_neighbor {
 
@@ -3299,6 +6690,49 @@ TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_shape_nchw_8, generated_tests
 
 namespace generated_tests::resize_nearest_neighbor {
 
+void CreateModel_shape_nchw_dynamic_output_shape_8(Model *model);
+bool is_ignored_shape_nchw_dynamic_output_shape_8(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nchw_dynamic_output_shape_8();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nchw_dynamic_output_shape_8) {
+    execute(CreateModel_shape_nchw_dynamic_output_shape_8,
+            is_ignored_shape_nchw_dynamic_output_shape_8,
+            get_examples_shape_nchw_dynamic_output_shape_8());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nchw_all_inputs_as_internal_8(Model *model);
+bool is_ignored_shape_nchw_all_inputs_as_internal_8(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nchw_all_inputs_as_internal_8();
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_shape_nchw_all_inputs_as_internal_8) {
+    execute(CreateModel_shape_nchw_all_inputs_as_internal_8,
+            is_ignored_shape_nchw_all_inputs_as_internal_8,
+            get_examples_shape_nchw_all_inputs_as_internal_8());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_shape_nchw_all_inputs_as_internal_8, generated_tests::resize_nearest_neighbor::CreateModel_shape_nchw_all_inputs_as_internal_8)
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nchw_all_inputs_as_internal_dynamic_output_shape_8(Model *model);
+bool is_ignored_shape_nchw_all_inputs_as_internal_dynamic_output_shape_8(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nchw_all_inputs_as_internal_dynamic_output_shape_8();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nchw_all_inputs_as_internal_dynamic_output_shape_8) {
+    execute(CreateModel_shape_nchw_all_inputs_as_internal_dynamic_output_shape_8,
+            is_ignored_shape_nchw_all_inputs_as_internal_dynamic_output_shape_8,
+            get_examples_shape_nchw_all_inputs_as_internal_dynamic_output_shape_8());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
 void CreateModel_shape_nchw_relaxed_8(Model *model);
 bool is_ignored_shape_nchw_relaxed_8(int);
 std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nchw_relaxed_8();
@@ -3307,6 +6741,48 @@ TEST_F(GeneratedTests, resize_nearest_neighbor_shape_nchw_relaxed_8) {
     execute(CreateModel_shape_nchw_relaxed_8,
             is_ignored_shape_nchw_relaxed_8,
             get_examples_shape_nchw_relaxed_8());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nchw_relaxed_dynamic_output_shape_8(Model *model);
+bool is_ignored_shape_nchw_relaxed_dynamic_output_shape_8(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nchw_relaxed_dynamic_output_shape_8();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nchw_relaxed_dynamic_output_shape_8) {
+    execute(CreateModel_shape_nchw_relaxed_dynamic_output_shape_8,
+            is_ignored_shape_nchw_relaxed_dynamic_output_shape_8,
+            get_examples_shape_nchw_relaxed_dynamic_output_shape_8());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nchw_relaxed_all_inputs_as_internal_8(Model *model);
+bool is_ignored_shape_nchw_relaxed_all_inputs_as_internal_8(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nchw_relaxed_all_inputs_as_internal_8();
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_shape_nchw_relaxed_all_inputs_as_internal_8) {
+    execute(CreateModel_shape_nchw_relaxed_all_inputs_as_internal_8,
+            is_ignored_shape_nchw_relaxed_all_inputs_as_internal_8,
+            get_examples_shape_nchw_relaxed_all_inputs_as_internal_8());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_8(Model *model);
+bool is_ignored_shape_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_8(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_8();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_8) {
+    execute(CreateModel_shape_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_8,
+            is_ignored_shape_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_8,
+            get_examples_shape_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_8());
 }
 
 } // namespace generated_tests::resize_nearest_neighbor
@@ -3328,6 +6804,49 @@ TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_shape_nchw_quant8_8, generate
 
 namespace generated_tests::resize_nearest_neighbor {
 
+void CreateModel_shape_nchw_quant8_dynamic_output_shape_8(Model *model);
+bool is_ignored_shape_nchw_quant8_dynamic_output_shape_8(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nchw_quant8_dynamic_output_shape_8();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nchw_quant8_dynamic_output_shape_8) {
+    execute(CreateModel_shape_nchw_quant8_dynamic_output_shape_8,
+            is_ignored_shape_nchw_quant8_dynamic_output_shape_8,
+            get_examples_shape_nchw_quant8_dynamic_output_shape_8());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nchw_quant8_all_inputs_as_internal_8(Model *model);
+bool is_ignored_shape_nchw_quant8_all_inputs_as_internal_8(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nchw_quant8_all_inputs_as_internal_8();
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_shape_nchw_quant8_all_inputs_as_internal_8) {
+    execute(CreateModel_shape_nchw_quant8_all_inputs_as_internal_8,
+            is_ignored_shape_nchw_quant8_all_inputs_as_internal_8,
+            get_examples_shape_nchw_quant8_all_inputs_as_internal_8());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_shape_nchw_quant8_all_inputs_as_internal_8, generated_tests::resize_nearest_neighbor::CreateModel_shape_nchw_quant8_all_inputs_as_internal_8)
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_shape_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_8(Model *model);
+bool is_ignored_shape_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_8(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_8();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_8) {
+    execute(CreateModel_shape_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_8,
+            is_ignored_shape_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_8,
+            get_examples_shape_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_8());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
 void CreateModel_shape_nchw_float16_8(Model *model);
 bool is_ignored_shape_nchw_float16_8(int);
 std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nchw_float16_8();
@@ -3343,112 +6862,43 @@ TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_shape_nchw_float16_8, generat
 
 namespace generated_tests::resize_nearest_neighbor {
 
-void CreateModel_shape_dynamic_output_shape_nhwc_8(Model *model);
-bool is_ignored_shape_dynamic_output_shape_nhwc_8(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_shape_dynamic_output_shape_nhwc_8();
+void CreateModel_shape_nchw_float16_dynamic_output_shape_8(Model *model);
+bool is_ignored_shape_nchw_float16_dynamic_output_shape_8(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nchw_float16_dynamic_output_shape_8();
 
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_dynamic_output_shape_nhwc_8) {
-    execute(CreateModel_shape_dynamic_output_shape_nhwc_8,
-            is_ignored_shape_dynamic_output_shape_nhwc_8,
-            get_examples_shape_dynamic_output_shape_nhwc_8());
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nchw_float16_dynamic_output_shape_8) {
+    execute(CreateModel_shape_nchw_float16_dynamic_output_shape_8,
+            is_ignored_shape_nchw_float16_dynamic_output_shape_8,
+            get_examples_shape_nchw_float16_dynamic_output_shape_8());
 }
 
 } // namespace generated_tests::resize_nearest_neighbor
 
 namespace generated_tests::resize_nearest_neighbor {
 
-void CreateModel_shape_dynamic_output_shape_nhwc_relaxed_8(Model *model);
-bool is_ignored_shape_dynamic_output_shape_nhwc_relaxed_8(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_shape_dynamic_output_shape_nhwc_relaxed_8();
+void CreateModel_shape_nchw_float16_all_inputs_as_internal_8(Model *model);
+bool is_ignored_shape_nchw_float16_all_inputs_as_internal_8(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nchw_float16_all_inputs_as_internal_8();
 
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_dynamic_output_shape_nhwc_relaxed_8) {
-    execute(CreateModel_shape_dynamic_output_shape_nhwc_relaxed_8,
-            is_ignored_shape_dynamic_output_shape_nhwc_relaxed_8,
-            get_examples_shape_dynamic_output_shape_nhwc_relaxed_8());
+TEST_F(GeneratedTests, resize_nearest_neighbor_shape_nchw_float16_all_inputs_as_internal_8) {
+    execute(CreateModel_shape_nchw_float16_all_inputs_as_internal_8,
+            is_ignored_shape_nchw_float16_all_inputs_as_internal_8,
+            get_examples_shape_nchw_float16_all_inputs_as_internal_8());
 }
 
 } // namespace generated_tests::resize_nearest_neighbor
+TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_shape_nchw_float16_all_inputs_as_internal_8, generated_tests::resize_nearest_neighbor::CreateModel_shape_nchw_float16_all_inputs_as_internal_8)
 
 namespace generated_tests::resize_nearest_neighbor {
 
-void CreateModel_shape_dynamic_output_shape_nhwc_quant8_8(Model *model);
-bool is_ignored_shape_dynamic_output_shape_nhwc_quant8_8(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_shape_dynamic_output_shape_nhwc_quant8_8();
+void CreateModel_shape_nchw_float16_all_inputs_as_internal_dynamic_output_shape_8(Model *model);
+bool is_ignored_shape_nchw_float16_all_inputs_as_internal_dynamic_output_shape_8(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_shape_nchw_float16_all_inputs_as_internal_dynamic_output_shape_8();
 
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_dynamic_output_shape_nhwc_quant8_8) {
-    execute(CreateModel_shape_dynamic_output_shape_nhwc_quant8_8,
-            is_ignored_shape_dynamic_output_shape_nhwc_quant8_8,
-            get_examples_shape_dynamic_output_shape_nhwc_quant8_8());
-}
-
-} // namespace generated_tests::resize_nearest_neighbor
-
-namespace generated_tests::resize_nearest_neighbor {
-
-void CreateModel_shape_dynamic_output_shape_nhwc_float16_8(Model *model);
-bool is_ignored_shape_dynamic_output_shape_nhwc_float16_8(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_shape_dynamic_output_shape_nhwc_float16_8();
-
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_dynamic_output_shape_nhwc_float16_8) {
-    execute(CreateModel_shape_dynamic_output_shape_nhwc_float16_8,
-            is_ignored_shape_dynamic_output_shape_nhwc_float16_8,
-            get_examples_shape_dynamic_output_shape_nhwc_float16_8());
-}
-
-} // namespace generated_tests::resize_nearest_neighbor
-
-namespace generated_tests::resize_nearest_neighbor {
-
-void CreateModel_shape_dynamic_output_shape_nchw_8(Model *model);
-bool is_ignored_shape_dynamic_output_shape_nchw_8(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_shape_dynamic_output_shape_nchw_8();
-
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_dynamic_output_shape_nchw_8) {
-    execute(CreateModel_shape_dynamic_output_shape_nchw_8,
-            is_ignored_shape_dynamic_output_shape_nchw_8,
-            get_examples_shape_dynamic_output_shape_nchw_8());
-}
-
-} // namespace generated_tests::resize_nearest_neighbor
-
-namespace generated_tests::resize_nearest_neighbor {
-
-void CreateModel_shape_dynamic_output_shape_nchw_relaxed_8(Model *model);
-bool is_ignored_shape_dynamic_output_shape_nchw_relaxed_8(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_shape_dynamic_output_shape_nchw_relaxed_8();
-
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_dynamic_output_shape_nchw_relaxed_8) {
-    execute(CreateModel_shape_dynamic_output_shape_nchw_relaxed_8,
-            is_ignored_shape_dynamic_output_shape_nchw_relaxed_8,
-            get_examples_shape_dynamic_output_shape_nchw_relaxed_8());
-}
-
-} // namespace generated_tests::resize_nearest_neighbor
-
-namespace generated_tests::resize_nearest_neighbor {
-
-void CreateModel_shape_dynamic_output_shape_nchw_quant8_8(Model *model);
-bool is_ignored_shape_dynamic_output_shape_nchw_quant8_8(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_shape_dynamic_output_shape_nchw_quant8_8();
-
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_dynamic_output_shape_nchw_quant8_8) {
-    execute(CreateModel_shape_dynamic_output_shape_nchw_quant8_8,
-            is_ignored_shape_dynamic_output_shape_nchw_quant8_8,
-            get_examples_shape_dynamic_output_shape_nchw_quant8_8());
-}
-
-} // namespace generated_tests::resize_nearest_neighbor
-
-namespace generated_tests::resize_nearest_neighbor {
-
-void CreateModel_shape_dynamic_output_shape_nchw_float16_8(Model *model);
-bool is_ignored_shape_dynamic_output_shape_nchw_float16_8(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_shape_dynamic_output_shape_nchw_float16_8();
-
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_dynamic_output_shape_nchw_float16_8) {
-    execute(CreateModel_shape_dynamic_output_shape_nchw_float16_8,
-            is_ignored_shape_dynamic_output_shape_nchw_float16_8,
-            get_examples_shape_dynamic_output_shape_nchw_float16_8());
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_shape_nchw_float16_all_inputs_as_internal_dynamic_output_shape_8) {
+    execute(CreateModel_shape_nchw_float16_all_inputs_as_internal_dynamic_output_shape_8,
+            is_ignored_shape_nchw_float16_all_inputs_as_internal_dynamic_output_shape_8,
+            get_examples_shape_nchw_float16_all_inputs_as_internal_dynamic_output_shape_8());
 }
 
 } // namespace generated_tests::resize_nearest_neighbor
@@ -3470,6 +6920,49 @@ TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_scale_nhwc_8, generated_tests
 
 namespace generated_tests::resize_nearest_neighbor {
 
+void CreateModel_scale_nhwc_dynamic_output_shape_8(Model *model);
+bool is_ignored_scale_nhwc_dynamic_output_shape_8(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nhwc_dynamic_output_shape_8();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nhwc_dynamic_output_shape_8) {
+    execute(CreateModel_scale_nhwc_dynamic_output_shape_8,
+            is_ignored_scale_nhwc_dynamic_output_shape_8,
+            get_examples_scale_nhwc_dynamic_output_shape_8());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nhwc_all_inputs_as_internal_8(Model *model);
+bool is_ignored_scale_nhwc_all_inputs_as_internal_8(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nhwc_all_inputs_as_internal_8();
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_scale_nhwc_all_inputs_as_internal_8) {
+    execute(CreateModel_scale_nhwc_all_inputs_as_internal_8,
+            is_ignored_scale_nhwc_all_inputs_as_internal_8,
+            get_examples_scale_nhwc_all_inputs_as_internal_8());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_scale_nhwc_all_inputs_as_internal_8, generated_tests::resize_nearest_neighbor::CreateModel_scale_nhwc_all_inputs_as_internal_8)
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nhwc_all_inputs_as_internal_dynamic_output_shape_8(Model *model);
+bool is_ignored_scale_nhwc_all_inputs_as_internal_dynamic_output_shape_8(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nhwc_all_inputs_as_internal_dynamic_output_shape_8();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nhwc_all_inputs_as_internal_dynamic_output_shape_8) {
+    execute(CreateModel_scale_nhwc_all_inputs_as_internal_dynamic_output_shape_8,
+            is_ignored_scale_nhwc_all_inputs_as_internal_dynamic_output_shape_8,
+            get_examples_scale_nhwc_all_inputs_as_internal_dynamic_output_shape_8());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
 void CreateModel_scale_nhwc_relaxed_8(Model *model);
 bool is_ignored_scale_nhwc_relaxed_8(int);
 std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nhwc_relaxed_8();
@@ -3478,6 +6971,48 @@ TEST_F(GeneratedTests, resize_nearest_neighbor_scale_nhwc_relaxed_8) {
     execute(CreateModel_scale_nhwc_relaxed_8,
             is_ignored_scale_nhwc_relaxed_8,
             get_examples_scale_nhwc_relaxed_8());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nhwc_relaxed_dynamic_output_shape_8(Model *model);
+bool is_ignored_scale_nhwc_relaxed_dynamic_output_shape_8(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nhwc_relaxed_dynamic_output_shape_8();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nhwc_relaxed_dynamic_output_shape_8) {
+    execute(CreateModel_scale_nhwc_relaxed_dynamic_output_shape_8,
+            is_ignored_scale_nhwc_relaxed_dynamic_output_shape_8,
+            get_examples_scale_nhwc_relaxed_dynamic_output_shape_8());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nhwc_relaxed_all_inputs_as_internal_8(Model *model);
+bool is_ignored_scale_nhwc_relaxed_all_inputs_as_internal_8(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nhwc_relaxed_all_inputs_as_internal_8();
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_scale_nhwc_relaxed_all_inputs_as_internal_8) {
+    execute(CreateModel_scale_nhwc_relaxed_all_inputs_as_internal_8,
+            is_ignored_scale_nhwc_relaxed_all_inputs_as_internal_8,
+            get_examples_scale_nhwc_relaxed_all_inputs_as_internal_8());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_8(Model *model);
+bool is_ignored_scale_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_8(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_8();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_8) {
+    execute(CreateModel_scale_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_8,
+            is_ignored_scale_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_8,
+            get_examples_scale_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_8());
 }
 
 } // namespace generated_tests::resize_nearest_neighbor
@@ -3499,6 +7034,49 @@ TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_scale_nhwc_quant8_8, generate
 
 namespace generated_tests::resize_nearest_neighbor {
 
+void CreateModel_scale_nhwc_quant8_dynamic_output_shape_8(Model *model);
+bool is_ignored_scale_nhwc_quant8_dynamic_output_shape_8(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nhwc_quant8_dynamic_output_shape_8();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nhwc_quant8_dynamic_output_shape_8) {
+    execute(CreateModel_scale_nhwc_quant8_dynamic_output_shape_8,
+            is_ignored_scale_nhwc_quant8_dynamic_output_shape_8,
+            get_examples_scale_nhwc_quant8_dynamic_output_shape_8());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nhwc_quant8_all_inputs_as_internal_8(Model *model);
+bool is_ignored_scale_nhwc_quant8_all_inputs_as_internal_8(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nhwc_quant8_all_inputs_as_internal_8();
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_scale_nhwc_quant8_all_inputs_as_internal_8) {
+    execute(CreateModel_scale_nhwc_quant8_all_inputs_as_internal_8,
+            is_ignored_scale_nhwc_quant8_all_inputs_as_internal_8,
+            get_examples_scale_nhwc_quant8_all_inputs_as_internal_8());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_scale_nhwc_quant8_all_inputs_as_internal_8, generated_tests::resize_nearest_neighbor::CreateModel_scale_nhwc_quant8_all_inputs_as_internal_8)
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_8(Model *model);
+bool is_ignored_scale_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_8(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_8();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_8) {
+    execute(CreateModel_scale_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_8,
+            is_ignored_scale_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_8,
+            get_examples_scale_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_8());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
 void CreateModel_scale_nhwc_float16_8(Model *model);
 bool is_ignored_scale_nhwc_float16_8(int);
 std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nhwc_float16_8();
@@ -3511,6 +7089,49 @@ TEST_F(GeneratedTests, resize_nearest_neighbor_scale_nhwc_float16_8) {
 
 } // namespace generated_tests::resize_nearest_neighbor
 TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_scale_nhwc_float16_8, generated_tests::resize_nearest_neighbor::CreateModel_scale_nhwc_float16_8)
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nhwc_float16_dynamic_output_shape_8(Model *model);
+bool is_ignored_scale_nhwc_float16_dynamic_output_shape_8(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nhwc_float16_dynamic_output_shape_8();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nhwc_float16_dynamic_output_shape_8) {
+    execute(CreateModel_scale_nhwc_float16_dynamic_output_shape_8,
+            is_ignored_scale_nhwc_float16_dynamic_output_shape_8,
+            get_examples_scale_nhwc_float16_dynamic_output_shape_8());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nhwc_float16_all_inputs_as_internal_8(Model *model);
+bool is_ignored_scale_nhwc_float16_all_inputs_as_internal_8(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nhwc_float16_all_inputs_as_internal_8();
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_scale_nhwc_float16_all_inputs_as_internal_8) {
+    execute(CreateModel_scale_nhwc_float16_all_inputs_as_internal_8,
+            is_ignored_scale_nhwc_float16_all_inputs_as_internal_8,
+            get_examples_scale_nhwc_float16_all_inputs_as_internal_8());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_scale_nhwc_float16_all_inputs_as_internal_8, generated_tests::resize_nearest_neighbor::CreateModel_scale_nhwc_float16_all_inputs_as_internal_8)
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_8(Model *model);
+bool is_ignored_scale_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_8(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_8();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_8) {
+    execute(CreateModel_scale_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_8,
+            is_ignored_scale_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_8,
+            get_examples_scale_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_8());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
 
 namespace generated_tests::resize_nearest_neighbor {
 
@@ -3529,6 +7150,49 @@ TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_scale_nchw_8, generated_tests
 
 namespace generated_tests::resize_nearest_neighbor {
 
+void CreateModel_scale_nchw_dynamic_output_shape_8(Model *model);
+bool is_ignored_scale_nchw_dynamic_output_shape_8(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nchw_dynamic_output_shape_8();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nchw_dynamic_output_shape_8) {
+    execute(CreateModel_scale_nchw_dynamic_output_shape_8,
+            is_ignored_scale_nchw_dynamic_output_shape_8,
+            get_examples_scale_nchw_dynamic_output_shape_8());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nchw_all_inputs_as_internal_8(Model *model);
+bool is_ignored_scale_nchw_all_inputs_as_internal_8(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nchw_all_inputs_as_internal_8();
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_scale_nchw_all_inputs_as_internal_8) {
+    execute(CreateModel_scale_nchw_all_inputs_as_internal_8,
+            is_ignored_scale_nchw_all_inputs_as_internal_8,
+            get_examples_scale_nchw_all_inputs_as_internal_8());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_scale_nchw_all_inputs_as_internal_8, generated_tests::resize_nearest_neighbor::CreateModel_scale_nchw_all_inputs_as_internal_8)
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nchw_all_inputs_as_internal_dynamic_output_shape_8(Model *model);
+bool is_ignored_scale_nchw_all_inputs_as_internal_dynamic_output_shape_8(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nchw_all_inputs_as_internal_dynamic_output_shape_8();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nchw_all_inputs_as_internal_dynamic_output_shape_8) {
+    execute(CreateModel_scale_nchw_all_inputs_as_internal_dynamic_output_shape_8,
+            is_ignored_scale_nchw_all_inputs_as_internal_dynamic_output_shape_8,
+            get_examples_scale_nchw_all_inputs_as_internal_dynamic_output_shape_8());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
 void CreateModel_scale_nchw_relaxed_8(Model *model);
 bool is_ignored_scale_nchw_relaxed_8(int);
 std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nchw_relaxed_8();
@@ -3537,6 +7201,48 @@ TEST_F(GeneratedTests, resize_nearest_neighbor_scale_nchw_relaxed_8) {
     execute(CreateModel_scale_nchw_relaxed_8,
             is_ignored_scale_nchw_relaxed_8,
             get_examples_scale_nchw_relaxed_8());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nchw_relaxed_dynamic_output_shape_8(Model *model);
+bool is_ignored_scale_nchw_relaxed_dynamic_output_shape_8(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nchw_relaxed_dynamic_output_shape_8();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nchw_relaxed_dynamic_output_shape_8) {
+    execute(CreateModel_scale_nchw_relaxed_dynamic_output_shape_8,
+            is_ignored_scale_nchw_relaxed_dynamic_output_shape_8,
+            get_examples_scale_nchw_relaxed_dynamic_output_shape_8());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nchw_relaxed_all_inputs_as_internal_8(Model *model);
+bool is_ignored_scale_nchw_relaxed_all_inputs_as_internal_8(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nchw_relaxed_all_inputs_as_internal_8();
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_scale_nchw_relaxed_all_inputs_as_internal_8) {
+    execute(CreateModel_scale_nchw_relaxed_all_inputs_as_internal_8,
+            is_ignored_scale_nchw_relaxed_all_inputs_as_internal_8,
+            get_examples_scale_nchw_relaxed_all_inputs_as_internal_8());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_8(Model *model);
+bool is_ignored_scale_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_8(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_8();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_8) {
+    execute(CreateModel_scale_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_8,
+            is_ignored_scale_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_8,
+            get_examples_scale_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_8());
 }
 
 } // namespace generated_tests::resize_nearest_neighbor
@@ -3558,6 +7264,49 @@ TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_scale_nchw_quant8_8, generate
 
 namespace generated_tests::resize_nearest_neighbor {
 
+void CreateModel_scale_nchw_quant8_dynamic_output_shape_8(Model *model);
+bool is_ignored_scale_nchw_quant8_dynamic_output_shape_8(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nchw_quant8_dynamic_output_shape_8();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nchw_quant8_dynamic_output_shape_8) {
+    execute(CreateModel_scale_nchw_quant8_dynamic_output_shape_8,
+            is_ignored_scale_nchw_quant8_dynamic_output_shape_8,
+            get_examples_scale_nchw_quant8_dynamic_output_shape_8());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nchw_quant8_all_inputs_as_internal_8(Model *model);
+bool is_ignored_scale_nchw_quant8_all_inputs_as_internal_8(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nchw_quant8_all_inputs_as_internal_8();
+
+TEST_F(GeneratedTests, resize_nearest_neighbor_scale_nchw_quant8_all_inputs_as_internal_8) {
+    execute(CreateModel_scale_nchw_quant8_all_inputs_as_internal_8,
+            is_ignored_scale_nchw_quant8_all_inputs_as_internal_8,
+            get_examples_scale_nchw_quant8_all_inputs_as_internal_8());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_scale_nchw_quant8_all_inputs_as_internal_8, generated_tests::resize_nearest_neighbor::CreateModel_scale_nchw_quant8_all_inputs_as_internal_8)
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_scale_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_8(Model *model);
+bool is_ignored_scale_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_8(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_8();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_8) {
+    execute(CreateModel_scale_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_8,
+            is_ignored_scale_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_8,
+            get_examples_scale_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_8());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
 void CreateModel_scale_nchw_float16_8(Model *model);
 bool is_ignored_scale_nchw_float16_8(int);
 std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nchw_float16_8();
@@ -3573,112 +7322,43 @@ TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_scale_nchw_float16_8, generat
 
 namespace generated_tests::resize_nearest_neighbor {
 
-void CreateModel_scale_dynamic_output_shape_nhwc_8(Model *model);
-bool is_ignored_scale_dynamic_output_shape_nhwc_8(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_scale_dynamic_output_shape_nhwc_8();
+void CreateModel_scale_nchw_float16_dynamic_output_shape_8(Model *model);
+bool is_ignored_scale_nchw_float16_dynamic_output_shape_8(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nchw_float16_dynamic_output_shape_8();
 
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_dynamic_output_shape_nhwc_8) {
-    execute(CreateModel_scale_dynamic_output_shape_nhwc_8,
-            is_ignored_scale_dynamic_output_shape_nhwc_8,
-            get_examples_scale_dynamic_output_shape_nhwc_8());
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nchw_float16_dynamic_output_shape_8) {
+    execute(CreateModel_scale_nchw_float16_dynamic_output_shape_8,
+            is_ignored_scale_nchw_float16_dynamic_output_shape_8,
+            get_examples_scale_nchw_float16_dynamic_output_shape_8());
 }
 
 } // namespace generated_tests::resize_nearest_neighbor
 
 namespace generated_tests::resize_nearest_neighbor {
 
-void CreateModel_scale_dynamic_output_shape_nhwc_relaxed_8(Model *model);
-bool is_ignored_scale_dynamic_output_shape_nhwc_relaxed_8(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_scale_dynamic_output_shape_nhwc_relaxed_8();
+void CreateModel_scale_nchw_float16_all_inputs_as_internal_8(Model *model);
+bool is_ignored_scale_nchw_float16_all_inputs_as_internal_8(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nchw_float16_all_inputs_as_internal_8();
 
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_dynamic_output_shape_nhwc_relaxed_8) {
-    execute(CreateModel_scale_dynamic_output_shape_nhwc_relaxed_8,
-            is_ignored_scale_dynamic_output_shape_nhwc_relaxed_8,
-            get_examples_scale_dynamic_output_shape_nhwc_relaxed_8());
+TEST_F(GeneratedTests, resize_nearest_neighbor_scale_nchw_float16_all_inputs_as_internal_8) {
+    execute(CreateModel_scale_nchw_float16_all_inputs_as_internal_8,
+            is_ignored_scale_nchw_float16_all_inputs_as_internal_8,
+            get_examples_scale_nchw_float16_all_inputs_as_internal_8());
 }
 
 } // namespace generated_tests::resize_nearest_neighbor
+TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_scale_nchw_float16_all_inputs_as_internal_8, generated_tests::resize_nearest_neighbor::CreateModel_scale_nchw_float16_all_inputs_as_internal_8)
 
 namespace generated_tests::resize_nearest_neighbor {
 
-void CreateModel_scale_dynamic_output_shape_nhwc_quant8_8(Model *model);
-bool is_ignored_scale_dynamic_output_shape_nhwc_quant8_8(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_scale_dynamic_output_shape_nhwc_quant8_8();
+void CreateModel_scale_nchw_float16_all_inputs_as_internal_dynamic_output_shape_8(Model *model);
+bool is_ignored_scale_nchw_float16_all_inputs_as_internal_dynamic_output_shape_8(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_scale_nchw_float16_all_inputs_as_internal_dynamic_output_shape_8();
 
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_dynamic_output_shape_nhwc_quant8_8) {
-    execute(CreateModel_scale_dynamic_output_shape_nhwc_quant8_8,
-            is_ignored_scale_dynamic_output_shape_nhwc_quant8_8,
-            get_examples_scale_dynamic_output_shape_nhwc_quant8_8());
-}
-
-} // namespace generated_tests::resize_nearest_neighbor
-
-namespace generated_tests::resize_nearest_neighbor {
-
-void CreateModel_scale_dynamic_output_shape_nhwc_float16_8(Model *model);
-bool is_ignored_scale_dynamic_output_shape_nhwc_float16_8(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_scale_dynamic_output_shape_nhwc_float16_8();
-
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_dynamic_output_shape_nhwc_float16_8) {
-    execute(CreateModel_scale_dynamic_output_shape_nhwc_float16_8,
-            is_ignored_scale_dynamic_output_shape_nhwc_float16_8,
-            get_examples_scale_dynamic_output_shape_nhwc_float16_8());
-}
-
-} // namespace generated_tests::resize_nearest_neighbor
-
-namespace generated_tests::resize_nearest_neighbor {
-
-void CreateModel_scale_dynamic_output_shape_nchw_8(Model *model);
-bool is_ignored_scale_dynamic_output_shape_nchw_8(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_scale_dynamic_output_shape_nchw_8();
-
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_dynamic_output_shape_nchw_8) {
-    execute(CreateModel_scale_dynamic_output_shape_nchw_8,
-            is_ignored_scale_dynamic_output_shape_nchw_8,
-            get_examples_scale_dynamic_output_shape_nchw_8());
-}
-
-} // namespace generated_tests::resize_nearest_neighbor
-
-namespace generated_tests::resize_nearest_neighbor {
-
-void CreateModel_scale_dynamic_output_shape_nchw_relaxed_8(Model *model);
-bool is_ignored_scale_dynamic_output_shape_nchw_relaxed_8(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_scale_dynamic_output_shape_nchw_relaxed_8();
-
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_dynamic_output_shape_nchw_relaxed_8) {
-    execute(CreateModel_scale_dynamic_output_shape_nchw_relaxed_8,
-            is_ignored_scale_dynamic_output_shape_nchw_relaxed_8,
-            get_examples_scale_dynamic_output_shape_nchw_relaxed_8());
-}
-
-} // namespace generated_tests::resize_nearest_neighbor
-
-namespace generated_tests::resize_nearest_neighbor {
-
-void CreateModel_scale_dynamic_output_shape_nchw_quant8_8(Model *model);
-bool is_ignored_scale_dynamic_output_shape_nchw_quant8_8(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_scale_dynamic_output_shape_nchw_quant8_8();
-
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_dynamic_output_shape_nchw_quant8_8) {
-    execute(CreateModel_scale_dynamic_output_shape_nchw_quant8_8,
-            is_ignored_scale_dynamic_output_shape_nchw_quant8_8,
-            get_examples_scale_dynamic_output_shape_nchw_quant8_8());
-}
-
-} // namespace generated_tests::resize_nearest_neighbor
-
-namespace generated_tests::resize_nearest_neighbor {
-
-void CreateModel_scale_dynamic_output_shape_nchw_float16_8(Model *model);
-bool is_ignored_scale_dynamic_output_shape_nchw_float16_8(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_scale_dynamic_output_shape_nchw_float16_8();
-
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_dynamic_output_shape_nchw_float16_8) {
-    execute(CreateModel_scale_dynamic_output_shape_nchw_float16_8,
-            is_ignored_scale_dynamic_output_shape_nchw_float16_8,
-            get_examples_scale_dynamic_output_shape_nchw_float16_8());
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_scale_nchw_float16_all_inputs_as_internal_dynamic_output_shape_8) {
+    execute(CreateModel_scale_nchw_float16_all_inputs_as_internal_dynamic_output_shape_8,
+            is_ignored_scale_nchw_float16_all_inputs_as_internal_dynamic_output_shape_8,
+            get_examples_scale_nchw_float16_all_inputs_as_internal_dynamic_output_shape_8());
 }
 
 } // namespace generated_tests::resize_nearest_neighbor
@@ -3700,6 +7380,20 @@ TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_zero_sized_nhwc, generated_te
 
 namespace generated_tests::resize_nearest_neighbor {
 
+void CreateModel_zero_sized_nhwc_dynamic_output_shape(Model *model);
+bool is_ignored_zero_sized_nhwc_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_nhwc_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_zero_sized_nhwc_dynamic_output_shape) {
+    execute(CreateModel_zero_sized_nhwc_dynamic_output_shape,
+            is_ignored_zero_sized_nhwc_dynamic_output_shape,
+            get_examples_zero_sized_nhwc_dynamic_output_shape());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
 void CreateModel_zero_sized_nhwc_relaxed(Model *model);
 bool is_ignored_zero_sized_nhwc_relaxed(int);
 std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_nhwc_relaxed();
@@ -3708,6 +7402,20 @@ TEST_F(GeneratedTests, resize_nearest_neighbor_zero_sized_nhwc_relaxed) {
     execute(CreateModel_zero_sized_nhwc_relaxed,
             is_ignored_zero_sized_nhwc_relaxed,
             get_examples_zero_sized_nhwc_relaxed());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_zero_sized_nhwc_relaxed_dynamic_output_shape(Model *model);
+bool is_ignored_zero_sized_nhwc_relaxed_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_nhwc_relaxed_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_zero_sized_nhwc_relaxed_dynamic_output_shape) {
+    execute(CreateModel_zero_sized_nhwc_relaxed_dynamic_output_shape,
+            is_ignored_zero_sized_nhwc_relaxed_dynamic_output_shape,
+            get_examples_zero_sized_nhwc_relaxed_dynamic_output_shape());
 }
 
 } // namespace generated_tests::resize_nearest_neighbor
@@ -3729,6 +7437,20 @@ TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_zero_sized_nhwc_quant8, gener
 
 namespace generated_tests::resize_nearest_neighbor {
 
+void CreateModel_zero_sized_nhwc_quant8_dynamic_output_shape(Model *model);
+bool is_ignored_zero_sized_nhwc_quant8_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_nhwc_quant8_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_zero_sized_nhwc_quant8_dynamic_output_shape) {
+    execute(CreateModel_zero_sized_nhwc_quant8_dynamic_output_shape,
+            is_ignored_zero_sized_nhwc_quant8_dynamic_output_shape,
+            get_examples_zero_sized_nhwc_quant8_dynamic_output_shape());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
 void CreateModel_zero_sized_nhwc_float16(Model *model);
 bool is_ignored_zero_sized_nhwc_float16(int);
 std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_nhwc_float16();
@@ -3741,6 +7463,20 @@ TEST_F(GeneratedTests, resize_nearest_neighbor_zero_sized_nhwc_float16) {
 
 } // namespace generated_tests::resize_nearest_neighbor
 TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_zero_sized_nhwc_float16, generated_tests::resize_nearest_neighbor::CreateModel_zero_sized_nhwc_float16)
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_zero_sized_nhwc_float16_dynamic_output_shape(Model *model);
+bool is_ignored_zero_sized_nhwc_float16_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_nhwc_float16_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_zero_sized_nhwc_float16_dynamic_output_shape) {
+    execute(CreateModel_zero_sized_nhwc_float16_dynamic_output_shape,
+            is_ignored_zero_sized_nhwc_float16_dynamic_output_shape,
+            get_examples_zero_sized_nhwc_float16_dynamic_output_shape());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
 
 namespace generated_tests::resize_nearest_neighbor {
 
@@ -3759,6 +7495,20 @@ TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_zero_sized_nchw, generated_te
 
 namespace generated_tests::resize_nearest_neighbor {
 
+void CreateModel_zero_sized_nchw_dynamic_output_shape(Model *model);
+bool is_ignored_zero_sized_nchw_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_nchw_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_zero_sized_nchw_dynamic_output_shape) {
+    execute(CreateModel_zero_sized_nchw_dynamic_output_shape,
+            is_ignored_zero_sized_nchw_dynamic_output_shape,
+            get_examples_zero_sized_nchw_dynamic_output_shape());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
 void CreateModel_zero_sized_nchw_relaxed(Model *model);
 bool is_ignored_zero_sized_nchw_relaxed(int);
 std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_nchw_relaxed();
@@ -3767,6 +7517,20 @@ TEST_F(GeneratedTests, resize_nearest_neighbor_zero_sized_nchw_relaxed) {
     execute(CreateModel_zero_sized_nchw_relaxed,
             is_ignored_zero_sized_nchw_relaxed,
             get_examples_zero_sized_nchw_relaxed());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_zero_sized_nchw_relaxed_dynamic_output_shape(Model *model);
+bool is_ignored_zero_sized_nchw_relaxed_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_nchw_relaxed_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_zero_sized_nchw_relaxed_dynamic_output_shape) {
+    execute(CreateModel_zero_sized_nchw_relaxed_dynamic_output_shape,
+            is_ignored_zero_sized_nchw_relaxed_dynamic_output_shape,
+            get_examples_zero_sized_nchw_relaxed_dynamic_output_shape());
 }
 
 } // namespace generated_tests::resize_nearest_neighbor
@@ -3788,6 +7552,20 @@ TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_zero_sized_nchw_quant8, gener
 
 namespace generated_tests::resize_nearest_neighbor {
 
+void CreateModel_zero_sized_nchw_quant8_dynamic_output_shape(Model *model);
+bool is_ignored_zero_sized_nchw_quant8_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_nchw_quant8_dynamic_output_shape();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_zero_sized_nchw_quant8_dynamic_output_shape) {
+    execute(CreateModel_zero_sized_nchw_quant8_dynamic_output_shape,
+            is_ignored_zero_sized_nchw_quant8_dynamic_output_shape,
+            get_examples_zero_sized_nchw_quant8_dynamic_output_shape());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
 void CreateModel_zero_sized_nchw_float16(Model *model);
 bool is_ignored_zero_sized_nchw_float16(int);
 std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_nchw_float16();
@@ -3803,112 +7581,14 @@ TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_zero_sized_nchw_float16, gene
 
 namespace generated_tests::resize_nearest_neighbor {
 
-void CreateModel_zero_sized_dynamic_output_shape_nhwc(Model *model);
-bool is_ignored_zero_sized_dynamic_output_shape_nhwc(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_dynamic_output_shape_nhwc();
+void CreateModel_zero_sized_nchw_float16_dynamic_output_shape(Model *model);
+bool is_ignored_zero_sized_nchw_float16_dynamic_output_shape(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_nchw_float16_dynamic_output_shape();
 
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_zero_sized_dynamic_output_shape_nhwc) {
-    execute(CreateModel_zero_sized_dynamic_output_shape_nhwc,
-            is_ignored_zero_sized_dynamic_output_shape_nhwc,
-            get_examples_zero_sized_dynamic_output_shape_nhwc());
-}
-
-} // namespace generated_tests::resize_nearest_neighbor
-
-namespace generated_tests::resize_nearest_neighbor {
-
-void CreateModel_zero_sized_dynamic_output_shape_nhwc_relaxed(Model *model);
-bool is_ignored_zero_sized_dynamic_output_shape_nhwc_relaxed(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_dynamic_output_shape_nhwc_relaxed();
-
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_zero_sized_dynamic_output_shape_nhwc_relaxed) {
-    execute(CreateModel_zero_sized_dynamic_output_shape_nhwc_relaxed,
-            is_ignored_zero_sized_dynamic_output_shape_nhwc_relaxed,
-            get_examples_zero_sized_dynamic_output_shape_nhwc_relaxed());
-}
-
-} // namespace generated_tests::resize_nearest_neighbor
-
-namespace generated_tests::resize_nearest_neighbor {
-
-void CreateModel_zero_sized_dynamic_output_shape_nhwc_quant8(Model *model);
-bool is_ignored_zero_sized_dynamic_output_shape_nhwc_quant8(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_dynamic_output_shape_nhwc_quant8();
-
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_zero_sized_dynamic_output_shape_nhwc_quant8) {
-    execute(CreateModel_zero_sized_dynamic_output_shape_nhwc_quant8,
-            is_ignored_zero_sized_dynamic_output_shape_nhwc_quant8,
-            get_examples_zero_sized_dynamic_output_shape_nhwc_quant8());
-}
-
-} // namespace generated_tests::resize_nearest_neighbor
-
-namespace generated_tests::resize_nearest_neighbor {
-
-void CreateModel_zero_sized_dynamic_output_shape_nhwc_float16(Model *model);
-bool is_ignored_zero_sized_dynamic_output_shape_nhwc_float16(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_dynamic_output_shape_nhwc_float16();
-
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_zero_sized_dynamic_output_shape_nhwc_float16) {
-    execute(CreateModel_zero_sized_dynamic_output_shape_nhwc_float16,
-            is_ignored_zero_sized_dynamic_output_shape_nhwc_float16,
-            get_examples_zero_sized_dynamic_output_shape_nhwc_float16());
-}
-
-} // namespace generated_tests::resize_nearest_neighbor
-
-namespace generated_tests::resize_nearest_neighbor {
-
-void CreateModel_zero_sized_dynamic_output_shape_nchw(Model *model);
-bool is_ignored_zero_sized_dynamic_output_shape_nchw(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_dynamic_output_shape_nchw();
-
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_zero_sized_dynamic_output_shape_nchw) {
-    execute(CreateModel_zero_sized_dynamic_output_shape_nchw,
-            is_ignored_zero_sized_dynamic_output_shape_nchw,
-            get_examples_zero_sized_dynamic_output_shape_nchw());
-}
-
-} // namespace generated_tests::resize_nearest_neighbor
-
-namespace generated_tests::resize_nearest_neighbor {
-
-void CreateModel_zero_sized_dynamic_output_shape_nchw_relaxed(Model *model);
-bool is_ignored_zero_sized_dynamic_output_shape_nchw_relaxed(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_dynamic_output_shape_nchw_relaxed();
-
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_zero_sized_dynamic_output_shape_nchw_relaxed) {
-    execute(CreateModel_zero_sized_dynamic_output_shape_nchw_relaxed,
-            is_ignored_zero_sized_dynamic_output_shape_nchw_relaxed,
-            get_examples_zero_sized_dynamic_output_shape_nchw_relaxed());
-}
-
-} // namespace generated_tests::resize_nearest_neighbor
-
-namespace generated_tests::resize_nearest_neighbor {
-
-void CreateModel_zero_sized_dynamic_output_shape_nchw_quant8(Model *model);
-bool is_ignored_zero_sized_dynamic_output_shape_nchw_quant8(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_dynamic_output_shape_nchw_quant8();
-
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_zero_sized_dynamic_output_shape_nchw_quant8) {
-    execute(CreateModel_zero_sized_dynamic_output_shape_nchw_quant8,
-            is_ignored_zero_sized_dynamic_output_shape_nchw_quant8,
-            get_examples_zero_sized_dynamic_output_shape_nchw_quant8());
-}
-
-} // namespace generated_tests::resize_nearest_neighbor
-
-namespace generated_tests::resize_nearest_neighbor {
-
-void CreateModel_zero_sized_dynamic_output_shape_nchw_float16(Model *model);
-bool is_ignored_zero_sized_dynamic_output_shape_nchw_float16(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_dynamic_output_shape_nchw_float16();
-
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_zero_sized_dynamic_output_shape_nchw_float16) {
-    execute(CreateModel_zero_sized_dynamic_output_shape_nchw_float16,
-            is_ignored_zero_sized_dynamic_output_shape_nchw_float16,
-            get_examples_zero_sized_dynamic_output_shape_nchw_float16());
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_zero_sized_nchw_float16_dynamic_output_shape) {
+    execute(CreateModel_zero_sized_nchw_float16_dynamic_output_shape,
+            is_ignored_zero_sized_nchw_float16_dynamic_output_shape,
+            get_examples_zero_sized_nchw_float16_dynamic_output_shape());
 }
 
 } // namespace generated_tests::resize_nearest_neighbor
@@ -3930,6 +7610,20 @@ TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_zero_sized_nhwc_2, generated_
 
 namespace generated_tests::resize_nearest_neighbor {
 
+void CreateModel_zero_sized_nhwc_dynamic_output_shape_2(Model *model);
+bool is_ignored_zero_sized_nhwc_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_nhwc_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_zero_sized_nhwc_dynamic_output_shape_2) {
+    execute(CreateModel_zero_sized_nhwc_dynamic_output_shape_2,
+            is_ignored_zero_sized_nhwc_dynamic_output_shape_2,
+            get_examples_zero_sized_nhwc_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
 void CreateModel_zero_sized_nhwc_relaxed_2(Model *model);
 bool is_ignored_zero_sized_nhwc_relaxed_2(int);
 std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_nhwc_relaxed_2();
@@ -3938,6 +7632,20 @@ TEST_F(GeneratedTests, resize_nearest_neighbor_zero_sized_nhwc_relaxed_2) {
     execute(CreateModel_zero_sized_nhwc_relaxed_2,
             is_ignored_zero_sized_nhwc_relaxed_2,
             get_examples_zero_sized_nhwc_relaxed_2());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_zero_sized_nhwc_relaxed_dynamic_output_shape_2(Model *model);
+bool is_ignored_zero_sized_nhwc_relaxed_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_nhwc_relaxed_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_zero_sized_nhwc_relaxed_dynamic_output_shape_2) {
+    execute(CreateModel_zero_sized_nhwc_relaxed_dynamic_output_shape_2,
+            is_ignored_zero_sized_nhwc_relaxed_dynamic_output_shape_2,
+            get_examples_zero_sized_nhwc_relaxed_dynamic_output_shape_2());
 }
 
 } // namespace generated_tests::resize_nearest_neighbor
@@ -3959,6 +7667,20 @@ TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_zero_sized_nhwc_quant8_2, gen
 
 namespace generated_tests::resize_nearest_neighbor {
 
+void CreateModel_zero_sized_nhwc_quant8_dynamic_output_shape_2(Model *model);
+bool is_ignored_zero_sized_nhwc_quant8_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_nhwc_quant8_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_zero_sized_nhwc_quant8_dynamic_output_shape_2) {
+    execute(CreateModel_zero_sized_nhwc_quant8_dynamic_output_shape_2,
+            is_ignored_zero_sized_nhwc_quant8_dynamic_output_shape_2,
+            get_examples_zero_sized_nhwc_quant8_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
 void CreateModel_zero_sized_nhwc_float16_2(Model *model);
 bool is_ignored_zero_sized_nhwc_float16_2(int);
 std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_nhwc_float16_2();
@@ -3971,6 +7693,20 @@ TEST_F(GeneratedTests, resize_nearest_neighbor_zero_sized_nhwc_float16_2) {
 
 } // namespace generated_tests::resize_nearest_neighbor
 TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_zero_sized_nhwc_float16_2, generated_tests::resize_nearest_neighbor::CreateModel_zero_sized_nhwc_float16_2)
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_zero_sized_nhwc_float16_dynamic_output_shape_2(Model *model);
+bool is_ignored_zero_sized_nhwc_float16_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_nhwc_float16_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_zero_sized_nhwc_float16_dynamic_output_shape_2) {
+    execute(CreateModel_zero_sized_nhwc_float16_dynamic_output_shape_2,
+            is_ignored_zero_sized_nhwc_float16_dynamic_output_shape_2,
+            get_examples_zero_sized_nhwc_float16_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
 
 namespace generated_tests::resize_nearest_neighbor {
 
@@ -3989,6 +7725,20 @@ TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_zero_sized_nchw_2, generated_
 
 namespace generated_tests::resize_nearest_neighbor {
 
+void CreateModel_zero_sized_nchw_dynamic_output_shape_2(Model *model);
+bool is_ignored_zero_sized_nchw_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_nchw_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_zero_sized_nchw_dynamic_output_shape_2) {
+    execute(CreateModel_zero_sized_nchw_dynamic_output_shape_2,
+            is_ignored_zero_sized_nchw_dynamic_output_shape_2,
+            get_examples_zero_sized_nchw_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
 void CreateModel_zero_sized_nchw_relaxed_2(Model *model);
 bool is_ignored_zero_sized_nchw_relaxed_2(int);
 std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_nchw_relaxed_2();
@@ -3997,6 +7747,20 @@ TEST_F(GeneratedTests, resize_nearest_neighbor_zero_sized_nchw_relaxed_2) {
     execute(CreateModel_zero_sized_nchw_relaxed_2,
             is_ignored_zero_sized_nchw_relaxed_2,
             get_examples_zero_sized_nchw_relaxed_2());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
+void CreateModel_zero_sized_nchw_relaxed_dynamic_output_shape_2(Model *model);
+bool is_ignored_zero_sized_nchw_relaxed_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_nchw_relaxed_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_zero_sized_nchw_relaxed_dynamic_output_shape_2) {
+    execute(CreateModel_zero_sized_nchw_relaxed_dynamic_output_shape_2,
+            is_ignored_zero_sized_nchw_relaxed_dynamic_output_shape_2,
+            get_examples_zero_sized_nchw_relaxed_dynamic_output_shape_2());
 }
 
 } // namespace generated_tests::resize_nearest_neighbor
@@ -4018,6 +7782,20 @@ TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_zero_sized_nchw_quant8_2, gen
 
 namespace generated_tests::resize_nearest_neighbor {
 
+void CreateModel_zero_sized_nchw_quant8_dynamic_output_shape_2(Model *model);
+bool is_ignored_zero_sized_nchw_quant8_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_nchw_quant8_dynamic_output_shape_2();
+
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_zero_sized_nchw_quant8_dynamic_output_shape_2) {
+    execute(CreateModel_zero_sized_nchw_quant8_dynamic_output_shape_2,
+            is_ignored_zero_sized_nchw_quant8_dynamic_output_shape_2,
+            get_examples_zero_sized_nchw_quant8_dynamic_output_shape_2());
+}
+
+} // namespace generated_tests::resize_nearest_neighbor
+
+namespace generated_tests::resize_nearest_neighbor {
+
 void CreateModel_zero_sized_nchw_float16_2(Model *model);
 bool is_ignored_zero_sized_nchw_float16_2(int);
 std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_nchw_float16_2();
@@ -4033,112 +7811,14 @@ TEST_AVAILABLE_SINCE(V1_2, resize_nearest_neighbor_zero_sized_nchw_float16_2, ge
 
 namespace generated_tests::resize_nearest_neighbor {
 
-void CreateModel_zero_sized_dynamic_output_shape_nhwc_2(Model *model);
-bool is_ignored_zero_sized_dynamic_output_shape_nhwc_2(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_dynamic_output_shape_nhwc_2();
+void CreateModel_zero_sized_nchw_float16_dynamic_output_shape_2(Model *model);
+bool is_ignored_zero_sized_nchw_float16_dynamic_output_shape_2(int);
+std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_nchw_float16_dynamic_output_shape_2();
 
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_zero_sized_dynamic_output_shape_nhwc_2) {
-    execute(CreateModel_zero_sized_dynamic_output_shape_nhwc_2,
-            is_ignored_zero_sized_dynamic_output_shape_nhwc_2,
-            get_examples_zero_sized_dynamic_output_shape_nhwc_2());
-}
-
-} // namespace generated_tests::resize_nearest_neighbor
-
-namespace generated_tests::resize_nearest_neighbor {
-
-void CreateModel_zero_sized_dynamic_output_shape_nhwc_relaxed_2(Model *model);
-bool is_ignored_zero_sized_dynamic_output_shape_nhwc_relaxed_2(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_dynamic_output_shape_nhwc_relaxed_2();
-
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_zero_sized_dynamic_output_shape_nhwc_relaxed_2) {
-    execute(CreateModel_zero_sized_dynamic_output_shape_nhwc_relaxed_2,
-            is_ignored_zero_sized_dynamic_output_shape_nhwc_relaxed_2,
-            get_examples_zero_sized_dynamic_output_shape_nhwc_relaxed_2());
-}
-
-} // namespace generated_tests::resize_nearest_neighbor
-
-namespace generated_tests::resize_nearest_neighbor {
-
-void CreateModel_zero_sized_dynamic_output_shape_nhwc_quant8_2(Model *model);
-bool is_ignored_zero_sized_dynamic_output_shape_nhwc_quant8_2(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_dynamic_output_shape_nhwc_quant8_2();
-
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_zero_sized_dynamic_output_shape_nhwc_quant8_2) {
-    execute(CreateModel_zero_sized_dynamic_output_shape_nhwc_quant8_2,
-            is_ignored_zero_sized_dynamic_output_shape_nhwc_quant8_2,
-            get_examples_zero_sized_dynamic_output_shape_nhwc_quant8_2());
-}
-
-} // namespace generated_tests::resize_nearest_neighbor
-
-namespace generated_tests::resize_nearest_neighbor {
-
-void CreateModel_zero_sized_dynamic_output_shape_nhwc_float16_2(Model *model);
-bool is_ignored_zero_sized_dynamic_output_shape_nhwc_float16_2(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_dynamic_output_shape_nhwc_float16_2();
-
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_zero_sized_dynamic_output_shape_nhwc_float16_2) {
-    execute(CreateModel_zero_sized_dynamic_output_shape_nhwc_float16_2,
-            is_ignored_zero_sized_dynamic_output_shape_nhwc_float16_2,
-            get_examples_zero_sized_dynamic_output_shape_nhwc_float16_2());
-}
-
-} // namespace generated_tests::resize_nearest_neighbor
-
-namespace generated_tests::resize_nearest_neighbor {
-
-void CreateModel_zero_sized_dynamic_output_shape_nchw_2(Model *model);
-bool is_ignored_zero_sized_dynamic_output_shape_nchw_2(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_dynamic_output_shape_nchw_2();
-
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_zero_sized_dynamic_output_shape_nchw_2) {
-    execute(CreateModel_zero_sized_dynamic_output_shape_nchw_2,
-            is_ignored_zero_sized_dynamic_output_shape_nchw_2,
-            get_examples_zero_sized_dynamic_output_shape_nchw_2());
-}
-
-} // namespace generated_tests::resize_nearest_neighbor
-
-namespace generated_tests::resize_nearest_neighbor {
-
-void CreateModel_zero_sized_dynamic_output_shape_nchw_relaxed_2(Model *model);
-bool is_ignored_zero_sized_dynamic_output_shape_nchw_relaxed_2(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_dynamic_output_shape_nchw_relaxed_2();
-
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_zero_sized_dynamic_output_shape_nchw_relaxed_2) {
-    execute(CreateModel_zero_sized_dynamic_output_shape_nchw_relaxed_2,
-            is_ignored_zero_sized_dynamic_output_shape_nchw_relaxed_2,
-            get_examples_zero_sized_dynamic_output_shape_nchw_relaxed_2());
-}
-
-} // namespace generated_tests::resize_nearest_neighbor
-
-namespace generated_tests::resize_nearest_neighbor {
-
-void CreateModel_zero_sized_dynamic_output_shape_nchw_quant8_2(Model *model);
-bool is_ignored_zero_sized_dynamic_output_shape_nchw_quant8_2(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_dynamic_output_shape_nchw_quant8_2();
-
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_zero_sized_dynamic_output_shape_nchw_quant8_2) {
-    execute(CreateModel_zero_sized_dynamic_output_shape_nchw_quant8_2,
-            is_ignored_zero_sized_dynamic_output_shape_nchw_quant8_2,
-            get_examples_zero_sized_dynamic_output_shape_nchw_quant8_2());
-}
-
-} // namespace generated_tests::resize_nearest_neighbor
-
-namespace generated_tests::resize_nearest_neighbor {
-
-void CreateModel_zero_sized_dynamic_output_shape_nchw_float16_2(Model *model);
-bool is_ignored_zero_sized_dynamic_output_shape_nchw_float16_2(int);
-std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_dynamic_output_shape_nchw_float16_2();
-
-TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_zero_sized_dynamic_output_shape_nchw_float16_2) {
-    execute(CreateModel_zero_sized_dynamic_output_shape_nchw_float16_2,
-            is_ignored_zero_sized_dynamic_output_shape_nchw_float16_2,
-            get_examples_zero_sized_dynamic_output_shape_nchw_float16_2());
+TEST_F(DynamicOutputShapeTest, resize_nearest_neighbor_zero_sized_nchw_float16_dynamic_output_shape_2) {
+    execute(CreateModel_zero_sized_nchw_float16_dynamic_output_shape_2,
+            is_ignored_zero_sized_nchw_float16_dynamic_output_shape_2,
+            get_examples_zero_sized_nchw_float16_dynamic_output_shape_2());
 }
 
 } // namespace generated_tests::resize_nearest_neighbor
