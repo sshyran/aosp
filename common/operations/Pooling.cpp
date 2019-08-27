@@ -105,7 +105,9 @@ struct PoolingParam {
                 .filter_height = filter_height,
                 .filter_width = filter_width,
                 .padding_values = {.height = static_cast<int16_t>(padding_top),
-                                   .width = static_cast<int16_t>(padding_left)}};
+                                   .width = static_cast<int16_t>(padding_left),
+                                   .width_offset = 0,
+                                   .height_offset = 0}};
         if (output.type == OperandType::TENSOR_QUANT8_ASYMM) {
             int32_t output_activation_min = 0;
             int32_t output_activation_max = 0;
