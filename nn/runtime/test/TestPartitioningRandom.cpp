@@ -30,6 +30,7 @@
 #include <cassert>
 #include <cstdio>
 #include <iterator>
+#include <memory>
 #include <random>
 #include <set>
 #include <tuple>
@@ -39,7 +40,6 @@
 #include <unistd.h>
 
 #include <android-base/logging.h>
-#include <android/sharedmem.h>
 #include <gtest/gtest.h>
 
 // Uncomment the following line to generate some debugging output that
@@ -98,7 +98,6 @@ using ExecutionPlan = nn::ExecutionPlan;
 using HalVersion = nn::HalVersion;
 using HidlModel = V1_2::Model;
 using HidlToken = hidl_array<uint8_t, ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN>;
-using MemoryBuilder = nn::Memory;
 using ModelBuilder = nn::ModelBuilder;
 using Result = nn::test_wrapper::Result;
 using SampleDriver = nn::sample_driver::SampleDriver;
@@ -252,7 +251,6 @@ class TestCompilation : public WrapperCompilation {
 class TestMemories {
    public:
     TestMemories() = default;
-    ~TestMemories();
 
     TestMemories(const TestMemories&) = delete;
     TestMemories& operator=(const TestMemories&) = delete;
@@ -282,15 +280,12 @@ class TestMemories {
         CHECK(mLayoutDone);
         CHECK(regionIndex < regionCount());
         const auto& regionDescriptor = mRegions[regionIndex];
-        const WrapperMemory* memory = &mMemorys[std::get<0>(regionDescriptor)];
+        const WrapperMemory* memory = &mMemories[std::get<0>(regionDescriptor)];
         uint32_t offset = std::get<1>(regionDescriptor);
         uint32_t length = std::get<2>(regionDescriptor);
 
-        uint8_t* buffer;
-        if (reinterpret_cast<MemoryBuilder*>(memory->get())->getPointer(&buffer) !=
-            ANEURALNETWORKS_NO_ERROR) {
-            CHECK(0);
-        }
+        uint8_t* buffer = reinterpret_cast<nn::MemoryAshmem*>(memory->get())->getPointer();
+        CHECK(buffer != nullptr);
 
         if (pMemory) *pMemory = memory;
         if (pOffset) *pOffset = offset;
@@ -309,8 +304,7 @@ class TestMemories {
     std::vector<uint32_t> mMemorySizes;
 
     // Index is the memory index.
-    std::vector<WrapperMemory> mMemorys;
-    std::vector<int> mFDs;
+    std::vector<WrapperMemory> mMemories;
 
     // Index is the region index; tuple represents memory index,
     // region offset within memory, region length.
@@ -323,18 +317,14 @@ class TestMemories {
 void TestMemories::layout() {
     CHECK(!mLayoutDone);
     for (uint32_t memorySize : mMemorySizes) {
-        const int fd = ASharedMemory_create(nullptr, memorySize);
-        CHECK(fd >= 0);
-        mMemorys.emplace_back(memorySize, PROT_READ | PROT_WRITE, fd, 0);
-        mFDs.push_back(fd);
+        auto [n, ashmem] = nn::MemoryAshmem::create(memorySize);
+        CHECK_EQ(n, ANEURALNETWORKS_NO_ERROR);
+        CHECK(ashmem != nullptr);
+
+        ANeuralNetworksMemory* memory = reinterpret_cast<ANeuralNetworksMemory*>(ashmem.release());
+        mMemories.emplace_back(memory);
     }
     mLayoutDone = true;
-}
-
-TestMemories::~TestMemories() {
-    for (int fd : mFDs) {
-        close(fd);
-    }
 }
 
 class RandomPartitioningTest : public ::testing::TestWithParam<unsigned> {
