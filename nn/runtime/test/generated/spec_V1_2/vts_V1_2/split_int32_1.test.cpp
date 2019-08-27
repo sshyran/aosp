@@ -3,106 +3,52 @@
 // clang-format off
 #include "GeneratedTests.h"
 
+
 namespace generated_tests::split_int32_1 {
 
-std::vector<::test_helper::MixedTypedExample>& get_examples();
+const ::test_helper::TestModel& get_test_model();
 
 } // namespace generated_tests::split_int32_1
 
 namespace android::hardware::neuralnetworks::V1_2::generated_tests::split_int32_1 {
 
-Model createTestModel();
-bool is_ignored(int);
+TEST_F(GeneratedTest, split_int32_1) {
+    Execute(device, ::generated_tests::split_int32_1::get_test_model());
+}
 
-TEST_F(NeuralnetworksHidlTest, split_int32_1) {
-  Execute(device,
-          createTestModel,
-          is_ignored,
-          ::generated_tests::split_int32_1::get_examples());
+TEST_F(DynamicOutputShapeTest, split_int32_1) {
+    Execute(device, ::generated_tests::split_int32_1::get_test_model(), true);
 }
 
 TEST_F(ValidationTest, split_int32_1) {
-  const Model model = createTestModel();
-  const std::vector<Request> requests = createRequests(::generated_tests::split_int32_1::get_examples());
-  validateEverything(model, requests);
+    const Model model = createModel(::generated_tests::split_int32_1::get_test_model());
+    const Request request = createRequest(::generated_tests::split_int32_1::get_test_model());
+    validateEverything(model, request);
 }
 
 } // namespace android::hardware::neuralnetworks::V1_2::generated_tests::split_int32_1
 
+
 namespace generated_tests::split_int32_1 {
 
-std::vector<::test_helper::MixedTypedExample>& get_examples_dynamic_output_shape();
+const ::test_helper::TestModel& get_test_model_relaxed();
 
 } // namespace generated_tests::split_int32_1
 
 namespace android::hardware::neuralnetworks::V1_2::generated_tests::split_int32_1 {
 
-Model createTestModel_dynamic_output_shape();
-bool is_ignored_dynamic_output_shape(int);
-
-TEST_F(DynamicOutputShapeTest, split_int32_1_dynamic_output_shape) {
-  Execute(device,
-          createTestModel_dynamic_output_shape,
-          is_ignored_dynamic_output_shape,
-          ::generated_tests::split_int32_1::get_examples_dynamic_output_shape(), true);
+TEST_F(GeneratedTest, split_int32_1_relaxed) {
+    Execute(device, ::generated_tests::split_int32_1::get_test_model_relaxed());
 }
 
-TEST_F(ValidationTest, split_int32_1_dynamic_output_shape) {
-  const Model model = createTestModel_dynamic_output_shape();
-  const std::vector<Request> requests = createRequests(::generated_tests::split_int32_1::get_examples_dynamic_output_shape());
-  validateEverything(model, requests);
-}
-
-} // namespace android::hardware::neuralnetworks::V1_2::generated_tests::split_int32_1
-
-namespace generated_tests::split_int32_1 {
-
-std::vector<::test_helper::MixedTypedExample>& get_examples_relaxed();
-
-} // namespace generated_tests::split_int32_1
-
-namespace android::hardware::neuralnetworks::V1_2::generated_tests::split_int32_1 {
-
-Model createTestModel_relaxed();
-bool is_ignored_relaxed(int);
-
-TEST_F(NeuralnetworksHidlTest, split_int32_1_relaxed) {
-  Execute(device,
-          createTestModel_relaxed,
-          is_ignored_relaxed,
-          ::generated_tests::split_int32_1::get_examples_relaxed());
+TEST_F(DynamicOutputShapeTest, split_int32_1_relaxed) {
+    Execute(device, ::generated_tests::split_int32_1::get_test_model_relaxed(), true);
 }
 
 TEST_F(ValidationTest, split_int32_1_relaxed) {
-  const Model model = createTestModel_relaxed();
-  const std::vector<Request> requests = createRequests(::generated_tests::split_int32_1::get_examples_relaxed());
-  validateEverything(model, requests);
-}
-
-} // namespace android::hardware::neuralnetworks::V1_2::generated_tests::split_int32_1
-
-namespace generated_tests::split_int32_1 {
-
-std::vector<::test_helper::MixedTypedExample>& get_examples_relaxed_dynamic_output_shape();
-
-} // namespace generated_tests::split_int32_1
-
-namespace android::hardware::neuralnetworks::V1_2::generated_tests::split_int32_1 {
-
-Model createTestModel_relaxed_dynamic_output_shape();
-bool is_ignored_relaxed_dynamic_output_shape(int);
-
-TEST_F(DynamicOutputShapeTest, split_int32_1_relaxed_dynamic_output_shape) {
-  Execute(device,
-          createTestModel_relaxed_dynamic_output_shape,
-          is_ignored_relaxed_dynamic_output_shape,
-          ::generated_tests::split_int32_1::get_examples_relaxed_dynamic_output_shape(), true);
-}
-
-TEST_F(ValidationTest, split_int32_1_relaxed_dynamic_output_shape) {
-  const Model model = createTestModel_relaxed_dynamic_output_shape();
-  const std::vector<Request> requests = createRequests(::generated_tests::split_int32_1::get_examples_relaxed_dynamic_output_shape());
-  validateEverything(model, requests);
+    const Model model = createModel(::generated_tests::split_int32_1::get_test_model_relaxed());
+    const Request request = createRequest(::generated_tests::split_int32_1::get_test_model_relaxed());
+    validateEverything(model, request);
 }
 
 } // namespace android::hardware::neuralnetworks::V1_2::generated_tests::split_int32_1
