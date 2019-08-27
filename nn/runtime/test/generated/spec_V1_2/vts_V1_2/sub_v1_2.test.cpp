@@ -3,1146 +3,552 @@
 // clang-format off
 #include "GeneratedTests.h"
 
+
 namespace generated_tests::sub_v1_2 {
 
-std::vector<::test_helper::MixedTypedExample>& get_examples_none();
+const ::test_helper::TestModel& get_test_model_none();
 
 } // namespace generated_tests::sub_v1_2
 
 namespace android::hardware::neuralnetworks::V1_2::generated_tests::sub_v1_2 {
 
-Model createTestModel_none();
-bool is_ignored_none(int);
+TEST_F(GeneratedTest, sub_v1_2_none) {
+    Execute(device, ::generated_tests::sub_v1_2::get_test_model_none());
+}
 
-TEST_F(NeuralnetworksHidlTest, sub_v1_2_none) {
-  Execute(device,
-          createTestModel_none,
-          is_ignored_none,
-          ::generated_tests::sub_v1_2::get_examples_none());
+TEST_F(DynamicOutputShapeTest, sub_v1_2_none) {
+    Execute(device, ::generated_tests::sub_v1_2::get_test_model_none(), true);
 }
 
 TEST_F(ValidationTest, sub_v1_2_none) {
-  const Model model = createTestModel_none();
-  const std::vector<Request> requests = createRequests(::generated_tests::sub_v1_2::get_examples_none());
-  validateEverything(model, requests);
+    const Model model = createModel(::generated_tests::sub_v1_2::get_test_model_none());
+    const Request request = createRequest(::generated_tests::sub_v1_2::get_test_model_none());
+    validateEverything(model, request);
 }
 
 } // namespace android::hardware::neuralnetworks::V1_2::generated_tests::sub_v1_2
 
+
 namespace generated_tests::sub_v1_2 {
 
-std::vector<::test_helper::MixedTypedExample>& get_examples_none_dynamic_output_shape();
+const ::test_helper::TestModel& get_test_model_none_all_inputs_as_internal();
 
 } // namespace generated_tests::sub_v1_2
 
 namespace android::hardware::neuralnetworks::V1_2::generated_tests::sub_v1_2 {
 
-Model createTestModel_none_dynamic_output_shape();
-bool is_ignored_none_dynamic_output_shape(int);
-
-TEST_F(DynamicOutputShapeTest, sub_v1_2_none_dynamic_output_shape) {
-  Execute(device,
-          createTestModel_none_dynamic_output_shape,
-          is_ignored_none_dynamic_output_shape,
-          ::generated_tests::sub_v1_2::get_examples_none_dynamic_output_shape(), true);
+TEST_F(GeneratedTest, sub_v1_2_none_all_inputs_as_internal) {
+    Execute(device, ::generated_tests::sub_v1_2::get_test_model_none_all_inputs_as_internal());
 }
 
-TEST_F(ValidationTest, sub_v1_2_none_dynamic_output_shape) {
-  const Model model = createTestModel_none_dynamic_output_shape();
-  const std::vector<Request> requests = createRequests(::generated_tests::sub_v1_2::get_examples_none_dynamic_output_shape());
-  validateEverything(model, requests);
-}
-
-} // namespace android::hardware::neuralnetworks::V1_2::generated_tests::sub_v1_2
-
-namespace generated_tests::sub_v1_2 {
-
-std::vector<::test_helper::MixedTypedExample>& get_examples_none_all_inputs_as_internal();
-
-} // namespace generated_tests::sub_v1_2
-
-namespace android::hardware::neuralnetworks::V1_2::generated_tests::sub_v1_2 {
-
-Model createTestModel_none_all_inputs_as_internal();
-bool is_ignored_none_all_inputs_as_internal(int);
-
-TEST_F(NeuralnetworksHidlTest, sub_v1_2_none_all_inputs_as_internal) {
-  Execute(device,
-          createTestModel_none_all_inputs_as_internal,
-          is_ignored_none_all_inputs_as_internal,
-          ::generated_tests::sub_v1_2::get_examples_none_all_inputs_as_internal());
+TEST_F(DynamicOutputShapeTest, sub_v1_2_none_all_inputs_as_internal) {
+    Execute(device, ::generated_tests::sub_v1_2::get_test_model_none_all_inputs_as_internal(), true);
 }
 
 TEST_F(ValidationTest, sub_v1_2_none_all_inputs_as_internal) {
-  const Model model = createTestModel_none_all_inputs_as_internal();
-  const std::vector<Request> requests = createRequests(::generated_tests::sub_v1_2::get_examples_none_all_inputs_as_internal());
-  validateEverything(model, requests);
+    const Model model = createModel(::generated_tests::sub_v1_2::get_test_model_none_all_inputs_as_internal());
+    const Request request = createRequest(::generated_tests::sub_v1_2::get_test_model_none_all_inputs_as_internal());
+    validateEverything(model, request);
 }
 
 } // namespace android::hardware::neuralnetworks::V1_2::generated_tests::sub_v1_2
 
+
 namespace generated_tests::sub_v1_2 {
 
-std::vector<::test_helper::MixedTypedExample>& get_examples_none_all_inputs_as_internal_dynamic_output_shape();
+const ::test_helper::TestModel& get_test_model_relu();
 
 } // namespace generated_tests::sub_v1_2
 
 namespace android::hardware::neuralnetworks::V1_2::generated_tests::sub_v1_2 {
 
-Model createTestModel_none_all_inputs_as_internal_dynamic_output_shape();
-bool is_ignored_none_all_inputs_as_internal_dynamic_output_shape(int);
-
-TEST_F(DynamicOutputShapeTest, sub_v1_2_none_all_inputs_as_internal_dynamic_output_shape) {
-  Execute(device,
-          createTestModel_none_all_inputs_as_internal_dynamic_output_shape,
-          is_ignored_none_all_inputs_as_internal_dynamic_output_shape,
-          ::generated_tests::sub_v1_2::get_examples_none_all_inputs_as_internal_dynamic_output_shape(), true);
+TEST_F(GeneratedTest, sub_v1_2_relu) {
+    Execute(device, ::generated_tests::sub_v1_2::get_test_model_relu());
 }
 
-TEST_F(ValidationTest, sub_v1_2_none_all_inputs_as_internal_dynamic_output_shape) {
-  const Model model = createTestModel_none_all_inputs_as_internal_dynamic_output_shape();
-  const std::vector<Request> requests = createRequests(::generated_tests::sub_v1_2::get_examples_none_all_inputs_as_internal_dynamic_output_shape());
-  validateEverything(model, requests);
-}
-
-} // namespace android::hardware::neuralnetworks::V1_2::generated_tests::sub_v1_2
-
-namespace generated_tests::sub_v1_2 {
-
-std::vector<::test_helper::MixedTypedExample>& get_examples_relu();
-
-} // namespace generated_tests::sub_v1_2
-
-namespace android::hardware::neuralnetworks::V1_2::generated_tests::sub_v1_2 {
-
-Model createTestModel_relu();
-bool is_ignored_relu(int);
-
-TEST_F(NeuralnetworksHidlTest, sub_v1_2_relu) {
-  Execute(device,
-          createTestModel_relu,
-          is_ignored_relu,
-          ::generated_tests::sub_v1_2::get_examples_relu());
+TEST_F(DynamicOutputShapeTest, sub_v1_2_relu) {
+    Execute(device, ::generated_tests::sub_v1_2::get_test_model_relu(), true);
 }
 
 TEST_F(ValidationTest, sub_v1_2_relu) {
-  const Model model = createTestModel_relu();
-  const std::vector<Request> requests = createRequests(::generated_tests::sub_v1_2::get_examples_relu());
-  validateEverything(model, requests);
+    const Model model = createModel(::generated_tests::sub_v1_2::get_test_model_relu());
+    const Request request = createRequest(::generated_tests::sub_v1_2::get_test_model_relu());
+    validateEverything(model, request);
 }
 
 } // namespace android::hardware::neuralnetworks::V1_2::generated_tests::sub_v1_2
 
+
 namespace generated_tests::sub_v1_2 {
 
-std::vector<::test_helper::MixedTypedExample>& get_examples_relu_dynamic_output_shape();
+const ::test_helper::TestModel& get_test_model_relu_all_inputs_as_internal();
 
 } // namespace generated_tests::sub_v1_2
 
 namespace android::hardware::neuralnetworks::V1_2::generated_tests::sub_v1_2 {
 
-Model createTestModel_relu_dynamic_output_shape();
-bool is_ignored_relu_dynamic_output_shape(int);
-
-TEST_F(DynamicOutputShapeTest, sub_v1_2_relu_dynamic_output_shape) {
-  Execute(device,
-          createTestModel_relu_dynamic_output_shape,
-          is_ignored_relu_dynamic_output_shape,
-          ::generated_tests::sub_v1_2::get_examples_relu_dynamic_output_shape(), true);
+TEST_F(GeneratedTest, sub_v1_2_relu_all_inputs_as_internal) {
+    Execute(device, ::generated_tests::sub_v1_2::get_test_model_relu_all_inputs_as_internal());
 }
 
-TEST_F(ValidationTest, sub_v1_2_relu_dynamic_output_shape) {
-  const Model model = createTestModel_relu_dynamic_output_shape();
-  const std::vector<Request> requests = createRequests(::generated_tests::sub_v1_2::get_examples_relu_dynamic_output_shape());
-  validateEverything(model, requests);
-}
-
-} // namespace android::hardware::neuralnetworks::V1_2::generated_tests::sub_v1_2
-
-namespace generated_tests::sub_v1_2 {
-
-std::vector<::test_helper::MixedTypedExample>& get_examples_relu_all_inputs_as_internal();
-
-} // namespace generated_tests::sub_v1_2
-
-namespace android::hardware::neuralnetworks::V1_2::generated_tests::sub_v1_2 {
-
-Model createTestModel_relu_all_inputs_as_internal();
-bool is_ignored_relu_all_inputs_as_internal(int);
-
-TEST_F(NeuralnetworksHidlTest, sub_v1_2_relu_all_inputs_as_internal) {
-  Execute(device,
-          createTestModel_relu_all_inputs_as_internal,
-          is_ignored_relu_all_inputs_as_internal,
-          ::generated_tests::sub_v1_2::get_examples_relu_all_inputs_as_internal());
+TEST_F(DynamicOutputShapeTest, sub_v1_2_relu_all_inputs_as_internal) {
+    Execute(device, ::generated_tests::sub_v1_2::get_test_model_relu_all_inputs_as_internal(), true);
 }
 
 TEST_F(ValidationTest, sub_v1_2_relu_all_inputs_as_internal) {
-  const Model model = createTestModel_relu_all_inputs_as_internal();
-  const std::vector<Request> requests = createRequests(::generated_tests::sub_v1_2::get_examples_relu_all_inputs_as_internal());
-  validateEverything(model, requests);
+    const Model model = createModel(::generated_tests::sub_v1_2::get_test_model_relu_all_inputs_as_internal());
+    const Request request = createRequest(::generated_tests::sub_v1_2::get_test_model_relu_all_inputs_as_internal());
+    validateEverything(model, request);
 }
 
 } // namespace android::hardware::neuralnetworks::V1_2::generated_tests::sub_v1_2
 
+
 namespace generated_tests::sub_v1_2 {
 
-std::vector<::test_helper::MixedTypedExample>& get_examples_relu_all_inputs_as_internal_dynamic_output_shape();
+const ::test_helper::TestModel& get_test_model_relu1();
 
 } // namespace generated_tests::sub_v1_2
 
 namespace android::hardware::neuralnetworks::V1_2::generated_tests::sub_v1_2 {
 
-Model createTestModel_relu_all_inputs_as_internal_dynamic_output_shape();
-bool is_ignored_relu_all_inputs_as_internal_dynamic_output_shape(int);
-
-TEST_F(DynamicOutputShapeTest, sub_v1_2_relu_all_inputs_as_internal_dynamic_output_shape) {
-  Execute(device,
-          createTestModel_relu_all_inputs_as_internal_dynamic_output_shape,
-          is_ignored_relu_all_inputs_as_internal_dynamic_output_shape,
-          ::generated_tests::sub_v1_2::get_examples_relu_all_inputs_as_internal_dynamic_output_shape(), true);
+TEST_F(GeneratedTest, sub_v1_2_relu1) {
+    Execute(device, ::generated_tests::sub_v1_2::get_test_model_relu1());
 }
 
-TEST_F(ValidationTest, sub_v1_2_relu_all_inputs_as_internal_dynamic_output_shape) {
-  const Model model = createTestModel_relu_all_inputs_as_internal_dynamic_output_shape();
-  const std::vector<Request> requests = createRequests(::generated_tests::sub_v1_2::get_examples_relu_all_inputs_as_internal_dynamic_output_shape());
-  validateEverything(model, requests);
-}
-
-} // namespace android::hardware::neuralnetworks::V1_2::generated_tests::sub_v1_2
-
-namespace generated_tests::sub_v1_2 {
-
-std::vector<::test_helper::MixedTypedExample>& get_examples_relu1();
-
-} // namespace generated_tests::sub_v1_2
-
-namespace android::hardware::neuralnetworks::V1_2::generated_tests::sub_v1_2 {
-
-Model createTestModel_relu1();
-bool is_ignored_relu1(int);
-
-TEST_F(NeuralnetworksHidlTest, sub_v1_2_relu1) {
-  Execute(device,
-          createTestModel_relu1,
-          is_ignored_relu1,
-          ::generated_tests::sub_v1_2::get_examples_relu1());
+TEST_F(DynamicOutputShapeTest, sub_v1_2_relu1) {
+    Execute(device, ::generated_tests::sub_v1_2::get_test_model_relu1(), true);
 }
 
 TEST_F(ValidationTest, sub_v1_2_relu1) {
-  const Model model = createTestModel_relu1();
-  const std::vector<Request> requests = createRequests(::generated_tests::sub_v1_2::get_examples_relu1());
-  validateEverything(model, requests);
+    const Model model = createModel(::generated_tests::sub_v1_2::get_test_model_relu1());
+    const Request request = createRequest(::generated_tests::sub_v1_2::get_test_model_relu1());
+    validateEverything(model, request);
 }
 
 } // namespace android::hardware::neuralnetworks::V1_2::generated_tests::sub_v1_2
 
+
 namespace generated_tests::sub_v1_2 {
 
-std::vector<::test_helper::MixedTypedExample>& get_examples_relu1_dynamic_output_shape();
+const ::test_helper::TestModel& get_test_model_relu1_all_inputs_as_internal();
 
 } // namespace generated_tests::sub_v1_2
 
 namespace android::hardware::neuralnetworks::V1_2::generated_tests::sub_v1_2 {
 
-Model createTestModel_relu1_dynamic_output_shape();
-bool is_ignored_relu1_dynamic_output_shape(int);
-
-TEST_F(DynamicOutputShapeTest, sub_v1_2_relu1_dynamic_output_shape) {
-  Execute(device,
-          createTestModel_relu1_dynamic_output_shape,
-          is_ignored_relu1_dynamic_output_shape,
-          ::generated_tests::sub_v1_2::get_examples_relu1_dynamic_output_shape(), true);
+TEST_F(GeneratedTest, sub_v1_2_relu1_all_inputs_as_internal) {
+    Execute(device, ::generated_tests::sub_v1_2::get_test_model_relu1_all_inputs_as_internal());
 }
 
-TEST_F(ValidationTest, sub_v1_2_relu1_dynamic_output_shape) {
-  const Model model = createTestModel_relu1_dynamic_output_shape();
-  const std::vector<Request> requests = createRequests(::generated_tests::sub_v1_2::get_examples_relu1_dynamic_output_shape());
-  validateEverything(model, requests);
-}
-
-} // namespace android::hardware::neuralnetworks::V1_2::generated_tests::sub_v1_2
-
-namespace generated_tests::sub_v1_2 {
-
-std::vector<::test_helper::MixedTypedExample>& get_examples_relu1_all_inputs_as_internal();
-
-} // namespace generated_tests::sub_v1_2
-
-namespace android::hardware::neuralnetworks::V1_2::generated_tests::sub_v1_2 {
-
-Model createTestModel_relu1_all_inputs_as_internal();
-bool is_ignored_relu1_all_inputs_as_internal(int);
-
-TEST_F(NeuralnetworksHidlTest, sub_v1_2_relu1_all_inputs_as_internal) {
-  Execute(device,
-          createTestModel_relu1_all_inputs_as_internal,
-          is_ignored_relu1_all_inputs_as_internal,
-          ::generated_tests::sub_v1_2::get_examples_relu1_all_inputs_as_internal());
+TEST_F(DynamicOutputShapeTest, sub_v1_2_relu1_all_inputs_as_internal) {
+    Execute(device, ::generated_tests::sub_v1_2::get_test_model_relu1_all_inputs_as_internal(), true);
 }
 
 TEST_F(ValidationTest, sub_v1_2_relu1_all_inputs_as_internal) {
-  const Model model = createTestModel_relu1_all_inputs_as_internal();
-  const std::vector<Request> requests = createRequests(::generated_tests::sub_v1_2::get_examples_relu1_all_inputs_as_internal());
-  validateEverything(model, requests);
+    const Model model = createModel(::generated_tests::sub_v1_2::get_test_model_relu1_all_inputs_as_internal());
+    const Request request = createRequest(::generated_tests::sub_v1_2::get_test_model_relu1_all_inputs_as_internal());
+    validateEverything(model, request);
 }
 
 } // namespace android::hardware::neuralnetworks::V1_2::generated_tests::sub_v1_2
 
+
 namespace generated_tests::sub_v1_2 {
 
-std::vector<::test_helper::MixedTypedExample>& get_examples_relu1_all_inputs_as_internal_dynamic_output_shape();
+const ::test_helper::TestModel& get_test_model_relu6();
 
 } // namespace generated_tests::sub_v1_2
 
 namespace android::hardware::neuralnetworks::V1_2::generated_tests::sub_v1_2 {
 
-Model createTestModel_relu1_all_inputs_as_internal_dynamic_output_shape();
-bool is_ignored_relu1_all_inputs_as_internal_dynamic_output_shape(int);
-
-TEST_F(DynamicOutputShapeTest, sub_v1_2_relu1_all_inputs_as_internal_dynamic_output_shape) {
-  Execute(device,
-          createTestModel_relu1_all_inputs_as_internal_dynamic_output_shape,
-          is_ignored_relu1_all_inputs_as_internal_dynamic_output_shape,
-          ::generated_tests::sub_v1_2::get_examples_relu1_all_inputs_as_internal_dynamic_output_shape(), true);
+TEST_F(GeneratedTest, sub_v1_2_relu6) {
+    Execute(device, ::generated_tests::sub_v1_2::get_test_model_relu6());
 }
 
-TEST_F(ValidationTest, sub_v1_2_relu1_all_inputs_as_internal_dynamic_output_shape) {
-  const Model model = createTestModel_relu1_all_inputs_as_internal_dynamic_output_shape();
-  const std::vector<Request> requests = createRequests(::generated_tests::sub_v1_2::get_examples_relu1_all_inputs_as_internal_dynamic_output_shape());
-  validateEverything(model, requests);
-}
-
-} // namespace android::hardware::neuralnetworks::V1_2::generated_tests::sub_v1_2
-
-namespace generated_tests::sub_v1_2 {
-
-std::vector<::test_helper::MixedTypedExample>& get_examples_relu6();
-
-} // namespace generated_tests::sub_v1_2
-
-namespace android::hardware::neuralnetworks::V1_2::generated_tests::sub_v1_2 {
-
-Model createTestModel_relu6();
-bool is_ignored_relu6(int);
-
-TEST_F(NeuralnetworksHidlTest, sub_v1_2_relu6) {
-  Execute(device,
-          createTestModel_relu6,
-          is_ignored_relu6,
-          ::generated_tests::sub_v1_2::get_examples_relu6());
+TEST_F(DynamicOutputShapeTest, sub_v1_2_relu6) {
+    Execute(device, ::generated_tests::sub_v1_2::get_test_model_relu6(), true);
 }
 
 TEST_F(ValidationTest, sub_v1_2_relu6) {
-  const Model model = createTestModel_relu6();
-  const std::vector<Request> requests = createRequests(::generated_tests::sub_v1_2::get_examples_relu6());
-  validateEverything(model, requests);
+    const Model model = createModel(::generated_tests::sub_v1_2::get_test_model_relu6());
+    const Request request = createRequest(::generated_tests::sub_v1_2::get_test_model_relu6());
+    validateEverything(model, request);
 }
 
 } // namespace android::hardware::neuralnetworks::V1_2::generated_tests::sub_v1_2
 
+
 namespace generated_tests::sub_v1_2 {
 
-std::vector<::test_helper::MixedTypedExample>& get_examples_relu6_dynamic_output_shape();
+const ::test_helper::TestModel& get_test_model_relu6_all_inputs_as_internal();
 
 } // namespace generated_tests::sub_v1_2
 
 namespace android::hardware::neuralnetworks::V1_2::generated_tests::sub_v1_2 {
 
-Model createTestModel_relu6_dynamic_output_shape();
-bool is_ignored_relu6_dynamic_output_shape(int);
-
-TEST_F(DynamicOutputShapeTest, sub_v1_2_relu6_dynamic_output_shape) {
-  Execute(device,
-          createTestModel_relu6_dynamic_output_shape,
-          is_ignored_relu6_dynamic_output_shape,
-          ::generated_tests::sub_v1_2::get_examples_relu6_dynamic_output_shape(), true);
+TEST_F(GeneratedTest, sub_v1_2_relu6_all_inputs_as_internal) {
+    Execute(device, ::generated_tests::sub_v1_2::get_test_model_relu6_all_inputs_as_internal());
 }
 
-TEST_F(ValidationTest, sub_v1_2_relu6_dynamic_output_shape) {
-  const Model model = createTestModel_relu6_dynamic_output_shape();
-  const std::vector<Request> requests = createRequests(::generated_tests::sub_v1_2::get_examples_relu6_dynamic_output_shape());
-  validateEverything(model, requests);
-}
-
-} // namespace android::hardware::neuralnetworks::V1_2::generated_tests::sub_v1_2
-
-namespace generated_tests::sub_v1_2 {
-
-std::vector<::test_helper::MixedTypedExample>& get_examples_relu6_all_inputs_as_internal();
-
-} // namespace generated_tests::sub_v1_2
-
-namespace android::hardware::neuralnetworks::V1_2::generated_tests::sub_v1_2 {
-
-Model createTestModel_relu6_all_inputs_as_internal();
-bool is_ignored_relu6_all_inputs_as_internal(int);
-
-TEST_F(NeuralnetworksHidlTest, sub_v1_2_relu6_all_inputs_as_internal) {
-  Execute(device,
-          createTestModel_relu6_all_inputs_as_internal,
-          is_ignored_relu6_all_inputs_as_internal,
-          ::generated_tests::sub_v1_2::get_examples_relu6_all_inputs_as_internal());
+TEST_F(DynamicOutputShapeTest, sub_v1_2_relu6_all_inputs_as_internal) {
+    Execute(device, ::generated_tests::sub_v1_2::get_test_model_relu6_all_inputs_as_internal(), true);
 }
 
 TEST_F(ValidationTest, sub_v1_2_relu6_all_inputs_as_internal) {
-  const Model model = createTestModel_relu6_all_inputs_as_internal();
-  const std::vector<Request> requests = createRequests(::generated_tests::sub_v1_2::get_examples_relu6_all_inputs_as_internal());
-  validateEverything(model, requests);
+    const Model model = createModel(::generated_tests::sub_v1_2::get_test_model_relu6_all_inputs_as_internal());
+    const Request request = createRequest(::generated_tests::sub_v1_2::get_test_model_relu6_all_inputs_as_internal());
+    validateEverything(model, request);
 }
 
 } // namespace android::hardware::neuralnetworks::V1_2::generated_tests::sub_v1_2
 
+
 namespace generated_tests::sub_v1_2 {
 
-std::vector<::test_helper::MixedTypedExample>& get_examples_relu6_all_inputs_as_internal_dynamic_output_shape();
+const ::test_helper::TestModel& get_test_model_float16_none();
 
 } // namespace generated_tests::sub_v1_2
 
 namespace android::hardware::neuralnetworks::V1_2::generated_tests::sub_v1_2 {
 
-Model createTestModel_relu6_all_inputs_as_internal_dynamic_output_shape();
-bool is_ignored_relu6_all_inputs_as_internal_dynamic_output_shape(int);
-
-TEST_F(DynamicOutputShapeTest, sub_v1_2_relu6_all_inputs_as_internal_dynamic_output_shape) {
-  Execute(device,
-          createTestModel_relu6_all_inputs_as_internal_dynamic_output_shape,
-          is_ignored_relu6_all_inputs_as_internal_dynamic_output_shape,
-          ::generated_tests::sub_v1_2::get_examples_relu6_all_inputs_as_internal_dynamic_output_shape(), true);
+TEST_F(GeneratedTest, sub_v1_2_float16_none) {
+    Execute(device, ::generated_tests::sub_v1_2::get_test_model_float16_none());
 }
 
-TEST_F(ValidationTest, sub_v1_2_relu6_all_inputs_as_internal_dynamic_output_shape) {
-  const Model model = createTestModel_relu6_all_inputs_as_internal_dynamic_output_shape();
-  const std::vector<Request> requests = createRequests(::generated_tests::sub_v1_2::get_examples_relu6_all_inputs_as_internal_dynamic_output_shape());
-  validateEverything(model, requests);
-}
-
-} // namespace android::hardware::neuralnetworks::V1_2::generated_tests::sub_v1_2
-
-namespace generated_tests::sub_v1_2 {
-
-std::vector<::test_helper::MixedTypedExample>& get_examples_float16_none();
-
-} // namespace generated_tests::sub_v1_2
-
-namespace android::hardware::neuralnetworks::V1_2::generated_tests::sub_v1_2 {
-
-Model createTestModel_float16_none();
-bool is_ignored_float16_none(int);
-
-TEST_F(NeuralnetworksHidlTest, sub_v1_2_float16_none) {
-  Execute(device,
-          createTestModel_float16_none,
-          is_ignored_float16_none,
-          ::generated_tests::sub_v1_2::get_examples_float16_none());
+TEST_F(DynamicOutputShapeTest, sub_v1_2_float16_none) {
+    Execute(device, ::generated_tests::sub_v1_2::get_test_model_float16_none(), true);
 }
 
 TEST_F(ValidationTest, sub_v1_2_float16_none) {
-  const Model model = createTestModel_float16_none();
-  const std::vector<Request> requests = createRequests(::generated_tests::sub_v1_2::get_examples_float16_none());
-  validateEverything(model, requests);
+    const Model model = createModel(::generated_tests::sub_v1_2::get_test_model_float16_none());
+    const Request request = createRequest(::generated_tests::sub_v1_2::get_test_model_float16_none());
+    validateEverything(model, request);
 }
 
 } // namespace android::hardware::neuralnetworks::V1_2::generated_tests::sub_v1_2
 
+
 namespace generated_tests::sub_v1_2 {
 
-std::vector<::test_helper::MixedTypedExample>& get_examples_float16_none_dynamic_output_shape();
+const ::test_helper::TestModel& get_test_model_float16_none_all_inputs_as_internal();
 
 } // namespace generated_tests::sub_v1_2
 
 namespace android::hardware::neuralnetworks::V1_2::generated_tests::sub_v1_2 {
 
-Model createTestModel_float16_none_dynamic_output_shape();
-bool is_ignored_float16_none_dynamic_output_shape(int);
-
-TEST_F(DynamicOutputShapeTest, sub_v1_2_float16_none_dynamic_output_shape) {
-  Execute(device,
-          createTestModel_float16_none_dynamic_output_shape,
-          is_ignored_float16_none_dynamic_output_shape,
-          ::generated_tests::sub_v1_2::get_examples_float16_none_dynamic_output_shape(), true);
+TEST_F(GeneratedTest, sub_v1_2_float16_none_all_inputs_as_internal) {
+    Execute(device, ::generated_tests::sub_v1_2::get_test_model_float16_none_all_inputs_as_internal());
 }
 
-TEST_F(ValidationTest, sub_v1_2_float16_none_dynamic_output_shape) {
-  const Model model = createTestModel_float16_none_dynamic_output_shape();
-  const std::vector<Request> requests = createRequests(::generated_tests::sub_v1_2::get_examples_float16_none_dynamic_output_shape());
-  validateEverything(model, requests);
-}
-
-} // namespace android::hardware::neuralnetworks::V1_2::generated_tests::sub_v1_2
-
-namespace generated_tests::sub_v1_2 {
-
-std::vector<::test_helper::MixedTypedExample>& get_examples_float16_none_all_inputs_as_internal();
-
-} // namespace generated_tests::sub_v1_2
-
-namespace android::hardware::neuralnetworks::V1_2::generated_tests::sub_v1_2 {
-
-Model createTestModel_float16_none_all_inputs_as_internal();
-bool is_ignored_float16_none_all_inputs_as_internal(int);
-
-TEST_F(NeuralnetworksHidlTest, sub_v1_2_float16_none_all_inputs_as_internal) {
-  Execute(device,
-          createTestModel_float16_none_all_inputs_as_internal,
-          is_ignored_float16_none_all_inputs_as_internal,
-          ::generated_tests::sub_v1_2::get_examples_float16_none_all_inputs_as_internal());
+TEST_F(DynamicOutputShapeTest, sub_v1_2_float16_none_all_inputs_as_internal) {
+    Execute(device, ::generated_tests::sub_v1_2::get_test_model_float16_none_all_inputs_as_internal(), true);
 }
 
 TEST_F(ValidationTest, sub_v1_2_float16_none_all_inputs_as_internal) {
-  const Model model = createTestModel_float16_none_all_inputs_as_internal();
-  const std::vector<Request> requests = createRequests(::generated_tests::sub_v1_2::get_examples_float16_none_all_inputs_as_internal());
-  validateEverything(model, requests);
+    const Model model = createModel(::generated_tests::sub_v1_2::get_test_model_float16_none_all_inputs_as_internal());
+    const Request request = createRequest(::generated_tests::sub_v1_2::get_test_model_float16_none_all_inputs_as_internal());
+    validateEverything(model, request);
 }
 
 } // namespace android::hardware::neuralnetworks::V1_2::generated_tests::sub_v1_2
 
+
 namespace generated_tests::sub_v1_2 {
 
-std::vector<::test_helper::MixedTypedExample>& get_examples_float16_none_all_inputs_as_internal_dynamic_output_shape();
+const ::test_helper::TestModel& get_test_model_float16_relu();
 
 } // namespace generated_tests::sub_v1_2
 
 namespace android::hardware::neuralnetworks::V1_2::generated_tests::sub_v1_2 {
 
-Model createTestModel_float16_none_all_inputs_as_internal_dynamic_output_shape();
-bool is_ignored_float16_none_all_inputs_as_internal_dynamic_output_shape(int);
-
-TEST_F(DynamicOutputShapeTest, sub_v1_2_float16_none_all_inputs_as_internal_dynamic_output_shape) {
-  Execute(device,
-          createTestModel_float16_none_all_inputs_as_internal_dynamic_output_shape,
-          is_ignored_float16_none_all_inputs_as_internal_dynamic_output_shape,
-          ::generated_tests::sub_v1_2::get_examples_float16_none_all_inputs_as_internal_dynamic_output_shape(), true);
+TEST_F(GeneratedTest, sub_v1_2_float16_relu) {
+    Execute(device, ::generated_tests::sub_v1_2::get_test_model_float16_relu());
 }
 
-TEST_F(ValidationTest, sub_v1_2_float16_none_all_inputs_as_internal_dynamic_output_shape) {
-  const Model model = createTestModel_float16_none_all_inputs_as_internal_dynamic_output_shape();
-  const std::vector<Request> requests = createRequests(::generated_tests::sub_v1_2::get_examples_float16_none_all_inputs_as_internal_dynamic_output_shape());
-  validateEverything(model, requests);
-}
-
-} // namespace android::hardware::neuralnetworks::V1_2::generated_tests::sub_v1_2
-
-namespace generated_tests::sub_v1_2 {
-
-std::vector<::test_helper::MixedTypedExample>& get_examples_float16_relu();
-
-} // namespace generated_tests::sub_v1_2
-
-namespace android::hardware::neuralnetworks::V1_2::generated_tests::sub_v1_2 {
-
-Model createTestModel_float16_relu();
-bool is_ignored_float16_relu(int);
-
-TEST_F(NeuralnetworksHidlTest, sub_v1_2_float16_relu) {
-  Execute(device,
-          createTestModel_float16_relu,
-          is_ignored_float16_relu,
-          ::generated_tests::sub_v1_2::get_examples_float16_relu());
+TEST_F(DynamicOutputShapeTest, sub_v1_2_float16_relu) {
+    Execute(device, ::generated_tests::sub_v1_2::get_test_model_float16_relu(), true);
 }
 
 TEST_F(ValidationTest, sub_v1_2_float16_relu) {
-  const Model model = createTestModel_float16_relu();
-  const std::vector<Request> requests = createRequests(::generated_tests::sub_v1_2::get_examples_float16_relu());
-  validateEverything(model, requests);
+    const Model model = createModel(::generated_tests::sub_v1_2::get_test_model_float16_relu());
+    const Request request = createRequest(::generated_tests::sub_v1_2::get_test_model_float16_relu());
+    validateEverything(model, request);
 }
 
 } // namespace android::hardware::neuralnetworks::V1_2::generated_tests::sub_v1_2
 
+
 namespace generated_tests::sub_v1_2 {
 
-std::vector<::test_helper::MixedTypedExample>& get_examples_float16_relu_dynamic_output_shape();
+const ::test_helper::TestModel& get_test_model_float16_relu_all_inputs_as_internal();
 
 } // namespace generated_tests::sub_v1_2
 
 namespace android::hardware::neuralnetworks::V1_2::generated_tests::sub_v1_2 {
 
-Model createTestModel_float16_relu_dynamic_output_shape();
-bool is_ignored_float16_relu_dynamic_output_shape(int);
-
-TEST_F(DynamicOutputShapeTest, sub_v1_2_float16_relu_dynamic_output_shape) {
-  Execute(device,
-          createTestModel_float16_relu_dynamic_output_shape,
-          is_ignored_float16_relu_dynamic_output_shape,
-          ::generated_tests::sub_v1_2::get_examples_float16_relu_dynamic_output_shape(), true);
+TEST_F(GeneratedTest, sub_v1_2_float16_relu_all_inputs_as_internal) {
+    Execute(device, ::generated_tests::sub_v1_2::get_test_model_float16_relu_all_inputs_as_internal());
 }
 
-TEST_F(ValidationTest, sub_v1_2_float16_relu_dynamic_output_shape) {
-  const Model model = createTestModel_float16_relu_dynamic_output_shape();
-  const std::vector<Request> requests = createRequests(::generated_tests::sub_v1_2::get_examples_float16_relu_dynamic_output_shape());
-  validateEverything(model, requests);
-}
-
-} // namespace android::hardware::neuralnetworks::V1_2::generated_tests::sub_v1_2
-
-namespace generated_tests::sub_v1_2 {
-
-std::vector<::test_helper::MixedTypedExample>& get_examples_float16_relu_all_inputs_as_internal();
-
-} // namespace generated_tests::sub_v1_2
-
-namespace android::hardware::neuralnetworks::V1_2::generated_tests::sub_v1_2 {
-
-Model createTestModel_float16_relu_all_inputs_as_internal();
-bool is_ignored_float16_relu_all_inputs_as_internal(int);
-
-TEST_F(NeuralnetworksHidlTest, sub_v1_2_float16_relu_all_inputs_as_internal) {
-  Execute(device,
-          createTestModel_float16_relu_all_inputs_as_internal,
-          is_ignored_float16_relu_all_inputs_as_internal,
-          ::generated_tests::sub_v1_2::get_examples_float16_relu_all_inputs_as_internal());
+TEST_F(DynamicOutputShapeTest, sub_v1_2_float16_relu_all_inputs_as_internal) {
+    Execute(device, ::generated_tests::sub_v1_2::get_test_model_float16_relu_all_inputs_as_internal(), true);
 }
 
 TEST_F(ValidationTest, sub_v1_2_float16_relu_all_inputs_as_internal) {
-  const Model model = createTestModel_float16_relu_all_inputs_as_internal();
-  const std::vector<Request> requests = createRequests(::generated_tests::sub_v1_2::get_examples_float16_relu_all_inputs_as_internal());
-  validateEverything(model, requests);
+    const Model model = createModel(::generated_tests::sub_v1_2::get_test_model_float16_relu_all_inputs_as_internal());
+    const Request request = createRequest(::generated_tests::sub_v1_2::get_test_model_float16_relu_all_inputs_as_internal());
+    validateEverything(model, request);
 }
 
 } // namespace android::hardware::neuralnetworks::V1_2::generated_tests::sub_v1_2
 
+
 namespace generated_tests::sub_v1_2 {
 
-std::vector<::test_helper::MixedTypedExample>& get_examples_float16_relu_all_inputs_as_internal_dynamic_output_shape();
+const ::test_helper::TestModel& get_test_model_float16_relu1();
 
 } // namespace generated_tests::sub_v1_2
 
 namespace android::hardware::neuralnetworks::V1_2::generated_tests::sub_v1_2 {
 
-Model createTestModel_float16_relu_all_inputs_as_internal_dynamic_output_shape();
-bool is_ignored_float16_relu_all_inputs_as_internal_dynamic_output_shape(int);
-
-TEST_F(DynamicOutputShapeTest, sub_v1_2_float16_relu_all_inputs_as_internal_dynamic_output_shape) {
-  Execute(device,
-          createTestModel_float16_relu_all_inputs_as_internal_dynamic_output_shape,
-          is_ignored_float16_relu_all_inputs_as_internal_dynamic_output_shape,
-          ::generated_tests::sub_v1_2::get_examples_float16_relu_all_inputs_as_internal_dynamic_output_shape(), true);
+TEST_F(GeneratedTest, sub_v1_2_float16_relu1) {
+    Execute(device, ::generated_tests::sub_v1_2::get_test_model_float16_relu1());
 }
 
-TEST_F(ValidationTest, sub_v1_2_float16_relu_all_inputs_as_internal_dynamic_output_shape) {
-  const Model model = createTestModel_float16_relu_all_inputs_as_internal_dynamic_output_shape();
-  const std::vector<Request> requests = createRequests(::generated_tests::sub_v1_2::get_examples_float16_relu_all_inputs_as_internal_dynamic_output_shape());
-  validateEverything(model, requests);
-}
-
-} // namespace android::hardware::neuralnetworks::V1_2::generated_tests::sub_v1_2
-
-namespace generated_tests::sub_v1_2 {
-
-std::vector<::test_helper::MixedTypedExample>& get_examples_float16_relu1();
-
-} // namespace generated_tests::sub_v1_2
-
-namespace android::hardware::neuralnetworks::V1_2::generated_tests::sub_v1_2 {
-
-Model createTestModel_float16_relu1();
-bool is_ignored_float16_relu1(int);
-
-TEST_F(NeuralnetworksHidlTest, sub_v1_2_float16_relu1) {
-  Execute(device,
-          createTestModel_float16_relu1,
-          is_ignored_float16_relu1,
-          ::generated_tests::sub_v1_2::get_examples_float16_relu1());
+TEST_F(DynamicOutputShapeTest, sub_v1_2_float16_relu1) {
+    Execute(device, ::generated_tests::sub_v1_2::get_test_model_float16_relu1(), true);
 }
 
 TEST_F(ValidationTest, sub_v1_2_float16_relu1) {
-  const Model model = createTestModel_float16_relu1();
-  const std::vector<Request> requests = createRequests(::generated_tests::sub_v1_2::get_examples_float16_relu1());
-  validateEverything(model, requests);
+    const Model model = createModel(::generated_tests::sub_v1_2::get_test_model_float16_relu1());
+    const Request request = createRequest(::generated_tests::sub_v1_2::get_test_model_float16_relu1());
+    validateEverything(model, request);
 }
 
 } // namespace android::hardware::neuralnetworks::V1_2::generated_tests::sub_v1_2
 
+
 namespace generated_tests::sub_v1_2 {
 
-std::vector<::test_helper::MixedTypedExample>& get_examples_float16_relu1_dynamic_output_shape();
+const ::test_helper::TestModel& get_test_model_float16_relu1_all_inputs_as_internal();
 
 } // namespace generated_tests::sub_v1_2
 
 namespace android::hardware::neuralnetworks::V1_2::generated_tests::sub_v1_2 {
 
-Model createTestModel_float16_relu1_dynamic_output_shape();
-bool is_ignored_float16_relu1_dynamic_output_shape(int);
-
-TEST_F(DynamicOutputShapeTest, sub_v1_2_float16_relu1_dynamic_output_shape) {
-  Execute(device,
-          createTestModel_float16_relu1_dynamic_output_shape,
-          is_ignored_float16_relu1_dynamic_output_shape,
-          ::generated_tests::sub_v1_2::get_examples_float16_relu1_dynamic_output_shape(), true);
+TEST_F(GeneratedTest, sub_v1_2_float16_relu1_all_inputs_as_internal) {
+    Execute(device, ::generated_tests::sub_v1_2::get_test_model_float16_relu1_all_inputs_as_internal());
 }
 
-TEST_F(ValidationTest, sub_v1_2_float16_relu1_dynamic_output_shape) {
-  const Model model = createTestModel_float16_relu1_dynamic_output_shape();
-  const std::vector<Request> requests = createRequests(::generated_tests::sub_v1_2::get_examples_float16_relu1_dynamic_output_shape());
-  validateEverything(model, requests);
-}
-
-} // namespace android::hardware::neuralnetworks::V1_2::generated_tests::sub_v1_2
-
-namespace generated_tests::sub_v1_2 {
-
-std::vector<::test_helper::MixedTypedExample>& get_examples_float16_relu1_all_inputs_as_internal();
-
-} // namespace generated_tests::sub_v1_2
-
-namespace android::hardware::neuralnetworks::V1_2::generated_tests::sub_v1_2 {
-
-Model createTestModel_float16_relu1_all_inputs_as_internal();
-bool is_ignored_float16_relu1_all_inputs_as_internal(int);
-
-TEST_F(NeuralnetworksHidlTest, sub_v1_2_float16_relu1_all_inputs_as_internal) {
-  Execute(device,
-          createTestModel_float16_relu1_all_inputs_as_internal,
-          is_ignored_float16_relu1_all_inputs_as_internal,
-          ::generated_tests::sub_v1_2::get_examples_float16_relu1_all_inputs_as_internal());
+TEST_F(DynamicOutputShapeTest, sub_v1_2_float16_relu1_all_inputs_as_internal) {
+    Execute(device, ::generated_tests::sub_v1_2::get_test_model_float16_relu1_all_inputs_as_internal(), true);
 }
 
 TEST_F(ValidationTest, sub_v1_2_float16_relu1_all_inputs_as_internal) {
-  const Model model = createTestModel_float16_relu1_all_inputs_as_internal();
-  const std::vector<Request> requests = createRequests(::generated_tests::sub_v1_2::get_examples_float16_relu1_all_inputs_as_internal());
-  validateEverything(model, requests);
+    const Model model = createModel(::generated_tests::sub_v1_2::get_test_model_float16_relu1_all_inputs_as_internal());
+    const Request request = createRequest(::generated_tests::sub_v1_2::get_test_model_float16_relu1_all_inputs_as_internal());
+    validateEverything(model, request);
 }
 
 } // namespace android::hardware::neuralnetworks::V1_2::generated_tests::sub_v1_2
 
+
 namespace generated_tests::sub_v1_2 {
 
-std::vector<::test_helper::MixedTypedExample>& get_examples_float16_relu1_all_inputs_as_internal_dynamic_output_shape();
+const ::test_helper::TestModel& get_test_model_float16_relu6();
 
 } // namespace generated_tests::sub_v1_2
 
 namespace android::hardware::neuralnetworks::V1_2::generated_tests::sub_v1_2 {
 
-Model createTestModel_float16_relu1_all_inputs_as_internal_dynamic_output_shape();
-bool is_ignored_float16_relu1_all_inputs_as_internal_dynamic_output_shape(int);
-
-TEST_F(DynamicOutputShapeTest, sub_v1_2_float16_relu1_all_inputs_as_internal_dynamic_output_shape) {
-  Execute(device,
-          createTestModel_float16_relu1_all_inputs_as_internal_dynamic_output_shape,
-          is_ignored_float16_relu1_all_inputs_as_internal_dynamic_output_shape,
-          ::generated_tests::sub_v1_2::get_examples_float16_relu1_all_inputs_as_internal_dynamic_output_shape(), true);
+TEST_F(GeneratedTest, sub_v1_2_float16_relu6) {
+    Execute(device, ::generated_tests::sub_v1_2::get_test_model_float16_relu6());
 }
 
-TEST_F(ValidationTest, sub_v1_2_float16_relu1_all_inputs_as_internal_dynamic_output_shape) {
-  const Model model = createTestModel_float16_relu1_all_inputs_as_internal_dynamic_output_shape();
-  const std::vector<Request> requests = createRequests(::generated_tests::sub_v1_2::get_examples_float16_relu1_all_inputs_as_internal_dynamic_output_shape());
-  validateEverything(model, requests);
-}
-
-} // namespace android::hardware::neuralnetworks::V1_2::generated_tests::sub_v1_2
-
-namespace generated_tests::sub_v1_2 {
-
-std::vector<::test_helper::MixedTypedExample>& get_examples_float16_relu6();
-
-} // namespace generated_tests::sub_v1_2
-
-namespace android::hardware::neuralnetworks::V1_2::generated_tests::sub_v1_2 {
-
-Model createTestModel_float16_relu6();
-bool is_ignored_float16_relu6(int);
-
-TEST_F(NeuralnetworksHidlTest, sub_v1_2_float16_relu6) {
-  Execute(device,
-          createTestModel_float16_relu6,
-          is_ignored_float16_relu6,
-          ::generated_tests::sub_v1_2::get_examples_float16_relu6());
+TEST_F(DynamicOutputShapeTest, sub_v1_2_float16_relu6) {
+    Execute(device, ::generated_tests::sub_v1_2::get_test_model_float16_relu6(), true);
 }
 
 TEST_F(ValidationTest, sub_v1_2_float16_relu6) {
-  const Model model = createTestModel_float16_relu6();
-  const std::vector<Request> requests = createRequests(::generated_tests::sub_v1_2::get_examples_float16_relu6());
-  validateEverything(model, requests);
+    const Model model = createModel(::generated_tests::sub_v1_2::get_test_model_float16_relu6());
+    const Request request = createRequest(::generated_tests::sub_v1_2::get_test_model_float16_relu6());
+    validateEverything(model, request);
 }
 
 } // namespace android::hardware::neuralnetworks::V1_2::generated_tests::sub_v1_2
 
+
 namespace generated_tests::sub_v1_2 {
 
-std::vector<::test_helper::MixedTypedExample>& get_examples_float16_relu6_dynamic_output_shape();
+const ::test_helper::TestModel& get_test_model_float16_relu6_all_inputs_as_internal();
 
 } // namespace generated_tests::sub_v1_2
 
 namespace android::hardware::neuralnetworks::V1_2::generated_tests::sub_v1_2 {
 
-Model createTestModel_float16_relu6_dynamic_output_shape();
-bool is_ignored_float16_relu6_dynamic_output_shape(int);
-
-TEST_F(DynamicOutputShapeTest, sub_v1_2_float16_relu6_dynamic_output_shape) {
-  Execute(device,
-          createTestModel_float16_relu6_dynamic_output_shape,
-          is_ignored_float16_relu6_dynamic_output_shape,
-          ::generated_tests::sub_v1_2::get_examples_float16_relu6_dynamic_output_shape(), true);
+TEST_F(GeneratedTest, sub_v1_2_float16_relu6_all_inputs_as_internal) {
+    Execute(device, ::generated_tests::sub_v1_2::get_test_model_float16_relu6_all_inputs_as_internal());
 }
 
-TEST_F(ValidationTest, sub_v1_2_float16_relu6_dynamic_output_shape) {
-  const Model model = createTestModel_float16_relu6_dynamic_output_shape();
-  const std::vector<Request> requests = createRequests(::generated_tests::sub_v1_2::get_examples_float16_relu6_dynamic_output_shape());
-  validateEverything(model, requests);
-}
-
-} // namespace android::hardware::neuralnetworks::V1_2::generated_tests::sub_v1_2
-
-namespace generated_tests::sub_v1_2 {
-
-std::vector<::test_helper::MixedTypedExample>& get_examples_float16_relu6_all_inputs_as_internal();
-
-} // namespace generated_tests::sub_v1_2
-
-namespace android::hardware::neuralnetworks::V1_2::generated_tests::sub_v1_2 {
-
-Model createTestModel_float16_relu6_all_inputs_as_internal();
-bool is_ignored_float16_relu6_all_inputs_as_internal(int);
-
-TEST_F(NeuralnetworksHidlTest, sub_v1_2_float16_relu6_all_inputs_as_internal) {
-  Execute(device,
-          createTestModel_float16_relu6_all_inputs_as_internal,
-          is_ignored_float16_relu6_all_inputs_as_internal,
-          ::generated_tests::sub_v1_2::get_examples_float16_relu6_all_inputs_as_internal());
+TEST_F(DynamicOutputShapeTest, sub_v1_2_float16_relu6_all_inputs_as_internal) {
+    Execute(device, ::generated_tests::sub_v1_2::get_test_model_float16_relu6_all_inputs_as_internal(), true);
 }
 
 TEST_F(ValidationTest, sub_v1_2_float16_relu6_all_inputs_as_internal) {
-  const Model model = createTestModel_float16_relu6_all_inputs_as_internal();
-  const std::vector<Request> requests = createRequests(::generated_tests::sub_v1_2::get_examples_float16_relu6_all_inputs_as_internal());
-  validateEverything(model, requests);
+    const Model model = createModel(::generated_tests::sub_v1_2::get_test_model_float16_relu6_all_inputs_as_internal());
+    const Request request = createRequest(::generated_tests::sub_v1_2::get_test_model_float16_relu6_all_inputs_as_internal());
+    validateEverything(model, request);
 }
 
 } // namespace android::hardware::neuralnetworks::V1_2::generated_tests::sub_v1_2
 
+
 namespace generated_tests::sub_v1_2 {
 
-std::vector<::test_helper::MixedTypedExample>& get_examples_float16_relu6_all_inputs_as_internal_dynamic_output_shape();
+const ::test_helper::TestModel& get_test_model_quant8();
 
 } // namespace generated_tests::sub_v1_2
 
 namespace android::hardware::neuralnetworks::V1_2::generated_tests::sub_v1_2 {
 
-Model createTestModel_float16_relu6_all_inputs_as_internal_dynamic_output_shape();
-bool is_ignored_float16_relu6_all_inputs_as_internal_dynamic_output_shape(int);
-
-TEST_F(DynamicOutputShapeTest, sub_v1_2_float16_relu6_all_inputs_as_internal_dynamic_output_shape) {
-  Execute(device,
-          createTestModel_float16_relu6_all_inputs_as_internal_dynamic_output_shape,
-          is_ignored_float16_relu6_all_inputs_as_internal_dynamic_output_shape,
-          ::generated_tests::sub_v1_2::get_examples_float16_relu6_all_inputs_as_internal_dynamic_output_shape(), true);
+TEST_F(GeneratedTest, sub_v1_2_quant8) {
+    Execute(device, ::generated_tests::sub_v1_2::get_test_model_quant8());
 }
 
-TEST_F(ValidationTest, sub_v1_2_float16_relu6_all_inputs_as_internal_dynamic_output_shape) {
-  const Model model = createTestModel_float16_relu6_all_inputs_as_internal_dynamic_output_shape();
-  const std::vector<Request> requests = createRequests(::generated_tests::sub_v1_2::get_examples_float16_relu6_all_inputs_as_internal_dynamic_output_shape());
-  validateEverything(model, requests);
-}
-
-} // namespace android::hardware::neuralnetworks::V1_2::generated_tests::sub_v1_2
-
-namespace generated_tests::sub_v1_2 {
-
-std::vector<::test_helper::MixedTypedExample>& get_examples_quant8();
-
-} // namespace generated_tests::sub_v1_2
-
-namespace android::hardware::neuralnetworks::V1_2::generated_tests::sub_v1_2 {
-
-Model createTestModel_quant8();
-bool is_ignored_quant8(int);
-
-TEST_F(NeuralnetworksHidlTest, sub_v1_2_quant8) {
-  Execute(device,
-          createTestModel_quant8,
-          is_ignored_quant8,
-          ::generated_tests::sub_v1_2::get_examples_quant8());
+TEST_F(DynamicOutputShapeTest, sub_v1_2_quant8) {
+    Execute(device, ::generated_tests::sub_v1_2::get_test_model_quant8(), true);
 }
 
 TEST_F(ValidationTest, sub_v1_2_quant8) {
-  const Model model = createTestModel_quant8();
-  const std::vector<Request> requests = createRequests(::generated_tests::sub_v1_2::get_examples_quant8());
-  validateEverything(model, requests);
+    const Model model = createModel(::generated_tests::sub_v1_2::get_test_model_quant8());
+    const Request request = createRequest(::generated_tests::sub_v1_2::get_test_model_quant8());
+    validateEverything(model, request);
 }
 
 } // namespace android::hardware::neuralnetworks::V1_2::generated_tests::sub_v1_2
 
+
 namespace generated_tests::sub_v1_2 {
 
-std::vector<::test_helper::MixedTypedExample>& get_examples_quant8_dynamic_output_shape();
+const ::test_helper::TestModel& get_test_model_quant8_all_inputs_as_internal();
 
 } // namespace generated_tests::sub_v1_2
 
 namespace android::hardware::neuralnetworks::V1_2::generated_tests::sub_v1_2 {
 
-Model createTestModel_quant8_dynamic_output_shape();
-bool is_ignored_quant8_dynamic_output_shape(int);
-
-TEST_F(DynamicOutputShapeTest, sub_v1_2_quant8_dynamic_output_shape) {
-  Execute(device,
-          createTestModel_quant8_dynamic_output_shape,
-          is_ignored_quant8_dynamic_output_shape,
-          ::generated_tests::sub_v1_2::get_examples_quant8_dynamic_output_shape(), true);
+TEST_F(GeneratedTest, sub_v1_2_quant8_all_inputs_as_internal) {
+    Execute(device, ::generated_tests::sub_v1_2::get_test_model_quant8_all_inputs_as_internal());
 }
 
-TEST_F(ValidationTest, sub_v1_2_quant8_dynamic_output_shape) {
-  const Model model = createTestModel_quant8_dynamic_output_shape();
-  const std::vector<Request> requests = createRequests(::generated_tests::sub_v1_2::get_examples_quant8_dynamic_output_shape());
-  validateEverything(model, requests);
-}
-
-} // namespace android::hardware::neuralnetworks::V1_2::generated_tests::sub_v1_2
-
-namespace generated_tests::sub_v1_2 {
-
-std::vector<::test_helper::MixedTypedExample>& get_examples_quant8_all_inputs_as_internal();
-
-} // namespace generated_tests::sub_v1_2
-
-namespace android::hardware::neuralnetworks::V1_2::generated_tests::sub_v1_2 {
-
-Model createTestModel_quant8_all_inputs_as_internal();
-bool is_ignored_quant8_all_inputs_as_internal(int);
-
-TEST_F(NeuralnetworksHidlTest, sub_v1_2_quant8_all_inputs_as_internal) {
-  Execute(device,
-          createTestModel_quant8_all_inputs_as_internal,
-          is_ignored_quant8_all_inputs_as_internal,
-          ::generated_tests::sub_v1_2::get_examples_quant8_all_inputs_as_internal());
+TEST_F(DynamicOutputShapeTest, sub_v1_2_quant8_all_inputs_as_internal) {
+    Execute(device, ::generated_tests::sub_v1_2::get_test_model_quant8_all_inputs_as_internal(), true);
 }
 
 TEST_F(ValidationTest, sub_v1_2_quant8_all_inputs_as_internal) {
-  const Model model = createTestModel_quant8_all_inputs_as_internal();
-  const std::vector<Request> requests = createRequests(::generated_tests::sub_v1_2::get_examples_quant8_all_inputs_as_internal());
-  validateEverything(model, requests);
+    const Model model = createModel(::generated_tests::sub_v1_2::get_test_model_quant8_all_inputs_as_internal());
+    const Request request = createRequest(::generated_tests::sub_v1_2::get_test_model_quant8_all_inputs_as_internal());
+    validateEverything(model, request);
 }
 
 } // namespace android::hardware::neuralnetworks::V1_2::generated_tests::sub_v1_2
 
+
 namespace generated_tests::sub_v1_2 {
 
-std::vector<::test_helper::MixedTypedExample>& get_examples_quant8_all_inputs_as_internal_dynamic_output_shape();
+const ::test_helper::TestModel& get_test_model_zero_sized();
 
 } // namespace generated_tests::sub_v1_2
 
 namespace android::hardware::neuralnetworks::V1_2::generated_tests::sub_v1_2 {
 
-Model createTestModel_quant8_all_inputs_as_internal_dynamic_output_shape();
-bool is_ignored_quant8_all_inputs_as_internal_dynamic_output_shape(int);
-
-TEST_F(DynamicOutputShapeTest, sub_v1_2_quant8_all_inputs_as_internal_dynamic_output_shape) {
-  Execute(device,
-          createTestModel_quant8_all_inputs_as_internal_dynamic_output_shape,
-          is_ignored_quant8_all_inputs_as_internal_dynamic_output_shape,
-          ::generated_tests::sub_v1_2::get_examples_quant8_all_inputs_as_internal_dynamic_output_shape(), true);
+TEST_F(GeneratedTest, sub_v1_2_zero_sized) {
+    Execute(device, ::generated_tests::sub_v1_2::get_test_model_zero_sized());
 }
 
-TEST_F(ValidationTest, sub_v1_2_quant8_all_inputs_as_internal_dynamic_output_shape) {
-  const Model model = createTestModel_quant8_all_inputs_as_internal_dynamic_output_shape();
-  const std::vector<Request> requests = createRequests(::generated_tests::sub_v1_2::get_examples_quant8_all_inputs_as_internal_dynamic_output_shape());
-  validateEverything(model, requests);
-}
-
-} // namespace android::hardware::neuralnetworks::V1_2::generated_tests::sub_v1_2
-
-namespace generated_tests::sub_v1_2 {
-
-std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized();
-
-} // namespace generated_tests::sub_v1_2
-
-namespace android::hardware::neuralnetworks::V1_2::generated_tests::sub_v1_2 {
-
-Model createTestModel_zero_sized();
-bool is_ignored_zero_sized(int);
-
-TEST_F(NeuralnetworksHidlTest, sub_v1_2_zero_sized) {
-  Execute(device,
-          createTestModel_zero_sized,
-          is_ignored_zero_sized,
-          ::generated_tests::sub_v1_2::get_examples_zero_sized());
+TEST_F(DynamicOutputShapeTest, sub_v1_2_zero_sized) {
+    Execute(device, ::generated_tests::sub_v1_2::get_test_model_zero_sized(), true);
 }
 
 TEST_F(ValidationTest, sub_v1_2_zero_sized) {
-  const Model model = createTestModel_zero_sized();
-  const std::vector<Request> requests = createRequests(::generated_tests::sub_v1_2::get_examples_zero_sized());
-  validateEverything(model, requests);
+    const Model model = createModel(::generated_tests::sub_v1_2::get_test_model_zero_sized());
+    const Request request = createRequest(::generated_tests::sub_v1_2::get_test_model_zero_sized());
+    validateEverything(model, request);
 }
 
 } // namespace android::hardware::neuralnetworks::V1_2::generated_tests::sub_v1_2
 
+
 namespace generated_tests::sub_v1_2 {
 
-std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_dynamic_output_shape();
+const ::test_helper::TestModel& get_test_model_zero_sized_relaxed();
 
 } // namespace generated_tests::sub_v1_2
 
 namespace android::hardware::neuralnetworks::V1_2::generated_tests::sub_v1_2 {
 
-Model createTestModel_zero_sized_dynamic_output_shape();
-bool is_ignored_zero_sized_dynamic_output_shape(int);
-
-TEST_F(DynamicOutputShapeTest, sub_v1_2_zero_sized_dynamic_output_shape) {
-  Execute(device,
-          createTestModel_zero_sized_dynamic_output_shape,
-          is_ignored_zero_sized_dynamic_output_shape,
-          ::generated_tests::sub_v1_2::get_examples_zero_sized_dynamic_output_shape(), true);
+TEST_F(GeneratedTest, sub_v1_2_zero_sized_relaxed) {
+    Execute(device, ::generated_tests::sub_v1_2::get_test_model_zero_sized_relaxed());
 }
 
-TEST_F(ValidationTest, sub_v1_2_zero_sized_dynamic_output_shape) {
-  const Model model = createTestModel_zero_sized_dynamic_output_shape();
-  const std::vector<Request> requests = createRequests(::generated_tests::sub_v1_2::get_examples_zero_sized_dynamic_output_shape());
-  validateEverything(model, requests);
-}
-
-} // namespace android::hardware::neuralnetworks::V1_2::generated_tests::sub_v1_2
-
-namespace generated_tests::sub_v1_2 {
-
-std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_relaxed();
-
-} // namespace generated_tests::sub_v1_2
-
-namespace android::hardware::neuralnetworks::V1_2::generated_tests::sub_v1_2 {
-
-Model createTestModel_zero_sized_relaxed();
-bool is_ignored_zero_sized_relaxed(int);
-
-TEST_F(NeuralnetworksHidlTest, sub_v1_2_zero_sized_relaxed) {
-  Execute(device,
-          createTestModel_zero_sized_relaxed,
-          is_ignored_zero_sized_relaxed,
-          ::generated_tests::sub_v1_2::get_examples_zero_sized_relaxed());
+TEST_F(DynamicOutputShapeTest, sub_v1_2_zero_sized_relaxed) {
+    Execute(device, ::generated_tests::sub_v1_2::get_test_model_zero_sized_relaxed(), true);
 }
 
 TEST_F(ValidationTest, sub_v1_2_zero_sized_relaxed) {
-  const Model model = createTestModel_zero_sized_relaxed();
-  const std::vector<Request> requests = createRequests(::generated_tests::sub_v1_2::get_examples_zero_sized_relaxed());
-  validateEverything(model, requests);
+    const Model model = createModel(::generated_tests::sub_v1_2::get_test_model_zero_sized_relaxed());
+    const Request request = createRequest(::generated_tests::sub_v1_2::get_test_model_zero_sized_relaxed());
+    validateEverything(model, request);
 }
 
 } // namespace android::hardware::neuralnetworks::V1_2::generated_tests::sub_v1_2
 
+
 namespace generated_tests::sub_v1_2 {
 
-std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_relaxed_dynamic_output_shape();
+const ::test_helper::TestModel& get_test_model_zero_sized_quant8();
 
 } // namespace generated_tests::sub_v1_2
 
 namespace android::hardware::neuralnetworks::V1_2::generated_tests::sub_v1_2 {
 
-Model createTestModel_zero_sized_relaxed_dynamic_output_shape();
-bool is_ignored_zero_sized_relaxed_dynamic_output_shape(int);
-
-TEST_F(DynamicOutputShapeTest, sub_v1_2_zero_sized_relaxed_dynamic_output_shape) {
-  Execute(device,
-          createTestModel_zero_sized_relaxed_dynamic_output_shape,
-          is_ignored_zero_sized_relaxed_dynamic_output_shape,
-          ::generated_tests::sub_v1_2::get_examples_zero_sized_relaxed_dynamic_output_shape(), true);
+TEST_F(GeneratedTest, sub_v1_2_zero_sized_quant8) {
+    Execute(device, ::generated_tests::sub_v1_2::get_test_model_zero_sized_quant8());
 }
 
-TEST_F(ValidationTest, sub_v1_2_zero_sized_relaxed_dynamic_output_shape) {
-  const Model model = createTestModel_zero_sized_relaxed_dynamic_output_shape();
-  const std::vector<Request> requests = createRequests(::generated_tests::sub_v1_2::get_examples_zero_sized_relaxed_dynamic_output_shape());
-  validateEverything(model, requests);
-}
-
-} // namespace android::hardware::neuralnetworks::V1_2::generated_tests::sub_v1_2
-
-namespace generated_tests::sub_v1_2 {
-
-std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_quant8();
-
-} // namespace generated_tests::sub_v1_2
-
-namespace android::hardware::neuralnetworks::V1_2::generated_tests::sub_v1_2 {
-
-Model createTestModel_zero_sized_quant8();
-bool is_ignored_zero_sized_quant8(int);
-
-TEST_F(NeuralnetworksHidlTest, sub_v1_2_zero_sized_quant8) {
-  Execute(device,
-          createTestModel_zero_sized_quant8,
-          is_ignored_zero_sized_quant8,
-          ::generated_tests::sub_v1_2::get_examples_zero_sized_quant8());
+TEST_F(DynamicOutputShapeTest, sub_v1_2_zero_sized_quant8) {
+    Execute(device, ::generated_tests::sub_v1_2::get_test_model_zero_sized_quant8(), true);
 }
 
 TEST_F(ValidationTest, sub_v1_2_zero_sized_quant8) {
-  const Model model = createTestModel_zero_sized_quant8();
-  const std::vector<Request> requests = createRequests(::generated_tests::sub_v1_2::get_examples_zero_sized_quant8());
-  validateEverything(model, requests);
+    const Model model = createModel(::generated_tests::sub_v1_2::get_test_model_zero_sized_quant8());
+    const Request request = createRequest(::generated_tests::sub_v1_2::get_test_model_zero_sized_quant8());
+    validateEverything(model, request);
 }
 
 } // namespace android::hardware::neuralnetworks::V1_2::generated_tests::sub_v1_2
 
+
 namespace generated_tests::sub_v1_2 {
 
-std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_quant8_dynamic_output_shape();
+const ::test_helper::TestModel& get_test_model_zero_sized_float16();
 
 } // namespace generated_tests::sub_v1_2
 
 namespace android::hardware::neuralnetworks::V1_2::generated_tests::sub_v1_2 {
 
-Model createTestModel_zero_sized_quant8_dynamic_output_shape();
-bool is_ignored_zero_sized_quant8_dynamic_output_shape(int);
-
-TEST_F(DynamicOutputShapeTest, sub_v1_2_zero_sized_quant8_dynamic_output_shape) {
-  Execute(device,
-          createTestModel_zero_sized_quant8_dynamic_output_shape,
-          is_ignored_zero_sized_quant8_dynamic_output_shape,
-          ::generated_tests::sub_v1_2::get_examples_zero_sized_quant8_dynamic_output_shape(), true);
+TEST_F(GeneratedTest, sub_v1_2_zero_sized_float16) {
+    Execute(device, ::generated_tests::sub_v1_2::get_test_model_zero_sized_float16());
 }
 
-TEST_F(ValidationTest, sub_v1_2_zero_sized_quant8_dynamic_output_shape) {
-  const Model model = createTestModel_zero_sized_quant8_dynamic_output_shape();
-  const std::vector<Request> requests = createRequests(::generated_tests::sub_v1_2::get_examples_zero_sized_quant8_dynamic_output_shape());
-  validateEverything(model, requests);
-}
-
-} // namespace android::hardware::neuralnetworks::V1_2::generated_tests::sub_v1_2
-
-namespace generated_tests::sub_v1_2 {
-
-std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_float16();
-
-} // namespace generated_tests::sub_v1_2
-
-namespace android::hardware::neuralnetworks::V1_2::generated_tests::sub_v1_2 {
-
-Model createTestModel_zero_sized_float16();
-bool is_ignored_zero_sized_float16(int);
-
-TEST_F(NeuralnetworksHidlTest, sub_v1_2_zero_sized_float16) {
-  Execute(device,
-          createTestModel_zero_sized_float16,
-          is_ignored_zero_sized_float16,
-          ::generated_tests::sub_v1_2::get_examples_zero_sized_float16());
+TEST_F(DynamicOutputShapeTest, sub_v1_2_zero_sized_float16) {
+    Execute(device, ::generated_tests::sub_v1_2::get_test_model_zero_sized_float16(), true);
 }
 
 TEST_F(ValidationTest, sub_v1_2_zero_sized_float16) {
-  const Model model = createTestModel_zero_sized_float16();
-  const std::vector<Request> requests = createRequests(::generated_tests::sub_v1_2::get_examples_zero_sized_float16());
-  validateEverything(model, requests);
-}
-
-} // namespace android::hardware::neuralnetworks::V1_2::generated_tests::sub_v1_2
-
-namespace generated_tests::sub_v1_2 {
-
-std::vector<::test_helper::MixedTypedExample>& get_examples_zero_sized_float16_dynamic_output_shape();
-
-} // namespace generated_tests::sub_v1_2
-
-namespace android::hardware::neuralnetworks::V1_2::generated_tests::sub_v1_2 {
-
-Model createTestModel_zero_sized_float16_dynamic_output_shape();
-bool is_ignored_zero_sized_float16_dynamic_output_shape(int);
-
-TEST_F(DynamicOutputShapeTest, sub_v1_2_zero_sized_float16_dynamic_output_shape) {
-  Execute(device,
-          createTestModel_zero_sized_float16_dynamic_output_shape,
-          is_ignored_zero_sized_float16_dynamic_output_shape,
-          ::generated_tests::sub_v1_2::get_examples_zero_sized_float16_dynamic_output_shape(), true);
-}
-
-TEST_F(ValidationTest, sub_v1_2_zero_sized_float16_dynamic_output_shape) {
-  const Model model = createTestModel_zero_sized_float16_dynamic_output_shape();
-  const std::vector<Request> requests = createRequests(::generated_tests::sub_v1_2::get_examples_zero_sized_float16_dynamic_output_shape());
-  validateEverything(model, requests);
+    const Model model = createModel(::generated_tests::sub_v1_2::get_test_model_zero_sized_float16());
+    const Request request = createRequest(::generated_tests::sub_v1_2::get_test_model_zero_sized_float16());
+    validateEverything(model, request);
 }
 
 } // namespace android::hardware::neuralnetworks::V1_2::generated_tests::sub_v1_2

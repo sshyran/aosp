@@ -3,54 +3,44 @@
 // clang-format off
 #include "GeneratedTests.h"
 
+
 namespace generated_tests::logistic_float_1_relaxed {
 
-std::vector<::test_helper::MixedTypedExample>& get_examples();
+const ::test_helper::TestModel& get_test_model();
 
 } // namespace generated_tests::logistic_float_1_relaxed
 
 namespace android::hardware::neuralnetworks::V1_1::generated_tests::logistic_float_1_relaxed {
 
-Model createTestModel();
-bool is_ignored(int);
-
-TEST_F(NeuralnetworksHidlTest, logistic_float_1_relaxed) {
-  Execute(device,
-          createTestModel,
-          is_ignored,
-          ::generated_tests::logistic_float_1_relaxed::get_examples());
+TEST_F(GeneratedTest, logistic_float_1_relaxed) {
+    Execute(device, ::generated_tests::logistic_float_1_relaxed::get_test_model());
 }
 
 TEST_F(ValidationTest, logistic_float_1_relaxed) {
-  const Model model = createTestModel();
-  const std::vector<Request> requests = createRequests(::generated_tests::logistic_float_1_relaxed::get_examples());
-  validateEverything(model, requests);
+    const Model model = createModel(::generated_tests::logistic_float_1_relaxed::get_test_model());
+    const Request request = createRequest(::generated_tests::logistic_float_1_relaxed::get_test_model());
+    validateEverything(model, request);
 }
 
 } // namespace android::hardware::neuralnetworks::V1_1::generated_tests::logistic_float_1_relaxed
 
+
 namespace generated_tests::logistic_float_1_relaxed {
 
-std::vector<::test_helper::MixedTypedExample>& get_examples_all_inputs_as_internal();
+const ::test_helper::TestModel& get_test_model_all_inputs_as_internal();
 
 } // namespace generated_tests::logistic_float_1_relaxed
 
 namespace android::hardware::neuralnetworks::V1_1::generated_tests::logistic_float_1_relaxed {
 
-Model createTestModel_all_inputs_as_internal();
-bool is_ignored_all_inputs_as_internal(int);
-
-TEST_F(NeuralnetworksHidlTest, logistic_float_1_relaxed_all_inputs_as_internal) {
-  Execute(device,
-          createTestModel_all_inputs_as_internal,
-          is_ignored_all_inputs_as_internal,
-          ::generated_tests::logistic_float_1_relaxed::get_examples_all_inputs_as_internal());
+TEST_F(GeneratedTest, logistic_float_1_relaxed_all_inputs_as_internal) {
+    Execute(device, ::generated_tests::logistic_float_1_relaxed::get_test_model_all_inputs_as_internal());
 }
 
 TEST_F(ValidationTest, logistic_float_1_relaxed_all_inputs_as_internal) {
-  const Model model = createTestModel_all_inputs_as_internal();
-  const std::vector<Request> requests = createRequests(::generated_tests::logistic_float_1_relaxed::get_examples_all_inputs_as_internal());
-  validateEverything(model, requests);
+    const Model model = createModel(::generated_tests::logistic_float_1_relaxed::get_test_model_all_inputs_as_internal());
+    const Request request = createRequest(::generated_tests::logistic_float_1_relaxed::get_test_model_all_inputs_as_internal());
+    validateEverything(model, request);
 }
 
 } // namespace android::hardware::neuralnetworks::V1_1::generated_tests::logistic_float_1_relaxed
