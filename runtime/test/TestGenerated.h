@@ -69,19 +69,12 @@ class GeneratedTests : public GENERATED_TESTS_BASE {
     virtual void TearDown() override;
 
     std::optional<Compilation> compileModel(const Model* model);
-    void executeWithCompilation(const Model* model, Compilation* compilation,
-                                std::function<bool(int)> isIgnored,
-                                std::vector<MixedTypedExample>& examples);
-    void executeOnce(const Model* model, std::function<bool(int)> isIgnored,
-                     std::vector<MixedTypedExample>& examples);
-    void executeMultithreadedOwnCompilation(const Model* model, std::function<bool(int)> isIgnored,
-                                            std::vector<MixedTypedExample>& examples);
-    void executeMultithreadedSharedCompilation(const Model* model,
-                                               std::function<bool(int)> isIgnored,
-                                               std::vector<MixedTypedExample>& examples);
+    void executeWithCompilation(const Compilation* compilation, const TestModel& testModel);
+    void executeOnce(const Model* model, const TestModel& testModel);
+    void executeMultithreadedOwnCompilation(const Model* model, const TestModel& testModel);
+    void executeMultithreadedSharedCompilation(const Model* model, const TestModel& testModel);
     // Test driver for those generated from ml/nn/runtime/test/spec
-    void execute(std::function<void(Model*)> createModel, std::function<bool(int)> isIgnored,
-                 std::vector<MixedTypedExample>& examples);
+    void execute(const TestModel& testModel);
 
     std::string mCacheDir;
     std::vector<uint8_t> mToken;
@@ -104,6 +97,9 @@ class GeneratedValidationTests : public GeneratedTests {
    protected:
     GeneratedValidationTests() : GeneratedTests(/*expectFailure=*/true) {}
 };
+
+// Convert TestModel to NDK model.
+void createModel(const TestModel& testModel, Model* model);
 
 }  // namespace generated_tests
 

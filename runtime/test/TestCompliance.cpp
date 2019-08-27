@@ -20,6 +20,7 @@
 
 #include "HalInterfaces.h"
 #include "ModelBuilder.h"
+#include "TestGenerated.h"
 #include "TestNeuralNetworksWrapper.h"
 #include "Utils.h"
 
@@ -39,6 +40,21 @@ static HidlModel createHidlModel(std::function<void(WrapperModel*)> createModel)
     EXPECT_EQ(wrapperModel.finish(), test_wrapper::Result::NO_ERROR);
     ModelBuilder* modelBuilder = reinterpret_cast<ModelBuilder*>(wrapperModel.getHandle());
     return modelBuilder->makeHidlModel();
+}
+
+void ComplianceTest::testAvailableSinceV1_2(const test_helper::TestModel& testModel) {
+    testAvailableSinceV1_2(
+            [&testModel](WrapperModel* model) { generated_tests::createModel(testModel, model); });
+}
+
+void ComplianceTest::testAvailableSinceV1_1(const test_helper::TestModel& testModel) {
+    testAvailableSinceV1_1(
+            [&testModel](WrapperModel* model) { generated_tests::createModel(testModel, model); });
+}
+
+void ComplianceTest::testAvailableSinceV1_0(const test_helper::TestModel& testModel) {
+    testAvailableSinceV1_0(
+            [&testModel](WrapperModel* model) { generated_tests::createModel(testModel, model); });
 }
 
 void ComplianceTest::testAvailableSinceV1_2(std::function<void(WrapperModel*)> createModel) {
