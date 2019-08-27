@@ -17,14 +17,16 @@
 #ifndef ANDROID_FRAMEWORKS_ML_NN_COMMON_OPERATIONS_BIDIRECTIONAL_SEQUENCE_LSTM_H
 #define ANDROID_FRAMEWORKS_ML_NN_COMMON_OPERATIONS_BIDIRECTIONAL_SEQUENCE_LSTM_H
 
+#include <tensorflow/lite/kernels/internal/tensor_utils.h>
+
+#include <algorithm>
+#include <cmath>
+#include <vector>
+
 #include "ActivationFunctor.h"
 #include "HalOperation.h"
 #include "LSTM.h"
 #include "OperationsUtils.h"
-
-#include <tensorflow/lite/kernels/internal/tensor_utils.h>
-#include <algorithm>
-#include <cmath>
 
 namespace android {
 namespace nn {
@@ -193,8 +195,8 @@ class BidirectionalSequenceLSTM {
     const RunTimeOperandInfo* fw_cell_layer_norm_weights_;
     const RunTimeOperandInfo* fw_output_layer_norm_weights_;
 
-    RunTimeOperandInfo* fw_activation_state_;
-    RunTimeOperandInfo* fw_cell_state_;
+    const RunTimeOperandInfo* fw_activation_state_;
+    const RunTimeOperandInfo* fw_cell_state_;
     RunTimeOperandInfo* fw_output_;
 
     const RunTimeOperandInfo* bw_input_to_input_weights_;
@@ -224,8 +226,8 @@ class BidirectionalSequenceLSTM {
     const RunTimeOperandInfo* bw_cell_layer_norm_weights_;
     const RunTimeOperandInfo* bw_output_layer_norm_weights_;
 
-    RunTimeOperandInfo* bw_activation_state_;
-    RunTimeOperandInfo* bw_cell_state_;
+    const RunTimeOperandInfo* bw_activation_state_;
+    const RunTimeOperandInfo* bw_cell_state_;
     RunTimeOperandInfo* bw_output_;
 };
 
