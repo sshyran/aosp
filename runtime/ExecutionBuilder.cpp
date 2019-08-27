@@ -308,6 +308,8 @@ int ExecutionBuilder::getOutputOperandRank(uint32_t index, uint32_t* rank) {
 //         with an explicit device list.  See CompilationBuilder::mExplicitDeviceList.
 static void cpuFallbackFull(ExecutionBuilder* executionBuilder,
                             const sp<ExecutionCallback>& executionCallback) {
+    CHECK(executionBuilder != nullptr);
+    CHECK(executionCallback != nullptr);
     NNTRACE_RT(NNTRACE_PHASE_EXECUTION, "cpuFallbackFull");
     VLOG(EXECUTION) << "cpuFallbackFull";
     StepExecutor executor(executionBuilder, executionBuilder->getModel(),
@@ -327,8 +329,8 @@ static void cpuFallbackFull(ExecutionBuilder* executionBuilder,
 // Attempt synchronous execution on CPU.
 // (1) First, attempt to execute this step on CPU.  If successful,
 //     return true.  (Do not call executionCallback->notify().)
-// (2) If unsuccessful, attempt to execute the full model on CPU,
-//     ensure that executionCallback->notify() is called, and return
+// (2) If unsuccessful, and the ExecutionPlan is compound, attempt to execute the
+//     full model on CPU, ensure that executionCallback->notify() is called, and return
 //     false.
 // TODO: How should we handle timing in this case?
 //       For Q this is irrelevant: We only support timing in conjunction
@@ -338,6 +340,10 @@ static bool cpuFallbackPartial(ExecutionBuilder* executionBuilder, const Executi
                                std::shared_ptr<ExecutionPlan::Controller> controller,
                                const sp<ExecutionCallback>& executionCallback,
                                std::vector<OutputShape>* outputShapes) {
+    CHECK(executionBuilder != nullptr);
+    CHECK(plan != nullptr);
+    CHECK(executionCallback != nullptr);
+    CHECK(outputShapes != nullptr);
     NNTRACE_RT(NNTRACE_PHASE_EXECUTION, "cpuFallbackPartial");
     VLOG(EXECUTION) << "cpuFallbackPartial";
     std::shared_ptr<StepExecutor> executor;
@@ -358,8 +364,9 @@ static bool cpuFallbackPartial(ExecutionBuilder* executionBuilder, const Executi
         status = ErrorStatus::GENERAL_FAILURE;
     }
     if (status != ErrorStatus::NONE) {
+        // Do not fallback twice if the ExecutionPlan is simple.
         // OUTPUT_INSUFFICIENT_SIZE is not recoverable
-        if (status == ErrorStatus::OUTPUT_INSUFFICIENT_SIZE) {
+        if (plan->isSimple() || status == ErrorStatus::OUTPUT_INSUFFICIENT_SIZE) {
             executionCallback->notify(status, *outputShapes, kNoTiming);
         } else {
             cpuFallbackFull(executionBuilder, executionCallback);
@@ -374,9 +381,13 @@ static void asyncStartComputePartitioned(ExecutionBuilder* executionBuilder,
                                          std::shared_ptr<ExecutionPlan::Controller> controller,
                                          bool allowFallback,
                                          const sp<ExecutionCallback>& executionCallback) {
+    CHECK(executionBuilder != nullptr);
+    CHECK(plan != nullptr);
     VLOG(EXECUTION) << "ExecutionBuilder::compute (from plan, iteratively)";
     std::vector<OutputShape> outputShapes;
     Timing timing = kNoTiming;
+    // Disallow fallback when the ExecutionPlan is simple on CPU.
+    allowFallback &= !plan->isSimpleCpu();
     executionBuilder->initializeOutputShapes(&outputShapes);
     while (true) {
         std::shared_ptr<StepExecutor> executor;
