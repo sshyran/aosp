@@ -3,106 +3,52 @@
 // clang-format off
 #include "GeneratedTests.h"
 
+
 namespace generated_tests::logical_and {
 
-std::vector<::test_helper::MixedTypedExample>& get_examples_simple();
+const ::test_helper::TestModel& get_test_model_simple();
 
 } // namespace generated_tests::logical_and
 
 namespace android::hardware::neuralnetworks::V1_2::generated_tests::logical_and {
 
-Model createTestModel();
-bool is_ignored(int);
+TEST_F(GeneratedTest, logical_and_simple) {
+    Execute(device, ::generated_tests::logical_and::get_test_model_simple());
+}
 
-TEST_F(NeuralnetworksHidlTest, logical_and_simple) {
-  Execute(device,
-          createTestModel,
-          is_ignored,
-          ::generated_tests::logical_and::get_examples_simple());
+TEST_F(DynamicOutputShapeTest, logical_and_simple) {
+    Execute(device, ::generated_tests::logical_and::get_test_model_simple(), true);
 }
 
 TEST_F(ValidationTest, logical_and_simple) {
-  const Model model = createTestModel();
-  const std::vector<Request> requests = createRequests(::generated_tests::logical_and::get_examples_simple());
-  validateEverything(model, requests);
+    const Model model = createModel(::generated_tests::logical_and::get_test_model_simple());
+    const Request request = createRequest(::generated_tests::logical_and::get_test_model_simple());
+    validateEverything(model, request);
 }
 
 } // namespace android::hardware::neuralnetworks::V1_2::generated_tests::logical_and
 
+
 namespace generated_tests::logical_and {
 
-std::vector<::test_helper::MixedTypedExample>& get_examples_simple_dynamic_output_shape();
+const ::test_helper::TestModel& get_test_model_broadcast();
 
 } // namespace generated_tests::logical_and
 
 namespace android::hardware::neuralnetworks::V1_2::generated_tests::logical_and {
 
-Model createTestModel_dynamic_output_shape();
-bool is_ignored_dynamic_output_shape(int);
-
-TEST_F(DynamicOutputShapeTest, logical_and_simple_dynamic_output_shape) {
-  Execute(device,
-          createTestModel_dynamic_output_shape,
-          is_ignored_dynamic_output_shape,
-          ::generated_tests::logical_and::get_examples_simple_dynamic_output_shape(), true);
+TEST_F(GeneratedTest, logical_and_broadcast) {
+    Execute(device, ::generated_tests::logical_and::get_test_model_broadcast());
 }
 
-TEST_F(ValidationTest, logical_and_simple_dynamic_output_shape) {
-  const Model model = createTestModel_dynamic_output_shape();
-  const std::vector<Request> requests = createRequests(::generated_tests::logical_and::get_examples_simple_dynamic_output_shape());
-  validateEverything(model, requests);
-}
-
-} // namespace android::hardware::neuralnetworks::V1_2::generated_tests::logical_and
-
-namespace generated_tests::logical_and {
-
-std::vector<::test_helper::MixedTypedExample>& get_examples_broadcast();
-
-} // namespace generated_tests::logical_and
-
-namespace android::hardware::neuralnetworks::V1_2::generated_tests::logical_and {
-
-Model createTestModel_2();
-bool is_ignored_2(int);
-
-TEST_F(NeuralnetworksHidlTest, logical_and_broadcast) {
-  Execute(device,
-          createTestModel_2,
-          is_ignored_2,
-          ::generated_tests::logical_and::get_examples_broadcast());
+TEST_F(DynamicOutputShapeTest, logical_and_broadcast) {
+    Execute(device, ::generated_tests::logical_and::get_test_model_broadcast(), true);
 }
 
 TEST_F(ValidationTest, logical_and_broadcast) {
-  const Model model = createTestModel_2();
-  const std::vector<Request> requests = createRequests(::generated_tests::logical_and::get_examples_broadcast());
-  validateEverything(model, requests);
-}
-
-} // namespace android::hardware::neuralnetworks::V1_2::generated_tests::logical_and
-
-namespace generated_tests::logical_and {
-
-std::vector<::test_helper::MixedTypedExample>& get_examples_broadcast_dynamic_output_shape();
-
-} // namespace generated_tests::logical_and
-
-namespace android::hardware::neuralnetworks::V1_2::generated_tests::logical_and {
-
-Model createTestModel_dynamic_output_shape_2();
-bool is_ignored_dynamic_output_shape_2(int);
-
-TEST_F(DynamicOutputShapeTest, logical_and_broadcast_dynamic_output_shape) {
-  Execute(device,
-          createTestModel_dynamic_output_shape_2,
-          is_ignored_dynamic_output_shape_2,
-          ::generated_tests::logical_and::get_examples_broadcast_dynamic_output_shape(), true);
-}
-
-TEST_F(ValidationTest, logical_and_broadcast_dynamic_output_shape) {
-  const Model model = createTestModel_dynamic_output_shape_2();
-  const std::vector<Request> requests = createRequests(::generated_tests::logical_and::get_examples_broadcast_dynamic_output_shape());
-  validateEverything(model, requests);
+    const Model model = createModel(::generated_tests::logical_and::get_test_model_broadcast());
+    const Request request = createRequest(::generated_tests::logical_and::get_test_model_broadcast());
+    validateEverything(model, request);
 }
 
 } // namespace android::hardware::neuralnetworks::V1_2::generated_tests::logical_and
