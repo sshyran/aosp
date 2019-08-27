@@ -29,3 +29,29 @@ TEST_F(ValidationTest, embedding_lookup) {
 
 } // namespace android::hardware::neuralnetworks::V1_0::generated_tests::embedding_lookup
 
+namespace generated_tests::embedding_lookup {
+
+std::vector<::test_helper::MixedTypedExample>& get_examples_all_inputs_as_internal();
+
+} // namespace generated_tests::embedding_lookup
+
+namespace android::hardware::neuralnetworks::V1_0::generated_tests::embedding_lookup {
+
+Model createTestModel_all_inputs_as_internal();
+bool is_ignored_all_inputs_as_internal(int);
+
+TEST_F(NeuralnetworksHidlTest, embedding_lookup_all_inputs_as_internal) {
+  Execute(device,
+          createTestModel_all_inputs_as_internal,
+          is_ignored_all_inputs_as_internal,
+          ::generated_tests::embedding_lookup::get_examples_all_inputs_as_internal());
+}
+
+TEST_F(ValidationTest, embedding_lookup_all_inputs_as_internal) {
+  const Model model = createTestModel_all_inputs_as_internal();
+  const std::vector<Request> requests = createRequests(::generated_tests::embedding_lookup::get_examples_all_inputs_as_internal());
+  validateEverything(model, requests);
+}
+
+} // namespace android::hardware::neuralnetworks::V1_0::generated_tests::embedding_lookup
+

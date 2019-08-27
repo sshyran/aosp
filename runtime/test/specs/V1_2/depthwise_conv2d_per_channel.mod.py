@@ -26,7 +26,7 @@ Model("same").Operation("DEPTHWISE_CONV_2D", i1, f1, b1, 0, 0, 0, 0, 1, 1, 1, 0)
 Example({
     i1: [4, 16, 4, 32, 4, 64, 4, 128],
     o1: [8, 48],
-}).AddInput(f1, b1)
+})
 
 
 # TEST 2: Different scales, zeroPoint=128
@@ -43,7 +43,7 @@ Example({
     i2: [129, 130] * 9,
     o2: [132, 130, 134, 131, 132, 130, 134, 131,
          132, 130, 134, 131, 132, 130, 134, 131],
-}).AddInput(f2, b2)
+})
 
 
 layout = BoolScalar("layout", False) # NHWC
@@ -62,4 +62,4 @@ Example({
     i3: [129, 130] * 9,
     o3: [132, 130, 134, 131, 132, 130, 134, 131,
          132, 130, 134, 131, 132, 130, 134, 131],
-}).AddNchw(i3, o3, layout).AddInput(f3, b3)
+}).AddNchw(i3, o3, layout)
