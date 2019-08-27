@@ -324,12 +324,3 @@ cc_library_static {
     srcs: ["generated/spec_V1_2/*.example.cpp"],
     static_libs: ["libneuralnetworks_generated_test_harness"],
 }
-
-// CompilationCachingTests in VtsHalNeuralnetworksV1_2TargetTest depend on MobileNets.
-filegroup {
-    name: "VtsHalNeuralNetworksV1_2_mobilenets",
-    srcs: [
-        "generated/spec_V1_0/mobilenet_224_gender_basic_fixed.example.cpp",
-        "generated/spec_V1_0/mobilenet_quantized.example.cpp",
-    ],
-}
