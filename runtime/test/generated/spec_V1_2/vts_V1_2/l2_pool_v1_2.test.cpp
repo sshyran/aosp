@@ -56,56 +56,6 @@ TEST_F(ValidationTest, l2_pool_v1_2_nhwc_all_inputs_as_internal) {
 
 namespace generated_tests::l2_pool_v1_2 {
 
-const ::test_helper::TestModel& get_test_model_nhwc_float16();
-
-} // namespace generated_tests::l2_pool_v1_2
-
-namespace android::hardware::neuralnetworks::V1_2::generated_tests::l2_pool_v1_2 {
-
-TEST_F(GeneratedTest, l2_pool_v1_2_nhwc_float16) {
-    Execute(device, ::generated_tests::l2_pool_v1_2::get_test_model_nhwc_float16());
-}
-
-TEST_F(DynamicOutputShapeTest, l2_pool_v1_2_nhwc_float16) {
-    Execute(device, ::generated_tests::l2_pool_v1_2::get_test_model_nhwc_float16(), true);
-}
-
-TEST_F(ValidationTest, l2_pool_v1_2_nhwc_float16) {
-    const Model model = createModel(::generated_tests::l2_pool_v1_2::get_test_model_nhwc_float16());
-    const Request request = createRequest(::generated_tests::l2_pool_v1_2::get_test_model_nhwc_float16());
-    validateEverything(model, request);
-}
-
-} // namespace android::hardware::neuralnetworks::V1_2::generated_tests::l2_pool_v1_2
-
-
-namespace generated_tests::l2_pool_v1_2 {
-
-const ::test_helper::TestModel& get_test_model_nhwc_float16_all_inputs_as_internal();
-
-} // namespace generated_tests::l2_pool_v1_2
-
-namespace android::hardware::neuralnetworks::V1_2::generated_tests::l2_pool_v1_2 {
-
-TEST_F(GeneratedTest, l2_pool_v1_2_nhwc_float16_all_inputs_as_internal) {
-    Execute(device, ::generated_tests::l2_pool_v1_2::get_test_model_nhwc_float16_all_inputs_as_internal());
-}
-
-TEST_F(DynamicOutputShapeTest, l2_pool_v1_2_nhwc_float16_all_inputs_as_internal) {
-    Execute(device, ::generated_tests::l2_pool_v1_2::get_test_model_nhwc_float16_all_inputs_as_internal(), true);
-}
-
-TEST_F(ValidationTest, l2_pool_v1_2_nhwc_float16_all_inputs_as_internal) {
-    const Model model = createModel(::generated_tests::l2_pool_v1_2::get_test_model_nhwc_float16_all_inputs_as_internal());
-    const Request request = createRequest(::generated_tests::l2_pool_v1_2::get_test_model_nhwc_float16_all_inputs_as_internal());
-    validateEverything(model, request);
-}
-
-} // namespace android::hardware::neuralnetworks::V1_2::generated_tests::l2_pool_v1_2
-
-
-namespace generated_tests::l2_pool_v1_2 {
-
 const ::test_helper::TestModel& get_test_model_nhwc_relaxed();
 
 } // namespace generated_tests::l2_pool_v1_2
@@ -156,23 +106,23 @@ TEST_F(ValidationTest, l2_pool_v1_2_nhwc_relaxed_all_inputs_as_internal) {
 
 namespace generated_tests::l2_pool_v1_2 {
 
-const ::test_helper::TestModel& get_test_model_nhwc_relaxed_float16();
+const ::test_helper::TestModel& get_test_model_nhwc_float16();
 
 } // namespace generated_tests::l2_pool_v1_2
 
 namespace android::hardware::neuralnetworks::V1_2::generated_tests::l2_pool_v1_2 {
 
-TEST_F(GeneratedTest, l2_pool_v1_2_nhwc_relaxed_float16) {
-    Execute(device, ::generated_tests::l2_pool_v1_2::get_test_model_nhwc_relaxed_float16());
+TEST_F(GeneratedTest, l2_pool_v1_2_nhwc_float16) {
+    Execute(device, ::generated_tests::l2_pool_v1_2::get_test_model_nhwc_float16());
 }
 
-TEST_F(DynamicOutputShapeTest, l2_pool_v1_2_nhwc_relaxed_float16) {
-    Execute(device, ::generated_tests::l2_pool_v1_2::get_test_model_nhwc_relaxed_float16(), true);
+TEST_F(DynamicOutputShapeTest, l2_pool_v1_2_nhwc_float16) {
+    Execute(device, ::generated_tests::l2_pool_v1_2::get_test_model_nhwc_float16(), true);
 }
 
-TEST_F(ValidationTest, l2_pool_v1_2_nhwc_relaxed_float16) {
-    const Model model = createModel(::generated_tests::l2_pool_v1_2::get_test_model_nhwc_relaxed_float16());
-    const Request request = createRequest(::generated_tests::l2_pool_v1_2::get_test_model_nhwc_relaxed_float16());
+TEST_F(ValidationTest, l2_pool_v1_2_nhwc_float16) {
+    const Model model = createModel(::generated_tests::l2_pool_v1_2::get_test_model_nhwc_float16());
+    const Request request = createRequest(::generated_tests::l2_pool_v1_2::get_test_model_nhwc_float16());
     validateEverything(model, request);
 }
 
@@ -181,23 +131,23 @@ TEST_F(ValidationTest, l2_pool_v1_2_nhwc_relaxed_float16) {
 
 namespace generated_tests::l2_pool_v1_2 {
 
-const ::test_helper::TestModel& get_test_model_nhwc_relaxed_float16_all_inputs_as_internal();
+const ::test_helper::TestModel& get_test_model_nhwc_float16_all_inputs_as_internal();
 
 } // namespace generated_tests::l2_pool_v1_2
 
 namespace android::hardware::neuralnetworks::V1_2::generated_tests::l2_pool_v1_2 {
 
-TEST_F(GeneratedTest, l2_pool_v1_2_nhwc_relaxed_float16_all_inputs_as_internal) {
-    Execute(device, ::generated_tests::l2_pool_v1_2::get_test_model_nhwc_relaxed_float16_all_inputs_as_internal());
+TEST_F(GeneratedTest, l2_pool_v1_2_nhwc_float16_all_inputs_as_internal) {
+    Execute(device, ::generated_tests::l2_pool_v1_2::get_test_model_nhwc_float16_all_inputs_as_internal());
 }
 
-TEST_F(DynamicOutputShapeTest, l2_pool_v1_2_nhwc_relaxed_float16_all_inputs_as_internal) {
-    Execute(device, ::generated_tests::l2_pool_v1_2::get_test_model_nhwc_relaxed_float16_all_inputs_as_internal(), true);
+TEST_F(DynamicOutputShapeTest, l2_pool_v1_2_nhwc_float16_all_inputs_as_internal) {
+    Execute(device, ::generated_tests::l2_pool_v1_2::get_test_model_nhwc_float16_all_inputs_as_internal(), true);
 }
 
-TEST_F(ValidationTest, l2_pool_v1_2_nhwc_relaxed_float16_all_inputs_as_internal) {
-    const Model model = createModel(::generated_tests::l2_pool_v1_2::get_test_model_nhwc_relaxed_float16_all_inputs_as_internal());
-    const Request request = createRequest(::generated_tests::l2_pool_v1_2::get_test_model_nhwc_relaxed_float16_all_inputs_as_internal());
+TEST_F(ValidationTest, l2_pool_v1_2_nhwc_float16_all_inputs_as_internal) {
+    const Model model = createModel(::generated_tests::l2_pool_v1_2::get_test_model_nhwc_float16_all_inputs_as_internal());
+    const Request request = createRequest(::generated_tests::l2_pool_v1_2::get_test_model_nhwc_float16_all_inputs_as_internal());
     validateEverything(model, request);
 }
 
@@ -256,56 +206,6 @@ TEST_F(ValidationTest, l2_pool_v1_2_nchw_all_inputs_as_internal) {
 
 namespace generated_tests::l2_pool_v1_2 {
 
-const ::test_helper::TestModel& get_test_model_nchw_float16();
-
-} // namespace generated_tests::l2_pool_v1_2
-
-namespace android::hardware::neuralnetworks::V1_2::generated_tests::l2_pool_v1_2 {
-
-TEST_F(GeneratedTest, l2_pool_v1_2_nchw_float16) {
-    Execute(device, ::generated_tests::l2_pool_v1_2::get_test_model_nchw_float16());
-}
-
-TEST_F(DynamicOutputShapeTest, l2_pool_v1_2_nchw_float16) {
-    Execute(device, ::generated_tests::l2_pool_v1_2::get_test_model_nchw_float16(), true);
-}
-
-TEST_F(ValidationTest, l2_pool_v1_2_nchw_float16) {
-    const Model model = createModel(::generated_tests::l2_pool_v1_2::get_test_model_nchw_float16());
-    const Request request = createRequest(::generated_tests::l2_pool_v1_2::get_test_model_nchw_float16());
-    validateEverything(model, request);
-}
-
-} // namespace android::hardware::neuralnetworks::V1_2::generated_tests::l2_pool_v1_2
-
-
-namespace generated_tests::l2_pool_v1_2 {
-
-const ::test_helper::TestModel& get_test_model_nchw_float16_all_inputs_as_internal();
-
-} // namespace generated_tests::l2_pool_v1_2
-
-namespace android::hardware::neuralnetworks::V1_2::generated_tests::l2_pool_v1_2 {
-
-TEST_F(GeneratedTest, l2_pool_v1_2_nchw_float16_all_inputs_as_internal) {
-    Execute(device, ::generated_tests::l2_pool_v1_2::get_test_model_nchw_float16_all_inputs_as_internal());
-}
-
-TEST_F(DynamicOutputShapeTest, l2_pool_v1_2_nchw_float16_all_inputs_as_internal) {
-    Execute(device, ::generated_tests::l2_pool_v1_2::get_test_model_nchw_float16_all_inputs_as_internal(), true);
-}
-
-TEST_F(ValidationTest, l2_pool_v1_2_nchw_float16_all_inputs_as_internal) {
-    const Model model = createModel(::generated_tests::l2_pool_v1_2::get_test_model_nchw_float16_all_inputs_as_internal());
-    const Request request = createRequest(::generated_tests::l2_pool_v1_2::get_test_model_nchw_float16_all_inputs_as_internal());
-    validateEverything(model, request);
-}
-
-} // namespace android::hardware::neuralnetworks::V1_2::generated_tests::l2_pool_v1_2
-
-
-namespace generated_tests::l2_pool_v1_2 {
-
 const ::test_helper::TestModel& get_test_model_nchw_relaxed();
 
 } // namespace generated_tests::l2_pool_v1_2
@@ -356,23 +256,23 @@ TEST_F(ValidationTest, l2_pool_v1_2_nchw_relaxed_all_inputs_as_internal) {
 
 namespace generated_tests::l2_pool_v1_2 {
 
-const ::test_helper::TestModel& get_test_model_nchw_relaxed_float16();
+const ::test_helper::TestModel& get_test_model_nchw_float16();
 
 } // namespace generated_tests::l2_pool_v1_2
 
 namespace android::hardware::neuralnetworks::V1_2::generated_tests::l2_pool_v1_2 {
 
-TEST_F(GeneratedTest, l2_pool_v1_2_nchw_relaxed_float16) {
-    Execute(device, ::generated_tests::l2_pool_v1_2::get_test_model_nchw_relaxed_float16());
+TEST_F(GeneratedTest, l2_pool_v1_2_nchw_float16) {
+    Execute(device, ::generated_tests::l2_pool_v1_2::get_test_model_nchw_float16());
 }
 
-TEST_F(DynamicOutputShapeTest, l2_pool_v1_2_nchw_relaxed_float16) {
-    Execute(device, ::generated_tests::l2_pool_v1_2::get_test_model_nchw_relaxed_float16(), true);
+TEST_F(DynamicOutputShapeTest, l2_pool_v1_2_nchw_float16) {
+    Execute(device, ::generated_tests::l2_pool_v1_2::get_test_model_nchw_float16(), true);
 }
 
-TEST_F(ValidationTest, l2_pool_v1_2_nchw_relaxed_float16) {
-    const Model model = createModel(::generated_tests::l2_pool_v1_2::get_test_model_nchw_relaxed_float16());
-    const Request request = createRequest(::generated_tests::l2_pool_v1_2::get_test_model_nchw_relaxed_float16());
+TEST_F(ValidationTest, l2_pool_v1_2_nchw_float16) {
+    const Model model = createModel(::generated_tests::l2_pool_v1_2::get_test_model_nchw_float16());
+    const Request request = createRequest(::generated_tests::l2_pool_v1_2::get_test_model_nchw_float16());
     validateEverything(model, request);
 }
 
@@ -381,23 +281,23 @@ TEST_F(ValidationTest, l2_pool_v1_2_nchw_relaxed_float16) {
 
 namespace generated_tests::l2_pool_v1_2 {
 
-const ::test_helper::TestModel& get_test_model_nchw_relaxed_float16_all_inputs_as_internal();
+const ::test_helper::TestModel& get_test_model_nchw_float16_all_inputs_as_internal();
 
 } // namespace generated_tests::l2_pool_v1_2
 
 namespace android::hardware::neuralnetworks::V1_2::generated_tests::l2_pool_v1_2 {
 
-TEST_F(GeneratedTest, l2_pool_v1_2_nchw_relaxed_float16_all_inputs_as_internal) {
-    Execute(device, ::generated_tests::l2_pool_v1_2::get_test_model_nchw_relaxed_float16_all_inputs_as_internal());
+TEST_F(GeneratedTest, l2_pool_v1_2_nchw_float16_all_inputs_as_internal) {
+    Execute(device, ::generated_tests::l2_pool_v1_2::get_test_model_nchw_float16_all_inputs_as_internal());
 }
 
-TEST_F(DynamicOutputShapeTest, l2_pool_v1_2_nchw_relaxed_float16_all_inputs_as_internal) {
-    Execute(device, ::generated_tests::l2_pool_v1_2::get_test_model_nchw_relaxed_float16_all_inputs_as_internal(), true);
+TEST_F(DynamicOutputShapeTest, l2_pool_v1_2_nchw_float16_all_inputs_as_internal) {
+    Execute(device, ::generated_tests::l2_pool_v1_2::get_test_model_nchw_float16_all_inputs_as_internal(), true);
 }
 
-TEST_F(ValidationTest, l2_pool_v1_2_nchw_relaxed_float16_all_inputs_as_internal) {
-    const Model model = createModel(::generated_tests::l2_pool_v1_2::get_test_model_nchw_relaxed_float16_all_inputs_as_internal());
-    const Request request = createRequest(::generated_tests::l2_pool_v1_2::get_test_model_nchw_relaxed_float16_all_inputs_as_internal());
+TEST_F(ValidationTest, l2_pool_v1_2_nchw_float16_all_inputs_as_internal) {
+    const Model model = createModel(::generated_tests::l2_pool_v1_2::get_test_model_nchw_float16_all_inputs_as_internal());
+    const Request request = createRequest(::generated_tests::l2_pool_v1_2::get_test_model_nchw_float16_all_inputs_as_internal());
     validateEverything(model, request);
 }
 
@@ -456,56 +356,6 @@ TEST_F(ValidationTest, l2_pool_v1_2_nhwc_all_inputs_as_internal_2) {
 
 namespace generated_tests::l2_pool_v1_2 {
 
-const ::test_helper::TestModel& get_test_model_nhwc_float16_2();
-
-} // namespace generated_tests::l2_pool_v1_2
-
-namespace android::hardware::neuralnetworks::V1_2::generated_tests::l2_pool_v1_2 {
-
-TEST_F(GeneratedTest, l2_pool_v1_2_nhwc_float16_2) {
-    Execute(device, ::generated_tests::l2_pool_v1_2::get_test_model_nhwc_float16_2());
-}
-
-TEST_F(DynamicOutputShapeTest, l2_pool_v1_2_nhwc_float16_2) {
-    Execute(device, ::generated_tests::l2_pool_v1_2::get_test_model_nhwc_float16_2(), true);
-}
-
-TEST_F(ValidationTest, l2_pool_v1_2_nhwc_float16_2) {
-    const Model model = createModel(::generated_tests::l2_pool_v1_2::get_test_model_nhwc_float16_2());
-    const Request request = createRequest(::generated_tests::l2_pool_v1_2::get_test_model_nhwc_float16_2());
-    validateEverything(model, request);
-}
-
-} // namespace android::hardware::neuralnetworks::V1_2::generated_tests::l2_pool_v1_2
-
-
-namespace generated_tests::l2_pool_v1_2 {
-
-const ::test_helper::TestModel& get_test_model_nhwc_float16_all_inputs_as_internal_2();
-
-} // namespace generated_tests::l2_pool_v1_2
-
-namespace android::hardware::neuralnetworks::V1_2::generated_tests::l2_pool_v1_2 {
-
-TEST_F(GeneratedTest, l2_pool_v1_2_nhwc_float16_all_inputs_as_internal_2) {
-    Execute(device, ::generated_tests::l2_pool_v1_2::get_test_model_nhwc_float16_all_inputs_as_internal_2());
-}
-
-TEST_F(DynamicOutputShapeTest, l2_pool_v1_2_nhwc_float16_all_inputs_as_internal_2) {
-    Execute(device, ::generated_tests::l2_pool_v1_2::get_test_model_nhwc_float16_all_inputs_as_internal_2(), true);
-}
-
-TEST_F(ValidationTest, l2_pool_v1_2_nhwc_float16_all_inputs_as_internal_2) {
-    const Model model = createModel(::generated_tests::l2_pool_v1_2::get_test_model_nhwc_float16_all_inputs_as_internal_2());
-    const Request request = createRequest(::generated_tests::l2_pool_v1_2::get_test_model_nhwc_float16_all_inputs_as_internal_2());
-    validateEverything(model, request);
-}
-
-} // namespace android::hardware::neuralnetworks::V1_2::generated_tests::l2_pool_v1_2
-
-
-namespace generated_tests::l2_pool_v1_2 {
-
 const ::test_helper::TestModel& get_test_model_nhwc_relaxed_2();
 
 } // namespace generated_tests::l2_pool_v1_2
@@ -556,23 +406,23 @@ TEST_F(ValidationTest, l2_pool_v1_2_nhwc_relaxed_all_inputs_as_internal_2) {
 
 namespace generated_tests::l2_pool_v1_2 {
 
-const ::test_helper::TestModel& get_test_model_nhwc_relaxed_float16_2();
+const ::test_helper::TestModel& get_test_model_nhwc_float16_2();
 
 } // namespace generated_tests::l2_pool_v1_2
 
 namespace android::hardware::neuralnetworks::V1_2::generated_tests::l2_pool_v1_2 {
 
-TEST_F(GeneratedTest, l2_pool_v1_2_nhwc_relaxed_float16_2) {
-    Execute(device, ::generated_tests::l2_pool_v1_2::get_test_model_nhwc_relaxed_float16_2());
+TEST_F(GeneratedTest, l2_pool_v1_2_nhwc_float16_2) {
+    Execute(device, ::generated_tests::l2_pool_v1_2::get_test_model_nhwc_float16_2());
 }
 
-TEST_F(DynamicOutputShapeTest, l2_pool_v1_2_nhwc_relaxed_float16_2) {
-    Execute(device, ::generated_tests::l2_pool_v1_2::get_test_model_nhwc_relaxed_float16_2(), true);
+TEST_F(DynamicOutputShapeTest, l2_pool_v1_2_nhwc_float16_2) {
+    Execute(device, ::generated_tests::l2_pool_v1_2::get_test_model_nhwc_float16_2(), true);
 }
 
-TEST_F(ValidationTest, l2_pool_v1_2_nhwc_relaxed_float16_2) {
-    const Model model = createModel(::generated_tests::l2_pool_v1_2::get_test_model_nhwc_relaxed_float16_2());
-    const Request request = createRequest(::generated_tests::l2_pool_v1_2::get_test_model_nhwc_relaxed_float16_2());
+TEST_F(ValidationTest, l2_pool_v1_2_nhwc_float16_2) {
+    const Model model = createModel(::generated_tests::l2_pool_v1_2::get_test_model_nhwc_float16_2());
+    const Request request = createRequest(::generated_tests::l2_pool_v1_2::get_test_model_nhwc_float16_2());
     validateEverything(model, request);
 }
 
@@ -581,23 +431,23 @@ TEST_F(ValidationTest, l2_pool_v1_2_nhwc_relaxed_float16_2) {
 
 namespace generated_tests::l2_pool_v1_2 {
 
-const ::test_helper::TestModel& get_test_model_nhwc_relaxed_float16_all_inputs_as_internal_2();
+const ::test_helper::TestModel& get_test_model_nhwc_float16_all_inputs_as_internal_2();
 
 } // namespace generated_tests::l2_pool_v1_2
 
 namespace android::hardware::neuralnetworks::V1_2::generated_tests::l2_pool_v1_2 {
 
-TEST_F(GeneratedTest, l2_pool_v1_2_nhwc_relaxed_float16_all_inputs_as_internal_2) {
-    Execute(device, ::generated_tests::l2_pool_v1_2::get_test_model_nhwc_relaxed_float16_all_inputs_as_internal_2());
+TEST_F(GeneratedTest, l2_pool_v1_2_nhwc_float16_all_inputs_as_internal_2) {
+    Execute(device, ::generated_tests::l2_pool_v1_2::get_test_model_nhwc_float16_all_inputs_as_internal_2());
 }
 
-TEST_F(DynamicOutputShapeTest, l2_pool_v1_2_nhwc_relaxed_float16_all_inputs_as_internal_2) {
-    Execute(device, ::generated_tests::l2_pool_v1_2::get_test_model_nhwc_relaxed_float16_all_inputs_as_internal_2(), true);
+TEST_F(DynamicOutputShapeTest, l2_pool_v1_2_nhwc_float16_all_inputs_as_internal_2) {
+    Execute(device, ::generated_tests::l2_pool_v1_2::get_test_model_nhwc_float16_all_inputs_as_internal_2(), true);
 }
 
-TEST_F(ValidationTest, l2_pool_v1_2_nhwc_relaxed_float16_all_inputs_as_internal_2) {
-    const Model model = createModel(::generated_tests::l2_pool_v1_2::get_test_model_nhwc_relaxed_float16_all_inputs_as_internal_2());
-    const Request request = createRequest(::generated_tests::l2_pool_v1_2::get_test_model_nhwc_relaxed_float16_all_inputs_as_internal_2());
+TEST_F(ValidationTest, l2_pool_v1_2_nhwc_float16_all_inputs_as_internal_2) {
+    const Model model = createModel(::generated_tests::l2_pool_v1_2::get_test_model_nhwc_float16_all_inputs_as_internal_2());
+    const Request request = createRequest(::generated_tests::l2_pool_v1_2::get_test_model_nhwc_float16_all_inputs_as_internal_2());
     validateEverything(model, request);
 }
 
@@ -656,56 +506,6 @@ TEST_F(ValidationTest, l2_pool_v1_2_nchw_all_inputs_as_internal_2) {
 
 namespace generated_tests::l2_pool_v1_2 {
 
-const ::test_helper::TestModel& get_test_model_nchw_float16_2();
-
-} // namespace generated_tests::l2_pool_v1_2
-
-namespace android::hardware::neuralnetworks::V1_2::generated_tests::l2_pool_v1_2 {
-
-TEST_F(GeneratedTest, l2_pool_v1_2_nchw_float16_2) {
-    Execute(device, ::generated_tests::l2_pool_v1_2::get_test_model_nchw_float16_2());
-}
-
-TEST_F(DynamicOutputShapeTest, l2_pool_v1_2_nchw_float16_2) {
-    Execute(device, ::generated_tests::l2_pool_v1_2::get_test_model_nchw_float16_2(), true);
-}
-
-TEST_F(ValidationTest, l2_pool_v1_2_nchw_float16_2) {
-    const Model model = createModel(::generated_tests::l2_pool_v1_2::get_test_model_nchw_float16_2());
-    const Request request = createRequest(::generated_tests::l2_pool_v1_2::get_test_model_nchw_float16_2());
-    validateEverything(model, request);
-}
-
-} // namespace android::hardware::neuralnetworks::V1_2::generated_tests::l2_pool_v1_2
-
-
-namespace generated_tests::l2_pool_v1_2 {
-
-const ::test_helper::TestModel& get_test_model_nchw_float16_all_inputs_as_internal_2();
-
-} // namespace generated_tests::l2_pool_v1_2
-
-namespace android::hardware::neuralnetworks::V1_2::generated_tests::l2_pool_v1_2 {
-
-TEST_F(GeneratedTest, l2_pool_v1_2_nchw_float16_all_inputs_as_internal_2) {
-    Execute(device, ::generated_tests::l2_pool_v1_2::get_test_model_nchw_float16_all_inputs_as_internal_2());
-}
-
-TEST_F(DynamicOutputShapeTest, l2_pool_v1_2_nchw_float16_all_inputs_as_internal_2) {
-    Execute(device, ::generated_tests::l2_pool_v1_2::get_test_model_nchw_float16_all_inputs_as_internal_2(), true);
-}
-
-TEST_F(ValidationTest, l2_pool_v1_2_nchw_float16_all_inputs_as_internal_2) {
-    const Model model = createModel(::generated_tests::l2_pool_v1_2::get_test_model_nchw_float16_all_inputs_as_internal_2());
-    const Request request = createRequest(::generated_tests::l2_pool_v1_2::get_test_model_nchw_float16_all_inputs_as_internal_2());
-    validateEverything(model, request);
-}
-
-} // namespace android::hardware::neuralnetworks::V1_2::generated_tests::l2_pool_v1_2
-
-
-namespace generated_tests::l2_pool_v1_2 {
-
 const ::test_helper::TestModel& get_test_model_nchw_relaxed_2();
 
 } // namespace generated_tests::l2_pool_v1_2
@@ -756,23 +556,23 @@ TEST_F(ValidationTest, l2_pool_v1_2_nchw_relaxed_all_inputs_as_internal_2) {
 
 namespace generated_tests::l2_pool_v1_2 {
 
-const ::test_helper::TestModel& get_test_model_nchw_relaxed_float16_2();
+const ::test_helper::TestModel& get_test_model_nchw_float16_2();
 
 } // namespace generated_tests::l2_pool_v1_2
 
 namespace android::hardware::neuralnetworks::V1_2::generated_tests::l2_pool_v1_2 {
 
-TEST_F(GeneratedTest, l2_pool_v1_2_nchw_relaxed_float16_2) {
-    Execute(device, ::generated_tests::l2_pool_v1_2::get_test_model_nchw_relaxed_float16_2());
+TEST_F(GeneratedTest, l2_pool_v1_2_nchw_float16_2) {
+    Execute(device, ::generated_tests::l2_pool_v1_2::get_test_model_nchw_float16_2());
 }
 
-TEST_F(DynamicOutputShapeTest, l2_pool_v1_2_nchw_relaxed_float16_2) {
-    Execute(device, ::generated_tests::l2_pool_v1_2::get_test_model_nchw_relaxed_float16_2(), true);
+TEST_F(DynamicOutputShapeTest, l2_pool_v1_2_nchw_float16_2) {
+    Execute(device, ::generated_tests::l2_pool_v1_2::get_test_model_nchw_float16_2(), true);
 }
 
-TEST_F(ValidationTest, l2_pool_v1_2_nchw_relaxed_float16_2) {
-    const Model model = createModel(::generated_tests::l2_pool_v1_2::get_test_model_nchw_relaxed_float16_2());
-    const Request request = createRequest(::generated_tests::l2_pool_v1_2::get_test_model_nchw_relaxed_float16_2());
+TEST_F(ValidationTest, l2_pool_v1_2_nchw_float16_2) {
+    const Model model = createModel(::generated_tests::l2_pool_v1_2::get_test_model_nchw_float16_2());
+    const Request request = createRequest(::generated_tests::l2_pool_v1_2::get_test_model_nchw_float16_2());
     validateEverything(model, request);
 }
 
@@ -781,23 +581,23 @@ TEST_F(ValidationTest, l2_pool_v1_2_nchw_relaxed_float16_2) {
 
 namespace generated_tests::l2_pool_v1_2 {
 
-const ::test_helper::TestModel& get_test_model_nchw_relaxed_float16_all_inputs_as_internal_2();
+const ::test_helper::TestModel& get_test_model_nchw_float16_all_inputs_as_internal_2();
 
 } // namespace generated_tests::l2_pool_v1_2
 
 namespace android::hardware::neuralnetworks::V1_2::generated_tests::l2_pool_v1_2 {
 
-TEST_F(GeneratedTest, l2_pool_v1_2_nchw_relaxed_float16_all_inputs_as_internal_2) {
-    Execute(device, ::generated_tests::l2_pool_v1_2::get_test_model_nchw_relaxed_float16_all_inputs_as_internal_2());
+TEST_F(GeneratedTest, l2_pool_v1_2_nchw_float16_all_inputs_as_internal_2) {
+    Execute(device, ::generated_tests::l2_pool_v1_2::get_test_model_nchw_float16_all_inputs_as_internal_2());
 }
 
-TEST_F(DynamicOutputShapeTest, l2_pool_v1_2_nchw_relaxed_float16_all_inputs_as_internal_2) {
-    Execute(device, ::generated_tests::l2_pool_v1_2::get_test_model_nchw_relaxed_float16_all_inputs_as_internal_2(), true);
+TEST_F(DynamicOutputShapeTest, l2_pool_v1_2_nchw_float16_all_inputs_as_internal_2) {
+    Execute(device, ::generated_tests::l2_pool_v1_2::get_test_model_nchw_float16_all_inputs_as_internal_2(), true);
 }
 
-TEST_F(ValidationTest, l2_pool_v1_2_nchw_relaxed_float16_all_inputs_as_internal_2) {
-    const Model model = createModel(::generated_tests::l2_pool_v1_2::get_test_model_nchw_relaxed_float16_all_inputs_as_internal_2());
-    const Request request = createRequest(::generated_tests::l2_pool_v1_2::get_test_model_nchw_relaxed_float16_all_inputs_as_internal_2());
+TEST_F(ValidationTest, l2_pool_v1_2_nchw_float16_all_inputs_as_internal_2) {
+    const Model model = createModel(::generated_tests::l2_pool_v1_2::get_test_model_nchw_float16_all_inputs_as_internal_2());
+    const Request request = createRequest(::generated_tests::l2_pool_v1_2::get_test_model_nchw_float16_all_inputs_as_internal_2());
     validateEverything(model, request);
 }
 
@@ -856,56 +656,6 @@ TEST_F(ValidationTest, l2_pool_v1_2_large_nhwc_all_inputs_as_internal) {
 
 namespace generated_tests::l2_pool_v1_2 {
 
-const ::test_helper::TestModel& get_test_model_large_nhwc_float16();
-
-} // namespace generated_tests::l2_pool_v1_2
-
-namespace android::hardware::neuralnetworks::V1_2::generated_tests::l2_pool_v1_2 {
-
-TEST_F(GeneratedTest, l2_pool_v1_2_large_nhwc_float16) {
-    Execute(device, ::generated_tests::l2_pool_v1_2::get_test_model_large_nhwc_float16());
-}
-
-TEST_F(DynamicOutputShapeTest, l2_pool_v1_2_large_nhwc_float16) {
-    Execute(device, ::generated_tests::l2_pool_v1_2::get_test_model_large_nhwc_float16(), true);
-}
-
-TEST_F(ValidationTest, l2_pool_v1_2_large_nhwc_float16) {
-    const Model model = createModel(::generated_tests::l2_pool_v1_2::get_test_model_large_nhwc_float16());
-    const Request request = createRequest(::generated_tests::l2_pool_v1_2::get_test_model_large_nhwc_float16());
-    validateEverything(model, request);
-}
-
-} // namespace android::hardware::neuralnetworks::V1_2::generated_tests::l2_pool_v1_2
-
-
-namespace generated_tests::l2_pool_v1_2 {
-
-const ::test_helper::TestModel& get_test_model_large_nhwc_float16_all_inputs_as_internal();
-
-} // namespace generated_tests::l2_pool_v1_2
-
-namespace android::hardware::neuralnetworks::V1_2::generated_tests::l2_pool_v1_2 {
-
-TEST_F(GeneratedTest, l2_pool_v1_2_large_nhwc_float16_all_inputs_as_internal) {
-    Execute(device, ::generated_tests::l2_pool_v1_2::get_test_model_large_nhwc_float16_all_inputs_as_internal());
-}
-
-TEST_F(DynamicOutputShapeTest, l2_pool_v1_2_large_nhwc_float16_all_inputs_as_internal) {
-    Execute(device, ::generated_tests::l2_pool_v1_2::get_test_model_large_nhwc_float16_all_inputs_as_internal(), true);
-}
-
-TEST_F(ValidationTest, l2_pool_v1_2_large_nhwc_float16_all_inputs_as_internal) {
-    const Model model = createModel(::generated_tests::l2_pool_v1_2::get_test_model_large_nhwc_float16_all_inputs_as_internal());
-    const Request request = createRequest(::generated_tests::l2_pool_v1_2::get_test_model_large_nhwc_float16_all_inputs_as_internal());
-    validateEverything(model, request);
-}
-
-} // namespace android::hardware::neuralnetworks::V1_2::generated_tests::l2_pool_v1_2
-
-
-namespace generated_tests::l2_pool_v1_2 {
-
 const ::test_helper::TestModel& get_test_model_large_nhwc_relaxed();
 
 } // namespace generated_tests::l2_pool_v1_2
@@ -956,23 +706,23 @@ TEST_F(ValidationTest, l2_pool_v1_2_large_nhwc_relaxed_all_inputs_as_internal) {
 
 namespace generated_tests::l2_pool_v1_2 {
 
-const ::test_helper::TestModel& get_test_model_large_nhwc_relaxed_float16();
+const ::test_helper::TestModel& get_test_model_large_nhwc_float16();
 
 } // namespace generated_tests::l2_pool_v1_2
 
 namespace android::hardware::neuralnetworks::V1_2::generated_tests::l2_pool_v1_2 {
 
-TEST_F(GeneratedTest, l2_pool_v1_2_large_nhwc_relaxed_float16) {
-    Execute(device, ::generated_tests::l2_pool_v1_2::get_test_model_large_nhwc_relaxed_float16());
+TEST_F(GeneratedTest, l2_pool_v1_2_large_nhwc_float16) {
+    Execute(device, ::generated_tests::l2_pool_v1_2::get_test_model_large_nhwc_float16());
 }
 
-TEST_F(DynamicOutputShapeTest, l2_pool_v1_2_large_nhwc_relaxed_float16) {
-    Execute(device, ::generated_tests::l2_pool_v1_2::get_test_model_large_nhwc_relaxed_float16(), true);
+TEST_F(DynamicOutputShapeTest, l2_pool_v1_2_large_nhwc_float16) {
+    Execute(device, ::generated_tests::l2_pool_v1_2::get_test_model_large_nhwc_float16(), true);
 }
 
-TEST_F(ValidationTest, l2_pool_v1_2_large_nhwc_relaxed_float16) {
-    const Model model = createModel(::generated_tests::l2_pool_v1_2::get_test_model_large_nhwc_relaxed_float16());
-    const Request request = createRequest(::generated_tests::l2_pool_v1_2::get_test_model_large_nhwc_relaxed_float16());
+TEST_F(ValidationTest, l2_pool_v1_2_large_nhwc_float16) {
+    const Model model = createModel(::generated_tests::l2_pool_v1_2::get_test_model_large_nhwc_float16());
+    const Request request = createRequest(::generated_tests::l2_pool_v1_2::get_test_model_large_nhwc_float16());
     validateEverything(model, request);
 }
 
@@ -981,23 +731,23 @@ TEST_F(ValidationTest, l2_pool_v1_2_large_nhwc_relaxed_float16) {
 
 namespace generated_tests::l2_pool_v1_2 {
 
-const ::test_helper::TestModel& get_test_model_large_nhwc_relaxed_float16_all_inputs_as_internal();
+const ::test_helper::TestModel& get_test_model_large_nhwc_float16_all_inputs_as_internal();
 
 } // namespace generated_tests::l2_pool_v1_2
 
 namespace android::hardware::neuralnetworks::V1_2::generated_tests::l2_pool_v1_2 {
 
-TEST_F(GeneratedTest, l2_pool_v1_2_large_nhwc_relaxed_float16_all_inputs_as_internal) {
-    Execute(device, ::generated_tests::l2_pool_v1_2::get_test_model_large_nhwc_relaxed_float16_all_inputs_as_internal());
+TEST_F(GeneratedTest, l2_pool_v1_2_large_nhwc_float16_all_inputs_as_internal) {
+    Execute(device, ::generated_tests::l2_pool_v1_2::get_test_model_large_nhwc_float16_all_inputs_as_internal());
 }
 
-TEST_F(DynamicOutputShapeTest, l2_pool_v1_2_large_nhwc_relaxed_float16_all_inputs_as_internal) {
-    Execute(device, ::generated_tests::l2_pool_v1_2::get_test_model_large_nhwc_relaxed_float16_all_inputs_as_internal(), true);
+TEST_F(DynamicOutputShapeTest, l2_pool_v1_2_large_nhwc_float16_all_inputs_as_internal) {
+    Execute(device, ::generated_tests::l2_pool_v1_2::get_test_model_large_nhwc_float16_all_inputs_as_internal(), true);
 }
 
-TEST_F(ValidationTest, l2_pool_v1_2_large_nhwc_relaxed_float16_all_inputs_as_internal) {
-    const Model model = createModel(::generated_tests::l2_pool_v1_2::get_test_model_large_nhwc_relaxed_float16_all_inputs_as_internal());
-    const Request request = createRequest(::generated_tests::l2_pool_v1_2::get_test_model_large_nhwc_relaxed_float16_all_inputs_as_internal());
+TEST_F(ValidationTest, l2_pool_v1_2_large_nhwc_float16_all_inputs_as_internal) {
+    const Model model = createModel(::generated_tests::l2_pool_v1_2::get_test_model_large_nhwc_float16_all_inputs_as_internal());
+    const Request request = createRequest(::generated_tests::l2_pool_v1_2::get_test_model_large_nhwc_float16_all_inputs_as_internal());
     validateEverything(model, request);
 }
 
@@ -1056,56 +806,6 @@ TEST_F(ValidationTest, l2_pool_v1_2_large_nchw_all_inputs_as_internal) {
 
 namespace generated_tests::l2_pool_v1_2 {
 
-const ::test_helper::TestModel& get_test_model_large_nchw_float16();
-
-} // namespace generated_tests::l2_pool_v1_2
-
-namespace android::hardware::neuralnetworks::V1_2::generated_tests::l2_pool_v1_2 {
-
-TEST_F(GeneratedTest, l2_pool_v1_2_large_nchw_float16) {
-    Execute(device, ::generated_tests::l2_pool_v1_2::get_test_model_large_nchw_float16());
-}
-
-TEST_F(DynamicOutputShapeTest, l2_pool_v1_2_large_nchw_float16) {
-    Execute(device, ::generated_tests::l2_pool_v1_2::get_test_model_large_nchw_float16(), true);
-}
-
-TEST_F(ValidationTest, l2_pool_v1_2_large_nchw_float16) {
-    const Model model = createModel(::generated_tests::l2_pool_v1_2::get_test_model_large_nchw_float16());
-    const Request request = createRequest(::generated_tests::l2_pool_v1_2::get_test_model_large_nchw_float16());
-    validateEverything(model, request);
-}
-
-} // namespace android::hardware::neuralnetworks::V1_2::generated_tests::l2_pool_v1_2
-
-
-namespace generated_tests::l2_pool_v1_2 {
-
-const ::test_helper::TestModel& get_test_model_large_nchw_float16_all_inputs_as_internal();
-
-} // namespace generated_tests::l2_pool_v1_2
-
-namespace android::hardware::neuralnetworks::V1_2::generated_tests::l2_pool_v1_2 {
-
-TEST_F(GeneratedTest, l2_pool_v1_2_large_nchw_float16_all_inputs_as_internal) {
-    Execute(device, ::generated_tests::l2_pool_v1_2::get_test_model_large_nchw_float16_all_inputs_as_internal());
-}
-
-TEST_F(DynamicOutputShapeTest, l2_pool_v1_2_large_nchw_float16_all_inputs_as_internal) {
-    Execute(device, ::generated_tests::l2_pool_v1_2::get_test_model_large_nchw_float16_all_inputs_as_internal(), true);
-}
-
-TEST_F(ValidationTest, l2_pool_v1_2_large_nchw_float16_all_inputs_as_internal) {
-    const Model model = createModel(::generated_tests::l2_pool_v1_2::get_test_model_large_nchw_float16_all_inputs_as_internal());
-    const Request request = createRequest(::generated_tests::l2_pool_v1_2::get_test_model_large_nchw_float16_all_inputs_as_internal());
-    validateEverything(model, request);
-}
-
-} // namespace android::hardware::neuralnetworks::V1_2::generated_tests::l2_pool_v1_2
-
-
-namespace generated_tests::l2_pool_v1_2 {
-
 const ::test_helper::TestModel& get_test_model_large_nchw_relaxed();
 
 } // namespace generated_tests::l2_pool_v1_2
@@ -1156,23 +856,23 @@ TEST_F(ValidationTest, l2_pool_v1_2_large_nchw_relaxed_all_inputs_as_internal) {
 
 namespace generated_tests::l2_pool_v1_2 {
 
-const ::test_helper::TestModel& get_test_model_large_nchw_relaxed_float16();
+const ::test_helper::TestModel& get_test_model_large_nchw_float16();
 
 } // namespace generated_tests::l2_pool_v1_2
 
 namespace android::hardware::neuralnetworks::V1_2::generated_tests::l2_pool_v1_2 {
 
-TEST_F(GeneratedTest, l2_pool_v1_2_large_nchw_relaxed_float16) {
-    Execute(device, ::generated_tests::l2_pool_v1_2::get_test_model_large_nchw_relaxed_float16());
+TEST_F(GeneratedTest, l2_pool_v1_2_large_nchw_float16) {
+    Execute(device, ::generated_tests::l2_pool_v1_2::get_test_model_large_nchw_float16());
 }
 
-TEST_F(DynamicOutputShapeTest, l2_pool_v1_2_large_nchw_relaxed_float16) {
-    Execute(device, ::generated_tests::l2_pool_v1_2::get_test_model_large_nchw_relaxed_float16(), true);
+TEST_F(DynamicOutputShapeTest, l2_pool_v1_2_large_nchw_float16) {
+    Execute(device, ::generated_tests::l2_pool_v1_2::get_test_model_large_nchw_float16(), true);
 }
 
-TEST_F(ValidationTest, l2_pool_v1_2_large_nchw_relaxed_float16) {
-    const Model model = createModel(::generated_tests::l2_pool_v1_2::get_test_model_large_nchw_relaxed_float16());
-    const Request request = createRequest(::generated_tests::l2_pool_v1_2::get_test_model_large_nchw_relaxed_float16());
+TEST_F(ValidationTest, l2_pool_v1_2_large_nchw_float16) {
+    const Model model = createModel(::generated_tests::l2_pool_v1_2::get_test_model_large_nchw_float16());
+    const Request request = createRequest(::generated_tests::l2_pool_v1_2::get_test_model_large_nchw_float16());
     validateEverything(model, request);
 }
 
@@ -1181,23 +881,23 @@ TEST_F(ValidationTest, l2_pool_v1_2_large_nchw_relaxed_float16) {
 
 namespace generated_tests::l2_pool_v1_2 {
 
-const ::test_helper::TestModel& get_test_model_large_nchw_relaxed_float16_all_inputs_as_internal();
+const ::test_helper::TestModel& get_test_model_large_nchw_float16_all_inputs_as_internal();
 
 } // namespace generated_tests::l2_pool_v1_2
 
 namespace android::hardware::neuralnetworks::V1_2::generated_tests::l2_pool_v1_2 {
 
-TEST_F(GeneratedTest, l2_pool_v1_2_large_nchw_relaxed_float16_all_inputs_as_internal) {
-    Execute(device, ::generated_tests::l2_pool_v1_2::get_test_model_large_nchw_relaxed_float16_all_inputs_as_internal());
+TEST_F(GeneratedTest, l2_pool_v1_2_large_nchw_float16_all_inputs_as_internal) {
+    Execute(device, ::generated_tests::l2_pool_v1_2::get_test_model_large_nchw_float16_all_inputs_as_internal());
 }
 
-TEST_F(DynamicOutputShapeTest, l2_pool_v1_2_large_nchw_relaxed_float16_all_inputs_as_internal) {
-    Execute(device, ::generated_tests::l2_pool_v1_2::get_test_model_large_nchw_relaxed_float16_all_inputs_as_internal(), true);
+TEST_F(DynamicOutputShapeTest, l2_pool_v1_2_large_nchw_float16_all_inputs_as_internal) {
+    Execute(device, ::generated_tests::l2_pool_v1_2::get_test_model_large_nchw_float16_all_inputs_as_internal(), true);
 }
 
-TEST_F(ValidationTest, l2_pool_v1_2_large_nchw_relaxed_float16_all_inputs_as_internal) {
-    const Model model = createModel(::generated_tests::l2_pool_v1_2::get_test_model_large_nchw_relaxed_float16_all_inputs_as_internal());
-    const Request request = createRequest(::generated_tests::l2_pool_v1_2::get_test_model_large_nchw_relaxed_float16_all_inputs_as_internal());
+TEST_F(ValidationTest, l2_pool_v1_2_large_nchw_float16_all_inputs_as_internal) {
+    const Model model = createModel(::generated_tests::l2_pool_v1_2::get_test_model_large_nchw_float16_all_inputs_as_internal());
+    const Request request = createRequest(::generated_tests::l2_pool_v1_2::get_test_model_large_nchw_float16_all_inputs_as_internal());
     validateEverything(model, request);
 }
 
