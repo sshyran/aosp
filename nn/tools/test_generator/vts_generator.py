@@ -46,15 +46,8 @@ def ParseCmdLine():
     args.example = None  # VTS generator does not generate examples. See cts_generator.py.
     tg.FileNames.InitializeFileLists(args.spec, args.example, args.test)
 
-def generate_vts_test(example, test_fd):
-    # Do not generate DynamicOutputShapeTest for pre-1.2 VTS.
-    if example.model.hasDynamicOutputShape and target_hal_version < "V1_2":
-        return
 
-    generated_vts_namespace = "android::hardware::neuralnetworks::{hal_version}::generated_tests::{spec_name}".format(
-        spec_name=tg.FileNames.specName, hal_version=target_hal_version)
-    generated_cts_namespace = "generated_tests::{spec_name}".format(spec_name=tg.FileNames.specName)
-    testTemplate = """\
+VTS_TEST_TEMPLATE_HEAD = """
 namespace {generated_cts_namespace} {{
 
 const ::test_helper::TestModel& get_{examples_name}();
@@ -62,30 +55,48 @@ const ::test_helper::TestModel& get_{examples_name}();
 }} // namespace {generated_cts_namespace}
 
 namespace {generated_vts_namespace} {{
-
 """
 
-    if not example.expectFailure:
-        testTemplate += """
-TEST_F({test_case_name}, {test_name}) {{
-  Execute(device,
-          ::{generated_cts_namespace}::get_{examples_name}(){test_dynamic_output_shape});
+GENERATED_TEST_DEF = """
+TEST_F(GeneratedTest, {test_name}) {{
+    Execute(device, ::{generated_cts_namespace}::get_{examples_name}());
 }}
 """
 
-    testTemplate += """
+DYNAMIC_OUTPUT_SHAPE_TEST_DEF = """
+TEST_F(DynamicOutputShapeTest, {test_name}) {{
+    Execute(device, ::{generated_cts_namespace}::get_{examples_name}(), true);
+}}
+"""
+
+VALIDATION_TEST_DEF = """
 TEST_F(ValidationTest, {test_name}) {{
-  const Model model = createModel(::{generated_cts_namespace}::get_{examples_name}(){test_dynamic_output_shape});
-  const Request request = createRequest(::{generated_cts_namespace}::get_{examples_name}());
-  {validation_method}(model, request);
+    const Model model = createModel(::{generated_cts_namespace}::get_{examples_name}());
+    const Request request = createRequest(::{generated_cts_namespace}::get_{examples_name}());
+    {validation_method}(model, request);
 }}
+"""
 
+VTS_TEST_TEMPLATE_TAIL = """
 }} // namespace {generated_vts_namespace}
 """
 
-    print(testTemplate.format(
-            test_case_name="DynamicOutputShapeTest" if example.model.hasDynamicOutputShape \
-                           else "GeneratedTest",
+def GeneratedVtsTest(example, test_fd):
+    generated_vts_namespace = "android::hardware::neuralnetworks::{hal_version}::generated_tests::{spec_name}".format(
+        spec_name=tg.FileNames.specName, hal_version=target_hal_version)
+    generated_cts_namespace = "generated_tests::{spec_name}".format(spec_name=tg.FileNames.specName)
+
+    test_template = VTS_TEST_TEMPLATE_HEAD
+
+    if not example.expectFailure:
+        test_template += GENERATED_TEST_DEF
+        if example.testDynamicOutputShape and target_hal_version >= "V1_2":
+            test_template += DYNAMIC_OUTPUT_SHAPE_TEST_DEF
+    test_template += VALIDATION_TEST_DEF
+
+    test_template += VTS_TEST_TEMPLATE_TAIL
+
+    print(test_template.format(
             test_name=str(example.testName),
             generated_vts_namespace=generated_vts_namespace,
             generated_cts_namespace=generated_cts_namespace,
@@ -93,7 +104,6 @@ TEST_F(ValidationTest, {test_name}) {{
             create_model_name=str(example.model.createTestFunctionName),
             is_ignored_name=str(example.model.isIgnoredFunctionName),
             examples_name=str(example.examplesName),
-            test_dynamic_output_shape=", true" if example.model.hasDynamicOutputShape else "",
             validation_method="validateFailure" if example.expectFailure else "validateEverything",
         ), file=test_fd)
 
@@ -112,4 +122,4 @@ def InitializeFiles(test_fd, example_fd=None):
 if __name__ == "__main__":
     ParseCmdLine()
     tg.Run(InitializeFiles=InitializeFiles,
-           DumpTest=generate_vts_test)
+           DumpTest=GeneratedVtsTest)

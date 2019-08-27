@@ -284,7 +284,6 @@ class Operand(NamedVariable):
         else:
             self.type = Type.GetType(*opType, extraParams=extraParams)
         self.SetValue(value)
-        self.dimensions = self.type.dimensions
         self.lifetime = "TEMPORARY_VARIABLE"
         self.model_index = None
         self.ins = []
@@ -356,7 +355,7 @@ class IgnoredOutput(Output):
         Output.__init__(self, name, opType, backward, skipRenaming=skipRenaming)
         self.lifetime = "MODEL_OUTPUT"
     def Feed(self, value):
-        numElements = reduce(lambda x,y: x*y, self.dimensions, 1)
+        numElements = reduce(lambda x,y: x*y, self.type.dimensions, 1)
         self.value = [0 for x in range(numElements)]
         return self
 
@@ -461,7 +460,6 @@ class Model:
         self.isRelaxed = False
         self.compiled = False
         self.dumped = False
-        self.hasDynamicOutputShape = False
         self.version = FileNames.version
         Model.models.append(self)
 
@@ -498,10 +496,6 @@ class Model:
 
     def RelaxedExecution(self, isRelaxed):
         self.isRelaxed = isRelaxed
-        return self
-
-    def TestDynamicOutputShape(self, hasDynamicOutputShape):
-        self.hasDynamicOutputShape = hasDynamicOutputShape
         return self
 
     # Sets the version of the model in compliance tests. Set to None to disable the test.
@@ -583,23 +577,14 @@ class Model:
         for op in operations:
             self.TopologicalSortHelper(op, deps, visited)
 
-    def SetOutputUnspecified(self):
-        for op in self.operands:
-            op.dimensions = op.type.dimensions
-        if self.hasDynamicOutputShape:
-            for op in self.GetOutputs():
-                op.ToUnspecifiedDim()
-        return self
-
     def Compile(self):
         if self.compiled:
             return self
         self.SetOperandIndex()
         self.SetOperandInsAndOuts()
         self.TopologicalSort()
-        self.SetOutputUnspecified()
-        # Do not check compliance for relaxed mode and dynamic output shape tests.
-        if self.isRelaxed or self.hasDynamicOutputShape:
+        # Do not check compliance for relaxed mode tests.
+        if self.isRelaxed:
             self.IntroducedIn(None)
         self.compiled = True
         return self
@@ -896,18 +881,6 @@ class ActivationConverter(ModelVariation, ImplicitVariation):
                 v = np.minimum(v, high)
             return op.SetValueFromNumpy(v)
 
-class DynamicOutputShapeConverter(ModelVariation):
-    def __init__(self, name=None):
-        ModelVariation.__init__(self, name=name)
-
-    def SetToDefaultName(self):
-        self.name = "dynamic_output_shape"
-        return self
-
-    def TransformModel(self, model):
-        model.TestDynamicOutputShape(True)
-        return model
-
 # Convert all constant tensors as model inputs.
 class AllTensorsAsInputsConverter(ModelVariation):
 
@@ -963,7 +936,6 @@ class AllInputsAsInternalCoverter(ModelVariation):
         # Convert to internal operands.
         model.UpdateEquivalentOperands([op.ConvertTo(Internal) for op in modelInputs])
         return model
-
 
 # An example is always attached to a model, and could have multiple variations
 class Example:
@@ -1124,8 +1096,6 @@ class Example:
                 self.expectedMultinomialDistributionTolerance == 0:
             self.AddVariations(AllTensorsAsInputsConverter())
             self.AddVariations(AllInputsAsInternalCoverter())
-        if self.testDynamicOutputShape:
-            self.AddVariations(DynamicOutputShapeConverter())
         [v.SetToDefaultName() for vs in self.variations for v in vs if v.name is None]
 
         for feedDict in self.feedDicts:
