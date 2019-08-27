@@ -3,2498 +3,1202 @@
 // clang-format off
 #include "GeneratedTests.h"
 
+
 namespace generated_tests::depth_to_space_v1_2 {
 
-std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc();
+const ::test_helper::TestModel& get_test_model_nhwc();
 
 } // namespace generated_tests::depth_to_space_v1_2
 
 namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2 {
 
-Model createTestModel_nhwc();
-bool is_ignored_nhwc(int);
+TEST_F(GeneratedTest, depth_to_space_v1_2_nhwc) {
+    Execute(device, ::generated_tests::depth_to_space_v1_2::get_test_model_nhwc());
+}
 
-TEST_F(NeuralnetworksHidlTest, depth_to_space_v1_2_nhwc) {
-  Execute(device,
-          createTestModel_nhwc,
-          is_ignored_nhwc,
-          ::generated_tests::depth_to_space_v1_2::get_examples_nhwc());
+TEST_F(DynamicOutputShapeTest, depth_to_space_v1_2_nhwc) {
+    Execute(device, ::generated_tests::depth_to_space_v1_2::get_test_model_nhwc(), true);
 }
 
 TEST_F(ValidationTest, depth_to_space_v1_2_nhwc) {
-  const Model model = createTestModel_nhwc();
-  const std::vector<Request> requests = createRequests(::generated_tests::depth_to_space_v1_2::get_examples_nhwc());
-  validateEverything(model, requests);
+    const Model model = createModel(::generated_tests::depth_to_space_v1_2::get_test_model_nhwc());
+    const Request request = createRequest(::generated_tests::depth_to_space_v1_2::get_test_model_nhwc());
+    validateEverything(model, request);
 }
 
 } // namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2
 
+
 namespace generated_tests::depth_to_space_v1_2 {
 
-std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_dynamic_output_shape();
+const ::test_helper::TestModel& get_test_model_nhwc_all_inputs_as_internal();
 
 } // namespace generated_tests::depth_to_space_v1_2
 
 namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2 {
 
-Model createTestModel_nhwc_dynamic_output_shape();
-bool is_ignored_nhwc_dynamic_output_shape(int);
-
-TEST_F(DynamicOutputShapeTest, depth_to_space_v1_2_nhwc_dynamic_output_shape) {
-  Execute(device,
-          createTestModel_nhwc_dynamic_output_shape,
-          is_ignored_nhwc_dynamic_output_shape,
-          ::generated_tests::depth_to_space_v1_2::get_examples_nhwc_dynamic_output_shape(), true);
+TEST_F(GeneratedTest, depth_to_space_v1_2_nhwc_all_inputs_as_internal) {
+    Execute(device, ::generated_tests::depth_to_space_v1_2::get_test_model_nhwc_all_inputs_as_internal());
 }
 
-TEST_F(ValidationTest, depth_to_space_v1_2_nhwc_dynamic_output_shape) {
-  const Model model = createTestModel_nhwc_dynamic_output_shape();
-  const std::vector<Request> requests = createRequests(::generated_tests::depth_to_space_v1_2::get_examples_nhwc_dynamic_output_shape());
-  validateEverything(model, requests);
-}
-
-} // namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2
-
-namespace generated_tests::depth_to_space_v1_2 {
-
-std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_all_inputs_as_internal();
-
-} // namespace generated_tests::depth_to_space_v1_2
-
-namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2 {
-
-Model createTestModel_nhwc_all_inputs_as_internal();
-bool is_ignored_nhwc_all_inputs_as_internal(int);
-
-TEST_F(NeuralnetworksHidlTest, depth_to_space_v1_2_nhwc_all_inputs_as_internal) {
-  Execute(device,
-          createTestModel_nhwc_all_inputs_as_internal,
-          is_ignored_nhwc_all_inputs_as_internal,
-          ::generated_tests::depth_to_space_v1_2::get_examples_nhwc_all_inputs_as_internal());
+TEST_F(DynamicOutputShapeTest, depth_to_space_v1_2_nhwc_all_inputs_as_internal) {
+    Execute(device, ::generated_tests::depth_to_space_v1_2::get_test_model_nhwc_all_inputs_as_internal(), true);
 }
 
 TEST_F(ValidationTest, depth_to_space_v1_2_nhwc_all_inputs_as_internal) {
-  const Model model = createTestModel_nhwc_all_inputs_as_internal();
-  const std::vector<Request> requests = createRequests(::generated_tests::depth_to_space_v1_2::get_examples_nhwc_all_inputs_as_internal());
-  validateEverything(model, requests);
+    const Model model = createModel(::generated_tests::depth_to_space_v1_2::get_test_model_nhwc_all_inputs_as_internal());
+    const Request request = createRequest(::generated_tests::depth_to_space_v1_2::get_test_model_nhwc_all_inputs_as_internal());
+    validateEverything(model, request);
 }
 
 } // namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2
 
+
 namespace generated_tests::depth_to_space_v1_2 {
 
-std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_all_inputs_as_internal_dynamic_output_shape();
+const ::test_helper::TestModel& get_test_model_nhwc_relaxed();
 
 } // namespace generated_tests::depth_to_space_v1_2
 
 namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2 {
 
-Model createTestModel_nhwc_all_inputs_as_internal_dynamic_output_shape();
-bool is_ignored_nhwc_all_inputs_as_internal_dynamic_output_shape(int);
-
-TEST_F(DynamicOutputShapeTest, depth_to_space_v1_2_nhwc_all_inputs_as_internal_dynamic_output_shape) {
-  Execute(device,
-          createTestModel_nhwc_all_inputs_as_internal_dynamic_output_shape,
-          is_ignored_nhwc_all_inputs_as_internal_dynamic_output_shape,
-          ::generated_tests::depth_to_space_v1_2::get_examples_nhwc_all_inputs_as_internal_dynamic_output_shape(), true);
+TEST_F(GeneratedTest, depth_to_space_v1_2_nhwc_relaxed) {
+    Execute(device, ::generated_tests::depth_to_space_v1_2::get_test_model_nhwc_relaxed());
 }
 
-TEST_F(ValidationTest, depth_to_space_v1_2_nhwc_all_inputs_as_internal_dynamic_output_shape) {
-  const Model model = createTestModel_nhwc_all_inputs_as_internal_dynamic_output_shape();
-  const std::vector<Request> requests = createRequests(::generated_tests::depth_to_space_v1_2::get_examples_nhwc_all_inputs_as_internal_dynamic_output_shape());
-  validateEverything(model, requests);
-}
-
-} // namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2
-
-namespace generated_tests::depth_to_space_v1_2 {
-
-std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_relaxed();
-
-} // namespace generated_tests::depth_to_space_v1_2
-
-namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2 {
-
-Model createTestModel_nhwc_relaxed();
-bool is_ignored_nhwc_relaxed(int);
-
-TEST_F(NeuralnetworksHidlTest, depth_to_space_v1_2_nhwc_relaxed) {
-  Execute(device,
-          createTestModel_nhwc_relaxed,
-          is_ignored_nhwc_relaxed,
-          ::generated_tests::depth_to_space_v1_2::get_examples_nhwc_relaxed());
+TEST_F(DynamicOutputShapeTest, depth_to_space_v1_2_nhwc_relaxed) {
+    Execute(device, ::generated_tests::depth_to_space_v1_2::get_test_model_nhwc_relaxed(), true);
 }
 
 TEST_F(ValidationTest, depth_to_space_v1_2_nhwc_relaxed) {
-  const Model model = createTestModel_nhwc_relaxed();
-  const std::vector<Request> requests = createRequests(::generated_tests::depth_to_space_v1_2::get_examples_nhwc_relaxed());
-  validateEverything(model, requests);
+    const Model model = createModel(::generated_tests::depth_to_space_v1_2::get_test_model_nhwc_relaxed());
+    const Request request = createRequest(::generated_tests::depth_to_space_v1_2::get_test_model_nhwc_relaxed());
+    validateEverything(model, request);
 }
 
 } // namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2
 
+
 namespace generated_tests::depth_to_space_v1_2 {
 
-std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_relaxed_dynamic_output_shape();
+const ::test_helper::TestModel& get_test_model_nhwc_relaxed_all_inputs_as_internal();
 
 } // namespace generated_tests::depth_to_space_v1_2
 
 namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2 {
 
-Model createTestModel_nhwc_relaxed_dynamic_output_shape();
-bool is_ignored_nhwc_relaxed_dynamic_output_shape(int);
-
-TEST_F(DynamicOutputShapeTest, depth_to_space_v1_2_nhwc_relaxed_dynamic_output_shape) {
-  Execute(device,
-          createTestModel_nhwc_relaxed_dynamic_output_shape,
-          is_ignored_nhwc_relaxed_dynamic_output_shape,
-          ::generated_tests::depth_to_space_v1_2::get_examples_nhwc_relaxed_dynamic_output_shape(), true);
+TEST_F(GeneratedTest, depth_to_space_v1_2_nhwc_relaxed_all_inputs_as_internal) {
+    Execute(device, ::generated_tests::depth_to_space_v1_2::get_test_model_nhwc_relaxed_all_inputs_as_internal());
 }
 
-TEST_F(ValidationTest, depth_to_space_v1_2_nhwc_relaxed_dynamic_output_shape) {
-  const Model model = createTestModel_nhwc_relaxed_dynamic_output_shape();
-  const std::vector<Request> requests = createRequests(::generated_tests::depth_to_space_v1_2::get_examples_nhwc_relaxed_dynamic_output_shape());
-  validateEverything(model, requests);
-}
-
-} // namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2
-
-namespace generated_tests::depth_to_space_v1_2 {
-
-std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_relaxed_all_inputs_as_internal();
-
-} // namespace generated_tests::depth_to_space_v1_2
-
-namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2 {
-
-Model createTestModel_nhwc_relaxed_all_inputs_as_internal();
-bool is_ignored_nhwc_relaxed_all_inputs_as_internal(int);
-
-TEST_F(NeuralnetworksHidlTest, depth_to_space_v1_2_nhwc_relaxed_all_inputs_as_internal) {
-  Execute(device,
-          createTestModel_nhwc_relaxed_all_inputs_as_internal,
-          is_ignored_nhwc_relaxed_all_inputs_as_internal,
-          ::generated_tests::depth_to_space_v1_2::get_examples_nhwc_relaxed_all_inputs_as_internal());
+TEST_F(DynamicOutputShapeTest, depth_to_space_v1_2_nhwc_relaxed_all_inputs_as_internal) {
+    Execute(device, ::generated_tests::depth_to_space_v1_2::get_test_model_nhwc_relaxed_all_inputs_as_internal(), true);
 }
 
 TEST_F(ValidationTest, depth_to_space_v1_2_nhwc_relaxed_all_inputs_as_internal) {
-  const Model model = createTestModel_nhwc_relaxed_all_inputs_as_internal();
-  const std::vector<Request> requests = createRequests(::generated_tests::depth_to_space_v1_2::get_examples_nhwc_relaxed_all_inputs_as_internal());
-  validateEverything(model, requests);
+    const Model model = createModel(::generated_tests::depth_to_space_v1_2::get_test_model_nhwc_relaxed_all_inputs_as_internal());
+    const Request request = createRequest(::generated_tests::depth_to_space_v1_2::get_test_model_nhwc_relaxed_all_inputs_as_internal());
+    validateEverything(model, request);
 }
 
 } // namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2
 
+
 namespace generated_tests::depth_to_space_v1_2 {
 
-std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape();
+const ::test_helper::TestModel& get_test_model_nhwc_float16();
 
 } // namespace generated_tests::depth_to_space_v1_2
 
 namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2 {
 
-Model createTestModel_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape();
-bool is_ignored_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape(int);
-
-TEST_F(DynamicOutputShapeTest, depth_to_space_v1_2_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape) {
-  Execute(device,
-          createTestModel_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape,
-          is_ignored_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape,
-          ::generated_tests::depth_to_space_v1_2::get_examples_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape(), true);
+TEST_F(GeneratedTest, depth_to_space_v1_2_nhwc_float16) {
+    Execute(device, ::generated_tests::depth_to_space_v1_2::get_test_model_nhwc_float16());
 }
 
-TEST_F(ValidationTest, depth_to_space_v1_2_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape) {
-  const Model model = createTestModel_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape();
-  const std::vector<Request> requests = createRequests(::generated_tests::depth_to_space_v1_2::get_examples_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape());
-  validateEverything(model, requests);
-}
-
-} // namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2
-
-namespace generated_tests::depth_to_space_v1_2 {
-
-std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_float16();
-
-} // namespace generated_tests::depth_to_space_v1_2
-
-namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2 {
-
-Model createTestModel_nhwc_float16();
-bool is_ignored_nhwc_float16(int);
-
-TEST_F(NeuralnetworksHidlTest, depth_to_space_v1_2_nhwc_float16) {
-  Execute(device,
-          createTestModel_nhwc_float16,
-          is_ignored_nhwc_float16,
-          ::generated_tests::depth_to_space_v1_2::get_examples_nhwc_float16());
+TEST_F(DynamicOutputShapeTest, depth_to_space_v1_2_nhwc_float16) {
+    Execute(device, ::generated_tests::depth_to_space_v1_2::get_test_model_nhwc_float16(), true);
 }
 
 TEST_F(ValidationTest, depth_to_space_v1_2_nhwc_float16) {
-  const Model model = createTestModel_nhwc_float16();
-  const std::vector<Request> requests = createRequests(::generated_tests::depth_to_space_v1_2::get_examples_nhwc_float16());
-  validateEverything(model, requests);
+    const Model model = createModel(::generated_tests::depth_to_space_v1_2::get_test_model_nhwc_float16());
+    const Request request = createRequest(::generated_tests::depth_to_space_v1_2::get_test_model_nhwc_float16());
+    validateEverything(model, request);
 }
 
 } // namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2
 
+
 namespace generated_tests::depth_to_space_v1_2 {
 
-std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_float16_dynamic_output_shape();
+const ::test_helper::TestModel& get_test_model_nhwc_float16_all_inputs_as_internal();
 
 } // namespace generated_tests::depth_to_space_v1_2
 
 namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2 {
 
-Model createTestModel_nhwc_float16_dynamic_output_shape();
-bool is_ignored_nhwc_float16_dynamic_output_shape(int);
-
-TEST_F(DynamicOutputShapeTest, depth_to_space_v1_2_nhwc_float16_dynamic_output_shape) {
-  Execute(device,
-          createTestModel_nhwc_float16_dynamic_output_shape,
-          is_ignored_nhwc_float16_dynamic_output_shape,
-          ::generated_tests::depth_to_space_v1_2::get_examples_nhwc_float16_dynamic_output_shape(), true);
+TEST_F(GeneratedTest, depth_to_space_v1_2_nhwc_float16_all_inputs_as_internal) {
+    Execute(device, ::generated_tests::depth_to_space_v1_2::get_test_model_nhwc_float16_all_inputs_as_internal());
 }
 
-TEST_F(ValidationTest, depth_to_space_v1_2_nhwc_float16_dynamic_output_shape) {
-  const Model model = createTestModel_nhwc_float16_dynamic_output_shape();
-  const std::vector<Request> requests = createRequests(::generated_tests::depth_to_space_v1_2::get_examples_nhwc_float16_dynamic_output_shape());
-  validateEverything(model, requests);
-}
-
-} // namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2
-
-namespace generated_tests::depth_to_space_v1_2 {
-
-std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_float16_all_inputs_as_internal();
-
-} // namespace generated_tests::depth_to_space_v1_2
-
-namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2 {
-
-Model createTestModel_nhwc_float16_all_inputs_as_internal();
-bool is_ignored_nhwc_float16_all_inputs_as_internal(int);
-
-TEST_F(NeuralnetworksHidlTest, depth_to_space_v1_2_nhwc_float16_all_inputs_as_internal) {
-  Execute(device,
-          createTestModel_nhwc_float16_all_inputs_as_internal,
-          is_ignored_nhwc_float16_all_inputs_as_internal,
-          ::generated_tests::depth_to_space_v1_2::get_examples_nhwc_float16_all_inputs_as_internal());
+TEST_F(DynamicOutputShapeTest, depth_to_space_v1_2_nhwc_float16_all_inputs_as_internal) {
+    Execute(device, ::generated_tests::depth_to_space_v1_2::get_test_model_nhwc_float16_all_inputs_as_internal(), true);
 }
 
 TEST_F(ValidationTest, depth_to_space_v1_2_nhwc_float16_all_inputs_as_internal) {
-  const Model model = createTestModel_nhwc_float16_all_inputs_as_internal();
-  const std::vector<Request> requests = createRequests(::generated_tests::depth_to_space_v1_2::get_examples_nhwc_float16_all_inputs_as_internal());
-  validateEverything(model, requests);
+    const Model model = createModel(::generated_tests::depth_to_space_v1_2::get_test_model_nhwc_float16_all_inputs_as_internal());
+    const Request request = createRequest(::generated_tests::depth_to_space_v1_2::get_test_model_nhwc_float16_all_inputs_as_internal());
+    validateEverything(model, request);
 }
 
 } // namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2
 
+
 namespace generated_tests::depth_to_space_v1_2 {
 
-std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_float16_all_inputs_as_internal_dynamic_output_shape();
+const ::test_helper::TestModel& get_test_model_nhwc_quant8();
 
 } // namespace generated_tests::depth_to_space_v1_2
 
 namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2 {
 
-Model createTestModel_nhwc_float16_all_inputs_as_internal_dynamic_output_shape();
-bool is_ignored_nhwc_float16_all_inputs_as_internal_dynamic_output_shape(int);
-
-TEST_F(DynamicOutputShapeTest, depth_to_space_v1_2_nhwc_float16_all_inputs_as_internal_dynamic_output_shape) {
-  Execute(device,
-          createTestModel_nhwc_float16_all_inputs_as_internal_dynamic_output_shape,
-          is_ignored_nhwc_float16_all_inputs_as_internal_dynamic_output_shape,
-          ::generated_tests::depth_to_space_v1_2::get_examples_nhwc_float16_all_inputs_as_internal_dynamic_output_shape(), true);
+TEST_F(GeneratedTest, depth_to_space_v1_2_nhwc_quant8) {
+    Execute(device, ::generated_tests::depth_to_space_v1_2::get_test_model_nhwc_quant8());
 }
 
-TEST_F(ValidationTest, depth_to_space_v1_2_nhwc_float16_all_inputs_as_internal_dynamic_output_shape) {
-  const Model model = createTestModel_nhwc_float16_all_inputs_as_internal_dynamic_output_shape();
-  const std::vector<Request> requests = createRequests(::generated_tests::depth_to_space_v1_2::get_examples_nhwc_float16_all_inputs_as_internal_dynamic_output_shape());
-  validateEverything(model, requests);
-}
-
-} // namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2
-
-namespace generated_tests::depth_to_space_v1_2 {
-
-std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_quant8();
-
-} // namespace generated_tests::depth_to_space_v1_2
-
-namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2 {
-
-Model createTestModel_nhwc_quant8();
-bool is_ignored_nhwc_quant8(int);
-
-TEST_F(NeuralnetworksHidlTest, depth_to_space_v1_2_nhwc_quant8) {
-  Execute(device,
-          createTestModel_nhwc_quant8,
-          is_ignored_nhwc_quant8,
-          ::generated_tests::depth_to_space_v1_2::get_examples_nhwc_quant8());
+TEST_F(DynamicOutputShapeTest, depth_to_space_v1_2_nhwc_quant8) {
+    Execute(device, ::generated_tests::depth_to_space_v1_2::get_test_model_nhwc_quant8(), true);
 }
 
 TEST_F(ValidationTest, depth_to_space_v1_2_nhwc_quant8) {
-  const Model model = createTestModel_nhwc_quant8();
-  const std::vector<Request> requests = createRequests(::generated_tests::depth_to_space_v1_2::get_examples_nhwc_quant8());
-  validateEverything(model, requests);
+    const Model model = createModel(::generated_tests::depth_to_space_v1_2::get_test_model_nhwc_quant8());
+    const Request request = createRequest(::generated_tests::depth_to_space_v1_2::get_test_model_nhwc_quant8());
+    validateEverything(model, request);
 }
 
 } // namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2
 
+
 namespace generated_tests::depth_to_space_v1_2 {
 
-std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_quant8_dynamic_output_shape();
+const ::test_helper::TestModel& get_test_model_nhwc_quant8_all_inputs_as_internal();
 
 } // namespace generated_tests::depth_to_space_v1_2
 
 namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2 {
 
-Model createTestModel_nhwc_quant8_dynamic_output_shape();
-bool is_ignored_nhwc_quant8_dynamic_output_shape(int);
-
-TEST_F(DynamicOutputShapeTest, depth_to_space_v1_2_nhwc_quant8_dynamic_output_shape) {
-  Execute(device,
-          createTestModel_nhwc_quant8_dynamic_output_shape,
-          is_ignored_nhwc_quant8_dynamic_output_shape,
-          ::generated_tests::depth_to_space_v1_2::get_examples_nhwc_quant8_dynamic_output_shape(), true);
+TEST_F(GeneratedTest, depth_to_space_v1_2_nhwc_quant8_all_inputs_as_internal) {
+    Execute(device, ::generated_tests::depth_to_space_v1_2::get_test_model_nhwc_quant8_all_inputs_as_internal());
 }
 
-TEST_F(ValidationTest, depth_to_space_v1_2_nhwc_quant8_dynamic_output_shape) {
-  const Model model = createTestModel_nhwc_quant8_dynamic_output_shape();
-  const std::vector<Request> requests = createRequests(::generated_tests::depth_to_space_v1_2::get_examples_nhwc_quant8_dynamic_output_shape());
-  validateEverything(model, requests);
-}
-
-} // namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2
-
-namespace generated_tests::depth_to_space_v1_2 {
-
-std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_quant8_all_inputs_as_internal();
-
-} // namespace generated_tests::depth_to_space_v1_2
-
-namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2 {
-
-Model createTestModel_nhwc_quant8_all_inputs_as_internal();
-bool is_ignored_nhwc_quant8_all_inputs_as_internal(int);
-
-TEST_F(NeuralnetworksHidlTest, depth_to_space_v1_2_nhwc_quant8_all_inputs_as_internal) {
-  Execute(device,
-          createTestModel_nhwc_quant8_all_inputs_as_internal,
-          is_ignored_nhwc_quant8_all_inputs_as_internal,
-          ::generated_tests::depth_to_space_v1_2::get_examples_nhwc_quant8_all_inputs_as_internal());
+TEST_F(DynamicOutputShapeTest, depth_to_space_v1_2_nhwc_quant8_all_inputs_as_internal) {
+    Execute(device, ::generated_tests::depth_to_space_v1_2::get_test_model_nhwc_quant8_all_inputs_as_internal(), true);
 }
 
 TEST_F(ValidationTest, depth_to_space_v1_2_nhwc_quant8_all_inputs_as_internal) {
-  const Model model = createTestModel_nhwc_quant8_all_inputs_as_internal();
-  const std::vector<Request> requests = createRequests(::generated_tests::depth_to_space_v1_2::get_examples_nhwc_quant8_all_inputs_as_internal());
-  validateEverything(model, requests);
+    const Model model = createModel(::generated_tests::depth_to_space_v1_2::get_test_model_nhwc_quant8_all_inputs_as_internal());
+    const Request request = createRequest(::generated_tests::depth_to_space_v1_2::get_test_model_nhwc_quant8_all_inputs_as_internal());
+    validateEverything(model, request);
 }
 
 } // namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2
 
+
 namespace generated_tests::depth_to_space_v1_2 {
 
-std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape();
+const ::test_helper::TestModel& get_test_model_nchw();
 
 } // namespace generated_tests::depth_to_space_v1_2
 
 namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2 {
 
-Model createTestModel_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape();
-bool is_ignored_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape(int);
-
-TEST_F(DynamicOutputShapeTest, depth_to_space_v1_2_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape) {
-  Execute(device,
-          createTestModel_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape,
-          is_ignored_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape,
-          ::generated_tests::depth_to_space_v1_2::get_examples_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape(), true);
+TEST_F(GeneratedTest, depth_to_space_v1_2_nchw) {
+    Execute(device, ::generated_tests::depth_to_space_v1_2::get_test_model_nchw());
 }
 
-TEST_F(ValidationTest, depth_to_space_v1_2_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape) {
-  const Model model = createTestModel_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape();
-  const std::vector<Request> requests = createRequests(::generated_tests::depth_to_space_v1_2::get_examples_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape());
-  validateEverything(model, requests);
-}
-
-} // namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2
-
-namespace generated_tests::depth_to_space_v1_2 {
-
-std::vector<::test_helper::MixedTypedExample>& get_examples_nchw();
-
-} // namespace generated_tests::depth_to_space_v1_2
-
-namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2 {
-
-Model createTestModel_nchw();
-bool is_ignored_nchw(int);
-
-TEST_F(NeuralnetworksHidlTest, depth_to_space_v1_2_nchw) {
-  Execute(device,
-          createTestModel_nchw,
-          is_ignored_nchw,
-          ::generated_tests::depth_to_space_v1_2::get_examples_nchw());
+TEST_F(DynamicOutputShapeTest, depth_to_space_v1_2_nchw) {
+    Execute(device, ::generated_tests::depth_to_space_v1_2::get_test_model_nchw(), true);
 }
 
 TEST_F(ValidationTest, depth_to_space_v1_2_nchw) {
-  const Model model = createTestModel_nchw();
-  const std::vector<Request> requests = createRequests(::generated_tests::depth_to_space_v1_2::get_examples_nchw());
-  validateEverything(model, requests);
+    const Model model = createModel(::generated_tests::depth_to_space_v1_2::get_test_model_nchw());
+    const Request request = createRequest(::generated_tests::depth_to_space_v1_2::get_test_model_nchw());
+    validateEverything(model, request);
 }
 
 } // namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2
 
+
 namespace generated_tests::depth_to_space_v1_2 {
 
-std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_dynamic_output_shape();
+const ::test_helper::TestModel& get_test_model_nchw_all_inputs_as_internal();
 
 } // namespace generated_tests::depth_to_space_v1_2
 
 namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2 {
 
-Model createTestModel_nchw_dynamic_output_shape();
-bool is_ignored_nchw_dynamic_output_shape(int);
-
-TEST_F(DynamicOutputShapeTest, depth_to_space_v1_2_nchw_dynamic_output_shape) {
-  Execute(device,
-          createTestModel_nchw_dynamic_output_shape,
-          is_ignored_nchw_dynamic_output_shape,
-          ::generated_tests::depth_to_space_v1_2::get_examples_nchw_dynamic_output_shape(), true);
+TEST_F(GeneratedTest, depth_to_space_v1_2_nchw_all_inputs_as_internal) {
+    Execute(device, ::generated_tests::depth_to_space_v1_2::get_test_model_nchw_all_inputs_as_internal());
 }
 
-TEST_F(ValidationTest, depth_to_space_v1_2_nchw_dynamic_output_shape) {
-  const Model model = createTestModel_nchw_dynamic_output_shape();
-  const std::vector<Request> requests = createRequests(::generated_tests::depth_to_space_v1_2::get_examples_nchw_dynamic_output_shape());
-  validateEverything(model, requests);
-}
-
-} // namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2
-
-namespace generated_tests::depth_to_space_v1_2 {
-
-std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_all_inputs_as_internal();
-
-} // namespace generated_tests::depth_to_space_v1_2
-
-namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2 {
-
-Model createTestModel_nchw_all_inputs_as_internal();
-bool is_ignored_nchw_all_inputs_as_internal(int);
-
-TEST_F(NeuralnetworksHidlTest, depth_to_space_v1_2_nchw_all_inputs_as_internal) {
-  Execute(device,
-          createTestModel_nchw_all_inputs_as_internal,
-          is_ignored_nchw_all_inputs_as_internal,
-          ::generated_tests::depth_to_space_v1_2::get_examples_nchw_all_inputs_as_internal());
+TEST_F(DynamicOutputShapeTest, depth_to_space_v1_2_nchw_all_inputs_as_internal) {
+    Execute(device, ::generated_tests::depth_to_space_v1_2::get_test_model_nchw_all_inputs_as_internal(), true);
 }
 
 TEST_F(ValidationTest, depth_to_space_v1_2_nchw_all_inputs_as_internal) {
-  const Model model = createTestModel_nchw_all_inputs_as_internal();
-  const std::vector<Request> requests = createRequests(::generated_tests::depth_to_space_v1_2::get_examples_nchw_all_inputs_as_internal());
-  validateEverything(model, requests);
+    const Model model = createModel(::generated_tests::depth_to_space_v1_2::get_test_model_nchw_all_inputs_as_internal());
+    const Request request = createRequest(::generated_tests::depth_to_space_v1_2::get_test_model_nchw_all_inputs_as_internal());
+    validateEverything(model, request);
 }
 
 } // namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2
 
+
 namespace generated_tests::depth_to_space_v1_2 {
 
-std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_all_inputs_as_internal_dynamic_output_shape();
+const ::test_helper::TestModel& get_test_model_nchw_relaxed();
 
 } // namespace generated_tests::depth_to_space_v1_2
 
 namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2 {
 
-Model createTestModel_nchw_all_inputs_as_internal_dynamic_output_shape();
-bool is_ignored_nchw_all_inputs_as_internal_dynamic_output_shape(int);
-
-TEST_F(DynamicOutputShapeTest, depth_to_space_v1_2_nchw_all_inputs_as_internal_dynamic_output_shape) {
-  Execute(device,
-          createTestModel_nchw_all_inputs_as_internal_dynamic_output_shape,
-          is_ignored_nchw_all_inputs_as_internal_dynamic_output_shape,
-          ::generated_tests::depth_to_space_v1_2::get_examples_nchw_all_inputs_as_internal_dynamic_output_shape(), true);
+TEST_F(GeneratedTest, depth_to_space_v1_2_nchw_relaxed) {
+    Execute(device, ::generated_tests::depth_to_space_v1_2::get_test_model_nchw_relaxed());
 }
 
-TEST_F(ValidationTest, depth_to_space_v1_2_nchw_all_inputs_as_internal_dynamic_output_shape) {
-  const Model model = createTestModel_nchw_all_inputs_as_internal_dynamic_output_shape();
-  const std::vector<Request> requests = createRequests(::generated_tests::depth_to_space_v1_2::get_examples_nchw_all_inputs_as_internal_dynamic_output_shape());
-  validateEverything(model, requests);
-}
-
-} // namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2
-
-namespace generated_tests::depth_to_space_v1_2 {
-
-std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_relaxed();
-
-} // namespace generated_tests::depth_to_space_v1_2
-
-namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2 {
-
-Model createTestModel_nchw_relaxed();
-bool is_ignored_nchw_relaxed(int);
-
-TEST_F(NeuralnetworksHidlTest, depth_to_space_v1_2_nchw_relaxed) {
-  Execute(device,
-          createTestModel_nchw_relaxed,
-          is_ignored_nchw_relaxed,
-          ::generated_tests::depth_to_space_v1_2::get_examples_nchw_relaxed());
+TEST_F(DynamicOutputShapeTest, depth_to_space_v1_2_nchw_relaxed) {
+    Execute(device, ::generated_tests::depth_to_space_v1_2::get_test_model_nchw_relaxed(), true);
 }
 
 TEST_F(ValidationTest, depth_to_space_v1_2_nchw_relaxed) {
-  const Model model = createTestModel_nchw_relaxed();
-  const std::vector<Request> requests = createRequests(::generated_tests::depth_to_space_v1_2::get_examples_nchw_relaxed());
-  validateEverything(model, requests);
+    const Model model = createModel(::generated_tests::depth_to_space_v1_2::get_test_model_nchw_relaxed());
+    const Request request = createRequest(::generated_tests::depth_to_space_v1_2::get_test_model_nchw_relaxed());
+    validateEverything(model, request);
 }
 
 } // namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2
 
+
 namespace generated_tests::depth_to_space_v1_2 {
 
-std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_relaxed_dynamic_output_shape();
+const ::test_helper::TestModel& get_test_model_nchw_relaxed_all_inputs_as_internal();
 
 } // namespace generated_tests::depth_to_space_v1_2
 
 namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2 {
 
-Model createTestModel_nchw_relaxed_dynamic_output_shape();
-bool is_ignored_nchw_relaxed_dynamic_output_shape(int);
-
-TEST_F(DynamicOutputShapeTest, depth_to_space_v1_2_nchw_relaxed_dynamic_output_shape) {
-  Execute(device,
-          createTestModel_nchw_relaxed_dynamic_output_shape,
-          is_ignored_nchw_relaxed_dynamic_output_shape,
-          ::generated_tests::depth_to_space_v1_2::get_examples_nchw_relaxed_dynamic_output_shape(), true);
+TEST_F(GeneratedTest, depth_to_space_v1_2_nchw_relaxed_all_inputs_as_internal) {
+    Execute(device, ::generated_tests::depth_to_space_v1_2::get_test_model_nchw_relaxed_all_inputs_as_internal());
 }
 
-TEST_F(ValidationTest, depth_to_space_v1_2_nchw_relaxed_dynamic_output_shape) {
-  const Model model = createTestModel_nchw_relaxed_dynamic_output_shape();
-  const std::vector<Request> requests = createRequests(::generated_tests::depth_to_space_v1_2::get_examples_nchw_relaxed_dynamic_output_shape());
-  validateEverything(model, requests);
-}
-
-} // namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2
-
-namespace generated_tests::depth_to_space_v1_2 {
-
-std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_relaxed_all_inputs_as_internal();
-
-} // namespace generated_tests::depth_to_space_v1_2
-
-namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2 {
-
-Model createTestModel_nchw_relaxed_all_inputs_as_internal();
-bool is_ignored_nchw_relaxed_all_inputs_as_internal(int);
-
-TEST_F(NeuralnetworksHidlTest, depth_to_space_v1_2_nchw_relaxed_all_inputs_as_internal) {
-  Execute(device,
-          createTestModel_nchw_relaxed_all_inputs_as_internal,
-          is_ignored_nchw_relaxed_all_inputs_as_internal,
-          ::generated_tests::depth_to_space_v1_2::get_examples_nchw_relaxed_all_inputs_as_internal());
+TEST_F(DynamicOutputShapeTest, depth_to_space_v1_2_nchw_relaxed_all_inputs_as_internal) {
+    Execute(device, ::generated_tests::depth_to_space_v1_2::get_test_model_nchw_relaxed_all_inputs_as_internal(), true);
 }
 
 TEST_F(ValidationTest, depth_to_space_v1_2_nchw_relaxed_all_inputs_as_internal) {
-  const Model model = createTestModel_nchw_relaxed_all_inputs_as_internal();
-  const std::vector<Request> requests = createRequests(::generated_tests::depth_to_space_v1_2::get_examples_nchw_relaxed_all_inputs_as_internal());
-  validateEverything(model, requests);
+    const Model model = createModel(::generated_tests::depth_to_space_v1_2::get_test_model_nchw_relaxed_all_inputs_as_internal());
+    const Request request = createRequest(::generated_tests::depth_to_space_v1_2::get_test_model_nchw_relaxed_all_inputs_as_internal());
+    validateEverything(model, request);
 }
 
 } // namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2
 
+
 namespace generated_tests::depth_to_space_v1_2 {
 
-std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape();
+const ::test_helper::TestModel& get_test_model_nchw_float16();
 
 } // namespace generated_tests::depth_to_space_v1_2
 
 namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2 {
 
-Model createTestModel_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape();
-bool is_ignored_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape(int);
-
-TEST_F(DynamicOutputShapeTest, depth_to_space_v1_2_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape) {
-  Execute(device,
-          createTestModel_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape,
-          is_ignored_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape,
-          ::generated_tests::depth_to_space_v1_2::get_examples_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape(), true);
+TEST_F(GeneratedTest, depth_to_space_v1_2_nchw_float16) {
+    Execute(device, ::generated_tests::depth_to_space_v1_2::get_test_model_nchw_float16());
 }
 
-TEST_F(ValidationTest, depth_to_space_v1_2_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape) {
-  const Model model = createTestModel_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape();
-  const std::vector<Request> requests = createRequests(::generated_tests::depth_to_space_v1_2::get_examples_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape());
-  validateEverything(model, requests);
-}
-
-} // namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2
-
-namespace generated_tests::depth_to_space_v1_2 {
-
-std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_float16();
-
-} // namespace generated_tests::depth_to_space_v1_2
-
-namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2 {
-
-Model createTestModel_nchw_float16();
-bool is_ignored_nchw_float16(int);
-
-TEST_F(NeuralnetworksHidlTest, depth_to_space_v1_2_nchw_float16) {
-  Execute(device,
-          createTestModel_nchw_float16,
-          is_ignored_nchw_float16,
-          ::generated_tests::depth_to_space_v1_2::get_examples_nchw_float16());
+TEST_F(DynamicOutputShapeTest, depth_to_space_v1_2_nchw_float16) {
+    Execute(device, ::generated_tests::depth_to_space_v1_2::get_test_model_nchw_float16(), true);
 }
 
 TEST_F(ValidationTest, depth_to_space_v1_2_nchw_float16) {
-  const Model model = createTestModel_nchw_float16();
-  const std::vector<Request> requests = createRequests(::generated_tests::depth_to_space_v1_2::get_examples_nchw_float16());
-  validateEverything(model, requests);
+    const Model model = createModel(::generated_tests::depth_to_space_v1_2::get_test_model_nchw_float16());
+    const Request request = createRequest(::generated_tests::depth_to_space_v1_2::get_test_model_nchw_float16());
+    validateEverything(model, request);
 }
 
 } // namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2
 
+
 namespace generated_tests::depth_to_space_v1_2 {
 
-std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_float16_dynamic_output_shape();
+const ::test_helper::TestModel& get_test_model_nchw_float16_all_inputs_as_internal();
 
 } // namespace generated_tests::depth_to_space_v1_2
 
 namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2 {
 
-Model createTestModel_nchw_float16_dynamic_output_shape();
-bool is_ignored_nchw_float16_dynamic_output_shape(int);
-
-TEST_F(DynamicOutputShapeTest, depth_to_space_v1_2_nchw_float16_dynamic_output_shape) {
-  Execute(device,
-          createTestModel_nchw_float16_dynamic_output_shape,
-          is_ignored_nchw_float16_dynamic_output_shape,
-          ::generated_tests::depth_to_space_v1_2::get_examples_nchw_float16_dynamic_output_shape(), true);
+TEST_F(GeneratedTest, depth_to_space_v1_2_nchw_float16_all_inputs_as_internal) {
+    Execute(device, ::generated_tests::depth_to_space_v1_2::get_test_model_nchw_float16_all_inputs_as_internal());
 }
 
-TEST_F(ValidationTest, depth_to_space_v1_2_nchw_float16_dynamic_output_shape) {
-  const Model model = createTestModel_nchw_float16_dynamic_output_shape();
-  const std::vector<Request> requests = createRequests(::generated_tests::depth_to_space_v1_2::get_examples_nchw_float16_dynamic_output_shape());
-  validateEverything(model, requests);
-}
-
-} // namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2
-
-namespace generated_tests::depth_to_space_v1_2 {
-
-std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_float16_all_inputs_as_internal();
-
-} // namespace generated_tests::depth_to_space_v1_2
-
-namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2 {
-
-Model createTestModel_nchw_float16_all_inputs_as_internal();
-bool is_ignored_nchw_float16_all_inputs_as_internal(int);
-
-TEST_F(NeuralnetworksHidlTest, depth_to_space_v1_2_nchw_float16_all_inputs_as_internal) {
-  Execute(device,
-          createTestModel_nchw_float16_all_inputs_as_internal,
-          is_ignored_nchw_float16_all_inputs_as_internal,
-          ::generated_tests::depth_to_space_v1_2::get_examples_nchw_float16_all_inputs_as_internal());
+TEST_F(DynamicOutputShapeTest, depth_to_space_v1_2_nchw_float16_all_inputs_as_internal) {
+    Execute(device, ::generated_tests::depth_to_space_v1_2::get_test_model_nchw_float16_all_inputs_as_internal(), true);
 }
 
 TEST_F(ValidationTest, depth_to_space_v1_2_nchw_float16_all_inputs_as_internal) {
-  const Model model = createTestModel_nchw_float16_all_inputs_as_internal();
-  const std::vector<Request> requests = createRequests(::generated_tests::depth_to_space_v1_2::get_examples_nchw_float16_all_inputs_as_internal());
-  validateEverything(model, requests);
+    const Model model = createModel(::generated_tests::depth_to_space_v1_2::get_test_model_nchw_float16_all_inputs_as_internal());
+    const Request request = createRequest(::generated_tests::depth_to_space_v1_2::get_test_model_nchw_float16_all_inputs_as_internal());
+    validateEverything(model, request);
 }
 
 } // namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2
 
+
 namespace generated_tests::depth_to_space_v1_2 {
 
-std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_float16_all_inputs_as_internal_dynamic_output_shape();
+const ::test_helper::TestModel& get_test_model_nchw_quant8();
 
 } // namespace generated_tests::depth_to_space_v1_2
 
 namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2 {
 
-Model createTestModel_nchw_float16_all_inputs_as_internal_dynamic_output_shape();
-bool is_ignored_nchw_float16_all_inputs_as_internal_dynamic_output_shape(int);
-
-TEST_F(DynamicOutputShapeTest, depth_to_space_v1_2_nchw_float16_all_inputs_as_internal_dynamic_output_shape) {
-  Execute(device,
-          createTestModel_nchw_float16_all_inputs_as_internal_dynamic_output_shape,
-          is_ignored_nchw_float16_all_inputs_as_internal_dynamic_output_shape,
-          ::generated_tests::depth_to_space_v1_2::get_examples_nchw_float16_all_inputs_as_internal_dynamic_output_shape(), true);
+TEST_F(GeneratedTest, depth_to_space_v1_2_nchw_quant8) {
+    Execute(device, ::generated_tests::depth_to_space_v1_2::get_test_model_nchw_quant8());
 }
 
-TEST_F(ValidationTest, depth_to_space_v1_2_nchw_float16_all_inputs_as_internal_dynamic_output_shape) {
-  const Model model = createTestModel_nchw_float16_all_inputs_as_internal_dynamic_output_shape();
-  const std::vector<Request> requests = createRequests(::generated_tests::depth_to_space_v1_2::get_examples_nchw_float16_all_inputs_as_internal_dynamic_output_shape());
-  validateEverything(model, requests);
-}
-
-} // namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2
-
-namespace generated_tests::depth_to_space_v1_2 {
-
-std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_quant8();
-
-} // namespace generated_tests::depth_to_space_v1_2
-
-namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2 {
-
-Model createTestModel_nchw_quant8();
-bool is_ignored_nchw_quant8(int);
-
-TEST_F(NeuralnetworksHidlTest, depth_to_space_v1_2_nchw_quant8) {
-  Execute(device,
-          createTestModel_nchw_quant8,
-          is_ignored_nchw_quant8,
-          ::generated_tests::depth_to_space_v1_2::get_examples_nchw_quant8());
+TEST_F(DynamicOutputShapeTest, depth_to_space_v1_2_nchw_quant8) {
+    Execute(device, ::generated_tests::depth_to_space_v1_2::get_test_model_nchw_quant8(), true);
 }
 
 TEST_F(ValidationTest, depth_to_space_v1_2_nchw_quant8) {
-  const Model model = createTestModel_nchw_quant8();
-  const std::vector<Request> requests = createRequests(::generated_tests::depth_to_space_v1_2::get_examples_nchw_quant8());
-  validateEverything(model, requests);
+    const Model model = createModel(::generated_tests::depth_to_space_v1_2::get_test_model_nchw_quant8());
+    const Request request = createRequest(::generated_tests::depth_to_space_v1_2::get_test_model_nchw_quant8());
+    validateEverything(model, request);
 }
 
 } // namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2
 
+
 namespace generated_tests::depth_to_space_v1_2 {
 
-std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_quant8_dynamic_output_shape();
+const ::test_helper::TestModel& get_test_model_nchw_quant8_all_inputs_as_internal();
 
 } // namespace generated_tests::depth_to_space_v1_2
 
 namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2 {
 
-Model createTestModel_nchw_quant8_dynamic_output_shape();
-bool is_ignored_nchw_quant8_dynamic_output_shape(int);
-
-TEST_F(DynamicOutputShapeTest, depth_to_space_v1_2_nchw_quant8_dynamic_output_shape) {
-  Execute(device,
-          createTestModel_nchw_quant8_dynamic_output_shape,
-          is_ignored_nchw_quant8_dynamic_output_shape,
-          ::generated_tests::depth_to_space_v1_2::get_examples_nchw_quant8_dynamic_output_shape(), true);
+TEST_F(GeneratedTest, depth_to_space_v1_2_nchw_quant8_all_inputs_as_internal) {
+    Execute(device, ::generated_tests::depth_to_space_v1_2::get_test_model_nchw_quant8_all_inputs_as_internal());
 }
 
-TEST_F(ValidationTest, depth_to_space_v1_2_nchw_quant8_dynamic_output_shape) {
-  const Model model = createTestModel_nchw_quant8_dynamic_output_shape();
-  const std::vector<Request> requests = createRequests(::generated_tests::depth_to_space_v1_2::get_examples_nchw_quant8_dynamic_output_shape());
-  validateEverything(model, requests);
-}
-
-} // namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2
-
-namespace generated_tests::depth_to_space_v1_2 {
-
-std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_quant8_all_inputs_as_internal();
-
-} // namespace generated_tests::depth_to_space_v1_2
-
-namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2 {
-
-Model createTestModel_nchw_quant8_all_inputs_as_internal();
-bool is_ignored_nchw_quant8_all_inputs_as_internal(int);
-
-TEST_F(NeuralnetworksHidlTest, depth_to_space_v1_2_nchw_quant8_all_inputs_as_internal) {
-  Execute(device,
-          createTestModel_nchw_quant8_all_inputs_as_internal,
-          is_ignored_nchw_quant8_all_inputs_as_internal,
-          ::generated_tests::depth_to_space_v1_2::get_examples_nchw_quant8_all_inputs_as_internal());
+TEST_F(DynamicOutputShapeTest, depth_to_space_v1_2_nchw_quant8_all_inputs_as_internal) {
+    Execute(device, ::generated_tests::depth_to_space_v1_2::get_test_model_nchw_quant8_all_inputs_as_internal(), true);
 }
 
 TEST_F(ValidationTest, depth_to_space_v1_2_nchw_quant8_all_inputs_as_internal) {
-  const Model model = createTestModel_nchw_quant8_all_inputs_as_internal();
-  const std::vector<Request> requests = createRequests(::generated_tests::depth_to_space_v1_2::get_examples_nchw_quant8_all_inputs_as_internal());
-  validateEverything(model, requests);
+    const Model model = createModel(::generated_tests::depth_to_space_v1_2::get_test_model_nchw_quant8_all_inputs_as_internal());
+    const Request request = createRequest(::generated_tests::depth_to_space_v1_2::get_test_model_nchw_quant8_all_inputs_as_internal());
+    validateEverything(model, request);
 }
 
 } // namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2
 
+
 namespace generated_tests::depth_to_space_v1_2 {
 
-std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_quant8_all_inputs_as_internal_dynamic_output_shape();
+const ::test_helper::TestModel& get_test_model_nhwc_2();
 
 } // namespace generated_tests::depth_to_space_v1_2
 
 namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2 {
 
-Model createTestModel_nchw_quant8_all_inputs_as_internal_dynamic_output_shape();
-bool is_ignored_nchw_quant8_all_inputs_as_internal_dynamic_output_shape(int);
-
-TEST_F(DynamicOutputShapeTest, depth_to_space_v1_2_nchw_quant8_all_inputs_as_internal_dynamic_output_shape) {
-  Execute(device,
-          createTestModel_nchw_quant8_all_inputs_as_internal_dynamic_output_shape,
-          is_ignored_nchw_quant8_all_inputs_as_internal_dynamic_output_shape,
-          ::generated_tests::depth_to_space_v1_2::get_examples_nchw_quant8_all_inputs_as_internal_dynamic_output_shape(), true);
+TEST_F(GeneratedTest, depth_to_space_v1_2_nhwc_2) {
+    Execute(device, ::generated_tests::depth_to_space_v1_2::get_test_model_nhwc_2());
 }
 
-TEST_F(ValidationTest, depth_to_space_v1_2_nchw_quant8_all_inputs_as_internal_dynamic_output_shape) {
-  const Model model = createTestModel_nchw_quant8_all_inputs_as_internal_dynamic_output_shape();
-  const std::vector<Request> requests = createRequests(::generated_tests::depth_to_space_v1_2::get_examples_nchw_quant8_all_inputs_as_internal_dynamic_output_shape());
-  validateEverything(model, requests);
-}
-
-} // namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2
-
-namespace generated_tests::depth_to_space_v1_2 {
-
-std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_2();
-
-} // namespace generated_tests::depth_to_space_v1_2
-
-namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2 {
-
-Model createTestModel_nhwc_2();
-bool is_ignored_nhwc_2(int);
-
-TEST_F(NeuralnetworksHidlTest, depth_to_space_v1_2_nhwc_2) {
-  Execute(device,
-          createTestModel_nhwc_2,
-          is_ignored_nhwc_2,
-          ::generated_tests::depth_to_space_v1_2::get_examples_nhwc_2());
+TEST_F(DynamicOutputShapeTest, depth_to_space_v1_2_nhwc_2) {
+    Execute(device, ::generated_tests::depth_to_space_v1_2::get_test_model_nhwc_2(), true);
 }
 
 TEST_F(ValidationTest, depth_to_space_v1_2_nhwc_2) {
-  const Model model = createTestModel_nhwc_2();
-  const std::vector<Request> requests = createRequests(::generated_tests::depth_to_space_v1_2::get_examples_nhwc_2());
-  validateEverything(model, requests);
+    const Model model = createModel(::generated_tests::depth_to_space_v1_2::get_test_model_nhwc_2());
+    const Request request = createRequest(::generated_tests::depth_to_space_v1_2::get_test_model_nhwc_2());
+    validateEverything(model, request);
 }
 
 } // namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2
 
+
 namespace generated_tests::depth_to_space_v1_2 {
 
-std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_dynamic_output_shape_2();
+const ::test_helper::TestModel& get_test_model_nhwc_all_inputs_as_internal_2();
 
 } // namespace generated_tests::depth_to_space_v1_2
 
 namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2 {
 
-Model createTestModel_nhwc_dynamic_output_shape_2();
-bool is_ignored_nhwc_dynamic_output_shape_2(int);
-
-TEST_F(DynamicOutputShapeTest, depth_to_space_v1_2_nhwc_dynamic_output_shape_2) {
-  Execute(device,
-          createTestModel_nhwc_dynamic_output_shape_2,
-          is_ignored_nhwc_dynamic_output_shape_2,
-          ::generated_tests::depth_to_space_v1_2::get_examples_nhwc_dynamic_output_shape_2(), true);
+TEST_F(GeneratedTest, depth_to_space_v1_2_nhwc_all_inputs_as_internal_2) {
+    Execute(device, ::generated_tests::depth_to_space_v1_2::get_test_model_nhwc_all_inputs_as_internal_2());
 }
 
-TEST_F(ValidationTest, depth_to_space_v1_2_nhwc_dynamic_output_shape_2) {
-  const Model model = createTestModel_nhwc_dynamic_output_shape_2();
-  const std::vector<Request> requests = createRequests(::generated_tests::depth_to_space_v1_2::get_examples_nhwc_dynamic_output_shape_2());
-  validateEverything(model, requests);
-}
-
-} // namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2
-
-namespace generated_tests::depth_to_space_v1_2 {
-
-std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_all_inputs_as_internal_2();
-
-} // namespace generated_tests::depth_to_space_v1_2
-
-namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2 {
-
-Model createTestModel_nhwc_all_inputs_as_internal_2();
-bool is_ignored_nhwc_all_inputs_as_internal_2(int);
-
-TEST_F(NeuralnetworksHidlTest, depth_to_space_v1_2_nhwc_all_inputs_as_internal_2) {
-  Execute(device,
-          createTestModel_nhwc_all_inputs_as_internal_2,
-          is_ignored_nhwc_all_inputs_as_internal_2,
-          ::generated_tests::depth_to_space_v1_2::get_examples_nhwc_all_inputs_as_internal_2());
+TEST_F(DynamicOutputShapeTest, depth_to_space_v1_2_nhwc_all_inputs_as_internal_2) {
+    Execute(device, ::generated_tests::depth_to_space_v1_2::get_test_model_nhwc_all_inputs_as_internal_2(), true);
 }
 
 TEST_F(ValidationTest, depth_to_space_v1_2_nhwc_all_inputs_as_internal_2) {
-  const Model model = createTestModel_nhwc_all_inputs_as_internal_2();
-  const std::vector<Request> requests = createRequests(::generated_tests::depth_to_space_v1_2::get_examples_nhwc_all_inputs_as_internal_2());
-  validateEverything(model, requests);
+    const Model model = createModel(::generated_tests::depth_to_space_v1_2::get_test_model_nhwc_all_inputs_as_internal_2());
+    const Request request = createRequest(::generated_tests::depth_to_space_v1_2::get_test_model_nhwc_all_inputs_as_internal_2());
+    validateEverything(model, request);
 }
 
 } // namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2
 
+
 namespace generated_tests::depth_to_space_v1_2 {
 
-std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_all_inputs_as_internal_dynamic_output_shape_2();
+const ::test_helper::TestModel& get_test_model_nhwc_relaxed_2();
 
 } // namespace generated_tests::depth_to_space_v1_2
 
 namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2 {
 
-Model createTestModel_nhwc_all_inputs_as_internal_dynamic_output_shape_2();
-bool is_ignored_nhwc_all_inputs_as_internal_dynamic_output_shape_2(int);
-
-TEST_F(DynamicOutputShapeTest, depth_to_space_v1_2_nhwc_all_inputs_as_internal_dynamic_output_shape_2) {
-  Execute(device,
-          createTestModel_nhwc_all_inputs_as_internal_dynamic_output_shape_2,
-          is_ignored_nhwc_all_inputs_as_internal_dynamic_output_shape_2,
-          ::generated_tests::depth_to_space_v1_2::get_examples_nhwc_all_inputs_as_internal_dynamic_output_shape_2(), true);
+TEST_F(GeneratedTest, depth_to_space_v1_2_nhwc_relaxed_2) {
+    Execute(device, ::generated_tests::depth_to_space_v1_2::get_test_model_nhwc_relaxed_2());
 }
 
-TEST_F(ValidationTest, depth_to_space_v1_2_nhwc_all_inputs_as_internal_dynamic_output_shape_2) {
-  const Model model = createTestModel_nhwc_all_inputs_as_internal_dynamic_output_shape_2();
-  const std::vector<Request> requests = createRequests(::generated_tests::depth_to_space_v1_2::get_examples_nhwc_all_inputs_as_internal_dynamic_output_shape_2());
-  validateEverything(model, requests);
-}
-
-} // namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2
-
-namespace generated_tests::depth_to_space_v1_2 {
-
-std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_relaxed_2();
-
-} // namespace generated_tests::depth_to_space_v1_2
-
-namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2 {
-
-Model createTestModel_nhwc_relaxed_2();
-bool is_ignored_nhwc_relaxed_2(int);
-
-TEST_F(NeuralnetworksHidlTest, depth_to_space_v1_2_nhwc_relaxed_2) {
-  Execute(device,
-          createTestModel_nhwc_relaxed_2,
-          is_ignored_nhwc_relaxed_2,
-          ::generated_tests::depth_to_space_v1_2::get_examples_nhwc_relaxed_2());
+TEST_F(DynamicOutputShapeTest, depth_to_space_v1_2_nhwc_relaxed_2) {
+    Execute(device, ::generated_tests::depth_to_space_v1_2::get_test_model_nhwc_relaxed_2(), true);
 }
 
 TEST_F(ValidationTest, depth_to_space_v1_2_nhwc_relaxed_2) {
-  const Model model = createTestModel_nhwc_relaxed_2();
-  const std::vector<Request> requests = createRequests(::generated_tests::depth_to_space_v1_2::get_examples_nhwc_relaxed_2());
-  validateEverything(model, requests);
+    const Model model = createModel(::generated_tests::depth_to_space_v1_2::get_test_model_nhwc_relaxed_2());
+    const Request request = createRequest(::generated_tests::depth_to_space_v1_2::get_test_model_nhwc_relaxed_2());
+    validateEverything(model, request);
 }
 
 } // namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2
 
+
 namespace generated_tests::depth_to_space_v1_2 {
 
-std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_relaxed_dynamic_output_shape_2();
+const ::test_helper::TestModel& get_test_model_nhwc_relaxed_all_inputs_as_internal_2();
 
 } // namespace generated_tests::depth_to_space_v1_2
 
 namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2 {
 
-Model createTestModel_nhwc_relaxed_dynamic_output_shape_2();
-bool is_ignored_nhwc_relaxed_dynamic_output_shape_2(int);
-
-TEST_F(DynamicOutputShapeTest, depth_to_space_v1_2_nhwc_relaxed_dynamic_output_shape_2) {
-  Execute(device,
-          createTestModel_nhwc_relaxed_dynamic_output_shape_2,
-          is_ignored_nhwc_relaxed_dynamic_output_shape_2,
-          ::generated_tests::depth_to_space_v1_2::get_examples_nhwc_relaxed_dynamic_output_shape_2(), true);
+TEST_F(GeneratedTest, depth_to_space_v1_2_nhwc_relaxed_all_inputs_as_internal_2) {
+    Execute(device, ::generated_tests::depth_to_space_v1_2::get_test_model_nhwc_relaxed_all_inputs_as_internal_2());
 }
 
-TEST_F(ValidationTest, depth_to_space_v1_2_nhwc_relaxed_dynamic_output_shape_2) {
-  const Model model = createTestModel_nhwc_relaxed_dynamic_output_shape_2();
-  const std::vector<Request> requests = createRequests(::generated_tests::depth_to_space_v1_2::get_examples_nhwc_relaxed_dynamic_output_shape_2());
-  validateEverything(model, requests);
-}
-
-} // namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2
-
-namespace generated_tests::depth_to_space_v1_2 {
-
-std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_relaxed_all_inputs_as_internal_2();
-
-} // namespace generated_tests::depth_to_space_v1_2
-
-namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2 {
-
-Model createTestModel_nhwc_relaxed_all_inputs_as_internal_2();
-bool is_ignored_nhwc_relaxed_all_inputs_as_internal_2(int);
-
-TEST_F(NeuralnetworksHidlTest, depth_to_space_v1_2_nhwc_relaxed_all_inputs_as_internal_2) {
-  Execute(device,
-          createTestModel_nhwc_relaxed_all_inputs_as_internal_2,
-          is_ignored_nhwc_relaxed_all_inputs_as_internal_2,
-          ::generated_tests::depth_to_space_v1_2::get_examples_nhwc_relaxed_all_inputs_as_internal_2());
+TEST_F(DynamicOutputShapeTest, depth_to_space_v1_2_nhwc_relaxed_all_inputs_as_internal_2) {
+    Execute(device, ::generated_tests::depth_to_space_v1_2::get_test_model_nhwc_relaxed_all_inputs_as_internal_2(), true);
 }
 
 TEST_F(ValidationTest, depth_to_space_v1_2_nhwc_relaxed_all_inputs_as_internal_2) {
-  const Model model = createTestModel_nhwc_relaxed_all_inputs_as_internal_2();
-  const std::vector<Request> requests = createRequests(::generated_tests::depth_to_space_v1_2::get_examples_nhwc_relaxed_all_inputs_as_internal_2());
-  validateEverything(model, requests);
+    const Model model = createModel(::generated_tests::depth_to_space_v1_2::get_test_model_nhwc_relaxed_all_inputs_as_internal_2());
+    const Request request = createRequest(::generated_tests::depth_to_space_v1_2::get_test_model_nhwc_relaxed_all_inputs_as_internal_2());
+    validateEverything(model, request);
 }
 
 } // namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2
 
+
 namespace generated_tests::depth_to_space_v1_2 {
 
-std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_2();
+const ::test_helper::TestModel& get_test_model_nhwc_float16_2();
 
 } // namespace generated_tests::depth_to_space_v1_2
 
 namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2 {
 
-Model createTestModel_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_2();
-bool is_ignored_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_2(int);
-
-TEST_F(DynamicOutputShapeTest, depth_to_space_v1_2_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_2) {
-  Execute(device,
-          createTestModel_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_2,
-          is_ignored_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_2,
-          ::generated_tests::depth_to_space_v1_2::get_examples_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_2(), true);
+TEST_F(GeneratedTest, depth_to_space_v1_2_nhwc_float16_2) {
+    Execute(device, ::generated_tests::depth_to_space_v1_2::get_test_model_nhwc_float16_2());
 }
 
-TEST_F(ValidationTest, depth_to_space_v1_2_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_2) {
-  const Model model = createTestModel_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_2();
-  const std::vector<Request> requests = createRequests(::generated_tests::depth_to_space_v1_2::get_examples_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_2());
-  validateEverything(model, requests);
-}
-
-} // namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2
-
-namespace generated_tests::depth_to_space_v1_2 {
-
-std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_float16_2();
-
-} // namespace generated_tests::depth_to_space_v1_2
-
-namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2 {
-
-Model createTestModel_nhwc_float16_2();
-bool is_ignored_nhwc_float16_2(int);
-
-TEST_F(NeuralnetworksHidlTest, depth_to_space_v1_2_nhwc_float16_2) {
-  Execute(device,
-          createTestModel_nhwc_float16_2,
-          is_ignored_nhwc_float16_2,
-          ::generated_tests::depth_to_space_v1_2::get_examples_nhwc_float16_2());
+TEST_F(DynamicOutputShapeTest, depth_to_space_v1_2_nhwc_float16_2) {
+    Execute(device, ::generated_tests::depth_to_space_v1_2::get_test_model_nhwc_float16_2(), true);
 }
 
 TEST_F(ValidationTest, depth_to_space_v1_2_nhwc_float16_2) {
-  const Model model = createTestModel_nhwc_float16_2();
-  const std::vector<Request> requests = createRequests(::generated_tests::depth_to_space_v1_2::get_examples_nhwc_float16_2());
-  validateEverything(model, requests);
+    const Model model = createModel(::generated_tests::depth_to_space_v1_2::get_test_model_nhwc_float16_2());
+    const Request request = createRequest(::generated_tests::depth_to_space_v1_2::get_test_model_nhwc_float16_2());
+    validateEverything(model, request);
 }
 
 } // namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2
 
+
 namespace generated_tests::depth_to_space_v1_2 {
 
-std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_float16_dynamic_output_shape_2();
+const ::test_helper::TestModel& get_test_model_nhwc_float16_all_inputs_as_internal_2();
 
 } // namespace generated_tests::depth_to_space_v1_2
 
 namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2 {
 
-Model createTestModel_nhwc_float16_dynamic_output_shape_2();
-bool is_ignored_nhwc_float16_dynamic_output_shape_2(int);
-
-TEST_F(DynamicOutputShapeTest, depth_to_space_v1_2_nhwc_float16_dynamic_output_shape_2) {
-  Execute(device,
-          createTestModel_nhwc_float16_dynamic_output_shape_2,
-          is_ignored_nhwc_float16_dynamic_output_shape_2,
-          ::generated_tests::depth_to_space_v1_2::get_examples_nhwc_float16_dynamic_output_shape_2(), true);
+TEST_F(GeneratedTest, depth_to_space_v1_2_nhwc_float16_all_inputs_as_internal_2) {
+    Execute(device, ::generated_tests::depth_to_space_v1_2::get_test_model_nhwc_float16_all_inputs_as_internal_2());
 }
 
-TEST_F(ValidationTest, depth_to_space_v1_2_nhwc_float16_dynamic_output_shape_2) {
-  const Model model = createTestModel_nhwc_float16_dynamic_output_shape_2();
-  const std::vector<Request> requests = createRequests(::generated_tests::depth_to_space_v1_2::get_examples_nhwc_float16_dynamic_output_shape_2());
-  validateEverything(model, requests);
-}
-
-} // namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2
-
-namespace generated_tests::depth_to_space_v1_2 {
-
-std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_float16_all_inputs_as_internal_2();
-
-} // namespace generated_tests::depth_to_space_v1_2
-
-namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2 {
-
-Model createTestModel_nhwc_float16_all_inputs_as_internal_2();
-bool is_ignored_nhwc_float16_all_inputs_as_internal_2(int);
-
-TEST_F(NeuralnetworksHidlTest, depth_to_space_v1_2_nhwc_float16_all_inputs_as_internal_2) {
-  Execute(device,
-          createTestModel_nhwc_float16_all_inputs_as_internal_2,
-          is_ignored_nhwc_float16_all_inputs_as_internal_2,
-          ::generated_tests::depth_to_space_v1_2::get_examples_nhwc_float16_all_inputs_as_internal_2());
+TEST_F(DynamicOutputShapeTest, depth_to_space_v1_2_nhwc_float16_all_inputs_as_internal_2) {
+    Execute(device, ::generated_tests::depth_to_space_v1_2::get_test_model_nhwc_float16_all_inputs_as_internal_2(), true);
 }
 
 TEST_F(ValidationTest, depth_to_space_v1_2_nhwc_float16_all_inputs_as_internal_2) {
-  const Model model = createTestModel_nhwc_float16_all_inputs_as_internal_2();
-  const std::vector<Request> requests = createRequests(::generated_tests::depth_to_space_v1_2::get_examples_nhwc_float16_all_inputs_as_internal_2());
-  validateEverything(model, requests);
+    const Model model = createModel(::generated_tests::depth_to_space_v1_2::get_test_model_nhwc_float16_all_inputs_as_internal_2());
+    const Request request = createRequest(::generated_tests::depth_to_space_v1_2::get_test_model_nhwc_float16_all_inputs_as_internal_2());
+    validateEverything(model, request);
 }
 
 } // namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2
 
+
 namespace generated_tests::depth_to_space_v1_2 {
 
-std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_2();
+const ::test_helper::TestModel& get_test_model_nhwc_quant8_2();
 
 } // namespace generated_tests::depth_to_space_v1_2
 
 namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2 {
 
-Model createTestModel_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_2();
-bool is_ignored_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_2(int);
-
-TEST_F(DynamicOutputShapeTest, depth_to_space_v1_2_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_2) {
-  Execute(device,
-          createTestModel_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_2,
-          is_ignored_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_2,
-          ::generated_tests::depth_to_space_v1_2::get_examples_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_2(), true);
+TEST_F(GeneratedTest, depth_to_space_v1_2_nhwc_quant8_2) {
+    Execute(device, ::generated_tests::depth_to_space_v1_2::get_test_model_nhwc_quant8_2());
 }
 
-TEST_F(ValidationTest, depth_to_space_v1_2_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_2) {
-  const Model model = createTestModel_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_2();
-  const std::vector<Request> requests = createRequests(::generated_tests::depth_to_space_v1_2::get_examples_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_2());
-  validateEverything(model, requests);
-}
-
-} // namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2
-
-namespace generated_tests::depth_to_space_v1_2 {
-
-std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_quant8_2();
-
-} // namespace generated_tests::depth_to_space_v1_2
-
-namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2 {
-
-Model createTestModel_nhwc_quant8_2();
-bool is_ignored_nhwc_quant8_2(int);
-
-TEST_F(NeuralnetworksHidlTest, depth_to_space_v1_2_nhwc_quant8_2) {
-  Execute(device,
-          createTestModel_nhwc_quant8_2,
-          is_ignored_nhwc_quant8_2,
-          ::generated_tests::depth_to_space_v1_2::get_examples_nhwc_quant8_2());
+TEST_F(DynamicOutputShapeTest, depth_to_space_v1_2_nhwc_quant8_2) {
+    Execute(device, ::generated_tests::depth_to_space_v1_2::get_test_model_nhwc_quant8_2(), true);
 }
 
 TEST_F(ValidationTest, depth_to_space_v1_2_nhwc_quant8_2) {
-  const Model model = createTestModel_nhwc_quant8_2();
-  const std::vector<Request> requests = createRequests(::generated_tests::depth_to_space_v1_2::get_examples_nhwc_quant8_2());
-  validateEverything(model, requests);
+    const Model model = createModel(::generated_tests::depth_to_space_v1_2::get_test_model_nhwc_quant8_2());
+    const Request request = createRequest(::generated_tests::depth_to_space_v1_2::get_test_model_nhwc_quant8_2());
+    validateEverything(model, request);
 }
 
 } // namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2
 
+
 namespace generated_tests::depth_to_space_v1_2 {
 
-std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_quant8_dynamic_output_shape_2();
+const ::test_helper::TestModel& get_test_model_nhwc_quant8_all_inputs_as_internal_2();
 
 } // namespace generated_tests::depth_to_space_v1_2
 
 namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2 {
 
-Model createTestModel_nhwc_quant8_dynamic_output_shape_2();
-bool is_ignored_nhwc_quant8_dynamic_output_shape_2(int);
-
-TEST_F(DynamicOutputShapeTest, depth_to_space_v1_2_nhwc_quant8_dynamic_output_shape_2) {
-  Execute(device,
-          createTestModel_nhwc_quant8_dynamic_output_shape_2,
-          is_ignored_nhwc_quant8_dynamic_output_shape_2,
-          ::generated_tests::depth_to_space_v1_2::get_examples_nhwc_quant8_dynamic_output_shape_2(), true);
+TEST_F(GeneratedTest, depth_to_space_v1_2_nhwc_quant8_all_inputs_as_internal_2) {
+    Execute(device, ::generated_tests::depth_to_space_v1_2::get_test_model_nhwc_quant8_all_inputs_as_internal_2());
 }
 
-TEST_F(ValidationTest, depth_to_space_v1_2_nhwc_quant8_dynamic_output_shape_2) {
-  const Model model = createTestModel_nhwc_quant8_dynamic_output_shape_2();
-  const std::vector<Request> requests = createRequests(::generated_tests::depth_to_space_v1_2::get_examples_nhwc_quant8_dynamic_output_shape_2());
-  validateEverything(model, requests);
-}
-
-} // namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2
-
-namespace generated_tests::depth_to_space_v1_2 {
-
-std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_quant8_all_inputs_as_internal_2();
-
-} // namespace generated_tests::depth_to_space_v1_2
-
-namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2 {
-
-Model createTestModel_nhwc_quant8_all_inputs_as_internal_2();
-bool is_ignored_nhwc_quant8_all_inputs_as_internal_2(int);
-
-TEST_F(NeuralnetworksHidlTest, depth_to_space_v1_2_nhwc_quant8_all_inputs_as_internal_2) {
-  Execute(device,
-          createTestModel_nhwc_quant8_all_inputs_as_internal_2,
-          is_ignored_nhwc_quant8_all_inputs_as_internal_2,
-          ::generated_tests::depth_to_space_v1_2::get_examples_nhwc_quant8_all_inputs_as_internal_2());
+TEST_F(DynamicOutputShapeTest, depth_to_space_v1_2_nhwc_quant8_all_inputs_as_internal_2) {
+    Execute(device, ::generated_tests::depth_to_space_v1_2::get_test_model_nhwc_quant8_all_inputs_as_internal_2(), true);
 }
 
 TEST_F(ValidationTest, depth_to_space_v1_2_nhwc_quant8_all_inputs_as_internal_2) {
-  const Model model = createTestModel_nhwc_quant8_all_inputs_as_internal_2();
-  const std::vector<Request> requests = createRequests(::generated_tests::depth_to_space_v1_2::get_examples_nhwc_quant8_all_inputs_as_internal_2());
-  validateEverything(model, requests);
+    const Model model = createModel(::generated_tests::depth_to_space_v1_2::get_test_model_nhwc_quant8_all_inputs_as_internal_2());
+    const Request request = createRequest(::generated_tests::depth_to_space_v1_2::get_test_model_nhwc_quant8_all_inputs_as_internal_2());
+    validateEverything(model, request);
 }
 
 } // namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2
 
+
 namespace generated_tests::depth_to_space_v1_2 {
 
-std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_2();
+const ::test_helper::TestModel& get_test_model_nchw_2();
 
 } // namespace generated_tests::depth_to_space_v1_2
 
 namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2 {
 
-Model createTestModel_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_2();
-bool is_ignored_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_2(int);
-
-TEST_F(DynamicOutputShapeTest, depth_to_space_v1_2_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_2) {
-  Execute(device,
-          createTestModel_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_2,
-          is_ignored_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_2,
-          ::generated_tests::depth_to_space_v1_2::get_examples_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_2(), true);
+TEST_F(GeneratedTest, depth_to_space_v1_2_nchw_2) {
+    Execute(device, ::generated_tests::depth_to_space_v1_2::get_test_model_nchw_2());
 }
 
-TEST_F(ValidationTest, depth_to_space_v1_2_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_2) {
-  const Model model = createTestModel_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_2();
-  const std::vector<Request> requests = createRequests(::generated_tests::depth_to_space_v1_2::get_examples_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_2());
-  validateEverything(model, requests);
-}
-
-} // namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2
-
-namespace generated_tests::depth_to_space_v1_2 {
-
-std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_2();
-
-} // namespace generated_tests::depth_to_space_v1_2
-
-namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2 {
-
-Model createTestModel_nchw_2();
-bool is_ignored_nchw_2(int);
-
-TEST_F(NeuralnetworksHidlTest, depth_to_space_v1_2_nchw_2) {
-  Execute(device,
-          createTestModel_nchw_2,
-          is_ignored_nchw_2,
-          ::generated_tests::depth_to_space_v1_2::get_examples_nchw_2());
+TEST_F(DynamicOutputShapeTest, depth_to_space_v1_2_nchw_2) {
+    Execute(device, ::generated_tests::depth_to_space_v1_2::get_test_model_nchw_2(), true);
 }
 
 TEST_F(ValidationTest, depth_to_space_v1_2_nchw_2) {
-  const Model model = createTestModel_nchw_2();
-  const std::vector<Request> requests = createRequests(::generated_tests::depth_to_space_v1_2::get_examples_nchw_2());
-  validateEverything(model, requests);
+    const Model model = createModel(::generated_tests::depth_to_space_v1_2::get_test_model_nchw_2());
+    const Request request = createRequest(::generated_tests::depth_to_space_v1_2::get_test_model_nchw_2());
+    validateEverything(model, request);
 }
 
 } // namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2
 
+
 namespace generated_tests::depth_to_space_v1_2 {
 
-std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_dynamic_output_shape_2();
+const ::test_helper::TestModel& get_test_model_nchw_all_inputs_as_internal_2();
 
 } // namespace generated_tests::depth_to_space_v1_2
 
 namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2 {
 
-Model createTestModel_nchw_dynamic_output_shape_2();
-bool is_ignored_nchw_dynamic_output_shape_2(int);
-
-TEST_F(DynamicOutputShapeTest, depth_to_space_v1_2_nchw_dynamic_output_shape_2) {
-  Execute(device,
-          createTestModel_nchw_dynamic_output_shape_2,
-          is_ignored_nchw_dynamic_output_shape_2,
-          ::generated_tests::depth_to_space_v1_2::get_examples_nchw_dynamic_output_shape_2(), true);
+TEST_F(GeneratedTest, depth_to_space_v1_2_nchw_all_inputs_as_internal_2) {
+    Execute(device, ::generated_tests::depth_to_space_v1_2::get_test_model_nchw_all_inputs_as_internal_2());
 }
 
-TEST_F(ValidationTest, depth_to_space_v1_2_nchw_dynamic_output_shape_2) {
-  const Model model = createTestModel_nchw_dynamic_output_shape_2();
-  const std::vector<Request> requests = createRequests(::generated_tests::depth_to_space_v1_2::get_examples_nchw_dynamic_output_shape_2());
-  validateEverything(model, requests);
-}
-
-} // namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2
-
-namespace generated_tests::depth_to_space_v1_2 {
-
-std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_all_inputs_as_internal_2();
-
-} // namespace generated_tests::depth_to_space_v1_2
-
-namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2 {
-
-Model createTestModel_nchw_all_inputs_as_internal_2();
-bool is_ignored_nchw_all_inputs_as_internal_2(int);
-
-TEST_F(NeuralnetworksHidlTest, depth_to_space_v1_2_nchw_all_inputs_as_internal_2) {
-  Execute(device,
-          createTestModel_nchw_all_inputs_as_internal_2,
-          is_ignored_nchw_all_inputs_as_internal_2,
-          ::generated_tests::depth_to_space_v1_2::get_examples_nchw_all_inputs_as_internal_2());
+TEST_F(DynamicOutputShapeTest, depth_to_space_v1_2_nchw_all_inputs_as_internal_2) {
+    Execute(device, ::generated_tests::depth_to_space_v1_2::get_test_model_nchw_all_inputs_as_internal_2(), true);
 }
 
 TEST_F(ValidationTest, depth_to_space_v1_2_nchw_all_inputs_as_internal_2) {
-  const Model model = createTestModel_nchw_all_inputs_as_internal_2();
-  const std::vector<Request> requests = createRequests(::generated_tests::depth_to_space_v1_2::get_examples_nchw_all_inputs_as_internal_2());
-  validateEverything(model, requests);
+    const Model model = createModel(::generated_tests::depth_to_space_v1_2::get_test_model_nchw_all_inputs_as_internal_2());
+    const Request request = createRequest(::generated_tests::depth_to_space_v1_2::get_test_model_nchw_all_inputs_as_internal_2());
+    validateEverything(model, request);
 }
 
 } // namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2
 
+
 namespace generated_tests::depth_to_space_v1_2 {
 
-std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_all_inputs_as_internal_dynamic_output_shape_2();
+const ::test_helper::TestModel& get_test_model_nchw_relaxed_2();
 
 } // namespace generated_tests::depth_to_space_v1_2
 
 namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2 {
 
-Model createTestModel_nchw_all_inputs_as_internal_dynamic_output_shape_2();
-bool is_ignored_nchw_all_inputs_as_internal_dynamic_output_shape_2(int);
-
-TEST_F(DynamicOutputShapeTest, depth_to_space_v1_2_nchw_all_inputs_as_internal_dynamic_output_shape_2) {
-  Execute(device,
-          createTestModel_nchw_all_inputs_as_internal_dynamic_output_shape_2,
-          is_ignored_nchw_all_inputs_as_internal_dynamic_output_shape_2,
-          ::generated_tests::depth_to_space_v1_2::get_examples_nchw_all_inputs_as_internal_dynamic_output_shape_2(), true);
+TEST_F(GeneratedTest, depth_to_space_v1_2_nchw_relaxed_2) {
+    Execute(device, ::generated_tests::depth_to_space_v1_2::get_test_model_nchw_relaxed_2());
 }
 
-TEST_F(ValidationTest, depth_to_space_v1_2_nchw_all_inputs_as_internal_dynamic_output_shape_2) {
-  const Model model = createTestModel_nchw_all_inputs_as_internal_dynamic_output_shape_2();
-  const std::vector<Request> requests = createRequests(::generated_tests::depth_to_space_v1_2::get_examples_nchw_all_inputs_as_internal_dynamic_output_shape_2());
-  validateEverything(model, requests);
-}
-
-} // namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2
-
-namespace generated_tests::depth_to_space_v1_2 {
-
-std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_relaxed_2();
-
-} // namespace generated_tests::depth_to_space_v1_2
-
-namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2 {
-
-Model createTestModel_nchw_relaxed_2();
-bool is_ignored_nchw_relaxed_2(int);
-
-TEST_F(NeuralnetworksHidlTest, depth_to_space_v1_2_nchw_relaxed_2) {
-  Execute(device,
-          createTestModel_nchw_relaxed_2,
-          is_ignored_nchw_relaxed_2,
-          ::generated_tests::depth_to_space_v1_2::get_examples_nchw_relaxed_2());
+TEST_F(DynamicOutputShapeTest, depth_to_space_v1_2_nchw_relaxed_2) {
+    Execute(device, ::generated_tests::depth_to_space_v1_2::get_test_model_nchw_relaxed_2(), true);
 }
 
 TEST_F(ValidationTest, depth_to_space_v1_2_nchw_relaxed_2) {
-  const Model model = createTestModel_nchw_relaxed_2();
-  const std::vector<Request> requests = createRequests(::generated_tests::depth_to_space_v1_2::get_examples_nchw_relaxed_2());
-  validateEverything(model, requests);
+    const Model model = createModel(::generated_tests::depth_to_space_v1_2::get_test_model_nchw_relaxed_2());
+    const Request request = createRequest(::generated_tests::depth_to_space_v1_2::get_test_model_nchw_relaxed_2());
+    validateEverything(model, request);
 }
 
 } // namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2
 
+
 namespace generated_tests::depth_to_space_v1_2 {
 
-std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_relaxed_dynamic_output_shape_2();
+const ::test_helper::TestModel& get_test_model_nchw_relaxed_all_inputs_as_internal_2();
 
 } // namespace generated_tests::depth_to_space_v1_2
 
 namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2 {
 
-Model createTestModel_nchw_relaxed_dynamic_output_shape_2();
-bool is_ignored_nchw_relaxed_dynamic_output_shape_2(int);
-
-TEST_F(DynamicOutputShapeTest, depth_to_space_v1_2_nchw_relaxed_dynamic_output_shape_2) {
-  Execute(device,
-          createTestModel_nchw_relaxed_dynamic_output_shape_2,
-          is_ignored_nchw_relaxed_dynamic_output_shape_2,
-          ::generated_tests::depth_to_space_v1_2::get_examples_nchw_relaxed_dynamic_output_shape_2(), true);
+TEST_F(GeneratedTest, depth_to_space_v1_2_nchw_relaxed_all_inputs_as_internal_2) {
+    Execute(device, ::generated_tests::depth_to_space_v1_2::get_test_model_nchw_relaxed_all_inputs_as_internal_2());
 }
 
-TEST_F(ValidationTest, depth_to_space_v1_2_nchw_relaxed_dynamic_output_shape_2) {
-  const Model model = createTestModel_nchw_relaxed_dynamic_output_shape_2();
-  const std::vector<Request> requests = createRequests(::generated_tests::depth_to_space_v1_2::get_examples_nchw_relaxed_dynamic_output_shape_2());
-  validateEverything(model, requests);
-}
-
-} // namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2
-
-namespace generated_tests::depth_to_space_v1_2 {
-
-std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_relaxed_all_inputs_as_internal_2();
-
-} // namespace generated_tests::depth_to_space_v1_2
-
-namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2 {
-
-Model createTestModel_nchw_relaxed_all_inputs_as_internal_2();
-bool is_ignored_nchw_relaxed_all_inputs_as_internal_2(int);
-
-TEST_F(NeuralnetworksHidlTest, depth_to_space_v1_2_nchw_relaxed_all_inputs_as_internal_2) {
-  Execute(device,
-          createTestModel_nchw_relaxed_all_inputs_as_internal_2,
-          is_ignored_nchw_relaxed_all_inputs_as_internal_2,
-          ::generated_tests::depth_to_space_v1_2::get_examples_nchw_relaxed_all_inputs_as_internal_2());
+TEST_F(DynamicOutputShapeTest, depth_to_space_v1_2_nchw_relaxed_all_inputs_as_internal_2) {
+    Execute(device, ::generated_tests::depth_to_space_v1_2::get_test_model_nchw_relaxed_all_inputs_as_internal_2(), true);
 }
 
 TEST_F(ValidationTest, depth_to_space_v1_2_nchw_relaxed_all_inputs_as_internal_2) {
-  const Model model = createTestModel_nchw_relaxed_all_inputs_as_internal_2();
-  const std::vector<Request> requests = createRequests(::generated_tests::depth_to_space_v1_2::get_examples_nchw_relaxed_all_inputs_as_internal_2());
-  validateEverything(model, requests);
+    const Model model = createModel(::generated_tests::depth_to_space_v1_2::get_test_model_nchw_relaxed_all_inputs_as_internal_2());
+    const Request request = createRequest(::generated_tests::depth_to_space_v1_2::get_test_model_nchw_relaxed_all_inputs_as_internal_2());
+    validateEverything(model, request);
 }
 
 } // namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2
 
+
 namespace generated_tests::depth_to_space_v1_2 {
 
-std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_2();
+const ::test_helper::TestModel& get_test_model_nchw_float16_2();
 
 } // namespace generated_tests::depth_to_space_v1_2
 
 namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2 {
 
-Model createTestModel_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_2();
-bool is_ignored_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_2(int);
-
-TEST_F(DynamicOutputShapeTest, depth_to_space_v1_2_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_2) {
-  Execute(device,
-          createTestModel_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_2,
-          is_ignored_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_2,
-          ::generated_tests::depth_to_space_v1_2::get_examples_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_2(), true);
+TEST_F(GeneratedTest, depth_to_space_v1_2_nchw_float16_2) {
+    Execute(device, ::generated_tests::depth_to_space_v1_2::get_test_model_nchw_float16_2());
 }
 
-TEST_F(ValidationTest, depth_to_space_v1_2_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_2) {
-  const Model model = createTestModel_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_2();
-  const std::vector<Request> requests = createRequests(::generated_tests::depth_to_space_v1_2::get_examples_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_2());
-  validateEverything(model, requests);
-}
-
-} // namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2
-
-namespace generated_tests::depth_to_space_v1_2 {
-
-std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_float16_2();
-
-} // namespace generated_tests::depth_to_space_v1_2
-
-namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2 {
-
-Model createTestModel_nchw_float16_2();
-bool is_ignored_nchw_float16_2(int);
-
-TEST_F(NeuralnetworksHidlTest, depth_to_space_v1_2_nchw_float16_2) {
-  Execute(device,
-          createTestModel_nchw_float16_2,
-          is_ignored_nchw_float16_2,
-          ::generated_tests::depth_to_space_v1_2::get_examples_nchw_float16_2());
+TEST_F(DynamicOutputShapeTest, depth_to_space_v1_2_nchw_float16_2) {
+    Execute(device, ::generated_tests::depth_to_space_v1_2::get_test_model_nchw_float16_2(), true);
 }
 
 TEST_F(ValidationTest, depth_to_space_v1_2_nchw_float16_2) {
-  const Model model = createTestModel_nchw_float16_2();
-  const std::vector<Request> requests = createRequests(::generated_tests::depth_to_space_v1_2::get_examples_nchw_float16_2());
-  validateEverything(model, requests);
+    const Model model = createModel(::generated_tests::depth_to_space_v1_2::get_test_model_nchw_float16_2());
+    const Request request = createRequest(::generated_tests::depth_to_space_v1_2::get_test_model_nchw_float16_2());
+    validateEverything(model, request);
 }
 
 } // namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2
 
+
 namespace generated_tests::depth_to_space_v1_2 {
 
-std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_float16_dynamic_output_shape_2();
+const ::test_helper::TestModel& get_test_model_nchw_float16_all_inputs_as_internal_2();
 
 } // namespace generated_tests::depth_to_space_v1_2
 
 namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2 {
 
-Model createTestModel_nchw_float16_dynamic_output_shape_2();
-bool is_ignored_nchw_float16_dynamic_output_shape_2(int);
-
-TEST_F(DynamicOutputShapeTest, depth_to_space_v1_2_nchw_float16_dynamic_output_shape_2) {
-  Execute(device,
-          createTestModel_nchw_float16_dynamic_output_shape_2,
-          is_ignored_nchw_float16_dynamic_output_shape_2,
-          ::generated_tests::depth_to_space_v1_2::get_examples_nchw_float16_dynamic_output_shape_2(), true);
+TEST_F(GeneratedTest, depth_to_space_v1_2_nchw_float16_all_inputs_as_internal_2) {
+    Execute(device, ::generated_tests::depth_to_space_v1_2::get_test_model_nchw_float16_all_inputs_as_internal_2());
 }
 
-TEST_F(ValidationTest, depth_to_space_v1_2_nchw_float16_dynamic_output_shape_2) {
-  const Model model = createTestModel_nchw_float16_dynamic_output_shape_2();
-  const std::vector<Request> requests = createRequests(::generated_tests::depth_to_space_v1_2::get_examples_nchw_float16_dynamic_output_shape_2());
-  validateEverything(model, requests);
-}
-
-} // namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2
-
-namespace generated_tests::depth_to_space_v1_2 {
-
-std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_float16_all_inputs_as_internal_2();
-
-} // namespace generated_tests::depth_to_space_v1_2
-
-namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2 {
-
-Model createTestModel_nchw_float16_all_inputs_as_internal_2();
-bool is_ignored_nchw_float16_all_inputs_as_internal_2(int);
-
-TEST_F(NeuralnetworksHidlTest, depth_to_space_v1_2_nchw_float16_all_inputs_as_internal_2) {
-  Execute(device,
-          createTestModel_nchw_float16_all_inputs_as_internal_2,
-          is_ignored_nchw_float16_all_inputs_as_internal_2,
-          ::generated_tests::depth_to_space_v1_2::get_examples_nchw_float16_all_inputs_as_internal_2());
+TEST_F(DynamicOutputShapeTest, depth_to_space_v1_2_nchw_float16_all_inputs_as_internal_2) {
+    Execute(device, ::generated_tests::depth_to_space_v1_2::get_test_model_nchw_float16_all_inputs_as_internal_2(), true);
 }
 
 TEST_F(ValidationTest, depth_to_space_v1_2_nchw_float16_all_inputs_as_internal_2) {
-  const Model model = createTestModel_nchw_float16_all_inputs_as_internal_2();
-  const std::vector<Request> requests = createRequests(::generated_tests::depth_to_space_v1_2::get_examples_nchw_float16_all_inputs_as_internal_2());
-  validateEverything(model, requests);
+    const Model model = createModel(::generated_tests::depth_to_space_v1_2::get_test_model_nchw_float16_all_inputs_as_internal_2());
+    const Request request = createRequest(::generated_tests::depth_to_space_v1_2::get_test_model_nchw_float16_all_inputs_as_internal_2());
+    validateEverything(model, request);
 }
 
 } // namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2
 
+
 namespace generated_tests::depth_to_space_v1_2 {
 
-std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_float16_all_inputs_as_internal_dynamic_output_shape_2();
+const ::test_helper::TestModel& get_test_model_nchw_quant8_2();
 
 } // namespace generated_tests::depth_to_space_v1_2
 
 namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2 {
 
-Model createTestModel_nchw_float16_all_inputs_as_internal_dynamic_output_shape_2();
-bool is_ignored_nchw_float16_all_inputs_as_internal_dynamic_output_shape_2(int);
-
-TEST_F(DynamicOutputShapeTest, depth_to_space_v1_2_nchw_float16_all_inputs_as_internal_dynamic_output_shape_2) {
-  Execute(device,
-          createTestModel_nchw_float16_all_inputs_as_internal_dynamic_output_shape_2,
-          is_ignored_nchw_float16_all_inputs_as_internal_dynamic_output_shape_2,
-          ::generated_tests::depth_to_space_v1_2::get_examples_nchw_float16_all_inputs_as_internal_dynamic_output_shape_2(), true);
+TEST_F(GeneratedTest, depth_to_space_v1_2_nchw_quant8_2) {
+    Execute(device, ::generated_tests::depth_to_space_v1_2::get_test_model_nchw_quant8_2());
 }
 
-TEST_F(ValidationTest, depth_to_space_v1_2_nchw_float16_all_inputs_as_internal_dynamic_output_shape_2) {
-  const Model model = createTestModel_nchw_float16_all_inputs_as_internal_dynamic_output_shape_2();
-  const std::vector<Request> requests = createRequests(::generated_tests::depth_to_space_v1_2::get_examples_nchw_float16_all_inputs_as_internal_dynamic_output_shape_2());
-  validateEverything(model, requests);
-}
-
-} // namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2
-
-namespace generated_tests::depth_to_space_v1_2 {
-
-std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_quant8_2();
-
-} // namespace generated_tests::depth_to_space_v1_2
-
-namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2 {
-
-Model createTestModel_nchw_quant8_2();
-bool is_ignored_nchw_quant8_2(int);
-
-TEST_F(NeuralnetworksHidlTest, depth_to_space_v1_2_nchw_quant8_2) {
-  Execute(device,
-          createTestModel_nchw_quant8_2,
-          is_ignored_nchw_quant8_2,
-          ::generated_tests::depth_to_space_v1_2::get_examples_nchw_quant8_2());
+TEST_F(DynamicOutputShapeTest, depth_to_space_v1_2_nchw_quant8_2) {
+    Execute(device, ::generated_tests::depth_to_space_v1_2::get_test_model_nchw_quant8_2(), true);
 }
 
 TEST_F(ValidationTest, depth_to_space_v1_2_nchw_quant8_2) {
-  const Model model = createTestModel_nchw_quant8_2();
-  const std::vector<Request> requests = createRequests(::generated_tests::depth_to_space_v1_2::get_examples_nchw_quant8_2());
-  validateEverything(model, requests);
+    const Model model = createModel(::generated_tests::depth_to_space_v1_2::get_test_model_nchw_quant8_2());
+    const Request request = createRequest(::generated_tests::depth_to_space_v1_2::get_test_model_nchw_quant8_2());
+    validateEverything(model, request);
 }
 
 } // namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2
 
+
 namespace generated_tests::depth_to_space_v1_2 {
 
-std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_quant8_dynamic_output_shape_2();
+const ::test_helper::TestModel& get_test_model_nchw_quant8_all_inputs_as_internal_2();
 
 } // namespace generated_tests::depth_to_space_v1_2
 
 namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2 {
 
-Model createTestModel_nchw_quant8_dynamic_output_shape_2();
-bool is_ignored_nchw_quant8_dynamic_output_shape_2(int);
-
-TEST_F(DynamicOutputShapeTest, depth_to_space_v1_2_nchw_quant8_dynamic_output_shape_2) {
-  Execute(device,
-          createTestModel_nchw_quant8_dynamic_output_shape_2,
-          is_ignored_nchw_quant8_dynamic_output_shape_2,
-          ::generated_tests::depth_to_space_v1_2::get_examples_nchw_quant8_dynamic_output_shape_2(), true);
+TEST_F(GeneratedTest, depth_to_space_v1_2_nchw_quant8_all_inputs_as_internal_2) {
+    Execute(device, ::generated_tests::depth_to_space_v1_2::get_test_model_nchw_quant8_all_inputs_as_internal_2());
 }
 
-TEST_F(ValidationTest, depth_to_space_v1_2_nchw_quant8_dynamic_output_shape_2) {
-  const Model model = createTestModel_nchw_quant8_dynamic_output_shape_2();
-  const std::vector<Request> requests = createRequests(::generated_tests::depth_to_space_v1_2::get_examples_nchw_quant8_dynamic_output_shape_2());
-  validateEverything(model, requests);
-}
-
-} // namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2
-
-namespace generated_tests::depth_to_space_v1_2 {
-
-std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_quant8_all_inputs_as_internal_2();
-
-} // namespace generated_tests::depth_to_space_v1_2
-
-namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2 {
-
-Model createTestModel_nchw_quant8_all_inputs_as_internal_2();
-bool is_ignored_nchw_quant8_all_inputs_as_internal_2(int);
-
-TEST_F(NeuralnetworksHidlTest, depth_to_space_v1_2_nchw_quant8_all_inputs_as_internal_2) {
-  Execute(device,
-          createTestModel_nchw_quant8_all_inputs_as_internal_2,
-          is_ignored_nchw_quant8_all_inputs_as_internal_2,
-          ::generated_tests::depth_to_space_v1_2::get_examples_nchw_quant8_all_inputs_as_internal_2());
+TEST_F(DynamicOutputShapeTest, depth_to_space_v1_2_nchw_quant8_all_inputs_as_internal_2) {
+    Execute(device, ::generated_tests::depth_to_space_v1_2::get_test_model_nchw_quant8_all_inputs_as_internal_2(), true);
 }
 
 TEST_F(ValidationTest, depth_to_space_v1_2_nchw_quant8_all_inputs_as_internal_2) {
-  const Model model = createTestModel_nchw_quant8_all_inputs_as_internal_2();
-  const std::vector<Request> requests = createRequests(::generated_tests::depth_to_space_v1_2::get_examples_nchw_quant8_all_inputs_as_internal_2());
-  validateEverything(model, requests);
+    const Model model = createModel(::generated_tests::depth_to_space_v1_2::get_test_model_nchw_quant8_all_inputs_as_internal_2());
+    const Request request = createRequest(::generated_tests::depth_to_space_v1_2::get_test_model_nchw_quant8_all_inputs_as_internal_2());
+    validateEverything(model, request);
 }
 
 } // namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2
 
+
 namespace generated_tests::depth_to_space_v1_2 {
 
-std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_2();
+const ::test_helper::TestModel& get_test_model_nhwc_3();
 
 } // namespace generated_tests::depth_to_space_v1_2
 
 namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2 {
 
-Model createTestModel_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_2();
-bool is_ignored_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_2(int);
-
-TEST_F(DynamicOutputShapeTest, depth_to_space_v1_2_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_2) {
-  Execute(device,
-          createTestModel_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_2,
-          is_ignored_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_2,
-          ::generated_tests::depth_to_space_v1_2::get_examples_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_2(), true);
+TEST_F(GeneratedTest, depth_to_space_v1_2_nhwc_3) {
+    Execute(device, ::generated_tests::depth_to_space_v1_2::get_test_model_nhwc_3());
 }
 
-TEST_F(ValidationTest, depth_to_space_v1_2_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_2) {
-  const Model model = createTestModel_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_2();
-  const std::vector<Request> requests = createRequests(::generated_tests::depth_to_space_v1_2::get_examples_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_2());
-  validateEverything(model, requests);
-}
-
-} // namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2
-
-namespace generated_tests::depth_to_space_v1_2 {
-
-std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_3();
-
-} // namespace generated_tests::depth_to_space_v1_2
-
-namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2 {
-
-Model createTestModel_nhwc_3();
-bool is_ignored_nhwc_3(int);
-
-TEST_F(NeuralnetworksHidlTest, depth_to_space_v1_2_nhwc_3) {
-  Execute(device,
-          createTestModel_nhwc_3,
-          is_ignored_nhwc_3,
-          ::generated_tests::depth_to_space_v1_2::get_examples_nhwc_3());
+TEST_F(DynamicOutputShapeTest, depth_to_space_v1_2_nhwc_3) {
+    Execute(device, ::generated_tests::depth_to_space_v1_2::get_test_model_nhwc_3(), true);
 }
 
 TEST_F(ValidationTest, depth_to_space_v1_2_nhwc_3) {
-  const Model model = createTestModel_nhwc_3();
-  const std::vector<Request> requests = createRequests(::generated_tests::depth_to_space_v1_2::get_examples_nhwc_3());
-  validateEverything(model, requests);
+    const Model model = createModel(::generated_tests::depth_to_space_v1_2::get_test_model_nhwc_3());
+    const Request request = createRequest(::generated_tests::depth_to_space_v1_2::get_test_model_nhwc_3());
+    validateEverything(model, request);
 }
 
 } // namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2
 
+
 namespace generated_tests::depth_to_space_v1_2 {
 
-std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_dynamic_output_shape_3();
+const ::test_helper::TestModel& get_test_model_nhwc_all_inputs_as_internal_3();
 
 } // namespace generated_tests::depth_to_space_v1_2
 
 namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2 {
 
-Model createTestModel_nhwc_dynamic_output_shape_3();
-bool is_ignored_nhwc_dynamic_output_shape_3(int);
-
-TEST_F(DynamicOutputShapeTest, depth_to_space_v1_2_nhwc_dynamic_output_shape_3) {
-  Execute(device,
-          createTestModel_nhwc_dynamic_output_shape_3,
-          is_ignored_nhwc_dynamic_output_shape_3,
-          ::generated_tests::depth_to_space_v1_2::get_examples_nhwc_dynamic_output_shape_3(), true);
+TEST_F(GeneratedTest, depth_to_space_v1_2_nhwc_all_inputs_as_internal_3) {
+    Execute(device, ::generated_tests::depth_to_space_v1_2::get_test_model_nhwc_all_inputs_as_internal_3());
 }
 
-TEST_F(ValidationTest, depth_to_space_v1_2_nhwc_dynamic_output_shape_3) {
-  const Model model = createTestModel_nhwc_dynamic_output_shape_3();
-  const std::vector<Request> requests = createRequests(::generated_tests::depth_to_space_v1_2::get_examples_nhwc_dynamic_output_shape_3());
-  validateEverything(model, requests);
-}
-
-} // namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2
-
-namespace generated_tests::depth_to_space_v1_2 {
-
-std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_all_inputs_as_internal_3();
-
-} // namespace generated_tests::depth_to_space_v1_2
-
-namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2 {
-
-Model createTestModel_nhwc_all_inputs_as_internal_3();
-bool is_ignored_nhwc_all_inputs_as_internal_3(int);
-
-TEST_F(NeuralnetworksHidlTest, depth_to_space_v1_2_nhwc_all_inputs_as_internal_3) {
-  Execute(device,
-          createTestModel_nhwc_all_inputs_as_internal_3,
-          is_ignored_nhwc_all_inputs_as_internal_3,
-          ::generated_tests::depth_to_space_v1_2::get_examples_nhwc_all_inputs_as_internal_3());
+TEST_F(DynamicOutputShapeTest, depth_to_space_v1_2_nhwc_all_inputs_as_internal_3) {
+    Execute(device, ::generated_tests::depth_to_space_v1_2::get_test_model_nhwc_all_inputs_as_internal_3(), true);
 }
 
 TEST_F(ValidationTest, depth_to_space_v1_2_nhwc_all_inputs_as_internal_3) {
-  const Model model = createTestModel_nhwc_all_inputs_as_internal_3();
-  const std::vector<Request> requests = createRequests(::generated_tests::depth_to_space_v1_2::get_examples_nhwc_all_inputs_as_internal_3());
-  validateEverything(model, requests);
+    const Model model = createModel(::generated_tests::depth_to_space_v1_2::get_test_model_nhwc_all_inputs_as_internal_3());
+    const Request request = createRequest(::generated_tests::depth_to_space_v1_2::get_test_model_nhwc_all_inputs_as_internal_3());
+    validateEverything(model, request);
 }
 
 } // namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2
 
+
 namespace generated_tests::depth_to_space_v1_2 {
 
-std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_all_inputs_as_internal_dynamic_output_shape_3();
+const ::test_helper::TestModel& get_test_model_nhwc_relaxed_3();
 
 } // namespace generated_tests::depth_to_space_v1_2
 
 namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2 {
 
-Model createTestModel_nhwc_all_inputs_as_internal_dynamic_output_shape_3();
-bool is_ignored_nhwc_all_inputs_as_internal_dynamic_output_shape_3(int);
-
-TEST_F(DynamicOutputShapeTest, depth_to_space_v1_2_nhwc_all_inputs_as_internal_dynamic_output_shape_3) {
-  Execute(device,
-          createTestModel_nhwc_all_inputs_as_internal_dynamic_output_shape_3,
-          is_ignored_nhwc_all_inputs_as_internal_dynamic_output_shape_3,
-          ::generated_tests::depth_to_space_v1_2::get_examples_nhwc_all_inputs_as_internal_dynamic_output_shape_3(), true);
+TEST_F(GeneratedTest, depth_to_space_v1_2_nhwc_relaxed_3) {
+    Execute(device, ::generated_tests::depth_to_space_v1_2::get_test_model_nhwc_relaxed_3());
 }
 
-TEST_F(ValidationTest, depth_to_space_v1_2_nhwc_all_inputs_as_internal_dynamic_output_shape_3) {
-  const Model model = createTestModel_nhwc_all_inputs_as_internal_dynamic_output_shape_3();
-  const std::vector<Request> requests = createRequests(::generated_tests::depth_to_space_v1_2::get_examples_nhwc_all_inputs_as_internal_dynamic_output_shape_3());
-  validateEverything(model, requests);
-}
-
-} // namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2
-
-namespace generated_tests::depth_to_space_v1_2 {
-
-std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_relaxed_3();
-
-} // namespace generated_tests::depth_to_space_v1_2
-
-namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2 {
-
-Model createTestModel_nhwc_relaxed_3();
-bool is_ignored_nhwc_relaxed_3(int);
-
-TEST_F(NeuralnetworksHidlTest, depth_to_space_v1_2_nhwc_relaxed_3) {
-  Execute(device,
-          createTestModel_nhwc_relaxed_3,
-          is_ignored_nhwc_relaxed_3,
-          ::generated_tests::depth_to_space_v1_2::get_examples_nhwc_relaxed_3());
+TEST_F(DynamicOutputShapeTest, depth_to_space_v1_2_nhwc_relaxed_3) {
+    Execute(device, ::generated_tests::depth_to_space_v1_2::get_test_model_nhwc_relaxed_3(), true);
 }
 
 TEST_F(ValidationTest, depth_to_space_v1_2_nhwc_relaxed_3) {
-  const Model model = createTestModel_nhwc_relaxed_3();
-  const std::vector<Request> requests = createRequests(::generated_tests::depth_to_space_v1_2::get_examples_nhwc_relaxed_3());
-  validateEverything(model, requests);
+    const Model model = createModel(::generated_tests::depth_to_space_v1_2::get_test_model_nhwc_relaxed_3());
+    const Request request = createRequest(::generated_tests::depth_to_space_v1_2::get_test_model_nhwc_relaxed_3());
+    validateEverything(model, request);
 }
 
 } // namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2
 
+
 namespace generated_tests::depth_to_space_v1_2 {
 
-std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_relaxed_dynamic_output_shape_3();
+const ::test_helper::TestModel& get_test_model_nhwc_relaxed_all_inputs_as_internal_3();
 
 } // namespace generated_tests::depth_to_space_v1_2
 
 namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2 {
 
-Model createTestModel_nhwc_relaxed_dynamic_output_shape_3();
-bool is_ignored_nhwc_relaxed_dynamic_output_shape_3(int);
-
-TEST_F(DynamicOutputShapeTest, depth_to_space_v1_2_nhwc_relaxed_dynamic_output_shape_3) {
-  Execute(device,
-          createTestModel_nhwc_relaxed_dynamic_output_shape_3,
-          is_ignored_nhwc_relaxed_dynamic_output_shape_3,
-          ::generated_tests::depth_to_space_v1_2::get_examples_nhwc_relaxed_dynamic_output_shape_3(), true);
+TEST_F(GeneratedTest, depth_to_space_v1_2_nhwc_relaxed_all_inputs_as_internal_3) {
+    Execute(device, ::generated_tests::depth_to_space_v1_2::get_test_model_nhwc_relaxed_all_inputs_as_internal_3());
 }
 
-TEST_F(ValidationTest, depth_to_space_v1_2_nhwc_relaxed_dynamic_output_shape_3) {
-  const Model model = createTestModel_nhwc_relaxed_dynamic_output_shape_3();
-  const std::vector<Request> requests = createRequests(::generated_tests::depth_to_space_v1_2::get_examples_nhwc_relaxed_dynamic_output_shape_3());
-  validateEverything(model, requests);
-}
-
-} // namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2
-
-namespace generated_tests::depth_to_space_v1_2 {
-
-std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_relaxed_all_inputs_as_internal_3();
-
-} // namespace generated_tests::depth_to_space_v1_2
-
-namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2 {
-
-Model createTestModel_nhwc_relaxed_all_inputs_as_internal_3();
-bool is_ignored_nhwc_relaxed_all_inputs_as_internal_3(int);
-
-TEST_F(NeuralnetworksHidlTest, depth_to_space_v1_2_nhwc_relaxed_all_inputs_as_internal_3) {
-  Execute(device,
-          createTestModel_nhwc_relaxed_all_inputs_as_internal_3,
-          is_ignored_nhwc_relaxed_all_inputs_as_internal_3,
-          ::generated_tests::depth_to_space_v1_2::get_examples_nhwc_relaxed_all_inputs_as_internal_3());
+TEST_F(DynamicOutputShapeTest, depth_to_space_v1_2_nhwc_relaxed_all_inputs_as_internal_3) {
+    Execute(device, ::generated_tests::depth_to_space_v1_2::get_test_model_nhwc_relaxed_all_inputs_as_internal_3(), true);
 }
 
 TEST_F(ValidationTest, depth_to_space_v1_2_nhwc_relaxed_all_inputs_as_internal_3) {
-  const Model model = createTestModel_nhwc_relaxed_all_inputs_as_internal_3();
-  const std::vector<Request> requests = createRequests(::generated_tests::depth_to_space_v1_2::get_examples_nhwc_relaxed_all_inputs_as_internal_3());
-  validateEverything(model, requests);
+    const Model model = createModel(::generated_tests::depth_to_space_v1_2::get_test_model_nhwc_relaxed_all_inputs_as_internal_3());
+    const Request request = createRequest(::generated_tests::depth_to_space_v1_2::get_test_model_nhwc_relaxed_all_inputs_as_internal_3());
+    validateEverything(model, request);
 }
 
 } // namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2
 
+
 namespace generated_tests::depth_to_space_v1_2 {
 
-std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_3();
+const ::test_helper::TestModel& get_test_model_nhwc_float16_3();
 
 } // namespace generated_tests::depth_to_space_v1_2
 
 namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2 {
 
-Model createTestModel_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_3();
-bool is_ignored_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_3(int);
-
-TEST_F(DynamicOutputShapeTest, depth_to_space_v1_2_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_3) {
-  Execute(device,
-          createTestModel_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_3,
-          is_ignored_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_3,
-          ::generated_tests::depth_to_space_v1_2::get_examples_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_3(), true);
+TEST_F(GeneratedTest, depth_to_space_v1_2_nhwc_float16_3) {
+    Execute(device, ::generated_tests::depth_to_space_v1_2::get_test_model_nhwc_float16_3());
 }
 
-TEST_F(ValidationTest, depth_to_space_v1_2_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_3) {
-  const Model model = createTestModel_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_3();
-  const std::vector<Request> requests = createRequests(::generated_tests::depth_to_space_v1_2::get_examples_nhwc_relaxed_all_inputs_as_internal_dynamic_output_shape_3());
-  validateEverything(model, requests);
-}
-
-} // namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2
-
-namespace generated_tests::depth_to_space_v1_2 {
-
-std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_float16_3();
-
-} // namespace generated_tests::depth_to_space_v1_2
-
-namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2 {
-
-Model createTestModel_nhwc_float16_3();
-bool is_ignored_nhwc_float16_3(int);
-
-TEST_F(NeuralnetworksHidlTest, depth_to_space_v1_2_nhwc_float16_3) {
-  Execute(device,
-          createTestModel_nhwc_float16_3,
-          is_ignored_nhwc_float16_3,
-          ::generated_tests::depth_to_space_v1_2::get_examples_nhwc_float16_3());
+TEST_F(DynamicOutputShapeTest, depth_to_space_v1_2_nhwc_float16_3) {
+    Execute(device, ::generated_tests::depth_to_space_v1_2::get_test_model_nhwc_float16_3(), true);
 }
 
 TEST_F(ValidationTest, depth_to_space_v1_2_nhwc_float16_3) {
-  const Model model = createTestModel_nhwc_float16_3();
-  const std::vector<Request> requests = createRequests(::generated_tests::depth_to_space_v1_2::get_examples_nhwc_float16_3());
-  validateEverything(model, requests);
+    const Model model = createModel(::generated_tests::depth_to_space_v1_2::get_test_model_nhwc_float16_3());
+    const Request request = createRequest(::generated_tests::depth_to_space_v1_2::get_test_model_nhwc_float16_3());
+    validateEverything(model, request);
 }
 
 } // namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2
 
+
 namespace generated_tests::depth_to_space_v1_2 {
 
-std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_float16_dynamic_output_shape_3();
+const ::test_helper::TestModel& get_test_model_nhwc_float16_all_inputs_as_internal_3();
 
 } // namespace generated_tests::depth_to_space_v1_2
 
 namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2 {
 
-Model createTestModel_nhwc_float16_dynamic_output_shape_3();
-bool is_ignored_nhwc_float16_dynamic_output_shape_3(int);
-
-TEST_F(DynamicOutputShapeTest, depth_to_space_v1_2_nhwc_float16_dynamic_output_shape_3) {
-  Execute(device,
-          createTestModel_nhwc_float16_dynamic_output_shape_3,
-          is_ignored_nhwc_float16_dynamic_output_shape_3,
-          ::generated_tests::depth_to_space_v1_2::get_examples_nhwc_float16_dynamic_output_shape_3(), true);
+TEST_F(GeneratedTest, depth_to_space_v1_2_nhwc_float16_all_inputs_as_internal_3) {
+    Execute(device, ::generated_tests::depth_to_space_v1_2::get_test_model_nhwc_float16_all_inputs_as_internal_3());
 }
 
-TEST_F(ValidationTest, depth_to_space_v1_2_nhwc_float16_dynamic_output_shape_3) {
-  const Model model = createTestModel_nhwc_float16_dynamic_output_shape_3();
-  const std::vector<Request> requests = createRequests(::generated_tests::depth_to_space_v1_2::get_examples_nhwc_float16_dynamic_output_shape_3());
-  validateEverything(model, requests);
-}
-
-} // namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2
-
-namespace generated_tests::depth_to_space_v1_2 {
-
-std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_float16_all_inputs_as_internal_3();
-
-} // namespace generated_tests::depth_to_space_v1_2
-
-namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2 {
-
-Model createTestModel_nhwc_float16_all_inputs_as_internal_3();
-bool is_ignored_nhwc_float16_all_inputs_as_internal_3(int);
-
-TEST_F(NeuralnetworksHidlTest, depth_to_space_v1_2_nhwc_float16_all_inputs_as_internal_3) {
-  Execute(device,
-          createTestModel_nhwc_float16_all_inputs_as_internal_3,
-          is_ignored_nhwc_float16_all_inputs_as_internal_3,
-          ::generated_tests::depth_to_space_v1_2::get_examples_nhwc_float16_all_inputs_as_internal_3());
+TEST_F(DynamicOutputShapeTest, depth_to_space_v1_2_nhwc_float16_all_inputs_as_internal_3) {
+    Execute(device, ::generated_tests::depth_to_space_v1_2::get_test_model_nhwc_float16_all_inputs_as_internal_3(), true);
 }
 
 TEST_F(ValidationTest, depth_to_space_v1_2_nhwc_float16_all_inputs_as_internal_3) {
-  const Model model = createTestModel_nhwc_float16_all_inputs_as_internal_3();
-  const std::vector<Request> requests = createRequests(::generated_tests::depth_to_space_v1_2::get_examples_nhwc_float16_all_inputs_as_internal_3());
-  validateEverything(model, requests);
+    const Model model = createModel(::generated_tests::depth_to_space_v1_2::get_test_model_nhwc_float16_all_inputs_as_internal_3());
+    const Request request = createRequest(::generated_tests::depth_to_space_v1_2::get_test_model_nhwc_float16_all_inputs_as_internal_3());
+    validateEverything(model, request);
 }
 
 } // namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2
 
+
 namespace generated_tests::depth_to_space_v1_2 {
 
-std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_3();
+const ::test_helper::TestModel& get_test_model_nhwc_quant8_3();
 
 } // namespace generated_tests::depth_to_space_v1_2
 
 namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2 {
 
-Model createTestModel_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_3();
-bool is_ignored_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_3(int);
-
-TEST_F(DynamicOutputShapeTest, depth_to_space_v1_2_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_3) {
-  Execute(device,
-          createTestModel_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_3,
-          is_ignored_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_3,
-          ::generated_tests::depth_to_space_v1_2::get_examples_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_3(), true);
+TEST_F(GeneratedTest, depth_to_space_v1_2_nhwc_quant8_3) {
+    Execute(device, ::generated_tests::depth_to_space_v1_2::get_test_model_nhwc_quant8_3());
 }
 
-TEST_F(ValidationTest, depth_to_space_v1_2_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_3) {
-  const Model model = createTestModel_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_3();
-  const std::vector<Request> requests = createRequests(::generated_tests::depth_to_space_v1_2::get_examples_nhwc_float16_all_inputs_as_internal_dynamic_output_shape_3());
-  validateEverything(model, requests);
-}
-
-} // namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2
-
-namespace generated_tests::depth_to_space_v1_2 {
-
-std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_quant8_3();
-
-} // namespace generated_tests::depth_to_space_v1_2
-
-namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2 {
-
-Model createTestModel_nhwc_quant8_3();
-bool is_ignored_nhwc_quant8_3(int);
-
-TEST_F(NeuralnetworksHidlTest, depth_to_space_v1_2_nhwc_quant8_3) {
-  Execute(device,
-          createTestModel_nhwc_quant8_3,
-          is_ignored_nhwc_quant8_3,
-          ::generated_tests::depth_to_space_v1_2::get_examples_nhwc_quant8_3());
+TEST_F(DynamicOutputShapeTest, depth_to_space_v1_2_nhwc_quant8_3) {
+    Execute(device, ::generated_tests::depth_to_space_v1_2::get_test_model_nhwc_quant8_3(), true);
 }
 
 TEST_F(ValidationTest, depth_to_space_v1_2_nhwc_quant8_3) {
-  const Model model = createTestModel_nhwc_quant8_3();
-  const std::vector<Request> requests = createRequests(::generated_tests::depth_to_space_v1_2::get_examples_nhwc_quant8_3());
-  validateEverything(model, requests);
+    const Model model = createModel(::generated_tests::depth_to_space_v1_2::get_test_model_nhwc_quant8_3());
+    const Request request = createRequest(::generated_tests::depth_to_space_v1_2::get_test_model_nhwc_quant8_3());
+    validateEverything(model, request);
 }
 
 } // namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2
 
+
 namespace generated_tests::depth_to_space_v1_2 {
 
-std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_quant8_dynamic_output_shape_3();
+const ::test_helper::TestModel& get_test_model_nhwc_quant8_all_inputs_as_internal_3();
 
 } // namespace generated_tests::depth_to_space_v1_2
 
 namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2 {
 
-Model createTestModel_nhwc_quant8_dynamic_output_shape_3();
-bool is_ignored_nhwc_quant8_dynamic_output_shape_3(int);
-
-TEST_F(DynamicOutputShapeTest, depth_to_space_v1_2_nhwc_quant8_dynamic_output_shape_3) {
-  Execute(device,
-          createTestModel_nhwc_quant8_dynamic_output_shape_3,
-          is_ignored_nhwc_quant8_dynamic_output_shape_3,
-          ::generated_tests::depth_to_space_v1_2::get_examples_nhwc_quant8_dynamic_output_shape_3(), true);
+TEST_F(GeneratedTest, depth_to_space_v1_2_nhwc_quant8_all_inputs_as_internal_3) {
+    Execute(device, ::generated_tests::depth_to_space_v1_2::get_test_model_nhwc_quant8_all_inputs_as_internal_3());
 }
 
-TEST_F(ValidationTest, depth_to_space_v1_2_nhwc_quant8_dynamic_output_shape_3) {
-  const Model model = createTestModel_nhwc_quant8_dynamic_output_shape_3();
-  const std::vector<Request> requests = createRequests(::generated_tests::depth_to_space_v1_2::get_examples_nhwc_quant8_dynamic_output_shape_3());
-  validateEverything(model, requests);
-}
-
-} // namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2
-
-namespace generated_tests::depth_to_space_v1_2 {
-
-std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_quant8_all_inputs_as_internal_3();
-
-} // namespace generated_tests::depth_to_space_v1_2
-
-namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2 {
-
-Model createTestModel_nhwc_quant8_all_inputs_as_internal_3();
-bool is_ignored_nhwc_quant8_all_inputs_as_internal_3(int);
-
-TEST_F(NeuralnetworksHidlTest, depth_to_space_v1_2_nhwc_quant8_all_inputs_as_internal_3) {
-  Execute(device,
-          createTestModel_nhwc_quant8_all_inputs_as_internal_3,
-          is_ignored_nhwc_quant8_all_inputs_as_internal_3,
-          ::generated_tests::depth_to_space_v1_2::get_examples_nhwc_quant8_all_inputs_as_internal_3());
+TEST_F(DynamicOutputShapeTest, depth_to_space_v1_2_nhwc_quant8_all_inputs_as_internal_3) {
+    Execute(device, ::generated_tests::depth_to_space_v1_2::get_test_model_nhwc_quant8_all_inputs_as_internal_3(), true);
 }
 
 TEST_F(ValidationTest, depth_to_space_v1_2_nhwc_quant8_all_inputs_as_internal_3) {
-  const Model model = createTestModel_nhwc_quant8_all_inputs_as_internal_3();
-  const std::vector<Request> requests = createRequests(::generated_tests::depth_to_space_v1_2::get_examples_nhwc_quant8_all_inputs_as_internal_3());
-  validateEverything(model, requests);
+    const Model model = createModel(::generated_tests::depth_to_space_v1_2::get_test_model_nhwc_quant8_all_inputs_as_internal_3());
+    const Request request = createRequest(::generated_tests::depth_to_space_v1_2::get_test_model_nhwc_quant8_all_inputs_as_internal_3());
+    validateEverything(model, request);
 }
 
 } // namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2
 
+
 namespace generated_tests::depth_to_space_v1_2 {
 
-std::vector<::test_helper::MixedTypedExample>& get_examples_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_3();
+const ::test_helper::TestModel& get_test_model_nchw_3();
 
 } // namespace generated_tests::depth_to_space_v1_2
 
 namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2 {
 
-Model createTestModel_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_3();
-bool is_ignored_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_3(int);
-
-TEST_F(DynamicOutputShapeTest, depth_to_space_v1_2_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_3) {
-  Execute(device,
-          createTestModel_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_3,
-          is_ignored_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_3,
-          ::generated_tests::depth_to_space_v1_2::get_examples_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_3(), true);
+TEST_F(GeneratedTest, depth_to_space_v1_2_nchw_3) {
+    Execute(device, ::generated_tests::depth_to_space_v1_2::get_test_model_nchw_3());
 }
 
-TEST_F(ValidationTest, depth_to_space_v1_2_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_3) {
-  const Model model = createTestModel_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_3();
-  const std::vector<Request> requests = createRequests(::generated_tests::depth_to_space_v1_2::get_examples_nhwc_quant8_all_inputs_as_internal_dynamic_output_shape_3());
-  validateEverything(model, requests);
-}
-
-} // namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2
-
-namespace generated_tests::depth_to_space_v1_2 {
-
-std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_3();
-
-} // namespace generated_tests::depth_to_space_v1_2
-
-namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2 {
-
-Model createTestModel_nchw_3();
-bool is_ignored_nchw_3(int);
-
-TEST_F(NeuralnetworksHidlTest, depth_to_space_v1_2_nchw_3) {
-  Execute(device,
-          createTestModel_nchw_3,
-          is_ignored_nchw_3,
-          ::generated_tests::depth_to_space_v1_2::get_examples_nchw_3());
+TEST_F(DynamicOutputShapeTest, depth_to_space_v1_2_nchw_3) {
+    Execute(device, ::generated_tests::depth_to_space_v1_2::get_test_model_nchw_3(), true);
 }
 
 TEST_F(ValidationTest, depth_to_space_v1_2_nchw_3) {
-  const Model model = createTestModel_nchw_3();
-  const std::vector<Request> requests = createRequests(::generated_tests::depth_to_space_v1_2::get_examples_nchw_3());
-  validateEverything(model, requests);
+    const Model model = createModel(::generated_tests::depth_to_space_v1_2::get_test_model_nchw_3());
+    const Request request = createRequest(::generated_tests::depth_to_space_v1_2::get_test_model_nchw_3());
+    validateEverything(model, request);
 }
 
 } // namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2
 
+
 namespace generated_tests::depth_to_space_v1_2 {
 
-std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_dynamic_output_shape_3();
+const ::test_helper::TestModel& get_test_model_nchw_all_inputs_as_internal_3();
 
 } // namespace generated_tests::depth_to_space_v1_2
 
 namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2 {
 
-Model createTestModel_nchw_dynamic_output_shape_3();
-bool is_ignored_nchw_dynamic_output_shape_3(int);
-
-TEST_F(DynamicOutputShapeTest, depth_to_space_v1_2_nchw_dynamic_output_shape_3) {
-  Execute(device,
-          createTestModel_nchw_dynamic_output_shape_3,
-          is_ignored_nchw_dynamic_output_shape_3,
-          ::generated_tests::depth_to_space_v1_2::get_examples_nchw_dynamic_output_shape_3(), true);
+TEST_F(GeneratedTest, depth_to_space_v1_2_nchw_all_inputs_as_internal_3) {
+    Execute(device, ::generated_tests::depth_to_space_v1_2::get_test_model_nchw_all_inputs_as_internal_3());
 }
 
-TEST_F(ValidationTest, depth_to_space_v1_2_nchw_dynamic_output_shape_3) {
-  const Model model = createTestModel_nchw_dynamic_output_shape_3();
-  const std::vector<Request> requests = createRequests(::generated_tests::depth_to_space_v1_2::get_examples_nchw_dynamic_output_shape_3());
-  validateEverything(model, requests);
-}
-
-} // namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2
-
-namespace generated_tests::depth_to_space_v1_2 {
-
-std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_all_inputs_as_internal_3();
-
-} // namespace generated_tests::depth_to_space_v1_2
-
-namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2 {
-
-Model createTestModel_nchw_all_inputs_as_internal_3();
-bool is_ignored_nchw_all_inputs_as_internal_3(int);
-
-TEST_F(NeuralnetworksHidlTest, depth_to_space_v1_2_nchw_all_inputs_as_internal_3) {
-  Execute(device,
-          createTestModel_nchw_all_inputs_as_internal_3,
-          is_ignored_nchw_all_inputs_as_internal_3,
-          ::generated_tests::depth_to_space_v1_2::get_examples_nchw_all_inputs_as_internal_3());
+TEST_F(DynamicOutputShapeTest, depth_to_space_v1_2_nchw_all_inputs_as_internal_3) {
+    Execute(device, ::generated_tests::depth_to_space_v1_2::get_test_model_nchw_all_inputs_as_internal_3(), true);
 }
 
 TEST_F(ValidationTest, depth_to_space_v1_2_nchw_all_inputs_as_internal_3) {
-  const Model model = createTestModel_nchw_all_inputs_as_internal_3();
-  const std::vector<Request> requests = createRequests(::generated_tests::depth_to_space_v1_2::get_examples_nchw_all_inputs_as_internal_3());
-  validateEverything(model, requests);
+    const Model model = createModel(::generated_tests::depth_to_space_v1_2::get_test_model_nchw_all_inputs_as_internal_3());
+    const Request request = createRequest(::generated_tests::depth_to_space_v1_2::get_test_model_nchw_all_inputs_as_internal_3());
+    validateEverything(model, request);
 }
 
 } // namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2
 
+
 namespace generated_tests::depth_to_space_v1_2 {
 
-std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_all_inputs_as_internal_dynamic_output_shape_3();
+const ::test_helper::TestModel& get_test_model_nchw_relaxed_3();
 
 } // namespace generated_tests::depth_to_space_v1_2
 
 namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2 {
 
-Model createTestModel_nchw_all_inputs_as_internal_dynamic_output_shape_3();
-bool is_ignored_nchw_all_inputs_as_internal_dynamic_output_shape_3(int);
-
-TEST_F(DynamicOutputShapeTest, depth_to_space_v1_2_nchw_all_inputs_as_internal_dynamic_output_shape_3) {
-  Execute(device,
-          createTestModel_nchw_all_inputs_as_internal_dynamic_output_shape_3,
-          is_ignored_nchw_all_inputs_as_internal_dynamic_output_shape_3,
-          ::generated_tests::depth_to_space_v1_2::get_examples_nchw_all_inputs_as_internal_dynamic_output_shape_3(), true);
+TEST_F(GeneratedTest, depth_to_space_v1_2_nchw_relaxed_3) {
+    Execute(device, ::generated_tests::depth_to_space_v1_2::get_test_model_nchw_relaxed_3());
 }
 
-TEST_F(ValidationTest, depth_to_space_v1_2_nchw_all_inputs_as_internal_dynamic_output_shape_3) {
-  const Model model = createTestModel_nchw_all_inputs_as_internal_dynamic_output_shape_3();
-  const std::vector<Request> requests = createRequests(::generated_tests::depth_to_space_v1_2::get_examples_nchw_all_inputs_as_internal_dynamic_output_shape_3());
-  validateEverything(model, requests);
-}
-
-} // namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2
-
-namespace generated_tests::depth_to_space_v1_2 {
-
-std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_relaxed_3();
-
-} // namespace generated_tests::depth_to_space_v1_2
-
-namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2 {
-
-Model createTestModel_nchw_relaxed_3();
-bool is_ignored_nchw_relaxed_3(int);
-
-TEST_F(NeuralnetworksHidlTest, depth_to_space_v1_2_nchw_relaxed_3) {
-  Execute(device,
-          createTestModel_nchw_relaxed_3,
-          is_ignored_nchw_relaxed_3,
-          ::generated_tests::depth_to_space_v1_2::get_examples_nchw_relaxed_3());
+TEST_F(DynamicOutputShapeTest, depth_to_space_v1_2_nchw_relaxed_3) {
+    Execute(device, ::generated_tests::depth_to_space_v1_2::get_test_model_nchw_relaxed_3(), true);
 }
 
 TEST_F(ValidationTest, depth_to_space_v1_2_nchw_relaxed_3) {
-  const Model model = createTestModel_nchw_relaxed_3();
-  const std::vector<Request> requests = createRequests(::generated_tests::depth_to_space_v1_2::get_examples_nchw_relaxed_3());
-  validateEverything(model, requests);
+    const Model model = createModel(::generated_tests::depth_to_space_v1_2::get_test_model_nchw_relaxed_3());
+    const Request request = createRequest(::generated_tests::depth_to_space_v1_2::get_test_model_nchw_relaxed_3());
+    validateEverything(model, request);
 }
 
 } // namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2
 
+
 namespace generated_tests::depth_to_space_v1_2 {
 
-std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_relaxed_dynamic_output_shape_3();
+const ::test_helper::TestModel& get_test_model_nchw_relaxed_all_inputs_as_internal_3();
 
 } // namespace generated_tests::depth_to_space_v1_2
 
 namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2 {
 
-Model createTestModel_nchw_relaxed_dynamic_output_shape_3();
-bool is_ignored_nchw_relaxed_dynamic_output_shape_3(int);
-
-TEST_F(DynamicOutputShapeTest, depth_to_space_v1_2_nchw_relaxed_dynamic_output_shape_3) {
-  Execute(device,
-          createTestModel_nchw_relaxed_dynamic_output_shape_3,
-          is_ignored_nchw_relaxed_dynamic_output_shape_3,
-          ::generated_tests::depth_to_space_v1_2::get_examples_nchw_relaxed_dynamic_output_shape_3(), true);
+TEST_F(GeneratedTest, depth_to_space_v1_2_nchw_relaxed_all_inputs_as_internal_3) {
+    Execute(device, ::generated_tests::depth_to_space_v1_2::get_test_model_nchw_relaxed_all_inputs_as_internal_3());
 }
 
-TEST_F(ValidationTest, depth_to_space_v1_2_nchw_relaxed_dynamic_output_shape_3) {
-  const Model model = createTestModel_nchw_relaxed_dynamic_output_shape_3();
-  const std::vector<Request> requests = createRequests(::generated_tests::depth_to_space_v1_2::get_examples_nchw_relaxed_dynamic_output_shape_3());
-  validateEverything(model, requests);
-}
-
-} // namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2
-
-namespace generated_tests::depth_to_space_v1_2 {
-
-std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_relaxed_all_inputs_as_internal_3();
-
-} // namespace generated_tests::depth_to_space_v1_2
-
-namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2 {
-
-Model createTestModel_nchw_relaxed_all_inputs_as_internal_3();
-bool is_ignored_nchw_relaxed_all_inputs_as_internal_3(int);
-
-TEST_F(NeuralnetworksHidlTest, depth_to_space_v1_2_nchw_relaxed_all_inputs_as_internal_3) {
-  Execute(device,
-          createTestModel_nchw_relaxed_all_inputs_as_internal_3,
-          is_ignored_nchw_relaxed_all_inputs_as_internal_3,
-          ::generated_tests::depth_to_space_v1_2::get_examples_nchw_relaxed_all_inputs_as_internal_3());
+TEST_F(DynamicOutputShapeTest, depth_to_space_v1_2_nchw_relaxed_all_inputs_as_internal_3) {
+    Execute(device, ::generated_tests::depth_to_space_v1_2::get_test_model_nchw_relaxed_all_inputs_as_internal_3(), true);
 }
 
 TEST_F(ValidationTest, depth_to_space_v1_2_nchw_relaxed_all_inputs_as_internal_3) {
-  const Model model = createTestModel_nchw_relaxed_all_inputs_as_internal_3();
-  const std::vector<Request> requests = createRequests(::generated_tests::depth_to_space_v1_2::get_examples_nchw_relaxed_all_inputs_as_internal_3());
-  validateEverything(model, requests);
+    const Model model = createModel(::generated_tests::depth_to_space_v1_2::get_test_model_nchw_relaxed_all_inputs_as_internal_3());
+    const Request request = createRequest(::generated_tests::depth_to_space_v1_2::get_test_model_nchw_relaxed_all_inputs_as_internal_3());
+    validateEverything(model, request);
 }
 
 } // namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2
 
+
 namespace generated_tests::depth_to_space_v1_2 {
 
-std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_3();
+const ::test_helper::TestModel& get_test_model_nchw_float16_3();
 
 } // namespace generated_tests::depth_to_space_v1_2
 
 namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2 {
 
-Model createTestModel_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_3();
-bool is_ignored_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_3(int);
-
-TEST_F(DynamicOutputShapeTest, depth_to_space_v1_2_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_3) {
-  Execute(device,
-          createTestModel_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_3,
-          is_ignored_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_3,
-          ::generated_tests::depth_to_space_v1_2::get_examples_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_3(), true);
+TEST_F(GeneratedTest, depth_to_space_v1_2_nchw_float16_3) {
+    Execute(device, ::generated_tests::depth_to_space_v1_2::get_test_model_nchw_float16_3());
 }
 
-TEST_F(ValidationTest, depth_to_space_v1_2_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_3) {
-  const Model model = createTestModel_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_3();
-  const std::vector<Request> requests = createRequests(::generated_tests::depth_to_space_v1_2::get_examples_nchw_relaxed_all_inputs_as_internal_dynamic_output_shape_3());
-  validateEverything(model, requests);
-}
-
-} // namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2
-
-namespace generated_tests::depth_to_space_v1_2 {
-
-std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_float16_3();
-
-} // namespace generated_tests::depth_to_space_v1_2
-
-namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2 {
-
-Model createTestModel_nchw_float16_3();
-bool is_ignored_nchw_float16_3(int);
-
-TEST_F(NeuralnetworksHidlTest, depth_to_space_v1_2_nchw_float16_3) {
-  Execute(device,
-          createTestModel_nchw_float16_3,
-          is_ignored_nchw_float16_3,
-          ::generated_tests::depth_to_space_v1_2::get_examples_nchw_float16_3());
+TEST_F(DynamicOutputShapeTest, depth_to_space_v1_2_nchw_float16_3) {
+    Execute(device, ::generated_tests::depth_to_space_v1_2::get_test_model_nchw_float16_3(), true);
 }
 
 TEST_F(ValidationTest, depth_to_space_v1_2_nchw_float16_3) {
-  const Model model = createTestModel_nchw_float16_3();
-  const std::vector<Request> requests = createRequests(::generated_tests::depth_to_space_v1_2::get_examples_nchw_float16_3());
-  validateEverything(model, requests);
+    const Model model = createModel(::generated_tests::depth_to_space_v1_2::get_test_model_nchw_float16_3());
+    const Request request = createRequest(::generated_tests::depth_to_space_v1_2::get_test_model_nchw_float16_3());
+    validateEverything(model, request);
 }
 
 } // namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2
 
+
 namespace generated_tests::depth_to_space_v1_2 {
 
-std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_float16_dynamic_output_shape_3();
+const ::test_helper::TestModel& get_test_model_nchw_float16_all_inputs_as_internal_3();
 
 } // namespace generated_tests::depth_to_space_v1_2
 
 namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2 {
 
-Model createTestModel_nchw_float16_dynamic_output_shape_3();
-bool is_ignored_nchw_float16_dynamic_output_shape_3(int);
-
-TEST_F(DynamicOutputShapeTest, depth_to_space_v1_2_nchw_float16_dynamic_output_shape_3) {
-  Execute(device,
-          createTestModel_nchw_float16_dynamic_output_shape_3,
-          is_ignored_nchw_float16_dynamic_output_shape_3,
-          ::generated_tests::depth_to_space_v1_2::get_examples_nchw_float16_dynamic_output_shape_3(), true);
+TEST_F(GeneratedTest, depth_to_space_v1_2_nchw_float16_all_inputs_as_internal_3) {
+    Execute(device, ::generated_tests::depth_to_space_v1_2::get_test_model_nchw_float16_all_inputs_as_internal_3());
 }
 
-TEST_F(ValidationTest, depth_to_space_v1_2_nchw_float16_dynamic_output_shape_3) {
-  const Model model = createTestModel_nchw_float16_dynamic_output_shape_3();
-  const std::vector<Request> requests = createRequests(::generated_tests::depth_to_space_v1_2::get_examples_nchw_float16_dynamic_output_shape_3());
-  validateEverything(model, requests);
-}
-
-} // namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2
-
-namespace generated_tests::depth_to_space_v1_2 {
-
-std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_float16_all_inputs_as_internal_3();
-
-} // namespace generated_tests::depth_to_space_v1_2
-
-namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2 {
-
-Model createTestModel_nchw_float16_all_inputs_as_internal_3();
-bool is_ignored_nchw_float16_all_inputs_as_internal_3(int);
-
-TEST_F(NeuralnetworksHidlTest, depth_to_space_v1_2_nchw_float16_all_inputs_as_internal_3) {
-  Execute(device,
-          createTestModel_nchw_float16_all_inputs_as_internal_3,
-          is_ignored_nchw_float16_all_inputs_as_internal_3,
-          ::generated_tests::depth_to_space_v1_2::get_examples_nchw_float16_all_inputs_as_internal_3());
+TEST_F(DynamicOutputShapeTest, depth_to_space_v1_2_nchw_float16_all_inputs_as_internal_3) {
+    Execute(device, ::generated_tests::depth_to_space_v1_2::get_test_model_nchw_float16_all_inputs_as_internal_3(), true);
 }
 
 TEST_F(ValidationTest, depth_to_space_v1_2_nchw_float16_all_inputs_as_internal_3) {
-  const Model model = createTestModel_nchw_float16_all_inputs_as_internal_3();
-  const std::vector<Request> requests = createRequests(::generated_tests::depth_to_space_v1_2::get_examples_nchw_float16_all_inputs_as_internal_3());
-  validateEverything(model, requests);
+    const Model model = createModel(::generated_tests::depth_to_space_v1_2::get_test_model_nchw_float16_all_inputs_as_internal_3());
+    const Request request = createRequest(::generated_tests::depth_to_space_v1_2::get_test_model_nchw_float16_all_inputs_as_internal_3());
+    validateEverything(model, request);
 }
 
 } // namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2
 
+
 namespace generated_tests::depth_to_space_v1_2 {
 
-std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_float16_all_inputs_as_internal_dynamic_output_shape_3();
+const ::test_helper::TestModel& get_test_model_nchw_quant8_3();
 
 } // namespace generated_tests::depth_to_space_v1_2
 
 namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2 {
 
-Model createTestModel_nchw_float16_all_inputs_as_internal_dynamic_output_shape_3();
-bool is_ignored_nchw_float16_all_inputs_as_internal_dynamic_output_shape_3(int);
-
-TEST_F(DynamicOutputShapeTest, depth_to_space_v1_2_nchw_float16_all_inputs_as_internal_dynamic_output_shape_3) {
-  Execute(device,
-          createTestModel_nchw_float16_all_inputs_as_internal_dynamic_output_shape_3,
-          is_ignored_nchw_float16_all_inputs_as_internal_dynamic_output_shape_3,
-          ::generated_tests::depth_to_space_v1_2::get_examples_nchw_float16_all_inputs_as_internal_dynamic_output_shape_3(), true);
+TEST_F(GeneratedTest, depth_to_space_v1_2_nchw_quant8_3) {
+    Execute(device, ::generated_tests::depth_to_space_v1_2::get_test_model_nchw_quant8_3());
 }
 
-TEST_F(ValidationTest, depth_to_space_v1_2_nchw_float16_all_inputs_as_internal_dynamic_output_shape_3) {
-  const Model model = createTestModel_nchw_float16_all_inputs_as_internal_dynamic_output_shape_3();
-  const std::vector<Request> requests = createRequests(::generated_tests::depth_to_space_v1_2::get_examples_nchw_float16_all_inputs_as_internal_dynamic_output_shape_3());
-  validateEverything(model, requests);
-}
-
-} // namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2
-
-namespace generated_tests::depth_to_space_v1_2 {
-
-std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_quant8_3();
-
-} // namespace generated_tests::depth_to_space_v1_2
-
-namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2 {
-
-Model createTestModel_nchw_quant8_3();
-bool is_ignored_nchw_quant8_3(int);
-
-TEST_F(NeuralnetworksHidlTest, depth_to_space_v1_2_nchw_quant8_3) {
-  Execute(device,
-          createTestModel_nchw_quant8_3,
-          is_ignored_nchw_quant8_3,
-          ::generated_tests::depth_to_space_v1_2::get_examples_nchw_quant8_3());
+TEST_F(DynamicOutputShapeTest, depth_to_space_v1_2_nchw_quant8_3) {
+    Execute(device, ::generated_tests::depth_to_space_v1_2::get_test_model_nchw_quant8_3(), true);
 }
 
 TEST_F(ValidationTest, depth_to_space_v1_2_nchw_quant8_3) {
-  const Model model = createTestModel_nchw_quant8_3();
-  const std::vector<Request> requests = createRequests(::generated_tests::depth_to_space_v1_2::get_examples_nchw_quant8_3());
-  validateEverything(model, requests);
+    const Model model = createModel(::generated_tests::depth_to_space_v1_2::get_test_model_nchw_quant8_3());
+    const Request request = createRequest(::generated_tests::depth_to_space_v1_2::get_test_model_nchw_quant8_3());
+    validateEverything(model, request);
 }
 
 } // namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2
 
+
 namespace generated_tests::depth_to_space_v1_2 {
 
-std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_quant8_dynamic_output_shape_3();
+const ::test_helper::TestModel& get_test_model_nchw_quant8_all_inputs_as_internal_3();
 
 } // namespace generated_tests::depth_to_space_v1_2
 
 namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2 {
 
-Model createTestModel_nchw_quant8_dynamic_output_shape_3();
-bool is_ignored_nchw_quant8_dynamic_output_shape_3(int);
-
-TEST_F(DynamicOutputShapeTest, depth_to_space_v1_2_nchw_quant8_dynamic_output_shape_3) {
-  Execute(device,
-          createTestModel_nchw_quant8_dynamic_output_shape_3,
-          is_ignored_nchw_quant8_dynamic_output_shape_3,
-          ::generated_tests::depth_to_space_v1_2::get_examples_nchw_quant8_dynamic_output_shape_3(), true);
+TEST_F(GeneratedTest, depth_to_space_v1_2_nchw_quant8_all_inputs_as_internal_3) {
+    Execute(device, ::generated_tests::depth_to_space_v1_2::get_test_model_nchw_quant8_all_inputs_as_internal_3());
 }
 
-TEST_F(ValidationTest, depth_to_space_v1_2_nchw_quant8_dynamic_output_shape_3) {
-  const Model model = createTestModel_nchw_quant8_dynamic_output_shape_3();
-  const std::vector<Request> requests = createRequests(::generated_tests::depth_to_space_v1_2::get_examples_nchw_quant8_dynamic_output_shape_3());
-  validateEverything(model, requests);
-}
-
-} // namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2
-
-namespace generated_tests::depth_to_space_v1_2 {
-
-std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_quant8_all_inputs_as_internal_3();
-
-} // namespace generated_tests::depth_to_space_v1_2
-
-namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2 {
-
-Model createTestModel_nchw_quant8_all_inputs_as_internal_3();
-bool is_ignored_nchw_quant8_all_inputs_as_internal_3(int);
-
-TEST_F(NeuralnetworksHidlTest, depth_to_space_v1_2_nchw_quant8_all_inputs_as_internal_3) {
-  Execute(device,
-          createTestModel_nchw_quant8_all_inputs_as_internal_3,
-          is_ignored_nchw_quant8_all_inputs_as_internal_3,
-          ::generated_tests::depth_to_space_v1_2::get_examples_nchw_quant8_all_inputs_as_internal_3());
+TEST_F(DynamicOutputShapeTest, depth_to_space_v1_2_nchw_quant8_all_inputs_as_internal_3) {
+    Execute(device, ::generated_tests::depth_to_space_v1_2::get_test_model_nchw_quant8_all_inputs_as_internal_3(), true);
 }
 
 TEST_F(ValidationTest, depth_to_space_v1_2_nchw_quant8_all_inputs_as_internal_3) {
-  const Model model = createTestModel_nchw_quant8_all_inputs_as_internal_3();
-  const std::vector<Request> requests = createRequests(::generated_tests::depth_to_space_v1_2::get_examples_nchw_quant8_all_inputs_as_internal_3());
-  validateEverything(model, requests);
-}
-
-} // namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2
-
-namespace generated_tests::depth_to_space_v1_2 {
-
-std::vector<::test_helper::MixedTypedExample>& get_examples_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_3();
-
-} // namespace generated_tests::depth_to_space_v1_2
-
-namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2 {
-
-Model createTestModel_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_3();
-bool is_ignored_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_3(int);
-
-TEST_F(DynamicOutputShapeTest, depth_to_space_v1_2_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_3) {
-  Execute(device,
-          createTestModel_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_3,
-          is_ignored_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_3,
-          ::generated_tests::depth_to_space_v1_2::get_examples_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_3(), true);
-}
-
-TEST_F(ValidationTest, depth_to_space_v1_2_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_3) {
-  const Model model = createTestModel_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_3();
-  const std::vector<Request> requests = createRequests(::generated_tests::depth_to_space_v1_2::get_examples_nchw_quant8_all_inputs_as_internal_dynamic_output_shape_3());
-  validateEverything(model, requests);
+    const Model model = createModel(::generated_tests::depth_to_space_v1_2::get_test_model_nchw_quant8_all_inputs_as_internal_3());
+    const Request request = createRequest(::generated_tests::depth_to_space_v1_2::get_test_model_nchw_quant8_all_inputs_as_internal_3());
+    validateEverything(model, request);
 }
 
 } // namespace android::hardware::neuralnetworks::V1_2::generated_tests::depth_to_space_v1_2
