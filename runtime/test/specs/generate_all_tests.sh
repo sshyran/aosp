@@ -27,7 +27,6 @@ for source_version in $NNAPI_VERSIONS; do
   mkdir -p "$cts_dir"
   "$CTS_GENERATOR" "specs/$source_version" \
     --test="$cts_dir" \
-    --model="$cts_dir" \
     --example="$generated_dir" \
     "$@"
   for target_version in $NNAPI_VERSIONS; do
@@ -38,7 +37,6 @@ for source_version in $NNAPI_VERSIONS; do
     mkdir -p "$vts_dir"
     "$VTS_GENERATOR" "specs/$source_version" \
       --test="$vts_dir" \
-      --model="$vts_dir" \
       --target_hal_version="$target_version" \
       "$@"
   done
