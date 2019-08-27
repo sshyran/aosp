@@ -14,16 +14,16 @@
  * limitations under the License.
  */
 
-#include "TestHarness.h"
-#include "TestNeuralNetworksWrapper.h"
-
 #include <gtest/gtest.h>
 
+#include <cmath>
+#include <string>
 #include <tuple>
 #include <vector>
 
+#include "TestNeuralNetworksWrapper.h"
+
 using namespace android::nn::test_wrapper;
-using namespace test_helper;
 
 namespace {
 
@@ -87,34 +87,46 @@ class UnknownDimensionsTest : public ::testing::TestWithParam<OperandParams> {
     void TestAll();
 
     template <typename T>
-    void CompareResults(std::map<int, std::vector<T>>& expected,
-                        std::map<int, std::vector<T>>& actual);
+    void CompareResults(const std::vector<T>& expected, const std::vector<T>& actual);
 };
 
+template <typename T>
+void CompareGeneric(const std::vector<T>& golden, const std::vector<T>& test,
+                    std::function<void(T, T)> cmp) {
+    ASSERT_EQ(golden.size(), test.size());
+    for (uint32_t i = 0; i < golden.size(); i++) {
+        SCOPED_TRACE(testing::Message() << "When comparing element " << i);
+        cmp(golden[i], test[i]);
+    }
+}
+
+constexpr size_t gMaximumNumberOfErrorMessages = 10;
+
 template <>
-void UnknownDimensionsTest::CompareResults<float>(std::map<int, std::vector<float>>& golden,
-                                                  std::map<int, std::vector<float>>& test) {
+void UnknownDimensionsTest::CompareResults<float>(const std::vector<float>& golden,
+                                                  const std::vector<float>& test) {
     size_t totalNumberOfErrors = 0;
     float fpAtol = 1e-5f, fpRtol = 1e-5f;
-    compare_<float>(golden, test,
-                    [&totalNumberOfErrors, fpAtol, fpRtol](float expected, float actual) {
-                        // Compute the range based on both absolute tolerance and relative tolerance
-                        float fpRange = fpAtol + fpRtol * std::abs(expected);
-                        if (totalNumberOfErrors < gMaximumNumberOfErrorMessages) {
-                            EXPECT_NEAR(expected, actual, fpRange);
-                        }
-                        if (std::abs(expected - actual) > fpRange) {
-                            totalNumberOfErrors++;
-                        }
-                    });
+    CompareGeneric<float>(golden, test,
+                          [&totalNumberOfErrors, fpAtol, fpRtol](float expected, float actual) {
+                              // Compute the range based on both absolute tolerance and relative
+                              // tolerance
+                              float fpRange = fpAtol + fpRtol * std::abs(expected);
+                              if (totalNumberOfErrors < gMaximumNumberOfErrorMessages) {
+                                  EXPECT_NEAR(expected, actual, fpRange);
+                              }
+                              if (std::abs(expected - actual) > fpRange) {
+                                  totalNumberOfErrors++;
+                              }
+                          });
     EXPECT_EQ(size_t{0}, totalNumberOfErrors);
 }
 
 template <>
-void UnknownDimensionsTest::CompareResults<uint8_t>(std::map<int, std::vector<uint8_t>>& golden,
-                                                    std::map<int, std::vector<uint8_t>>& test) {
+void UnknownDimensionsTest::CompareResults<uint8_t>(const std::vector<uint8_t>& golden,
+                                                    const std::vector<uint8_t>& test) {
     size_t totalNumberOfErrors = 0;
-    compare_<uint8_t>(golden, test, [&totalNumberOfErrors](uint8_t expected, uint8_t actual) {
+    CompareGeneric<uint8_t>(golden, test, [&totalNumberOfErrors](uint8_t expected, uint8_t actual) {
         if (totalNumberOfErrors < gMaximumNumberOfErrorMessages) {
             EXPECT_NEAR(expected, actual, 1);
         }
@@ -126,22 +138,23 @@ void UnknownDimensionsTest::CompareResults<uint8_t>(std::map<int, std::vector<ui
 }
 
 template <>
-void UnknownDimensionsTest::CompareResults<_Float16>(std::map<int, std::vector<_Float16>>& golden,
-                                                     std::map<int, std::vector<_Float16>>& test) {
+void UnknownDimensionsTest::CompareResults<_Float16>(const std::vector<_Float16>& golden,
+                                                     const std::vector<_Float16>& test) {
     size_t totalNumberOfErrors = 0;
     float fpAtol = 5.0f * 0.0009765625f, fpRtol = 5.0f * 0.0009765625f;
-    compare_<_Float16>(golden, test,
-                       [&totalNumberOfErrors, fpAtol, fpRtol](_Float16 expected, _Float16 actual) {
-                           // Compute the range based on both absolute tolerance and relative
-                           // tolerance
-                           float fpRange = fpAtol + fpRtol * std::abs(static_cast<float>(expected));
-                           if (totalNumberOfErrors < gMaximumNumberOfErrorMessages) {
-                               EXPECT_NEAR(expected, actual, fpRange);
-                           }
-                           if (std::abs(static_cast<float>(expected - actual)) > fpRange) {
-                               totalNumberOfErrors++;
-                           }
-                       });
+    CompareGeneric<_Float16>(
+            golden, test,
+            [&totalNumberOfErrors, fpAtol, fpRtol](_Float16 expected, _Float16 actual) {
+                // Compute the range based on both absolute tolerance and relative
+                // tolerance
+                float fpRange = fpAtol + fpRtol * std::abs(static_cast<float>(expected));
+                if (totalNumberOfErrors < gMaximumNumberOfErrorMessages) {
+                    EXPECT_NEAR(expected, actual, fpRange);
+                }
+                if (std::abs(static_cast<float>(expected - actual)) > fpRange) {
+                    totalNumberOfErrors++;
+                }
+            });
     EXPECT_EQ(size_t{0}, totalNumberOfErrors);
 }
 
@@ -288,11 +301,9 @@ void UnknownDimensionsTest::TestOne(const OperandParams& paramsForInput0,
         return;
     }
 
-    typedef std::vector<T> vec;
-    typedef std::map<int, vec> Operands;
     constexpr size_t count = sizeof(fives) / sizeof(fives[0][0]);
-    Operands expected_opds{{0, vec{&fives[0][0], &fives[0][0] + count}}};
-    Operands actual_opds{{0, vec{&actual[0][0], &actual[0][0] + count}}};
+    std::vector<T> expected_opds(&fives[0][0], &fives[0][0] + count);
+    std::vector<T> actual_opds(&actual[0][0], &actual[0][0] + count);
     CompareResults(expected_opds, actual_opds);
 }
 
