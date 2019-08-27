@@ -44,4 +44,4 @@ example0 = {
 
 # All dimensions, with all possible axis parameter
 Model().Operation("L2_NORMALIZATION", i1, axis).To(o1)
-Example(example0).AddRelaxed().AddAllDimsAndAxis(i1, o1, axis).AddVariations("relaxed", "float16", quant8)
+Example(example0).AddAllDimsAndAxis(i1, o1, axis).AddVariations("relaxed", "float16", quant8)
