@@ -68,10 +68,14 @@ cc_defaults {
         "TestValidateOperations.cpp",
         "TestValidation.cpp",
         "TestWrapper.cpp",
-        "generated/spec_V1_*/*.example.cpp",
     ],
     static_libs: [
         "libgmock",
+    ],
+    whole_static_libs: [
+        "neuralnetworks_generated_V1_0_example",
+        "neuralnetworks_generated_V1_1_example",
+        "neuralnetworks_generated_V1_2_example",
     ],
     cflags: [
         "-UNDEBUG",
@@ -217,7 +221,6 @@ cc_defaults {
         "TestGenerated.cpp",
         "TestMain.cpp",
         "TestNeuralNetworksWrapper.cpp",
-        "generated/spec_V1_*/*.example.cpp",
     ],
     cflags: [
         "-DNNTEST_MULTITHREADED",
@@ -227,6 +230,11 @@ cc_defaults {
         "libgmock",
         "libneuralnetworks",
         "libneuralnetworks_common",
+    ],
+    whole_static_libs: [
+        "neuralnetworks_generated_V1_0_example",
+        "neuralnetworks_generated_V1_1_example",
+        "neuralnetworks_generated_V1_2_example",
     ],
     shared_libs: [
         "libcutils",
@@ -299,25 +307,22 @@ cc_library_static {
     stl: "c++_static",
 }
 
-filegroup {
-    name: "VtsHalNeuralNetworksV1_0_all_generated_tests",
-    srcs: [
-        "generated/spec_V1_0/*.example.cpp",
-    ],
+cc_library_static {
+    name: "neuralnetworks_generated_V1_0_example",
+    srcs: ["generated/spec_V1_0/*.example.cpp"],
+    static_libs: ["libneuralnetworks_generated_test_harness"],
 }
 
-filegroup {
-    name: "VtsHalNeuralNetworksV1_1_all_generated_tests",
-    srcs: [
-        "generated/spec_V1_1/*.example.cpp",
-    ],
+cc_library_static {
+    name: "neuralnetworks_generated_V1_1_example",
+    srcs: ["generated/spec_V1_1/*.example.cpp"],
+    static_libs: ["libneuralnetworks_generated_test_harness"],
 }
 
-filegroup {
-    name: "VtsHalNeuralNetworksV1_2_all_generated_tests",
-    srcs: [
-        "generated/spec_V1_2/*.example.cpp",
-    ],
+cc_library_static {
+    name: "neuralnetworks_generated_V1_2_example",
+    srcs: ["generated/spec_V1_2/*.example.cpp"],
+    static_libs: ["libneuralnetworks_generated_test_harness"],
 }
 
 // CompilationCachingTests in VtsHalNeuralnetworksV1_2TargetTest depend on MobileNets.
