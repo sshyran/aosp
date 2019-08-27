@@ -63,8 +63,6 @@ namespace generated_tests {
 
 class GeneratedTests : public GENERATED_TESTS_BASE {
    protected:
-    GeneratedTests(bool expectFailure = false) : mExpectFailure(expectFailure) {}
-
     virtual void SetUp() override;
     virtual void TearDown() override;
 
@@ -79,6 +77,7 @@ class GeneratedTests : public GENERATED_TESTS_BASE {
     std::string mCacheDir;
     std::vector<uint8_t> mToken;
     bool mTestCompilationCaching = false;
+    bool mTestDynamicOutputShape = false;
     bool mExpectFailure = false;
 #ifdef NNTEST_COMPUTE_MODE
     // SetUp() uses Execution::setComputeMode() to establish a new ComputeMode,
@@ -90,16 +89,22 @@ class GeneratedTests : public GENERATED_TESTS_BASE {
 };
 
 // Tag for the dynamic output shape tests
-class DynamicOutputShapeTest : public GeneratedTests {};
+class DynamicOutputShapeTest : public GeneratedTests {
+   protected:
+    DynamicOutputShapeTest() { mTestDynamicOutputShape = true; }
+};
 
 // Tag for the generated validation tests
 class GeneratedValidationTests : public GeneratedTests {
    protected:
-    GeneratedValidationTests() : GeneratedTests(/*expectFailure=*/true) {}
+    GeneratedValidationTests() { mExpectFailure = true; }
 };
 
 // Convert TestModel to NDK model.
-void createModel(const TestModel& testModel, Model* model);
+void createModel(const TestModel& testModel, bool testDynamicOutputShape, Model* model);
+inline void createModel(const TestModel& testModel, Model* model) {
+    createModel(testModel, /*testDynamicOutputShape=*/false, model);
+}
 
 }  // namespace generated_tests
 

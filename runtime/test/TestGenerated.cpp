@@ -15,12 +15,12 @@
  */
 
 #include "TestGenerated.h"
-#include "TestHarness.h"
-
-#include <gtest/gtest.h>
 
 #include <ftw.h>
+#include <gtest/gtest.h>
 #include <unistd.h>
+
+#include <algorithm>
 #include <cassert>
 #include <cmath>
 #include <fstream>
@@ -28,6 +28,8 @@
 #include <map>
 #include <thread>
 #include <vector>
+
+#include "TestHarness.h"
 
 // Systrace is not available from CTS tests due to platform layering
 // constraints. We reuse the NNTEST_ONLY_PUBLIC_API flag, as that should also be
@@ -44,20 +46,24 @@ namespace generated_tests {
 using namespace android::nn::test_wrapper;
 using namespace test_helper;
 
-static OperandType getOperandType(const TestOperand& op) {
+static OperandType getOperandType(const TestOperand& op, bool testDynamicOutputShape) {
+    auto dims = op.dimensions;
+    if (testDynamicOutputShape && op.lifetime == TestOperandLifeTime::MODEL_OUTPUT) {
+        dims.assign(dims.size(), 0);
+    }
     if (op.type == TestOperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL) {
         return OperandType(
-                static_cast<Type>(op.type), op.dimensions,
+                static_cast<Type>(op.type), dims,
                 SymmPerChannelQuantParams(op.channelQuant.scales, op.channelQuant.channelDim));
     } else {
-        return OperandType(static_cast<Type>(op.type), op.dimensions, op.scale, op.zeroPoint);
+        return OperandType(static_cast<Type>(op.type), dims, op.scale, op.zeroPoint);
     }
 }
 
-void createModel(const TestModel& testModel, Model* model) {
+void createModel(const TestModel& testModel, bool testDynamicOutputShape, Model* model) {
     // Operands.
     for (const auto& operand : testModel.operands) {
-        auto type = getOperandType(operand);
+        auto type = getOperandType(operand, testDynamicOutputShape);
         auto index = model->addOperand(&type);
 
         switch (operand.lifetime) {
@@ -103,9 +109,18 @@ static void createRequest(const TestModel& testModel, Execution* execution,
     // Model outputs.
     for (uint32_t i = 0; i < testModel.outputIndexes.size(); i++) {
         const auto& operand = testModel.operands[testModel.outputIndexes[i]];
-        outputs->emplace_back(operand.data.size());
+
+        // In the case of zero-sized output, we should at least provide a one-byte buffer.
+        // This is because zero-sized tensors are only supported internally to the runtime, or
+        // reported in output shapes. It is illegal for the client to pre-specify a zero-sized
+        // tensor as model output. Otherwise, we will have two semantic conflicts:
+        // - "Zero dimension" conflicts with "unspecified dimension".
+        // - "Omitted operand buffer" conflicts with "zero-sized operand buffer".
+        const size_t bufferSize = std::max<size_t>(operand.data.size(), 1);
+
+        outputs->emplace_back(bufferSize);
         ASSERT_EQ(Result::NO_ERROR,
-                  execution->setOutput(i, outputs->back().getMutable<void>(), operand.data.size()));
+                  execution->setOutput(i, outputs->back().getMutable<void>(), bufferSize));
     }
 }
 
@@ -211,7 +226,7 @@ void GeneratedTests::executeMultithreadedSharedCompilation(const Model* model,
 void GeneratedTests::execute(const TestModel& testModel) {
     NNTRACE_APP(NNTRACE_PHASE_OVERALL, "execute");
     Model model;
-    createModel(testModel, &model);
+    createModel(testModel, mTestDynamicOutputShape, &model);
     model.finish();
     auto executeInternal = [&testModel, &model, this]() {
         SCOPED_TRACE("TestCompilationCaching = " + std::to_string(mTestCompilationCaching));
