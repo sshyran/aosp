@@ -47,4 +47,6 @@ Model().Operation("L2_NORMALIZATION", i1).To(o1)
 Example(example0).AddRelaxed().AddAllDims(i1, o1).AddVariations("relaxed", "float16", quant8)
 
 # L2_NORMALIZATION of rank 4 is introduced in V1_0.
-Example.SetVersion("V1_0", "l2_normalization_v1_2_dim4_axis3")
+Example.SetVersion("V1_0", 
+                   "l2_normalization_v1_2_dim4_axis3",
+                   "l2_normalization_v1_2_dim4_axis3_all_inputs_as_internal")
