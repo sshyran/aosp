@@ -19,6 +19,7 @@
 
 #include <gtest/gtest.h>
 
+#include "TestHarness.h"
 #include "TestNeuralNetworksWrapper.h"
 
 #if defined(NNTEST_ONLY_PUBLIC_API) || defined(NNTEST_MULTITHREADED)
@@ -31,6 +32,10 @@ using namespace ::android::nn;
 // Tag for the compilance tests
 class ComplianceTest : public ::testing::Test {
    protected:
+    void testAvailableSinceV1_2(const test_helper::TestModel& testModel);
+    void testAvailableSinceV1_1(const test_helper::TestModel& testModel);
+    void testAvailableSinceV1_0(const test_helper::TestModel& testModel);
+
     void testAvailableSinceV1_2(std::function<void(test_wrapper::Model*)> createModel);
     void testAvailableSinceV1_1(std::function<void(test_wrapper::Model*)> createModel);
     void testAvailableSinceV1_0(std::function<void(test_wrapper::Model*)> createModel);
@@ -38,9 +43,9 @@ class ComplianceTest : public ::testing::Test {
 
 }  // namespace compliance_test
 
-#define TEST_AVAILABLE_SINCE(version, testName, createModel)                       \
-    namespace compliance_test {                                                    \
-    TEST_F(ComplianceTest, testName) { testAvailableSince##version(createModel); } \
+#define TEST_AVAILABLE_SINCE(version, testName, testModel)                       \
+    namespace compliance_test {                                                  \
+    TEST_F(ComplianceTest, testName) { testAvailableSince##version(testModel); } \
     }
 
 #endif
