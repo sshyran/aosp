@@ -211,8 +211,8 @@ void SVDF::EvalFloat32(const float* inputData, const float* inputStateData, cons
     for (int b = 0; b < batch_size; b++) {
         float* state_out_ptr_batch = outputStateData + b * memory_size * num_filters;
         for (int f = 0; f < num_filters; f++) {
-            tflite::tensor_utils::VectorShiftLeft(state_out_ptr_batch, memory_size,
-                                                  /*shift_value=*/0.0);
+            tflite::tensor_utils::VectorShiftLeft<float>(state_out_ptr_batch, memory_size,
+                                                         /*shift_value=*/0.0);
             state_out_ptr_batch += memory_size;
         }
     }
