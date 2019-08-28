@@ -2,16 +2,17 @@
 // DO NOT EDIT
 // clang-format off
 #include "TestHarness.h"
-
 using namespace test_helper;
 
 namespace generated_tests::cast {
 
 const TestModel& get_test_model_float16_to_float16() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f}),
@@ -42,6 +43,8 @@ const TestModel& get_test_model_float16_to_float16() {
     };
     return model;
 }
+
+const auto dummy_test_model_float16_to_float16 = TestModelManager::get().add("cast_float16_to_float16", get_test_model_float16_to_float16());
 
 }  // namespace generated_tests::cast
 
@@ -49,9 +52,11 @@ namespace generated_tests::cast {
 
 const TestModel& get_test_model_float16_to_float16_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -116,6 +121,8 @@ const TestModel& get_test_model_float16_to_float16_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_float16_to_float16_all_inputs_as_internal = TestModelManager::get().add("cast_float16_to_float16_all_inputs_as_internal", get_test_model_float16_to_float16_all_inputs_as_internal());
 
 }  // namespace generated_tests::cast
 
@@ -123,9 +130,11 @@ namespace generated_tests::cast {
 
 const TestModel& get_test_model_float16_to_float32() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f}),
@@ -156,6 +165,8 @@ const TestModel& get_test_model_float16_to_float32() {
     };
     return model;
 }
+
+const auto dummy_test_model_float16_to_float32 = TestModelManager::get().add("cast_float16_to_float32", get_test_model_float16_to_float32());
 
 }  // namespace generated_tests::cast
 
@@ -163,9 +174,11 @@ namespace generated_tests::cast {
 
 const TestModel& get_test_model_float16_to_float32_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -230,6 +243,8 @@ const TestModel& get_test_model_float16_to_float32_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_float16_to_float32_all_inputs_as_internal = TestModelManager::get().add("cast_float16_to_float32_all_inputs_as_internal", get_test_model_float16_to_float32_all_inputs_as_internal());
 
 }  // namespace generated_tests::cast
 
@@ -237,9 +252,11 @@ namespace generated_tests::cast {
 
 const TestModel& get_test_model_float16_to_float32_relaxed() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f}),
@@ -270,6 +287,8 @@ const TestModel& get_test_model_float16_to_float32_relaxed() {
     };
     return model;
 }
+
+const auto dummy_test_model_float16_to_float32_relaxed = TestModelManager::get().add("cast_float16_to_float32_relaxed", get_test_model_float16_to_float32_relaxed());
 
 }  // namespace generated_tests::cast
 
@@ -277,9 +296,11 @@ namespace generated_tests::cast {
 
 const TestModel& get_test_model_float16_to_float32_relaxed_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {2},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -344,6 +365,8 @@ const TestModel& get_test_model_float16_to_float32_relaxed_all_inputs_as_interna
     };
     return model;
 }
+
+const auto dummy_test_model_float16_to_float32_relaxed_all_inputs_as_internal = TestModelManager::get().add("cast_float16_to_float32_relaxed_all_inputs_as_internal", get_test_model_float16_to_float32_relaxed_all_inputs_as_internal());
 
 }  // namespace generated_tests::cast
 
@@ -351,9 +374,11 @@ namespace generated_tests::cast {
 
 const TestModel& get_test_model_float16_to_int32() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f}),
@@ -384,6 +409,8 @@ const TestModel& get_test_model_float16_to_int32() {
     };
     return model;
 }
+
+const auto dummy_test_model_float16_to_int32 = TestModelManager::get().add("cast_float16_to_int32", get_test_model_float16_to_int32());
 
 }  // namespace generated_tests::cast
 
@@ -391,9 +418,11 @@ namespace generated_tests::cast {
 
 const TestModel& get_test_model_float16_to_int32_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -458,6 +487,8 @@ const TestModel& get_test_model_float16_to_int32_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_float16_to_int32_all_inputs_as_internal = TestModelManager::get().add("cast_float16_to_int32_all_inputs_as_internal", get_test_model_float16_to_int32_all_inputs_as_internal());
 
 }  // namespace generated_tests::cast
 
@@ -465,9 +496,11 @@ namespace generated_tests::cast {
 
 const TestModel& get_test_model_float16_to_quant8() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f}),
@@ -498,6 +531,8 @@ const TestModel& get_test_model_float16_to_quant8() {
     };
     return model;
 }
+
+const auto dummy_test_model_float16_to_quant8 = TestModelManager::get().add("cast_float16_to_quant8", get_test_model_float16_to_quant8());
 
 }  // namespace generated_tests::cast
 
@@ -505,9 +540,11 @@ namespace generated_tests::cast {
 
 const TestModel& get_test_model_float16_to_quant8_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -572,6 +609,8 @@ const TestModel& get_test_model_float16_to_quant8_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_float16_to_quant8_all_inputs_as_internal = TestModelManager::get().add("cast_float16_to_quant8_all_inputs_as_internal", get_test_model_float16_to_quant8_all_inputs_as_internal());
 
 }  // namespace generated_tests::cast
 
@@ -579,9 +618,11 @@ namespace generated_tests::cast {
 
 const TestModel& get_test_model_float32_to_float16() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f}),
@@ -612,6 +653,8 @@ const TestModel& get_test_model_float32_to_float16() {
     };
     return model;
 }
+
+const auto dummy_test_model_float32_to_float16 = TestModelManager::get().add("cast_float32_to_float16", get_test_model_float32_to_float16());
 
 }  // namespace generated_tests::cast
 
@@ -619,9 +662,11 @@ namespace generated_tests::cast {
 
 const TestModel& get_test_model_float32_to_float16_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -686,6 +731,8 @@ const TestModel& get_test_model_float32_to_float16_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_float32_to_float16_all_inputs_as_internal = TestModelManager::get().add("cast_float32_to_float16_all_inputs_as_internal", get_test_model_float32_to_float16_all_inputs_as_internal());
 
 }  // namespace generated_tests::cast
 
@@ -693,9 +740,11 @@ namespace generated_tests::cast {
 
 const TestModel& get_test_model_float32_to_float16_relaxed() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f}),
@@ -726,6 +775,8 @@ const TestModel& get_test_model_float32_to_float16_relaxed() {
     };
     return model;
 }
+
+const auto dummy_test_model_float32_to_float16_relaxed = TestModelManager::get().add("cast_float32_to_float16_relaxed", get_test_model_float32_to_float16_relaxed());
 
 }  // namespace generated_tests::cast
 
@@ -733,9 +784,11 @@ namespace generated_tests::cast {
 
 const TestModel& get_test_model_float32_to_float16_relaxed_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {2},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -800,6 +853,8 @@ const TestModel& get_test_model_float32_to_float16_relaxed_all_inputs_as_interna
     };
     return model;
 }
+
+const auto dummy_test_model_float32_to_float16_relaxed_all_inputs_as_internal = TestModelManager::get().add("cast_float32_to_float16_relaxed_all_inputs_as_internal", get_test_model_float32_to_float16_relaxed_all_inputs_as_internal());
 
 }  // namespace generated_tests::cast
 
@@ -807,9 +862,11 @@ namespace generated_tests::cast {
 
 const TestModel& get_test_model_float32_to_float32() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f}),
@@ -840,6 +897,8 @@ const TestModel& get_test_model_float32_to_float32() {
     };
     return model;
 }
+
+const auto dummy_test_model_float32_to_float32 = TestModelManager::get().add("cast_float32_to_float32", get_test_model_float32_to_float32());
 
 }  // namespace generated_tests::cast
 
@@ -847,9 +906,11 @@ namespace generated_tests::cast {
 
 const TestModel& get_test_model_float32_to_float32_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -914,6 +975,8 @@ const TestModel& get_test_model_float32_to_float32_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_float32_to_float32_all_inputs_as_internal = TestModelManager::get().add("cast_float32_to_float32_all_inputs_as_internal", get_test_model_float32_to_float32_all_inputs_as_internal());
 
 }  // namespace generated_tests::cast
 
@@ -921,9 +984,11 @@ namespace generated_tests::cast {
 
 const TestModel& get_test_model_float32_to_float32_relaxed() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f}),
@@ -954,6 +1019,8 @@ const TestModel& get_test_model_float32_to_float32_relaxed() {
     };
     return model;
 }
+
+const auto dummy_test_model_float32_to_float32_relaxed = TestModelManager::get().add("cast_float32_to_float32_relaxed", get_test_model_float32_to_float32_relaxed());
 
 }  // namespace generated_tests::cast
 
@@ -961,9 +1028,11 @@ namespace generated_tests::cast {
 
 const TestModel& get_test_model_float32_to_float32_relaxed_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {2},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -1028,6 +1097,8 @@ const TestModel& get_test_model_float32_to_float32_relaxed_all_inputs_as_interna
     };
     return model;
 }
+
+const auto dummy_test_model_float32_to_float32_relaxed_all_inputs_as_internal = TestModelManager::get().add("cast_float32_to_float32_relaxed_all_inputs_as_internal", get_test_model_float32_to_float32_relaxed_all_inputs_as_internal());
 
 }  // namespace generated_tests::cast
 
@@ -1035,9 +1106,11 @@ namespace generated_tests::cast {
 
 const TestModel& get_test_model_float32_to_int32() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f}),
@@ -1068,6 +1141,8 @@ const TestModel& get_test_model_float32_to_int32() {
     };
     return model;
 }
+
+const auto dummy_test_model_float32_to_int32 = TestModelManager::get().add("cast_float32_to_int32", get_test_model_float32_to_int32());
 
 }  // namespace generated_tests::cast
 
@@ -1075,9 +1150,11 @@ namespace generated_tests::cast {
 
 const TestModel& get_test_model_float32_to_int32_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -1142,6 +1219,8 @@ const TestModel& get_test_model_float32_to_int32_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_float32_to_int32_all_inputs_as_internal = TestModelManager::get().add("cast_float32_to_int32_all_inputs_as_internal", get_test_model_float32_to_int32_all_inputs_as_internal());
 
 }  // namespace generated_tests::cast
 
@@ -1149,9 +1228,11 @@ namespace generated_tests::cast {
 
 const TestModel& get_test_model_float32_to_int32_relaxed() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f}),
@@ -1182,6 +1263,8 @@ const TestModel& get_test_model_float32_to_int32_relaxed() {
     };
     return model;
 }
+
+const auto dummy_test_model_float32_to_int32_relaxed = TestModelManager::get().add("cast_float32_to_int32_relaxed", get_test_model_float32_to_int32_relaxed());
 
 }  // namespace generated_tests::cast
 
@@ -1189,9 +1272,11 @@ namespace generated_tests::cast {
 
 const TestModel& get_test_model_float32_to_int32_relaxed_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {2},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -1256,6 +1341,8 @@ const TestModel& get_test_model_float32_to_int32_relaxed_all_inputs_as_internal(
     };
     return model;
 }
+
+const auto dummy_test_model_float32_to_int32_relaxed_all_inputs_as_internal = TestModelManager::get().add("cast_float32_to_int32_relaxed_all_inputs_as_internal", get_test_model_float32_to_int32_relaxed_all_inputs_as_internal());
 
 }  // namespace generated_tests::cast
 
@@ -1263,9 +1350,11 @@ namespace generated_tests::cast {
 
 const TestModel& get_test_model_float32_to_quant8() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f}),
@@ -1296,6 +1385,8 @@ const TestModel& get_test_model_float32_to_quant8() {
     };
     return model;
 }
+
+const auto dummy_test_model_float32_to_quant8 = TestModelManager::get().add("cast_float32_to_quant8", get_test_model_float32_to_quant8());
 
 }  // namespace generated_tests::cast
 
@@ -1303,9 +1394,11 @@ namespace generated_tests::cast {
 
 const TestModel& get_test_model_float32_to_quant8_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -1370,6 +1463,8 @@ const TestModel& get_test_model_float32_to_quant8_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_float32_to_quant8_all_inputs_as_internal = TestModelManager::get().add("cast_float32_to_quant8_all_inputs_as_internal", get_test_model_float32_to_quant8_all_inputs_as_internal());
 
 }  // namespace generated_tests::cast
 
@@ -1377,9 +1472,11 @@ namespace generated_tests::cast {
 
 const TestModel& get_test_model_float32_to_quant8_relaxed() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f}),
@@ -1411,15 +1508,19 @@ const TestModel& get_test_model_float32_to_quant8_relaxed() {
     return model;
 }
 
+const auto dummy_test_model_float32_to_quant8_relaxed = TestModelManager::get().add("cast_float32_to_quant8_relaxed", get_test_model_float32_to_quant8_relaxed());
+
 }  // namespace generated_tests::cast
 
 namespace generated_tests::cast {
 
 const TestModel& get_test_model_float32_to_quant8_relaxed_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {2},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -1485,15 +1586,19 @@ const TestModel& get_test_model_float32_to_quant8_relaxed_all_inputs_as_internal
     return model;
 }
 
+const auto dummy_test_model_float32_to_quant8_relaxed_all_inputs_as_internal = TestModelManager::get().add("cast_float32_to_quant8_relaxed_all_inputs_as_internal", get_test_model_float32_to_quant8_relaxed_all_inputs_as_internal());
+
 }  // namespace generated_tests::cast
 
 namespace generated_tests::cast {
 
 const TestModel& get_test_model_int32_to_float16() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<int32_t>({1, 2, 3, 4, 5, 6}),
@@ -1524,6 +1629,8 @@ const TestModel& get_test_model_int32_to_float16() {
     };
     return model;
 }
+
+const auto dummy_test_model_int32_to_float16 = TestModelManager::get().add("cast_int32_to_float16", get_test_model_int32_to_float16());
 
 }  // namespace generated_tests::cast
 
@@ -1531,9 +1638,11 @@ namespace generated_tests::cast {
 
 const TestModel& get_test_model_int32_to_float32() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<int32_t>({1, 2, 3, 4, 5, 6}),
@@ -1564,6 +1673,8 @@ const TestModel& get_test_model_int32_to_float32() {
     };
     return model;
 }
+
+const auto dummy_test_model_int32_to_float32 = TestModelManager::get().add("cast_int32_to_float32", get_test_model_int32_to_float32());
 
 }  // namespace generated_tests::cast
 
@@ -1571,9 +1682,11 @@ namespace generated_tests::cast {
 
 const TestModel& get_test_model_int32_to_float32_relaxed() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<int32_t>({1, 2, 3, 4, 5, 6}),
@@ -1604,6 +1717,8 @@ const TestModel& get_test_model_int32_to_float32_relaxed() {
     };
     return model;
 }
+
+const auto dummy_test_model_int32_to_float32_relaxed = TestModelManager::get().add("cast_int32_to_float32_relaxed", get_test_model_int32_to_float32_relaxed());
 
 }  // namespace generated_tests::cast
 
@@ -1611,9 +1726,11 @@ namespace generated_tests::cast {
 
 const TestModel& get_test_model_int32_to_int32() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<int32_t>({1, 2, 3, 4, 5, 6}),
@@ -1644,6 +1761,8 @@ const TestModel& get_test_model_int32_to_int32() {
     };
     return model;
 }
+
+const auto dummy_test_model_int32_to_int32 = TestModelManager::get().add("cast_int32_to_int32", get_test_model_int32_to_int32());
 
 }  // namespace generated_tests::cast
 
@@ -1651,9 +1770,11 @@ namespace generated_tests::cast {
 
 const TestModel& get_test_model_int32_to_quant8() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<int32_t>({1, 2, 3, 4, 5, 6}),
@@ -1684,6 +1805,8 @@ const TestModel& get_test_model_int32_to_quant8() {
     };
     return model;
 }
+
+const auto dummy_test_model_int32_to_quant8 = TestModelManager::get().add("cast_int32_to_quant8", get_test_model_int32_to_quant8());
 
 }  // namespace generated_tests::cast
 
@@ -1691,9 +1814,11 @@ namespace generated_tests::cast {
 
 const TestModel& get_test_model_quant8_to_float16() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({1, 2, 3, 4, 5, 6}),
@@ -1724,6 +1849,8 @@ const TestModel& get_test_model_quant8_to_float16() {
     };
     return model;
 }
+
+const auto dummy_test_model_quant8_to_float16 = TestModelManager::get().add("cast_quant8_to_float16", get_test_model_quant8_to_float16());
 
 }  // namespace generated_tests::cast
 
@@ -1731,9 +1858,11 @@ namespace generated_tests::cast {
 
 const TestModel& get_test_model_quant8_to_float16_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -1799,15 +1928,19 @@ const TestModel& get_test_model_quant8_to_float16_all_inputs_as_internal() {
     return model;
 }
 
+const auto dummy_test_model_quant8_to_float16_all_inputs_as_internal = TestModelManager::get().add("cast_quant8_to_float16_all_inputs_as_internal", get_test_model_quant8_to_float16_all_inputs_as_internal());
+
 }  // namespace generated_tests::cast
 
 namespace generated_tests::cast {
 
 const TestModel& get_test_model_quant8_to_float32() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({1, 2, 3, 4, 5, 6}),
@@ -1838,6 +1971,8 @@ const TestModel& get_test_model_quant8_to_float32() {
     };
     return model;
 }
+
+const auto dummy_test_model_quant8_to_float32 = TestModelManager::get().add("cast_quant8_to_float32", get_test_model_quant8_to_float32());
 
 }  // namespace generated_tests::cast
 
@@ -1845,9 +1980,11 @@ namespace generated_tests::cast {
 
 const TestModel& get_test_model_quant8_to_float32_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -1912,6 +2049,8 @@ const TestModel& get_test_model_quant8_to_float32_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_quant8_to_float32_all_inputs_as_internal = TestModelManager::get().add("cast_quant8_to_float32_all_inputs_as_internal", get_test_model_quant8_to_float32_all_inputs_as_internal());
 
 }  // namespace generated_tests::cast
 
@@ -1919,9 +2058,11 @@ namespace generated_tests::cast {
 
 const TestModel& get_test_model_quant8_to_float32_relaxed() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({1, 2, 3, 4, 5, 6}),
@@ -1952,6 +2093,8 @@ const TestModel& get_test_model_quant8_to_float32_relaxed() {
     };
     return model;
 }
+
+const auto dummy_test_model_quant8_to_float32_relaxed = TestModelManager::get().add("cast_quant8_to_float32_relaxed", get_test_model_quant8_to_float32_relaxed());
 
 }  // namespace generated_tests::cast
 
@@ -1959,9 +2102,11 @@ namespace generated_tests::cast {
 
 const TestModel& get_test_model_quant8_to_float32_relaxed_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {2},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -2027,15 +2172,19 @@ const TestModel& get_test_model_quant8_to_float32_relaxed_all_inputs_as_internal
     return model;
 }
 
+const auto dummy_test_model_quant8_to_float32_relaxed_all_inputs_as_internal = TestModelManager::get().add("cast_quant8_to_float32_relaxed_all_inputs_as_internal", get_test_model_quant8_to_float32_relaxed_all_inputs_as_internal());
+
 }  // namespace generated_tests::cast
 
 namespace generated_tests::cast {
 
 const TestModel& get_test_model_quant8_to_int32() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({1, 2, 3, 4, 5, 6}),
@@ -2066,6 +2215,8 @@ const TestModel& get_test_model_quant8_to_int32() {
     };
     return model;
 }
+
+const auto dummy_test_model_quant8_to_int32 = TestModelManager::get().add("cast_quant8_to_int32", get_test_model_quant8_to_int32());
 
 }  // namespace generated_tests::cast
 
@@ -2073,9 +2224,11 @@ namespace generated_tests::cast {
 
 const TestModel& get_test_model_quant8_to_int32_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -2141,15 +2294,19 @@ const TestModel& get_test_model_quant8_to_int32_all_inputs_as_internal() {
     return model;
 }
 
+const auto dummy_test_model_quant8_to_int32_all_inputs_as_internal = TestModelManager::get().add("cast_quant8_to_int32_all_inputs_as_internal", get_test_model_quant8_to_int32_all_inputs_as_internal());
+
 }  // namespace generated_tests::cast
 
 namespace generated_tests::cast {
 
 const TestModel& get_test_model_quant8_to_quant8() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({1, 2, 3, 4, 5, 6}),
@@ -2181,15 +2338,19 @@ const TestModel& get_test_model_quant8_to_quant8() {
     return model;
 }
 
+const auto dummy_test_model_quant8_to_quant8 = TestModelManager::get().add("cast_quant8_to_quant8", get_test_model_quant8_to_quant8());
+
 }  // namespace generated_tests::cast
 
 namespace generated_tests::cast {
 
 const TestModel& get_test_model_quant8_to_quant8_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -2255,15 +2416,19 @@ const TestModel& get_test_model_quant8_to_quant8_all_inputs_as_internal() {
     return model;
 }
 
+const auto dummy_test_model_quant8_to_quant8_all_inputs_as_internal = TestModelManager::get().add("cast_quant8_to_quant8_all_inputs_as_internal", get_test_model_quant8_to_quant8_all_inputs_as_internal());
+
 }  // namespace generated_tests::cast
 
 namespace generated_tests::cast {
 
 const TestModel& get_test_model_float16_to_quant8_overflow() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({-1.0f, 256.0f}),
@@ -2295,15 +2460,19 @@ const TestModel& get_test_model_float16_to_quant8_overflow() {
     return model;
 }
 
+const auto dummy_test_model_float16_to_quant8_overflow = TestModelManager::get().add("cast_float16_to_quant8_overflow", get_test_model_float16_to_quant8_overflow());
+
 }  // namespace generated_tests::cast
 
 namespace generated_tests::cast {
 
 const TestModel& get_test_model_float16_to_quant8_overflow_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -2369,15 +2538,19 @@ const TestModel& get_test_model_float16_to_quant8_overflow_all_inputs_as_interna
     return model;
 }
 
+const auto dummy_test_model_float16_to_quant8_overflow_all_inputs_as_internal = TestModelManager::get().add("cast_float16_to_quant8_overflow_all_inputs_as_internal", get_test_model_float16_to_quant8_overflow_all_inputs_as_internal());
+
 }  // namespace generated_tests::cast
 
 namespace generated_tests::cast {
 
 const TestModel& get_test_model_float32_to_quant8_overflow() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.0f, 256.0f}),
@@ -2408,6 +2581,8 @@ const TestModel& get_test_model_float32_to_quant8_overflow() {
     };
     return model;
 }
+
+const auto dummy_test_model_float32_to_quant8_overflow = TestModelManager::get().add("cast_float32_to_quant8_overflow", get_test_model_float32_to_quant8_overflow());
 
 }  // namespace generated_tests::cast
 
@@ -2415,9 +2590,11 @@ namespace generated_tests::cast {
 
 const TestModel& get_test_model_float32_to_quant8_overflow_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -2482,6 +2659,8 @@ const TestModel& get_test_model_float32_to_quant8_overflow_all_inputs_as_interna
     };
     return model;
 }
+
+const auto dummy_test_model_float32_to_quant8_overflow_all_inputs_as_internal = TestModelManager::get().add("cast_float32_to_quant8_overflow_all_inputs_as_internal", get_test_model_float32_to_quant8_overflow_all_inputs_as_internal());
 
 }  // namespace generated_tests::cast
 
@@ -2489,9 +2668,11 @@ namespace generated_tests::cast {
 
 const TestModel& get_test_model_float32_to_quant8_overflow_relaxed() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.0f, 256.0f}),
@@ -2523,15 +2704,19 @@ const TestModel& get_test_model_float32_to_quant8_overflow_relaxed() {
     return model;
 }
 
+const auto dummy_test_model_float32_to_quant8_overflow_relaxed = TestModelManager::get().add("cast_float32_to_quant8_overflow_relaxed", get_test_model_float32_to_quant8_overflow_relaxed());
+
 }  // namespace generated_tests::cast
 
 namespace generated_tests::cast {
 
 const TestModel& get_test_model_float32_to_quant8_overflow_relaxed_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {2},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -2597,15 +2782,19 @@ const TestModel& get_test_model_float32_to_quant8_overflow_relaxed_all_inputs_as
     return model;
 }
 
+const auto dummy_test_model_float32_to_quant8_overflow_relaxed_all_inputs_as_internal = TestModelManager::get().add("cast_float32_to_quant8_overflow_relaxed_all_inputs_as_internal", get_test_model_float32_to_quant8_overflow_relaxed_all_inputs_as_internal());
+
 }  // namespace generated_tests::cast
 
 namespace generated_tests::cast {
 
 const TestModel& get_test_model_int32_to_quant8_overflow() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<int32_t>({-1, 256}),
@@ -2636,6 +2825,8 @@ const TestModel& get_test_model_int32_to_quant8_overflow() {
     };
     return model;
 }
+
+const auto dummy_test_model_int32_to_quant8_overflow = TestModelManager::get().add("cast_int32_to_quant8_overflow", get_test_model_int32_to_quant8_overflow());
 
 }  // namespace generated_tests::cast
 

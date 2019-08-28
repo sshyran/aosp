@@ -2,16 +2,17 @@
 // DO NOT EDIT
 // clang-format off
 #include "TestHarness.h"
-
 using namespace test_helper;
 
 namespace generated_tests::unidirectional_sequence_lstm_layer_norm_cifg_peephole {
 
 const TestModel& get_test_model() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 24, 25, 26, 27},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({0.7f, 0.8f, 0.1f, 0.2f, 0.3f, 0.3f, 0.2f, 0.9f, 0.8f, 0.1f, 0.8f, 0.1f, 0.2f, 0.4f, 0.5f, 0.1f, 0.5f, 0.2f, 0.4f, 0.2f, 0.2f, 0.7f, 0.7f, 0.1f, 0.7f, 0.6f, 0.9f, 0.2f, 0.5f, 0.7f}),
@@ -312,6 +313,8 @@ const TestModel& get_test_model() {
     };
     return model;
 }
+
+const auto dummy_test_model = TestModelManager::get().add("unidirectional_sequence_lstm_layer_norm_cifg_peephole", get_test_model());
 
 }  // namespace generated_tests::unidirectional_sequence_lstm_layer_norm_cifg_peephole
 
@@ -319,9 +322,11 @@ namespace generated_tests::unidirectional_sequence_lstm_layer_norm_cifg_peephole
 
 const TestModel& get_test_model_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {1, 5, 9, 12, 17, 24, 29, 32, 35, 38, 41, 44, 47, 50, 53, 56, 59, 62, 65, 68, 71, 74, 77, 80},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -1234,6 +1239,8 @@ const TestModel& get_test_model_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_all_inputs_as_internal = TestModelManager::get().add("unidirectional_sequence_lstm_layer_norm_cifg_peephole_all_inputs_as_internal", get_test_model_all_inputs_as_internal());
 
 }  // namespace generated_tests::unidirectional_sequence_lstm_layer_norm_cifg_peephole
 
@@ -1241,9 +1248,11 @@ namespace generated_tests::unidirectional_sequence_lstm_layer_norm_cifg_peephole
 
 const TestModel& get_test_model_relaxed() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 24, 25, 26, 27},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({0.7f, 0.8f, 0.1f, 0.2f, 0.3f, 0.3f, 0.2f, 0.9f, 0.8f, 0.1f, 0.8f, 0.1f, 0.2f, 0.4f, 0.5f, 0.1f, 0.5f, 0.2f, 0.4f, 0.2f, 0.2f, 0.7f, 0.7f, 0.1f, 0.7f, 0.6f, 0.9f, 0.2f, 0.5f, 0.7f}),
@@ -1544,6 +1553,8 @@ const TestModel& get_test_model_relaxed() {
     };
     return model;
 }
+
+const auto dummy_test_model_relaxed = TestModelManager::get().add("unidirectional_sequence_lstm_layer_norm_cifg_peephole_relaxed", get_test_model_relaxed());
 
 }  // namespace generated_tests::unidirectional_sequence_lstm_layer_norm_cifg_peephole
 
@@ -1551,9 +1562,11 @@ namespace generated_tests::unidirectional_sequence_lstm_layer_norm_cifg_peephole
 
 const TestModel& get_test_model_relaxed_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {1, 5, 9, 12, 17, 24, 29, 32, 35, 38, 41, 44, 47, 50, 53, 56, 59, 62, 65, 68, 71, 74, 77, 80},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -2467,15 +2480,19 @@ const TestModel& get_test_model_relaxed_all_inputs_as_internal() {
     return model;
 }
 
+const auto dummy_test_model_relaxed_all_inputs_as_internal = TestModelManager::get().add("unidirectional_sequence_lstm_layer_norm_cifg_peephole_relaxed_all_inputs_as_internal", get_test_model_relaxed_all_inputs_as_internal());
+
 }  // namespace generated_tests::unidirectional_sequence_lstm_layer_norm_cifg_peephole
 
 namespace generated_tests::unidirectional_sequence_lstm_layer_norm_cifg_peephole {
 
 const TestModel& get_test_model_float16() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 24, 25, 26, 27},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({0.699999988079071f, 0.800000011920929f, 0.10000000149011612f, 0.20000000298023224f, 0.30000001192092896f, 0.30000001192092896f, 0.20000000298023224f, 0.8999999761581421f, 0.800000011920929f, 0.10000000149011612f, 0.800000011920929f, 0.10000000149011612f, 0.20000000298023224f, 0.4000000059604645f, 0.5f, 0.10000000149011612f, 0.5f, 0.20000000298023224f, 0.4000000059604645f, 0.20000000298023224f, 0.20000000298023224f, 0.699999988079071f, 0.699999988079071f, 0.10000000149011612f, 0.699999988079071f, 0.6000000238418579f, 0.8999999761581421f, 0.20000000298023224f, 0.5f, 0.699999988079071f}),
@@ -2777,15 +2794,19 @@ const TestModel& get_test_model_float16() {
     return model;
 }
 
+const auto dummy_test_model_float16 = TestModelManager::get().add("unidirectional_sequence_lstm_layer_norm_cifg_peephole_float16", get_test_model_float16());
+
 }  // namespace generated_tests::unidirectional_sequence_lstm_layer_norm_cifg_peephole
 
 namespace generated_tests::unidirectional_sequence_lstm_layer_norm_cifg_peephole {
 
 const TestModel& get_test_model_float16_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {1, 5, 9, 12, 17, 24, 29, 32, 35, 38, 41, 44, 47, 50, 53, 56, 59, 62, 65, 68, 71, 74, 77, 80},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -3698,6 +3719,8 @@ const TestModel& get_test_model_float16_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_float16_all_inputs_as_internal = TestModelManager::get().add("unidirectional_sequence_lstm_layer_norm_cifg_peephole_float16_all_inputs_as_internal", get_test_model_float16_all_inputs_as_internal());
 
 }  // namespace generated_tests::unidirectional_sequence_lstm_layer_norm_cifg_peephole
 

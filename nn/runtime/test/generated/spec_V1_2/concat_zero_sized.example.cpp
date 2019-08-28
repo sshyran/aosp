@@ -2,16 +2,17 @@
 // DO NOT EDIT
 // clang-format off
 #include "TestHarness.h"
-
 using namespace test_helper;
 
 namespace generated_tests::concat_zero_sized {
 
 const TestModel& get_test_model() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({0.9f, 0.1f}),
@@ -270,6 +271,8 @@ const TestModel& get_test_model() {
     };
     return model;
 }
+
+const auto dummy_test_model = TestModelManager::get().add("concat_zero_sized", get_test_model());
 
 }  // namespace generated_tests::concat_zero_sized
 
@@ -277,9 +280,11 @@ namespace generated_tests::concat_zero_sized {
 
 const TestModel& get_test_model_relaxed() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({0.9f, 0.1f}),
@@ -539,15 +544,19 @@ const TestModel& get_test_model_relaxed() {
     return model;
 }
 
+const auto dummy_test_model_relaxed = TestModelManager::get().add("concat_zero_sized_relaxed", get_test_model_relaxed());
+
 }  // namespace generated_tests::concat_zero_sized
 
 namespace generated_tests::concat_zero_sized {
 
 const TestModel& get_test_model_quant8() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({137, 129}),
@@ -807,15 +816,19 @@ const TestModel& get_test_model_quant8() {
     return model;
 }
 
+const auto dummy_test_model_quant8 = TestModelManager::get().add("concat_zero_sized_quant8", get_test_model_quant8());
+
 }  // namespace generated_tests::concat_zero_sized
 
 namespace generated_tests::concat_zero_sized {
 
 const TestModel& get_test_model_float16() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({0.8999999761581421f, 0.10000000149011612f}),
@@ -1075,15 +1088,19 @@ const TestModel& get_test_model_float16() {
     return model;
 }
 
+const auto dummy_test_model_float16 = TestModelManager::get().add("concat_zero_sized_float16", get_test_model_float16());
+
 }  // namespace generated_tests::concat_zero_sized
 
 namespace generated_tests::concat_zero_sized {
 
 const TestModel& get_test_model_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13, 22},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({0.9f, 0.1f}),
@@ -1352,6 +1369,8 @@ const TestModel& get_test_model_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_2 = TestModelManager::get().add("concat_zero_sized_2", get_test_model_2());
 
 }  // namespace generated_tests::concat_zero_sized
 
@@ -1359,9 +1378,11 @@ namespace generated_tests::concat_zero_sized {
 
 const TestModel& get_test_model_relaxed_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13, 22},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({0.9f, 0.1f}),
@@ -1631,15 +1652,19 @@ const TestModel& get_test_model_relaxed_2() {
     return model;
 }
 
+const auto dummy_test_model_relaxed_2 = TestModelManager::get().add("concat_zero_sized_relaxed_2", get_test_model_relaxed_2());
+
 }  // namespace generated_tests::concat_zero_sized
 
 namespace generated_tests::concat_zero_sized {
 
 const TestModel& get_test_model_quant8_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13, 22},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({137, 129}),
@@ -1909,15 +1934,19 @@ const TestModel& get_test_model_quant8_2() {
     return model;
 }
 
+const auto dummy_test_model_quant8_2 = TestModelManager::get().add("concat_zero_sized_quant8_2", get_test_model_quant8_2());
+
 }  // namespace generated_tests::concat_zero_sized
 
 namespace generated_tests::concat_zero_sized {
 
 const TestModel& get_test_model_float16_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13, 22},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({0.8999999761581421f, 0.10000000149011612f}),
@@ -2186,6 +2215,8 @@ const TestModel& get_test_model_float16_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_float16_2 = TestModelManager::get().add("concat_zero_sized_float16_2", get_test_model_float16_2());
 
 }  // namespace generated_tests::concat_zero_sized
 

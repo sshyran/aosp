@@ -55,6 +55,7 @@ cc_defaults {
         //
         // Changes to this list must be reflected in the "CtsNNAPITests_static"
         // library to ensure CTS tests coverage.
+        "TestAssertions.cpp",
         "TestFree.cpp",
         "TestGenerated.cpp",
         "TestMemory.cpp",
@@ -68,7 +69,6 @@ cc_defaults {
         "TestValidation.cpp",
         "TestWrapper.cpp",
         "generated/spec_V1_*/*.example.cpp",
-        "generated/spec_V1_*/cts/*.test.cpp",
     ],
     static_libs: [
         "libgmock",
@@ -218,7 +218,6 @@ cc_defaults {
         "TestMain.cpp",
         "TestNeuralNetworksWrapper.cpp",
         "generated/spec_V1_*/*.example.cpp",
-        "generated/spec_V1_*/cts/*.test.cpp",
     ],
     cflags: [
         "-DNNTEST_MULTITHREADED",
@@ -274,7 +273,6 @@ cc_library_static {
         "fuzzing/TestRandomGraph.cpp",
         "fuzzing/operation_signatures/*.cpp",
         "generated/spec_V1_*/*.example.cpp",
-        "generated/spec_V1_*/cts/*.test.cpp",
     ],
     include_dirs: [
         "frameworks/ml/nn/common/include",
@@ -302,50 +300,23 @@ cc_library_static {
 }
 
 filegroup {
-    name: "VtsHalNeuralNetworksV1_0_all_generated_V1_0_tests",
+    name: "VtsHalNeuralNetworksV1_0_all_generated_tests",
     srcs: [
         "generated/spec_V1_0/*.example.cpp",
-        "generated/spec_V1_0/vts_V1_0/*.test.cpp",
     ],
 }
 
 filegroup {
-    name: "VtsHalNeuralNetworksV1_1_all_generated_V1_0_tests",
-    srcs: [
-        "generated/spec_V1_0/*.example.cpp",
-        "generated/spec_V1_0/vts_V1_1/*.test.cpp",
-    ],
-}
-
-filegroup {
-    name: "VtsHalNeuralNetworksV1_1_all_generated_V1_1_tests",
+    name: "VtsHalNeuralNetworksV1_1_all_generated_tests",
     srcs: [
         "generated/spec_V1_1/*.example.cpp",
-        "generated/spec_V1_1/vts_V1_1/*.test.cpp",
     ],
 }
 
 filegroup {
-    name: "VtsHalNeuralNetworksV1_2_all_generated_V1_0_tests",
-    srcs: [
-        "generated/spec_V1_0/*.example.cpp",
-        "generated/spec_V1_0/vts_V1_2/*.test.cpp",
-    ],
-}
-
-filegroup {
-    name: "VtsHalNeuralNetworksV1_2_all_generated_V1_1_tests",
-    srcs: [
-        "generated/spec_V1_1/*.example.cpp",
-        "generated/spec_V1_1/vts_V1_2/*.test.cpp",
-    ],
-}
-
-filegroup {
-    name: "VtsHalNeuralNetworksV1_2_all_generated_V1_2_tests",
+    name: "VtsHalNeuralNetworksV1_2_all_generated_tests",
     srcs: [
         "generated/spec_V1_2/*.example.cpp",
-        "generated/spec_V1_2/vts_V1_2/*.test.cpp",
     ],
 }
 
