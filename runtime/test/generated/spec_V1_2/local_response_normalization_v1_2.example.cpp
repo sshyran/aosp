@@ -2,16 +2,17 @@
 // DO NOT EDIT
 // clang-format off
 #include "TestHarness.h"
-
 using namespace test_helper;
 
 namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis0() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, -1.1f, -1.1f, -1.1f, -1.1f, -1.1f, -1.1f, -1.1f, 0.6f, 0.6f, 0.6f, 0.6f, 0.6f, 0.6f, 0.6f, 0.6f, 0.7f, 0.7f, 0.7f, 0.7f, 0.7f, 0.7f, 0.7f, 0.7f, 1.2f, 1.2f, 1.2f, 1.2f, 1.2f, 1.2f, 1.2f, 1.2f, -0.7f, -0.7f, -0.7f, -0.7f, -0.7f, -0.7f, -0.7f, -0.7f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f}),
@@ -92,6 +93,8 @@ const TestModel& get_test_model_axis_dim4_axis0() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis0 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis0", get_test_model_axis_dim4_axis0());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -99,9 +102,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis0_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -216,6 +221,8 @@ const TestModel& get_test_model_axis_dim4_axis0_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis0_all_inputs_as_internal = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis0_all_inputs_as_internal", get_test_model_axis_dim4_axis0_all_inputs_as_internal());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -223,9 +230,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis0_relaxed() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, -1.1f, -1.1f, -1.1f, -1.1f, -1.1f, -1.1f, -1.1f, 0.6f, 0.6f, 0.6f, 0.6f, 0.6f, 0.6f, 0.6f, 0.6f, 0.7f, 0.7f, 0.7f, 0.7f, 0.7f, 0.7f, 0.7f, 0.7f, 1.2f, 1.2f, 1.2f, 1.2f, 1.2f, 1.2f, 1.2f, 1.2f, -0.7f, -0.7f, -0.7f, -0.7f, -0.7f, -0.7f, -0.7f, -0.7f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f}),
@@ -306,6 +315,8 @@ const TestModel& get_test_model_axis_dim4_axis0_relaxed() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis0_relaxed = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis0_relaxed", get_test_model_axis_dim4_axis0_relaxed());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -313,9 +324,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis0_relaxed_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -430,6 +443,8 @@ const TestModel& get_test_model_axis_dim4_axis0_relaxed_all_inputs_as_internal()
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis0_relaxed_all_inputs_as_internal = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis0_relaxed_all_inputs_as_internal", get_test_model_axis_dim4_axis0_relaxed_all_inputs_as_internal());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -437,9 +452,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis0_float16() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({-1.100000023841858f, -1.100000023841858f, -1.100000023841858f, -1.100000023841858f, -1.100000023841858f, -1.100000023841858f, -1.100000023841858f, -1.100000023841858f, 0.6000000238418579f, 0.6000000238418579f, 0.6000000238418579f, 0.6000000238418579f, 0.6000000238418579f, 0.6000000238418579f, 0.6000000238418579f, 0.6000000238418579f, 0.699999988079071f, 0.699999988079071f, 0.699999988079071f, 0.699999988079071f, 0.699999988079071f, 0.699999988079071f, 0.699999988079071f, 0.699999988079071f, 1.2000000476837158f, 1.2000000476837158f, 1.2000000476837158f, 1.2000000476837158f, 1.2000000476837158f, 1.2000000476837158f, 1.2000000476837158f, 1.2000000476837158f, -0.699999988079071f, -0.699999988079071f, -0.699999988079071f, -0.699999988079071f, -0.699999988079071f, -0.699999988079071f, -0.699999988079071f, -0.699999988079071f, 0.10000000149011612f, 0.10000000149011612f, 0.10000000149011612f, 0.10000000149011612f, 0.10000000149011612f, 0.10000000149011612f, 0.10000000149011612f, 0.10000000149011612f}),
@@ -520,6 +537,8 @@ const TestModel& get_test_model_axis_dim4_axis0_float16() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis0_float16 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis0_float16", get_test_model_axis_dim4_axis0_float16());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -527,9 +546,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis0_float16_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -644,6 +665,8 @@ const TestModel& get_test_model_axis_dim4_axis0_float16_all_inputs_as_internal()
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis0_float16_all_inputs_as_internal = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis0_float16_all_inputs_as_internal", get_test_model_axis_dim4_axis0_float16_all_inputs_as_internal());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -651,9 +674,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis0_neg() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, -1.1f, -1.1f, -1.1f, -1.1f, -1.1f, -1.1f, -1.1f, 0.6f, 0.6f, 0.6f, 0.6f, 0.6f, 0.6f, 0.6f, 0.6f, 0.7f, 0.7f, 0.7f, 0.7f, 0.7f, 0.7f, 0.7f, 0.7f, 1.2f, 1.2f, 1.2f, 1.2f, 1.2f, 1.2f, 1.2f, 1.2f, -0.7f, -0.7f, -0.7f, -0.7f, -0.7f, -0.7f, -0.7f, -0.7f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f}),
@@ -734,6 +759,8 @@ const TestModel& get_test_model_axis_dim4_axis0_neg() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis0_neg = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis0_neg", get_test_model_axis_dim4_axis0_neg());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -741,9 +768,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis0_neg_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -858,6 +887,8 @@ const TestModel& get_test_model_axis_dim4_axis0_neg_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis0_neg_all_inputs_as_internal = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis0_neg_all_inputs_as_internal", get_test_model_axis_dim4_axis0_neg_all_inputs_as_internal());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -865,9 +896,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis0_neg_relaxed() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, -1.1f, -1.1f, -1.1f, -1.1f, -1.1f, -1.1f, -1.1f, 0.6f, 0.6f, 0.6f, 0.6f, 0.6f, 0.6f, 0.6f, 0.6f, 0.7f, 0.7f, 0.7f, 0.7f, 0.7f, 0.7f, 0.7f, 0.7f, 1.2f, 1.2f, 1.2f, 1.2f, 1.2f, 1.2f, 1.2f, 1.2f, -0.7f, -0.7f, -0.7f, -0.7f, -0.7f, -0.7f, -0.7f, -0.7f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f}),
@@ -948,6 +981,8 @@ const TestModel& get_test_model_axis_dim4_axis0_neg_relaxed() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis0_neg_relaxed = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis0_neg_relaxed", get_test_model_axis_dim4_axis0_neg_relaxed());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -955,9 +990,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis0_neg_relaxed_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -1073,15 +1110,19 @@ const TestModel& get_test_model_axis_dim4_axis0_neg_relaxed_all_inputs_as_intern
     return model;
 }
 
+const auto dummy_test_model_axis_dim4_axis0_neg_relaxed_all_inputs_as_internal = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis0_neg_relaxed_all_inputs_as_internal", get_test_model_axis_dim4_axis0_neg_relaxed_all_inputs_as_internal());
+
 }  // namespace generated_tests::local_response_normalization_v1_2
 
 namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis0_neg_float16() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({-1.100000023841858f, -1.100000023841858f, -1.100000023841858f, -1.100000023841858f, -1.100000023841858f, -1.100000023841858f, -1.100000023841858f, -1.100000023841858f, 0.6000000238418579f, 0.6000000238418579f, 0.6000000238418579f, 0.6000000238418579f, 0.6000000238418579f, 0.6000000238418579f, 0.6000000238418579f, 0.6000000238418579f, 0.699999988079071f, 0.699999988079071f, 0.699999988079071f, 0.699999988079071f, 0.699999988079071f, 0.699999988079071f, 0.699999988079071f, 0.699999988079071f, 1.2000000476837158f, 1.2000000476837158f, 1.2000000476837158f, 1.2000000476837158f, 1.2000000476837158f, 1.2000000476837158f, 1.2000000476837158f, 1.2000000476837158f, -0.699999988079071f, -0.699999988079071f, -0.699999988079071f, -0.699999988079071f, -0.699999988079071f, -0.699999988079071f, -0.699999988079071f, -0.699999988079071f, 0.10000000149011612f, 0.10000000149011612f, 0.10000000149011612f, 0.10000000149011612f, 0.10000000149011612f, 0.10000000149011612f, 0.10000000149011612f, 0.10000000149011612f}),
@@ -1162,6 +1203,8 @@ const TestModel& get_test_model_axis_dim4_axis0_neg_float16() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis0_neg_float16 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis0_neg_float16", get_test_model_axis_dim4_axis0_neg_float16());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -1169,9 +1212,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis0_neg_float16_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -1287,15 +1332,19 @@ const TestModel& get_test_model_axis_dim4_axis0_neg_float16_all_inputs_as_intern
     return model;
 }
 
+const auto dummy_test_model_axis_dim4_axis0_neg_float16_all_inputs_as_internal = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis0_neg_float16_all_inputs_as_internal", get_test_model_axis_dim4_axis0_neg_float16_all_inputs_as_internal());
+
 }  // namespace generated_tests::local_response_normalization_v1_2
 
 namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis1() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, -1.1f, -1.1f, -1.1f, 0.6f, 0.6f, 0.6f, 0.6f, 0.7f, 0.7f, 0.7f, 0.7f, 1.2f, 1.2f, 1.2f, 1.2f, -0.7f, -0.7f, -0.7f, -0.7f, 0.1f, 0.1f, 0.1f, 0.1f, -1.1f, -1.1f, -1.1f, -1.1f, 0.6f, 0.6f, 0.6f, 0.6f, 0.7f, 0.7f, 0.7f, 0.7f, 1.2f, 1.2f, 1.2f, 1.2f, -0.7f, -0.7f, -0.7f, -0.7f, 0.1f, 0.1f, 0.1f, 0.1f}),
@@ -1376,6 +1425,8 @@ const TestModel& get_test_model_axis_dim4_axis1() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis1 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis1", get_test_model_axis_dim4_axis1());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -1383,9 +1434,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis1_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -1500,6 +1553,8 @@ const TestModel& get_test_model_axis_dim4_axis1_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis1_all_inputs_as_internal = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis1_all_inputs_as_internal", get_test_model_axis_dim4_axis1_all_inputs_as_internal());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -1507,9 +1562,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis1_relaxed() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, -1.1f, -1.1f, -1.1f, 0.6f, 0.6f, 0.6f, 0.6f, 0.7f, 0.7f, 0.7f, 0.7f, 1.2f, 1.2f, 1.2f, 1.2f, -0.7f, -0.7f, -0.7f, -0.7f, 0.1f, 0.1f, 0.1f, 0.1f, -1.1f, -1.1f, -1.1f, -1.1f, 0.6f, 0.6f, 0.6f, 0.6f, 0.7f, 0.7f, 0.7f, 0.7f, 1.2f, 1.2f, 1.2f, 1.2f, -0.7f, -0.7f, -0.7f, -0.7f, 0.1f, 0.1f, 0.1f, 0.1f}),
@@ -1590,6 +1647,8 @@ const TestModel& get_test_model_axis_dim4_axis1_relaxed() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis1_relaxed = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis1_relaxed", get_test_model_axis_dim4_axis1_relaxed());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -1597,9 +1656,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis1_relaxed_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -1714,6 +1775,8 @@ const TestModel& get_test_model_axis_dim4_axis1_relaxed_all_inputs_as_internal()
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis1_relaxed_all_inputs_as_internal = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis1_relaxed_all_inputs_as_internal", get_test_model_axis_dim4_axis1_relaxed_all_inputs_as_internal());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -1721,9 +1784,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis1_float16() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({-1.100000023841858f, -1.100000023841858f, -1.100000023841858f, -1.100000023841858f, 0.6000000238418579f, 0.6000000238418579f, 0.6000000238418579f, 0.6000000238418579f, 0.699999988079071f, 0.699999988079071f, 0.699999988079071f, 0.699999988079071f, 1.2000000476837158f, 1.2000000476837158f, 1.2000000476837158f, 1.2000000476837158f, -0.699999988079071f, -0.699999988079071f, -0.699999988079071f, -0.699999988079071f, 0.10000000149011612f, 0.10000000149011612f, 0.10000000149011612f, 0.10000000149011612f, -1.100000023841858f, -1.100000023841858f, -1.100000023841858f, -1.100000023841858f, 0.6000000238418579f, 0.6000000238418579f, 0.6000000238418579f, 0.6000000238418579f, 0.699999988079071f, 0.699999988079071f, 0.699999988079071f, 0.699999988079071f, 1.2000000476837158f, 1.2000000476837158f, 1.2000000476837158f, 1.2000000476837158f, -0.699999988079071f, -0.699999988079071f, -0.699999988079071f, -0.699999988079071f, 0.10000000149011612f, 0.10000000149011612f, 0.10000000149011612f, 0.10000000149011612f}),
@@ -1804,6 +1869,8 @@ const TestModel& get_test_model_axis_dim4_axis1_float16() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis1_float16 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis1_float16", get_test_model_axis_dim4_axis1_float16());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -1811,9 +1878,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis1_float16_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -1928,6 +1997,8 @@ const TestModel& get_test_model_axis_dim4_axis1_float16_all_inputs_as_internal()
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis1_float16_all_inputs_as_internal = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis1_float16_all_inputs_as_internal", get_test_model_axis_dim4_axis1_float16_all_inputs_as_internal());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -1935,9 +2006,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis1_neg() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, -1.1f, -1.1f, -1.1f, 0.6f, 0.6f, 0.6f, 0.6f, 0.7f, 0.7f, 0.7f, 0.7f, 1.2f, 1.2f, 1.2f, 1.2f, -0.7f, -0.7f, -0.7f, -0.7f, 0.1f, 0.1f, 0.1f, 0.1f, -1.1f, -1.1f, -1.1f, -1.1f, 0.6f, 0.6f, 0.6f, 0.6f, 0.7f, 0.7f, 0.7f, 0.7f, 1.2f, 1.2f, 1.2f, 1.2f, -0.7f, -0.7f, -0.7f, -0.7f, 0.1f, 0.1f, 0.1f, 0.1f}),
@@ -2018,6 +2091,8 @@ const TestModel& get_test_model_axis_dim4_axis1_neg() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis1_neg = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis1_neg", get_test_model_axis_dim4_axis1_neg());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -2025,9 +2100,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis1_neg_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -2142,6 +2219,8 @@ const TestModel& get_test_model_axis_dim4_axis1_neg_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis1_neg_all_inputs_as_internal = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis1_neg_all_inputs_as_internal", get_test_model_axis_dim4_axis1_neg_all_inputs_as_internal());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -2149,9 +2228,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis1_neg_relaxed() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, -1.1f, -1.1f, -1.1f, 0.6f, 0.6f, 0.6f, 0.6f, 0.7f, 0.7f, 0.7f, 0.7f, 1.2f, 1.2f, 1.2f, 1.2f, -0.7f, -0.7f, -0.7f, -0.7f, 0.1f, 0.1f, 0.1f, 0.1f, -1.1f, -1.1f, -1.1f, -1.1f, 0.6f, 0.6f, 0.6f, 0.6f, 0.7f, 0.7f, 0.7f, 0.7f, 1.2f, 1.2f, 1.2f, 1.2f, -0.7f, -0.7f, -0.7f, -0.7f, 0.1f, 0.1f, 0.1f, 0.1f}),
@@ -2232,6 +2313,8 @@ const TestModel& get_test_model_axis_dim4_axis1_neg_relaxed() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis1_neg_relaxed = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis1_neg_relaxed", get_test_model_axis_dim4_axis1_neg_relaxed());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -2239,9 +2322,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis1_neg_relaxed_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -2357,15 +2442,19 @@ const TestModel& get_test_model_axis_dim4_axis1_neg_relaxed_all_inputs_as_intern
     return model;
 }
 
+const auto dummy_test_model_axis_dim4_axis1_neg_relaxed_all_inputs_as_internal = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis1_neg_relaxed_all_inputs_as_internal", get_test_model_axis_dim4_axis1_neg_relaxed_all_inputs_as_internal());
+
 }  // namespace generated_tests::local_response_normalization_v1_2
 
 namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis1_neg_float16() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({-1.100000023841858f, -1.100000023841858f, -1.100000023841858f, -1.100000023841858f, 0.6000000238418579f, 0.6000000238418579f, 0.6000000238418579f, 0.6000000238418579f, 0.699999988079071f, 0.699999988079071f, 0.699999988079071f, 0.699999988079071f, 1.2000000476837158f, 1.2000000476837158f, 1.2000000476837158f, 1.2000000476837158f, -0.699999988079071f, -0.699999988079071f, -0.699999988079071f, -0.699999988079071f, 0.10000000149011612f, 0.10000000149011612f, 0.10000000149011612f, 0.10000000149011612f, -1.100000023841858f, -1.100000023841858f, -1.100000023841858f, -1.100000023841858f, 0.6000000238418579f, 0.6000000238418579f, 0.6000000238418579f, 0.6000000238418579f, 0.699999988079071f, 0.699999988079071f, 0.699999988079071f, 0.699999988079071f, 1.2000000476837158f, 1.2000000476837158f, 1.2000000476837158f, 1.2000000476837158f, -0.699999988079071f, -0.699999988079071f, -0.699999988079071f, -0.699999988079071f, 0.10000000149011612f, 0.10000000149011612f, 0.10000000149011612f, 0.10000000149011612f}),
@@ -2446,6 +2535,8 @@ const TestModel& get_test_model_axis_dim4_axis1_neg_float16() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis1_neg_float16 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis1_neg_float16", get_test_model_axis_dim4_axis1_neg_float16());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -2453,9 +2544,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis1_neg_float16_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -2571,15 +2664,19 @@ const TestModel& get_test_model_axis_dim4_axis1_neg_float16_all_inputs_as_intern
     return model;
 }
 
+const auto dummy_test_model_axis_dim4_axis1_neg_float16_all_inputs_as_internal = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis1_neg_float16_all_inputs_as_internal", get_test_model_axis_dim4_axis1_neg_float16_all_inputs_as_internal());
+
 }  // namespace generated_tests::local_response_normalization_v1_2
 
 namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, -1.1f, 0.6f, 0.6f, 0.7f, 0.7f, 1.2f, 1.2f, -0.7f, -0.7f, 0.1f, 0.1f, -1.1f, -1.1f, 0.6f, 0.6f, 0.7f, 0.7f, 1.2f, 1.2f, -0.7f, -0.7f, 0.1f, 0.1f, -1.1f, -1.1f, 0.6f, 0.6f, 0.7f, 0.7f, 1.2f, 1.2f, -0.7f, -0.7f, 0.1f, 0.1f, -1.1f, -1.1f, 0.6f, 0.6f, 0.7f, 0.7f, 1.2f, 1.2f, -0.7f, -0.7f, 0.1f, 0.1f}),
@@ -2660,6 +2757,8 @@ const TestModel& get_test_model_axis_dim4_axis2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis2 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis2", get_test_model_axis_dim4_axis2());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -2667,9 +2766,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis2_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -2784,6 +2885,8 @@ const TestModel& get_test_model_axis_dim4_axis2_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis2_all_inputs_as_internal = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis2_all_inputs_as_internal", get_test_model_axis_dim4_axis2_all_inputs_as_internal());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -2791,9 +2894,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis2_relaxed() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, -1.1f, 0.6f, 0.6f, 0.7f, 0.7f, 1.2f, 1.2f, -0.7f, -0.7f, 0.1f, 0.1f, -1.1f, -1.1f, 0.6f, 0.6f, 0.7f, 0.7f, 1.2f, 1.2f, -0.7f, -0.7f, 0.1f, 0.1f, -1.1f, -1.1f, 0.6f, 0.6f, 0.7f, 0.7f, 1.2f, 1.2f, -0.7f, -0.7f, 0.1f, 0.1f, -1.1f, -1.1f, 0.6f, 0.6f, 0.7f, 0.7f, 1.2f, 1.2f, -0.7f, -0.7f, 0.1f, 0.1f}),
@@ -2874,6 +2979,8 @@ const TestModel& get_test_model_axis_dim4_axis2_relaxed() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis2_relaxed = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis2_relaxed", get_test_model_axis_dim4_axis2_relaxed());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -2881,9 +2988,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis2_relaxed_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -2998,6 +3107,8 @@ const TestModel& get_test_model_axis_dim4_axis2_relaxed_all_inputs_as_internal()
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis2_relaxed_all_inputs_as_internal = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis2_relaxed_all_inputs_as_internal", get_test_model_axis_dim4_axis2_relaxed_all_inputs_as_internal());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -3005,9 +3116,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis2_float16() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({-1.100000023841858f, -1.100000023841858f, 0.6000000238418579f, 0.6000000238418579f, 0.699999988079071f, 0.699999988079071f, 1.2000000476837158f, 1.2000000476837158f, -0.699999988079071f, -0.699999988079071f, 0.10000000149011612f, 0.10000000149011612f, -1.100000023841858f, -1.100000023841858f, 0.6000000238418579f, 0.6000000238418579f, 0.699999988079071f, 0.699999988079071f, 1.2000000476837158f, 1.2000000476837158f, -0.699999988079071f, -0.699999988079071f, 0.10000000149011612f, 0.10000000149011612f, -1.100000023841858f, -1.100000023841858f, 0.6000000238418579f, 0.6000000238418579f, 0.699999988079071f, 0.699999988079071f, 1.2000000476837158f, 1.2000000476837158f, -0.699999988079071f, -0.699999988079071f, 0.10000000149011612f, 0.10000000149011612f, -1.100000023841858f, -1.100000023841858f, 0.6000000238418579f, 0.6000000238418579f, 0.699999988079071f, 0.699999988079071f, 1.2000000476837158f, 1.2000000476837158f, -0.699999988079071f, -0.699999988079071f, 0.10000000149011612f, 0.10000000149011612f}),
@@ -3088,6 +3201,8 @@ const TestModel& get_test_model_axis_dim4_axis2_float16() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis2_float16 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis2_float16", get_test_model_axis_dim4_axis2_float16());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -3095,9 +3210,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis2_float16_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -3212,6 +3329,8 @@ const TestModel& get_test_model_axis_dim4_axis2_float16_all_inputs_as_internal()
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis2_float16_all_inputs_as_internal = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis2_float16_all_inputs_as_internal", get_test_model_axis_dim4_axis2_float16_all_inputs_as_internal());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -3219,9 +3338,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis2_neg() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, -1.1f, 0.6f, 0.6f, 0.7f, 0.7f, 1.2f, 1.2f, -0.7f, -0.7f, 0.1f, 0.1f, -1.1f, -1.1f, 0.6f, 0.6f, 0.7f, 0.7f, 1.2f, 1.2f, -0.7f, -0.7f, 0.1f, 0.1f, -1.1f, -1.1f, 0.6f, 0.6f, 0.7f, 0.7f, 1.2f, 1.2f, -0.7f, -0.7f, 0.1f, 0.1f, -1.1f, -1.1f, 0.6f, 0.6f, 0.7f, 0.7f, 1.2f, 1.2f, -0.7f, -0.7f, 0.1f, 0.1f}),
@@ -3302,6 +3423,8 @@ const TestModel& get_test_model_axis_dim4_axis2_neg() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis2_neg = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis2_neg", get_test_model_axis_dim4_axis2_neg());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -3309,9 +3432,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis2_neg_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -3426,6 +3551,8 @@ const TestModel& get_test_model_axis_dim4_axis2_neg_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis2_neg_all_inputs_as_internal = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis2_neg_all_inputs_as_internal", get_test_model_axis_dim4_axis2_neg_all_inputs_as_internal());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -3433,9 +3560,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis2_neg_relaxed() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, -1.1f, 0.6f, 0.6f, 0.7f, 0.7f, 1.2f, 1.2f, -0.7f, -0.7f, 0.1f, 0.1f, -1.1f, -1.1f, 0.6f, 0.6f, 0.7f, 0.7f, 1.2f, 1.2f, -0.7f, -0.7f, 0.1f, 0.1f, -1.1f, -1.1f, 0.6f, 0.6f, 0.7f, 0.7f, 1.2f, 1.2f, -0.7f, -0.7f, 0.1f, 0.1f, -1.1f, -1.1f, 0.6f, 0.6f, 0.7f, 0.7f, 1.2f, 1.2f, -0.7f, -0.7f, 0.1f, 0.1f}),
@@ -3516,6 +3645,8 @@ const TestModel& get_test_model_axis_dim4_axis2_neg_relaxed() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis2_neg_relaxed = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis2_neg_relaxed", get_test_model_axis_dim4_axis2_neg_relaxed());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -3523,9 +3654,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis2_neg_relaxed_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -3641,15 +3774,19 @@ const TestModel& get_test_model_axis_dim4_axis2_neg_relaxed_all_inputs_as_intern
     return model;
 }
 
+const auto dummy_test_model_axis_dim4_axis2_neg_relaxed_all_inputs_as_internal = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis2_neg_relaxed_all_inputs_as_internal", get_test_model_axis_dim4_axis2_neg_relaxed_all_inputs_as_internal());
+
 }  // namespace generated_tests::local_response_normalization_v1_2
 
 namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis2_neg_float16() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({-1.100000023841858f, -1.100000023841858f, 0.6000000238418579f, 0.6000000238418579f, 0.699999988079071f, 0.699999988079071f, 1.2000000476837158f, 1.2000000476837158f, -0.699999988079071f, -0.699999988079071f, 0.10000000149011612f, 0.10000000149011612f, -1.100000023841858f, -1.100000023841858f, 0.6000000238418579f, 0.6000000238418579f, 0.699999988079071f, 0.699999988079071f, 1.2000000476837158f, 1.2000000476837158f, -0.699999988079071f, -0.699999988079071f, 0.10000000149011612f, 0.10000000149011612f, -1.100000023841858f, -1.100000023841858f, 0.6000000238418579f, 0.6000000238418579f, 0.699999988079071f, 0.699999988079071f, 1.2000000476837158f, 1.2000000476837158f, -0.699999988079071f, -0.699999988079071f, 0.10000000149011612f, 0.10000000149011612f, -1.100000023841858f, -1.100000023841858f, 0.6000000238418579f, 0.6000000238418579f, 0.699999988079071f, 0.699999988079071f, 1.2000000476837158f, 1.2000000476837158f, -0.699999988079071f, -0.699999988079071f, 0.10000000149011612f, 0.10000000149011612f}),
@@ -3730,6 +3867,8 @@ const TestModel& get_test_model_axis_dim4_axis2_neg_float16() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis2_neg_float16 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis2_neg_float16", get_test_model_axis_dim4_axis2_neg_float16());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -3737,9 +3876,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis2_neg_float16_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -3855,15 +3996,19 @@ const TestModel& get_test_model_axis_dim4_axis2_neg_float16_all_inputs_as_intern
     return model;
 }
 
+const auto dummy_test_model_axis_dim4_axis2_neg_float16_all_inputs_as_internal = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis2_neg_float16_all_inputs_as_internal", get_test_model_axis_dim4_axis2_neg_float16_all_inputs_as_internal());
+
 }  // namespace generated_tests::local_response_normalization_v1_2
 
 namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f}),
@@ -3944,6 +4089,8 @@ const TestModel& get_test_model_axis_dim4_axis3() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis3 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis3", get_test_model_axis_dim4_axis3());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -3951,9 +4098,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis3_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -4068,6 +4217,8 @@ const TestModel& get_test_model_axis_dim4_axis3_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis3_all_inputs_as_internal = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis3_all_inputs_as_internal", get_test_model_axis_dim4_axis3_all_inputs_as_internal());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -4075,9 +4226,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis3_relaxed() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f}),
@@ -4158,6 +4311,8 @@ const TestModel& get_test_model_axis_dim4_axis3_relaxed() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis3_relaxed = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis3_relaxed", get_test_model_axis_dim4_axis3_relaxed());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -4165,9 +4320,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis3_relaxed_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -4282,6 +4439,8 @@ const TestModel& get_test_model_axis_dim4_axis3_relaxed_all_inputs_as_internal()
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis3_relaxed_all_inputs_as_internal = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis3_relaxed_all_inputs_as_internal", get_test_model_axis_dim4_axis3_relaxed_all_inputs_as_internal());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -4289,9 +4448,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis3_float16() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({-1.100000023841858f, 0.6000000238418579f, 0.699999988079071f, 1.2000000476837158f, -0.699999988079071f, 0.10000000149011612f, -1.100000023841858f, 0.6000000238418579f, 0.699999988079071f, 1.2000000476837158f, -0.699999988079071f, 0.10000000149011612f, -1.100000023841858f, 0.6000000238418579f, 0.699999988079071f, 1.2000000476837158f, -0.699999988079071f, 0.10000000149011612f, -1.100000023841858f, 0.6000000238418579f, 0.699999988079071f, 1.2000000476837158f, -0.699999988079071f, 0.10000000149011612f, -1.100000023841858f, 0.6000000238418579f, 0.699999988079071f, 1.2000000476837158f, -0.699999988079071f, 0.10000000149011612f, -1.100000023841858f, 0.6000000238418579f, 0.699999988079071f, 1.2000000476837158f, -0.699999988079071f, 0.10000000149011612f, -1.100000023841858f, 0.6000000238418579f, 0.699999988079071f, 1.2000000476837158f, -0.699999988079071f, 0.10000000149011612f, -1.100000023841858f, 0.6000000238418579f, 0.699999988079071f, 1.2000000476837158f, -0.699999988079071f, 0.10000000149011612f}),
@@ -4372,6 +4533,8 @@ const TestModel& get_test_model_axis_dim4_axis3_float16() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis3_float16 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis3_float16", get_test_model_axis_dim4_axis3_float16());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -4379,9 +4542,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis3_float16_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -4496,6 +4661,8 @@ const TestModel& get_test_model_axis_dim4_axis3_float16_all_inputs_as_internal()
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis3_float16_all_inputs_as_internal = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis3_float16_all_inputs_as_internal", get_test_model_axis_dim4_axis3_float16_all_inputs_as_internal());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -4503,9 +4670,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis3_neg() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f}),
@@ -4586,6 +4755,8 @@ const TestModel& get_test_model_axis_dim4_axis3_neg() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis3_neg = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis3_neg", get_test_model_axis_dim4_axis3_neg());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -4593,9 +4764,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis3_neg_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -4710,6 +4883,8 @@ const TestModel& get_test_model_axis_dim4_axis3_neg_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis3_neg_all_inputs_as_internal = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis3_neg_all_inputs_as_internal", get_test_model_axis_dim4_axis3_neg_all_inputs_as_internal());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -4717,9 +4892,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis3_neg_relaxed() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f}),
@@ -4800,6 +4977,8 @@ const TestModel& get_test_model_axis_dim4_axis3_neg_relaxed() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis3_neg_relaxed = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis3_neg_relaxed", get_test_model_axis_dim4_axis3_neg_relaxed());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -4807,9 +4986,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis3_neg_relaxed_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -4925,15 +5106,19 @@ const TestModel& get_test_model_axis_dim4_axis3_neg_relaxed_all_inputs_as_intern
     return model;
 }
 
+const auto dummy_test_model_axis_dim4_axis3_neg_relaxed_all_inputs_as_internal = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis3_neg_relaxed_all_inputs_as_internal", get_test_model_axis_dim4_axis3_neg_relaxed_all_inputs_as_internal());
+
 }  // namespace generated_tests::local_response_normalization_v1_2
 
 namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis3_neg_float16() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({-1.100000023841858f, 0.6000000238418579f, 0.699999988079071f, 1.2000000476837158f, -0.699999988079071f, 0.10000000149011612f, -1.100000023841858f, 0.6000000238418579f, 0.699999988079071f, 1.2000000476837158f, -0.699999988079071f, 0.10000000149011612f, -1.100000023841858f, 0.6000000238418579f, 0.699999988079071f, 1.2000000476837158f, -0.699999988079071f, 0.10000000149011612f, -1.100000023841858f, 0.6000000238418579f, 0.699999988079071f, 1.2000000476837158f, -0.699999988079071f, 0.10000000149011612f, -1.100000023841858f, 0.6000000238418579f, 0.699999988079071f, 1.2000000476837158f, -0.699999988079071f, 0.10000000149011612f, -1.100000023841858f, 0.6000000238418579f, 0.699999988079071f, 1.2000000476837158f, -0.699999988079071f, 0.10000000149011612f, -1.100000023841858f, 0.6000000238418579f, 0.699999988079071f, 1.2000000476837158f, -0.699999988079071f, 0.10000000149011612f, -1.100000023841858f, 0.6000000238418579f, 0.699999988079071f, 1.2000000476837158f, -0.699999988079071f, 0.10000000149011612f}),
@@ -5014,6 +5199,8 @@ const TestModel& get_test_model_axis_dim4_axis3_neg_float16() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis3_neg_float16 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis3_neg_float16", get_test_model_axis_dim4_axis3_neg_float16());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -5021,9 +5208,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis3_neg_float16_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -5139,15 +5328,19 @@ const TestModel& get_test_model_axis_dim4_axis3_neg_float16_all_inputs_as_intern
     return model;
 }
 
+const auto dummy_test_model_axis_dim4_axis3_neg_float16_all_inputs_as_internal = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis3_neg_float16_all_inputs_as_internal", get_test_model_axis_dim4_axis3_neg_float16_all_inputs_as_internal());
+
 }  // namespace generated_tests::local_response_normalization_v1_2
 
 namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis0() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, -1.1f, -1.1f, -1.1f, 0.6f, 0.6f, 0.6f, 0.6f, 0.7f, 0.7f, 0.7f, 0.7f, 1.2f, 1.2f, 1.2f, 1.2f, -0.7f, -0.7f, -0.7f, -0.7f, 0.1f, 0.1f, 0.1f, 0.1f}),
@@ -5228,6 +5421,8 @@ const TestModel& get_test_model_axis_dim3_axis0() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim3_axis0 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim3_axis0", get_test_model_axis_dim3_axis0());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -5235,9 +5430,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis0_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -5352,6 +5549,8 @@ const TestModel& get_test_model_axis_dim3_axis0_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim3_axis0_all_inputs_as_internal = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim3_axis0_all_inputs_as_internal", get_test_model_axis_dim3_axis0_all_inputs_as_internal());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -5359,9 +5558,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis0_relaxed() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, -1.1f, -1.1f, -1.1f, 0.6f, 0.6f, 0.6f, 0.6f, 0.7f, 0.7f, 0.7f, 0.7f, 1.2f, 1.2f, 1.2f, 1.2f, -0.7f, -0.7f, -0.7f, -0.7f, 0.1f, 0.1f, 0.1f, 0.1f}),
@@ -5442,6 +5643,8 @@ const TestModel& get_test_model_axis_dim3_axis0_relaxed() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim3_axis0_relaxed = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim3_axis0_relaxed", get_test_model_axis_dim3_axis0_relaxed());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -5449,9 +5652,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis0_relaxed_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -5566,6 +5771,8 @@ const TestModel& get_test_model_axis_dim3_axis0_relaxed_all_inputs_as_internal()
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim3_axis0_relaxed_all_inputs_as_internal = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim3_axis0_relaxed_all_inputs_as_internal", get_test_model_axis_dim3_axis0_relaxed_all_inputs_as_internal());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -5573,9 +5780,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis0_float16() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({-1.100000023841858f, -1.100000023841858f, -1.100000023841858f, -1.100000023841858f, 0.6000000238418579f, 0.6000000238418579f, 0.6000000238418579f, 0.6000000238418579f, 0.699999988079071f, 0.699999988079071f, 0.699999988079071f, 0.699999988079071f, 1.2000000476837158f, 1.2000000476837158f, 1.2000000476837158f, 1.2000000476837158f, -0.699999988079071f, -0.699999988079071f, -0.699999988079071f, -0.699999988079071f, 0.10000000149011612f, 0.10000000149011612f, 0.10000000149011612f, 0.10000000149011612f}),
@@ -5656,6 +5865,8 @@ const TestModel& get_test_model_axis_dim3_axis0_float16() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim3_axis0_float16 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim3_axis0_float16", get_test_model_axis_dim3_axis0_float16());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -5663,9 +5874,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis0_float16_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -5780,6 +5993,8 @@ const TestModel& get_test_model_axis_dim3_axis0_float16_all_inputs_as_internal()
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim3_axis0_float16_all_inputs_as_internal = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim3_axis0_float16_all_inputs_as_internal", get_test_model_axis_dim3_axis0_float16_all_inputs_as_internal());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -5787,9 +6002,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis0_neg() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, -1.1f, -1.1f, -1.1f, 0.6f, 0.6f, 0.6f, 0.6f, 0.7f, 0.7f, 0.7f, 0.7f, 1.2f, 1.2f, 1.2f, 1.2f, -0.7f, -0.7f, -0.7f, -0.7f, 0.1f, 0.1f, 0.1f, 0.1f}),
@@ -5870,6 +6087,8 @@ const TestModel& get_test_model_axis_dim3_axis0_neg() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim3_axis0_neg = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim3_axis0_neg", get_test_model_axis_dim3_axis0_neg());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -5877,9 +6096,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis0_neg_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -5994,6 +6215,8 @@ const TestModel& get_test_model_axis_dim3_axis0_neg_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim3_axis0_neg_all_inputs_as_internal = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim3_axis0_neg_all_inputs_as_internal", get_test_model_axis_dim3_axis0_neg_all_inputs_as_internal());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -6001,9 +6224,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis0_neg_relaxed() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, -1.1f, -1.1f, -1.1f, 0.6f, 0.6f, 0.6f, 0.6f, 0.7f, 0.7f, 0.7f, 0.7f, 1.2f, 1.2f, 1.2f, 1.2f, -0.7f, -0.7f, -0.7f, -0.7f, 0.1f, 0.1f, 0.1f, 0.1f}),
@@ -6084,6 +6309,8 @@ const TestModel& get_test_model_axis_dim3_axis0_neg_relaxed() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim3_axis0_neg_relaxed = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim3_axis0_neg_relaxed", get_test_model_axis_dim3_axis0_neg_relaxed());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -6091,9 +6318,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis0_neg_relaxed_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -6209,15 +6438,19 @@ const TestModel& get_test_model_axis_dim3_axis0_neg_relaxed_all_inputs_as_intern
     return model;
 }
 
+const auto dummy_test_model_axis_dim3_axis0_neg_relaxed_all_inputs_as_internal = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim3_axis0_neg_relaxed_all_inputs_as_internal", get_test_model_axis_dim3_axis0_neg_relaxed_all_inputs_as_internal());
+
 }  // namespace generated_tests::local_response_normalization_v1_2
 
 namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis0_neg_float16() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({-1.100000023841858f, -1.100000023841858f, -1.100000023841858f, -1.100000023841858f, 0.6000000238418579f, 0.6000000238418579f, 0.6000000238418579f, 0.6000000238418579f, 0.699999988079071f, 0.699999988079071f, 0.699999988079071f, 0.699999988079071f, 1.2000000476837158f, 1.2000000476837158f, 1.2000000476837158f, 1.2000000476837158f, -0.699999988079071f, -0.699999988079071f, -0.699999988079071f, -0.699999988079071f, 0.10000000149011612f, 0.10000000149011612f, 0.10000000149011612f, 0.10000000149011612f}),
@@ -6298,6 +6531,8 @@ const TestModel& get_test_model_axis_dim3_axis0_neg_float16() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim3_axis0_neg_float16 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim3_axis0_neg_float16", get_test_model_axis_dim3_axis0_neg_float16());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -6305,9 +6540,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis0_neg_float16_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -6423,15 +6660,19 @@ const TestModel& get_test_model_axis_dim3_axis0_neg_float16_all_inputs_as_intern
     return model;
 }
 
+const auto dummy_test_model_axis_dim3_axis0_neg_float16_all_inputs_as_internal = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim3_axis0_neg_float16_all_inputs_as_internal", get_test_model_axis_dim3_axis0_neg_float16_all_inputs_as_internal());
+
 }  // namespace generated_tests::local_response_normalization_v1_2
 
 namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis1() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, -1.1f, 0.6f, 0.6f, 0.7f, 0.7f, 1.2f, 1.2f, -0.7f, -0.7f, 0.1f, 0.1f, -1.1f, -1.1f, 0.6f, 0.6f, 0.7f, 0.7f, 1.2f, 1.2f, -0.7f, -0.7f, 0.1f, 0.1f}),
@@ -6512,6 +6753,8 @@ const TestModel& get_test_model_axis_dim3_axis1() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim3_axis1 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim3_axis1", get_test_model_axis_dim3_axis1());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -6519,9 +6762,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis1_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -6636,6 +6881,8 @@ const TestModel& get_test_model_axis_dim3_axis1_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim3_axis1_all_inputs_as_internal = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim3_axis1_all_inputs_as_internal", get_test_model_axis_dim3_axis1_all_inputs_as_internal());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -6643,9 +6890,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis1_relaxed() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, -1.1f, 0.6f, 0.6f, 0.7f, 0.7f, 1.2f, 1.2f, -0.7f, -0.7f, 0.1f, 0.1f, -1.1f, -1.1f, 0.6f, 0.6f, 0.7f, 0.7f, 1.2f, 1.2f, -0.7f, -0.7f, 0.1f, 0.1f}),
@@ -6726,6 +6975,8 @@ const TestModel& get_test_model_axis_dim3_axis1_relaxed() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim3_axis1_relaxed = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim3_axis1_relaxed", get_test_model_axis_dim3_axis1_relaxed());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -6733,9 +6984,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis1_relaxed_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -6850,6 +7103,8 @@ const TestModel& get_test_model_axis_dim3_axis1_relaxed_all_inputs_as_internal()
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim3_axis1_relaxed_all_inputs_as_internal = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim3_axis1_relaxed_all_inputs_as_internal", get_test_model_axis_dim3_axis1_relaxed_all_inputs_as_internal());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -6857,9 +7112,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis1_float16() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({-1.100000023841858f, -1.100000023841858f, 0.6000000238418579f, 0.6000000238418579f, 0.699999988079071f, 0.699999988079071f, 1.2000000476837158f, 1.2000000476837158f, -0.699999988079071f, -0.699999988079071f, 0.10000000149011612f, 0.10000000149011612f, -1.100000023841858f, -1.100000023841858f, 0.6000000238418579f, 0.6000000238418579f, 0.699999988079071f, 0.699999988079071f, 1.2000000476837158f, 1.2000000476837158f, -0.699999988079071f, -0.699999988079071f, 0.10000000149011612f, 0.10000000149011612f}),
@@ -6940,6 +7197,8 @@ const TestModel& get_test_model_axis_dim3_axis1_float16() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim3_axis1_float16 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim3_axis1_float16", get_test_model_axis_dim3_axis1_float16());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -6947,9 +7206,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis1_float16_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -7064,6 +7325,8 @@ const TestModel& get_test_model_axis_dim3_axis1_float16_all_inputs_as_internal()
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim3_axis1_float16_all_inputs_as_internal = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim3_axis1_float16_all_inputs_as_internal", get_test_model_axis_dim3_axis1_float16_all_inputs_as_internal());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -7071,9 +7334,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis1_neg() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, -1.1f, 0.6f, 0.6f, 0.7f, 0.7f, 1.2f, 1.2f, -0.7f, -0.7f, 0.1f, 0.1f, -1.1f, -1.1f, 0.6f, 0.6f, 0.7f, 0.7f, 1.2f, 1.2f, -0.7f, -0.7f, 0.1f, 0.1f}),
@@ -7154,6 +7419,8 @@ const TestModel& get_test_model_axis_dim3_axis1_neg() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim3_axis1_neg = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim3_axis1_neg", get_test_model_axis_dim3_axis1_neg());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -7161,9 +7428,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis1_neg_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -7278,6 +7547,8 @@ const TestModel& get_test_model_axis_dim3_axis1_neg_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim3_axis1_neg_all_inputs_as_internal = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim3_axis1_neg_all_inputs_as_internal", get_test_model_axis_dim3_axis1_neg_all_inputs_as_internal());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -7285,9 +7556,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis1_neg_relaxed() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, -1.1f, 0.6f, 0.6f, 0.7f, 0.7f, 1.2f, 1.2f, -0.7f, -0.7f, 0.1f, 0.1f, -1.1f, -1.1f, 0.6f, 0.6f, 0.7f, 0.7f, 1.2f, 1.2f, -0.7f, -0.7f, 0.1f, 0.1f}),
@@ -7368,6 +7641,8 @@ const TestModel& get_test_model_axis_dim3_axis1_neg_relaxed() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim3_axis1_neg_relaxed = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim3_axis1_neg_relaxed", get_test_model_axis_dim3_axis1_neg_relaxed());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -7375,9 +7650,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis1_neg_relaxed_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -7493,15 +7770,19 @@ const TestModel& get_test_model_axis_dim3_axis1_neg_relaxed_all_inputs_as_intern
     return model;
 }
 
+const auto dummy_test_model_axis_dim3_axis1_neg_relaxed_all_inputs_as_internal = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim3_axis1_neg_relaxed_all_inputs_as_internal", get_test_model_axis_dim3_axis1_neg_relaxed_all_inputs_as_internal());
+
 }  // namespace generated_tests::local_response_normalization_v1_2
 
 namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis1_neg_float16() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({-1.100000023841858f, -1.100000023841858f, 0.6000000238418579f, 0.6000000238418579f, 0.699999988079071f, 0.699999988079071f, 1.2000000476837158f, 1.2000000476837158f, -0.699999988079071f, -0.699999988079071f, 0.10000000149011612f, 0.10000000149011612f, -1.100000023841858f, -1.100000023841858f, 0.6000000238418579f, 0.6000000238418579f, 0.699999988079071f, 0.699999988079071f, 1.2000000476837158f, 1.2000000476837158f, -0.699999988079071f, -0.699999988079071f, 0.10000000149011612f, 0.10000000149011612f}),
@@ -7582,6 +7863,8 @@ const TestModel& get_test_model_axis_dim3_axis1_neg_float16() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim3_axis1_neg_float16 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim3_axis1_neg_float16", get_test_model_axis_dim3_axis1_neg_float16());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -7589,9 +7872,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis1_neg_float16_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -7707,15 +7992,19 @@ const TestModel& get_test_model_axis_dim3_axis1_neg_float16_all_inputs_as_intern
     return model;
 }
 
+const auto dummy_test_model_axis_dim3_axis1_neg_float16_all_inputs_as_internal = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim3_axis1_neg_float16_all_inputs_as_internal", get_test_model_axis_dim3_axis1_neg_float16_all_inputs_as_internal());
+
 }  // namespace generated_tests::local_response_normalization_v1_2
 
 namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f}),
@@ -7796,6 +8085,8 @@ const TestModel& get_test_model_axis_dim3_axis2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim3_axis2 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim3_axis2", get_test_model_axis_dim3_axis2());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -7803,9 +8094,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis2_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -7920,6 +8213,8 @@ const TestModel& get_test_model_axis_dim3_axis2_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim3_axis2_all_inputs_as_internal = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim3_axis2_all_inputs_as_internal", get_test_model_axis_dim3_axis2_all_inputs_as_internal());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -7927,9 +8222,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis2_relaxed() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f}),
@@ -8010,6 +8307,8 @@ const TestModel& get_test_model_axis_dim3_axis2_relaxed() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim3_axis2_relaxed = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim3_axis2_relaxed", get_test_model_axis_dim3_axis2_relaxed());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -8017,9 +8316,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis2_relaxed_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -8134,6 +8435,8 @@ const TestModel& get_test_model_axis_dim3_axis2_relaxed_all_inputs_as_internal()
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim3_axis2_relaxed_all_inputs_as_internal = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim3_axis2_relaxed_all_inputs_as_internal", get_test_model_axis_dim3_axis2_relaxed_all_inputs_as_internal());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -8141,9 +8444,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis2_float16() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({-1.100000023841858f, 0.6000000238418579f, 0.699999988079071f, 1.2000000476837158f, -0.699999988079071f, 0.10000000149011612f, -1.100000023841858f, 0.6000000238418579f, 0.699999988079071f, 1.2000000476837158f, -0.699999988079071f, 0.10000000149011612f, -1.100000023841858f, 0.6000000238418579f, 0.699999988079071f, 1.2000000476837158f, -0.699999988079071f, 0.10000000149011612f, -1.100000023841858f, 0.6000000238418579f, 0.699999988079071f, 1.2000000476837158f, -0.699999988079071f, 0.10000000149011612f}),
@@ -8224,6 +8529,8 @@ const TestModel& get_test_model_axis_dim3_axis2_float16() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim3_axis2_float16 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim3_axis2_float16", get_test_model_axis_dim3_axis2_float16());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -8231,9 +8538,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis2_float16_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -8348,6 +8657,8 @@ const TestModel& get_test_model_axis_dim3_axis2_float16_all_inputs_as_internal()
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim3_axis2_float16_all_inputs_as_internal = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim3_axis2_float16_all_inputs_as_internal", get_test_model_axis_dim3_axis2_float16_all_inputs_as_internal());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -8355,9 +8666,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis2_neg() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f}),
@@ -8438,6 +8751,8 @@ const TestModel& get_test_model_axis_dim3_axis2_neg() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim3_axis2_neg = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim3_axis2_neg", get_test_model_axis_dim3_axis2_neg());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -8445,9 +8760,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis2_neg_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -8562,6 +8879,8 @@ const TestModel& get_test_model_axis_dim3_axis2_neg_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim3_axis2_neg_all_inputs_as_internal = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim3_axis2_neg_all_inputs_as_internal", get_test_model_axis_dim3_axis2_neg_all_inputs_as_internal());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -8569,9 +8888,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis2_neg_relaxed() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f}),
@@ -8652,6 +8973,8 @@ const TestModel& get_test_model_axis_dim3_axis2_neg_relaxed() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim3_axis2_neg_relaxed = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim3_axis2_neg_relaxed", get_test_model_axis_dim3_axis2_neg_relaxed());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -8659,9 +8982,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis2_neg_relaxed_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -8777,15 +9102,19 @@ const TestModel& get_test_model_axis_dim3_axis2_neg_relaxed_all_inputs_as_intern
     return model;
 }
 
+const auto dummy_test_model_axis_dim3_axis2_neg_relaxed_all_inputs_as_internal = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim3_axis2_neg_relaxed_all_inputs_as_internal", get_test_model_axis_dim3_axis2_neg_relaxed_all_inputs_as_internal());
+
 }  // namespace generated_tests::local_response_normalization_v1_2
 
 namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis2_neg_float16() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({-1.100000023841858f, 0.6000000238418579f, 0.699999988079071f, 1.2000000476837158f, -0.699999988079071f, 0.10000000149011612f, -1.100000023841858f, 0.6000000238418579f, 0.699999988079071f, 1.2000000476837158f, -0.699999988079071f, 0.10000000149011612f, -1.100000023841858f, 0.6000000238418579f, 0.699999988079071f, 1.2000000476837158f, -0.699999988079071f, 0.10000000149011612f, -1.100000023841858f, 0.6000000238418579f, 0.699999988079071f, 1.2000000476837158f, -0.699999988079071f, 0.10000000149011612f}),
@@ -8866,6 +9195,8 @@ const TestModel& get_test_model_axis_dim3_axis2_neg_float16() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim3_axis2_neg_float16 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim3_axis2_neg_float16", get_test_model_axis_dim3_axis2_neg_float16());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -8873,9 +9204,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis2_neg_float16_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -8991,15 +9324,19 @@ const TestModel& get_test_model_axis_dim3_axis2_neg_float16_all_inputs_as_intern
     return model;
 }
 
+const auto dummy_test_model_axis_dim3_axis2_neg_float16_all_inputs_as_internal = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim3_axis2_neg_float16_all_inputs_as_internal", get_test_model_axis_dim3_axis2_neg_float16_all_inputs_as_internal());
+
 }  // namespace generated_tests::local_response_normalization_v1_2
 
 namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim2_axis0() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, -1.1f, 0.6f, 0.6f, 0.7f, 0.7f, 1.2f, 1.2f, -0.7f, -0.7f, 0.1f, 0.1f}),
@@ -9080,6 +9417,8 @@ const TestModel& get_test_model_axis_dim2_axis0() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim2_axis0 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim2_axis0", get_test_model_axis_dim2_axis0());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -9087,9 +9426,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim2_axis0_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -9204,6 +9545,8 @@ const TestModel& get_test_model_axis_dim2_axis0_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim2_axis0_all_inputs_as_internal = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim2_axis0_all_inputs_as_internal", get_test_model_axis_dim2_axis0_all_inputs_as_internal());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -9211,9 +9554,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim2_axis0_relaxed() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, -1.1f, 0.6f, 0.6f, 0.7f, 0.7f, 1.2f, 1.2f, -0.7f, -0.7f, 0.1f, 0.1f}),
@@ -9294,6 +9639,8 @@ const TestModel& get_test_model_axis_dim2_axis0_relaxed() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim2_axis0_relaxed = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim2_axis0_relaxed", get_test_model_axis_dim2_axis0_relaxed());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -9301,9 +9648,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim2_axis0_relaxed_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -9418,6 +9767,8 @@ const TestModel& get_test_model_axis_dim2_axis0_relaxed_all_inputs_as_internal()
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim2_axis0_relaxed_all_inputs_as_internal = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim2_axis0_relaxed_all_inputs_as_internal", get_test_model_axis_dim2_axis0_relaxed_all_inputs_as_internal());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -9425,9 +9776,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim2_axis0_float16() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({-1.100000023841858f, -1.100000023841858f, 0.6000000238418579f, 0.6000000238418579f, 0.699999988079071f, 0.699999988079071f, 1.2000000476837158f, 1.2000000476837158f, -0.699999988079071f, -0.699999988079071f, 0.10000000149011612f, 0.10000000149011612f}),
@@ -9508,6 +9861,8 @@ const TestModel& get_test_model_axis_dim2_axis0_float16() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim2_axis0_float16 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim2_axis0_float16", get_test_model_axis_dim2_axis0_float16());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -9515,9 +9870,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim2_axis0_float16_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -9632,6 +9989,8 @@ const TestModel& get_test_model_axis_dim2_axis0_float16_all_inputs_as_internal()
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim2_axis0_float16_all_inputs_as_internal = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim2_axis0_float16_all_inputs_as_internal", get_test_model_axis_dim2_axis0_float16_all_inputs_as_internal());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -9639,9 +9998,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim2_axis0_neg() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, -1.1f, 0.6f, 0.6f, 0.7f, 0.7f, 1.2f, 1.2f, -0.7f, -0.7f, 0.1f, 0.1f}),
@@ -9722,6 +10083,8 @@ const TestModel& get_test_model_axis_dim2_axis0_neg() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim2_axis0_neg = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim2_axis0_neg", get_test_model_axis_dim2_axis0_neg());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -9729,9 +10092,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim2_axis0_neg_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -9846,6 +10211,8 @@ const TestModel& get_test_model_axis_dim2_axis0_neg_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim2_axis0_neg_all_inputs_as_internal = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim2_axis0_neg_all_inputs_as_internal", get_test_model_axis_dim2_axis0_neg_all_inputs_as_internal());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -9853,9 +10220,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim2_axis0_neg_relaxed() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, -1.1f, 0.6f, 0.6f, 0.7f, 0.7f, 1.2f, 1.2f, -0.7f, -0.7f, 0.1f, 0.1f}),
@@ -9936,6 +10305,8 @@ const TestModel& get_test_model_axis_dim2_axis0_neg_relaxed() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim2_axis0_neg_relaxed = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim2_axis0_neg_relaxed", get_test_model_axis_dim2_axis0_neg_relaxed());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -9943,9 +10314,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim2_axis0_neg_relaxed_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -10061,15 +10434,19 @@ const TestModel& get_test_model_axis_dim2_axis0_neg_relaxed_all_inputs_as_intern
     return model;
 }
 
+const auto dummy_test_model_axis_dim2_axis0_neg_relaxed_all_inputs_as_internal = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim2_axis0_neg_relaxed_all_inputs_as_internal", get_test_model_axis_dim2_axis0_neg_relaxed_all_inputs_as_internal());
+
 }  // namespace generated_tests::local_response_normalization_v1_2
 
 namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim2_axis0_neg_float16() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({-1.100000023841858f, -1.100000023841858f, 0.6000000238418579f, 0.6000000238418579f, 0.699999988079071f, 0.699999988079071f, 1.2000000476837158f, 1.2000000476837158f, -0.699999988079071f, -0.699999988079071f, 0.10000000149011612f, 0.10000000149011612f}),
@@ -10150,6 +10527,8 @@ const TestModel& get_test_model_axis_dim2_axis0_neg_float16() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim2_axis0_neg_float16 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim2_axis0_neg_float16", get_test_model_axis_dim2_axis0_neg_float16());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -10157,9 +10536,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim2_axis0_neg_float16_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -10275,15 +10656,19 @@ const TestModel& get_test_model_axis_dim2_axis0_neg_float16_all_inputs_as_intern
     return model;
 }
 
+const auto dummy_test_model_axis_dim2_axis0_neg_float16_all_inputs_as_internal = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim2_axis0_neg_float16_all_inputs_as_internal", get_test_model_axis_dim2_axis0_neg_float16_all_inputs_as_internal());
+
 }  // namespace generated_tests::local_response_normalization_v1_2
 
 namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim2_axis1() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f}),
@@ -10364,6 +10749,8 @@ const TestModel& get_test_model_axis_dim2_axis1() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim2_axis1 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim2_axis1", get_test_model_axis_dim2_axis1());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -10371,9 +10758,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim2_axis1_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -10488,6 +10877,8 @@ const TestModel& get_test_model_axis_dim2_axis1_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim2_axis1_all_inputs_as_internal = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim2_axis1_all_inputs_as_internal", get_test_model_axis_dim2_axis1_all_inputs_as_internal());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -10495,9 +10886,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim2_axis1_relaxed() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f}),
@@ -10578,6 +10971,8 @@ const TestModel& get_test_model_axis_dim2_axis1_relaxed() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim2_axis1_relaxed = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim2_axis1_relaxed", get_test_model_axis_dim2_axis1_relaxed());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -10585,9 +10980,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim2_axis1_relaxed_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -10702,6 +11099,8 @@ const TestModel& get_test_model_axis_dim2_axis1_relaxed_all_inputs_as_internal()
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim2_axis1_relaxed_all_inputs_as_internal = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim2_axis1_relaxed_all_inputs_as_internal", get_test_model_axis_dim2_axis1_relaxed_all_inputs_as_internal());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -10709,9 +11108,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim2_axis1_float16() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({-1.100000023841858f, 0.6000000238418579f, 0.699999988079071f, 1.2000000476837158f, -0.699999988079071f, 0.10000000149011612f, -1.100000023841858f, 0.6000000238418579f, 0.699999988079071f, 1.2000000476837158f, -0.699999988079071f, 0.10000000149011612f}),
@@ -10792,6 +11193,8 @@ const TestModel& get_test_model_axis_dim2_axis1_float16() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim2_axis1_float16 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim2_axis1_float16", get_test_model_axis_dim2_axis1_float16());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -10799,9 +11202,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim2_axis1_float16_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -10916,6 +11321,8 @@ const TestModel& get_test_model_axis_dim2_axis1_float16_all_inputs_as_internal()
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim2_axis1_float16_all_inputs_as_internal = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim2_axis1_float16_all_inputs_as_internal", get_test_model_axis_dim2_axis1_float16_all_inputs_as_internal());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -10923,9 +11330,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim2_axis1_neg() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f}),
@@ -11006,6 +11415,8 @@ const TestModel& get_test_model_axis_dim2_axis1_neg() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim2_axis1_neg = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim2_axis1_neg", get_test_model_axis_dim2_axis1_neg());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -11013,9 +11424,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim2_axis1_neg_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -11130,6 +11543,8 @@ const TestModel& get_test_model_axis_dim2_axis1_neg_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim2_axis1_neg_all_inputs_as_internal = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim2_axis1_neg_all_inputs_as_internal", get_test_model_axis_dim2_axis1_neg_all_inputs_as_internal());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -11137,9 +11552,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim2_axis1_neg_relaxed() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f}),
@@ -11220,6 +11637,8 @@ const TestModel& get_test_model_axis_dim2_axis1_neg_relaxed() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim2_axis1_neg_relaxed = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim2_axis1_neg_relaxed", get_test_model_axis_dim2_axis1_neg_relaxed());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -11227,9 +11646,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim2_axis1_neg_relaxed_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -11345,15 +11766,19 @@ const TestModel& get_test_model_axis_dim2_axis1_neg_relaxed_all_inputs_as_intern
     return model;
 }
 
+const auto dummy_test_model_axis_dim2_axis1_neg_relaxed_all_inputs_as_internal = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim2_axis1_neg_relaxed_all_inputs_as_internal", get_test_model_axis_dim2_axis1_neg_relaxed_all_inputs_as_internal());
+
 }  // namespace generated_tests::local_response_normalization_v1_2
 
 namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim2_axis1_neg_float16() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({-1.100000023841858f, 0.6000000238418579f, 0.699999988079071f, 1.2000000476837158f, -0.699999988079071f, 0.10000000149011612f, -1.100000023841858f, 0.6000000238418579f, 0.699999988079071f, 1.2000000476837158f, -0.699999988079071f, 0.10000000149011612f}),
@@ -11434,6 +11859,8 @@ const TestModel& get_test_model_axis_dim2_axis1_neg_float16() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim2_axis1_neg_float16 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim2_axis1_neg_float16", get_test_model_axis_dim2_axis1_neg_float16());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -11441,9 +11868,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim2_axis1_neg_float16_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -11559,15 +11988,19 @@ const TestModel& get_test_model_axis_dim2_axis1_neg_float16_all_inputs_as_intern
     return model;
 }
 
+const auto dummy_test_model_axis_dim2_axis1_neg_float16_all_inputs_as_internal = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim2_axis1_neg_float16_all_inputs_as_internal", get_test_model_axis_dim2_axis1_neg_float16_all_inputs_as_internal());
+
 }  // namespace generated_tests::local_response_normalization_v1_2
 
 namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim1_axis0() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f}),
@@ -11648,6 +12081,8 @@ const TestModel& get_test_model_axis_dim1_axis0() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim1_axis0 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim1_axis0", get_test_model_axis_dim1_axis0());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -11655,9 +12090,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim1_axis0_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -11772,6 +12209,8 @@ const TestModel& get_test_model_axis_dim1_axis0_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim1_axis0_all_inputs_as_internal = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim1_axis0_all_inputs_as_internal", get_test_model_axis_dim1_axis0_all_inputs_as_internal());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -11779,9 +12218,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim1_axis0_relaxed() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f}),
@@ -11862,6 +12303,8 @@ const TestModel& get_test_model_axis_dim1_axis0_relaxed() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim1_axis0_relaxed = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim1_axis0_relaxed", get_test_model_axis_dim1_axis0_relaxed());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -11869,9 +12312,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim1_axis0_relaxed_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -11986,6 +12431,8 @@ const TestModel& get_test_model_axis_dim1_axis0_relaxed_all_inputs_as_internal()
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim1_axis0_relaxed_all_inputs_as_internal = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim1_axis0_relaxed_all_inputs_as_internal", get_test_model_axis_dim1_axis0_relaxed_all_inputs_as_internal());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -11993,9 +12440,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim1_axis0_float16() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({-1.100000023841858f, 0.6000000238418579f, 0.699999988079071f, 1.2000000476837158f, -0.699999988079071f, 0.10000000149011612f}),
@@ -12076,6 +12525,8 @@ const TestModel& get_test_model_axis_dim1_axis0_float16() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim1_axis0_float16 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim1_axis0_float16", get_test_model_axis_dim1_axis0_float16());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -12083,9 +12534,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim1_axis0_float16_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -12200,6 +12653,8 @@ const TestModel& get_test_model_axis_dim1_axis0_float16_all_inputs_as_internal()
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim1_axis0_float16_all_inputs_as_internal = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim1_axis0_float16_all_inputs_as_internal", get_test_model_axis_dim1_axis0_float16_all_inputs_as_internal());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -12207,9 +12662,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim1_axis0_neg() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f}),
@@ -12290,6 +12747,8 @@ const TestModel& get_test_model_axis_dim1_axis0_neg() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim1_axis0_neg = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim1_axis0_neg", get_test_model_axis_dim1_axis0_neg());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -12297,9 +12756,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim1_axis0_neg_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -12414,6 +12875,8 @@ const TestModel& get_test_model_axis_dim1_axis0_neg_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim1_axis0_neg_all_inputs_as_internal = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim1_axis0_neg_all_inputs_as_internal", get_test_model_axis_dim1_axis0_neg_all_inputs_as_internal());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -12421,9 +12884,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim1_axis0_neg_relaxed() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f}),
@@ -12504,6 +12969,8 @@ const TestModel& get_test_model_axis_dim1_axis0_neg_relaxed() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim1_axis0_neg_relaxed = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim1_axis0_neg_relaxed", get_test_model_axis_dim1_axis0_neg_relaxed());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -12511,9 +12978,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim1_axis0_neg_relaxed_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -12629,15 +13098,19 @@ const TestModel& get_test_model_axis_dim1_axis0_neg_relaxed_all_inputs_as_intern
     return model;
 }
 
+const auto dummy_test_model_axis_dim1_axis0_neg_relaxed_all_inputs_as_internal = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim1_axis0_neg_relaxed_all_inputs_as_internal", get_test_model_axis_dim1_axis0_neg_relaxed_all_inputs_as_internal());
+
 }  // namespace generated_tests::local_response_normalization_v1_2
 
 namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim1_axis0_neg_float16() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({-1.100000023841858f, 0.6000000238418579f, 0.699999988079071f, 1.2000000476837158f, -0.699999988079071f, 0.10000000149011612f}),
@@ -12718,6 +13191,8 @@ const TestModel& get_test_model_axis_dim1_axis0_neg_float16() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim1_axis0_neg_float16 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim1_axis0_neg_float16", get_test_model_axis_dim1_axis0_neg_float16());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -12725,9 +13200,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim1_axis0_neg_float16_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -12843,15 +13320,19 @@ const TestModel& get_test_model_axis_dim1_axis0_neg_float16_all_inputs_as_intern
     return model;
 }
 
+const auto dummy_test_model_axis_dim1_axis0_neg_float16_all_inputs_as_internal = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim1_axis0_neg_float16_all_inputs_as_internal", get_test_model_axis_dim1_axis0_neg_float16_all_inputs_as_internal());
+
 }  // namespace generated_tests::local_response_normalization_v1_2
 
 namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis0_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, -1.1f, -1.1f, -1.1f, -1.1f, -1.1f, -1.1f, -1.1f, 0.6f, 0.6f, 0.6f, 0.6f, 0.6f, 0.6f, 0.6f, 0.6f, 0.7f, 0.7f, 0.7f, 0.7f, 0.7f, 0.7f, 0.7f, 0.7f, 1.2f, 1.2f, 1.2f, 1.2f, 1.2f, 1.2f, 1.2f, 1.2f, -0.7f, -0.7f, -0.7f, -0.7f, -0.7f, -0.7f, -0.7f, -0.7f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f}),
@@ -12932,6 +13413,8 @@ const TestModel& get_test_model_axis_dim4_axis0_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis0_2 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis0_2", get_test_model_axis_dim4_axis0_2());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -12939,9 +13422,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis0_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -13056,6 +13541,8 @@ const TestModel& get_test_model_axis_dim4_axis0_all_inputs_as_internal_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis0_all_inputs_as_internal_2 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis0_all_inputs_as_internal_2", get_test_model_axis_dim4_axis0_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -13063,9 +13550,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis0_relaxed_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, -1.1f, -1.1f, -1.1f, -1.1f, -1.1f, -1.1f, -1.1f, 0.6f, 0.6f, 0.6f, 0.6f, 0.6f, 0.6f, 0.6f, 0.6f, 0.7f, 0.7f, 0.7f, 0.7f, 0.7f, 0.7f, 0.7f, 0.7f, 1.2f, 1.2f, 1.2f, 1.2f, 1.2f, 1.2f, 1.2f, 1.2f, -0.7f, -0.7f, -0.7f, -0.7f, -0.7f, -0.7f, -0.7f, -0.7f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f}),
@@ -13146,6 +13635,8 @@ const TestModel& get_test_model_axis_dim4_axis0_relaxed_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis0_relaxed_2 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis0_relaxed_2", get_test_model_axis_dim4_axis0_relaxed_2());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -13153,9 +13644,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis0_relaxed_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -13270,6 +13763,8 @@ const TestModel& get_test_model_axis_dim4_axis0_relaxed_all_inputs_as_internal_2
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis0_relaxed_all_inputs_as_internal_2 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis0_relaxed_all_inputs_as_internal_2", get_test_model_axis_dim4_axis0_relaxed_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -13277,9 +13772,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis0_float16_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({-1.100000023841858f, -1.100000023841858f, -1.100000023841858f, -1.100000023841858f, -1.100000023841858f, -1.100000023841858f, -1.100000023841858f, -1.100000023841858f, 0.6000000238418579f, 0.6000000238418579f, 0.6000000238418579f, 0.6000000238418579f, 0.6000000238418579f, 0.6000000238418579f, 0.6000000238418579f, 0.6000000238418579f, 0.699999988079071f, 0.699999988079071f, 0.699999988079071f, 0.699999988079071f, 0.699999988079071f, 0.699999988079071f, 0.699999988079071f, 0.699999988079071f, 1.2000000476837158f, 1.2000000476837158f, 1.2000000476837158f, 1.2000000476837158f, 1.2000000476837158f, 1.2000000476837158f, 1.2000000476837158f, 1.2000000476837158f, -0.699999988079071f, -0.699999988079071f, -0.699999988079071f, -0.699999988079071f, -0.699999988079071f, -0.699999988079071f, -0.699999988079071f, -0.699999988079071f, 0.10000000149011612f, 0.10000000149011612f, 0.10000000149011612f, 0.10000000149011612f, 0.10000000149011612f, 0.10000000149011612f, 0.10000000149011612f, 0.10000000149011612f}),
@@ -13360,6 +13857,8 @@ const TestModel& get_test_model_axis_dim4_axis0_float16_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis0_float16_2 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis0_float16_2", get_test_model_axis_dim4_axis0_float16_2());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -13367,9 +13866,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis0_float16_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -13484,6 +13985,8 @@ const TestModel& get_test_model_axis_dim4_axis0_float16_all_inputs_as_internal_2
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis0_float16_all_inputs_as_internal_2 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis0_float16_all_inputs_as_internal_2", get_test_model_axis_dim4_axis0_float16_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -13491,9 +13994,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis0_neg_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, -1.1f, -1.1f, -1.1f, -1.1f, -1.1f, -1.1f, -1.1f, 0.6f, 0.6f, 0.6f, 0.6f, 0.6f, 0.6f, 0.6f, 0.6f, 0.7f, 0.7f, 0.7f, 0.7f, 0.7f, 0.7f, 0.7f, 0.7f, 1.2f, 1.2f, 1.2f, 1.2f, 1.2f, 1.2f, 1.2f, 1.2f, -0.7f, -0.7f, -0.7f, -0.7f, -0.7f, -0.7f, -0.7f, -0.7f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f}),
@@ -13574,6 +14079,8 @@ const TestModel& get_test_model_axis_dim4_axis0_neg_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis0_neg_2 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis0_neg_2", get_test_model_axis_dim4_axis0_neg_2());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -13581,9 +14088,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis0_neg_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -13698,6 +14207,8 @@ const TestModel& get_test_model_axis_dim4_axis0_neg_all_inputs_as_internal_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis0_neg_all_inputs_as_internal_2 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis0_neg_all_inputs_as_internal_2", get_test_model_axis_dim4_axis0_neg_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -13705,9 +14216,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis0_neg_relaxed_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, -1.1f, -1.1f, -1.1f, -1.1f, -1.1f, -1.1f, -1.1f, 0.6f, 0.6f, 0.6f, 0.6f, 0.6f, 0.6f, 0.6f, 0.6f, 0.7f, 0.7f, 0.7f, 0.7f, 0.7f, 0.7f, 0.7f, 0.7f, 1.2f, 1.2f, 1.2f, 1.2f, 1.2f, 1.2f, 1.2f, 1.2f, -0.7f, -0.7f, -0.7f, -0.7f, -0.7f, -0.7f, -0.7f, -0.7f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f}),
@@ -13788,6 +14301,8 @@ const TestModel& get_test_model_axis_dim4_axis0_neg_relaxed_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis0_neg_relaxed_2 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis0_neg_relaxed_2", get_test_model_axis_dim4_axis0_neg_relaxed_2());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -13795,9 +14310,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis0_neg_relaxed_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -13913,15 +14430,19 @@ const TestModel& get_test_model_axis_dim4_axis0_neg_relaxed_all_inputs_as_intern
     return model;
 }
 
+const auto dummy_test_model_axis_dim4_axis0_neg_relaxed_all_inputs_as_internal_2 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis0_neg_relaxed_all_inputs_as_internal_2", get_test_model_axis_dim4_axis0_neg_relaxed_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::local_response_normalization_v1_2
 
 namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis0_neg_float16_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({-1.100000023841858f, -1.100000023841858f, -1.100000023841858f, -1.100000023841858f, -1.100000023841858f, -1.100000023841858f, -1.100000023841858f, -1.100000023841858f, 0.6000000238418579f, 0.6000000238418579f, 0.6000000238418579f, 0.6000000238418579f, 0.6000000238418579f, 0.6000000238418579f, 0.6000000238418579f, 0.6000000238418579f, 0.699999988079071f, 0.699999988079071f, 0.699999988079071f, 0.699999988079071f, 0.699999988079071f, 0.699999988079071f, 0.699999988079071f, 0.699999988079071f, 1.2000000476837158f, 1.2000000476837158f, 1.2000000476837158f, 1.2000000476837158f, 1.2000000476837158f, 1.2000000476837158f, 1.2000000476837158f, 1.2000000476837158f, -0.699999988079071f, -0.699999988079071f, -0.699999988079071f, -0.699999988079071f, -0.699999988079071f, -0.699999988079071f, -0.699999988079071f, -0.699999988079071f, 0.10000000149011612f, 0.10000000149011612f, 0.10000000149011612f, 0.10000000149011612f, 0.10000000149011612f, 0.10000000149011612f, 0.10000000149011612f, 0.10000000149011612f}),
@@ -14002,6 +14523,8 @@ const TestModel& get_test_model_axis_dim4_axis0_neg_float16_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis0_neg_float16_2 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis0_neg_float16_2", get_test_model_axis_dim4_axis0_neg_float16_2());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -14009,9 +14532,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis0_neg_float16_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -14127,15 +14652,19 @@ const TestModel& get_test_model_axis_dim4_axis0_neg_float16_all_inputs_as_intern
     return model;
 }
 
+const auto dummy_test_model_axis_dim4_axis0_neg_float16_all_inputs_as_internal_2 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis0_neg_float16_all_inputs_as_internal_2", get_test_model_axis_dim4_axis0_neg_float16_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::local_response_normalization_v1_2
 
 namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis1_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, -1.1f, -1.1f, -1.1f, 0.6f, 0.6f, 0.6f, 0.6f, 0.7f, 0.7f, 0.7f, 0.7f, 1.2f, 1.2f, 1.2f, 1.2f, -0.7f, -0.7f, -0.7f, -0.7f, 0.1f, 0.1f, 0.1f, 0.1f, -1.1f, -1.1f, -1.1f, -1.1f, 0.6f, 0.6f, 0.6f, 0.6f, 0.7f, 0.7f, 0.7f, 0.7f, 1.2f, 1.2f, 1.2f, 1.2f, -0.7f, -0.7f, -0.7f, -0.7f, 0.1f, 0.1f, 0.1f, 0.1f}),
@@ -14216,6 +14745,8 @@ const TestModel& get_test_model_axis_dim4_axis1_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis1_2 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis1_2", get_test_model_axis_dim4_axis1_2());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -14223,9 +14754,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis1_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -14340,6 +14873,8 @@ const TestModel& get_test_model_axis_dim4_axis1_all_inputs_as_internal_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis1_all_inputs_as_internal_2 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis1_all_inputs_as_internal_2", get_test_model_axis_dim4_axis1_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -14347,9 +14882,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis1_relaxed_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, -1.1f, -1.1f, -1.1f, 0.6f, 0.6f, 0.6f, 0.6f, 0.7f, 0.7f, 0.7f, 0.7f, 1.2f, 1.2f, 1.2f, 1.2f, -0.7f, -0.7f, -0.7f, -0.7f, 0.1f, 0.1f, 0.1f, 0.1f, -1.1f, -1.1f, -1.1f, -1.1f, 0.6f, 0.6f, 0.6f, 0.6f, 0.7f, 0.7f, 0.7f, 0.7f, 1.2f, 1.2f, 1.2f, 1.2f, -0.7f, -0.7f, -0.7f, -0.7f, 0.1f, 0.1f, 0.1f, 0.1f}),
@@ -14430,6 +14967,8 @@ const TestModel& get_test_model_axis_dim4_axis1_relaxed_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis1_relaxed_2 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis1_relaxed_2", get_test_model_axis_dim4_axis1_relaxed_2());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -14437,9 +14976,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis1_relaxed_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -14554,6 +15095,8 @@ const TestModel& get_test_model_axis_dim4_axis1_relaxed_all_inputs_as_internal_2
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis1_relaxed_all_inputs_as_internal_2 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis1_relaxed_all_inputs_as_internal_2", get_test_model_axis_dim4_axis1_relaxed_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -14561,9 +15104,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis1_float16_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({-1.100000023841858f, -1.100000023841858f, -1.100000023841858f, -1.100000023841858f, 0.6000000238418579f, 0.6000000238418579f, 0.6000000238418579f, 0.6000000238418579f, 0.699999988079071f, 0.699999988079071f, 0.699999988079071f, 0.699999988079071f, 1.2000000476837158f, 1.2000000476837158f, 1.2000000476837158f, 1.2000000476837158f, -0.699999988079071f, -0.699999988079071f, -0.699999988079071f, -0.699999988079071f, 0.10000000149011612f, 0.10000000149011612f, 0.10000000149011612f, 0.10000000149011612f, -1.100000023841858f, -1.100000023841858f, -1.100000023841858f, -1.100000023841858f, 0.6000000238418579f, 0.6000000238418579f, 0.6000000238418579f, 0.6000000238418579f, 0.699999988079071f, 0.699999988079071f, 0.699999988079071f, 0.699999988079071f, 1.2000000476837158f, 1.2000000476837158f, 1.2000000476837158f, 1.2000000476837158f, -0.699999988079071f, -0.699999988079071f, -0.699999988079071f, -0.699999988079071f, 0.10000000149011612f, 0.10000000149011612f, 0.10000000149011612f, 0.10000000149011612f}),
@@ -14644,6 +15189,8 @@ const TestModel& get_test_model_axis_dim4_axis1_float16_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis1_float16_2 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis1_float16_2", get_test_model_axis_dim4_axis1_float16_2());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -14651,9 +15198,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis1_float16_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -14768,6 +15317,8 @@ const TestModel& get_test_model_axis_dim4_axis1_float16_all_inputs_as_internal_2
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis1_float16_all_inputs_as_internal_2 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis1_float16_all_inputs_as_internal_2", get_test_model_axis_dim4_axis1_float16_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -14775,9 +15326,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis1_neg_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, -1.1f, -1.1f, -1.1f, 0.6f, 0.6f, 0.6f, 0.6f, 0.7f, 0.7f, 0.7f, 0.7f, 1.2f, 1.2f, 1.2f, 1.2f, -0.7f, -0.7f, -0.7f, -0.7f, 0.1f, 0.1f, 0.1f, 0.1f, -1.1f, -1.1f, -1.1f, -1.1f, 0.6f, 0.6f, 0.6f, 0.6f, 0.7f, 0.7f, 0.7f, 0.7f, 1.2f, 1.2f, 1.2f, 1.2f, -0.7f, -0.7f, -0.7f, -0.7f, 0.1f, 0.1f, 0.1f, 0.1f}),
@@ -14858,6 +15411,8 @@ const TestModel& get_test_model_axis_dim4_axis1_neg_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis1_neg_2 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis1_neg_2", get_test_model_axis_dim4_axis1_neg_2());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -14865,9 +15420,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis1_neg_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -14982,6 +15539,8 @@ const TestModel& get_test_model_axis_dim4_axis1_neg_all_inputs_as_internal_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis1_neg_all_inputs_as_internal_2 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis1_neg_all_inputs_as_internal_2", get_test_model_axis_dim4_axis1_neg_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -14989,9 +15548,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis1_neg_relaxed_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, -1.1f, -1.1f, -1.1f, 0.6f, 0.6f, 0.6f, 0.6f, 0.7f, 0.7f, 0.7f, 0.7f, 1.2f, 1.2f, 1.2f, 1.2f, -0.7f, -0.7f, -0.7f, -0.7f, 0.1f, 0.1f, 0.1f, 0.1f, -1.1f, -1.1f, -1.1f, -1.1f, 0.6f, 0.6f, 0.6f, 0.6f, 0.7f, 0.7f, 0.7f, 0.7f, 1.2f, 1.2f, 1.2f, 1.2f, -0.7f, -0.7f, -0.7f, -0.7f, 0.1f, 0.1f, 0.1f, 0.1f}),
@@ -15072,6 +15633,8 @@ const TestModel& get_test_model_axis_dim4_axis1_neg_relaxed_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis1_neg_relaxed_2 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis1_neg_relaxed_2", get_test_model_axis_dim4_axis1_neg_relaxed_2());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -15079,9 +15642,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis1_neg_relaxed_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -15197,15 +15762,19 @@ const TestModel& get_test_model_axis_dim4_axis1_neg_relaxed_all_inputs_as_intern
     return model;
 }
 
+const auto dummy_test_model_axis_dim4_axis1_neg_relaxed_all_inputs_as_internal_2 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis1_neg_relaxed_all_inputs_as_internal_2", get_test_model_axis_dim4_axis1_neg_relaxed_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::local_response_normalization_v1_2
 
 namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis1_neg_float16_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({-1.100000023841858f, -1.100000023841858f, -1.100000023841858f, -1.100000023841858f, 0.6000000238418579f, 0.6000000238418579f, 0.6000000238418579f, 0.6000000238418579f, 0.699999988079071f, 0.699999988079071f, 0.699999988079071f, 0.699999988079071f, 1.2000000476837158f, 1.2000000476837158f, 1.2000000476837158f, 1.2000000476837158f, -0.699999988079071f, -0.699999988079071f, -0.699999988079071f, -0.699999988079071f, 0.10000000149011612f, 0.10000000149011612f, 0.10000000149011612f, 0.10000000149011612f, -1.100000023841858f, -1.100000023841858f, -1.100000023841858f, -1.100000023841858f, 0.6000000238418579f, 0.6000000238418579f, 0.6000000238418579f, 0.6000000238418579f, 0.699999988079071f, 0.699999988079071f, 0.699999988079071f, 0.699999988079071f, 1.2000000476837158f, 1.2000000476837158f, 1.2000000476837158f, 1.2000000476837158f, -0.699999988079071f, -0.699999988079071f, -0.699999988079071f, -0.699999988079071f, 0.10000000149011612f, 0.10000000149011612f, 0.10000000149011612f, 0.10000000149011612f}),
@@ -15286,6 +15855,8 @@ const TestModel& get_test_model_axis_dim4_axis1_neg_float16_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis1_neg_float16_2 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis1_neg_float16_2", get_test_model_axis_dim4_axis1_neg_float16_2());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -15293,9 +15864,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis1_neg_float16_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -15411,15 +15984,19 @@ const TestModel& get_test_model_axis_dim4_axis1_neg_float16_all_inputs_as_intern
     return model;
 }
 
+const auto dummy_test_model_axis_dim4_axis1_neg_float16_all_inputs_as_internal_2 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis1_neg_float16_all_inputs_as_internal_2", get_test_model_axis_dim4_axis1_neg_float16_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::local_response_normalization_v1_2
 
 namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis2_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, -1.1f, 0.6f, 0.6f, 0.7f, 0.7f, 1.2f, 1.2f, -0.7f, -0.7f, 0.1f, 0.1f, -1.1f, -1.1f, 0.6f, 0.6f, 0.7f, 0.7f, 1.2f, 1.2f, -0.7f, -0.7f, 0.1f, 0.1f, -1.1f, -1.1f, 0.6f, 0.6f, 0.7f, 0.7f, 1.2f, 1.2f, -0.7f, -0.7f, 0.1f, 0.1f, -1.1f, -1.1f, 0.6f, 0.6f, 0.7f, 0.7f, 1.2f, 1.2f, -0.7f, -0.7f, 0.1f, 0.1f}),
@@ -15500,6 +16077,8 @@ const TestModel& get_test_model_axis_dim4_axis2_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis2_2 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis2_2", get_test_model_axis_dim4_axis2_2());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -15507,9 +16086,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis2_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -15624,6 +16205,8 @@ const TestModel& get_test_model_axis_dim4_axis2_all_inputs_as_internal_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis2_all_inputs_as_internal_2 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis2_all_inputs_as_internal_2", get_test_model_axis_dim4_axis2_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -15631,9 +16214,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis2_relaxed_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, -1.1f, 0.6f, 0.6f, 0.7f, 0.7f, 1.2f, 1.2f, -0.7f, -0.7f, 0.1f, 0.1f, -1.1f, -1.1f, 0.6f, 0.6f, 0.7f, 0.7f, 1.2f, 1.2f, -0.7f, -0.7f, 0.1f, 0.1f, -1.1f, -1.1f, 0.6f, 0.6f, 0.7f, 0.7f, 1.2f, 1.2f, -0.7f, -0.7f, 0.1f, 0.1f, -1.1f, -1.1f, 0.6f, 0.6f, 0.7f, 0.7f, 1.2f, 1.2f, -0.7f, -0.7f, 0.1f, 0.1f}),
@@ -15714,6 +16299,8 @@ const TestModel& get_test_model_axis_dim4_axis2_relaxed_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis2_relaxed_2 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis2_relaxed_2", get_test_model_axis_dim4_axis2_relaxed_2());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -15721,9 +16308,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis2_relaxed_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -15838,6 +16427,8 @@ const TestModel& get_test_model_axis_dim4_axis2_relaxed_all_inputs_as_internal_2
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis2_relaxed_all_inputs_as_internal_2 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis2_relaxed_all_inputs_as_internal_2", get_test_model_axis_dim4_axis2_relaxed_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -15845,9 +16436,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis2_float16_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({-1.100000023841858f, -1.100000023841858f, 0.6000000238418579f, 0.6000000238418579f, 0.699999988079071f, 0.699999988079071f, 1.2000000476837158f, 1.2000000476837158f, -0.699999988079071f, -0.699999988079071f, 0.10000000149011612f, 0.10000000149011612f, -1.100000023841858f, -1.100000023841858f, 0.6000000238418579f, 0.6000000238418579f, 0.699999988079071f, 0.699999988079071f, 1.2000000476837158f, 1.2000000476837158f, -0.699999988079071f, -0.699999988079071f, 0.10000000149011612f, 0.10000000149011612f, -1.100000023841858f, -1.100000023841858f, 0.6000000238418579f, 0.6000000238418579f, 0.699999988079071f, 0.699999988079071f, 1.2000000476837158f, 1.2000000476837158f, -0.699999988079071f, -0.699999988079071f, 0.10000000149011612f, 0.10000000149011612f, -1.100000023841858f, -1.100000023841858f, 0.6000000238418579f, 0.6000000238418579f, 0.699999988079071f, 0.699999988079071f, 1.2000000476837158f, 1.2000000476837158f, -0.699999988079071f, -0.699999988079071f, 0.10000000149011612f, 0.10000000149011612f}),
@@ -15928,6 +16521,8 @@ const TestModel& get_test_model_axis_dim4_axis2_float16_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis2_float16_2 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis2_float16_2", get_test_model_axis_dim4_axis2_float16_2());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -15935,9 +16530,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis2_float16_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -16052,6 +16649,8 @@ const TestModel& get_test_model_axis_dim4_axis2_float16_all_inputs_as_internal_2
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis2_float16_all_inputs_as_internal_2 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis2_float16_all_inputs_as_internal_2", get_test_model_axis_dim4_axis2_float16_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -16059,9 +16658,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis2_neg_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, -1.1f, 0.6f, 0.6f, 0.7f, 0.7f, 1.2f, 1.2f, -0.7f, -0.7f, 0.1f, 0.1f, -1.1f, -1.1f, 0.6f, 0.6f, 0.7f, 0.7f, 1.2f, 1.2f, -0.7f, -0.7f, 0.1f, 0.1f, -1.1f, -1.1f, 0.6f, 0.6f, 0.7f, 0.7f, 1.2f, 1.2f, -0.7f, -0.7f, 0.1f, 0.1f, -1.1f, -1.1f, 0.6f, 0.6f, 0.7f, 0.7f, 1.2f, 1.2f, -0.7f, -0.7f, 0.1f, 0.1f}),
@@ -16142,6 +16743,8 @@ const TestModel& get_test_model_axis_dim4_axis2_neg_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis2_neg_2 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis2_neg_2", get_test_model_axis_dim4_axis2_neg_2());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -16149,9 +16752,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis2_neg_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -16266,6 +16871,8 @@ const TestModel& get_test_model_axis_dim4_axis2_neg_all_inputs_as_internal_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis2_neg_all_inputs_as_internal_2 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis2_neg_all_inputs_as_internal_2", get_test_model_axis_dim4_axis2_neg_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -16273,9 +16880,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis2_neg_relaxed_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, -1.1f, 0.6f, 0.6f, 0.7f, 0.7f, 1.2f, 1.2f, -0.7f, -0.7f, 0.1f, 0.1f, -1.1f, -1.1f, 0.6f, 0.6f, 0.7f, 0.7f, 1.2f, 1.2f, -0.7f, -0.7f, 0.1f, 0.1f, -1.1f, -1.1f, 0.6f, 0.6f, 0.7f, 0.7f, 1.2f, 1.2f, -0.7f, -0.7f, 0.1f, 0.1f, -1.1f, -1.1f, 0.6f, 0.6f, 0.7f, 0.7f, 1.2f, 1.2f, -0.7f, -0.7f, 0.1f, 0.1f}),
@@ -16356,6 +16965,8 @@ const TestModel& get_test_model_axis_dim4_axis2_neg_relaxed_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis2_neg_relaxed_2 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis2_neg_relaxed_2", get_test_model_axis_dim4_axis2_neg_relaxed_2());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -16363,9 +16974,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis2_neg_relaxed_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -16481,15 +17094,19 @@ const TestModel& get_test_model_axis_dim4_axis2_neg_relaxed_all_inputs_as_intern
     return model;
 }
 
+const auto dummy_test_model_axis_dim4_axis2_neg_relaxed_all_inputs_as_internal_2 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis2_neg_relaxed_all_inputs_as_internal_2", get_test_model_axis_dim4_axis2_neg_relaxed_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::local_response_normalization_v1_2
 
 namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis2_neg_float16_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({-1.100000023841858f, -1.100000023841858f, 0.6000000238418579f, 0.6000000238418579f, 0.699999988079071f, 0.699999988079071f, 1.2000000476837158f, 1.2000000476837158f, -0.699999988079071f, -0.699999988079071f, 0.10000000149011612f, 0.10000000149011612f, -1.100000023841858f, -1.100000023841858f, 0.6000000238418579f, 0.6000000238418579f, 0.699999988079071f, 0.699999988079071f, 1.2000000476837158f, 1.2000000476837158f, -0.699999988079071f, -0.699999988079071f, 0.10000000149011612f, 0.10000000149011612f, -1.100000023841858f, -1.100000023841858f, 0.6000000238418579f, 0.6000000238418579f, 0.699999988079071f, 0.699999988079071f, 1.2000000476837158f, 1.2000000476837158f, -0.699999988079071f, -0.699999988079071f, 0.10000000149011612f, 0.10000000149011612f, -1.100000023841858f, -1.100000023841858f, 0.6000000238418579f, 0.6000000238418579f, 0.699999988079071f, 0.699999988079071f, 1.2000000476837158f, 1.2000000476837158f, -0.699999988079071f, -0.699999988079071f, 0.10000000149011612f, 0.10000000149011612f}),
@@ -16570,6 +17187,8 @@ const TestModel& get_test_model_axis_dim4_axis2_neg_float16_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis2_neg_float16_2 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis2_neg_float16_2", get_test_model_axis_dim4_axis2_neg_float16_2());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -16577,9 +17196,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis2_neg_float16_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -16695,15 +17316,19 @@ const TestModel& get_test_model_axis_dim4_axis2_neg_float16_all_inputs_as_intern
     return model;
 }
 
+const auto dummy_test_model_axis_dim4_axis2_neg_float16_all_inputs_as_internal_2 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis2_neg_float16_all_inputs_as_internal_2", get_test_model_axis_dim4_axis2_neg_float16_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::local_response_normalization_v1_2
 
 namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis3_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f}),
@@ -16784,6 +17409,8 @@ const TestModel& get_test_model_axis_dim4_axis3_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis3_2 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis3_2", get_test_model_axis_dim4_axis3_2());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -16791,9 +17418,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis3_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -16908,6 +17537,8 @@ const TestModel& get_test_model_axis_dim4_axis3_all_inputs_as_internal_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis3_all_inputs_as_internal_2 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis3_all_inputs_as_internal_2", get_test_model_axis_dim4_axis3_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -16915,9 +17546,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis3_relaxed_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f}),
@@ -16998,6 +17631,8 @@ const TestModel& get_test_model_axis_dim4_axis3_relaxed_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis3_relaxed_2 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis3_relaxed_2", get_test_model_axis_dim4_axis3_relaxed_2());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -17005,9 +17640,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis3_relaxed_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -17122,6 +17759,8 @@ const TestModel& get_test_model_axis_dim4_axis3_relaxed_all_inputs_as_internal_2
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis3_relaxed_all_inputs_as_internal_2 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis3_relaxed_all_inputs_as_internal_2", get_test_model_axis_dim4_axis3_relaxed_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -17129,9 +17768,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis3_float16_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({-1.100000023841858f, 0.6000000238418579f, 0.699999988079071f, 1.2000000476837158f, -0.699999988079071f, 0.10000000149011612f, -1.100000023841858f, 0.6000000238418579f, 0.699999988079071f, 1.2000000476837158f, -0.699999988079071f, 0.10000000149011612f, -1.100000023841858f, 0.6000000238418579f, 0.699999988079071f, 1.2000000476837158f, -0.699999988079071f, 0.10000000149011612f, -1.100000023841858f, 0.6000000238418579f, 0.699999988079071f, 1.2000000476837158f, -0.699999988079071f, 0.10000000149011612f, -1.100000023841858f, 0.6000000238418579f, 0.699999988079071f, 1.2000000476837158f, -0.699999988079071f, 0.10000000149011612f, -1.100000023841858f, 0.6000000238418579f, 0.699999988079071f, 1.2000000476837158f, -0.699999988079071f, 0.10000000149011612f, -1.100000023841858f, 0.6000000238418579f, 0.699999988079071f, 1.2000000476837158f, -0.699999988079071f, 0.10000000149011612f, -1.100000023841858f, 0.6000000238418579f, 0.699999988079071f, 1.2000000476837158f, -0.699999988079071f, 0.10000000149011612f}),
@@ -17212,6 +17853,8 @@ const TestModel& get_test_model_axis_dim4_axis3_float16_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis3_float16_2 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis3_float16_2", get_test_model_axis_dim4_axis3_float16_2());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -17219,9 +17862,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis3_float16_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -17336,6 +17981,8 @@ const TestModel& get_test_model_axis_dim4_axis3_float16_all_inputs_as_internal_2
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis3_float16_all_inputs_as_internal_2 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis3_float16_all_inputs_as_internal_2", get_test_model_axis_dim4_axis3_float16_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -17343,9 +17990,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis3_neg_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f}),
@@ -17426,6 +18075,8 @@ const TestModel& get_test_model_axis_dim4_axis3_neg_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis3_neg_2 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis3_neg_2", get_test_model_axis_dim4_axis3_neg_2());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -17433,9 +18084,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis3_neg_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -17550,6 +18203,8 @@ const TestModel& get_test_model_axis_dim4_axis3_neg_all_inputs_as_internal_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis3_neg_all_inputs_as_internal_2 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis3_neg_all_inputs_as_internal_2", get_test_model_axis_dim4_axis3_neg_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -17557,9 +18212,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis3_neg_relaxed_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f}),
@@ -17640,6 +18297,8 @@ const TestModel& get_test_model_axis_dim4_axis3_neg_relaxed_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis3_neg_relaxed_2 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis3_neg_relaxed_2", get_test_model_axis_dim4_axis3_neg_relaxed_2());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -17647,9 +18306,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis3_neg_relaxed_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -17765,15 +18426,19 @@ const TestModel& get_test_model_axis_dim4_axis3_neg_relaxed_all_inputs_as_intern
     return model;
 }
 
+const auto dummy_test_model_axis_dim4_axis3_neg_relaxed_all_inputs_as_internal_2 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis3_neg_relaxed_all_inputs_as_internal_2", get_test_model_axis_dim4_axis3_neg_relaxed_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::local_response_normalization_v1_2
 
 namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis3_neg_float16_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({-1.100000023841858f, 0.6000000238418579f, 0.699999988079071f, 1.2000000476837158f, -0.699999988079071f, 0.10000000149011612f, -1.100000023841858f, 0.6000000238418579f, 0.699999988079071f, 1.2000000476837158f, -0.699999988079071f, 0.10000000149011612f, -1.100000023841858f, 0.6000000238418579f, 0.699999988079071f, 1.2000000476837158f, -0.699999988079071f, 0.10000000149011612f, -1.100000023841858f, 0.6000000238418579f, 0.699999988079071f, 1.2000000476837158f, -0.699999988079071f, 0.10000000149011612f, -1.100000023841858f, 0.6000000238418579f, 0.699999988079071f, 1.2000000476837158f, -0.699999988079071f, 0.10000000149011612f, -1.100000023841858f, 0.6000000238418579f, 0.699999988079071f, 1.2000000476837158f, -0.699999988079071f, 0.10000000149011612f, -1.100000023841858f, 0.6000000238418579f, 0.699999988079071f, 1.2000000476837158f, -0.699999988079071f, 0.10000000149011612f, -1.100000023841858f, 0.6000000238418579f, 0.699999988079071f, 1.2000000476837158f, -0.699999988079071f, 0.10000000149011612f}),
@@ -17854,6 +18519,8 @@ const TestModel& get_test_model_axis_dim4_axis3_neg_float16_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis3_neg_float16_2 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis3_neg_float16_2", get_test_model_axis_dim4_axis3_neg_float16_2());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -17861,9 +18528,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis3_neg_float16_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -17979,15 +18648,19 @@ const TestModel& get_test_model_axis_dim4_axis3_neg_float16_all_inputs_as_intern
     return model;
 }
 
+const auto dummy_test_model_axis_dim4_axis3_neg_float16_all_inputs_as_internal_2 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis3_neg_float16_all_inputs_as_internal_2", get_test_model_axis_dim4_axis3_neg_float16_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::local_response_normalization_v1_2
 
 namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis0_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, -1.1f, -1.1f, -1.1f, 0.6f, 0.6f, 0.6f, 0.6f, 0.7f, 0.7f, 0.7f, 0.7f, 1.2f, 1.2f, 1.2f, 1.2f, -0.7f, -0.7f, -0.7f, -0.7f, 0.1f, 0.1f, 0.1f, 0.1f}),
@@ -18068,6 +18741,8 @@ const TestModel& get_test_model_axis_dim3_axis0_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim3_axis0_2 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim3_axis0_2", get_test_model_axis_dim3_axis0_2());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -18075,9 +18750,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis0_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -18192,6 +18869,8 @@ const TestModel& get_test_model_axis_dim3_axis0_all_inputs_as_internal_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim3_axis0_all_inputs_as_internal_2 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim3_axis0_all_inputs_as_internal_2", get_test_model_axis_dim3_axis0_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -18199,9 +18878,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis0_relaxed_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, -1.1f, -1.1f, -1.1f, 0.6f, 0.6f, 0.6f, 0.6f, 0.7f, 0.7f, 0.7f, 0.7f, 1.2f, 1.2f, 1.2f, 1.2f, -0.7f, -0.7f, -0.7f, -0.7f, 0.1f, 0.1f, 0.1f, 0.1f}),
@@ -18282,6 +18963,8 @@ const TestModel& get_test_model_axis_dim3_axis0_relaxed_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim3_axis0_relaxed_2 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim3_axis0_relaxed_2", get_test_model_axis_dim3_axis0_relaxed_2());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -18289,9 +18972,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis0_relaxed_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -18406,6 +19091,8 @@ const TestModel& get_test_model_axis_dim3_axis0_relaxed_all_inputs_as_internal_2
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim3_axis0_relaxed_all_inputs_as_internal_2 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim3_axis0_relaxed_all_inputs_as_internal_2", get_test_model_axis_dim3_axis0_relaxed_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -18413,9 +19100,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis0_float16_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({-1.100000023841858f, -1.100000023841858f, -1.100000023841858f, -1.100000023841858f, 0.6000000238418579f, 0.6000000238418579f, 0.6000000238418579f, 0.6000000238418579f, 0.699999988079071f, 0.699999988079071f, 0.699999988079071f, 0.699999988079071f, 1.2000000476837158f, 1.2000000476837158f, 1.2000000476837158f, 1.2000000476837158f, -0.699999988079071f, -0.699999988079071f, -0.699999988079071f, -0.699999988079071f, 0.10000000149011612f, 0.10000000149011612f, 0.10000000149011612f, 0.10000000149011612f}),
@@ -18496,6 +19185,8 @@ const TestModel& get_test_model_axis_dim3_axis0_float16_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim3_axis0_float16_2 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim3_axis0_float16_2", get_test_model_axis_dim3_axis0_float16_2());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -18503,9 +19194,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis0_float16_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -18620,6 +19313,8 @@ const TestModel& get_test_model_axis_dim3_axis0_float16_all_inputs_as_internal_2
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim3_axis0_float16_all_inputs_as_internal_2 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim3_axis0_float16_all_inputs_as_internal_2", get_test_model_axis_dim3_axis0_float16_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -18627,9 +19322,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis0_neg_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, -1.1f, -1.1f, -1.1f, 0.6f, 0.6f, 0.6f, 0.6f, 0.7f, 0.7f, 0.7f, 0.7f, 1.2f, 1.2f, 1.2f, 1.2f, -0.7f, -0.7f, -0.7f, -0.7f, 0.1f, 0.1f, 0.1f, 0.1f}),
@@ -18710,6 +19407,8 @@ const TestModel& get_test_model_axis_dim3_axis0_neg_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim3_axis0_neg_2 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim3_axis0_neg_2", get_test_model_axis_dim3_axis0_neg_2());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -18717,9 +19416,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis0_neg_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -18834,6 +19535,8 @@ const TestModel& get_test_model_axis_dim3_axis0_neg_all_inputs_as_internal_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim3_axis0_neg_all_inputs_as_internal_2 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim3_axis0_neg_all_inputs_as_internal_2", get_test_model_axis_dim3_axis0_neg_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -18841,9 +19544,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis0_neg_relaxed_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, -1.1f, -1.1f, -1.1f, 0.6f, 0.6f, 0.6f, 0.6f, 0.7f, 0.7f, 0.7f, 0.7f, 1.2f, 1.2f, 1.2f, 1.2f, -0.7f, -0.7f, -0.7f, -0.7f, 0.1f, 0.1f, 0.1f, 0.1f}),
@@ -18924,6 +19629,8 @@ const TestModel& get_test_model_axis_dim3_axis0_neg_relaxed_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim3_axis0_neg_relaxed_2 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim3_axis0_neg_relaxed_2", get_test_model_axis_dim3_axis0_neg_relaxed_2());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -18931,9 +19638,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis0_neg_relaxed_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -19049,15 +19758,19 @@ const TestModel& get_test_model_axis_dim3_axis0_neg_relaxed_all_inputs_as_intern
     return model;
 }
 
+const auto dummy_test_model_axis_dim3_axis0_neg_relaxed_all_inputs_as_internal_2 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim3_axis0_neg_relaxed_all_inputs_as_internal_2", get_test_model_axis_dim3_axis0_neg_relaxed_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::local_response_normalization_v1_2
 
 namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis0_neg_float16_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({-1.100000023841858f, -1.100000023841858f, -1.100000023841858f, -1.100000023841858f, 0.6000000238418579f, 0.6000000238418579f, 0.6000000238418579f, 0.6000000238418579f, 0.699999988079071f, 0.699999988079071f, 0.699999988079071f, 0.699999988079071f, 1.2000000476837158f, 1.2000000476837158f, 1.2000000476837158f, 1.2000000476837158f, -0.699999988079071f, -0.699999988079071f, -0.699999988079071f, -0.699999988079071f, 0.10000000149011612f, 0.10000000149011612f, 0.10000000149011612f, 0.10000000149011612f}),
@@ -19138,6 +19851,8 @@ const TestModel& get_test_model_axis_dim3_axis0_neg_float16_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim3_axis0_neg_float16_2 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim3_axis0_neg_float16_2", get_test_model_axis_dim3_axis0_neg_float16_2());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -19145,9 +19860,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis0_neg_float16_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -19263,15 +19980,19 @@ const TestModel& get_test_model_axis_dim3_axis0_neg_float16_all_inputs_as_intern
     return model;
 }
 
+const auto dummy_test_model_axis_dim3_axis0_neg_float16_all_inputs_as_internal_2 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim3_axis0_neg_float16_all_inputs_as_internal_2", get_test_model_axis_dim3_axis0_neg_float16_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::local_response_normalization_v1_2
 
 namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis1_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, -1.1f, 0.6f, 0.6f, 0.7f, 0.7f, 1.2f, 1.2f, -0.7f, -0.7f, 0.1f, 0.1f, -1.1f, -1.1f, 0.6f, 0.6f, 0.7f, 0.7f, 1.2f, 1.2f, -0.7f, -0.7f, 0.1f, 0.1f}),
@@ -19352,6 +20073,8 @@ const TestModel& get_test_model_axis_dim3_axis1_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim3_axis1_2 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim3_axis1_2", get_test_model_axis_dim3_axis1_2());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -19359,9 +20082,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis1_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -19476,6 +20201,8 @@ const TestModel& get_test_model_axis_dim3_axis1_all_inputs_as_internal_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim3_axis1_all_inputs_as_internal_2 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim3_axis1_all_inputs_as_internal_2", get_test_model_axis_dim3_axis1_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -19483,9 +20210,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis1_relaxed_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, -1.1f, 0.6f, 0.6f, 0.7f, 0.7f, 1.2f, 1.2f, -0.7f, -0.7f, 0.1f, 0.1f, -1.1f, -1.1f, 0.6f, 0.6f, 0.7f, 0.7f, 1.2f, 1.2f, -0.7f, -0.7f, 0.1f, 0.1f}),
@@ -19566,6 +20295,8 @@ const TestModel& get_test_model_axis_dim3_axis1_relaxed_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim3_axis1_relaxed_2 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim3_axis1_relaxed_2", get_test_model_axis_dim3_axis1_relaxed_2());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -19573,9 +20304,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis1_relaxed_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -19690,6 +20423,8 @@ const TestModel& get_test_model_axis_dim3_axis1_relaxed_all_inputs_as_internal_2
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim3_axis1_relaxed_all_inputs_as_internal_2 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim3_axis1_relaxed_all_inputs_as_internal_2", get_test_model_axis_dim3_axis1_relaxed_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -19697,9 +20432,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis1_float16_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({-1.100000023841858f, -1.100000023841858f, 0.6000000238418579f, 0.6000000238418579f, 0.699999988079071f, 0.699999988079071f, 1.2000000476837158f, 1.2000000476837158f, -0.699999988079071f, -0.699999988079071f, 0.10000000149011612f, 0.10000000149011612f, -1.100000023841858f, -1.100000023841858f, 0.6000000238418579f, 0.6000000238418579f, 0.699999988079071f, 0.699999988079071f, 1.2000000476837158f, 1.2000000476837158f, -0.699999988079071f, -0.699999988079071f, 0.10000000149011612f, 0.10000000149011612f}),
@@ -19780,6 +20517,8 @@ const TestModel& get_test_model_axis_dim3_axis1_float16_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim3_axis1_float16_2 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim3_axis1_float16_2", get_test_model_axis_dim3_axis1_float16_2());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -19787,9 +20526,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis1_float16_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -19904,6 +20645,8 @@ const TestModel& get_test_model_axis_dim3_axis1_float16_all_inputs_as_internal_2
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim3_axis1_float16_all_inputs_as_internal_2 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim3_axis1_float16_all_inputs_as_internal_2", get_test_model_axis_dim3_axis1_float16_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -19911,9 +20654,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis1_neg_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, -1.1f, 0.6f, 0.6f, 0.7f, 0.7f, 1.2f, 1.2f, -0.7f, -0.7f, 0.1f, 0.1f, -1.1f, -1.1f, 0.6f, 0.6f, 0.7f, 0.7f, 1.2f, 1.2f, -0.7f, -0.7f, 0.1f, 0.1f}),
@@ -19994,6 +20739,8 @@ const TestModel& get_test_model_axis_dim3_axis1_neg_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim3_axis1_neg_2 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim3_axis1_neg_2", get_test_model_axis_dim3_axis1_neg_2());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -20001,9 +20748,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis1_neg_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -20118,6 +20867,8 @@ const TestModel& get_test_model_axis_dim3_axis1_neg_all_inputs_as_internal_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim3_axis1_neg_all_inputs_as_internal_2 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim3_axis1_neg_all_inputs_as_internal_2", get_test_model_axis_dim3_axis1_neg_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -20125,9 +20876,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis1_neg_relaxed_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, -1.1f, 0.6f, 0.6f, 0.7f, 0.7f, 1.2f, 1.2f, -0.7f, -0.7f, 0.1f, 0.1f, -1.1f, -1.1f, 0.6f, 0.6f, 0.7f, 0.7f, 1.2f, 1.2f, -0.7f, -0.7f, 0.1f, 0.1f}),
@@ -20208,6 +20961,8 @@ const TestModel& get_test_model_axis_dim3_axis1_neg_relaxed_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim3_axis1_neg_relaxed_2 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim3_axis1_neg_relaxed_2", get_test_model_axis_dim3_axis1_neg_relaxed_2());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -20215,9 +20970,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis1_neg_relaxed_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -20333,15 +21090,19 @@ const TestModel& get_test_model_axis_dim3_axis1_neg_relaxed_all_inputs_as_intern
     return model;
 }
 
+const auto dummy_test_model_axis_dim3_axis1_neg_relaxed_all_inputs_as_internal_2 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim3_axis1_neg_relaxed_all_inputs_as_internal_2", get_test_model_axis_dim3_axis1_neg_relaxed_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::local_response_normalization_v1_2
 
 namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis1_neg_float16_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({-1.100000023841858f, -1.100000023841858f, 0.6000000238418579f, 0.6000000238418579f, 0.699999988079071f, 0.699999988079071f, 1.2000000476837158f, 1.2000000476837158f, -0.699999988079071f, -0.699999988079071f, 0.10000000149011612f, 0.10000000149011612f, -1.100000023841858f, -1.100000023841858f, 0.6000000238418579f, 0.6000000238418579f, 0.699999988079071f, 0.699999988079071f, 1.2000000476837158f, 1.2000000476837158f, -0.699999988079071f, -0.699999988079071f, 0.10000000149011612f, 0.10000000149011612f}),
@@ -20422,6 +21183,8 @@ const TestModel& get_test_model_axis_dim3_axis1_neg_float16_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim3_axis1_neg_float16_2 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim3_axis1_neg_float16_2", get_test_model_axis_dim3_axis1_neg_float16_2());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -20429,9 +21192,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis1_neg_float16_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -20547,15 +21312,19 @@ const TestModel& get_test_model_axis_dim3_axis1_neg_float16_all_inputs_as_intern
     return model;
 }
 
+const auto dummy_test_model_axis_dim3_axis1_neg_float16_all_inputs_as_internal_2 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim3_axis1_neg_float16_all_inputs_as_internal_2", get_test_model_axis_dim3_axis1_neg_float16_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::local_response_normalization_v1_2
 
 namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis2_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f}),
@@ -20636,6 +21405,8 @@ const TestModel& get_test_model_axis_dim3_axis2_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim3_axis2_2 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim3_axis2_2", get_test_model_axis_dim3_axis2_2());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -20643,9 +21414,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis2_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -20760,6 +21533,8 @@ const TestModel& get_test_model_axis_dim3_axis2_all_inputs_as_internal_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim3_axis2_all_inputs_as_internal_2 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim3_axis2_all_inputs_as_internal_2", get_test_model_axis_dim3_axis2_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -20767,9 +21542,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis2_relaxed_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f}),
@@ -20850,6 +21627,8 @@ const TestModel& get_test_model_axis_dim3_axis2_relaxed_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim3_axis2_relaxed_2 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim3_axis2_relaxed_2", get_test_model_axis_dim3_axis2_relaxed_2());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -20857,9 +21636,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis2_relaxed_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -20974,6 +21755,8 @@ const TestModel& get_test_model_axis_dim3_axis2_relaxed_all_inputs_as_internal_2
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim3_axis2_relaxed_all_inputs_as_internal_2 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim3_axis2_relaxed_all_inputs_as_internal_2", get_test_model_axis_dim3_axis2_relaxed_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -20981,9 +21764,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis2_float16_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({-1.100000023841858f, 0.6000000238418579f, 0.699999988079071f, 1.2000000476837158f, -0.699999988079071f, 0.10000000149011612f, -1.100000023841858f, 0.6000000238418579f, 0.699999988079071f, 1.2000000476837158f, -0.699999988079071f, 0.10000000149011612f, -1.100000023841858f, 0.6000000238418579f, 0.699999988079071f, 1.2000000476837158f, -0.699999988079071f, 0.10000000149011612f, -1.100000023841858f, 0.6000000238418579f, 0.699999988079071f, 1.2000000476837158f, -0.699999988079071f, 0.10000000149011612f}),
@@ -21064,6 +21849,8 @@ const TestModel& get_test_model_axis_dim3_axis2_float16_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim3_axis2_float16_2 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim3_axis2_float16_2", get_test_model_axis_dim3_axis2_float16_2());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -21071,9 +21858,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis2_float16_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -21188,6 +21977,8 @@ const TestModel& get_test_model_axis_dim3_axis2_float16_all_inputs_as_internal_2
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim3_axis2_float16_all_inputs_as_internal_2 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim3_axis2_float16_all_inputs_as_internal_2", get_test_model_axis_dim3_axis2_float16_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -21195,9 +21986,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis2_neg_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f}),
@@ -21278,6 +22071,8 @@ const TestModel& get_test_model_axis_dim3_axis2_neg_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim3_axis2_neg_2 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim3_axis2_neg_2", get_test_model_axis_dim3_axis2_neg_2());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -21285,9 +22080,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis2_neg_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -21402,6 +22199,8 @@ const TestModel& get_test_model_axis_dim3_axis2_neg_all_inputs_as_internal_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim3_axis2_neg_all_inputs_as_internal_2 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim3_axis2_neg_all_inputs_as_internal_2", get_test_model_axis_dim3_axis2_neg_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -21409,9 +22208,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis2_neg_relaxed_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f}),
@@ -21492,6 +22293,8 @@ const TestModel& get_test_model_axis_dim3_axis2_neg_relaxed_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim3_axis2_neg_relaxed_2 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim3_axis2_neg_relaxed_2", get_test_model_axis_dim3_axis2_neg_relaxed_2());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -21499,9 +22302,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis2_neg_relaxed_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -21617,15 +22422,19 @@ const TestModel& get_test_model_axis_dim3_axis2_neg_relaxed_all_inputs_as_intern
     return model;
 }
 
+const auto dummy_test_model_axis_dim3_axis2_neg_relaxed_all_inputs_as_internal_2 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim3_axis2_neg_relaxed_all_inputs_as_internal_2", get_test_model_axis_dim3_axis2_neg_relaxed_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::local_response_normalization_v1_2
 
 namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis2_neg_float16_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({-1.100000023841858f, 0.6000000238418579f, 0.699999988079071f, 1.2000000476837158f, -0.699999988079071f, 0.10000000149011612f, -1.100000023841858f, 0.6000000238418579f, 0.699999988079071f, 1.2000000476837158f, -0.699999988079071f, 0.10000000149011612f, -1.100000023841858f, 0.6000000238418579f, 0.699999988079071f, 1.2000000476837158f, -0.699999988079071f, 0.10000000149011612f, -1.100000023841858f, 0.6000000238418579f, 0.699999988079071f, 1.2000000476837158f, -0.699999988079071f, 0.10000000149011612f}),
@@ -21706,6 +22515,8 @@ const TestModel& get_test_model_axis_dim3_axis2_neg_float16_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim3_axis2_neg_float16_2 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim3_axis2_neg_float16_2", get_test_model_axis_dim3_axis2_neg_float16_2());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -21713,9 +22524,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis2_neg_float16_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -21831,15 +22644,19 @@ const TestModel& get_test_model_axis_dim3_axis2_neg_float16_all_inputs_as_intern
     return model;
 }
 
+const auto dummy_test_model_axis_dim3_axis2_neg_float16_all_inputs_as_internal_2 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim3_axis2_neg_float16_all_inputs_as_internal_2", get_test_model_axis_dim3_axis2_neg_float16_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::local_response_normalization_v1_2
 
 namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim2_axis0_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, -1.1f, 0.6f, 0.6f, 0.7f, 0.7f, 1.2f, 1.2f, -0.7f, -0.7f, 0.1f, 0.1f}),
@@ -21920,6 +22737,8 @@ const TestModel& get_test_model_axis_dim2_axis0_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim2_axis0_2 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim2_axis0_2", get_test_model_axis_dim2_axis0_2());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -21927,9 +22746,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim2_axis0_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -22044,6 +22865,8 @@ const TestModel& get_test_model_axis_dim2_axis0_all_inputs_as_internal_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim2_axis0_all_inputs_as_internal_2 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim2_axis0_all_inputs_as_internal_2", get_test_model_axis_dim2_axis0_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -22051,9 +22874,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim2_axis0_relaxed_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, -1.1f, 0.6f, 0.6f, 0.7f, 0.7f, 1.2f, 1.2f, -0.7f, -0.7f, 0.1f, 0.1f}),
@@ -22134,6 +22959,8 @@ const TestModel& get_test_model_axis_dim2_axis0_relaxed_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim2_axis0_relaxed_2 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim2_axis0_relaxed_2", get_test_model_axis_dim2_axis0_relaxed_2());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -22141,9 +22968,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim2_axis0_relaxed_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -22258,6 +23087,8 @@ const TestModel& get_test_model_axis_dim2_axis0_relaxed_all_inputs_as_internal_2
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim2_axis0_relaxed_all_inputs_as_internal_2 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim2_axis0_relaxed_all_inputs_as_internal_2", get_test_model_axis_dim2_axis0_relaxed_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -22265,9 +23096,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim2_axis0_float16_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({-1.100000023841858f, -1.100000023841858f, 0.6000000238418579f, 0.6000000238418579f, 0.699999988079071f, 0.699999988079071f, 1.2000000476837158f, 1.2000000476837158f, -0.699999988079071f, -0.699999988079071f, 0.10000000149011612f, 0.10000000149011612f}),
@@ -22348,6 +23181,8 @@ const TestModel& get_test_model_axis_dim2_axis0_float16_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim2_axis0_float16_2 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim2_axis0_float16_2", get_test_model_axis_dim2_axis0_float16_2());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -22355,9 +23190,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim2_axis0_float16_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -22472,6 +23309,8 @@ const TestModel& get_test_model_axis_dim2_axis0_float16_all_inputs_as_internal_2
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim2_axis0_float16_all_inputs_as_internal_2 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim2_axis0_float16_all_inputs_as_internal_2", get_test_model_axis_dim2_axis0_float16_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -22479,9 +23318,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim2_axis0_neg_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, -1.1f, 0.6f, 0.6f, 0.7f, 0.7f, 1.2f, 1.2f, -0.7f, -0.7f, 0.1f, 0.1f}),
@@ -22562,6 +23403,8 @@ const TestModel& get_test_model_axis_dim2_axis0_neg_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim2_axis0_neg_2 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim2_axis0_neg_2", get_test_model_axis_dim2_axis0_neg_2());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -22569,9 +23412,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim2_axis0_neg_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -22686,6 +23531,8 @@ const TestModel& get_test_model_axis_dim2_axis0_neg_all_inputs_as_internal_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim2_axis0_neg_all_inputs_as_internal_2 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim2_axis0_neg_all_inputs_as_internal_2", get_test_model_axis_dim2_axis0_neg_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -22693,9 +23540,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim2_axis0_neg_relaxed_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, -1.1f, 0.6f, 0.6f, 0.7f, 0.7f, 1.2f, 1.2f, -0.7f, -0.7f, 0.1f, 0.1f}),
@@ -22776,6 +23625,8 @@ const TestModel& get_test_model_axis_dim2_axis0_neg_relaxed_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim2_axis0_neg_relaxed_2 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim2_axis0_neg_relaxed_2", get_test_model_axis_dim2_axis0_neg_relaxed_2());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -22783,9 +23634,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim2_axis0_neg_relaxed_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -22901,15 +23754,19 @@ const TestModel& get_test_model_axis_dim2_axis0_neg_relaxed_all_inputs_as_intern
     return model;
 }
 
+const auto dummy_test_model_axis_dim2_axis0_neg_relaxed_all_inputs_as_internal_2 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim2_axis0_neg_relaxed_all_inputs_as_internal_2", get_test_model_axis_dim2_axis0_neg_relaxed_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::local_response_normalization_v1_2
 
 namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim2_axis0_neg_float16_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({-1.100000023841858f, -1.100000023841858f, 0.6000000238418579f, 0.6000000238418579f, 0.699999988079071f, 0.699999988079071f, 1.2000000476837158f, 1.2000000476837158f, -0.699999988079071f, -0.699999988079071f, 0.10000000149011612f, 0.10000000149011612f}),
@@ -22990,6 +23847,8 @@ const TestModel& get_test_model_axis_dim2_axis0_neg_float16_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim2_axis0_neg_float16_2 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim2_axis0_neg_float16_2", get_test_model_axis_dim2_axis0_neg_float16_2());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -22997,9 +23856,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim2_axis0_neg_float16_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -23115,15 +23976,19 @@ const TestModel& get_test_model_axis_dim2_axis0_neg_float16_all_inputs_as_intern
     return model;
 }
 
+const auto dummy_test_model_axis_dim2_axis0_neg_float16_all_inputs_as_internal_2 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim2_axis0_neg_float16_all_inputs_as_internal_2", get_test_model_axis_dim2_axis0_neg_float16_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::local_response_normalization_v1_2
 
 namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim2_axis1_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f}),
@@ -23204,6 +24069,8 @@ const TestModel& get_test_model_axis_dim2_axis1_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim2_axis1_2 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim2_axis1_2", get_test_model_axis_dim2_axis1_2());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -23211,9 +24078,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim2_axis1_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -23328,6 +24197,8 @@ const TestModel& get_test_model_axis_dim2_axis1_all_inputs_as_internal_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim2_axis1_all_inputs_as_internal_2 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim2_axis1_all_inputs_as_internal_2", get_test_model_axis_dim2_axis1_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -23335,9 +24206,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim2_axis1_relaxed_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f}),
@@ -23418,6 +24291,8 @@ const TestModel& get_test_model_axis_dim2_axis1_relaxed_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim2_axis1_relaxed_2 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim2_axis1_relaxed_2", get_test_model_axis_dim2_axis1_relaxed_2());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -23425,9 +24300,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim2_axis1_relaxed_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -23542,6 +24419,8 @@ const TestModel& get_test_model_axis_dim2_axis1_relaxed_all_inputs_as_internal_2
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim2_axis1_relaxed_all_inputs_as_internal_2 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim2_axis1_relaxed_all_inputs_as_internal_2", get_test_model_axis_dim2_axis1_relaxed_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -23549,9 +24428,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim2_axis1_float16_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({-1.100000023841858f, 0.6000000238418579f, 0.699999988079071f, 1.2000000476837158f, -0.699999988079071f, 0.10000000149011612f, -1.100000023841858f, 0.6000000238418579f, 0.699999988079071f, 1.2000000476837158f, -0.699999988079071f, 0.10000000149011612f}),
@@ -23632,6 +24513,8 @@ const TestModel& get_test_model_axis_dim2_axis1_float16_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim2_axis1_float16_2 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim2_axis1_float16_2", get_test_model_axis_dim2_axis1_float16_2());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -23639,9 +24522,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim2_axis1_float16_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -23756,6 +24641,8 @@ const TestModel& get_test_model_axis_dim2_axis1_float16_all_inputs_as_internal_2
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim2_axis1_float16_all_inputs_as_internal_2 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim2_axis1_float16_all_inputs_as_internal_2", get_test_model_axis_dim2_axis1_float16_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -23763,9 +24650,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim2_axis1_neg_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f}),
@@ -23846,6 +24735,8 @@ const TestModel& get_test_model_axis_dim2_axis1_neg_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim2_axis1_neg_2 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim2_axis1_neg_2", get_test_model_axis_dim2_axis1_neg_2());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -23853,9 +24744,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim2_axis1_neg_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -23970,6 +24863,8 @@ const TestModel& get_test_model_axis_dim2_axis1_neg_all_inputs_as_internal_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim2_axis1_neg_all_inputs_as_internal_2 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim2_axis1_neg_all_inputs_as_internal_2", get_test_model_axis_dim2_axis1_neg_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -23977,9 +24872,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim2_axis1_neg_relaxed_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f}),
@@ -24060,6 +24957,8 @@ const TestModel& get_test_model_axis_dim2_axis1_neg_relaxed_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim2_axis1_neg_relaxed_2 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim2_axis1_neg_relaxed_2", get_test_model_axis_dim2_axis1_neg_relaxed_2());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -24067,9 +24966,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim2_axis1_neg_relaxed_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -24185,15 +25086,19 @@ const TestModel& get_test_model_axis_dim2_axis1_neg_relaxed_all_inputs_as_intern
     return model;
 }
 
+const auto dummy_test_model_axis_dim2_axis1_neg_relaxed_all_inputs_as_internal_2 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim2_axis1_neg_relaxed_all_inputs_as_internal_2", get_test_model_axis_dim2_axis1_neg_relaxed_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::local_response_normalization_v1_2
 
 namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim2_axis1_neg_float16_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({-1.100000023841858f, 0.6000000238418579f, 0.699999988079071f, 1.2000000476837158f, -0.699999988079071f, 0.10000000149011612f, -1.100000023841858f, 0.6000000238418579f, 0.699999988079071f, 1.2000000476837158f, -0.699999988079071f, 0.10000000149011612f}),
@@ -24274,6 +25179,8 @@ const TestModel& get_test_model_axis_dim2_axis1_neg_float16_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim2_axis1_neg_float16_2 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim2_axis1_neg_float16_2", get_test_model_axis_dim2_axis1_neg_float16_2());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -24281,9 +25188,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim2_axis1_neg_float16_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -24399,15 +25308,19 @@ const TestModel& get_test_model_axis_dim2_axis1_neg_float16_all_inputs_as_intern
     return model;
 }
 
+const auto dummy_test_model_axis_dim2_axis1_neg_float16_all_inputs_as_internal_2 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim2_axis1_neg_float16_all_inputs_as_internal_2", get_test_model_axis_dim2_axis1_neg_float16_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::local_response_normalization_v1_2
 
 namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim1_axis0_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f}),
@@ -24488,6 +25401,8 @@ const TestModel& get_test_model_axis_dim1_axis0_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim1_axis0_2 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim1_axis0_2", get_test_model_axis_dim1_axis0_2());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -24495,9 +25410,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim1_axis0_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -24612,6 +25529,8 @@ const TestModel& get_test_model_axis_dim1_axis0_all_inputs_as_internal_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim1_axis0_all_inputs_as_internal_2 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim1_axis0_all_inputs_as_internal_2", get_test_model_axis_dim1_axis0_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -24619,9 +25538,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim1_axis0_relaxed_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f}),
@@ -24702,6 +25623,8 @@ const TestModel& get_test_model_axis_dim1_axis0_relaxed_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim1_axis0_relaxed_2 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim1_axis0_relaxed_2", get_test_model_axis_dim1_axis0_relaxed_2());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -24709,9 +25632,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim1_axis0_relaxed_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -24826,6 +25751,8 @@ const TestModel& get_test_model_axis_dim1_axis0_relaxed_all_inputs_as_internal_2
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim1_axis0_relaxed_all_inputs_as_internal_2 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim1_axis0_relaxed_all_inputs_as_internal_2", get_test_model_axis_dim1_axis0_relaxed_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -24833,9 +25760,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim1_axis0_float16_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({-1.100000023841858f, 0.6000000238418579f, 0.699999988079071f, 1.2000000476837158f, -0.699999988079071f, 0.10000000149011612f}),
@@ -24916,6 +25845,8 @@ const TestModel& get_test_model_axis_dim1_axis0_float16_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim1_axis0_float16_2 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim1_axis0_float16_2", get_test_model_axis_dim1_axis0_float16_2());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -24923,9 +25854,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim1_axis0_float16_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -25040,6 +25973,8 @@ const TestModel& get_test_model_axis_dim1_axis0_float16_all_inputs_as_internal_2
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim1_axis0_float16_all_inputs_as_internal_2 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim1_axis0_float16_all_inputs_as_internal_2", get_test_model_axis_dim1_axis0_float16_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -25047,9 +25982,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim1_axis0_neg_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f}),
@@ -25130,6 +26067,8 @@ const TestModel& get_test_model_axis_dim1_axis0_neg_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim1_axis0_neg_2 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim1_axis0_neg_2", get_test_model_axis_dim1_axis0_neg_2());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -25137,9 +26076,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim1_axis0_neg_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -25254,6 +26195,8 @@ const TestModel& get_test_model_axis_dim1_axis0_neg_all_inputs_as_internal_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim1_axis0_neg_all_inputs_as_internal_2 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim1_axis0_neg_all_inputs_as_internal_2", get_test_model_axis_dim1_axis0_neg_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -25261,9 +26204,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim1_axis0_neg_relaxed_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f}),
@@ -25344,6 +26289,8 @@ const TestModel& get_test_model_axis_dim1_axis0_neg_relaxed_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim1_axis0_neg_relaxed_2 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim1_axis0_neg_relaxed_2", get_test_model_axis_dim1_axis0_neg_relaxed_2());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -25351,9 +26298,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim1_axis0_neg_relaxed_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -25469,15 +26418,19 @@ const TestModel& get_test_model_axis_dim1_axis0_neg_relaxed_all_inputs_as_intern
     return model;
 }
 
+const auto dummy_test_model_axis_dim1_axis0_neg_relaxed_all_inputs_as_internal_2 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim1_axis0_neg_relaxed_all_inputs_as_internal_2", get_test_model_axis_dim1_axis0_neg_relaxed_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::local_response_normalization_v1_2
 
 namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim1_axis0_neg_float16_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({-1.100000023841858f, 0.6000000238418579f, 0.699999988079071f, 1.2000000476837158f, -0.699999988079071f, 0.10000000149011612f}),
@@ -25558,6 +26511,8 @@ const TestModel& get_test_model_axis_dim1_axis0_neg_float16_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim1_axis0_neg_float16_2 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim1_axis0_neg_float16_2", get_test_model_axis_dim1_axis0_neg_float16_2());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -25565,9 +26520,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim1_axis0_neg_float16_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -25683,15 +26640,19 @@ const TestModel& get_test_model_axis_dim1_axis0_neg_float16_all_inputs_as_intern
     return model;
 }
 
+const auto dummy_test_model_axis_dim1_axis0_neg_float16_all_inputs_as_internal_2 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim1_axis0_neg_float16_all_inputs_as_internal_2", get_test_model_axis_dim1_axis0_neg_float16_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::local_response_normalization_v1_2
 
 namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis0_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, -1.1f, -1.1f, -1.1f, -1.1f, -1.1f, -1.1f, -1.1f, 0.6f, 0.6f, 0.6f, 0.6f, 0.6f, 0.6f, 0.6f, 0.6f, 0.7f, 0.7f, 0.7f, 0.7f, 0.7f, 0.7f, 0.7f, 0.7f, 1.2f, 1.2f, 1.2f, 1.2f, 1.2f, 1.2f, 1.2f, 1.2f, -0.7f, -0.7f, -0.7f, -0.7f, -0.7f, -0.7f, -0.7f, -0.7f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f}),
@@ -25772,6 +26733,8 @@ const TestModel& get_test_model_axis_dim4_axis0_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis0_3 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis0_3", get_test_model_axis_dim4_axis0_3());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -25779,9 +26742,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis0_all_inputs_as_internal_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -25896,6 +26861,8 @@ const TestModel& get_test_model_axis_dim4_axis0_all_inputs_as_internal_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis0_all_inputs_as_internal_3 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis0_all_inputs_as_internal_3", get_test_model_axis_dim4_axis0_all_inputs_as_internal_3());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -25903,9 +26870,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis0_relaxed_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, -1.1f, -1.1f, -1.1f, -1.1f, -1.1f, -1.1f, -1.1f, 0.6f, 0.6f, 0.6f, 0.6f, 0.6f, 0.6f, 0.6f, 0.6f, 0.7f, 0.7f, 0.7f, 0.7f, 0.7f, 0.7f, 0.7f, 0.7f, 1.2f, 1.2f, 1.2f, 1.2f, 1.2f, 1.2f, 1.2f, 1.2f, -0.7f, -0.7f, -0.7f, -0.7f, -0.7f, -0.7f, -0.7f, -0.7f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f}),
@@ -25986,6 +26955,8 @@ const TestModel& get_test_model_axis_dim4_axis0_relaxed_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis0_relaxed_3 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis0_relaxed_3", get_test_model_axis_dim4_axis0_relaxed_3());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -25993,9 +26964,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis0_relaxed_all_inputs_as_internal_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -26110,6 +27083,8 @@ const TestModel& get_test_model_axis_dim4_axis0_relaxed_all_inputs_as_internal_3
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis0_relaxed_all_inputs_as_internal_3 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis0_relaxed_all_inputs_as_internal_3", get_test_model_axis_dim4_axis0_relaxed_all_inputs_as_internal_3());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -26117,9 +27092,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis0_float16_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({-1.100000023841858f, -1.100000023841858f, -1.100000023841858f, -1.100000023841858f, -1.100000023841858f, -1.100000023841858f, -1.100000023841858f, -1.100000023841858f, 0.6000000238418579f, 0.6000000238418579f, 0.6000000238418579f, 0.6000000238418579f, 0.6000000238418579f, 0.6000000238418579f, 0.6000000238418579f, 0.6000000238418579f, 0.699999988079071f, 0.699999988079071f, 0.699999988079071f, 0.699999988079071f, 0.699999988079071f, 0.699999988079071f, 0.699999988079071f, 0.699999988079071f, 1.2000000476837158f, 1.2000000476837158f, 1.2000000476837158f, 1.2000000476837158f, 1.2000000476837158f, 1.2000000476837158f, 1.2000000476837158f, 1.2000000476837158f, -0.699999988079071f, -0.699999988079071f, -0.699999988079071f, -0.699999988079071f, -0.699999988079071f, -0.699999988079071f, -0.699999988079071f, -0.699999988079071f, 0.10000000149011612f, 0.10000000149011612f, 0.10000000149011612f, 0.10000000149011612f, 0.10000000149011612f, 0.10000000149011612f, 0.10000000149011612f, 0.10000000149011612f}),
@@ -26200,6 +27177,8 @@ const TestModel& get_test_model_axis_dim4_axis0_float16_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis0_float16_3 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis0_float16_3", get_test_model_axis_dim4_axis0_float16_3());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -26207,9 +27186,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis0_float16_all_inputs_as_internal_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -26324,6 +27305,8 @@ const TestModel& get_test_model_axis_dim4_axis0_float16_all_inputs_as_internal_3
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis0_float16_all_inputs_as_internal_3 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis0_float16_all_inputs_as_internal_3", get_test_model_axis_dim4_axis0_float16_all_inputs_as_internal_3());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -26331,9 +27314,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis0_neg_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, -1.1f, -1.1f, -1.1f, -1.1f, -1.1f, -1.1f, -1.1f, 0.6f, 0.6f, 0.6f, 0.6f, 0.6f, 0.6f, 0.6f, 0.6f, 0.7f, 0.7f, 0.7f, 0.7f, 0.7f, 0.7f, 0.7f, 0.7f, 1.2f, 1.2f, 1.2f, 1.2f, 1.2f, 1.2f, 1.2f, 1.2f, -0.7f, -0.7f, -0.7f, -0.7f, -0.7f, -0.7f, -0.7f, -0.7f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f}),
@@ -26414,6 +27399,8 @@ const TestModel& get_test_model_axis_dim4_axis0_neg_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis0_neg_3 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis0_neg_3", get_test_model_axis_dim4_axis0_neg_3());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -26421,9 +27408,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis0_neg_all_inputs_as_internal_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -26538,6 +27527,8 @@ const TestModel& get_test_model_axis_dim4_axis0_neg_all_inputs_as_internal_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis0_neg_all_inputs_as_internal_3 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis0_neg_all_inputs_as_internal_3", get_test_model_axis_dim4_axis0_neg_all_inputs_as_internal_3());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -26545,9 +27536,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis0_neg_relaxed_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, -1.1f, -1.1f, -1.1f, -1.1f, -1.1f, -1.1f, -1.1f, 0.6f, 0.6f, 0.6f, 0.6f, 0.6f, 0.6f, 0.6f, 0.6f, 0.7f, 0.7f, 0.7f, 0.7f, 0.7f, 0.7f, 0.7f, 0.7f, 1.2f, 1.2f, 1.2f, 1.2f, 1.2f, 1.2f, 1.2f, 1.2f, -0.7f, -0.7f, -0.7f, -0.7f, -0.7f, -0.7f, -0.7f, -0.7f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f}),
@@ -26628,6 +27621,8 @@ const TestModel& get_test_model_axis_dim4_axis0_neg_relaxed_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis0_neg_relaxed_3 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis0_neg_relaxed_3", get_test_model_axis_dim4_axis0_neg_relaxed_3());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -26635,9 +27630,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis0_neg_relaxed_all_inputs_as_internal_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -26753,15 +27750,19 @@ const TestModel& get_test_model_axis_dim4_axis0_neg_relaxed_all_inputs_as_intern
     return model;
 }
 
+const auto dummy_test_model_axis_dim4_axis0_neg_relaxed_all_inputs_as_internal_3 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis0_neg_relaxed_all_inputs_as_internal_3", get_test_model_axis_dim4_axis0_neg_relaxed_all_inputs_as_internal_3());
+
 }  // namespace generated_tests::local_response_normalization_v1_2
 
 namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis0_neg_float16_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({-1.100000023841858f, -1.100000023841858f, -1.100000023841858f, -1.100000023841858f, -1.100000023841858f, -1.100000023841858f, -1.100000023841858f, -1.100000023841858f, 0.6000000238418579f, 0.6000000238418579f, 0.6000000238418579f, 0.6000000238418579f, 0.6000000238418579f, 0.6000000238418579f, 0.6000000238418579f, 0.6000000238418579f, 0.699999988079071f, 0.699999988079071f, 0.699999988079071f, 0.699999988079071f, 0.699999988079071f, 0.699999988079071f, 0.699999988079071f, 0.699999988079071f, 1.2000000476837158f, 1.2000000476837158f, 1.2000000476837158f, 1.2000000476837158f, 1.2000000476837158f, 1.2000000476837158f, 1.2000000476837158f, 1.2000000476837158f, -0.699999988079071f, -0.699999988079071f, -0.699999988079071f, -0.699999988079071f, -0.699999988079071f, -0.699999988079071f, -0.699999988079071f, -0.699999988079071f, 0.10000000149011612f, 0.10000000149011612f, 0.10000000149011612f, 0.10000000149011612f, 0.10000000149011612f, 0.10000000149011612f, 0.10000000149011612f, 0.10000000149011612f}),
@@ -26842,6 +27843,8 @@ const TestModel& get_test_model_axis_dim4_axis0_neg_float16_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis0_neg_float16_3 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis0_neg_float16_3", get_test_model_axis_dim4_axis0_neg_float16_3());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -26849,9 +27852,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis0_neg_float16_all_inputs_as_internal_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -26967,15 +27972,19 @@ const TestModel& get_test_model_axis_dim4_axis0_neg_float16_all_inputs_as_intern
     return model;
 }
 
+const auto dummy_test_model_axis_dim4_axis0_neg_float16_all_inputs_as_internal_3 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis0_neg_float16_all_inputs_as_internal_3", get_test_model_axis_dim4_axis0_neg_float16_all_inputs_as_internal_3());
+
 }  // namespace generated_tests::local_response_normalization_v1_2
 
 namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis1_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, -1.1f, -1.1f, -1.1f, 0.6f, 0.6f, 0.6f, 0.6f, 0.7f, 0.7f, 0.7f, 0.7f, 1.2f, 1.2f, 1.2f, 1.2f, -0.7f, -0.7f, -0.7f, -0.7f, 0.1f, 0.1f, 0.1f, 0.1f, -1.1f, -1.1f, -1.1f, -1.1f, 0.6f, 0.6f, 0.6f, 0.6f, 0.7f, 0.7f, 0.7f, 0.7f, 1.2f, 1.2f, 1.2f, 1.2f, -0.7f, -0.7f, -0.7f, -0.7f, 0.1f, 0.1f, 0.1f, 0.1f}),
@@ -27056,6 +28065,8 @@ const TestModel& get_test_model_axis_dim4_axis1_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis1_3 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis1_3", get_test_model_axis_dim4_axis1_3());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -27063,9 +28074,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis1_all_inputs_as_internal_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -27180,6 +28193,8 @@ const TestModel& get_test_model_axis_dim4_axis1_all_inputs_as_internal_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis1_all_inputs_as_internal_3 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis1_all_inputs_as_internal_3", get_test_model_axis_dim4_axis1_all_inputs_as_internal_3());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -27187,9 +28202,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis1_relaxed_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, -1.1f, -1.1f, -1.1f, 0.6f, 0.6f, 0.6f, 0.6f, 0.7f, 0.7f, 0.7f, 0.7f, 1.2f, 1.2f, 1.2f, 1.2f, -0.7f, -0.7f, -0.7f, -0.7f, 0.1f, 0.1f, 0.1f, 0.1f, -1.1f, -1.1f, -1.1f, -1.1f, 0.6f, 0.6f, 0.6f, 0.6f, 0.7f, 0.7f, 0.7f, 0.7f, 1.2f, 1.2f, 1.2f, 1.2f, -0.7f, -0.7f, -0.7f, -0.7f, 0.1f, 0.1f, 0.1f, 0.1f}),
@@ -27270,6 +28287,8 @@ const TestModel& get_test_model_axis_dim4_axis1_relaxed_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis1_relaxed_3 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis1_relaxed_3", get_test_model_axis_dim4_axis1_relaxed_3());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -27277,9 +28296,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis1_relaxed_all_inputs_as_internal_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -27394,6 +28415,8 @@ const TestModel& get_test_model_axis_dim4_axis1_relaxed_all_inputs_as_internal_3
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis1_relaxed_all_inputs_as_internal_3 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis1_relaxed_all_inputs_as_internal_3", get_test_model_axis_dim4_axis1_relaxed_all_inputs_as_internal_3());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -27401,9 +28424,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis1_float16_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({-1.100000023841858f, -1.100000023841858f, -1.100000023841858f, -1.100000023841858f, 0.6000000238418579f, 0.6000000238418579f, 0.6000000238418579f, 0.6000000238418579f, 0.699999988079071f, 0.699999988079071f, 0.699999988079071f, 0.699999988079071f, 1.2000000476837158f, 1.2000000476837158f, 1.2000000476837158f, 1.2000000476837158f, -0.699999988079071f, -0.699999988079071f, -0.699999988079071f, -0.699999988079071f, 0.10000000149011612f, 0.10000000149011612f, 0.10000000149011612f, 0.10000000149011612f, -1.100000023841858f, -1.100000023841858f, -1.100000023841858f, -1.100000023841858f, 0.6000000238418579f, 0.6000000238418579f, 0.6000000238418579f, 0.6000000238418579f, 0.699999988079071f, 0.699999988079071f, 0.699999988079071f, 0.699999988079071f, 1.2000000476837158f, 1.2000000476837158f, 1.2000000476837158f, 1.2000000476837158f, -0.699999988079071f, -0.699999988079071f, -0.699999988079071f, -0.699999988079071f, 0.10000000149011612f, 0.10000000149011612f, 0.10000000149011612f, 0.10000000149011612f}),
@@ -27484,6 +28509,8 @@ const TestModel& get_test_model_axis_dim4_axis1_float16_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis1_float16_3 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis1_float16_3", get_test_model_axis_dim4_axis1_float16_3());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -27491,9 +28518,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis1_float16_all_inputs_as_internal_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -27608,6 +28637,8 @@ const TestModel& get_test_model_axis_dim4_axis1_float16_all_inputs_as_internal_3
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis1_float16_all_inputs_as_internal_3 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis1_float16_all_inputs_as_internal_3", get_test_model_axis_dim4_axis1_float16_all_inputs_as_internal_3());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -27615,9 +28646,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis1_neg_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, -1.1f, -1.1f, -1.1f, 0.6f, 0.6f, 0.6f, 0.6f, 0.7f, 0.7f, 0.7f, 0.7f, 1.2f, 1.2f, 1.2f, 1.2f, -0.7f, -0.7f, -0.7f, -0.7f, 0.1f, 0.1f, 0.1f, 0.1f, -1.1f, -1.1f, -1.1f, -1.1f, 0.6f, 0.6f, 0.6f, 0.6f, 0.7f, 0.7f, 0.7f, 0.7f, 1.2f, 1.2f, 1.2f, 1.2f, -0.7f, -0.7f, -0.7f, -0.7f, 0.1f, 0.1f, 0.1f, 0.1f}),
@@ -27698,6 +28731,8 @@ const TestModel& get_test_model_axis_dim4_axis1_neg_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis1_neg_3 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis1_neg_3", get_test_model_axis_dim4_axis1_neg_3());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -27705,9 +28740,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis1_neg_all_inputs_as_internal_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -27822,6 +28859,8 @@ const TestModel& get_test_model_axis_dim4_axis1_neg_all_inputs_as_internal_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis1_neg_all_inputs_as_internal_3 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis1_neg_all_inputs_as_internal_3", get_test_model_axis_dim4_axis1_neg_all_inputs_as_internal_3());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -27829,9 +28868,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis1_neg_relaxed_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, -1.1f, -1.1f, -1.1f, 0.6f, 0.6f, 0.6f, 0.6f, 0.7f, 0.7f, 0.7f, 0.7f, 1.2f, 1.2f, 1.2f, 1.2f, -0.7f, -0.7f, -0.7f, -0.7f, 0.1f, 0.1f, 0.1f, 0.1f, -1.1f, -1.1f, -1.1f, -1.1f, 0.6f, 0.6f, 0.6f, 0.6f, 0.7f, 0.7f, 0.7f, 0.7f, 1.2f, 1.2f, 1.2f, 1.2f, -0.7f, -0.7f, -0.7f, -0.7f, 0.1f, 0.1f, 0.1f, 0.1f}),
@@ -27912,6 +28953,8 @@ const TestModel& get_test_model_axis_dim4_axis1_neg_relaxed_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis1_neg_relaxed_3 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis1_neg_relaxed_3", get_test_model_axis_dim4_axis1_neg_relaxed_3());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -27919,9 +28962,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis1_neg_relaxed_all_inputs_as_internal_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -28037,15 +29082,19 @@ const TestModel& get_test_model_axis_dim4_axis1_neg_relaxed_all_inputs_as_intern
     return model;
 }
 
+const auto dummy_test_model_axis_dim4_axis1_neg_relaxed_all_inputs_as_internal_3 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis1_neg_relaxed_all_inputs_as_internal_3", get_test_model_axis_dim4_axis1_neg_relaxed_all_inputs_as_internal_3());
+
 }  // namespace generated_tests::local_response_normalization_v1_2
 
 namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis1_neg_float16_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({-1.100000023841858f, -1.100000023841858f, -1.100000023841858f, -1.100000023841858f, 0.6000000238418579f, 0.6000000238418579f, 0.6000000238418579f, 0.6000000238418579f, 0.699999988079071f, 0.699999988079071f, 0.699999988079071f, 0.699999988079071f, 1.2000000476837158f, 1.2000000476837158f, 1.2000000476837158f, 1.2000000476837158f, -0.699999988079071f, -0.699999988079071f, -0.699999988079071f, -0.699999988079071f, 0.10000000149011612f, 0.10000000149011612f, 0.10000000149011612f, 0.10000000149011612f, -1.100000023841858f, -1.100000023841858f, -1.100000023841858f, -1.100000023841858f, 0.6000000238418579f, 0.6000000238418579f, 0.6000000238418579f, 0.6000000238418579f, 0.699999988079071f, 0.699999988079071f, 0.699999988079071f, 0.699999988079071f, 1.2000000476837158f, 1.2000000476837158f, 1.2000000476837158f, 1.2000000476837158f, -0.699999988079071f, -0.699999988079071f, -0.699999988079071f, -0.699999988079071f, 0.10000000149011612f, 0.10000000149011612f, 0.10000000149011612f, 0.10000000149011612f}),
@@ -28126,6 +29175,8 @@ const TestModel& get_test_model_axis_dim4_axis1_neg_float16_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis1_neg_float16_3 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis1_neg_float16_3", get_test_model_axis_dim4_axis1_neg_float16_3());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -28133,9 +29184,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis1_neg_float16_all_inputs_as_internal_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -28251,15 +29304,19 @@ const TestModel& get_test_model_axis_dim4_axis1_neg_float16_all_inputs_as_intern
     return model;
 }
 
+const auto dummy_test_model_axis_dim4_axis1_neg_float16_all_inputs_as_internal_3 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis1_neg_float16_all_inputs_as_internal_3", get_test_model_axis_dim4_axis1_neg_float16_all_inputs_as_internal_3());
+
 }  // namespace generated_tests::local_response_normalization_v1_2
 
 namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis2_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, -1.1f, 0.6f, 0.6f, 0.7f, 0.7f, 1.2f, 1.2f, -0.7f, -0.7f, 0.1f, 0.1f, -1.1f, -1.1f, 0.6f, 0.6f, 0.7f, 0.7f, 1.2f, 1.2f, -0.7f, -0.7f, 0.1f, 0.1f, -1.1f, -1.1f, 0.6f, 0.6f, 0.7f, 0.7f, 1.2f, 1.2f, -0.7f, -0.7f, 0.1f, 0.1f, -1.1f, -1.1f, 0.6f, 0.6f, 0.7f, 0.7f, 1.2f, 1.2f, -0.7f, -0.7f, 0.1f, 0.1f}),
@@ -28340,6 +29397,8 @@ const TestModel& get_test_model_axis_dim4_axis2_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis2_3 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis2_3", get_test_model_axis_dim4_axis2_3());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -28347,9 +29406,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis2_all_inputs_as_internal_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -28464,6 +29525,8 @@ const TestModel& get_test_model_axis_dim4_axis2_all_inputs_as_internal_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis2_all_inputs_as_internal_3 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis2_all_inputs_as_internal_3", get_test_model_axis_dim4_axis2_all_inputs_as_internal_3());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -28471,9 +29534,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis2_relaxed_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, -1.1f, 0.6f, 0.6f, 0.7f, 0.7f, 1.2f, 1.2f, -0.7f, -0.7f, 0.1f, 0.1f, -1.1f, -1.1f, 0.6f, 0.6f, 0.7f, 0.7f, 1.2f, 1.2f, -0.7f, -0.7f, 0.1f, 0.1f, -1.1f, -1.1f, 0.6f, 0.6f, 0.7f, 0.7f, 1.2f, 1.2f, -0.7f, -0.7f, 0.1f, 0.1f, -1.1f, -1.1f, 0.6f, 0.6f, 0.7f, 0.7f, 1.2f, 1.2f, -0.7f, -0.7f, 0.1f, 0.1f}),
@@ -28554,6 +29619,8 @@ const TestModel& get_test_model_axis_dim4_axis2_relaxed_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis2_relaxed_3 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis2_relaxed_3", get_test_model_axis_dim4_axis2_relaxed_3());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -28561,9 +29628,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis2_relaxed_all_inputs_as_internal_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -28678,6 +29747,8 @@ const TestModel& get_test_model_axis_dim4_axis2_relaxed_all_inputs_as_internal_3
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis2_relaxed_all_inputs_as_internal_3 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis2_relaxed_all_inputs_as_internal_3", get_test_model_axis_dim4_axis2_relaxed_all_inputs_as_internal_3());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -28685,9 +29756,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis2_float16_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({-1.100000023841858f, -1.100000023841858f, 0.6000000238418579f, 0.6000000238418579f, 0.699999988079071f, 0.699999988079071f, 1.2000000476837158f, 1.2000000476837158f, -0.699999988079071f, -0.699999988079071f, 0.10000000149011612f, 0.10000000149011612f, -1.100000023841858f, -1.100000023841858f, 0.6000000238418579f, 0.6000000238418579f, 0.699999988079071f, 0.699999988079071f, 1.2000000476837158f, 1.2000000476837158f, -0.699999988079071f, -0.699999988079071f, 0.10000000149011612f, 0.10000000149011612f, -1.100000023841858f, -1.100000023841858f, 0.6000000238418579f, 0.6000000238418579f, 0.699999988079071f, 0.699999988079071f, 1.2000000476837158f, 1.2000000476837158f, -0.699999988079071f, -0.699999988079071f, 0.10000000149011612f, 0.10000000149011612f, -1.100000023841858f, -1.100000023841858f, 0.6000000238418579f, 0.6000000238418579f, 0.699999988079071f, 0.699999988079071f, 1.2000000476837158f, 1.2000000476837158f, -0.699999988079071f, -0.699999988079071f, 0.10000000149011612f, 0.10000000149011612f}),
@@ -28768,6 +29841,8 @@ const TestModel& get_test_model_axis_dim4_axis2_float16_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis2_float16_3 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis2_float16_3", get_test_model_axis_dim4_axis2_float16_3());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -28775,9 +29850,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis2_float16_all_inputs_as_internal_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -28892,6 +29969,8 @@ const TestModel& get_test_model_axis_dim4_axis2_float16_all_inputs_as_internal_3
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis2_float16_all_inputs_as_internal_3 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis2_float16_all_inputs_as_internal_3", get_test_model_axis_dim4_axis2_float16_all_inputs_as_internal_3());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -28899,9 +29978,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis2_neg_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, -1.1f, 0.6f, 0.6f, 0.7f, 0.7f, 1.2f, 1.2f, -0.7f, -0.7f, 0.1f, 0.1f, -1.1f, -1.1f, 0.6f, 0.6f, 0.7f, 0.7f, 1.2f, 1.2f, -0.7f, -0.7f, 0.1f, 0.1f, -1.1f, -1.1f, 0.6f, 0.6f, 0.7f, 0.7f, 1.2f, 1.2f, -0.7f, -0.7f, 0.1f, 0.1f, -1.1f, -1.1f, 0.6f, 0.6f, 0.7f, 0.7f, 1.2f, 1.2f, -0.7f, -0.7f, 0.1f, 0.1f}),
@@ -28982,6 +30063,8 @@ const TestModel& get_test_model_axis_dim4_axis2_neg_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis2_neg_3 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis2_neg_3", get_test_model_axis_dim4_axis2_neg_3());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -28989,9 +30072,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis2_neg_all_inputs_as_internal_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -29106,6 +30191,8 @@ const TestModel& get_test_model_axis_dim4_axis2_neg_all_inputs_as_internal_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis2_neg_all_inputs_as_internal_3 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis2_neg_all_inputs_as_internal_3", get_test_model_axis_dim4_axis2_neg_all_inputs_as_internal_3());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -29113,9 +30200,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis2_neg_relaxed_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, -1.1f, 0.6f, 0.6f, 0.7f, 0.7f, 1.2f, 1.2f, -0.7f, -0.7f, 0.1f, 0.1f, -1.1f, -1.1f, 0.6f, 0.6f, 0.7f, 0.7f, 1.2f, 1.2f, -0.7f, -0.7f, 0.1f, 0.1f, -1.1f, -1.1f, 0.6f, 0.6f, 0.7f, 0.7f, 1.2f, 1.2f, -0.7f, -0.7f, 0.1f, 0.1f, -1.1f, -1.1f, 0.6f, 0.6f, 0.7f, 0.7f, 1.2f, 1.2f, -0.7f, -0.7f, 0.1f, 0.1f}),
@@ -29196,6 +30285,8 @@ const TestModel& get_test_model_axis_dim4_axis2_neg_relaxed_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis2_neg_relaxed_3 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis2_neg_relaxed_3", get_test_model_axis_dim4_axis2_neg_relaxed_3());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -29203,9 +30294,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis2_neg_relaxed_all_inputs_as_internal_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -29321,15 +30414,19 @@ const TestModel& get_test_model_axis_dim4_axis2_neg_relaxed_all_inputs_as_intern
     return model;
 }
 
+const auto dummy_test_model_axis_dim4_axis2_neg_relaxed_all_inputs_as_internal_3 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis2_neg_relaxed_all_inputs_as_internal_3", get_test_model_axis_dim4_axis2_neg_relaxed_all_inputs_as_internal_3());
+
 }  // namespace generated_tests::local_response_normalization_v1_2
 
 namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis2_neg_float16_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({-1.100000023841858f, -1.100000023841858f, 0.6000000238418579f, 0.6000000238418579f, 0.699999988079071f, 0.699999988079071f, 1.2000000476837158f, 1.2000000476837158f, -0.699999988079071f, -0.699999988079071f, 0.10000000149011612f, 0.10000000149011612f, -1.100000023841858f, -1.100000023841858f, 0.6000000238418579f, 0.6000000238418579f, 0.699999988079071f, 0.699999988079071f, 1.2000000476837158f, 1.2000000476837158f, -0.699999988079071f, -0.699999988079071f, 0.10000000149011612f, 0.10000000149011612f, -1.100000023841858f, -1.100000023841858f, 0.6000000238418579f, 0.6000000238418579f, 0.699999988079071f, 0.699999988079071f, 1.2000000476837158f, 1.2000000476837158f, -0.699999988079071f, -0.699999988079071f, 0.10000000149011612f, 0.10000000149011612f, -1.100000023841858f, -1.100000023841858f, 0.6000000238418579f, 0.6000000238418579f, 0.699999988079071f, 0.699999988079071f, 1.2000000476837158f, 1.2000000476837158f, -0.699999988079071f, -0.699999988079071f, 0.10000000149011612f, 0.10000000149011612f}),
@@ -29410,6 +30507,8 @@ const TestModel& get_test_model_axis_dim4_axis2_neg_float16_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis2_neg_float16_3 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis2_neg_float16_3", get_test_model_axis_dim4_axis2_neg_float16_3());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -29417,9 +30516,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis2_neg_float16_all_inputs_as_internal_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -29535,15 +30636,19 @@ const TestModel& get_test_model_axis_dim4_axis2_neg_float16_all_inputs_as_intern
     return model;
 }
 
+const auto dummy_test_model_axis_dim4_axis2_neg_float16_all_inputs_as_internal_3 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis2_neg_float16_all_inputs_as_internal_3", get_test_model_axis_dim4_axis2_neg_float16_all_inputs_as_internal_3());
+
 }  // namespace generated_tests::local_response_normalization_v1_2
 
 namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis3_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f}),
@@ -29624,6 +30729,8 @@ const TestModel& get_test_model_axis_dim4_axis3_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis3_3 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis3_3", get_test_model_axis_dim4_axis3_3());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -29631,9 +30738,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis3_all_inputs_as_internal_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -29748,6 +30857,8 @@ const TestModel& get_test_model_axis_dim4_axis3_all_inputs_as_internal_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis3_all_inputs_as_internal_3 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis3_all_inputs_as_internal_3", get_test_model_axis_dim4_axis3_all_inputs_as_internal_3());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -29755,9 +30866,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis3_relaxed_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f}),
@@ -29838,6 +30951,8 @@ const TestModel& get_test_model_axis_dim4_axis3_relaxed_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis3_relaxed_3 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis3_relaxed_3", get_test_model_axis_dim4_axis3_relaxed_3());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -29845,9 +30960,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis3_relaxed_all_inputs_as_internal_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -29962,6 +31079,8 @@ const TestModel& get_test_model_axis_dim4_axis3_relaxed_all_inputs_as_internal_3
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis3_relaxed_all_inputs_as_internal_3 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis3_relaxed_all_inputs_as_internal_3", get_test_model_axis_dim4_axis3_relaxed_all_inputs_as_internal_3());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -29969,9 +31088,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis3_float16_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({-1.100000023841858f, 0.6000000238418579f, 0.699999988079071f, 1.2000000476837158f, -0.699999988079071f, 0.10000000149011612f, -1.100000023841858f, 0.6000000238418579f, 0.699999988079071f, 1.2000000476837158f, -0.699999988079071f, 0.10000000149011612f, -1.100000023841858f, 0.6000000238418579f, 0.699999988079071f, 1.2000000476837158f, -0.699999988079071f, 0.10000000149011612f, -1.100000023841858f, 0.6000000238418579f, 0.699999988079071f, 1.2000000476837158f, -0.699999988079071f, 0.10000000149011612f, -1.100000023841858f, 0.6000000238418579f, 0.699999988079071f, 1.2000000476837158f, -0.699999988079071f, 0.10000000149011612f, -1.100000023841858f, 0.6000000238418579f, 0.699999988079071f, 1.2000000476837158f, -0.699999988079071f, 0.10000000149011612f, -1.100000023841858f, 0.6000000238418579f, 0.699999988079071f, 1.2000000476837158f, -0.699999988079071f, 0.10000000149011612f, -1.100000023841858f, 0.6000000238418579f, 0.699999988079071f, 1.2000000476837158f, -0.699999988079071f, 0.10000000149011612f}),
@@ -30052,6 +31173,8 @@ const TestModel& get_test_model_axis_dim4_axis3_float16_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis3_float16_3 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis3_float16_3", get_test_model_axis_dim4_axis3_float16_3());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -30059,9 +31182,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis3_float16_all_inputs_as_internal_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -30177,15 +31302,19 @@ const TestModel& get_test_model_axis_dim4_axis3_float16_all_inputs_as_internal_3
     return model;
 }
 
+const auto dummy_test_model_axis_dim4_axis3_float16_all_inputs_as_internal_3 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis3_float16_all_inputs_as_internal_3", get_test_model_axis_dim4_axis3_float16_all_inputs_as_internal_3());
+
 }  // namespace generated_tests::local_response_normalization_v1_2
 
 namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis3_neg_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f}),
@@ -30266,6 +31395,8 @@ const TestModel& get_test_model_axis_dim4_axis3_neg_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis3_neg_3 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis3_neg_3", get_test_model_axis_dim4_axis3_neg_3());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -30273,9 +31404,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis3_neg_all_inputs_as_internal_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -30390,6 +31523,8 @@ const TestModel& get_test_model_axis_dim4_axis3_neg_all_inputs_as_internal_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis3_neg_all_inputs_as_internal_3 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis3_neg_all_inputs_as_internal_3", get_test_model_axis_dim4_axis3_neg_all_inputs_as_internal_3());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -30397,9 +31532,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis3_neg_relaxed_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f}),
@@ -30480,6 +31617,8 @@ const TestModel& get_test_model_axis_dim4_axis3_neg_relaxed_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis3_neg_relaxed_3 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis3_neg_relaxed_3", get_test_model_axis_dim4_axis3_neg_relaxed_3());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -30487,9 +31626,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis3_neg_relaxed_all_inputs_as_internal_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -30605,15 +31746,19 @@ const TestModel& get_test_model_axis_dim4_axis3_neg_relaxed_all_inputs_as_intern
     return model;
 }
 
+const auto dummy_test_model_axis_dim4_axis3_neg_relaxed_all_inputs_as_internal_3 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis3_neg_relaxed_all_inputs_as_internal_3", get_test_model_axis_dim4_axis3_neg_relaxed_all_inputs_as_internal_3());
+
 }  // namespace generated_tests::local_response_normalization_v1_2
 
 namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis3_neg_float16_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({-1.100000023841858f, 0.6000000238418579f, 0.699999988079071f, 1.2000000476837158f, -0.699999988079071f, 0.10000000149011612f, -1.100000023841858f, 0.6000000238418579f, 0.699999988079071f, 1.2000000476837158f, -0.699999988079071f, 0.10000000149011612f, -1.100000023841858f, 0.6000000238418579f, 0.699999988079071f, 1.2000000476837158f, -0.699999988079071f, 0.10000000149011612f, -1.100000023841858f, 0.6000000238418579f, 0.699999988079071f, 1.2000000476837158f, -0.699999988079071f, 0.10000000149011612f, -1.100000023841858f, 0.6000000238418579f, 0.699999988079071f, 1.2000000476837158f, -0.699999988079071f, 0.10000000149011612f, -1.100000023841858f, 0.6000000238418579f, 0.699999988079071f, 1.2000000476837158f, -0.699999988079071f, 0.10000000149011612f, -1.100000023841858f, 0.6000000238418579f, 0.699999988079071f, 1.2000000476837158f, -0.699999988079071f, 0.10000000149011612f, -1.100000023841858f, 0.6000000238418579f, 0.699999988079071f, 1.2000000476837158f, -0.699999988079071f, 0.10000000149011612f}),
@@ -30694,6 +31839,8 @@ const TestModel& get_test_model_axis_dim4_axis3_neg_float16_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim4_axis3_neg_float16_3 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis3_neg_float16_3", get_test_model_axis_dim4_axis3_neg_float16_3());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -30701,9 +31848,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim4_axis3_neg_float16_all_inputs_as_internal_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -30819,15 +31968,19 @@ const TestModel& get_test_model_axis_dim4_axis3_neg_float16_all_inputs_as_intern
     return model;
 }
 
+const auto dummy_test_model_axis_dim4_axis3_neg_float16_all_inputs_as_internal_3 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim4_axis3_neg_float16_all_inputs_as_internal_3", get_test_model_axis_dim4_axis3_neg_float16_all_inputs_as_internal_3());
+
 }  // namespace generated_tests::local_response_normalization_v1_2
 
 namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis0_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, -1.1f, -1.1f, -1.1f, 0.6f, 0.6f, 0.6f, 0.6f, 0.7f, 0.7f, 0.7f, 0.7f, 1.2f, 1.2f, 1.2f, 1.2f, -0.7f, -0.7f, -0.7f, -0.7f, 0.1f, 0.1f, 0.1f, 0.1f}),
@@ -30908,6 +32061,8 @@ const TestModel& get_test_model_axis_dim3_axis0_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim3_axis0_3 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim3_axis0_3", get_test_model_axis_dim3_axis0_3());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -30915,9 +32070,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis0_all_inputs_as_internal_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -31032,6 +32189,8 @@ const TestModel& get_test_model_axis_dim3_axis0_all_inputs_as_internal_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim3_axis0_all_inputs_as_internal_3 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim3_axis0_all_inputs_as_internal_3", get_test_model_axis_dim3_axis0_all_inputs_as_internal_3());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -31039,9 +32198,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis0_relaxed_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, -1.1f, -1.1f, -1.1f, 0.6f, 0.6f, 0.6f, 0.6f, 0.7f, 0.7f, 0.7f, 0.7f, 1.2f, 1.2f, 1.2f, 1.2f, -0.7f, -0.7f, -0.7f, -0.7f, 0.1f, 0.1f, 0.1f, 0.1f}),
@@ -31122,6 +32283,8 @@ const TestModel& get_test_model_axis_dim3_axis0_relaxed_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim3_axis0_relaxed_3 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim3_axis0_relaxed_3", get_test_model_axis_dim3_axis0_relaxed_3());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -31129,9 +32292,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis0_relaxed_all_inputs_as_internal_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -31246,6 +32411,8 @@ const TestModel& get_test_model_axis_dim3_axis0_relaxed_all_inputs_as_internal_3
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim3_axis0_relaxed_all_inputs_as_internal_3 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim3_axis0_relaxed_all_inputs_as_internal_3", get_test_model_axis_dim3_axis0_relaxed_all_inputs_as_internal_3());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -31253,9 +32420,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis0_float16_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({-1.100000023841858f, -1.100000023841858f, -1.100000023841858f, -1.100000023841858f, 0.6000000238418579f, 0.6000000238418579f, 0.6000000238418579f, 0.6000000238418579f, 0.699999988079071f, 0.699999988079071f, 0.699999988079071f, 0.699999988079071f, 1.2000000476837158f, 1.2000000476837158f, 1.2000000476837158f, 1.2000000476837158f, -0.699999988079071f, -0.699999988079071f, -0.699999988079071f, -0.699999988079071f, 0.10000000149011612f, 0.10000000149011612f, 0.10000000149011612f, 0.10000000149011612f}),
@@ -31336,6 +32505,8 @@ const TestModel& get_test_model_axis_dim3_axis0_float16_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim3_axis0_float16_3 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim3_axis0_float16_3", get_test_model_axis_dim3_axis0_float16_3());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -31343,9 +32514,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis0_float16_all_inputs_as_internal_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -31460,6 +32633,8 @@ const TestModel& get_test_model_axis_dim3_axis0_float16_all_inputs_as_internal_3
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim3_axis0_float16_all_inputs_as_internal_3 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim3_axis0_float16_all_inputs_as_internal_3", get_test_model_axis_dim3_axis0_float16_all_inputs_as_internal_3());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -31467,9 +32642,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis0_neg_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, -1.1f, -1.1f, -1.1f, 0.6f, 0.6f, 0.6f, 0.6f, 0.7f, 0.7f, 0.7f, 0.7f, 1.2f, 1.2f, 1.2f, 1.2f, -0.7f, -0.7f, -0.7f, -0.7f, 0.1f, 0.1f, 0.1f, 0.1f}),
@@ -31550,6 +32727,8 @@ const TestModel& get_test_model_axis_dim3_axis0_neg_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim3_axis0_neg_3 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim3_axis0_neg_3", get_test_model_axis_dim3_axis0_neg_3());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -31557,9 +32736,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis0_neg_all_inputs_as_internal_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -31674,6 +32855,8 @@ const TestModel& get_test_model_axis_dim3_axis0_neg_all_inputs_as_internal_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim3_axis0_neg_all_inputs_as_internal_3 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim3_axis0_neg_all_inputs_as_internal_3", get_test_model_axis_dim3_axis0_neg_all_inputs_as_internal_3());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -31681,9 +32864,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis0_neg_relaxed_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, -1.1f, -1.1f, -1.1f, 0.6f, 0.6f, 0.6f, 0.6f, 0.7f, 0.7f, 0.7f, 0.7f, 1.2f, 1.2f, 1.2f, 1.2f, -0.7f, -0.7f, -0.7f, -0.7f, 0.1f, 0.1f, 0.1f, 0.1f}),
@@ -31764,6 +32949,8 @@ const TestModel& get_test_model_axis_dim3_axis0_neg_relaxed_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim3_axis0_neg_relaxed_3 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim3_axis0_neg_relaxed_3", get_test_model_axis_dim3_axis0_neg_relaxed_3());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -31771,9 +32958,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis0_neg_relaxed_all_inputs_as_internal_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -31889,15 +33078,19 @@ const TestModel& get_test_model_axis_dim3_axis0_neg_relaxed_all_inputs_as_intern
     return model;
 }
 
+const auto dummy_test_model_axis_dim3_axis0_neg_relaxed_all_inputs_as_internal_3 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim3_axis0_neg_relaxed_all_inputs_as_internal_3", get_test_model_axis_dim3_axis0_neg_relaxed_all_inputs_as_internal_3());
+
 }  // namespace generated_tests::local_response_normalization_v1_2
 
 namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis0_neg_float16_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({-1.100000023841858f, -1.100000023841858f, -1.100000023841858f, -1.100000023841858f, 0.6000000238418579f, 0.6000000238418579f, 0.6000000238418579f, 0.6000000238418579f, 0.699999988079071f, 0.699999988079071f, 0.699999988079071f, 0.699999988079071f, 1.2000000476837158f, 1.2000000476837158f, 1.2000000476837158f, 1.2000000476837158f, -0.699999988079071f, -0.699999988079071f, -0.699999988079071f, -0.699999988079071f, 0.10000000149011612f, 0.10000000149011612f, 0.10000000149011612f, 0.10000000149011612f}),
@@ -31978,6 +33171,8 @@ const TestModel& get_test_model_axis_dim3_axis0_neg_float16_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim3_axis0_neg_float16_3 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim3_axis0_neg_float16_3", get_test_model_axis_dim3_axis0_neg_float16_3());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -31985,9 +33180,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis0_neg_float16_all_inputs_as_internal_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -32103,15 +33300,19 @@ const TestModel& get_test_model_axis_dim3_axis0_neg_float16_all_inputs_as_intern
     return model;
 }
 
+const auto dummy_test_model_axis_dim3_axis0_neg_float16_all_inputs_as_internal_3 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim3_axis0_neg_float16_all_inputs_as_internal_3", get_test_model_axis_dim3_axis0_neg_float16_all_inputs_as_internal_3());
+
 }  // namespace generated_tests::local_response_normalization_v1_2
 
 namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis1_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, -1.1f, 0.6f, 0.6f, 0.7f, 0.7f, 1.2f, 1.2f, -0.7f, -0.7f, 0.1f, 0.1f, -1.1f, -1.1f, 0.6f, 0.6f, 0.7f, 0.7f, 1.2f, 1.2f, -0.7f, -0.7f, 0.1f, 0.1f}),
@@ -32192,6 +33393,8 @@ const TestModel& get_test_model_axis_dim3_axis1_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim3_axis1_3 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim3_axis1_3", get_test_model_axis_dim3_axis1_3());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -32199,9 +33402,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis1_all_inputs_as_internal_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -32316,6 +33521,8 @@ const TestModel& get_test_model_axis_dim3_axis1_all_inputs_as_internal_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim3_axis1_all_inputs_as_internal_3 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim3_axis1_all_inputs_as_internal_3", get_test_model_axis_dim3_axis1_all_inputs_as_internal_3());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -32323,9 +33530,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis1_relaxed_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, -1.1f, 0.6f, 0.6f, 0.7f, 0.7f, 1.2f, 1.2f, -0.7f, -0.7f, 0.1f, 0.1f, -1.1f, -1.1f, 0.6f, 0.6f, 0.7f, 0.7f, 1.2f, 1.2f, -0.7f, -0.7f, 0.1f, 0.1f}),
@@ -32406,6 +33615,8 @@ const TestModel& get_test_model_axis_dim3_axis1_relaxed_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim3_axis1_relaxed_3 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim3_axis1_relaxed_3", get_test_model_axis_dim3_axis1_relaxed_3());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -32413,9 +33624,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis1_relaxed_all_inputs_as_internal_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -32530,6 +33743,8 @@ const TestModel& get_test_model_axis_dim3_axis1_relaxed_all_inputs_as_internal_3
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim3_axis1_relaxed_all_inputs_as_internal_3 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim3_axis1_relaxed_all_inputs_as_internal_3", get_test_model_axis_dim3_axis1_relaxed_all_inputs_as_internal_3());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -32537,9 +33752,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis1_float16_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({-1.100000023841858f, -1.100000023841858f, 0.6000000238418579f, 0.6000000238418579f, 0.699999988079071f, 0.699999988079071f, 1.2000000476837158f, 1.2000000476837158f, -0.699999988079071f, -0.699999988079071f, 0.10000000149011612f, 0.10000000149011612f, -1.100000023841858f, -1.100000023841858f, 0.6000000238418579f, 0.6000000238418579f, 0.699999988079071f, 0.699999988079071f, 1.2000000476837158f, 1.2000000476837158f, -0.699999988079071f, -0.699999988079071f, 0.10000000149011612f, 0.10000000149011612f}),
@@ -32620,6 +33837,8 @@ const TestModel& get_test_model_axis_dim3_axis1_float16_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim3_axis1_float16_3 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim3_axis1_float16_3", get_test_model_axis_dim3_axis1_float16_3());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -32627,9 +33846,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis1_float16_all_inputs_as_internal_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -32744,6 +33965,8 @@ const TestModel& get_test_model_axis_dim3_axis1_float16_all_inputs_as_internal_3
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim3_axis1_float16_all_inputs_as_internal_3 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim3_axis1_float16_all_inputs_as_internal_3", get_test_model_axis_dim3_axis1_float16_all_inputs_as_internal_3());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -32751,9 +33974,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis1_neg_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, -1.1f, 0.6f, 0.6f, 0.7f, 0.7f, 1.2f, 1.2f, -0.7f, -0.7f, 0.1f, 0.1f, -1.1f, -1.1f, 0.6f, 0.6f, 0.7f, 0.7f, 1.2f, 1.2f, -0.7f, -0.7f, 0.1f, 0.1f}),
@@ -32834,6 +34059,8 @@ const TestModel& get_test_model_axis_dim3_axis1_neg_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim3_axis1_neg_3 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim3_axis1_neg_3", get_test_model_axis_dim3_axis1_neg_3());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -32841,9 +34068,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis1_neg_all_inputs_as_internal_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -32958,6 +34187,8 @@ const TestModel& get_test_model_axis_dim3_axis1_neg_all_inputs_as_internal_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim3_axis1_neg_all_inputs_as_internal_3 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim3_axis1_neg_all_inputs_as_internal_3", get_test_model_axis_dim3_axis1_neg_all_inputs_as_internal_3());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -32965,9 +34196,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis1_neg_relaxed_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, -1.1f, 0.6f, 0.6f, 0.7f, 0.7f, 1.2f, 1.2f, -0.7f, -0.7f, 0.1f, 0.1f, -1.1f, -1.1f, 0.6f, 0.6f, 0.7f, 0.7f, 1.2f, 1.2f, -0.7f, -0.7f, 0.1f, 0.1f}),
@@ -33048,6 +34281,8 @@ const TestModel& get_test_model_axis_dim3_axis1_neg_relaxed_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim3_axis1_neg_relaxed_3 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim3_axis1_neg_relaxed_3", get_test_model_axis_dim3_axis1_neg_relaxed_3());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -33055,9 +34290,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis1_neg_relaxed_all_inputs_as_internal_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -33173,15 +34410,19 @@ const TestModel& get_test_model_axis_dim3_axis1_neg_relaxed_all_inputs_as_intern
     return model;
 }
 
+const auto dummy_test_model_axis_dim3_axis1_neg_relaxed_all_inputs_as_internal_3 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim3_axis1_neg_relaxed_all_inputs_as_internal_3", get_test_model_axis_dim3_axis1_neg_relaxed_all_inputs_as_internal_3());
+
 }  // namespace generated_tests::local_response_normalization_v1_2
 
 namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis1_neg_float16_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({-1.100000023841858f, -1.100000023841858f, 0.6000000238418579f, 0.6000000238418579f, 0.699999988079071f, 0.699999988079071f, 1.2000000476837158f, 1.2000000476837158f, -0.699999988079071f, -0.699999988079071f, 0.10000000149011612f, 0.10000000149011612f, -1.100000023841858f, -1.100000023841858f, 0.6000000238418579f, 0.6000000238418579f, 0.699999988079071f, 0.699999988079071f, 1.2000000476837158f, 1.2000000476837158f, -0.699999988079071f, -0.699999988079071f, 0.10000000149011612f, 0.10000000149011612f}),
@@ -33262,6 +34503,8 @@ const TestModel& get_test_model_axis_dim3_axis1_neg_float16_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim3_axis1_neg_float16_3 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim3_axis1_neg_float16_3", get_test_model_axis_dim3_axis1_neg_float16_3());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -33269,9 +34512,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis1_neg_float16_all_inputs_as_internal_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -33387,15 +34632,19 @@ const TestModel& get_test_model_axis_dim3_axis1_neg_float16_all_inputs_as_intern
     return model;
 }
 
+const auto dummy_test_model_axis_dim3_axis1_neg_float16_all_inputs_as_internal_3 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim3_axis1_neg_float16_all_inputs_as_internal_3", get_test_model_axis_dim3_axis1_neg_float16_all_inputs_as_internal_3());
+
 }  // namespace generated_tests::local_response_normalization_v1_2
 
 namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis2_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f}),
@@ -33476,6 +34725,8 @@ const TestModel& get_test_model_axis_dim3_axis2_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim3_axis2_3 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim3_axis2_3", get_test_model_axis_dim3_axis2_3());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -33483,9 +34734,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis2_all_inputs_as_internal_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -33600,6 +34853,8 @@ const TestModel& get_test_model_axis_dim3_axis2_all_inputs_as_internal_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim3_axis2_all_inputs_as_internal_3 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim3_axis2_all_inputs_as_internal_3", get_test_model_axis_dim3_axis2_all_inputs_as_internal_3());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -33607,9 +34862,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis2_relaxed_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f}),
@@ -33690,6 +34947,8 @@ const TestModel& get_test_model_axis_dim3_axis2_relaxed_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim3_axis2_relaxed_3 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim3_axis2_relaxed_3", get_test_model_axis_dim3_axis2_relaxed_3());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -33697,9 +34956,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis2_relaxed_all_inputs_as_internal_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -33814,6 +35075,8 @@ const TestModel& get_test_model_axis_dim3_axis2_relaxed_all_inputs_as_internal_3
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim3_axis2_relaxed_all_inputs_as_internal_3 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim3_axis2_relaxed_all_inputs_as_internal_3", get_test_model_axis_dim3_axis2_relaxed_all_inputs_as_internal_3());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -33821,9 +35084,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis2_float16_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({-1.100000023841858f, 0.6000000238418579f, 0.699999988079071f, 1.2000000476837158f, -0.699999988079071f, 0.10000000149011612f, -1.100000023841858f, 0.6000000238418579f, 0.699999988079071f, 1.2000000476837158f, -0.699999988079071f, 0.10000000149011612f, -1.100000023841858f, 0.6000000238418579f, 0.699999988079071f, 1.2000000476837158f, -0.699999988079071f, 0.10000000149011612f, -1.100000023841858f, 0.6000000238418579f, 0.699999988079071f, 1.2000000476837158f, -0.699999988079071f, 0.10000000149011612f}),
@@ -33904,6 +35169,8 @@ const TestModel& get_test_model_axis_dim3_axis2_float16_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim3_axis2_float16_3 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim3_axis2_float16_3", get_test_model_axis_dim3_axis2_float16_3());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -33911,9 +35178,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis2_float16_all_inputs_as_internal_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -34028,6 +35297,8 @@ const TestModel& get_test_model_axis_dim3_axis2_float16_all_inputs_as_internal_3
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim3_axis2_float16_all_inputs_as_internal_3 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim3_axis2_float16_all_inputs_as_internal_3", get_test_model_axis_dim3_axis2_float16_all_inputs_as_internal_3());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -34035,9 +35306,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis2_neg_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f}),
@@ -34118,6 +35391,8 @@ const TestModel& get_test_model_axis_dim3_axis2_neg_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim3_axis2_neg_3 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim3_axis2_neg_3", get_test_model_axis_dim3_axis2_neg_3());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -34125,9 +35400,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis2_neg_all_inputs_as_internal_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -34242,6 +35519,8 @@ const TestModel& get_test_model_axis_dim3_axis2_neg_all_inputs_as_internal_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim3_axis2_neg_all_inputs_as_internal_3 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim3_axis2_neg_all_inputs_as_internal_3", get_test_model_axis_dim3_axis2_neg_all_inputs_as_internal_3());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -34249,9 +35528,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis2_neg_relaxed_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f}),
@@ -34332,6 +35613,8 @@ const TestModel& get_test_model_axis_dim3_axis2_neg_relaxed_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim3_axis2_neg_relaxed_3 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim3_axis2_neg_relaxed_3", get_test_model_axis_dim3_axis2_neg_relaxed_3());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -34339,9 +35622,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis2_neg_relaxed_all_inputs_as_internal_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -34456,6 +35741,8 @@ const TestModel& get_test_model_axis_dim3_axis2_neg_relaxed_all_inputs_as_intern
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim3_axis2_neg_relaxed_all_inputs_as_internal_3 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim3_axis2_neg_relaxed_all_inputs_as_internal_3", get_test_model_axis_dim3_axis2_neg_relaxed_all_inputs_as_internal_3());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -34463,9 +35750,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis2_neg_float16_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({-1.100000023841858f, 0.6000000238418579f, 0.699999988079071f, 1.2000000476837158f, -0.699999988079071f, 0.10000000149011612f, -1.100000023841858f, 0.6000000238418579f, 0.699999988079071f, 1.2000000476837158f, -0.699999988079071f, 0.10000000149011612f, -1.100000023841858f, 0.6000000238418579f, 0.699999988079071f, 1.2000000476837158f, -0.699999988079071f, 0.10000000149011612f, -1.100000023841858f, 0.6000000238418579f, 0.699999988079071f, 1.2000000476837158f, -0.699999988079071f, 0.10000000149011612f}),
@@ -34546,6 +35835,8 @@ const TestModel& get_test_model_axis_dim3_axis2_neg_float16_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim3_axis2_neg_float16_3 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim3_axis2_neg_float16_3", get_test_model_axis_dim3_axis2_neg_float16_3());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -34553,9 +35844,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim3_axis2_neg_float16_all_inputs_as_internal_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -34670,6 +35963,8 @@ const TestModel& get_test_model_axis_dim3_axis2_neg_float16_all_inputs_as_intern
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim3_axis2_neg_float16_all_inputs_as_internal_3 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim3_axis2_neg_float16_all_inputs_as_internal_3", get_test_model_axis_dim3_axis2_neg_float16_all_inputs_as_internal_3());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -34677,9 +35972,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim2_axis0_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, -1.1f, 0.6f, 0.6f, 0.7f, 0.7f, 1.2f, 1.2f, -0.7f, -0.7f, 0.1f, 0.1f}),
@@ -34760,6 +36057,8 @@ const TestModel& get_test_model_axis_dim2_axis0_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim2_axis0_3 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim2_axis0_3", get_test_model_axis_dim2_axis0_3());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -34767,9 +36066,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim2_axis0_all_inputs_as_internal_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -34884,6 +36185,8 @@ const TestModel& get_test_model_axis_dim2_axis0_all_inputs_as_internal_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim2_axis0_all_inputs_as_internal_3 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim2_axis0_all_inputs_as_internal_3", get_test_model_axis_dim2_axis0_all_inputs_as_internal_3());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -34891,9 +36194,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim2_axis0_relaxed_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, -1.1f, 0.6f, 0.6f, 0.7f, 0.7f, 1.2f, 1.2f, -0.7f, -0.7f, 0.1f, 0.1f}),
@@ -34974,6 +36279,8 @@ const TestModel& get_test_model_axis_dim2_axis0_relaxed_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim2_axis0_relaxed_3 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim2_axis0_relaxed_3", get_test_model_axis_dim2_axis0_relaxed_3());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -34981,9 +36288,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim2_axis0_relaxed_all_inputs_as_internal_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -35098,6 +36407,8 @@ const TestModel& get_test_model_axis_dim2_axis0_relaxed_all_inputs_as_internal_3
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim2_axis0_relaxed_all_inputs_as_internal_3 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim2_axis0_relaxed_all_inputs_as_internal_3", get_test_model_axis_dim2_axis0_relaxed_all_inputs_as_internal_3());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -35105,9 +36416,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim2_axis0_float16_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({-1.100000023841858f, -1.100000023841858f, 0.6000000238418579f, 0.6000000238418579f, 0.699999988079071f, 0.699999988079071f, 1.2000000476837158f, 1.2000000476837158f, -0.699999988079071f, -0.699999988079071f, 0.10000000149011612f, 0.10000000149011612f}),
@@ -35188,6 +36501,8 @@ const TestModel& get_test_model_axis_dim2_axis0_float16_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim2_axis0_float16_3 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim2_axis0_float16_3", get_test_model_axis_dim2_axis0_float16_3());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -35195,9 +36510,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim2_axis0_float16_all_inputs_as_internal_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -35312,6 +36629,8 @@ const TestModel& get_test_model_axis_dim2_axis0_float16_all_inputs_as_internal_3
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim2_axis0_float16_all_inputs_as_internal_3 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim2_axis0_float16_all_inputs_as_internal_3", get_test_model_axis_dim2_axis0_float16_all_inputs_as_internal_3());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -35319,9 +36638,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim2_axis0_neg_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, -1.1f, 0.6f, 0.6f, 0.7f, 0.7f, 1.2f, 1.2f, -0.7f, -0.7f, 0.1f, 0.1f}),
@@ -35402,6 +36723,8 @@ const TestModel& get_test_model_axis_dim2_axis0_neg_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim2_axis0_neg_3 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim2_axis0_neg_3", get_test_model_axis_dim2_axis0_neg_3());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -35409,9 +36732,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim2_axis0_neg_all_inputs_as_internal_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -35526,6 +36851,8 @@ const TestModel& get_test_model_axis_dim2_axis0_neg_all_inputs_as_internal_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim2_axis0_neg_all_inputs_as_internal_3 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim2_axis0_neg_all_inputs_as_internal_3", get_test_model_axis_dim2_axis0_neg_all_inputs_as_internal_3());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -35533,9 +36860,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim2_axis0_neg_relaxed_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, -1.1f, 0.6f, 0.6f, 0.7f, 0.7f, 1.2f, 1.2f, -0.7f, -0.7f, 0.1f, 0.1f}),
@@ -35616,6 +36945,8 @@ const TestModel& get_test_model_axis_dim2_axis0_neg_relaxed_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim2_axis0_neg_relaxed_3 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim2_axis0_neg_relaxed_3", get_test_model_axis_dim2_axis0_neg_relaxed_3());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -35623,9 +36954,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim2_axis0_neg_relaxed_all_inputs_as_internal_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -35741,15 +37074,19 @@ const TestModel& get_test_model_axis_dim2_axis0_neg_relaxed_all_inputs_as_intern
     return model;
 }
 
+const auto dummy_test_model_axis_dim2_axis0_neg_relaxed_all_inputs_as_internal_3 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim2_axis0_neg_relaxed_all_inputs_as_internal_3", get_test_model_axis_dim2_axis0_neg_relaxed_all_inputs_as_internal_3());
+
 }  // namespace generated_tests::local_response_normalization_v1_2
 
 namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim2_axis0_neg_float16_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({-1.100000023841858f, -1.100000023841858f, 0.6000000238418579f, 0.6000000238418579f, 0.699999988079071f, 0.699999988079071f, 1.2000000476837158f, 1.2000000476837158f, -0.699999988079071f, -0.699999988079071f, 0.10000000149011612f, 0.10000000149011612f}),
@@ -35830,6 +37167,8 @@ const TestModel& get_test_model_axis_dim2_axis0_neg_float16_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim2_axis0_neg_float16_3 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim2_axis0_neg_float16_3", get_test_model_axis_dim2_axis0_neg_float16_3());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -35837,9 +37176,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim2_axis0_neg_float16_all_inputs_as_internal_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -35955,15 +37296,19 @@ const TestModel& get_test_model_axis_dim2_axis0_neg_float16_all_inputs_as_intern
     return model;
 }
 
+const auto dummy_test_model_axis_dim2_axis0_neg_float16_all_inputs_as_internal_3 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim2_axis0_neg_float16_all_inputs_as_internal_3", get_test_model_axis_dim2_axis0_neg_float16_all_inputs_as_internal_3());
+
 }  // namespace generated_tests::local_response_normalization_v1_2
 
 namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim2_axis1_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f}),
@@ -36044,6 +37389,8 @@ const TestModel& get_test_model_axis_dim2_axis1_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim2_axis1_3 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim2_axis1_3", get_test_model_axis_dim2_axis1_3());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -36051,9 +37398,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim2_axis1_all_inputs_as_internal_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -36168,6 +37517,8 @@ const TestModel& get_test_model_axis_dim2_axis1_all_inputs_as_internal_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim2_axis1_all_inputs_as_internal_3 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim2_axis1_all_inputs_as_internal_3", get_test_model_axis_dim2_axis1_all_inputs_as_internal_3());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -36175,9 +37526,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim2_axis1_relaxed_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f}),
@@ -36258,6 +37611,8 @@ const TestModel& get_test_model_axis_dim2_axis1_relaxed_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim2_axis1_relaxed_3 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim2_axis1_relaxed_3", get_test_model_axis_dim2_axis1_relaxed_3());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -36265,9 +37620,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim2_axis1_relaxed_all_inputs_as_internal_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -36382,6 +37739,8 @@ const TestModel& get_test_model_axis_dim2_axis1_relaxed_all_inputs_as_internal_3
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim2_axis1_relaxed_all_inputs_as_internal_3 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim2_axis1_relaxed_all_inputs_as_internal_3", get_test_model_axis_dim2_axis1_relaxed_all_inputs_as_internal_3());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -36389,9 +37748,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim2_axis1_float16_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({-1.100000023841858f, 0.6000000238418579f, 0.699999988079071f, 1.2000000476837158f, -0.699999988079071f, 0.10000000149011612f, -1.100000023841858f, 0.6000000238418579f, 0.699999988079071f, 1.2000000476837158f, -0.699999988079071f, 0.10000000149011612f}),
@@ -36472,6 +37833,8 @@ const TestModel& get_test_model_axis_dim2_axis1_float16_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim2_axis1_float16_3 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim2_axis1_float16_3", get_test_model_axis_dim2_axis1_float16_3());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -36479,9 +37842,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim2_axis1_float16_all_inputs_as_internal_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -36597,15 +37962,19 @@ const TestModel& get_test_model_axis_dim2_axis1_float16_all_inputs_as_internal_3
     return model;
 }
 
+const auto dummy_test_model_axis_dim2_axis1_float16_all_inputs_as_internal_3 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim2_axis1_float16_all_inputs_as_internal_3", get_test_model_axis_dim2_axis1_float16_all_inputs_as_internal_3());
+
 }  // namespace generated_tests::local_response_normalization_v1_2
 
 namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim2_axis1_neg_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f}),
@@ -36686,6 +38055,8 @@ const TestModel& get_test_model_axis_dim2_axis1_neg_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim2_axis1_neg_3 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim2_axis1_neg_3", get_test_model_axis_dim2_axis1_neg_3());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -36693,9 +38064,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim2_axis1_neg_all_inputs_as_internal_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -36810,6 +38183,8 @@ const TestModel& get_test_model_axis_dim2_axis1_neg_all_inputs_as_internal_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim2_axis1_neg_all_inputs_as_internal_3 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim2_axis1_neg_all_inputs_as_internal_3", get_test_model_axis_dim2_axis1_neg_all_inputs_as_internal_3());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -36817,9 +38192,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim2_axis1_neg_relaxed_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f}),
@@ -36900,6 +38277,8 @@ const TestModel& get_test_model_axis_dim2_axis1_neg_relaxed_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim2_axis1_neg_relaxed_3 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim2_axis1_neg_relaxed_3", get_test_model_axis_dim2_axis1_neg_relaxed_3());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -36907,9 +38286,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim2_axis1_neg_relaxed_all_inputs_as_internal_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -37024,6 +38405,8 @@ const TestModel& get_test_model_axis_dim2_axis1_neg_relaxed_all_inputs_as_intern
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim2_axis1_neg_relaxed_all_inputs_as_internal_3 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim2_axis1_neg_relaxed_all_inputs_as_internal_3", get_test_model_axis_dim2_axis1_neg_relaxed_all_inputs_as_internal_3());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -37031,9 +38414,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim2_axis1_neg_float16_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({-1.100000023841858f, 0.6000000238418579f, 0.699999988079071f, 1.2000000476837158f, -0.699999988079071f, 0.10000000149011612f, -1.100000023841858f, 0.6000000238418579f, 0.699999988079071f, 1.2000000476837158f, -0.699999988079071f, 0.10000000149011612f}),
@@ -37114,6 +38499,8 @@ const TestModel& get_test_model_axis_dim2_axis1_neg_float16_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim2_axis1_neg_float16_3 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim2_axis1_neg_float16_3", get_test_model_axis_dim2_axis1_neg_float16_3());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -37121,9 +38508,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim2_axis1_neg_float16_all_inputs_as_internal_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -37238,6 +38627,8 @@ const TestModel& get_test_model_axis_dim2_axis1_neg_float16_all_inputs_as_intern
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim2_axis1_neg_float16_all_inputs_as_internal_3 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim2_axis1_neg_float16_all_inputs_as_internal_3", get_test_model_axis_dim2_axis1_neg_float16_all_inputs_as_internal_3());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -37245,9 +38636,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim1_axis0_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f}),
@@ -37328,6 +38721,8 @@ const TestModel& get_test_model_axis_dim1_axis0_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim1_axis0_3 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim1_axis0_3", get_test_model_axis_dim1_axis0_3());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -37335,9 +38730,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim1_axis0_all_inputs_as_internal_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -37452,6 +38849,8 @@ const TestModel& get_test_model_axis_dim1_axis0_all_inputs_as_internal_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim1_axis0_all_inputs_as_internal_3 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim1_axis0_all_inputs_as_internal_3", get_test_model_axis_dim1_axis0_all_inputs_as_internal_3());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -37459,9 +38858,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim1_axis0_relaxed_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f}),
@@ -37542,6 +38943,8 @@ const TestModel& get_test_model_axis_dim1_axis0_relaxed_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim1_axis0_relaxed_3 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim1_axis0_relaxed_3", get_test_model_axis_dim1_axis0_relaxed_3());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -37549,9 +38952,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim1_axis0_relaxed_all_inputs_as_internal_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -37666,6 +39071,8 @@ const TestModel& get_test_model_axis_dim1_axis0_relaxed_all_inputs_as_internal_3
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim1_axis0_relaxed_all_inputs_as_internal_3 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim1_axis0_relaxed_all_inputs_as_internal_3", get_test_model_axis_dim1_axis0_relaxed_all_inputs_as_internal_3());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -37673,9 +39080,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim1_axis0_float16_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({-1.100000023841858f, 0.6000000238418579f, 0.699999988079071f, 1.2000000476837158f, -0.699999988079071f, 0.10000000149011612f}),
@@ -37756,6 +39165,8 @@ const TestModel& get_test_model_axis_dim1_axis0_float16_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim1_axis0_float16_3 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim1_axis0_float16_3", get_test_model_axis_dim1_axis0_float16_3());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -37763,9 +39174,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim1_axis0_float16_all_inputs_as_internal_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -37880,6 +39293,8 @@ const TestModel& get_test_model_axis_dim1_axis0_float16_all_inputs_as_internal_3
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim1_axis0_float16_all_inputs_as_internal_3 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim1_axis0_float16_all_inputs_as_internal_3", get_test_model_axis_dim1_axis0_float16_all_inputs_as_internal_3());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -37887,9 +39302,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim1_axis0_neg_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f}),
@@ -37970,6 +39387,8 @@ const TestModel& get_test_model_axis_dim1_axis0_neg_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim1_axis0_neg_3 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim1_axis0_neg_3", get_test_model_axis_dim1_axis0_neg_3());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -37977,9 +39396,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim1_axis0_neg_all_inputs_as_internal_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -38094,6 +39515,8 @@ const TestModel& get_test_model_axis_dim1_axis0_neg_all_inputs_as_internal_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim1_axis0_neg_all_inputs_as_internal_3 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim1_axis0_neg_all_inputs_as_internal_3", get_test_model_axis_dim1_axis0_neg_all_inputs_as_internal_3());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -38101,9 +39524,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim1_axis0_neg_relaxed_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f}),
@@ -38184,6 +39609,8 @@ const TestModel& get_test_model_axis_dim1_axis0_neg_relaxed_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim1_axis0_neg_relaxed_3 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim1_axis0_neg_relaxed_3", get_test_model_axis_dim1_axis0_neg_relaxed_3());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -38191,9 +39618,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim1_axis0_neg_relaxed_all_inputs_as_internal_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -38308,6 +39737,8 @@ const TestModel& get_test_model_axis_dim1_axis0_neg_relaxed_all_inputs_as_intern
     };
     return model;
 }
+
+const auto dummy_test_model_axis_dim1_axis0_neg_relaxed_all_inputs_as_internal_3 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim1_axis0_neg_relaxed_all_inputs_as_internal_3", get_test_model_axis_dim1_axis0_neg_relaxed_all_inputs_as_internal_3());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -38315,9 +39746,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim1_axis0_neg_float16_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({-1.100000023841858f, 0.6000000238418579f, 0.699999988079071f, 1.2000000476837158f, -0.699999988079071f, 0.10000000149011612f}),
@@ -38399,15 +39832,19 @@ const TestModel& get_test_model_axis_dim1_axis0_neg_float16_3() {
     return model;
 }
 
+const auto dummy_test_model_axis_dim1_axis0_neg_float16_3 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim1_axis0_neg_float16_3", get_test_model_axis_dim1_axis0_neg_float16_3());
+
 }  // namespace generated_tests::local_response_normalization_v1_2
 
 namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_axis_dim1_axis0_neg_float16_all_inputs_as_internal_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -38523,15 +39960,19 @@ const TestModel& get_test_model_axis_dim1_axis0_neg_float16_all_inputs_as_intern
     return model;
 }
 
+const auto dummy_test_model_axis_dim1_axis0_neg_float16_all_inputs_as_internal_3 = TestModelManager::get().add("local_response_normalization_v1_2_axis_dim1_axis0_neg_float16_all_inputs_as_internal_3", get_test_model_axis_dim1_axis0_neg_float16_all_inputs_as_internal_3());
+
 }  // namespace generated_tests::local_response_normalization_v1_2
 
 namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_dim1_axis0() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f}),
@@ -38602,6 +40043,8 @@ const TestModel& get_test_model_dim1_axis0() {
     };
     return model;
 }
+
+const auto dummy_test_model_dim1_axis0 = TestModelManager::get().add("local_response_normalization_v1_2_dim1_axis0", get_test_model_dim1_axis0());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -38609,9 +40052,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_dim1_axis0_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {6},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -38716,6 +40161,8 @@ const TestModel& get_test_model_dim1_axis0_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_dim1_axis0_all_inputs_as_internal = TestModelManager::get().add("local_response_normalization_v1_2_dim1_axis0_all_inputs_as_internal", get_test_model_dim1_axis0_all_inputs_as_internal());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -38723,9 +40170,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_dim1_axis0_relaxed() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f}),
@@ -38796,6 +40245,8 @@ const TestModel& get_test_model_dim1_axis0_relaxed() {
     };
     return model;
 }
+
+const auto dummy_test_model_dim1_axis0_relaxed = TestModelManager::get().add("local_response_normalization_v1_2_dim1_axis0_relaxed", get_test_model_dim1_axis0_relaxed());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -38803,9 +40254,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_dim1_axis0_relaxed_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {6},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -38911,15 +40364,19 @@ const TestModel& get_test_model_dim1_axis0_relaxed_all_inputs_as_internal() {
     return model;
 }
 
+const auto dummy_test_model_dim1_axis0_relaxed_all_inputs_as_internal = TestModelManager::get().add("local_response_normalization_v1_2_dim1_axis0_relaxed_all_inputs_as_internal", get_test_model_dim1_axis0_relaxed_all_inputs_as_internal());
+
 }  // namespace generated_tests::local_response_normalization_v1_2
 
 namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_dim1_axis0_float16() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({-1.100000023841858f, 0.6000000238418579f, 0.699999988079071f, 1.2000000476837158f, -0.699999988079071f, 0.10000000149011612f}),
@@ -38990,6 +40447,8 @@ const TestModel& get_test_model_dim1_axis0_float16() {
     };
     return model;
 }
+
+const auto dummy_test_model_dim1_axis0_float16 = TestModelManager::get().add("local_response_normalization_v1_2_dim1_axis0_float16", get_test_model_dim1_axis0_float16());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -38997,9 +40456,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_dim1_axis0_float16_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {6},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -39105,15 +40566,19 @@ const TestModel& get_test_model_dim1_axis0_float16_all_inputs_as_internal() {
     return model;
 }
 
+const auto dummy_test_model_dim1_axis0_float16_all_inputs_as_internal = TestModelManager::get().add("local_response_normalization_v1_2_dim1_axis0_float16_all_inputs_as_internal", get_test_model_dim1_axis0_float16_all_inputs_as_internal());
+
 }  // namespace generated_tests::local_response_normalization_v1_2
 
 namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_dim2_axis1() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f}),
@@ -39184,6 +40649,8 @@ const TestModel& get_test_model_dim2_axis1() {
     };
     return model;
 }
+
+const auto dummy_test_model_dim2_axis1 = TestModelManager::get().add("local_response_normalization_v1_2_dim2_axis1", get_test_model_dim2_axis1());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -39191,9 +40658,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_dim2_axis1_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {6},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -39298,6 +40767,8 @@ const TestModel& get_test_model_dim2_axis1_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_dim2_axis1_all_inputs_as_internal = TestModelManager::get().add("local_response_normalization_v1_2_dim2_axis1_all_inputs_as_internal", get_test_model_dim2_axis1_all_inputs_as_internal());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -39305,9 +40776,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_dim2_axis1_relaxed() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f}),
@@ -39378,6 +40851,8 @@ const TestModel& get_test_model_dim2_axis1_relaxed() {
     };
     return model;
 }
+
+const auto dummy_test_model_dim2_axis1_relaxed = TestModelManager::get().add("local_response_normalization_v1_2_dim2_axis1_relaxed", get_test_model_dim2_axis1_relaxed());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -39385,9 +40860,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_dim2_axis1_relaxed_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {6},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -39493,15 +40970,19 @@ const TestModel& get_test_model_dim2_axis1_relaxed_all_inputs_as_internal() {
     return model;
 }
 
+const auto dummy_test_model_dim2_axis1_relaxed_all_inputs_as_internal = TestModelManager::get().add("local_response_normalization_v1_2_dim2_axis1_relaxed_all_inputs_as_internal", get_test_model_dim2_axis1_relaxed_all_inputs_as_internal());
+
 }  // namespace generated_tests::local_response_normalization_v1_2
 
 namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_dim2_axis1_float16() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({-1.100000023841858f, 0.6000000238418579f, 0.699999988079071f, 1.2000000476837158f, -0.699999988079071f, 0.10000000149011612f, -1.100000023841858f, 0.6000000238418579f, 0.699999988079071f, 1.2000000476837158f, -0.699999988079071f, 0.10000000149011612f}),
@@ -39572,6 +41053,8 @@ const TestModel& get_test_model_dim2_axis1_float16() {
     };
     return model;
 }
+
+const auto dummy_test_model_dim2_axis1_float16 = TestModelManager::get().add("local_response_normalization_v1_2_dim2_axis1_float16", get_test_model_dim2_axis1_float16());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -39579,9 +41062,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_dim2_axis1_float16_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {6},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -39687,15 +41172,19 @@ const TestModel& get_test_model_dim2_axis1_float16_all_inputs_as_internal() {
     return model;
 }
 
+const auto dummy_test_model_dim2_axis1_float16_all_inputs_as_internal = TestModelManager::get().add("local_response_normalization_v1_2_dim2_axis1_float16_all_inputs_as_internal", get_test_model_dim2_axis1_float16_all_inputs_as_internal());
+
 }  // namespace generated_tests::local_response_normalization_v1_2
 
 namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_dim3_axis2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f}),
@@ -39766,6 +41255,8 @@ const TestModel& get_test_model_dim3_axis2() {
     };
     return model;
 }
+
+const auto dummy_test_model_dim3_axis2 = TestModelManager::get().add("local_response_normalization_v1_2_dim3_axis2", get_test_model_dim3_axis2());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -39773,9 +41264,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_dim3_axis2_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {6},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -39880,6 +41373,8 @@ const TestModel& get_test_model_dim3_axis2_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_dim3_axis2_all_inputs_as_internal = TestModelManager::get().add("local_response_normalization_v1_2_dim3_axis2_all_inputs_as_internal", get_test_model_dim3_axis2_all_inputs_as_internal());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
@@ -39887,9 +41382,11 @@ namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_dim3_axis2_relaxed() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({-1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f, -1.1f, 0.6f, 0.7f, 1.2f, -0.7f, 0.1f}),
@@ -39961,15 +41458,19 @@ const TestModel& get_test_model_dim3_axis2_relaxed() {
     return model;
 }
 
+const auto dummy_test_model_dim3_axis2_relaxed = TestModelManager::get().add("local_response_normalization_v1_2_dim3_axis2_relaxed", get_test_model_dim3_axis2_relaxed());
+
 }  // namespace generated_tests::local_response_normalization_v1_2
 
 namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_dim3_axis2_relaxed_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {6},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -40075,15 +41576,19 @@ const TestModel& get_test_model_dim3_axis2_relaxed_all_inputs_as_internal() {
     return model;
 }
 
+const auto dummy_test_model_dim3_axis2_relaxed_all_inputs_as_internal = TestModelManager::get().add("local_response_normalization_v1_2_dim3_axis2_relaxed_all_inputs_as_internal", get_test_model_dim3_axis2_relaxed_all_inputs_as_internal());
+
 }  // namespace generated_tests::local_response_normalization_v1_2
 
 namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_dim3_axis2_float16() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({-1.100000023841858f, 0.6000000238418579f, 0.699999988079071f, 1.2000000476837158f, -0.699999988079071f, 0.10000000149011612f, -1.100000023841858f, 0.6000000238418579f, 0.699999988079071f, 1.2000000476837158f, -0.699999988079071f, 0.10000000149011612f, -1.100000023841858f, 0.6000000238418579f, 0.699999988079071f, 1.2000000476837158f, -0.699999988079071f, 0.10000000149011612f, -1.100000023841858f, 0.6000000238418579f, 0.699999988079071f, 1.2000000476837158f, -0.699999988079071f, 0.10000000149011612f}),
@@ -40155,15 +41660,19 @@ const TestModel& get_test_model_dim3_axis2_float16() {
     return model;
 }
 
+const auto dummy_test_model_dim3_axis2_float16 = TestModelManager::get().add("local_response_normalization_v1_2_dim3_axis2_float16", get_test_model_dim3_axis2_float16());
+
 }  // namespace generated_tests::local_response_normalization_v1_2
 
 namespace generated_tests::local_response_normalization_v1_2 {
 
 const TestModel& get_test_model_dim3_axis2_float16_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {6},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -40268,6 +41777,8 @@ const TestModel& get_test_model_dim3_axis2_float16_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_dim3_axis2_float16_all_inputs_as_internal = TestModelManager::get().add("local_response_normalization_v1_2_dim3_axis2_float16_all_inputs_as_internal", get_test_model_dim3_axis2_float16_all_inputs_as_internal());
 
 }  // namespace generated_tests::local_response_normalization_v1_2
 
