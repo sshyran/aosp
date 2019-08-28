@@ -2,16 +2,17 @@
 // DO NOT EDIT
 // clang-format off
 #include "TestHarness.h"
-
 using namespace test_helper;
 
 namespace generated_tests::axis_aligned_bbox_transform {
 
 const TestModel& get_test_model() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2, 3},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({100.0f, 150.0f, 400.0f, 430.0f, 120.0f, 60.0f, 122.0f, 61.0f, 10.0f, 20.0f, 20.0f, 50.0f, 50.0f, 120.0f, 150.0f, 250.0f, 400.0f, 100.0f, 1000.0f, 2000.0f}),
@@ -72,6 +73,8 @@ const TestModel& get_test_model() {
     };
     return model;
 }
+
+const auto dummy_test_model = TestModelManager::get().add("axis_aligned_bbox_transform", get_test_model());
 
 }  // namespace generated_tests::axis_aligned_bbox_transform
 
@@ -79,9 +82,11 @@ namespace generated_tests::axis_aligned_bbox_transform {
 
 const TestModel& get_test_model_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {2, 5, 8, 11},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -244,6 +249,8 @@ const TestModel& get_test_model_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_all_inputs_as_internal = TestModelManager::get().add("axis_aligned_bbox_transform_all_inputs_as_internal", get_test_model_all_inputs_as_internal());
 
 }  // namespace generated_tests::axis_aligned_bbox_transform
 
@@ -251,9 +258,11 @@ namespace generated_tests::axis_aligned_bbox_transform {
 
 const TestModel& get_test_model_relaxed() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2, 3},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({100.0f, 150.0f, 400.0f, 430.0f, 120.0f, 60.0f, 122.0f, 61.0f, 10.0f, 20.0f, 20.0f, 50.0f, 50.0f, 120.0f, 150.0f, 250.0f, 400.0f, 100.0f, 1000.0f, 2000.0f}),
@@ -314,6 +323,8 @@ const TestModel& get_test_model_relaxed() {
     };
     return model;
 }
+
+const auto dummy_test_model_relaxed = TestModelManager::get().add("axis_aligned_bbox_transform_relaxed", get_test_model_relaxed());
 
 }  // namespace generated_tests::axis_aligned_bbox_transform
 
@@ -321,9 +332,11 @@ namespace generated_tests::axis_aligned_bbox_transform {
 
 const TestModel& get_test_model_relaxed_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {2, 5, 8, 11},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -487,15 +500,19 @@ const TestModel& get_test_model_relaxed_all_inputs_as_internal() {
     return model;
 }
 
+const auto dummy_test_model_relaxed_all_inputs_as_internal = TestModelManager::get().add("axis_aligned_bbox_transform_relaxed_all_inputs_as_internal", get_test_model_relaxed_all_inputs_as_internal());
+
 }  // namespace generated_tests::axis_aligned_bbox_transform
 
 namespace generated_tests::axis_aligned_bbox_transform {
 
 const TestModel& get_test_model_float16() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2, 3},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({100.0f, 150.0f, 400.0f, 430.0f, 120.0f, 60.0f, 122.0f, 61.0f, 10.0f, 20.0f, 20.0f, 50.0f, 50.0f, 120.0f, 150.0f, 250.0f, 400.0f, 100.0f, 1000.0f, 2000.0f}),
@@ -556,6 +573,8 @@ const TestModel& get_test_model_float16() {
     };
     return model;
 }
+
+const auto dummy_test_model_float16 = TestModelManager::get().add("axis_aligned_bbox_transform_float16", get_test_model_float16());
 
 }  // namespace generated_tests::axis_aligned_bbox_transform
 
@@ -563,9 +582,11 @@ namespace generated_tests::axis_aligned_bbox_transform {
 
 const TestModel& get_test_model_float16_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {2, 5, 8, 11},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -729,15 +750,19 @@ const TestModel& get_test_model_float16_all_inputs_as_internal() {
     return model;
 }
 
+const auto dummy_test_model_float16_all_inputs_as_internal = TestModelManager::get().add("axis_aligned_bbox_transform_float16_all_inputs_as_internal", get_test_model_float16_all_inputs_as_internal());
+
 }  // namespace generated_tests::axis_aligned_bbox_transform
 
 namespace generated_tests::axis_aligned_bbox_transform {
 
 const TestModel& get_test_model_quant8() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2, 3},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint16_t>({800, 1200, 3200, 3440, 960, 480, 976, 488, 80, 160, 160, 400, 400, 960, 1200, 2000, 3200, 800, 8000, 16000}),
@@ -798,6 +823,8 @@ const TestModel& get_test_model_quant8() {
     };
     return model;
 }
+
+const auto dummy_test_model_quant8 = TestModelManager::get().add("axis_aligned_bbox_transform_quant8", get_test_model_quant8());
 
 }  // namespace generated_tests::axis_aligned_bbox_transform
 
@@ -805,9 +832,11 @@ namespace generated_tests::axis_aligned_bbox_transform {
 
 const TestModel& get_test_model_quant8_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 2, 3, 5},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint16_t>({800, 1200, 3200, 3440, 960, 480, 976, 488, 80, 160, 160, 400, 400, 960, 1200, 2000, 3200, 800, 8000, 16000}),
@@ -903,15 +932,19 @@ const TestModel& get_test_model_quant8_all_inputs_as_internal() {
     return model;
 }
 
+const auto dummy_test_model_quant8_all_inputs_as_internal = TestModelManager::get().add("axis_aligned_bbox_transform_quant8_all_inputs_as_internal", get_test_model_quant8_all_inputs_as_internal());
+
 }  // namespace generated_tests::axis_aligned_bbox_transform
 
 namespace generated_tests::axis_aligned_bbox_transform {
 
 const TestModel& get_test_model_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2, 3},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({100.0f, 150.0f, 400.0f, 430.0f, 120.0f, 60.0f, 122.0f, 61.0f, 10.0f, 20.0f, 20.0f, 50.0f, 50.0f, 120.0f, 150.0f, 250.0f, 400.0f, 100.0f, 1000.0f, 2000.0f}),
@@ -972,6 +1005,8 @@ const TestModel& get_test_model_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_2 = TestModelManager::get().add("axis_aligned_bbox_transform_2", get_test_model_2());
 
 }  // namespace generated_tests::axis_aligned_bbox_transform
 
@@ -979,9 +1014,11 @@ namespace generated_tests::axis_aligned_bbox_transform {
 
 const TestModel& get_test_model_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {2, 5, 8, 11},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -1144,6 +1181,8 @@ const TestModel& get_test_model_all_inputs_as_internal_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_all_inputs_as_internal_2 = TestModelManager::get().add("axis_aligned_bbox_transform_all_inputs_as_internal_2", get_test_model_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::axis_aligned_bbox_transform
 
@@ -1151,9 +1190,11 @@ namespace generated_tests::axis_aligned_bbox_transform {
 
 const TestModel& get_test_model_relaxed_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2, 3},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({100.0f, 150.0f, 400.0f, 430.0f, 120.0f, 60.0f, 122.0f, 61.0f, 10.0f, 20.0f, 20.0f, 50.0f, 50.0f, 120.0f, 150.0f, 250.0f, 400.0f, 100.0f, 1000.0f, 2000.0f}),
@@ -1214,6 +1255,8 @@ const TestModel& get_test_model_relaxed_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_relaxed_2 = TestModelManager::get().add("axis_aligned_bbox_transform_relaxed_2", get_test_model_relaxed_2());
 
 }  // namespace generated_tests::axis_aligned_bbox_transform
 
@@ -1221,9 +1264,11 @@ namespace generated_tests::axis_aligned_bbox_transform {
 
 const TestModel& get_test_model_relaxed_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {2, 5, 8, 11},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -1387,15 +1432,19 @@ const TestModel& get_test_model_relaxed_all_inputs_as_internal_2() {
     return model;
 }
 
+const auto dummy_test_model_relaxed_all_inputs_as_internal_2 = TestModelManager::get().add("axis_aligned_bbox_transform_relaxed_all_inputs_as_internal_2", get_test_model_relaxed_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::axis_aligned_bbox_transform
 
 namespace generated_tests::axis_aligned_bbox_transform {
 
 const TestModel& get_test_model_float16_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2, 3},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({100.0f, 150.0f, 400.0f, 430.0f, 120.0f, 60.0f, 122.0f, 61.0f, 10.0f, 20.0f, 20.0f, 50.0f, 50.0f, 120.0f, 150.0f, 250.0f, 400.0f, 100.0f, 1000.0f, 2000.0f}),
@@ -1457,15 +1506,19 @@ const TestModel& get_test_model_float16_2() {
     return model;
 }
 
+const auto dummy_test_model_float16_2 = TestModelManager::get().add("axis_aligned_bbox_transform_float16_2", get_test_model_float16_2());
+
 }  // namespace generated_tests::axis_aligned_bbox_transform
 
 namespace generated_tests::axis_aligned_bbox_transform {
 
 const TestModel& get_test_model_float16_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {2, 5, 8, 11},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -1629,15 +1682,19 @@ const TestModel& get_test_model_float16_all_inputs_as_internal_2() {
     return model;
 }
 
+const auto dummy_test_model_float16_all_inputs_as_internal_2 = TestModelManager::get().add("axis_aligned_bbox_transform_float16_all_inputs_as_internal_2", get_test_model_float16_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::axis_aligned_bbox_transform
 
 namespace generated_tests::axis_aligned_bbox_transform {
 
 const TestModel& get_test_model_quant8_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2, 3},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint16_t>({800, 1200, 3200, 3440, 960, 480, 976, 488, 80, 160, 160, 400, 400, 960, 1200, 2000, 3200, 800, 8000, 16000}),
@@ -1699,15 +1756,19 @@ const TestModel& get_test_model_quant8_2() {
     return model;
 }
 
+const auto dummy_test_model_quant8_2 = TestModelManager::get().add("axis_aligned_bbox_transform_quant8_2", get_test_model_quant8_2());
+
 }  // namespace generated_tests::axis_aligned_bbox_transform
 
 namespace generated_tests::axis_aligned_bbox_transform {
 
 const TestModel& get_test_model_quant8_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 2, 3, 5},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint16_t>({800, 1200, 3200, 3440, 960, 480, 976, 488, 80, 160, 160, 400, 400, 960, 1200, 2000, 3200, 800, 8000, 16000}),
@@ -1802,6 +1863,8 @@ const TestModel& get_test_model_quant8_all_inputs_as_internal_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_quant8_all_inputs_as_internal_2 = TestModelManager::get().add("axis_aligned_bbox_transform_quant8_all_inputs_as_internal_2", get_test_model_quant8_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::axis_aligned_bbox_transform
 

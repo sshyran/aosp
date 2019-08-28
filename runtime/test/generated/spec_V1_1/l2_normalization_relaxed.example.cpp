@@ -2,16 +2,17 @@
 // DO NOT EDIT
 // clang-format off
 #include "TestHarness.h"
-
 using namespace test_helper;
 
 namespace generated_tests::l2_normalization_relaxed {
 
 const TestModel& get_test_model() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({0.0f, 3.0f, 4.0f}),
@@ -43,15 +44,19 @@ const TestModel& get_test_model() {
     return model;
 }
 
+const auto dummy_test_model = TestModelManager::get().add("l2_normalization_relaxed", get_test_model());
+
 }  // namespace generated_tests::l2_normalization_relaxed
 
 namespace generated_tests::l2_normalization_relaxed {
 
 const TestModel& get_test_model_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {2},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -116,6 +121,8 @@ const TestModel& get_test_model_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_all_inputs_as_internal = TestModelManager::get().add("l2_normalization_relaxed_all_inputs_as_internal", get_test_model_all_inputs_as_internal());
 
 }  // namespace generated_tests::l2_normalization_relaxed
 

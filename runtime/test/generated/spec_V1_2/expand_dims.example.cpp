@@ -2,16 +2,17 @@
 // DO NOT EDIT
 // clang-format off
 #include "TestHarness.h"
-
 using namespace test_helper;
 
 namespace generated_tests::expand_dims {
 
 const TestModel& get_test_model() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.2f, -3.4f, 5.6f, 7.8f}),
@@ -52,6 +53,8 @@ const TestModel& get_test_model() {
     };
     return model;
 }
+
+const auto dummy_test_model = TestModelManager::get().add("expand_dims", get_test_model());
 
 }  // namespace generated_tests::expand_dims
 
@@ -59,9 +62,11 @@ namespace generated_tests::expand_dims {
 
 const TestModel& get_test_model_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {3},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -136,6 +141,8 @@ const TestModel& get_test_model_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_all_inputs_as_internal = TestModelManager::get().add("expand_dims_all_inputs_as_internal", get_test_model_all_inputs_as_internal());
 
 }  // namespace generated_tests::expand_dims
 
@@ -143,9 +150,11 @@ namespace generated_tests::expand_dims {
 
 const TestModel& get_test_model_relaxed() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.2f, -3.4f, 5.6f, 7.8f}),
@@ -186,6 +195,8 @@ const TestModel& get_test_model_relaxed() {
     };
     return model;
 }
+
+const auto dummy_test_model_relaxed = TestModelManager::get().add("expand_dims_relaxed", get_test_model_relaxed());
 
 }  // namespace generated_tests::expand_dims
 
@@ -193,9 +204,11 @@ namespace generated_tests::expand_dims {
 
 const TestModel& get_test_model_relaxed_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {3},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -270,6 +283,8 @@ const TestModel& get_test_model_relaxed_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_relaxed_all_inputs_as_internal = TestModelManager::get().add("expand_dims_relaxed_all_inputs_as_internal", get_test_model_relaxed_all_inputs_as_internal());
 
 }  // namespace generated_tests::expand_dims
 
@@ -277,9 +292,11 @@ namespace generated_tests::expand_dims {
 
 const TestModel& get_test_model_quant8() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({129, 120, 138, 143}),
@@ -320,6 +337,8 @@ const TestModel& get_test_model_quant8() {
     };
     return model;
 }
+
+const auto dummy_test_model_quant8 = TestModelManager::get().add("expand_dims_quant8", get_test_model_quant8());
 
 }  // namespace generated_tests::expand_dims
 
@@ -327,9 +346,11 @@ namespace generated_tests::expand_dims {
 
 const TestModel& get_test_model_quant8_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {3},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -404,6 +425,8 @@ const TestModel& get_test_model_quant8_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_quant8_all_inputs_as_internal = TestModelManager::get().add("expand_dims_quant8_all_inputs_as_internal", get_test_model_quant8_all_inputs_as_internal());
 
 }  // namespace generated_tests::expand_dims
 
@@ -411,9 +434,11 @@ namespace generated_tests::expand_dims {
 
 const TestModel& get_test_model_int32() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<int32_t>({1, -3, 6, 8}),
@@ -454,6 +479,8 @@ const TestModel& get_test_model_int32() {
     };
     return model;
 }
+
+const auto dummy_test_model_int32 = TestModelManager::get().add("expand_dims_int32", get_test_model_int32());
 
 }  // namespace generated_tests::expand_dims
 
@@ -461,9 +488,11 @@ namespace generated_tests::expand_dims {
 
 const TestModel& get_test_model_float16() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({1.2000000476837158f, -3.4000000953674316f, 5.599999904632568f, 7.800000190734863f}),
@@ -504,6 +533,8 @@ const TestModel& get_test_model_float16() {
     };
     return model;
 }
+
+const auto dummy_test_model_float16 = TestModelManager::get().add("expand_dims_float16", get_test_model_float16());
 
 }  // namespace generated_tests::expand_dims
 
@@ -511,9 +542,11 @@ namespace generated_tests::expand_dims {
 
 const TestModel& get_test_model_float16_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {3},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -589,15 +622,19 @@ const TestModel& get_test_model_float16_all_inputs_as_internal() {
     return model;
 }
 
+const auto dummy_test_model_float16_all_inputs_as_internal = TestModelManager::get().add("expand_dims_float16_all_inputs_as_internal", get_test_model_float16_all_inputs_as_internal());
+
 }  // namespace generated_tests::expand_dims
 
 namespace generated_tests::expand_dims {
 
 const TestModel& get_test_model_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.2f, -3.4f, 5.6f, 7.8f}),
@@ -638,6 +675,8 @@ const TestModel& get_test_model_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_2 = TestModelManager::get().add("expand_dims_2", get_test_model_2());
 
 }  // namespace generated_tests::expand_dims
 
@@ -645,9 +684,11 @@ namespace generated_tests::expand_dims {
 
 const TestModel& get_test_model_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {3},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -722,6 +763,8 @@ const TestModel& get_test_model_all_inputs_as_internal_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_all_inputs_as_internal_2 = TestModelManager::get().add("expand_dims_all_inputs_as_internal_2", get_test_model_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::expand_dims
 
@@ -729,9 +772,11 @@ namespace generated_tests::expand_dims {
 
 const TestModel& get_test_model_relaxed_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.2f, -3.4f, 5.6f, 7.8f}),
@@ -772,6 +817,8 @@ const TestModel& get_test_model_relaxed_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_relaxed_2 = TestModelManager::get().add("expand_dims_relaxed_2", get_test_model_relaxed_2());
 
 }  // namespace generated_tests::expand_dims
 
@@ -779,9 +826,11 @@ namespace generated_tests::expand_dims {
 
 const TestModel& get_test_model_relaxed_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {3},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -856,6 +905,8 @@ const TestModel& get_test_model_relaxed_all_inputs_as_internal_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_relaxed_all_inputs_as_internal_2 = TestModelManager::get().add("expand_dims_relaxed_all_inputs_as_internal_2", get_test_model_relaxed_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::expand_dims
 
@@ -863,9 +914,11 @@ namespace generated_tests::expand_dims {
 
 const TestModel& get_test_model_quant8_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({129, 120, 138, 143}),
@@ -906,6 +959,8 @@ const TestModel& get_test_model_quant8_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_quant8_2 = TestModelManager::get().add("expand_dims_quant8_2", get_test_model_quant8_2());
 
 }  // namespace generated_tests::expand_dims
 
@@ -913,9 +968,11 @@ namespace generated_tests::expand_dims {
 
 const TestModel& get_test_model_quant8_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {3},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -990,6 +1047,8 @@ const TestModel& get_test_model_quant8_all_inputs_as_internal_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_quant8_all_inputs_as_internal_2 = TestModelManager::get().add("expand_dims_quant8_all_inputs_as_internal_2", get_test_model_quant8_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::expand_dims
 
@@ -997,9 +1056,11 @@ namespace generated_tests::expand_dims {
 
 const TestModel& get_test_model_int32_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<int32_t>({1, -3, 6, 8}),
@@ -1040,6 +1101,8 @@ const TestModel& get_test_model_int32_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_int32_2 = TestModelManager::get().add("expand_dims_int32_2", get_test_model_int32_2());
 
 }  // namespace generated_tests::expand_dims
 
@@ -1047,9 +1110,11 @@ namespace generated_tests::expand_dims {
 
 const TestModel& get_test_model_float16_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({1.2000000476837158f, -3.4000000953674316f, 5.599999904632568f, 7.800000190734863f}),
@@ -1090,6 +1155,8 @@ const TestModel& get_test_model_float16_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_float16_2 = TestModelManager::get().add("expand_dims_float16_2", get_test_model_float16_2());
 
 }  // namespace generated_tests::expand_dims
 
@@ -1097,9 +1164,11 @@ namespace generated_tests::expand_dims {
 
 const TestModel& get_test_model_float16_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {3},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -1175,15 +1244,19 @@ const TestModel& get_test_model_float16_all_inputs_as_internal_2() {
     return model;
 }
 
+const auto dummy_test_model_float16_all_inputs_as_internal_2 = TestModelManager::get().add("expand_dims_float16_all_inputs_as_internal_2", get_test_model_float16_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::expand_dims
 
 namespace generated_tests::expand_dims {
 
 const TestModel& get_test_model_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.2f, -3.4f, 5.6f, 7.8f}),
@@ -1224,6 +1297,8 @@ const TestModel& get_test_model_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_3 = TestModelManager::get().add("expand_dims_3", get_test_model_3());
 
 }  // namespace generated_tests::expand_dims
 
@@ -1231,9 +1306,11 @@ namespace generated_tests::expand_dims {
 
 const TestModel& get_test_model_all_inputs_as_internal_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {3},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -1308,6 +1385,8 @@ const TestModel& get_test_model_all_inputs_as_internal_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_all_inputs_as_internal_3 = TestModelManager::get().add("expand_dims_all_inputs_as_internal_3", get_test_model_all_inputs_as_internal_3());
 
 }  // namespace generated_tests::expand_dims
 
@@ -1315,9 +1394,11 @@ namespace generated_tests::expand_dims {
 
 const TestModel& get_test_model_relaxed_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.2f, -3.4f, 5.6f, 7.8f}),
@@ -1358,6 +1439,8 @@ const TestModel& get_test_model_relaxed_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_relaxed_3 = TestModelManager::get().add("expand_dims_relaxed_3", get_test_model_relaxed_3());
 
 }  // namespace generated_tests::expand_dims
 
@@ -1365,9 +1448,11 @@ namespace generated_tests::expand_dims {
 
 const TestModel& get_test_model_relaxed_all_inputs_as_internal_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {3},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -1442,6 +1527,8 @@ const TestModel& get_test_model_relaxed_all_inputs_as_internal_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_relaxed_all_inputs_as_internal_3 = TestModelManager::get().add("expand_dims_relaxed_all_inputs_as_internal_3", get_test_model_relaxed_all_inputs_as_internal_3());
 
 }  // namespace generated_tests::expand_dims
 
@@ -1449,9 +1536,11 @@ namespace generated_tests::expand_dims {
 
 const TestModel& get_test_model_quant8_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({129, 120, 138, 143}),
@@ -1492,6 +1581,8 @@ const TestModel& get_test_model_quant8_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_quant8_3 = TestModelManager::get().add("expand_dims_quant8_3", get_test_model_quant8_3());
 
 }  // namespace generated_tests::expand_dims
 
@@ -1499,9 +1590,11 @@ namespace generated_tests::expand_dims {
 
 const TestModel& get_test_model_quant8_all_inputs_as_internal_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {3},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -1576,6 +1669,8 @@ const TestModel& get_test_model_quant8_all_inputs_as_internal_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_quant8_all_inputs_as_internal_3 = TestModelManager::get().add("expand_dims_quant8_all_inputs_as_internal_3", get_test_model_quant8_all_inputs_as_internal_3());
 
 }  // namespace generated_tests::expand_dims
 
@@ -1583,9 +1678,11 @@ namespace generated_tests::expand_dims {
 
 const TestModel& get_test_model_int32_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<int32_t>({1, -3, 6, 8}),
@@ -1626,6 +1723,8 @@ const TestModel& get_test_model_int32_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_int32_3 = TestModelManager::get().add("expand_dims_int32_3", get_test_model_int32_3());
 
 }  // namespace generated_tests::expand_dims
 
@@ -1633,9 +1732,11 @@ namespace generated_tests::expand_dims {
 
 const TestModel& get_test_model_float16_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({1.2000000476837158f, -3.4000000953674316f, 5.599999904632568f, 7.800000190734863f}),
@@ -1677,15 +1778,19 @@ const TestModel& get_test_model_float16_3() {
     return model;
 }
 
+const auto dummy_test_model_float16_3 = TestModelManager::get().add("expand_dims_float16_3", get_test_model_float16_3());
+
 }  // namespace generated_tests::expand_dims
 
 namespace generated_tests::expand_dims {
 
 const TestModel& get_test_model_float16_all_inputs_as_internal_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {3},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -1761,15 +1866,19 @@ const TestModel& get_test_model_float16_all_inputs_as_internal_3() {
     return model;
 }
 
+const auto dummy_test_model_float16_all_inputs_as_internal_3 = TestModelManager::get().add("expand_dims_float16_all_inputs_as_internal_3", get_test_model_float16_all_inputs_as_internal_3());
+
 }  // namespace generated_tests::expand_dims
 
 namespace generated_tests::expand_dims {
 
 const TestModel& get_test_model_4() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.2f, -3.4f, 5.6f, 7.8f}),
@@ -1810,6 +1919,8 @@ const TestModel& get_test_model_4() {
     };
     return model;
 }
+
+const auto dummy_test_model_4 = TestModelManager::get().add("expand_dims_4", get_test_model_4());
 
 }  // namespace generated_tests::expand_dims
 
@@ -1817,9 +1928,11 @@ namespace generated_tests::expand_dims {
 
 const TestModel& get_test_model_all_inputs_as_internal_4() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {3},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -1894,6 +2007,8 @@ const TestModel& get_test_model_all_inputs_as_internal_4() {
     };
     return model;
 }
+
+const auto dummy_test_model_all_inputs_as_internal_4 = TestModelManager::get().add("expand_dims_all_inputs_as_internal_4", get_test_model_all_inputs_as_internal_4());
 
 }  // namespace generated_tests::expand_dims
 
@@ -1901,9 +2016,11 @@ namespace generated_tests::expand_dims {
 
 const TestModel& get_test_model_relaxed_4() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.2f, -3.4f, 5.6f, 7.8f}),
@@ -1945,15 +2062,19 @@ const TestModel& get_test_model_relaxed_4() {
     return model;
 }
 
+const auto dummy_test_model_relaxed_4 = TestModelManager::get().add("expand_dims_relaxed_4", get_test_model_relaxed_4());
+
 }  // namespace generated_tests::expand_dims
 
 namespace generated_tests::expand_dims {
 
 const TestModel& get_test_model_relaxed_all_inputs_as_internal_4() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {3},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -2029,15 +2150,19 @@ const TestModel& get_test_model_relaxed_all_inputs_as_internal_4() {
     return model;
 }
 
+const auto dummy_test_model_relaxed_all_inputs_as_internal_4 = TestModelManager::get().add("expand_dims_relaxed_all_inputs_as_internal_4", get_test_model_relaxed_all_inputs_as_internal_4());
+
 }  // namespace generated_tests::expand_dims
 
 namespace generated_tests::expand_dims {
 
 const TestModel& get_test_model_quant8_4() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({129, 120, 138, 143}),
@@ -2079,15 +2204,19 @@ const TestModel& get_test_model_quant8_4() {
     return model;
 }
 
+const auto dummy_test_model_quant8_4 = TestModelManager::get().add("expand_dims_quant8_4", get_test_model_quant8_4());
+
 }  // namespace generated_tests::expand_dims
 
 namespace generated_tests::expand_dims {
 
 const TestModel& get_test_model_quant8_all_inputs_as_internal_4() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {3},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -2163,15 +2292,19 @@ const TestModel& get_test_model_quant8_all_inputs_as_internal_4() {
     return model;
 }
 
+const auto dummy_test_model_quant8_all_inputs_as_internal_4 = TestModelManager::get().add("expand_dims_quant8_all_inputs_as_internal_4", get_test_model_quant8_all_inputs_as_internal_4());
+
 }  // namespace generated_tests::expand_dims
 
 namespace generated_tests::expand_dims {
 
 const TestModel& get_test_model_int32_4() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<int32_t>({1, -3, 6, 8}),
@@ -2212,6 +2345,8 @@ const TestModel& get_test_model_int32_4() {
     };
     return model;
 }
+
+const auto dummy_test_model_int32_4 = TestModelManager::get().add("expand_dims_int32_4", get_test_model_int32_4());
 
 }  // namespace generated_tests::expand_dims
 
@@ -2219,9 +2354,11 @@ namespace generated_tests::expand_dims {
 
 const TestModel& get_test_model_float16_4() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({1.2000000476837158f, -3.4000000953674316f, 5.599999904632568f, 7.800000190734863f}),
@@ -2263,15 +2400,19 @@ const TestModel& get_test_model_float16_4() {
     return model;
 }
 
+const auto dummy_test_model_float16_4 = TestModelManager::get().add("expand_dims_float16_4", get_test_model_float16_4());
+
 }  // namespace generated_tests::expand_dims
 
 namespace generated_tests::expand_dims {
 
 const TestModel& get_test_model_float16_all_inputs_as_internal_4() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {3},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -2346,6 +2487,8 @@ const TestModel& get_test_model_float16_all_inputs_as_internal_4() {
     };
     return model;
 }
+
+const auto dummy_test_model_float16_all_inputs_as_internal_4 = TestModelManager::get().add("expand_dims_float16_all_inputs_as_internal_4", get_test_model_float16_all_inputs_as_internal_4());
 
 }  // namespace generated_tests::expand_dims
 

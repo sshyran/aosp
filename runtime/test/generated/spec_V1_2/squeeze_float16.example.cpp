@@ -2,16 +2,17 @@
 // DO NOT EDIT
 // clang-format off
 #include "TestHarness.h"
-
 using namespace test_helper;
 
 namespace generated_tests::squeeze_float16 {
 
 const TestModel& get_test_model() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({1.4f, 2.3f, 3.2f, 4.1f, 5.4f, 6.3f, 7.2f, 8.1f}),
@@ -52,6 +53,8 @@ const TestModel& get_test_model() {
     };
     return model;
 }
+
+const auto dummy_test_model = TestModelManager::get().add("squeeze_float16", get_test_model());
 
 }  // namespace generated_tests::squeeze_float16
 
@@ -59,9 +62,11 @@ namespace generated_tests::squeeze_float16 {
 
 const TestModel& get_test_model_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {3},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -136,6 +141,8 @@ const TestModel& get_test_model_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_all_inputs_as_internal = TestModelManager::get().add("squeeze_float16_all_inputs_as_internal", get_test_model_all_inputs_as_internal());
 
 }  // namespace generated_tests::squeeze_float16
 
@@ -143,9 +150,11 @@ namespace generated_tests::squeeze_float16 {
 
 const TestModel& get_test_model_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({1.4f, 2.3f, 3.2f, 4.1f, 5.4f, 6.3f, 7.2f, 8.1f}),
@@ -187,15 +196,19 @@ const TestModel& get_test_model_all_tensors_as_inputs() {
     return model;
 }
 
+const auto dummy_test_model_all_tensors_as_inputs = TestModelManager::get().add("squeeze_float16_all_tensors_as_inputs", get_test_model_all_tensors_as_inputs());
+
 }  // namespace generated_tests::squeeze_float16
 
 namespace generated_tests::squeeze_float16 {
 
 const TestModel& get_test_model_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {1, 3},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -270,6 +283,8 @@ const TestModel& get_test_model_all_tensors_as_inputs_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("squeeze_float16_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_all_tensors_as_inputs_all_inputs_as_internal());
 
 }  // namespace generated_tests::squeeze_float16
 

@@ -2,16 +2,17 @@
 // DO NOT EDIT
 // clang-format off
 #include "TestHarness.h"
-
 using namespace test_helper;
 
 namespace generated_tests::div_v1_2 {
 
 const TestModel& get_test_model() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({2.001953125f, 0.0001000165f, 8.75f}),
@@ -62,6 +63,8 @@ const TestModel& get_test_model() {
     };
     return model;
 }
+
+const auto dummy_test_model = TestModelManager::get().add("div_v1_2", get_test_model());
 
 }  // namespace generated_tests::div_v1_2
 
@@ -69,9 +72,11 @@ namespace generated_tests::div_v1_2 {
 
 const TestModel& get_test_model_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4, 7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -191,15 +196,19 @@ const TestModel& get_test_model_all_inputs_as_internal() {
     return model;
 }
 
+const auto dummy_test_model_all_inputs_as_internal = TestModelManager::get().add("div_v1_2_all_inputs_as_internal", get_test_model_all_inputs_as_internal());
+
 }  // namespace generated_tests::div_v1_2
 
 namespace generated_tests::div_v1_2 {
 
 const TestModel& get_test_model_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({1.0f, 4.0f, 3.0f, 8.0f}),
@@ -251,15 +260,19 @@ const TestModel& get_test_model_2() {
     return model;
 }
 
+const auto dummy_test_model_2 = TestModelManager::get().add("div_v1_2_2", get_test_model_2());
+
 }  // namespace generated_tests::div_v1_2
 
 namespace generated_tests::div_v1_2 {
 
 const TestModel& get_test_model_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4, 7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -379,15 +392,19 @@ const TestModel& get_test_model_all_inputs_as_internal_2() {
     return model;
 }
 
+const auto dummy_test_model_all_inputs_as_internal_2 = TestModelManager::get().add("div_v1_2_all_inputs_as_internal_2", get_test_model_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::div_v1_2
 
 namespace generated_tests::div_v1_2 {
 
 const TestModel& get_test_model_zero_sized() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({0.9f, 0.1f}),
@@ -656,6 +673,8 @@ const TestModel& get_test_model_zero_sized() {
     };
     return model;
 }
+
+const auto dummy_test_model_zero_sized = TestModelManager::get().add("div_v1_2_zero_sized", get_test_model_zero_sized());
 
 }  // namespace generated_tests::div_v1_2
 
@@ -663,9 +682,11 @@ namespace generated_tests::div_v1_2 {
 
 const TestModel& get_test_model_zero_sized_relaxed() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({0.9f, 0.1f}),
@@ -935,15 +956,19 @@ const TestModel& get_test_model_zero_sized_relaxed() {
     return model;
 }
 
+const auto dummy_test_model_zero_sized_relaxed = TestModelManager::get().add("div_v1_2_zero_sized_relaxed", get_test_model_zero_sized_relaxed());
+
 }  // namespace generated_tests::div_v1_2
 
 namespace generated_tests::div_v1_2 {
 
 const TestModel& get_test_model_zero_sized_float16() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({0.8999999761581421f, 0.10000000149011612f}),
@@ -1212,6 +1237,8 @@ const TestModel& get_test_model_zero_sized_float16() {
     };
     return model;
 }
+
+const auto dummy_test_model_zero_sized_float16 = TestModelManager::get().add("div_v1_2_zero_sized_float16", get_test_model_zero_sized_float16());
 
 }  // namespace generated_tests::div_v1_2
 

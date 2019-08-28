@@ -18,26 +18,12 @@ set -Eeuox pipefail
 cd "$(dirname "$0")/.."  # runtime/test
 
 NNAPI_VERSIONS="V1_0 V1_1 V1_2"
-CTS_GENERATOR="../../tools/test_generator/cts_generator.py"
-VTS_GENERATOR="../../tools/test_generator/vts_generator.py"
+EXAMPLE_GENERATOR="../../tools/test_generator/example_generator.py"
 
 for source_version in $NNAPI_VERSIONS; do
   generated_dir="generated/spec_$source_version"
-  cts_dir="$generated_dir/cts"
-  mkdir -p "$cts_dir"
-  "$CTS_GENERATOR" "specs/$source_version" \
-    --test="$cts_dir" \
+  mkdir -p "$generated_dir"
+  "$EXAMPLE_GENERATOR" "specs/$source_version" \
     --example="$generated_dir" \
     "$@"
-  for target_version in $NNAPI_VERSIONS; do
-    if [[ "$source_version" > "$target_version" ]]; then
-      continue
-    fi
-    vts_dir="$generated_dir/vts_$target_version"
-    mkdir -p "$vts_dir"
-    "$VTS_GENERATOR" "specs/$source_version" \
-      --test="$vts_dir" \
-      --target_hal_version="$target_version" \
-      "$@"
-  done
 done

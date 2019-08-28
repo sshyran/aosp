@@ -2,16 +2,17 @@
 // DO NOT EDIT
 // clang-format off
 #include "TestHarness.h"
-
 using namespace test_helper;
 
 namespace generated_tests::reduce_any {
 
 const TestModel& get_test_model() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<bool8>({false}),
@@ -63,15 +64,19 @@ const TestModel& get_test_model() {
     return model;
 }
 
+const auto dummy_test_model = TestModelManager::get().add("reduce_any", get_test_model());
+
 }  // namespace generated_tests::reduce_any
 
 namespace generated_tests::reduce_any {
 
 const TestModel& get_test_model_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<bool8>({false, false, false, false, false, false, false, true, false, false, false, true}),
@@ -123,15 +128,19 @@ const TestModel& get_test_model_2() {
     return model;
 }
 
+const auto dummy_test_model_2 = TestModelManager::get().add("reduce_any_2", get_test_model_2());
+
 }  // namespace generated_tests::reduce_any
 
 namespace generated_tests::reduce_any {
 
 const TestModel& get_test_model_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<bool8>({false, false, false, false, false, false, false, true, false, false, false, true}),
@@ -182,6 +191,8 @@ const TestModel& get_test_model_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_3 = TestModelManager::get().add("reduce_any_3", get_test_model_3());
 
 }  // namespace generated_tests::reduce_any
 
