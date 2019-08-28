@@ -2,16 +2,17 @@
 // DO NOT EDIT
 // clang-format off
 #include "TestHarness.h"
-
 using namespace test_helper;
 
 namespace generated_tests::lstm2_state {
 
 const TestModel& get_test_model() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_0,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({3.0f, 4.0f}),
@@ -293,15 +294,19 @@ const TestModel& get_test_model() {
     return model;
 }
 
+const auto dummy_test_model = TestModelManager::get().add("lstm2_state", get_test_model());
+
 }  // namespace generated_tests::lstm2_state
 
 namespace generated_tests::lstm2_state {
 
 const TestModel& get_test_model_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {1, 5, 9, 12, 16, 17, 27, 30, 33, 36, 39, 42, 45, 48, 51, 54, 57, 60, 63, 66},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_0,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -1058,6 +1063,8 @@ const TestModel& get_test_model_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_all_inputs_as_internal = TestModelManager::get().add("lstm2_state_all_inputs_as_internal", get_test_model_all_inputs_as_internal());
 
 }  // namespace generated_tests::lstm2_state
 

@@ -2,16 +2,17 @@
 // DO NOT EDIT
 // clang-format off
 #include "TestHarness.h"
-
 using namespace test_helper;
 
 namespace generated_tests::space_to_batch_float_2_relaxed {
 
 const TestModel& get_test_model() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f, 10.0f}),
@@ -62,6 +63,8 @@ const TestModel& get_test_model() {
     };
     return model;
 }
+
+const auto dummy_test_model = TestModelManager::get().add("space_to_batch_float_2_relaxed", get_test_model());
 
 }  // namespace generated_tests::space_to_batch_float_2_relaxed
 
@@ -69,9 +72,11 @@ namespace generated_tests::space_to_batch_float_2_relaxed {
 
 const TestModel& get_test_model_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {4},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -156,6 +161,8 @@ const TestModel& get_test_model_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_all_inputs_as_internal = TestModelManager::get().add("space_to_batch_float_2_relaxed_all_inputs_as_internal", get_test_model_all_inputs_as_internal());
 
 }  // namespace generated_tests::space_to_batch_float_2_relaxed
 
@@ -163,9 +170,11 @@ namespace generated_tests::space_to_batch_float_2_relaxed {
 
 const TestModel& get_test_model_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f, 10.0f}),
@@ -217,15 +226,19 @@ const TestModel& get_test_model_all_tensors_as_inputs() {
     return model;
 }
 
+const auto dummy_test_model_all_tensors_as_inputs = TestModelManager::get().add("space_to_batch_float_2_relaxed_all_tensors_as_inputs", get_test_model_all_tensors_as_inputs());
+
 }  // namespace generated_tests::space_to_batch_float_2_relaxed
 
 namespace generated_tests::space_to_batch_float_2_relaxed {
 
 const TestModel& get_test_model_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {1, 2, 4},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -310,6 +323,8 @@ const TestModel& get_test_model_all_tensors_as_inputs_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("space_to_batch_float_2_relaxed_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_all_tensors_as_inputs_all_inputs_as_internal());
 
 }  // namespace generated_tests::space_to_batch_float_2_relaxed
 

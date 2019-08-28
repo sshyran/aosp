@@ -2,16 +2,17 @@
 // DO NOT EDIT
 // clang-format off
 #include "TestHarness.h"
-
 using namespace test_helper;
 
 namespace generated_tests::lsh_projection_float16 {
 
 const TestModel& get_test_model() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({0.123f, 0.456f, -0.321f, -0.654f, 1.234f, 5.678f, -4.321f, -8.765f}),
@@ -72,6 +73,8 @@ const TestModel& get_test_model() {
     };
     return model;
 }
+
+const auto dummy_test_model = TestModelManager::get().add("lsh_projection_float16", get_test_model());
 
 }  // namespace generated_tests::lsh_projection_float16
 
@@ -79,9 +82,11 @@ namespace generated_tests::lsh_projection_float16 {
 
 const TestModel& get_test_model_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {1, 5},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({0.123f, 0.456f, -0.321f, -0.654f, 1.234f, 5.678f, -4.321f, -8.765f}),
@@ -176,6 +181,8 @@ const TestModel& get_test_model_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_all_inputs_as_internal = TestModelManager::get().add("lsh_projection_float16_all_inputs_as_internal", get_test_model_all_inputs_as_internal());
 
 }  // namespace generated_tests::lsh_projection_float16
 
@@ -183,9 +190,11 @@ namespace generated_tests::lsh_projection_float16 {
 
 const TestModel& get_test_model_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({0.123f, 0.456f, -0.321f, -0.654f, 1.234f, 5.678f, -4.321f, -8.765f}),
@@ -246,6 +255,8 @@ const TestModel& get_test_model_all_tensors_as_inputs() {
     };
     return model;
 }
+
+const auto dummy_test_model_all_tensors_as_inputs = TestModelManager::get().add("lsh_projection_float16_all_tensors_as_inputs", get_test_model_all_tensors_as_inputs());
 
 }  // namespace generated_tests::lsh_projection_float16
 
@@ -253,9 +264,11 @@ namespace generated_tests::lsh_projection_float16 {
 
 const TestModel& get_test_model_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {1, 5, 8},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -384,6 +397,8 @@ const TestModel& get_test_model_all_tensors_as_inputs_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("lsh_projection_float16_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_all_tensors_as_inputs_all_inputs_as_internal());
 
 }  // namespace generated_tests::lsh_projection_float16
 
@@ -391,9 +406,11 @@ namespace generated_tests::lsh_projection_float16 {
 
 const TestModel& get_test_model_float16() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({0.123f, 0.456f, -0.321f, -0.654f, 1.234f, 5.678f, -4.321f, -8.765f}),
@@ -455,15 +472,19 @@ const TestModel& get_test_model_float16() {
     return model;
 }
 
+const auto dummy_test_model_float16 = TestModelManager::get().add("lsh_projection_float16_float16", get_test_model_float16());
+
 }  // namespace generated_tests::lsh_projection_float16
 
 namespace generated_tests::lsh_projection_float16 {
 
 const TestModel& get_test_model_float16_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {1, 5},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({0.123f, 0.456f, -0.321f, -0.654f, 1.234f, 5.678f, -4.321f, -8.765f}),
@@ -559,15 +580,19 @@ const TestModel& get_test_model_float16_all_inputs_as_internal() {
     return model;
 }
 
+const auto dummy_test_model_float16_all_inputs_as_internal = TestModelManager::get().add("lsh_projection_float16_float16_all_inputs_as_internal", get_test_model_float16_all_inputs_as_internal());
+
 }  // namespace generated_tests::lsh_projection_float16
 
 namespace generated_tests::lsh_projection_float16 {
 
 const TestModel& get_test_model_float16_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({0.123f, 0.456f, -0.321f, -0.654f, 1.234f, 5.678f, -4.321f, -8.765f}),
@@ -629,15 +654,19 @@ const TestModel& get_test_model_float16_all_tensors_as_inputs() {
     return model;
 }
 
+const auto dummy_test_model_float16_all_tensors_as_inputs = TestModelManager::get().add("lsh_projection_float16_float16_all_tensors_as_inputs", get_test_model_float16_all_tensors_as_inputs());
+
 }  // namespace generated_tests::lsh_projection_float16
 
 namespace generated_tests::lsh_projection_float16 {
 
 const TestModel& get_test_model_float16_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {1, 5, 8},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -766,6 +795,8 @@ const TestModel& get_test_model_float16_all_tensors_as_inputs_all_inputs_as_inte
     };
     return model;
 }
+
+const auto dummy_test_model_float16_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("lsh_projection_float16_float16_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_float16_all_tensors_as_inputs_all_inputs_as_internal());
 
 }  // namespace generated_tests::lsh_projection_float16
 
