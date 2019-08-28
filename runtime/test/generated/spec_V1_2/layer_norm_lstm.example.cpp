@@ -2,16 +2,17 @@
 // DO NOT EDIT
 // clang-format off
 #include "TestHarness.h"
-
 using namespace test_helper;
 
 namespace generated_tests::layer_norm_lstm {
 
 const TestModel& get_test_model_NoCifgPeepholeProjectionNoClippingLayerNormLstm() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 23, 24, 25, 26},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({0.7f, 0.8f, 0.1f, 0.2f, 0.3f, 0.3f, 0.2f, 0.9f, 0.8f, 0.1f}),
@@ -332,6 +333,8 @@ const TestModel& get_test_model_NoCifgPeepholeProjectionNoClippingLayerNormLstm(
     };
     return model;
 }
+
+const auto dummy_test_model_NoCifgPeepholeProjectionNoClippingLayerNormLstm = TestModelManager::get().add("layer_norm_lstm_NoCifgPeepholeProjectionNoClippingLayerNormLstm", get_test_model_NoCifgPeepholeProjectionNoClippingLayerNormLstm());
 
 }  // namespace generated_tests::layer_norm_lstm
 
@@ -339,9 +342,11 @@ namespace generated_tests::layer_norm_lstm {
 
 const TestModel& get_test_model_NoCifgPeepholeProjectionNoClippingLayerNormLstm_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {17, 31, 34, 37, 40, 43, 46, 49, 52, 55, 58, 61, 64, 67, 70, 73, 76, 79, 82, 85, 88, 91, 94, 97},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -1444,6 +1449,8 @@ const TestModel& get_test_model_NoCifgPeepholeProjectionNoClippingLayerNormLstm_
     };
     return model;
 }
+
+const auto dummy_test_model_NoCifgPeepholeProjectionNoClippingLayerNormLstm_all_inputs_as_internal = TestModelManager::get().add("layer_norm_lstm_NoCifgPeepholeProjectionNoClippingLayerNormLstm_all_inputs_as_internal", get_test_model_NoCifgPeepholeProjectionNoClippingLayerNormLstm_all_inputs_as_internal());
 
 }  // namespace generated_tests::layer_norm_lstm
 
@@ -1451,9 +1458,11 @@ namespace generated_tests::layer_norm_lstm {
 
 const TestModel& get_test_model_NoCifgPeepholeProjectionNoClippingLayerNormLstm_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 23, 24, 25, 26},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({0.8f, 0.1f, 0.2f, 0.4f, 0.5f, 0.1f, 0.5f, 0.2f, 0.4f, 0.2f}),
@@ -1774,6 +1783,8 @@ const TestModel& get_test_model_NoCifgPeepholeProjectionNoClippingLayerNormLstm_
     };
     return model;
 }
+
+const auto dummy_test_model_NoCifgPeepholeProjectionNoClippingLayerNormLstm_2 = TestModelManager::get().add("layer_norm_lstm_NoCifgPeepholeProjectionNoClippingLayerNormLstm_2", get_test_model_NoCifgPeepholeProjectionNoClippingLayerNormLstm_2());
 
 }  // namespace generated_tests::layer_norm_lstm
 
@@ -1781,9 +1792,11 @@ namespace generated_tests::layer_norm_lstm {
 
 const TestModel& get_test_model_NoCifgPeepholeProjectionNoClippingLayerNormLstm_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {17, 31, 34, 37, 40, 43, 46, 49, 52, 55, 58, 61, 64, 67, 70, 73, 76, 79, 82, 85, 88, 91, 94, 97},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -2887,15 +2900,19 @@ const TestModel& get_test_model_NoCifgPeepholeProjectionNoClippingLayerNormLstm_
     return model;
 }
 
+const auto dummy_test_model_NoCifgPeepholeProjectionNoClippingLayerNormLstm_all_inputs_as_internal_2 = TestModelManager::get().add("layer_norm_lstm_NoCifgPeepholeProjectionNoClippingLayerNormLstm_all_inputs_as_internal_2", get_test_model_NoCifgPeepholeProjectionNoClippingLayerNormLstm_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::layer_norm_lstm
 
 namespace generated_tests::layer_norm_lstm {
 
 const TestModel& get_test_model_NoCifgPeepholeProjectionNoClippingLayerNormLstm_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 23, 24, 25, 26},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({0.2f, 0.7f, 0.7f, 0.1f, 0.7f, 0.6f, 0.9f, 0.2f, 0.5f, 0.7f}),
@@ -3217,15 +3234,19 @@ const TestModel& get_test_model_NoCifgPeepholeProjectionNoClippingLayerNormLstm_
     return model;
 }
 
+const auto dummy_test_model_NoCifgPeepholeProjectionNoClippingLayerNormLstm_3 = TestModelManager::get().add("layer_norm_lstm_NoCifgPeepholeProjectionNoClippingLayerNormLstm_3", get_test_model_NoCifgPeepholeProjectionNoClippingLayerNormLstm_3());
+
 }  // namespace generated_tests::layer_norm_lstm
 
 namespace generated_tests::layer_norm_lstm {
 
 const TestModel& get_test_model_NoCifgPeepholeProjectionNoClippingLayerNormLstm_all_inputs_as_internal_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {17, 31, 34, 37, 40, 43, 46, 49, 52, 55, 58, 61, 64, 67, 70, 73, 76, 79, 82, 85, 88, 91, 94, 97},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -4329,15 +4350,19 @@ const TestModel& get_test_model_NoCifgPeepholeProjectionNoClippingLayerNormLstm_
     return model;
 }
 
+const auto dummy_test_model_NoCifgPeepholeProjectionNoClippingLayerNormLstm_all_inputs_as_internal_3 = TestModelManager::get().add("layer_norm_lstm_NoCifgPeepholeProjectionNoClippingLayerNormLstm_all_inputs_as_internal_3", get_test_model_NoCifgPeepholeProjectionNoClippingLayerNormLstm_all_inputs_as_internal_3());
+
 }  // namespace generated_tests::layer_norm_lstm
 
 namespace generated_tests::layer_norm_lstm {
 
 const TestModel& get_test_model_CifgPeepholeProjectionNoClippingLayerNormLstm() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 23, 24, 25, 26},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({0.7f, 0.8f, 0.1f, 0.2f, 0.3f, 0.3f, 0.2f, 0.9f, 0.8f, 0.1f}),
@@ -4658,6 +4683,8 @@ const TestModel& get_test_model_CifgPeepholeProjectionNoClippingLayerNormLstm() 
     };
     return model;
 }
+
+const auto dummy_test_model_CifgPeepholeProjectionNoClippingLayerNormLstm = TestModelManager::get().add("layer_norm_lstm_CifgPeepholeProjectionNoClippingLayerNormLstm", get_test_model_CifgPeepholeProjectionNoClippingLayerNormLstm());
 
 }  // namespace generated_tests::layer_norm_lstm
 
@@ -4665,9 +4692,11 @@ namespace generated_tests::layer_norm_lstm {
 
 const TestModel& get_test_model_CifgPeepholeProjectionNoClippingLayerNormLstm_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {1, 5, 9, 12, 17, 23, 31, 34, 37, 40, 43, 46, 49, 52, 55, 58, 61, 64, 67, 70, 73, 76, 79, 82},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -5601,15 +5630,19 @@ const TestModel& get_test_model_CifgPeepholeProjectionNoClippingLayerNormLstm_al
     return model;
 }
 
+const auto dummy_test_model_CifgPeepholeProjectionNoClippingLayerNormLstm_all_inputs_as_internal = TestModelManager::get().add("layer_norm_lstm_CifgPeepholeProjectionNoClippingLayerNormLstm_all_inputs_as_internal", get_test_model_CifgPeepholeProjectionNoClippingLayerNormLstm_all_inputs_as_internal());
+
 }  // namespace generated_tests::layer_norm_lstm
 
 namespace generated_tests::layer_norm_lstm {
 
 const TestModel& get_test_model_CifgPeepholeProjectionNoClippingLayerNormLstm_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 23, 24, 25, 26},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({0.8f, 0.1f, 0.2f, 0.4f, 0.5f, 0.1f, 0.5f, 0.2f, 0.4f, 0.2f}),
@@ -5930,6 +5963,8 @@ const TestModel& get_test_model_CifgPeepholeProjectionNoClippingLayerNormLstm_2(
     };
     return model;
 }
+
+const auto dummy_test_model_CifgPeepholeProjectionNoClippingLayerNormLstm_2 = TestModelManager::get().add("layer_norm_lstm_CifgPeepholeProjectionNoClippingLayerNormLstm_2", get_test_model_CifgPeepholeProjectionNoClippingLayerNormLstm_2());
 
 }  // namespace generated_tests::layer_norm_lstm
 
@@ -5937,9 +5972,11 @@ namespace generated_tests::layer_norm_lstm {
 
 const TestModel& get_test_model_CifgPeepholeProjectionNoClippingLayerNormLstm_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {1, 5, 9, 12, 17, 23, 31, 34, 37, 40, 43, 46, 49, 52, 55, 58, 61, 64, 67, 70, 73, 76, 79, 82},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -6873,15 +6910,19 @@ const TestModel& get_test_model_CifgPeepholeProjectionNoClippingLayerNormLstm_al
     return model;
 }
 
+const auto dummy_test_model_CifgPeepholeProjectionNoClippingLayerNormLstm_all_inputs_as_internal_2 = TestModelManager::get().add("layer_norm_lstm_CifgPeepholeProjectionNoClippingLayerNormLstm_all_inputs_as_internal_2", get_test_model_CifgPeepholeProjectionNoClippingLayerNormLstm_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::layer_norm_lstm
 
 namespace generated_tests::layer_norm_lstm {
 
 const TestModel& get_test_model_CifgPeepholeProjectionNoClippingLayerNormLstm_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 23, 24, 25, 26},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({0.2f, 0.7f, 0.7f, 0.1f, 0.7f, 0.6f, 0.9f, 0.2f, 0.5f, 0.7f}),
@@ -7203,15 +7244,19 @@ const TestModel& get_test_model_CifgPeepholeProjectionNoClippingLayerNormLstm_3(
     return model;
 }
 
+const auto dummy_test_model_CifgPeepholeProjectionNoClippingLayerNormLstm_3 = TestModelManager::get().add("layer_norm_lstm_CifgPeepholeProjectionNoClippingLayerNormLstm_3", get_test_model_CifgPeepholeProjectionNoClippingLayerNormLstm_3());
+
 }  // namespace generated_tests::layer_norm_lstm
 
 namespace generated_tests::layer_norm_lstm {
 
 const TestModel& get_test_model_CifgPeepholeProjectionNoClippingLayerNormLstm_all_inputs_as_internal_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {1, 5, 9, 12, 17, 23, 31, 34, 37, 40, 43, 46, 49, 52, 55, 58, 61, 64, 67, 70, 73, 76, 79, 82},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -8144,6 +8189,8 @@ const TestModel& get_test_model_CifgPeepholeProjectionNoClippingLayerNormLstm_al
     };
     return model;
 }
+
+const auto dummy_test_model_CifgPeepholeProjectionNoClippingLayerNormLstm_all_inputs_as_internal_3 = TestModelManager::get().add("layer_norm_lstm_CifgPeepholeProjectionNoClippingLayerNormLstm_all_inputs_as_internal_3", get_test_model_CifgPeepholeProjectionNoClippingLayerNormLstm_all_inputs_as_internal_3());
 
 }  // namespace generated_tests::layer_norm_lstm
 

@@ -2,16 +2,17 @@
 // DO NOT EDIT
 // clang-format off
 #include "TestHarness.h"
-
 using namespace test_helper;
 
 namespace generated_tests::fully_connected_v1_2 {
 
 const TestModel& get_test_model() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_0,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({2.0f, 32.0f, 16.0f}),
@@ -72,6 +73,8 @@ const TestModel& get_test_model() {
     };
     return model;
 }
+
+const auto dummy_test_model = TestModelManager::get().add("fully_connected_v1_2", get_test_model());
 
 }  // namespace generated_tests::fully_connected_v1_2
 
@@ -79,9 +82,11 @@ namespace generated_tests::fully_connected_v1_2 {
 
 const TestModel& get_test_model_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {5},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_0,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -176,6 +181,8 @@ const TestModel& get_test_model_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_all_inputs_as_internal = TestModelManager::get().add("fully_connected_v1_2_all_inputs_as_internal", get_test_model_all_inputs_as_internal());
 
 }  // namespace generated_tests::fully_connected_v1_2
 
@@ -183,9 +190,11 @@ namespace generated_tests::fully_connected_v1_2 {
 
 const TestModel& get_test_model_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_0,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({2.0f, 32.0f, 16.0f}),
@@ -246,6 +255,8 @@ const TestModel& get_test_model_all_tensors_as_inputs() {
     };
     return model;
 }
+
+const auto dummy_test_model_all_tensors_as_inputs = TestModelManager::get().add("fully_connected_v1_2_all_tensors_as_inputs", get_test_model_all_tensors_as_inputs());
 
 }  // namespace generated_tests::fully_connected_v1_2
 
@@ -253,9 +264,11 @@ namespace generated_tests::fully_connected_v1_2 {
 
 const TestModel& get_test_model_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {5, 8, 11},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_0,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -418,6 +431,8 @@ const TestModel& get_test_model_all_tensors_as_inputs_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("fully_connected_v1_2_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_all_tensors_as_inputs_all_inputs_as_internal());
 
 }  // namespace generated_tests::fully_connected_v1_2
 
@@ -425,9 +440,11 @@ namespace generated_tests::fully_connected_v1_2 {
 
 const TestModel& get_test_model_relaxed() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({2.0f, 32.0f, 16.0f}),
@@ -488,6 +505,8 @@ const TestModel& get_test_model_relaxed() {
     };
     return model;
 }
+
+const auto dummy_test_model_relaxed = TestModelManager::get().add("fully_connected_v1_2_relaxed", get_test_model_relaxed());
 
 }  // namespace generated_tests::fully_connected_v1_2
 
@@ -495,9 +514,11 @@ namespace generated_tests::fully_connected_v1_2 {
 
 const TestModel& get_test_model_relaxed_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {5},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -592,6 +613,8 @@ const TestModel& get_test_model_relaxed_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_relaxed_all_inputs_as_internal = TestModelManager::get().add("fully_connected_v1_2_relaxed_all_inputs_as_internal", get_test_model_relaxed_all_inputs_as_internal());
 
 }  // namespace generated_tests::fully_connected_v1_2
 
@@ -599,9 +622,11 @@ namespace generated_tests::fully_connected_v1_2 {
 
 const TestModel& get_test_model_relaxed_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({2.0f, 32.0f, 16.0f}),
@@ -662,6 +687,8 @@ const TestModel& get_test_model_relaxed_all_tensors_as_inputs() {
     };
     return model;
 }
+
+const auto dummy_test_model_relaxed_all_tensors_as_inputs = TestModelManager::get().add("fully_connected_v1_2_relaxed_all_tensors_as_inputs", get_test_model_relaxed_all_tensors_as_inputs());
 
 }  // namespace generated_tests::fully_connected_v1_2
 
@@ -669,9 +696,11 @@ namespace generated_tests::fully_connected_v1_2 {
 
 const TestModel& get_test_model_relaxed_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {5, 8, 11},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -835,15 +864,19 @@ const TestModel& get_test_model_relaxed_all_tensors_as_inputs_all_inputs_as_inte
     return model;
 }
 
+const auto dummy_test_model_relaxed_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("fully_connected_v1_2_relaxed_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_relaxed_all_tensors_as_inputs_all_inputs_as_internal());
+
 }  // namespace generated_tests::fully_connected_v1_2
 
 namespace generated_tests::fully_connected_v1_2 {
 
 const TestModel& get_test_model_float16() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({2.0f, 32.0f, 16.0f}),
@@ -905,15 +938,19 @@ const TestModel& get_test_model_float16() {
     return model;
 }
 
+const auto dummy_test_model_float16 = TestModelManager::get().add("fully_connected_v1_2_float16", get_test_model_float16());
+
 }  // namespace generated_tests::fully_connected_v1_2
 
 namespace generated_tests::fully_connected_v1_2 {
 
 const TestModel& get_test_model_float16_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {5},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -1009,15 +1046,19 @@ const TestModel& get_test_model_float16_all_inputs_as_internal() {
     return model;
 }
 
+const auto dummy_test_model_float16_all_inputs_as_internal = TestModelManager::get().add("fully_connected_v1_2_float16_all_inputs_as_internal", get_test_model_float16_all_inputs_as_internal());
+
 }  // namespace generated_tests::fully_connected_v1_2
 
 namespace generated_tests::fully_connected_v1_2 {
 
 const TestModel& get_test_model_float16_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({2.0f, 32.0f, 16.0f}),
@@ -1079,15 +1120,19 @@ const TestModel& get_test_model_float16_all_tensors_as_inputs() {
     return model;
 }
 
+const auto dummy_test_model_float16_all_tensors_as_inputs = TestModelManager::get().add("fully_connected_v1_2_float16_all_tensors_as_inputs", get_test_model_float16_all_tensors_as_inputs());
+
 }  // namespace generated_tests::fully_connected_v1_2
 
 namespace generated_tests::fully_connected_v1_2 {
 
 const TestModel& get_test_model_float16_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {5, 8, 11},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -1251,15 +1296,19 @@ const TestModel& get_test_model_float16_all_tensors_as_inputs_all_inputs_as_inte
     return model;
 }
 
+const auto dummy_test_model_float16_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("fully_connected_v1_2_float16_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_float16_all_tensors_as_inputs_all_inputs_as_internal());
+
 }  // namespace generated_tests::fully_connected_v1_2
 
 namespace generated_tests::fully_connected_v1_2 {
 
 const TestModel& get_test_model_quant8_mult_gt_1() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({131, 191, 159}),
@@ -1321,15 +1370,19 @@ const TestModel& get_test_model_quant8_mult_gt_1() {
     return model;
 }
 
+const auto dummy_test_model_quant8_mult_gt_1 = TestModelManager::get().add("fully_connected_v1_2_quant8_mult_gt_1", get_test_model_quant8_mult_gt_1());
+
 }  // namespace generated_tests::fully_connected_v1_2
 
 namespace generated_tests::fully_connected_v1_2 {
 
 const TestModel& get_test_model_quant8_mult_gt_1_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {5},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -1425,15 +1478,19 @@ const TestModel& get_test_model_quant8_mult_gt_1_all_inputs_as_internal() {
     return model;
 }
 
+const auto dummy_test_model_quant8_mult_gt_1_all_inputs_as_internal = TestModelManager::get().add("fully_connected_v1_2_quant8_mult_gt_1_all_inputs_as_internal", get_test_model_quant8_mult_gt_1_all_inputs_as_internal());
+
 }  // namespace generated_tests::fully_connected_v1_2
 
 namespace generated_tests::fully_connected_v1_2 {
 
 const TestModel& get_test_model_quant8_mult_gt_1_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({131, 191, 159}),
@@ -1495,15 +1552,19 @@ const TestModel& get_test_model_quant8_mult_gt_1_all_tensors_as_inputs() {
     return model;
 }
 
+const auto dummy_test_model_quant8_mult_gt_1_all_tensors_as_inputs = TestModelManager::get().add("fully_connected_v1_2_quant8_mult_gt_1_all_tensors_as_inputs", get_test_model_quant8_mult_gt_1_all_tensors_as_inputs());
+
 }  // namespace generated_tests::fully_connected_v1_2
 
 namespace generated_tests::fully_connected_v1_2 {
 
 const TestModel& get_test_model_quant8_mult_gt_1_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {2, 5, 8},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -1633,15 +1694,19 @@ const TestModel& get_test_model_quant8_mult_gt_1_all_tensors_as_inputs_all_input
     return model;
 }
 
+const auto dummy_test_model_quant8_mult_gt_1_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("fully_connected_v1_2_quant8_mult_gt_1_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_quant8_mult_gt_1_all_tensors_as_inputs_all_inputs_as_internal());
+
 }  // namespace generated_tests::fully_connected_v1_2
 
 namespace generated_tests::fully_connected_v1_2 {
 
 const TestModel& get_test_model_zero_sized_nhwc() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({0.9f, 0.1f}),
@@ -1920,6 +1985,8 @@ const TestModel& get_test_model_zero_sized_nhwc() {
     };
     return model;
 }
+
+const auto dummy_test_model_zero_sized_nhwc = TestModelManager::get().add("fully_connected_v1_2_zero_sized_nhwc", get_test_model_zero_sized_nhwc());
 
 }  // namespace generated_tests::fully_connected_v1_2
 
@@ -1927,9 +1994,11 @@ namespace generated_tests::fully_connected_v1_2 {
 
 const TestModel& get_test_model_zero_sized_nhwc_relaxed() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({0.9f, 0.1f}),
@@ -2208,6 +2277,8 @@ const TestModel& get_test_model_zero_sized_nhwc_relaxed() {
     };
     return model;
 }
+
+const auto dummy_test_model_zero_sized_nhwc_relaxed = TestModelManager::get().add("fully_connected_v1_2_zero_sized_nhwc_relaxed", get_test_model_zero_sized_nhwc_relaxed());
 
 }  // namespace generated_tests::fully_connected_v1_2
 
@@ -2215,9 +2286,11 @@ namespace generated_tests::fully_connected_v1_2 {
 
 const TestModel& get_test_model_zero_sized_nhwc_quant8() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({137, 129}),
@@ -2496,6 +2569,8 @@ const TestModel& get_test_model_zero_sized_nhwc_quant8() {
     };
     return model;
 }
+
+const auto dummy_test_model_zero_sized_nhwc_quant8 = TestModelManager::get().add("fully_connected_v1_2_zero_sized_nhwc_quant8", get_test_model_zero_sized_nhwc_quant8());
 
 }  // namespace generated_tests::fully_connected_v1_2
 
@@ -2503,9 +2578,11 @@ namespace generated_tests::fully_connected_v1_2 {
 
 const TestModel& get_test_model_zero_sized_nhwc_float16() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({0.8999999761581421f, 0.10000000149011612f}),
@@ -2785,15 +2862,19 @@ const TestModel& get_test_model_zero_sized_nhwc_float16() {
     return model;
 }
 
+const auto dummy_test_model_zero_sized_nhwc_float16 = TestModelManager::get().add("fully_connected_v1_2_zero_sized_nhwc_float16", get_test_model_zero_sized_nhwc_float16());
+
 }  // namespace generated_tests::fully_connected_v1_2
 
 namespace generated_tests::fully_connected_v1_2 {
 
 const TestModel& get_test_model_zero_sized_nchw() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({0.9f, 0.1f}),
@@ -3072,6 +3153,8 @@ const TestModel& get_test_model_zero_sized_nchw() {
     };
     return model;
 }
+
+const auto dummy_test_model_zero_sized_nchw = TestModelManager::get().add("fully_connected_v1_2_zero_sized_nchw", get_test_model_zero_sized_nchw());
 
 }  // namespace generated_tests::fully_connected_v1_2
 
@@ -3079,9 +3162,11 @@ namespace generated_tests::fully_connected_v1_2 {
 
 const TestModel& get_test_model_zero_sized_nchw_relaxed() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({0.9f, 0.1f}),
@@ -3361,15 +3446,19 @@ const TestModel& get_test_model_zero_sized_nchw_relaxed() {
     return model;
 }
 
+const auto dummy_test_model_zero_sized_nchw_relaxed = TestModelManager::get().add("fully_connected_v1_2_zero_sized_nchw_relaxed", get_test_model_zero_sized_nchw_relaxed());
+
 }  // namespace generated_tests::fully_connected_v1_2
 
 namespace generated_tests::fully_connected_v1_2 {
 
 const TestModel& get_test_model_zero_sized_nchw_quant8() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({137, 129}),
@@ -3649,15 +3738,19 @@ const TestModel& get_test_model_zero_sized_nchw_quant8() {
     return model;
 }
 
+const auto dummy_test_model_zero_sized_nchw_quant8 = TestModelManager::get().add("fully_connected_v1_2_zero_sized_nchw_quant8", get_test_model_zero_sized_nchw_quant8());
+
 }  // namespace generated_tests::fully_connected_v1_2
 
 namespace generated_tests::fully_connected_v1_2 {
 
 const TestModel& get_test_model_zero_sized_nchw_float16() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({0.8999999761581421f, 0.10000000149011612f}),
@@ -3936,6 +4029,8 @@ const TestModel& get_test_model_zero_sized_nchw_float16() {
     };
     return model;
 }
+
+const auto dummy_test_model_zero_sized_nchw_float16 = TestModelManager::get().add("fully_connected_v1_2_zero_sized_nchw_float16", get_test_model_zero_sized_nchw_float16());
 
 }  // namespace generated_tests::fully_connected_v1_2
 

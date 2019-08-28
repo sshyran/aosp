@@ -2,16 +2,17 @@
 // DO NOT EDIT
 // clang-format off
 #include "TestHarness.h"
-
 using namespace test_helper;
 
 namespace generated_tests::concat_mixed_quant {
 
 const TestModel& get_test_model_quant8() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2, 3},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({139, 91, 79, 44}),
@@ -82,6 +83,8 @@ const TestModel& get_test_model_quant8() {
     };
     return model;
 }
+
+const auto dummy_test_model_quant8 = TestModelManager::get().add("concat_mixed_quant_quant8", get_test_model_quant8());
 
 }  // namespace generated_tests::concat_mixed_quant
 
@@ -89,9 +92,11 @@ namespace generated_tests::concat_mixed_quant {
 
 const TestModel& get_test_model_quant8_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {6, 9, 12, 15},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -299,15 +304,19 @@ const TestModel& get_test_model_quant8_all_inputs_as_internal() {
     return model;
 }
 
+const auto dummy_test_model_quant8_all_inputs_as_internal = TestModelManager::get().add("concat_mixed_quant_quant8_all_inputs_as_internal", get_test_model_quant8_all_inputs_as_internal());
+
 }  // namespace generated_tests::concat_mixed_quant
 
 namespace generated_tests::concat_mixed_quant {
 
 const TestModel& get_test_model_quant8_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2, 3},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({139, 91, 79, 44}),
@@ -379,15 +388,19 @@ const TestModel& get_test_model_quant8_2() {
     return model;
 }
 
+const auto dummy_test_model_quant8_2 = TestModelManager::get().add("concat_mixed_quant_quant8_2", get_test_model_quant8_2());
+
 }  // namespace generated_tests::concat_mixed_quant
 
 namespace generated_tests::concat_mixed_quant {
 
 const TestModel& get_test_model_quant8_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {6, 9, 12, 15},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -594,6 +607,8 @@ const TestModel& get_test_model_quant8_all_inputs_as_internal_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_quant8_all_inputs_as_internal_2 = TestModelManager::get().add("concat_mixed_quant_quant8_all_inputs_as_internal_2", get_test_model_quant8_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::concat_mixed_quant
 

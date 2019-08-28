@@ -2,16 +2,17 @@
 // DO NOT EDIT
 // clang-format off
 #include "TestHarness.h"
-
 using namespace test_helper;
 
 namespace generated_tests::unidirectional_sequence_lstm_batch_major_peephole_projection_bias {
 
 const TestModel& get_test_model() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 24, 25, 26, 27},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({0.787926f, 0.151646f, 0.071352f, 0.118426f, 0.458058f, 0.596268f, 0.998386f, 0.568695f, 0.864524f, 0.571277f, 0.073204f, 0.296072f, 0.743333f, 0.069199f, 0.045348f, 0.867394f, 0.291279f, 0.013714f, 0.482521f, 0.626339f, 0.295743f, 0.544053f, 0.690064f, 0.858138f, 0.497181f, 0.642421f, 0.52426f, 0.134799f, 0.003639f, 0.162482f, 0.640394f, 0.930399f, 0.050782f, 0.432485f, 0.988078f, 0.082922f, 0.563329f, 0.865614f, 0.333232f, 0.259916f}),
@@ -313,15 +314,19 @@ const TestModel& get_test_model() {
     return model;
 }
 
+const auto dummy_test_model = TestModelManager::get().add("unidirectional_sequence_lstm_batch_major_peephole_projection_bias", get_test_model());
+
 }  // namespace generated_tests::unidirectional_sequence_lstm_batch_major_peephole_projection_bias
 
 namespace generated_tests::unidirectional_sequence_lstm_batch_major_peephole_projection_bias {
 
 const TestModel& get_test_model_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {24, 25, 26, 27, 29, 32, 35, 38, 41, 44, 47, 50, 53, 56, 59, 62, 65, 68, 71, 74, 77, 80, 83, 86},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -1302,6 +1307,8 @@ const TestModel& get_test_model_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_all_inputs_as_internal = TestModelManager::get().add("unidirectional_sequence_lstm_batch_major_peephole_projection_bias_all_inputs_as_internal", get_test_model_all_inputs_as_internal());
 
 }  // namespace generated_tests::unidirectional_sequence_lstm_batch_major_peephole_projection_bias
 

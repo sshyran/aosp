@@ -2,16 +2,17 @@
 // DO NOT EDIT
 // clang-format off
 #include "TestHarness.h"
-
 using namespace test_helper;
 
 namespace generated_tests::gather_higher_rank {
 
 const TestModel& get_test_model() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f}),
@@ -62,6 +63,8 @@ const TestModel& get_test_model() {
     };
     return model;
 }
+
+const auto dummy_test_model = TestModelManager::get().add("gather_higher_rank", get_test_model());
 
 }  // namespace generated_tests::gather_higher_rank
 
@@ -69,9 +72,11 @@ namespace generated_tests::gather_higher_rank {
 
 const TestModel& get_test_model_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {2, 4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -156,6 +161,8 @@ const TestModel& get_test_model_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_all_inputs_as_internal = TestModelManager::get().add("gather_higher_rank_all_inputs_as_internal", get_test_model_all_inputs_as_internal());
 
 }  // namespace generated_tests::gather_higher_rank
 
@@ -163,9 +170,11 @@ namespace generated_tests::gather_higher_rank {
 
 const TestModel& get_test_model_relaxed() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 2},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f}),
@@ -217,15 +226,19 @@ const TestModel& get_test_model_relaxed() {
     return model;
 }
 
+const auto dummy_test_model_relaxed = TestModelManager::get().add("gather_higher_rank_relaxed", get_test_model_relaxed());
+
 }  // namespace generated_tests::gather_higher_rank
 
 namespace generated_tests::gather_higher_rank {
 
 const TestModel& get_test_model_relaxed_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {2, 4},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -311,15 +324,19 @@ const TestModel& get_test_model_relaxed_all_inputs_as_internal() {
     return model;
 }
 
+const auto dummy_test_model_relaxed_all_inputs_as_internal = TestModelManager::get().add("gather_higher_rank_relaxed_all_inputs_as_internal", get_test_model_relaxed_all_inputs_as_internal());
+
 }  // namespace generated_tests::gather_higher_rank
 
 namespace generated_tests::gather_higher_rank {
 
 const TestModel& get_test_model_quant8() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({129, 131, 133, 135, 137, 139}),
@@ -371,15 +388,19 @@ const TestModel& get_test_model_quant8() {
     return model;
 }
 
+const auto dummy_test_model_quant8 = TestModelManager::get().add("gather_higher_rank_quant8", get_test_model_quant8());
+
 }  // namespace generated_tests::gather_higher_rank
 
 namespace generated_tests::gather_higher_rank {
 
 const TestModel& get_test_model_quant8_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {2, 4},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -465,15 +486,19 @@ const TestModel& get_test_model_quant8_all_inputs_as_internal() {
     return model;
 }
 
+const auto dummy_test_model_quant8_all_inputs_as_internal = TestModelManager::get().add("gather_higher_rank_quant8_all_inputs_as_internal", get_test_model_quant8_all_inputs_as_internal());
+
 }  // namespace generated_tests::gather_higher_rank
 
 namespace generated_tests::gather_higher_rank {
 
 const TestModel& get_test_model_int32() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<int32_t>({1, 2, 3, 4, 5, 6}),
@@ -524,6 +549,8 @@ const TestModel& get_test_model_int32() {
     };
     return model;
 }
+
+const auto dummy_test_model_int32 = TestModelManager::get().add("gather_higher_rank_int32", get_test_model_int32());
 
 }  // namespace generated_tests::gather_higher_rank
 

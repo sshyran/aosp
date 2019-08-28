@@ -2,16 +2,17 @@
 // DO NOT EDIT
 // clang-format off
 #include "TestHarness.h"
-
 using namespace test_helper;
 
 namespace generated_tests::prelu {
 
 const TestModel& get_test_model() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, -1.0f, -1.0f, -1.0f, -2.0f, -2.0f, -2.0f}),
@@ -52,6 +53,8 @@ const TestModel& get_test_model() {
     };
     return model;
 }
+
+const auto dummy_test_model = TestModelManager::get().add("prelu", get_test_model());
 
 }  // namespace generated_tests::prelu
 
@@ -59,9 +62,11 @@ namespace generated_tests::prelu {
 
 const TestModel& get_test_model_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {3},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -136,6 +141,8 @@ const TestModel& get_test_model_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_all_inputs_as_internal = TestModelManager::get().add("prelu_all_inputs_as_internal", get_test_model_all_inputs_as_internal());
 
 }  // namespace generated_tests::prelu
 
@@ -143,9 +150,11 @@ namespace generated_tests::prelu {
 
 const TestModel& get_test_model_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, -1.0f, -1.0f, -1.0f, -2.0f, -2.0f, -2.0f}),
@@ -186,6 +195,8 @@ const TestModel& get_test_model_all_tensors_as_inputs() {
     };
     return model;
 }
+
+const auto dummy_test_model_all_tensors_as_inputs = TestModelManager::get().add("prelu_all_tensors_as_inputs", get_test_model_all_tensors_as_inputs());
 
 }  // namespace generated_tests::prelu
 
@@ -193,9 +204,11 @@ namespace generated_tests::prelu {
 
 const TestModel& get_test_model_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {3, 6},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -304,6 +317,8 @@ const TestModel& get_test_model_all_tensors_as_inputs_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("prelu_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_all_tensors_as_inputs_all_inputs_as_internal());
 
 }  // namespace generated_tests::prelu
 
@@ -311,9 +326,11 @@ namespace generated_tests::prelu {
 
 const TestModel& get_test_model_relaxed() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, -1.0f, -1.0f, -1.0f, -2.0f, -2.0f, -2.0f}),
@@ -354,6 +371,8 @@ const TestModel& get_test_model_relaxed() {
     };
     return model;
 }
+
+const auto dummy_test_model_relaxed = TestModelManager::get().add("prelu_relaxed", get_test_model_relaxed());
 
 }  // namespace generated_tests::prelu
 
@@ -361,9 +380,11 @@ namespace generated_tests::prelu {
 
 const TestModel& get_test_model_relaxed_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {3},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -438,6 +459,8 @@ const TestModel& get_test_model_relaxed_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_relaxed_all_inputs_as_internal = TestModelManager::get().add("prelu_relaxed_all_inputs_as_internal", get_test_model_relaxed_all_inputs_as_internal());
 
 }  // namespace generated_tests::prelu
 
@@ -445,9 +468,11 @@ namespace generated_tests::prelu {
 
 const TestModel& get_test_model_relaxed_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, -1.0f, -1.0f, -1.0f, -2.0f, -2.0f, -2.0f}),
@@ -488,6 +513,8 @@ const TestModel& get_test_model_relaxed_all_tensors_as_inputs() {
     };
     return model;
 }
+
+const auto dummy_test_model_relaxed_all_tensors_as_inputs = TestModelManager::get().add("prelu_relaxed_all_tensors_as_inputs", get_test_model_relaxed_all_tensors_as_inputs());
 
 }  // namespace generated_tests::prelu
 
@@ -495,9 +522,11 @@ namespace generated_tests::prelu {
 
 const TestModel& get_test_model_relaxed_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {3, 6},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -607,15 +636,19 @@ const TestModel& get_test_model_relaxed_all_tensors_as_inputs_all_inputs_as_inte
     return model;
 }
 
+const auto dummy_test_model_relaxed_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("prelu_relaxed_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_relaxed_all_tensors_as_inputs_all_inputs_as_internal());
+
 }  // namespace generated_tests::prelu
 
 namespace generated_tests::prelu {
 
 const TestModel& get_test_model_quant8() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({128, 128, 128, 132, 132, 132, 124, 124, 124, 120, 120, 120}),
@@ -656,6 +689,8 @@ const TestModel& get_test_model_quant8() {
     };
     return model;
 }
+
+const auto dummy_test_model_quant8 = TestModelManager::get().add("prelu_quant8", get_test_model_quant8());
 
 }  // namespace generated_tests::prelu
 
@@ -663,9 +698,11 @@ namespace generated_tests::prelu {
 
 const TestModel& get_test_model_quant8_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {3},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -740,6 +777,8 @@ const TestModel& get_test_model_quant8_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_quant8_all_inputs_as_internal = TestModelManager::get().add("prelu_quant8_all_inputs_as_internal", get_test_model_quant8_all_inputs_as_internal());
 
 }  // namespace generated_tests::prelu
 
@@ -747,9 +786,11 @@ namespace generated_tests::prelu {
 
 const TestModel& get_test_model_quant8_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({128, 128, 128, 132, 132, 132, 124, 124, 124, 120, 120, 120}),
@@ -790,6 +831,8 @@ const TestModel& get_test_model_quant8_all_tensors_as_inputs() {
     };
     return model;
 }
+
+const auto dummy_test_model_quant8_all_tensors_as_inputs = TestModelManager::get().add("prelu_quant8_all_tensors_as_inputs", get_test_model_quant8_all_tensors_as_inputs());
 
 }  // namespace generated_tests::prelu
 
@@ -797,9 +840,11 @@ namespace generated_tests::prelu {
 
 const TestModel& get_test_model_quant8_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {3, 6},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -909,15 +954,19 @@ const TestModel& get_test_model_quant8_all_tensors_as_inputs_all_inputs_as_inter
     return model;
 }
 
+const auto dummy_test_model_quant8_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("prelu_quant8_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_quant8_all_tensors_as_inputs_all_inputs_as_internal());
+
 }  // namespace generated_tests::prelu
 
 namespace generated_tests::prelu {
 
 const TestModel& get_test_model_quant8_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({128, 128, 128, 132, 132, 132, 124, 124, 124, 120, 120, 120}),
@@ -958,6 +1007,8 @@ const TestModel& get_test_model_quant8_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_quant8_2 = TestModelManager::get().add("prelu_quant8_2", get_test_model_quant8_2());
 
 }  // namespace generated_tests::prelu
 
@@ -965,9 +1016,11 @@ namespace generated_tests::prelu {
 
 const TestModel& get_test_model_quant8_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {3},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -1042,6 +1095,8 @@ const TestModel& get_test_model_quant8_all_inputs_as_internal_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_quant8_all_inputs_as_internal_2 = TestModelManager::get().add("prelu_quant8_all_inputs_as_internal_2", get_test_model_quant8_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::prelu
 
@@ -1049,9 +1104,11 @@ namespace generated_tests::prelu {
 
 const TestModel& get_test_model_quant8_all_tensors_as_inputs_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({128, 128, 128, 132, 132, 132, 124, 124, 124, 120, 120, 120}),
@@ -1092,6 +1149,8 @@ const TestModel& get_test_model_quant8_all_tensors_as_inputs_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_quant8_all_tensors_as_inputs_2 = TestModelManager::get().add("prelu_quant8_all_tensors_as_inputs_2", get_test_model_quant8_all_tensors_as_inputs_2());
 
 }  // namespace generated_tests::prelu
 
@@ -1099,9 +1158,11 @@ namespace generated_tests::prelu {
 
 const TestModel& get_test_model_quant8_all_tensors_as_inputs_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {3, 6},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -1211,15 +1272,19 @@ const TestModel& get_test_model_quant8_all_tensors_as_inputs_all_inputs_as_inter
     return model;
 }
 
+const auto dummy_test_model_quant8_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("prelu_quant8_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_quant8_all_tensors_as_inputs_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::prelu
 
 namespace generated_tests::prelu {
 
 const TestModel& get_test_model_quant8_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({128, 128, 128, 132, 132, 132, 124, 124, 124, 120, 120, 120}),
@@ -1260,6 +1325,8 @@ const TestModel& get_test_model_quant8_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_quant8_3 = TestModelManager::get().add("prelu_quant8_3", get_test_model_quant8_3());
 
 }  // namespace generated_tests::prelu
 
@@ -1267,9 +1334,11 @@ namespace generated_tests::prelu {
 
 const TestModel& get_test_model_quant8_all_inputs_as_internal_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {3},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -1344,6 +1413,8 @@ const TestModel& get_test_model_quant8_all_inputs_as_internal_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_quant8_all_inputs_as_internal_3 = TestModelManager::get().add("prelu_quant8_all_inputs_as_internal_3", get_test_model_quant8_all_inputs_as_internal_3());
 
 }  // namespace generated_tests::prelu
 
@@ -1351,9 +1422,11 @@ namespace generated_tests::prelu {
 
 const TestModel& get_test_model_quant8_all_tensors_as_inputs_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({128, 128, 128, 132, 132, 132, 124, 124, 124, 120, 120, 120}),
@@ -1394,6 +1467,8 @@ const TestModel& get_test_model_quant8_all_tensors_as_inputs_3() {
     };
     return model;
 }
+
+const auto dummy_test_model_quant8_all_tensors_as_inputs_3 = TestModelManager::get().add("prelu_quant8_all_tensors_as_inputs_3", get_test_model_quant8_all_tensors_as_inputs_3());
 
 }  // namespace generated_tests::prelu
 
@@ -1401,9 +1476,11 @@ namespace generated_tests::prelu {
 
 const TestModel& get_test_model_quant8_all_tensors_as_inputs_all_inputs_as_internal_3() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {3, 6},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -1513,15 +1590,19 @@ const TestModel& get_test_model_quant8_all_tensors_as_inputs_all_inputs_as_inter
     return model;
 }
 
+const auto dummy_test_model_quant8_all_tensors_as_inputs_all_inputs_as_internal_3 = TestModelManager::get().add("prelu_quant8_all_tensors_as_inputs_all_inputs_as_internal_3", get_test_model_quant8_all_tensors_as_inputs_all_inputs_as_internal_3());
+
 }  // namespace generated_tests::prelu
 
 namespace generated_tests::prelu {
 
 const TestModel& get_test_model_quant8_4() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({128, 128, 128, 132, 132, 132, 124, 124, 124, 120, 120, 120}),
@@ -1563,15 +1644,19 @@ const TestModel& get_test_model_quant8_4() {
     return model;
 }
 
+const auto dummy_test_model_quant8_4 = TestModelManager::get().add("prelu_quant8_4", get_test_model_quant8_4());
+
 }  // namespace generated_tests::prelu
 
 namespace generated_tests::prelu {
 
 const TestModel& get_test_model_quant8_all_inputs_as_internal_4() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {3},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -1647,15 +1732,19 @@ const TestModel& get_test_model_quant8_all_inputs_as_internal_4() {
     return model;
 }
 
+const auto dummy_test_model_quant8_all_inputs_as_internal_4 = TestModelManager::get().add("prelu_quant8_all_inputs_as_internal_4", get_test_model_quant8_all_inputs_as_internal_4());
+
 }  // namespace generated_tests::prelu
 
 namespace generated_tests::prelu {
 
 const TestModel& get_test_model_quant8_all_tensors_as_inputs_4() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({128, 128, 128, 132, 132, 132, 124, 124, 124, 120, 120, 120}),
@@ -1697,15 +1786,19 @@ const TestModel& get_test_model_quant8_all_tensors_as_inputs_4() {
     return model;
 }
 
+const auto dummy_test_model_quant8_all_tensors_as_inputs_4 = TestModelManager::get().add("prelu_quant8_all_tensors_as_inputs_4", get_test_model_quant8_all_tensors_as_inputs_4());
+
 }  // namespace generated_tests::prelu
 
 namespace generated_tests::prelu {
 
 const TestModel& get_test_model_quant8_all_tensors_as_inputs_all_inputs_as_internal_4() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {3, 6},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -1815,15 +1908,19 @@ const TestModel& get_test_model_quant8_all_tensors_as_inputs_all_inputs_as_inter
     return model;
 }
 
+const auto dummy_test_model_quant8_all_tensors_as_inputs_all_inputs_as_internal_4 = TestModelManager::get().add("prelu_quant8_all_tensors_as_inputs_all_inputs_as_internal_4", get_test_model_quant8_all_tensors_as_inputs_all_inputs_as_internal_4());
+
 }  // namespace generated_tests::prelu
 
 namespace generated_tests::prelu {
 
 const TestModel& get_test_model_float16() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, -1.0f, -1.0f, -1.0f, -2.0f, -2.0f, -2.0f}),
@@ -1865,15 +1962,19 @@ const TestModel& get_test_model_float16() {
     return model;
 }
 
+const auto dummy_test_model_float16 = TestModelManager::get().add("prelu_float16", get_test_model_float16());
+
 }  // namespace generated_tests::prelu
 
 namespace generated_tests::prelu {
 
 const TestModel& get_test_model_float16_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {3},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -1949,15 +2050,19 @@ const TestModel& get_test_model_float16_all_inputs_as_internal() {
     return model;
 }
 
+const auto dummy_test_model_float16_all_inputs_as_internal = TestModelManager::get().add("prelu_float16_all_inputs_as_internal", get_test_model_float16_all_inputs_as_internal());
+
 }  // namespace generated_tests::prelu
 
 namespace generated_tests::prelu {
 
 const TestModel& get_test_model_float16_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, -1.0f, -1.0f, -1.0f, -2.0f, -2.0f, -2.0f}),
@@ -1999,15 +2104,19 @@ const TestModel& get_test_model_float16_all_tensors_as_inputs() {
     return model;
 }
 
+const auto dummy_test_model_float16_all_tensors_as_inputs = TestModelManager::get().add("prelu_float16_all_tensors_as_inputs", get_test_model_float16_all_tensors_as_inputs());
+
 }  // namespace generated_tests::prelu
 
 namespace generated_tests::prelu {
 
 const TestModel& get_test_model_float16_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {3, 6},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -2116,6 +2225,8 @@ const TestModel& get_test_model_float16_all_tensors_as_inputs_all_inputs_as_inte
     };
     return model;
 }
+
+const auto dummy_test_model_float16_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("prelu_float16_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_float16_all_tensors_as_inputs_all_inputs_as_internal());
 
 }  // namespace generated_tests::prelu
 
