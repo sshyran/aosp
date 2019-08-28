@@ -2,16 +2,17 @@
 // DO NOT EDIT
 // clang-format off
 #include "TestHarness.h"
-
 using namespace test_helper;
 
 namespace generated_tests::select_v1_2 {
 
 const TestModel& get_test_model_one_dim() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<bool8>({true, false, true}),
@@ -63,15 +64,19 @@ const TestModel& get_test_model_one_dim() {
     return model;
 }
 
+const auto dummy_test_model_one_dim = TestModelManager::get().add("select_v1_2_one_dim", get_test_model_one_dim());
+
 }  // namespace generated_tests::select_v1_2
 
 namespace generated_tests::select_v1_2 {
 
 const TestModel& get_test_model_one_dim_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 4, 7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<bool8>({true, false, true}),
@@ -191,15 +196,19 @@ const TestModel& get_test_model_one_dim_all_inputs_as_internal() {
     return model;
 }
 
+const auto dummy_test_model_one_dim_all_inputs_as_internal = TestModelManager::get().add("select_v1_2_one_dim_all_inputs_as_internal", get_test_model_one_dim_all_inputs_as_internal());
+
 }  // namespace generated_tests::select_v1_2
 
 namespace generated_tests::select_v1_2 {
 
 const TestModel& get_test_model_one_dim_int32() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<bool8>({true, false, true}),
@@ -251,15 +260,19 @@ const TestModel& get_test_model_one_dim_int32() {
     return model;
 }
 
+const auto dummy_test_model_one_dim_int32 = TestModelManager::get().add("select_v1_2_one_dim_int32", get_test_model_one_dim_int32());
+
 }  // namespace generated_tests::select_v1_2
 
 namespace generated_tests::select_v1_2 {
 
 const TestModel& get_test_model_one_dim_float16() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<bool8>({true, false, true}),
@@ -310,6 +323,8 @@ const TestModel& get_test_model_one_dim_float16() {
     };
     return model;
 }
+
+const auto dummy_test_model_one_dim_float16 = TestModelManager::get().add("select_v1_2_one_dim_float16", get_test_model_one_dim_float16());
 
 }  // namespace generated_tests::select_v1_2
 
@@ -317,9 +332,11 @@ namespace generated_tests::select_v1_2 {
 
 const TestModel& get_test_model_one_dim_float16_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 4, 7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<bool8>({true, false, true}),
@@ -439,15 +456,19 @@ const TestModel& get_test_model_one_dim_float16_all_inputs_as_internal() {
     return model;
 }
 
+const auto dummy_test_model_one_dim_float16_all_inputs_as_internal = TestModelManager::get().add("select_v1_2_one_dim_float16_all_inputs_as_internal", get_test_model_one_dim_float16_all_inputs_as_internal());
+
 }  // namespace generated_tests::select_v1_2
 
 namespace generated_tests::select_v1_2 {
 
 const TestModel& get_test_model_one_dim_relaxed() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<bool8>({true, false, true}),
@@ -499,15 +520,19 @@ const TestModel& get_test_model_one_dim_relaxed() {
     return model;
 }
 
+const auto dummy_test_model_one_dim_relaxed = TestModelManager::get().add("select_v1_2_one_dim_relaxed", get_test_model_one_dim_relaxed());
+
 }  // namespace generated_tests::select_v1_2
 
 namespace generated_tests::select_v1_2 {
 
 const TestModel& get_test_model_one_dim_relaxed_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 4, 7},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<bool8>({true, false, true}),
@@ -627,15 +652,19 @@ const TestModel& get_test_model_one_dim_relaxed_all_inputs_as_internal() {
     return model;
 }
 
+const auto dummy_test_model_one_dim_relaxed_all_inputs_as_internal = TestModelManager::get().add("select_v1_2_one_dim_relaxed_all_inputs_as_internal", get_test_model_one_dim_relaxed_all_inputs_as_internal());
+
 }  // namespace generated_tests::select_v1_2
 
 namespace generated_tests::select_v1_2 {
 
 const TestModel& get_test_model_one_dim_quant8() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<bool8>({true, false, true}),
@@ -687,15 +716,19 @@ const TestModel& get_test_model_one_dim_quant8() {
     return model;
 }
 
+const auto dummy_test_model_one_dim_quant8 = TestModelManager::get().add("select_v1_2_one_dim_quant8", get_test_model_one_dim_quant8());
+
 }  // namespace generated_tests::select_v1_2
 
 namespace generated_tests::select_v1_2 {
 
 const TestModel& get_test_model_one_dim_quant8_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 4, 7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<bool8>({true, false, true}),
@@ -815,15 +848,19 @@ const TestModel& get_test_model_one_dim_quant8_all_inputs_as_internal() {
     return model;
 }
 
+const auto dummy_test_model_one_dim_quant8_all_inputs_as_internal = TestModelManager::get().add("select_v1_2_one_dim_quant8_all_inputs_as_internal", get_test_model_one_dim_quant8_all_inputs_as_internal());
+
 }  // namespace generated_tests::select_v1_2
 
 namespace generated_tests::select_v1_2 {
 
 const TestModel& get_test_model_two_dim() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<bool8>({false, true, false, true}),
@@ -875,15 +912,19 @@ const TestModel& get_test_model_two_dim() {
     return model;
 }
 
+const auto dummy_test_model_two_dim = TestModelManager::get().add("select_v1_2_two_dim", get_test_model_two_dim());
+
 }  // namespace generated_tests::select_v1_2
 
 namespace generated_tests::select_v1_2 {
 
 const TestModel& get_test_model_two_dim_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 4, 7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<bool8>({false, true, false, true}),
@@ -1003,15 +1044,19 @@ const TestModel& get_test_model_two_dim_all_inputs_as_internal() {
     return model;
 }
 
+const auto dummy_test_model_two_dim_all_inputs_as_internal = TestModelManager::get().add("select_v1_2_two_dim_all_inputs_as_internal", get_test_model_two_dim_all_inputs_as_internal());
+
 }  // namespace generated_tests::select_v1_2
 
 namespace generated_tests::select_v1_2 {
 
 const TestModel& get_test_model_two_dim_int32() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<bool8>({false, true, false, true}),
@@ -1063,15 +1108,19 @@ const TestModel& get_test_model_two_dim_int32() {
     return model;
 }
 
+const auto dummy_test_model_two_dim_int32 = TestModelManager::get().add("select_v1_2_two_dim_int32", get_test_model_two_dim_int32());
+
 }  // namespace generated_tests::select_v1_2
 
 namespace generated_tests::select_v1_2 {
 
 const TestModel& get_test_model_two_dim_float16() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<bool8>({false, true, false, true}),
@@ -1122,6 +1171,8 @@ const TestModel& get_test_model_two_dim_float16() {
     };
     return model;
 }
+
+const auto dummy_test_model_two_dim_float16 = TestModelManager::get().add("select_v1_2_two_dim_float16", get_test_model_two_dim_float16());
 
 }  // namespace generated_tests::select_v1_2
 
@@ -1129,9 +1180,11 @@ namespace generated_tests::select_v1_2 {
 
 const TestModel& get_test_model_two_dim_float16_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 4, 7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<bool8>({false, true, false, true}),
@@ -1251,15 +1304,19 @@ const TestModel& get_test_model_two_dim_float16_all_inputs_as_internal() {
     return model;
 }
 
+const auto dummy_test_model_two_dim_float16_all_inputs_as_internal = TestModelManager::get().add("select_v1_2_two_dim_float16_all_inputs_as_internal", get_test_model_two_dim_float16_all_inputs_as_internal());
+
 }  // namespace generated_tests::select_v1_2
 
 namespace generated_tests::select_v1_2 {
 
 const TestModel& get_test_model_two_dim_relaxed() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<bool8>({false, true, false, true}),
@@ -1311,15 +1368,19 @@ const TestModel& get_test_model_two_dim_relaxed() {
     return model;
 }
 
+const auto dummy_test_model_two_dim_relaxed = TestModelManager::get().add("select_v1_2_two_dim_relaxed", get_test_model_two_dim_relaxed());
+
 }  // namespace generated_tests::select_v1_2
 
 namespace generated_tests::select_v1_2 {
 
 const TestModel& get_test_model_two_dim_relaxed_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 4, 7},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<bool8>({false, true, false, true}),
@@ -1439,15 +1500,19 @@ const TestModel& get_test_model_two_dim_relaxed_all_inputs_as_internal() {
     return model;
 }
 
+const auto dummy_test_model_two_dim_relaxed_all_inputs_as_internal = TestModelManager::get().add("select_v1_2_two_dim_relaxed_all_inputs_as_internal", get_test_model_two_dim_relaxed_all_inputs_as_internal());
+
 }  // namespace generated_tests::select_v1_2
 
 namespace generated_tests::select_v1_2 {
 
 const TestModel& get_test_model_two_dim_quant8() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<bool8>({false, true, false, true}),
@@ -1499,15 +1564,19 @@ const TestModel& get_test_model_two_dim_quant8() {
     return model;
 }
 
+const auto dummy_test_model_two_dim_quant8 = TestModelManager::get().add("select_v1_2_two_dim_quant8", get_test_model_two_dim_quant8());
+
 }  // namespace generated_tests::select_v1_2
 
 namespace generated_tests::select_v1_2 {
 
 const TestModel& get_test_model_two_dim_quant8_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 4, 7},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<bool8>({false, true, false, true}),
@@ -1627,15 +1696,19 @@ const TestModel& get_test_model_two_dim_quant8_all_inputs_as_internal() {
     return model;
 }
 
+const auto dummy_test_model_two_dim_quant8_all_inputs_as_internal = TestModelManager::get().add("select_v1_2_two_dim_quant8_all_inputs_as_internal", get_test_model_two_dim_quant8_all_inputs_as_internal());
+
 }  // namespace generated_tests::select_v1_2
 
 namespace generated_tests::select_v1_2 {
 
 const TestModel& get_test_model_five_dim() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<bool8>({true, false, true, false, true, false, true, false}),
@@ -1687,15 +1760,19 @@ const TestModel& get_test_model_five_dim() {
     return model;
 }
 
+const auto dummy_test_model_five_dim = TestModelManager::get().add("select_v1_2_five_dim", get_test_model_five_dim());
+
 }  // namespace generated_tests::select_v1_2
 
 namespace generated_tests::select_v1_2 {
 
 const TestModel& get_test_model_five_dim_int32() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<bool8>({true, false, true, false, true, false, true, false}),
@@ -1747,15 +1824,19 @@ const TestModel& get_test_model_five_dim_int32() {
     return model;
 }
 
+const auto dummy_test_model_five_dim_int32 = TestModelManager::get().add("select_v1_2_five_dim_int32", get_test_model_five_dim_int32());
+
 }  // namespace generated_tests::select_v1_2
 
 namespace generated_tests::select_v1_2 {
 
 const TestModel& get_test_model_five_dim_float16() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<bool8>({true, false, true, false, true, false, true, false}),
@@ -1807,15 +1888,19 @@ const TestModel& get_test_model_five_dim_float16() {
     return model;
 }
 
+const auto dummy_test_model_five_dim_float16 = TestModelManager::get().add("select_v1_2_five_dim_float16", get_test_model_five_dim_float16());
+
 }  // namespace generated_tests::select_v1_2
 
 namespace generated_tests::select_v1_2 {
 
 const TestModel& get_test_model_five_dim_relaxed() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<bool8>({true, false, true, false, true, false, true, false}),
@@ -1867,15 +1952,19 @@ const TestModel& get_test_model_five_dim_relaxed() {
     return model;
 }
 
+const auto dummy_test_model_five_dim_relaxed = TestModelManager::get().add("select_v1_2_five_dim_relaxed", get_test_model_five_dim_relaxed());
+
 }  // namespace generated_tests::select_v1_2
 
 namespace generated_tests::select_v1_2 {
 
 const TestModel& get_test_model_five_dim_quant8() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<bool8>({true, false, true, false, true, false, true, false}),
@@ -1926,6 +2015,8 @@ const TestModel& get_test_model_five_dim_quant8() {
     };
     return model;
 }
+
+const auto dummy_test_model_five_dim_quant8 = TestModelManager::get().add("select_v1_2_five_dim_quant8", get_test_model_five_dim_quant8());
 
 }  // namespace generated_tests::select_v1_2
 

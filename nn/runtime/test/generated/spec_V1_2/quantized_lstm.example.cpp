@@ -2,16 +2,17 @@
 // DO NOT EDIT
 // clang-format off
 #include "TestHarness.h"
-
 using namespace test_helper;
 
 namespace generated_tests::quantized_lstm {
 
 const TestModel& get_test_model() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({166, 179, 50, 150}),
@@ -192,6 +193,8 @@ const TestModel& get_test_model() {
     };
     return model;
 }
+
+const auto dummy_test_model = TestModelManager::get().add("quantized_lstm", get_test_model());
 
 }  // namespace generated_tests::quantized_lstm
 
@@ -199,9 +202,11 @@ namespace generated_tests::quantized_lstm {
 
 const TestModel& get_test_model_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {9, 10, 11, 12, 13, 17, 20, 23, 26, 29, 32, 35, 38, 41, 44},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -722,6 +727,8 @@ const TestModel& get_test_model_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_all_inputs_as_internal = TestModelManager::get().add("quantized_lstm_all_inputs_as_internal", get_test_model_all_inputs_as_internal());
 
 }  // namespace generated_tests::quantized_lstm
 
@@ -729,9 +736,11 @@ namespace generated_tests::quantized_lstm {
 
 const TestModel& get_test_model_relaxed() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({166, 179, 50, 150}),
@@ -912,6 +921,8 @@ const TestModel& get_test_model_relaxed() {
     };
     return model;
 }
+
+const auto dummy_test_model_relaxed = TestModelManager::get().add("quantized_lstm_relaxed", get_test_model_relaxed());
 
 }  // namespace generated_tests::quantized_lstm
 
@@ -919,9 +930,11 @@ namespace generated_tests::quantized_lstm {
 
 const TestModel& get_test_model_relaxed_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {9, 10, 11, 12, 13, 17, 20, 23, 26, 29, 32, 35, 38, 41, 44},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -1443,15 +1456,19 @@ const TestModel& get_test_model_relaxed_all_inputs_as_internal() {
     return model;
 }
 
+const auto dummy_test_model_relaxed_all_inputs_as_internal = TestModelManager::get().add("quantized_lstm_relaxed_all_inputs_as_internal", get_test_model_relaxed_all_inputs_as_internal());
+
 }  // namespace generated_tests::quantized_lstm
 
 namespace generated_tests::quantized_lstm {
 
 const TestModel& get_test_model_constant_weights() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 13, 14},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({166, 179}),
@@ -1632,6 +1649,8 @@ const TestModel& get_test_model_constant_weights() {
     };
     return model;
 }
+
+const auto dummy_test_model_constant_weights = TestModelManager::get().add("quantized_lstm_constant_weights", get_test_model_constant_weights());
 
 }  // namespace generated_tests::quantized_lstm
 
@@ -1639,9 +1658,11 @@ namespace generated_tests::quantized_lstm {
 
 const TestModel& get_test_model_constant_weights_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13, 17, 20},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -1890,6 +1911,8 @@ const TestModel& get_test_model_constant_weights_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_constant_weights_all_inputs_as_internal = TestModelManager::get().add("quantized_lstm_constant_weights_all_inputs_as_internal", get_test_model_constant_weights_all_inputs_as_internal());
 
 }  // namespace generated_tests::quantized_lstm
 
@@ -1897,9 +1920,11 @@ namespace generated_tests::quantized_lstm {
 
 const TestModel& get_test_model_constant_weights_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({166, 179}),
@@ -2080,6 +2105,8 @@ const TestModel& get_test_model_constant_weights_all_tensors_as_inputs() {
     };
     return model;
 }
+
+const auto dummy_test_model_constant_weights_all_tensors_as_inputs = TestModelManager::get().add("quantized_lstm_constant_weights_all_tensors_as_inputs", get_test_model_constant_weights_all_tensors_as_inputs());
 
 }  // namespace generated_tests::quantized_lstm
 
@@ -2087,9 +2114,11 @@ namespace generated_tests::quantized_lstm {
 
 const TestModel& get_test_model_constant_weights_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {9, 10, 11, 12, 13, 17, 20, 23, 26, 29, 32, 35, 38, 41, 44},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -2610,6 +2639,8 @@ const TestModel& get_test_model_constant_weights_all_tensors_as_inputs_all_input
     };
     return model;
 }
+
+const auto dummy_test_model_constant_weights_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("quantized_lstm_constant_weights_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_constant_weights_all_tensors_as_inputs_all_inputs_as_internal());
 
 }  // namespace generated_tests::quantized_lstm
 
@@ -2617,9 +2648,11 @@ namespace generated_tests::quantized_lstm {
 
 const TestModel& get_test_model_constant_weights_relaxed() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 13, 14},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({166, 179}),
@@ -2801,15 +2834,19 @@ const TestModel& get_test_model_constant_weights_relaxed() {
     return model;
 }
 
+const auto dummy_test_model_constant_weights_relaxed = TestModelManager::get().add("quantized_lstm_constant_weights_relaxed", get_test_model_constant_weights_relaxed());
+
 }  // namespace generated_tests::quantized_lstm
 
 namespace generated_tests::quantized_lstm {
 
 const TestModel& get_test_model_constant_weights_relaxed_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13, 17, 20},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -3059,15 +3096,19 @@ const TestModel& get_test_model_constant_weights_relaxed_all_inputs_as_internal(
     return model;
 }
 
+const auto dummy_test_model_constant_weights_relaxed_all_inputs_as_internal = TestModelManager::get().add("quantized_lstm_constant_weights_relaxed_all_inputs_as_internal", get_test_model_constant_weights_relaxed_all_inputs_as_internal());
+
 }  // namespace generated_tests::quantized_lstm
 
 namespace generated_tests::quantized_lstm {
 
 const TestModel& get_test_model_constant_weights_relaxed_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({166, 179}),
@@ -3249,15 +3290,19 @@ const TestModel& get_test_model_constant_weights_relaxed_all_tensors_as_inputs()
     return model;
 }
 
+const auto dummy_test_model_constant_weights_relaxed_all_tensors_as_inputs = TestModelManager::get().add("quantized_lstm_constant_weights_relaxed_all_tensors_as_inputs", get_test_model_constant_weights_relaxed_all_tensors_as_inputs());
+
 }  // namespace generated_tests::quantized_lstm
 
 namespace generated_tests::quantized_lstm {
 
 const TestModel& get_test_model_constant_weights_relaxed_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {9, 10, 11, 12, 13, 17, 20, 23, 26, 29, 32, 35, 38, 41, 44},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -3778,6 +3823,8 @@ const TestModel& get_test_model_constant_weights_relaxed_all_tensors_as_inputs_a
     };
     return model;
 }
+
+const auto dummy_test_model_constant_weights_relaxed_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("quantized_lstm_constant_weights_relaxed_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_constant_weights_relaxed_all_tensors_as_inputs_all_inputs_as_internal());
 
 }  // namespace generated_tests::quantized_lstm
 
