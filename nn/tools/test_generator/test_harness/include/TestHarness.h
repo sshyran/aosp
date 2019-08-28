@@ -25,7 +25,11 @@
 
 #include <cstdlib>
 #include <cstring>
+#include <functional>
+#include <map>
 #include <memory>
+#include <string>
+#include <utility>
 #include <vector>
 
 namespace test_helper {
@@ -47,8 +51,6 @@ static_assert(sizeof(bool8) == 1, "size of bool8 must be 8 bits");
 
 // We need the following enum classes since the test harness can neither depend on NDK nor HIDL
 // definitions.
-//
-// TODO: Find a place to statically check the values against HIDL and NDK definitions.
 
 enum class TestOperandType {
     FLOAT32 = 0,
@@ -174,6 +176,8 @@ enum class TestOperationType {
     RESIZE_NEAREST_NEIGHBOR = 94,
 };
 
+enum class TestHalVersion { UNKNOWN, V1_0, V1_1, V1_2 };
+
 // Manages the data buffer for a test operand.
 class TestBuffer {
    public:
@@ -260,10 +264,55 @@ struct TestModel {
     std::vector<uint32_t> outputIndexes;
     bool isRelaxed = false;
 
+    // Additional testing information and flags associated with the TestModel.
+
     // Specifies the RANDOM_MULTINOMIAL distribution tolerance.
     // If set to greater than zero, the input is compared as log-probabilities
     // to the output and must be within this tolerance to pass.
     float expectedMultinomialDistributionTolerance = 0.0f;
+
+    // If set to true, the TestModel specifies a validation test that is expected to fail during
+    // compilation or execution.
+    bool expectFailure = false;
+
+    // The minimum supported HAL version.
+    TestHalVersion minSupportedVersion = TestHalVersion::UNKNOWN;
+};
+
+// Manages all generated test models.
+class TestModelManager {
+   public:
+    // Returns the singleton manager.
+    static TestModelManager& get() {
+        static TestModelManager instance;
+        return instance;
+    }
+
+    // Registers a TestModel to the manager. Returns a dummy integer for global variable
+    // initialization.
+    int add(std::string name, const TestModel& testModel) {
+        mTestModels.emplace(std::move(name), &testModel);
+        return 0;
+    }
+
+    // Returns a vector of selected TestModels for which the given "filter" returns true.
+    using TestParam = std::pair<std::string, const TestModel*>;
+    std::vector<TestParam> getTestModels(std::function<bool(const TestModel&)> filter) {
+        std::vector<TestParam> testModels;
+        testModels.reserve(mTestModels.size());
+        std::copy_if(mTestModels.begin(), mTestModels.end(), std::back_inserter(testModels),
+                     [filter](const auto& nameTestPair) { return filter(*nameTestPair.second); });
+        return testModels;
+    }
+
+   private:
+    TestModelManager() = default;
+    TestModelManager(const TestModelManager&) = delete;
+    TestModelManager& operator=(const TestModelManager&) = delete;
+
+    // Contains all TestModels generated from nn/runtime/test/specs directory.
+    // The TestModels are sorted by name to ensure a predictable order.
+    std::map<std::string, const TestModel*> mTestModels;
 };
 
 // Check the output results against the expected values in test model by calling

@@ -2,16 +2,17 @@
 // DO NOT EDIT
 // clang-format off
 #include "TestHarness.h"
-
 using namespace test_helper;
 
 namespace generated_tests::logical_and {
 
 const TestModel& get_test_model_simple() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<bool8>({true, false, false, true}),
@@ -53,15 +54,19 @@ const TestModel& get_test_model_simple() {
     return model;
 }
 
+const auto dummy_test_model_simple = TestModelManager::get().add("logical_and_simple", get_test_model_simple());
+
 }  // namespace generated_tests::logical_and
 
 namespace generated_tests::logical_and {
 
 const TestModel& get_test_model_broadcast() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<bool8>({true, false, false, true}),
@@ -102,6 +107,8 @@ const TestModel& get_test_model_broadcast() {
     };
     return model;
 }
+
+const auto dummy_test_model_broadcast = TestModelManager::get().add("logical_and_broadcast", get_test_model_broadcast());
 
 }  // namespace generated_tests::logical_and
 

@@ -2,16 +2,17 @@
 // DO NOT EDIT
 // clang-format off
 #include "TestHarness.h"
-
 using namespace test_helper;
 
 namespace generated_tests::box_with_nms_limit_linear {
 
 const TestModel& get_test_model() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({0.9f, 0.95f, 0.75f, 0.8f, 0.7f, 0.85f, 0.6f, 0.9f, 0.95f, 0.9f, 0.65f, 0.9f, 0.8f, 0.85f, 0.8f, 0.6f, 0.6f, 0.2f, 0.6f, 0.8f, 0.4f, 0.9f, 0.55f, 0.6f, 0.9f, 0.75f, 0.7f, 0.8f, 0.7f, 0.85f, 0.9f, 0.95f, 0.75f, 0.8f, 0.85f, 0.8f, 0.6f, 0.9f, 0.95f, 0.6f, 0.6f, 0.2f, 0.5f, 0.9f, 0.8f, 0.9f, 0.75f, 0.7f, 0.9f, 0.65f, 0.9f, 0.9f, 0.55f, 0.6f, 0.6f, 0.8f, 0.4f}),
@@ -152,6 +153,8 @@ const TestModel& get_test_model() {
     };
     return model;
 }
+
+const auto dummy_test_model = TestModelManager::get().add("box_with_nms_limit_linear", get_test_model());
 
 }  // namespace generated_tests::box_with_nms_limit_linear
 
@@ -159,9 +162,11 @@ namespace generated_tests::box_with_nms_limit_linear {
 
 const TestModel& get_test_model_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {2, 13, 16},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -370,6 +375,8 @@ const TestModel& get_test_model_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_all_inputs_as_internal = TestModelManager::get().add("box_with_nms_limit_linear_all_inputs_as_internal", get_test_model_all_inputs_as_internal());
 
 }  // namespace generated_tests::box_with_nms_limit_linear
 
@@ -377,9 +384,11 @@ namespace generated_tests::box_with_nms_limit_linear {
 
 const TestModel& get_test_model_relaxed() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({0.9f, 0.95f, 0.75f, 0.8f, 0.7f, 0.85f, 0.6f, 0.9f, 0.95f, 0.9f, 0.65f, 0.9f, 0.8f, 0.85f, 0.8f, 0.6f, 0.6f, 0.2f, 0.6f, 0.8f, 0.4f, 0.9f, 0.55f, 0.6f, 0.9f, 0.75f, 0.7f, 0.8f, 0.7f, 0.85f, 0.9f, 0.95f, 0.75f, 0.8f, 0.85f, 0.8f, 0.6f, 0.9f, 0.95f, 0.6f, 0.6f, 0.2f, 0.5f, 0.9f, 0.8f, 0.9f, 0.75f, 0.7f, 0.9f, 0.65f, 0.9f, 0.9f, 0.55f, 0.6f, 0.6f, 0.8f, 0.4f}),
@@ -520,6 +529,8 @@ const TestModel& get_test_model_relaxed() {
     };
     return model;
 }
+
+const auto dummy_test_model_relaxed = TestModelManager::get().add("box_with_nms_limit_linear_relaxed", get_test_model_relaxed());
 
 }  // namespace generated_tests::box_with_nms_limit_linear
 
@@ -527,9 +538,11 @@ namespace generated_tests::box_with_nms_limit_linear {
 
 const TestModel& get_test_model_relaxed_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {2, 13, 16},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -739,15 +752,19 @@ const TestModel& get_test_model_relaxed_all_inputs_as_internal() {
     return model;
 }
 
+const auto dummy_test_model_relaxed_all_inputs_as_internal = TestModelManager::get().add("box_with_nms_limit_linear_relaxed_all_inputs_as_internal", get_test_model_relaxed_all_inputs_as_internal());
+
 }  // namespace generated_tests::box_with_nms_limit_linear
 
 namespace generated_tests::box_with_nms_limit_linear {
 
 const TestModel& get_test_model_float16() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({0.8999999761581421f, 0.949999988079071f, 0.75f, 0.800000011920929f, 0.699999988079071f, 0.8500000238418579f, 0.6000000238418579f, 0.8999999761581421f, 0.949999988079071f, 0.8999999761581421f, 0.6499999761581421f, 0.8999999761581421f, 0.800000011920929f, 0.8500000238418579f, 0.800000011920929f, 0.6000000238418579f, 0.6000000238418579f, 0.20000000298023224f, 0.6000000238418579f, 0.800000011920929f, 0.4000000059604645f, 0.8999999761581421f, 0.550000011920929f, 0.6000000238418579f, 0.8999999761581421f, 0.75f, 0.699999988079071f, 0.800000011920929f, 0.699999988079071f, 0.8500000238418579f, 0.8999999761581421f, 0.949999988079071f, 0.75f, 0.800000011920929f, 0.8500000238418579f, 0.800000011920929f, 0.6000000238418579f, 0.8999999761581421f, 0.949999988079071f, 0.6000000238418579f, 0.6000000238418579f, 0.20000000298023224f, 0.5f, 0.8999999761581421f, 0.800000011920929f, 0.8999999761581421f, 0.75f, 0.699999988079071f, 0.8999999761581421f, 0.6499999761581421f, 0.8999999761581421f, 0.8999999761581421f, 0.550000011920929f, 0.6000000238418579f, 0.6000000238418579f, 0.800000011920929f, 0.4000000059604645f}),
@@ -889,15 +906,19 @@ const TestModel& get_test_model_float16() {
     return model;
 }
 
+const auto dummy_test_model_float16 = TestModelManager::get().add("box_with_nms_limit_linear_float16", get_test_model_float16());
+
 }  // namespace generated_tests::box_with_nms_limit_linear
 
 namespace generated_tests::box_with_nms_limit_linear {
 
 const TestModel& get_test_model_float16_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {2, 13, 16},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -1107,15 +1128,19 @@ const TestModel& get_test_model_float16_all_inputs_as_internal() {
     return model;
 }
 
+const auto dummy_test_model_float16_all_inputs_as_internal = TestModelManager::get().add("box_with_nms_limit_linear_float16_all_inputs_as_internal", get_test_model_float16_all_inputs_as_internal());
+
 }  // namespace generated_tests::box_with_nms_limit_linear
 
 namespace generated_tests::box_with_nms_limit_linear {
 
 const TestModel& get_test_model_quant8() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({90, 95, 75, 80, 70, 85, 60, 90, 95, 90, 65, 90, 80, 85, 80, 60, 60, 20, 60, 80, 40, 90, 55, 60, 90, 75, 70, 80, 70, 85, 90, 95, 75, 80, 85, 80, 60, 90, 95, 60, 60, 20, 50, 90, 80, 90, 75, 70, 90, 65, 90, 90, 55, 60, 60, 80, 40}),
@@ -1257,15 +1282,19 @@ const TestModel& get_test_model_quant8() {
     return model;
 }
 
+const auto dummy_test_model_quant8 = TestModelManager::get().add("box_with_nms_limit_linear_quant8", get_test_model_quant8());
+
 }  // namespace generated_tests::box_with_nms_limit_linear
 
 namespace generated_tests::box_with_nms_limit_linear {
 
 const TestModel& get_test_model_quant8_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {1, 2, 13},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -1441,15 +1470,19 @@ const TestModel& get_test_model_quant8_all_inputs_as_internal() {
     return model;
 }
 
+const auto dummy_test_model_quant8_all_inputs_as_internal = TestModelManager::get().add("box_with_nms_limit_linear_quant8_all_inputs_as_internal", get_test_model_quant8_all_inputs_as_internal());
+
 }  // namespace generated_tests::box_with_nms_limit_linear
 
 namespace generated_tests::box_with_nms_limit_linear {
 
 const TestModel& get_test_model_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({0.9f, 0.95f, 0.75f, 0.8f, 0.7f, 0.85f, 0.6f, 0.9f, 0.95f, 0.9f, 0.65f, 0.9f, 0.8f, 0.85f, 0.8f, 0.6f, 0.6f, 0.2f, 0.6f, 0.8f, 0.4f, 0.9f, 0.55f, 0.6f, 0.9f, 0.75f, 0.7f, 0.8f, 0.7f, 0.85f, 0.9f, 0.95f, 0.75f, 0.8f, 0.85f, 0.8f, 0.6f, 0.9f, 0.95f, 0.6f, 0.6f, 0.2f, 0.5f, 0.9f, 0.8f, 0.9f, 0.75f, 0.7f, 0.9f, 0.65f, 0.9f, 0.9f, 0.55f, 0.6f, 0.6f, 0.8f, 0.4f}),
@@ -1590,6 +1623,8 @@ const TestModel& get_test_model_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_2 = TestModelManager::get().add("box_with_nms_limit_linear_2", get_test_model_2());
 
 }  // namespace generated_tests::box_with_nms_limit_linear
 
@@ -1597,9 +1632,11 @@ namespace generated_tests::box_with_nms_limit_linear {
 
 const TestModel& get_test_model_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {2, 13, 16},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -1808,6 +1845,8 @@ const TestModel& get_test_model_all_inputs_as_internal_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_all_inputs_as_internal_2 = TestModelManager::get().add("box_with_nms_limit_linear_all_inputs_as_internal_2", get_test_model_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::box_with_nms_limit_linear
 
@@ -1815,9 +1854,11 @@ namespace generated_tests::box_with_nms_limit_linear {
 
 const TestModel& get_test_model_relaxed_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({0.9f, 0.95f, 0.75f, 0.8f, 0.7f, 0.85f, 0.6f, 0.9f, 0.95f, 0.9f, 0.65f, 0.9f, 0.8f, 0.85f, 0.8f, 0.6f, 0.6f, 0.2f, 0.6f, 0.8f, 0.4f, 0.9f, 0.55f, 0.6f, 0.9f, 0.75f, 0.7f, 0.8f, 0.7f, 0.85f, 0.9f, 0.95f, 0.75f, 0.8f, 0.85f, 0.8f, 0.6f, 0.9f, 0.95f, 0.6f, 0.6f, 0.2f, 0.5f, 0.9f, 0.8f, 0.9f, 0.75f, 0.7f, 0.9f, 0.65f, 0.9f, 0.9f, 0.55f, 0.6f, 0.6f, 0.8f, 0.4f}),
@@ -1958,6 +1999,8 @@ const TestModel& get_test_model_relaxed_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_relaxed_2 = TestModelManager::get().add("box_with_nms_limit_linear_relaxed_2", get_test_model_relaxed_2());
 
 }  // namespace generated_tests::box_with_nms_limit_linear
 
@@ -1965,9 +2008,11 @@ namespace generated_tests::box_with_nms_limit_linear {
 
 const TestModel& get_test_model_relaxed_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {2, 13, 16},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -2177,15 +2222,19 @@ const TestModel& get_test_model_relaxed_all_inputs_as_internal_2() {
     return model;
 }
 
+const auto dummy_test_model_relaxed_all_inputs_as_internal_2 = TestModelManager::get().add("box_with_nms_limit_linear_relaxed_all_inputs_as_internal_2", get_test_model_relaxed_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::box_with_nms_limit_linear
 
 namespace generated_tests::box_with_nms_limit_linear {
 
 const TestModel& get_test_model_float16_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({0.8999999761581421f, 0.949999988079071f, 0.75f, 0.800000011920929f, 0.699999988079071f, 0.8500000238418579f, 0.6000000238418579f, 0.8999999761581421f, 0.949999988079071f, 0.8999999761581421f, 0.6499999761581421f, 0.8999999761581421f, 0.800000011920929f, 0.8500000238418579f, 0.800000011920929f, 0.6000000238418579f, 0.6000000238418579f, 0.20000000298023224f, 0.6000000238418579f, 0.800000011920929f, 0.4000000059604645f, 0.8999999761581421f, 0.550000011920929f, 0.6000000238418579f, 0.8999999761581421f, 0.75f, 0.699999988079071f, 0.800000011920929f, 0.699999988079071f, 0.8500000238418579f, 0.8999999761581421f, 0.949999988079071f, 0.75f, 0.800000011920929f, 0.8500000238418579f, 0.800000011920929f, 0.6000000238418579f, 0.8999999761581421f, 0.949999988079071f, 0.6000000238418579f, 0.6000000238418579f, 0.20000000298023224f, 0.5f, 0.8999999761581421f, 0.800000011920929f, 0.8999999761581421f, 0.75f, 0.699999988079071f, 0.8999999761581421f, 0.6499999761581421f, 0.8999999761581421f, 0.8999999761581421f, 0.550000011920929f, 0.6000000238418579f, 0.6000000238418579f, 0.800000011920929f, 0.4000000059604645f}),
@@ -2327,15 +2376,19 @@ const TestModel& get_test_model_float16_2() {
     return model;
 }
 
+const auto dummy_test_model_float16_2 = TestModelManager::get().add("box_with_nms_limit_linear_float16_2", get_test_model_float16_2());
+
 }  // namespace generated_tests::box_with_nms_limit_linear
 
 namespace generated_tests::box_with_nms_limit_linear {
 
 const TestModel& get_test_model_float16_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {2, 13, 16},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -2545,15 +2598,19 @@ const TestModel& get_test_model_float16_all_inputs_as_internal_2() {
     return model;
 }
 
+const auto dummy_test_model_float16_all_inputs_as_internal_2 = TestModelManager::get().add("box_with_nms_limit_linear_float16_all_inputs_as_internal_2", get_test_model_float16_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::box_with_nms_limit_linear
 
 namespace generated_tests::box_with_nms_limit_linear {
 
 const TestModel& get_test_model_quant8_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({218, 223, 203, 208, 198, 213, 188, 218, 223, 218, 193, 218, 208, 213, 208, 188, 188, 148, 188, 208, 168, 218, 183, 188, 218, 203, 198, 208, 198, 213, 218, 223, 203, 208, 213, 208, 188, 218, 223, 188, 188, 148, 178, 218, 208, 218, 203, 198, 218, 193, 218, 218, 183, 188, 188, 208, 168}),
@@ -2695,15 +2752,19 @@ const TestModel& get_test_model_quant8_2() {
     return model;
 }
 
+const auto dummy_test_model_quant8_2 = TestModelManager::get().add("box_with_nms_limit_linear_quant8_2", get_test_model_quant8_2());
+
 }  // namespace generated_tests::box_with_nms_limit_linear
 
 namespace generated_tests::box_with_nms_limit_linear {
 
 const TestModel& get_test_model_quant8_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {1, 2, 13},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -2878,6 +2939,8 @@ const TestModel& get_test_model_quant8_all_inputs_as_internal_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_quant8_all_inputs_as_internal_2 = TestModelManager::get().add("box_with_nms_limit_linear_quant8_all_inputs_as_internal_2", get_test_model_quant8_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::box_with_nms_limit_linear
 
