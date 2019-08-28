@@ -2,16 +2,17 @@
 // DO NOT EDIT
 // clang-format off
 #include "TestHarness.h"
-
 using namespace test_helper;
 
 namespace generated_tests::pad_all_dims {
 
 const TestModel& get_test_model() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_1,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f}),
@@ -52,6 +53,8 @@ const TestModel& get_test_model() {
     };
     return model;
 }
+
+const auto dummy_test_model = TestModelManager::get().add("pad_all_dims", get_test_model());
 
 }  // namespace generated_tests::pad_all_dims
 
@@ -59,9 +62,11 @@ namespace generated_tests::pad_all_dims {
 
 const TestModel& get_test_model_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {3},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_1,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -136,6 +141,8 @@ const TestModel& get_test_model_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_all_inputs_as_internal = TestModelManager::get().add("pad_all_dims_all_inputs_as_internal", get_test_model_all_inputs_as_internal());
 
 }  // namespace generated_tests::pad_all_dims
 
@@ -143,9 +150,11 @@ namespace generated_tests::pad_all_dims {
 
 const TestModel& get_test_model_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_1,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f}),
@@ -186,6 +195,8 @@ const TestModel& get_test_model_all_tensors_as_inputs() {
     };
     return model;
 }
+
+const auto dummy_test_model_all_tensors_as_inputs = TestModelManager::get().add("pad_all_dims_all_tensors_as_inputs", get_test_model_all_tensors_as_inputs());
 
 }  // namespace generated_tests::pad_all_dims
 
@@ -193,9 +204,11 @@ namespace generated_tests::pad_all_dims {
 
 const TestModel& get_test_model_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {1, 3},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_1,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -270,6 +283,8 @@ const TestModel& get_test_model_all_tensors_as_inputs_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("pad_all_dims_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_all_tensors_as_inputs_all_inputs_as_internal());
 
 }  // namespace generated_tests::pad_all_dims
 
@@ -277,9 +292,11 @@ namespace generated_tests::pad_all_dims {
 
 const TestModel& get_test_model_float16() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f}),
@@ -320,6 +337,8 @@ const TestModel& get_test_model_float16() {
     };
     return model;
 }
+
+const auto dummy_test_model_float16 = TestModelManager::get().add("pad_all_dims_float16", get_test_model_float16());
 
 }  // namespace generated_tests::pad_all_dims
 
@@ -327,9 +346,11 @@ namespace generated_tests::pad_all_dims {
 
 const TestModel& get_test_model_float16_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {3},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -404,6 +425,8 @@ const TestModel& get_test_model_float16_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_float16_all_inputs_as_internal = TestModelManager::get().add("pad_all_dims_float16_all_inputs_as_internal", get_test_model_float16_all_inputs_as_internal());
 
 }  // namespace generated_tests::pad_all_dims
 
@@ -411,9 +434,11 @@ namespace generated_tests::pad_all_dims {
 
 const TestModel& get_test_model_float16_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f}),
@@ -455,15 +480,19 @@ const TestModel& get_test_model_float16_all_tensors_as_inputs() {
     return model;
 }
 
+const auto dummy_test_model_float16_all_tensors_as_inputs = TestModelManager::get().add("pad_all_dims_float16_all_tensors_as_inputs", get_test_model_float16_all_tensors_as_inputs());
+
 }  // namespace generated_tests::pad_all_dims
 
 namespace generated_tests::pad_all_dims {
 
 const TestModel& get_test_model_float16_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {1, 3},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -539,15 +568,19 @@ const TestModel& get_test_model_float16_all_tensors_as_inputs_all_inputs_as_inte
     return model;
 }
 
+const auto dummy_test_model_float16_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("pad_all_dims_float16_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_float16_all_tensors_as_inputs_all_inputs_as_internal());
+
 }  // namespace generated_tests::pad_all_dims
 
 namespace generated_tests::pad_all_dims {
 
 const TestModel& get_test_model_relaxed() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f}),
@@ -588,6 +621,8 @@ const TestModel& get_test_model_relaxed() {
     };
     return model;
 }
+
+const auto dummy_test_model_relaxed = TestModelManager::get().add("pad_all_dims_relaxed", get_test_model_relaxed());
 
 }  // namespace generated_tests::pad_all_dims
 
@@ -595,9 +630,11 @@ namespace generated_tests::pad_all_dims {
 
 const TestModel& get_test_model_relaxed_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {3},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -672,6 +709,8 @@ const TestModel& get_test_model_relaxed_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_relaxed_all_inputs_as_internal = TestModelManager::get().add("pad_all_dims_relaxed_all_inputs_as_internal", get_test_model_relaxed_all_inputs_as_internal());
 
 }  // namespace generated_tests::pad_all_dims
 
@@ -679,9 +718,11 @@ namespace generated_tests::pad_all_dims {
 
 const TestModel& get_test_model_relaxed_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f}),
@@ -723,15 +764,19 @@ const TestModel& get_test_model_relaxed_all_tensors_as_inputs() {
     return model;
 }
 
+const auto dummy_test_model_relaxed_all_tensors_as_inputs = TestModelManager::get().add("pad_all_dims_relaxed_all_tensors_as_inputs", get_test_model_relaxed_all_tensors_as_inputs());
+
 }  // namespace generated_tests::pad_all_dims
 
 namespace generated_tests::pad_all_dims {
 
 const TestModel& get_test_model_relaxed_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {1, 3},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -807,15 +852,19 @@ const TestModel& get_test_model_relaxed_all_tensors_as_inputs_all_inputs_as_inte
     return model;
 }
 
+const auto dummy_test_model_relaxed_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("pad_all_dims_relaxed_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_relaxed_all_tensors_as_inputs_all_inputs_as_internal());
+
 }  // namespace generated_tests::pad_all_dims
 
 namespace generated_tests::pad_all_dims {
 
 const TestModel& get_test_model_quant8() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_1,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({0, 1, 1, 2, 2, 3}),
@@ -856,6 +905,8 @@ const TestModel& get_test_model_quant8() {
     };
     return model;
 }
+
+const auto dummy_test_model_quant8 = TestModelManager::get().add("pad_all_dims_quant8", get_test_model_quant8());
 
 }  // namespace generated_tests::pad_all_dims
 
@@ -863,9 +914,11 @@ namespace generated_tests::pad_all_dims {
 
 const TestModel& get_test_model_quant8_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {3},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_1,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -940,6 +993,8 @@ const TestModel& get_test_model_quant8_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_quant8_all_inputs_as_internal = TestModelManager::get().add("pad_all_dims_quant8_all_inputs_as_internal", get_test_model_quant8_all_inputs_as_internal());
 
 }  // namespace generated_tests::pad_all_dims
 
@@ -947,9 +1002,11 @@ namespace generated_tests::pad_all_dims {
 
 const TestModel& get_test_model_quant8_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_1,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({0, 1, 1, 2, 2, 3}),
@@ -991,15 +1048,19 @@ const TestModel& get_test_model_quant8_all_tensors_as_inputs() {
     return model;
 }
 
+const auto dummy_test_model_quant8_all_tensors_as_inputs = TestModelManager::get().add("pad_all_dims_quant8_all_tensors_as_inputs", get_test_model_quant8_all_tensors_as_inputs());
+
 }  // namespace generated_tests::pad_all_dims
 
 namespace generated_tests::pad_all_dims {
 
 const TestModel& get_test_model_quant8_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {1, 3},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_1,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -1074,6 +1135,8 @@ const TestModel& get_test_model_quant8_all_tensors_as_inputs_all_inputs_as_inter
     };
     return model;
 }
+
+const auto dummy_test_model_quant8_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("pad_all_dims_quant8_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_quant8_all_tensors_as_inputs_all_inputs_as_internal());
 
 }  // namespace generated_tests::pad_all_dims
 

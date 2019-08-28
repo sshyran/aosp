@@ -2,16 +2,17 @@
 // DO NOT EDIT
 // clang-format off
 #include "TestHarness.h"
-
 using namespace test_helper;
 
 namespace generated_tests::less {
 
 const TestModel& get_test_model_simple() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({5.0f, 7.0f, 10.0f}),
@@ -53,15 +54,19 @@ const TestModel& get_test_model_simple() {
     return model;
 }
 
+const auto dummy_test_model_simple = TestModelManager::get().add("less_simple", get_test_model_simple());
+
 }  // namespace generated_tests::less
 
 namespace generated_tests::less {
 
 const TestModel& get_test_model_simple_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {3, 6},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -171,15 +176,19 @@ const TestModel& get_test_model_simple_all_inputs_as_internal() {
     return model;
 }
 
+const auto dummy_test_model_simple_all_inputs_as_internal = TestModelManager::get().add("less_simple_all_inputs_as_internal", get_test_model_simple_all_inputs_as_internal());
+
 }  // namespace generated_tests::less
 
 namespace generated_tests::less {
 
 const TestModel& get_test_model_simple_int32() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<int32_t>({5, 7, 10}),
@@ -221,15 +230,19 @@ const TestModel& get_test_model_simple_int32() {
     return model;
 }
 
+const auto dummy_test_model_simple_int32 = TestModelManager::get().add("less_simple_int32", get_test_model_simple_int32());
+
 }  // namespace generated_tests::less
 
 namespace generated_tests::less {
 
 const TestModel& get_test_model_simple_float16() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({5.0f, 7.0f, 10.0f}),
@@ -270,6 +283,8 @@ const TestModel& get_test_model_simple_float16() {
     };
     return model;
 }
+
+const auto dummy_test_model_simple_float16 = TestModelManager::get().add("less_simple_float16", get_test_model_simple_float16());
 
 }  // namespace generated_tests::less
 
@@ -277,9 +292,11 @@ namespace generated_tests::less {
 
 const TestModel& get_test_model_simple_float16_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {3, 6},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -389,15 +406,19 @@ const TestModel& get_test_model_simple_float16_all_inputs_as_internal() {
     return model;
 }
 
+const auto dummy_test_model_simple_float16_all_inputs_as_internal = TestModelManager::get().add("less_simple_float16_all_inputs_as_internal", get_test_model_simple_float16_all_inputs_as_internal());
+
 }  // namespace generated_tests::less
 
 namespace generated_tests::less {
 
 const TestModel& get_test_model_simple_relaxed() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({5.0f, 7.0f, 10.0f}),
@@ -438,6 +459,8 @@ const TestModel& get_test_model_simple_relaxed() {
     };
     return model;
 }
+
+const auto dummy_test_model_simple_relaxed = TestModelManager::get().add("less_simple_relaxed", get_test_model_simple_relaxed());
 
 }  // namespace generated_tests::less
 
@@ -445,9 +468,11 @@ namespace generated_tests::less {
 
 const TestModel& get_test_model_simple_relaxed_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {3, 6},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -557,15 +582,19 @@ const TestModel& get_test_model_simple_relaxed_all_inputs_as_internal() {
     return model;
 }
 
+const auto dummy_test_model_simple_relaxed_all_inputs_as_internal = TestModelManager::get().add("less_simple_relaxed_all_inputs_as_internal", get_test_model_simple_relaxed_all_inputs_as_internal());
+
 }  // namespace generated_tests::less
 
 namespace generated_tests::less {
 
 const TestModel& get_test_model_broadcast() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({5.0f, 10.0f}),
@@ -607,15 +636,19 @@ const TestModel& get_test_model_broadcast() {
     return model;
 }
 
+const auto dummy_test_model_broadcast = TestModelManager::get().add("less_broadcast", get_test_model_broadcast());
+
 }  // namespace generated_tests::less
 
 namespace generated_tests::less {
 
 const TestModel& get_test_model_broadcast_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {3, 6},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -725,15 +758,19 @@ const TestModel& get_test_model_broadcast_all_inputs_as_internal() {
     return model;
 }
 
+const auto dummy_test_model_broadcast_all_inputs_as_internal = TestModelManager::get().add("less_broadcast_all_inputs_as_internal", get_test_model_broadcast_all_inputs_as_internal());
+
 }  // namespace generated_tests::less
 
 namespace generated_tests::less {
 
 const TestModel& get_test_model_broadcast_int32() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<int32_t>({5, 10}),
@@ -775,15 +812,19 @@ const TestModel& get_test_model_broadcast_int32() {
     return model;
 }
 
+const auto dummy_test_model_broadcast_int32 = TestModelManager::get().add("less_broadcast_int32", get_test_model_broadcast_int32());
+
 }  // namespace generated_tests::less
 
 namespace generated_tests::less {
 
 const TestModel& get_test_model_broadcast_float16() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({5.0f, 10.0f}),
@@ -824,6 +865,8 @@ const TestModel& get_test_model_broadcast_float16() {
     };
     return model;
 }
+
+const auto dummy_test_model_broadcast_float16 = TestModelManager::get().add("less_broadcast_float16", get_test_model_broadcast_float16());
 
 }  // namespace generated_tests::less
 
@@ -831,9 +874,11 @@ namespace generated_tests::less {
 
 const TestModel& get_test_model_broadcast_float16_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {3, 6},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -943,15 +988,19 @@ const TestModel& get_test_model_broadcast_float16_all_inputs_as_internal() {
     return model;
 }
 
+const auto dummy_test_model_broadcast_float16_all_inputs_as_internal = TestModelManager::get().add("less_broadcast_float16_all_inputs_as_internal", get_test_model_broadcast_float16_all_inputs_as_internal());
+
 }  // namespace generated_tests::less
 
 namespace generated_tests::less {
 
 const TestModel& get_test_model_broadcast_relaxed() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({5.0f, 10.0f}),
@@ -992,6 +1041,8 @@ const TestModel& get_test_model_broadcast_relaxed() {
     };
     return model;
 }
+
+const auto dummy_test_model_broadcast_relaxed = TestModelManager::get().add("less_broadcast_relaxed", get_test_model_broadcast_relaxed());
 
 }  // namespace generated_tests::less
 
@@ -999,9 +1050,11 @@ namespace generated_tests::less {
 
 const TestModel& get_test_model_broadcast_relaxed_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {3, 6},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -1111,15 +1164,19 @@ const TestModel& get_test_model_broadcast_relaxed_all_inputs_as_internal() {
     return model;
 }
 
+const auto dummy_test_model_broadcast_relaxed_all_inputs_as_internal = TestModelManager::get().add("less_broadcast_relaxed_all_inputs_as_internal", get_test_model_broadcast_relaxed_all_inputs_as_internal());
+
 }  // namespace generated_tests::less
 
 namespace generated_tests::less {
 
 const TestModel& get_test_model_quantized_different_scale() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({129, 130, 131}),
@@ -1160,6 +1217,8 @@ const TestModel& get_test_model_quantized_different_scale() {
     };
     return model;
 }
+
+const auto dummy_test_model_quantized_different_scale = TestModelManager::get().add("less_quantized_different_scale", get_test_model_quantized_different_scale());
 
 }  // namespace generated_tests::less
 
@@ -1167,9 +1226,11 @@ namespace generated_tests::less {
 
 const TestModel& get_test_model_quantized_different_scale_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {3, 6},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -1278,6 +1339,8 @@ const TestModel& get_test_model_quantized_different_scale_all_inputs_as_internal
     };
     return model;
 }
+
+const auto dummy_test_model_quantized_different_scale_all_inputs_as_internal = TestModelManager::get().add("less_quantized_different_scale_all_inputs_as_internal", get_test_model_quantized_different_scale_all_inputs_as_internal());
 
 }  // namespace generated_tests::less
 
@@ -1285,9 +1348,11 @@ namespace generated_tests::less {
 
 const TestModel& get_test_model_quantized_different_zero_point() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({129, 130, 131}),
@@ -1329,15 +1394,19 @@ const TestModel& get_test_model_quantized_different_zero_point() {
     return model;
 }
 
+const auto dummy_test_model_quantized_different_zero_point = TestModelManager::get().add("less_quantized_different_zero_point", get_test_model_quantized_different_zero_point());
+
 }  // namespace generated_tests::less
 
 namespace generated_tests::less {
 
 const TestModel& get_test_model_quantized_different_zero_point_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {3, 6},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -1447,15 +1516,19 @@ const TestModel& get_test_model_quantized_different_zero_point_all_inputs_as_int
     return model;
 }
 
+const auto dummy_test_model_quantized_different_zero_point_all_inputs_as_internal = TestModelManager::get().add("less_quantized_different_zero_point_all_inputs_as_internal", get_test_model_quantized_different_zero_point_all_inputs_as_internal());
+
 }  // namespace generated_tests::less
 
 namespace generated_tests::less {
 
 const TestModel& get_test_model_quantized_overflow_second_input_if_requantized() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({0}),
@@ -1496,6 +1569,8 @@ const TestModel& get_test_model_quantized_overflow_second_input_if_requantized()
     };
     return model;
 }
+
+const auto dummy_test_model_quantized_overflow_second_input_if_requantized = TestModelManager::get().add("less_quantized_overflow_second_input_if_requantized", get_test_model_quantized_overflow_second_input_if_requantized());
 
 }  // namespace generated_tests::less
 
@@ -1503,9 +1578,11 @@ namespace generated_tests::less {
 
 const TestModel& get_test_model_quantized_overflow_second_input_if_requantized_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {3, 6},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -1615,15 +1692,19 @@ const TestModel& get_test_model_quantized_overflow_second_input_if_requantized_a
     return model;
 }
 
+const auto dummy_test_model_quantized_overflow_second_input_if_requantized_all_inputs_as_internal = TestModelManager::get().add("less_quantized_overflow_second_input_if_requantized_all_inputs_as_internal", get_test_model_quantized_overflow_second_input_if_requantized_all_inputs_as_internal());
+
 }  // namespace generated_tests::less
 
 namespace generated_tests::less {
 
 const TestModel& get_test_model_quantized_overflow_first_input_if_requantized() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({200}),
@@ -1665,15 +1746,19 @@ const TestModel& get_test_model_quantized_overflow_first_input_if_requantized() 
     return model;
 }
 
+const auto dummy_test_model_quantized_overflow_first_input_if_requantized = TestModelManager::get().add("less_quantized_overflow_first_input_if_requantized", get_test_model_quantized_overflow_first_input_if_requantized());
+
 }  // namespace generated_tests::less
 
 namespace generated_tests::less {
 
 const TestModel& get_test_model_quantized_overflow_first_input_if_requantized_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {3, 6},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -1783,15 +1868,19 @@ const TestModel& get_test_model_quantized_overflow_first_input_if_requantized_al
     return model;
 }
 
+const auto dummy_test_model_quantized_overflow_first_input_if_requantized_all_inputs_as_internal = TestModelManager::get().add("less_quantized_overflow_first_input_if_requantized_all_inputs_as_internal", get_test_model_quantized_overflow_first_input_if_requantized_all_inputs_as_internal());
+
 }  // namespace generated_tests::less
 
 namespace generated_tests::less {
 
 const TestModel& get_test_model_boolean() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<bool8>({false, true, false, true}),
@@ -1832,6 +1921,8 @@ const TestModel& get_test_model_boolean() {
     };
     return model;
 }
+
+const auto dummy_test_model_boolean = TestModelManager::get().add("less_boolean", get_test_model_boolean());
 
 }  // namespace generated_tests::less
 

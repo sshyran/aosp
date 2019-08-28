@@ -2,16 +2,17 @@
 // DO NOT EDIT
 // clang-format off
 #include "TestHarness.h"
-
 using namespace test_helper;
 
 namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nhwc_none() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 6.0f, 5.0f, 4.0f, 3.0f, 2.0f, 1.0f, 2.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f}),
@@ -152,6 +153,8 @@ const TestModel& get_test_model_nhwc_none() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_none = TestModelManager::get().add("grouped_conv2d_nhwc_none", get_test_model_nhwc_none());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -159,9 +162,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nhwc_none_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -336,6 +341,8 @@ const TestModel& get_test_model_nhwc_none_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_none_all_inputs_as_internal = TestModelManager::get().add("grouped_conv2d_nhwc_none_all_inputs_as_internal", get_test_model_nhwc_none_all_inputs_as_internal());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -343,9 +350,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nhwc_none_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 6.0f, 5.0f, 4.0f, 3.0f, 2.0f, 1.0f, 2.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f}),
@@ -486,6 +495,8 @@ const TestModel& get_test_model_nhwc_none_all_tensors_as_inputs() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_none_all_tensors_as_inputs = TestModelManager::get().add("grouped_conv2d_nhwc_none_all_tensors_as_inputs", get_test_model_nhwc_none_all_tensors_as_inputs());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -493,9 +504,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nhwc_none_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13, 16, 19},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -738,6 +751,8 @@ const TestModel& get_test_model_nhwc_none_all_tensors_as_inputs_all_inputs_as_in
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_none_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("grouped_conv2d_nhwc_none_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_nhwc_none_all_tensors_as_inputs_all_inputs_as_internal());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -745,9 +760,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nhwc_none_relaxed() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 6.0f, 5.0f, 4.0f, 3.0f, 2.0f, 1.0f, 2.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f}),
@@ -888,6 +905,8 @@ const TestModel& get_test_model_nhwc_none_relaxed() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_none_relaxed = TestModelManager::get().add("grouped_conv2d_nhwc_none_relaxed", get_test_model_nhwc_none_relaxed());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -895,9 +914,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nhwc_none_relaxed_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -1072,6 +1093,8 @@ const TestModel& get_test_model_nhwc_none_relaxed_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_none_relaxed_all_inputs_as_internal = TestModelManager::get().add("grouped_conv2d_nhwc_none_relaxed_all_inputs_as_internal", get_test_model_nhwc_none_relaxed_all_inputs_as_internal());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -1079,9 +1102,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nhwc_none_relaxed_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 6.0f, 5.0f, 4.0f, 3.0f, 2.0f, 1.0f, 2.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f}),
@@ -1222,6 +1247,8 @@ const TestModel& get_test_model_nhwc_none_relaxed_all_tensors_as_inputs() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_none_relaxed_all_tensors_as_inputs = TestModelManager::get().add("grouped_conv2d_nhwc_none_relaxed_all_tensors_as_inputs", get_test_model_nhwc_none_relaxed_all_tensors_as_inputs());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -1229,9 +1256,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nhwc_none_relaxed_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13, 16, 19},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -1475,15 +1504,19 @@ const TestModel& get_test_model_nhwc_none_relaxed_all_tensors_as_inputs_all_inpu
     return model;
 }
 
+const auto dummy_test_model_nhwc_none_relaxed_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("grouped_conv2d_nhwc_none_relaxed_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_nhwc_none_relaxed_all_tensors_as_inputs_all_inputs_as_internal());
+
 }  // namespace generated_tests::grouped_conv2d
 
 namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nhwc_none_quant8() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({104, 108, 112, 116, 120, 124, 124, 120, 116, 112, 108, 104, 108, 112, 112, 112, 112, 112}),
@@ -1624,6 +1657,8 @@ const TestModel& get_test_model_nhwc_none_quant8() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_none_quant8 = TestModelManager::get().add("grouped_conv2d_nhwc_none_quant8", get_test_model_nhwc_none_quant8());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -1631,9 +1666,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nhwc_none_quant8_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -1808,6 +1845,8 @@ const TestModel& get_test_model_nhwc_none_quant8_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_none_quant8_all_inputs_as_internal = TestModelManager::get().add("grouped_conv2d_nhwc_none_quant8_all_inputs_as_internal", get_test_model_nhwc_none_quant8_all_inputs_as_internal());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -1815,9 +1854,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nhwc_none_quant8_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({104, 108, 112, 116, 120, 124, 124, 120, 116, 112, 108, 104, 108, 112, 112, 112, 112, 112}),
@@ -1958,6 +1999,8 @@ const TestModel& get_test_model_nhwc_none_quant8_all_tensors_as_inputs() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_none_quant8_all_tensors_as_inputs = TestModelManager::get().add("grouped_conv2d_nhwc_none_quant8_all_tensors_as_inputs", get_test_model_nhwc_none_quant8_all_tensors_as_inputs());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -1965,9 +2008,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nhwc_none_quant8_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {2, 13, 16},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -2176,6 +2221,8 @@ const TestModel& get_test_model_nhwc_none_quant8_all_tensors_as_inputs_all_input
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_none_quant8_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("grouped_conv2d_nhwc_none_quant8_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_nhwc_none_quant8_all_tensors_as_inputs_all_inputs_as_internal());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -2183,9 +2230,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nhwc_none_quant8_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({104, 108, 112, 116, 120, 124, 124, 120, 116, 112, 108, 104, 108, 112, 112, 112, 112, 112}),
@@ -2326,6 +2375,8 @@ const TestModel& get_test_model_nhwc_none_quant8_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_none_quant8_2 = TestModelManager::get().add("grouped_conv2d_nhwc_none_quant8_2", get_test_model_nhwc_none_quant8_2());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -2333,9 +2384,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nhwc_none_quant8_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -2510,6 +2563,8 @@ const TestModel& get_test_model_nhwc_none_quant8_all_inputs_as_internal_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_none_quant8_all_inputs_as_internal_2 = TestModelManager::get().add("grouped_conv2d_nhwc_none_quant8_all_inputs_as_internal_2", get_test_model_nhwc_none_quant8_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -2517,9 +2572,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nhwc_none_quant8_all_tensors_as_inputs_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({104, 108, 112, 116, 120, 124, 124, 120, 116, 112, 108, 104, 108, 112, 112, 112, 112, 112}),
@@ -2660,6 +2717,8 @@ const TestModel& get_test_model_nhwc_none_quant8_all_tensors_as_inputs_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_none_quant8_all_tensors_as_inputs_2 = TestModelManager::get().add("grouped_conv2d_nhwc_none_quant8_all_tensors_as_inputs_2", get_test_model_nhwc_none_quant8_all_tensors_as_inputs_2());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -2667,9 +2726,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nhwc_none_quant8_all_tensors_as_inputs_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {2, 13, 16},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -2879,15 +2940,19 @@ const TestModel& get_test_model_nhwc_none_quant8_all_tensors_as_inputs_all_input
     return model;
 }
 
+const auto dummy_test_model_nhwc_none_quant8_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("grouped_conv2d_nhwc_none_quant8_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_nhwc_none_quant8_all_tensors_as_inputs_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::grouped_conv2d
 
 namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nhwc_none_channelQuant8() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({104, 108, 112, 116, 120, 124, 124, 120, 116, 112, 108, 104, 108, 112, 112, 112, 112, 112}),
@@ -3031,6 +3096,8 @@ const TestModel& get_test_model_nhwc_none_channelQuant8() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_none_channelQuant8 = TestModelManager::get().add("grouped_conv2d_nhwc_none_channelQuant8", get_test_model_nhwc_none_channelQuant8());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -3038,9 +3105,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nhwc_none_channelQuant8_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -3218,6 +3287,8 @@ const TestModel& get_test_model_nhwc_none_channelQuant8_all_inputs_as_internal()
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_none_channelQuant8_all_inputs_as_internal = TestModelManager::get().add("grouped_conv2d_nhwc_none_channelQuant8_all_inputs_as_internal", get_test_model_nhwc_none_channelQuant8_all_inputs_as_internal());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -3225,9 +3296,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nhwc_none_channelQuant8_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({104, 108, 112, 116, 120, 124, 124, 120, 116, 112, 108, 104, 108, 112, 112, 112, 112, 112}),
@@ -3371,6 +3444,8 @@ const TestModel& get_test_model_nhwc_none_channelQuant8_all_tensors_as_inputs() 
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_none_channelQuant8_all_tensors_as_inputs = TestModelManager::get().add("grouped_conv2d_nhwc_none_channelQuant8_all_tensors_as_inputs", get_test_model_nhwc_none_channelQuant8_all_tensors_as_inputs());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -3378,9 +3453,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nhwc_none_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {1, 2, 13},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -3559,15 +3636,19 @@ const TestModel& get_test_model_nhwc_none_channelQuant8_all_tensors_as_inputs_al
     return model;
 }
 
+const auto dummy_test_model_nhwc_none_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("grouped_conv2d_nhwc_none_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_nhwc_none_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal());
+
 }  // namespace generated_tests::grouped_conv2d
 
 namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nhwc_none_channelQuant8_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({104, 108, 112, 116, 120, 124, 124, 120, 116, 112, 108, 104, 108, 112, 112, 112, 112, 112}),
@@ -3711,6 +3792,8 @@ const TestModel& get_test_model_nhwc_none_channelQuant8_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_none_channelQuant8_2 = TestModelManager::get().add("grouped_conv2d_nhwc_none_channelQuant8_2", get_test_model_nhwc_none_channelQuant8_2());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -3718,9 +3801,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nhwc_none_channelQuant8_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -3898,6 +3983,8 @@ const TestModel& get_test_model_nhwc_none_channelQuant8_all_inputs_as_internal_2
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_none_channelQuant8_all_inputs_as_internal_2 = TestModelManager::get().add("grouped_conv2d_nhwc_none_channelQuant8_all_inputs_as_internal_2", get_test_model_nhwc_none_channelQuant8_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -3905,9 +3992,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nhwc_none_channelQuant8_all_tensors_as_inputs_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({104, 108, 112, 116, 120, 124, 124, 120, 116, 112, 108, 104, 108, 112, 112, 112, 112, 112}),
@@ -4051,6 +4140,8 @@ const TestModel& get_test_model_nhwc_none_channelQuant8_all_tensors_as_inputs_2(
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_none_channelQuant8_all_tensors_as_inputs_2 = TestModelManager::get().add("grouped_conv2d_nhwc_none_channelQuant8_all_tensors_as_inputs_2", get_test_model_nhwc_none_channelQuant8_all_tensors_as_inputs_2());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -4058,9 +4149,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nhwc_none_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {1, 2, 13},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -4239,15 +4332,19 @@ const TestModel& get_test_model_nhwc_none_channelQuant8_all_tensors_as_inputs_al
     return model;
 }
 
+const auto dummy_test_model_nhwc_none_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("grouped_conv2d_nhwc_none_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_nhwc_none_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::grouped_conv2d
 
 namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nhwc_none_float16() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 6.0f, 5.0f, 4.0f, 3.0f, 2.0f, 1.0f, 2.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f}),
@@ -4388,6 +4485,8 @@ const TestModel& get_test_model_nhwc_none_float16() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_none_float16 = TestModelManager::get().add("grouped_conv2d_nhwc_none_float16", get_test_model_nhwc_none_float16());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -4395,9 +4494,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nhwc_none_float16_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -4572,6 +4673,8 @@ const TestModel& get_test_model_nhwc_none_float16_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_none_float16_all_inputs_as_internal = TestModelManager::get().add("grouped_conv2d_nhwc_none_float16_all_inputs_as_internal", get_test_model_nhwc_none_float16_all_inputs_as_internal());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -4579,9 +4682,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nhwc_none_float16_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 6.0f, 5.0f, 4.0f, 3.0f, 2.0f, 1.0f, 2.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f}),
@@ -4722,6 +4827,8 @@ const TestModel& get_test_model_nhwc_none_float16_all_tensors_as_inputs() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_none_float16_all_tensors_as_inputs = TestModelManager::get().add("grouped_conv2d_nhwc_none_float16_all_tensors_as_inputs", get_test_model_nhwc_none_float16_all_tensors_as_inputs());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -4729,9 +4836,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nhwc_none_float16_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13, 16, 19},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -4975,15 +5084,19 @@ const TestModel& get_test_model_nhwc_none_float16_all_tensors_as_inputs_all_inpu
     return model;
 }
 
+const auto dummy_test_model_nhwc_none_float16_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("grouped_conv2d_nhwc_none_float16_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_nhwc_none_float16_all_tensors_as_inputs_all_inputs_as_internal());
+
 }  // namespace generated_tests::grouped_conv2d
 
 namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nhwc_relu() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 6.0f, 5.0f, 4.0f, 3.0f, 2.0f, 1.0f, 2.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f}),
@@ -5124,6 +5237,8 @@ const TestModel& get_test_model_nhwc_relu() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_relu = TestModelManager::get().add("grouped_conv2d_nhwc_relu", get_test_model_nhwc_relu());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -5131,9 +5246,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nhwc_relu_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -5308,6 +5425,8 @@ const TestModel& get_test_model_nhwc_relu_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_relu_all_inputs_as_internal = TestModelManager::get().add("grouped_conv2d_nhwc_relu_all_inputs_as_internal", get_test_model_nhwc_relu_all_inputs_as_internal());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -5315,9 +5434,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nhwc_relu_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 6.0f, 5.0f, 4.0f, 3.0f, 2.0f, 1.0f, 2.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f}),
@@ -5458,6 +5579,8 @@ const TestModel& get_test_model_nhwc_relu_all_tensors_as_inputs() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_relu_all_tensors_as_inputs = TestModelManager::get().add("grouped_conv2d_nhwc_relu_all_tensors_as_inputs", get_test_model_nhwc_relu_all_tensors_as_inputs());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -5465,9 +5588,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nhwc_relu_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13, 16, 19},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -5710,6 +5835,8 @@ const TestModel& get_test_model_nhwc_relu_all_tensors_as_inputs_all_inputs_as_in
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_relu_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("grouped_conv2d_nhwc_relu_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_nhwc_relu_all_tensors_as_inputs_all_inputs_as_internal());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -5717,9 +5844,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nhwc_relu_relaxed() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 6.0f, 5.0f, 4.0f, 3.0f, 2.0f, 1.0f, 2.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f}),
@@ -5860,6 +5989,8 @@ const TestModel& get_test_model_nhwc_relu_relaxed() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_relu_relaxed = TestModelManager::get().add("grouped_conv2d_nhwc_relu_relaxed", get_test_model_nhwc_relu_relaxed());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -5867,9 +5998,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nhwc_relu_relaxed_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -6044,6 +6177,8 @@ const TestModel& get_test_model_nhwc_relu_relaxed_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_relu_relaxed_all_inputs_as_internal = TestModelManager::get().add("grouped_conv2d_nhwc_relu_relaxed_all_inputs_as_internal", get_test_model_nhwc_relu_relaxed_all_inputs_as_internal());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -6051,9 +6186,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nhwc_relu_relaxed_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 6.0f, 5.0f, 4.0f, 3.0f, 2.0f, 1.0f, 2.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f}),
@@ -6194,6 +6331,8 @@ const TestModel& get_test_model_nhwc_relu_relaxed_all_tensors_as_inputs() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_relu_relaxed_all_tensors_as_inputs = TestModelManager::get().add("grouped_conv2d_nhwc_relu_relaxed_all_tensors_as_inputs", get_test_model_nhwc_relu_relaxed_all_tensors_as_inputs());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -6201,9 +6340,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nhwc_relu_relaxed_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13, 16, 19},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -6447,15 +6588,19 @@ const TestModel& get_test_model_nhwc_relu_relaxed_all_tensors_as_inputs_all_inpu
     return model;
 }
 
+const auto dummy_test_model_nhwc_relu_relaxed_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("grouped_conv2d_nhwc_relu_relaxed_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_nhwc_relu_relaxed_all_tensors_as_inputs_all_inputs_as_internal());
+
 }  // namespace generated_tests::grouped_conv2d
 
 namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nhwc_relu_quant8() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({104, 108, 112, 116, 120, 124, 124, 120, 116, 112, 108, 104, 108, 112, 112, 112, 112, 112}),
@@ -6596,6 +6741,8 @@ const TestModel& get_test_model_nhwc_relu_quant8() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_relu_quant8 = TestModelManager::get().add("grouped_conv2d_nhwc_relu_quant8", get_test_model_nhwc_relu_quant8());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -6603,9 +6750,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nhwc_relu_quant8_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -6780,6 +6929,8 @@ const TestModel& get_test_model_nhwc_relu_quant8_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_relu_quant8_all_inputs_as_internal = TestModelManager::get().add("grouped_conv2d_nhwc_relu_quant8_all_inputs_as_internal", get_test_model_nhwc_relu_quant8_all_inputs_as_internal());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -6787,9 +6938,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nhwc_relu_quant8_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({104, 108, 112, 116, 120, 124, 124, 120, 116, 112, 108, 104, 108, 112, 112, 112, 112, 112}),
@@ -6930,6 +7083,8 @@ const TestModel& get_test_model_nhwc_relu_quant8_all_tensors_as_inputs() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_relu_quant8_all_tensors_as_inputs = TestModelManager::get().add("grouped_conv2d_nhwc_relu_quant8_all_tensors_as_inputs", get_test_model_nhwc_relu_quant8_all_tensors_as_inputs());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -6937,9 +7092,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nhwc_relu_quant8_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {2, 13, 16},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -7148,6 +7305,8 @@ const TestModel& get_test_model_nhwc_relu_quant8_all_tensors_as_inputs_all_input
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_relu_quant8_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("grouped_conv2d_nhwc_relu_quant8_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_nhwc_relu_quant8_all_tensors_as_inputs_all_inputs_as_internal());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -7155,9 +7314,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nhwc_relu_quant8_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({104, 108, 112, 116, 120, 124, 124, 120, 116, 112, 108, 104, 108, 112, 112, 112, 112, 112}),
@@ -7298,6 +7459,8 @@ const TestModel& get_test_model_nhwc_relu_quant8_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_relu_quant8_2 = TestModelManager::get().add("grouped_conv2d_nhwc_relu_quant8_2", get_test_model_nhwc_relu_quant8_2());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -7305,9 +7468,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nhwc_relu_quant8_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -7482,6 +7647,8 @@ const TestModel& get_test_model_nhwc_relu_quant8_all_inputs_as_internal_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_relu_quant8_all_inputs_as_internal_2 = TestModelManager::get().add("grouped_conv2d_nhwc_relu_quant8_all_inputs_as_internal_2", get_test_model_nhwc_relu_quant8_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -7489,9 +7656,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nhwc_relu_quant8_all_tensors_as_inputs_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({104, 108, 112, 116, 120, 124, 124, 120, 116, 112, 108, 104, 108, 112, 112, 112, 112, 112}),
@@ -7632,6 +7801,8 @@ const TestModel& get_test_model_nhwc_relu_quant8_all_tensors_as_inputs_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_relu_quant8_all_tensors_as_inputs_2 = TestModelManager::get().add("grouped_conv2d_nhwc_relu_quant8_all_tensors_as_inputs_2", get_test_model_nhwc_relu_quant8_all_tensors_as_inputs_2());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -7639,9 +7810,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nhwc_relu_quant8_all_tensors_as_inputs_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {2, 13, 16},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -7851,15 +8024,19 @@ const TestModel& get_test_model_nhwc_relu_quant8_all_tensors_as_inputs_all_input
     return model;
 }
 
+const auto dummy_test_model_nhwc_relu_quant8_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("grouped_conv2d_nhwc_relu_quant8_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_nhwc_relu_quant8_all_tensors_as_inputs_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::grouped_conv2d
 
 namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nhwc_relu_channelQuant8() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({104, 108, 112, 116, 120, 124, 124, 120, 116, 112, 108, 104, 108, 112, 112, 112, 112, 112}),
@@ -8003,6 +8180,8 @@ const TestModel& get_test_model_nhwc_relu_channelQuant8() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_relu_channelQuant8 = TestModelManager::get().add("grouped_conv2d_nhwc_relu_channelQuant8", get_test_model_nhwc_relu_channelQuant8());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -8010,9 +8189,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nhwc_relu_channelQuant8_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -8190,6 +8371,8 @@ const TestModel& get_test_model_nhwc_relu_channelQuant8_all_inputs_as_internal()
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_relu_channelQuant8_all_inputs_as_internal = TestModelManager::get().add("grouped_conv2d_nhwc_relu_channelQuant8_all_inputs_as_internal", get_test_model_nhwc_relu_channelQuant8_all_inputs_as_internal());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -8197,9 +8380,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nhwc_relu_channelQuant8_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({104, 108, 112, 116, 120, 124, 124, 120, 116, 112, 108, 104, 108, 112, 112, 112, 112, 112}),
@@ -8343,6 +8528,8 @@ const TestModel& get_test_model_nhwc_relu_channelQuant8_all_tensors_as_inputs() 
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_relu_channelQuant8_all_tensors_as_inputs = TestModelManager::get().add("grouped_conv2d_nhwc_relu_channelQuant8_all_tensors_as_inputs", get_test_model_nhwc_relu_channelQuant8_all_tensors_as_inputs());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -8350,9 +8537,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nhwc_relu_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {1, 2, 13},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -8531,15 +8720,19 @@ const TestModel& get_test_model_nhwc_relu_channelQuant8_all_tensors_as_inputs_al
     return model;
 }
 
+const auto dummy_test_model_nhwc_relu_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("grouped_conv2d_nhwc_relu_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_nhwc_relu_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal());
+
 }  // namespace generated_tests::grouped_conv2d
 
 namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nhwc_relu_channelQuant8_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({104, 108, 112, 116, 120, 124, 124, 120, 116, 112, 108, 104, 108, 112, 112, 112, 112, 112}),
@@ -8683,6 +8876,8 @@ const TestModel& get_test_model_nhwc_relu_channelQuant8_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_relu_channelQuant8_2 = TestModelManager::get().add("grouped_conv2d_nhwc_relu_channelQuant8_2", get_test_model_nhwc_relu_channelQuant8_2());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -8690,9 +8885,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nhwc_relu_channelQuant8_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -8870,6 +9067,8 @@ const TestModel& get_test_model_nhwc_relu_channelQuant8_all_inputs_as_internal_2
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_relu_channelQuant8_all_inputs_as_internal_2 = TestModelManager::get().add("grouped_conv2d_nhwc_relu_channelQuant8_all_inputs_as_internal_2", get_test_model_nhwc_relu_channelQuant8_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -8877,9 +9076,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nhwc_relu_channelQuant8_all_tensors_as_inputs_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({104, 108, 112, 116, 120, 124, 124, 120, 116, 112, 108, 104, 108, 112, 112, 112, 112, 112}),
@@ -9023,6 +9224,8 @@ const TestModel& get_test_model_nhwc_relu_channelQuant8_all_tensors_as_inputs_2(
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_relu_channelQuant8_all_tensors_as_inputs_2 = TestModelManager::get().add("grouped_conv2d_nhwc_relu_channelQuant8_all_tensors_as_inputs_2", get_test_model_nhwc_relu_channelQuant8_all_tensors_as_inputs_2());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -9030,9 +9233,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nhwc_relu_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {1, 2, 13},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -9211,15 +9416,19 @@ const TestModel& get_test_model_nhwc_relu_channelQuant8_all_tensors_as_inputs_al
     return model;
 }
 
+const auto dummy_test_model_nhwc_relu_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("grouped_conv2d_nhwc_relu_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_nhwc_relu_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::grouped_conv2d
 
 namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nhwc_relu_float16() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 6.0f, 5.0f, 4.0f, 3.0f, 2.0f, 1.0f, 2.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f}),
@@ -9360,6 +9569,8 @@ const TestModel& get_test_model_nhwc_relu_float16() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_relu_float16 = TestModelManager::get().add("grouped_conv2d_nhwc_relu_float16", get_test_model_nhwc_relu_float16());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -9367,9 +9578,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nhwc_relu_float16_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -9544,6 +9757,8 @@ const TestModel& get_test_model_nhwc_relu_float16_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_relu_float16_all_inputs_as_internal = TestModelManager::get().add("grouped_conv2d_nhwc_relu_float16_all_inputs_as_internal", get_test_model_nhwc_relu_float16_all_inputs_as_internal());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -9551,9 +9766,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nhwc_relu_float16_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 6.0f, 5.0f, 4.0f, 3.0f, 2.0f, 1.0f, 2.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f}),
@@ -9694,6 +9911,8 @@ const TestModel& get_test_model_nhwc_relu_float16_all_tensors_as_inputs() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_relu_float16_all_tensors_as_inputs = TestModelManager::get().add("grouped_conv2d_nhwc_relu_float16_all_tensors_as_inputs", get_test_model_nhwc_relu_float16_all_tensors_as_inputs());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -9701,9 +9920,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nhwc_relu_float16_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13, 16, 19},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -9947,15 +10168,19 @@ const TestModel& get_test_model_nhwc_relu_float16_all_tensors_as_inputs_all_inpu
     return model;
 }
 
+const auto dummy_test_model_nhwc_relu_float16_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("grouped_conv2d_nhwc_relu_float16_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_nhwc_relu_float16_all_tensors_as_inputs_all_inputs_as_internal());
+
 }  // namespace generated_tests::grouped_conv2d
 
 namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nhwc_relu1() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 6.0f, 5.0f, 4.0f, 3.0f, 2.0f, 1.0f, 2.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f}),
@@ -10096,6 +10321,8 @@ const TestModel& get_test_model_nhwc_relu1() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_relu1 = TestModelManager::get().add("grouped_conv2d_nhwc_relu1", get_test_model_nhwc_relu1());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -10103,9 +10330,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nhwc_relu1_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -10280,6 +10509,8 @@ const TestModel& get_test_model_nhwc_relu1_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_relu1_all_inputs_as_internal = TestModelManager::get().add("grouped_conv2d_nhwc_relu1_all_inputs_as_internal", get_test_model_nhwc_relu1_all_inputs_as_internal());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -10287,9 +10518,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nhwc_relu1_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 6.0f, 5.0f, 4.0f, 3.0f, 2.0f, 1.0f, 2.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f}),
@@ -10430,6 +10663,8 @@ const TestModel& get_test_model_nhwc_relu1_all_tensors_as_inputs() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_relu1_all_tensors_as_inputs = TestModelManager::get().add("grouped_conv2d_nhwc_relu1_all_tensors_as_inputs", get_test_model_nhwc_relu1_all_tensors_as_inputs());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -10437,9 +10672,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nhwc_relu1_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13, 16, 19},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -10682,6 +10919,8 @@ const TestModel& get_test_model_nhwc_relu1_all_tensors_as_inputs_all_inputs_as_i
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_relu1_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("grouped_conv2d_nhwc_relu1_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_nhwc_relu1_all_tensors_as_inputs_all_inputs_as_internal());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -10689,9 +10928,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nhwc_relu1_relaxed() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 6.0f, 5.0f, 4.0f, 3.0f, 2.0f, 1.0f, 2.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f}),
@@ -10832,6 +11073,8 @@ const TestModel& get_test_model_nhwc_relu1_relaxed() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_relu1_relaxed = TestModelManager::get().add("grouped_conv2d_nhwc_relu1_relaxed", get_test_model_nhwc_relu1_relaxed());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -10839,9 +11082,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nhwc_relu1_relaxed_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -11016,6 +11261,8 @@ const TestModel& get_test_model_nhwc_relu1_relaxed_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_relu1_relaxed_all_inputs_as_internal = TestModelManager::get().add("grouped_conv2d_nhwc_relu1_relaxed_all_inputs_as_internal", get_test_model_nhwc_relu1_relaxed_all_inputs_as_internal());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -11023,9 +11270,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nhwc_relu1_relaxed_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 6.0f, 5.0f, 4.0f, 3.0f, 2.0f, 1.0f, 2.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f}),
@@ -11166,6 +11415,8 @@ const TestModel& get_test_model_nhwc_relu1_relaxed_all_tensors_as_inputs() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_relu1_relaxed_all_tensors_as_inputs = TestModelManager::get().add("grouped_conv2d_nhwc_relu1_relaxed_all_tensors_as_inputs", get_test_model_nhwc_relu1_relaxed_all_tensors_as_inputs());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -11173,9 +11424,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nhwc_relu1_relaxed_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13, 16, 19},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -11419,15 +11672,19 @@ const TestModel& get_test_model_nhwc_relu1_relaxed_all_tensors_as_inputs_all_inp
     return model;
 }
 
+const auto dummy_test_model_nhwc_relu1_relaxed_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("grouped_conv2d_nhwc_relu1_relaxed_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_nhwc_relu1_relaxed_all_tensors_as_inputs_all_inputs_as_internal());
+
 }  // namespace generated_tests::grouped_conv2d
 
 namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nhwc_relu1_quant8() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({104, 108, 112, 116, 120, 124, 124, 120, 116, 112, 108, 104, 108, 112, 112, 112, 112, 112}),
@@ -11568,6 +11825,8 @@ const TestModel& get_test_model_nhwc_relu1_quant8() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_relu1_quant8 = TestModelManager::get().add("grouped_conv2d_nhwc_relu1_quant8", get_test_model_nhwc_relu1_quant8());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -11575,9 +11834,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nhwc_relu1_quant8_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -11752,6 +12013,8 @@ const TestModel& get_test_model_nhwc_relu1_quant8_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_relu1_quant8_all_inputs_as_internal = TestModelManager::get().add("grouped_conv2d_nhwc_relu1_quant8_all_inputs_as_internal", get_test_model_nhwc_relu1_quant8_all_inputs_as_internal());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -11759,9 +12022,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nhwc_relu1_quant8_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({104, 108, 112, 116, 120, 124, 124, 120, 116, 112, 108, 104, 108, 112, 112, 112, 112, 112}),
@@ -11902,6 +12167,8 @@ const TestModel& get_test_model_nhwc_relu1_quant8_all_tensors_as_inputs() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_relu1_quant8_all_tensors_as_inputs = TestModelManager::get().add("grouped_conv2d_nhwc_relu1_quant8_all_tensors_as_inputs", get_test_model_nhwc_relu1_quant8_all_tensors_as_inputs());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -11909,9 +12176,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nhwc_relu1_quant8_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {2, 13, 16},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -12120,6 +12389,8 @@ const TestModel& get_test_model_nhwc_relu1_quant8_all_tensors_as_inputs_all_inpu
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_relu1_quant8_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("grouped_conv2d_nhwc_relu1_quant8_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_nhwc_relu1_quant8_all_tensors_as_inputs_all_inputs_as_internal());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -12127,9 +12398,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nhwc_relu1_quant8_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({104, 108, 112, 116, 120, 124, 124, 120, 116, 112, 108, 104, 108, 112, 112, 112, 112, 112}),
@@ -12270,6 +12543,8 @@ const TestModel& get_test_model_nhwc_relu1_quant8_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_relu1_quant8_2 = TestModelManager::get().add("grouped_conv2d_nhwc_relu1_quant8_2", get_test_model_nhwc_relu1_quant8_2());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -12277,9 +12552,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nhwc_relu1_quant8_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -12454,6 +12731,8 @@ const TestModel& get_test_model_nhwc_relu1_quant8_all_inputs_as_internal_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_relu1_quant8_all_inputs_as_internal_2 = TestModelManager::get().add("grouped_conv2d_nhwc_relu1_quant8_all_inputs_as_internal_2", get_test_model_nhwc_relu1_quant8_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -12461,9 +12740,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nhwc_relu1_quant8_all_tensors_as_inputs_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({104, 108, 112, 116, 120, 124, 124, 120, 116, 112, 108, 104, 108, 112, 112, 112, 112, 112}),
@@ -12604,6 +12885,8 @@ const TestModel& get_test_model_nhwc_relu1_quant8_all_tensors_as_inputs_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_relu1_quant8_all_tensors_as_inputs_2 = TestModelManager::get().add("grouped_conv2d_nhwc_relu1_quant8_all_tensors_as_inputs_2", get_test_model_nhwc_relu1_quant8_all_tensors_as_inputs_2());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -12611,9 +12894,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nhwc_relu1_quant8_all_tensors_as_inputs_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {2, 13, 16},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -12823,15 +13108,19 @@ const TestModel& get_test_model_nhwc_relu1_quant8_all_tensors_as_inputs_all_inpu
     return model;
 }
 
+const auto dummy_test_model_nhwc_relu1_quant8_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("grouped_conv2d_nhwc_relu1_quant8_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_nhwc_relu1_quant8_all_tensors_as_inputs_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::grouped_conv2d
 
 namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nhwc_relu1_channelQuant8() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({104, 108, 112, 116, 120, 124, 124, 120, 116, 112, 108, 104, 108, 112, 112, 112, 112, 112}),
@@ -12975,6 +13264,8 @@ const TestModel& get_test_model_nhwc_relu1_channelQuant8() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_relu1_channelQuant8 = TestModelManager::get().add("grouped_conv2d_nhwc_relu1_channelQuant8", get_test_model_nhwc_relu1_channelQuant8());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -12982,9 +13273,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nhwc_relu1_channelQuant8_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -13162,6 +13455,8 @@ const TestModel& get_test_model_nhwc_relu1_channelQuant8_all_inputs_as_internal(
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_relu1_channelQuant8_all_inputs_as_internal = TestModelManager::get().add("grouped_conv2d_nhwc_relu1_channelQuant8_all_inputs_as_internal", get_test_model_nhwc_relu1_channelQuant8_all_inputs_as_internal());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -13169,9 +13464,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nhwc_relu1_channelQuant8_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({104, 108, 112, 116, 120, 124, 124, 120, 116, 112, 108, 104, 108, 112, 112, 112, 112, 112}),
@@ -13315,6 +13612,8 @@ const TestModel& get_test_model_nhwc_relu1_channelQuant8_all_tensors_as_inputs()
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_relu1_channelQuant8_all_tensors_as_inputs = TestModelManager::get().add("grouped_conv2d_nhwc_relu1_channelQuant8_all_tensors_as_inputs", get_test_model_nhwc_relu1_channelQuant8_all_tensors_as_inputs());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -13322,9 +13621,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nhwc_relu1_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {1, 2, 13},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -13503,15 +13804,19 @@ const TestModel& get_test_model_nhwc_relu1_channelQuant8_all_tensors_as_inputs_a
     return model;
 }
 
+const auto dummy_test_model_nhwc_relu1_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("grouped_conv2d_nhwc_relu1_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_nhwc_relu1_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal());
+
 }  // namespace generated_tests::grouped_conv2d
 
 namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nhwc_relu1_channelQuant8_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({104, 108, 112, 116, 120, 124, 124, 120, 116, 112, 108, 104, 108, 112, 112, 112, 112, 112}),
@@ -13655,6 +13960,8 @@ const TestModel& get_test_model_nhwc_relu1_channelQuant8_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_relu1_channelQuant8_2 = TestModelManager::get().add("grouped_conv2d_nhwc_relu1_channelQuant8_2", get_test_model_nhwc_relu1_channelQuant8_2());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -13662,9 +13969,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nhwc_relu1_channelQuant8_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -13842,6 +14151,8 @@ const TestModel& get_test_model_nhwc_relu1_channelQuant8_all_inputs_as_internal_
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_relu1_channelQuant8_all_inputs_as_internal_2 = TestModelManager::get().add("grouped_conv2d_nhwc_relu1_channelQuant8_all_inputs_as_internal_2", get_test_model_nhwc_relu1_channelQuant8_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -13849,9 +14160,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nhwc_relu1_channelQuant8_all_tensors_as_inputs_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({104, 108, 112, 116, 120, 124, 124, 120, 116, 112, 108, 104, 108, 112, 112, 112, 112, 112}),
@@ -13995,6 +14308,8 @@ const TestModel& get_test_model_nhwc_relu1_channelQuant8_all_tensors_as_inputs_2
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_relu1_channelQuant8_all_tensors_as_inputs_2 = TestModelManager::get().add("grouped_conv2d_nhwc_relu1_channelQuant8_all_tensors_as_inputs_2", get_test_model_nhwc_relu1_channelQuant8_all_tensors_as_inputs_2());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -14002,9 +14317,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nhwc_relu1_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {1, 2, 13},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -14183,15 +14500,19 @@ const TestModel& get_test_model_nhwc_relu1_channelQuant8_all_tensors_as_inputs_a
     return model;
 }
 
+const auto dummy_test_model_nhwc_relu1_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("grouped_conv2d_nhwc_relu1_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_nhwc_relu1_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::grouped_conv2d
 
 namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nhwc_relu1_float16() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 6.0f, 5.0f, 4.0f, 3.0f, 2.0f, 1.0f, 2.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f}),
@@ -14332,6 +14653,8 @@ const TestModel& get_test_model_nhwc_relu1_float16() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_relu1_float16 = TestModelManager::get().add("grouped_conv2d_nhwc_relu1_float16", get_test_model_nhwc_relu1_float16());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -14339,9 +14662,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nhwc_relu1_float16_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -14516,6 +14841,8 @@ const TestModel& get_test_model_nhwc_relu1_float16_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_relu1_float16_all_inputs_as_internal = TestModelManager::get().add("grouped_conv2d_nhwc_relu1_float16_all_inputs_as_internal", get_test_model_nhwc_relu1_float16_all_inputs_as_internal());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -14523,9 +14850,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nhwc_relu1_float16_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 6.0f, 5.0f, 4.0f, 3.0f, 2.0f, 1.0f, 2.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f}),
@@ -14666,6 +14995,8 @@ const TestModel& get_test_model_nhwc_relu1_float16_all_tensors_as_inputs() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_relu1_float16_all_tensors_as_inputs = TestModelManager::get().add("grouped_conv2d_nhwc_relu1_float16_all_tensors_as_inputs", get_test_model_nhwc_relu1_float16_all_tensors_as_inputs());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -14673,9 +15004,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nhwc_relu1_float16_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13, 16, 19},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -14919,15 +15252,19 @@ const TestModel& get_test_model_nhwc_relu1_float16_all_tensors_as_inputs_all_inp
     return model;
 }
 
+const auto dummy_test_model_nhwc_relu1_float16_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("grouped_conv2d_nhwc_relu1_float16_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_nhwc_relu1_float16_all_tensors_as_inputs_all_inputs_as_internal());
+
 }  // namespace generated_tests::grouped_conv2d
 
 namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nhwc_relu6() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 6.0f, 5.0f, 4.0f, 3.0f, 2.0f, 1.0f, 2.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f}),
@@ -15068,6 +15405,8 @@ const TestModel& get_test_model_nhwc_relu6() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_relu6 = TestModelManager::get().add("grouped_conv2d_nhwc_relu6", get_test_model_nhwc_relu6());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -15075,9 +15414,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nhwc_relu6_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -15252,6 +15593,8 @@ const TestModel& get_test_model_nhwc_relu6_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_relu6_all_inputs_as_internal = TestModelManager::get().add("grouped_conv2d_nhwc_relu6_all_inputs_as_internal", get_test_model_nhwc_relu6_all_inputs_as_internal());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -15259,9 +15602,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nhwc_relu6_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 6.0f, 5.0f, 4.0f, 3.0f, 2.0f, 1.0f, 2.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f}),
@@ -15402,6 +15747,8 @@ const TestModel& get_test_model_nhwc_relu6_all_tensors_as_inputs() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_relu6_all_tensors_as_inputs = TestModelManager::get().add("grouped_conv2d_nhwc_relu6_all_tensors_as_inputs", get_test_model_nhwc_relu6_all_tensors_as_inputs());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -15409,9 +15756,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nhwc_relu6_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13, 16, 19},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -15654,6 +16003,8 @@ const TestModel& get_test_model_nhwc_relu6_all_tensors_as_inputs_all_inputs_as_i
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_relu6_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("grouped_conv2d_nhwc_relu6_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_nhwc_relu6_all_tensors_as_inputs_all_inputs_as_internal());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -15661,9 +16012,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nhwc_relu6_relaxed() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 6.0f, 5.0f, 4.0f, 3.0f, 2.0f, 1.0f, 2.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f}),
@@ -15804,6 +16157,8 @@ const TestModel& get_test_model_nhwc_relu6_relaxed() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_relu6_relaxed = TestModelManager::get().add("grouped_conv2d_nhwc_relu6_relaxed", get_test_model_nhwc_relu6_relaxed());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -15811,9 +16166,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nhwc_relu6_relaxed_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -15988,6 +16345,8 @@ const TestModel& get_test_model_nhwc_relu6_relaxed_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_relu6_relaxed_all_inputs_as_internal = TestModelManager::get().add("grouped_conv2d_nhwc_relu6_relaxed_all_inputs_as_internal", get_test_model_nhwc_relu6_relaxed_all_inputs_as_internal());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -15995,9 +16354,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nhwc_relu6_relaxed_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 6.0f, 5.0f, 4.0f, 3.0f, 2.0f, 1.0f, 2.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f}),
@@ -16138,6 +16499,8 @@ const TestModel& get_test_model_nhwc_relu6_relaxed_all_tensors_as_inputs() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_relu6_relaxed_all_tensors_as_inputs = TestModelManager::get().add("grouped_conv2d_nhwc_relu6_relaxed_all_tensors_as_inputs", get_test_model_nhwc_relu6_relaxed_all_tensors_as_inputs());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -16145,9 +16508,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nhwc_relu6_relaxed_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13, 16, 19},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -16391,15 +16756,19 @@ const TestModel& get_test_model_nhwc_relu6_relaxed_all_tensors_as_inputs_all_inp
     return model;
 }
 
+const auto dummy_test_model_nhwc_relu6_relaxed_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("grouped_conv2d_nhwc_relu6_relaxed_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_nhwc_relu6_relaxed_all_tensors_as_inputs_all_inputs_as_internal());
+
 }  // namespace generated_tests::grouped_conv2d
 
 namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nhwc_relu6_quant8() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({104, 108, 112, 116, 120, 124, 124, 120, 116, 112, 108, 104, 108, 112, 112, 112, 112, 112}),
@@ -16540,6 +16909,8 @@ const TestModel& get_test_model_nhwc_relu6_quant8() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_relu6_quant8 = TestModelManager::get().add("grouped_conv2d_nhwc_relu6_quant8", get_test_model_nhwc_relu6_quant8());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -16547,9 +16918,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nhwc_relu6_quant8_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -16724,6 +17097,8 @@ const TestModel& get_test_model_nhwc_relu6_quant8_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_relu6_quant8_all_inputs_as_internal = TestModelManager::get().add("grouped_conv2d_nhwc_relu6_quant8_all_inputs_as_internal", get_test_model_nhwc_relu6_quant8_all_inputs_as_internal());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -16731,9 +17106,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nhwc_relu6_quant8_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({104, 108, 112, 116, 120, 124, 124, 120, 116, 112, 108, 104, 108, 112, 112, 112, 112, 112}),
@@ -16874,6 +17251,8 @@ const TestModel& get_test_model_nhwc_relu6_quant8_all_tensors_as_inputs() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_relu6_quant8_all_tensors_as_inputs = TestModelManager::get().add("grouped_conv2d_nhwc_relu6_quant8_all_tensors_as_inputs", get_test_model_nhwc_relu6_quant8_all_tensors_as_inputs());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -16881,9 +17260,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nhwc_relu6_quant8_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {2, 13, 16},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -17092,6 +17473,8 @@ const TestModel& get_test_model_nhwc_relu6_quant8_all_tensors_as_inputs_all_inpu
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_relu6_quant8_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("grouped_conv2d_nhwc_relu6_quant8_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_nhwc_relu6_quant8_all_tensors_as_inputs_all_inputs_as_internal());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -17099,9 +17482,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nhwc_relu6_quant8_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({104, 108, 112, 116, 120, 124, 124, 120, 116, 112, 108, 104, 108, 112, 112, 112, 112, 112}),
@@ -17242,6 +17627,8 @@ const TestModel& get_test_model_nhwc_relu6_quant8_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_relu6_quant8_2 = TestModelManager::get().add("grouped_conv2d_nhwc_relu6_quant8_2", get_test_model_nhwc_relu6_quant8_2());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -17249,9 +17636,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nhwc_relu6_quant8_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -17426,6 +17815,8 @@ const TestModel& get_test_model_nhwc_relu6_quant8_all_inputs_as_internal_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_relu6_quant8_all_inputs_as_internal_2 = TestModelManager::get().add("grouped_conv2d_nhwc_relu6_quant8_all_inputs_as_internal_2", get_test_model_nhwc_relu6_quant8_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -17433,9 +17824,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nhwc_relu6_quant8_all_tensors_as_inputs_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({104, 108, 112, 116, 120, 124, 124, 120, 116, 112, 108, 104, 108, 112, 112, 112, 112, 112}),
@@ -17576,6 +17969,8 @@ const TestModel& get_test_model_nhwc_relu6_quant8_all_tensors_as_inputs_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_relu6_quant8_all_tensors_as_inputs_2 = TestModelManager::get().add("grouped_conv2d_nhwc_relu6_quant8_all_tensors_as_inputs_2", get_test_model_nhwc_relu6_quant8_all_tensors_as_inputs_2());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -17583,9 +17978,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nhwc_relu6_quant8_all_tensors_as_inputs_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {2, 13, 16},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -17795,15 +18192,19 @@ const TestModel& get_test_model_nhwc_relu6_quant8_all_tensors_as_inputs_all_inpu
     return model;
 }
 
+const auto dummy_test_model_nhwc_relu6_quant8_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("grouped_conv2d_nhwc_relu6_quant8_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_nhwc_relu6_quant8_all_tensors_as_inputs_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::grouped_conv2d
 
 namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nhwc_relu6_channelQuant8() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({104, 108, 112, 116, 120, 124, 124, 120, 116, 112, 108, 104, 108, 112, 112, 112, 112, 112}),
@@ -17947,6 +18348,8 @@ const TestModel& get_test_model_nhwc_relu6_channelQuant8() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_relu6_channelQuant8 = TestModelManager::get().add("grouped_conv2d_nhwc_relu6_channelQuant8", get_test_model_nhwc_relu6_channelQuant8());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -17954,9 +18357,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nhwc_relu6_channelQuant8_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -18134,6 +18539,8 @@ const TestModel& get_test_model_nhwc_relu6_channelQuant8_all_inputs_as_internal(
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_relu6_channelQuant8_all_inputs_as_internal = TestModelManager::get().add("grouped_conv2d_nhwc_relu6_channelQuant8_all_inputs_as_internal", get_test_model_nhwc_relu6_channelQuant8_all_inputs_as_internal());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -18141,9 +18548,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nhwc_relu6_channelQuant8_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({104, 108, 112, 116, 120, 124, 124, 120, 116, 112, 108, 104, 108, 112, 112, 112, 112, 112}),
@@ -18287,6 +18696,8 @@ const TestModel& get_test_model_nhwc_relu6_channelQuant8_all_tensors_as_inputs()
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_relu6_channelQuant8_all_tensors_as_inputs = TestModelManager::get().add("grouped_conv2d_nhwc_relu6_channelQuant8_all_tensors_as_inputs", get_test_model_nhwc_relu6_channelQuant8_all_tensors_as_inputs());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -18294,9 +18705,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nhwc_relu6_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {1, 2, 13},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -18475,15 +18888,19 @@ const TestModel& get_test_model_nhwc_relu6_channelQuant8_all_tensors_as_inputs_a
     return model;
 }
 
+const auto dummy_test_model_nhwc_relu6_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("grouped_conv2d_nhwc_relu6_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_nhwc_relu6_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal());
+
 }  // namespace generated_tests::grouped_conv2d
 
 namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nhwc_relu6_channelQuant8_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({104, 108, 112, 116, 120, 124, 124, 120, 116, 112, 108, 104, 108, 112, 112, 112, 112, 112}),
@@ -18627,6 +19044,8 @@ const TestModel& get_test_model_nhwc_relu6_channelQuant8_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_relu6_channelQuant8_2 = TestModelManager::get().add("grouped_conv2d_nhwc_relu6_channelQuant8_2", get_test_model_nhwc_relu6_channelQuant8_2());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -18634,9 +19053,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nhwc_relu6_channelQuant8_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -18814,6 +19235,8 @@ const TestModel& get_test_model_nhwc_relu6_channelQuant8_all_inputs_as_internal_
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_relu6_channelQuant8_all_inputs_as_internal_2 = TestModelManager::get().add("grouped_conv2d_nhwc_relu6_channelQuant8_all_inputs_as_internal_2", get_test_model_nhwc_relu6_channelQuant8_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -18821,9 +19244,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nhwc_relu6_channelQuant8_all_tensors_as_inputs_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({104, 108, 112, 116, 120, 124, 124, 120, 116, 112, 108, 104, 108, 112, 112, 112, 112, 112}),
@@ -18967,6 +19392,8 @@ const TestModel& get_test_model_nhwc_relu6_channelQuant8_all_tensors_as_inputs_2
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_relu6_channelQuant8_all_tensors_as_inputs_2 = TestModelManager::get().add("grouped_conv2d_nhwc_relu6_channelQuant8_all_tensors_as_inputs_2", get_test_model_nhwc_relu6_channelQuant8_all_tensors_as_inputs_2());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -18974,9 +19401,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nhwc_relu6_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {1, 2, 13},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -19155,15 +19584,19 @@ const TestModel& get_test_model_nhwc_relu6_channelQuant8_all_tensors_as_inputs_a
     return model;
 }
 
+const auto dummy_test_model_nhwc_relu6_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("grouped_conv2d_nhwc_relu6_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_nhwc_relu6_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::grouped_conv2d
 
 namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nhwc_relu6_float16() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 6.0f, 5.0f, 4.0f, 3.0f, 2.0f, 1.0f, 2.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f}),
@@ -19304,6 +19737,8 @@ const TestModel& get_test_model_nhwc_relu6_float16() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_relu6_float16 = TestModelManager::get().add("grouped_conv2d_nhwc_relu6_float16", get_test_model_nhwc_relu6_float16());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -19311,9 +19746,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nhwc_relu6_float16_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -19488,6 +19925,8 @@ const TestModel& get_test_model_nhwc_relu6_float16_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_relu6_float16_all_inputs_as_internal = TestModelManager::get().add("grouped_conv2d_nhwc_relu6_float16_all_inputs_as_internal", get_test_model_nhwc_relu6_float16_all_inputs_as_internal());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -19495,9 +19934,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nhwc_relu6_float16_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 6.0f, 5.0f, 4.0f, 3.0f, 2.0f, 1.0f, 2.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f}),
@@ -19638,6 +20079,8 @@ const TestModel& get_test_model_nhwc_relu6_float16_all_tensors_as_inputs() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_relu6_float16_all_tensors_as_inputs = TestModelManager::get().add("grouped_conv2d_nhwc_relu6_float16_all_tensors_as_inputs", get_test_model_nhwc_relu6_float16_all_tensors_as_inputs());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -19645,9 +20088,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nhwc_relu6_float16_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13, 16, 19},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -19891,15 +20336,19 @@ const TestModel& get_test_model_nhwc_relu6_float16_all_tensors_as_inputs_all_inp
     return model;
 }
 
+const auto dummy_test_model_nhwc_relu6_float16_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("grouped_conv2d_nhwc_relu6_float16_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_nhwc_relu6_float16_all_tensors_as_inputs_all_inputs_as_internal());
+
 }  // namespace generated_tests::grouped_conv2d
 
 namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nchw_none() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 3.0f, 5.0f, 6.0f, 4.0f, 2.0f, 2.0f, 3.0f, 3.0f, 2.0f, 4.0f, 6.0f, 5.0f, 3.0f, 1.0f, 3.0f, 3.0f, 3.0f}),
@@ -20040,6 +20489,8 @@ const TestModel& get_test_model_nchw_none() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_none = TestModelManager::get().add("grouped_conv2d_nchw_none", get_test_model_nchw_none());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -20047,9 +20498,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nchw_none_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -20224,6 +20677,8 @@ const TestModel& get_test_model_nchw_none_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_none_all_inputs_as_internal = TestModelManager::get().add("grouped_conv2d_nchw_none_all_inputs_as_internal", get_test_model_nchw_none_all_inputs_as_internal());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -20231,9 +20686,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nchw_none_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 3.0f, 5.0f, 6.0f, 4.0f, 2.0f, 2.0f, 3.0f, 3.0f, 2.0f, 4.0f, 6.0f, 5.0f, 3.0f, 1.0f, 3.0f, 3.0f, 3.0f}),
@@ -20374,6 +20831,8 @@ const TestModel& get_test_model_nchw_none_all_tensors_as_inputs() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_none_all_tensors_as_inputs = TestModelManager::get().add("grouped_conv2d_nchw_none_all_tensors_as_inputs", get_test_model_nchw_none_all_tensors_as_inputs());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -20381,9 +20840,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nchw_none_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13, 16, 19},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -20626,6 +21087,8 @@ const TestModel& get_test_model_nchw_none_all_tensors_as_inputs_all_inputs_as_in
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_none_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("grouped_conv2d_nchw_none_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_nchw_none_all_tensors_as_inputs_all_inputs_as_internal());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -20633,9 +21096,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nchw_none_relaxed() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 3.0f, 5.0f, 6.0f, 4.0f, 2.0f, 2.0f, 3.0f, 3.0f, 2.0f, 4.0f, 6.0f, 5.0f, 3.0f, 1.0f, 3.0f, 3.0f, 3.0f}),
@@ -20776,6 +21241,8 @@ const TestModel& get_test_model_nchw_none_relaxed() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_none_relaxed = TestModelManager::get().add("grouped_conv2d_nchw_none_relaxed", get_test_model_nchw_none_relaxed());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -20783,9 +21250,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nchw_none_relaxed_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -20960,6 +21429,8 @@ const TestModel& get_test_model_nchw_none_relaxed_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_none_relaxed_all_inputs_as_internal = TestModelManager::get().add("grouped_conv2d_nchw_none_relaxed_all_inputs_as_internal", get_test_model_nchw_none_relaxed_all_inputs_as_internal());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -20967,9 +21438,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nchw_none_relaxed_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 3.0f, 5.0f, 6.0f, 4.0f, 2.0f, 2.0f, 3.0f, 3.0f, 2.0f, 4.0f, 6.0f, 5.0f, 3.0f, 1.0f, 3.0f, 3.0f, 3.0f}),
@@ -21110,6 +21583,8 @@ const TestModel& get_test_model_nchw_none_relaxed_all_tensors_as_inputs() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_none_relaxed_all_tensors_as_inputs = TestModelManager::get().add("grouped_conv2d_nchw_none_relaxed_all_tensors_as_inputs", get_test_model_nchw_none_relaxed_all_tensors_as_inputs());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -21117,9 +21592,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nchw_none_relaxed_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13, 16, 19},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -21363,15 +21840,19 @@ const TestModel& get_test_model_nchw_none_relaxed_all_tensors_as_inputs_all_inpu
     return model;
 }
 
+const auto dummy_test_model_nchw_none_relaxed_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("grouped_conv2d_nchw_none_relaxed_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_nchw_none_relaxed_all_tensors_as_inputs_all_inputs_as_internal());
+
 }  // namespace generated_tests::grouped_conv2d
 
 namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nchw_none_quant8() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({104, 112, 120, 124, 116, 108, 108, 112, 112, 108, 116, 124, 120, 112, 104, 112, 112, 112}),
@@ -21512,6 +21993,8 @@ const TestModel& get_test_model_nchw_none_quant8() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_none_quant8 = TestModelManager::get().add("grouped_conv2d_nchw_none_quant8", get_test_model_nchw_none_quant8());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -21519,9 +22002,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nchw_none_quant8_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -21696,6 +22181,8 @@ const TestModel& get_test_model_nchw_none_quant8_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_none_quant8_all_inputs_as_internal = TestModelManager::get().add("grouped_conv2d_nchw_none_quant8_all_inputs_as_internal", get_test_model_nchw_none_quant8_all_inputs_as_internal());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -21703,9 +22190,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nchw_none_quant8_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({104, 112, 120, 124, 116, 108, 108, 112, 112, 108, 116, 124, 120, 112, 104, 112, 112, 112}),
@@ -21846,6 +22335,8 @@ const TestModel& get_test_model_nchw_none_quant8_all_tensors_as_inputs() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_none_quant8_all_tensors_as_inputs = TestModelManager::get().add("grouped_conv2d_nchw_none_quant8_all_tensors_as_inputs", get_test_model_nchw_none_quant8_all_tensors_as_inputs());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -21853,9 +22344,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nchw_none_quant8_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {2, 13, 16},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -22064,6 +22557,8 @@ const TestModel& get_test_model_nchw_none_quant8_all_tensors_as_inputs_all_input
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_none_quant8_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("grouped_conv2d_nchw_none_quant8_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_nchw_none_quant8_all_tensors_as_inputs_all_inputs_as_internal());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -22071,9 +22566,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nchw_none_quant8_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({104, 112, 120, 124, 116, 108, 108, 112, 112, 108, 116, 124, 120, 112, 104, 112, 112, 112}),
@@ -22214,6 +22711,8 @@ const TestModel& get_test_model_nchw_none_quant8_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_none_quant8_2 = TestModelManager::get().add("grouped_conv2d_nchw_none_quant8_2", get_test_model_nchw_none_quant8_2());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -22221,9 +22720,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nchw_none_quant8_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -22398,6 +22899,8 @@ const TestModel& get_test_model_nchw_none_quant8_all_inputs_as_internal_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_none_quant8_all_inputs_as_internal_2 = TestModelManager::get().add("grouped_conv2d_nchw_none_quant8_all_inputs_as_internal_2", get_test_model_nchw_none_quant8_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -22405,9 +22908,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nchw_none_quant8_all_tensors_as_inputs_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({104, 112, 120, 124, 116, 108, 108, 112, 112, 108, 116, 124, 120, 112, 104, 112, 112, 112}),
@@ -22548,6 +23053,8 @@ const TestModel& get_test_model_nchw_none_quant8_all_tensors_as_inputs_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_none_quant8_all_tensors_as_inputs_2 = TestModelManager::get().add("grouped_conv2d_nchw_none_quant8_all_tensors_as_inputs_2", get_test_model_nchw_none_quant8_all_tensors_as_inputs_2());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -22555,9 +23062,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nchw_none_quant8_all_tensors_as_inputs_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {2, 13, 16},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -22767,15 +23276,19 @@ const TestModel& get_test_model_nchw_none_quant8_all_tensors_as_inputs_all_input
     return model;
 }
 
+const auto dummy_test_model_nchw_none_quant8_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("grouped_conv2d_nchw_none_quant8_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_nchw_none_quant8_all_tensors_as_inputs_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::grouped_conv2d
 
 namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nchw_none_channelQuant8() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({104, 112, 120, 124, 116, 108, 108, 112, 112, 108, 116, 124, 120, 112, 104, 112, 112, 112}),
@@ -22919,6 +23432,8 @@ const TestModel& get_test_model_nchw_none_channelQuant8() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_none_channelQuant8 = TestModelManager::get().add("grouped_conv2d_nchw_none_channelQuant8", get_test_model_nchw_none_channelQuant8());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -22926,9 +23441,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nchw_none_channelQuant8_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -23106,6 +23623,8 @@ const TestModel& get_test_model_nchw_none_channelQuant8_all_inputs_as_internal()
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_none_channelQuant8_all_inputs_as_internal = TestModelManager::get().add("grouped_conv2d_nchw_none_channelQuant8_all_inputs_as_internal", get_test_model_nchw_none_channelQuant8_all_inputs_as_internal());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -23113,9 +23632,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nchw_none_channelQuant8_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({104, 112, 120, 124, 116, 108, 108, 112, 112, 108, 116, 124, 120, 112, 104, 112, 112, 112}),
@@ -23259,6 +23780,8 @@ const TestModel& get_test_model_nchw_none_channelQuant8_all_tensors_as_inputs() 
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_none_channelQuant8_all_tensors_as_inputs = TestModelManager::get().add("grouped_conv2d_nchw_none_channelQuant8_all_tensors_as_inputs", get_test_model_nchw_none_channelQuant8_all_tensors_as_inputs());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -23266,9 +23789,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nchw_none_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {1, 2, 13},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -23447,15 +23972,19 @@ const TestModel& get_test_model_nchw_none_channelQuant8_all_tensors_as_inputs_al
     return model;
 }
 
+const auto dummy_test_model_nchw_none_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("grouped_conv2d_nchw_none_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_nchw_none_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal());
+
 }  // namespace generated_tests::grouped_conv2d
 
 namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nchw_none_channelQuant8_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({104, 112, 120, 124, 116, 108, 108, 112, 112, 108, 116, 124, 120, 112, 104, 112, 112, 112}),
@@ -23599,6 +24128,8 @@ const TestModel& get_test_model_nchw_none_channelQuant8_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_none_channelQuant8_2 = TestModelManager::get().add("grouped_conv2d_nchw_none_channelQuant8_2", get_test_model_nchw_none_channelQuant8_2());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -23606,9 +24137,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nchw_none_channelQuant8_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -23786,6 +24319,8 @@ const TestModel& get_test_model_nchw_none_channelQuant8_all_inputs_as_internal_2
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_none_channelQuant8_all_inputs_as_internal_2 = TestModelManager::get().add("grouped_conv2d_nchw_none_channelQuant8_all_inputs_as_internal_2", get_test_model_nchw_none_channelQuant8_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -23793,9 +24328,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nchw_none_channelQuant8_all_tensors_as_inputs_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({104, 112, 120, 124, 116, 108, 108, 112, 112, 108, 116, 124, 120, 112, 104, 112, 112, 112}),
@@ -23939,6 +24476,8 @@ const TestModel& get_test_model_nchw_none_channelQuant8_all_tensors_as_inputs_2(
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_none_channelQuant8_all_tensors_as_inputs_2 = TestModelManager::get().add("grouped_conv2d_nchw_none_channelQuant8_all_tensors_as_inputs_2", get_test_model_nchw_none_channelQuant8_all_tensors_as_inputs_2());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -23946,9 +24485,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nchw_none_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {1, 2, 13},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -24127,15 +24668,19 @@ const TestModel& get_test_model_nchw_none_channelQuant8_all_tensors_as_inputs_al
     return model;
 }
 
+const auto dummy_test_model_nchw_none_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("grouped_conv2d_nchw_none_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_nchw_none_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::grouped_conv2d
 
 namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nchw_none_float16() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({1.0f, 3.0f, 5.0f, 6.0f, 4.0f, 2.0f, 2.0f, 3.0f, 3.0f, 2.0f, 4.0f, 6.0f, 5.0f, 3.0f, 1.0f, 3.0f, 3.0f, 3.0f}),
@@ -24276,6 +24821,8 @@ const TestModel& get_test_model_nchw_none_float16() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_none_float16 = TestModelManager::get().add("grouped_conv2d_nchw_none_float16", get_test_model_nchw_none_float16());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -24283,9 +24830,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nchw_none_float16_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -24460,6 +25009,8 @@ const TestModel& get_test_model_nchw_none_float16_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_none_float16_all_inputs_as_internal = TestModelManager::get().add("grouped_conv2d_nchw_none_float16_all_inputs_as_internal", get_test_model_nchw_none_float16_all_inputs_as_internal());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -24467,9 +25018,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nchw_none_float16_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({1.0f, 3.0f, 5.0f, 6.0f, 4.0f, 2.0f, 2.0f, 3.0f, 3.0f, 2.0f, 4.0f, 6.0f, 5.0f, 3.0f, 1.0f, 3.0f, 3.0f, 3.0f}),
@@ -24610,6 +25163,8 @@ const TestModel& get_test_model_nchw_none_float16_all_tensors_as_inputs() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_none_float16_all_tensors_as_inputs = TestModelManager::get().add("grouped_conv2d_nchw_none_float16_all_tensors_as_inputs", get_test_model_nchw_none_float16_all_tensors_as_inputs());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -24617,9 +25172,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nchw_none_float16_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13, 16, 19},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -24863,15 +25420,19 @@ const TestModel& get_test_model_nchw_none_float16_all_tensors_as_inputs_all_inpu
     return model;
 }
 
+const auto dummy_test_model_nchw_none_float16_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("grouped_conv2d_nchw_none_float16_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_nchw_none_float16_all_tensors_as_inputs_all_inputs_as_internal());
+
 }  // namespace generated_tests::grouped_conv2d
 
 namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nchw_relu() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 3.0f, 5.0f, 6.0f, 4.0f, 2.0f, 2.0f, 3.0f, 3.0f, 2.0f, 4.0f, 6.0f, 5.0f, 3.0f, 1.0f, 3.0f, 3.0f, 3.0f}),
@@ -25012,6 +25573,8 @@ const TestModel& get_test_model_nchw_relu() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_relu = TestModelManager::get().add("grouped_conv2d_nchw_relu", get_test_model_nchw_relu());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -25019,9 +25582,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nchw_relu_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -25196,6 +25761,8 @@ const TestModel& get_test_model_nchw_relu_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_relu_all_inputs_as_internal = TestModelManager::get().add("grouped_conv2d_nchw_relu_all_inputs_as_internal", get_test_model_nchw_relu_all_inputs_as_internal());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -25203,9 +25770,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nchw_relu_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 3.0f, 5.0f, 6.0f, 4.0f, 2.0f, 2.0f, 3.0f, 3.0f, 2.0f, 4.0f, 6.0f, 5.0f, 3.0f, 1.0f, 3.0f, 3.0f, 3.0f}),
@@ -25346,6 +25915,8 @@ const TestModel& get_test_model_nchw_relu_all_tensors_as_inputs() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_relu_all_tensors_as_inputs = TestModelManager::get().add("grouped_conv2d_nchw_relu_all_tensors_as_inputs", get_test_model_nchw_relu_all_tensors_as_inputs());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -25353,9 +25924,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nchw_relu_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13, 16, 19},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -25598,6 +26171,8 @@ const TestModel& get_test_model_nchw_relu_all_tensors_as_inputs_all_inputs_as_in
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_relu_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("grouped_conv2d_nchw_relu_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_nchw_relu_all_tensors_as_inputs_all_inputs_as_internal());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -25605,9 +26180,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nchw_relu_relaxed() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 3.0f, 5.0f, 6.0f, 4.0f, 2.0f, 2.0f, 3.0f, 3.0f, 2.0f, 4.0f, 6.0f, 5.0f, 3.0f, 1.0f, 3.0f, 3.0f, 3.0f}),
@@ -25748,6 +26325,8 @@ const TestModel& get_test_model_nchw_relu_relaxed() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_relu_relaxed = TestModelManager::get().add("grouped_conv2d_nchw_relu_relaxed", get_test_model_nchw_relu_relaxed());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -25755,9 +26334,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nchw_relu_relaxed_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -25932,6 +26513,8 @@ const TestModel& get_test_model_nchw_relu_relaxed_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_relu_relaxed_all_inputs_as_internal = TestModelManager::get().add("grouped_conv2d_nchw_relu_relaxed_all_inputs_as_internal", get_test_model_nchw_relu_relaxed_all_inputs_as_internal());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -25939,9 +26522,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nchw_relu_relaxed_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 3.0f, 5.0f, 6.0f, 4.0f, 2.0f, 2.0f, 3.0f, 3.0f, 2.0f, 4.0f, 6.0f, 5.0f, 3.0f, 1.0f, 3.0f, 3.0f, 3.0f}),
@@ -26082,6 +26667,8 @@ const TestModel& get_test_model_nchw_relu_relaxed_all_tensors_as_inputs() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_relu_relaxed_all_tensors_as_inputs = TestModelManager::get().add("grouped_conv2d_nchw_relu_relaxed_all_tensors_as_inputs", get_test_model_nchw_relu_relaxed_all_tensors_as_inputs());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -26089,9 +26676,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nchw_relu_relaxed_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13, 16, 19},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -26335,15 +26924,19 @@ const TestModel& get_test_model_nchw_relu_relaxed_all_tensors_as_inputs_all_inpu
     return model;
 }
 
+const auto dummy_test_model_nchw_relu_relaxed_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("grouped_conv2d_nchw_relu_relaxed_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_nchw_relu_relaxed_all_tensors_as_inputs_all_inputs_as_internal());
+
 }  // namespace generated_tests::grouped_conv2d
 
 namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nchw_relu_quant8() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({104, 112, 120, 124, 116, 108, 108, 112, 112, 108, 116, 124, 120, 112, 104, 112, 112, 112}),
@@ -26484,6 +27077,8 @@ const TestModel& get_test_model_nchw_relu_quant8() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_relu_quant8 = TestModelManager::get().add("grouped_conv2d_nchw_relu_quant8", get_test_model_nchw_relu_quant8());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -26491,9 +27086,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nchw_relu_quant8_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -26668,6 +27265,8 @@ const TestModel& get_test_model_nchw_relu_quant8_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_relu_quant8_all_inputs_as_internal = TestModelManager::get().add("grouped_conv2d_nchw_relu_quant8_all_inputs_as_internal", get_test_model_nchw_relu_quant8_all_inputs_as_internal());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -26675,9 +27274,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nchw_relu_quant8_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({104, 112, 120, 124, 116, 108, 108, 112, 112, 108, 116, 124, 120, 112, 104, 112, 112, 112}),
@@ -26818,6 +27419,8 @@ const TestModel& get_test_model_nchw_relu_quant8_all_tensors_as_inputs() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_relu_quant8_all_tensors_as_inputs = TestModelManager::get().add("grouped_conv2d_nchw_relu_quant8_all_tensors_as_inputs", get_test_model_nchw_relu_quant8_all_tensors_as_inputs());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -26825,9 +27428,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nchw_relu_quant8_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {2, 13, 16},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -27036,6 +27641,8 @@ const TestModel& get_test_model_nchw_relu_quant8_all_tensors_as_inputs_all_input
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_relu_quant8_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("grouped_conv2d_nchw_relu_quant8_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_nchw_relu_quant8_all_tensors_as_inputs_all_inputs_as_internal());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -27043,9 +27650,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nchw_relu_quant8_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({104, 112, 120, 124, 116, 108, 108, 112, 112, 108, 116, 124, 120, 112, 104, 112, 112, 112}),
@@ -27186,6 +27795,8 @@ const TestModel& get_test_model_nchw_relu_quant8_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_relu_quant8_2 = TestModelManager::get().add("grouped_conv2d_nchw_relu_quant8_2", get_test_model_nchw_relu_quant8_2());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -27193,9 +27804,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nchw_relu_quant8_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -27370,6 +27983,8 @@ const TestModel& get_test_model_nchw_relu_quant8_all_inputs_as_internal_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_relu_quant8_all_inputs_as_internal_2 = TestModelManager::get().add("grouped_conv2d_nchw_relu_quant8_all_inputs_as_internal_2", get_test_model_nchw_relu_quant8_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -27377,9 +27992,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nchw_relu_quant8_all_tensors_as_inputs_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({104, 112, 120, 124, 116, 108, 108, 112, 112, 108, 116, 124, 120, 112, 104, 112, 112, 112}),
@@ -27520,6 +28137,8 @@ const TestModel& get_test_model_nchw_relu_quant8_all_tensors_as_inputs_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_relu_quant8_all_tensors_as_inputs_2 = TestModelManager::get().add("grouped_conv2d_nchw_relu_quant8_all_tensors_as_inputs_2", get_test_model_nchw_relu_quant8_all_tensors_as_inputs_2());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -27527,9 +28146,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nchw_relu_quant8_all_tensors_as_inputs_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {2, 13, 16},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -27739,15 +28360,19 @@ const TestModel& get_test_model_nchw_relu_quant8_all_tensors_as_inputs_all_input
     return model;
 }
 
+const auto dummy_test_model_nchw_relu_quant8_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("grouped_conv2d_nchw_relu_quant8_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_nchw_relu_quant8_all_tensors_as_inputs_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::grouped_conv2d
 
 namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nchw_relu_channelQuant8() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({104, 112, 120, 124, 116, 108, 108, 112, 112, 108, 116, 124, 120, 112, 104, 112, 112, 112}),
@@ -27891,6 +28516,8 @@ const TestModel& get_test_model_nchw_relu_channelQuant8() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_relu_channelQuant8 = TestModelManager::get().add("grouped_conv2d_nchw_relu_channelQuant8", get_test_model_nchw_relu_channelQuant8());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -27898,9 +28525,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nchw_relu_channelQuant8_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -28078,6 +28707,8 @@ const TestModel& get_test_model_nchw_relu_channelQuant8_all_inputs_as_internal()
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_relu_channelQuant8_all_inputs_as_internal = TestModelManager::get().add("grouped_conv2d_nchw_relu_channelQuant8_all_inputs_as_internal", get_test_model_nchw_relu_channelQuant8_all_inputs_as_internal());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -28085,9 +28716,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nchw_relu_channelQuant8_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({104, 112, 120, 124, 116, 108, 108, 112, 112, 108, 116, 124, 120, 112, 104, 112, 112, 112}),
@@ -28231,6 +28864,8 @@ const TestModel& get_test_model_nchw_relu_channelQuant8_all_tensors_as_inputs() 
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_relu_channelQuant8_all_tensors_as_inputs = TestModelManager::get().add("grouped_conv2d_nchw_relu_channelQuant8_all_tensors_as_inputs", get_test_model_nchw_relu_channelQuant8_all_tensors_as_inputs());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -28238,9 +28873,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nchw_relu_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {1, 2, 13},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -28419,15 +29056,19 @@ const TestModel& get_test_model_nchw_relu_channelQuant8_all_tensors_as_inputs_al
     return model;
 }
 
+const auto dummy_test_model_nchw_relu_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("grouped_conv2d_nchw_relu_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_nchw_relu_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal());
+
 }  // namespace generated_tests::grouped_conv2d
 
 namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nchw_relu_channelQuant8_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({104, 112, 120, 124, 116, 108, 108, 112, 112, 108, 116, 124, 120, 112, 104, 112, 112, 112}),
@@ -28571,6 +29212,8 @@ const TestModel& get_test_model_nchw_relu_channelQuant8_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_relu_channelQuant8_2 = TestModelManager::get().add("grouped_conv2d_nchw_relu_channelQuant8_2", get_test_model_nchw_relu_channelQuant8_2());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -28578,9 +29221,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nchw_relu_channelQuant8_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -28758,6 +29403,8 @@ const TestModel& get_test_model_nchw_relu_channelQuant8_all_inputs_as_internal_2
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_relu_channelQuant8_all_inputs_as_internal_2 = TestModelManager::get().add("grouped_conv2d_nchw_relu_channelQuant8_all_inputs_as_internal_2", get_test_model_nchw_relu_channelQuant8_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -28765,9 +29412,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nchw_relu_channelQuant8_all_tensors_as_inputs_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({104, 112, 120, 124, 116, 108, 108, 112, 112, 108, 116, 124, 120, 112, 104, 112, 112, 112}),
@@ -28911,6 +29560,8 @@ const TestModel& get_test_model_nchw_relu_channelQuant8_all_tensors_as_inputs_2(
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_relu_channelQuant8_all_tensors_as_inputs_2 = TestModelManager::get().add("grouped_conv2d_nchw_relu_channelQuant8_all_tensors_as_inputs_2", get_test_model_nchw_relu_channelQuant8_all_tensors_as_inputs_2());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -28918,9 +29569,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nchw_relu_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {1, 2, 13},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -29099,15 +29752,19 @@ const TestModel& get_test_model_nchw_relu_channelQuant8_all_tensors_as_inputs_al
     return model;
 }
 
+const auto dummy_test_model_nchw_relu_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("grouped_conv2d_nchw_relu_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_nchw_relu_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::grouped_conv2d
 
 namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nchw_relu_float16() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({1.0f, 3.0f, 5.0f, 6.0f, 4.0f, 2.0f, 2.0f, 3.0f, 3.0f, 2.0f, 4.0f, 6.0f, 5.0f, 3.0f, 1.0f, 3.0f, 3.0f, 3.0f}),
@@ -29248,6 +29905,8 @@ const TestModel& get_test_model_nchw_relu_float16() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_relu_float16 = TestModelManager::get().add("grouped_conv2d_nchw_relu_float16", get_test_model_nchw_relu_float16());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -29255,9 +29914,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nchw_relu_float16_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -29432,6 +30093,8 @@ const TestModel& get_test_model_nchw_relu_float16_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_relu_float16_all_inputs_as_internal = TestModelManager::get().add("grouped_conv2d_nchw_relu_float16_all_inputs_as_internal", get_test_model_nchw_relu_float16_all_inputs_as_internal());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -29439,9 +30102,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nchw_relu_float16_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({1.0f, 3.0f, 5.0f, 6.0f, 4.0f, 2.0f, 2.0f, 3.0f, 3.0f, 2.0f, 4.0f, 6.0f, 5.0f, 3.0f, 1.0f, 3.0f, 3.0f, 3.0f}),
@@ -29582,6 +30247,8 @@ const TestModel& get_test_model_nchw_relu_float16_all_tensors_as_inputs() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_relu_float16_all_tensors_as_inputs = TestModelManager::get().add("grouped_conv2d_nchw_relu_float16_all_tensors_as_inputs", get_test_model_nchw_relu_float16_all_tensors_as_inputs());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -29589,9 +30256,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nchw_relu_float16_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13, 16, 19},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -29835,15 +30504,19 @@ const TestModel& get_test_model_nchw_relu_float16_all_tensors_as_inputs_all_inpu
     return model;
 }
 
+const auto dummy_test_model_nchw_relu_float16_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("grouped_conv2d_nchw_relu_float16_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_nchw_relu_float16_all_tensors_as_inputs_all_inputs_as_internal());
+
 }  // namespace generated_tests::grouped_conv2d
 
 namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nchw_relu1() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 3.0f, 5.0f, 6.0f, 4.0f, 2.0f, 2.0f, 3.0f, 3.0f, 2.0f, 4.0f, 6.0f, 5.0f, 3.0f, 1.0f, 3.0f, 3.0f, 3.0f}),
@@ -29984,6 +30657,8 @@ const TestModel& get_test_model_nchw_relu1() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_relu1 = TestModelManager::get().add("grouped_conv2d_nchw_relu1", get_test_model_nchw_relu1());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -29991,9 +30666,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nchw_relu1_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -30168,6 +30845,8 @@ const TestModel& get_test_model_nchw_relu1_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_relu1_all_inputs_as_internal = TestModelManager::get().add("grouped_conv2d_nchw_relu1_all_inputs_as_internal", get_test_model_nchw_relu1_all_inputs_as_internal());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -30175,9 +30854,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nchw_relu1_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 3.0f, 5.0f, 6.0f, 4.0f, 2.0f, 2.0f, 3.0f, 3.0f, 2.0f, 4.0f, 6.0f, 5.0f, 3.0f, 1.0f, 3.0f, 3.0f, 3.0f}),
@@ -30318,6 +30999,8 @@ const TestModel& get_test_model_nchw_relu1_all_tensors_as_inputs() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_relu1_all_tensors_as_inputs = TestModelManager::get().add("grouped_conv2d_nchw_relu1_all_tensors_as_inputs", get_test_model_nchw_relu1_all_tensors_as_inputs());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -30325,9 +31008,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nchw_relu1_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13, 16, 19},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -30570,6 +31255,8 @@ const TestModel& get_test_model_nchw_relu1_all_tensors_as_inputs_all_inputs_as_i
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_relu1_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("grouped_conv2d_nchw_relu1_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_nchw_relu1_all_tensors_as_inputs_all_inputs_as_internal());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -30577,9 +31264,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nchw_relu1_relaxed() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 3.0f, 5.0f, 6.0f, 4.0f, 2.0f, 2.0f, 3.0f, 3.0f, 2.0f, 4.0f, 6.0f, 5.0f, 3.0f, 1.0f, 3.0f, 3.0f, 3.0f}),
@@ -30720,6 +31409,8 @@ const TestModel& get_test_model_nchw_relu1_relaxed() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_relu1_relaxed = TestModelManager::get().add("grouped_conv2d_nchw_relu1_relaxed", get_test_model_nchw_relu1_relaxed());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -30727,9 +31418,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nchw_relu1_relaxed_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -30904,6 +31597,8 @@ const TestModel& get_test_model_nchw_relu1_relaxed_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_relu1_relaxed_all_inputs_as_internal = TestModelManager::get().add("grouped_conv2d_nchw_relu1_relaxed_all_inputs_as_internal", get_test_model_nchw_relu1_relaxed_all_inputs_as_internal());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -30911,9 +31606,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nchw_relu1_relaxed_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 3.0f, 5.0f, 6.0f, 4.0f, 2.0f, 2.0f, 3.0f, 3.0f, 2.0f, 4.0f, 6.0f, 5.0f, 3.0f, 1.0f, 3.0f, 3.0f, 3.0f}),
@@ -31054,6 +31751,8 @@ const TestModel& get_test_model_nchw_relu1_relaxed_all_tensors_as_inputs() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_relu1_relaxed_all_tensors_as_inputs = TestModelManager::get().add("grouped_conv2d_nchw_relu1_relaxed_all_tensors_as_inputs", get_test_model_nchw_relu1_relaxed_all_tensors_as_inputs());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -31061,9 +31760,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nchw_relu1_relaxed_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13, 16, 19},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -31307,15 +32008,19 @@ const TestModel& get_test_model_nchw_relu1_relaxed_all_tensors_as_inputs_all_inp
     return model;
 }
 
+const auto dummy_test_model_nchw_relu1_relaxed_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("grouped_conv2d_nchw_relu1_relaxed_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_nchw_relu1_relaxed_all_tensors_as_inputs_all_inputs_as_internal());
+
 }  // namespace generated_tests::grouped_conv2d
 
 namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nchw_relu1_quant8() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({104, 112, 120, 124, 116, 108, 108, 112, 112, 108, 116, 124, 120, 112, 104, 112, 112, 112}),
@@ -31456,6 +32161,8 @@ const TestModel& get_test_model_nchw_relu1_quant8() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_relu1_quant8 = TestModelManager::get().add("grouped_conv2d_nchw_relu1_quant8", get_test_model_nchw_relu1_quant8());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -31463,9 +32170,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nchw_relu1_quant8_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -31640,6 +32349,8 @@ const TestModel& get_test_model_nchw_relu1_quant8_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_relu1_quant8_all_inputs_as_internal = TestModelManager::get().add("grouped_conv2d_nchw_relu1_quant8_all_inputs_as_internal", get_test_model_nchw_relu1_quant8_all_inputs_as_internal());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -31647,9 +32358,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nchw_relu1_quant8_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({104, 112, 120, 124, 116, 108, 108, 112, 112, 108, 116, 124, 120, 112, 104, 112, 112, 112}),
@@ -31790,6 +32503,8 @@ const TestModel& get_test_model_nchw_relu1_quant8_all_tensors_as_inputs() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_relu1_quant8_all_tensors_as_inputs = TestModelManager::get().add("grouped_conv2d_nchw_relu1_quant8_all_tensors_as_inputs", get_test_model_nchw_relu1_quant8_all_tensors_as_inputs());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -31797,9 +32512,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nchw_relu1_quant8_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {2, 13, 16},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -32008,6 +32725,8 @@ const TestModel& get_test_model_nchw_relu1_quant8_all_tensors_as_inputs_all_inpu
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_relu1_quant8_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("grouped_conv2d_nchw_relu1_quant8_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_nchw_relu1_quant8_all_tensors_as_inputs_all_inputs_as_internal());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -32015,9 +32734,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nchw_relu1_quant8_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({104, 112, 120, 124, 116, 108, 108, 112, 112, 108, 116, 124, 120, 112, 104, 112, 112, 112}),
@@ -32158,6 +32879,8 @@ const TestModel& get_test_model_nchw_relu1_quant8_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_relu1_quant8_2 = TestModelManager::get().add("grouped_conv2d_nchw_relu1_quant8_2", get_test_model_nchw_relu1_quant8_2());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -32165,9 +32888,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nchw_relu1_quant8_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -32342,6 +33067,8 @@ const TestModel& get_test_model_nchw_relu1_quant8_all_inputs_as_internal_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_relu1_quant8_all_inputs_as_internal_2 = TestModelManager::get().add("grouped_conv2d_nchw_relu1_quant8_all_inputs_as_internal_2", get_test_model_nchw_relu1_quant8_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -32349,9 +33076,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nchw_relu1_quant8_all_tensors_as_inputs_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({104, 112, 120, 124, 116, 108, 108, 112, 112, 108, 116, 124, 120, 112, 104, 112, 112, 112}),
@@ -32492,6 +33221,8 @@ const TestModel& get_test_model_nchw_relu1_quant8_all_tensors_as_inputs_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_relu1_quant8_all_tensors_as_inputs_2 = TestModelManager::get().add("grouped_conv2d_nchw_relu1_quant8_all_tensors_as_inputs_2", get_test_model_nchw_relu1_quant8_all_tensors_as_inputs_2());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -32499,9 +33230,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nchw_relu1_quant8_all_tensors_as_inputs_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {2, 13, 16},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -32711,15 +33444,19 @@ const TestModel& get_test_model_nchw_relu1_quant8_all_tensors_as_inputs_all_inpu
     return model;
 }
 
+const auto dummy_test_model_nchw_relu1_quant8_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("grouped_conv2d_nchw_relu1_quant8_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_nchw_relu1_quant8_all_tensors_as_inputs_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::grouped_conv2d
 
 namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nchw_relu1_channelQuant8() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({104, 112, 120, 124, 116, 108, 108, 112, 112, 108, 116, 124, 120, 112, 104, 112, 112, 112}),
@@ -32863,6 +33600,8 @@ const TestModel& get_test_model_nchw_relu1_channelQuant8() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_relu1_channelQuant8 = TestModelManager::get().add("grouped_conv2d_nchw_relu1_channelQuant8", get_test_model_nchw_relu1_channelQuant8());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -32870,9 +33609,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nchw_relu1_channelQuant8_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -33050,6 +33791,8 @@ const TestModel& get_test_model_nchw_relu1_channelQuant8_all_inputs_as_internal(
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_relu1_channelQuant8_all_inputs_as_internal = TestModelManager::get().add("grouped_conv2d_nchw_relu1_channelQuant8_all_inputs_as_internal", get_test_model_nchw_relu1_channelQuant8_all_inputs_as_internal());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -33057,9 +33800,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nchw_relu1_channelQuant8_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({104, 112, 120, 124, 116, 108, 108, 112, 112, 108, 116, 124, 120, 112, 104, 112, 112, 112}),
@@ -33203,6 +33948,8 @@ const TestModel& get_test_model_nchw_relu1_channelQuant8_all_tensors_as_inputs()
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_relu1_channelQuant8_all_tensors_as_inputs = TestModelManager::get().add("grouped_conv2d_nchw_relu1_channelQuant8_all_tensors_as_inputs", get_test_model_nchw_relu1_channelQuant8_all_tensors_as_inputs());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -33210,9 +33957,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nchw_relu1_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {1, 2, 13},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -33391,15 +34140,19 @@ const TestModel& get_test_model_nchw_relu1_channelQuant8_all_tensors_as_inputs_a
     return model;
 }
 
+const auto dummy_test_model_nchw_relu1_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("grouped_conv2d_nchw_relu1_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_nchw_relu1_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal());
+
 }  // namespace generated_tests::grouped_conv2d
 
 namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nchw_relu1_channelQuant8_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({104, 112, 120, 124, 116, 108, 108, 112, 112, 108, 116, 124, 120, 112, 104, 112, 112, 112}),
@@ -33543,6 +34296,8 @@ const TestModel& get_test_model_nchw_relu1_channelQuant8_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_relu1_channelQuant8_2 = TestModelManager::get().add("grouped_conv2d_nchw_relu1_channelQuant8_2", get_test_model_nchw_relu1_channelQuant8_2());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -33550,9 +34305,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nchw_relu1_channelQuant8_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -33730,6 +34487,8 @@ const TestModel& get_test_model_nchw_relu1_channelQuant8_all_inputs_as_internal_
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_relu1_channelQuant8_all_inputs_as_internal_2 = TestModelManager::get().add("grouped_conv2d_nchw_relu1_channelQuant8_all_inputs_as_internal_2", get_test_model_nchw_relu1_channelQuant8_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -33737,9 +34496,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nchw_relu1_channelQuant8_all_tensors_as_inputs_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({104, 112, 120, 124, 116, 108, 108, 112, 112, 108, 116, 124, 120, 112, 104, 112, 112, 112}),
@@ -33883,6 +34644,8 @@ const TestModel& get_test_model_nchw_relu1_channelQuant8_all_tensors_as_inputs_2
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_relu1_channelQuant8_all_tensors_as_inputs_2 = TestModelManager::get().add("grouped_conv2d_nchw_relu1_channelQuant8_all_tensors_as_inputs_2", get_test_model_nchw_relu1_channelQuant8_all_tensors_as_inputs_2());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -33890,9 +34653,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nchw_relu1_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {1, 2, 13},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -34071,15 +34836,19 @@ const TestModel& get_test_model_nchw_relu1_channelQuant8_all_tensors_as_inputs_a
     return model;
 }
 
+const auto dummy_test_model_nchw_relu1_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("grouped_conv2d_nchw_relu1_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_nchw_relu1_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::grouped_conv2d
 
 namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nchw_relu1_float16() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({1.0f, 3.0f, 5.0f, 6.0f, 4.0f, 2.0f, 2.0f, 3.0f, 3.0f, 2.0f, 4.0f, 6.0f, 5.0f, 3.0f, 1.0f, 3.0f, 3.0f, 3.0f}),
@@ -34220,6 +34989,8 @@ const TestModel& get_test_model_nchw_relu1_float16() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_relu1_float16 = TestModelManager::get().add("grouped_conv2d_nchw_relu1_float16", get_test_model_nchw_relu1_float16());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -34227,9 +34998,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nchw_relu1_float16_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -34404,6 +35177,8 @@ const TestModel& get_test_model_nchw_relu1_float16_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_relu1_float16_all_inputs_as_internal = TestModelManager::get().add("grouped_conv2d_nchw_relu1_float16_all_inputs_as_internal", get_test_model_nchw_relu1_float16_all_inputs_as_internal());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -34411,9 +35186,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nchw_relu1_float16_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({1.0f, 3.0f, 5.0f, 6.0f, 4.0f, 2.0f, 2.0f, 3.0f, 3.0f, 2.0f, 4.0f, 6.0f, 5.0f, 3.0f, 1.0f, 3.0f, 3.0f, 3.0f}),
@@ -34554,6 +35331,8 @@ const TestModel& get_test_model_nchw_relu1_float16_all_tensors_as_inputs() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_relu1_float16_all_tensors_as_inputs = TestModelManager::get().add("grouped_conv2d_nchw_relu1_float16_all_tensors_as_inputs", get_test_model_nchw_relu1_float16_all_tensors_as_inputs());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -34561,9 +35340,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nchw_relu1_float16_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13, 16, 19},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -34807,15 +35588,19 @@ const TestModel& get_test_model_nchw_relu1_float16_all_tensors_as_inputs_all_inp
     return model;
 }
 
+const auto dummy_test_model_nchw_relu1_float16_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("grouped_conv2d_nchw_relu1_float16_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_nchw_relu1_float16_all_tensors_as_inputs_all_inputs_as_internal());
+
 }  // namespace generated_tests::grouped_conv2d
 
 namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nchw_relu6() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 3.0f, 5.0f, 6.0f, 4.0f, 2.0f, 2.0f, 3.0f, 3.0f, 2.0f, 4.0f, 6.0f, 5.0f, 3.0f, 1.0f, 3.0f, 3.0f, 3.0f}),
@@ -34956,6 +35741,8 @@ const TestModel& get_test_model_nchw_relu6() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_relu6 = TestModelManager::get().add("grouped_conv2d_nchw_relu6", get_test_model_nchw_relu6());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -34963,9 +35750,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nchw_relu6_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -35140,6 +35929,8 @@ const TestModel& get_test_model_nchw_relu6_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_relu6_all_inputs_as_internal = TestModelManager::get().add("grouped_conv2d_nchw_relu6_all_inputs_as_internal", get_test_model_nchw_relu6_all_inputs_as_internal());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -35147,9 +35938,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nchw_relu6_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 3.0f, 5.0f, 6.0f, 4.0f, 2.0f, 2.0f, 3.0f, 3.0f, 2.0f, 4.0f, 6.0f, 5.0f, 3.0f, 1.0f, 3.0f, 3.0f, 3.0f}),
@@ -35290,6 +36083,8 @@ const TestModel& get_test_model_nchw_relu6_all_tensors_as_inputs() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_relu6_all_tensors_as_inputs = TestModelManager::get().add("grouped_conv2d_nchw_relu6_all_tensors_as_inputs", get_test_model_nchw_relu6_all_tensors_as_inputs());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -35297,9 +36092,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nchw_relu6_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13, 16, 19},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -35542,6 +36339,8 @@ const TestModel& get_test_model_nchw_relu6_all_tensors_as_inputs_all_inputs_as_i
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_relu6_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("grouped_conv2d_nchw_relu6_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_nchw_relu6_all_tensors_as_inputs_all_inputs_as_internal());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -35549,9 +36348,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nchw_relu6_relaxed() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 3.0f, 5.0f, 6.0f, 4.0f, 2.0f, 2.0f, 3.0f, 3.0f, 2.0f, 4.0f, 6.0f, 5.0f, 3.0f, 1.0f, 3.0f, 3.0f, 3.0f}),
@@ -35692,6 +36493,8 @@ const TestModel& get_test_model_nchw_relu6_relaxed() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_relu6_relaxed = TestModelManager::get().add("grouped_conv2d_nchw_relu6_relaxed", get_test_model_nchw_relu6_relaxed());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -35699,9 +36502,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nchw_relu6_relaxed_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -35876,6 +36681,8 @@ const TestModel& get_test_model_nchw_relu6_relaxed_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_relu6_relaxed_all_inputs_as_internal = TestModelManager::get().add("grouped_conv2d_nchw_relu6_relaxed_all_inputs_as_internal", get_test_model_nchw_relu6_relaxed_all_inputs_as_internal());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -35883,9 +36690,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nchw_relu6_relaxed_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 3.0f, 5.0f, 6.0f, 4.0f, 2.0f, 2.0f, 3.0f, 3.0f, 2.0f, 4.0f, 6.0f, 5.0f, 3.0f, 1.0f, 3.0f, 3.0f, 3.0f}),
@@ -36026,6 +36835,8 @@ const TestModel& get_test_model_nchw_relu6_relaxed_all_tensors_as_inputs() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_relu6_relaxed_all_tensors_as_inputs = TestModelManager::get().add("grouped_conv2d_nchw_relu6_relaxed_all_tensors_as_inputs", get_test_model_nchw_relu6_relaxed_all_tensors_as_inputs());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -36033,9 +36844,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nchw_relu6_relaxed_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13, 16, 19},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -36279,15 +37092,19 @@ const TestModel& get_test_model_nchw_relu6_relaxed_all_tensors_as_inputs_all_inp
     return model;
 }
 
+const auto dummy_test_model_nchw_relu6_relaxed_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("grouped_conv2d_nchw_relu6_relaxed_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_nchw_relu6_relaxed_all_tensors_as_inputs_all_inputs_as_internal());
+
 }  // namespace generated_tests::grouped_conv2d
 
 namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nchw_relu6_quant8() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({104, 112, 120, 124, 116, 108, 108, 112, 112, 108, 116, 124, 120, 112, 104, 112, 112, 112}),
@@ -36428,6 +37245,8 @@ const TestModel& get_test_model_nchw_relu6_quant8() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_relu6_quant8 = TestModelManager::get().add("grouped_conv2d_nchw_relu6_quant8", get_test_model_nchw_relu6_quant8());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -36435,9 +37254,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nchw_relu6_quant8_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -36612,6 +37433,8 @@ const TestModel& get_test_model_nchw_relu6_quant8_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_relu6_quant8_all_inputs_as_internal = TestModelManager::get().add("grouped_conv2d_nchw_relu6_quant8_all_inputs_as_internal", get_test_model_nchw_relu6_quant8_all_inputs_as_internal());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -36619,9 +37442,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nchw_relu6_quant8_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({104, 112, 120, 124, 116, 108, 108, 112, 112, 108, 116, 124, 120, 112, 104, 112, 112, 112}),
@@ -36762,6 +37587,8 @@ const TestModel& get_test_model_nchw_relu6_quant8_all_tensors_as_inputs() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_relu6_quant8_all_tensors_as_inputs = TestModelManager::get().add("grouped_conv2d_nchw_relu6_quant8_all_tensors_as_inputs", get_test_model_nchw_relu6_quant8_all_tensors_as_inputs());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -36769,9 +37596,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nchw_relu6_quant8_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {2, 13, 16},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -36980,6 +37809,8 @@ const TestModel& get_test_model_nchw_relu6_quant8_all_tensors_as_inputs_all_inpu
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_relu6_quant8_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("grouped_conv2d_nchw_relu6_quant8_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_nchw_relu6_quant8_all_tensors_as_inputs_all_inputs_as_internal());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -36987,9 +37818,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nchw_relu6_quant8_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({104, 112, 120, 124, 116, 108, 108, 112, 112, 108, 116, 124, 120, 112, 104, 112, 112, 112}),
@@ -37131,15 +37964,19 @@ const TestModel& get_test_model_nchw_relu6_quant8_2() {
     return model;
 }
 
+const auto dummy_test_model_nchw_relu6_quant8_2 = TestModelManager::get().add("grouped_conv2d_nchw_relu6_quant8_2", get_test_model_nchw_relu6_quant8_2());
+
 }  // namespace generated_tests::grouped_conv2d
 
 namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nchw_relu6_quant8_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -37315,15 +38152,19 @@ const TestModel& get_test_model_nchw_relu6_quant8_all_inputs_as_internal_2() {
     return model;
 }
 
+const auto dummy_test_model_nchw_relu6_quant8_all_inputs_as_internal_2 = TestModelManager::get().add("grouped_conv2d_nchw_relu6_quant8_all_inputs_as_internal_2", get_test_model_nchw_relu6_quant8_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::grouped_conv2d
 
 namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nchw_relu6_quant8_all_tensors_as_inputs_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({104, 112, 120, 124, 116, 108, 108, 112, 112, 108, 116, 124, 120, 112, 104, 112, 112, 112}),
@@ -37465,15 +38306,19 @@ const TestModel& get_test_model_nchw_relu6_quant8_all_tensors_as_inputs_2() {
     return model;
 }
 
+const auto dummy_test_model_nchw_relu6_quant8_all_tensors_as_inputs_2 = TestModelManager::get().add("grouped_conv2d_nchw_relu6_quant8_all_tensors_as_inputs_2", get_test_model_nchw_relu6_quant8_all_tensors_as_inputs_2());
+
 }  // namespace generated_tests::grouped_conv2d
 
 namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nchw_relu6_quant8_all_tensors_as_inputs_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {2, 13, 16},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -37683,15 +38528,19 @@ const TestModel& get_test_model_nchw_relu6_quant8_all_tensors_as_inputs_all_inpu
     return model;
 }
 
+const auto dummy_test_model_nchw_relu6_quant8_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("grouped_conv2d_nchw_relu6_quant8_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_nchw_relu6_quant8_all_tensors_as_inputs_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::grouped_conv2d
 
 namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nchw_relu6_channelQuant8() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({104, 112, 120, 124, 116, 108, 108, 112, 112, 108, 116, 124, 120, 112, 104, 112, 112, 112}),
@@ -37835,6 +38684,8 @@ const TestModel& get_test_model_nchw_relu6_channelQuant8() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_relu6_channelQuant8 = TestModelManager::get().add("grouped_conv2d_nchw_relu6_channelQuant8", get_test_model_nchw_relu6_channelQuant8());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -37842,9 +38693,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nchw_relu6_channelQuant8_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -38022,6 +38875,8 @@ const TestModel& get_test_model_nchw_relu6_channelQuant8_all_inputs_as_internal(
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_relu6_channelQuant8_all_inputs_as_internal = TestModelManager::get().add("grouped_conv2d_nchw_relu6_channelQuant8_all_inputs_as_internal", get_test_model_nchw_relu6_channelQuant8_all_inputs_as_internal());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -38029,9 +38884,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nchw_relu6_channelQuant8_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({104, 112, 120, 124, 116, 108, 108, 112, 112, 108, 116, 124, 120, 112, 104, 112, 112, 112}),
@@ -38175,6 +39032,8 @@ const TestModel& get_test_model_nchw_relu6_channelQuant8_all_tensors_as_inputs()
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_relu6_channelQuant8_all_tensors_as_inputs = TestModelManager::get().add("grouped_conv2d_nchw_relu6_channelQuant8_all_tensors_as_inputs", get_test_model_nchw_relu6_channelQuant8_all_tensors_as_inputs());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -38182,9 +39041,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nchw_relu6_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {1, 2, 13},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -38363,15 +39224,19 @@ const TestModel& get_test_model_nchw_relu6_channelQuant8_all_tensors_as_inputs_a
     return model;
 }
 
+const auto dummy_test_model_nchw_relu6_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("grouped_conv2d_nchw_relu6_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_nchw_relu6_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal());
+
 }  // namespace generated_tests::grouped_conv2d
 
 namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nchw_relu6_channelQuant8_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({104, 112, 120, 124, 116, 108, 108, 112, 112, 108, 116, 124, 120, 112, 104, 112, 112, 112}),
@@ -38515,6 +39380,8 @@ const TestModel& get_test_model_nchw_relu6_channelQuant8_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_relu6_channelQuant8_2 = TestModelManager::get().add("grouped_conv2d_nchw_relu6_channelQuant8_2", get_test_model_nchw_relu6_channelQuant8_2());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -38522,9 +39389,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nchw_relu6_channelQuant8_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -38702,6 +39571,8 @@ const TestModel& get_test_model_nchw_relu6_channelQuant8_all_inputs_as_internal_
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_relu6_channelQuant8_all_inputs_as_internal_2 = TestModelManager::get().add("grouped_conv2d_nchw_relu6_channelQuant8_all_inputs_as_internal_2", get_test_model_nchw_relu6_channelQuant8_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -38709,9 +39580,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nchw_relu6_channelQuant8_all_tensors_as_inputs_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({104, 112, 120, 124, 116, 108, 108, 112, 112, 108, 116, 124, 120, 112, 104, 112, 112, 112}),
@@ -38856,15 +39729,19 @@ const TestModel& get_test_model_nchw_relu6_channelQuant8_all_tensors_as_inputs_2
     return model;
 }
 
+const auto dummy_test_model_nchw_relu6_channelQuant8_all_tensors_as_inputs_2 = TestModelManager::get().add("grouped_conv2d_nchw_relu6_channelQuant8_all_tensors_as_inputs_2", get_test_model_nchw_relu6_channelQuant8_all_tensors_as_inputs_2());
+
 }  // namespace generated_tests::grouped_conv2d
 
 namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nchw_relu6_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {1, 2, 13},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -39043,15 +39920,19 @@ const TestModel& get_test_model_nchw_relu6_channelQuant8_all_tensors_as_inputs_a
     return model;
 }
 
+const auto dummy_test_model_nchw_relu6_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("grouped_conv2d_nchw_relu6_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_nchw_relu6_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::grouped_conv2d
 
 namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nchw_relu6_float16() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({1.0f, 3.0f, 5.0f, 6.0f, 4.0f, 2.0f, 2.0f, 3.0f, 3.0f, 2.0f, 4.0f, 6.0f, 5.0f, 3.0f, 1.0f, 3.0f, 3.0f, 3.0f}),
@@ -39193,15 +40074,19 @@ const TestModel& get_test_model_nchw_relu6_float16() {
     return model;
 }
 
+const auto dummy_test_model_nchw_relu6_float16 = TestModelManager::get().add("grouped_conv2d_nchw_relu6_float16", get_test_model_nchw_relu6_float16());
+
 }  // namespace generated_tests::grouped_conv2d
 
 namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nchw_relu6_float16_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -39377,15 +40262,19 @@ const TestModel& get_test_model_nchw_relu6_float16_all_inputs_as_internal() {
     return model;
 }
 
+const auto dummy_test_model_nchw_relu6_float16_all_inputs_as_internal = TestModelManager::get().add("grouped_conv2d_nchw_relu6_float16_all_inputs_as_internal", get_test_model_nchw_relu6_float16_all_inputs_as_internal());
+
 }  // namespace generated_tests::grouped_conv2d
 
 namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nchw_relu6_float16_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({1.0f, 3.0f, 5.0f, 6.0f, 4.0f, 2.0f, 2.0f, 3.0f, 3.0f, 2.0f, 4.0f, 6.0f, 5.0f, 3.0f, 1.0f, 3.0f, 3.0f, 3.0f}),
@@ -39527,15 +40416,19 @@ const TestModel& get_test_model_nchw_relu6_float16_all_tensors_as_inputs() {
     return model;
 }
 
+const auto dummy_test_model_nchw_relu6_float16_all_tensors_as_inputs = TestModelManager::get().add("grouped_conv2d_nchw_relu6_float16_all_tensors_as_inputs", get_test_model_nchw_relu6_float16_all_tensors_as_inputs());
+
 }  // namespace generated_tests::grouped_conv2d
 
 namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_nchw_relu6_float16_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {13, 16, 19},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -39779,15 +40672,19 @@ const TestModel& get_test_model_nchw_relu6_float16_all_tensors_as_inputs_all_inp
     return model;
 }
 
+const auto dummy_test_model_nchw_relu6_float16_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("grouped_conv2d_nchw_relu6_float16_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_nchw_relu6_float16_all_tensors_as_inputs_all_inputs_as_internal());
+
 }  // namespace generated_tests::grouped_conv2d
 
 namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_large_nhwc() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 4.0f, 3.0f, 2.0f, 1.0f, 2.0f, 3.0f, 3.0f, 3.0f}),
@@ -39898,6 +40795,8 @@ const TestModel& get_test_model_large_nhwc() {
     };
     return model;
 }
+
+const auto dummy_test_model_large_nhwc = TestModelManager::get().add("grouped_conv2d_large_nhwc", get_test_model_large_nhwc());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -39905,9 +40804,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_large_nhwc_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {10},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -40052,6 +40953,8 @@ const TestModel& get_test_model_large_nhwc_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_large_nhwc_all_inputs_as_internal = TestModelManager::get().add("grouped_conv2d_large_nhwc_all_inputs_as_internal", get_test_model_large_nhwc_all_inputs_as_internal());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -40059,9 +40962,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_large_nhwc_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 4.0f, 3.0f, 2.0f, 1.0f, 2.0f, 3.0f, 3.0f, 3.0f}),
@@ -40172,6 +41077,8 @@ const TestModel& get_test_model_large_nhwc_all_tensors_as_inputs() {
     };
     return model;
 }
+
+const auto dummy_test_model_large_nhwc_all_tensors_as_inputs = TestModelManager::get().add("grouped_conv2d_large_nhwc_all_tensors_as_inputs", get_test_model_large_nhwc_all_tensors_as_inputs());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -40179,9 +41086,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_large_nhwc_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {10, 13, 16},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -40394,6 +41303,8 @@ const TestModel& get_test_model_large_nhwc_all_tensors_as_inputs_all_inputs_as_i
     };
     return model;
 }
+
+const auto dummy_test_model_large_nhwc_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("grouped_conv2d_large_nhwc_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_large_nhwc_all_tensors_as_inputs_all_inputs_as_internal());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -40401,9 +41312,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_large_nhwc_relaxed() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 4.0f, 3.0f, 2.0f, 1.0f, 2.0f, 3.0f, 3.0f, 3.0f}),
@@ -40514,6 +41427,8 @@ const TestModel& get_test_model_large_nhwc_relaxed() {
     };
     return model;
 }
+
+const auto dummy_test_model_large_nhwc_relaxed = TestModelManager::get().add("grouped_conv2d_large_nhwc_relaxed", get_test_model_large_nhwc_relaxed());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -40521,9 +41436,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_large_nhwc_relaxed_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {10},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -40668,6 +41585,8 @@ const TestModel& get_test_model_large_nhwc_relaxed_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_large_nhwc_relaxed_all_inputs_as_internal = TestModelManager::get().add("grouped_conv2d_large_nhwc_relaxed_all_inputs_as_internal", get_test_model_large_nhwc_relaxed_all_inputs_as_internal());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -40675,9 +41594,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_large_nhwc_relaxed_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 4.0f, 3.0f, 2.0f, 1.0f, 2.0f, 3.0f, 3.0f, 3.0f}),
@@ -40788,6 +41709,8 @@ const TestModel& get_test_model_large_nhwc_relaxed_all_tensors_as_inputs() {
     };
     return model;
 }
+
+const auto dummy_test_model_large_nhwc_relaxed_all_tensors_as_inputs = TestModelManager::get().add("grouped_conv2d_large_nhwc_relaxed_all_tensors_as_inputs", get_test_model_large_nhwc_relaxed_all_tensors_as_inputs());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -40795,9 +41718,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_large_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {10, 13, 16},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -41011,15 +41936,19 @@ const TestModel& get_test_model_large_nhwc_relaxed_all_tensors_as_inputs_all_inp
     return model;
 }
 
+const auto dummy_test_model_large_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("grouped_conv2d_large_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_large_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal());
+
 }  // namespace generated_tests::grouped_conv2d
 
 namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_large_nhwc_quant8() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({132, 136, 140, 144, 144, 140, 136, 132, 136, 140, 140, 140}),
@@ -41130,6 +42059,8 @@ const TestModel& get_test_model_large_nhwc_quant8() {
     };
     return model;
 }
+
+const auto dummy_test_model_large_nhwc_quant8 = TestModelManager::get().add("grouped_conv2d_large_nhwc_quant8", get_test_model_large_nhwc_quant8());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -41137,9 +42068,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_large_nhwc_quant8_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {10},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -41284,6 +42217,8 @@ const TestModel& get_test_model_large_nhwc_quant8_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_large_nhwc_quant8_all_inputs_as_internal = TestModelManager::get().add("grouped_conv2d_large_nhwc_quant8_all_inputs_as_internal", get_test_model_large_nhwc_quant8_all_inputs_as_internal());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -41291,9 +42226,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_large_nhwc_quant8_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({132, 136, 140, 144, 144, 140, 136, 132, 136, 140, 140, 140}),
@@ -41404,6 +42341,8 @@ const TestModel& get_test_model_large_nhwc_quant8_all_tensors_as_inputs() {
     };
     return model;
 }
+
+const auto dummy_test_model_large_nhwc_quant8_all_tensors_as_inputs = TestModelManager::get().add("grouped_conv2d_large_nhwc_quant8_all_tensors_as_inputs", get_test_model_large_nhwc_quant8_all_tensors_as_inputs());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -41411,9 +42350,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_large_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {2, 10, 13},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -41592,6 +42533,8 @@ const TestModel& get_test_model_large_nhwc_quant8_all_tensors_as_inputs_all_inpu
     };
     return model;
 }
+
+const auto dummy_test_model_large_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("grouped_conv2d_large_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_large_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -41599,9 +42542,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_large_nhwc_channelQuant8() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({132, 136, 140, 144, 144, 140, 136, 132, 136, 140, 140, 140}),
@@ -41715,6 +42660,8 @@ const TestModel& get_test_model_large_nhwc_channelQuant8() {
     };
     return model;
 }
+
+const auto dummy_test_model_large_nhwc_channelQuant8 = TestModelManager::get().add("grouped_conv2d_large_nhwc_channelQuant8", get_test_model_large_nhwc_channelQuant8());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -41722,9 +42669,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_large_nhwc_channelQuant8_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {10},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -41872,6 +42821,8 @@ const TestModel& get_test_model_large_nhwc_channelQuant8_all_inputs_as_internal(
     };
     return model;
 }
+
+const auto dummy_test_model_large_nhwc_channelQuant8_all_inputs_as_internal = TestModelManager::get().add("grouped_conv2d_large_nhwc_channelQuant8_all_inputs_as_internal", get_test_model_large_nhwc_channelQuant8_all_inputs_as_internal());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -41879,9 +42830,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_large_nhwc_channelQuant8_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({132, 136, 140, 144, 144, 140, 136, 132, 136, 140, 140, 140}),
@@ -41995,6 +42948,8 @@ const TestModel& get_test_model_large_nhwc_channelQuant8_all_tensors_as_inputs()
     };
     return model;
 }
+
+const auto dummy_test_model_large_nhwc_channelQuant8_all_tensors_as_inputs = TestModelManager::get().add("grouped_conv2d_large_nhwc_channelQuant8_all_tensors_as_inputs", get_test_model_large_nhwc_channelQuant8_all_tensors_as_inputs());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -42002,9 +42957,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_large_nhwc_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {1, 2, 10},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -42153,15 +43110,19 @@ const TestModel& get_test_model_large_nhwc_channelQuant8_all_tensors_as_inputs_a
     return model;
 }
 
+const auto dummy_test_model_large_nhwc_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("grouped_conv2d_large_nhwc_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_large_nhwc_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal());
+
 }  // namespace generated_tests::grouped_conv2d
 
 namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_large_nhwc_float16() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({1.0f, 2.0f, 3.0f, 4.0f, 4.0f, 3.0f, 2.0f, 1.0f, 2.0f, 3.0f, 3.0f, 3.0f}),
@@ -42272,6 +43233,8 @@ const TestModel& get_test_model_large_nhwc_float16() {
     };
     return model;
 }
+
+const auto dummy_test_model_large_nhwc_float16 = TestModelManager::get().add("grouped_conv2d_large_nhwc_float16", get_test_model_large_nhwc_float16());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -42279,9 +43242,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_large_nhwc_float16_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {10},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -42426,6 +43391,8 @@ const TestModel& get_test_model_large_nhwc_float16_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_large_nhwc_float16_all_inputs_as_internal = TestModelManager::get().add("grouped_conv2d_large_nhwc_float16_all_inputs_as_internal", get_test_model_large_nhwc_float16_all_inputs_as_internal());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -42433,9 +43400,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_large_nhwc_float16_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({1.0f, 2.0f, 3.0f, 4.0f, 4.0f, 3.0f, 2.0f, 1.0f, 2.0f, 3.0f, 3.0f, 3.0f}),
@@ -42546,6 +43515,8 @@ const TestModel& get_test_model_large_nhwc_float16_all_tensors_as_inputs() {
     };
     return model;
 }
+
+const auto dummy_test_model_large_nhwc_float16_all_tensors_as_inputs = TestModelManager::get().add("grouped_conv2d_large_nhwc_float16_all_tensors_as_inputs", get_test_model_large_nhwc_float16_all_tensors_as_inputs());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -42553,9 +43524,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_large_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {10, 13, 16},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -42769,15 +43742,19 @@ const TestModel& get_test_model_large_nhwc_float16_all_tensors_as_inputs_all_inp
     return model;
 }
 
+const auto dummy_test_model_large_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("grouped_conv2d_large_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_large_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal());
+
 }  // namespace generated_tests::grouped_conv2d
 
 namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_large_nchw() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 3.0f, 4.0f, 2.0f, 2.0f, 3.0f, 2.0f, 4.0f, 3.0f, 1.0f, 3.0f, 3.0f}),
@@ -42888,6 +43865,8 @@ const TestModel& get_test_model_large_nchw() {
     };
     return model;
 }
+
+const auto dummy_test_model_large_nchw = TestModelManager::get().add("grouped_conv2d_large_nchw", get_test_model_large_nchw());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -42895,9 +43874,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_large_nchw_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {10},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -43042,6 +44023,8 @@ const TestModel& get_test_model_large_nchw_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_large_nchw_all_inputs_as_internal = TestModelManager::get().add("grouped_conv2d_large_nchw_all_inputs_as_internal", get_test_model_large_nchw_all_inputs_as_internal());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -43049,9 +44032,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_large_nchw_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 3.0f, 4.0f, 2.0f, 2.0f, 3.0f, 2.0f, 4.0f, 3.0f, 1.0f, 3.0f, 3.0f}),
@@ -43162,6 +44147,8 @@ const TestModel& get_test_model_large_nchw_all_tensors_as_inputs() {
     };
     return model;
 }
+
+const auto dummy_test_model_large_nchw_all_tensors_as_inputs = TestModelManager::get().add("grouped_conv2d_large_nchw_all_tensors_as_inputs", get_test_model_large_nchw_all_tensors_as_inputs());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -43169,9 +44156,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_large_nchw_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {10, 13, 16},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -43384,6 +44373,8 @@ const TestModel& get_test_model_large_nchw_all_tensors_as_inputs_all_inputs_as_i
     };
     return model;
 }
+
+const auto dummy_test_model_large_nchw_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("grouped_conv2d_large_nchw_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_large_nchw_all_tensors_as_inputs_all_inputs_as_internal());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -43391,9 +44382,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_large_nchw_relaxed() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 3.0f, 4.0f, 2.0f, 2.0f, 3.0f, 2.0f, 4.0f, 3.0f, 1.0f, 3.0f, 3.0f}),
@@ -43504,6 +44497,8 @@ const TestModel& get_test_model_large_nchw_relaxed() {
     };
     return model;
 }
+
+const auto dummy_test_model_large_nchw_relaxed = TestModelManager::get().add("grouped_conv2d_large_nchw_relaxed", get_test_model_large_nchw_relaxed());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -43511,9 +44506,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_large_nchw_relaxed_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {10},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -43658,6 +44655,8 @@ const TestModel& get_test_model_large_nchw_relaxed_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_large_nchw_relaxed_all_inputs_as_internal = TestModelManager::get().add("grouped_conv2d_large_nchw_relaxed_all_inputs_as_internal", get_test_model_large_nchw_relaxed_all_inputs_as_internal());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -43665,9 +44664,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_large_nchw_relaxed_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 3.0f, 4.0f, 2.0f, 2.0f, 3.0f, 2.0f, 4.0f, 3.0f, 1.0f, 3.0f, 3.0f}),
@@ -43778,6 +44779,8 @@ const TestModel& get_test_model_large_nchw_relaxed_all_tensors_as_inputs() {
     };
     return model;
 }
+
+const auto dummy_test_model_large_nchw_relaxed_all_tensors_as_inputs = TestModelManager::get().add("grouped_conv2d_large_nchw_relaxed_all_tensors_as_inputs", get_test_model_large_nchw_relaxed_all_tensors_as_inputs());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -43785,9 +44788,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_large_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {10, 13, 16},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -44001,15 +45006,19 @@ const TestModel& get_test_model_large_nchw_relaxed_all_tensors_as_inputs_all_inp
     return model;
 }
 
+const auto dummy_test_model_large_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("grouped_conv2d_large_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_large_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal());
+
 }  // namespace generated_tests::grouped_conv2d
 
 namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_large_nchw_quant8() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({132, 140, 144, 136, 136, 140, 136, 144, 140, 132, 140, 140}),
@@ -44120,6 +45129,8 @@ const TestModel& get_test_model_large_nchw_quant8() {
     };
     return model;
 }
+
+const auto dummy_test_model_large_nchw_quant8 = TestModelManager::get().add("grouped_conv2d_large_nchw_quant8", get_test_model_large_nchw_quant8());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -44127,9 +45138,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_large_nchw_quant8_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {10},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -44274,6 +45287,8 @@ const TestModel& get_test_model_large_nchw_quant8_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_large_nchw_quant8_all_inputs_as_internal = TestModelManager::get().add("grouped_conv2d_large_nchw_quant8_all_inputs_as_internal", get_test_model_large_nchw_quant8_all_inputs_as_internal());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -44281,9 +45296,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_large_nchw_quant8_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({132, 140, 144, 136, 136, 140, 136, 144, 140, 132, 140, 140}),
@@ -44394,6 +45411,8 @@ const TestModel& get_test_model_large_nchw_quant8_all_tensors_as_inputs() {
     };
     return model;
 }
+
+const auto dummy_test_model_large_nchw_quant8_all_tensors_as_inputs = TestModelManager::get().add("grouped_conv2d_large_nchw_quant8_all_tensors_as_inputs", get_test_model_large_nchw_quant8_all_tensors_as_inputs());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -44401,9 +45420,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_large_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {2, 10, 13},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -44583,15 +45604,19 @@ const TestModel& get_test_model_large_nchw_quant8_all_tensors_as_inputs_all_inpu
     return model;
 }
 
+const auto dummy_test_model_large_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("grouped_conv2d_large_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_large_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal());
+
 }  // namespace generated_tests::grouped_conv2d
 
 namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_large_nchw_channelQuant8() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({132, 140, 144, 136, 136, 140, 136, 144, 140, 132, 140, 140}),
@@ -44705,6 +45730,8 @@ const TestModel& get_test_model_large_nchw_channelQuant8() {
     };
     return model;
 }
+
+const auto dummy_test_model_large_nchw_channelQuant8 = TestModelManager::get().add("grouped_conv2d_large_nchw_channelQuant8", get_test_model_large_nchw_channelQuant8());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -44712,9 +45739,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_large_nchw_channelQuant8_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {10},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -44862,6 +45891,8 @@ const TestModel& get_test_model_large_nchw_channelQuant8_all_inputs_as_internal(
     };
     return model;
 }
+
+const auto dummy_test_model_large_nchw_channelQuant8_all_inputs_as_internal = TestModelManager::get().add("grouped_conv2d_large_nchw_channelQuant8_all_inputs_as_internal", get_test_model_large_nchw_channelQuant8_all_inputs_as_internal());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -44869,9 +45900,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_large_nchw_channelQuant8_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({132, 140, 144, 136, 136, 140, 136, 144, 140, 132, 140, 140}),
@@ -44986,15 +46019,19 @@ const TestModel& get_test_model_large_nchw_channelQuant8_all_tensors_as_inputs()
     return model;
 }
 
+const auto dummy_test_model_large_nchw_channelQuant8_all_tensors_as_inputs = TestModelManager::get().add("grouped_conv2d_large_nchw_channelQuant8_all_tensors_as_inputs", get_test_model_large_nchw_channelQuant8_all_tensors_as_inputs());
+
 }  // namespace generated_tests::grouped_conv2d
 
 namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_large_nchw_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {1, 2, 10},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -45143,15 +46180,19 @@ const TestModel& get_test_model_large_nchw_channelQuant8_all_tensors_as_inputs_a
     return model;
 }
 
+const auto dummy_test_model_large_nchw_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("grouped_conv2d_large_nchw_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_large_nchw_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal());
+
 }  // namespace generated_tests::grouped_conv2d
 
 namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_large_nchw_float16() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({1.0f, 3.0f, 4.0f, 2.0f, 2.0f, 3.0f, 2.0f, 4.0f, 3.0f, 1.0f, 3.0f, 3.0f}),
@@ -45262,6 +46303,8 @@ const TestModel& get_test_model_large_nchw_float16() {
     };
     return model;
 }
+
+const auto dummy_test_model_large_nchw_float16 = TestModelManager::get().add("grouped_conv2d_large_nchw_float16", get_test_model_large_nchw_float16());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -45269,9 +46312,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_large_nchw_float16_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {10},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -45416,6 +46461,8 @@ const TestModel& get_test_model_large_nchw_float16_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_large_nchw_float16_all_inputs_as_internal = TestModelManager::get().add("grouped_conv2d_large_nchw_float16_all_inputs_as_internal", get_test_model_large_nchw_float16_all_inputs_as_internal());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -45423,9 +46470,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_large_nchw_float16_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({1.0f, 3.0f, 4.0f, 2.0f, 2.0f, 3.0f, 2.0f, 4.0f, 3.0f, 1.0f, 3.0f, 3.0f}),
@@ -45536,6 +46585,8 @@ const TestModel& get_test_model_large_nchw_float16_all_tensors_as_inputs() {
     };
     return model;
 }
+
+const auto dummy_test_model_large_nchw_float16_all_tensors_as_inputs = TestModelManager::get().add("grouped_conv2d_large_nchw_float16_all_tensors_as_inputs", get_test_model_large_nchw_float16_all_tensors_as_inputs());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -45543,9 +46594,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_large_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {10, 13, 16},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -45759,15 +46812,19 @@ const TestModel& get_test_model_large_nchw_float16_all_tensors_as_inputs_all_inp
     return model;
 }
 
+const auto dummy_test_model_large_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("grouped_conv2d_large_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_large_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal());
+
 }  // namespace generated_tests::grouped_conv2d
 
 namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_channel_nhwc() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 55.0f, 4.0f, 3.0f, 2.0f, 1.0f, 5.0f, 4.0f, 3.0f, 2.0f, 11.0f, 2.0f, 3.0f, 4.0f, 5.0f, 2.0f, 3.0f, 2.0f, 3.0f, 22.0f, 3.0f, 2.0f, 3.0f, 2.0f, 1.0f, 0.0f, 2.0f, 1.0f, 33.0f, 1.0f, 2.0f, 0.0f, 1.0f}),
@@ -45878,6 +46935,8 @@ const TestModel& get_test_model_channel_nhwc() {
     };
     return model;
 }
+
+const auto dummy_test_model_channel_nhwc = TestModelManager::get().add("grouped_conv2d_channel_nhwc", get_test_model_channel_nhwc());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -45885,9 +46944,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_channel_nhwc_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {10},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -46032,6 +47093,8 @@ const TestModel& get_test_model_channel_nhwc_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_channel_nhwc_all_inputs_as_internal = TestModelManager::get().add("grouped_conv2d_channel_nhwc_all_inputs_as_internal", get_test_model_channel_nhwc_all_inputs_as_internal());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -46039,9 +47102,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_channel_nhwc_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 55.0f, 4.0f, 3.0f, 2.0f, 1.0f, 5.0f, 4.0f, 3.0f, 2.0f, 11.0f, 2.0f, 3.0f, 4.0f, 5.0f, 2.0f, 3.0f, 2.0f, 3.0f, 22.0f, 3.0f, 2.0f, 3.0f, 2.0f, 1.0f, 0.0f, 2.0f, 1.0f, 33.0f, 1.0f, 2.0f, 0.0f, 1.0f}),
@@ -46152,6 +47217,8 @@ const TestModel& get_test_model_channel_nhwc_all_tensors_as_inputs() {
     };
     return model;
 }
+
+const auto dummy_test_model_channel_nhwc_all_tensors_as_inputs = TestModelManager::get().add("grouped_conv2d_channel_nhwc_all_tensors_as_inputs", get_test_model_channel_nhwc_all_tensors_as_inputs());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -46159,9 +47226,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_channel_nhwc_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {10, 13, 16},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -46374,6 +47443,8 @@ const TestModel& get_test_model_channel_nhwc_all_tensors_as_inputs_all_inputs_as
     };
     return model;
 }
+
+const auto dummy_test_model_channel_nhwc_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("grouped_conv2d_channel_nhwc_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_channel_nhwc_all_tensors_as_inputs_all_inputs_as_internal());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -46381,9 +47452,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_channel_nhwc_relaxed() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 55.0f, 4.0f, 3.0f, 2.0f, 1.0f, 5.0f, 4.0f, 3.0f, 2.0f, 11.0f, 2.0f, 3.0f, 4.0f, 5.0f, 2.0f, 3.0f, 2.0f, 3.0f, 22.0f, 3.0f, 2.0f, 3.0f, 2.0f, 1.0f, 0.0f, 2.0f, 1.0f, 33.0f, 1.0f, 2.0f, 0.0f, 1.0f}),
@@ -46494,6 +47567,8 @@ const TestModel& get_test_model_channel_nhwc_relaxed() {
     };
     return model;
 }
+
+const auto dummy_test_model_channel_nhwc_relaxed = TestModelManager::get().add("grouped_conv2d_channel_nhwc_relaxed", get_test_model_channel_nhwc_relaxed());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -46501,9 +47576,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_channel_nhwc_relaxed_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {10},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -46648,6 +47725,8 @@ const TestModel& get_test_model_channel_nhwc_relaxed_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_channel_nhwc_relaxed_all_inputs_as_internal = TestModelManager::get().add("grouped_conv2d_channel_nhwc_relaxed_all_inputs_as_internal", get_test_model_channel_nhwc_relaxed_all_inputs_as_internal());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -46655,9 +47734,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_channel_nhwc_relaxed_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 55.0f, 4.0f, 3.0f, 2.0f, 1.0f, 5.0f, 4.0f, 3.0f, 2.0f, 11.0f, 2.0f, 3.0f, 4.0f, 5.0f, 2.0f, 3.0f, 2.0f, 3.0f, 22.0f, 3.0f, 2.0f, 3.0f, 2.0f, 1.0f, 0.0f, 2.0f, 1.0f, 33.0f, 1.0f, 2.0f, 0.0f, 1.0f}),
@@ -46768,6 +47849,8 @@ const TestModel& get_test_model_channel_nhwc_relaxed_all_tensors_as_inputs() {
     };
     return model;
 }
+
+const auto dummy_test_model_channel_nhwc_relaxed_all_tensors_as_inputs = TestModelManager::get().add("grouped_conv2d_channel_nhwc_relaxed_all_tensors_as_inputs", get_test_model_channel_nhwc_relaxed_all_tensors_as_inputs());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -46775,9 +47858,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_channel_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {10, 13, 16},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -46991,15 +48076,19 @@ const TestModel& get_test_model_channel_nhwc_relaxed_all_tensors_as_inputs_all_i
     return model;
 }
 
+const auto dummy_test_model_channel_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("grouped_conv2d_channel_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_channel_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as_internal());
+
 }  // namespace generated_tests::grouped_conv2d
 
 namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_channel_nhwc_quant8() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({2, 4, 6, 8, 110, 8, 6, 4, 2, 10, 8, 6, 4, 22, 4, 6, 8, 10, 4, 6, 4, 6, 44, 6, 4, 6, 4, 2, 0, 4, 2, 66, 2, 4, 0, 2}),
@@ -47110,6 +48199,8 @@ const TestModel& get_test_model_channel_nhwc_quant8() {
     };
     return model;
 }
+
+const auto dummy_test_model_channel_nhwc_quant8 = TestModelManager::get().add("grouped_conv2d_channel_nhwc_quant8", get_test_model_channel_nhwc_quant8());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -47117,9 +48208,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_channel_nhwc_quant8_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {10},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -47264,6 +48357,8 @@ const TestModel& get_test_model_channel_nhwc_quant8_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_channel_nhwc_quant8_all_inputs_as_internal = TestModelManager::get().add("grouped_conv2d_channel_nhwc_quant8_all_inputs_as_internal", get_test_model_channel_nhwc_quant8_all_inputs_as_internal());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -47271,9 +48366,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_channel_nhwc_quant8_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({2, 4, 6, 8, 110, 8, 6, 4, 2, 10, 8, 6, 4, 22, 4, 6, 8, 10, 4, 6, 4, 6, 44, 6, 4, 6, 4, 2, 0, 4, 2, 66, 2, 4, 0, 2}),
@@ -47384,6 +48481,8 @@ const TestModel& get_test_model_channel_nhwc_quant8_all_tensors_as_inputs() {
     };
     return model;
 }
+
+const auto dummy_test_model_channel_nhwc_quant8_all_tensors_as_inputs = TestModelManager::get().add("grouped_conv2d_channel_nhwc_quant8_all_tensors_as_inputs", get_test_model_channel_nhwc_quant8_all_tensors_as_inputs());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -47391,9 +48490,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_channel_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {2, 10, 13},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -47572,6 +48673,8 @@ const TestModel& get_test_model_channel_nhwc_quant8_all_tensors_as_inputs_all_in
     };
     return model;
 }
+
+const auto dummy_test_model_channel_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("grouped_conv2d_channel_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_channel_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -47579,9 +48682,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_channel_nhwc_channelQuant8() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({2, 4, 6, 8, 110, 8, 6, 4, 2, 10, 8, 6, 4, 22, 4, 6, 8, 10, 4, 6, 4, 6, 44, 6, 4, 6, 4, 2, 0, 4, 2, 66, 2, 4, 0, 2}),
@@ -47695,6 +48800,8 @@ const TestModel& get_test_model_channel_nhwc_channelQuant8() {
     };
     return model;
 }
+
+const auto dummy_test_model_channel_nhwc_channelQuant8 = TestModelManager::get().add("grouped_conv2d_channel_nhwc_channelQuant8", get_test_model_channel_nhwc_channelQuant8());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -47702,9 +48809,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_channel_nhwc_channelQuant8_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {10},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -47852,6 +48961,8 @@ const TestModel& get_test_model_channel_nhwc_channelQuant8_all_inputs_as_interna
     };
     return model;
 }
+
+const auto dummy_test_model_channel_nhwc_channelQuant8_all_inputs_as_internal = TestModelManager::get().add("grouped_conv2d_channel_nhwc_channelQuant8_all_inputs_as_internal", get_test_model_channel_nhwc_channelQuant8_all_inputs_as_internal());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -47859,9 +48970,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_channel_nhwc_channelQuant8_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({2, 4, 6, 8, 110, 8, 6, 4, 2, 10, 8, 6, 4, 22, 4, 6, 8, 10, 4, 6, 4, 6, 44, 6, 4, 6, 4, 2, 0, 4, 2, 66, 2, 4, 0, 2}),
@@ -47975,6 +49088,8 @@ const TestModel& get_test_model_channel_nhwc_channelQuant8_all_tensors_as_inputs
     };
     return model;
 }
+
+const auto dummy_test_model_channel_nhwc_channelQuant8_all_tensors_as_inputs = TestModelManager::get().add("grouped_conv2d_channel_nhwc_channelQuant8_all_tensors_as_inputs", get_test_model_channel_nhwc_channelQuant8_all_tensors_as_inputs());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -47982,9 +49097,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_channel_nhwc_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {1, 2, 10},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -48133,15 +49250,19 @@ const TestModel& get_test_model_channel_nhwc_channelQuant8_all_tensors_as_inputs
     return model;
 }
 
+const auto dummy_test_model_channel_nhwc_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("grouped_conv2d_channel_nhwc_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_channel_nhwc_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal());
+
 }  // namespace generated_tests::grouped_conv2d
 
 namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_channel_nhwc_float16() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({1.0f, 2.0f, 3.0f, 4.0f, 55.0f, 4.0f, 3.0f, 2.0f, 1.0f, 5.0f, 4.0f, 3.0f, 2.0f, 11.0f, 2.0f, 3.0f, 4.0f, 5.0f, 2.0f, 3.0f, 2.0f, 3.0f, 22.0f, 3.0f, 2.0f, 3.0f, 2.0f, 1.0f, 0.0f, 2.0f, 1.0f, 33.0f, 1.0f, 2.0f, 0.0f, 1.0f}),
@@ -48252,6 +49373,8 @@ const TestModel& get_test_model_channel_nhwc_float16() {
     };
     return model;
 }
+
+const auto dummy_test_model_channel_nhwc_float16 = TestModelManager::get().add("grouped_conv2d_channel_nhwc_float16", get_test_model_channel_nhwc_float16());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -48259,9 +49382,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_channel_nhwc_float16_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {10},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -48406,6 +49531,8 @@ const TestModel& get_test_model_channel_nhwc_float16_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_channel_nhwc_float16_all_inputs_as_internal = TestModelManager::get().add("grouped_conv2d_channel_nhwc_float16_all_inputs_as_internal", get_test_model_channel_nhwc_float16_all_inputs_as_internal());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -48413,9 +49540,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_channel_nhwc_float16_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({1.0f, 2.0f, 3.0f, 4.0f, 55.0f, 4.0f, 3.0f, 2.0f, 1.0f, 5.0f, 4.0f, 3.0f, 2.0f, 11.0f, 2.0f, 3.0f, 4.0f, 5.0f, 2.0f, 3.0f, 2.0f, 3.0f, 22.0f, 3.0f, 2.0f, 3.0f, 2.0f, 1.0f, 0.0f, 2.0f, 1.0f, 33.0f, 1.0f, 2.0f, 0.0f, 1.0f}),
@@ -48526,6 +49655,8 @@ const TestModel& get_test_model_channel_nhwc_float16_all_tensors_as_inputs() {
     };
     return model;
 }
+
+const auto dummy_test_model_channel_nhwc_float16_all_tensors_as_inputs = TestModelManager::get().add("grouped_conv2d_channel_nhwc_float16_all_tensors_as_inputs", get_test_model_channel_nhwc_float16_all_tensors_as_inputs());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -48533,9 +49664,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_channel_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {10, 13, 16},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -48749,15 +49882,19 @@ const TestModel& get_test_model_channel_nhwc_float16_all_tensors_as_inputs_all_i
     return model;
 }
 
+const auto dummy_test_model_channel_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("grouped_conv2d_channel_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_channel_nhwc_float16_all_tensors_as_inputs_all_inputs_as_internal());
+
 }  // namespace generated_tests::grouped_conv2d
 
 namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_channel_nchw() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 5.0f, 2.0f, 1.0f, 2.0f, 4.0f, 3.0f, 0.0f, 3.0f, 3.0f, 2.0f, 2.0f, 4.0f, 2.0f, 3.0f, 1.0f, 55.0f, 11.0f, 22.0f, 33.0f, 4.0f, 2.0f, 3.0f, 1.0f, 3.0f, 3.0f, 2.0f, 2.0f, 2.0f, 4.0f, 3.0f, 0.0f, 1.0f, 5.0f, 2.0f, 1.0f}),
@@ -48868,6 +50005,8 @@ const TestModel& get_test_model_channel_nchw() {
     };
     return model;
 }
+
+const auto dummy_test_model_channel_nchw = TestModelManager::get().add("grouped_conv2d_channel_nchw", get_test_model_channel_nchw());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -48875,9 +50014,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_channel_nchw_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {10},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -49022,6 +50163,8 @@ const TestModel& get_test_model_channel_nchw_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_channel_nchw_all_inputs_as_internal = TestModelManager::get().add("grouped_conv2d_channel_nchw_all_inputs_as_internal", get_test_model_channel_nchw_all_inputs_as_internal());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -49029,9 +50172,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_channel_nchw_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 5.0f, 2.0f, 1.0f, 2.0f, 4.0f, 3.0f, 0.0f, 3.0f, 3.0f, 2.0f, 2.0f, 4.0f, 2.0f, 3.0f, 1.0f, 55.0f, 11.0f, 22.0f, 33.0f, 4.0f, 2.0f, 3.0f, 1.0f, 3.0f, 3.0f, 2.0f, 2.0f, 2.0f, 4.0f, 3.0f, 0.0f, 1.0f, 5.0f, 2.0f, 1.0f}),
@@ -49142,6 +50287,8 @@ const TestModel& get_test_model_channel_nchw_all_tensors_as_inputs() {
     };
     return model;
 }
+
+const auto dummy_test_model_channel_nchw_all_tensors_as_inputs = TestModelManager::get().add("grouped_conv2d_channel_nchw_all_tensors_as_inputs", get_test_model_channel_nchw_all_tensors_as_inputs());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -49149,9 +50296,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_channel_nchw_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {10, 13, 16},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -49364,6 +50513,8 @@ const TestModel& get_test_model_channel_nchw_all_tensors_as_inputs_all_inputs_as
     };
     return model;
 }
+
+const auto dummy_test_model_channel_nchw_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("grouped_conv2d_channel_nchw_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_channel_nchw_all_tensors_as_inputs_all_inputs_as_internal());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -49371,9 +50522,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_channel_nchw_relaxed() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 5.0f, 2.0f, 1.0f, 2.0f, 4.0f, 3.0f, 0.0f, 3.0f, 3.0f, 2.0f, 2.0f, 4.0f, 2.0f, 3.0f, 1.0f, 55.0f, 11.0f, 22.0f, 33.0f, 4.0f, 2.0f, 3.0f, 1.0f, 3.0f, 3.0f, 2.0f, 2.0f, 2.0f, 4.0f, 3.0f, 0.0f, 1.0f, 5.0f, 2.0f, 1.0f}),
@@ -49484,6 +50637,8 @@ const TestModel& get_test_model_channel_nchw_relaxed() {
     };
     return model;
 }
+
+const auto dummy_test_model_channel_nchw_relaxed = TestModelManager::get().add("grouped_conv2d_channel_nchw_relaxed", get_test_model_channel_nchw_relaxed());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -49491,9 +50646,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_channel_nchw_relaxed_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {10},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -49638,6 +50795,8 @@ const TestModel& get_test_model_channel_nchw_relaxed_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_channel_nchw_relaxed_all_inputs_as_internal = TestModelManager::get().add("grouped_conv2d_channel_nchw_relaxed_all_inputs_as_internal", get_test_model_channel_nchw_relaxed_all_inputs_as_internal());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -49645,9 +50804,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_channel_nchw_relaxed_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({1.0f, 5.0f, 2.0f, 1.0f, 2.0f, 4.0f, 3.0f, 0.0f, 3.0f, 3.0f, 2.0f, 2.0f, 4.0f, 2.0f, 3.0f, 1.0f, 55.0f, 11.0f, 22.0f, 33.0f, 4.0f, 2.0f, 3.0f, 1.0f, 3.0f, 3.0f, 2.0f, 2.0f, 2.0f, 4.0f, 3.0f, 0.0f, 1.0f, 5.0f, 2.0f, 1.0f}),
@@ -49758,6 +50919,8 @@ const TestModel& get_test_model_channel_nchw_relaxed_all_tensors_as_inputs() {
     };
     return model;
 }
+
+const auto dummy_test_model_channel_nchw_relaxed_all_tensors_as_inputs = TestModelManager::get().add("grouped_conv2d_channel_nchw_relaxed_all_tensors_as_inputs", get_test_model_channel_nchw_relaxed_all_tensors_as_inputs());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -49765,9 +50928,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_channel_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {10, 13, 16},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -49981,15 +51146,19 @@ const TestModel& get_test_model_channel_nchw_relaxed_all_tensors_as_inputs_all_i
     return model;
 }
 
+const auto dummy_test_model_channel_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("grouped_conv2d_channel_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_channel_nchw_relaxed_all_tensors_as_inputs_all_inputs_as_internal());
+
 }  // namespace generated_tests::grouped_conv2d
 
 namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_channel_nchw_quant8() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({2, 10, 4, 2, 4, 8, 6, 0, 6, 6, 4, 4, 8, 4, 6, 2, 110, 22, 44, 66, 8, 4, 6, 2, 6, 6, 4, 4, 4, 8, 6, 0, 2, 10, 4, 2}),
@@ -50101,15 +51270,19 @@ const TestModel& get_test_model_channel_nchw_quant8() {
     return model;
 }
 
+const auto dummy_test_model_channel_nchw_quant8 = TestModelManager::get().add("grouped_conv2d_channel_nchw_quant8", get_test_model_channel_nchw_quant8());
+
 }  // namespace generated_tests::grouped_conv2d
 
 namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_channel_nchw_quant8_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {10},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -50255,15 +51428,19 @@ const TestModel& get_test_model_channel_nchw_quant8_all_inputs_as_internal() {
     return model;
 }
 
+const auto dummy_test_model_channel_nchw_quant8_all_inputs_as_internal = TestModelManager::get().add("grouped_conv2d_channel_nchw_quant8_all_inputs_as_internal", get_test_model_channel_nchw_quant8_all_inputs_as_internal());
+
 }  // namespace generated_tests::grouped_conv2d
 
 namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_channel_nchw_quant8_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({2, 10, 4, 2, 4, 8, 6, 0, 6, 6, 4, 4, 8, 4, 6, 2, 110, 22, 44, 66, 8, 4, 6, 2, 6, 6, 4, 4, 4, 8, 6, 0, 2, 10, 4, 2}),
@@ -50375,15 +51552,19 @@ const TestModel& get_test_model_channel_nchw_quant8_all_tensors_as_inputs() {
     return model;
 }
 
+const auto dummy_test_model_channel_nchw_quant8_all_tensors_as_inputs = TestModelManager::get().add("grouped_conv2d_channel_nchw_quant8_all_tensors_as_inputs", get_test_model_channel_nchw_quant8_all_tensors_as_inputs());
+
 }  // namespace generated_tests::grouped_conv2d
 
 namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_channel_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {2, 10, 13},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -50563,15 +51744,19 @@ const TestModel& get_test_model_channel_nchw_quant8_all_tensors_as_inputs_all_in
     return model;
 }
 
+const auto dummy_test_model_channel_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("grouped_conv2d_channel_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_channel_nchw_quant8_all_tensors_as_inputs_all_inputs_as_internal());
+
 }  // namespace generated_tests::grouped_conv2d
 
 namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_channel_nchw_channelQuant8() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({2, 10, 4, 2, 4, 8, 6, 0, 6, 6, 4, 4, 8, 4, 6, 2, 110, 22, 44, 66, 8, 4, 6, 2, 6, 6, 4, 4, 4, 8, 6, 0, 2, 10, 4, 2}),
@@ -50685,6 +51870,8 @@ const TestModel& get_test_model_channel_nchw_channelQuant8() {
     };
     return model;
 }
+
+const auto dummy_test_model_channel_nchw_channelQuant8 = TestModelManager::get().add("grouped_conv2d_channel_nchw_channelQuant8", get_test_model_channel_nchw_channelQuant8());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -50692,9 +51879,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_channel_nchw_channelQuant8_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {10},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -50842,6 +52031,8 @@ const TestModel& get_test_model_channel_nchw_channelQuant8_all_inputs_as_interna
     };
     return model;
 }
+
+const auto dummy_test_model_channel_nchw_channelQuant8_all_inputs_as_internal = TestModelManager::get().add("grouped_conv2d_channel_nchw_channelQuant8_all_inputs_as_internal", get_test_model_channel_nchw_channelQuant8_all_inputs_as_internal());
 
 }  // namespace generated_tests::grouped_conv2d
 
@@ -50849,9 +52040,11 @@ namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_channel_nchw_channelQuant8_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({2, 10, 4, 2, 4, 8, 6, 0, 6, 6, 4, 4, 8, 4, 6, 2, 110, 22, 44, 66, 8, 4, 6, 2, 6, 6, 4, 4, 4, 8, 6, 0, 2, 10, 4, 2}),
@@ -50966,15 +52159,19 @@ const TestModel& get_test_model_channel_nchw_channelQuant8_all_tensors_as_inputs
     return model;
 }
 
+const auto dummy_test_model_channel_nchw_channelQuant8_all_tensors_as_inputs = TestModelManager::get().add("grouped_conv2d_channel_nchw_channelQuant8_all_tensors_as_inputs", get_test_model_channel_nchw_channelQuant8_all_tensors_as_inputs());
+
 }  // namespace generated_tests::grouped_conv2d
 
 namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_channel_nchw_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {1, 2, 10},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -51123,15 +52320,19 @@ const TestModel& get_test_model_channel_nchw_channelQuant8_all_tensors_as_inputs
     return model;
 }
 
+const auto dummy_test_model_channel_nchw_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("grouped_conv2d_channel_nchw_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_channel_nchw_channelQuant8_all_tensors_as_inputs_all_inputs_as_internal());
+
 }  // namespace generated_tests::grouped_conv2d
 
 namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_channel_nchw_float16() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({1.0f, 5.0f, 2.0f, 1.0f, 2.0f, 4.0f, 3.0f, 0.0f, 3.0f, 3.0f, 2.0f, 2.0f, 4.0f, 2.0f, 3.0f, 1.0f, 55.0f, 11.0f, 22.0f, 33.0f, 4.0f, 2.0f, 3.0f, 1.0f, 3.0f, 3.0f, 2.0f, 2.0f, 2.0f, 4.0f, 3.0f, 0.0f, 1.0f, 5.0f, 2.0f, 1.0f}),
@@ -51243,15 +52444,19 @@ const TestModel& get_test_model_channel_nchw_float16() {
     return model;
 }
 
+const auto dummy_test_model_channel_nchw_float16 = TestModelManager::get().add("grouped_conv2d_channel_nchw_float16", get_test_model_channel_nchw_float16());
+
 }  // namespace generated_tests::grouped_conv2d
 
 namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_channel_nchw_float16_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {10},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -51397,15 +52602,19 @@ const TestModel& get_test_model_channel_nchw_float16_all_inputs_as_internal() {
     return model;
 }
 
+const auto dummy_test_model_channel_nchw_float16_all_inputs_as_internal = TestModelManager::get().add("grouped_conv2d_channel_nchw_float16_all_inputs_as_internal", get_test_model_channel_nchw_float16_all_inputs_as_internal());
+
 }  // namespace generated_tests::grouped_conv2d
 
 namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_channel_nchw_float16_all_tensors_as_inputs() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({1.0f, 5.0f, 2.0f, 1.0f, 2.0f, 4.0f, 3.0f, 0.0f, 3.0f, 3.0f, 2.0f, 2.0f, 4.0f, 2.0f, 3.0f, 1.0f, 55.0f, 11.0f, 22.0f, 33.0f, 4.0f, 2.0f, 3.0f, 1.0f, 3.0f, 3.0f, 2.0f, 2.0f, 2.0f, 4.0f, 3.0f, 0.0f, 1.0f, 5.0f, 2.0f, 1.0f}),
@@ -51517,15 +52726,19 @@ const TestModel& get_test_model_channel_nchw_float16_all_tensors_as_inputs() {
     return model;
 }
 
+const auto dummy_test_model_channel_nchw_float16_all_tensors_as_inputs = TestModelManager::get().add("grouped_conv2d_channel_nchw_float16_all_tensors_as_inputs", get_test_model_channel_nchw_float16_all_tensors_as_inputs());
+
 }  // namespace generated_tests::grouped_conv2d
 
 namespace generated_tests::grouped_conv2d {
 
 const TestModel& get_test_model_channel_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {10, 13, 16},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -51738,6 +52951,8 @@ const TestModel& get_test_model_channel_nchw_float16_all_tensors_as_inputs_all_i
     };
     return model;
 }
+
+const auto dummy_test_model_channel_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("grouped_conv2d_channel_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_channel_nchw_float16_all_tensors_as_inputs_all_inputs_as_internal());
 
 }  // namespace generated_tests::grouped_conv2d
 
