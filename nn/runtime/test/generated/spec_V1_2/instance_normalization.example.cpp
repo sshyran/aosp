@@ -2,16 +2,17 @@
 // DO NOT EDIT
 // clang-format off
 #include "TestHarness.h"
-
 using namespace test_helper;
 
 namespace generated_tests::instance_normalization {
 
 const TestModel& get_test_model_nhwc() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({0.0f, 1.0f, 0.0f, 2.0f, 0.0f, 2.0f, 0.0f, 4.0f, 1.0f, -1.0f, -1.0f, 2.0f, -1.0f, -2.0f, 1.0f, 4.0f}),
@@ -82,6 +83,8 @@ const TestModel& get_test_model_nhwc() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc = TestModelManager::get().add("instance_normalization_nhwc", get_test_model_nhwc());
 
 }  // namespace generated_tests::instance_normalization
 
@@ -89,9 +92,11 @@ namespace generated_tests::instance_normalization {
 
 const TestModel& get_test_model_nhwc_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {6},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -196,6 +201,8 @@ const TestModel& get_test_model_nhwc_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_all_inputs_as_internal = TestModelManager::get().add("instance_normalization_nhwc_all_inputs_as_internal", get_test_model_nhwc_all_inputs_as_internal());
 
 }  // namespace generated_tests::instance_normalization
 
@@ -203,9 +210,11 @@ namespace generated_tests::instance_normalization {
 
 const TestModel& get_test_model_nhwc_relaxed() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({0.0f, 1.0f, 0.0f, 2.0f, 0.0f, 2.0f, 0.0f, 4.0f, 1.0f, -1.0f, -1.0f, 2.0f, -1.0f, -2.0f, 1.0f, 4.0f}),
@@ -276,6 +285,8 @@ const TestModel& get_test_model_nhwc_relaxed() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_relaxed = TestModelManager::get().add("instance_normalization_nhwc_relaxed", get_test_model_nhwc_relaxed());
 
 }  // namespace generated_tests::instance_normalization
 
@@ -283,9 +294,11 @@ namespace generated_tests::instance_normalization {
 
 const TestModel& get_test_model_nhwc_relaxed_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {6},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -391,15 +404,19 @@ const TestModel& get_test_model_nhwc_relaxed_all_inputs_as_internal() {
     return model;
 }
 
+const auto dummy_test_model_nhwc_relaxed_all_inputs_as_internal = TestModelManager::get().add("instance_normalization_nhwc_relaxed_all_inputs_as_internal", get_test_model_nhwc_relaxed_all_inputs_as_internal());
+
 }  // namespace generated_tests::instance_normalization
 
 namespace generated_tests::instance_normalization {
 
 const TestModel& get_test_model_nhwc_float16() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({0.0f, 1.0f, 0.0f, 2.0f, 0.0f, 2.0f, 0.0f, 4.0f, 1.0f, -1.0f, -1.0f, 2.0f, -1.0f, -2.0f, 1.0f, 4.0f}),
@@ -470,6 +487,8 @@ const TestModel& get_test_model_nhwc_float16() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_float16 = TestModelManager::get().add("instance_normalization_nhwc_float16", get_test_model_nhwc_float16());
 
 }  // namespace generated_tests::instance_normalization
 
@@ -477,9 +496,11 @@ namespace generated_tests::instance_normalization {
 
 const TestModel& get_test_model_nhwc_float16_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {6},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -585,15 +606,19 @@ const TestModel& get_test_model_nhwc_float16_all_inputs_as_internal() {
     return model;
 }
 
+const auto dummy_test_model_nhwc_float16_all_inputs_as_internal = TestModelManager::get().add("instance_normalization_nhwc_float16_all_inputs_as_internal", get_test_model_nhwc_float16_all_inputs_as_internal());
+
 }  // namespace generated_tests::instance_normalization
 
 namespace generated_tests::instance_normalization {
 
 const TestModel& get_test_model_nchw() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 2.0f, 2.0f, 4.0f, 1.0f, -1.0f, -1.0f, 1.0f, -1.0f, 2.0f, -2.0f, 4.0f}),
@@ -664,6 +689,8 @@ const TestModel& get_test_model_nchw() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw = TestModelManager::get().add("instance_normalization_nchw", get_test_model_nchw());
 
 }  // namespace generated_tests::instance_normalization
 
@@ -671,9 +698,11 @@ namespace generated_tests::instance_normalization {
 
 const TestModel& get_test_model_nchw_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {6},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -778,6 +807,8 @@ const TestModel& get_test_model_nchw_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_all_inputs_as_internal = TestModelManager::get().add("instance_normalization_nchw_all_inputs_as_internal", get_test_model_nchw_all_inputs_as_internal());
 
 }  // namespace generated_tests::instance_normalization
 
@@ -785,9 +816,11 @@ namespace generated_tests::instance_normalization {
 
 const TestModel& get_test_model_nchw_relaxed() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 2.0f, 2.0f, 4.0f, 1.0f, -1.0f, -1.0f, 1.0f, -1.0f, 2.0f, -2.0f, 4.0f}),
@@ -858,6 +891,8 @@ const TestModel& get_test_model_nchw_relaxed() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_relaxed = TestModelManager::get().add("instance_normalization_nchw_relaxed", get_test_model_nchw_relaxed());
 
 }  // namespace generated_tests::instance_normalization
 
@@ -865,9 +900,11 @@ namespace generated_tests::instance_normalization {
 
 const TestModel& get_test_model_nchw_relaxed_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {6},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -973,15 +1010,19 @@ const TestModel& get_test_model_nchw_relaxed_all_inputs_as_internal() {
     return model;
 }
 
+const auto dummy_test_model_nchw_relaxed_all_inputs_as_internal = TestModelManager::get().add("instance_normalization_nchw_relaxed_all_inputs_as_internal", get_test_model_nchw_relaxed_all_inputs_as_internal());
+
 }  // namespace generated_tests::instance_normalization
 
 namespace generated_tests::instance_normalization {
 
 const TestModel& get_test_model_nchw_float16() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 2.0f, 2.0f, 4.0f, 1.0f, -1.0f, -1.0f, 1.0f, -1.0f, 2.0f, -2.0f, 4.0f}),
@@ -1052,6 +1093,8 @@ const TestModel& get_test_model_nchw_float16() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_float16 = TestModelManager::get().add("instance_normalization_nchw_float16", get_test_model_nchw_float16());
 
 }  // namespace generated_tests::instance_normalization
 
@@ -1059,9 +1102,11 @@ namespace generated_tests::instance_normalization {
 
 const TestModel& get_test_model_nchw_float16_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {6},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -1167,15 +1212,19 @@ const TestModel& get_test_model_nchw_float16_all_inputs_as_internal() {
     return model;
 }
 
+const auto dummy_test_model_nchw_float16_all_inputs_as_internal = TestModelManager::get().add("instance_normalization_nchw_float16_all_inputs_as_internal", get_test_model_nchw_float16_all_inputs_as_internal());
+
 }  // namespace generated_tests::instance_normalization
 
 namespace generated_tests::instance_normalization {
 
 const TestModel& get_test_model_nhwc_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({0.0f, 1.0f, 0.0f, 2.0f, 0.0f, 2.0f, 0.0f, 4.0f, 1.0f, -1.0f, -1.0f, 2.0f, -1.0f, -2.0f, 1.0f, 4.0f}),
@@ -1246,6 +1295,8 @@ const TestModel& get_test_model_nhwc_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_2 = TestModelManager::get().add("instance_normalization_nhwc_2", get_test_model_nhwc_2());
 
 }  // namespace generated_tests::instance_normalization
 
@@ -1253,9 +1304,11 @@ namespace generated_tests::instance_normalization {
 
 const TestModel& get_test_model_nhwc_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {6},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -1360,6 +1413,8 @@ const TestModel& get_test_model_nhwc_all_inputs_as_internal_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_all_inputs_as_internal_2 = TestModelManager::get().add("instance_normalization_nhwc_all_inputs_as_internal_2", get_test_model_nhwc_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::instance_normalization
 
@@ -1367,9 +1422,11 @@ namespace generated_tests::instance_normalization {
 
 const TestModel& get_test_model_nhwc_relaxed_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({0.0f, 1.0f, 0.0f, 2.0f, 0.0f, 2.0f, 0.0f, 4.0f, 1.0f, -1.0f, -1.0f, 2.0f, -1.0f, -2.0f, 1.0f, 4.0f}),
@@ -1440,6 +1497,8 @@ const TestModel& get_test_model_nhwc_relaxed_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_relaxed_2 = TestModelManager::get().add("instance_normalization_nhwc_relaxed_2", get_test_model_nhwc_relaxed_2());
 
 }  // namespace generated_tests::instance_normalization
 
@@ -1447,9 +1506,11 @@ namespace generated_tests::instance_normalization {
 
 const TestModel& get_test_model_nhwc_relaxed_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {6},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -1555,15 +1616,19 @@ const TestModel& get_test_model_nhwc_relaxed_all_inputs_as_internal_2() {
     return model;
 }
 
+const auto dummy_test_model_nhwc_relaxed_all_inputs_as_internal_2 = TestModelManager::get().add("instance_normalization_nhwc_relaxed_all_inputs_as_internal_2", get_test_model_nhwc_relaxed_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::instance_normalization
 
 namespace generated_tests::instance_normalization {
 
 const TestModel& get_test_model_nhwc_float16_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({0.0f, 1.0f, 0.0f, 2.0f, 0.0f, 2.0f, 0.0f, 4.0f, 1.0f, -1.0f, -1.0f, 2.0f, -1.0f, -2.0f, 1.0f, 4.0f}),
@@ -1634,6 +1699,8 @@ const TestModel& get_test_model_nhwc_float16_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_float16_2 = TestModelManager::get().add("instance_normalization_nhwc_float16_2", get_test_model_nhwc_float16_2());
 
 }  // namespace generated_tests::instance_normalization
 
@@ -1641,9 +1708,11 @@ namespace generated_tests::instance_normalization {
 
 const TestModel& get_test_model_nhwc_float16_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {6},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -1749,15 +1818,19 @@ const TestModel& get_test_model_nhwc_float16_all_inputs_as_internal_2() {
     return model;
 }
 
+const auto dummy_test_model_nhwc_float16_all_inputs_as_internal_2 = TestModelManager::get().add("instance_normalization_nhwc_float16_all_inputs_as_internal_2", get_test_model_nhwc_float16_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::instance_normalization
 
 namespace generated_tests::instance_normalization {
 
 const TestModel& get_test_model_nchw_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 2.0f, 2.0f, 4.0f, 1.0f, -1.0f, -1.0f, 1.0f, -1.0f, 2.0f, -2.0f, 4.0f}),
@@ -1828,6 +1901,8 @@ const TestModel& get_test_model_nchw_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_2 = TestModelManager::get().add("instance_normalization_nchw_2", get_test_model_nchw_2());
 
 }  // namespace generated_tests::instance_normalization
 
@@ -1835,9 +1910,11 @@ namespace generated_tests::instance_normalization {
 
 const TestModel& get_test_model_nchw_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {6},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -1942,6 +2019,8 @@ const TestModel& get_test_model_nchw_all_inputs_as_internal_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_all_inputs_as_internal_2 = TestModelManager::get().add("instance_normalization_nchw_all_inputs_as_internal_2", get_test_model_nchw_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::instance_normalization
 
@@ -1949,9 +2028,11 @@ namespace generated_tests::instance_normalization {
 
 const TestModel& get_test_model_nchw_relaxed_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 2.0f, 2.0f, 4.0f, 1.0f, -1.0f, -1.0f, 1.0f, -1.0f, 2.0f, -2.0f, 4.0f}),
@@ -2023,15 +2104,19 @@ const TestModel& get_test_model_nchw_relaxed_2() {
     return model;
 }
 
+const auto dummy_test_model_nchw_relaxed_2 = TestModelManager::get().add("instance_normalization_nchw_relaxed_2", get_test_model_nchw_relaxed_2());
+
 }  // namespace generated_tests::instance_normalization
 
 namespace generated_tests::instance_normalization {
 
 const TestModel& get_test_model_nchw_relaxed_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {6},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -2137,15 +2222,19 @@ const TestModel& get_test_model_nchw_relaxed_all_inputs_as_internal_2() {
     return model;
 }
 
+const auto dummy_test_model_nchw_relaxed_all_inputs_as_internal_2 = TestModelManager::get().add("instance_normalization_nchw_relaxed_all_inputs_as_internal_2", get_test_model_nchw_relaxed_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::instance_normalization
 
 namespace generated_tests::instance_normalization {
 
 const TestModel& get_test_model_nchw_float16_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 2.0f, 2.0f, 4.0f, 1.0f, -1.0f, -1.0f, 1.0f, -1.0f, 2.0f, -2.0f, 4.0f}),
@@ -2217,15 +2306,19 @@ const TestModel& get_test_model_nchw_float16_2() {
     return model;
 }
 
+const auto dummy_test_model_nchw_float16_2 = TestModelManager::get().add("instance_normalization_nchw_float16_2", get_test_model_nchw_float16_2());
+
 }  // namespace generated_tests::instance_normalization
 
 namespace generated_tests::instance_normalization {
 
 const TestModel& get_test_model_nchw_float16_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {6},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -2330,6 +2423,8 @@ const TestModel& get_test_model_nchw_float16_all_inputs_as_internal_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_float16_all_inputs_as_internal_2 = TestModelManager::get().add("instance_normalization_nchw_float16_all_inputs_as_internal_2", get_test_model_nchw_float16_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::instance_normalization
 

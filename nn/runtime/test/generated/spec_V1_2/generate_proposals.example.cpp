@@ -2,16 +2,17 @@
 // DO NOT EDIT
 // clang-format off
 #include "TestHarness.h"
-
 using namespace test_helper;
 
 namespace generated_tests::generate_proposals {
 
 const TestModel& get_test_model_nhwc() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2, 3},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({0.8f, 0.9f, 0.85f, 0.85f, 0.75f, 0.8f, 0.9f, 0.95f}),
@@ -162,6 +163,8 @@ const TestModel& get_test_model_nhwc() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc = TestModelManager::get().add("generate_proposals_nhwc", get_test_model_nhwc());
 
 }  // namespace generated_tests::generate_proposals
 
@@ -169,9 +172,11 @@ namespace generated_tests::generate_proposals {
 
 const TestModel& get_test_model_nhwc_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {14, 17, 20, 23},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -458,6 +463,8 @@ const TestModel& get_test_model_nhwc_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_all_inputs_as_internal = TestModelManager::get().add("generate_proposals_nhwc_all_inputs_as_internal", get_test_model_nhwc_all_inputs_as_internal());
 
 }  // namespace generated_tests::generate_proposals
 
@@ -465,9 +472,11 @@ namespace generated_tests::generate_proposals {
 
 const TestModel& get_test_model_nhwc_relaxed() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2, 3},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({0.8f, 0.9f, 0.85f, 0.85f, 0.75f, 0.8f, 0.9f, 0.95f}),
@@ -618,6 +627,8 @@ const TestModel& get_test_model_nhwc_relaxed() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_relaxed = TestModelManager::get().add("generate_proposals_nhwc_relaxed", get_test_model_nhwc_relaxed());
 
 }  // namespace generated_tests::generate_proposals
 
@@ -625,9 +636,11 @@ namespace generated_tests::generate_proposals {
 
 const TestModel& get_test_model_nhwc_relaxed_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {14, 17, 20, 23},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -915,15 +928,19 @@ const TestModel& get_test_model_nhwc_relaxed_all_inputs_as_internal() {
     return model;
 }
 
+const auto dummy_test_model_nhwc_relaxed_all_inputs_as_internal = TestModelManager::get().add("generate_proposals_nhwc_relaxed_all_inputs_as_internal", get_test_model_nhwc_relaxed_all_inputs_as_internal());
+
 }  // namespace generated_tests::generate_proposals
 
 namespace generated_tests::generate_proposals {
 
 const TestModel& get_test_model_nhwc_quant8() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2, 3},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({180, 190, 185, 185, 175, 180, 190, 195}),
@@ -1074,6 +1091,8 @@ const TestModel& get_test_model_nhwc_quant8() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_quant8 = TestModelManager::get().add("generate_proposals_nhwc_quant8", get_test_model_nhwc_quant8());
 
 }  // namespace generated_tests::generate_proposals
 
@@ -1081,9 +1100,11 @@ namespace generated_tests::generate_proposals {
 
 const TestModel& get_test_model_nhwc_quant8_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {2, 3, 14, 17},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -1303,15 +1324,19 @@ const TestModel& get_test_model_nhwc_quant8_all_inputs_as_internal() {
     return model;
 }
 
+const auto dummy_test_model_nhwc_quant8_all_inputs_as_internal = TestModelManager::get().add("generate_proposals_nhwc_quant8_all_inputs_as_internal", get_test_model_nhwc_quant8_all_inputs_as_internal());
+
 }  // namespace generated_tests::generate_proposals
 
 namespace generated_tests::generate_proposals {
 
 const TestModel& get_test_model_nhwc_float16() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2, 3},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({0.800000011920929f, 0.8999999761581421f, 0.8500000238418579f, 0.8500000238418579f, 0.75f, 0.800000011920929f, 0.8999999761581421f, 0.949999988079071f}),
@@ -1462,6 +1487,8 @@ const TestModel& get_test_model_nhwc_float16() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_float16 = TestModelManager::get().add("generate_proposals_nhwc_float16", get_test_model_nhwc_float16());
 
 }  // namespace generated_tests::generate_proposals
 
@@ -1469,9 +1496,11 @@ namespace generated_tests::generate_proposals {
 
 const TestModel& get_test_model_nhwc_float16_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {14, 17, 20, 23},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -1759,15 +1788,19 @@ const TestModel& get_test_model_nhwc_float16_all_inputs_as_internal() {
     return model;
 }
 
+const auto dummy_test_model_nhwc_float16_all_inputs_as_internal = TestModelManager::get().add("generate_proposals_nhwc_float16_all_inputs_as_internal", get_test_model_nhwc_float16_all_inputs_as_internal());
+
 }  // namespace generated_tests::generate_proposals
 
 namespace generated_tests::generate_proposals {
 
 const TestModel& get_test_model_nchw() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2, 3},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({0.8f, 0.85f, 0.75f, 0.9f, 0.9f, 0.85f, 0.8f, 0.95f}),
@@ -1918,6 +1951,8 @@ const TestModel& get_test_model_nchw() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw = TestModelManager::get().add("generate_proposals_nchw", get_test_model_nchw());
 
 }  // namespace generated_tests::generate_proposals
 
@@ -1925,9 +1960,11 @@ namespace generated_tests::generate_proposals {
 
 const TestModel& get_test_model_nchw_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {14, 17, 20, 23},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -2214,6 +2251,8 @@ const TestModel& get_test_model_nchw_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_all_inputs_as_internal = TestModelManager::get().add("generate_proposals_nchw_all_inputs_as_internal", get_test_model_nchw_all_inputs_as_internal());
 
 }  // namespace generated_tests::generate_proposals
 
@@ -2221,9 +2260,11 @@ namespace generated_tests::generate_proposals {
 
 const TestModel& get_test_model_nchw_relaxed() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2, 3},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({0.8f, 0.85f, 0.75f, 0.9f, 0.9f, 0.85f, 0.8f, 0.95f}),
@@ -2375,15 +2416,19 @@ const TestModel& get_test_model_nchw_relaxed() {
     return model;
 }
 
+const auto dummy_test_model_nchw_relaxed = TestModelManager::get().add("generate_proposals_nchw_relaxed", get_test_model_nchw_relaxed());
+
 }  // namespace generated_tests::generate_proposals
 
 namespace generated_tests::generate_proposals {
 
 const TestModel& get_test_model_nchw_relaxed_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {14, 17, 20, 23},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -2671,15 +2716,19 @@ const TestModel& get_test_model_nchw_relaxed_all_inputs_as_internal() {
     return model;
 }
 
+const auto dummy_test_model_nchw_relaxed_all_inputs_as_internal = TestModelManager::get().add("generate_proposals_nchw_relaxed_all_inputs_as_internal", get_test_model_nchw_relaxed_all_inputs_as_internal());
+
 }  // namespace generated_tests::generate_proposals
 
 namespace generated_tests::generate_proposals {
 
 const TestModel& get_test_model_nchw_quant8() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2, 3},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({180, 185, 175, 190, 190, 185, 180, 195}),
@@ -2831,15 +2880,19 @@ const TestModel& get_test_model_nchw_quant8() {
     return model;
 }
 
+const auto dummy_test_model_nchw_quant8 = TestModelManager::get().add("generate_proposals_nchw_quant8", get_test_model_nchw_quant8());
+
 }  // namespace generated_tests::generate_proposals
 
 namespace generated_tests::generate_proposals {
 
 const TestModel& get_test_model_nchw_quant8_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {2, 3, 14, 17},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -3059,15 +3112,19 @@ const TestModel& get_test_model_nchw_quant8_all_inputs_as_internal() {
     return model;
 }
 
+const auto dummy_test_model_nchw_quant8_all_inputs_as_internal = TestModelManager::get().add("generate_proposals_nchw_quant8_all_inputs_as_internal", get_test_model_nchw_quant8_all_inputs_as_internal());
+
 }  // namespace generated_tests::generate_proposals
 
 namespace generated_tests::generate_proposals {
 
 const TestModel& get_test_model_nchw_float16() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2, 3},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({0.800000011920929f, 0.8500000238418579f, 0.75f, 0.8999999761581421f, 0.8999999761581421f, 0.8500000238418579f, 0.800000011920929f, 0.949999988079071f}),
@@ -3218,6 +3275,8 @@ const TestModel& get_test_model_nchw_float16() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_float16 = TestModelManager::get().add("generate_proposals_nchw_float16", get_test_model_nchw_float16());
 
 }  // namespace generated_tests::generate_proposals
 
@@ -3225,9 +3284,11 @@ namespace generated_tests::generate_proposals {
 
 const TestModel& get_test_model_nchw_float16_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {14, 17, 20, 23},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -3515,15 +3576,19 @@ const TestModel& get_test_model_nchw_float16_all_inputs_as_internal() {
     return model;
 }
 
+const auto dummy_test_model_nchw_float16_all_inputs_as_internal = TestModelManager::get().add("generate_proposals_nchw_float16_all_inputs_as_internal", get_test_model_nchw_float16_all_inputs_as_internal());
+
 }  // namespace generated_tests::generate_proposals
 
 namespace generated_tests::generate_proposals {
 
 const TestModel& get_test_model_nhwc_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2, 3},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({0.885f, 0.21f, 0.78f, 0.57f, 0.795f, 0.66f, 0.915f, 0.615f, 0.27f, 0.69f, 0.645f, 0.945f, 0.465f, 0.345f, 0.855f, 0.555f, 0.48f, 0.6f, 0.735f, 0.63f, 0.495f, 0.03f, 0.12f, 0.225f, 0.24f, 0.285f, 0.51f, 0.315f, 0.435f, 0.255f, 0.585f, 0.06f, 0.9f, 0.75f, 0.18f, 0.45f, 0.36f, 0.09f, 0.405f, 0.15f, 0.0f, 0.195f, 0.075f, 0.81f, 0.87f, 0.93f, 0.39f, 0.165f, 0.825f, 0.525f, 0.765f, 0.105f, 0.54f, 0.705f, 0.675f, 0.3f, 0.42f, 0.045f, 0.33f, 0.015f, 0.84f, 0.135f, 0.72f, 0.375f, 0.495f, 0.315f, 0.195f, 0.24f, 0.21f, 0.54f, 0.78f, 0.72f, 0.045f, 0.93f, 0.27f, 0.735f, 0.135f, 0.09f, 0.81f, 0.705f, 0.39f, 0.885f, 0.42f, 0.945f, 0.9f, 0.225f, 0.75f, 0.3f, 0.375f, 0.63f, 0.825f, 0.675f, 0.015f, 0.48f, 0.645f, 0.615f, 0.33f, 0.465f, 0.66f, 0.6f, 0.075f, 0.84f, 0.285f, 0.57f, 0.585f, 0.165f, 0.06f, 0.36f, 0.795f, 0.855f, 0.105f, 0.45f, 0.0f, 0.87f, 0.525f, 0.255f, 0.69f, 0.555f, 0.15f, 0.345f, 0.03f, 0.915f, 0.405f, 0.435f, 0.765f, 0.12f, 0.51f, 0.18f}),
@@ -3674,6 +3739,8 @@ const TestModel& get_test_model_nhwc_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_2 = TestModelManager::get().add("generate_proposals_nhwc_2", get_test_model_nhwc_2());
 
 }  // namespace generated_tests::generate_proposals
 
@@ -3681,9 +3748,11 @@ namespace generated_tests::generate_proposals {
 
 const TestModel& get_test_model_nhwc_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {14, 17, 20, 23},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -3970,6 +4039,8 @@ const TestModel& get_test_model_nhwc_all_inputs_as_internal_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_all_inputs_as_internal_2 = TestModelManager::get().add("generate_proposals_nhwc_all_inputs_as_internal_2", get_test_model_nhwc_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::generate_proposals
 
@@ -3977,9 +4048,11 @@ namespace generated_tests::generate_proposals {
 
 const TestModel& get_test_model_nhwc_relaxed_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2, 3},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({0.885f, 0.21f, 0.78f, 0.57f, 0.795f, 0.66f, 0.915f, 0.615f, 0.27f, 0.69f, 0.645f, 0.945f, 0.465f, 0.345f, 0.855f, 0.555f, 0.48f, 0.6f, 0.735f, 0.63f, 0.495f, 0.03f, 0.12f, 0.225f, 0.24f, 0.285f, 0.51f, 0.315f, 0.435f, 0.255f, 0.585f, 0.06f, 0.9f, 0.75f, 0.18f, 0.45f, 0.36f, 0.09f, 0.405f, 0.15f, 0.0f, 0.195f, 0.075f, 0.81f, 0.87f, 0.93f, 0.39f, 0.165f, 0.825f, 0.525f, 0.765f, 0.105f, 0.54f, 0.705f, 0.675f, 0.3f, 0.42f, 0.045f, 0.33f, 0.015f, 0.84f, 0.135f, 0.72f, 0.375f, 0.495f, 0.315f, 0.195f, 0.24f, 0.21f, 0.54f, 0.78f, 0.72f, 0.045f, 0.93f, 0.27f, 0.735f, 0.135f, 0.09f, 0.81f, 0.705f, 0.39f, 0.885f, 0.42f, 0.945f, 0.9f, 0.225f, 0.75f, 0.3f, 0.375f, 0.63f, 0.825f, 0.675f, 0.015f, 0.48f, 0.645f, 0.615f, 0.33f, 0.465f, 0.66f, 0.6f, 0.075f, 0.84f, 0.285f, 0.57f, 0.585f, 0.165f, 0.06f, 0.36f, 0.795f, 0.855f, 0.105f, 0.45f, 0.0f, 0.87f, 0.525f, 0.255f, 0.69f, 0.555f, 0.15f, 0.345f, 0.03f, 0.915f, 0.405f, 0.435f, 0.765f, 0.12f, 0.51f, 0.18f}),
@@ -4130,6 +4203,8 @@ const TestModel& get_test_model_nhwc_relaxed_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_relaxed_2 = TestModelManager::get().add("generate_proposals_nhwc_relaxed_2", get_test_model_nhwc_relaxed_2());
 
 }  // namespace generated_tests::generate_proposals
 
@@ -4137,9 +4212,11 @@ namespace generated_tests::generate_proposals {
 
 const TestModel& get_test_model_nhwc_relaxed_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {14, 17, 20, 23},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -4427,15 +4504,19 @@ const TestModel& get_test_model_nhwc_relaxed_all_inputs_as_internal_2() {
     return model;
 }
 
+const auto dummy_test_model_nhwc_relaxed_all_inputs_as_internal_2 = TestModelManager::get().add("generate_proposals_nhwc_relaxed_all_inputs_as_internal_2", get_test_model_nhwc_relaxed_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::generate_proposals
 
 namespace generated_tests::generate_proposals {
 
 const TestModel& get_test_model_nhwc_quant8_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2, 3},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({177, 42, 156, 114, 159, 132, 183, 123, 54, 138, 129, 189, 93, 69, 171, 111, 96, 120, 147, 126, 99, 6, 24, 45, 48, 57, 102, 63, 87, 51, 117, 12, 180, 150, 36, 90, 72, 18, 81, 30, 0, 39, 15, 162, 174, 186, 78, 33, 165, 105, 153, 21, 108, 141, 135, 60, 84, 9, 66, 3, 168, 27, 144, 75, 99, 63, 39, 48, 42, 108, 156, 144, 9, 186, 54, 147, 27, 18, 162, 141, 78, 177, 84, 189, 180, 45, 150, 60, 75, 126, 165, 135, 3, 96, 129, 123, 66, 93, 132, 120, 15, 168, 57, 114, 117, 33, 12, 72, 159, 171, 21, 90, 0, 174, 105, 51, 138, 111, 30, 69, 6, 183, 81, 87, 153, 24, 102, 36}),
@@ -4586,6 +4667,8 @@ const TestModel& get_test_model_nhwc_quant8_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_quant8_2 = TestModelManager::get().add("generate_proposals_nhwc_quant8_2", get_test_model_nhwc_quant8_2());
 
 }  // namespace generated_tests::generate_proposals
 
@@ -4593,9 +4676,11 @@ namespace generated_tests::generate_proposals {
 
 const TestModel& get_test_model_nhwc_quant8_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {2, 3, 14, 17},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -4815,15 +4900,19 @@ const TestModel& get_test_model_nhwc_quant8_all_inputs_as_internal_2() {
     return model;
 }
 
+const auto dummy_test_model_nhwc_quant8_all_inputs_as_internal_2 = TestModelManager::get().add("generate_proposals_nhwc_quant8_all_inputs_as_internal_2", get_test_model_nhwc_quant8_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::generate_proposals
 
 namespace generated_tests::generate_proposals {
 
 const TestModel& get_test_model_nhwc_float16_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2, 3},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({0.8849999904632568f, 0.20999999344348907f, 0.7799999713897705f, 0.5699999928474426f, 0.7950000166893005f, 0.6600000262260437f, 0.9150000214576721f, 0.6150000095367432f, 0.27000001072883606f, 0.6899999976158142f, 0.6449999809265137f, 0.9449999928474426f, 0.4650000035762787f, 0.3449999988079071f, 0.8550000190734863f, 0.5550000071525574f, 0.47999998927116394f, 0.6000000238418579f, 0.7350000143051147f, 0.6299999952316284f, 0.4950000047683716f, 0.029999999329447746f, 0.11999999731779099f, 0.22499999403953552f, 0.23999999463558197f, 0.2849999964237213f, 0.5099999904632568f, 0.3149999976158142f, 0.4350000023841858f, 0.2549999952316284f, 0.5849999785423279f, 0.05999999865889549f, 0.8999999761581421f, 0.75f, 0.18000000715255737f, 0.44999998807907104f, 0.36000001430511475f, 0.09000000357627869f, 0.4050000011920929f, 0.15000000596046448f, 0.0f, 0.19499999284744263f, 0.07500000298023224f, 0.8100000023841858f, 0.8700000047683716f, 0.9300000071525574f, 0.38999998569488525f, 0.16500000655651093f, 0.824999988079071f, 0.5249999761581421f, 0.7649999856948853f, 0.10499999672174454f, 0.5400000214576721f, 0.7049999833106995f, 0.675000011920929f, 0.30000001192092896f, 0.41999998688697815f, 0.04500000178813934f, 0.33000001311302185f, 0.014999999664723873f, 0.8399999737739563f, 0.13500000536441803f, 0.7200000286102295f, 0.375f, 0.4950000047683716f, 0.3149999976158142f, 0.19499999284744263f, 0.23999999463558197f, 0.20999999344348907f, 0.5400000214576721f, 0.7799999713897705f, 0.7200000286102295f, 0.04500000178813934f, 0.9300000071525574f, 0.27000001072883606f, 0.7350000143051147f, 0.13500000536441803f, 0.09000000357627869f, 0.8100000023841858f, 0.7049999833106995f, 0.38999998569488525f, 0.8849999904632568f, 0.41999998688697815f, 0.9449999928474426f, 0.8999999761581421f, 0.22499999403953552f, 0.75f, 0.30000001192092896f, 0.375f, 0.6299999952316284f, 0.824999988079071f, 0.675000011920929f, 0.014999999664723873f, 0.47999998927116394f, 0.6449999809265137f, 0.6150000095367432f, 0.33000001311302185f, 0.4650000035762787f, 0.6600000262260437f, 0.6000000238418579f, 0.07500000298023224f, 0.8399999737739563f, 0.2849999964237213f, 0.5699999928474426f, 0.5849999785423279f, 0.16500000655651093f, 0.05999999865889549f, 0.36000001430511475f, 0.7950000166893005f, 0.8550000190734863f, 0.10499999672174454f, 0.44999998807907104f, 0.0f, 0.8700000047683716f, 0.5249999761581421f, 0.2549999952316284f, 0.6899999976158142f, 0.5550000071525574f, 0.15000000596046448f, 0.3449999988079071f, 0.029999999329447746f, 0.9150000214576721f, 0.4050000011920929f, 0.4350000023841858f, 0.7649999856948853f, 0.11999999731779099f, 0.5099999904632568f, 0.18000000715255737f}),
@@ -4974,6 +5063,8 @@ const TestModel& get_test_model_nhwc_float16_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_nhwc_float16_2 = TestModelManager::get().add("generate_proposals_nhwc_float16_2", get_test_model_nhwc_float16_2());
 
 }  // namespace generated_tests::generate_proposals
 
@@ -4981,9 +5072,11 @@ namespace generated_tests::generate_proposals {
 
 const TestModel& get_test_model_nhwc_float16_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {14, 17, 20, 23},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -5271,15 +5364,19 @@ const TestModel& get_test_model_nhwc_float16_all_inputs_as_internal_2() {
     return model;
 }
 
+const auto dummy_test_model_nhwc_float16_all_inputs_as_internal_2 = TestModelManager::get().add("generate_proposals_nhwc_float16_all_inputs_as_internal_2", get_test_model_nhwc_float16_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::generate_proposals
 
 namespace generated_tests::generate_proposals {
 
 const TestModel& get_test_model_nchw_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2, 3},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({0.885f, 0.795f, 0.27f, 0.465f, 0.48f, 0.495f, 0.24f, 0.435f, 0.9f, 0.36f, 0.0f, 0.87f, 0.825f, 0.54f, 0.42f, 0.84f, 0.21f, 0.66f, 0.69f, 0.345f, 0.6f, 0.03f, 0.285f, 0.255f, 0.75f, 0.09f, 0.195f, 0.93f, 0.525f, 0.705f, 0.045f, 0.135f, 0.78f, 0.915f, 0.645f, 0.855f, 0.735f, 0.12f, 0.51f, 0.585f, 0.18f, 0.405f, 0.075f, 0.39f, 0.765f, 0.675f, 0.33f, 0.72f, 0.57f, 0.615f, 0.945f, 0.555f, 0.63f, 0.225f, 0.315f, 0.06f, 0.45f, 0.15f, 0.81f, 0.165f, 0.105f, 0.3f, 0.015f, 0.375f, 0.495f, 0.21f, 0.045f, 0.135f, 0.39f, 0.9f, 0.375f, 0.015f, 0.33f, 0.075f, 0.585f, 0.795f, 0.0f, 0.69f, 0.03f, 0.765f, 0.315f, 0.54f, 0.93f, 0.09f, 0.885f, 0.225f, 0.63f, 0.48f, 0.465f, 0.84f, 0.165f, 0.855f, 0.87f, 0.555f, 0.915f, 0.12f, 0.195f, 0.78f, 0.27f, 0.81f, 0.42f, 0.75f, 0.825f, 0.645f, 0.66f, 0.285f, 0.06f, 0.105f, 0.525f, 0.15f, 0.405f, 0.51f, 0.24f, 0.72f, 0.735f, 0.705f, 0.945f, 0.3f, 0.675f, 0.615f, 0.6f, 0.57f, 0.36f, 0.45f, 0.255f, 0.345f, 0.435f, 0.18f}),
@@ -5430,6 +5527,8 @@ const TestModel& get_test_model_nchw_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_2 = TestModelManager::get().add("generate_proposals_nchw_2", get_test_model_nchw_2());
 
 }  // namespace generated_tests::generate_proposals
 
@@ -5437,9 +5536,11 @@ namespace generated_tests::generate_proposals {
 
 const TestModel& get_test_model_nchw_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {14, 17, 20, 23},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -5726,6 +5827,8 @@ const TestModel& get_test_model_nchw_all_inputs_as_internal_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_all_inputs_as_internal_2 = TestModelManager::get().add("generate_proposals_nchw_all_inputs_as_internal_2", get_test_model_nchw_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::generate_proposals
 
@@ -5733,9 +5836,11 @@ namespace generated_tests::generate_proposals {
 
 const TestModel& get_test_model_nchw_relaxed_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2, 3},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({0.885f, 0.795f, 0.27f, 0.465f, 0.48f, 0.495f, 0.24f, 0.435f, 0.9f, 0.36f, 0.0f, 0.87f, 0.825f, 0.54f, 0.42f, 0.84f, 0.21f, 0.66f, 0.69f, 0.345f, 0.6f, 0.03f, 0.285f, 0.255f, 0.75f, 0.09f, 0.195f, 0.93f, 0.525f, 0.705f, 0.045f, 0.135f, 0.78f, 0.915f, 0.645f, 0.855f, 0.735f, 0.12f, 0.51f, 0.585f, 0.18f, 0.405f, 0.075f, 0.39f, 0.765f, 0.675f, 0.33f, 0.72f, 0.57f, 0.615f, 0.945f, 0.555f, 0.63f, 0.225f, 0.315f, 0.06f, 0.45f, 0.15f, 0.81f, 0.165f, 0.105f, 0.3f, 0.015f, 0.375f, 0.495f, 0.21f, 0.045f, 0.135f, 0.39f, 0.9f, 0.375f, 0.015f, 0.33f, 0.075f, 0.585f, 0.795f, 0.0f, 0.69f, 0.03f, 0.765f, 0.315f, 0.54f, 0.93f, 0.09f, 0.885f, 0.225f, 0.63f, 0.48f, 0.465f, 0.84f, 0.165f, 0.855f, 0.87f, 0.555f, 0.915f, 0.12f, 0.195f, 0.78f, 0.27f, 0.81f, 0.42f, 0.75f, 0.825f, 0.645f, 0.66f, 0.285f, 0.06f, 0.105f, 0.525f, 0.15f, 0.405f, 0.51f, 0.24f, 0.72f, 0.735f, 0.705f, 0.945f, 0.3f, 0.675f, 0.615f, 0.6f, 0.57f, 0.36f, 0.45f, 0.255f, 0.345f, 0.435f, 0.18f}),
@@ -5887,15 +5992,19 @@ const TestModel& get_test_model_nchw_relaxed_2() {
     return model;
 }
 
+const auto dummy_test_model_nchw_relaxed_2 = TestModelManager::get().add("generate_proposals_nchw_relaxed_2", get_test_model_nchw_relaxed_2());
+
 }  // namespace generated_tests::generate_proposals
 
 namespace generated_tests::generate_proposals {
 
 const TestModel& get_test_model_nchw_relaxed_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {14, 17, 20, 23},
         .isRelaxed = true,
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -6183,15 +6292,19 @@ const TestModel& get_test_model_nchw_relaxed_all_inputs_as_internal_2() {
     return model;
 }
 
+const auto dummy_test_model_nchw_relaxed_all_inputs_as_internal_2 = TestModelManager::get().add("generate_proposals_nchw_relaxed_all_inputs_as_internal_2", get_test_model_nchw_relaxed_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::generate_proposals
 
 namespace generated_tests::generate_proposals {
 
 const TestModel& get_test_model_nchw_quant8_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2, 3},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({177, 159, 54, 93, 96, 99, 48, 87, 180, 72, 0, 174, 165, 108, 84, 168, 42, 132, 138, 69, 120, 6, 57, 51, 150, 18, 39, 186, 105, 141, 9, 27, 156, 183, 129, 171, 147, 24, 102, 117, 36, 81, 15, 78, 153, 135, 66, 144, 114, 123, 189, 111, 126, 45, 63, 12, 90, 30, 162, 33, 21, 60, 3, 75, 99, 42, 9, 27, 78, 180, 75, 3, 66, 15, 117, 159, 0, 138, 6, 153, 63, 108, 186, 18, 177, 45, 126, 96, 93, 168, 33, 171, 174, 111, 183, 24, 39, 156, 54, 162, 84, 150, 165, 129, 132, 57, 12, 21, 105, 30, 81, 102, 48, 144, 147, 141, 189, 60, 135, 123, 120, 114, 72, 90, 51, 69, 87, 36}),
@@ -6343,15 +6456,19 @@ const TestModel& get_test_model_nchw_quant8_2() {
     return model;
 }
 
+const auto dummy_test_model_nchw_quant8_2 = TestModelManager::get().add("generate_proposals_nchw_quant8_2", get_test_model_nchw_quant8_2());
+
 }  // namespace generated_tests::generate_proposals
 
 namespace generated_tests::generate_proposals {
 
 const TestModel& get_test_model_nchw_quant8_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {2, 3, 14, 17},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<uint8_t>({}),
@@ -6571,15 +6688,19 @@ const TestModel& get_test_model_nchw_quant8_all_inputs_as_internal_2() {
     return model;
 }
 
+const auto dummy_test_model_nchw_quant8_all_inputs_as_internal_2 = TestModelManager::get().add("generate_proposals_nchw_quant8_all_inputs_as_internal_2", get_test_model_nchw_quant8_all_inputs_as_internal_2());
+
 }  // namespace generated_tests::generate_proposals
 
 namespace generated_tests::generate_proposals {
 
 const TestModel& get_test_model_nchw_float16_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2, 3},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({0.8849999904632568f, 0.7950000166893005f, 0.27000001072883606f, 0.4650000035762787f, 0.47999998927116394f, 0.4950000047683716f, 0.23999999463558197f, 0.4350000023841858f, 0.8999999761581421f, 0.36000001430511475f, 0.0f, 0.8700000047683716f, 0.824999988079071f, 0.5400000214576721f, 0.41999998688697815f, 0.8399999737739563f, 0.20999999344348907f, 0.6600000262260437f, 0.6899999976158142f, 0.3449999988079071f, 0.6000000238418579f, 0.029999999329447746f, 0.2849999964237213f, 0.2549999952316284f, 0.75f, 0.09000000357627869f, 0.19499999284744263f, 0.9300000071525574f, 0.5249999761581421f, 0.7049999833106995f, 0.04500000178813934f, 0.13500000536441803f, 0.7799999713897705f, 0.9150000214576721f, 0.6449999809265137f, 0.8550000190734863f, 0.7350000143051147f, 0.11999999731779099f, 0.5099999904632568f, 0.5849999785423279f, 0.18000000715255737f, 0.4050000011920929f, 0.07500000298023224f, 0.38999998569488525f, 0.7649999856948853f, 0.675000011920929f, 0.33000001311302185f, 0.7200000286102295f, 0.5699999928474426f, 0.6150000095367432f, 0.9449999928474426f, 0.5550000071525574f, 0.6299999952316284f, 0.22499999403953552f, 0.3149999976158142f, 0.05999999865889549f, 0.44999998807907104f, 0.15000000596046448f, 0.8100000023841858f, 0.16500000655651093f, 0.10499999672174454f, 0.30000001192092896f, 0.014999999664723873f, 0.375f, 0.4950000047683716f, 0.20999999344348907f, 0.04500000178813934f, 0.13500000536441803f, 0.38999998569488525f, 0.8999999761581421f, 0.375f, 0.014999999664723873f, 0.33000001311302185f, 0.07500000298023224f, 0.5849999785423279f, 0.7950000166893005f, 0.0f, 0.6899999976158142f, 0.029999999329447746f, 0.7649999856948853f, 0.3149999976158142f, 0.5400000214576721f, 0.9300000071525574f, 0.09000000357627869f, 0.8849999904632568f, 0.22499999403953552f, 0.6299999952316284f, 0.47999998927116394f, 0.4650000035762787f, 0.8399999737739563f, 0.16500000655651093f, 0.8550000190734863f, 0.8700000047683716f, 0.5550000071525574f, 0.9150000214576721f, 0.11999999731779099f, 0.19499999284744263f, 0.7799999713897705f, 0.27000001072883606f, 0.8100000023841858f, 0.41999998688697815f, 0.75f, 0.824999988079071f, 0.6449999809265137f, 0.6600000262260437f, 0.2849999964237213f, 0.05999999865889549f, 0.10499999672174454f, 0.5249999761581421f, 0.15000000596046448f, 0.4050000011920929f, 0.5099999904632568f, 0.23999999463558197f, 0.7200000286102295f, 0.7350000143051147f, 0.7049999833106995f, 0.9449999928474426f, 0.30000001192092896f, 0.675000011920929f, 0.6150000095367432f, 0.6000000238418579f, 0.5699999928474426f, 0.36000001430511475f, 0.44999998807907104f, 0.2549999952316284f, 0.3449999988079071f, 0.4350000023841858f, 0.18000000715255737f}),
@@ -6731,15 +6852,19 @@ const TestModel& get_test_model_nchw_float16_2() {
     return model;
 }
 
+const auto dummy_test_model_nchw_float16_2 = TestModelManager::get().add("generate_proposals_nchw_float16_2", get_test_model_nchw_float16_2());
+
 }  // namespace generated_tests::generate_proposals
 
 namespace generated_tests::generate_proposals {
 
 const TestModel& get_test_model_nchw_float16_all_inputs_as_internal_2() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {14, 17, 20, 23},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<_Float16>({}),
@@ -7026,6 +7151,8 @@ const TestModel& get_test_model_nchw_float16_all_inputs_as_internal_2() {
     };
     return model;
 }
+
+const auto dummy_test_model_nchw_float16_all_inputs_as_internal_2 = TestModelManager::get().add("generate_proposals_nchw_float16_all_inputs_as_internal_2", get_test_model_nchw_float16_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::generate_proposals
 
