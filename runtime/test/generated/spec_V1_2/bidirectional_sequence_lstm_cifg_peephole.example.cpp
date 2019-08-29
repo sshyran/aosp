@@ -2,16 +2,17 @@
 // DO NOT EDIT
 // clang-format off
 #include "TestHarness.h"
-
 using namespace test_helper;
 
 namespace generated_tests::bidirectional_sequence_lstm_cifg_peephole {
 
 const TestModel& get_test_model_blackbox() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 53, 54, 55, 56, 57, 58, 59, 60},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({2.0f, 3.0f, 3.0f, 4.0f, 1.0f, 1.0f}),
@@ -653,15 +654,19 @@ const TestModel& get_test_model_blackbox() {
     return model;
 }
 
+const auto dummy_test_model_blackbox = TestModelManager::get().add("bidirectional_sequence_lstm_cifg_peephole_blackbox", get_test_model_blackbox());
+
 }  // namespace generated_tests::bidirectional_sequence_lstm_cifg_peephole
 
 namespace generated_tests::bidirectional_sequence_lstm_cifg_peephole {
 
 const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
     static TestModel model = {
+        .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .inputIndexes = {1, 5, 9, 12, 16, 17, 18, 22, 26, 29, 33, 34, 39, 40, 41, 42, 43, 44, 45, 46, 47, 53, 54, 55, 56, 57, 58, 59, 60, 63, 66, 69, 72, 75, 78, 81, 84, 87, 90, 93, 96, 99, 102, 105, 108, 111, 114, 117, 120, 123, 126, 129, 132, 135, 138, 141},
         .isRelaxed = false,
+        .minSupportedVersion = TestHalVersion::V1_2,
         .operands = {{
                 .channelQuant = {},
                 .data = TestBuffer::createFromVector<float>({}),
@@ -2220,6 +2225,8 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
     };
     return model;
 }
+
+const auto dummy_test_model_blackbox_all_inputs_as_internal = TestModelManager::get().add("bidirectional_sequence_lstm_cifg_peephole_blackbox_all_inputs_as_internal", get_test_model_blackbox_all_inputs_as_internal());
 
 }  // namespace generated_tests::bidirectional_sequence_lstm_cifg_peephole
 

@@ -26,10 +26,12 @@
 #include <fstream>
 #include <iostream>
 #include <map>
+#include <string>
 #include <thread>
 #include <vector>
 
 #include "TestHarness.h"
+#include "TestNeuralNetworksWrapper.h"
 
 // Systrace is not available from CTS tests due to platform layering
 // constraints. We reuse the NNTEST_ONLY_PUBLIC_API flag, as that should also be
@@ -42,9 +44,45 @@
 #define NNTRACE_APP_SWITCH(...)
 #endif
 
-namespace generated_tests {
-using namespace android::nn::test_wrapper;
+#ifdef NNTEST_CTS
+#define NNTEST_COMPUTE_MODE
+#endif
+
+namespace android::nn::generated_tests {
+using namespace test_wrapper;
 using namespace test_helper;
+
+class GeneratedTests : public GeneratedTestBase {
+   protected:
+    void SetUp() override;
+    void TearDown() override;
+
+    std::optional<Compilation> compileModel(const Model* model);
+    void executeWithCompilation(const Compilation* compilation, const TestModel& testModel);
+    void executeOnce(const Model* model, const TestModel& testModel);
+    void executeMultithreadedOwnCompilation(const Model* model, const TestModel& testModel);
+    void executeMultithreadedSharedCompilation(const Model* model, const TestModel& testModel);
+    // Test driver for those generated from ml/nn/runtime/test/spec
+    void execute(const TestModel& testModel);
+
+    std::string mCacheDir;
+    std::vector<uint8_t> mToken;
+    bool mTestCompilationCaching = false;
+    bool mTestDynamicOutputShape = false;
+    bool mExpectFailure = false;
+};
+
+// Tag for the dynamic output shape tests
+class DynamicOutputShapeTest : public GeneratedTests {
+   protected:
+    DynamicOutputShapeTest() { mTestDynamicOutputShape = true; }
+};
+
+// Tag for the generated validation tests
+class GeneratedValidationTests : public GeneratedTests {
+   protected:
+    GeneratedValidationTests() { mExpectFailure = true; }
+};
 
 static OperandType getOperandType(const TestOperand& op, bool testDynamicOutputShape) {
     auto dims = op.dimensions;
@@ -243,9 +281,7 @@ void GeneratedTests::execute(const TestModel& testModel) {
 }
 
 void GeneratedTests::SetUp() {
-#ifdef NNTEST_COMPUTE_MODE
-    mOldComputeMode = Execution::setComputeMode(GetParam());
-#endif
+    GeneratedTestBase::SetUp();
     char cacheDirTemp[] = "/data/local/tmp/TestCompilationCachingXXXXXX";
     char* cacheDir = mkdtemp(cacheDirTemp);
     ASSERT_NE(cacheDir, nullptr);
@@ -254,9 +290,6 @@ void GeneratedTests::SetUp() {
 }
 
 void GeneratedTests::TearDown() {
-#ifdef NNTEST_COMPUTE_MODE
-    Execution::setComputeMode(mOldComputeMode);
-#endif
     if (!::testing::Test::HasFailure()) {
         // TODO: Switch to std::filesystem::remove_all once libc++fs is made available in CTS.
         // Remove the cache directory specified by path recursively.
@@ -265,13 +298,48 @@ void GeneratedTests::TearDown() {
         };
         nftw(mCacheDir.c_str(), callback, 128, FTW_DEPTH | FTW_MOUNT | FTW_PHYS);
     }
+    GeneratedTestBase::TearDown();
 }
 
 #ifdef NNTEST_COMPUTE_MODE
-INSTANTIATE_TEST_SUITE_P(ComputeMode, GeneratedTests,
-                         testing::Values(Execution::ComputeMode::SYNC,
-                                         Execution::ComputeMode::ASYNC,
-                                         Execution::ComputeMode::BURST));
+TEST_P(GeneratedTests, Sync) {
+    const auto oldComputeMode = Execution::setComputeMode(Execution::ComputeMode::SYNC);
+    execute(*mTestModel);
+    Execution::setComputeMode(oldComputeMode);
+}
+
+TEST_P(GeneratedTests, Async) {
+    const auto oldComputeMode = Execution::setComputeMode(Execution::ComputeMode::ASYNC);
+    execute(*mTestModel);
+    Execution::setComputeMode(oldComputeMode);
+}
+
+TEST_P(GeneratedTests, Burst) {
+    const auto oldComputeMode = Execution::setComputeMode(Execution::ComputeMode::BURST);
+    execute(*mTestModel);
+    Execution::setComputeMode(oldComputeMode);
+}
+#else
+TEST_P(GeneratedTests, Test) {
+    execute(*mTestModel);
+}
 #endif
 
-}  // namespace generated_tests
+TEST_P(DynamicOutputShapeTest, Test) {
+    execute(*mTestModel);
+}
+
+TEST_P(GeneratedValidationTests, Test) {
+    execute(*mTestModel);
+}
+
+INSTANTIATE_GENERATED_TEST(GeneratedTests,
+                           [](const TestModel& testModel) { return !testModel.expectFailure; });
+
+INSTANTIATE_GENERATED_TEST(DynamicOutputShapeTest,
+                           [](const TestModel& testModel) { return !testModel.expectFailure; });
+
+INSTANTIATE_GENERATED_TEST(GeneratedValidationTests,
+                           [](const TestModel& testModel) { return testModel.expectFailure; });
+
+}  // namespace android::nn::generated_tests
