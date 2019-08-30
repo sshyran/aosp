@@ -27,6 +27,7 @@
 #include <functional>
 #include <memory>
 #include <string>
+#include <tuple>
 #include <utility>
 #include <vector>
 
@@ -112,9 +113,10 @@ class DriverPreparedModel : public PreparedModel {
     DriverPreparedModel(const std::shared_ptr<VersionedIPreparedModel>& preparedModel)
         : mPreparedModel(preparedModel) {}
 
-    int execute(const std::shared_ptr<ExecutionBurstController>& burstController,
-                MeasureTiming measure, std::vector<ModelArgumentInfo>* inputs,
-                std::vector<ModelArgumentInfo>* outputs, MemoryTracker* memories,
+    int execute(const std::vector<ModelArgumentInfo>& inputs,
+                const std::vector<ModelArgumentInfo>& outputs, const MemoryTracker& memories,
+                const std::shared_ptr<ExecutionBurstController>& burstController,
+                MeasureTiming measure,
                 sp<ExecutionCallback>* synchronizationCallback) const override;
 
     std::shared_ptr<ExecutionBurstController> configureExecutionBurst(
@@ -305,15 +307,21 @@ int DriverDevice::prepareModelFromCache(const hidl_vec<hidl_handle>& modelCache,
                              preparedModel);
 }
 
+// Convert ModelArgumentInfo to HIDL RequestArgument. For pointer arguments, use the location
+// information in ptrArgsLocations.
 static void setRequestArgumentArray(const std::vector<ModelArgumentInfo>& argumentInfos,
+                                    const std::vector<DataLocation>& ptrArgsLocations,
                                     hidl_vec<RequestArgument>* ioInfos) {
     size_t count = argumentInfos.size();
     ioInfos->resize(count);
+    uint32_t ptrArgsIndex = 0;
     for (size_t i = 0; i < count; i++) {
         const auto& info = argumentInfos[i];
         (*ioInfos)[i] = {
                 .hasNoValue = info.state == ModelArgumentInfo::HAS_NO_VALUE,
-                .location = info.locationAndLength,
+                .location = info.state == ModelArgumentInfo::POINTER
+                                    ? ptrArgsLocations[ptrArgsIndex++]
+                                    : info.locationAndLength,
                 .dimensions = info.dimensions,
         };
     }
@@ -322,88 +330,94 @@ static void setRequestArgumentArray(const std::vector<ModelArgumentInfo>& argume
 // Figures out how to place each of the input or outputs in a buffer. This just
 // does the layout and memory allocation, it does not copy data.  Aligns each
 // input a bit.
-static std::pair<int, std::unique_ptr<MemoryAshmem>> allocatePointerArgumentsToPool(
-        MemoryTracker* memories, std::vector<ModelArgumentInfo>* args) {
+static std::tuple<int, std::unique_ptr<MemoryAshmem>, std::vector<DataLocation>>
+allocatePointerArgumentsToPool(const std::vector<ModelArgumentInfo>& args,
+                               MemoryTracker* memories) {
     CHECK(memories != nullptr);
-    CHECK(args != nullptr);
-
+    std::vector<DataLocation> ptrArgsLocations;
     const uint32_t nextPoolIndex = memories->size();
     int64_t total = 0;
-    for (auto& info : *args) {
+    for (const auto& info : args) {
         if (info.state == ModelArgumentInfo::POINTER) {
-            DataLocation& loc = info.locationAndLength;
+            const DataLocation& loc = info.locationAndLength;
             // TODO Good enough alignment?
             total += alignBytesNeeded(static_cast<uint32_t>(total), loc.length);
-            loc.poolIndex = nextPoolIndex;
-            loc.offset = static_cast<uint32_t>(total);
+            ptrArgsLocations.push_back({.poolIndex = nextPoolIndex,
+                                        .offset = static_cast<uint32_t>(total),
+                                        .length = loc.length});
             total += loc.length;
         }
     };
     if (total > 0xFFFFFFFF) {
         LOG(ERROR) << "allocatePointerArgumentsToPool: ANeuralNetworksExecution: Size of all "
                       "inputs or outputs exceeds 2^32.";
-        return {ANEURALNETWORKS_BAD_DATA, nullptr};
+        return {ANEURALNETWORKS_BAD_DATA, nullptr, std::vector<DataLocation>{}};
     }
     if (total <= 0) {
-        return {ANEURALNETWORKS_NO_ERROR, nullptr};
+        return {ANEURALNETWORKS_NO_ERROR, nullptr, std::vector<DataLocation>{}};
     }
     auto [n, memory] = MemoryAshmem::create(total);
     if (n != ANEURALNETWORKS_NO_ERROR) {
-        return {n, nullptr};
+        return {n, nullptr, std::vector<DataLocation>{}};
     }
     memories->add(memory.get());
-    return {ANEURALNETWORKS_NO_ERROR, std::move(memory)};
+    return {ANEURALNETWORKS_NO_ERROR, std::move(memory), std::move(ptrArgsLocations)};
 }
 
 // Start compute on an actual HIDL driver.
 //
-// Two separate memory pools will be allocated for inputs and outputs specified by pointers. The
-// loc field in each ModelArgumentInfo structure will be updated accordingly. The input pointer
-// data will be copied to the input pool prior to execution, and the output pointer data will be
-// copied out from the output pool after the execution.
+// Because HIDL cannot take raw pointers, two separate memory pools will be allocated for inputs and
+// outputs specified by pointers. The input pointer data will be copied to the input pool prior to
+// execution, and the output pointer data will be copied out from the output pool after the
+// execution.
 //
 // The HIDL invocation will choose between sync/async execution according to
 // DeviceManager::mSyncExecHal.
-int DriverPreparedModel::execute(const std::shared_ptr<ExecutionBurstController>& burstController,
-                                 MeasureTiming measure, std::vector<ModelArgumentInfo>* inputs,
-                                 std::vector<ModelArgumentInfo>* outputs, MemoryTracker* memories,
+int DriverPreparedModel::execute(const std::vector<ModelArgumentInfo>& inputs,
+                                 const std::vector<ModelArgumentInfo>& outputs,
+                                 const MemoryTracker& memories,
+                                 const std::shared_ptr<ExecutionBurstController>& burstController,
+                                 MeasureTiming measure,
                                  sp<ExecutionCallback>* synchronizationCallback) const {
-    CHECK(inputs != nullptr);
-    CHECK(outputs != nullptr);
-    CHECK(memories != nullptr);
     CHECK(synchronizationCallback != nullptr);
     *synchronizationCallback = nullptr;
 
     NNTRACE_RT(NNTRACE_PHASE_INPUTS_AND_OUTPUTS, "DriverPreparedModel::execute");
+
+    // Make a copy of the memory tracker as we will append memory pools for pointer arguments.
+    MemoryTracker localMemories = memories;
 
     // We separate the input & output pools so accelerators only need to copy
     // the contents of the input pools. We could also use it to set protection
     // on read only memory but that's not currently done.
 
     // Layout the input and output data
-    const auto [n1, inputPointerArguments] = allocatePointerArgumentsToPool(memories, inputs);
+    const auto [n1, inputPtrArgsMemory, inputPtrArgsLocations] =
+            allocatePointerArgumentsToPool(inputs, &localMemories);
     NN_RETURN_IF_ERROR(n1);
-    const auto [n2, outputPointerArguments] = allocatePointerArgumentsToPool(memories, outputs);
+    const auto [n2, outputPtrArgsMemory, outputPtrArgsLocations] =
+            allocatePointerArgumentsToPool(outputs, &localMemories);
     NN_RETURN_IF_ERROR(n2);
 
     // Copy the input data that was specified via a pointer.
-    if (inputPointerArguments != nullptr) {
-        for (const auto& info : *inputs) {
+    if (inputPtrArgsMemory != nullptr) {
+        uint32_t ptrInputIndex = 0;
+        for (const auto& info : inputs) {
             if (info.state == ModelArgumentInfo::POINTER) {
-                const DataLocation& loc = info.locationAndLength;
-                uint8_t* const data = inputPointerArguments->getPointer();
+                const DataLocation& loc = inputPtrArgsLocations[ptrInputIndex++];
+                uint8_t* const data = inputPtrArgsMemory->getPointer();
                 memcpy(data + loc.offset, info.buffer, loc.length);
             }
         }
     }
 
     Request request;
-    setRequestArgumentArray(*inputs, &request.inputs);
-    setRequestArgumentArray(*outputs, &request.outputs);
-    uint32_t count = memories->size();
+    setRequestArgumentArray(inputs, inputPtrArgsLocations, &request.inputs);
+    setRequestArgumentArray(outputs, outputPtrArgsLocations, &request.outputs);
+    uint32_t count = localMemories.size();
     request.pools.resize(count);
     for (uint32_t i = 0; i < count; i++) {
-        request.pools[i] = (*memories)[i]->getHidlMemory();
+        request.pools[i] = localMemories[i]->getHidlMemory();
     }
 
     NNTRACE_FULL_SWITCH(NNTRACE_LAYER_IPC, NNTRACE_PHASE_EXECUTION,
@@ -426,8 +440,8 @@ int DriverPreparedModel::execute(const std::shared_ptr<ExecutionBurstController>
     bool burstFallback = false;
     if (burstCompute) {
         std::vector<intptr_t> memoryIds;
-        memoryIds.reserve(memories->size());
-        for (const Memory* memory : *memories) {
+        memoryIds.reserve(localMemories.size());
+        for (const Memory* memory : localMemories) {
             memory->usedBy(burstController);
             memoryIds.push_back(memory->getKey());
         }
@@ -493,11 +507,12 @@ int DriverPreparedModel::execute(const std::shared_ptr<ExecutionBurstController>
     // TODO: Move this block of code somewhere else. It should not be in the
     // startCompute function.
     NNTRACE_RT_SWITCH(NNTRACE_PHASE_RESULTS, "DriverPreparedModel::execute");
-    if (outputPointerArguments != nullptr) {
-        for (const auto& info : *outputs) {
+    if (outputPtrArgsMemory != nullptr) {
+        uint32_t ptrOutputIndex = 0;
+        for (const auto& info : outputs) {
             if (info.state == ModelArgumentInfo::POINTER) {
-                const DataLocation& loc = info.locationAndLength;
-                const uint8_t* const data = outputPointerArguments->getPointer();
+                const DataLocation& loc = outputPtrArgsLocations[ptrOutputIndex++];
+                const uint8_t* const data = outputPtrArgsMemory->getPointer();
                 memcpy(info.buffer, data + loc.offset, loc.length);
             }
         }
@@ -566,9 +581,10 @@ class CpuPreparedModel : public PreparedModel {
     // successfully created.
     static int create(Model hidlModel, std::shared_ptr<PreparedModel>* preparedModel);
 
-    int execute(const std::shared_ptr<ExecutionBurstController>& burstController,
-                MeasureTiming measure, std::vector<ModelArgumentInfo>* inputs,
-                std::vector<ModelArgumentInfo>* outputs, MemoryTracker* memories,
+    int execute(const std::vector<ModelArgumentInfo>& inputs,
+                const std::vector<ModelArgumentInfo>& outputs, const MemoryTracker& memories,
+                const std::shared_ptr<ExecutionBurstController>& burstController,
+                MeasureTiming measure,
                 sp<ExecutionCallback>* synchronizationCallback) const override;
 
     std::shared_ptr<ExecutionBurstController> configureExecutionBurst(bool) const override {
@@ -647,13 +663,12 @@ static void computeOnCpu(const Model& model, const Request& request,
 // there are input/output in this method to avoid data copying.
 //
 // Will choose between sync/async execution according to DeviceManager::mSyncExecCpu.
-int CpuPreparedModel::execute(const std::shared_ptr<ExecutionBurstController>& /*burstController*/,
-                              MeasureTiming /*measure*/, std::vector<ModelArgumentInfo>* inputs,
-                              std::vector<ModelArgumentInfo>* outputs, MemoryTracker* memories,
+int CpuPreparedModel::execute(const std::vector<ModelArgumentInfo>& inputs,
+                              const std::vector<ModelArgumentInfo>& outputs,
+                              const MemoryTracker& memories,
+                              const std::shared_ptr<ExecutionBurstController>& /*burstController*/,
+                              MeasureTiming /*measure*/,
                               sp<ExecutionCallback>* synchronizationCallback) const {
-    CHECK(inputs != nullptr);
-    CHECK(outputs != nullptr);
-    CHECK(memories != nullptr);
     CHECK(synchronizationCallback != nullptr);
 
     // TODO: use a thread pool
@@ -668,8 +683,8 @@ int CpuPreparedModel::execute(const std::shared_ptr<ExecutionBurstController>& /
     *synchronizationCallback = nullptr;
 
     std::vector<RunTimePoolInfo> requestPoolInfos;
-    requestPoolInfos.reserve(memories->size());
-    for (const Memory* mem : *memories) {
+    requestPoolInfos.reserve(memories.size());
+    for (const Memory* mem : memories) {
         if (std::optional<RunTimePoolInfo> poolInfo =
                     RunTimePoolInfo::createFromHidlMemory(mem->getHidlMemory())) {
             requestPoolInfos.emplace_back(*poolInfo);
@@ -678,23 +693,27 @@ int CpuPreparedModel::execute(const std::shared_ptr<ExecutionBurstController>& /
         }
     }
     // Create as many pools as there are input / output.
-    auto fixPointerArguments = [&requestPoolInfos](std::vector<ModelArgumentInfo>* argumentInfos) {
-        for (ModelArgumentInfo& argumentInfo : *argumentInfos) {
+    auto fixPointerArguments = [&requestPoolInfos](
+                                       const std::vector<ModelArgumentInfo>& argumentInfos) {
+        std::vector<DataLocation> ptrArgsLocations;
+        for (const ModelArgumentInfo& argumentInfo : argumentInfos) {
             if (argumentInfo.state == ModelArgumentInfo::POINTER) {
-                argumentInfo.locationAndLength.poolIndex =
-                        static_cast<uint32_t>(requestPoolInfos.size());
-                argumentInfo.locationAndLength.offset = 0;
+                ptrArgsLocations.push_back(
+                        {.poolIndex = static_cast<uint32_t>(requestPoolInfos.size()),
+                         .offset = 0,
+                         .length = argumentInfo.locationAndLength.length});
                 requestPoolInfos.emplace_back(RunTimePoolInfo::createFromExistingBuffer(
                         static_cast<uint8_t*>(argumentInfo.buffer)));
             }
         }
+        return ptrArgsLocations;
     };
-    fixPointerArguments(inputs);
-    fixPointerArguments(outputs);
+    const std::vector<DataLocation> inputPtrArgsLocations = fixPointerArguments(inputs);
+    const std::vector<DataLocation> outputPtrArgsLocations = fixPointerArguments(outputs);
 
     Request request;
-    setRequestArgumentArray(*inputs, &request.inputs);
-    setRequestArgumentArray(*outputs, &request.outputs);
+    setRequestArgumentArray(inputs, inputPtrArgsLocations, &request.inputs);
+    setRequestArgumentArray(outputs, outputPtrArgsLocations, &request.outputs);
 
     if (DeviceManager::get()->syncExecCpu()) {
         computeOnCpu(mModel, request, mModelPoolInfos, requestPoolInfos, executionCallback);
