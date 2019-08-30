@@ -161,8 +161,8 @@ class MemoryTracker {
     // Iteration
     auto begin() { return mMemories.begin(); }
     auto end() { return mMemories.end(); }
-    auto cbegin() const { return mMemories.cbegin(); }
-    auto cend() const { return mMemories.cend(); }
+    auto begin() const { return mMemories.begin(); }
+    auto end() const { return mMemories.end(); }
 };
 
 }  // namespace nn

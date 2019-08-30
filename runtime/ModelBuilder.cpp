@@ -18,16 +18,19 @@
 
 #include "ModelBuilder.h"
 
+#include <algorithm>
+#include <map>
+#include <memory>
+#include <set>
+#include <utility>
+#include <vector>
+
 #include "CompilationBuilder.h"
 #include "GraphDump.h"
 #include "Manager.h"
 #include "TypeManager.h"
 #include "Utils.h"
 #include "ValidateHal.h"
-
-#include <map>
-#include <memory>
-#include <utility>
 
 namespace android {
 namespace nn {
@@ -537,7 +540,7 @@ Model ModelBuilder::makeHidlModel() const {
 
     uint32_t count = mMemories.size();
     model.pools.resize(count);
-    std::transform(mMemories.cbegin(), mMemories.cend(), model.pools.begin(),
+    std::transform(mMemories.begin(), mMemories.end(), model.pools.begin(),
                    [](const Memory* m) { return m->getHidlMemory(); });
 
     return model;
