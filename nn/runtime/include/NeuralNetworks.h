@@ -644,6 +644,7 @@ typedef enum {
      *      cells between each filter element on height dimension. If this input is set,
      *      input 9 (dilation factor for width) must be specified as well.
      *      Available since API level 29.
+
      *
      * Outputs:
      * * 0: The output 4-D tensor, of shape
