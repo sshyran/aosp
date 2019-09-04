@@ -221,6 +221,7 @@ cc_defaults {
         "libhidlmemory",
         "libnativewindow",
         "libneuralnetworks",
+        "libneuralnetworks_packageinfo",
     ],
     static_libs: [
         "libbase",
