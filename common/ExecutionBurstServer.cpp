@@ -20,6 +20,7 @@
 
 #include <android-base/logging.h>
 
+#include <cstring>
 #include <limits>
 #include <map>
 
@@ -81,7 +82,7 @@ class DefaultBurstExecutorWithCache : public ExecutionBurstServer::IBurstExecuto
         const Return<void> ret = mpPreparedModel->executeSynchronously(fullRequest, measure, cb);
         if (!ret.isOk() || returnedStatus != ErrorStatus::NONE) {
             LOG(ERROR) << "IPreparedModelAdapter::execute -- Error executing";
-            return {ErrorStatus::GENERAL_FAILURE, {}, {}};
+            return {returnedStatus, {}, kNoTiming};
         }
 
         return std::make_tuple(returnedStatus, std::move(returnedOutputShapes), returnedTiming);
@@ -119,10 +120,12 @@ std::vector<FmqResultDatum> serialize(ErrorStatus errorStatus,
     // package output shape data
     for (const auto& operand : outputShapes) {
         // package operand information
+        FmqResultDatum::OperandInformation info{};
+        info.isSufficient = operand.isSufficient;
+        info.numberOfDimensions = static_cast<uint32_t>(operand.dimensions.size());
+
         FmqResultDatum datum;
-        datum.operandInformation(
-                {/*.isSufficient=*/operand.isSufficient,
-                 /*.numberOfDimensions=*/static_cast<uint32_t>(operand.dimensions.size())});
+        datum.operandInformation(info);
         data.push_back(datum);
 
         // package operand dimensions
@@ -367,7 +370,7 @@ std::optional<std::vector<FmqRequestDatum>> RequestChannelReceiver::getPacketBlo
     // are also available.
     const size_t count = mFmqRequestChannel->availableToRead();
     std::vector<FmqRequestDatum> packet(count + 1);
-    packet.front() = datum;
+    std::memcpy(&packet.front(), &datum, sizeof(datum));
     success &= mFmqRequestChannel->read(packet.data() + 1, count);
 
     // terminate loop
@@ -381,7 +384,7 @@ std::optional<std::vector<FmqRequestDatum>> RequestChannelReceiver::getPacketBlo
         return std::nullopt;
     }
 
-    return packet;
+    return std::make_optional(std::move(packet));
 }
 
 // ResultChannelSender methods

@@ -76,7 +76,7 @@ for i in $(seq 1 $NUMBER_RUNS); do
   # Show homescreen
   adb shell wm dismiss-keyguard
   # Set the shell pid as a top-app and run tests
-  adb shell 'echo $$ > /dev/stune/top-app/tasks; am instrument -w -e size large -e class com.android.nn.benchmark.app.TFLiteTest com.android.nn.benchmark.app/android.support.test.runner.AndroidJUnitRunner' | tee -a $LOGFILE
+  adb shell 'echo $$ > /dev/stune/top-app/tasks; am instrument -w -e size large -e class com.android.nn.benchmark.app.TFLiteTest com.android.nn.benchmark.app/androidx.test.runner.AndroidJUnitRunner' | tee -a $LOGFILE
   sleep 10  # let CPU cool down
 done
 
@@ -93,7 +93,7 @@ for i in $(seq 1 $NUMBER_RUNS); do
   # Show homescreen
   adb shell wm dismiss-keyguard
   # Set the shell pid as a top-app and run tests
-  adb shell 'echo $$ > /dev/stune/top-app/tasks; am instrument -w -e size large -e class com.android.nn.benchmark.app.NNTest com.android.nn.benchmark.app/android.support.test.runner.AndroidJUnitRunner' | tee -a $LOGFILE
+  adb shell 'echo $$ > /dev/stune/top-app/tasks; am instrument -w -e size large -e class com.android.nn.benchmark.app.NNTest com.android.nn.benchmark.app/androidx.test.runner.AndroidJUnitRunner' | tee -a $LOGFILE
 done
 
 echo "Driver run data from 'parse_benchmark.py $LOGFILE'"
