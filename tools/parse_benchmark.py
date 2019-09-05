@@ -3,7 +3,7 @@
 
 Reads a file with output from multiple runs of
   adb shell am instrument
-    -w com.android.nn.benchmark.app/android.support.test.runner.AndroidJUnitRunner
+    -w com.android.nn.benchmark.app/androidx.test.runner.AndroidJUnitRunner
 
 and provides either raw measurements or aggregated statistics of the runs.
 
