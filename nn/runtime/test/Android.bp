@@ -33,7 +33,6 @@ cc_defaults {
         "libfmq",
         "libhidlbase",
         "libhidlmemory",
-        "libhidltransport",
         "liblog",
         "libnativewindow",
         "libtextclassifier_hash",

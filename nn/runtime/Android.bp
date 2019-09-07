@@ -64,7 +64,6 @@ cc_library {
                 "libcutils",
                 "libhidlbase",
                 "libhidlmemory",
-                "libhidltransport",
                 "liblog",
                 "libnativewindow",
                 "libui",
