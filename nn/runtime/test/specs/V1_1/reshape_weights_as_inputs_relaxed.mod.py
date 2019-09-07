@@ -14,6 +14,8 @@
 # limitations under the License.
 #
 
+# TODO: Re-enable after b/140641425 is addressed.
+"""
 # model
 model = Model()
 i1 = Input("op1", "TENSOR_FLOAT32", "{1, 1, 3, 3}") # a line of 3 pixels, 3 components/pixel
@@ -35,3 +37,4 @@ output0 = {i3: # output 0
 
 # Instantiate an example
 Example((input0, output0))
+"""
