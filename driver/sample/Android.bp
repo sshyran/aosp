@@ -39,7 +39,6 @@ cc_defaults {
         "libhardware",
         "libhidlbase",
         "libhidlmemory",
-        "libhidltransport",
         "liblog",
         "libnativewindow",
         "libtextclassifier_hash",
