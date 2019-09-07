@@ -72,12 +72,12 @@ class VersionedIDevice {
      * protections.
      *
      * @param serviceName The name of the service that provides "device".
-     * @param device A device object that is at least version 1.0 of the IDevice
-     *               interface.
+     * @param makeDevice A device factory function that returns a device object
+     *                   that is at least version 1.0 of the IDevice interface.
      * @return A valid VersionedIDevice object, otherwise nullptr.
      */
     static std::shared_ptr<VersionedIDevice> create(std::string serviceName,
-                                                    sp<hal::V1_0::IDevice> device);
+                                                    const hal::DeviceFactory& makeDevice);
 
     /**
      * Constructor for the VersionedIDevice object.
@@ -92,6 +92,8 @@ class VersionedIDevice {
      * @param numberOfCacheFilesNeeded Number of model cache and data cache
      *     files needed by the driver.
      * @param serviceName The name of the service that provides core.getDevice<V1_0::IDevice>().
+     * @param makeDevice A device factory function that returns a device object
+     *                   that is at least version 1.0 of the IDevice interface.
      * @param core An object that encapsulates a V1_0::IDevice, any appropriate downcasts to
      *             newer interfaces, and a hidl_death_recipient that will proactively handle
      *             the case when the service containing the IDevice object crashes.
@@ -100,7 +102,7 @@ class VersionedIDevice {
                      std::vector<hal::Extension> supportedExtensions, int32_t type,
                      std::string versionString,
                      std::pair<uint32_t, uint32_t> numberOfCacheFilesNeeded,
-                     std::string serviceName, Core core);
+                     std::string serviceName, const hal::DeviceFactory& makeDevice, Core core);
 
     /**
      * Gets the capabilities of a driver.
@@ -553,6 +555,9 @@ class VersionedIDevice {
 
     // The name of the service that implements the driver.
     const std::string kServiceName;
+
+    // Factory function object to generate an IDevice object.
+    const hal::DeviceFactory kMakeDevice;
 
     // Guards access to mCore.
     mutable std::shared_mutex mMutex;
