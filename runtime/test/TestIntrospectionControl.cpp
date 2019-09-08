@@ -43,7 +43,6 @@ using DeviceManager = nn::DeviceManager;
 using ExecutePreference = nn::test_wrapper::ExecutePreference;
 using ExecutionBurstServer = nn::ExecutionBurstServer;
 using HidlModel = V1_2::Model;
-using HidlToken = hidl_array<uint8_t, ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN>;
 using PreparedModelCallback = nn::PreparedModelCallback;
 using Result = nn::test_wrapper::Result;
 using SampleDriver = nn::sample_driver::SampleDriver;
@@ -437,7 +436,7 @@ class TestDriver12 : public SampleDriver {
 
     Return<ErrorStatus> prepareModel_1_2(const HidlModel& model, ExecutionPreference,
                                          const hidl_vec<hidl_handle>&, const hidl_vec<hidl_handle>&,
-                                         const HidlToken&,
+                                         const CacheToken&,
                                          const sp<IPreparedModelCallback>& callback) override {
         callback->notify_1_2(ErrorStatus::NONE, new TestPreparedModel12(model, this, mSuccess));
         return ErrorStatus::NONE;

@@ -100,8 +100,6 @@ namespace {
 
 using namespace hal;
 
-using HidlToken = hidl_array<uint8_t, static_cast<uint32_t>(Constant::BYTE_SIZE_OF_CACHE_TOKEN)>;
-
 const Timing kBadTiming = {.timeOnDevice = UINT64_MAX, .timeInDriver = UINT64_MAX};
 
 void sendFailureMessage(const sp<IPreparedModelCallback>& cb) {
@@ -662,7 +660,7 @@ std::pair<ErrorStatus, hidl_vec<bool>> VersionedIDevice::getSupportedOperations(
 
 std::pair<ErrorStatus, std::shared_ptr<VersionedIPreparedModel>> VersionedIDevice::prepareModel(
         const Model& model, ExecutionPreference preference, const hidl_vec<hidl_handle>& modelCache,
-        const hidl_vec<hidl_handle>& dataCache, const HidlToken& token) {
+        const hidl_vec<hidl_handle>& dataCache, const CacheToken& token) {
     const std::pair<ErrorStatus, std::shared_ptr<VersionedIPreparedModel>> kFailure = {
             ErrorStatus::GENERAL_FAILURE, nullptr};
 
@@ -781,7 +779,7 @@ std::pair<ErrorStatus, std::shared_ptr<VersionedIPreparedModel>> VersionedIDevic
 std::pair<ErrorStatus, std::shared_ptr<VersionedIPreparedModel>>
 VersionedIDevice::prepareModelFromCache(const hidl_vec<hidl_handle>& modelCache,
                                         const hidl_vec<hidl_handle>& dataCache,
-                                        const HidlToken& token) {
+                                        const CacheToken& token) {
     const std::pair<ErrorStatus, std::shared_ptr<VersionedIPreparedModel>> kFailure = {
             ErrorStatus::GENERAL_FAILURE, nullptr};
 
