@@ -51,7 +51,6 @@ from test_generator import Model
 from test_generator import Operand
 from test_generator import Output
 from test_generator import Parameter
-from test_generator import ParameterAsInputConverter
 from test_generator import RelaxedModeConverter
 from test_generator import SymmPerChannelQuantParams
 
@@ -197,12 +196,8 @@ def GetOperandsInfo(example):
                 "group": "operand"
             })
         ret[-1].update(GetOperandInfo(op))
-        if isinstance(op, Parameter):
+        if isinstance(op, (Parameter, Input, Output)):
             ret[-1]["data"] = FormatArray(op.value, op.type.IsScalar())
-        elif isinstance(op, Input):
-            ret[-1]["data"] = FormatArray(example.feedDicts[0][0][op], op.type.IsScalar())
-        elif isinstance(op, Output) and not isinstance(op, IgnoredOutput):
-            ret[-1]["data"] = FormatArray(example.feedDicts[0][1][op], op.type.IsScalar())
     return ret
 
 
@@ -251,7 +246,7 @@ def ParseCmdLine():
     parser.add_argument("spec", help="the spec file")
     parser.add_argument("-o", "--out", help="the output html path", default="out.html")
     args = parser.parse_args()
-    tg.FileNames.InitializeFileLists(args.spec, "-", "-", "-")
+    tg.FileNames.InitializeFileLists(args.spec, "-")
     tg.FileNames.NextFile()
     return os.path.abspath(args.spec), os.path.abspath(args.out)
 
