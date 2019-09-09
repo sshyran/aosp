@@ -28,7 +28,6 @@ namespace nn {
 namespace sample_driver {
 
 using hardware::MQDescriptorSync;
-using HidlToken = hal::hidl_array<uint8_t, ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN>;
 
 // Base class used to create sample drivers for the NN HAL.  This class
 // provides some implementation of the more common functions.
@@ -62,11 +61,11 @@ class SampleDriver : public hal::IDevice {
     hal::Return<hal::ErrorStatus> prepareModel_1_2(
             const hal::V1_2::Model& model, hal::ExecutionPreference preference,
             const hal::hidl_vec<hal::hidl_handle>& modelCache,
-            const hal::hidl_vec<hal::hidl_handle>& dataCache, const HidlToken& token,
+            const hal::hidl_vec<hal::hidl_handle>& dataCache, const hal::CacheToken& token,
             const sp<hal::V1_2::IPreparedModelCallback>& callback) override;
     hal::Return<hal::ErrorStatus> prepareModelFromCache(
             const hal::hidl_vec<hal::hidl_handle>& modelCache,
-            const hal::hidl_vec<hal::hidl_handle>& dataCache, const HidlToken& token,
+            const hal::hidl_vec<hal::hidl_handle>& dataCache, const hal::CacheToken& token,
             const sp<hal::V1_2::IPreparedModelCallback>& callback) override;
     hal::Return<hal::DeviceStatus> getStatus() override;
 
