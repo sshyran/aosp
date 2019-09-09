@@ -28,7 +28,6 @@ using namespace android::nn;
 using namespace hal;
 using Result = test_wrapper::Result;
 using Type = test_wrapper::Type;
-using HidlToken = hidl_array<uint8_t, ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN>;
 const Timing kBadTiming = {.timeOnDevice = UINT64_MAX, .timeInDriver = UINT64_MAX};
 template <typename T>
 using MQDescriptorSync = ::android::hardware::MQDescriptorSync<T>;
@@ -141,7 +140,7 @@ class CachingDriver : public sample_driver::SampleDriver {
     Return<ErrorStatus> prepareModel_1_2(const Model&, ExecutionPreference,
                                          const hidl_vec<hidl_handle>& modelCacheHandle,
                                          const hidl_vec<hidl_handle>& dataCacheHandle,
-                                         const HidlToken&,
+                                         const CacheToken&,
                                          const sp<IPreparedModelCallback>& cb) override {
         checkNumberOfCacheHandles(modelCacheHandle.size(), dataCacheHandle.size());
         if (modelCacheHandle.size() != 0 || dataCacheHandle.size() != 0) {
@@ -159,7 +158,7 @@ class CachingDriver : public sample_driver::SampleDriver {
     // mErrorStatusPrepareFromCache, sets mHasCalledPrepareModelFromCache.
     Return<ErrorStatus> prepareModelFromCache(
             const hidl_vec<hidl_handle>& modelCacheHandle,
-            const hidl_vec<hidl_handle>& dataCacheHandle, const HidlToken&,
+            const hidl_vec<hidl_handle>& dataCacheHandle, const CacheToken&,
             const sp<V1_2::IPreparedModelCallback>& callback) override {
         readFromCache(modelCacheHandle, mModelCacheData);
         readFromCache(dataCacheHandle, mDataCacheData);

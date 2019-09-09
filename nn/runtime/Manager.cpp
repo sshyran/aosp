@@ -47,8 +47,6 @@ namespace nn {
 
 using namespace hal;
 
-using HidlToken = hidl_array<uint8_t, ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN>;
-
 const Timing kNoTiming = {.timeOnDevice = UINT64_MAX, .timeInDriver = UINT64_MAX};
 
 bool Device::isCachingSupported() const {
@@ -85,10 +83,10 @@ class DriverDevice : public Device {
 
     int prepareModel(const Model& hidlModel, ExecutionPreference executionPreference,
                      const hidl_vec<hidl_handle>& modelCache,
-                     const hidl_vec<hidl_handle>& dataCache, const HidlToken& token,
+                     const hidl_vec<hidl_handle>& dataCache, const CacheToken& token,
                      std::shared_ptr<PreparedModel>* preparedModel) const override;
     int prepareModelFromCache(const hidl_vec<hidl_handle>& modelCache,
-                              const hidl_vec<hidl_handle>& dataCache, const HidlToken& token,
+                              const hidl_vec<hidl_handle>& dataCache, const CacheToken& token,
                               std::shared_ptr<PreparedModel>* preparedModel) const override;
 
    private:
@@ -282,7 +280,7 @@ static int prepareModelCheck(ErrorStatus status,
 
 int DriverDevice::prepareModel(const Model& hidlModel, ExecutionPreference executionPreference,
                                const hidl_vec<hidl_handle>& modelCache,
-                               const hidl_vec<hidl_handle>& dataCache, const HidlToken& token,
+                               const hidl_vec<hidl_handle>& dataCache, const CacheToken& token,
                                std::shared_ptr<PreparedModel>* preparedModel) const {
     // Note that some work within VersionedIDevice will be subtracted from the IPC layer
     NNTRACE_FULL(NNTRACE_LAYER_IPC, NNTRACE_PHASE_COMPILATION, "prepareModel");
@@ -295,7 +293,7 @@ int DriverDevice::prepareModel(const Model& hidlModel, ExecutionPreference execu
 
 int DriverDevice::prepareModelFromCache(const hidl_vec<hidl_handle>& modelCache,
                                         const hidl_vec<hidl_handle>& dataCache,
-                                        const HidlToken& token,
+                                        const CacheToken& token,
                                         std::shared_ptr<PreparedModel>* preparedModel) const {
     // Note that some work within VersionedIDevice will be subtracted from the IPC layer
     NNTRACE_FULL(NNTRACE_LAYER_IPC, NNTRACE_PHASE_COMPILATION, "prepareModelFromCache");
@@ -522,10 +520,10 @@ class CpuDevice : public Device {
 
     int prepareModel(const Model& hidlModel, ExecutionPreference executionPreference,
                      const hidl_vec<hidl_handle>& modelCache,
-                     const hidl_vec<hidl_handle>& dataCache, const HidlToken&,
+                     const hidl_vec<hidl_handle>& dataCache, const CacheToken&,
                      std::shared_ptr<PreparedModel>* preparedModel) const override;
     int prepareModelFromCache(const hidl_vec<hidl_handle>&, const hidl_vec<hidl_handle>&,
-                              const HidlToken&, std::shared_ptr<PreparedModel>*) const override {
+                              const CacheToken&, std::shared_ptr<PreparedModel>*) const override {
         CHECK(false) << "Should never call prepareModelFromCache on CpuDevice";
         return ANEURALNETWORKS_OP_FAILED;
     }
@@ -586,7 +584,7 @@ void CpuDevice::getSupportedOperations(const MetaModel& metaModel,
 
 int CpuDevice::prepareModel(const Model& hidlModel, ExecutionPreference executionPreference,
                             const hidl_vec<hidl_handle>& modelCache,
-                            const hidl_vec<hidl_handle>& dataCache, const HidlToken&,
+                            const hidl_vec<hidl_handle>& dataCache, const CacheToken&,
                             std::shared_ptr<PreparedModel>* preparedModel) const {
     CHECK(modelCache.size() == 0 && dataCache.size() == 0)
             << "Should never call prepareModel with cache information on CpuDevice";

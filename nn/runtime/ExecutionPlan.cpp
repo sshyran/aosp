@@ -58,8 +58,6 @@ namespace {
 
 using namespace hal;
 
-using HidlToken = hidl_array<uint8_t, ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN>;
-
 // Opens cache file by filename and sets the handle to the opened fd. Returns false on fail. The
 // handle is expected to come in as empty, and is only set to a fd when the function returns true.
 // The file descriptor is always opened with both read and write permission.
@@ -128,7 +126,7 @@ bool compileFromCache(const std::shared_ptr<Device>& device, const std::string& 
     CHECK(token != nullptr && device != nullptr);
     VLOG(COMPILATION) << "compileFromCache";
     *preparedModel = nullptr;
-    HidlToken cacheToken(token);
+    CacheToken cacheToken(token);
     hidl_vec<hidl_handle> modelCache, dataCache;
     NN_RET_CHECK(getCacheHandles(cacheDir, token, device->getNumberOfCacheFilesNeeded(),
                                  /*createIfNotExist=*/false, &modelCache, &dataCache));
@@ -142,7 +140,7 @@ int compileModelAndCache(const std::shared_ptr<Device>& device, const ModelBuild
     CHECK(device != nullptr);
     *preparedModel = nullptr;
     uint8_t dummyToken[ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN] = {0};
-    HidlToken cacheToken(token == nullptr ? dummyToken : token);
+    CacheToken cacheToken(token == nullptr ? dummyToken : token);
     hidl_vec<hidl_handle> modelCache, dataCache;
     if (token == nullptr || !getCacheHandles(cacheDir, token, device->getNumberOfCacheFilesNeeded(),
                                              /*createIfNotExist=*/true, &modelCache, &dataCache)) {

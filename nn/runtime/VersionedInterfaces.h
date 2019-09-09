@@ -241,10 +241,7 @@ class VersionedIDevice {
     std::pair<hal::ErrorStatus, std::shared_ptr<VersionedIPreparedModel>> prepareModel(
             const hal::Model& model, hal::ExecutionPreference preference,
             const hal::hidl_vec<hal::hidl_handle>& modelCache,
-            const hal::hidl_vec<hal::hidl_handle>& dataCache,
-            const hal::hidl_array<uint8_t,
-                                  static_cast<uint32_t>(hal::Constant::BYTE_SIZE_OF_CACHE_TOKEN)>&
-                    token);
+            const hal::hidl_vec<hal::hidl_handle>& dataCache, const hal::CacheToken& token);
 
     /**
      * Creates a prepared model from cache files for execution.
@@ -314,10 +311,7 @@ class VersionedIDevice {
      */
     std::pair<hal::ErrorStatus, std::shared_ptr<VersionedIPreparedModel>> prepareModelFromCache(
             const hal::hidl_vec<hal::hidl_handle>& modelCache,
-            const hal::hidl_vec<hal::hidl_handle>& dataCache,
-            const hal::hidl_array<uint8_t,
-                                  static_cast<uint32_t>(hal::Constant::BYTE_SIZE_OF_CACHE_TOKEN)>&
-                    token);
+            const hal::hidl_vec<hal::hidl_handle>& dataCache, const hal::CacheToken& token);
 
     /**
      * Returns the current status of a driver.
