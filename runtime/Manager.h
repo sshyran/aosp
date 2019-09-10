@@ -48,13 +48,11 @@ class PreparedModel {
     virtual ~PreparedModel() = default;
 
     // Start computation with given input/output argument info and memory pools.
-    //
-    // When executed on an actual driver device, this method may append new memory pools to
-    // "memories" for inputs and outputs specified via pointers, and the data location for
-    // "inputs" and "outputs" may get updated.
-    virtual int execute(const std::shared_ptr<ExecutionBurstController>& burstController,
-                        hal::MeasureTiming measure, std::vector<ModelArgumentInfo>* inputs,
-                        std::vector<ModelArgumentInfo>* outputs, MemoryTracker* memories,
+    virtual int execute(const std::vector<ModelArgumentInfo>& inputs,
+                        const std::vector<ModelArgumentInfo>& outputs,
+                        const MemoryTracker& memories,
+                        const std::shared_ptr<ExecutionBurstController>& burstController,
+                        hal::MeasureTiming measure,
                         sp<ExecutionCallback>* synchronizationCallback) const = 0;
 
     virtual std::shared_ptr<ExecutionBurstController> configureExecutionBurst(

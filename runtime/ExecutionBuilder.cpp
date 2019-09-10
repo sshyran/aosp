@@ -701,8 +701,8 @@ int StepExecutor::startCompute(sp<ExecutionCallback>* synchronizationCallback,
     mExecutionBuilder->reportTiming(kNoTiming);
 
     CHECK(mPreparedModel != nullptr);
-    NN_RETURN_IF_ERROR(mPreparedModel->execute(burstController, measureTiming(mExecutionBuilder),
-                                               &mInputs, &mOutputs, &mMemories,
+    NN_RETURN_IF_ERROR(mPreparedModel->execute(mInputs, mOutputs, mMemories, burstController,
+                                               measureTiming(mExecutionBuilder),
                                                synchronizationCallback));
 
     if (*synchronizationCallback != nullptr) {
