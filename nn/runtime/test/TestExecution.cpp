@@ -39,7 +39,6 @@ using CompilationBuilder = nn::CompilationBuilder;
 using Device = nn::Device;
 using DeviceManager = nn::DeviceManager;
 using HidlModel = V1_2::Model;
-using HidlToken = hidl_array<uint8_t, ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN>;
 using PreparedModelCallback = nn::PreparedModelCallback;
 using Result = nn::test_wrapper::Result;
 using SampleDriver = nn::sample_driver::SampleDriver;
@@ -186,7 +185,7 @@ class TestDriver12 : public SampleDriver {
     Return<ErrorStatus> prepareModel_1_2(
             const HidlModel& model, ExecutionPreference preference,
             const hidl_vec<hidl_handle>& modelCache, const hidl_vec<hidl_handle>& dataCache,
-            const HidlToken& token, const sp<IPreparedModelCallback>& actualCallback) override {
+            const CacheToken& token, const sp<IPreparedModelCallback>& actualCallback) override {
         sp<PreparedModelCallback> localCallback = new PreparedModelCallback;
         Return<ErrorStatus> prepareModelReturn = SampleDriver::prepareModel_1_2(
                 model, preference, modelCache, dataCache, token, localCallback);
