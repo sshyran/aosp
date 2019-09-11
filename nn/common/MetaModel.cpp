@@ -18,16 +18,16 @@
 
 #include "MetaModel.h"
 
-#include "GraphDump.h"
-#include "HalInterfaces.h"
-#include "Utils.h"
-
 #include <algorithm>
 #include <map>
 #include <set>
 #include <sstream>
 #include <type_traits>
 #include <utility>
+
+#include "GraphDump.h"
+#include "HalInterfaces.h"
+#include "Utils.h"
 
 namespace android::nn {
 
@@ -74,6 +74,10 @@ template <>
 struct ModelVersion<hal::V1_2::Model> {
     static constexpr char name[] = "V1_2";
 };
+template <>
+struct ModelVersion<hal::V1_3::Model> {
+    static constexpr char name[] = "V1_3";
+};
 
 // Dispatcher mechanism for calling an appropriate uncheckedConvertToV1_*
 // given the desired return type.
@@ -87,6 +91,10 @@ template <>
 hal::V1_1::OperationType uncheckedConvertTo<hal::V1_1::OperationType>(OperationType type) {
     return uncheckedConvertToV1_1(type);
 }
+template <>
+hal::V1_2::OperationType uncheckedConvertTo<hal::V1_2::OperationType>(OperationType type) {
+    return type;
+}
 
 // Dispatcher mechanism for calling an appropriate convertToV1_* given the
 // desired return type.  Note that there is no V1_1::Operand type.
@@ -96,21 +104,30 @@ template <>
 hal::V1_0::Operand convertTo<hal::V1_0::Operand>(Operand operand) {
     return convertToV1_0(operand);
 }
+template <>
+hal::V1_2::Operand convertTo<hal::V1_2::Operand>(Operand operand) {
+    return convertToV1_2(operand);
+}
 
 // Dispatcher mechanism for calling an appropriate compliantWithV1_* given the
 // desired target model type.
 template <typename T_SlicedModel>
-void getNoncompliantOperations(const hal::V1_2::Model& model,
+void getNoncompliantOperations(const hal::V1_3::Model& model,
                                std::set<uint32_t>* noncompliantOperations);
 template <>
-void getNoncompliantOperations<hal::V1_0::Model>(const hal::V1_2::Model& model,
+void getNoncompliantOperations<hal::V1_0::Model>(const hal::V1_3::Model& model,
                                                  std::set<uint32_t>* noncompliantOperations) {
     compliantWithV1_0(model, noncompliantOperations);
 }
 template <>
-void getNoncompliantOperations<hal::V1_1::Model>(const hal::V1_2::Model& model,
+void getNoncompliantOperations<hal::V1_1::Model>(const hal::V1_3::Model& model,
                                                  std::set<uint32_t>* noncompliantOperations) {
     compliantWithV1_1(model, noncompliantOperations);
+}
+template <>
+void getNoncompliantOperations<hal::V1_2::Model>(const hal::V1_3::Model& model,
+                                                 std::set<uint32_t>* noncompliantOperations) {
+    compliantWithV1_2(model, noncompliantOperations);
 }
 
 template <class T_SlicedModel>
@@ -165,6 +182,8 @@ template MetaModel::ReturnedSlice<hal::V1_0::Model> MetaModel::getSlice(
         Slice<hal::V1_0::Model>* slice) const;
 template MetaModel::ReturnedSlice<hal::V1_1::Model> MetaModel::getSlice(
         Slice<hal::V1_1::Model>* slice) const;
+template MetaModel::ReturnedSlice<hal::V1_2::Model> MetaModel::getSlice(
+        Slice<hal::V1_2::Model>* slice) const;
 
 // Utility class for makeSlice().
 //
@@ -474,7 +493,7 @@ MetaModel::Slice<T_SlicedModel> MetaModel::makeSlice() const {
         {
             std::ostringstream toName;
             toName << "Slice: To " << ModelVersion<decltype(slice.mHidlModel)>::name;
-            graphDump(toName.str().c_str(), convertToV1_2(slice.mHidlModel));
+            graphDump(toName.str().c_str(), convertToV1_3(slice.mHidlModel));
         }
     }
 
