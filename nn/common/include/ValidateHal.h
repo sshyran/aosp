@@ -27,7 +27,8 @@ enum class HalVersion : int32_t {
     V1_0,
     V1_1,
     V1_2,
-    LATEST = V1_2,
+    V1_3,
+    LATEST = V1_3,
 };
 
 // Verifies that the model is valid, i.e. it is consistent, takes
@@ -55,6 +56,7 @@ bool validOperationType(hal::V1_2::OperationType operation);
 
 bool validOperandType(hal::V1_0::OperandType operand);
 bool validOperandType(hal::V1_2::OperandType operand);
+bool validOperandType(hal::V1_3::OperandType operand);
 
 // Verfies that the memory pool is valid in the specified HAL version.
 bool validatePool(const hal::hidl_memory& pool, HalVersion ver = HalVersion::LATEST);

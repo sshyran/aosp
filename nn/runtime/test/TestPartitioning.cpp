@@ -14,6 +14,19 @@
  * limitations under the License.
  */
 
+#include <gtest/gtest.h>
+
+#include <algorithm>
+#include <filesystem>
+#include <functional>
+#include <map>
+#include <memory>
+#include <queue>
+#include <string>
+#include <type_traits>
+#include <utility>
+#include <vector>
+
 #include "CompilationBuilder.h"
 #include "ExecutionPlan.h"
 #include "HalInterfaces.h"
@@ -25,14 +38,6 @@
 #include "TestNeuralNetworksWrapper.h"
 #include "Utils.h"
 #include "ValidateHal.h"
-
-#include <gtest/gtest.h>
-
-#include <filesystem>
-#include <functional>
-#include <map>
-#include <queue>
-#include <type_traits>
 
 // Uncomment the following line to generate some debugging output that
 // may be useful when analyzing failures:
@@ -138,7 +143,7 @@ using ExecutePreference = ::android::nn::test_wrapper::ExecutePreference;
 using ExecutionPlan = ::android::nn::ExecutionPlan;
 using ExecutionStep = ::android::nn::ExecutionStep;
 using HalVersion = ::android::nn::HalVersion;
-using HidlModel = V1_2::Model;
+using HidlModel = V1_3::Model;
 using ModelBuilder = ::android::nn::ModelBuilder;
 using Result = ::android::nn::test_wrapper::Result;
 using SampleDriver = ::android::nn::sample_driver::SampleDriver;
@@ -157,7 +162,8 @@ Capabilities makeCapabilities(float perf) {
     PerformanceInfo perfInfo = {.execTime = perf, .powerUsage = perf};
     return {.relaxedFloat32toFloat16PerformanceScalar = perfInfo,
             .relaxedFloat32toFloat16PerformanceTensor = perfInfo,
-            .operandPerformance = ::android::nn::nonExtensionOperandPerformance(perfInfo)};
+            .operandPerformance =
+                    ::android::nn::nonExtensionOperandPerformance<HalVersion::V1_3>(perfInfo)};
 };
 
 void update(Capabilities* capabilities, OperandType type, float perf) {
@@ -326,7 +332,7 @@ class PartitioningDriver : public SampleDriver {
         return Void();
     }
 
-    Return<ErrorStatus> prepareModel_1_2(const Model& model, ExecutionPreference,
+    Return<ErrorStatus> prepareModel_1_3(const Model& model, ExecutionPreference,
                                          const hidl_vec<hidl_handle>&, const hidl_vec<hidl_handle>&,
                                          const CacheToken&,
                                          const sp<IPreparedModelCallback>& cb) override {
@@ -345,12 +351,12 @@ class PartitioningDriver : public SampleDriver {
 
     Return<DeviceStatus> getStatus() override { return DeviceStatus::AVAILABLE; }
 
-    Return<void> getCapabilities_1_2(getCapabilities_1_2_cb cb) override {
+    Return<void> getCapabilities_1_3(getCapabilities_1_3_cb cb) override {
         cb(ErrorStatus::NONE, mCapabilities);
         return Void();
     }
 
-    Return<void> getSupportedOperations_1_2(const Model& model,
+    Return<void> getSupportedOperations_1_3(const Model& model,
                                             getSupportedOperations_cb cb) override {
         if (!android::nn::validateModel(model)) {
             cb(ErrorStatus::INVALID_ARGUMENT, std::vector<bool>());
@@ -393,41 +399,108 @@ class PartitioningDriver : public SampleDriver {
     OEM mOEM;
 };
 
+// Like PartitioningDriver, but implementing 1.2
+class PartitioningDriverV1_2 : public V1_2::IDevice {
+   public:
+    PartitioningDriverV1_2(const char* name, const char* version, Capabilities capabilities,
+                           uint32_t operationMask,
+                           PartitioningDriver::OEM oem = PartitioningDriver::OEMNo)
+        : mLatestDriver(new PartitioningDriver(name, version, capabilities, operationMask, oem)) {}
+    Return<void> getCapabilities_1_2(getCapabilities_1_2_cb _hidl_cb) override {
+        return mLatestDriver->getCapabilities_1_2(_hidl_cb);
+    }
+    Return<void> getSupportedOperations_1_2(const V1_2::Model& model,
+                                            getSupportedOperations_1_2_cb _hidl_cb) override {
+        return mLatestDriver->getSupportedOperations_1_2(model, _hidl_cb);
+    }
+    Return<ErrorStatus> prepareModel_1_2(
+            const V1_2::Model& model, ExecutionPreference preference,
+            const hidl_vec<hidl_handle>& modelCache, const hidl_vec<hidl_handle>& dataCache,
+            const CacheToken& token, const sp<IPreparedModelCallback>& actualCallback) override {
+        return mLatestDriver->prepareModel_1_2(model, preference, modelCache, dataCache, token,
+                                               actualCallback);
+    }
+    Return<void> getVersionString(getVersionString_cb _hidl_cb) override {
+        return mLatestDriver->getVersionString(_hidl_cb);
+    }
+    Return<void> getType(getType_cb _hidl_cb) override { return mLatestDriver->getType(_hidl_cb); }
+    Return<void> getSupportedExtensions(getSupportedExtensions_cb _hidl_cb) {
+        return mLatestDriver->getSupportedExtensions(_hidl_cb);
+    }
+    Return<void> getNumberOfCacheFilesNeeded(getNumberOfCacheFilesNeeded_cb _hidl_cb) {
+        return mLatestDriver->getNumberOfCacheFilesNeeded(_hidl_cb);
+    }
+    Return<ErrorStatus> prepareModelFromCache(const hidl_vec<hidl_handle>& modelCache,
+                                              const hidl_vec<hidl_handle>& dataCache,
+                                              const CacheToken& token,
+                                              const sp<V1_2::IPreparedModelCallback>& callback) {
+        return mLatestDriver->prepareModelFromCache(modelCache, dataCache, token, callback);
+    }
+    Return<void> getCapabilities_1_1(getCapabilities_1_1_cb _hidl_cb) override {
+        return mLatestDriver->getCapabilities_1_1(_hidl_cb);
+    }
+    Return<void> getSupportedOperations_1_1(const V1_1::Model& model,
+                                            getSupportedOperations_1_1_cb _hidl_cb) override {
+        return mLatestDriver->getSupportedOperations_1_1(model, _hidl_cb);
+    }
+    Return<ErrorStatus> prepareModel_1_1(
+            const V1_1::Model& model, ExecutionPreference preference,
+            const sp<V1_0::IPreparedModelCallback>& actualCallback) override {
+        return mLatestDriver->prepareModel_1_1(model, preference, actualCallback);
+    }
+    Return<DeviceStatus> getStatus() override { return mLatestDriver->getStatus(); }
+    Return<void> getCapabilities(getCapabilities_cb _hidl_cb) override {
+        return mLatestDriver->getCapabilities(_hidl_cb);
+    }
+    Return<void> getSupportedOperations(const V1_0::Model& model,
+                                        getSupportedOperations_cb _hidl_cb) override {
+        return mLatestDriver->getSupportedOperations(model, _hidl_cb);
+    }
+    Return<ErrorStatus> prepareModel(
+            const V1_0::Model& model,
+            const sp<V1_0::IPreparedModelCallback>& actualCallback) override {
+        return mLatestDriver->prepareModel(model, actualCallback);
+    }
+
+   private:
+    const sp<V1_3::IDevice> mLatestDriver;
+};
+
 // Like PartitioningDriver, but implementing 1.1
 class PartitioningDriverV1_1 : public V1_1::IDevice {
    public:
     PartitioningDriverV1_1(const char* name, const char* version, Capabilities capabilities,
                            uint32_t operationMask,
                            PartitioningDriver::OEM oem = PartitioningDriver::OEMNo)
-        : mDriverV1_2(new PartitioningDriver(name, version, capabilities, operationMask, oem)) {}
+        : mLatestDriver(new PartitioningDriver(name, version, capabilities, operationMask, oem)) {}
     Return<void> getCapabilities_1_1(getCapabilities_1_1_cb _hidl_cb) override {
-        return mDriverV1_2->getCapabilities_1_1(_hidl_cb);
+        return mLatestDriver->getCapabilities_1_1(_hidl_cb);
     }
     Return<void> getSupportedOperations_1_1(const V1_1::Model& model,
                                             getSupportedOperations_1_1_cb _hidl_cb) override {
-        return mDriverV1_2->getSupportedOperations_1_1(model, _hidl_cb);
+        return mLatestDriver->getSupportedOperations_1_1(model, _hidl_cb);
     }
     Return<ErrorStatus> prepareModel_1_1(
             const V1_1::Model& model, ExecutionPreference preference,
             const sp<V1_0::IPreparedModelCallback>& actualCallback) override {
-        return mDriverV1_2->prepareModel_1_1(model, preference, actualCallback);
+        return mLatestDriver->prepareModel_1_1(model, preference, actualCallback);
     }
-    Return<DeviceStatus> getStatus() override { return mDriverV1_2->getStatus(); }
+    Return<DeviceStatus> getStatus() override { return mLatestDriver->getStatus(); }
     Return<void> getCapabilities(getCapabilities_cb _hidl_cb) override {
-        return mDriverV1_2->getCapabilities(_hidl_cb);
+        return mLatestDriver->getCapabilities(_hidl_cb);
     }
     Return<void> getSupportedOperations(const V1_0::Model& model,
                                         getSupportedOperations_cb _hidl_cb) override {
-        return mDriverV1_2->getSupportedOperations(model, _hidl_cb);
+        return mLatestDriver->getSupportedOperations(model, _hidl_cb);
     }
     Return<ErrorStatus> prepareModel(
             const V1_0::Model& model,
             const sp<V1_0::IPreparedModelCallback>& actualCallback) override {
-        return mDriverV1_2->prepareModel(model, actualCallback);
+        return mLatestDriver->prepareModel(model, actualCallback);
     }
 
    private:
-    const sp<V1_2::IDevice> mDriverV1_2;
+    const sp<V1_3::IDevice> mLatestDriver;
 };
 
 // Like PartitioningDriver, but implementing 1.0
@@ -436,23 +509,23 @@ class PartitioningDriverV1_0 : public V1_0::IDevice {
     PartitioningDriverV1_0(const char* name, const char* version, Capabilities capabilities,
                            uint32_t operationMask,
                            PartitioningDriver::OEM oem = PartitioningDriver::OEMNo)
-        : mDriverV1_2(new PartitioningDriver(name, version, capabilities, operationMask, oem)) {}
+        : mLatestDriver(new PartitioningDriver(name, version, capabilities, operationMask, oem)) {}
     Return<void> getCapabilities(getCapabilities_cb _hidl_cb) override {
-        return mDriverV1_2->getCapabilities(_hidl_cb);
+        return mLatestDriver->getCapabilities(_hidl_cb);
     }
     Return<void> getSupportedOperations(const V1_0::Model& model,
                                         getSupportedOperations_cb _hidl_cb) override {
-        return mDriverV1_2->getSupportedOperations(model, _hidl_cb);
+        return mLatestDriver->getSupportedOperations(model, _hidl_cb);
     }
     Return<ErrorStatus> prepareModel(
             const V1_0::Model& model,
             const sp<V1_0::IPreparedModelCallback>& actualCallback) override {
-        return mDriverV1_2->prepareModel(model, actualCallback);
+        return mLatestDriver->prepareModel(model, actualCallback);
     }
-    Return<DeviceStatus> getStatus() override { return mDriverV1_2->getStatus(); }
+    Return<DeviceStatus> getStatus() override { return mLatestDriver->getStatus(); }
 
    private:
-    const sp<V1_2::IDevice> mDriverV1_2;
+    const sp<V1_3::IDevice> mLatestDriver;
 };
 
 // This class adds some simple abstractions and utilities on top of
@@ -499,6 +572,7 @@ class PartitioningModel : private WrapperModel {
 
             case ANEURALNETWORKS_TENSOR_INT32:
             case ANEURALNETWORKS_TENSOR_QUANT8_ASYMM:
+            case ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED:
             case ANEURALNETWORKS_TENSOR_QUANT8_SYMM:
             case ANEURALNETWORKS_TENSOR_QUANT16_ASYMM:
             case ANEURALNETWORKS_TENSOR_QUANT16_SYMM: {
@@ -705,10 +779,12 @@ class PartitioningTest : public ::testing::Test {
                             PartitioningDriver::OEM oem = PartitioningDriver::OEMNo)
             : mName(name), mVersionString(version), mOperationMask(operationMask), mOEM(oem) {
             PerformanceInfo perfRelaxedInfo = {.execTime = perfRelaxed, .powerUsage = perfRelaxed};
-            mCapabilities = {.relaxedFloat32toFloat16PerformanceScalar = perfRelaxedInfo,
-                             .relaxedFloat32toFloat16PerformanceTensor = perfRelaxedInfo,
-                             .operandPerformance = ::android::nn::nonExtensionOperandPerformance(
-                                     {.execTime = perf, .powerUsage = perf})};
+            mCapabilities = {
+                    .relaxedFloat32toFloat16PerformanceScalar = perfRelaxedInfo,
+                    .relaxedFloat32toFloat16PerformanceTensor = perfRelaxedInfo,
+                    .operandPerformance =
+                            ::android::nn::nonExtensionOperandPerformance<HalVersion::V1_3>(
+                                    {.execTime = perf, .powerUsage = perf})};
         }
         DeviceSpecification(const std::string& name, float perf, HalVersion halVersion,
                             uint32_t operationMaskV1_0, uint32_t operationMaskV1_1 = 0,
@@ -773,8 +849,14 @@ class PartitioningTest : public ::testing::Test {
         for (const auto& specification : specifications) {
             V1_0::IDevice* halDriver = nullptr;
             switch (specification.mHalVersion) {
-                case HalVersion::V1_2:
+                case HalVersion::V1_3:
                     halDriver = new PartitioningDriver(
+                            specification.mName.c_str(), specification.mVersionString.c_str(),
+                            specification.mCapabilities, specification.mOperationMask,
+                            specification.mOEM);
+                    break;
+                case HalVersion::V1_2:
+                    halDriver = new PartitioningDriverV1_2(
                             specification.mName.c_str(), specification.mVersionString.c_str(),
                             specification.mCapabilities, specification.mOperationMask,
                             specification.mOEM);
