@@ -97,7 +97,6 @@ using DeviceManager = nn::DeviceManager;
 using ExecutionPlan = nn::ExecutionPlan;
 using HalVersion = nn::HalVersion;
 using HidlModel = V1_2::Model;
-using HidlToken = hidl_array<uint8_t, ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN>;
 using ModelBuilder = nn::ModelBuilder;
 using Result = nn::test_wrapper::Result;
 using SampleDriver = nn::sample_driver::SampleDriver;
@@ -553,7 +552,7 @@ class TestDriver : public SampleDriver {
     Return<ErrorStatus> prepareModel_1_2(const HidlModel& model, ExecutionPreference preference,
                                          const hidl_vec<hidl_handle>& modelCache,
                                          const hidl_vec<hidl_handle>& dataCache,
-                                         const HidlToken& token,
+                                         const CacheToken& token,
                                          const sp<IPreparedModelCallback>& callback) override {
         // NOTE: We verify that all operations in the model are supported.
         ErrorStatus outStatus = ErrorStatus::INVALID_ARGUMENT;

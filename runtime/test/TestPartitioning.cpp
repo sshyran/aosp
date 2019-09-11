@@ -139,7 +139,6 @@ using ExecutionPlan = ::android::nn::ExecutionPlan;
 using ExecutionStep = ::android::nn::ExecutionStep;
 using HalVersion = ::android::nn::HalVersion;
 using HidlModel = V1_2::Model;
-using HidlToken = hidl_array<uint8_t, ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN>;
 using ModelBuilder = ::android::nn::ModelBuilder;
 using Result = ::android::nn::test_wrapper::Result;
 using SampleDriver = ::android::nn::sample_driver::SampleDriver;
@@ -329,7 +328,7 @@ class PartitioningDriver : public SampleDriver {
 
     Return<ErrorStatus> prepareModel_1_2(const Model& model, ExecutionPreference,
                                          const hidl_vec<hidl_handle>&, const hidl_vec<hidl_handle>&,
-                                         const HidlToken&,
+                                         const CacheToken&,
                                          const sp<IPreparedModelCallback>& cb) override {
         ErrorStatus status = ErrorStatus::NONE;
         if (mOEM != OEMYes) {
@@ -381,7 +380,7 @@ class PartitioningDriver : public SampleDriver {
     }
 
     Return<ErrorStatus> prepareModelFromCache(
-            const hidl_vec<hidl_handle>&, const hidl_vec<hidl_handle>&, const HidlToken&,
+            const hidl_vec<hidl_handle>&, const hidl_vec<hidl_handle>&, const CacheToken&,
             const sp<V1_2::IPreparedModelCallback>& callback) override {
         callback->notify_1_2(ErrorStatus::NONE, new PartitioningPreparedModel);
         return ErrorStatus::NONE;
