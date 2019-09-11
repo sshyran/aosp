@@ -18,17 +18,79 @@
 
 #include "VersionedInterfaces.h"
 
+#include <android-base/logging.h>
+#include <android-base/scopeguard.h>
+#include <android-base/thread_annotations.h>
+
+#include <functional>
+#include <memory>
+#include <string>
+#include <tuple>
+#include <type_traits>
+#include <utility>
+#include <vector>
+
 #include "Callbacks.h"
 #include "ExecutionBurstController.h"
 #include "MetaModel.h"
 #include "Tracing.h"
 #include "Utils.h"
 
-#include <android-base/logging.h>
-#include <android-base/scopeguard.h>
-#include <android-base/thread_annotations.h>
-#include <functional>
-#include <type_traits>
+/*
+ * Some notes about HIDL interface objects and lifetimes across processes:
+ *
+ * All HIDL interface objects inherit from IBase, which itself inherits from
+ * ::android::RefBase. As such, all HIDL interface objects are reference counted
+ * and must be owned through ::android::sp (or referenced through ::android::wp).
+ * Allocating RefBase objects on the stack will log errors and may result in
+ * crashes, and deleting a RefBase object through another means (e.g., "delete",
+ * "free", or RAII-cleanup through std::unique_ptr or some equivalent) will
+ * result in double-free and/or use-after-free undefined behavior.
+ *
+ * HIDL/Binder manages the reference count of HIDL interface objects
+ * automatically across processes. If a process that references (but did not
+ * create) the HIDL interface object dies, HIDL/Binder ensures any reference
+ * count it held is properly released. (Caveat: it might be possible that
+ * HIDL/Binder behave strangely with ::android::wp references.)
+ *
+ * If the process which created the HIDL interface object dies, any call on this
+ * object from another process will result in a HIDL transport error with the
+ * code DEAD_OBJECT.
+ */
+
+/*
+ * Some notes about asynchronous calls across HIDL:
+ *
+ * For synchronous calls across HIDL, if an error occurs after the function was
+ * called but before it returns, HIDL will return a transport error. For
+ * example, if the message cannot be delivered to the server process or if the
+ * server process dies before returning a result, HIDL will return from the
+ * function with the appropriate transport error in the Return<> object which
+ * can be queried with Return<>::isOk(), Return<>::isDeadObject(),
+ * Return<>::description(), etc.
+ *
+ * However, HIDL offers no such error management in the case of asynchronous
+ * calls. By default, if the client launches an asynchronous task and the server
+ * fails to return a result through the callback, the client will be left
+ * waiting indefinitely for a result it will never receive.
+ *
+ * In the NNAPI, IDevice::prepareModel* and IPreparedModel::execute* (but not
+ * IPreparedModel::executeSynchronously) are asynchronous calls across HIDL.
+ * Specifically, these asynchronous functions are called with a HIDL interface
+ * callback object (IPrepareModelCallback for IDevice::prepareModel* and
+ * IExecutionCallback for IPreparedModel::execute*) and are expected to quickly
+ * return, and the results are returned at a later time through these callback
+ * objects.
+ *
+ * To protect against the case when the server dies after the asynchronous task
+ * was called successfully but before the results could be returned, HIDL
+ * provides an object called a "hidl_death_recipient", which can be used to
+ * detect when an interface object (and more generally, the server process) has
+ * died. VersionedInterfaces uses hidl_death_recipients to detect when the
+ * driver process has died, and VersionedInterfaces will unblock any thread
+ * waiting on the results of a callback object that may otherwise not be
+ * signaled.
+ */
 
 namespace android {
 namespace nn {
@@ -52,10 +114,6 @@ void sendFailureMessage(const sp<PreparedModelCallback>& cb) {
 
 void sendFailureMessage(const sp<IExecutionCallback>& cb) {
     cb->notify(ErrorStatus::GENERAL_FAILURE);
-}
-
-void sendFailureMessage(const sp<ExecutionCallback>& cb) {
-    sendFailureMessage(static_cast<sp<IExecutionCallback>>(cb));
 }
 
 // This class is thread safe
@@ -142,52 +200,61 @@ VersionedIPreparedModel::~VersionedIPreparedModel() {
     mPreparedModelV1_0->unlinkToDeath(mDeathHandler).isOk();
 }
 
-ErrorStatus VersionedIPreparedModel::execute(const Request& request, MeasureTiming measure,
-                                             const sp<ExecutionCallback>& callback) {
+std::tuple<ErrorStatus, std::vector<OutputShape>, Timing>
+VersionedIPreparedModel::executeAsynchronously(const Request& request, MeasureTiming measure) {
+    const auto failWithStatus = [](ErrorStatus status) {
+        return std::make_tuple(status, std::vector<OutputShape>{}, kBadTiming);
+    };
+    const auto getResults = [](const ExecutionCallback& cb) {
+        return std::make_tuple(cb.getStatus(), cb.getOutputShapes(), cb.getTiming());
+    };
+
+    const sp<ExecutionCallback> callback = new ExecutionCallback();
     const auto scoped = mDeathHandler->protectCallback(callback);
 
+    // version 1.2+ HAL
     if (mPreparedModelV1_2 != nullptr) {
         Return<ErrorStatus> ret = mPreparedModelV1_2->execute_1_2(request, measure, callback);
         if (!ret.isOk()) {
-            sendFailureMessage(callback);
             LOG(ERROR) << "execute_1_2 failure: " << ret.description();
-            return ErrorStatus::GENERAL_FAILURE;
+            return failWithStatus(ErrorStatus::GENERAL_FAILURE);
         }
         if (ret != ErrorStatus::NONE) {
-            sendFailureMessage(callback);
             LOG(ERROR) << "execute_1_2 returned " << toString(static_cast<ErrorStatus>(ret));
-            return static_cast<ErrorStatus>(ret);
+            return failWithStatus(ret);
         }
         callback->wait();
-        return static_cast<ErrorStatus>(ret);
-    } else if (mPreparedModelV1_0 != nullptr) {
+        return getResults(*callback);
+    }
+
+    // version 1.0+ HAL
+    if (mPreparedModelV1_0 != nullptr) {
         Return<ErrorStatus> ret = mPreparedModelV1_0->execute(request, callback);
         if (!ret.isOk()) {
-            sendFailureMessage(callback);
             LOG(ERROR) << "execute failure: " << ret.description();
-            return ErrorStatus::GENERAL_FAILURE;
+            return failWithStatus(ErrorStatus::GENERAL_FAILURE);
         }
         if (ret != ErrorStatus::NONE) {
-            sendFailureMessage(callback);
             LOG(ERROR) << "execute returned " << toString(static_cast<ErrorStatus>(ret));
-            return static_cast<ErrorStatus>(ret);
+            return failWithStatus(ret);
         }
         callback->wait();
-        return static_cast<ErrorStatus>(ret);
-    } else {
-        sendFailureMessage(callback);
-        LOG(ERROR) << "execute called with no preparedModel";
-        return ErrorStatus::GENERAL_FAILURE;
+        return getResults(*callback);
     }
+
+    // No prepared model available
+    LOG(ERROR) << "executeAsynchronously called with no preparedModel";
+    return failWithStatus(ErrorStatus::GENERAL_FAILURE);
 }
 
-std::tuple<ErrorStatus, hidl_vec<OutputShape>, Timing>
+std::tuple<ErrorStatus, std::vector<OutputShape>, Timing>
 VersionedIPreparedModel::executeSynchronously(const Request& request, MeasureTiming measure) {
-    const std::tuple<ErrorStatus, hidl_vec<OutputShape>, Timing> kFailure = {
-            ErrorStatus::GENERAL_FAILURE, {}, kBadTiming};
+    const auto kFailure =
+            std::make_tuple(ErrorStatus::GENERAL_FAILURE, std::vector<OutputShape>{}, kBadTiming);
 
+    // version 1.2+ HAL
     if (mPreparedModelV1_2 != nullptr) {
-        std::tuple<ErrorStatus, hidl_vec<OutputShape>, Timing> result;
+        std::tuple<ErrorStatus, std::vector<OutputShape>, Timing> result;
         Return<void> ret = mPreparedModelV1_2->executeSynchronously(
                 request, measure,
                 [&result](ErrorStatus error, const hidl_vec<OutputShape>& outputShapes,
@@ -199,18 +266,21 @@ VersionedIPreparedModel::executeSynchronously(const Request& request, MeasureTim
             return kFailure;
         }
         return result;
-    } else {
-        // Simulate synchronous execution.
-        sp<ExecutionCallback> callback = new ExecutionCallback();
-        ErrorStatus ret = execute(request, measure, callback);
-        if (ret != ErrorStatus::NONE) {
-            return {ret, {}, kBadTiming};
-        }
-        callback->wait();
-        // callback->getOutputShapes() will always return an empty hidl vector.
-        // callback->getTiming() will always return values indicating no measurement.
-        return {callback->getStatus(), callback->getOutputShapes(), callback->getTiming()};
     }
+
+    // Fallback to asynchronous execution.
+    return executeAsynchronously(request, measure);
+}
+
+std::tuple<ErrorStatus, std::vector<OutputShape>, Timing> VersionedIPreparedModel::execute(
+        const Request& request, MeasureTiming measure, bool preferSynchronous) {
+    if (preferSynchronous) {
+        VLOG(EXECUTION) << "Before executeSynchronously() " << SHOW_IF_DEBUG(toString(request));
+        return executeSynchronously(request, measure);
+    }
+
+    VLOG(EXECUTION) << "Before executeAsynchronously() " << SHOW_IF_DEBUG(toString(request));
+    return executeAsynchronously(request, measure);
 }
 
 std::shared_ptr<ExecutionBurstController> VersionedIPreparedModel::configureExecutionBurst(
@@ -220,14 +290,6 @@ std::shared_ptr<ExecutionBurstController> VersionedIPreparedModel::configureExec
     } else {
         return nullptr;
     }
-}
-
-bool VersionedIPreparedModel::operator==(nullptr_t) const {
-    return mPreparedModelV1_0 == nullptr;
-}
-
-bool VersionedIPreparedModel::operator!=(nullptr_t) const {
-    return mPreparedModelV1_0 != nullptr;
 }
 
 std::shared_ptr<VersionedIDevice> VersionedIDevice::create(std::string serviceName,
@@ -861,14 +923,6 @@ std::tuple<ErrorStatus, uint32_t, uint32_t> VersionedIDevice::getNumberOfCacheFi
         LOG(ERROR) << "Could not handle getNumberOfCacheFilesNeeded";
         return kFailure;
     }
-}
-
-bool VersionedIDevice::operator==(nullptr_t) const {
-    return getDevice<V1_0::IDevice>() == nullptr;
-}
-
-bool VersionedIDevice::operator!=(nullptr_t) const {
-    return getDevice<V1_0::IDevice>() != nullptr;
 }
 
 }  // namespace nn
