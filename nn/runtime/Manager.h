@@ -84,17 +84,16 @@ class Device {
     virtual std::pair<uint32_t, uint32_t> getNumberOfCacheFilesNeeded() const = 0;
     bool isCachingSupported() const;
 
-    virtual int prepareModel(
-            const hal::Model& hidlModel, hal::ExecutionPreference executionPreference,
-            const hal::hidl_vec<hal::hidl_handle>& modelCache,
-            const hal::hidl_vec<hal::hidl_handle>& dataCache,
-            const hal::hidl_array<uint8_t, ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN>& token,
-            std::shared_ptr<PreparedModel>* preparedModel) const = 0;
-    virtual int prepareModelFromCache(
-            const hal::hidl_vec<hal::hidl_handle>& modelCache,
-            const hal::hidl_vec<hal::hidl_handle>& dataCache,
-            const hal::hidl_array<uint8_t, ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN>& token,
-            std::shared_ptr<PreparedModel>* preparedModel) const = 0;
+    virtual int prepareModel(const hal::Model& hidlModel,
+                             hal::ExecutionPreference executionPreference,
+                             const hal::hidl_vec<hal::hidl_handle>& modelCache,
+                             const hal::hidl_vec<hal::hidl_handle>& dataCache,
+                             const hal::CacheToken& token,
+                             std::shared_ptr<PreparedModel>* preparedModel) const = 0;
+    virtual int prepareModelFromCache(const hal::hidl_vec<hal::hidl_handle>& modelCache,
+                                      const hal::hidl_vec<hal::hidl_handle>& dataCache,
+                                      const hal::CacheToken& token,
+                                      std::shared_ptr<PreparedModel>* preparedModel) const = 0;
 };
 
 // Manages the NN HAL devices.  Only one instance of this class will exist.
