@@ -57,11 +57,11 @@ class GeneratedTests : public GeneratedTestBase {
     void SetUp() override;
     void TearDown() override;
 
-    std::optional<Compilation> compileModel(const Model* model);
-    void executeWithCompilation(const Compilation* compilation, const TestModel& testModel);
-    void executeOnce(const Model* model, const TestModel& testModel);
-    void executeMultithreadedOwnCompilation(const Model* model, const TestModel& testModel);
-    void executeMultithreadedSharedCompilation(const Model* model, const TestModel& testModel);
+    std::optional<Compilation> compileModel(const Model& model);
+    void executeWithCompilation(const Compilation& compilation, const TestModel& testModel);
+    void executeOnce(const Model& model, const TestModel& testModel);
+    void executeMultithreadedOwnCompilation(const Model& model, const TestModel& testModel);
+    void executeMultithreadedSharedCompilation(const Model& model, const TestModel& testModel);
     // Test driver for those generated from ml/nn/runtime/test/spec
     void execute(const TestModel& testModel);
 
@@ -99,6 +99,8 @@ static OperandType getOperandType(const TestOperand& op, bool testDynamicOutputS
 }
 
 void createModel(const TestModel& testModel, bool testDynamicOutputShape, Model* model) {
+    ASSERT_NE(nullptr, model);
+
     // Operands.
     for (const auto& operand : testModel.operands) {
         auto type = getOperandType(operand, testDynamicOutputShape);
@@ -129,13 +131,16 @@ void createModel(const TestModel& testModel, bool testDynamicOutputShape, Model*
     model->identifyInputsAndOutputs(testModel.inputIndexes, testModel.outputIndexes);
 
     // Relaxed computation.
-    if (testModel.isRelaxed) model->relaxComputationFloat32toFloat16(true);
+    model->relaxComputationFloat32toFloat16(testModel.isRelaxed);
 
     ASSERT_TRUE(model->isValid());
 }
 
 static void createRequest(const TestModel& testModel, Execution* execution,
                           std::vector<TestBuffer>* outputs) {
+    ASSERT_NE(nullptr, execution);
+    ASSERT_NE(nullptr, outputs);
+
     // Model inputs.
     for (uint32_t i = 0; i < testModel.inputIndexes.size(); i++) {
         const auto& operand = testModel.operands[testModel.inputIndexes[i]];
@@ -161,22 +166,22 @@ static void createRequest(const TestModel& testModel, Execution* execution,
     }
 }
 
-std::optional<Compilation> GeneratedTests::compileModel(const Model* model) {
+std::optional<Compilation> GeneratedTests::compileModel(const Model& model) {
     NNTRACE_APP(NNTRACE_PHASE_COMPILATION, "compileModel");
     if (mTestCompilationCaching) {
         // Compile the model twice with the same token, so that compilation caching will be
         // exercised if supported by the driver.
         // No invalid model will be passed to this branch.
         EXPECT_FALSE(mExpectFailure);
-        Compilation compilation1(model);
+        Compilation compilation1(&model);
         EXPECT_EQ(compilation1.setCaching(mCacheDir, mToken), Result::NO_ERROR);
         EXPECT_EQ(compilation1.finish(), Result::NO_ERROR);
-        Compilation compilation2(model);
+        Compilation compilation2(&model);
         EXPECT_EQ(compilation2.setCaching(mCacheDir, mToken), Result::NO_ERROR);
         EXPECT_EQ(compilation2.finish(), Result::NO_ERROR);
         return compilation2;
     } else {
-        Compilation compilation(model);
+        Compilation compilation(&model);
         Result result = compilation.finish();
 
         // For valid model, we check the compilation result == NO_ERROR.
@@ -188,11 +193,11 @@ std::optional<Compilation> GeneratedTests::compileModel(const Model* model) {
     }
 }
 
-void GeneratedTests::executeWithCompilation(const Compilation* compilation,
+void GeneratedTests::executeWithCompilation(const Compilation& compilation,
                                             const TestModel& testModel) {
     NNTRACE_APP(NNTRACE_PHASE_EXECUTION, "executeWithCompilation example");
 
-    Execution execution(compilation);
+    Execution execution(&compilation);
     std::vector<TestBuffer> outputs;
     {
         NNTRACE_APP(NNTRACE_PHASE_INPUTS_AND_OUTPUTS, "executeWithCompilation example");
@@ -223,15 +228,15 @@ void GeneratedTests::executeWithCompilation(const Compilation* compilation,
     }
 }
 
-void GeneratedTests::executeOnce(const Model* model, const TestModel& testModel) {
+void GeneratedTests::executeOnce(const Model& model, const TestModel& testModel) {
     NNTRACE_APP(NNTRACE_PHASE_OVERALL, "executeOnce");
     std::optional<Compilation> compilation = compileModel(model);
     // Early return if compilation fails. The compilation result code is checked in compileModel.
     if (!compilation) return;
-    executeWithCompilation(&compilation.value(), testModel);
+    executeWithCompilation(compilation.value(), testModel);
 }
 
-void GeneratedTests::executeMultithreadedOwnCompilation(const Model* model,
+void GeneratedTests::executeMultithreadedOwnCompilation(const Model& model,
                                                         const TestModel& testModel) {
     NNTRACE_APP(NNTRACE_PHASE_OVERALL, "executeMultithreadedOwnCompilation");
     SCOPED_TRACE("MultithreadedOwnCompilation");
@@ -242,7 +247,7 @@ void GeneratedTests::executeMultithreadedOwnCompilation(const Model* model,
     std::for_each(threads.begin(), threads.end(), [](std::thread& t) { t.join(); });
 }
 
-void GeneratedTests::executeMultithreadedSharedCompilation(const Model* model,
+void GeneratedTests::executeMultithreadedSharedCompilation(const Model& model,
                                                            const TestModel& testModel) {
     NNTRACE_APP(NNTRACE_PHASE_OVERALL, "executeMultithreadedSharedCompilation");
     SCOPED_TRACE("MultithreadedSharedCompilation");
@@ -252,7 +257,7 @@ void GeneratedTests::executeMultithreadedSharedCompilation(const Model* model,
     std::vector<std::thread> threads;
     for (int i = 0; i < 10; i++) {
         threads.push_back(
-                std::thread([&]() { executeWithCompilation(&compilation.value(), testModel); }));
+                std::thread([&]() { executeWithCompilation(compilation.value(), testModel); }));
     }
     std::for_each(threads.begin(), threads.end(), [](std::thread& t) { t.join(); });
 }
@@ -266,10 +271,10 @@ void GeneratedTests::execute(const TestModel& testModel) {
     auto executeInternal = [&testModel, &model, this]() {
         SCOPED_TRACE("TestCompilationCaching = " + std::to_string(mTestCompilationCaching));
 #ifndef NNTEST_MULTITHREADED
-        executeOnce(&model, testModel);
+        executeOnce(model, testModel);
 #else   // defined(NNTEST_MULTITHREADED)
-        executeMultithreadedOwnCompilation(&model, testModel);
-        executeMultithreadedSharedCompilation(&model, testModel);
+        executeMultithreadedOwnCompilation(model, testModel);
+        executeMultithreadedSharedCompilation(model, testModel);
 #endif  // !defined(NNTEST_MULTITHREADED)
     };
     mTestCompilationCaching = false;
@@ -304,33 +309,33 @@ void GeneratedTests::TearDown() {
 #ifdef NNTEST_COMPUTE_MODE
 TEST_P(GeneratedTests, Sync) {
     const auto oldComputeMode = Execution::setComputeMode(Execution::ComputeMode::SYNC);
-    execute(*mTestModel);
+    execute(testModel);
     Execution::setComputeMode(oldComputeMode);
 }
 
 TEST_P(GeneratedTests, Async) {
     const auto oldComputeMode = Execution::setComputeMode(Execution::ComputeMode::ASYNC);
-    execute(*mTestModel);
+    execute(testModel);
     Execution::setComputeMode(oldComputeMode);
 }
 
 TEST_P(GeneratedTests, Burst) {
     const auto oldComputeMode = Execution::setComputeMode(Execution::ComputeMode::BURST);
-    execute(*mTestModel);
+    execute(testModel);
     Execution::setComputeMode(oldComputeMode);
 }
 #else
 TEST_P(GeneratedTests, Test) {
-    execute(*mTestModel);
+    execute(testModel);
 }
 #endif
 
 TEST_P(DynamicOutputShapeTest, Test) {
-    execute(*mTestModel);
+    execute(testModel);
 }
 
 TEST_P(GeneratedValidationTests, Test) {
-    execute(*mTestModel);
+    execute(testModel);
 }
 
 INSTANTIATE_GENERATED_TEST(GeneratedTests,
