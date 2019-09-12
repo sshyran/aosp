@@ -23,11 +23,13 @@
 #ifndef ANDROID_FRAMEWORKS_ML_NN_TOOLS_TEST_GENERATOR_TEST_HARNESS_TEST_HARNESS_H
 #define ANDROID_FRAMEWORKS_ML_NN_TOOLS_TEST_GENERATOR_TEST_HARNESS_TEST_HARNESS_H
 
+#include <algorithm>
 #include <cstdlib>
 #include <cstring>
 #include <functional>
 #include <map>
 #include <memory>
+#include <random>
 #include <string>
 #include <utility>
 #include <vector>
@@ -205,6 +207,18 @@ class TestBuffer {
         return TestBuffer(vec.size() * sizeof(T), vec.data());
     }
 
+    // Factory method for creating a randomized buffer with "size" number of
+    // bytes.
+    template <typename T>
+    static TestBuffer createFromRng(size_t size, std::default_random_engine* gen) {
+        static_assert(kAlignment % sizeof(T) == 0);
+        TestBuffer testBuffer(size);
+        std::uniform_int_distribution<T> dist{};
+        const size_t adjustedSize = testBuffer.alignedSize() / sizeof(T);
+        std::generate_n(testBuffer.getMutable<T>(), adjustedSize, [&] { return dist(*gen); });
+        return testBuffer;
+    }
+
     template <typename T>
     const T* get() const {
         return reinterpret_cast<const T*>(mBuffer.get());
@@ -221,8 +235,8 @@ class TestBuffer {
     // Returns the byte size that is aligned to kAlignment.
     size_t alignedSize() const { return ((mSize + kAlignment - 1) / kAlignment) * kAlignment; }
 
-    bool operator==(nullptr_t) const { return mBuffer == nullptr; }
-    bool operator!=(nullptr_t) const { return mBuffer != nullptr; }
+    bool operator==(std::nullptr_t) const { return mBuffer == nullptr; }
+    bool operator!=(std::nullptr_t) const { return mBuffer != nullptr; }
 
    private:
     std::shared_ptr<void> mBuffer;

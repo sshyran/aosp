@@ -171,6 +171,26 @@ cc_test {
     ],
 }
 
+cc_fuzz {
+    name: "libneuralnetworks_fuzzer",
+    defaults: ["NeuralNetworksTest_default_libs"],
+    owner: "google",
+    srcs: [
+        "android_fuzzing/Converter.cpp",
+        "android_fuzzing/FuzzTest.cpp",
+        "android_fuzzing/StaticAssert.cpp",
+    ],
+    corpus: ["android_fuzzing/corpus/*"],
+    shared_libs: ["libprotobuf-cpp-full"],
+    static_libs: [
+        "libneuralnetworks",
+        "libneuralnetworks_common",
+        "libneuralnetworks_fuzzer_proto",
+        "libneuralnetworks_generated_test_harness",
+        "libprotobuf-mutator",
+    ],
+}
+
 // Temporarily disabled due to b/139889855.
 cc_test {
     name: "NeuralNetworksTest_static_asan",
