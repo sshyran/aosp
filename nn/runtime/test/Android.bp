@@ -41,8 +41,10 @@ cc_defaults {
     ],
     static_libs: [
         "libc++fs",
-        "libcrypto",
         "libneuralnetworks_generated_test_harness",
+    ],
+    whole_static_libs: [
+        "libcrypto",
     ],
 }
 
