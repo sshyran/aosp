@@ -100,7 +100,7 @@ namespace {
 
 using namespace hal;
 
-const Timing kBadTiming = {.timeOnDevice = UINT64_MAX, .timeInDriver = UINT64_MAX};
+const Timing kNoTiming = {.timeOnDevice = UINT64_MAX, .timeInDriver = UINT64_MAX};
 
 void sendFailureMessage(const sp<IPreparedModelCallback>& cb) {
     cb->notify(ErrorStatus::GENERAL_FAILURE, nullptr);
@@ -198,13 +198,13 @@ VersionedIPreparedModel::~VersionedIPreparedModel() {
     mPreparedModelV1_0->unlinkToDeath(mDeathHandler).isOk();
 }
 
-std::tuple<ErrorStatus, std::vector<OutputShape>, Timing>
-VersionedIPreparedModel::executeAsynchronously(const Request& request, MeasureTiming measure) {
+std::tuple<int, std::vector<OutputShape>, Timing> VersionedIPreparedModel::executeAsynchronously(
+        const Request& request, MeasureTiming measure) {
     const auto failWithStatus = [](ErrorStatus status) {
-        return std::make_tuple(status, std::vector<OutputShape>{}, kBadTiming);
+        return getExecutionResult(status, {}, kNoTiming);
     };
     const auto getResults = [](const ExecutionCallback& cb) {
-        return std::make_tuple(cb.getStatus(), cb.getOutputShapes(), cb.getTiming());
+        return getExecutionResult(cb.getStatus(), cb.getOutputShapes(), cb.getTiming());
     };
 
     const sp<ExecutionCallback> callback = new ExecutionCallback();
@@ -245,19 +245,18 @@ VersionedIPreparedModel::executeAsynchronously(const Request& request, MeasureTi
     return failWithStatus(ErrorStatus::GENERAL_FAILURE);
 }
 
-std::tuple<ErrorStatus, std::vector<OutputShape>, Timing>
-VersionedIPreparedModel::executeSynchronously(const Request& request, MeasureTiming measure) {
-    const auto kFailure =
-            std::make_tuple(ErrorStatus::GENERAL_FAILURE, std::vector<OutputShape>{}, kBadTiming);
+std::tuple<int, std::vector<OutputShape>, Timing> VersionedIPreparedModel::executeSynchronously(
+        const Request& request, MeasureTiming measure) {
+    const auto kFailure = getExecutionResult(ErrorStatus::GENERAL_FAILURE, {}, kNoTiming);
 
     // version 1.2+ HAL
     if (mPreparedModelV1_2 != nullptr) {
-        std::tuple<ErrorStatus, std::vector<OutputShape>, Timing> result;
+        std::tuple<int, std::vector<OutputShape>, Timing> result;
         Return<void> ret = mPreparedModelV1_2->executeSynchronously(
                 request, measure,
                 [&result](ErrorStatus error, const hidl_vec<OutputShape>& outputShapes,
                           const Timing& timing) {
-                    result = std::make_tuple(error, outputShapes, timing);
+                    result = getExecutionResult(error, outputShapes, timing);
                 });
         if (!ret.isOk()) {
             LOG(ERROR) << "executeSynchronously failure: " << ret.description();
@@ -270,7 +269,7 @@ VersionedIPreparedModel::executeSynchronously(const Request& request, MeasureTim
     return executeAsynchronously(request, measure);
 }
 
-std::tuple<ErrorStatus, std::vector<OutputShape>, Timing> VersionedIPreparedModel::execute(
+std::tuple<int, std::vector<OutputShape>, Timing> VersionedIPreparedModel::execute(
         const Request& request, MeasureTiming measure, bool preferSynchronous) {
     if (preferSynchronous) {
         VLOG(EXECUTION) << "Before executeSynchronously() " << SHOW_IF_DEBUG(toString(request));
