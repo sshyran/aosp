@@ -1,3 +1,5 @@
+# TODO: Re-enable after b/140641425 is addressed.
+"""
 # model
 model = Model()
 # a line of 3 pixels, 3 components/pixel
@@ -19,3 +21,4 @@ output0 = {i3: # output 0
 
 # Instantiate an example
 Example((input0, output0))
+"""
