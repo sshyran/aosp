@@ -166,6 +166,7 @@ cc_library_static {
         "android.hidl.allocator@1.0",
         "android.hidl.memory@1.0",
         "libbase",
+        "libcrypto",
         "libcutils",
         "libfmq",
         "libhidlbase",
@@ -175,9 +176,6 @@ cc_library_static {
         "libtextclassifier_hash",
         "libui",
         "libutils",
-    ],
-    static_libs: [
-        "libcrypto_static",
     ],
     header_libs: [
         "gemmlowp_headers",
