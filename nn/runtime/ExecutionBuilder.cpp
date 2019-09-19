@@ -516,6 +516,8 @@ int ExecutionBuilder::compute(sp<ExecutionCallback>* synchronizationCallback,
         return convertErrorStatusToResultCode(localSynchronizationCallback->getStatus());
     } else /* asynchronous */ {
         // TODO: use a thread pool
+        // TODO(mikie): this could have NNTRACE so we could measure the overhead
+        //              of spinning up a new thread.
 
         // Prepare the callback for asynchronous execution.
         // sp<ExecutionCallback> object is returned when the
@@ -690,22 +692,27 @@ bool StepExecutor::isCpu() const {
 
 int StepExecutor::startCompute(sp<ExecutionCallback>* synchronizationCallback,
                                const std::shared_ptr<ExecutionBurstController>& burstController) {
+    CHECK(mPreparedModel != nullptr);
+    CHECK(synchronizationCallback != nullptr);
+    *synchronizationCallback = nullptr;
+
     if (VLOG_IS_ON(EXECUTION)) {
         logArguments("input", mInputs);
         logArguments("output", mOutputs);
     }
 
-    // Initialize timing information in case we take an error path to exit.
-    mExecutionBuilder->reportTiming(kNoTiming);
+    const MeasureTiming measure = measureTiming(mExecutionBuilder);
+    const auto [n, outputShapes, timing] =
+            mPreparedModel->execute(mInputs, mOutputs, mMemories, burstController, measure);
+    mExecutionBuilder->reportTiming(timing);
 
-    CHECK(mPreparedModel != nullptr);
-    NN_RETURN_IF_ERROR(mPreparedModel->execute(mInputs, mOutputs, mMemories, burstController,
-                                               measureTiming(mExecutionBuilder),
-                                               synchronizationCallback));
-
-    if (*synchronizationCallback != nullptr) {
-        mExecutionBuilder->reportTiming((*synchronizationCallback)->getTiming());
+    if (n != ANEURALNETWORKS_NO_ERROR && n != ANEURALNETWORKS_OUTPUT_INSUFFICIENT_SIZE) {
+        return n;
     }
+
+    const ErrorStatus status = convertResultCodeToErrorStatus(n);
+    *synchronizationCallback = new ExecutionCallback();
+    (*synchronizationCallback)->notify_1_2(status, outputShapes, timing);
     return ANEURALNETWORKS_NO_ERROR;
 }
 
