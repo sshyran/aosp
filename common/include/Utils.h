@@ -299,6 +299,12 @@ hal::ErrorStatus convertResultCodeToErrorStatus(int resultCode);
 // Not guaranteed to be a 1-to-1 mapping.
 int convertErrorStatusToResultCode(hal::ErrorStatus status);
 
+// Convert execution results to runtime format. Additionally checks that the
+// returned results abide by the HAL specification, and logs an error if the
+// result violates the specification.
+std::tuple<int, std::vector<hal::OutputShape>, hal::Timing> getExecutionResult(
+        hal::ErrorStatus status, std::vector<hal::OutputShape> outputShapes, hal::Timing timing);
+
 // Versioning
 
 bool compliantWithV1_0(const hal::V1_0::Capabilities& capabilities);
