@@ -111,11 +111,11 @@ class DriverPreparedModel : public PreparedModel {
     DriverPreparedModel(const std::shared_ptr<VersionedIPreparedModel>& preparedModel)
         : mPreparedModel(preparedModel) {}
 
-    int execute(const std::vector<ModelArgumentInfo>& inputs,
-                const std::vector<ModelArgumentInfo>& outputs, const MemoryTracker& memories,
-                const std::shared_ptr<ExecutionBurstController>& burstController,
-                MeasureTiming measure,
-                sp<ExecutionCallback>* synchronizationCallback) const override;
+    std::tuple<int, std::vector<OutputShape>, Timing> execute(
+            const std::vector<ModelArgumentInfo>& inputs,
+            const std::vector<ModelArgumentInfo>& outputs, const MemoryTracker& memories,
+            const std::shared_ptr<ExecutionBurstController>& burstController,
+            MeasureTiming measure) const override;
 
     std::shared_ptr<ExecutionBurstController> configureExecutionBurst(
             bool blocking) const override {
@@ -362,7 +362,7 @@ allocatePointerArgumentsToPool(const std::vector<ModelArgumentInfo>& args,
     return {ANEURALNETWORKS_NO_ERROR, std::move(memory), std::move(ptrArgsLocations)};
 }
 
-// Start compute on an actual HIDL driver.
+// Perform computation on an actual HIDL driver.
 //
 // Because HIDL cannot take raw pointers, two separate memory pools will be allocated for inputs and
 // outputs specified by pointers. The input pointer data will be copied to the input pool prior to
@@ -371,15 +371,11 @@ allocatePointerArgumentsToPool(const std::vector<ModelArgumentInfo>& args,
 //
 // The HIDL invocation will choose between sync/async execution according to
 // DeviceManager::mSyncExecHal.
-int DriverPreparedModel::execute(const std::vector<ModelArgumentInfo>& inputs,
-                                 const std::vector<ModelArgumentInfo>& outputs,
-                                 const MemoryTracker& memories,
-                                 const std::shared_ptr<ExecutionBurstController>& burstController,
-                                 MeasureTiming measure,
-                                 sp<ExecutionCallback>* synchronizationCallback) const {
-    CHECK(synchronizationCallback != nullptr);
-    *synchronizationCallback = nullptr;
-
+std::tuple<int, std::vector<OutputShape>, Timing> DriverPreparedModel::execute(
+        const std::vector<ModelArgumentInfo>& inputs, const std::vector<ModelArgumentInfo>& outputs,
+        const MemoryTracker& memories,
+        const std::shared_ptr<ExecutionBurstController>& burstController,
+        MeasureTiming measure) const {
     NNTRACE_RT(NNTRACE_PHASE_INPUTS_AND_OUTPUTS, "DriverPreparedModel::execute");
 
     // Make a copy of the memory tracker as we will append memory pools for pointer arguments.
@@ -392,10 +388,14 @@ int DriverPreparedModel::execute(const std::vector<ModelArgumentInfo>& inputs,
     // Layout the input and output data
     const auto [n1, inputPtrArgsMemory, inputPtrArgsLocations] =
             allocatePointerArgumentsToPool(inputs, &localMemories);
-    NN_RETURN_IF_ERROR(n1);
+    if (n1 != ANEURALNETWORKS_NO_ERROR) {
+        return {n1, {}, kNoTiming};
+    }
     const auto [n2, outputPtrArgsMemory, outputPtrArgsLocations] =
             allocatePointerArgumentsToPool(outputs, &localMemories);
-    NN_RETURN_IF_ERROR(n2);
+    if (n2 != ANEURALNETWORKS_NO_ERROR) {
+        return {n2, {}, kNoTiming};
+    }
 
     // Copy the input data that was specified via a pointer.
     if (inputPtrArgsMemory != nullptr) {
@@ -421,12 +421,9 @@ int DriverPreparedModel::execute(const std::vector<ModelArgumentInfo>& inputs,
     NNTRACE_FULL_SWITCH(NNTRACE_LAYER_IPC, NNTRACE_PHASE_EXECUTION,
                         "DriverPreparedModel::execute::execute");
 
-    // Prepare the callback for asynchronous execution. sp<ExecutionCallback>
-    // object is returned when the execution has been successfully launched,
-    // otherwise a nullptr is returned. The executionCallback is abstracted in
-    // the NN API as an "event".
-    sp<ExecutionCallback> executionCallback = new ExecutionCallback();
-    ErrorStatus executionStatus = ErrorStatus::GENERAL_FAILURE;
+    int n = ANEURALNETWORKS_OP_FAILED;
+    std::vector<OutputShape> outputShapes;
+    Timing timing = kNoTiming;
 
     // compute using burst if present
     const bool burstCompute = (burstController != nullptr);
@@ -441,15 +438,8 @@ int DriverPreparedModel::execute(const std::vector<ModelArgumentInfo>& inputs,
 
         VLOG(EXECUTION) << "Before ExecutionBurstController->tryCompute() "
                         << SHOW_IF_DEBUG(toString(request));
-        auto [status, outputShapes, timing, fallback] =
+        std::tie(n, outputShapes, timing, burstFallback) =
                 burstController->tryCompute(request, measure, memoryIds);
-
-        if (!fallback) {
-            executionCallback->notify(status, std::move(outputShapes), timing);
-        }
-
-        burstFallback = fallback;
-        executionStatus = status;
     }
 
     // compute from IPreparedModel if either:
@@ -457,19 +447,13 @@ int DriverPreparedModel::execute(const std::vector<ModelArgumentInfo>& inputs,
     // (2) the burst execution failed and requested a fallback execution
     if (!burstCompute || burstFallback) {
         const bool preferSynchronous = DeviceManager::get()->syncExecHal();
-        auto [status, outputShapes, timing] =
+        std::tie(n, outputShapes, timing) =
                 mPreparedModel->execute(request, measure, preferSynchronous);
-        executionCallback->notify(status, std::move(outputShapes), timing);
-        executionStatus = status;
     }
 
-    if (executionStatus != ErrorStatus::NONE) {
+    if (n != ANEURALNETWORKS_NO_ERROR) {
         VLOG(EXECUTION) << "**Execution failed**";
-        if (executionStatus == ErrorStatus::OUTPUT_INSUFFICIENT_SIZE) {
-            *synchronizationCallback = executionCallback;
-            return ANEURALNETWORKS_NO_ERROR;
-        }
-        return convertErrorStatusToResultCode(executionStatus);
+        return {n, std::move(outputShapes), timing};
     }
 
     // Copy the output data from shared memory to the output buffers.
@@ -484,10 +468,9 @@ int DriverPreparedModel::execute(const std::vector<ModelArgumentInfo>& inputs,
             }
         }
     }
-    VLOG(EXECUTION) << "DriverPreparedModel::execute completed";
 
-    *synchronizationCallback = executionCallback;
-    return ANEURALNETWORKS_NO_ERROR;
+    VLOG(EXECUTION) << "DriverPreparedModel::execute completed";
+    return {ANEURALNETWORKS_NO_ERROR, std::move(outputShapes), timing};
 }
 
 // A special abstracted device for the CPU. Only one instance of this class will exist.
@@ -548,11 +531,11 @@ class CpuPreparedModel : public PreparedModel {
     // successfully created.
     static int create(Model hidlModel, std::shared_ptr<PreparedModel>* preparedModel);
 
-    int execute(const std::vector<ModelArgumentInfo>& inputs,
-                const std::vector<ModelArgumentInfo>& outputs, const MemoryTracker& memories,
-                const std::shared_ptr<ExecutionBurstController>& burstController,
-                MeasureTiming measure,
-                sp<ExecutionCallback>* synchronizationCallback) const override;
+    std::tuple<int, std::vector<OutputShape>, Timing> execute(
+            const std::vector<ModelArgumentInfo>& inputs,
+            const std::vector<ModelArgumentInfo>& outputs, const MemoryTracker& memories,
+            const std::shared_ptr<ExecutionBurstController>& burstController,
+            MeasureTiming measure) const override;
 
     std::shared_ptr<ExecutionBurstController> configureExecutionBurst(bool) const override {
         return nullptr;
@@ -612,43 +595,29 @@ int CpuPreparedModel::create(Model hidlModel, std::shared_ptr<PreparedModel>* pr
     return ANEURALNETWORKS_NO_ERROR;
 }
 
-static void computeOnCpu(const Model& model, const Request& request,
-                         const std::vector<RunTimePoolInfo>& modelPoolInfos,
-                         const std::vector<RunTimePoolInfo>& requestPoolInfos,
-                         const sp<IExecutionCallback>& executionCallback) {
+static std::tuple<int, std::vector<OutputShape>, Timing> computeOnCpu(
+        const Model& model, const Request& request,
+        const std::vector<RunTimePoolInfo>& modelPoolInfos,
+        const std::vector<RunTimePoolInfo>& requestPoolInfos) {
     NNTRACE_RT(NNTRACE_PHASE_EXECUTION, "computeOnCpu");
     CpuExecutor executor;
     int err = executor.run(model, request, modelPoolInfos, requestPoolInfos);
     const auto& outputShapes = executor.getOutputShapes();
-    executionCallback->notify_1_2(convertResultCodeToErrorStatus(err), outputShapes, kNoTiming);
+    return {err, outputShapes, kNoTiming};
 }
 
-// Start compute on NNAPI CPU reference implementation.
+// Perform computation on NNAPI CPU reference implementation.
 //
 // Contrary to DriverPreparedModel::execute, the NNAPI CPU reference executor lives in the
 // same process as the NNAPI runtime and can take raw pointers. We will create as many pools as
 // there are input/output in this method to avoid data copying.
 //
 // Will choose between sync/async execution according to DeviceManager::mSyncExecCpu.
-int CpuPreparedModel::execute(const std::vector<ModelArgumentInfo>& inputs,
-                              const std::vector<ModelArgumentInfo>& outputs,
-                              const MemoryTracker& memories,
-                              const std::shared_ptr<ExecutionBurstController>& /*burstController*/,
-                              MeasureTiming /*measure*/,
-                              sp<ExecutionCallback>* synchronizationCallback) const {
-    CHECK(synchronizationCallback != nullptr);
-
-    // TODO: use a thread pool
-    // TODO(mikie): this could have NNTRACE so we could measure the overhead of
-    //              spinning up a new thread.
-
-    // Prepare the callback for asynchronous execution. sp<ExecutionCallback>
-    // object is returned when the execution has been successfully launched,
-    // otherwise a nullptr is returned. The executionCallback is abstracted in
-    // the NN API as an "event".
-    sp<ExecutionCallback> executionCallback = new ExecutionCallback();
-    *synchronizationCallback = nullptr;
-
+std::tuple<int, std::vector<OutputShape>, Timing> CpuPreparedModel::execute(
+        const std::vector<ModelArgumentInfo>& inputs, const std::vector<ModelArgumentInfo>& outputs,
+        const MemoryTracker& memories,
+        const std::shared_ptr<ExecutionBurstController>& /*burstController*/,
+        MeasureTiming /*measure*/) const {
     std::vector<RunTimePoolInfo> requestPoolInfos;
     requestPoolInfos.reserve(memories.size());
     for (const Memory* mem : memories) {
@@ -656,7 +625,7 @@ int CpuPreparedModel::execute(const std::vector<ModelArgumentInfo>& inputs,
                     RunTimePoolInfo::createFromHidlMemory(mem->getHidlMemory())) {
             requestPoolInfos.emplace_back(*poolInfo);
         } else {
-            return ANEURALNETWORKS_UNMAPPABLE;
+            return {ANEURALNETWORKS_UNMAPPABLE, {}, kNoTiming};
         }
     }
     // Create as many pools as there are input / output.
@@ -682,17 +651,18 @@ int CpuPreparedModel::execute(const std::vector<ModelArgumentInfo>& inputs,
     setRequestArgumentArray(inputs, inputPtrArgsLocations, &request.inputs);
     setRequestArgumentArray(outputs, outputPtrArgsLocations, &request.outputs);
 
-    if (DeviceManager::get()->syncExecCpu()) {
-        computeOnCpu(mModel, request, mModelPoolInfos, requestPoolInfos, executionCallback);
-    } else {
-        std::thread thread(computeOnCpu, std::cref(mModel), std::move(request),
-                           std::cref(mModelPoolInfos), std::move(requestPoolInfos),
-                           executionCallback);
-        executionCallback->bindThread(std::move(thread));
+    if (!DeviceManager::get()->syncExecCpu()) {
+        // TODO: use a thread pool
+        // TODO(mikie): this could have NNTRACE so we could measure the overhead
+        //              of spinning up a new thread.
+        std::tuple<int, std::vector<OutputShape>, Timing> result = {};
+        std::thread([this, &request, &requestPoolInfos, &result] {
+            result = computeOnCpu(mModel, request, mModelPoolInfos, requestPoolInfos);
+        }).join();
+        return result;
     }
 
-    *synchronizationCallback = executionCallback;
-    return ANEURALNETWORKS_NO_ERROR;
+    return computeOnCpu(mModel, request, mModelPoolInfos, requestPoolInfos);
 }
 
 DeviceManager* DeviceManager::get() {
