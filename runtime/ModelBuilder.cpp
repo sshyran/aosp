@@ -70,7 +70,9 @@ int ModelBuilder::addOperand(const ANeuralNetworksOperandType& type) {
         LOG(ERROR) << "Extensions are not supported for this process.";
         return ANEURALNETWORKS_BAD_DATA;
     }
-    if (operandType == OperandType::OEM || operandType == OperandType::TENSOR_OEM_BYTE) {
+    bool isOemOperand =
+            operandType == OperandType::OEM || operandType == OperandType::TENSOR_OEM_BYTE;
+    if (isOemOperand && !mHasOEMOperand) {
         LOG(WARNING) << "OEM data type is deprecated. Use Extensions instead.";
     }
 
@@ -98,6 +100,7 @@ int ModelBuilder::addOperand(const ANeuralNetworksOperandType& type) {
             .location = {.poolIndex = 0, .offset = 0, .length = 0},
             .extraParams = Operand::ExtraParams(),
     });
+    mHasOEMOperand |= isOemOperand;
     return ANEURALNETWORKS_NO_ERROR;
 }
 
@@ -329,7 +332,7 @@ int ModelBuilder::addOperation(ANeuralNetworksOperationType type, uint32_t input
         LOG(ERROR) << "Extensions are not supported for this process.";
         return ANEURALNETWORKS_BAD_DATA;
     }
-    if (operationType == OperationType::OEM_OPERATION) {
+    if (operationType == OperationType::OEM_OPERATION && !mHasOEMOperation) {
         LOG(WARNING) << "OEM_OPERATION is deprecated. Use Extensions instead.";
     }
 
