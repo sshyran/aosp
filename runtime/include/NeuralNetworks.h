@@ -2623,6 +2623,10 @@ typedef enum {
      *        If batch-major: [batch_size, max_time, bw_output_size]
      *
      * Available since API level 29.
+     *
+     * Important: As of API level 29, there is no way to get the output state tensors out and NNAPI
+     * does not maintain internal states. This operator does not support the usage pattern in which
+     * multiple cells are chained and state tensors are propagated.
      */
     ANEURALNETWORKS_BIDIRECTIONAL_SEQUENCE_LSTM = 42,
 
@@ -2742,6 +2746,10 @@ typedef enum {
      *      [batchSize, maxTime, bwNumUnits].
      *
      * Available since API level 29.
+     *
+     * Important: As of API level 29, there is no way to get the output state tensors out and NNAPI
+     * does not maintain internal states. This operator does not support the usage pattern in which
+     * multiple cells are chained and state tensors are propagated.
      */
     ANEURALNETWORKS_BIDIRECTIONAL_SEQUENCE_RNN = 43,
 
@@ -4717,6 +4725,10 @@ typedef enum {
      *        If batch-major: [batch_size, max_time, output_size]
      *
      * Available since API level 29.
+     *
+     * Important: As of API level 29, there is no way to get the output state tensors out and NNAPI
+     * does not maintain internal states. This operator does not support the usage pattern in which
+     * multiple cells are chained and state tensors are propagated.
      */
     ANEURALNETWORKS_UNIDIRECTIONAL_SEQUENCE_LSTM = 92,
 
@@ -4774,6 +4786,10 @@ typedef enum {
      *      numUnits].
      *
      * Available since API level 29.
+     *
+     * Important: As of API level 29, there is no way to get the output state tensors out and NNAPI
+     * does not maintain internal states. This operator does not support the usage pattern in which
+     * multiple cells are chained and state tensors are propagated.
      */
     ANEURALNETWORKS_UNIDIRECTIONAL_SEQUENCE_RNN = 93,
 
