@@ -88,6 +88,7 @@ cc_library_static {
         "android.hidl.allocator@1.0",
         "android.hidl.memory@1.0",
         "libfmq",
+        "libhidlbase",
         "libhidlmemory",
         "libnativewindow",
     ],
@@ -213,16 +214,17 @@ cc_library_static {
 cc_defaults {
     name: "NeuralNetworksTest_common",
     shared_libs: [
-        "android.hardware.neuralnetworks@1.0",
-        "android.hardware.neuralnetworks@1.1",
-        "android.hardware.neuralnetworks@1.2",
         "android.hidl.allocator@1.0",
         "android.hidl.memory@1.0",
+        "libhidlbase",
         "libhidlmemory",
         "libnativewindow",
         "libneuralnetworks",
     ],
     static_libs: [
+        "android.hardware.neuralnetworks@1.0",
+        "android.hardware.neuralnetworks@1.1",
+        "android.hardware.neuralnetworks@1.2",
         "libbase",
         "libgmock",
         "liblog",
