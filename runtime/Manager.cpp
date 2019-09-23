@@ -81,13 +81,13 @@ class DriverDevice : public Device {
         return mNumCacheFiles;
     }
 
-    int prepareModel(const Model& hidlModel, ExecutionPreference executionPreference,
-                     const hidl_vec<hidl_handle>& modelCache,
-                     const hidl_vec<hidl_handle>& dataCache, const CacheToken& token,
-                     std::shared_ptr<PreparedModel>* preparedModel) const override;
-    int prepareModelFromCache(const hidl_vec<hidl_handle>& modelCache,
-                              const hidl_vec<hidl_handle>& dataCache, const CacheToken& token,
-                              std::shared_ptr<PreparedModel>* preparedModel) const override;
+    std::pair<int, std::shared_ptr<PreparedModel>> prepareModel(
+            const Model& hidlModel, ExecutionPreference executionPreference,
+            const hidl_vec<hidl_handle>& modelCache, const hidl_vec<hidl_handle>& dataCache,
+            const CacheToken& token) const override;
+    std::pair<int, std::shared_ptr<PreparedModel>> prepareModelFromCache(
+            const hidl_vec<hidl_handle>& modelCache, const hidl_vec<hidl_handle>& dataCache,
+            const CacheToken& token) const override;
 
    private:
     std::string mName;
@@ -257,52 +257,45 @@ PerformanceInfo DriverDevice::getPerformance(OperandType type) const {
     return lookup(mCapabilities.operandPerformance, type);
 }
 
-static int prepareModelCheck(ErrorStatus status,
-                             const std::shared_ptr<VersionedIPreparedModel>& preparedModel,
-                             const char* prepareName, const char* serviceName,
-                             std::shared_ptr<PreparedModel>* preparedModelOut) {
-    CHECK(preparedModelOut != nullptr) << "prepareModelCheck -- preparedModelOut must be non-null";
-    *preparedModelOut = nullptr;
-
+static std::pair<int, std::shared_ptr<PreparedModel>> prepareModelCheck(
+        ErrorStatus status, const std::shared_ptr<VersionedIPreparedModel>& preparedModel,
+        const char* prepareName, const char* serviceName) {
     if (status != ErrorStatus::NONE) {
         LOG(ERROR) << prepareName << " on " << serviceName << " failed: "
                    << "prepareReturnStatus=" << toString(status);
-        return ANEURALNETWORKS_OP_FAILED;
+        return {ANEURALNETWORKS_OP_FAILED, nullptr};
     }
     if (preparedModel == nullptr) {
         LOG(ERROR) << prepareName << " on " << serviceName << " failed: preparedModel is nullptr";
-        return ANEURALNETWORKS_OP_FAILED;
+        return {ANEURALNETWORKS_OP_FAILED, nullptr};
     }
 
-    *preparedModelOut = std::make_shared<DriverPreparedModel>(preparedModel);
-    return ANEURALNETWORKS_NO_ERROR;
+    return {ANEURALNETWORKS_NO_ERROR, std::make_shared<DriverPreparedModel>(preparedModel)};
 }
 
-int DriverDevice::prepareModel(const Model& hidlModel, ExecutionPreference executionPreference,
-                               const hidl_vec<hidl_handle>& modelCache,
-                               const hidl_vec<hidl_handle>& dataCache, const CacheToken& token,
-                               std::shared_ptr<PreparedModel>* preparedModel) const {
+std::pair<int, std::shared_ptr<PreparedModel>> DriverDevice::prepareModel(
+        const Model& hidlModel, ExecutionPreference executionPreference,
+        const hidl_vec<hidl_handle>& modelCache, const hidl_vec<hidl_handle>& dataCache,
+        const CacheToken& token) const {
     // Note that some work within VersionedIDevice will be subtracted from the IPC layer
     NNTRACE_FULL(NNTRACE_LAYER_IPC, NNTRACE_PHASE_COMPILATION, "prepareModel");
 
-    const auto [status, localPreparedModel] =
+    const auto [status, preparedModel] =
             mInterface->prepareModel(hidlModel, executionPreference, modelCache, dataCache, token);
 
-    return prepareModelCheck(status, localPreparedModel, "prepareModel", getName(), preparedModel);
+    return prepareModelCheck(status, preparedModel, "prepareModel", getName());
 }
 
-int DriverDevice::prepareModelFromCache(const hidl_vec<hidl_handle>& modelCache,
-                                        const hidl_vec<hidl_handle>& dataCache,
-                                        const CacheToken& token,
-                                        std::shared_ptr<PreparedModel>* preparedModel) const {
+std::pair<int, std::shared_ptr<PreparedModel>> DriverDevice::prepareModelFromCache(
+        const hidl_vec<hidl_handle>& modelCache, const hidl_vec<hidl_handle>& dataCache,
+        const CacheToken& token) const {
     // Note that some work within VersionedIDevice will be subtracted from the IPC layer
     NNTRACE_FULL(NNTRACE_LAYER_IPC, NNTRACE_PHASE_COMPILATION, "prepareModelFromCache");
 
-    const auto [status, localPreparedModel] =
+    const auto [status, preparedModel] =
             mInterface->prepareModelFromCache(modelCache, dataCache, token);
 
-    return prepareModelCheck(status, localPreparedModel, "prepareModelFromCache", getName(),
-                             preparedModel);
+    return prepareModelCheck(status, preparedModel, "prepareModelFromCache", getName());
 }
 
 // Convert ModelArgumentInfo to HIDL RequestArgument. For pointer arguments, use the location
@@ -501,14 +494,15 @@ class CpuDevice : public Device {
         return kNumCacheFiles;
     }
 
-    int prepareModel(const Model& hidlModel, ExecutionPreference executionPreference,
-                     const hidl_vec<hidl_handle>& modelCache,
-                     const hidl_vec<hidl_handle>& dataCache, const CacheToken&,
-                     std::shared_ptr<PreparedModel>* preparedModel) const override;
-    int prepareModelFromCache(const hidl_vec<hidl_handle>&, const hidl_vec<hidl_handle>&,
-                              const CacheToken&, std::shared_ptr<PreparedModel>*) const override {
+    std::pair<int, std::shared_ptr<PreparedModel>> prepareModel(
+            const Model& hidlModel, ExecutionPreference executionPreference,
+            const hidl_vec<hidl_handle>& modelCache, const hidl_vec<hidl_handle>& dataCache,
+            const CacheToken&) const override;
+    std::pair<int, std::shared_ptr<PreparedModel>> prepareModelFromCache(
+            const hidl_vec<hidl_handle>&, const hidl_vec<hidl_handle>&,
+            const CacheToken&) const override {
         CHECK(false) << "Should never call prepareModelFromCache on CpuDevice";
-        return ANEURALNETWORKS_OP_FAILED;
+        return {ANEURALNETWORKS_OP_FAILED, nullptr};
     }
 
    private:
@@ -527,9 +521,10 @@ class CpuDevice : public Device {
 // A special abstracted PreparedModel for the CPU, constructed by CpuDevice.
 class CpuPreparedModel : public PreparedModel {
    public:
-    // Factory method for CpuPreparedModel. Returns ANEURALNETWORKS_NO_ERROR if
-    // successfully created.
-    static int create(Model hidlModel, std::shared_ptr<PreparedModel>* preparedModel);
+    // Factory method for CpuPreparedModel. Returns ANEURALNETWORKS_NO_ERROR and
+    // a prepared model object if successfully created. Returns an error code
+    // and nullptr otherwise.
+    static std::pair<int, std::shared_ptr<PreparedModel>> create(Model hidlModel);
 
     std::tuple<int, std::vector<OutputShape>, Timing> execute(
             const std::vector<ModelArgumentInfo>& inputs,
@@ -541,10 +536,11 @@ class CpuPreparedModel : public PreparedModel {
         return nullptr;
     }
 
-   private:
+    // Prefer to use CpuPreparedModel::create.
     CpuPreparedModel(Model model, std::vector<RunTimePoolInfo> poolInfos)
         : mModel(std::move(model)), mModelPoolInfos(std::move(poolInfos)) {}
 
+   private:
     const Model mModel;
     const std::vector<RunTimePoolInfo> mModelPoolInfos;
 };
@@ -565,34 +561,29 @@ void CpuDevice::getSupportedOperations(const MetaModel& metaModel,
     *supportedOperations = std::move(result);
 }
 
-int CpuDevice::prepareModel(const Model& hidlModel, ExecutionPreference executionPreference,
-                            const hidl_vec<hidl_handle>& modelCache,
-                            const hidl_vec<hidl_handle>& dataCache, const CacheToken&,
-                            std::shared_ptr<PreparedModel>* preparedModel) const {
+std::pair<int, std::shared_ptr<PreparedModel>> CpuDevice::prepareModel(
+        const Model& hidlModel, ExecutionPreference executionPreference,
+        const hidl_vec<hidl_handle>& modelCache, const hidl_vec<hidl_handle>& dataCache,
+        const CacheToken&) const {
     CHECK(modelCache.size() == 0 && dataCache.size() == 0)
             << "Should never call prepareModel with cache information on CpuDevice";
-    CHECK(preparedModel != nullptr) << "CpuDevice::prepareModel -- preparedModel must be non-null";
-    *preparedModel = nullptr;
 
     if (!validateModel(hidlModel) || !validateExecutionPreference(executionPreference)) {
-        return ANEURALNETWORKS_OP_FAILED;
+        return {ANEURALNETWORKS_OP_FAILED, nullptr};
     }
 
-    return CpuPreparedModel::create(hidlModel, preparedModel);
+    return CpuPreparedModel::create(hidlModel);
 }
 
-int CpuPreparedModel::create(Model hidlModel, std::shared_ptr<PreparedModel>* preparedModel) {
-    CHECK(preparedModel != nullptr);
-    *preparedModel = nullptr;
-
+std::pair<int, std::shared_ptr<PreparedModel>> CpuPreparedModel::create(Model hidlModel) {
     std::vector<RunTimePoolInfo> poolInfos;
     if (!setRunTimePoolInfosFromHidlMemories(&poolInfos, hidlModel.pools)) {
-        return ANEURALNETWORKS_UNMAPPABLE;
+        return {ANEURALNETWORKS_UNMAPPABLE, nullptr};
     }
 
-    *preparedModel = std::shared_ptr<CpuPreparedModel>(
-            new CpuPreparedModel(std::move(hidlModel), std::move(poolInfos)));
-    return ANEURALNETWORKS_NO_ERROR;
+    std::shared_ptr<PreparedModel> preparedModel =
+            std::make_shared<CpuPreparedModel>(std::move(hidlModel), std::move(poolInfos));
+    return {ANEURALNETWORKS_NO_ERROR, std::move(preparedModel)};
 }
 
 static std::tuple<int, std::vector<OutputShape>, Timing> computeOnCpu(
