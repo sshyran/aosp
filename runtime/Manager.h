@@ -84,11 +84,9 @@ class Device {
     virtual bool isCachingSupported() const = 0;
 
     virtual std::pair<int, std::shared_ptr<PreparedModel>> prepareModel(
-            const hal::Model& model, hal::ExecutionPreference preference,
+            const hal::ModelFactory& makeModel, hal::ExecutionPreference preference,
             const std::string& cacheDir,
             const std::optional<hal::CacheToken>& maybeToken) const = 0;
-    virtual std::pair<int, std::shared_ptr<PreparedModel>> prepareModelFromCache(
-            const std::string& cacheDir, const hal::CacheToken& token) const = 0;
 };
 
 // Manages the NN HAL devices.  Only one instance of this class will exist.
