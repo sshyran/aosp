@@ -77,12 +77,17 @@ class DriverDevice : public Device {
     }
 
     std::pair<int, std::shared_ptr<PreparedModel>> prepareModel(
-            const Model& model, ExecutionPreference preference, const std::string& cacheDir,
+            const ModelFactory& makeModel, ExecutionPreference preference,
+            const std::string& cacheDir,
             const std::optional<CacheToken>& maybeToken) const override;
-    std::pair<int, std::shared_ptr<PreparedModel>> prepareModelFromCache(
-            const std::string& cacheDir, const CacheToken& token) const override;
 
    private:
+    std::pair<int, std::shared_ptr<PreparedModel>> prepareModelInternal(
+            const Model& model, ExecutionPreference preference, const std::string& cacheDir,
+            const std::optional<CacheToken>& maybeToken) const;
+    std::pair<int, std::shared_ptr<PreparedModel>> prepareModelFromCacheInternal(
+            const std::string& cacheDir, const CacheToken& token) const;
+
     std::string mName;
     std::string mVersionString;
     const std::shared_ptr<VersionedIDevice> mInterface;
@@ -331,7 +336,7 @@ static std::pair<int, std::shared_ptr<PreparedModel>> prepareModelCheck(
     return {ANEURALNETWORKS_NO_ERROR, std::make_shared<DriverPreparedModel>(preparedModel)};
 }
 
-std::pair<int, std::shared_ptr<PreparedModel>> DriverDevice::prepareModel(
+std::pair<int, std::shared_ptr<PreparedModel>> DriverDevice::prepareModelInternal(
         const Model& model, ExecutionPreference preference, const std::string& cacheDir,
         const std::optional<CacheToken>& maybeToken) const {
     // Note that some work within VersionedIDevice will be subtracted from the IPC layer
@@ -353,7 +358,7 @@ std::pair<int, std::shared_ptr<PreparedModel>> DriverDevice::prepareModel(
     return prepareModelCheck(status, preparedModel, "prepareModel", getName());
 }
 
-std::pair<int, std::shared_ptr<PreparedModel>> DriverDevice::prepareModelFromCache(
+std::pair<int, std::shared_ptr<PreparedModel>> DriverDevice::prepareModelFromCacheInternal(
         const std::string& cacheDir, const CacheToken& token) const {
     // Note that some work within VersionedIDevice will be subtracted from the IPC layer
     NNTRACE_FULL(NNTRACE_LAYER_IPC, NNTRACE_PHASE_COMPILATION, "prepareModelFromCache");
@@ -369,6 +374,23 @@ std::pair<int, std::shared_ptr<PreparedModel>> DriverDevice::prepareModelFromCac
             mInterface->prepareModelFromCache(modelCache, dataCache, token);
 
     return prepareModelCheck(status, preparedModel, "prepareModelFromCache", getName());
+}
+
+std::pair<int, std::shared_ptr<PreparedModel>> DriverDevice::prepareModel(
+        const ModelFactory& makeModel, ExecutionPreference preference, const std::string& cacheDir,
+        const std::optional<CacheToken>& maybeToken) const {
+    // Attempt to compile from cache if token is present.
+    if (maybeToken.has_value()) {
+        const auto [n, preparedModel] = prepareModelFromCacheInternal(cacheDir, *maybeToken);
+        if (n == ANEURALNETWORKS_NO_ERROR) {
+            return {n, preparedModel};
+        }
+    }
+
+    // Fallback to full compilation (possibly with token) if
+    // prepareModelFromCache could not be used or failed.
+    const Model model = makeModel();
+    return prepareModelInternal(model, preference, cacheDir, maybeToken);
 }
 
 // Convert ModelArgumentInfo to HIDL RequestArgument. For pointer arguments, use the location
@@ -566,13 +588,9 @@ class CpuDevice : public Device {
     bool isCachingSupported() const override { return false; }
 
     std::pair<int, std::shared_ptr<PreparedModel>> prepareModel(
-            const Model& model, ExecutionPreference preference, const std::string& cacheDir,
+            const ModelFactory& makeModel, ExecutionPreference preference,
+            const std::string& cacheDir,
             const std::optional<CacheToken>& maybeToken) const override;
-    std::pair<int, std::shared_ptr<PreparedModel>> prepareModelFromCache(
-            const std::string& /*cacheDir*/, const CacheToken& /*token*/) const override {
-        CHECK(false) << "Should never call prepareModelFromCache on CpuDevice";
-        return {ANEURALNETWORKS_OP_FAILED, nullptr};
-    }
 
    private:
     CpuDevice() = default;
@@ -628,11 +646,12 @@ void CpuDevice::getSupportedOperations(const MetaModel& metaModel,
 }
 
 std::pair<int, std::shared_ptr<PreparedModel>> CpuDevice::prepareModel(
-        const Model& model, ExecutionPreference preference, const std::string& /*cacheDir*/,
-        const std::optional<CacheToken>& maybeToken) const {
+        const ModelFactory& makeModel, ExecutionPreference preference,
+        const std::string& /*cacheDir*/, const std::optional<CacheToken>& maybeToken) const {
     CHECK(!maybeToken.has_value())
             << "Should never call prepareModel with cache information on CpuDevice";
 
+    const Model model = makeModel();
     if (!validateModel(model) || !validateExecutionPreference(preference)) {
         return {ANEURALNETWORKS_OP_FAILED, nullptr};
     }

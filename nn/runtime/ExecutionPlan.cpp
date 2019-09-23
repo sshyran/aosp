@@ -58,23 +58,6 @@ namespace {
 
 using namespace hal;
 
-std::pair<int, std::shared_ptr<PreparedModel>> compile(
-        const Device& device, const ModelFactory& makeModel, ExecutionPreference preference,
-        const std::string& cacheDir, const std::optional<CacheToken>& maybeToken) {
-    // Attempt to compile from cache if token is present.
-    if (maybeToken.has_value()) {
-        const auto [n, preparedModel] = device.prepareModelFromCache(cacheDir, *maybeToken);
-        if (n == ANEURALNETWORKS_NO_ERROR) {
-            return {n, preparedModel};
-        }
-    }
-
-    // Fallback to full compilation (possibly with token) if
-    // prepareModelFromCache could not be used or failed.
-    const Model model = makeModel();
-    return device.prepareModel(model, preference, cacheDir, maybeToken);
-}
-
 // Compiles the model on device.
 // If compilation caching is available, depending on ExecutionPlan::mState, the token may only have
 // been initialized by the user provided token (SIMPLE body), or is already re-hashed by the
@@ -97,7 +80,7 @@ int compile(const Device& device, const ModelBuilder& model, int executionPrefer
     const ModelFactory makeModel = [&model] { return model.makeHidlModel(); };
     const ExecutionPreference preference = static_cast<ExecutionPreference>(executionPreference);
     const auto [n, returnedPreparedModel] =
-            compile(device, makeModel, preference, cacheDir, cacheToken);
+            device.prepareModel(makeModel, preference, cacheDir, cacheToken);
     *preparedModel = returnedPreparedModel;
     return n;
 }
