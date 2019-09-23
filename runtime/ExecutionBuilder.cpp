@@ -720,14 +720,14 @@ int StepExecutor::startCompute(sp<ExecutionCallback>* synchronizationCallback,
 int StepExecutor::startComputeOnCpuFallback(sp<ExecutionCallback>* synchronizationCallback) {
     NNTRACE_RT(NNTRACE_PHASE_EXECUTION, "StepExecutor::startComputeOnCpuFallback");
     VLOG(EXECUTION) << "Re-compile the model on CPU";
-    const Model model = mModel->makeHidlModel();
     mDevice = DeviceManager::getCpuDevice();
     mPreparedModel = nullptr;
+    const ModelFactory makeModel = [this] { return mModel->makeHidlModel(); };
     // TODO: Propagate user preference to this point instead of using default value of
     // ANEURALNETWORKS_PREFER_FAST_SINGLE_ANSWER.
     const ExecutionPreference preference =
             static_cast<ExecutionPreference>(ANEURALNETWORKS_PREFER_FAST_SINGLE_ANSWER);
-    const auto [n, preparedModel] = mDevice->prepareModel(model, preference, {}, {});
+    const auto [n, preparedModel] = mDevice->prepareModel(makeModel, preference, {}, {});
     mPreparedModel = preparedModel;
     NN_RETURN_IF_ERROR(n);
     return startCompute(synchronizationCallback, /*burstController=*/nullptr);
