@@ -143,8 +143,7 @@ class VersionedIDevice {
             const MetaModel& metaModel) const;
 
     /**
-     * Synchronously creates a prepared model for execution and optionally saves it
-     * into cache files.
+     * Creates a prepared model for execution.
      *
      * prepareModel is used to make any necessary transformations or alternative
      * representations to a model for execution, possibly including
@@ -152,42 +151,21 @@ class VersionedIDevice {
      * or compilation into the device's native binary format. The model itself
      * is not changed.
      *
-     * Optionally, caching information may be provided for the driver to save
-     * the prepared model to cache files for faster model compilation time
-     * when the same model preparation is requested in the future. There are
-     * two types of cache file handles provided to the driver: model cache
-     * and data cache. For more information on the two types of cache handles,
-     * refer to getNumberOfCacheFilesNeeded.
+     * Optionally, caching information may be provided for the driver to either:
+     * - load the prepared model from cache, bypassing full model preparation
+     * - save the prepared model to cache for faster model compilation time when
+     *     the same model preparation is requested in the future
      *
-     * The file descriptors must be opened with read and write permission. A file may
-     * have any size, and the corresponding file descriptor may have any offset. The
-     * driver must truncate a file to zero size before writing to that file. The file
-     * descriptors may be closed by the client once the asynchronous preparation has
-     * finished. The driver must dup a file descriptor if it wants to get access to
-     * the cache file later.
-     *
-     * The model is prepared synchronously with respect to the caller. The
-     * prepareModel function must verify the inputs to the preparedModel
-     * function related to preparing the model (as opposed to saving the
-     * prepared model to cache) are correct. If there is an error, prepareModel
-     * must immediately return the appropriate ErrorStatus value and nullptr for
-     * the VersionedIPreparedModel. If the inputs to the prepareModel function
-     * that are related to preparing the model are valid and there is no error,
-     * prepareModel must prepare the model.
+     * The prepareModel function must verify the inputs to the prepareModel
+     * function are correct. If there is an error, prepareModel must immediately
+     * return the appropriate result code and nullptr for the
+     * VersionedIPreparedModel. If the inputs to the prepareModel function are
+     * valid and there is no error, prepareModel must prepare the model.
      *
      * If the model was prepared successfully, prepareModel must return
-     * ErrorStatus::NONE and the produced VersionedIPreparedModel object. If an
-     * error occurred preparing the model, prepareModel must return the
-     * appropriate ErrorStatus value and nullptr for the
-     * VersionedIPreparedModel.
-     *
-     * Optionally, the driver may save the prepared model to cache during
-     * preparation. Any error that occurs when saving to cache must not affect
-     * the status of preparing the model. Even if the input arguments related to
-     * the cache may be invalid, or the driver may fail to save to cache, the
-     * prepareModel function must finish preparing the model. The driver may
-     * choose not to save to cache even if the caching information is provided
-     * and valid.
+     * ANEURALNETWORKS_NO_ERROR and the produced VersionedIPreparedModel object.
+     * If an error occurred preparing the model, prepareModel must return the
+     * appropriate result code and nullptr for the VersionedIPreparedModel.
      *
      * The only information that may be unknown to the model at this stage is
      * the shape of the tensors, which may only be known at execution time. As
@@ -199,7 +177,8 @@ class VersionedIDevice {
      *
      * Multiple threads may call prepareModel on the same model concurrently.
      *
-     * @param model The model to be prepared for execution.
+     * @param makeModel Factory function to create the model to be prepared for
+     *     execution.
      * @param preference Indicates the intended execution behavior of a prepared
      *     model.
      * @param cacheDir String specifying the cache directory.
@@ -223,71 +202,8 @@ class VersionedIDevice {
      *         that has been prepared for execution, else nullptr.
      */
     std::pair<int, std::shared_ptr<VersionedIPreparedModel>> prepareModel(
-            const hal::Model& model, hal::ExecutionPreference preference,
+            const hal::ModelFactory& makeModel, hal::ExecutionPreference preference,
             const std::string& cacheDir, const std::optional<hal::CacheToken>& maybeToken) const;
-
-    /**
-     * Creates a prepared model from cache files for execution.
-     *
-     * prepareModelFromCache is used to retrieve a prepared model directly from
-     * cache files to avoid slow model compilation time. There are
-     * two types of cache file handles provided to the driver: model cache
-     * and data cache. For more information on the two types of cache handles,
-     * refer to getNumberOfCacheFilesNeeded.
-     *
-     * The file descriptors must be opened with read and write permission. A file may
-     * have any size, and the corresponding file descriptor may have any offset. The
-     * driver must truncate a file to zero size before writing to that file. The file
-     * descriptors may be closed by the client once the asynchronous preparation has
-     * finished. The driver must dup a file descriptor if it wants to get access to
-     * the cache file later.
-     *
-     * The model is prepared synchronously with respect to the caller. The
-     * prepareModelFromCache function must verify the inputs to the
-     * prepareModelFromCache function are correct, and that the
-     * security-sensitive cache has not been modified since it was last written
-     * by the driver. If there is an error, or if compilation caching is not
-     * supported, or if the security-sensitive cache has been modified,
-     * prepareModelFromCache must return the appropriate ErrorStatus value and
-     * nullptr for the VersionedIPreparedModel. If the inputs to the
-     * prepareModelFromCache function are valid, the security-sensitive cache is
-     * not modified, and there is no error, prepareModelFromCache must prepare
-     * the model.
-     *
-     * If the model was prepared successfully, prepareModelFromCache must return
-     * ErrorStatus::NONE and the produced VersionedIPreparedModel object. If an
-     * error occurred preparing the model, prepareModelFromCache must return the
-     * appropriate ErrorStatus value and nullptr for the
-     * VersionedIPreparedModel.
-     *
-     * The only information that may be unknown to the model at this stage is
-     * the shape of the tensors, which may only be known at execution time. As
-     * such, some driver services may return partially prepared models, where
-     * the prepared model may only be finished when it is paired with a set of
-     * inputs to the model. Note that the same prepared model object may be
-     * used with different shapes of inputs on different (possibly concurrent)
-     * executions.
-     *
-     * @param cacheDir String specifying the cache directory.
-     * @param maybeToken A caching token of length
-     *     Constant::BYTE_SIZE_OF_CACHE_TOKEN identifying the prepared model. It
-     *     is the same token provided when saving the cache files with
-     *     prepareModel_1_2. Tokens should be chosen to have a low rate of
-     *     collision for a particular application. The driver cannot detect a
-     *     collision; a collision will result in a failed execution or in a
-     *     successful execution that produces incorrect output values.
-     * @return A pair of:
-     *     - Result code of preparing the model; must be:
-     *         - ANEURALNETWORKS_NO_ERROR if preparation succeeded
-     *         - ANEURALNETWORKS_UNAVAILABLE_DEVICE if driver is offline or busy
-     *         - ANEURALNETWORKS_OP_FAILED if there is an unspecified error
-     *         - ANEURALNETWORKS_BAD_DATA if one of the input arguments related
-     *             to preparing the model is invalid
-     *     - preparedModel A VersionedIPreparedModel object representing a model
-     *         that has been prepared for execution, else nullptr.
-     */
-    std::pair<int, std::shared_ptr<VersionedIPreparedModel>> prepareModelFromCache(
-            const std::string& cacheDir, const hal::CacheToken& token) const;
 
     /**
      * Returns the current status of a driver.
@@ -411,14 +327,11 @@ class VersionedIDevice {
     std::pair<uint32_t, uint32_t> mNumberOfCacheFilesNeeded;
 
     // internal methods to prepare a model
-    std::pair<hal::ErrorStatus, std::shared_ptr<VersionedIPreparedModel>> prepareModelInternal(
+    std::pair<int, std::shared_ptr<VersionedIPreparedModel>> prepareModelInternal(
             const hal::Model& model, hal::ExecutionPreference preference,
-            const hal::hidl_vec<hal::hidl_handle>& modelCache,
-            const hal::hidl_vec<hal::hidl_handle>& dataCache, const hal::CacheToken& token) const;
-    std::pair<hal::ErrorStatus, std::shared_ptr<VersionedIPreparedModel>>
-    prepareModelFromCacheInternal(const hal::hidl_vec<hal::hidl_handle>& modelCache,
-                                  const hal::hidl_vec<hal::hidl_handle>& dataCache,
-                                  const hal::CacheToken& token) const;
+            const std::string& cacheDir, const std::optional<hal::CacheToken>& maybeToken) const;
+    std::pair<int, std::shared_ptr<VersionedIPreparedModel>> prepareModelFromCacheInternal(
+            const std::string& cacheDir, const hal::CacheToken& token) const;
 
     /**
      * This is a utility class for VersionedIDevice that encapsulates a
