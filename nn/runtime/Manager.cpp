@@ -210,25 +210,13 @@ std::vector<bool> DriverDevice::getSupportedOperations(const MetaModel& metaMode
 std::pair<int, std::shared_ptr<PreparedModel>> DriverDevice::prepareModel(
         const ModelFactory& makeModel, ExecutionPreference preference, const std::string& cacheDir,
         const std::optional<CacheToken>& maybeToken) const {
-    // Attempt to compile from cache if token is present.
-    if (maybeToken.has_value()) {
-        const auto [n, preparedModel] = kInterface->prepareModelFromCache(cacheDir, *maybeToken);
-        if (n == ANEURALNETWORKS_NO_ERROR) {
-            return {n, std::make_shared<DriverPreparedModel>(preparedModel)};
-        }
-    }
-
-    // Fallback to full compilation (possibly with token) if
-    // prepareModelFromCache could not be used or failed.
-    const Model model = makeModel();
     const auto [n, preparedModel] =
-            kInterface->prepareModel(model, preference, cacheDir, maybeToken);
-    if (n == ANEURALNETWORKS_NO_ERROR) {
-        return {n, std::make_shared<DriverPreparedModel>(preparedModel)};
+            kInterface->prepareModel(makeModel, preference, cacheDir, maybeToken);
+    if (n != ANEURALNETWORKS_NO_ERROR) {
+        return {n, nullptr};
     }
-
-    // No further fallbacks, so return error.
-    return {ANEURALNETWORKS_OP_FAILED, nullptr};
+    CHECK(preparedModel != nullptr) << "prepareModel returned nullptr without error code";
+    return {ANEURALNETWORKS_NO_ERROR, std::make_shared<DriverPreparedModel>(preparedModel)};
 }
 
 // Convert ModelArgumentInfo to HIDL RequestArgument. For pointer arguments, use the location
