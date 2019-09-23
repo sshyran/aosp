@@ -121,47 +121,52 @@ bool getCacheHandles(const std::string& cacheDir, const CacheToken& token,
 }
 
 // Tries to compile directly from cache, returns false on fail.
-bool compileFromCache(const std::shared_ptr<Device>& device, const std::string& cacheDir,
-                      const CacheToken& token, std::shared_ptr<PreparedModel>* preparedModel) {
-    CHECK(device != nullptr);
-    CHECK(preparedModel != nullptr);
-    *preparedModel = nullptr;
+std::pair<int, std::shared_ptr<PreparedModel>> compileFromCache(const Device& device,
+                                                                const std::string& cacheDir,
+                                                                const CacheToken& token) {
     VLOG(COMPILATION) << "compileFromCache";
 
     hidl_vec<hidl_handle> modelCache, dataCache;
-    NN_RET_CHECK(getCacheHandles(cacheDir, token, device->getNumberOfCacheFilesNeeded(),
-                                 /*createIfNotExist=*/false, &modelCache, &dataCache));
+    if (!getCacheHandles(cacheDir, token, device.getNumberOfCacheFilesNeeded(),
+                         /*createIfNotExist=*/false, &modelCache, &dataCache)) {
+        return {ANEURALNETWORKS_OP_FAILED, nullptr};
+    }
 
-    const auto [n, returnedPreparedModel] =
-            device->prepareModelFromCache(modelCache, dataCache, token);
-    *preparedModel = returnedPreparedModel;
-    return n == ANEURALNETWORKS_NO_ERROR;
+    return device.prepareModelFromCache(modelCache, dataCache, token);
 }
 
-int compileModelAndCache(const std::shared_ptr<Device>& device, const ModelBuilder* model,
-                         int32_t executionPreference, const std::string& cacheDir,
-                         const std::optional<CacheToken>& maybeToken,
-                         std::shared_ptr<PreparedModel>* preparedModel) {
-    CHECK(device != nullptr);
-    CHECK(preparedModel != nullptr);
-    *preparedModel = nullptr;
+std::pair<int, std::shared_ptr<PreparedModel>> compileModelAndCache(
+        const Device& device, const Model& model, ExecutionPreference preference,
+        const std::string& cacheDir, const std::optional<CacheToken>& maybeToken) {
     static const CacheToken kNullToken{};
 
     hidl_vec<hidl_handle> modelCache, dataCache;
     if (!maybeToken.has_value() ||
-        !getCacheHandles(cacheDir, *maybeToken, device->getNumberOfCacheFilesNeeded(),
+        !getCacheHandles(cacheDir, *maybeToken, device.getNumberOfCacheFilesNeeded(),
                          /*createIfNotExist=*/true, &modelCache, &dataCache)) {
         modelCache.resize(0);
         dataCache.resize(0);
     }
 
     const CacheToken token = maybeToken.value_or(kNullToken);
-    const Model hidlModel = model->makeHidlModel();
-    const ExecutionPreference preference = static_cast<ExecutionPreference>(executionPreference);
-    const auto [n, returnedPreparedModel] =
-            device->prepareModel(hidlModel, preference, modelCache, dataCache, token);
-    *preparedModel = returnedPreparedModel;
-    return n;
+    return device.prepareModel(model, preference, modelCache, dataCache, token);
+}
+
+std::pair<int, std::shared_ptr<PreparedModel>> compile(
+        const Device& device, const ModelFactory& makeModel, ExecutionPreference preference,
+        const std::string& cacheDir, const std::optional<CacheToken>& maybeToken) {
+    // Attempt to compile from cache if token is present.
+    if (maybeToken.has_value()) {
+        const auto [n, preparedModel] = compileFromCache(device, cacheDir, *maybeToken);
+        if (n == ANEURALNETWORKS_NO_ERROR) {
+            return {n, preparedModel};
+        }
+    }
+
+    // Fallback to full compilation (possibly with token) if compileFromCache
+    // could not be used or failed.
+    const Model model = makeModel();
+    return compileModelAndCache(device, model, preference, cacheDir, maybeToken);
 }
 
 // Compiles the model on device.
@@ -169,25 +174,26 @@ int compileModelAndCache(const std::shared_ptr<Device>& device, const ModelBuild
 // been initialized by the user provided token (SIMPLE body), or is already re-hashed by the
 // operation indices to be executed (COMPOUND body). The token will be re-hashed further by the
 // device name, device version string, and the execution preference in this function.
-int compile(std::shared_ptr<Device> device, const ModelBuilder* model, int32_t executionPreference,
+int compile(const Device& device, const ModelBuilder& model, int executionPreference,
             const std::string& cacheDir, TokenHasher* token,
             std::shared_ptr<PreparedModel>* preparedModel) {
-    CHECK(device != nullptr);
+    CHECK(token != nullptr);
     CHECK(preparedModel != nullptr);
     *preparedModel = nullptr;
 
     std::optional<CacheToken> cacheToken;
-    if (device->isCachingSupported() && token->ok() && token->updateFromString(device->getName()) &&
-        token->updateFromString(device->getVersionString()) &&
+    if (device.isCachingSupported() && token->ok() && token->updateFromString(device.getName()) &&
+        token->updateFromString(device.getVersionString()) &&
         token->update(&executionPreference, sizeof(executionPreference)) && token->finish()) {
         cacheToken.emplace(token->getCacheToken());
     }
-    if (cacheToken.has_value() && compileFromCache(device, cacheDir, *cacheToken, preparedModel)) {
-        return ANEURALNETWORKS_NO_ERROR;
-    }
 
-    return compileModelAndCache(device, model, executionPreference, cacheDir, cacheToken,
-                                preparedModel);
+    const ModelFactory makeModel = [&model] { return model.makeHidlModel(); };
+    const ExecutionPreference preference = static_cast<ExecutionPreference>(executionPreference);
+    const auto [n, returnedPreparedModel] =
+            compile(device, makeModel, preference, cacheDir, cacheToken);
+    *preparedModel = returnedPreparedModel;
+    return n;
 }
 
 typedef std::function<void(uint32_t)> OperationReadyCallback;
@@ -590,7 +596,7 @@ int ExecutionStep::finishSubModel(const ModelBuilder* fromModel, bool* hasOutput
 
     // TODO: Move compilation elsewhere?
     VLOG(COMPILATION) << "ExecutionStep::finishSubModel, compilation on " << mDevice->getName();
-    return compile(mDevice, &mSubModel, executionPreference, *mPlan->getCacheDir(), &mToken,
+    return compile(*mDevice, mSubModel, executionPreference, *mPlan->getCacheDir(), &mToken,
                    &mPreparedSubModel);
 }
 
@@ -627,7 +633,7 @@ int ExecutionPlan::SimpleBody::finish([[maybe_unused]] const ModelBuilder* fromM
     nnAssert(mDevice != nullptr);
     VLOG(COMPILATION) << "ExecutionPlan::SimpleBody::finish, compilation";
     const int n =
-            compile(mDevice, mModel, executionPreference, *mCacheDir, &mToken, &mPreparedModel);
+            compile(*mDevice, *mModel, executionPreference, *mCacheDir, &mToken, &mPreparedModel);
     mSuccessfulFinish = (n == ANEURALNETWORKS_NO_ERROR);
     return n;
 }
