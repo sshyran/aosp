@@ -20,13 +20,17 @@
 
 #include "Utils.h"
 
+#include <PackageInfo.h>
 #include <android-base/file.h>
 #include <android-base/properties.h>
-#include <android/content/pm/IPackageManagerNative.h>
 #include <binder/IServiceManager.h>
 #include <procpartition/procpartition.h>
 #include <algorithm>
+#include <map>
+#include <memory>
+#include <string>
 #include <string_view>
+#include <vector>
 
 namespace android {
 namespace nn {
@@ -100,42 +104,16 @@ std::vector<std::string> getVendorExtensionAllowlistedApps() {
 // Query PackageManagerNative service about Android app properties.
 // On success, it will populate appPackageInfo->app* fields.
 bool fetchAppPackageLocationInfo(uid_t uid, TypeManager::AppPackageInfo* appPackageInfo) {
-    sp<::android::IServiceManager> sm(::android::defaultServiceManager());
-    sp<::android::IBinder> binder(sm->getService(String16("package_native")));
-    if (binder == nullptr) {
-        LOG(ERROR) << "getService package_native failed";
+    ANeuralNetworks_PackageInfo packageInfo;
+    if (!ANeuralNetworks_fetch_PackageInfo(uid, &packageInfo)) {
         return false;
     }
+    appPackageInfo->appPackageName = packageInfo.appPackageName;
+    appPackageInfo->appIsSystemApp = packageInfo.appIsSystemApp;
+    appPackageInfo->appIsOnVendorImage = packageInfo.appIsOnVendorImage;
+    appPackageInfo->appIsOnProductImage = packageInfo.appIsOnProductImage;
 
-    sp<content::pm::IPackageManagerNative> packageMgr =
-            interface_cast<content::pm::IPackageManagerNative>(binder);
-    std::vector<int> uids{static_cast<int>(uid)};
-    std::vector<std::string> names;
-    binder::Status status = packageMgr->getNamesForUids(uids, &names);
-    if (!status.isOk()) {
-        LOG(ERROR) << "package_native::getNamesForUids failed: "
-                   << status.exceptionMessage().c_str();
-        return false;
-    }
-    const std::string& packageName = names[0];
-
-    appPackageInfo->appPackageName = packageName;
-    int flags = 0;
-    status = packageMgr->getLocationFlags(packageName, &flags);
-    if (!status.isOk()) {
-        LOG(ERROR) << "package_native::getLocationFlags failed: "
-                   << status.exceptionMessage().c_str();
-        return false;
-    }
-    // isSystemApp()
-    appPackageInfo->appIsSystemApp =
-            ((flags & content::pm::IPackageManagerNative::LOCATION_SYSTEM) != 0);
-    // isVendor()
-    appPackageInfo->appIsOnVendorImage =
-            ((flags & content::pm::IPackageManagerNative::LOCATION_VENDOR) != 0);
-    // isProduct()
-    appPackageInfo->appIsOnProductImage =
-            ((flags & content::pm::IPackageManagerNative::LOCATION_PRODUCT) != 0);
+    ANeuralNetworks_free_PackageInfo(&packageInfo);
     return true;
 }
 
