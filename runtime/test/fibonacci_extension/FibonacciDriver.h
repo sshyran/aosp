@@ -41,7 +41,7 @@ class FibonacciOperationResolver : public IOperationResolver {
 };
 
 // A driver that implements FibonacciExtension.
-// The only supported operation is TEST_VENDOR_FIBONACCI.
+// The only supported operation is EXAMPLE_FIBONACCI.
 class FibonacciDriver : public SampleDriver {
    public:
     FibonacciDriver() : SampleDriver(kDriverName, FibonacciOperationResolver::get()) {}
