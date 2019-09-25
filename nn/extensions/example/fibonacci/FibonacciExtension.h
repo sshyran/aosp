@@ -14,42 +14,44 @@
  * limitations under the License.
  */
 
-#ifndef ANDROID_FRAMEWORKS_ML_NN_EXTENSIONS_TEST_VENDOR_FIBONACCI_FIBONACCI_EXTENSION_H
-#define ANDROID_FRAMEWORKS_ML_NN_EXTENSIONS_TEST_VENDOR_FIBONACCI_FIBONACCI_EXTENSION_H
+#ifndef ANDROID_FRAMEWORKS_ML_NN_EXTENSIONS_EXAMPLE_FIBONACCI_FIBONACCI_EXTENSION_H
+#define ANDROID_FRAMEWORKS_ML_NN_EXTENSIONS_EXAMPLE_FIBONACCI_FIBONACCI_EXTENSION_H
 
 /**
  * A sample extension definition.
+ *
+ * "Example" is a stand-in for the vendor name.
  *
  * Tests are available in
  * runtime/test/fibonacci_extension/FibonacciExtensionTest.cpp
  */
 
-const char TEST_VENDOR_FIBONACCI_EXTENSION_NAME[] = "com.example.fibonacci";
+const char EXAMPLE_FIBONACCI_EXTENSION_NAME[] = "com.example.fibonacci";
 
 /**
- * Quantization parameters for {@link TEST_VENDOR_TENSOR_QUANT64_ASYMM}.
+ * Quantization parameters for {@link EXAMPLE_TENSOR_QUANT64_ASYMM}.
  */
-typedef struct TestVendorQuant64AsymmParams {
+typedef struct ExampleQuant64AsymmParams {
     double scale;
     int64_t zeroPoint;
-} TestVendorQuant64AsymmParams;
+} ExampleQuant64AsymmParams;
 
 enum {
     /**
      * A signed 64-bit integer scalar value.
      */
-    TEST_VENDOR_INT64 = 0,
+    EXAMPLE_INT64 = 0,
 
     /**
      * A tensor of 64-bit unsigned integers that represent real numbers.
      *
-     * Attached to this tensor is {@link TestVendorQuant64AsymmParams} that is
+     * Attached to this tensor is {@link ExampleQuant64AsymmParams} that is
      * used to convert the 64-bit bit integer to the real value and vice versa.
      *
      * The formula is:
      *   real_value = (integer_value - zeroPoint) * scale.
      */
-    TEST_VENDOR_TENSOR_QUANT64_ASYMM = 1,
+    EXAMPLE_TENSOR_QUANT64_ASYMM = 1,
 };
 
 enum {
@@ -57,11 +59,11 @@ enum {
      * Computes the Fibonacci sequence up to n.
      *
      * Supported input types:
-     * - {@link TEST_VENDOR_INT64}
+     * - {@link EXAMPLE_INT64}
      * - {@link ANEURALNETWORKS_TENSOR_FLOAT32} (must contain exactly 1 element)
      *
      * Supported output types:
-     * - {@link TEST_VENDOR_TENSOR_QUANT64_ASYMM}
+     * - {@link EXAMPLE_TENSOR_QUANT64_ASYMM}
      * - {@link ANEURALNETWORKS_TENSOR_FLOAT32}
      *
      * Inputs:
@@ -70,7 +72,7 @@ enum {
      * Outputs:
      * * 0: A 1-D tensor of size n.
      */
-    TEST_VENDOR_FIBONACCI = 0,
+    EXAMPLE_FIBONACCI = 0,
 };
 
-#endif  // ANDROID_FRAMEWORKS_ML_NN_EXTENSIONS_TEST_VENDOR_FIBONACCI_FIBONACCI_EXTENSION_H
+#endif  // ANDROID_FRAMEWORKS_ML_NN_EXTENSIONS_EXAMPLE_FIBONACCI_FIBONACCI_EXTENSION_H

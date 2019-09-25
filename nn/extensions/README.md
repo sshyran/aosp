@@ -30,12 +30,16 @@ using the NNAPI driver HAL interface.
 
 The vendor is expected to create and maintain a header file with the
 extension definition. A complete example is provided in
-`test_vendor/fibonacci/FibonacciExtension.h`.
+`example/fibonacci/FibonacciExtension.h`.
+
+Note: Names of extension operation and operand types must be qualified with a
+vendor name. The vendor name is represented by `EXAMPLE` in the code samples on
+this page.
 
 Each extension must have a unique name that starts with the reverse domain name
 of the vendor:
 ```c
-const char MY_EXTENSION_NAME[] = "com.example.my_extension";
+const char EXAMPLE_EXTENSION_NAME[] = "com.example.my_extension";
 ```
 
 This name acts as a namespace for operations and data types.
@@ -48,27 +52,27 @@ enum {
     /**
      * A custom scalar type.
      */
-    MY_SCALAR = 0,
+    EXAMPLE_SCALAR = 0,
 
     /**
      * A custom tensor type.
      *
-     * Attached to this tensor is {@link MyTensorParams}.
+     * Attached to this tensor is {@link ExampleTensorParams}.
      */
-    MY_TENSOR = 1,
+    EXAMPLE_TENSOR = 1,
 };
 
 enum {
     /**
-     * Computes my function.
+     * Computes example function.
      *
      * Inputs:
-     * * 0: A scalar of {@link MY_SCALAR}.
+     * * 0: A scalar of {@link EXAMPLE_SCALAR}.
      *
      * Outputs:
-     * * 0: A tensor of {@link MY_TENSOR}.
+     * * 0: A tensor of {@link EXAMPLE_TENSOR}.
      */
-    MY_FUNCTION = 0,
+    EXAMPLE_FUNCTION = 0,
 };
 ```
 
@@ -80,12 +84,12 @@ extension.
 Extensions may also declare custom structures to accompany extension operands:
 ```c
 /**
- * Quantization parameters for {@link MY_TENSOR}.
+ * Quantization parameters for {@link EXAMPLE_TENSOR}.
  */
-typedef struct MyTensorParams {
+typedef struct ExampleTensorParams {
     double scale;
     int64_t zeroPoint;
-} MyTensorParams;
+} ExampleTensorParams;
 ```
 
 ## Using extensions in NNAPI clients
@@ -99,7 +103,7 @@ Use `ANeuralNetworksDevice_getExtensionSupport` to check whether a device
 supports an extension:
 ```c
 bool isExtensionSupported;
-CHECK_EQ(ANeuralNetworksDevice_getExtensionSupport(device, MY_EXTENSION_NAME,
+CHECK_EQ(ANeuralNetworksDevice_getExtensionSupport(device, EXAMPLE_EXTENSION_NAME,
                                                    &isExtensionSupported),
          ANEURALNETWORKS_NO_ERROR);
 if (isExtensionSupported) {
@@ -113,7 +117,8 @@ To build a model with an extension operand, use
 Then call `ANeuralNetworksModel_addOperand` as usual:
 ```c
 int32_t type;
-CHECK_EQ(ANeuralNetworksModel_getExtensionOperandType(model, MY_EXTENSION_NAME, MY_TENSOR, &type),
+CHECK_EQ(ANeuralNetworksModel_getExtensionOperandType(model, EXAMPLE_EXTENSION_NAME, EXAMPLE_TENSOR,
+                                                      &type),
          ANEURALNETWORKS_NO_ERROR);
 ANeuralNetworksOperandType operandType{
         .type = type,
@@ -126,7 +131,7 @@ CHECK_EQ(ANeuralNetworksModel_addOperand(model, &operandType), ANEURALNETWORKS_N
 Optionally, use `ANeuralNetworksModel_setOperandExtensionData` to
 associate additional data with an extension operand.
 ```c
-MyTensorParams params{
+ExampleTensorParams params{
         .scale = 0.5,
         .zeroPoint = 128,
 };
@@ -139,8 +144,8 @@ To build a model with an extension operation, use
 Then call `ANeuralNetworksModel_addOperation` as usual:
 ```c
 ANeuralNetworksOperationType type;
-CHECK_EQ(ANeuralNetworksModel_getExtensionOperationType(model, MY_EXTENSION_NAME, MY_FUNCTION,
-                                                        &type),
+CHECK_EQ(ANeuralNetworksModel_getExtensionOperationType(model, EXAMPLE_EXTENSION_NAME,
+                                                        EXAMPLE_FUNCTION, &type),
          ANEURALNETWORKS_NO_ERROR);
 CHECK_EQ(ANeuralNetworksModel_addOperation(model, type, inputCount, inputs, outputCount, outputs),
          ANEURALNETWORKS_NO_ERROR);
@@ -154,15 +159,15 @@ For each supported extension, the returned list must contain an entry
 describing it:
 ```c++
 Extension {
-    .name = MY_EXTENSION_NAME,
+    .name = EXAMPLE_EXTENSION_NAME,
     .operandTypes = {
         {
-            .type = MY_SCALAR,
+            .type = EXAMPLE_SCALAR,
             .isTensor = false,
             .byteSize = 8,
         },
         {
-            .type = MY_TENSOR,
+            .type = EXAMPLE_TENSOR,
             .isTensor = true,
             .byteSize = 8,
         },
