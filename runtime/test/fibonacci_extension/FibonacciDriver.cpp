@@ -27,6 +27,8 @@
 
 #include "FibonacciExtension.h"
 
+#include <vector>
+
 namespace android {
 namespace nn {
 namespace sample_driver {
@@ -39,7 +41,7 @@ const uint32_t kTypeWithinExtensionMask = (1 << kLowBitsType) - 1;
 
 namespace fibonacci_op {
 
-constexpr char kOperationName[] = "TEST_VENDOR_FIBONACCI";
+constexpr char kOperationName[] = "EXAMPLE_FIBONACCI";
 
 constexpr uint32_t kNumInputs = 1;
 constexpr uint32_t kInputN = 0;
@@ -49,7 +51,7 @@ constexpr uint32_t kOutputTensor = 0;
 
 bool getFibonacciExtensionPrefix(const Model& model, uint16_t* prefix) {
     NN_RET_CHECK_EQ(model.extensionNameToPrefix.size(), 1u);  // Assumes no other extensions in use.
-    NN_RET_CHECK_EQ(model.extensionNameToPrefix[0].name, TEST_VENDOR_FIBONACCI_EXTENSION_NAME);
+    NN_RET_CHECK_EQ(model.extensionNameToPrefix[0].name, EXAMPLE_FIBONACCI_EXTENSION_NAME);
     *prefix = model.extensionNameToPrefix[0].prefix;
     return true;
 }
@@ -58,7 +60,7 @@ bool isFibonacciOperation(const Operation& operation, const Model& model) {
     int32_t operationType = static_cast<int32_t>(operation.type);
     uint16_t prefix;
     NN_RET_CHECK(getFibonacciExtensionPrefix(model, &prefix));
-    NN_RET_CHECK_EQ(operationType, (prefix << kLowBitsType) | TEST_VENDOR_FIBONACCI);
+    NN_RET_CHECK_EQ(operationType, (prefix << kLowBitsType) | EXAMPLE_FIBONACCI);
     return true;
 }
 
@@ -70,9 +72,9 @@ bool validate(const Operation& operation, const Model& model) {
     int32_t outputType = static_cast<int32_t>(model.operands[operation.outputs[0]].type);
     uint16_t prefix;
     NN_RET_CHECK(getFibonacciExtensionPrefix(model, &prefix));
-    NN_RET_CHECK(inputType == ((prefix << kLowBitsType) | TEST_VENDOR_INT64) ||
+    NN_RET_CHECK(inputType == ((prefix << kLowBitsType) | EXAMPLE_INT64) ||
                  inputType == ANEURALNETWORKS_TENSOR_FLOAT32);
-    NN_RET_CHECK(outputType == ((prefix << kLowBitsType) | TEST_VENDOR_TENSOR_QUANT64_ASYMM) ||
+    NN_RET_CHECK(outputType == ((prefix << kLowBitsType) | EXAMPLE_TENSOR_QUANT64_ASYMM) ||
                  outputType == ANEURALNETWORKS_TENSOR_FLOAT32);
     return true;
 }
@@ -126,7 +128,7 @@ bool execute(IOperationExecutionContext* context) {
     } else {
         uint64_t* output = context->getOutputBuffer<uint64_t>(kOutputTensor);
         Shape outputShape = context->getOutputShape(kOutputTensor);
-        auto outputQuant = reinterpret_cast<const TestVendorQuant64AsymmParams*>(
+        auto outputQuant = reinterpret_cast<const ExampleQuant64AsymmParams*>(
                 outputShape.extraParams.extension().data());
         return compute(n, outputQuant->scale, outputQuant->zeroPoint, output);
     }
@@ -144,24 +146,24 @@ const OperationRegistration* FibonacciOperationResolver::findOperation(
     uint16_t prefix = static_cast<int32_t>(operationType) >> kLowBitsType;
     uint16_t typeWithinExtension = static_cast<int32_t>(operationType) & kTypeWithinExtensionMask;
     // Assumes no other extensions in use.
-    return prefix != 0 && typeWithinExtension == TEST_VENDOR_FIBONACCI ? &operationRegistration
-                                                                       : nullptr;
+    return prefix != 0 && typeWithinExtension == EXAMPLE_FIBONACCI ? &operationRegistration
+                                                                   : nullptr;
 }
 
 Return<void> FibonacciDriver::getSupportedExtensions(getSupportedExtensions_cb cb) {
     cb(ErrorStatus::NONE,
        {
                {
-                       .name = TEST_VENDOR_FIBONACCI_EXTENSION_NAME,
+                       .name = EXAMPLE_FIBONACCI_EXTENSION_NAME,
                        .operandTypes =
                                {
                                        {
-                                               .type = TEST_VENDOR_INT64,
+                                               .type = EXAMPLE_INT64,
                                                .isTensor = false,
                                                .byteSize = 8,
                                        },
                                        {
-                                               .type = TEST_VENDOR_TENSOR_QUANT64_ASYMM,
+                                               .type = EXAMPLE_TENSOR_QUANT64_ASYMM,
                                                .isTensor = true,
                                                .byteSize = 8,
                                        },
