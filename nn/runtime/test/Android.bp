@@ -133,7 +133,7 @@ cc_defaults {
     ],
     header_libs: [
         "libneuralnetworks_private_headers",
-        "neuralnetworks_test_vendor_fibonacci_extension",
+        "neuralnetworks_example_fibonacci_extension",
     ],
 }
 
