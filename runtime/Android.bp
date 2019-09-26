@@ -60,6 +60,7 @@ cc_library {
                 "android.hidl.allocator@1.0",
                 "android.hidl.memory@1.0",
                 "libbase",
+                "libcrypto",
                 "libcutils",
                 "libhidlbase",
                 "libhidlmemory",
@@ -68,9 +69,6 @@ cc_library {
                 "libneuralnetworks_packageinfo",
                 "libui",
                 "libutils",
-            ],
-            static_libs: [
-                "libcrypto_static",
             ],
         },
         host: {
