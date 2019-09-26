@@ -725,9 +725,11 @@ int StepExecutor::startComputeOnCpuFallback(sp<ExecutionCallback>* synchronizati
     mPreparedModel = nullptr;
     // TODO: Propagate user preference to this point instead of using default value of
     // ANEURALNETWORKS_PREFER_FAST_SINGLE_ANSWER.
-    ExecutionPreference preference =
+    const ExecutionPreference preference =
             static_cast<ExecutionPreference>(ANEURALNETWORKS_PREFER_FAST_SINGLE_ANSWER);
-    NN_RETURN_IF_ERROR(mDevice->prepareModel(model, preference, {}, {}, {}, &mPreparedModel));
+    const auto [n, preparedModel] = mDevice->prepareModel(model, preference, {}, {}, {});
+    mPreparedModel = preparedModel;
+    NN_RETURN_IF_ERROR(n);
     return startCompute(synchronizationCallback, /*burstController=*/nullptr);
 }
 
