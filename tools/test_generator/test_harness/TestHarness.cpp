@@ -46,7 +46,7 @@ int getQuant8AllowedError() {
     if (testName.find("mobilenet") != std::string::npos ||
         (testCaseName.find("CompilationCaching") != std::string::npos &&
          testName.find("TOCTOU") == std::string::npos)) {
-        return 2;
+        return 3;
     } else {
         return 1;
     }
