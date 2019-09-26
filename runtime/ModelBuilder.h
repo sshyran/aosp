@@ -26,6 +26,8 @@
 #include "NeuralNetworks.h"
 #include "Utils.h"
 
+#include <vector>
+
 namespace android {
 namespace nn {
 
@@ -142,6 +144,8 @@ class ModelBuilder {
     bool mHasExtensionOperation = false;
     // The description of the operands of the graph.
     std::vector<hal::Operand> mOperands;
+    // Is at least one of those operands an OEM operand?
+    bool mHasOEMOperand = false;
     // Specifies where to find the list of indexes identifying
     // the inputs and outputs of the model.  The offset is into
     // the mOperandIndexes table.
