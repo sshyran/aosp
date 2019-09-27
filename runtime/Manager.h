@@ -22,6 +22,7 @@
 #include <map>
 #include <memory>
 #include <string>
+#include <tuple>
 #include <unordered_set>
 #include <utility>
 #include <vector>
@@ -83,16 +84,15 @@ class Device {
     virtual std::pair<uint32_t, uint32_t> getNumberOfCacheFilesNeeded() const = 0;
     bool isCachingSupported() const;
 
-    virtual int prepareModel(const hal::Model& hidlModel,
-                             hal::ExecutionPreference executionPreference,
-                             const hal::hidl_vec<hal::hidl_handle>& modelCache,
-                             const hal::hidl_vec<hal::hidl_handle>& dataCache,
-                             const hal::CacheToken& token,
-                             std::shared_ptr<PreparedModel>* preparedModel) const = 0;
-    virtual int prepareModelFromCache(const hal::hidl_vec<hal::hidl_handle>& modelCache,
-                                      const hal::hidl_vec<hal::hidl_handle>& dataCache,
-                                      const hal::CacheToken& token,
-                                      std::shared_ptr<PreparedModel>* preparedModel) const = 0;
+    virtual std::pair<int, std::shared_ptr<PreparedModel>> prepareModel(
+            const hal::Model& hidlModel, hal::ExecutionPreference executionPreference,
+            const hal::hidl_vec<hal::hidl_handle>& modelCache,
+            const hal::hidl_vec<hal::hidl_handle>& dataCache,
+            const hal::CacheToken& token) const = 0;
+    virtual std::pair<int, std::shared_ptr<PreparedModel>> prepareModelFromCache(
+            const hal::hidl_vec<hal::hidl_handle>& modelCache,
+            const hal::hidl_vec<hal::hidl_handle>& dataCache,
+            const hal::CacheToken& token) const = 0;
 };
 
 // Manages the NN HAL devices.  Only one instance of this class will exist.
