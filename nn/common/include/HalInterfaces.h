@@ -29,7 +29,6 @@
 #include <android/hardware/neuralnetworks/1.2/IPreparedModel.h>
 #include <android/hardware/neuralnetworks/1.2/IPreparedModelCallback.h>
 #include <android/hardware/neuralnetworks/1.2/types.h>
-#include <android/hidl/allocator/1.0/IAllocator.h>
 #include <android/hidl/memory/1.0/IMemory.h>
 #include <hidlmemory/mapping.h>
 
@@ -46,7 +45,6 @@ using hardware::hidl_vec;
 using hardware::Return;
 using hardware::Void;
 
-using hidl::allocator::V1_0::IAllocator;
 using hidl::memory::V1_0::IMemory;
 
 namespace V1_0 = hardware::neuralnetworks::V1_0;
