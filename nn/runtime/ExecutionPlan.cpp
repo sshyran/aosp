@@ -124,32 +124,44 @@ bool getCacheHandles(const std::string& cacheDir, const uint8_t* token,
 bool compileFromCache(const std::shared_ptr<Device>& device, const std::string& cacheDir,
                       const uint8_t* token, std::shared_ptr<PreparedModel>* preparedModel) {
     CHECK(token != nullptr && device != nullptr);
-    VLOG(COMPILATION) << "compileFromCache";
+    CHECK(preparedModel != nullptr);
     *preparedModel = nullptr;
+    VLOG(COMPILATION) << "compileFromCache";
+
     CacheToken cacheToken(token);
     hidl_vec<hidl_handle> modelCache, dataCache;
     NN_RET_CHECK(getCacheHandles(cacheDir, token, device->getNumberOfCacheFilesNeeded(),
                                  /*createIfNotExist=*/false, &modelCache, &dataCache));
-    int ret = device->prepareModelFromCache(modelCache, dataCache, cacheToken, preparedModel);
-    return ret == ANEURALNETWORKS_NO_ERROR;
+
+    const auto [n, returnedPreparedModel] =
+            device->prepareModelFromCache(modelCache, dataCache, cacheToken);
+    *preparedModel = returnedPreparedModel;
+    return n == ANEURALNETWORKS_NO_ERROR;
 }
 
 int compileModelAndCache(const std::shared_ptr<Device>& device, const ModelBuilder* model,
                          int32_t executionPreference, const std::string& cacheDir,
                          const uint8_t* token, std::shared_ptr<PreparedModel>* preparedModel) {
     CHECK(device != nullptr);
+    CHECK(preparedModel != nullptr);
     *preparedModel = nullptr;
+
     uint8_t dummyToken[ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN] = {0};
     CacheToken cacheToken(token == nullptr ? dummyToken : token);
+
     hidl_vec<hidl_handle> modelCache, dataCache;
     if (token == nullptr || !getCacheHandles(cacheDir, token, device->getNumberOfCacheFilesNeeded(),
                                              /*createIfNotExist=*/true, &modelCache, &dataCache)) {
         modelCache.resize(0);
         dataCache.resize(0);
     }
-    return device->prepareModel(model->makeHidlModel(),
-                                static_cast<ExecutionPreference>(executionPreference), modelCache,
-                                dataCache, cacheToken, preparedModel);
+
+    const Model hidlModel = model->makeHidlModel();
+    const ExecutionPreference preference = static_cast<ExecutionPreference>(executionPreference);
+    const auto [n, returnedPreparedModel] =
+            device->prepareModel(hidlModel, preference, modelCache, dataCache, cacheToken);
+    *preparedModel = returnedPreparedModel;
+    return n;
 }
 
 // Compiles the model on device.
@@ -161,6 +173,9 @@ int compile(std::shared_ptr<Device> device, const ModelBuilder* model, int32_t e
             const std::string& cacheDir, TokenHasher* token,
             std::shared_ptr<PreparedModel>* preparedModel) {
     CHECK(device != nullptr);
+    CHECK(preparedModel != nullptr);
+    *preparedModel = nullptr;
+
     const uint8_t* tokenData = nullptr;
     if (device->isCachingSupported() && token->ok() && token->updateFromString(device->getName()) &&
         token->updateFromString(device->getVersionString()) &&
@@ -170,6 +185,7 @@ int compile(std::shared_ptr<Device> device, const ModelBuilder* model, int32_t e
     if (tokenData != nullptr && compileFromCache(device, cacheDir, tokenData, preparedModel)) {
         return ANEURALNETWORKS_NO_ERROR;
     }
+
     return compileModelAndCache(device, model, executionPreference, cacheDir, tokenData,
                                 preparedModel);
 }
