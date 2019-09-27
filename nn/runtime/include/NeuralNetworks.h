@@ -6159,7 +6159,8 @@ void ANeuralNetworksCompilation_free(ANeuralNetworksCompilation* compilation) __
 /**
  * Sets the execution preference.
  *
- * <p>Provides guidance to the runtime when trade-offs are possible.</p>
+ * <p>Provides guidance to the runtime when trade-offs are possible. By default the runtime
+ * uses PREFER_SINGLE_FAST_ANSWER</p>
  *
  * See {@link ANeuralNetworksCompilation} for information on multithreaded usage.
  *
