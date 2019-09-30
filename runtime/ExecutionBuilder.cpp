@@ -727,7 +727,7 @@ int StepExecutor::startComputeOnCpuFallback(sp<ExecutionCallback>* synchronizati
     // ANEURALNETWORKS_PREFER_FAST_SINGLE_ANSWER.
     const ExecutionPreference preference =
             static_cast<ExecutionPreference>(ANEURALNETWORKS_PREFER_FAST_SINGLE_ANSWER);
-    const auto [n, preparedModel] = mDevice->prepareModel(model, preference, {}, {}, {});
+    const auto [n, preparedModel] = mDevice->prepareModel(model, preference, {}, {});
     mPreparedModel = preparedModel;
     NN_RETURN_IF_ERROR(n);
     return startCompute(synchronizationCallback, /*burstController=*/nullptr);
