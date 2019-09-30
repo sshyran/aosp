@@ -49,12 +49,6 @@ using namespace hal;
 
 const Timing kNoTiming = {.timeOnDevice = UINT64_MAX, .timeInDriver = UINT64_MAX};
 
-bool Device::isCachingSupported() const {
-    auto pair = getNumberOfCacheFilesNeeded();
-    // Caching is supported if either of numModelCache or numDataCache is greater than 0.
-    return pair.first > 0 || pair.second > 0;
-}
-
 // A Device with actual underlying driver
 class DriverDevice : public Device {
    public:
@@ -77,17 +71,16 @@ class DriverDevice : public Device {
     PerformanceInfo getRelaxedFloat32toFloat16PerformanceTensor() const override {
         return mCapabilities.relaxedFloat32toFloat16PerformanceTensor;
     }
-    std::pair<uint32_t, uint32_t> getNumberOfCacheFilesNeeded() const override {
-        return mNumCacheFiles;
+    bool isCachingSupported() const override {
+        // Caching is supported if either of numModelCache or numDataCache is greater than 0.
+        return mNumCacheFiles.first > 0 || mNumCacheFiles.second > 0;
     }
 
     std::pair<int, std::shared_ptr<PreparedModel>> prepareModel(
-            const Model& hidlModel, ExecutionPreference executionPreference,
-            const hidl_vec<hidl_handle>& modelCache, const hidl_vec<hidl_handle>& dataCache,
-            const CacheToken& token) const override;
+            const Model& model, ExecutionPreference preference, const std::string& cacheDir,
+            const std::optional<CacheToken>& maybeToken) const override;
     std::pair<int, std::shared_ptr<PreparedModel>> prepareModelFromCache(
-            const hidl_vec<hidl_handle>& modelCache, const hidl_vec<hidl_handle>& dataCache,
-            const CacheToken& token) const override;
+            const std::string& cacheDir, const CacheToken& token) const override;
 
    private:
     std::string mName;
@@ -257,6 +250,71 @@ PerformanceInfo DriverDevice::getPerformance(OperandType type) const {
     return lookup(mCapabilities.operandPerformance, type);
 }
 
+// Opens cache file by filename and sets the handle to the opened fd. Returns false on fail. The
+// handle is expected to come in as empty, and is only set to a fd when the function returns true.
+// The file descriptor is always opened with both read and write permission.
+static bool createCacheHandle(const std::string& cache, bool createIfNotExist,
+                              hidl_handle* handle) {
+    CHECK(handle->getNativeHandle() == nullptr);
+    int fd = open(cache.c_str(), createIfNotExist ? (O_RDWR | O_CREAT) : O_RDWR, S_IRUSR | S_IWUSR);
+    NN_RET_CHECK_GE(fd, 0);
+    native_handle_t* cacheNativeHandle = native_handle_create(1, 0);
+    if (cacheNativeHandle == nullptr) {
+        close(fd);
+        return false;
+    }
+    cacheNativeHandle->data[0] = fd;
+    handle->setTo(cacheNativeHandle, /*shouldOwn=*/true);
+    return true;
+}
+
+// Opens a list of cache files and returns the handle vector. Returns empty vector on fail.
+// The file descriptors are always opened with both read and write permission.
+static hidl_vec<hidl_handle> createCacheHandleVec(uint32_t numCacheFiles,
+                                                  const std::string& baseFileName,
+                                                  bool createIfNotExist) {
+    CHECK(numCacheFiles <= static_cast<uint32_t>(Constant::MAX_NUMBER_OF_CACHE_FILES));
+    hidl_vec<hidl_handle> handles(numCacheFiles);
+    for (uint32_t i = 0; i < numCacheFiles; i++) {
+        std::string filename = baseFileName + std::to_string(i);
+        VLOG(COMPILATION) << "Cache " << i << ": " << filename;
+        if (!createCacheHandle(filename, createIfNotExist, &handles[i])) {
+            return hidl_vec<hidl_handle>();
+        }
+    }
+    return handles;
+}
+
+// Maps token to cache file names and sets the handle vectors to the opened fds. Returns false on
+// fail and leaves the vectors empty. Each vector is expected to come in as empty.
+static bool getCacheHandles(const std::string& cacheDir, const CacheToken& token,
+                            const std::pair<uint32_t, uint32_t>& numCacheFiles,
+                            bool createIfNotExist, hidl_vec<hidl_handle>* modelCache,
+                            hidl_vec<hidl_handle>* dataCache) {
+    // The filename includes ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN * 2 characters for token,
+    // and 1 character for model/data cache identifier.
+    std::string filename(ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN * 2 + 1, '0');
+    for (uint32_t i = 0; i < ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN; i++) {
+        filename[i * 2] = 'A' + (token[i] & 0x0F);
+        filename[i * 2 + 1] = 'A' + (token[i] >> 4);
+    }
+    CHECK(cacheDir.empty() || cacheDir.back() == '/');
+    std::string cacheFileName = cacheDir + filename;
+
+    cacheFileName[ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN * 2] = '1';
+    *modelCache = createCacheHandleVec(numCacheFiles.first, cacheFileName, createIfNotExist);
+    if (modelCache->size() != numCacheFiles.first) {
+        return false;
+    }
+    cacheFileName[ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN * 2] = '2';
+    *dataCache = createCacheHandleVec(numCacheFiles.second, cacheFileName, createIfNotExist);
+    if (dataCache->size() != numCacheFiles.second) {
+        modelCache->resize(0);
+        return false;
+    }
+    return true;
+}
+
 static std::pair<int, std::shared_ptr<PreparedModel>> prepareModelCheck(
         ErrorStatus status, const std::shared_ptr<VersionedIPreparedModel>& preparedModel,
         const char* prepareName, const char* serviceName) {
@@ -274,23 +332,38 @@ static std::pair<int, std::shared_ptr<PreparedModel>> prepareModelCheck(
 }
 
 std::pair<int, std::shared_ptr<PreparedModel>> DriverDevice::prepareModel(
-        const Model& hidlModel, ExecutionPreference executionPreference,
-        const hidl_vec<hidl_handle>& modelCache, const hidl_vec<hidl_handle>& dataCache,
-        const CacheToken& token) const {
+        const Model& model, ExecutionPreference preference, const std::string& cacheDir,
+        const std::optional<CacheToken>& maybeToken) const {
     // Note that some work within VersionedIDevice will be subtracted from the IPC layer
     NNTRACE_FULL(NNTRACE_LAYER_IPC, NNTRACE_PHASE_COMPILATION, "prepareModel");
 
+    hidl_vec<hidl_handle> modelCache, dataCache;
+    if (!maybeToken.has_value() ||
+        !getCacheHandles(cacheDir, *maybeToken, mNumCacheFiles,
+                         /*createIfNotExist=*/true, &modelCache, &dataCache)) {
+        modelCache.resize(0);
+        dataCache.resize(0);
+    }
+
+    static const CacheToken kNullToken{};
+    const CacheToken token = maybeToken.value_or(kNullToken);
     const auto [status, preparedModel] =
-            mInterface->prepareModel(hidlModel, executionPreference, modelCache, dataCache, token);
+            mInterface->prepareModel(model, preference, modelCache, dataCache, token);
 
     return prepareModelCheck(status, preparedModel, "prepareModel", getName());
 }
 
 std::pair<int, std::shared_ptr<PreparedModel>> DriverDevice::prepareModelFromCache(
-        const hidl_vec<hidl_handle>& modelCache, const hidl_vec<hidl_handle>& dataCache,
-        const CacheToken& token) const {
+        const std::string& cacheDir, const CacheToken& token) const {
     // Note that some work within VersionedIDevice will be subtracted from the IPC layer
     NNTRACE_FULL(NNTRACE_LAYER_IPC, NNTRACE_PHASE_COMPILATION, "prepareModelFromCache");
+    VLOG(COMPILATION) << "prepareModelFromCache";
+
+    hidl_vec<hidl_handle> modelCache, dataCache;
+    if (!getCacheHandles(cacheDir, token, mNumCacheFiles,
+                         /*createIfNotExist=*/false, &modelCache, &dataCache)) {
+        return {ANEURALNETWORKS_OP_FAILED, nullptr};
+    }
 
     const auto [status, preparedModel] =
             mInterface->prepareModelFromCache(modelCache, dataCache, token);
@@ -490,17 +563,13 @@ class CpuDevice : public Device {
     PerformanceInfo getRelaxedFloat32toFloat16PerformanceTensor() const override {
         return kPerformance;
     }
-    std::pair<uint32_t, uint32_t> getNumberOfCacheFilesNeeded() const override {
-        return kNumCacheFiles;
-    }
+    bool isCachingSupported() const override { return false; }
 
     std::pair<int, std::shared_ptr<PreparedModel>> prepareModel(
-            const Model& hidlModel, ExecutionPreference executionPreference,
-            const hidl_vec<hidl_handle>& modelCache, const hidl_vec<hidl_handle>& dataCache,
-            const CacheToken&) const override;
+            const Model& model, ExecutionPreference preference, const std::string& cacheDir,
+            const std::optional<CacheToken>& maybeToken) const override;
     std::pair<int, std::shared_ptr<PreparedModel>> prepareModelFromCache(
-            const hidl_vec<hidl_handle>&, const hidl_vec<hidl_handle>&,
-            const CacheToken&) const override {
+            const std::string& /*cacheDir*/, const CacheToken& /*token*/) const override {
         CHECK(false) << "Should never call prepareModelFromCache on CpuDevice";
         return {ANEURALNETWORKS_OP_FAILED, nullptr};
     }
@@ -513,9 +582,6 @@ class CpuDevice : public Device {
     // Since the performance is a ratio compared to the CPU performance,
     // by definition the performance of the CPU is 1.0.
     const PerformanceInfo kPerformance = {.execTime = 1.0f, .powerUsage = 1.0f};
-    // CPU device does not support compilation caching.
-    const std::pair<uint32_t, uint32_t> kNumCacheFiles = {/*numModelCache=*/0,
-                                                          /*numDataCache=*/0};
 };
 
 // A special abstracted PreparedModel for the CPU, constructed by CpuDevice.
@@ -562,17 +628,16 @@ void CpuDevice::getSupportedOperations(const MetaModel& metaModel,
 }
 
 std::pair<int, std::shared_ptr<PreparedModel>> CpuDevice::prepareModel(
-        const Model& hidlModel, ExecutionPreference executionPreference,
-        const hidl_vec<hidl_handle>& modelCache, const hidl_vec<hidl_handle>& dataCache,
-        const CacheToken&) const {
-    CHECK(modelCache.size() == 0 && dataCache.size() == 0)
+        const Model& model, ExecutionPreference preference, const std::string& /*cacheDir*/,
+        const std::optional<CacheToken>& maybeToken) const {
+    CHECK(!maybeToken.has_value())
             << "Should never call prepareModel with cache information on CpuDevice";
 
-    if (!validateModel(hidlModel) || !validateExecutionPreference(executionPreference)) {
+    if (!validateModel(model) || !validateExecutionPreference(preference)) {
         return {ANEURALNETWORKS_OP_FAILED, nullptr};
     }
 
-    return CpuPreparedModel::create(hidlModel);
+    return CpuPreparedModel::create(model);
 }
 
 std::pair<int, std::shared_ptr<PreparedModel>> CpuPreparedModel::create(Model hidlModel) {
