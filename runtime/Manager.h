@@ -81,18 +81,14 @@ class Device {
     virtual hal::PerformanceInfo getPerformance(hal::OperandType type) const = 0;
     virtual hal::PerformanceInfo getRelaxedFloat32toFloat16PerformanceScalar() const = 0;
     virtual hal::PerformanceInfo getRelaxedFloat32toFloat16PerformanceTensor() const = 0;
-    virtual std::pair<uint32_t, uint32_t> getNumberOfCacheFilesNeeded() const = 0;
-    bool isCachingSupported() const;
+    virtual bool isCachingSupported() const = 0;
 
     virtual std::pair<int, std::shared_ptr<PreparedModel>> prepareModel(
-            const hal::Model& hidlModel, hal::ExecutionPreference executionPreference,
-            const hal::hidl_vec<hal::hidl_handle>& modelCache,
-            const hal::hidl_vec<hal::hidl_handle>& dataCache,
-            const hal::CacheToken& token) const = 0;
+            const hal::Model& model, hal::ExecutionPreference preference,
+            const std::string& cacheDir,
+            const std::optional<hal::CacheToken>& maybeToken) const = 0;
     virtual std::pair<int, std::shared_ptr<PreparedModel>> prepareModelFromCache(
-            const hal::hidl_vec<hal::hidl_handle>& modelCache,
-            const hal::hidl_vec<hal::hidl_handle>& dataCache,
-            const hal::CacheToken& token) const = 0;
+            const std::string& cacheDir, const hal::CacheToken& token) const = 0;
 };
 
 // Manages the NN HAL devices.  Only one instance of this class will exist.
