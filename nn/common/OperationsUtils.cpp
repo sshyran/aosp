@@ -21,6 +21,7 @@
 #include "Utils.h"
 
 #include <cmath>
+#include <sstream>
 
 namespace android {
 namespace nn {
@@ -60,9 +61,24 @@ bool validateOutputTypes(const IOperationValidationContext* context,
 bool validateHalVersion(const IOperationValidationContext* context,
                         HalVersion minSupportedHalVersion) {
     if (context->getHalVersion() < minSupportedHalVersion) {
-        NN_RET_CHECK_FAIL() << "The given inputs and outputs are only supported in "
-                            << toString(minSupportedHalVersion) << " and later (validating using "
-                            << toString(context->getHalVersion()) << ")";
+        std::ostringstream message;
+        message << "Operation " << context->getOperationName() << " with inputs {";
+        for (uint32_t i = 0, n = context->getNumInputs(); i < n; ++i) {
+            if (i != 0) {
+                message << ", ";
+            }
+            message << toString(context->getInputType(i));
+        }
+        message << "} and outputs {";
+        for (uint32_t i = 0, n = context->getNumOutputs(); i < n; ++i) {
+            if (i != 0) {
+                message << ", ";
+            }
+            message << toString(context->getOutputType(i));
+        }
+        message << "} is only supported since " << toString(minSupportedHalVersion)
+                << " (validating using " << toString(context->getHalVersion()) << ")";
+        NN_RET_CHECK_FAIL() << message.str();
     }
     return true;
 }
