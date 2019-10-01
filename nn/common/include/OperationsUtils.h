@@ -56,6 +56,8 @@ class IOperationValidationContext {
    public:
     virtual ~IOperationValidationContext() {}
 
+    virtual const char* getOperationName() const = 0;
+
     // The HAL version of the environment in which the operation is to be
     // executed.
     //
