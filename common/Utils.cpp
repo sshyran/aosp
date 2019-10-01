@@ -117,16 +117,19 @@ class OperationValidationContext : public IOperationValidationContext {
     DISALLOW_IMPLICIT_CONSTRUCTORS(OperationValidationContext);
 
    public:
-    OperationValidationContext(uint32_t inputCount, const uint32_t* inputIndexes,
-                               uint32_t outputCount, const uint32_t* outputIndexes,
-                               const Operand* operands, HalVersion halVersion)
-        : inputCount(inputCount),
+    OperationValidationContext(const char* operationName, uint32_t inputCount,
+                               const uint32_t* inputIndexes, uint32_t outputCount,
+                               const uint32_t* outputIndexes, const Operand* operands,
+                               HalVersion halVersion)
+        : operationName(operationName),
+          inputCount(inputCount),
           inputIndexes(inputIndexes),
           outputCount(outputCount),
           outputIndexes(outputIndexes),
           operands(operands),
           halVersion(halVersion) {}
 
+    const char* getOperationName() const override;
     HalVersion getHalVersion() const override;
 
     uint32_t getNumInputs() const override;
@@ -142,6 +145,7 @@ class OperationValidationContext : public IOperationValidationContext {
     const Operand* getInputOperand(uint32_t index) const;
     const Operand* getOutputOperand(uint32_t index) const;
 
+    const char* operationName;
     uint32_t inputCount;
     const uint32_t* inputIndexes;
     uint32_t outputCount;
@@ -149,6 +153,10 @@ class OperationValidationContext : public IOperationValidationContext {
     const Operand* operands;
     HalVersion halVersion;
 };
+
+const char* OperationValidationContext::getOperationName() const {
+    return operationName;
+}
 
 HalVersion OperationValidationContext::getHalVersion() const {
     return halVersion;
@@ -1675,7 +1683,8 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
                 LOG(ERROR) << "Incomplete operation registration: " << getOperationName(opType);
                 return ANEURALNETWORKS_UNEXPECTED_NULL;
             }
-            OperationValidationContext context(inputCount, inputIndexes, outputCount, outputIndexes,
+            OperationValidationContext context(operationRegistration->name, inputCount,
+                                               inputIndexes, outputCount, outputIndexes,
                                                operands.data(), halVersion);
             if (!operationRegistration->validate(&context)) {
                 LOG(ERROR) << "Validation failed for operation " << getOperationName(opType);
