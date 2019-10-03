@@ -17,9 +17,8 @@
 #ifndef ANDROID_FRAMEWORKS_ML_NN_RUNTIME_VERSIONED_INTERFACES_H
 #define ANDROID_FRAMEWORKS_ML_NN_RUNTIME_VERSIONED_INTERFACES_H
 
-#include "HalInterfaces.h"
-
 #include <android-base/macros.h>
+
 #include <cstddef>
 #include <functional>
 #include <memory>
@@ -28,7 +27,10 @@
 #include <string>
 #include <tuple>
 #include <utility>
+#include <vector>
+
 #include "Callbacks.h"
+#include "HalInterfaces.h"
 
 namespace android {
 namespace nn {
@@ -98,7 +100,7 @@ class VersionedIDevice {
      *                - GENERAL_FAILURE if there is an unspecified error
      * @return capabilities Capabilities of the driver.
      */
-    std::pair<hal::ErrorStatus, hal::Capabilities> getCapabilities();
+    std::pair<hal::ErrorStatus, hal::Capabilities> getCapabilities() const;
 
     /**
      * Gets information about extensions supported by the driver implementation.
@@ -115,7 +117,7 @@ class VersionedIDevice {
      *     - GENERAL_FAILURE if there is an unspecified error
      * @return extensions A list of supported extensions.
      */
-    std::pair<hal::ErrorStatus, hal::hidl_vec<hal::Extension>> getSupportedExtensions();
+    std::pair<hal::ErrorStatus, hal::hidl_vec<hal::Extension>> getSupportedExtensions() const;
 
     /**
      * Gets the supported operations in a MetaModel.
@@ -146,7 +148,7 @@ class VersionedIDevice {
      *                             it is describing.
      */
     std::pair<hal::ErrorStatus, hal::hidl_vec<bool>> getSupportedOperations(
-            const MetaModel& metaModel);
+            const MetaModel& metaModel) const;
 
     /**
      * Synchronously creates a prepared model for execution and optionally saves it
@@ -241,7 +243,7 @@ class VersionedIDevice {
     std::pair<hal::ErrorStatus, std::shared_ptr<VersionedIPreparedModel>> prepareModel(
             const hal::Model& model, hal::ExecutionPreference preference,
             const hal::hidl_vec<hal::hidl_handle>& modelCache,
-            const hal::hidl_vec<hal::hidl_handle>& dataCache, const hal::CacheToken& token);
+            const hal::hidl_vec<hal::hidl_handle>& dataCache, const hal::CacheToken& token) const;
 
     /**
      * Creates a prepared model from cache files for execution.
@@ -311,7 +313,7 @@ class VersionedIDevice {
      */
     std::pair<hal::ErrorStatus, std::shared_ptr<VersionedIPreparedModel>> prepareModelFromCache(
             const hal::hidl_vec<hal::hidl_handle>& modelCache,
-            const hal::hidl_vec<hal::hidl_handle>& dataCache, const hal::CacheToken& token);
+            const hal::hidl_vec<hal::hidl_handle>& dataCache, const hal::CacheToken& token) const;
 
     /**
      * Returns the current status of a driver.
@@ -322,7 +324,7 @@ class VersionedIDevice {
      *                - DeviceStatus::OFFLINE
      *                - DeviceStatus::UNKNOWN
      */
-    hal::DeviceStatus getStatus();
+    hal::DeviceStatus getStatus() const;
 
     /**
      * Returns the feature level of a driver.
@@ -333,7 +335,7 @@ class VersionedIDevice {
      *                      Return -1 if the driver is offline or busy, or the query resulted in
      *                      an unspecified error.
      */
-    int64_t getFeatureLevel();
+    int64_t getFeatureLevel() const;
 
     /**
      * Returns the device type of a driver.
@@ -377,7 +379,7 @@ class VersionedIDevice {
      * @return version The version string of the device implementation.
      *     Must have nonzero length if the query is successful, and must be an empty string if not.
      */
-    std::pair<hal::ErrorStatus, hal::hidl_string> getVersionString();
+    std::pair<hal::ErrorStatus, hal::hidl_string> getVersionString() const;
 
     /**
      * Gets the caching requirements of the driver implementation.
@@ -417,14 +419,7 @@ class VersionedIDevice {
      *                      the driver needs to cache a single prepared model. It must
      *                      be less than or equal to Constant::MAX_NUMBER_OF_CACHE_FILES.
      */
-    std::tuple<hal::ErrorStatus, uint32_t, uint32_t> getNumberOfCacheFilesNeeded();
-
-    /**
-     * Returns the name of the service that implements the driver
-     *
-     * @return serviceName The name of the service.
-     */
-    std::string getServiceName() const { return mServiceName; }
+    std::tuple<hal::ErrorStatus, uint32_t, uint32_t> getNumberOfCacheFilesNeeded() const;
 
    private:
     /**
@@ -681,9 +676,8 @@ class VersionedIPreparedModel {
      *         UINT64_MAX. A driver may choose to report any time as UINT64_MAX,
      *         indicating that measurement is not available.
      */
-    std::tuple<int, std::vector<hal::OutputShape>, hal::Timing> execute(const hal::Request& request,
-                                                                        hal::MeasureTiming measure,
-                                                                        bool preferSynchronous);
+    std::tuple<int, std::vector<hal::OutputShape>, hal::Timing> execute(
+            const hal::Request& request, hal::MeasureTiming measure, bool preferSynchronous) const;
 
     /**
      * Creates a burst controller on a prepared model.
@@ -697,9 +691,9 @@ class VersionedIPreparedModel {
 
    private:
     std::tuple<int, std::vector<hal::OutputShape>, hal::Timing> executeAsynchronously(
-            const hal::Request& request, hal::MeasureTiming timing);
+            const hal::Request& request, hal::MeasureTiming timing) const;
     std::tuple<int, std::vector<hal::OutputShape>, hal::Timing> executeSynchronously(
-            const hal::Request& request, hal::MeasureTiming measure);
+            const hal::Request& request, hal::MeasureTiming measure) const;
 
     /**
      * All versions of IPreparedModel are necessary because the preparedModel could be v1.0,
