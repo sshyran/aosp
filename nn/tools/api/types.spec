@@ -1,6 +1,6 @@
 %% -*-Fundamental-*-
 
-%kind-validate hal_1.0 hal_1.1 hal_1.2 ndk
+%kind-validate hal_1.0 hal_1.1 hal_1.2 hal_1.3 ndk
 
 %kind ndk
 %define ANN ANEURALNETWORKS_
@@ -28,6 +28,10 @@
      *
      * Available since API level 29.
 %/define-lines
+%define-lines AVAIL30
+     *
+     * Available since API level 30.
+%/define-lines
 %define-lines OutputState
      *
      * Important: As of API level 29, there is no way to get the output state tensors out and NNAPI
@@ -54,6 +58,8 @@
 %/define-lines
 %define-lines AVAIL29
 %/define-lines
+%define-lines AVAIL30
+%/define-lines
 %define-lines PaddingCodeValues
      *      following values: {0 (NONE), 1 (SAME), 2 (VALID)}.
 %/define-lines
@@ -75,13 +81,13 @@
 %/define-lines
 %/kind
 
-%kind hal_1.2
+%kind hal_1.2 hal_1.3
 %define DeclareOperation %{1} = @1.1::OperationType:%{1}
 %define BeforeAPILevel29For Before HAL version 1.2, for
 %define or_1.2 or {@link OperandType::%{1}} 
 %/kind
 
-%kind ndk hal_1.2
+%kind ndk hal_1.2 hal_1.3
 %define-lines NHWC_NCHW
      * Supported tensor rank: 4, with "NHWC" or "NCHW" data layout.
      * With the default data layout NHWC, the data is stored in the order of:
@@ -99,6 +105,31 @@
      *      Since %{APILevel29}, zero batches is supported for this tensor.
 %/define-lines
 %/kind
+
+%section OEMDeprecationAndOperandTypeRangeMaxComment
+
+    /*
+     * DEPRECATED. Since HAL version 1.2, extensions are the preferred
+     * alternative to OEM operation and data types.
+     *
+     * OEM specific scalar value.
+     * OEM                 = 10000,
+     */
+    /*
+     * DEPRECATED. Since HAL version 1.2, extensions are the preferred
+     * alternative to OEM operation and data types.
+     *
+     * A tensor of OEM specific values.
+     * TENSOR_OEM_BYTE     = 10001,
+     */
+    /* ADDING A NEW FUNDAMENTAL TYPE REQUIRES UPDATING THE VALUE OF
+     * OperandTypeRange::FUNDAMENTAL_MAX.
+     */
+    /* ADDING A NEW OEM TYPE REQUIRES UPDATING THE VALUE OF
+     * OperandTypeRange::OEM_MAX.
+     */
+%/section
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -2545,7 +2576,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %% HAL OperationType for 1.2
-%% NDK OperationCode for API 20
+%% NDK OperationCode for API 29
 
 %section Operation_1.2
     /**
@@ -5025,4 +5056,29 @@
 
 %section Operation_1.2_MAX
     FUNDAMENTAL_MAX = 94,
+%/section
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% HAL OperandType for 1.3
+%% NDK OperandCode for API 30
+
+%section Operand_1.3
+    /**
+     * A tensor of 8 bit signed integers that represent real numbers.
+     *
+     * Attached to this tensor are two numbers that can be used to convert the
+     * 8 bit integer to the real value and vice versa. These two numbers are:
+     * - scale: a 32 bit floating point value greater than zero.
+     * - zeroPoint: a 32 bit integer, in range [-128, 127].
+     *
+     * The formula is:
+     * real_value = (integer_value - zeroPoint) * scale.
+%insert-lines AVAIL30
+     */
+    %{ANN}TENSOR_QUANT8_ASYMM_SIGNED = 14,
+%/section
+
+%section Operand_1.3_MAX
+    FUNDAMENTAL_MAX = 14,
 %/section
