@@ -205,12 +205,10 @@ class Specification(Reader):
         return
 
       # Check for start of kind
-      match = re.search("^%kind\s+(\S+)(\s+\S+)*\s*$", self.line)
+      match = re.search("^%kind\s+((\S+)(\s+\S+)*)\s*$", self.line)
       if match:
         assert self.conditional is self.UNCONDITIONAL, "%kind is nested at " + self.context()
         patterns = match[1]
-        if not match[2] is None:
-          patterns = patterns + " " + match[2]
         if self.match_kind(patterns):
           self.conditional = self.CONDITIONAL_ON
         else:
