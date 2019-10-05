@@ -319,7 +319,17 @@ std::shared_ptr<VersionedIDevice> VersionedIDevice::create(std::string serviceNa
 }
 
 VersionedIDevice::VersionedIDevice(std::string serviceName, Core core)
-    : mServiceName(std::move(serviceName)), mCore(std::move(core)) {}
+    : mServiceName(std::move(serviceName)), mCore(std::move(core)) {
+    initializeInternal();
+}
+
+void VersionedIDevice::initializeInternal() {
+    mCapabilities = getCapabilitiesInternal();
+    mSupportedExtensions = getSupportedExtensionsInternal();
+    mType = getTypeInternal();
+    mVersionString = getVersionStringInternal();
+    mNumberOfCacheFilesNeeded = getNumberOfCacheFilesNeededInternal();
+}
 
 std::optional<VersionedIDevice::Core> VersionedIDevice::Core::create(sp<V1_0::IDevice> device) {
     CHECK(device != nullptr) << "VersionedIDevice::Core::create passed invalid device object.";
@@ -481,7 +491,7 @@ Return<T_Return> VersionedIDevice::recoverable(
     return ret;
 }
 
-std::pair<ErrorStatus, Capabilities> VersionedIDevice::getCapabilities() const {
+std::pair<ErrorStatus, Capabilities> VersionedIDevice::getCapabilitiesInternal() const {
     const std::pair<ErrorStatus, Capabilities> kFailure = {ErrorStatus::GENERAL_FAILURE, {}};
     std::pair<ErrorStatus, Capabilities> result;
 
@@ -560,7 +570,12 @@ std::pair<ErrorStatus, Capabilities> VersionedIDevice::getCapabilities() const {
     return {ErrorStatus::DEVICE_UNAVAILABLE, {}};
 }
 
-std::pair<ErrorStatus, hidl_vec<Extension>> VersionedIDevice::getSupportedExtensions() const {
+std::pair<ErrorStatus, Capabilities> VersionedIDevice::getCapabilities() const {
+    return mCapabilities;
+}
+
+std::pair<ErrorStatus, hidl_vec<Extension>> VersionedIDevice::getSupportedExtensionsInternal()
+        const {
     const std::pair<ErrorStatus, hidl_vec<Extension>> kFailure = {ErrorStatus::GENERAL_FAILURE, {}};
 
     // version 1.2+ HAL
@@ -589,6 +604,10 @@ std::pair<ErrorStatus, hidl_vec<Extension>> VersionedIDevice::getSupportedExtens
     // No device available
     LOG(ERROR) << "Device not available!";
     return {ErrorStatus::DEVICE_UNAVAILABLE, {}};
+}
+
+std::pair<ErrorStatus, hidl_vec<Extension>> VersionedIDevice::getSupportedExtensions() const {
+    return mSupportedExtensions;
 }
 
 std::pair<ErrorStatus, hidl_vec<bool>> VersionedIDevice::getSupportedOperations(
@@ -968,7 +987,7 @@ int64_t VersionedIDevice::getFeatureLevel() const {
     }
 }
 
-int32_t VersionedIDevice::getType() const {
+int32_t VersionedIDevice::getTypeInternal() const {
     constexpr int32_t kFailure = -1;
 
     // version 1.2+ HAL
@@ -994,7 +1013,11 @@ int32_t VersionedIDevice::getType() const {
     return ANEURALNETWORKS_DEVICE_UNKNOWN;
 }
 
-std::pair<ErrorStatus, hidl_string> VersionedIDevice::getVersionString() const {
+int32_t VersionedIDevice::getType() const {
+    return mType;
+}
+
+std::pair<ErrorStatus, hidl_string> VersionedIDevice::getVersionStringInternal() const {
     const std::pair<ErrorStatus, hidl_string> kFailure = {ErrorStatus::GENERAL_FAILURE, ""};
 
     // version 1.2+ HAL
@@ -1024,7 +1047,12 @@ std::pair<ErrorStatus, hidl_string> VersionedIDevice::getVersionString() const {
     return kFailure;
 }
 
-std::tuple<ErrorStatus, uint32_t, uint32_t> VersionedIDevice::getNumberOfCacheFilesNeeded() const {
+std::pair<ErrorStatus, hidl_string> VersionedIDevice::getVersionString() const {
+    return mVersionString;
+}
+
+std::tuple<ErrorStatus, uint32_t, uint32_t> VersionedIDevice::getNumberOfCacheFilesNeededInternal()
+        const {
     constexpr std::tuple<ErrorStatus, uint32_t, uint32_t> kFailure = {ErrorStatus::GENERAL_FAILURE,
                                                                       0, 0};
 
@@ -1054,6 +1082,10 @@ std::tuple<ErrorStatus, uint32_t, uint32_t> VersionedIDevice::getNumberOfCacheFi
     // No device available
     LOG(ERROR) << "Could not handle getNumberOfCacheFilesNeeded";
     return kFailure;
+}
+
+std::tuple<ErrorStatus, uint32_t, uint32_t> VersionedIDevice::getNumberOfCacheFilesNeeded() const {
+    return mNumberOfCacheFilesNeeded;
 }
 
 }  // namespace nn
