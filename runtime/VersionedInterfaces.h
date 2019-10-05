@@ -422,6 +422,25 @@ class VersionedIDevice {
     std::tuple<hal::ErrorStatus, uint32_t, uint32_t> getNumberOfCacheFilesNeeded() const;
 
    private:
+    // initializeInternal must be called once before any other public method is
+    // called
+    void initializeInternal();
+
+    // internal helper methods
+    std::pair<hal::ErrorStatus, hal::Capabilities> getCapabilitiesInternal() const;
+    std::pair<hal::ErrorStatus, hal::hidl_vec<hal::Extension>> getSupportedExtensionsInternal()
+            const;
+    int32_t getTypeInternal() const;
+    std::pair<hal::ErrorStatus, hal::hidl_string> getVersionStringInternal() const;
+    std::tuple<hal::ErrorStatus, uint32_t, uint32_t> getNumberOfCacheFilesNeededInternal() const;
+
+    // internal members for the cached results of the internal methods above
+    std::pair<hal::ErrorStatus, hal::Capabilities> mCapabilities;
+    std::pair<hal::ErrorStatus, hal::hidl_vec<hal::Extension>> mSupportedExtensions;
+    int32_t mType;
+    std::pair<hal::ErrorStatus, hal::hidl_string> mVersionString;
+    std::tuple<hal::ErrorStatus, uint32_t, uint32_t> mNumberOfCacheFilesNeeded;
+
     /**
      * This is a utility class for VersionedIDevice that encapsulates a
      * V1_0::IDevice, any appropriate downcasts to newer interfaces, and a
