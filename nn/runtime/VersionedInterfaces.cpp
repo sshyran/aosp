@@ -314,21 +314,77 @@ std::shared_ptr<VersionedIDevice> VersionedIDevice::create(std::string serviceNa
         return nullptr;
     }
 
-    // return a valid VersionedIDevice object
-    return std::make_shared<VersionedIDevice>(std::move(serviceName), std::move(core.value()));
+    // create and initialize a VersionedIDevice object
+    const auto versionedIDevice =
+            std::make_shared<VersionedIDevice>(std::move(serviceName), std::move(core.value()));
+    if (!versionedIDevice->initializeInternal()) {
+        LOG(ERROR) << "VersionedIDevice failed to initialize";
+        return nullptr;
+    }
+
+    // return a valid, initialized VersionedIDevice object
+    return versionedIDevice;
 }
 
 VersionedIDevice::VersionedIDevice(std::string serviceName, Core core)
-    : mServiceName(std::move(serviceName)), mCore(std::move(core)) {
-    initializeInternal();
-}
+    : mServiceName(std::move(serviceName)), mCore(std::move(core)) {}
 
-void VersionedIDevice::initializeInternal() {
-    mCapabilities = getCapabilitiesInternal();
-    mSupportedExtensions = getSupportedExtensionsInternal();
-    mType = getTypeInternal();
-    mVersionString = getVersionStringInternal();
-    mNumberOfCacheFilesNeeded = getNumberOfCacheFilesNeededInternal();
+bool VersionedIDevice::initializeInternal() {
+    auto [capabilitiesStatus, capabilities] = getCapabilitiesInternal();
+    if (capabilitiesStatus != ErrorStatus::NONE) {
+        LOG(ERROR) << "IDevice::getCapabilities* returned the error "
+                   << toString(capabilitiesStatus);
+        return false;
+    }
+    VLOG(MANAGER) << "Capab " << toString(capabilities);
+
+    const auto [versionStatus, versionString] = getVersionStringInternal();
+    // TODO(miaowang): add a validation test case for in case of error.
+    if (versionStatus != ErrorStatus::NONE) {
+        LOG(ERROR) << "IDevice::getVersionString returned the error " << toString(versionStatus);
+        return false;
+    }
+
+    const int32_t type = getTypeInternal();
+    if (type == -1) {
+        LOG(ERROR) << "IDevice::getType returned an error";
+        return false;
+    }
+
+    const auto [extensionsStatus, supportedExtensions] = getSupportedExtensionsInternal();
+    if (extensionsStatus != ErrorStatus::NONE) {
+        LOG(ERROR) << "IDevice::getSupportedExtensions returned the error "
+                   << toString(extensionsStatus);
+        return false;
+    }
+
+    const auto [cacheFilesStatus, numModelCacheFiles, numDataCacheFiles] =
+            getNumberOfCacheFilesNeededInternal();
+    if (cacheFilesStatus != ErrorStatus::NONE) {
+        LOG(ERROR) << "IDevice::getNumberOfCacheFilesNeeded returned the error "
+                   << toString(cacheFilesStatus);
+        return false;
+    }
+
+    // The following limit is enforced by VTS
+    constexpr uint32_t maxNumCacheFiles =
+            static_cast<uint32_t>(Constant::MAX_NUMBER_OF_CACHE_FILES);
+    if (numModelCacheFiles > maxNumCacheFiles || numDataCacheFiles > maxNumCacheFiles) {
+        LOG(ERROR)
+                << "IDevice::getNumberOfCacheFilesNeeded returned invalid number of cache files: "
+                   "numModelCacheFiles = "
+                << numModelCacheFiles << ", numDataCacheFiles = " << numDataCacheFiles
+                << ", maxNumCacheFiles = " << maxNumCacheFiles;
+        return false;
+    }
+
+    // set internal members
+    mCapabilities = std::move(capabilities);
+    mSupportedExtensions = supportedExtensions;
+    mType = type;
+    mVersionString = versionString;
+    mNumberOfCacheFilesNeeded = {numModelCacheFiles, numDataCacheFiles};
+    return true;
 }
 
 std::optional<VersionedIDevice::Core> VersionedIDevice::Core::create(sp<V1_0::IDevice> device) {
@@ -570,7 +626,7 @@ std::pair<ErrorStatus, Capabilities> VersionedIDevice::getCapabilitiesInternal()
     return {ErrorStatus::DEVICE_UNAVAILABLE, {}};
 }
 
-std::pair<ErrorStatus, Capabilities> VersionedIDevice::getCapabilities() const {
+const Capabilities& VersionedIDevice::getCapabilities() const {
     return mCapabilities;
 }
 
@@ -606,7 +662,7 @@ std::pair<ErrorStatus, hidl_vec<Extension>> VersionedIDevice::getSupportedExtens
     return {ErrorStatus::DEVICE_UNAVAILABLE, {}};
 }
 
-std::pair<ErrorStatus, hidl_vec<Extension>> VersionedIDevice::getSupportedExtensions() const {
+const std::vector<Extension>& VersionedIDevice::getSupportedExtensions() const {
     return mSupportedExtensions;
 }
 
@@ -1008,9 +1064,15 @@ int32_t VersionedIDevice::getTypeInternal() const {
         return result;
     }
 
-    // version too low or no device available
-    LOG(INFO) << "Unknown NNAPI device type.";
-    return ANEURALNETWORKS_DEVICE_UNKNOWN;
+    // version too low
+    if (getDevice<V1_0::IDevice>() != nullptr) {
+        LOG(INFO) << "Unknown NNAPI device type.";
+        return ANEURALNETWORKS_DEVICE_UNKNOWN;
+    }
+
+    // No device available
+    LOG(ERROR) << "Could not handle getType";
+    return kFailure;
 }
 
 int32_t VersionedIDevice::getType() const {
@@ -1047,7 +1109,7 @@ std::pair<ErrorStatus, hidl_string> VersionedIDevice::getVersionStringInternal()
     return kFailure;
 }
 
-std::pair<ErrorStatus, hidl_string> VersionedIDevice::getVersionString() const {
+const std::string& VersionedIDevice::getVersionString() const {
     return mVersionString;
 }
 
@@ -1084,8 +1146,12 @@ std::tuple<ErrorStatus, uint32_t, uint32_t> VersionedIDevice::getNumberOfCacheFi
     return kFailure;
 }
 
-std::tuple<ErrorStatus, uint32_t, uint32_t> VersionedIDevice::getNumberOfCacheFilesNeeded() const {
+std::pair<uint32_t, uint32_t> VersionedIDevice::getNumberOfCacheFilesNeeded() const {
     return mNumberOfCacheFilesNeeded;
+}
+
+const std::string& VersionedIDevice::getName() const {
+    return mServiceName;
 }
 
 }  // namespace nn
