@@ -94,13 +94,9 @@ class VersionedIDevice {
     /**
      * Gets the capabilities of a driver.
      *
-     * @return status Error status of the call, must be:
-     *                - NONE if successful
-     *                - DEVICE_UNAVAILABLE if driver is offline or busy
-     *                - GENERAL_FAILURE if there is an unspecified error
      * @return capabilities Capabilities of the driver.
      */
-    std::pair<hal::ErrorStatus, hal::Capabilities> getCapabilities() const;
+    const hal::Capabilities& getCapabilities() const;
 
     /**
      * Gets information about extensions supported by the driver implementation.
@@ -111,13 +107,9 @@ class VersionedIDevice {
      * All extension operations and operands must be fully supported for the
      * extension to appear in the list of supported extensions.
      *
-     * @return status Error status of the call, must be:
-     *     - NONE if successful
-     *     - DEVICE_UNAVAILABLE if driver is offline or busy
-     *     - GENERAL_FAILURE if there is an unspecified error
      * @return extensions A list of supported extensions.
      */
-    std::pair<hal::ErrorStatus, hal::hidl_vec<hal::Extension>> getSupportedExtensions() const;
+    const std::vector<hal::Extension>& getSupportedExtensions() const;
 
     /**
      * Gets the supported operations in a MetaModel.
@@ -340,14 +332,12 @@ class VersionedIDevice {
     /**
      * Returns the device type of a driver.
      *
-     * @return deviceType The type of a given device, which can help application developers
-     *                    developers to distribute Machine Learning workloads and other workloads
-     *                    such as graphical rendering. E.g., for an app which renders AR scenes
-     *                    based on real time object detection results, the developer could choose
-     *                    an ACCELERATOR type device for ML workloads, and reserve GPU for
-     *                    graphical rendering.
-     *                    Return -1 if the driver is offline or busy, or the query resulted in
-     *                    an unspecified error.
+     * @return deviceType The type of a given device, which can help application
+     *     developers to distribute Machine Learning workloads and other
+     *     workloads such as graphical rendering. E.g., for an app which renders
+     *     AR scenes based on real time object detection results, the developer
+     *     could choose an ACCELERATOR type device for ML workloads, and reserve
+     *     GPU for graphical rendering.
      */
     int32_t getType() const;
 
@@ -371,15 +361,9 @@ class VersionedIDevice {
      *       the driver cannot meet that requirement because of bugs or certain optimizations.
      *       The application can filter out versions of these drivers.
      *
-     * @return status Error status returned from querying the version string. Must be:
-     *     - NONE if the query was successful
-     *     - DEVICE_UNAVAILABLE if driver is offline or busy
-     *     - GENERAL_FAILURE if the query resulted in an
-     *       unspecified error
      * @return version The version string of the device implementation.
-     *     Must have nonzero length if the query is successful, and must be an empty string if not.
      */
-    std::pair<hal::ErrorStatus, hal::hidl_string> getVersionString() const;
+    const std::string& getVersionString() const;
 
     /**
      * Gets the caching requirements of the driver implementation.
@@ -408,10 +392,6 @@ class VersionedIDevice {
      * IDevice::prepareModelFromCache or providing cache file descriptors to
      * IDevice::prepareModel_1_2.
      *
-     * @return status Error status of the call, must be:
-     *     - NONE if successful
-     *     - DEVICE_UNAVAILABLE if driver is offline or busy
-     *     - GENERAL_FAILURE if there is an unspecified error
      * @return numModelCache An unsigned integer indicating how many files for model cache
      *                       the driver needs to cache a single prepared model. It must
      *                       be less than or equal to Constant::MAX_NUMBER_OF_CACHE_FILES.
@@ -419,12 +399,19 @@ class VersionedIDevice {
      *                      the driver needs to cache a single prepared model. It must
      *                      be less than or equal to Constant::MAX_NUMBER_OF_CACHE_FILES.
      */
-    std::tuple<hal::ErrorStatus, uint32_t, uint32_t> getNumberOfCacheFilesNeeded() const;
+    std::pair<uint32_t, uint32_t> getNumberOfCacheFilesNeeded() const;
+
+    /**
+     * Returns the name of the service.
+     *
+     * @return Name of the service.
+     */
+    const std::string& getName() const;
 
    private:
-    // initializeInternal must be called once before any other public method is
-    // called
-    void initializeInternal();
+    // initializeInternal is called once during VersionedIDevice creation.
+    // 'true' indicates successful initialization.
+    bool initializeInternal();
 
     // internal helper methods
     std::pair<hal::ErrorStatus, hal::Capabilities> getCapabilitiesInternal() const;
@@ -435,11 +422,11 @@ class VersionedIDevice {
     std::tuple<hal::ErrorStatus, uint32_t, uint32_t> getNumberOfCacheFilesNeededInternal() const;
 
     // internal members for the cached results of the internal methods above
-    std::pair<hal::ErrorStatus, hal::Capabilities> mCapabilities;
-    std::pair<hal::ErrorStatus, hal::hidl_vec<hal::Extension>> mSupportedExtensions;
+    hal::Capabilities mCapabilities;
+    std::vector<hal::Extension> mSupportedExtensions;
     int32_t mType;
-    std::pair<hal::ErrorStatus, hal::hidl_string> mVersionString;
-    std::tuple<hal::ErrorStatus, uint32_t, uint32_t> mNumberOfCacheFilesNeeded;
+    std::string mVersionString;
+    std::pair<uint32_t, uint32_t> mNumberOfCacheFilesNeeded;
 
     /**
      * This is a utility class for VersionedIDevice that encapsulates a
