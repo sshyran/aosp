@@ -17,6 +17,9 @@
 #include <gtest/gtest.h>
 
 #include <algorithm>
+#include <map>
+#include <memory>
+#include <set>
 #include <string>
 
 #include "TestNeuralNetworksWrapper.h"
