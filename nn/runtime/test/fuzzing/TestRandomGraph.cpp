@@ -396,38 +396,128 @@ class SingleOperationTest : public RandomGraphTest {};
 // Most of these operations fall into categories of reshape or selection, e.g. RESHAPE, GATHER.
 // Additionally, operations with only logical or comparison arithmetic also use this criteria, e.g.
 // EQUAL, ARGMAX, TOPK_V2.
-const AccuracyCriteria kStrictCriteria = {
-        .float32 = {.atol = 1e-6f, .rtol = 1e-6f, .bias = 1e-7f, .mse = 1e-10f},
-        .float16 = {.atol = 1e-3f, .rtol = 1e-3f, .bias = 1e-4f, .mse = 1e-8f},
-        .int32 = {.atol = 1},
-        .quant8Asymm = {.atol = 1, .bias = 0.1f, .mse = 0.1f},
-        .quant8Symm = {.atol = 1, .bias = 0.1f, .mse = 0.1f},
-        .quant16Asymm = {.atol = 1, .bias = 0.1f, .mse = 0.1f},
-        .quant16Symm = {.atol = 1, .bias = 0.1f, .mse = 0.1f}};
+const AccuracyCriteria kStrictCriteria = {.float32 =
+                                                  {
+                                                          .bias = 1e-7f,
+                                                          .mse = 1e-10f,
+                                                          .atol = 1e-6f,
+                                                          .rtol = 1e-6f,
+                                                  },
+                                          .float16 =
+                                                  {
+                                                          .bias = 1e-4f,
+                                                          .mse = 1e-8f,
+                                                          .atol = 1e-3f,
+                                                          .rtol = 1e-3f,
+                                                  },
+                                          .int32 = {.atol = 1},
+                                          .quant8Asymm =
+                                                  {
+                                                          .bias = 0.1f,
+                                                          .mse = 0.1f,
+                                                          .atol = 1,
+                                                  },
+                                          .quant8Symm =
+                                                  {
+                                                          .bias = 0.1f,
+                                                          .mse = 0.1f,
+                                                          .atol = 1,
+                                                  },
+                                          .quant16Asymm =
+                                                  {
+                                                          .bias = 0.1f,
+                                                          .mse = 0.1f,
+                                                          .atol = 1,
+                                                  },
+                                          .quant16Symm = {
+                                                  .bias = 0.1f,
+                                                  .mse = 0.1f,
+                                                  .atol = 1,
+                                          }};
 
 // This is for operations that only do simple and single computation on buffer values, such as
 // addition, multiplication, or requantization. Most of these operations fall into categories of
 // broadcast or elementwise, e.g ADD, FLOOR.
-const AccuracyCriteria kMediumCriteria = {
-        .float32 = {.atol = 1e-5f, .rtol = 1e-5f, .bias = 1e-6f, .mse = 1e-8f},
-        .float16 = {.atol = 1e-2f, .rtol = 1e-2f, .bias = 1e-3f, .mse = 1e-6f},
-        .int32 = {.atol = 1},
-        .quant8Asymm = {.atol = 2, .bias = 0.5f, .mse = 0.5f},
-        .quant8Symm = {.atol = 2, .bias = 0.5f, .mse = 0.5f},
-        .quant16Asymm = {.atol = 2, .bias = 0.5f, .mse = 0.5f},
-        .quant16Symm = {.atol = 2, .bias = 0.5f, .mse = 0.5f}};
+const AccuracyCriteria kMediumCriteria = {.float32 =
+                                                  {
+                                                          .bias = 1e-6f,
+                                                          .mse = 1e-8f,
+                                                          .atol = 1e-5f,
+                                                          .rtol = 1e-5f,
+                                                  },
+                                          .float16 =
+                                                  {
+                                                          .bias = 1e-3f,
+                                                          .mse = 1e-6f,
+                                                          .atol = 1e-2f,
+                                                          .rtol = 1e-2f,
+                                                  },
+                                          .int32 = {.atol = 1},
+                                          .quant8Asymm =
+                                                  {
+                                                          .bias = 0.5f,
+                                                          .mse = 0.5f,
+                                                          .atol = 2,
+                                                  },
+                                          .quant8Symm =
+                                                  {
+                                                          .bias = 0.5f,
+                                                          .mse = 0.5f,
+                                                          .atol = 2,
+                                                  },
+                                          .quant16Asymm =
+                                                  {
+                                                          .bias = 0.5f,
+                                                          .mse = 0.5f,
+                                                          .atol = 2,
+                                                  },
+                                          .quant16Symm = {
+                                                  .bias = 0.5f,
+                                                  .mse = 0.5f,
+                                                  .atol = 2,
+                                          }};
 
 // This is for operations that involve sophisticated computations on buffer values, either a single
 // but complex transformation, e.g. LOGISTIC, or multiple transformations with accumulated errors,
 // e.g. CONV_2D, REDUCE_*.
-const AccuracyCriteria kRelaxedCriteria = {
-        .float32 = {.atol = 1e-3f, .rtol = 1e-3f, .bias = 2e-5f, .mse = 1e-7f},
-        .float16 = {.atol = 1.0f, .rtol = 1.0f, .bias = 5e-3f, .mse = 1e-4f},
-        .int32 = {.atol = 1},
-        .quant8Asymm = {.atol = 10, .bias = 1.5, .mse = 1.5},
-        .quant8Symm = {.atol = 10, .bias = 1.5, .mse = 1.5},
-        .quant16Asymm = {.atol = 10, .bias = 1.5, .mse = 1.5},
-        .quant16Symm = {.atol = 10, .bias = 1.5, .mse = 1.5}};
+const AccuracyCriteria kRelaxedCriteria = {.float32 =
+                                                   {
+                                                           .bias = 2e-5f,
+                                                           .mse = 1e-7f,
+                                                           .atol = 1e-3f,
+                                                           .rtol = 1e-3f,
+                                                   },
+                                           .float16 =
+                                                   {
+                                                           .bias = 5e-3f,
+                                                           .mse = 1e-4f,
+                                                           .atol = 1.0f,
+                                                           .rtol = 1.0f,
+                                                   },
+                                           .int32 = {.atol = 1},
+                                           .quant8Asymm =
+                                                   {
+                                                           .bias = 1.5,
+                                                           .mse = 1.5,
+                                                           .atol = 10,
+                                                   },
+                                           .quant8Symm =
+                                                   {
+                                                           .bias = 1.5,
+                                                           .mse = 1.5,
+                                                           .atol = 10,
+                                                   },
+                                           .quant16Asymm =
+                                                   {
+                                                           .bias = 1.5,
+                                                           .mse = 1.5,
+                                                           .atol = 10,
+                                                   },
+                                           .quant16Symm = {
+                                                   .bias = 1.5,
+                                                   .mse = 1.5,
+                                                   .atol = 10,
+                                           }};
 
 /*-- NNAPI 1.0 Operations ---------------------------------------------------*/
 
@@ -572,23 +662,83 @@ TEST_SINGLE_OPERATION(ROI_ALIGN, V1_2, kRelaxedCriteria);
 TEST_SINGLE_OPERATION(ROI_POOLING, V1_2, kRelaxedCriteria);
 TEST_SINGLE_OPERATION(HEATMAP_MAX_KEYPOINT, V1_2, kRelaxedCriteria);
 
-const AccuracyCriteria kSmallGraphCriteria = {
-        .float32 = {.atol = 1e-2f, .rtol = 1e-2f, .bias = 2e-5f, .mse = 1e-7f},
-        .float16 = {.atol = 1.0f, .rtol = 1.0f, .bias = 5e-3f, .mse = 1e-4f},
-        .int32 = {.atol = 1},
-        .quant8Asymm = {.atol = 12, .bias = 2, .mse = 2},
-        .quant8Symm = {.atol = 12, .bias = 2, .mse = 2},
-        .quant16Asymm = {.atol = 12, .bias = 2, .mse = 2},
-        .quant16Symm = {.atol = 12, .bias = 2, .mse = 2}};
+const AccuracyCriteria kSmallGraphCriteria = {.float32 =
+                                                      {
+                                                              .bias = 2e-5f,
+                                                              .mse = 1e-7f,
+                                                              .atol = 1e-2f,
+                                                              .rtol = 1e-2f,
+                                                      },
+                                              .float16 =
+                                                      {
+                                                              .bias = 5e-3f,
+                                                              .mse = 1e-4f,
+                                                              .atol = 1.0f,
+                                                              .rtol = 1.0f,
+                                                      },
+                                              .int32 = {.atol = 1},
+                                              .quant8Asymm =
+                                                      {
+                                                              .bias = 2,
+                                                              .mse = 2,
+                                                              .atol = 12,
+                                                      },
+                                              .quant8Symm =
+                                                      {
+                                                              .bias = 2,
+                                                              .mse = 2,
+                                                              .atol = 12,
+                                                      },
+                                              .quant16Asymm =
+                                                      {
+                                                              .bias = 2,
+                                                              .mse = 2,
+                                                              .atol = 12,
+                                                      },
+                                              .quant16Symm = {
+                                                      .bias = 2,
+                                                      .mse = 2,
+                                                      .atol = 12,
+                                              }};
 
-const AccuracyCriteria kLargeGraphCriteria = {
-        .float32 = {.atol = 1e-1f, .rtol = 1e-1f, .bias = 1e-2f, .mse = 1e-4f},
-        .float16 = {.atol = 1.0f, .rtol = 1.0f, .bias = 1e-1f, .mse = 5e-2f},
-        .int32 = {.atol = 1},
-        .quant8Asymm = {.atol = 12, .bias = 2, .mse = 2},
-        .quant8Symm = {.atol = 12, .bias = 2, .mse = 2},
-        .quant16Asymm = {.atol = 12, .bias = 2, .mse = 2},
-        .quant16Symm = {.atol = 12, .bias = 2, .mse = 2}};
+const AccuracyCriteria kLargeGraphCriteria = {.float32 =
+                                                      {
+                                                              .bias = 1e-2f,
+                                                              .mse = 1e-4f,
+                                                              .atol = 1e-1f,
+                                                              .rtol = 1e-1f,
+                                                      },
+                                              .float16 =
+                                                      {
+                                                              .bias = 1e-1f,
+                                                              .mse = 5e-2f,
+                                                              .atol = 1.0f,
+                                                              .rtol = 1.0f,
+                                                      },
+                                              .int32 = {.atol = 1},
+                                              .quant8Asymm =
+                                                      {
+                                                              .bias = 2,
+                                                              .mse = 2,
+                                                              .atol = 12,
+                                                      },
+                                              .quant8Symm =
+                                                      {
+                                                              .bias = 2,
+                                                              .mse = 2,
+                                                              .atol = 12,
+                                                      },
+                                              .quant16Asymm =
+                                                      {
+                                                              .bias = 2,
+                                                              .mse = 2,
+                                                              .atol = 12,
+                                                      },
+                                              .quant16Symm = {
+                                                      .bias = 2,
+                                                      .mse = 2,
+                                                      .atol = 12,
+                                              }};
 
 // Due to the limitation of the random graph generator, graphs generated with mixed-type or
 // mixed-rank operations are likely to result in a disconnected network. Thus, we filter the
