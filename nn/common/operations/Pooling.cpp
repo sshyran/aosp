@@ -16,6 +16,8 @@
 
 #define LOG_TAG "Operations"
 
+#include <vector>
+
 #include "CpuOperationUtils.h"
 #include "HalInterfaces.h"
 #include "OperationResolver.h"
