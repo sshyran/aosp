@@ -57,6 +57,9 @@ typedef enum {
 #if __ANDROID_API__ >= __ANDROID_API_Q__
 %insert Operand_1.2
 #endif  // __ANDROID_API__ >= __ANDROID_API_Q__
+#if __ANDROID_API__ >= __ANDROID_API_R__
+%insert Operand_1.3
+#endif  // __ANDROID_API__ >= __ANDROID_API_R__
 } OperandCode;
 
 %insert Operation_1.0_Comment
