@@ -521,10 +521,10 @@ std::pair<ErrorStatus, Capabilities> VersionedIDevice::getCapabilities() const {
 
 std::pair<ErrorStatus, hidl_vec<Extension>> VersionedIDevice::getSupportedExtensions() const {
     const std::pair<ErrorStatus, hidl_vec<Extension>> kFailure = {ErrorStatus::GENERAL_FAILURE, {}};
-    NNTRACE_FULL(NNTRACE_LAYER_IPC, NNTRACE_PHASE_COMPILATION, "getSupportedExtensions");
 
     // version 1.2+ HAL
     if (getDevice<V1_2::IDevice>() != nullptr) {
+        NNTRACE_FULL(NNTRACE_LAYER_IPC, NNTRACE_PHASE_INITIALIZATION, "getSupportedExtensions");
         std::pair<ErrorStatus, hidl_vec<Extension>> result;
         Return<void> ret = recoverable<void, V1_2::IDevice>(
                 __FUNCTION__, [&result](const sp<V1_2::IDevice>& device) {
