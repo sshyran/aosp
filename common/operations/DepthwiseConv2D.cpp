@@ -16,6 +16,9 @@
 
 #define LOG_TAG "Operations"
 
+#include <algorithm>
+#include <vector>
+
 #include "CpuOperationUtils.h"
 #include "Operations.h"
 
