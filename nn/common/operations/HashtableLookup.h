@@ -17,9 +17,9 @@
 #ifndef ANDROID_FRAMEWORKS_ML_NN_COMMON_OPERATIONS_HASHTABLE_LOOKUP_H
 #define ANDROID_FRAMEWORKS_ML_NN_COMMON_OPERATIONS_HASHTABLE_LOOKUP_H
 
-#include "HalOperation.h"
-
 #include <vector>
+
+#include "HalInterfaces.h"
 
 namespace android {
 namespace nn {
@@ -28,8 +28,7 @@ struct RunTimeOperandInfo;
 
 class HashtableLookup {
    public:
-    HashtableLookup(const hardware::neuralnetworks::V1_2::Operation& operation,
-                    std::vector<RunTimeOperandInfo>& operands);
+    HashtableLookup(const hal::Operation& operation, std::vector<RunTimeOperandInfo>& operands);
 
     bool Eval();
 

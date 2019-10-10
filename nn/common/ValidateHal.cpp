@@ -17,12 +17,16 @@
 #define LOG_TAG "ValidateHal"
 
 #include "ValidateHal.h"
+
+#include <android-base/logging.h>
+
+#include <algorithm>
+#include <vector>
+
 #include "NeuralNetworks.h"
 #include "OperationsUtils.h"
 #include "Tracing.h"
 #include "Utils.h"
-
-#include <android-base/logging.h>
 
 namespace android {
 namespace nn {
@@ -42,6 +46,10 @@ struct ModelToHalVersion<V1_1::Model> {
 template <>
 struct ModelToHalVersion<V1_2::Model> {
     static constexpr HalVersion version = HalVersion::V1_2;
+};
+template <>
+struct ModelToHalVersion<V1_3::Model> {
+    static constexpr HalVersion version = HalVersion::V1_3;
 };
 
 class MemoryAccessVerifier {
@@ -73,7 +81,7 @@ class MemoryAccessVerifier {
     std::vector<size_t> mPoolSizes;
 };
 
-static bool validateOperandExtraParams(const V1_2::Operand& operand, uint32_t index) {
+static bool validateOperandExtraParams(const V1_3::Operand& operand, uint32_t index) {
     switch (operand.type) {
         case OperandType::FLOAT32:
         case OperandType::INT32:
@@ -83,19 +91,20 @@ static bool validateOperandExtraParams(const V1_2::Operand& operand, uint32_t in
         case OperandType::TENSOR_FLOAT16:
         case OperandType::TENSOR_INT32:
         case OperandType::TENSOR_QUANT8_ASYMM:
+        case OperandType::TENSOR_QUANT8_ASYMM_SIGNED:
         case OperandType::TENSOR_QUANT8_SYMM:
         case OperandType::TENSOR_QUANT16_ASYMM:
         case OperandType::TENSOR_QUANT16_SYMM:
         case OperandType::TENSOR_BOOL8: {
             NN_RET_CHECK(operand.extraParams.getDiscriminator() ==
-                         V1_2::Operand::ExtraParams::hidl_discriminator::none)
+                         V1_3::Operand::ExtraParams::hidl_discriminator::none)
                     << "Operand " << index << ": Operand of type "
                     << getOperandTypeName(operand.type)
                     << " has incorrect extraParams: " << toString(operand.extraParams);
         } break;
         case OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL: {
             NN_RET_CHECK(operand.extraParams.getDiscriminator() ==
-                         V1_2::Operand::ExtraParams::hidl_discriminator::channelQuant)
+                         V1_3::Operand::ExtraParams::hidl_discriminator::channelQuant)
                     << "Operand " << index << ": Operand of type "
                     << getOperandTypeName(operand.type) << " without a Channel Quantization params";
             auto& channelQuant = operand.extraParams.channelQuant();
@@ -125,9 +134,9 @@ static bool validateOperandExtraParams(const V1_2::Operand& operand, uint32_t in
         default: {
             if (isExtensionOperandType(operand.type)) {
                 NN_RET_CHECK(operand.extraParams.getDiscriminator() ==
-                                     V1_2::Operand::ExtraParams::hidl_discriminator::extension ||
+                                     V1_3::Operand::ExtraParams::hidl_discriminator::extension ||
                              operand.extraParams.getDiscriminator() ==
-                                     V1_2::Operand::ExtraParams::hidl_discriminator::none)
+                                     V1_3::Operand::ExtraParams::hidl_discriminator::none)
                         << "Operand " << index << ": Extension operand of type "
                         << getOperandTypeName(operand.type)
                         << " has incorrect extraParams: " << toString(operand.extraParams);
@@ -152,7 +161,7 @@ static bool validateOperands(const hidl_vec<VersionedOperand>& operands,
         }
         // Once we are sure the operand is supported by its version, it is safe
         // to convert it to the latest version for the rest of the validations.
-        V1_2::Operand operand = convertToV1_2(versionedOperand);
+        V1_3::Operand operand = convertToV1_3(versionedOperand);
         // Validate type and dimensions.
         switch (operand.type) {
             case OperandType::FLOAT16:
@@ -173,6 +182,7 @@ static bool validateOperands(const hidl_vec<VersionedOperand>& operands,
             case OperandType::TENSOR_FLOAT32:
             case OperandType::TENSOR_INT32:
             case OperandType::TENSOR_QUANT8_ASYMM:
+            case OperandType::TENSOR_QUANT8_ASYMM_SIGNED:
             case OperandType::TENSOR_QUANT8_SYMM:
             case OperandType::TENSOR_QUANT16_ASYMM:
             case OperandType::TENSOR_QUANT16_SYMM:
@@ -228,6 +238,7 @@ static bool validateOperands(const hidl_vec<VersionedOperand>& operands,
                 }
                 break;
             case OperandType::TENSOR_QUANT8_ASYMM:
+            case OperandType::TENSOR_QUANT8_ASYMM_SIGNED:
             case OperandType::TENSOR_QUANT8_SYMM:
             case OperandType::TENSOR_QUANT16_ASYMM:
             case OperandType::TENSOR_QUANT16_SYMM:
@@ -274,6 +285,14 @@ static bool validateOperands(const hidl_vec<VersionedOperand>& operands,
                     LOG(ERROR) << "Operand " << index << ": Operand of type "
                                << getOperandTypeName(operand.type) << " with an invalid zeroPoint "
                                << operand.zeroPoint << ", must be in range [0, 255]";
+                    return false;
+                }
+                break;
+            case OperandType::TENSOR_QUANT8_ASYMM_SIGNED:
+                if (operand.zeroPoint < -128 || operand.zeroPoint > 127) {
+                    LOG(ERROR) << "Operand " << index << ": Operand of type "
+                               << getOperandTypeName(operand.type) << " with an invalid zeroPoint "
+                               << operand.zeroPoint << ", must be in range [-128, 127]";
                     return false;
                 }
                 break;
@@ -379,6 +398,10 @@ static HalVersion getHalVersion(const V1_1::Operation&) {
 
 static HalVersion getHalVersion(const V1_2::Operation&) {
     return HalVersion::V1_2;
+}
+
+static HalVersion getHalVersion(const V1_3::Operation&) {
+    return HalVersion::V1_3;
 }
 
 template <typename VersionedOperation>
@@ -491,7 +514,7 @@ bool validateModel(const T_Model& model) {
     }
     // We only need versioned operands for their validation. For all the other
     // validations we can use operands upcasted to the latest version.
-    const hidl_vec<Operand> latestVersionOperands = convertToV1_2(model.operands);
+    const hidl_vec<Operand> latestVersionOperands = convertToV1_3(model.operands);
     return (validateOperands(model.operands, model.operandValues, model.pools,
                              /*allowUnspecifiedRank=*/version >= HalVersion::V1_2) &&
             validateOperations(model.operations, latestVersionOperands) &&
@@ -505,6 +528,7 @@ bool validateModel(const T_Model& model) {
 template bool validateModel<V1_0::Model>(const V1_0::Model& model);
 template bool validateModel<V1_1::Model>(const V1_1::Model& model);
 template bool validateModel<V1_2::Model>(const V1_2::Model& model);
+template bool validateModel<V1_3::Model>(const V1_3::Model& model);
 
 // Validates the arguments of a request. type is either "input" or "output" and is used
 // for printing error messages. The operandIndexes is the appropriate array of input
@@ -589,10 +613,10 @@ template <class T_Model>
 bool validateRequest(const Request& request, const T_Model& model) {
     HalVersion version = ModelToHalVersion<T_Model>::version;
     return (validateRequestArguments(request.inputs, model.inputIndexes,
-                                     convertToV1_2(model.operands), request.pools,
+                                     convertToV1_3(model.operands), request.pools,
                                      /*allowUnspecified=*/false, "input") &&
             validateRequestArguments(request.outputs, model.outputIndexes,
-                                     convertToV1_2(model.operands), request.pools,
+                                     convertToV1_3(model.operands), request.pools,
                                      /*allowUnspecified=*/version >= HalVersion::V1_2, "output") &&
             validatePools(request.pools, version));
 }
@@ -600,6 +624,7 @@ bool validateRequest(const Request& request, const T_Model& model) {
 template bool validateRequest<V1_0::Model>(const Request& request, const V1_0::Model& model);
 template bool validateRequest<V1_1::Model>(const Request& request, const V1_1::Model& model);
 template bool validateRequest<V1_2::Model>(const Request& request, const V1_2::Model& model);
+template bool validateRequest<V1_3::Model>(const Request& request, const V1_3::Model& model);
 
 bool validateExecutionPreference(ExecutionPreference preference) {
     return preference == ExecutionPreference::LOW_POWER ||
@@ -641,6 +666,31 @@ bool validOperandType(V1_2::OperandType operandType) {
         case V1_2::OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL:
         case V1_2::OperandType::OEM:
         case V1_2::OperandType::TENSOR_OEM_BYTE:
+            return true;
+        default:
+            return isExtensionOperandType(static_cast<V1_3::OperandType>(operandType));
+    }
+}
+
+bool validOperandType(V1_3::OperandType operandType) {
+    switch (operandType) {
+        case V1_3::OperandType::FLOAT16:
+        case V1_3::OperandType::FLOAT32:
+        case V1_3::OperandType::INT32:
+        case V1_3::OperandType::UINT32:
+        case V1_3::OperandType::BOOL:
+        case V1_3::OperandType::TENSOR_FLOAT16:
+        case V1_3::OperandType::TENSOR_FLOAT32:
+        case V1_3::OperandType::TENSOR_INT32:
+        case V1_3::OperandType::TENSOR_QUANT8_ASYMM:
+        case V1_3::OperandType::TENSOR_QUANT8_SYMM:
+        case V1_3::OperandType::TENSOR_QUANT16_ASYMM:
+        case V1_3::OperandType::TENSOR_QUANT16_SYMM:
+        case V1_3::OperandType::TENSOR_BOOL8:
+        case V1_3::OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL:
+        case V1_3::OperandType::TENSOR_QUANT8_ASYMM_SIGNED:
+        case V1_3::OperandType::OEM:
+        case V1_3::OperandType::TENSOR_OEM_BYTE:
             return true;
         default:
             return isExtensionOperandType(operandType);
