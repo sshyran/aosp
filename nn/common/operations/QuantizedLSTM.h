@@ -17,10 +17,9 @@
 #ifndef ANDROID_FRAMEWORKS_ML_NN_COMMON_OPERATIONS_QUANTIZED_LSTM_H
 #define ANDROID_FRAMEWORKS_ML_NN_COMMON_OPERATIONS_QUANTIZED_LSTM_H
 
-#include "HalOperation.h"
-#include "OperationsUtils.h"
-
 #include <vector>
+
+#include "OperationsUtils.h"
 
 namespace android {
 namespace nn {
@@ -29,12 +28,10 @@ struct RunTimeOperandInfo;
 
 class QuantizedLSTMCell {
    public:
-    QuantizedLSTMCell(const hardware::neuralnetworks::V1_2::Operation& operation,
-                      std::vector<RunTimeOperandInfo>& operands);
+    QuantizedLSTMCell(const hal::Operation& operation, std::vector<RunTimeOperandInfo>& operands);
 
-    static bool prepare(const hardware::neuralnetworks::V1_2::Operation& operation,
-                        std::vector<RunTimeOperandInfo>& operands, Shape* cellStateShape,
-                        Shape* outputShape);
+    static bool prepare(const hal::Operation& operation, std::vector<RunTimeOperandInfo>& operands,
+                        Shape* cellStateShape, Shape* outputShape);
     bool eval();
 
     // Inputs:
