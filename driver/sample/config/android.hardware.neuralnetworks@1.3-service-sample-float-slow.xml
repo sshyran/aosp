@@ -2,6 +2,6 @@
     <hal format="hidl">
         <name>android.hardware.neuralnetworks</name>
         <transport>hwbinder</transport>
-        <fqname>@1.2::IDevice/sample-minimal</fqname>
+        <fqname>@1.3::IDevice/sample-float-slow</fqname>
     </hal>
 </manifest>
