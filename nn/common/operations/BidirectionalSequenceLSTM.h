@@ -24,7 +24,6 @@
 #include <vector>
 
 #include "ActivationFunctor.h"
-#include "HalOperation.h"
 #include "LSTM.h"
 #include "OperationsUtils.h"
 
@@ -35,12 +34,11 @@ struct RunTimeOperandInfo;
 
 class BidirectionalSequenceLSTM {
    public:
-    BidirectionalSequenceLSTM(const hardware::neuralnetworks::V1_2::Operation& operation,
+    BidirectionalSequenceLSTM(const hal::Operation& operation,
                               std::vector<RunTimeOperandInfo>& operands);
 
-    bool Prepare(const hardware::neuralnetworks::V1_2::Operation& operation,
-                 std::vector<RunTimeOperandInfo>& operands, Shape* fwOutputShape,
-                 Shape* bwOutputShape);
+    bool Prepare(const hal::Operation& operation, std::vector<RunTimeOperandInfo>& operands,
+                 Shape* fwOutputShape, Shape* bwOutputShape);
     bool Eval();
 
     // Input Tensors of size {max_time, n_batch, n_input}
