@@ -19,12 +19,10 @@
 
 #include <chrono>
 #include <fstream>
-#include <limits>
 #include <memory>
 #include <random>
 #include <sstream>
 #include <string>
-#include <vector>
 
 #include "RandomGraphGenerator.h"
 #include "RandomVariable.h"
@@ -253,7 +251,6 @@ static const char* kTypeNames[] = {
         "TENSOR_QUANT8_SYMM_PER_CHANNEL",
         "TENSOR_QUANT16_ASYMM",
         "TENSOR_QUANT8_SYMM",
-        "TENSOR_QUANT8_ASYMM_SIGNED",
 };
 
 static const char* kLifeTimeNames[6] = {
@@ -267,7 +264,7 @@ static const bool kScalarDataType[]{
         true,   // ANEURALNETWORKS_UINT32
         false,  // ANEURALNETWORKS_TENSOR_FLOAT32
         false,  // ANEURALNETWORKS_TENSOR_INT32
-        false,  // ANEURALNETWORKS_TENSOR_QUANT8_ASYMM
+        false,  // ANEURALNETWORKS_TENSOR_SYMMETRICAL_QUANT8
         true,   // ANEURALNETWORKS_BOOL
         false,  // ANEURALNETWORKS_TENSOR_QUANT16_SYMM
         false,  // ANEURALNETWORKS_TENSOR_FLOAT16
@@ -276,7 +273,6 @@ static const bool kScalarDataType[]{
         false,  // ANEURALNETWORKS_TENSOR_QUANT8_SYMM_PER_CHANNEL
         false,  // ANEURALNETWORKS_TENSOR_QUANT16_ASYMM
         false,  // ANEURALNETWORKS_TENSOR_QUANT8_SYMM
-        false,  // ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED
 };
 
 static const uint32_t kSizeOfDataType[]{
@@ -285,7 +281,7 @@ static const uint32_t kSizeOfDataType[]{
         4,  // ANEURALNETWORKS_UINT32
         4,  // ANEURALNETWORKS_TENSOR_FLOAT32
         4,  // ANEURALNETWORKS_TENSOR_INT32
-        1,  // ANEURALNETWORKS_TENSOR_QUANT8_ASYMM
+        1,  // ANEURALNETWORKS_TENSOR_SYMMETRICAL_QUANT8
         1,  // ANEURALNETWORKS_BOOL
         2,  // ANEURALNETWORKS_TENSOR_QUANT16_SYMM
         2,  // ANEURALNETWORKS_TENSOR_FLOAT16
@@ -294,7 +290,6 @@ static const uint32_t kSizeOfDataType[]{
         1,  // ANEURALNETWORKS_TENSOR_QUANT8_SYMM_PER_CHANNEL
         2,  // ANEURALNETWORKS_TENSOR_QUANT16_ASYMM
         1,  // ANEURALNETWORKS_TENSOR_QUANT8_SYMM
-        1,  // ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED
 };
 
 template <>
