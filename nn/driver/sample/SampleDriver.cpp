@@ -18,24 +18,17 @@
 
 #include "SampleDriver.h"
 
-#include <android-base/logging.h>
-#include <hidl/LegacySupport.h>
-
-#include <algorithm>
-#include <chrono>
-#include <map>
-#include <memory>
-#include <optional>
-#include <thread>
-#include <tuple>
-#include <utility>
-#include <vector>
-
 #include "CpuExecutor.h"
 #include "ExecutionBurstServer.h"
 #include "HalInterfaces.h"
 #include "Tracing.h"
 #include "ValidateHal.h"
+
+#include <android-base/logging.h>
+#include <hidl/LegacySupport.h>
+#include <chrono>
+#include <optional>
+#include <thread>
 
 namespace android {
 namespace nn {
@@ -62,7 +55,7 @@ static const Timing kNoTiming = {.timeOnDevice = UINT64_MAX, .timeInDriver = UIN
 Return<void> SampleDriver::getCapabilities(getCapabilities_cb cb) {
     NNTRACE_FULL(NNTRACE_LAYER_DRIVER, NNTRACE_PHASE_INITIALIZATION,
                  "SampleDriver::getCapabilities");
-    return getCapabilities_1_3([&](ErrorStatus error, const V1_3::Capabilities& capabilities) {
+    return getCapabilities_1_2([&](ErrorStatus error, const V1_2::Capabilities& capabilities) {
         // TODO(dgross): Do we need to check compliantWithV1_0(capabilities)?
         cb(error, convertToV1_0(capabilities));
     });
@@ -71,18 +64,9 @@ Return<void> SampleDriver::getCapabilities(getCapabilities_cb cb) {
 Return<void> SampleDriver::getCapabilities_1_1(getCapabilities_1_1_cb cb) {
     NNTRACE_FULL(NNTRACE_LAYER_DRIVER, NNTRACE_PHASE_INITIALIZATION,
                  "SampleDriver::getCapabilities_1_1");
-    return getCapabilities_1_3([&](ErrorStatus error, const V1_3::Capabilities& capabilities) {
+    return getCapabilities_1_2([&](ErrorStatus error, const V1_2::Capabilities& capabilities) {
         // TODO(dgross): Do we need to check compliantWithV1_1(capabilities)?
         cb(error, convertToV1_1(capabilities));
-    });
-}
-
-Return<void> SampleDriver::getCapabilities_1_2(getCapabilities_1_2_cb cb) {
-    NNTRACE_FULL(NNTRACE_LAYER_DRIVER, NNTRACE_PHASE_INITIALIZATION,
-                 "SampleDriver::getCapabilities_1_2");
-    return getCapabilities_1_3([&](ErrorStatus error, const V1_3::Capabilities& capabilities) {
-        // TODO(dgross): Do we need to check compliantWithV1_2(capabilities)?
-        cb(error, convertToV1_2(capabilities));
     });
 }
 
@@ -112,10 +96,11 @@ Return<void> SampleDriver::getSupportedOperations(const V1_0::Model& model,
                  "SampleDriver::getSupportedOperations");
     if (!validateModel(model)) {
         VLOG(DRIVER) << "getSupportedOperations";
-        cb(ErrorStatus::INVALID_ARGUMENT, {});
+        std::vector<bool> supported;
+        cb(ErrorStatus::INVALID_ARGUMENT, supported);
         return Void();
     }
-    return getSupportedOperations_1_3(convertToV1_3(model), cb);
+    return getSupportedOperations_1_2(convertToV1_2(model), cb);
 }
 
 Return<void> SampleDriver::getSupportedOperations_1_1(const V1_1::Model& model,
@@ -124,22 +109,11 @@ Return<void> SampleDriver::getSupportedOperations_1_1(const V1_1::Model& model,
                  "SampleDriver::getSupportedOperations_1_1");
     if (!validateModel(model)) {
         VLOG(DRIVER) << "getSupportedOperations_1_1";
-        cb(ErrorStatus::INVALID_ARGUMENT, {});
+        std::vector<bool> supported;
+        cb(ErrorStatus::INVALID_ARGUMENT, supported);
         return Void();
     }
-    return getSupportedOperations_1_3(convertToV1_3(model), cb);
-}
-
-Return<void> SampleDriver::getSupportedOperations_1_2(const V1_2::Model& model,
-                                                      getSupportedOperations_1_2_cb cb) {
-    NNTRACE_FULL(NNTRACE_LAYER_DRIVER, NNTRACE_PHASE_COMPILATION,
-                 "SampleDriver::getSupportedOperations_1_2");
-    if (!validateModel(model)) {
-        VLOG(DRIVER) << "getSupportedOperations_1_2";
-        cb(ErrorStatus::INVALID_ARGUMENT, {});
-        return Void();
-    }
-    return getSupportedOperations_1_3(convertToV1_3(model), cb);
+    return getSupportedOperations_1_2(convertToV1_2(model), cb);
 }
 
 Return<void> SampleDriver::getNumberOfCacheFilesNeeded(getNumberOfCacheFilesNeeded_cb cb) {
@@ -187,7 +161,7 @@ Return<ErrorStatus> prepareModelBase(const T_Model& model, const SampleDriver* d
     // asynchronously prepare the model from a new, detached thread
     std::thread([model, driver, callback] {
         sp<SamplePreparedModel> preparedModel =
-                new SamplePreparedModel(convertToV1_3(model), driver);
+                new SamplePreparedModel(convertToV1_2(model), driver);
         if (!preparedModel->initialize()) {
             notify(callback, ErrorStatus::INVALID_ARGUMENT, nullptr);
             return;
@@ -216,14 +190,6 @@ Return<ErrorStatus> SampleDriver::prepareModel_1_2(
         const hidl_vec<hidl_handle>&, const CacheToken&,
         const sp<V1_2::IPreparedModelCallback>& callback) {
     NNTRACE_FULL(NNTRACE_LAYER_DRIVER, NNTRACE_PHASE_COMPILATION, "SampleDriver::prepareModel_1_2");
-    return prepareModelBase(model, this, preference, callback);
-}
-
-Return<ErrorStatus> SampleDriver::prepareModel_1_3(
-        const V1_3::Model& model, ExecutionPreference preference, const hidl_vec<hidl_handle>&,
-        const hidl_vec<hidl_handle>&, const CacheToken&,
-        const sp<V1_2::IPreparedModelCallback>& callback) {
-    NNTRACE_FULL(NNTRACE_LAYER_DRIVER, NNTRACE_PHASE_COMPILATION, "SampleDriver::prepareModel_1_3");
     return prepareModelBase(model, this, preference, callback);
 }
 

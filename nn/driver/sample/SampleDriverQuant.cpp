@@ -16,16 +16,15 @@
 
 #define LOG_TAG "SampleDriverQuant"
 
-#include <android-base/logging.h>
-#include <hidl/LegacySupport.h>
-
-#include <thread>
-#include <vector>
+#include "SampleDriver.h"
 
 #include "HalInterfaces.h"
-#include "SampleDriver.h"
 #include "Utils.h"
 #include "ValidateHal.h"
+
+#include <android-base/logging.h>
+#include <hidl/LegacySupport.h>
+#include <thread>
 
 namespace android {
 namespace nn {
@@ -36,26 +35,26 @@ using namespace hal;
 class SampleDriverQuant : public SampleDriver {
    public:
     SampleDriverQuant() : SampleDriver("sample-quant") {}
-    Return<void> getCapabilities_1_3(getCapabilities_1_3_cb cb) override;
-    Return<void> getSupportedOperations_1_3(const V1_3::Model& model,
-                                            getSupportedOperations_1_3_cb cb) override;
+    Return<void> getCapabilities_1_2(getCapabilities_1_2_cb cb) override;
+    Return<void> getSupportedOperations_1_2(const V1_2::Model& model,
+                                            getSupportedOperations_1_2_cb cb) override;
 };
 
-Return<void> SampleDriverQuant::getCapabilities_1_3(getCapabilities_1_3_cb cb) {
+Return<void> SampleDriverQuant::getCapabilities_1_2(getCapabilities_1_2_cb cb) {
     android::nn::initVLogMask();
     VLOG(DRIVER) << "getCapabilities()";
 
     Capabilities capabilities = {
             .relaxedFloat32toFloat16PerformanceScalar = {.execTime = 50.0f, .powerUsage = 1.0f},
             .relaxedFloat32toFloat16PerformanceTensor = {.execTime = 50.0f, .powerUsage = 1.0f},
-            .operandPerformance = nonExtensionOperandPerformance<HalVersion::V1_3>({50.0f, 1.0f})};
+            .operandPerformance = nonExtensionOperandPerformance({50.0f, 1.0f})};
 
     cb(ErrorStatus::NONE, capabilities);
     return Void();
 }
 
-Return<void> SampleDriverQuant::getSupportedOperations_1_3(const V1_3::Model& model,
-                                                           getSupportedOperations_1_3_cb cb) {
+Return<void> SampleDriverQuant::getSupportedOperations_1_2(const V1_2::Model& model,
+                                                           getSupportedOperations_1_2_cb cb) {
     VLOG(DRIVER) << "getSupportedOperations()";
     if (validateModel(model)) {
         const size_t count = model.operations.size();
