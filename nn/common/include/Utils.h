@@ -17,19 +17,22 @@
 #ifndef ANDROID_FRAMEWORKS_ML_NN_COMMON_UTILS_H
 #define ANDROID_FRAMEWORKS_ML_NN_COMMON_UTILS_H
 
+#include <android-base/logging.h>
+
+#include <set>
+#include <string>
+#include <tuple>
+#include <vector>
+
 #include "HalInterfaces.h"
 #include "NeuralNetworks.h"
 #include "ValidateHal.h"
-
-#include <android-base/logging.h>
-#include <set>
-#include <vector>
 
 namespace android {
 namespace nn {
 
 // The number of data types (OperandCode) defined in NeuralNetworks.h.
-const int kNumberOfDataTypes = 14;
+const int kNumberOfDataTypes = 15;
 
 // The number of operation types (OperationCode) defined in NeuralNetworks.h.
 const int kNumberOfOperationTypes = 95;
@@ -153,25 +156,51 @@ class FalseyErrorStream {
     std::ostringstream mBuffer;
 };
 
+template <HalVersion version>
+struct VersionedType {};
+
+template <>
+struct VersionedType<HalVersion::V1_2> {
+    using OperandPerformance = hal::V1_2::Capabilities::OperandPerformance;
+    using OperandType = hal::V1_2::OperandType;
+};
+
+template <>
+struct VersionedType<HalVersion::V1_3> {
+    using OperandPerformance = hal::V1_3::Capabilities::OperandPerformance;
+    using OperandType = hal::V1_3::OperandType;
+};
+
+template <HalVersion version>
+using VersionedOperandPerformance = typename VersionedType<version>::OperandPerformance;
+template <HalVersion version>
+using VersionedOperandType = typename VersionedType<version>::OperandType;
+
 }  // namespace
 
 // Return a vector with one entry for each non extension OperandType, set to the
 // specified PerformanceInfo value.  The vector will be sorted by OperandType.
-hal::hidl_vec<hal::Capabilities::OperandPerformance> nonExtensionOperandPerformance(
+template <HalVersion version>
+hal::hidl_vec<VersionedOperandPerformance<version>> nonExtensionOperandPerformance(
         hal::PerformanceInfo perf);
 
 // Update the vector entry corresponding to the specified OperandType with the
 // specified PerformanceInfo value.  The vector must already have an entry for
 // that OperandType, and must be sorted by OperandType.
-void update(hal::hidl_vec<hal::Capabilities::OperandPerformance>* operandPerformance,
-            hal::OperandType type, hal::PerformanceInfo perf);
+void update(hal::hidl_vec<hal::V1_2::Capabilities::OperandPerformance>* operandPerformance,
+            hal::V1_2::OperandType type, hal::PerformanceInfo perf);
+void update(hal::hidl_vec<hal::V1_3::Capabilities::OperandPerformance>* operandPerformance,
+            hal::V1_3::OperandType type, hal::PerformanceInfo perf);
 
 // Look for a vector entry corresponding to the specified OperandType.  If
 // found, return the associated PerformanceInfo.  If not, return a pessimistic
 // PerformanceInfo (FLT_MAX).  The vector must be sorted by OperandType.
 hal::PerformanceInfo lookup(
-        const hal::hidl_vec<hal::Capabilities::OperandPerformance>& operandPerformance,
-        hal::OperandType type);
+        const hal::hidl_vec<hal::V1_2::Capabilities::OperandPerformance>& operandPerformance,
+        hal::V1_2::OperandType type);
+hal::PerformanceInfo lookup(
+        const hal::hidl_vec<hal::V1_3::Capabilities::OperandPerformance>& operandPerformance,
+        hal::V1_3::OperandType type);
 
 // Returns true if an operand type is an extension type.
 bool isExtensionOperandType(hal::OperandType type);
@@ -233,6 +262,7 @@ uint32_t alignBytesNeeded(uint32_t index, size_t length);
 void logModelToInfo(const hal::V1_0::Model& model);
 void logModelToInfo(const hal::V1_1::Model& model);
 void logModelToInfo(const hal::V1_2::Model& model);
+void logModelToInfo(const hal::V1_3::Model& model);
 
 inline std::string toString(uint32_t obj) {
     return std::to_string(obj);
@@ -257,6 +287,8 @@ inline std::string toString(HalVersion halVersion) {
             return "HAL version 1.1";
         case HalVersion::V1_2:
             return "HAL version 1.2";
+        case HalVersion::V1_3:
+            return "HAL version 1.3";
     }
 }
 
@@ -310,14 +342,19 @@ std::tuple<int, std::vector<hal::OutputShape>, hal::Timing> getExecutionResult(
 bool compliantWithV1_0(const hal::V1_0::Capabilities& capabilities);
 bool compliantWithV1_0(const hal::V1_1::Capabilities& capabilities);
 bool compliantWithV1_0(const hal::V1_2::Capabilities& capabilities);
+bool compliantWithV1_0(const hal::V1_3::Capabilities& capabilities);
 bool compliantWithV1_1(const hal::V1_0::Capabilities& capabilities);
 bool compliantWithV1_1(const hal::V1_1::Capabilities& capabilities);
 bool compliantWithV1_1(const hal::V1_2::Capabilities& capabilities);
+bool compliantWithV1_1(const hal::V1_3::Capabilities& capabilities);
 bool compliantWithV1_2(const hal::V1_0::Capabilities& capabilities);
 bool compliantWithV1_2(const hal::V1_1::Capabilities& capabilities);
 bool compliantWithV1_2(const hal::V1_2::Capabilities& capabilities);
-
-bool compliantWithV1_0(const hal::V1_2::Operand& operand);
+bool compliantWithV1_2(const hal::V1_3::Capabilities& capabilities);
+bool compliantWithV1_3(const hal::V1_0::Capabilities& capabilities);
+bool compliantWithV1_3(const hal::V1_1::Capabilities& capabilities);
+bool compliantWithV1_3(const hal::V1_2::Capabilities& capabilities);
+bool compliantWithV1_3(const hal::V1_3::Capabilities& capabilities);
 
 // If noncompliantOperations != nullptr, then
 //     precondition: noncompliantOperations->empty()
@@ -329,41 +366,75 @@ bool compliantWithV1_0(const hal::V1_0::Model& model);
 bool compliantWithV1_0(const hal::V1_1::Model& model);
 bool compliantWithV1_0(const hal::V1_2::Model& model,
                        std::set<uint32_t>* noncompliantOperations = nullptr);
+bool compliantWithV1_0(const hal::V1_3::Model& model,
+                       std::set<uint32_t>* noncompliantOperations = nullptr);
 bool compliantWithV1_1(const hal::V1_0::Model& model);
 bool compliantWithV1_1(const hal::V1_1::Model& model);
 bool compliantWithV1_1(const hal::V1_2::Model& model,
+                       std::set<uint32_t>* noncompliantOperations = nullptr);
+bool compliantWithV1_1(const hal::V1_3::Model& model,
+                       std::set<uint32_t>* noncompliantOperations = nullptr);
+bool compliantWithV1_2(const hal::V1_0::Model& model);
+bool compliantWithV1_2(const hal::V1_1::Model& model);
+bool compliantWithV1_2(const hal::V1_2::Model& model,
+                       std::set<uint32_t>* noncompliantOperations = nullptr);
+bool compliantWithV1_2(const hal::V1_3::Model& model,
                        std::set<uint32_t>* noncompliantOperations = nullptr);
 
 hal::V1_0::Capabilities convertToV1_0(const hal::V1_0::Capabilities& capabilities);
 hal::V1_0::Capabilities convertToV1_0(const hal::V1_1::Capabilities& capabilities);
 hal::V1_0::Capabilities convertToV1_0(const hal::V1_2::Capabilities& capabilities);
+hal::V1_0::Capabilities convertToV1_0(const hal::V1_3::Capabilities& capabilities);
 hal::V1_1::Capabilities convertToV1_1(const hal::V1_0::Capabilities& capabilities);
 hal::V1_1::Capabilities convertToV1_1(const hal::V1_1::Capabilities& capabilities);
 hal::V1_1::Capabilities convertToV1_1(const hal::V1_2::Capabilities& capabilities);
+hal::V1_1::Capabilities convertToV1_1(const hal::V1_3::Capabilities& capabilities);
 hal::V1_2::Capabilities convertToV1_2(const hal::V1_0::Capabilities& capabilities);
 hal::V1_2::Capabilities convertToV1_2(const hal::V1_1::Capabilities& capabilities);
 hal::V1_2::Capabilities convertToV1_2(const hal::V1_2::Capabilities& capabilities);
+hal::V1_2::Capabilities convertToV1_2(const hal::V1_3::Capabilities& capabilities);
+hal::V1_3::Capabilities convertToV1_3(const hal::V1_0::Capabilities& capabilities);
+hal::V1_3::Capabilities convertToV1_3(const hal::V1_1::Capabilities& capabilities);
+hal::V1_3::Capabilities convertToV1_3(const hal::V1_2::Capabilities& capabilities);
+hal::V1_3::Capabilities convertToV1_3(const hal::V1_3::Capabilities& capabilities);
 
 hal::V1_0::Model convertToV1_0(const hal::V1_0::Model& model);
 hal::V1_0::Model convertToV1_0(const hal::V1_1::Model& model);
 hal::V1_0::Model convertToV1_0(const hal::V1_2::Model& model);
+hal::V1_0::Model convertToV1_0(const hal::V1_3::Model& model);
 hal::V1_1::Model convertToV1_1(const hal::V1_0::Model& model);
 hal::V1_1::Model convertToV1_1(const hal::V1_1::Model& model);
 hal::V1_1::Model convertToV1_1(const hal::V1_2::Model& model);
+hal::V1_1::Model convertToV1_1(const hal::V1_3::Model& model);
 hal::V1_2::Model convertToV1_2(const hal::V1_0::Model& model);
 hal::V1_2::Model convertToV1_2(const hal::V1_1::Model& model);
 hal::V1_2::Model convertToV1_2(const hal::V1_2::Model& model);
+hal::V1_2::Model convertToV1_2(const hal::V1_3::Model& model);
+hal::V1_3::Model convertToV1_3(const hal::V1_0::Model& model);
+hal::V1_3::Model convertToV1_3(const hal::V1_1::Model& model);
+hal::V1_3::Model convertToV1_3(const hal::V1_2::Model& model);
+hal::V1_3::Model convertToV1_3(const hal::V1_3::Model& model);
 
 hal::V1_0::OperationType uncheckedConvertToV1_0(hal::V1_2::OperationType type);
 hal::V1_1::OperationType uncheckedConvertToV1_1(hal::V1_2::OperationType type);
 
 hal::V1_0::Operand convertToV1_0(const hal::V1_2::Operand& operand);
-
+hal::V1_0::Operand convertToV1_0(const hal::V1_3::Operand& operand);
 hal::V1_2::Operand convertToV1_2(const hal::V1_0::Operand& operand);
-hal::V1_2::Operand convertToV1_2(const hal::V1_2::Operand& operand);
+hal::V1_2::Operand convertToV1_2(const hal::V1_3::Operand& operand);
+hal::V1_3::Operand convertToV1_3(const hal::V1_0::Operand& operand);
+hal::V1_3::Operand convertToV1_3(const hal::V1_2::Operand& operand);
+hal::V1_3::Operand convertToV1_3(const hal::V1_3::Operand& operand);
 
+hal::hidl_vec<hal::V1_0::Operand> convertToV1_0(const hal::hidl_vec<hal::V1_0::Operand>& operands);
+hal::hidl_vec<hal::V1_0::Operand> convertToV1_0(const hal::hidl_vec<hal::V1_2::Operand>& operands);
+hal::hidl_vec<hal::V1_0::Operand> convertToV1_0(const hal::hidl_vec<hal::V1_3::Operand>& operands);
 hal::hidl_vec<hal::V1_2::Operand> convertToV1_2(const hal::hidl_vec<hal::V1_0::Operand>& operands);
 hal::hidl_vec<hal::V1_2::Operand> convertToV1_2(const hal::hidl_vec<hal::V1_2::Operand>& operands);
+hal::hidl_vec<hal::V1_2::Operand> convertToV1_2(const hal::hidl_vec<hal::V1_3::Operand>& operands);
+hal::hidl_vec<hal::V1_3::Operand> convertToV1_3(const hal::hidl_vec<hal::V1_0::Operand>& operands);
+hal::hidl_vec<hal::V1_3::Operand> convertToV1_3(const hal::hidl_vec<hal::V1_2::Operand>& operands);
+hal::hidl_vec<hal::V1_3::Operand> convertToV1_3(const hal::hidl_vec<hal::V1_3::Operand>& operands);
 
 #ifdef NN_DEBUGGABLE
 uint32_t getProp(const char* str, uint32_t defaultValue = 0);
