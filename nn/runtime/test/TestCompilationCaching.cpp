@@ -14,15 +14,19 @@
  * limitations under the License.
  */
 
+#include <gtest/gtest.h>
+
+#include <cstdlib>
+#include <filesystem>
+#include <numeric>
+#include <string>
+#include <tuple>
+#include <vector>
+
 #include "HalInterfaces.h"
 #include "Manager.h"
 #include "SampleDriver.h"
 #include "TestNeuralNetworksWrapper.h"
-
-#include <gtest/gtest.h>
-#include <cstdlib>
-#include <filesystem>
-#include <numeric>
 
 using namespace android::nn;
 using namespace hal;
@@ -110,19 +114,19 @@ class CachingDriver : public sample_driver::SampleDriver {
     ~CachingDriver() override {}
 
     // Reports faster than cpu.
-    Return<void> getCapabilities_1_2(getCapabilities_1_2_cb cb) override {
+    Return<void> getCapabilities_1_3(getCapabilities_1_3_cb cb) override {
         android::nn::initVLogMask();
         const PerformanceInfo kPerf = {.execTime = 0.1, .powerUsage = 0.1};
         Capabilities capabilities = {
                 .relaxedFloat32toFloat16PerformanceScalar = kPerf,
                 .relaxedFloat32toFloat16PerformanceTensor = kPerf,
-                .operandPerformance = android::nn::nonExtensionOperandPerformance(kPerf)};
+                .operandPerformance = nonExtensionOperandPerformance<HalVersion::V1_3>(kPerf)};
         cb(ErrorStatus::NONE, capabilities);
         return Void();
     }
 
     // Reports supporting all operations.
-    Return<void> getSupportedOperations_1_2(const Model& model,
+    Return<void> getSupportedOperations_1_3(const Model& model,
                                             getSupportedOperations_cb cb) override {
         std::vector<bool> supported(model.operations.size(), true);
         cb(ErrorStatus::NONE, supported);
@@ -137,7 +141,7 @@ class CachingDriver : public sample_driver::SampleDriver {
 
     // Generates CachingPreparedModel.
     // Writes the cache entry per mCacheXData and sets mHasCalledPrepareModel.
-    Return<ErrorStatus> prepareModel_1_2(const Model&, ExecutionPreference,
+    Return<ErrorStatus> prepareModel_1_3(const Model&, ExecutionPreference,
                                          const hidl_vec<hidl_handle>& modelCacheHandle,
                                          const hidl_vec<hidl_handle>& dataCacheHandle,
                                          const CacheToken&,
