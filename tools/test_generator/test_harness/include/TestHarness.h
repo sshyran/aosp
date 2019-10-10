@@ -67,6 +67,7 @@ enum class TestOperandType {
     TENSOR_QUANT8_SYMM_PER_CHANNEL = 11,
     TENSOR_QUANT16_ASYMM = 12,
     TENSOR_QUANT8_SYMM = 13,
+    TENSOR_QUANT8_ASYMM_SIGNED = 14,
 };
 
 enum class TestOperandLifeTime {
@@ -176,7 +177,7 @@ enum class TestOperationType {
     RESIZE_NEAREST_NEIGHBOR = 94,
 };
 
-enum class TestHalVersion { UNKNOWN, V1_0, V1_1, V1_2 };
+enum class TestHalVersion { UNKNOWN, V1_0, V1_1, V1_2, V1_3 };
 
 // Manages the data buffer for a test operand.
 class TestBuffer {
