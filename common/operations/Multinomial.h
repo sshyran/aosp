@@ -17,13 +17,12 @@
 #ifndef ANDROID_FRAMEWORKS_ML_NN_COMMON_OPERATIONS_MULTINOMIAL_H
 #define ANDROID_FRAMEWORKS_ML_NN_COMMON_OPERATIONS_MULTINOMIAL_H
 
+#include "HalOperation.h"
+
 #include <tensorflow/lite/kernels/internal/tensor_utils.h>
 
 #include <algorithm>
 #include <cmath>
-#include <vector>
-
-#include "HalInterfaces.h"
 
 namespace android {
 namespace nn {
@@ -33,10 +32,11 @@ struct Shape;
 
 class Multinomial {
    public:
-    Multinomial(const hal::Operation& operation, std::vector<RunTimeOperandInfo>& operands);
+    Multinomial(const hardware::neuralnetworks::V1_2::Operation& operation,
+                std::vector<RunTimeOperandInfo>& operands);
 
-    static bool Prepare(const hal::Operation& operation, std::vector<RunTimeOperandInfo>& operands,
-                        Shape* outputShape);
+    static bool Prepare(const hardware::neuralnetworks::V1_2::Operation& operation,
+                        std::vector<RunTimeOperandInfo>& operands, Shape* outputShape);
     bool Eval();
 
     static constexpr int kInputTensor = 0;
