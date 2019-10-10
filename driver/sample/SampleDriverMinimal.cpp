@@ -16,16 +16,17 @@
 
 #define LOG_TAG "SampleDriverMinimal"
 
-#include "SampleDriver.h"
+#include <android-base/logging.h>
+#include <hidl/LegacySupport.h>
+
+#include <thread>
+#include <vector>
 
 #include "HalInterfaces.h"
 #include "NeuralNetworksOEM.h"
+#include "SampleDriver.h"
 #include "Utils.h"
 #include "ValidateHal.h"
-
-#include <android-base/logging.h>
-#include <hidl/LegacySupport.h>
-#include <thread>
 
 namespace android {
 namespace nn {
@@ -36,19 +37,19 @@ using namespace hal;
 class SampleDriverMinimal : public SampleDriver {
    public:
     SampleDriverMinimal() : SampleDriver("sample-minimal") {}
-    Return<void> getCapabilities_1_2(getCapabilities_1_2_cb cb) override;
-    Return<void> getSupportedOperations_1_2(const V1_2::Model& model,
-                                            getSupportedOperations_1_2_cb cb) override;
+    Return<void> getCapabilities_1_3(getCapabilities_1_3_cb cb) override;
+    Return<void> getSupportedOperations_1_3(const V1_3::Model& model,
+                                            getSupportedOperations_1_3_cb cb) override;
 };
 
-Return<void> SampleDriverMinimal::getCapabilities_1_2(getCapabilities_1_2_cb cb) {
+Return<void> SampleDriverMinimal::getCapabilities_1_3(getCapabilities_1_3_cb cb) {
     android::nn::initVLogMask();
     VLOG(DRIVER) << "getCapabilities()";
 
     Capabilities capabilities = {
             .relaxedFloat32toFloat16PerformanceScalar = {.execTime = 0.4f, .powerUsage = 0.5f},
             .relaxedFloat32toFloat16PerformanceTensor = {.execTime = 0.4f, .powerUsage = 0.5f},
-            .operandPerformance = nonExtensionOperandPerformance({1.0f, 1.0f})};
+            .operandPerformance = nonExtensionOperandPerformance<HalVersion::V1_3>({1.0f, 1.0f})};
     update(&capabilities.operandPerformance, OperandType::TENSOR_FLOAT32,
            {.execTime = 0.4f, .powerUsage = 0.5f});
     update(&capabilities.operandPerformance, OperandType::FLOAT32,
@@ -58,8 +59,8 @@ Return<void> SampleDriverMinimal::getCapabilities_1_2(getCapabilities_1_2_cb cb)
     return Void();
 }
 
-Return<void> SampleDriverMinimal::getSupportedOperations_1_2(const V1_2::Model& model,
-                                                             getSupportedOperations_1_2_cb cb) {
+Return<void> SampleDriverMinimal::getSupportedOperations_1_3(const V1_3::Model& model,
+                                                             getSupportedOperations_1_3_cb cb) {
     VLOG(DRIVER) << "getSupportedOperations()";
     if (validateModel(model)) {
         const size_t count = model.operations.size();
