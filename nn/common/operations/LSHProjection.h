@@ -17,9 +17,9 @@
 #ifndef ANDROID_FRAMEWORKS_ML_NN_COMMON_OPERATIONS_LSHPROJECTION_H
 #define ANDROID_FRAMEWORKS_ML_NN_COMMON_OPERATIONS_LSHPROJECTION_H
 
-#include <vector>
+#include "HalOperation.h"
 
-#include "HalInterfaces.h"
+#include <vector>
 
 namespace android {
 namespace nn {
@@ -36,10 +36,11 @@ struct Shape;
 
 class LSHProjection {
    public:
-    LSHProjection(const hal::Operation& operation, std::vector<RunTimeOperandInfo>& operands);
+    LSHProjection(const hardware::neuralnetworks::V1_2::Operation& operation,
+                  std::vector<RunTimeOperandInfo>& operands);
 
-    static bool Prepare(const hal::Operation& operation, std::vector<RunTimeOperandInfo>& operands,
-                        Shape* outputShape);
+    static bool Prepare(const hardware::neuralnetworks::V1_2::Operation& operation,
+                        std::vector<RunTimeOperandInfo>& operands, Shape* outputShape);
     template <typename T>
     bool Eval();
 
