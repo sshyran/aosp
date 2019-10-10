@@ -620,21 +620,21 @@ std::tuple<int, std::vector<OutputShape>, Timing> CpuPreparedModel::execute(
         }
     }
     // Create as many pools as there are input / output.
-    auto fixPointerArguments = [&requestPoolInfos](
-                                       const std::vector<ModelArgumentInfo>& argumentInfos) {
-        std::vector<DataLocation> ptrArgsLocations;
-        for (const ModelArgumentInfo& argumentInfo : argumentInfos) {
-            if (argumentInfo.state == ModelArgumentInfo::POINTER) {
-                ptrArgsLocations.push_back(
-                        {.poolIndex = static_cast<uint32_t>(requestPoolInfos.size()),
-                         .offset = 0,
-                         .length = argumentInfo.locationAndLength.length});
-                requestPoolInfos.emplace_back(RunTimePoolInfo::createFromExistingBuffer(
-                        static_cast<uint8_t*>(argumentInfo.buffer)));
-            }
-        }
-        return ptrArgsLocations;
-    };
+    auto fixPointerArguments =
+            [&requestPoolInfos](const std::vector<ModelArgumentInfo>& argumentInfos) {
+                std::vector<DataLocation> ptrArgsLocations;
+                for (const ModelArgumentInfo& argumentInfo : argumentInfos) {
+                    if (argumentInfo.state == ModelArgumentInfo::POINTER) {
+                        ptrArgsLocations.push_back(
+                                {.poolIndex = static_cast<uint32_t>(requestPoolInfos.size()),
+                                 .offset = 0,
+                                 .length = argumentInfo.locationAndLength.length});
+                        requestPoolInfos.emplace_back(RunTimePoolInfo::createFromExistingBuffer(
+                                static_cast<uint8_t*>(argumentInfo.buffer)));
+                    }
+                }
+                return ptrArgsLocations;
+            };
     const std::vector<DataLocation> inputPtrArgsLocations = fixPointerArguments(inputs);
     const std::vector<DataLocation> outputPtrArgsLocations = fixPointerArguments(outputs);
 
