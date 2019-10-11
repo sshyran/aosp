@@ -33,7 +33,7 @@ static std::vector<MixedTypedExample> examples_nhwc = {
   // int -> Dimensions map
   .operandDimensions = {{0, {2, 2, 2, 2}}},
   // int -> FLOAT32 map
-  .float32Operands = {{0, {0.0f, -0.499996f, 0.0f, -0.0999992f, 0.0f, -0.0999992f, 0.0f, 0.6999944f, 0.99995f, -0.6999944f, -0.99995f, 0.499996f, -0.99995f, -1.0999912f, 0.99995f, 1.2999896f}}},
+  .float32Operands = {{0, {0.0f, -1.1470304f, 0.0f, -0.22940612f, 0.0f, -0.22940612f, 0.0f, 1.6058424f, 0.99995005f, -0.7337929f, -0.99995005f, 0.52413774f, -0.99995005f, -1.1531031f, 0.99995005f, 1.3627582f}}},
   // int -> INT32 map
   .int32Operands = {},
   // int -> QUANT8_ASYMM map
@@ -90,7 +90,7 @@ static std::vector<MixedTypedExample> examples_nhwc_relaxed = {
   // int -> Dimensions map
   .operandDimensions = {{0, {2, 2, 2, 2}}},
   // int -> FLOAT32 map
-  .float32Operands = {{0, {0.0f, -0.499996f, 0.0f, -0.0999992f, 0.0f, -0.0999992f, 0.0f, 0.6999944f, 0.99995f, -0.6999944f, -0.99995f, 0.499996f, -0.99995f, -1.0999912f, 0.99995f, 1.2999896f}}},
+  .float32Operands = {{0, {0.0f, -1.1470304f, 0.0f, -0.22940612f, 0.0f, -0.22940612f, 0.0f, 1.6058424f, 0.99995005f, -0.7337929f, -0.99995005f, 0.52413774f, -0.99995005f, -1.1531031f, 0.99995005f, 1.3627582f}}},
   // int -> INT32 map
   .int32Operands = {},
   // int -> QUANT8_ASYMM map
@@ -155,7 +155,7 @@ static std::vector<MixedTypedExample> examples_nhwc_float16 = {
   // int -> QUANT16_SYMM map
   .quant16SymmOperands = {},
   // int -> FLOAT16 map
-  .float16Operands = {{0, {0.0f, -0.49999600648880005f, 0.0f, -0.09999919682741165f, 0.0f, -0.09999919682741165f, 0.0f, 0.6999943852424622f, 0.9999499917030334f, -0.6999943852424622f, -0.9999499917030334f, 0.49999600648880005f, -0.9999499917030334f, -1.0999912023544312f, 0.9999499917030334f, 1.2999895811080933f}}},
+  .float16Operands = {{0, {0.0f, -1.1470303535461426f, 0.0f, -0.22940611839294434f, 0.0f, -0.22940611839294434f, 0.0f, 1.6058423519134521f, 0.9999500513076782f, -0.7337929010391235f, -0.9999500513076782f, 0.5241377353668213f, -0.9999500513076782f, -1.1531031131744385f, 0.9999500513076782f, 1.3627581596374512f}}},
   // int -> BOOL8 map
   .bool8Operands = {},
   // int -> QUANT8_SYMM_PER_CHANNEL map
@@ -204,7 +204,7 @@ static std::vector<MixedTypedExample> examples_nchw = {
   // int -> Dimensions map
   .operandDimensions = {{0, {2, 2, 2, 2}}},
   // int -> FLOAT32 map
-  .float32Operands = {{0, {0.0f, 0.0f, 0.0f, 0.0f, -0.499996f, -0.0999992f, -0.0999992f, 0.6999944f, 0.99995f, -0.99995f, -0.99995f, 0.99995f, -0.6999944f, 0.499996f, -1.0999912f, 1.2999896f}}},
+  .float32Operands = {{0, {0.0f, 0.0f, 0.0f, 0.0f, -1.1470304f, -0.22940612f, -0.22940612f, 1.6058424f, 0.99995005f, -0.99995005f, -0.99995005f, 0.99995005f, -0.7337929f, 0.52413774f, -1.1531031f, 1.3627582f}}},
   // int -> INT32 map
   .int32Operands = {},
   // int -> QUANT8_ASYMM map
@@ -261,7 +261,7 @@ static std::vector<MixedTypedExample> examples_nchw_relaxed = {
   // int -> Dimensions map
   .operandDimensions = {{0, {2, 2, 2, 2}}},
   // int -> FLOAT32 map
-  .float32Operands = {{0, {0.0f, 0.0f, 0.0f, 0.0f, -0.499996f, -0.0999992f, -0.0999992f, 0.6999944f, 0.99995f, -0.99995f, -0.99995f, 0.99995f, -0.6999944f, 0.499996f, -1.0999912f, 1.2999896f}}},
+  .float32Operands = {{0, {0.0f, 0.0f, 0.0f, 0.0f, -1.1470304f, -0.22940612f, -0.22940612f, 1.6058424f, 0.99995005f, -0.99995005f, -0.99995005f, 0.99995005f, -0.7337929f, 0.52413774f, -1.1531031f, 1.3627582f}}},
   // int -> INT32 map
   .int32Operands = {},
   // int -> QUANT8_ASYMM map
@@ -326,7 +326,7 @@ static std::vector<MixedTypedExample> examples_nchw_float16 = {
   // int -> QUANT16_SYMM map
   .quant16SymmOperands = {},
   // int -> FLOAT16 map
-  .float16Operands = {{0, {0.0f, 0.0f, 0.0f, 0.0f, -0.49999600648880005f, -0.09999919682741165f, -0.09999919682741165f, 0.6999943852424622f, 0.9999499917030334f, -0.9999499917030334f, -0.9999499917030334f, 0.9999499917030334f, -0.6999943852424622f, 0.49999600648880005f, -1.0999912023544312f, 1.2999895811080933f}}},
+  .float16Operands = {{0, {0.0f, 0.0f, 0.0f, 0.0f, -1.1470303535461426f, -0.22940611839294434f, -0.22940611839294434f, 1.6058423519134521f, 0.9999500513076782f, -0.9999500513076782f, -0.9999500513076782f, 0.9999500513076782f, -0.7337929010391235f, 0.5241377353668213f, -1.1531031131744385f, 1.3627581596374512f}}},
   // int -> BOOL8 map
   .bool8Operands = {},
   // int -> QUANT8_SYMM_PER_CHANNEL map
@@ -375,7 +375,7 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_nhwc = {
   // int -> Dimensions map
   .operandDimensions = {{0, {2, 2, 2, 2}}},
   // int -> FLOAT32 map
-  .float32Operands = {{0, {0.0f, -0.499996f, 0.0f, -0.0999992f, 0.0f, -0.0999992f, 0.0f, 0.6999944f, 0.99995f, -0.6999944f, -0.99995f, 0.499996f, -0.99995f, -1.0999912f, 0.99995f, 1.2999896f}}},
+  .float32Operands = {{0, {0.0f, -1.1470304f, 0.0f, -0.22940612f, 0.0f, -0.22940612f, 0.0f, 1.6058424f, 0.99995005f, -0.7337929f, -0.99995005f, 0.52413774f, -0.99995005f, -1.1531031f, 0.99995005f, 1.3627582f}}},
   // int -> INT32 map
   .int32Operands = {},
   // int -> QUANT8_ASYMM map
@@ -432,7 +432,7 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_nhwc_relaxed
   // int -> Dimensions map
   .operandDimensions = {{0, {2, 2, 2, 2}}},
   // int -> FLOAT32 map
-  .float32Operands = {{0, {0.0f, -0.499996f, 0.0f, -0.0999992f, 0.0f, -0.0999992f, 0.0f, 0.6999944f, 0.99995f, -0.6999944f, -0.99995f, 0.499996f, -0.99995f, -1.0999912f, 0.99995f, 1.2999896f}}},
+  .float32Operands = {{0, {0.0f, -1.1470304f, 0.0f, -0.22940612f, 0.0f, -0.22940612f, 0.0f, 1.6058424f, 0.99995005f, -0.7337929f, -0.99995005f, 0.52413774f, -0.99995005f, -1.1531031f, 0.99995005f, 1.3627582f}}},
   // int -> INT32 map
   .int32Operands = {},
   // int -> QUANT8_ASYMM map
@@ -497,7 +497,7 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_nhwc_float16
   // int -> QUANT16_SYMM map
   .quant16SymmOperands = {},
   // int -> FLOAT16 map
-  .float16Operands = {{0, {0.0f, -0.49999600648880005f, 0.0f, -0.09999919682741165f, 0.0f, -0.09999919682741165f, 0.0f, 0.6999943852424622f, 0.9999499917030334f, -0.6999943852424622f, -0.9999499917030334f, 0.49999600648880005f, -0.9999499917030334f, -1.0999912023544312f, 0.9999499917030334f, 1.2999895811080933f}}},
+  .float16Operands = {{0, {0.0f, -1.1470303535461426f, 0.0f, -0.22940611839294434f, 0.0f, -0.22940611839294434f, 0.0f, 1.6058423519134521f, 0.9999500513076782f, -0.7337929010391235f, -0.9999500513076782f, 0.5241377353668213f, -0.9999500513076782f, -1.1531031131744385f, 0.9999500513076782f, 1.3627581596374512f}}},
   // int -> BOOL8 map
   .bool8Operands = {},
   // int -> QUANT8_SYMM_PER_CHANNEL map
@@ -546,7 +546,7 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_nchw = {
   // int -> Dimensions map
   .operandDimensions = {{0, {2, 2, 2, 2}}},
   // int -> FLOAT32 map
-  .float32Operands = {{0, {0.0f, 0.0f, 0.0f, 0.0f, -0.499996f, -0.0999992f, -0.0999992f, 0.6999944f, 0.99995f, -0.99995f, -0.99995f, 0.99995f, -0.6999944f, 0.499996f, -1.0999912f, 1.2999896f}}},
+  .float32Operands = {{0, {0.0f, 0.0f, 0.0f, 0.0f, -1.1470304f, -0.22940612f, -0.22940612f, 1.6058424f, 0.99995005f, -0.99995005f, -0.99995005f, 0.99995005f, -0.7337929f, 0.52413774f, -1.1531031f, 1.3627582f}}},
   // int -> INT32 map
   .int32Operands = {},
   // int -> QUANT8_ASYMM map
@@ -603,7 +603,7 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_nchw_relaxed
   // int -> Dimensions map
   .operandDimensions = {{0, {2, 2, 2, 2}}},
   // int -> FLOAT32 map
-  .float32Operands = {{0, {0.0f, 0.0f, 0.0f, 0.0f, -0.499996f, -0.0999992f, -0.0999992f, 0.6999944f, 0.99995f, -0.99995f, -0.99995f, 0.99995f, -0.6999944f, 0.499996f, -1.0999912f, 1.2999896f}}},
+  .float32Operands = {{0, {0.0f, 0.0f, 0.0f, 0.0f, -1.1470304f, -0.22940612f, -0.22940612f, 1.6058424f, 0.99995005f, -0.99995005f, -0.99995005f, 0.99995005f, -0.7337929f, 0.52413774f, -1.1531031f, 1.3627582f}}},
   // int -> INT32 map
   .int32Operands = {},
   // int -> QUANT8_ASYMM map
@@ -668,7 +668,7 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_nchw_float16
   // int -> QUANT16_SYMM map
   .quant16SymmOperands = {},
   // int -> FLOAT16 map
-  .float16Operands = {{0, {0.0f, 0.0f, 0.0f, 0.0f, -0.49999600648880005f, -0.09999919682741165f, -0.09999919682741165f, 0.6999943852424622f, 0.9999499917030334f, -0.9999499917030334f, -0.9999499917030334f, 0.9999499917030334f, -0.6999943852424622f, 0.49999600648880005f, -1.0999912023544312f, 1.2999895811080933f}}},
+  .float16Operands = {{0, {0.0f, 0.0f, 0.0f, 0.0f, -1.1470303535461426f, -0.22940611839294434f, -0.22940611839294434f, 1.6058423519134521f, 0.9999500513076782f, -0.9999500513076782f, -0.9999500513076782f, 0.9999500513076782f, -0.7337929010391235f, 0.5241377353668213f, -1.1531031131744385f, 1.3627581596374512f}}},
   // int -> BOOL8 map
   .bool8Operands = {},
   // int -> QUANT8_SYMM_PER_CHANNEL map
@@ -717,7 +717,7 @@ static std::vector<MixedTypedExample> examples_nhwc_2 = {
   // int -> Dimensions map
   .operandDimensions = {{0, {2, 2, 2, 2}}},
   // int -> FLOAT32 map
-  .float32Operands = {{0, {10.0f, 9.000008f, 10.0f, 9.8000016f, 10.0f, 9.8000016f, 10.0f, 11.3999888f, 11.9999f, 8.6000112f, 8.0001f, 10.999992f, 8.0001f, 7.8000176f, 11.9999f, 12.5999792f}}},
+  .float32Operands = {{0, {10.0f, 7.7059393f, 10.0f, 9.541187f, 10.0f, 9.541187f, 10.0f, 13.211685f, 11.9999f, 8.532414f, 8.0001f, 11.048275f, 8.0001f, 7.693794f, 11.9999f, 12.725516f}}},
   // int -> INT32 map
   .int32Operands = {},
   // int -> QUANT8_ASYMM map
@@ -774,7 +774,7 @@ static std::vector<MixedTypedExample> examples_nhwc_relaxed_2 = {
   // int -> Dimensions map
   .operandDimensions = {{0, {2, 2, 2, 2}}},
   // int -> FLOAT32 map
-  .float32Operands = {{0, {10.0f, 9.000008f, 10.0f, 9.8000016f, 10.0f, 9.8000016f, 10.0f, 11.3999888f, 11.9999f, 8.6000112f, 8.0001f, 10.999992f, 8.0001f, 7.8000176f, 11.9999f, 12.5999792f}}},
+  .float32Operands = {{0, {10.0f, 7.7059393f, 10.0f, 9.541187f, 10.0f, 9.541187f, 10.0f, 13.211685f, 11.9999f, 8.532414f, 8.0001f, 11.048275f, 8.0001f, 7.693794f, 11.9999f, 12.725516f}}},
   // int -> INT32 map
   .int32Operands = {},
   // int -> QUANT8_ASYMM map
@@ -839,7 +839,7 @@ static std::vector<MixedTypedExample> examples_nhwc_float16_2 = {
   // int -> QUANT16_SYMM map
   .quant16SymmOperands = {},
   // int -> FLOAT16 map
-  .float16Operands = {{0, {10.0f, 9.000007629394531f, 10.0f, 9.80000114440918f, 10.0f, 9.80000114440918f, 10.0f, 11.399989128112793f, 11.999899864196777f, 8.600010871887207f, 8.000100135803223f, 10.999992370605469f, 8.000100135803223f, 7.800017833709717f, 11.999899864196777f, 12.599979400634766f}}},
+  .float16Operands = {{0, {10.0f, 7.705939292907715f, 10.0f, 9.541187286376953f, 10.0f, 9.541187286376953f, 10.0f, 13.211685180664062f, 11.999899864196777f, 8.532414436340332f, 8.000100135803223f, 11.048274993896484f, 8.000100135803223f, 7.693793773651123f, 11.999899864196777f, 12.725516319274902f}}},
   // int -> BOOL8 map
   .bool8Operands = {},
   // int -> QUANT8_SYMM_PER_CHANNEL map
@@ -888,7 +888,7 @@ static std::vector<MixedTypedExample> examples_nchw_2 = {
   // int -> Dimensions map
   .operandDimensions = {{0, {2, 2, 2, 2}}},
   // int -> FLOAT32 map
-  .float32Operands = {{0, {10.0f, 10.0f, 10.0f, 10.0f, 9.000008f, 9.8000016f, 9.8000016f, 11.3999888f, 11.9999f, 8.0001f, 8.0001f, 11.9999f, 8.6000112f, 10.999992f, 7.8000176f, 12.5999792f}}},
+  .float32Operands = {{0, {10.0f, 10.0f, 10.0f, 10.0f, 7.7059393f, 9.541187f, 9.541187f, 13.211685f, 11.9999f, 8.0001f, 8.0001f, 11.9999f, 8.532414f, 11.048275f, 7.693794f, 12.725516f}}},
   // int -> INT32 map
   .int32Operands = {},
   // int -> QUANT8_ASYMM map
@@ -945,7 +945,7 @@ static std::vector<MixedTypedExample> examples_nchw_relaxed_2 = {
   // int -> Dimensions map
   .operandDimensions = {{0, {2, 2, 2, 2}}},
   // int -> FLOAT32 map
-  .float32Operands = {{0, {10.0f, 10.0f, 10.0f, 10.0f, 9.000008f, 9.8000016f, 9.8000016f, 11.3999888f, 11.9999f, 8.0001f, 8.0001f, 11.9999f, 8.6000112f, 10.999992f, 7.8000176f, 12.5999792f}}},
+  .float32Operands = {{0, {10.0f, 10.0f, 10.0f, 10.0f, 7.7059393f, 9.541187f, 9.541187f, 13.211685f, 11.9999f, 8.0001f, 8.0001f, 11.9999f, 8.532414f, 11.048275f, 7.693794f, 12.725516f}}},
   // int -> INT32 map
   .int32Operands = {},
   // int -> QUANT8_ASYMM map
@@ -1010,7 +1010,7 @@ static std::vector<MixedTypedExample> examples_nchw_float16_2 = {
   // int -> QUANT16_SYMM map
   .quant16SymmOperands = {},
   // int -> FLOAT16 map
-  .float16Operands = {{0, {10.0f, 10.0f, 10.0f, 10.0f, 9.000007629394531f, 9.80000114440918f, 9.80000114440918f, 11.399989128112793f, 11.999899864196777f, 8.000100135803223f, 8.000100135803223f, 11.999899864196777f, 8.600010871887207f, 10.999992370605469f, 7.800017833709717f, 12.599979400634766f}}},
+  .float16Operands = {{0, {10.0f, 10.0f, 10.0f, 10.0f, 7.705939292907715f, 9.541187286376953f, 9.541187286376953f, 13.211685180664062f, 11.999899864196777f, 8.000100135803223f, 8.000100135803223f, 11.999899864196777f, 8.532414436340332f, 11.048274993896484f, 7.693793773651123f, 12.725516319274902f}}},
   // int -> BOOL8 map
   .bool8Operands = {},
   // int -> QUANT8_SYMM_PER_CHANNEL map
@@ -1059,7 +1059,7 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_nhwc_2 = {
   // int -> Dimensions map
   .operandDimensions = {{0, {2, 2, 2, 2}}},
   // int -> FLOAT32 map
-  .float32Operands = {{0, {10.0f, 9.000008f, 10.0f, 9.8000016f, 10.0f, 9.8000016f, 10.0f, 11.3999888f, 11.9999f, 8.6000112f, 8.0001f, 10.999992f, 8.0001f, 7.8000176f, 11.9999f, 12.5999792f}}},
+  .float32Operands = {{0, {10.0f, 7.7059393f, 10.0f, 9.541187f, 10.0f, 9.541187f, 10.0f, 13.211685f, 11.9999f, 8.532414f, 8.0001f, 11.048275f, 8.0001f, 7.693794f, 11.9999f, 12.725516f}}},
   // int -> INT32 map
   .int32Operands = {},
   // int -> QUANT8_ASYMM map
@@ -1116,7 +1116,7 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_nhwc_relaxed
   // int -> Dimensions map
   .operandDimensions = {{0, {2, 2, 2, 2}}},
   // int -> FLOAT32 map
-  .float32Operands = {{0, {10.0f, 9.000008f, 10.0f, 9.8000016f, 10.0f, 9.8000016f, 10.0f, 11.3999888f, 11.9999f, 8.6000112f, 8.0001f, 10.999992f, 8.0001f, 7.8000176f, 11.9999f, 12.5999792f}}},
+  .float32Operands = {{0, {10.0f, 7.7059393f, 10.0f, 9.541187f, 10.0f, 9.541187f, 10.0f, 13.211685f, 11.9999f, 8.532414f, 8.0001f, 11.048275f, 8.0001f, 7.693794f, 11.9999f, 12.725516f}}},
   // int -> INT32 map
   .int32Operands = {},
   // int -> QUANT8_ASYMM map
@@ -1181,7 +1181,7 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_nhwc_float16
   // int -> QUANT16_SYMM map
   .quant16SymmOperands = {},
   // int -> FLOAT16 map
-  .float16Operands = {{0, {10.0f, 9.000007629394531f, 10.0f, 9.80000114440918f, 10.0f, 9.80000114440918f, 10.0f, 11.399989128112793f, 11.999899864196777f, 8.600010871887207f, 8.000100135803223f, 10.999992370605469f, 8.000100135803223f, 7.800017833709717f, 11.999899864196777f, 12.599979400634766f}}},
+  .float16Operands = {{0, {10.0f, 7.705939292907715f, 10.0f, 9.541187286376953f, 10.0f, 9.541187286376953f, 10.0f, 13.211685180664062f, 11.999899864196777f, 8.532414436340332f, 8.000100135803223f, 11.048274993896484f, 8.000100135803223f, 7.693793773651123f, 11.999899864196777f, 12.725516319274902f}}},
   // int -> BOOL8 map
   .bool8Operands = {},
   // int -> QUANT8_SYMM_PER_CHANNEL map
@@ -1230,7 +1230,7 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_nchw_2 = {
   // int -> Dimensions map
   .operandDimensions = {{0, {2, 2, 2, 2}}},
   // int -> FLOAT32 map
-  .float32Operands = {{0, {10.0f, 10.0f, 10.0f, 10.0f, 9.000008f, 9.8000016f, 9.8000016f, 11.3999888f, 11.9999f, 8.0001f, 8.0001f, 11.9999f, 8.6000112f, 10.999992f, 7.8000176f, 12.5999792f}}},
+  .float32Operands = {{0, {10.0f, 10.0f, 10.0f, 10.0f, 7.7059393f, 9.541187f, 9.541187f, 13.211685f, 11.9999f, 8.0001f, 8.0001f, 11.9999f, 8.532414f, 11.048275f, 7.693794f, 12.725516f}}},
   // int -> INT32 map
   .int32Operands = {},
   // int -> QUANT8_ASYMM map
@@ -1287,7 +1287,7 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_nchw_relaxed
   // int -> Dimensions map
   .operandDimensions = {{0, {2, 2, 2, 2}}},
   // int -> FLOAT32 map
-  .float32Operands = {{0, {10.0f, 10.0f, 10.0f, 10.0f, 9.000008f, 9.8000016f, 9.8000016f, 11.3999888f, 11.9999f, 8.0001f, 8.0001f, 11.9999f, 8.6000112f, 10.999992f, 7.8000176f, 12.5999792f}}},
+  .float32Operands = {{0, {10.0f, 10.0f, 10.0f, 10.0f, 7.7059393f, 9.541187f, 9.541187f, 13.211685f, 11.9999f, 8.0001f, 8.0001f, 11.9999f, 8.532414f, 11.048275f, 7.693794f, 12.725516f}}},
   // int -> INT32 map
   .int32Operands = {},
   // int -> QUANT8_ASYMM map
@@ -1352,7 +1352,7 @@ static std::vector<MixedTypedExample> examples_dynamic_output_shape_nchw_float16
   // int -> QUANT16_SYMM map
   .quant16SymmOperands = {},
   // int -> FLOAT16 map
-  .float16Operands = {{0, {10.0f, 10.0f, 10.0f, 10.0f, 9.000007629394531f, 9.80000114440918f, 9.80000114440918f, 11.399989128112793f, 11.999899864196777f, 8.000100135803223f, 8.000100135803223f, 11.999899864196777f, 8.600010871887207f, 10.999992370605469f, 7.800017833709717f, 12.599979400634766f}}},
+  .float16Operands = {{0, {10.0f, 10.0f, 10.0f, 10.0f, 7.705939292907715f, 9.541187286376953f, 9.541187286376953f, 13.211685180664062f, 11.999899864196777f, 8.000100135803223f, 8.000100135803223f, 11.999899864196777f, 8.532414436340332f, 11.048274993896484f, 7.693793773651123f, 12.725516319274902f}}},
   // int -> BOOL8 map
   .bool8Operands = {},
   // int -> QUANT8_SYMM_PER_CHANNEL map
