@@ -19,9 +19,11 @@
 #include "VersionedInterfaces.h"
 
 #include <android-base/logging.h>
+#include <android-base/properties.h>
 #include <android-base/scopeguard.h>
 #include <android-base/thread_annotations.h>
 
+#include <chrono>
 #include <functional>
 #include <memory>
 #include <string>
@@ -276,12 +278,30 @@ std::tuple<int, std::vector<OutputShape>, Timing> VersionedIPreparedModel::execu
     return executeAsynchronously(request, measure);
 }
 
+// This is the amount of time the ExecutionBurstController should spend polling
+// the FMQ to see if it has data available before it should fall back to
+// waiting on the futex.
+static std::chrono::microseconds getPollingTimeWindow() {
+    constexpr int32_t defaultPollingTimeWindow = 50;
+#ifdef NN_DEBUGGABLE
+    constexpr int32_t minPollingTimeWindow = 0;
+    const int32_t selectedPollingTimeWindow =
+            base::GetIntProperty("debug.nn.burst-conrtoller-polling-window",
+                                 defaultPollingTimeWindow, minPollingTimeWindow);
+    return std::chrono::microseconds{selectedPollingTimeWindow};
+#else
+    return std::chrono::microseconds{defaultPollingTimeWindow};
+#endif  // NN_DEBUGGABLE
+}
+
 std::shared_ptr<ExecutionBurstController> VersionedIPreparedModel::configureExecutionBurst(
-        bool blocking) const {
+        bool preferPowerOverLatency) const {
     if (mPreparedModelV1_2 == nullptr) {
         return nullptr;
     }
-    return ExecutionBurstController::create(mPreparedModelV1_2, blocking);
+    const auto pollingTimeWindow =
+            (preferPowerOverLatency ? std::chrono::microseconds{0} : getPollingTimeWindow());
+    return ExecutionBurstController::create(mPreparedModelV1_2, pollingTimeWindow);
 }
 
 std::shared_ptr<VersionedIDevice> VersionedIDevice::create(std::string serviceName,
