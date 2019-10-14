@@ -127,7 +127,6 @@ class DriverPreparedModel : public PreparedModel {
 DriverDevice::DriverDevice(std::string name, const sp<V1_0::IDevice>& device)
     : mName(std::move(name)), mInterface(VersionedIDevice::create(mName, device)) {}
 
-// TODO: handle errors from initialize correctly
 bool DriverDevice::initialize() {
 #ifdef NN_DEBUGGABLE
     static const char samplePrefix[] = "sample";
@@ -167,18 +166,23 @@ bool DriverDevice::initialize() {
     std::tie(status, mNumCacheFiles.first, mNumCacheFiles.second) =
             mInterface->getNumberOfCacheFilesNeeded();
     if (status != ErrorStatus::NONE) {
-        LOG(WARNING) << "IDevice::getNumberOfCacheFilesNeeded returned the error "
-                     << toString(status);
-        mNumCacheFiles = {0, 0};
+        LOG(ERROR) << "IDevice::getNumberOfCacheFilesNeeded returned the error "
+                   << toString(status);
+        return false;
     }
-    if (mNumCacheFiles.first > static_cast<uint32_t>(Constant::MAX_NUMBER_OF_CACHE_FILES) ||
-        mNumCacheFiles.second > static_cast<uint32_t>(Constant::MAX_NUMBER_OF_CACHE_FILES)) {
-        LOG(WARNING)
-                << "IDevice::getNumberOfCacheFilesNeeded returned invalid number of cache files "
-                   "numModelCache = "
-                << mNumCacheFiles.first << ", numDataCache = " << mNumCacheFiles.second;
-        mNumCacheFiles = {0, 0};
+
+    // The following limit is enforced by VTS
+    constexpr uint32_t maxNumCacheFiles =
+            static_cast<uint32_t>(Constant::MAX_NUMBER_OF_CACHE_FILES);
+    if (mNumCacheFiles.first > maxNumCacheFiles || mNumCacheFiles.second > maxNumCacheFiles) {
+        LOG(ERROR)
+                << "IDevice::getNumberOfCacheFilesNeeded returned invalid number of cache files: "
+                   "numModelCacheFiles = "
+                << mNumCacheFiles.first << ", numDataCacheFiles = " << mNumCacheFiles.second
+                << ", maxNumCacheFiles = " << maxNumCacheFiles;
+        return false;
     }
+
     return true;
 }
 
