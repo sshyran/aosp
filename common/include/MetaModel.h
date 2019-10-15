@@ -74,6 +74,7 @@ class MetaModel {
 
     ReturnedSlice<hal::V1_0::Model> getSliceV1_0() const { return getSlice(&mSliceV1_0); }
     ReturnedSlice<hal::V1_1::Model> getSliceV1_1() const { return getSlice(&mSliceV1_1); }
+    ReturnedSlice<hal::V1_2::Model> getSliceV1_2() const { return getSlice(&mSliceV1_2); }
 
     // Disallowing copy constructor and assignment operator is for efficiency,
     // not for correctness.  The default copy constructor and assignment
@@ -115,6 +116,7 @@ class MetaModel {
     };
     mutable Slice<hal::V1_0::Model> mSliceV1_0;
     mutable Slice<hal::V1_1::Model> mSliceV1_1;
+    mutable Slice<hal::V1_2::Model> mSliceV1_2;
 
     template <class T_SlicedModel>
     ReturnedSlice<T_SlicedModel> getSlice(Slice<T_SlicedModel>* slice) const;
