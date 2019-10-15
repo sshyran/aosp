@@ -66,8 +66,7 @@ class DriverDevice : public Device {
     const std::vector<Extension>& getSupportedExtensions() const override {
         return kInterface->getSupportedExtensions();
     }
-    void getSupportedOperations(const MetaModel& metaModel,
-                                hidl_vec<bool>* supportedOperations) const override;
+    std::vector<bool> getSupportedOperations(const MetaModel& metaModel) const override;
     PerformanceInfo getPerformance(OperandType type) const override {
         const auto& capabilities = kInterface->getCapabilities();
         return lookup(capabilities.operandPerformance, type);
@@ -153,42 +152,34 @@ std::shared_ptr<DriverDevice> DriverDevice::create(std::string name, sp<V1_0::ID
     return std::make_shared<DriverDevice>(std::move(versionedDevice));
 }
 
-void DriverDevice::getSupportedOperations(const MetaModel& metaModel,
-                                          hidl_vec<bool>* outSupportedOperations) const {
+std::vector<bool> DriverDevice::getSupportedOperations(const MetaModel& metaModel) const {
     // Query the driver for what it can do.
     ErrorStatus status = ErrorStatus::GENERAL_FAILURE;
-    hidl_vec<bool> supportedOperations;
+    std::vector<bool> supportedOperations;
     std::tie(status, supportedOperations) = kInterface->getSupportedOperations(metaModel);
 
     const Model& hidlModel = metaModel.getModel();
     if (status != ErrorStatus::NONE) {
         LOG(ERROR) << "IDevice::getSupportedOperations returned the error " << toString(status);
         // Set the supported operation vectors to all false, so we won't use this driver.
-        outSupportedOperations->resize(hidlModel.operations.size());
-        std::fill(outSupportedOperations->begin(), outSupportedOperations->end(), false);
-        return;
+        return std::vector<bool>(hidlModel.operations.size(), false);
     }
     if (supportedOperations.size() != hidlModel.operations.size()) {
         LOG(ERROR) << "IDevice::getSupportedOperations returned a vector of length "
                    << supportedOperations.size() << " when expecting "
                    << hidlModel.operations.size();
         // Set the supported operation vectors to all false, so we won't use this driver.
-        outSupportedOperations->resize(hidlModel.operations.size());
-        std::fill(outSupportedOperations->begin(), outSupportedOperations->end(), false);
-        return;
+        return std::vector<bool>(hidlModel.operations.size(), false);
     }
-
-    *outSupportedOperations = std::move(supportedOperations);
 
 #ifdef NN_DEBUGGABLE
     if (mSupported != 1) {
-        return;
+        return supportedOperations;
     }
 
     const uint32_t baseAccumulator = std::hash<std::string>{}(getName());
-    for (size_t operationIndex = 0; operationIndex < outSupportedOperations->size();
-         operationIndex++) {
-        if (!(*outSupportedOperations)[operationIndex]) {
+    for (size_t operationIndex = 0; operationIndex < supportedOperations.size(); operationIndex++) {
+        if (!supportedOperations[operationIndex]) {
             continue;
         }
 
@@ -212,10 +203,12 @@ void DriverDevice::getSupportedOperations(const MetaModel& metaModel,
         accumulateOperands(operation.inputs);
         accumulateOperands(operation.outputs);
         if (accumulator & 1) {
-            (*outSupportedOperations)[operationIndex] = false;
+            supportedOperations[operationIndex] = false;
         }
     }
 #endif  // NN_DEBUGGABLE
+
+    return supportedOperations;
 }
 
 // Opens cache file by filename and sets the handle to the opened fd. Returns false on fail. The
@@ -541,8 +534,7 @@ class CpuDevice : public Device {
     const std::vector<Extension>& getSupportedExtensions() const override {
         return kSupportedExtensions;
     }
-    void getSupportedOperations(const MetaModel& metaModel,
-                                hidl_vec<bool>* supportedOperations) const override;
+    std::vector<bool> getSupportedOperations(const MetaModel& metaModel) const override;
     PerformanceInfo getPerformance(OperandType) const override { return kPerformance; }
     PerformanceInfo getRelaxedFloat32toFloat16PerformanceScalar() const override {
         return kPerformance;
@@ -595,11 +587,10 @@ class CpuPreparedModel : public PreparedModel {
     const std::vector<RunTimePoolInfo> mModelPoolInfos;
 };
 
-void CpuDevice::getSupportedOperations(const MetaModel& metaModel,
-                                       hidl_vec<bool>* supportedOperations) const {
+std::vector<bool> CpuDevice::getSupportedOperations(const MetaModel& metaModel) const {
     const Model& hidlModel = metaModel.getModel();
     const size_t count = hidlModel.operations.size();
-    hidl_vec<bool> result(count);
+    std::vector<bool> result(count, false);
     for (size_t i = 0; i < count; i++) {
         // TODO(b/119870033): Decide whether and how post-P operations would be supported on CPU.
         //                    We may want to use the slicer for CpuDevice just as we do for
@@ -608,7 +599,7 @@ void CpuDevice::getSupportedOperations(const MetaModel& metaModel,
         result[i] = !isExtensionOperationType(operationType) &&
                     operationType != OperationType::OEM_OPERATION;
     }
-    *supportedOperations = std::move(result);
+    return result;
 }
 
 std::pair<int, std::shared_ptr<PreparedModel>> CpuDevice::prepareModel(
