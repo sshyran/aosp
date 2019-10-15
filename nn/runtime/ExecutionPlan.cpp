@@ -997,13 +997,13 @@ class CanDo {
     CanDo() {}
 
     void initialize(const MetaModel& metaModel, std::shared_ptr<Device> device) {
-        device->getSupportedOperations(metaModel, &mSupportsOperationByIndex);
+        mSupportsOperationByIndex = device->getSupportedOperations(metaModel);
     }
 
     bool check(size_t operationIndex) const { return mSupportsOperationByIndex[operationIndex]; }
 
    private:
-    hidl_vec<bool> mSupportsOperationByIndex;
+    std::vector<bool> mSupportsOperationByIndex;
 };
 
 }  // anonymous namespace
