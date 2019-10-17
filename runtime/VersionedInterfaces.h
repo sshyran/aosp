@@ -502,6 +502,10 @@ class VersionedIDevice {
         sp<hal::V1_2::IDevice> getDevice() const {
             return mDeviceV1_2;
         }
+        template <>
+        sp<hal::V1_3::IDevice> getDevice() const {
+            return mDeviceV1_3;
+        }
 
         /**
          * Returns sp<*::IDevice> (as per getDevice()) and the
@@ -535,6 +539,7 @@ class VersionedIDevice {
         sp<hal::V1_0::IDevice> mDeviceV1_0;
         sp<hal::V1_1::IDevice> mDeviceV1_1;
         sp<hal::V1_2::IDevice> mDeviceV1_2;
+        sp<hal::V1_3::IDevice> mDeviceV1_3;
 
         /**
          * HIDL callback to be invoked if the service for mDeviceV1_0 crashes.

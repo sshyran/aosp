@@ -18,17 +18,24 @@
 
 #include "Utils.h"
 
-#include "NeuralNetworks.h"
-#include "NeuralNetworksOEM.h"
-#include "OperationResolver.h"
-#include "ValidateHal.h"
-
 #include <android-base/logging.h>
 #include <android-base/properties.h>
 #include <android-base/strings.h>
 #include <sys/system_properties.h>
+
 #include <algorithm>
+#include <limits>
+#include <set>
+#include <string>
+#include <tuple>
 #include <unordered_map>
+#include <utility>
+#include <vector>
+
+#include "NeuralNetworks.h"
+#include "NeuralNetworksOEM.h"
+#include "OperationResolver.h"
+#include "ValidateHal.h"
 
 namespace android {
 namespace nn {
@@ -226,7 +233,7 @@ const uint32_t kSizeOfDataType[]{
         4,  // ANEURALNETWORKS_UINT32
         4,  // ANEURALNETWORKS_TENSOR_FLOAT32
         4,  // ANEURALNETWORKS_TENSOR_INT32
-        1,  // ANEURALNETWORKS_TENSOR_SYMMETRICAL_QUANT8
+        1,  // ANEURALNETWORKS_TENSOR_QUANT8_ASYMM
         1,  // ANEURALNETWORKS_BOOL
         2,  // ANEURALNETWORKS_TENSOR_QUANT16_SYMM
         2,  // ANEURALNETWORKS_TENSOR_FLOAT16
@@ -235,6 +242,7 @@ const uint32_t kSizeOfDataType[]{
         1,  // ANEURALNETWORKS_TENSOR_QUANT8_SYMM_PER_CHANNEL
         2,  // ANEURALNETWORKS_TENSOR_QUANT16_ASYMM
         1,  // ANEURALNETWORKS_TENSOR_QUANT8_SYMM
+        1,  // ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED
 };
 
 static_assert(COUNT(kSizeOfDataType) == kNumberOfDataTypes, "kSizeOfDataType is incorrect");
@@ -245,7 +253,7 @@ const bool kScalarDataType[]{
         true,   // ANEURALNETWORKS_UINT32
         false,  // ANEURALNETWORKS_TENSOR_FLOAT32
         false,  // ANEURALNETWORKS_TENSOR_INT32
-        false,  // ANEURALNETWORKS_TENSOR_SYMMETRICAL_QUANT8
+        false,  // ANEURALNETWORKS_TENSOR_QUANT8_ASYMM
         true,   // ANEURALNETWORKS_BOOL
         false,  // ANEURALNETWORKS_TENSOR_QUANT16_SYMM
         false,  // ANEURALNETWORKS_TENSOR_FLOAT16
@@ -254,6 +262,7 @@ const bool kScalarDataType[]{
         false,  // ANEURALNETWORKS_TENSOR_QUANT8_SYMM_PER_CHANNEL
         false,  // ANEURALNETWORKS_TENSOR_QUANT16_ASYMM
         false,  // ANEURALNETWORKS_TENSOR_QUANT8_SYMM
+        false,  // ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED
 };
 
 static_assert(COUNT(kScalarDataType) == kNumberOfDataTypes, "kScalarDataType is incorrect");
@@ -349,6 +358,30 @@ void logModelToInfo(const V1_1::Model& model) {
     LOG(INFO) << "pools" << SHOW_IF_DEBUG(toString(model.pools));
 }
 
+void logModelToInfo(const V1_2::Model& model) {
+    LOG(INFO) << "V1_2::Model start";
+    LOG(INFO) << "operands" << toString(model.operands);
+    LOG(INFO) << "operations" << toString(model.operations);
+    LOG(INFO) << "inputIndexes" << toString(model.inputIndexes);
+    LOG(INFO) << "outputIndexes" << toString(model.outputIndexes);
+    LOG(INFO) << "operandValues size" << model.operandValues.size();
+    LOG(INFO) << "pools" << SHOW_IF_DEBUG(toString(model.pools));
+    LOG(INFO) << "relaxComputationFloat32toFloat16" << model.relaxComputationFloat32toFloat16;
+    LOG(INFO) << "extensionNameToPrefix" << toString(model.extensionNameToPrefix);
+}
+
+void logModelToInfo(const V1_3::Model& model) {
+    LOG(INFO) << "V1_3::Model start";
+    LOG(INFO) << "operands" << toString(model.operands);
+    LOG(INFO) << "operations" << toString(model.operations);
+    LOG(INFO) << "inputIndexes" << toString(model.inputIndexes);
+    LOG(INFO) << "outputIndexes" << toString(model.outputIndexes);
+    LOG(INFO) << "operandValues size" << model.operandValues.size();
+    LOG(INFO) << "pools" << SHOW_IF_DEBUG(toString(model.pools));
+    LOG(INFO) << "relaxComputationFloat32toFloat16" << model.relaxComputationFloat32toFloat16;
+    LOG(INFO) << "extensionNameToPrefix" << toString(model.extensionNameToPrefix);
+}
+
 bool validateOperandSymmPerChannelQuantParams(
         const Operand& halOperand, const ANeuralNetworksSymmPerChannelQuantParams& channelQuant,
         const char* tag) {
@@ -375,6 +408,14 @@ static bool validateScalarDimensions(const ANeuralNetworksOperandType& type, con
 
 static bool validateQuant8AsymmParams(const ANeuralNetworksOperandType& type, const char* tag) {
     NN_RET_CHECK(0 <= type.zeroPoint && type.zeroPoint <= 255)
+            << tag << " invalid zeroPoint: " << type.zeroPoint;
+    NN_RET_CHECK_GT(type.scale, 0.f) << tag << " invalid scale";
+    return true;
+}
+
+static bool validateQuant8AsymmSignedParams(const ANeuralNetworksOperandType& type,
+                                            const char* tag) {
+    NN_RET_CHECK(-128 <= type.zeroPoint && type.zeroPoint <= 127)
             << tag << " invalid zeroPoint: " << type.zeroPoint;
     NN_RET_CHECK_GT(type.scale, 0.f) << tag << " invalid scale";
     return true;
@@ -447,6 +488,8 @@ static bool validateOperandTypeHelper(
         NN_RET_CHECK(validateTensorDimensions(type, tag, allowPartial));
         if (type.type == ANEURALNETWORKS_TENSOR_QUANT8_ASYMM) {
             NN_RET_CHECK(validateQuant8AsymmParams(type, tag));
+        } else if (type.type == ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED) {
+            NN_RET_CHECK(validateQuant8AsymmSignedParams(type, tag));
         } else if (type.type == ANEURALNETWORKS_TENSOR_QUANT8_SYMM) {
             NN_RET_CHECK(validateQuant8SymmParams(type, tag));
         } else if (type.type == ANEURALNETWORKS_TENSOR_QUANT16_ASYMM) {
@@ -1763,21 +1806,23 @@ std::tuple<int, std::vector<OutputShape>, Timing> getExecutionResult(
     return {n, std::move(outputShapes), timing};
 }
 
-// V1_2::Capabilities::operandPerformance utilities.
-// The field V1_2::Capabilities::operandPerformance is a vector sorted by the
-// field V1_2::Capabilities::OperandPerformance::type.
+// Capabilities::operandPerformance utilities.
+// The field Capabilities::operandPerformance is a vector sorted by the field
+// Capabilities::OperandPerformance::type.
 
-hidl_vec<Capabilities::OperandPerformance> nonExtensionOperandPerformance(PerformanceInfo perf) {
-    using OpPerf = Capabilities::OperandPerformance;
+template <HalVersion version>
+hidl_vec<VersionedOperandPerformance<version>> nonExtensionOperandPerformance(
+        PerformanceInfo perf) {
+    using OpPerf = VersionedOperandPerformance<version>;
 
     // Note: range presents enumerators in declaration order, not in numerical order.
-    static constexpr hidl_enum_range<OperandType> kOperandTypeRange;
+    static constexpr hidl_enum_range<VersionedOperandType<version>> kOperandTypeRange;
 
     hidl_vec<OpPerf> ret(kOperandTypeRange.end() - kOperandTypeRange.begin());
 
     std::transform(kOperandTypeRange.begin(), kOperandTypeRange.end(), ret.begin(),
-                   [perf](OperandType type) {
-                       return Capabilities::OperandPerformance{type, perf};
+                   [perf](VersionedOperandType<version> type) {
+                       return OpPerf{type, perf};
                    });
     std::sort(ret.begin(), ret.end(),
               [](const OpPerf& a, const OpPerf& b) { return a.type < b.type; });
@@ -1785,28 +1830,57 @@ hidl_vec<Capabilities::OperandPerformance> nonExtensionOperandPerformance(Perfor
     return ret;
 }
 
-void update(hidl_vec<Capabilities::OperandPerformance>* operandPerformance, OperandType type,
-            PerformanceInfo perf) {
+template hal::hidl_vec<V1_2::Capabilities::OperandPerformance>
+nonExtensionOperandPerformance<HalVersion::V1_2>(PerformanceInfo perf);
+template hal::hidl_vec<V1_3::Capabilities::OperandPerformance>
+nonExtensionOperandPerformance<HalVersion::V1_3>(PerformanceInfo perf);
+
+template <HalVersion version>
+void update(hal::hidl_vec<VersionedOperandPerformance<version>>* operandPerformance,
+            VersionedOperandType<version> type, hal::PerformanceInfo perf) {
     CHECK(operandPerformance != nullptr);
-    const auto it = std::lower_bound(operandPerformance->begin(), operandPerformance->end(), type,
-                                     [](const Capabilities::OperandPerformance& perf,
-                                        OperandType type) { return perf.type < type; });
+    const auto it =
+            std::lower_bound(operandPerformance->begin(), operandPerformance->end(), type,
+                             [](const VersionedOperandPerformance<version>& perf,
+                                VersionedOperandType<version> type) { return perf.type < type; });
     CHECK(it != operandPerformance->end())
             << toString(type) << " not in " << toString(*operandPerformance);
     it->info = perf;
 }
 
-PerformanceInfo lookup(const hidl_vec<Capabilities::OperandPerformance>& operandPerformance,
-                       OperandType type) {
+void update(hidl_vec<V1_2::Capabilities::OperandPerformance>* operandPerformance,
+            V1_2::OperandType type, PerformanceInfo perf) {
+    update<HalVersion::V1_2>(operandPerformance, type, perf);
+}
+void update(hidl_vec<V1_3::Capabilities::OperandPerformance>* operandPerformance,
+            V1_3::OperandType type, PerformanceInfo perf) {
+    update<HalVersion::V1_3>(operandPerformance, type, perf);
+}
+
+template <HalVersion version>
+PerformanceInfo lookup(const hidl_vec<VersionedOperandPerformance<version>>& operandPerformance,
+                       VersionedOperandType<version> type) {
     const auto it = std::lower_bound(operandPerformance.begin(), operandPerformance.end(), type,
-                                     [](const Capabilities::OperandPerformance& perf,
-                                        OperandType type) { return perf.type < type; });
+                                     [](const VersionedOperandPerformance<version>& perf,
+                                        VersionedOperandType<version> type) {
+                                         return static_cast<OperandType>(perf.type) <
+                                                static_cast<OperandType>(type);
+                                     });
     if (it == operandPerformance.end()) {
         LOG(WARNING) << "No PerformanceInfo for " << toString(type);
         return {.execTime = FLT_MAX, .powerUsage = FLT_MAX};
     } else {
         return it->info;
     }
+}
+
+PerformanceInfo lookup(const hidl_vec<V1_2::Capabilities::OperandPerformance>& operandPerformance,
+                       V1_2::OperandType type) {
+    return lookup<HalVersion::V1_2>(operandPerformance, type);
+}
+PerformanceInfo lookup(const hidl_vec<V1_3::Capabilities::OperandPerformance>& operandPerformance,
+                       V1_3::OperandType type) {
+    return lookup<HalVersion::V1_3>(operandPerformance, type);
 }
 
 // Versioning
@@ -1818,6 +1892,18 @@ static const OperandType kQuantized8PerformanceConsistentWithP[] = {
         OperandType::TENSOR_OEM_BYTE};
 
 static bool isQuantized8PerformanceConsistentWithP(const V1_2::Capabilities& capabilities) {
+    const PerformanceInfo quantized8Performance =
+            lookup(capabilities.operandPerformance, V1_2::OperandType::TENSOR_QUANT8_ASYMM);
+    return std::all_of(std::begin(kQuantized8PerformanceConsistentWithP),
+                       std::end(kQuantized8PerformanceConsistentWithP),
+                       [quantized8Performance, &capabilities](OperandType type) {
+                           return quantized8Performance ==
+                                  lookup(capabilities.operandPerformance,
+                                         static_cast<V1_2::OperandType>(type));
+                       });
+}
+
+static bool isQuantized8PerformanceConsistentWithP(const V1_3::Capabilities& capabilities) {
     const PerformanceInfo quantized8Performance =
             lookup(capabilities.operandPerformance, OperandType::TENSOR_QUANT8_ASYMM);
     return std::all_of(std::begin(kQuantized8PerformanceConsistentWithP),
@@ -1831,13 +1917,12 @@ static bool isQuantized8PerformanceConsistentWithP(const V1_2::Capabilities& cap
 static hidl_vec<V1_2::Capabilities::OperandPerformance> makeQuantized8PerformanceConsistentWithP(
         PerformanceInfo quantized8Performance) {
     hidl_vec<V1_2::Capabilities::OperandPerformance> ret(
-            sizeof(kQuantized8PerformanceConsistentWithP) /
-            sizeof(kQuantized8PerformanceConsistentWithP[0]));
+            std::size(kQuantized8PerformanceConsistentWithP));
     std::transform(
             std::begin(kQuantized8PerformanceConsistentWithP),
             std::end(kQuantized8PerformanceConsistentWithP), ret.begin(),
             [quantized8Performance](OperandType type) -> V1_2::Capabilities::OperandPerformance {
-                return {type, quantized8Performance};
+                return {static_cast<V1_2::OperandType>(type), quantized8Performance};
             });
     return ret;
 }
@@ -1851,6 +1936,20 @@ bool compliantWithV1_0(const V1_1::Capabilities& capabilities) {
 }
 
 bool compliantWithV1_0(const V1_2::Capabilities& capabilities) {
+    const PerformanceInfo perfTensorFloat32 =
+            lookup(capabilities.operandPerformance, V1_2::OperandType::TENSOR_FLOAT32);
+    const PerformanceInfo perfFloat32 =
+            lookup(capabilities.operandPerformance, V1_2::OperandType::FLOAT32);
+    if (perfTensorFloat32 != perfFloat32 ||
+        perfTensorFloat32 != capabilities.relaxedFloat32toFloat16PerformanceTensor ||
+        perfFloat32 != capabilities.relaxedFloat32toFloat16PerformanceScalar) {
+        return false;
+    }
+
+    return isQuantized8PerformanceConsistentWithP(capabilities);
+}
+
+bool compliantWithV1_0(const V1_3::Capabilities& capabilities) {
     const PerformanceInfo perfTensorFloat32 =
             lookup(capabilities.operandPerformance, OperandType::TENSOR_FLOAT32);
     const PerformanceInfo perfFloat32 =
@@ -1875,6 +1974,17 @@ bool compliantWithV1_1(const V1_1::Capabilities&) {
 bool compliantWithV1_1(const V1_2::Capabilities& capabilities) {
     if ((capabilities.relaxedFloat32toFloat16PerformanceTensor !=
          capabilities.relaxedFloat32toFloat16PerformanceScalar) ||
+        (lookup(capabilities.operandPerformance, V1_2::OperandType::TENSOR_FLOAT32) !=
+         lookup(capabilities.operandPerformance, V1_2::OperandType::FLOAT32))) {
+        return false;
+    }
+
+    return isQuantized8PerformanceConsistentWithP(capabilities);
+}
+
+bool compliantWithV1_1(const V1_3::Capabilities& capabilities) {
+    if ((capabilities.relaxedFloat32toFloat16PerformanceTensor !=
+         capabilities.relaxedFloat32toFloat16PerformanceScalar) ||
         (lookup(capabilities.operandPerformance, OperandType::TENSOR_FLOAT32) !=
          lookup(capabilities.operandPerformance, OperandType::FLOAT32))) {
         return false;
@@ -1891,34 +2001,27 @@ bool compliantWithV1_2(const V1_1::Capabilities&) {
     return true;
 }
 
-bool compliantWithV1_2(const V1_0::Model&) {
+bool compliantWithV1_2(const V1_2::Capabilities&) {
     return true;
 }
 
-bool compliantWithV1_0(const V1_1::Model& model) {
-    // In addition to new enumeration values being introduced in V1_1::Model, a
-    // new flag was introduced to indicate whether or not float32 data can be
-    // calculated using float16 units. This 'relaxComputationFloat32toFloat16'
-    // flag is not relevant in whether a V1_1::Model is compliant with a
-    // V1_0::Model because all 1.0 drivers require strict calculation by default
-    // in the P NN runtime. Even if fp16 calculations are allowed, they can
-    // still be computed by a strict fp32 driver.
-    return std::all_of(
-            model.operations.begin(), model.operations.end(), [&model](const V1_1::Operation& op) {
-                int error = validateOperation(static_cast<int32_t>(op.type), op.inputs.size(),
-                                              op.inputs.size() > 0 ? op.inputs.data() : nullptr,
-                                              op.outputs.size(),
-                                              op.outputs.size() > 0 ? op.outputs.data() : nullptr,
-                                              convertToV1_2(model.operands), HalVersion::V1_0);
-                return error == ANEURALNETWORKS_NO_ERROR;
-            });
-}
-
-bool compliantWithV1_1(const V1_0::Model&) {
+bool compliantWithV1_2(const V1_3::Capabilities&) {
     return true;
 }
 
-bool compliantWithV1_1(const V1_1::Model&) {
+bool compliantWithV1_3(const V1_0::Capabilities&) {
+    return true;
+}
+
+bool compliantWithV1_3(const V1_1::Capabilities&) {
+    return true;
+}
+
+bool compliantWithV1_3(const V1_2::Capabilities&) {
+    return true;
+}
+
+bool compliantWithV1_3(const V1_3::Capabilities&) {
     return true;
 }
 
@@ -1949,6 +2052,17 @@ V1_0::Capabilities convertToV1_0(const V1_2::Capabilities& capabilities) {
                    << " from V1_2::Capabilities to V1_0::Capabilities";
     }
     return {.float32Performance =
+                    lookup(capabilities.operandPerformance, V1_2::OperandType::TENSOR_FLOAT32),
+            .quantized8Performance = lookup(capabilities.operandPerformance,
+                                            V1_2::OperandType::TENSOR_QUANT8_ASYMM)};
+}
+
+V1_0::Capabilities convertToV1_0(const V1_3::Capabilities& capabilities) {
+    if (!compliantWithV1_0(capabilities)) {
+        LOG(ERROR) << "Upcasting non-compliant capabilities " << toString(capabilities)
+                   << " from V1_3::Capabilities to V1_0::Capabilities";
+    }
+    return {.float32Performance =
                     lookup(capabilities.operandPerformance, OperandType::TENSOR_FLOAT32),
             .quantized8Performance =
                     lookup(capabilities.operandPerformance, OperandType::TENSOR_QUANT8_ASYMM)};
@@ -1970,6 +2084,19 @@ V1_1::Capabilities convertToV1_1(const V1_2::Capabilities& capabilities) {
                    << " from V1_2::Capabilities to V1_1::Capabilities";
     }
     return {.float32Performance =
+                    lookup(capabilities.operandPerformance, V1_2::OperandType::TENSOR_FLOAT32),
+            .quantized8Performance =
+                    lookup(capabilities.operandPerformance, V1_2::OperandType::TENSOR_QUANT8_ASYMM),
+            .relaxedFloat32toFloat16Performance =
+                    capabilities.relaxedFloat32toFloat16PerformanceTensor};
+}
+
+V1_1::Capabilities convertToV1_1(const V1_3::Capabilities& capabilities) {
+    if (!compliantWithV1_1(capabilities)) {
+        LOG(ERROR) << "Upcasting non-compliant capabilities " << toString(capabilities)
+                   << " from V1_3::Capabilities to V1_1::Capabilities";
+    }
+    return {.float32Performance =
                     lookup(capabilities.operandPerformance, OperandType::TENSOR_FLOAT32),
             .quantized8Performance =
                     lookup(capabilities.operandPerformance, OperandType::TENSOR_QUANT8_ASYMM),
@@ -1985,8 +2112,9 @@ V1_2::Capabilities convertToV1_2(const V1_0::Capabilities& capabilities) {
                     makeQuantized8PerformanceConsistentWithP(capabilities.quantized8Performance)};
     auto& opPerf = ret.operandPerformance;
     opPerf.resize(opPerf.size() + 2);
-    opPerf[opPerf.size() - 2] = {OperandType::TENSOR_FLOAT32, capabilities.float32Performance};
-    opPerf[opPerf.size() - 1] = {OperandType::FLOAT32, capabilities.float32Performance};
+    opPerf[opPerf.size() - 2] = {V1_2::OperandType::TENSOR_FLOAT32,
+                                 capabilities.float32Performance};
+    opPerf[opPerf.size() - 1] = {V1_2::OperandType::FLOAT32, capabilities.float32Performance};
     using OperandPerformance = V1_2::Capabilities::OperandPerformance;
     std::sort(opPerf.begin(), opPerf.end(),
               [](const OperandPerformance& a, const OperandPerformance& b) {
@@ -2004,8 +2132,9 @@ V1_2::Capabilities convertToV1_2(const V1_1::Capabilities& capabilities) {
                                       capabilities.quantized8Performance)};
     auto& opPerf = ret.operandPerformance;
     opPerf.resize(opPerf.size() + 2);
-    opPerf[opPerf.size() - 2] = {OperandType::TENSOR_FLOAT32, capabilities.float32Performance};
-    opPerf[opPerf.size() - 1] = {OperandType::FLOAT32, capabilities.float32Performance};
+    opPerf[opPerf.size() - 2] = {V1_2::OperandType::TENSOR_FLOAT32,
+                                 capabilities.float32Performance};
+    opPerf[opPerf.size() - 1] = {V1_2::OperandType::FLOAT32, capabilities.float32Performance};
     using OperandPerformance = V1_2::Capabilities::OperandPerformance;
     std::sort(opPerf.begin(), opPerf.end(),
               [](const OperandPerformance& a, const OperandPerformance& b) {
@@ -2015,6 +2144,62 @@ V1_2::Capabilities convertToV1_2(const V1_1::Capabilities& capabilities) {
 }
 
 V1_2::Capabilities convertToV1_2(const V1_2::Capabilities& capabilities) {
+    return capabilities;
+}
+
+V1_2::Capabilities convertToV1_2(const V1_3::Capabilities& capabilities) {
+    V1_2::Capabilities ret = {
+            .relaxedFloat32toFloat16PerformanceScalar =
+                    capabilities.relaxedFloat32toFloat16PerformanceScalar,
+            .relaxedFloat32toFloat16PerformanceTensor =
+                    capabilities.relaxedFloat32toFloat16PerformanceTensor,
+    };
+    const auto& inputOpPerf = capabilities.operandPerformance;
+    hidl_vec<V1_3::Capabilities::OperandPerformance> opPerfSupported;
+    opPerfSupported.resize(inputOpPerf.size());
+    auto last =
+            std::copy_if(inputOpPerf.begin(), inputOpPerf.end(), opPerfSupported.begin(),
+                         [](V1_3::Capabilities::OperandPerformance opPerf) {
+                             return validOperandType(static_cast<V1_2::OperandType>(opPerf.type));
+                         });
+    opPerfSupported.resize(std::distance(opPerfSupported.begin(), last));
+
+    auto& convertedOpPerf = ret.operandPerformance;
+    convertedOpPerf.resize(opPerfSupported.size());
+    std::transform(opPerfSupported.begin(), opPerfSupported.end(), convertedOpPerf.begin(),
+                   [](V1_3::Capabilities::OperandPerformance opPerf) {
+                       return V1_2::Capabilities::OperandPerformance{
+                               static_cast<V1_2::OperandType>(opPerf.type), opPerf.info};
+                   });
+    return ret;
+}
+
+V1_3::Capabilities convertToV1_3(const V1_0::Capabilities& capabilities) {
+    return convertToV1_3(convertToV1_2(capabilities));
+}
+
+V1_3::Capabilities convertToV1_3(const V1_1::Capabilities& capabilities) {
+    return convertToV1_3(convertToV1_2(capabilities));
+}
+
+V1_3::Capabilities convertToV1_3(const V1_2::Capabilities& capabilities) {
+    V1_3::Capabilities ret = {
+            .relaxedFloat32toFloat16PerformanceScalar =
+                    capabilities.relaxedFloat32toFloat16PerformanceScalar,
+            .relaxedFloat32toFloat16PerformanceTensor =
+                    capabilities.relaxedFloat32toFloat16PerformanceTensor,
+    };
+    auto& opPerf = ret.operandPerformance;
+    opPerf.resize(capabilities.operandPerformance.size());
+    std::transform(capabilities.operandPerformance.begin(), capabilities.operandPerformance.end(),
+                   opPerf.begin(), [](V1_2::Capabilities::OperandPerformance opPerf) {
+                       return V1_3::Capabilities::OperandPerformance{
+                               static_cast<V1_3::OperandType>(opPerf.type), opPerf.info};
+                   });
+    return ret;
+}
+
+V1_3::Capabilities convertToV1_3(const V1_3::Capabilities& capabilities) {
     return capabilities;
 }
 
@@ -2046,57 +2231,22 @@ static hidl_vec<V1_1::Operation> convertToV1_1(const hidl_vec<V1_0::Operation>& 
     return result;
 }
 
-bool compliantWithV1_0(const V1_2::Operand& operand) {
+bool compliantWithV1_0(const V1_3::Operand& operand) {
     return validOperandType(static_cast<V1_0::OperandType>(operand.type)) &&
            (nonExtensionOperandTypeIsScalar(static_cast<int>(operand.type)) ||
             operand.dimensions.size() != 0);
 }
 
-V1_0::Model convertToV1_0(const V1_0::Model& model) {
-    return model;
+bool compliantWithV1_2(const V1_3::Operand& operand) {
+    return validOperandType(static_cast<V1_2::OperandType>(operand.type));
 }
 
-V1_0::Model convertToV1_0(const V1_1::Model& model) {
-    if (!compliantWithV1_0(model)) {
-        LOG(ERROR) << "Upcasting non-compliant model " << SHOW_IF_DEBUG(toString(model))
-                   << " from V1_1::Model to V1_0::Model";
-    }
-    return {.operands = model.operands,
-            .operations = uncheckedConvertToV1_0(model.operations),
-            .inputIndexes = model.inputIndexes,
-            .outputIndexes = model.outputIndexes,
-            .operandValues = model.operandValues,
-            .pools = model.pools};
+bool compliantWithV1_3(const V1_3::Operand& operand) {
+    return true;
 }
 
-V1_1::Model convertToV1_1(const V1_0::Model& model) {
-    return {.operands = model.operands,
-            .operations = convertToV1_1(model.operations),
-            .inputIndexes = model.inputIndexes,
-            .outputIndexes = model.outputIndexes,
-            .operandValues = model.operandValues,
-            .pools = model.pools,
-            .relaxComputationFloat32toFloat16 = false};
-}
-
-V1_1::Model convertToV1_1(const V1_1::Model& model) {
-    return model;
-}
-
-void logModelToInfo(const V1_2::Model& model) {
-    LOG(INFO) << "V1_2::Model start";
-    LOG(INFO) << "operands" << toString(model.operands);
-    LOG(INFO) << "operations" << toString(model.operations);
-    LOG(INFO) << "inputIndexes" << toString(model.inputIndexes);
-    LOG(INFO) << "outputIndexes" << toString(model.outputIndexes);
-    LOG(INFO) << "operandValues size" << model.operandValues.size();
-    LOG(INFO) << "pools" << SHOW_IF_DEBUG(toString(model.pools));
-}
-
-static bool compliantWith(HalVersion version, const V1_2::Model& model,
+static bool compliantWith(HalVersion version, const V1_3::Model& model,
                           std::set<uint32_t>* noncompliantOperations) {
-    if (version >= HalVersion::V1_2) return true;
-
     // A boolean vector indicating whether each pool is compliant with the target HAL version.
     std::vector<bool> isPoolCompliant(model.pools.size(), false);
     std::transform(model.pools.begin(), model.pools.end(), isPoolCompliant.begin(),
@@ -2105,10 +2255,28 @@ static bool compliantWith(HalVersion version, const V1_2::Model& model,
     // A boolean vector indicating whether each operand is compliant with the target HAL version.
     std::vector<bool> isOperandCompliant(model.operands.size(), false);
     std::transform(model.operands.begin(), model.operands.end(), isOperandCompliant.begin(),
-                   [&isPoolCompliant](const V1_2::Operand& op) {
-                       // There is no V1_1::Operand -- both V1_0::Model and V1_1::Model use
-                       // V1_0::Operand.
-                       return compliantWithV1_0(op) &&
+                   [&isPoolCompliant, version](const Operand& op) {
+                       bool is_operand_compliant = false;
+                       switch (version) {
+                           case HalVersion::UNKNOWN:
+                               is_operand_compliant = false;
+                               break;
+                           case HalVersion::V1_0:
+                               is_operand_compliant = compliantWithV1_0(op);
+                               break;
+                           case HalVersion::V1_1:
+                               // There is no V1_1::Operand -- both V1_0::Model
+                               // and V1_1::Model use V1_0::Operand.
+                               is_operand_compliant = compliantWithV1_0(op);
+                               break;
+                           case HalVersion::V1_2:
+                               is_operand_compliant = compliantWithV1_2(op);
+                               break;
+                           case HalVersion::V1_3:
+                               is_operand_compliant = compliantWithV1_3(op);
+                               break;
+                       }
+                       return is_operand_compliant &&
                               !(op.lifetime == OperandLifeTime::CONSTANT_REFERENCE &&
                                 !isPoolCompliant[op.location.poolIndex]);
                    });
@@ -2119,8 +2287,7 @@ static bool compliantWith(HalVersion version, const V1_2::Model& model,
                 [&isOperandCompliant](const uint32_t ind) { return isOperandCompliant[ind]; });
     };
 
-    auto localValidateOperation = [&model, version,
-                                   &allOperandsCompliant](const V1_2::Operation& op) {
+    auto localValidateOperation = [&model, version, &allOperandsCompliant](const Operation& op) {
         if (!allOperandsCompliant(op.inputs) || !allOperandsCompliant(op.outputs)) return false;
         int error = validateOperation(
                 static_cast<int32_t>(op.type), op.inputs.size(),
@@ -2143,12 +2310,67 @@ static bool compliantWith(HalVersion version, const V1_2::Model& model,
     }
 }
 
+bool compliantWithV1_0(const V1_0::Model& model) {
+    return true;
+}
+
+bool compliantWithV1_0(const V1_1::Model& model) {
+    // In addition to new enumeration values being introduced in V1_1::Model, a
+    // new flag was introduced to indicate whether or not float32 data can be
+    // calculated using float16 units. This 'relaxComputationFloat32toFloat16'
+    // flag is not relevant in whether a V1_1::Model is compliant with a
+    // V1_0::Model because all 1.0 drivers require strict calculation by default
+    // in the P NN runtime. Even if fp16 calculations are allowed, they can
+    // still be computed by a strict fp32 driver.
+    return std::all_of(
+            model.operations.begin(), model.operations.end(), [&model](const V1_1::Operation& op) {
+                int error = validateOperation(static_cast<int32_t>(op.type), op.inputs.size(),
+                                              op.inputs.size() > 0 ? op.inputs.data() : nullptr,
+                                              op.outputs.size(),
+                                              op.outputs.size() > 0 ? op.outputs.data() : nullptr,
+                                              convertToV1_3(model.operands), HalVersion::V1_0);
+                return error == ANEURALNETWORKS_NO_ERROR;
+            });
+}
+
 bool compliantWithV1_0(const V1_2::Model& model, std::set<uint32_t>* noncompliantOperations) {
+    return compliantWith(HalVersion::V1_0, convertToV1_3(model), noncompliantOperations);
+}
+
+bool compliantWithV1_0(const V1_3::Model& model, std::set<uint32_t>* noncompliantOperations) {
     return compliantWith(HalVersion::V1_0, model, noncompliantOperations);
 }
 
+bool compliantWithV1_1(const V1_0::Model&) {
+    return true;
+}
+
+bool compliantWithV1_1(const V1_1::Model&) {
+    return true;
+}
+
 bool compliantWithV1_1(const V1_2::Model& model, std::set<uint32_t>* noncompliantOperations) {
+    return compliantWith(HalVersion::V1_1, convertToV1_3(model), noncompliantOperations);
+}
+
+bool compliantWithV1_1(const V1_3::Model& model, std::set<uint32_t>* noncompliantOperations) {
     return compliantWith(HalVersion::V1_1, model, noncompliantOperations);
+}
+
+bool compliantWithV1_2(const V1_0::Model&) {
+    return true;
+}
+
+bool compliantWithV1_2(const V1_1::Model&) {
+    return true;
+}
+
+bool compliantWithV1_2(const V1_2::Model&, std::set<uint32_t>* noncompliantOperations) {
+    return true;
+}
+
+bool compliantWithV1_2(const V1_3::Model& model, std::set<uint32_t>* noncompliantOperations) {
+    return compliantWith(HalVersion::V1_2, model, noncompliantOperations);
 }
 
 V1_0::OperationType uncheckedConvertToV1_0(V1_2::OperationType type) {
@@ -2157,6 +2379,10 @@ V1_0::OperationType uncheckedConvertToV1_0(V1_2::OperationType type) {
 
 V1_1::OperationType uncheckedConvertToV1_1(V1_2::OperationType type) {
     return static_cast<V1_1::OperationType>(type);
+}
+
+V1_2::OperationType convertToV1_2(V1_2::OperationType type) {
+    return type;
 }
 
 static V1_2::OperationType convertToV1_2(V1_0::OperationType type) {
@@ -2173,7 +2399,19 @@ static V1_0::Operation uncheckedConvertToV1_0(const V1_2::Operation& operation) 
             .outputs = operation.outputs};
 }
 
+static V1_0::Operation uncheckedConvertToV1_0(const V1_3::Operation& operation) {
+    return {.type = uncheckedConvertToV1_0(operation.type),
+            .inputs = operation.inputs,
+            .outputs = operation.outputs};
+}
+
 static V1_1::Operation uncheckedConvertToV1_1(const V1_2::Operation& operation) {
+    return {.type = uncheckedConvertToV1_1(operation.type),
+            .inputs = operation.inputs,
+            .outputs = operation.outputs};
+}
+
+static V1_1::Operation uncheckedConvertToV1_1(const V1_3::Operation& operation) {
     return {.type = uncheckedConvertToV1_1(operation.type),
             .inputs = operation.inputs,
             .outputs = operation.outputs};
@@ -2191,6 +2429,35 @@ static V1_2::Operation convertToV1_2(const V1_1::Operation& operation) {
             .outputs = operation.outputs};
 }
 
+static V1_2::Operation uncheckedConvertToV1_2(const V1_3::Operation& operation) {
+    return {.type = operation.type, .inputs = operation.inputs, .outputs = operation.outputs};
+}
+
+static V1_3::Operation convertToV1_3(const V1_0::Operation& operation) {
+    return {.type = convertToV1_2(operation.type),
+            .inputs = operation.inputs,
+            .outputs = operation.outputs};
+}
+
+static V1_3::Operation convertToV1_3(const V1_1::Operation& operation) {
+    return {.type = convertToV1_2(operation.type),
+            .inputs = operation.inputs,
+            .outputs = operation.outputs};
+}
+
+static V1_3::Operation convertToV1_3(const V1_2::Operation& operation) {
+    return {.type = operation.type, .inputs = operation.inputs, .outputs = operation.outputs};
+}
+
+static hidl_vec<V1_0::Operation> uncheckedConvertToV1_0(
+        const hidl_vec<V1_3::Operation>& operations) {
+    hidl_vec<V1_0::Operation> result(operations.size());
+    std::transform(
+            operations.begin(), operations.end(), result.begin(),
+            [](const V1_3::Operation& operation) { return uncheckedConvertToV1_0(operation); });
+    return result;
+}
+
 static hidl_vec<V1_0::Operation> uncheckedConvertToV1_0(
         const hidl_vec<V1_2::Operation>& operations) {
     hidl_vec<V1_0::Operation> result(operations.size());
@@ -2200,12 +2467,30 @@ static hidl_vec<V1_0::Operation> uncheckedConvertToV1_0(
     return result;
 }
 
+static hidl_vec<V1_2::Operation> uncheckedConvertToV1_2(
+        const hidl_vec<V1_3::Operation>& operations) {
+    hidl_vec<V1_2::Operation> result(operations.size());
+    std::transform(
+            operations.begin(), operations.end(), result.begin(),
+            [](const V1_3::Operation& operation) { return uncheckedConvertToV1_2(operation); });
+    return result;
+}
+
 static hidl_vec<V1_1::Operation> uncheckedConvertToV1_1(
         const hidl_vec<V1_2::Operation>& operations) {
     hidl_vec<V1_1::Operation> result(operations.size());
     std::transform(
             operations.begin(), operations.end(), result.begin(),
             [](const V1_2::Operation& operation) { return uncheckedConvertToV1_1(operation); });
+    return result;
+}
+
+static hidl_vec<V1_1::Operation> uncheckedConvertToV1_1(
+        const hidl_vec<V1_3::Operation>& operations) {
+    hidl_vec<V1_1::Operation> result(operations.size());
+    std::transform(
+            operations.begin(), operations.end(), result.begin(),
+            [](const V1_3::Operation& operation) { return uncheckedConvertToV1_1(operation); });
     return result;
 }
 
@@ -2223,26 +2508,111 @@ static hidl_vec<V1_2::Operation> convertToV1_2(const hidl_vec<V1_1::Operation>& 
     return result;
 }
 
-// We only need to convert from 1.0 and back since there wasn't any changes to
-// Operand in 1.1
-V1_2::OperandType convertToV1_2(const V1_0::OperandType& operandType) {
-    return static_cast<V1_2::OperandType>(operandType);
+static hidl_vec<V1_3::Operation> convertToV1_3(const hidl_vec<V1_0::Operation>& operations) {
+    hidl_vec<V1_3::Operation> result(operations.size());
+    std::transform(operations.begin(), operations.end(), result.begin(),
+                   [](const V1_0::Operation& operation) { return convertToV1_3(operation); });
+    return result;
+}
+
+static hidl_vec<V1_3::Operation> convertToV1_3(const hidl_vec<V1_1::Operation>& operations) {
+    hidl_vec<V1_3::Operation> result(operations.size());
+    std::transform(operations.begin(), operations.end(), result.begin(),
+                   [](const V1_1::Operation& operation) { return convertToV1_3(operation); });
+    return result;
+}
+
+static hidl_vec<V1_3::Operation> convertToV1_3(const hidl_vec<V1_2::Operation>& operations) {
+    hidl_vec<V1_3::Operation> result(operations.size());
+    std::transform(operations.begin(), operations.end(), result.begin(),
+                   [](const V1_2::Operation& operation) { return convertToV1_3(operation); });
+    return result;
 }
 
 static bool compliantWithV1_0(const V1_2::OperandType& operandType) {
     return validOperandType(static_cast<V1_0::OperandType>(operandType));
 }
 
+static bool compliantWithV1_0(const V1_3::OperandType& operandType) {
+    return validOperandType(static_cast<V1_0::OperandType>(operandType));
+}
+
+static bool compliantWithV1_2(const V1_3::OperandType& operandType) {
+    return validOperandType(static_cast<V1_2::OperandType>(operandType));
+}
+
 V1_0::OperandType convertToV1_0(const V1_2::OperandType& operandType) {
     if (!compliantWithV1_0(operandType)) {
         LOG(ERROR) << "Upcasting non-compliant operand type " << toString(operandType)
-                   << " from V1_2::Operand to V1_0::Operand";
+                   << " from V1_2::OperandType to V1_0::OperandType";
     }
     return static_cast<V1_0::OperandType>(operandType);
 }
 
-// We only need to convert from 1.0 and back since there wasn't any changes to
-// Operand in 1.1
+V1_2::OperandType convertToV1_2(const V1_0::OperandType& operandType) {
+    return static_cast<V1_2::OperandType>(operandType);
+}
+
+V1_2::OperandType convertToV1_2(const V1_3::OperandType& operandType) {
+    if (!compliantWithV1_2(operandType)) {
+        LOG(ERROR) << "Upcasting non-compliant operand type " << toString(operandType)
+                   << " from V1_3::OperandType to V1_2::OperandType";
+    }
+    return static_cast<V1_2::OperandType>(operandType);
+}
+
+V1_0::OperandType convertToV1_0(const V1_3::OperandType& operandType) {
+    if (!compliantWithV1_0(operandType)) {
+        LOG(ERROR) << "Upcasting non-compliant operand type " << toString(operandType)
+                   << " from V1_3::Operand to V1_0::Operand";
+    }
+    return static_cast<V1_0::OperandType>(operandType);
+}
+
+V1_0::OperandLifeTime convertToV1_0(const V1_0::OperandLifeTime& operandLifeTime) {
+    return operandLifeTime;
+}
+
+template <typename InExtraParams, typename OutExtraParams>
+OutExtraParams copyExtraParams(const InExtraParams& extraParams) {
+    OutExtraParams out;
+    switch (extraParams.getDiscriminator()) {
+        case InExtraParams::hidl_discriminator::none: {
+            out.none(extraParams.none());
+        } break;
+        case InExtraParams::hidl_discriminator::channelQuant: {
+            out.channelQuant({
+                    .scales = extraParams.channelQuant().scales,
+                    .channelDim = extraParams.channelQuant().channelDim,
+            });
+        } break;
+        case InExtraParams::hidl_discriminator::extension: {
+            out.extension(extraParams.extension());
+        } break;
+    }
+    return out;
+}
+
+V1_0::Operand convertToV1_0(const V1_2::Operand& operand) {
+    return {.type = convertToV1_0(operand.type),
+            .dimensions = operand.dimensions,
+            .numberOfConsumers = operand.numberOfConsumers,
+            .scale = operand.scale,
+            .zeroPoint = operand.zeroPoint,
+            .lifetime = convertToV1_0(operand.lifetime),
+            .location = operand.location};
+}
+
+V1_0::Operand convertToV1_0(const V1_3::Operand& operand) {
+    return {.type = convertToV1_0(operand.type),
+            .dimensions = operand.dimensions,
+            .numberOfConsumers = operand.numberOfConsumers,
+            .scale = operand.scale,
+            .zeroPoint = operand.zeroPoint,
+            .lifetime = convertToV1_0(operand.lifetime),
+            .location = operand.location};
+}
+
 V1_2::Operand convertToV1_2(const V1_0::Operand& operand) {
     return {.type = convertToV1_2(operand.type),
             .dimensions = operand.dimensions,
@@ -2253,12 +2623,20 @@ V1_2::Operand convertToV1_2(const V1_0::Operand& operand) {
             .location = operand.location};
 }
 
-V1_2::Operand convertToV1_2(const V1_2::Operand& operand) {
-    return operand;
+V1_2::Operand convertToV1_2(const V1_3::Operand& operand) {
+    return {.type = convertToV1_2(operand.type),
+            .dimensions = operand.dimensions,
+            .numberOfConsumers = operand.numberOfConsumers,
+            .scale = operand.scale,
+            .zeroPoint = operand.zeroPoint,
+            .lifetime = static_cast<V1_0::OperandLifeTime>(operand.lifetime),
+            .location = operand.location,
+            .extraParams = copyExtraParams<V1_3::Operand::ExtraParams, V1_2::Operand::ExtraParams>(
+                    operand.extraParams)};
 }
 
-V1_0::Operand convertToV1_0(const V1_2::Operand& operand) {
-    return {.type = convertToV1_0(operand.type),
+V1_3::Operand convertToV1_3(const V1_0::Operand& operand) {
+    return {.type = static_cast<V1_3::OperandType>(operand.type),
             .dimensions = operand.dimensions,
             .numberOfConsumers = operand.numberOfConsumers,
             .scale = operand.scale,
@@ -2267,8 +2645,40 @@ V1_0::Operand convertToV1_0(const V1_2::Operand& operand) {
             .location = operand.location};
 }
 
-// We only need to convert from 1.0 and back since there wasn't any changes to
-// Operand in 1.1
+V1_3::Operand convertToV1_3(const V1_2::Operand& operand) {
+    return {.type = static_cast<V1_3::OperandType>(operand.type),
+            .dimensions = operand.dimensions,
+            .numberOfConsumers = operand.numberOfConsumers,
+            .scale = operand.scale,
+            .zeroPoint = operand.zeroPoint,
+            .lifetime = operand.lifetime,
+            .location = operand.location,
+            .extraParams = copyExtraParams<V1_2::Operand::ExtraParams, V1_3::Operand::ExtraParams>(
+                    operand.extraParams)};
+}
+
+V1_3::Operand convertToV1_3(const V1_3::Operand& operand) {
+    return operand;
+}
+
+hidl_vec<V1_0::Operand> convertToV1_0(const hidl_vec<V1_0::Operand>& operands) {
+    return operands;
+}
+
+hidl_vec<V1_0::Operand> convertToV1_0(const hidl_vec<V1_2::Operand>& operands) {
+    hidl_vec<V1_0::Operand> result(operands.size());
+    std::transform(operands.begin(), operands.end(), result.begin(),
+                   [](const V1_2::Operand& operand) { return convertToV1_0(operand); });
+    return result;
+}
+
+hidl_vec<V1_0::Operand> convertToV1_0(const hidl_vec<V1_3::Operand>& operands) {
+    hidl_vec<V1_0::Operand> result(operands.size());
+    std::transform(operands.begin(), operands.end(), result.begin(),
+                   [](const V1_3::Operand& operand) { return convertToV1_0(operand); });
+    return result;
+}
+
 hidl_vec<V1_2::Operand> convertToV1_2(const hidl_vec<V1_0::Operand>& operands) {
     hidl_vec<V1_2::Operand> result(operands.size());
     std::transform(operands.begin(), operands.end(), result.begin(),
@@ -2280,11 +2690,46 @@ hidl_vec<V1_2::Operand> convertToV1_2(const hidl_vec<V1_2::Operand>& operands) {
     return operands;
 }
 
-hidl_vec<V1_0::Operand> convertToV1_0(const hidl_vec<V1_2::Operand>& operands) {
-    hidl_vec<V1_0::Operand> result(operands.size());
+hidl_vec<V1_2::Operand> convertToV1_2(const hidl_vec<V1_3::Operand>& operands) {
+    hidl_vec<V1_2::Operand> result(operands.size());
     std::transform(operands.begin(), operands.end(), result.begin(),
-                   [](const V1_2::Operand& operand) { return convertToV1_0(operand); });
+                   [](const V1_3::Operand& operand) { return convertToV1_2(operand); });
     return result;
+}
+
+hidl_vec<V1_3::Operand> convertToV1_3(const hidl_vec<V1_0::Operand>& operands) {
+    hidl_vec<V1_3::Operand> result(operands.size());
+    std::transform(operands.begin(), operands.end(), result.begin(),
+                   [](const V1_0::Operand& operand) { return convertToV1_3(operand); });
+    return result;
+}
+
+hidl_vec<V1_3::Operand> convertToV1_3(const hidl_vec<V1_2::Operand>& operands) {
+    hidl_vec<V1_3::Operand> result(operands.size());
+    std::transform(operands.begin(), operands.end(), result.begin(),
+                   [](const V1_2::Operand& operand) { return convertToV1_3(operand); });
+    return result;
+}
+
+hidl_vec<V1_3::Operand> convertToV1_3(const hidl_vec<V1_3::Operand>& operands) {
+    return operands;
+}
+
+V1_0::Model convertToV1_0(const V1_0::Model& model) {
+    return model;
+}
+
+V1_0::Model convertToV1_0(const V1_1::Model& model) {
+    if (!compliantWithV1_0(model)) {
+        LOG(ERROR) << "Upcasting non-compliant model " << SHOW_IF_DEBUG(toString(model))
+                   << " from V1_1::Model to V1_0::Model";
+    }
+    return {.operands = model.operands,
+            .operations = uncheckedConvertToV1_0(model.operations),
+            .inputIndexes = model.inputIndexes,
+            .outputIndexes = model.outputIndexes,
+            .operandValues = model.operandValues,
+            .pools = model.pools};
 }
 
 V1_0::Model convertToV1_0(const V1_2::Model& model) {
@@ -2300,6 +2745,33 @@ V1_0::Model convertToV1_0(const V1_2::Model& model) {
             .pools = model.pools};
 }
 
+V1_0::Model convertToV1_0(const V1_3::Model& model) {
+    if (!compliantWithV1_0(model)) {
+        LOG(ERROR) << "Upcasting non-compliant model " << SHOW_IF_DEBUG(toString(model))
+                   << " from V1_3::Model to V1_0::Model";
+    }
+    return {.operands = convertToV1_0(model.operands),
+            .operations = uncheckedConvertToV1_0(model.operations),
+            .inputIndexes = model.inputIndexes,
+            .outputIndexes = model.outputIndexes,
+            .operandValues = model.operandValues,
+            .pools = model.pools};
+}
+
+V1_1::Model convertToV1_1(const V1_0::Model& model) {
+    return {.operands = model.operands,
+            .operations = convertToV1_1(model.operations),
+            .inputIndexes = model.inputIndexes,
+            .outputIndexes = model.outputIndexes,
+            .operandValues = model.operandValues,
+            .pools = model.pools,
+            .relaxComputationFloat32toFloat16 = false};
+}
+
+V1_1::Model convertToV1_1(const V1_1::Model& model) {
+    return model;
+}
+
 V1_1::Model convertToV1_1(const V1_2::Model& model) {
     if (!compliantWithV1_1(model)) {
         LOG(ERROR) << "Upcasting non-compliant model " << SHOW_IF_DEBUG(toString(model))
@@ -2312,6 +2784,42 @@ V1_1::Model convertToV1_1(const V1_2::Model& model) {
             .operandValues = model.operandValues,
             .pools = model.pools,
             .relaxComputationFloat32toFloat16 = model.relaxComputationFloat32toFloat16};
+}
+
+V1_1::Model convertToV1_1(const V1_3::Model& model) {
+    if (!compliantWithV1_1(model)) {
+        LOG(ERROR) << "Upcasting non-compliant model " << SHOW_IF_DEBUG(toString(model))
+                   << " from V1_3::Model to V1_1::Model";
+    }
+    return {.operands = convertToV1_0(model.operands),  // Operands in 1.1 and 1.0 are identical.
+            .operations = uncheckedConvertToV1_1(model.operations),
+            .inputIndexes = model.inputIndexes,
+            .outputIndexes = model.outputIndexes,
+            .operandValues = model.operandValues,
+            .pools = model.pools,
+            .relaxComputationFloat32toFloat16 = model.relaxComputationFloat32toFloat16};
+}
+
+static hidl_vec<V1_2::Model::ExtensionNameAndPrefix> convertToV1_2(
+        const hidl_vec<V1_3::Model::ExtensionNameAndPrefix>& extensionNameAndPrefix) {
+    hidl_vec<V1_2::Model::ExtensionNameAndPrefix> result(extensionNameAndPrefix.size());
+    std::transform(extensionNameAndPrefix.begin(), extensionNameAndPrefix.end(), result.begin(),
+                   [](const V1_3::Model::ExtensionNameAndPrefix& nameAndPrefix)
+                           -> V1_2::Model::ExtensionNameAndPrefix {
+                       return {.name = nameAndPrefix.name, .prefix = nameAndPrefix.prefix};
+                   });
+    return result;
+}
+
+static hidl_vec<V1_3::Model::ExtensionNameAndPrefix> convertToV1_3(
+        const hidl_vec<V1_2::Model::ExtensionNameAndPrefix>& extensionNameAndPrefix) {
+    hidl_vec<V1_3::Model::ExtensionNameAndPrefix> result(extensionNameAndPrefix.size());
+    std::transform(extensionNameAndPrefix.begin(), extensionNameAndPrefix.end(), result.begin(),
+                   [](const V1_2::Model::ExtensionNameAndPrefix& nameAndPrefix)
+                           -> V1_3::Model::ExtensionNameAndPrefix {
+                       return {.name = nameAndPrefix.name, .prefix = nameAndPrefix.prefix};
+                   });
+    return result;
 }
 
 V1_2::Model convertToV1_2(const V1_0::Model& model) {
@@ -2335,6 +2843,56 @@ V1_2::Model convertToV1_2(const V1_1::Model& model) {
 }
 
 V1_2::Model convertToV1_2(const V1_2::Model& model) {
+    return model;
+}
+
+V1_2::Model convertToV1_2(const V1_3::Model& model) {
+    if (!compliantWithV1_2(model)) {
+        LOG(ERROR) << "Upcasting non-compliant model " << SHOW_IF_DEBUG(toString(model))
+                   << " from V1_3::Model to V1_2::Model";
+    }
+    return {.operands = convertToV1_2(model.operands),
+            .operations = uncheckedConvertToV1_2(model.operations),
+            .inputIndexes = model.inputIndexes,
+            .outputIndexes = model.outputIndexes,
+            .operandValues = model.operandValues,
+            .pools = model.pools,
+            .relaxComputationFloat32toFloat16 = model.relaxComputationFloat32toFloat16,
+            .extensionNameToPrefix = convertToV1_2(model.extensionNameToPrefix)};
+}
+
+V1_3::Model convertToV1_3(const V1_0::Model& model) {
+    return {.operands = convertToV1_3(model.operands),
+            .operations = convertToV1_3(model.operations),
+            .inputIndexes = model.inputIndexes,
+            .outputIndexes = model.outputIndexes,
+            .operandValues = model.operandValues,
+            .pools = model.pools,
+            .relaxComputationFloat32toFloat16 = false};
+}
+
+V1_3::Model convertToV1_3(const V1_1::Model& model) {
+    return {.operands = convertToV1_3(model.operands),
+            .operations = convertToV1_3(model.operations),
+            .inputIndexes = model.inputIndexes,
+            .outputIndexes = model.outputIndexes,
+            .operandValues = model.operandValues,
+            .pools = model.pools,
+            .relaxComputationFloat32toFloat16 = model.relaxComputationFloat32toFloat16};
+}
+
+V1_3::Model convertToV1_3(const V1_2::Model& model) {
+    return {.operands = convertToV1_3(model.operands),
+            .operations = convertToV1_3(model.operations),
+            .inputIndexes = model.inputIndexes,
+            .outputIndexes = model.outputIndexes,
+            .operandValues = model.operandValues,
+            .pools = model.pools,
+            .relaxComputationFloat32toFloat16 = model.relaxComputationFloat32toFloat16,
+            .extensionNameToPrefix = convertToV1_3(model.extensionNameToPrefix)};
+}
+
+V1_3::Model convertToV1_3(const V1_3::Model& model) {
     return model;
 }
 
