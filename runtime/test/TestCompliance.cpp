@@ -26,7 +26,7 @@ namespace android::nn::compliance_test {
 
 using namespace hal;
 using namespace test_helper;
-using HidlModel = V1_2::Model;
+using HidlModel = V1_3::Model;
 using WrapperModel = test_wrapper::Model;
 using WrapperOperandType = test_wrapper::OperandType;
 using WrapperType = test_wrapper::Type;
@@ -43,20 +43,30 @@ static HidlModel createHidlModel(std::function<void(WrapperModel*)> createModel)
     return modelBuilder->makeHidlModel();
 }
 
+void testAvailableSinceV1_3(std::function<void(WrapperModel*)> createModel) {
+    HidlModel model = createHidlModel(createModel);
+    ASSERT_FALSE(compliantWithV1_2(model));
+    ASSERT_FALSE(compliantWithV1_1(model));
+    ASSERT_FALSE(compliantWithV1_0(model));
+}
+
 void testAvailableSinceV1_2(std::function<void(WrapperModel*)> createModel) {
     HidlModel model = createHidlModel(createModel);
+    ASSERT_TRUE(compliantWithV1_2(model));
     ASSERT_FALSE(compliantWithV1_1(model));
     ASSERT_FALSE(compliantWithV1_0(model));
 }
 
 void testAvailableSinceV1_1(std::function<void(WrapperModel*)> createModel) {
     HidlModel model = createHidlModel(createModel);
+    ASSERT_TRUE(compliantWithV1_2(model));
     ASSERT_TRUE(compliantWithV1_1(model));
     ASSERT_FALSE(compliantWithV1_0(model));
 }
 
 void testAvailableSinceV1_0(std::function<void(WrapperModel*)> createModel) {
     HidlModel model = createHidlModel(createModel);
+    ASSERT_TRUE(compliantWithV1_2(model));
     ASSERT_TRUE(compliantWithV1_1(model));
     ASSERT_TRUE(compliantWithV1_0(model));
 }
@@ -161,6 +171,9 @@ TEST_P(GeneratedComplianceTest, Test) {
             break;
         case TestHalVersion::V1_2:
             testAvailableSinceV1_2(createModel);
+            break;
+        case TestHalVersion::V1_3:
+            testAvailableSinceV1_3(createModel);
             break;
         case TestHalVersion::UNKNOWN:
             FAIL();
