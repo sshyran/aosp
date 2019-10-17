@@ -18,16 +18,15 @@
 
 #include "FibonacciDriver.h"
 
+#include <vector>
+
+#include "FibonacciExtension.h"
 #include "HalInterfaces.h"
 #include "NeuralNetworksExtensions.h"
 #include "OperationResolver.h"
 #include "OperationsUtils.h"
 #include "Utils.h"
 #include "ValidateHal.h"
-
-#include "FibonacciExtension.h"
-
-#include <vector>
 
 namespace android {
 namespace nn {
@@ -173,19 +172,20 @@ Return<void> FibonacciDriver::getSupportedExtensions(getSupportedExtensions_cb c
     return Void();
 }
 
-Return<void> FibonacciDriver::getCapabilities_1_2(getCapabilities_1_2_cb cb) {
+Return<void> FibonacciDriver::getCapabilities_1_3(getCapabilities_1_3_cb cb) {
     android::nn::initVLogMask();
     VLOG(DRIVER) << "getCapabilities()";
     static const PerformanceInfo kPerf = {.execTime = 1.0f, .powerUsage = 1.0f};
-    Capabilities capabilities = {.relaxedFloat32toFloat16PerformanceScalar = kPerf,
-                                 .relaxedFloat32toFloat16PerformanceTensor = kPerf,
-                                 .operandPerformance = nonExtensionOperandPerformance(kPerf)};
+    Capabilities capabilities = {
+            .relaxedFloat32toFloat16PerformanceScalar = kPerf,
+            .relaxedFloat32toFloat16PerformanceTensor = kPerf,
+            .operandPerformance = nonExtensionOperandPerformance<HalVersion::V1_3>(kPerf)};
     cb(ErrorStatus::NONE, capabilities);
     return Void();
 }
 
-Return<void> FibonacciDriver::getSupportedOperations_1_2(const V1_2::Model& model,
-                                                         getSupportedOperations_1_2_cb cb) {
+Return<void> FibonacciDriver::getSupportedOperations_1_3(const V1_3::Model& model,
+                                                         getSupportedOperations_1_3_cb cb) {
     VLOG(DRIVER) << "getSupportedOperations()";
     if (!validateModel(model)) {
         cb(ErrorStatus::INVALID_ARGUMENT, {});
