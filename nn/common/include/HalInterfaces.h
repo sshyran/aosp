@@ -34,6 +34,8 @@
 #include <android/hidl/memory/1.0/IMemory.h>
 #include <hidlmemory/mapping.h>
 
+#include <functional>
+
 namespace android::nn::hal {
 
 using android::sp;
@@ -89,6 +91,7 @@ using V1_3::Operation;
 
 using CacheToken =
         hardware::hidl_array<uint8_t, static_cast<uint32_t>(Constant::BYTE_SIZE_OF_CACHE_TOKEN)>;
+using ModelFactory = std::function<Model()>;
 
 }  // namespace android::nn::hal
 
