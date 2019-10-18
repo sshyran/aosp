@@ -75,8 +75,7 @@ class Device {
     virtual const std::vector<hal::Extension>& getSupportedExtensions() const = 0;
 
     // See the MetaModel class in MetaModel.h for more details.
-    virtual void getSupportedOperations(const MetaModel& metaModel,
-                                        hal::hidl_vec<bool>* supportedOperations) const = 0;
+    virtual std::vector<bool> getSupportedOperations(const MetaModel& metaModel) const = 0;
 
     virtual hal::PerformanceInfo getPerformance(hal::OperandType type) const = 0;
     virtual hal::PerformanceInfo getRelaxedFloat32toFloat16PerformanceScalar() const = 0;
