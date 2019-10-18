@@ -665,8 +665,7 @@ int ANeuralNetworksModel_getSupportedOperationsForDevices(
 
         Device* d = reinterpret_cast<Device*>(const_cast<ANeuralNetworksDevice*>(devices[i]));
         const MetaModel metaModel(hidlModel, DeviceManager::get()->strictSlicing());
-        hidl_vec<bool> supportsByDevice;
-        d->getSupportedOperations(metaModel, &supportsByDevice);
+        const std::vector<bool> supportsByDevice = d->getSupportedOperations(metaModel);
         for (uint32_t j = 0; j < supportsByDevice.size(); j++) {
             uint32_t originalIdx = opMap[j];
             supportedOps[originalIdx] |= supportsByDevice[j];
