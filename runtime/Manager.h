@@ -56,7 +56,7 @@ class PreparedModel {
             hal::MeasureTiming measure) const = 0;
 
     virtual std::shared_ptr<ExecutionBurstController> configureExecutionBurst(
-            bool blocking) const = 0;
+            bool preferPowerOverLatency) const = 0;
 };
 
 // A unified interface for actual driver devices as well as the CPU
