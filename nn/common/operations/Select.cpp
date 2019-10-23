@@ -47,7 +47,8 @@ bool compute(const bool8* conditionData, const Shape& conditionShape, const T* a
     for (uint32_t i = 0; i < size; ++i) {
         T a = aData[i];
         T b = bData[i];
-        if (aShape.type == OperandType::TENSOR_QUANT8_ASYMM) {
+        if (aShape.type == OperandType::TENSOR_QUANT8_ASYMM ||
+            aShape.type == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
             a = requantize(a, aShape, outputShape);
             b = requantize(b, bShape, outputShape);
         }
@@ -72,9 +73,11 @@ bool validate(const IOperationValidationContext* context) {
     NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
     NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
     OperandType inputType = context->getInputType(kInputTensor1);
-    NN_RET_CHECK(
-            inputType == OperandType::TENSOR_FLOAT16 || inputType == OperandType::TENSOR_FLOAT32 ||
-            inputType == OperandType::TENSOR_INT32 || inputType == OperandType::TENSOR_QUANT8_ASYMM)
+    NN_RET_CHECK(inputType == OperandType::TENSOR_FLOAT16 ||
+                 inputType == OperandType::TENSOR_FLOAT32 ||
+                 inputType == OperandType::TENSOR_INT32 ||
+                 inputType == OperandType::TENSOR_QUANT8_ASYMM ||
+                 inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED)
             << "Unsupported input operand type for select op: " << toString(inputType);
     NN_RET_CHECK(validateInputTypes(context, {OperandType::TENSOR_BOOL8, inputType, inputType}));
     NN_RET_CHECK(validateOutputTypes(context, {inputType}));
@@ -113,6 +116,8 @@ bool execute(IOperationExecutionContext* context) {
             return executeTyped<int32_t>(context);
         case OperandType::TENSOR_QUANT8_ASYMM:
             return executeTyped<uint8_t>(context);
+        case OperandType::TENSOR_QUANT8_ASYMM_SIGNED:
+            return executeTyped<int8_t>(context);
         default:
             NN_RET_CHECK_FAIL() << "Unsupported tensor type for SELECT op.";
     }
