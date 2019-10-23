@@ -71,11 +71,15 @@ class SampleDriver : public hal::IDevice {
             const hal::V1_3::Model& model, hal::ExecutionPreference preference,
             const hal::hidl_vec<hal::hidl_handle>& modelCache,
             const hal::hidl_vec<hal::hidl_handle>& dataCache, const hal::CacheToken& token,
-            const sp<hal::V1_2::IPreparedModelCallback>& callback) override;
+            const sp<hal::V1_3::IPreparedModelCallback>& callback) override;
     hal::Return<hal::ErrorStatus> prepareModelFromCache(
             const hal::hidl_vec<hal::hidl_handle>& modelCache,
             const hal::hidl_vec<hal::hidl_handle>& dataCache, const hal::CacheToken& token,
             const sp<hal::V1_2::IPreparedModelCallback>& callback) override;
+    hal::Return<hal::ErrorStatus> prepareModelFromCache_1_3(
+            const hal::hidl_vec<hal::hidl_handle>& modelCache,
+            const hal::hidl_vec<hal::hidl_handle>& dataCache, const hal::CacheToken& token,
+            const sp<hal::V1_3::IPreparedModelCallback>& callback) override;
     hal::Return<hal::DeviceStatus> getStatus() override;
 
     // Starts and runs the driver service.  Typically called from main().

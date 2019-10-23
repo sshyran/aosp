@@ -458,14 +458,14 @@ class TestDriver13 : public SampleDriver {
                                          const hidl_vec<hidl_handle>&, const hidl_vec<hidl_handle>&,
                                          const CacheToken&,
                                          const sp<IPreparedModelCallback>& callback) override {
-        callback->notify_1_2(ErrorStatus::NONE, new TestPreparedModel12(model, this, mSuccess));
+        callback->notify_1_3(ErrorStatus::NONE, new TestPreparedModel12(model, this, mSuccess));
         return ErrorStatus::NONE;
     }
 
-    Return<ErrorStatus> prepareModel_1_2(const V1_2::Model& model, ExecutionPreference,
-                                         const hidl_vec<hidl_handle>&, const hidl_vec<hidl_handle>&,
-                                         const CacheToken&,
-                                         const sp<IPreparedModelCallback>& callback) override {
+    Return<ErrorStatus> prepareModel_1_2(
+            const V1_2::Model& model, ExecutionPreference, const hidl_vec<hidl_handle>&,
+            const hidl_vec<hidl_handle>&, const CacheToken&,
+            const sp<V1_2::IPreparedModelCallback>& callback) override {
         callback->notify_1_2(ErrorStatus::NONE,
                              new TestPreparedModel12(nn::convertToV1_3(model), this, mSuccess));
         return ErrorStatus::NONE;
@@ -515,11 +515,10 @@ class TestDriver12 : public V1_2::IDevice {
                                         getSupportedOperations_cb _hidl_cb) override {
         return mLatestDriver->getSupportedOperations(model, _hidl_cb);
     }
-    Return<ErrorStatus> prepareModel_1_2(const V1_2::Model& model, ExecutionPreference preference,
-                                         const hidl_vec<hidl_handle>& modelCache,
-                                         const hidl_vec<hidl_handle>& dataCache,
-                                         const CacheToken& token,
-                                         const sp<IPreparedModelCallback>& callback) override {
+    Return<ErrorStatus> prepareModel_1_2(
+            const V1_2::Model& model, ExecutionPreference preference,
+            const hidl_vec<hidl_handle>& modelCache, const hidl_vec<hidl_handle>& dataCache,
+            const CacheToken& token, const sp<V1_2::IPreparedModelCallback>& callback) override {
         return mLatestDriver->prepareModel_1_2(model, preference, modelCache, dataCache, token,
                                                callback);
     }

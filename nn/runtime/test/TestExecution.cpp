@@ -189,7 +189,8 @@ class TestDriver13 : public SampleDriver {
     Return<ErrorStatus> prepareModel_1_3(
             const HidlModel& model, ExecutionPreference preference,
             const hidl_vec<hidl_handle>& modelCache, const hidl_vec<hidl_handle>& dataCache,
-            const CacheToken& token, const sp<IPreparedModelCallback>& actualCallback) override {
+            const CacheToken& token,
+            const sp<V1_3::IPreparedModelCallback>& actualCallback) override {
         sp<PreparedModelCallback> localCallback = new PreparedModelCallback;
         Return<ErrorStatus> prepareModelReturn = SampleDriver::prepareModel_1_3(
                 model, preference, modelCache, dataCache, token, localCallback);
@@ -197,18 +198,18 @@ class TestDriver13 : public SampleDriver {
             return prepareModelReturn;
         }
         if (prepareModelReturn != ErrorStatus::NONE) {
-            actualCallback->notify_1_2(
+            actualCallback->notify_1_3(
                     localCallback->getStatus(),
                     V1_2::IPreparedModel::castFrom(localCallback->getPreparedModel()));
             return prepareModelReturn;
         }
         localCallback->wait();
         if (localCallback->getStatus() != ErrorStatus::NONE) {
-            actualCallback->notify_1_2(
+            actualCallback->notify_1_3(
                     localCallback->getStatus(),
                     V1_2::IPreparedModel::castFrom(localCallback->getPreparedModel()));
         } else {
-            actualCallback->notify_1_2(
+            actualCallback->notify_1_3(
                     ErrorStatus::NONE,
                     new TestPreparedModel12(localCallback->getPreparedModel(), mErrorStatus));
         }
@@ -218,7 +219,8 @@ class TestDriver13 : public SampleDriver {
     Return<ErrorStatus> prepareModel_1_2(
             const V1_2::Model& model, ExecutionPreference preference,
             const hidl_vec<hidl_handle>& modelCache, const hidl_vec<hidl_handle>& dataCache,
-            const CacheToken& token, const sp<IPreparedModelCallback>& actualCallback) override {
+            const CacheToken& token,
+            const sp<V1_2::IPreparedModelCallback>& actualCallback) override {
         sp<PreparedModelCallback> localCallback = new PreparedModelCallback;
         Return<ErrorStatus> prepareModelReturn = SampleDriver::prepareModel_1_2(
                 model, preference, modelCache, dataCache, token, localCallback);
@@ -308,7 +310,8 @@ class TestDriver12 : public V1_2::IDevice {
     Return<ErrorStatus> prepareModel_1_2(
             const V1_2::Model& model, ExecutionPreference preference,
             const hidl_vec<hidl_handle>& modelCache, const hidl_vec<hidl_handle>& dataCache,
-            const CacheToken& token, const sp<IPreparedModelCallback>& actualCallback) override {
+            const CacheToken& token,
+            const sp<V1_2::IPreparedModelCallback>& actualCallback) override {
         return mLatestDriver->prepareModel_1_2(model, preference, modelCache, dataCache, token,
                                                actualCallback);
     }
