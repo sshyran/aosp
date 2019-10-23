@@ -11,6 +11,7 @@
 %define OperandType OperandCode
 %define OperandTypeLinkPfx ANEURALNETWORKS_
 %define APILevel29 API level 29
+%define APILevel30 API level 30
 %define BeforeAPILevel29For Before API level 29, for
 %define or_1.2 or {@link ANEURALNETWORKS_%{1}} 
 %define-lines AVAIL27
@@ -51,6 +52,7 @@
 %define OperandType OperandType
 %define OperandTypeLinkPfx OperandType::
 %define APILevel29 HAL version 1.2
+%define APILevel30 HAL version 1.3
 %define-lines AVAIL27
 %/define-lines
 %define-lines AVAIL27Short
@@ -115,6 +117,13 @@
 %define-lines ZeroBatchesAPI29
      *      Since %{APILevel29}, zero batches is supported for this tensor.
 %/define-lines
+%/kind
+
+%kind ndk hal_1.3
+%define AndQuant8Signed 
+%/kind
+%kind hal_1.0 hal_1.1 hal_1.2
+%define AndQuant8Signed
 %/kind
 
 %section OEMDeprecationAndOperandTypeRangeMaxComment
@@ -2839,15 +2848,17 @@
      *       then clipping is disabled.
      *       If all the input tensors have type {@link %{OperandTypeLinkPfx}TENSOR_FLOAT32},
      *       this scalar must be of the type {@link %{OperandTypeLinkPfx}FLOAT32},
-     *       otherwise if all the input tensors have the type {@link %{OperandTypeLinkPfx}TENSOR_FLOAT16},
-     *       this scalar must be of type {@link %{OperandTypeLinkPfx}FLOAT16}.
+     *       otherwise if all the input tensors have the type
+     *       {@link %{OperandTypeLinkPfx}TENSOR_FLOAT16}, this scalar must be
+     *       of type {@link %{OperandTypeLinkPfx}FLOAT16}.
      * * 50: The clipping threshold for the output from the
      *       projection layer, such that values are bound within
      *       [-proj_clip, proj_clip]. If set to 0.0 then clipping is disabled.
      *       If all the input tensors have type {@link %{OperandTypeLinkPfx}TENSOR_FLOAT32},
      *       this scalar must be of the type {@link %{OperandTypeLinkPfx}FLOAT32},
-     *       otherwise if all the input tensors have the type {@link %{OperandTypeLinkPfx}TENSOR_FLOAT16},
-     *       this scalar must be of type {@link %{OperandTypeLinkPfx}FLOAT16}.
+     *       otherwise if all the input tensors have the type
+     *       {@link %{OperandTypeLinkPfx}TENSOR_FLOAT16}, this scalar must be
+     *       of type {@link %{OperandTypeLinkPfx}FLOAT16}.
      * * 51: merge_outputs
      *       An {@link %{OperandTypeLinkPfx}BOOL} scalar specifying if the outputs
      *       from forward and backward cells should be merged.
@@ -4541,6 +4552,9 @@
      * * {@link %{OperandTypeLinkPfx}TENSOR_FLOAT32}
      * * {@link %{OperandTypeLinkPfx}TENSOR_INT32}
      * * {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM}
+%kind ndk hal_1.3
+     * * {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM_SIGNED} (since %{APILevel30})
+%/kind
      *
      * Supported tensor rank: from 1
      *
@@ -4550,15 +4564,22 @@
      *      corresponding element in the output should be taken from input1 (if
      *      true) or input2 (if false).
      * * 1: An input tensor of the same shape as input0.
+%kind hal_1.2
      * * 2: An input tensor of the same shape and type as input1.
      *      For a {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM} tensor,
      *      the scales and zeroPoint can be different from input1 scale and zeroPoint.
+%else
+     * * 2: An input tensor of the same shape and type as input1.
+     *      For a {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM}
+     *      and {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM_SIGNED} tensor,
+     *      the scales and zeroPoint can be different from input1 scale and zeroPoint.
+%/kind
      *
      * Outputs:
      * * 0: A tensor of the same type and shape as input1 and input2.
      *      For a {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM} tensor,
      *      the scale and zeroPoint can be different from inputs' scale and zeroPoint.
-     *
+%insert-lines AVAIL29
      */
     %{DeclareOperation_1.2 SELECT 84},
 
