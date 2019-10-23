@@ -213,10 +213,30 @@ void checkResults(const TestModel& model, const std::vector<TestBuffer>& buffers
             case TestOperandType::TENSOR_BOOL8:
                 expectBooleanEqual(operand, result);
                 break;
+            case TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED:
+                expectNear<int8_t>(operand, result, quant8AllowedError, 0);
+                break;
             default:
                 FAIL() << "Data type not supported.";
         }
     }
+}
+
+TestModel convertQuant8AsymmOperandsToSigned(const TestModel& testModel) {
+    TestModel converted(testModel.copy());
+    for (TestOperand& operand : converted.operands) {
+        if (operand.type == test_helper::TestOperandType::TENSOR_QUANT8_ASYMM) {
+            operand.type = test_helper::TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED;
+            operand.zeroPoint -= 128;
+            const uint8_t* inputOperandData = operand.data.get<uint8_t>();
+            int8_t* outputOperandData = operand.data.getMutable<int8_t>();
+            for (size_t i = 0; i < operand.data.size(); ++i) {
+                outputOperandData[i] =
+                        static_cast<int8_t>(static_cast<int32_t>(inputOperandData[i]) - 128);
+            }
+        }
+    }
+    return converted;
 }
 
 }  // namespace test_helper
