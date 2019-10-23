@@ -242,6 +242,9 @@
 %/kind
      * * {@link %{OperandTypeLinkPfx}TENSOR_FLOAT32}
      * * {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM}
+%kind ndk hal_1.3+
+     * * {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM_SIGNED} (since %{APILevel30})
+%/kind
      *
      * Supported tensor rank: up to 4
      *
@@ -249,16 +252,28 @@
      * * 0: A tensor.
      * * 1: A tensor of the same {@link %{OperandType}}, and compatible dimensions
      *      as input0.
+%kind ndk hal_1.3+
+     *      For a {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM} and
+     *      {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM_SIGNED} tensor,
+     *      the scales and zeroPoint can be different from input0 scale and zeroPoint.
+%else
      *      For a {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM} tensor,
      *      the scales and zeroPoint can be different from input0 scale and zeroPoint.
+%/kind
      * * 2: An {@link %{OperandTypeLinkPfx}INT32} scalar, and has to be one of the
      *      {@link %{FusedActivationFunc}} values. Specifies the activation to
      *      invoke on the result.
      *
      * Outputs:
      * * 0: The sum, a tensor of the same {@link %{OperandType}} as input0.
+%kind ndk hal_1.3+
+     *      For a {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM} and
+     *      {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM} tensor,
+     *      the scale and zeroPoint can be different from inputs' scale and zeroPoint.
+%else
      *      For a {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM} tensor,
      *      the scale and zeroPoint can be different from inputs' scale and zeroPoint.
+%/kind
 %insert-lines AVAIL27
      */
     %{DeclareOperation ADD 0},
@@ -1607,6 +1622,9 @@
 %/kind
      * * {@link %{OperandTypeLinkPfx}TENSOR_FLOAT32}
      * * {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM}
+%kind ndk hal_1.3+
+     * * {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM_SIGNED} (since %{APILevel30})
+%/kind
      *
      * Supported tensor rank: up to 4
      *
@@ -1620,9 +1638,16 @@
      *
      * Outputs:
      * * 0: The product, a tensor of the same {@link %{OperandType}} as input0.
+%kind ndk hal_1.3+
+     *      For output tensor of {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM}
+     *      and {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM_SIGNED},
+     *      the following condition must be satisfied:
+     *      output_scale > input1_scale * input2_scale.
+%else
      *      For output tensor of {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM},
      *      the following condition must be satisfied:
      *      output_scale > input1_scale * input2_scale.
+%/kind
 %insert-lines AVAIL27
      */
     %{DeclareOperation MUL 18},
@@ -2437,6 +2462,9 @@
 %kind ndk hal_1.2+
      * * {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM} (since %{APILevel29})
 %/kind
+%kind ndk hal_1.3+
+     * * {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM_SIGNED} (since %{APILevel30})
+%/kind
      *
      * Supported tensor rank: up to 4
      *
@@ -2450,8 +2478,13 @@
      *
      * Outputs:
      * * 0: A tensor of the same {@link %{OperandType}} as input0.
-%kind ndk hal_1.2+
+%kind hal_1.2
      *      For a {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM} tensor,
+     *      the scale and zeroPoint can be different from inputs' scale and zeroPoint.
+%/kind
+%kind ndk hal_1.3+
+     *      For a {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM} and
+     *      {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM_SIGNED} tensor,
      *      the scale and zeroPoint can be different from inputs' scale and zeroPoint.
 %/kind
 %insert-lines AVAIL28
