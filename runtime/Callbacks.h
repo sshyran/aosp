@@ -24,6 +24,7 @@
 #include <functional>
 #include <mutex>
 #include <thread>
+#include <vector>
 
 /*
  * The Callback classes are used internally by the NeuralNetworks runtime to
@@ -51,7 +52,7 @@ namespace android::nn {
  * asynchronously with respect to the runtime. If a calling thread calls wait
  * or get* on a PreparedModelCallback object and the corresponding asynchronous
  * task has not finished preparing the model, the calling thread will block
- * until the asynchronous task has either called notify or notify_1_2.
+ * until the asynchronous task has called notify*.
  *
  * If the callback object is notified more than once, only the results of the
  * first call to notify* are used, and the results from subsequent calls are
@@ -67,8 +68,8 @@ class PreparedModelCallback : public hal::IPreparedModelCallback {
      * model, and allows all prior and future wait calls on the
      * PreparedModelCallback object to proceed.
      *
-     * Either IPreparedModelCallback::notify or
-     * IPreparedModelCallback::notify_1_2 must be called on a given
+     * One of IPreparedModelCallback::notify, IPreparedModelCallback::notify_1_2,
+     * or IPreparedModelCallback::notify_1_3 must be called on a given
      * PreparedModelCallback object.
      *
      * If the callback object is notified more than once, only the results of
@@ -93,8 +94,8 @@ class PreparedModelCallback : public hal::IPreparedModelCallback {
      * prepared model, and allows all prior and future wait calls on the
      * PreparedModelCallback object to proceed.
      *
-     * Either IPreparedModelCallback::notify or
-     * IPreparedModelCallback::notify_1_2 must be called on a given
+     * One of IPreparedModelCallback::notify, IPreparedModelCallback::notify_1_2,
+     * or IPreparedModelCallback::notify_1_3 must be called on a given
      * PreparedModelCallback object.
      *
      * If the callback object is notified more than once, only the results of
@@ -111,6 +112,32 @@ class PreparedModelCallback : public hal::IPreparedModelCallback {
      *     nullptr if the model was unable to be prepared.
      */
     hal::Return<void> notify_1_2(hal::ErrorStatus status,
+                                 const sp<hal::V1_2::IPreparedModel>& preparedModel) override;
+
+    /**
+     * IPreparedModelCallback::notify_1_3 marks the callback object with the
+     * return status of the asynchronous model preparation along with the
+     * prepared model, and allows all prior and future wait calls on the
+     * PreparedModelCallback object to proceed.
+     *
+     * One of IPreparedModelCallback::notify, IPreparedModelCallback::notify_1_2,
+     * or IPreparedModelCallback::notify_1_3 must be called on a given
+     * PreparedModelCallback object.
+     *
+     * If the callback object is notified more than once, only the results of
+     * the first call to notify* are used, and the results from subsequent calls
+     * are discarded.
+     *
+     * @param status Error status returned from asynchronously preparing the
+     *     model; will be:
+     *     - NONE if the asynchronous preparation was successful
+     *     - DEVICE_UNAVAILABLE if driver is offline or busy
+     *     - GENERAL_FAILURE if there is an unspecified error
+     *     - INVALID_ARGUMENT if the input model is invalid
+     * @param preparedModel Returned model that has been prepared for execution,
+     *     nullptr if the model was unable to be prepared.
+     */
+    hal::Return<void> notify_1_3(hal::ErrorStatus status,
                                  const sp<hal::V1_2::IPreparedModel>& preparedModel) override;
 
     /**
