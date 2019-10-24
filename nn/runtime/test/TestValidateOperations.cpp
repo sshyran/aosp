@@ -21,6 +21,7 @@
 #include <string>
 #include <vector>
 
+#include "NeuralNetworks.h"
 #include "NeuralNetworksOEM.h"
 #include "NeuralNetworksWrapper.h"
 
@@ -1068,6 +1069,14 @@ TEST(OperationValidationTest, AVERAGE_POOL_2D_float32) {
     poolingOpTest(ANEURALNETWORKS_AVERAGE_POOL_2D, ANEURALNETWORKS_TENSOR_FLOAT32);
 }
 
+TEST(OperationValidationTest, AVERAGE_POOL_2D_quant8) {
+    poolingOpTest(ANEURALNETWORKS_AVERAGE_POOL_2D, ANEURALNETWORKS_TENSOR_QUANT8_ASYMM);
+}
+
+TEST(OperationValidationTest, AVERAGE_POOL_2D_quant8_signed) {
+    poolingOpTest(ANEURALNETWORKS_AVERAGE_POOL_2D, ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED);
+}
+
 TEST(OperationValidationTest, MAX_POOL_2D_float32) {
     poolingOpTest(ANEURALNETWORKS_MAX_POOL_2D, ANEURALNETWORKS_TENSOR_FLOAT32);
 }
@@ -1076,20 +1085,20 @@ TEST(OperationValidationTest, MAX_POOL_2D_float16) {
     poolingOpTest(ANEURALNETWORKS_MAX_POOL_2D, ANEURALNETWORKS_TENSOR_FLOAT16);
 }
 
+TEST(OperationValidationTest, MAX_POOL_2D_quant8) {
+    poolingOpTest(ANEURALNETWORKS_MAX_POOL_2D, ANEURALNETWORKS_TENSOR_QUANT8_ASYMM);
+}
+
+TEST(OperationValidationTest, MAX_POOL_2D_quant8_signed) {
+    poolingOpTest(ANEURALNETWORKS_MAX_POOL_2D, ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED);
+}
+
 TEST(OperationValidationTest, L2_POOL_2D_float16) {
     poolingOpTest(ANEURALNETWORKS_L2_POOL_2D, ANEURALNETWORKS_TENSOR_FLOAT16);
 }
 
 TEST(OperationValidationTest, L2_POOL_2D_float32) {
     poolingOpTest(ANEURALNETWORKS_L2_POOL_2D, ANEURALNETWORKS_TENSOR_FLOAT32);
-}
-
-TEST(OperationValidationTest, AVERAGE_POOL_2D_quant8) {
-    poolingOpTest(ANEURALNETWORKS_AVERAGE_POOL_2D, ANEURALNETWORKS_TENSOR_QUANT8_ASYMM);
-}
-
-TEST(OperationValidationTest, MAX_POOL_2D_quant8) {
-    poolingOpTest(ANEURALNETWORKS_MAX_POOL_2D, ANEURALNETWORKS_TENSOR_QUANT8_ASYMM);
 }
 
 void spaceDepthOpTest(ANeuralNetworksOperationType operationCode, int32_t operandCode) {
