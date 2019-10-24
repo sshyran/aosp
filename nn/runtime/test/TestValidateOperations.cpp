@@ -1605,6 +1605,10 @@ TEST(OperationValidationTest, CONCATENATION_quant8) {
     concatenationTest(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM);
 }
 
+TEST(OperationValidationTest, CONCATENATION_quant8_signed) {
+    concatenationTest(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED);
+}
+
 void resizeBilinearOpTest(int32_t inputOperandCode, int32_t scalarOperandCode) {
     SCOPED_TRACE(inputOperandCode);
     uint32_t inputDimensions[4] = {2, 2, 2, 2};
