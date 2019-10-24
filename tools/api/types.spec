@@ -388,6 +388,9 @@
 %kind ndk hal_1.2+
      *   (full support since %{APILevel29}, see the input section)
 %/kind
+%kind ndk hal_1.3+
+     * * {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM_SIGNED} (since %{APILevel30})
+%/kind
      *
      * Supported tensor rank: up to 4
      *
@@ -401,6 +404,11 @@
 %/kind
      *            {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM}
      *            must have the same scale and zeroPoint as the output tensor.
+%kind ndk hal_1.3+
+     *            Input tensors of
+     *            {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM_SIGNED}
+     *            are allowed to have different scale and zeroPoint.
+%/kind
 %kind ndk hal_1.2+
      *            Since %{APILevel29}, zero-sized tensors are supported.
 %/kind
@@ -417,6 +425,10 @@
 %else
      *      For a {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM} tensor, the scale and zeroPoint
      *      values must be the same as the input tensors'.
+%/kind
+%kind hal_1.3+
+     *      For a {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM_SIGNED} tensor,
+     *      the scale and zeroPoint values can be different from input tensors.
 %/kind
 %insert-lines AVAIL27
      */
