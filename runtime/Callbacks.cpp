@@ -58,7 +58,7 @@ Return<void> PreparedModelCallback::notify_1_2(ErrorStatus errorStatus,
 }
 
 Return<void> PreparedModelCallback::notify_1_3(ErrorStatus errorStatus,
-                                               const sp<V1_2::IPreparedModel>& preparedModel) {
+                                               const sp<V1_3::IPreparedModel>& preparedModel) {
     return notify(errorStatus, preparedModel);
 }
 
