@@ -106,6 +106,9 @@ class SamplePreparedModel : public hal::IPreparedModel {
     hal::Return<hal::ErrorStatus> execute_1_2(
             const hal::Request& request, hal::MeasureTiming measure,
             const sp<hal::V1_2::IExecutionCallback>& callback) override;
+    hal::Return<hal::ErrorStatus> execute_1_3(
+            const hal::Request& request, hal::MeasureTiming measure,
+            const sp<hal::V1_2::IExecutionCallback>& callback) override;
     hal::Return<void> executeSynchronously(const hal::Request& request, hal::MeasureTiming measure,
                                            executeSynchronously_cb cb) override;
     hal::Return<void> configureExecutionBurst(

@@ -365,6 +365,11 @@ Return<ErrorStatus> SamplePreparedModel::execute_1_2(const Request& request, Mea
     return executeBase(request, measure, mModel, *mDriver, mPoolInfos, callback);
 }
 
+Return<ErrorStatus> SamplePreparedModel::execute_1_3(const Request& request, MeasureTiming measure,
+                                                     const sp<V1_2::IExecutionCallback>& callback) {
+    return executeBase(request, measure, mModel, *mDriver, mPoolInfos, callback);
+}
+
 Return<void> SamplePreparedModel::executeSynchronously(const Request& request,
                                                        MeasureTiming measure,
                                                        executeSynchronously_cb cb) {
