@@ -138,7 +138,7 @@ class PreparedModelCallback : public hal::IPreparedModelCallback {
      *     nullptr if the model was unable to be prepared.
      */
     hal::Return<void> notify_1_3(hal::ErrorStatus status,
-                                 const sp<hal::V1_2::IPreparedModel>& preparedModel) override;
+                                 const sp<hal::V1_3::IPreparedModel>& preparedModel) override;
 
     /**
      * PreparedModelCallback::wait blocks until notify* has been called on the
@@ -277,8 +277,7 @@ class ExecutionCallback : public hal::IExecutionCallback {
 
     /**
      * Retrieves the error status returned from the asynchronous task launched
-     * by either IPreparedModel::execute or IPreparedModel::execute_1_2. If
-     * IPreparedModel::execute or IPreparedModel::execute_1_2 has not finished
+     * by IPreparedModel::execute*. If IPreparedModel::execute* has not finished
      * asynchronously executing, this call will block until the asynchronous
      * task notifies the object.
      *
@@ -298,7 +297,8 @@ class ExecutionCallback : public hal::IExecutionCallback {
 
     /**
      * Retrieves the output shapes returned from the asynchronous task launched
-     * by IPreparedModel::execute_1_2. If IPreparedModel::execute_1_2 has not
+     * by either IPreparedModel::execute_1_2 or IPreparedModel::execute_1_3. If
+     * IPreparedModel::execute_1_2 or IPreparedModel::execute_1_3 has not
      * finished asynchronously executing, this call will block until the
      * asynchronous task notifies the object.
      *
@@ -320,7 +320,8 @@ class ExecutionCallback : public hal::IExecutionCallback {
 
     /**
      * Retrieves the duration of execution of the asynchronous task launched by
-     * IPreparedModel::execute_1_2. If IPreparedModel::execute_1_2 has not
+     * by either IPreparedModel::execute_1_2 or IPreparedModel::execute_1_3. If
+     * IPreparedModel::execute_1_2 or IPreparedModel::execute_1_3 has not
      * finished asynchronously executing, this call will block until the
      * asynchronous task notifies the object.
      *
