@@ -105,6 +105,10 @@ class CachingDriver : public sample_driver::SampleDriver {
                                         const sp<V1_2::IExecutionCallback>&) override {
             return ErrorStatus::DEVICE_UNAVAILABLE;
         }
+        Return<ErrorStatus> execute_1_3(const Request&, MeasureTiming,
+                                        const sp<V1_2::IExecutionCallback>&) override {
+            return ErrorStatus::DEVICE_UNAVAILABLE;
+        }
         Return<void> executeSynchronously(const Request&, MeasureTiming,
                                           executeSynchronously_cb cb) override {
             cb(ErrorStatus::DEVICE_UNAVAILABLE, {}, kBadTiming);
