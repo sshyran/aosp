@@ -557,7 +557,8 @@ ExecutionPlan::Controller::Controller(
 // indicate the regular execution path should be used. This can occur either
 // because PreparedModel was nullptr (cpu was best choice), or because the
 // IPreparedModel was of insufficient version or failed to configure the burst.
-std::vector<std::shared_ptr<ExecutionBurstController>> ExecutionPlan::makeBursts() const {
+std::vector<std::shared_ptr<ExecutionBurstController>> ExecutionPlan::makeBursts(
+        int preference) const {
     switch (mState) {
         // burst object for each partition in the compound case
         case COMPOUND: {
@@ -565,7 +566,10 @@ std::vector<std::shared_ptr<ExecutionBurstController>> ExecutionPlan::makeBursts
             bursts.reserve(compound()->mSteps.size());
             for (const auto& step : compound()->mSteps) {
                 if (const auto preparedModel = step->getPreparedSubModel()) {
-                    bursts.push_back(preparedModel->configureExecutionBurst(/*blocking=*/true));
+                    const bool preferPowerOverLatency =
+                            (preference == ANEURALNETWORKS_PREFER_LOW_POWER);
+                    bursts.push_back(
+                            preparedModel->configureExecutionBurst(preferPowerOverLatency));
                 } else {
                     bursts.push_back(nullptr);
                 }
@@ -577,7 +581,9 @@ std::vector<std::shared_ptr<ExecutionBurstController>> ExecutionPlan::makeBursts
             std::vector<std::shared_ptr<ExecutionBurstController>> burst;
             auto simpleBody = simple();
             if (const auto preparedModel = simpleBody->mPreparedModel) {
-                burst.push_back(preparedModel->configureExecutionBurst(/*blocking=*/true));
+                const bool preferPowerOverLatency =
+                        (preference == ANEURALNETWORKS_PREFER_LOW_POWER);
+                burst.push_back(preparedModel->configureExecutionBurst(preferPowerOverLatency));
             } else {
                 burst.push_back(nullptr);
             }

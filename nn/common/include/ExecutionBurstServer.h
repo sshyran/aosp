@@ -17,23 +17,24 @@
 #ifndef ANDROID_FRAMEWORKS_ML_NN_COMMON_EXECUTION_BURST_SERVER_H
 #define ANDROID_FRAMEWORKS_ML_NN_COMMON_EXECUTION_BURST_SERVER_H
 
-#include "HalInterfaces.h"
-
 #include <android-base/macros.h>
 #include <fmq/MessageQueue.h>
 #include <hidl/MQDescriptor.h>
 
 #include <atomic>
+#include <chrono>
 #include <memory>
 #include <optional>
 #include <thread>
+#include <tuple>
 #include <vector>
+
+#include "HalInterfaces.h"
 
 namespace android::nn {
 
-using hardware::MQDescriptorSync;
-using FmqRequestDescriptor = MQDescriptorSync<hal::FmqRequestDatum>;
-using FmqResultDescriptor = MQDescriptorSync<hal::FmqResultDatum>;
+using FmqRequestDescriptor = hardware::MQDescriptorSync<hal::FmqRequestDatum>;
+using FmqResultDescriptor = hardware::MQDescriptorSync<hal::FmqResultDatum>;
 
 /**
  * Function to serialize results.
@@ -69,7 +70,7 @@ std::optional<std::tuple<hal::Request, std::vector<int32_t>, hal::MeasureTiming>
  *
  * Because the receiver can wait on a packet that may never come (e.g., because
  * the sending side of the packet has been closed), this object can be
- * invalidating, unblocking the receiver.
+ * invalidated, unblocking the receiver.
  */
 class RequestChannelReceiver {
     using FmqRequestChannel =
@@ -82,10 +83,15 @@ class RequestChannelReceiver {
      * Prefer this call over the constructor.
      *
      * @param requestChannel Descriptor for the request channel.
+     * @param pollingTimeWindow How much time (in microseconds) the
+     *     RequestChannelReceiver is allowed to poll the FMQ before waiting on
+     *     the blocking futex. Polling may result in lower latencies at the
+     *     potential cost of more power usage.
      * @return RequestChannelReceiver on successful creation, nullptr otherwise.
      */
     static std::unique_ptr<RequestChannelReceiver> create(
-            const FmqRequestDescriptor& requestChannel);
+            const FmqRequestDescriptor& requestChannel,
+            std::chrono::microseconds pollingTimeWindow);
 
     /**
      * Get the request from the channel.
@@ -105,14 +111,15 @@ class RequestChannelReceiver {
      */
     void invalidate();
 
-    RequestChannelReceiver(std::unique_ptr<FmqRequestChannel> fmqRequestChannel, bool blocking);
+    RequestChannelReceiver(std::unique_ptr<FmqRequestChannel> fmqRequestChannel,
+                           std::chrono::microseconds pollingTimeWindow);
 
    private:
     std::optional<std::vector<hal::FmqRequestDatum>> getPacketBlocking();
 
     const std::unique_ptr<FmqRequestChannel> mFmqRequestChannel;
     std::atomic<bool> mTeardown{false};
-    const bool mBlocking;
+    const std::chrono::microseconds kPollingTimeWindow;
 };
 
 /**
@@ -149,11 +156,10 @@ class ResultChannelSender {
     // prefer calling ResultChannelSender::send
     bool sendPacket(const std::vector<hal::FmqResultDatum>& packet);
 
-    ResultChannelSender(std::unique_ptr<FmqResultChannel> fmqResultChannel, bool blocking);
+    ResultChannelSender(std::unique_ptr<FmqResultChannel> fmqResultChannel);
 
    private:
     const std::unique_ptr<FmqResultChannel> mFmqResultChannel;
-    const bool mBlocking;
 };
 
 /**
@@ -247,12 +253,17 @@ class ExecutionBurstServer : public hal::IBurstContext {
      *     the result of the execution.
      * @param executorWithCache Object which maintains a local cache of the
      *     memory pools and executes using the cached memory pools.
+     * @param pollingTimeWindow How much time (in microseconds) the
+     *     ExecutionBurstServer is allowed to poll the FMQ before waiting on
+     *     the blocking futex. Polling may result in lower latencies at the
+     *     potential cost of more power usage.
      * @result IBurstContext Handle to the burst context.
      */
     static sp<ExecutionBurstServer> create(
             const sp<hal::IBurstCallback>& callback, const FmqRequestDescriptor& requestChannel,
             const FmqResultDescriptor& resultChannel,
-            std::shared_ptr<IBurstExecutorWithCache> executorWithCache);
+            std::shared_ptr<IBurstExecutorWithCache> executorWithCache,
+            std::chrono::microseconds pollingTimeWindow = std::chrono::microseconds{0});
 
     /**
      * Create automated context to manage FMQ-based executions.
@@ -271,12 +282,16 @@ class ExecutionBurstServer : public hal::IBurstContext {
      * @param preparedModel PreparedModel that the burst object was created from.
      *     IPreparedModel::executeSynchronously will be used to perform the
      *     execution.
+     * @param pollingTimeWindow How much time (in microseconds) the
+     *     ExecutionBurstServer is allowed to poll the FMQ before waiting on
+     *     the blocking futex. Polling may result in lower latencies at the
+     *     potential cost of more power usage.
      * @result IBurstContext Handle to the burst context.
      */
-    static sp<ExecutionBurstServer> create(const sp<hal::IBurstCallback>& callback,
-                                           const FmqRequestDescriptor& requestChannel,
-                                           const FmqResultDescriptor& resultChannel,
-                                           hal::IPreparedModel* preparedModel);
+    static sp<ExecutionBurstServer> create(
+            const sp<hal::IBurstCallback>& callback, const FmqRequestDescriptor& requestChannel,
+            const FmqResultDescriptor& resultChannel, hal::IPreparedModel* preparedModel,
+            std::chrono::microseconds pollingTimeWindow = std::chrono::microseconds{0});
 
     ExecutionBurstServer(const sp<hal::IBurstCallback>& callback,
                          std::unique_ptr<RequestChannelReceiver> requestChannel,
