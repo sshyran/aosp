@@ -91,8 +91,9 @@ class SampleDriver : public hal::IDevice {
 
 class SamplePreparedModel : public hal::IPreparedModel {
    public:
-    SamplePreparedModel(const hal::Model& model, const SampleDriver* driver)
-        : mModel(model), mDriver(driver) {}
+    SamplePreparedModel(const hal::Model& model, const SampleDriver* driver,
+                        hal::ExecutionPreference preference)
+        : mModel(model), mDriver(driver), kPreference(preference) {}
     ~SamplePreparedModel() override {}
     bool initialize();
     hal::Return<hal::ErrorStatus> execute(
@@ -113,6 +114,7 @@ class SamplePreparedModel : public hal::IPreparedModel {
     hal::Model mModel;
     const SampleDriver* mDriver;
     std::vector<RunTimePoolInfo> mPoolInfos;
+    const hal::ExecutionPreference kPreference;
 };
 
 }  // namespace sample_driver

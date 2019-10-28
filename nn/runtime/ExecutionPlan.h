@@ -209,7 +209,7 @@ class ExecutionPlan {
         size_t mNextStepIndex;
     };
 
-    std::vector<std::shared_ptr<ExecutionBurstController>> makeBursts() const;
+    std::vector<std::shared_ptr<ExecutionBurstController>> makeBursts(int preference) const;
 
     std::shared_ptr<Controller> makeController(ExecutionBuilder* executionBuilder,
                                                const BurstBuilder* burstBuilder) const;
