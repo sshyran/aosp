@@ -35,6 +35,7 @@ doit ndk $(dirname $0)/NeuralNetworks.t ${ANDROID_BUILD_TOP}/frameworks/ml/nn/ru
 doit hal_1.0 ${HALDIR}/1.0/types.t ${HALDIR}/1.0/types.hal
 doit hal_1.1 ${HALDIR}/1.1/types.t ${HALDIR}/1.1/types.hal
 doit hal_1.2 ${HALDIR}/1.2/types.t ${HALDIR}/1.2/types.hal
+doit hal_1.3 ${HALDIR}/1.3/types.t ${HALDIR}/1.3/types.hal
 
 if [[ ${RET} -ne 0 ]] ; then
   echo >&2 "*** FAILED"
