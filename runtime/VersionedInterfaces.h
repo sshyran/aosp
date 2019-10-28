@@ -687,12 +687,16 @@ class VersionedIPreparedModel {
     /**
      * Creates a burst controller on a prepared model.
      *
-     * @param blocking 'true' if the FMQ should block until data is available.
+     * @param preferPowerOverLatency 'true' if the Burst object should run in a
+     *                               more power efficient mode, 'false' if more
+     *                               power can be used to possibly reduce
+     *                               burst compute latency.
      * @return ExecutionBurstController Execution burst controller object.
      *                                  nullptr is returned if the burst cannot
      *                                  be configured for any reason.
      */
-    std::shared_ptr<ExecutionBurstController> configureExecutionBurst(bool blocking) const;
+    std::shared_ptr<ExecutionBurstController> configureExecutionBurst(
+            bool preferPowerOverLatency) const;
 
    private:
     std::tuple<int, std::vector<hal::OutputShape>, hal::Timing> executeAsynchronously(

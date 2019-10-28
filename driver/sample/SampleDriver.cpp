@@ -19,6 +19,7 @@
 #include "SampleDriver.h"
 
 #include <android-base/logging.h>
+#include <android-base/properties.h>
 #include <hidl/LegacySupport.h>
 
 #include <algorithm>
@@ -185,9 +186,9 @@ Return<ErrorStatus> prepareModelBase(const T_Model& model, const SampleDriver* d
     }
 
     // asynchronously prepare the model from a new, detached thread
-    std::thread([model, driver, callback] {
+    std::thread([model, driver, preference, callback] {
         sp<SamplePreparedModel> preparedModel =
-                new SamplePreparedModel(convertToV1_3(model), driver);
+                new SamplePreparedModel(convertToV1_3(model), driver, preference);
         if (!preparedModel->initialize()) {
             notify(callback, ErrorStatus::INVALID_ARGUMENT, nullptr);
             return;
@@ -472,6 +473,22 @@ class BurstExecutorWithCache : public ExecutionBurstServer::IBurstExecutorWithCa
     std::map<int32_t, std::optional<RunTimePoolInfo>> mMemoryCache;  // cached requestPoolInfos
 };
 
+// This is the amount of time the ExecutionBurstServer should spend polling the
+// FMQ to see if it has data available before it should fall back to waiting on
+// the futex.
+static std::chrono::microseconds getPollingTimeWindow() {
+    constexpr int32_t defaultPollingTimeWindow = 50;
+#ifdef NN_DEBUGGABLE
+    constexpr int32_t minPollingTimeWindow = 0;
+    const int32_t selectedPollingTimeWindow =
+            base::GetIntProperty("debug.nn.sample-driver-burst-polling-window",
+                                 defaultPollingTimeWindow, minPollingTimeWindow);
+    return std::chrono::microseconds{selectedPollingTimeWindow};
+#else
+    return std::chrono::microseconds{defaultPollingTimeWindow};
+#endif  // NN_DEBUGGABLE
+}
+
 Return<void> SamplePreparedModel::configureExecutionBurst(
         const sp<V1_2::IBurstCallback>& callback,
         const MQDescriptorSync<V1_2::FmqRequestDatum>& requestChannel,
@@ -480,17 +497,22 @@ Return<void> SamplePreparedModel::configureExecutionBurst(
     NNTRACE_FULL(NNTRACE_LAYER_DRIVER, NNTRACE_PHASE_EXECUTION,
                  "SampleDriver::configureExecutionBurst");
 
+    const bool preferPowerOverLatency = (kPreference == hal::ExecutionPreference::LOW_POWER);
+    const auto pollingTimeWindow =
+            (preferPowerOverLatency ? std::chrono::microseconds{0} : getPollingTimeWindow());
+
     // Alternatively, the burst could be configured via:
     // const sp<V1_2::IBurstContext> burst =
     //         ExecutionBurstServer::create(callback, requestChannel,
-    //                                      resultChannel, this);
+    //                                      resultChannel, this,
+    //                                      pollingTimeWindow);
     //
     // However, this alternative representation does not include a memory map
     // caching optimization, and adds overhead.
     const std::shared_ptr<BurstExecutorWithCache> executorWithCache =
             std::make_shared<BurstExecutorWithCache>(mModel, mDriver, mPoolInfos);
     const sp<V1_2::IBurstContext> burst = ExecutionBurstServer::create(
-            callback, requestChannel, resultChannel, executorWithCache);
+            callback, requestChannel, resultChannel, executorWithCache, pollingTimeWindow);
 
     if (burst == nullptr) {
         cb(ErrorStatus::GENERAL_FAILURE, {});
