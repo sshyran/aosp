@@ -229,9 +229,9 @@ TEST_F(IntrospectionControlTest, SimpleAddModel) {
 
     // Verify that the mCompilation is actually using the "test-all" device.
     CompilationBuilder* c = reinterpret_cast<CompilationBuilder*>(mCompilation);
-    const char* deviceNameBuffer =
+    const std::string& deviceNameBuffer =
             c->forTest_getExecutionPlan().forTest_simpleGetDevice()->getName();
-    EXPECT_TRUE(driverName.compare(deviceNameBuffer) == 0);
+    EXPECT_EQ(driverName, deviceNameBuffer);
 
     float input1[2] = {1.0f, 2.0f};
     float input2[2] = {3.0f, 4.0f};
@@ -655,7 +655,7 @@ TEST_P(TimingTest, Test) {
     switch (kDriverKind) {
         case DriverKind::CPU: {
             // There should be only one driver -- the CPU
-            const char* name = DeviceManager::get()->getDrivers()[0]->getName();
+            const std::string& name = DeviceManager::get()->getDrivers()[0]->getName();
             ASSERT_TRUE(selectDeviceByName(name));
             break;
         }
