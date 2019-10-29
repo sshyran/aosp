@@ -666,8 +666,8 @@ int StepExecutor::setInputOrOutputFromTemporaryMemory(const Operand& inputOrOutp
 
     uint32_t poolIndex = mMemories.add(memory);
     uint32_t length = TypeManager::get()->getSizeOfData(inputOrOutputOperand);
-    return inputOrOutputInfo->setFromTemporaryMemory(inputOrOutputOperand, poolIndex, offset,
-                                                     length);
+    return inputOrOutputInfo->setFromMemory(inputOrOutputOperand, /*type=*/nullptr, poolIndex,
+                                            offset, length);
 }
 
 static void logArguments(const char* kind, const std::vector<ModelArgumentInfo>& args) {
