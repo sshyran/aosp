@@ -69,7 +69,7 @@ class ExecutionBuilder {
     int burstCompute(BurstBuilder* burst) { return compute(nullptr, burst); }
 
     // Initialize output dimensional information from ModelArgumentInfo.
-    void initializeOutputShapes(std::vector<hal::OutputShape>* outputShapes) const;
+    std::vector<hal::OutputShape> getInitialOutputShapes() const;
 
     int getOutputOperandDimensions(uint32_t index, uint32_t* dimensions);
     int getOutputOperandRank(uint32_t index, uint32_t* rank);
@@ -160,7 +160,7 @@ class StepExecutor {
     // is executing the entire model from the ExecutionBuilder).
     void mapInputsAndOutputsTrivially();
 
-    // Update output shapes returned from ExecutionCallback to ExecutionBuilder.
+    // Update output shapes with shapes returned from execution.
     bool updateOutputShapes(const std::vector<hal::OutputShape>& from,
                             std::vector<hal::OutputShape>* to);
 
@@ -189,12 +189,12 @@ class StepExecutor {
     }
 
     // Executes using the (driver, preparedModel) specified at construction time.
-    int startCompute(sp<ExecutionCallback>* synchronizationCallback,
-                     const std::shared_ptr<ExecutionBurstController>& burstController = nullptr);
+    std::tuple<int, std::vector<hal::OutputShape>, hal::Timing> compute(
+            const std::shared_ptr<ExecutionBurstController>& burstController = nullptr);
 
     // Re-compiles and executes using the CPU, regardless of the (driver,
     // preparedModel) specified at construction time.
-    int startComputeOnCpuFallback(sp<ExecutionCallback>* synchronizationCallback);
+    std::tuple<int, std::vector<hal::OutputShape>, hal::Timing> computeOnCpuFallback();
 
     bool isCpu() const;
 
