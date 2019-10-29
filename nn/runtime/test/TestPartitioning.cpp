@@ -1254,7 +1254,7 @@ TEST_F(PartitioningTest, SimpleModel) {
               ANEURALNETWORKS_NO_ERROR);
     ASSERT_EQ(planA.forTest_getKind(), ExecutionPlan::Kind::SIMPLE);
     ASSERT_NE(planA.forTest_simpleGetDevice().get(), nullptr);
-    ASSERT_STREQ(planA.forTest_simpleGetDevice()->getName(), "good");
+    ASSERT_EQ(planA.forTest_simpleGetDevice()->getName(), "good");
 
     // Simple partition (two devices are each capable of everything, none better than CPU).
     // No need to compare the original model to the model from the plan -- we
@@ -1342,7 +1342,7 @@ TEST_F(PartitioningTest, SliceModel) {
               ANEURALNETWORKS_NO_ERROR);
     ASSERT_EQ(planA.forTest_getKind(), ExecutionPlan::Kind::SIMPLE);
     ASSERT_NE(planA.forTest_simpleGetDevice().get(), nullptr);
-    ASSERT_STREQ(planA.forTest_simpleGetDevice()->getName(), "V1_2");
+    ASSERT_EQ(planA.forTest_simpleGetDevice()->getName(), "V1_2");
 
     // Compound partition (V1_0, V1_1, V1_2 devices are available, in decreasing
     // order of performance; model is distributed across all three devices).
@@ -1442,7 +1442,7 @@ TEST_F(PartitioningTest, SliceModelToEmpty) {
               ANEURALNETWORKS_NO_ERROR);
     ASSERT_EQ(plan.forTest_getKind(), ExecutionPlan::Kind::SIMPLE);
     ASSERT_NE(plan.forTest_simpleGetDevice().get(), nullptr);
-    ASSERT_STREQ(plan.forTest_simpleGetDevice()->getName(), "V1_2");
+    ASSERT_EQ(plan.forTest_simpleGetDevice()->getName(), "V1_2");
 }
 
 TEST_F(PartitioningTest, Cpu) {
@@ -1682,7 +1682,7 @@ TEST_F(PartitioningTest, OemOperations) {
     const auto& planBestOEM = compilationBestOEM.getExecutionPlan();
     ASSERT_EQ(planBestOEM.forTest_getKind(), ExecutionPlan::Kind::SIMPLE);
     ASSERT_NE(planBestOEM.forTest_simpleGetDevice().get(), nullptr);
-    ASSERT_STREQ(planBestOEM.forTest_simpleGetDevice()->getName(), "goodOEM");
+    ASSERT_EQ(planBestOEM.forTest_simpleGetDevice()->getName(), "goodOEM");
 
     // Verify that we get an error if no driver can run an OEM operation.
     const auto devicesNoOEM = makeDevices({{"noOEM", 0.5, ~0U, PartitioningDriver::OEMNo}});
@@ -1724,7 +1724,7 @@ TEST_F(PartitioningTest, RelaxedFP) {
         ASSERT_EQ(model.partitionTheWork(devices, ExecutePreference::PREFER_LOW_POWER, &plan),
                   ANEURALNETWORKS_NO_ERROR);
         ASSERT_EQ(plan.forTest_getKind(), ExecutionPlan::Kind::SIMPLE);
-        ASSERT_STREQ(plan.forTest_simpleGetDevice()->getName(), expectDevice);
+        ASSERT_EQ(plan.forTest_simpleGetDevice()->getName(), expectDevice);
     };
 
     ASSERT_NO_FATAL_FAILURE(TrivialTest(false, "f32"));
@@ -1772,7 +1772,7 @@ TEST_F(PartitioningTest, Perf) {
             ASSERT_EQ(model.partitionTheWork(devices, ExecutePreference::PREFER_LOW_POWER, &plan),
                       ANEURALNETWORKS_NO_ERROR);
             ASSERT_EQ(plan.forTest_getKind(), ExecutionPlan::Kind::SIMPLE);
-            ASSERT_STREQ(plan.forTest_simpleGetDevice()->getName(), "good");
+            ASSERT_EQ(plan.forTest_simpleGetDevice()->getName(), "good");
         }
 
         {
@@ -1790,7 +1790,7 @@ TEST_F(PartitioningTest, Perf) {
             ASSERT_EQ(model.partitionTheWork(devices, ExecutePreference::PREFER_LOW_POWER, &plan),
                       ANEURALNETWORKS_NO_ERROR);
             ASSERT_EQ(plan.forTest_getKind(), ExecutionPlan::Kind::SIMPLE);
-            ASSERT_STREQ(plan.forTest_simpleGetDevice()->getName(), "base");
+            ASSERT_EQ(plan.forTest_simpleGetDevice()->getName(), "base");
         }
     };
 
@@ -1853,7 +1853,7 @@ class CacheTest : public PartitioningTest {
         // Find the cache info for the device.
         const uint8_t* token = nullptr;
         if (plan.forTest_getKind() == ExecutionPlan::Kind::SIMPLE) {
-            ASSERT_STREQ(plan.forTest_simpleGetDevice()->getName(), deviceName);
+            ASSERT_EQ(plan.forTest_simpleGetDevice()->getName(), deviceName);
             token = plan.forTest_simpleGetCacheToken();
         } else if (plan.forTest_getKind() == ExecutionPlan::Kind::COMPOUND) {
             const auto& steps = plan.forTest_compoundGetSteps();
@@ -1861,7 +1861,7 @@ class CacheTest : public PartitioningTest {
             for (const auto& step : steps) {
                 // In general, two or more partitions can be on the same device. However, this will
                 // not happen on the test models with only 2 operations.
-                if (strcmp(step->getDevice()->getName(), deviceName) == 0) {
+                if (step->getDevice()->getName() == deviceName) {
                     ASSERT_FALSE(found);
                     token = step->forTest_getCacheToken();
                     found = true;
