@@ -65,7 +65,8 @@ cc_defaults {
         "TestOperandExtraParams.cpp",
         "TestTrivialModel.cpp",
         "TestUnknownDimensions.cpp",
-        "TestUnspecifiedDimensions.cpp",
+        // TODO(xusongw): Re-enable once b/141294076 is fixed.
+        // "TestUnspecifiedDimensions.cpp",
         "TestValidateModel.cpp",
         "TestValidateOperations.cpp",
         "TestValidation.cpp",
