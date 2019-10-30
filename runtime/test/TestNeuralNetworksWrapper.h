@@ -20,14 +20,16 @@
 #ifndef ANDROID_FRAMEWORKS_ML_NN_RUNTIME_TEST_TEST_NEURAL_NETWORKS_WRAPPER_H
 #define ANDROID_FRAMEWORKS_ML_NN_RUNTIME_TEST_TEST_NEURAL_NETWORKS_WRAPPER_H
 
+#include <math.h>
+
+#include <optional>
+#include <string>
+#include <utility>
+#include <vector>
+
 #include "NeuralNetworks.h"
 #include "NeuralNetworksWrapper.h"
 #include "NeuralNetworksWrapperExtensions.h"
-
-#include <math.h>
-#include <optional>
-#include <string>
-#include <vector>
 
 namespace android {
 namespace nn {
@@ -145,6 +147,18 @@ class Model {
             }
         }
         return mNextOperandId++;
+    }
+
+    template <typename T>
+    uint32_t addConstantOperand(const OperandType* type, const T& value) {
+        static_assert(!std::is_pointer_v<T>,
+                      "Pointer value type not supported because sizeof(T) is wrong");
+        static_assert(sizeof(T) <= ANEURALNETWORKS_MAX_SIZE_OF_IMMEDIATELY_COPIED_VALUES,
+                      "Values larger than ANEURALNETWORKS_MAX_SIZE_OF_IMMEDIATELY_COPIED_VALUES "
+                      "not supported");
+        uint32_t index = addOperand(type);
+        setOperandValue(index, &value, sizeof(T));
+        return index;
     }
 
     void setOperandValue(uint32_t index, const void* buffer, size_t length) {
