@@ -76,7 +76,6 @@ using V1_2::IBurstCallback;
 using V1_2::IBurstContext;
 using V1_2::IExecutionCallback;
 using V1_2::MeasureTiming;
-using V1_2::OperationType;
 using V1_2::OperationTypeRange;
 using V1_2::OutputShape;
 using V1_2::SymmPerChannelQuantParams;
@@ -90,6 +89,7 @@ using V1_3::Operand;
 using V1_3::OperandType;
 using V1_3::OperandTypeRange;
 using V1_3::Operation;
+using V1_3::OperationType;
 
 using CacheToken =
         hardware::hidl_array<uint8_t, static_cast<uint32_t>(Constant::BYTE_SIZE_OF_CACHE_TOKEN)>;

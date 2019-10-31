@@ -93,7 +93,7 @@ hal::V1_1::OperationType uncheckedConvertTo<hal::V1_1::OperationType>(OperationT
 }
 template <>
 hal::V1_2::OperationType uncheckedConvertTo<hal::V1_2::OperationType>(OperationType type) {
-    return type;
+    return uncheckedConvertToV1_2(type);
 }
 
 // Dispatcher mechanism for calling an appropriate convertToV1_* given the

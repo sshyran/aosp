@@ -2029,8 +2029,48 @@ static V1_0::OperationType uncheckedConvertToV1_0(V1_1::OperationType type) {
     return static_cast<V1_0::OperationType>(type);
 }
 
+static V1_0::OperationType uncheckedConvertToV1_0(V1_2::OperationType type) {
+    return static_cast<V1_0::OperationType>(type);
+}
+
+V1_0::OperationType uncheckedConvertToV1_0(V1_3::OperationType type) {
+    return static_cast<V1_0::OperationType>(type);
+}
+
 static V1_1::OperationType convertToV1_1(V1_0::OperationType type) {
     return static_cast<V1_1::OperationType>(type);
+}
+
+static V1_1::OperationType uncheckedConvertToV1_1(V1_2::OperationType type) {
+    return static_cast<V1_1::OperationType>(type);
+}
+
+V1_1::OperationType uncheckedConvertToV1_1(V1_3::OperationType type) {
+    return static_cast<V1_1::OperationType>(type);
+}
+
+static V1_2::OperationType convertToV1_2(V1_0::OperationType type) {
+    return static_cast<V1_2::OperationType>(type);
+}
+
+static V1_2::OperationType convertToV1_2(V1_1::OperationType type) {
+    return static_cast<V1_2::OperationType>(type);
+}
+
+V1_2::OperationType uncheckedConvertToV1_2(V1_3::OperationType type) {
+    return static_cast<V1_2::OperationType>(type);
+}
+
+static V1_3::OperationType convertToV1_3(V1_0::OperationType type) {
+    return static_cast<V1_3::OperationType>(type);
+}
+
+static V1_3::OperationType convertToV1_3(V1_1::OperationType type) {
+    return static_cast<V1_3::OperationType>(type);
+}
+
+static V1_3::OperationType convertToV1_3(V1_2::OperationType type) {
+    return static_cast<V1_3::OperationType>(type);
 }
 
 V1_0::Capabilities convertToV1_0(const V1_0::Capabilities& capabilities) {
@@ -2373,26 +2413,6 @@ bool compliantWithV1_2(const V1_3::Model& model, std::set<uint32_t>* noncomplian
     return compliantWith(HalVersion::V1_2, model, noncompliantOperations);
 }
 
-V1_0::OperationType uncheckedConvertToV1_0(V1_2::OperationType type) {
-    return static_cast<V1_0::OperationType>(type);
-}
-
-V1_1::OperationType uncheckedConvertToV1_1(V1_2::OperationType type) {
-    return static_cast<V1_1::OperationType>(type);
-}
-
-V1_2::OperationType convertToV1_2(V1_2::OperationType type) {
-    return type;
-}
-
-static V1_2::OperationType convertToV1_2(V1_0::OperationType type) {
-    return static_cast<V1_2::OperationType>(type);
-}
-
-static V1_2::OperationType convertToV1_2(V1_1::OperationType type) {
-    return static_cast<V1_2::OperationType>(type);
-}
-
 static V1_0::Operation uncheckedConvertToV1_0(const V1_2::Operation& operation) {
     return {.type = uncheckedConvertToV1_0(operation.type),
             .inputs = operation.inputs,
@@ -2430,23 +2450,27 @@ static V1_2::Operation convertToV1_2(const V1_1::Operation& operation) {
 }
 
 static V1_2::Operation uncheckedConvertToV1_2(const V1_3::Operation& operation) {
-    return {.type = operation.type, .inputs = operation.inputs, .outputs = operation.outputs};
+    return {.type = uncheckedConvertToV1_2(operation.type),
+            .inputs = operation.inputs,
+            .outputs = operation.outputs};
 }
 
 static V1_3::Operation convertToV1_3(const V1_0::Operation& operation) {
-    return {.type = convertToV1_2(operation.type),
+    return {.type = convertToV1_3(operation.type),
             .inputs = operation.inputs,
             .outputs = operation.outputs};
 }
 
 static V1_3::Operation convertToV1_3(const V1_1::Operation& operation) {
-    return {.type = convertToV1_2(operation.type),
+    return {.type = convertToV1_3(operation.type),
             .inputs = operation.inputs,
             .outputs = operation.outputs};
 }
 
 static V1_3::Operation convertToV1_3(const V1_2::Operation& operation) {
-    return {.type = operation.type, .inputs = operation.inputs, .outputs = operation.outputs};
+    return {.type = convertToV1_3(operation.type),
+            .inputs = operation.inputs,
+            .outputs = operation.outputs};
 }
 
 static hidl_vec<V1_0::Operation> uncheckedConvertToV1_0(
