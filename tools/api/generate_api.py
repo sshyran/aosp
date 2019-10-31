@@ -52,7 +52,7 @@ class Specification(Reader):
     self.deflines = dict() # key is definition name, value is array of strings (lines) in the definition
     self.deflines_key = None # name of current %define-lines
     self.kind = kind
-    self.kinds = None # remember %kind-validate, for the sake of issuing warnings
+    self.kinds = None # remember %define-kinds
     self.conditional = self.UNCONDITIONAL
 
   def finish(self):
@@ -101,21 +101,31 @@ class Specification(Reader):
     return out
 
   def match_kind(self, patterns_string):
-    """ Utility routine for %kind directive: Is self.kind found within patterns_string?
-    """
+    """ Utility routine for %kind directive: Is self.kind found within patterns_string?"""
     patterns = re.split("\s+", patterns_string.strip())
     for pattern in patterns:
-      match_pattern = re.search("^(.*)\*$", pattern)
-      if match_pattern:
+      wildcard_match = re.search("^(.*)\*$", pattern)
+      lowest_version_match = re.search("^(.*)\+$", pattern)
+      if wildcard_match:
         # A wildcard pattern: Ends in *, so see if it's a prefix of self.kind.
-        if re.search("^" + re.escape(match_pattern[1]), self.kind):
+        if re.search("^" + re.escape(wildcard_match[1]), self.kind):
           return True
+      elif lowest_version_match:
+        # A lowest version pattern: Ends in + and we check if self.kind is equal
+        # to the kind in the pattern or to any kind which is to the right of the
+        # kind in the pattern in self.kinds.
+        assert lowest_version_match[1] in self.kinds, (
+            "Kind \"" + pattern + "\" at " + self.context() +
+            " wasn't defined in %define-kinds"
+        )
+        lowest_pos = self.kinds.index(pattern[:-1])
+        return self.kind in self.kinds[lowest_pos:]
       else:
         # An ordinary pattern: See if it matches self.kind.
         if not self.kinds is None and not pattern in self.kinds:
           # TODO: Something similar for the wildcard case above
           print("WARNING: kind \"" + pattern + "\" at " + self.context() +
-                " would have been rejected by %kind-validate")
+                " would have been rejected by %define-kinds")
         if pattern == self.kind:
           return True
     return False
@@ -126,8 +136,9 @@ class Specification(Reader):
         definition, etc.
     """
 
-    DIRECTIVES = ["%define", "%define-lines", "%/define-lines", "%else", "%insert-lines",
-                  "%kind", "%/kind", "%kind-validate", "%section", "%/section"]
+    DIRECTIVES = ["%define", "%define-kinds", "%define-lines", "%/define-lines",
+                  "%else", "%insert-lines", "%kind", "%/kind", "%section",
+                  "%/section"]
 
     # Common typos: /%directive, \%directive
     matchbad = re.search("^[/\\\]%(\S*)", self.line)
@@ -247,17 +258,15 @@ class Specification(Reader):
         self.conditional = self.UNCONDITIONAL
         return
 
-      # Check for kind validation
-      match = re.search("^%kind-validate\s+(\S.*?)\s*$", self.line)
+      # Check for kinds definition
+      match = re.search("^%define-kinds\s+(\S.*?)\s*$", self.line)
       if match:
-        assert self.conditional is self.UNCONDITIONAL, "%kind-validate within %kind is forbidden at " + \
+        assert self.conditional is self.UNCONDITIONAL, "%define-kinds within %kind is forbidden at " + \
           self.context()
         kinds = re.split("\s+", match[1])
         assert self.kind in kinds, "kind \"" + self.kind + "\" is not listed on " + self.context()
-        if self.kinds is None:
-          self.kinds = kinds
-        else:
-          self.kinds = list(set(self.kinds) & set(kinds))
+        assert self.kinds is None, "Second %define-kinds directive at " + self.context()
+        self.kinds = kinds
         return
 
       # Check for define
