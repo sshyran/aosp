@@ -25,11 +25,22 @@ android_app_certificate {
     certificate: "com.android.neuralnetworks",
 }
 
-apex {
-    name: "com.android.neuralnetworks",
-    manifest: "manifest.json",
+filegroup {
+    name: "com.android.neuralnetworks-androidManifest",
+    srcs: ["AndroidManifest.xml"],
+}
+
+apex_defaults {
+    name: "com.android.neuralnetworks-defaults",
+    androidManifest: ":com.android.neuralnetworks-androidManifest",
     native_shared_libs: ["libneuralnetworks"],
     compile_multilib: "both",
     key: "com.android.neuralnetworks.key",
     certificate: ":com.android.neuralnetworks.certificate",
+}
+
+apex {
+    name: "com.android.neuralnetworks",
+    defaults: ["com.android.neuralnetworks-defaults"],
+    manifest: "manifest.json",
 }
