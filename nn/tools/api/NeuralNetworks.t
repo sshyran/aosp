@@ -1045,6 +1045,10 @@ int ANeuralNetworksModel_getSupportedOperationsForDevices(
  * ANeuralNetworksCompilation_create}, where the runtime will attempt to recover
  * from such failures.
  *
+ * The model passed to this function is termed the "main model" of the
+ * compilation, to distinguish it from other models referred to by an Operand
+ * of type {@link ANEURALNETWORKS_MODEL} within this compilation.
+ *
  * @param model The {@link ANeuralNetworksModel} to be compiled.
  * @param devices The set of devices. Must not contain duplicates.
  * @param numDevices The number of devices in the set.
@@ -1576,6 +1580,39 @@ int ANeuralNetworksModel_setOperandValueFromMemory(ANeuralNetworksModel* model, 
                                                    size_t offset, size_t length)
         __INTRODUCED_IN(27);
 
+#if __ANDROID_API__ >= __ANDROID_API_R__
+
+/**
+ * Sets an operand to a value that is a reference to another NNAPI model.
+ *
+ * The referenced model must already have been finished by a call to
+ * {@link ANeuralNetworksModel_finish}.
+ *
+ * The {@link ANeuralNetworksModel_relaxComputationFloat32toFloat16} setting of
+ * referenced models is overridden by that setting of the main model of a
+ * compilation.
+ *
+ * The referenced model must outlive the model referring to it.
+ *
+ * Attempting to modify a model once {@link ANeuralNetworksModel_finish} has
+ * been called will return an error.
+ *
+ * See {@link ANeuralNetworksModel} for information on multithreaded usage.
+ *
+ * Available since API level 30.
+ *
+ * @param model The model to be modified.
+ * @param index The index of the model operand we're setting.
+ * @param value The model to be referenced.
+ *
+ * @return ANEURALNETWORKS_NO_ERROR if successful.
+ */
+int ANeuralNetworksModel_setOperandValueFromModel(ANeuralNetworksModel* model, int32_t index,
+                                                  const ANeuralNetworksModel* value)
+        __INTRODUCED_IN(30);
+
+#endif  // __ANDROID_API__ >= __ANDROID_API_R__
+
 /**
  * Add an operation to a model.
  *
@@ -1640,6 +1677,9 @@ int ANeuralNetworksModel_identifyInputsAndOutputs(ANeuralNetworksModel* model, u
  * must be calculated using at least the range and precision of the IEEE 754
  * 32-bit floating-point format.
  *
+ * The relaxComputationFloat32toFloat16 setting of the main model of
+ * a compilation overrides the values of the referenced models.
+ *
  * @param model The model to be modified.
  * @param allow 'true' indicates {@link ANEURALNETWORKS_TENSOR_FLOAT32} may be
  *              calculated with range and/or precision as low as that of the
@@ -1663,7 +1703,11 @@ int ANeuralNetworksModel_relaxComputationFloat32toFloat16(ANeuralNetworksModel* 
 /**
  * Create a {@link ANeuralNetworksCompilation} to compile the given model.
  *
- * <p>This only creates the object. Compilation is only performed once
+ * The model passed to this function is termed the "main model" of the
+ * compilation, to distinguish it from other models referred to by an Operand
+ * of type {@link ANEURALNETWORKS_MODEL} within this compilation.
+ *
+ * <p>This function only creates the object. Compilation is only performed once
  * {@link ANeuralNetworksCompilation_finish} is invoked.</p>
  *
  * <p>{@link ANeuralNetworksCompilation_finish} should be called once
