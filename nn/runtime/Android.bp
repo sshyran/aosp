@@ -54,21 +54,9 @@ cc_library {
         android: {
             version_script: "libneuralnetworks.map.txt",
             shared_libs: [
-                "android.hardware.neuralnetworks@1.0",
-                "android.hardware.neuralnetworks@1.1",
-                "android.hardware.neuralnetworks@1.2",
-                "android.hardware.neuralnetworks@1.3",
-                "android.hidl.allocator@1.0",
-                "android.hidl.memory@1.0",
-                "libbase",
-                "libcutils",
-                "libhidlbase",
-                "libhidlmemory",
                 "liblog",
                 "libnativewindow",
-                "libnativewindow",
                 "libneuralnetworks_packageinfo",
-                "libutils",
             ],
         },
         host: {
@@ -80,17 +68,36 @@ cc_library {
     // TODO(pszczepaniak, b/144488395): Use system libnativewindow,
     // this would remove half of dependencies here.
     static_libs: [
+        "android.hardware.neuralnetworks@1.0",
+        "android.hardware.neuralnetworks@1.1",
+        "android.hardware.neuralnetworks@1.2",
+        "android.hardware.neuralnetworks@1.3",
+        "android.hidl.allocator@1.0",
+        "android.hidl.memory@1.0",
+        "libbase",
+        "libbinderthreadstate",
         "libcrypto_static",
+        "libcutils",
+        "libfmq",
+        "libhidlbase",
+        "libhidlmemory",
+        "libjsoncpp",
+        "libmath",
         "libneuralnetworks_common",
+        "libprocessgroup",
+        "libtextclassifier_hash_static",
+        "libutils",
     ],
+
+    stl: "libc++_static",
 
     whole_static_libs: [
         "libprocpartition",
     ],
 
     shared_libs: [
-        "libfmq",
-        "libtextclassifier_hash",
+        "libcgrouprc",
+        "libvndksupport",
     ],
 
     header_libs: [
