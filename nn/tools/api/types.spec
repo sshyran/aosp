@@ -12,6 +12,9 @@
 %define OperandType OperandCode
 %define OperandTypeLinkPfx ANEURALNETWORKS_
 %define OperationTypeLinkPfx ANEURALNETWORKS_
+%define runtime_or_driver runtime
+%define model_or_subgraph model
+%define MODEL_or_SUBGRAPH MODEL
 %define APILevel29 API level 29
 %define APILevel30 API level 30
 %define BeforeAPILevel29For Before API level 29, for
@@ -54,6 +57,9 @@
 %define OperandType OperandType
 %define OperandTypeLinkPfx OperandType::
 %define OperationTypeLinkPfx OperationType::
+%define runtime_or_driver driver
+%define model_or_subgraph subgraph
+%define MODEL_or_SUBGRAPH SUBGRAPH
 %define APILevel29 HAL version 1.2
 %define APILevel30 HAL version 1.3
 %define-lines AVAIL27
@@ -5759,10 +5765,25 @@
 %insert-lines AVAIL30
      */
     %{ANN}TENSOR_QUANT8_ASYMM_SIGNED = 14,
+
+    /**
+     * A reference to a %{model_or_subgraph}.
+%kind ndk
+     *
+     * {@link ANeuralNetworksModel_setOperandValueFromModel} must be used to set
+     * the value for an Operand of this type.
+%/kind
+%kind hal*
+     *
+     * Must have the lifetime {@link OperandLifeTime::SUBGRAPH}.
+%/kind
+%insert-lines AVAIL30
+     */
+    %{ANN}%{MODEL_or_SUBGRAPH} = 15,
 %/section
 
 %section Operand_1.3_MAX
-    FUNDAMENTAL_MAX = 14,
+    FUNDAMENTAL_MAX = 15,
 %/section
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -5900,8 +5921,98 @@
 %insert-lines AVAIL30
      */
     %{DeclareOperation_1.3 QUANTIZED_LSTM 95},
+
+    /**
+     * Executes one of the two referenced %{model_or_subgraph}s as determined by a boolean
+     * value.
+     *
+     * The inputs and outputs of the two referenced %{model_or_subgraph}s must agree with the
+     * signature of this operation. That is, if the operation has (3 + n) inputs
+     * and m outputs, both %{model_or_subgraph}s must have n inputs and m outputs with the same
+     * types as the corresponding operation inputs and outputs.
+     *
+     * Inputs:
+     * * 0: A value of type {@link %{OperandTypeLinkPfx}TENSOR_BOOL8} and shape [1]
+     *      that determines which of the two referenced %{model_or_subgraph}s to execute.
+     * * 1: A {@link %{OperandTypeLinkPfx}%{MODEL_or_SUBGRAPH}} reference to the %{model_or_subgraph} to be
+     *      executed if the condition is true.
+     * * 2: A {@link %{OperandTypeLinkPfx}%{MODEL_or_SUBGRAPH}} reference to the %{model_or_subgraph} to be
+     *      executed if the condition is false.
+     * * 3 ~ (n + 2): Inputs to be passed to the %{model_or_subgraph} selected for execution.
+     *
+     * Outputs:
+     * * 0 ~ (m - 1): Outputs produced by the selected %{model_or_subgraph}.
+%insert-lines AVAIL30
+     */
+    %{DeclareOperation_1.3 IF 96},
+
+    /**
+     * Executes the body %{model_or_subgraph} until the condition %{model_or_subgraph} outputs false.
+     *
+     * The inputs to this operation are the condition %{model_or_subgraph}, the body %{model_or_subgraph},
+     * and operand values for the first iteration of the loop. The values are
+     * implicitly split into three groups of input-output, state-only, and
+     * input-only values, as described below.
+     *
+     * The outputs of this operation are the final values of input-output
+     * operands.
+     *
+     * Both the condition and body %{model_or_subgraph} receive (m + k + n) inputs.
+     * * The first m (m >= 1) inputs are input-output operands. For the first
+     *   iteration, these are initialized from the corresponding inputs of the
+     *   WHILE operation. In subsequent iterations, their values come from the
+     *   corresponding outputs of the body %{model_or_subgraph} produced during the previous
+     *   iteration.
+     * * The next k (k >= 0) inputs are state-only operands. They are similar to
+     *   the input-output operands, except that their values are no longer
+     *   available after the loop terminates.
+     * * The last n (n >= 0) inputs are input-only operands. Their values come
+     *   from the corresponding inputs of the WHILE operation.
+     *
+     * The body %{model_or_subgraph} produces (m + k) outputs.
+     * * The first m outputs are input-output operands. They become the outputs
+     *   of the WHILE operation when a termination condition is reached.
+     * * The last k outputs are state-only operands. Their values are no longer
+     *   available after the loop terminates.
+     *
+     * The numbers m, k, and n are inferred by the %{runtime_or_driver} as follows:
+     *     m = (WHILE operation output count)
+     *     k = (body %{model_or_subgraph} output count) - m
+     *     n = (body %{model_or_subgraph} input count) - m - k
+     *
+     * The pseudo-code below illustrates the flow of a WHILE operation with
+     * inputs condition, body, initial_input_output, initial_state, input_only
+     * (m = 1, k = 1, n = 1):
+     *
+     *     input_output = initial_input_output
+     *     state = initial_state
+     *     while condition(input_output, state, input_only):
+     *         input_output, state = body(input_output, state, input_only)
+     *     return input_output
+     *
+     * Inputs:
+     * * 0: A {@link %{OperandTypeLinkPfx}%{MODEL_or_SUBGRAPH}} reference to the condition
+     *      %{model_or_subgraph}. The %{model_or_subgraph} must have (m + k + n) inputs with
+     *      the same types as the corresponding inputs of the WHILE operation
+     *      and exactly one output of {@link %{OperandTypeLinkPfx}TENSOR_BOOL8}
+     *      and shape [1].
+     * * 1: A {@link %{OperandTypeLinkPfx}%{MODEL_or_SUBGRAPH}} reference to the body %{model_or_subgraph}.
+     *      The %{model_or_subgraph} must have (m + k + n) inputs and (m + k) outputs with
+     *      the same types as the corresponding inputs and outputs of the WHILE
+     *      operation.
+     * * (m inputs): Initial values for input-output operands.
+     * * (k inputs): Initial values for state-only operands.
+     * * (n inputs): Values for input-only operands.
+     *
+     * Outputs:
+     * * 0 ~ (m - 1): Outputs produced by the loop.
+%insert-lines AVAIL30
+     */
+    %{DeclareOperation_1.3 WHILE 97},
 %/section
 
 %section Operation_1.3_MAX
-    FUNDAMENTAL_MAX = 95,
+    FUNDAMENTAL_MAX = 97,
 %/section
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
