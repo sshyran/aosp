@@ -92,12 +92,6 @@ class DriverDevice : public Device {
             const std::optional<CacheToken>& maybeToken) const override;
 
    private:
-    std::pair<int, std::shared_ptr<PreparedModel>> prepareModelInternal(
-            const Model& model, ExecutionPreference preference, const std::string& cacheDir,
-            const std::optional<CacheToken>& maybeToken) const;
-    std::pair<int, std::shared_ptr<PreparedModel>> prepareModelFromCacheInternal(
-            const std::string& cacheDir, const CacheToken& token) const;
-
     const std::shared_ptr<VersionedIDevice> kInterface;
 
 #ifdef NN_DEBUGGABLE
@@ -112,7 +106,9 @@ class DriverDevice : public Device {
 class DriverPreparedModel : public PreparedModel {
    public:
     DriverPreparedModel(const std::shared_ptr<VersionedIPreparedModel>& preparedModel)
-        : mPreparedModel(preparedModel) {}
+        : mPreparedModel(preparedModel) {
+        CHECK(mPreparedModel != nullptr);
+    }
 
     std::tuple<int, std::vector<OutputShape>, Timing> execute(
             const std::vector<ModelArgumentInfo>& inputs,
@@ -211,142 +207,28 @@ std::vector<bool> DriverDevice::getSupportedOperations(const MetaModel& metaMode
     return supportedOperations;
 }
 
-// Opens cache file by filename and sets the handle to the opened fd. Returns false on fail. The
-// handle is expected to come in as empty, and is only set to a fd when the function returns true.
-// The file descriptor is always opened with both read and write permission.
-static bool createCacheHandle(const std::string& cache, bool createIfNotExist,
-                              hidl_handle* handle) {
-    CHECK(handle->getNativeHandle() == nullptr);
-    int fd = open(cache.c_str(), createIfNotExist ? (O_RDWR | O_CREAT) : O_RDWR, S_IRUSR | S_IWUSR);
-    NN_RET_CHECK_GE(fd, 0);
-    native_handle_t* cacheNativeHandle = native_handle_create(1, 0);
-    if (cacheNativeHandle == nullptr) {
-        close(fd);
-        return false;
-    }
-    cacheNativeHandle->data[0] = fd;
-    handle->setTo(cacheNativeHandle, /*shouldOwn=*/true);
-    return true;
-}
-
-// Opens a list of cache files and returns the handle vector. Returns empty vector on fail.
-// The file descriptors are always opened with both read and write permission.
-static hidl_vec<hidl_handle> createCacheHandleVec(uint32_t numCacheFiles,
-                                                  const std::string& baseFileName,
-                                                  bool createIfNotExist) {
-    CHECK(numCacheFiles <= static_cast<uint32_t>(Constant::MAX_NUMBER_OF_CACHE_FILES));
-    hidl_vec<hidl_handle> handles(numCacheFiles);
-    for (uint32_t i = 0; i < numCacheFiles; i++) {
-        std::string filename = baseFileName + std::to_string(i);
-        VLOG(COMPILATION) << "Cache " << i << ": " << filename;
-        if (!createCacheHandle(filename, createIfNotExist, &handles[i])) {
-            return hidl_vec<hidl_handle>();
-        }
-    }
-    return handles;
-}
-
-// Maps token to cache file names and sets the handle vectors to the opened fds. Returns false on
-// fail and leaves the vectors empty. Each vector is expected to come in as empty.
-static bool getCacheHandles(const std::string& cacheDir, const CacheToken& token,
-                            const std::pair<uint32_t, uint32_t>& numCacheFiles,
-                            bool createIfNotExist, hidl_vec<hidl_handle>* modelCache,
-                            hidl_vec<hidl_handle>* dataCache) {
-    // The filename includes ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN * 2 characters for token,
-    // and 1 character for model/data cache identifier.
-    std::string filename(ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN * 2 + 1, '0');
-    for (uint32_t i = 0; i < ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN; i++) {
-        filename[i * 2] = 'A' + (token[i] & 0x0F);
-        filename[i * 2 + 1] = 'A' + (token[i] >> 4);
-    }
-    CHECK(cacheDir.empty() || cacheDir.back() == '/');
-    std::string cacheFileName = cacheDir + filename;
-
-    cacheFileName[ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN * 2] = '1';
-    *modelCache = createCacheHandleVec(numCacheFiles.first, cacheFileName, createIfNotExist);
-    if (modelCache->size() != numCacheFiles.first) {
-        return false;
-    }
-    cacheFileName[ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN * 2] = '2';
-    *dataCache = createCacheHandleVec(numCacheFiles.second, cacheFileName, createIfNotExist);
-    if (dataCache->size() != numCacheFiles.second) {
-        modelCache->resize(0);
-        return false;
-    }
-    return true;
-}
-
-static std::pair<int, std::shared_ptr<PreparedModel>> prepareModelCheck(
-        ErrorStatus status, const std::shared_ptr<VersionedIPreparedModel>& preparedModel,
-        const char* prepareName, const std::string& serviceName) {
-    if (status != ErrorStatus::NONE) {
-        LOG(ERROR) << prepareName << " on " << serviceName << " failed: "
-                   << "prepareReturnStatus=" << toString(status);
-        return {ANEURALNETWORKS_OP_FAILED, nullptr};
-    }
-    if (preparedModel == nullptr) {
-        LOG(ERROR) << prepareName << " on " << serviceName << " failed: preparedModel is nullptr";
-        return {ANEURALNETWORKS_OP_FAILED, nullptr};
-    }
-
-    return {ANEURALNETWORKS_NO_ERROR, std::make_shared<DriverPreparedModel>(preparedModel)};
-}
-
-std::pair<int, std::shared_ptr<PreparedModel>> DriverDevice::prepareModelInternal(
-        const Model& model, ExecutionPreference preference, const std::string& cacheDir,
-        const std::optional<CacheToken>& maybeToken) const {
-    // Note that some work within VersionedIDevice will be subtracted from the IPC layer
-    NNTRACE_FULL(NNTRACE_LAYER_IPC, NNTRACE_PHASE_COMPILATION, "prepareModel");
-
-    hidl_vec<hidl_handle> modelCache, dataCache;
-    if (!maybeToken.has_value() ||
-        !getCacheHandles(cacheDir, *maybeToken, kInterface->getNumberOfCacheFilesNeeded(),
-                         /*createIfNotExist=*/true, &modelCache, &dataCache)) {
-        modelCache.resize(0);
-        dataCache.resize(0);
-    }
-
-    static const CacheToken kNullToken{};
-    const CacheToken token = maybeToken.value_or(kNullToken);
-    const auto [status, preparedModel] =
-            kInterface->prepareModel(model, preference, modelCache, dataCache, token);
-
-    return prepareModelCheck(status, preparedModel, "prepareModel", getName());
-}
-
-std::pair<int, std::shared_ptr<PreparedModel>> DriverDevice::prepareModelFromCacheInternal(
-        const std::string& cacheDir, const CacheToken& token) const {
-    // Note that some work within VersionedIDevice will be subtracted from the IPC layer
-    NNTRACE_FULL(NNTRACE_LAYER_IPC, NNTRACE_PHASE_COMPILATION, "prepareModelFromCache");
-    VLOG(COMPILATION) << "prepareModelFromCache";
-
-    hidl_vec<hidl_handle> modelCache, dataCache;
-    if (!getCacheHandles(cacheDir, token, kInterface->getNumberOfCacheFilesNeeded(),
-                         /*createIfNotExist=*/false, &modelCache, &dataCache)) {
-        return {ANEURALNETWORKS_OP_FAILED, nullptr};
-    }
-
-    const auto [status, preparedModel] =
-            kInterface->prepareModelFromCache(modelCache, dataCache, token);
-
-    return prepareModelCheck(status, preparedModel, "prepareModelFromCache", getName());
-}
-
 std::pair<int, std::shared_ptr<PreparedModel>> DriverDevice::prepareModel(
         const ModelFactory& makeModel, ExecutionPreference preference, const std::string& cacheDir,
         const std::optional<CacheToken>& maybeToken) const {
     // Attempt to compile from cache if token is present.
     if (maybeToken.has_value()) {
-        const auto [n, preparedModel] = prepareModelFromCacheInternal(cacheDir, *maybeToken);
+        const auto [n, preparedModel] = kInterface->prepareModelFromCache(cacheDir, *maybeToken);
         if (n == ANEURALNETWORKS_NO_ERROR) {
-            return {n, preparedModel};
+            return {n, std::make_shared<DriverPreparedModel>(preparedModel)};
         }
     }
 
     // Fallback to full compilation (possibly with token) if
     // prepareModelFromCache could not be used or failed.
     const Model model = makeModel();
-    return prepareModelInternal(model, preference, cacheDir, maybeToken);
+    const auto [n, preparedModel] =
+            kInterface->prepareModel(model, preference, cacheDir, maybeToken);
+    if (n == ANEURALNETWORKS_NO_ERROR) {
+        return {n, std::make_shared<DriverPreparedModel>(preparedModel)};
+    }
+
+    // No further fallbacks, so return error.
+    return {ANEURALNETWORKS_OP_FAILED, nullptr};
 }
 
 // Convert ModelArgumentInfo to HIDL RequestArgument. For pointer arguments, use the location
