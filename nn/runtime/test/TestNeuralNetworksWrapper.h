@@ -151,13 +151,11 @@ class Model {
 
     template <typename T>
     uint32_t addConstantOperand(const OperandType* type, const T& value) {
-        static_assert(!std::is_pointer_v<T>,
-                      "Pointer value type not supported because sizeof(T) is wrong");
         static_assert(sizeof(T) <= ANEURALNETWORKS_MAX_SIZE_OF_IMMEDIATELY_COPIED_VALUES,
                       "Values larger than ANEURALNETWORKS_MAX_SIZE_OF_IMMEDIATELY_COPIED_VALUES "
                       "not supported");
         uint32_t index = addOperand(type);
-        setOperandValue(index, &value, sizeof(T));
+        setOperandValue(index, &value);
         return index;
     }
 
@@ -166,6 +164,12 @@ class Model {
             ANEURALNETWORKS_NO_ERROR) {
             mValid = false;
         }
+    }
+
+    template <typename T>
+    void setOperandValue(uint32_t index, const T* value) {
+        static_assert(!std::is_pointer<T>(), "No operand may have a pointer as its value");
+        return setOperandValue(index, value, sizeof(T));
     }
 
     void setOperandValueFromMemory(uint32_t index, const Memory* memory, uint32_t offset,
@@ -304,6 +308,13 @@ class Execution {
                 ANeuralNetworksExecution_setInput(mExecution, index, type, buffer, length));
     }
 
+    template <typename T>
+    Result setInput(uint32_t index, const T* value,
+                    const ANeuralNetworksOperandType* type = nullptr) {
+        static_assert(!std::is_pointer<T>(), "No operand may have a pointer as its value");
+        return setInput(index, value, sizeof(T), type);
+    }
+
     Result setInputFromMemory(uint32_t index, const Memory* memory, uint32_t offset,
                               uint32_t length, const ANeuralNetworksOperandType* type = nullptr) {
         return static_cast<Result>(ANeuralNetworksExecution_setInputFromMemory(
@@ -314,6 +325,12 @@ class Execution {
                      const ANeuralNetworksOperandType* type = nullptr) {
         return static_cast<Result>(
                 ANeuralNetworksExecution_setOutput(mExecution, index, type, buffer, length));
+    }
+
+    template <typename T>
+    Result setOutput(uint32_t index, T* value, const ANeuralNetworksOperandType* type = nullptr) {
+        static_assert(!std::is_pointer<T>(), "No operand may have a pointer as its value");
+        return setOutput(index, value, sizeof(T), type);
     }
 
     Result setOutputFromMemory(uint32_t index, const Memory* memory, uint32_t offset,
