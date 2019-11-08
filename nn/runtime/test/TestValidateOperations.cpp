@@ -2861,32 +2861,12 @@ TEST(OperationValidationTest, GREATER_EQUAL) {
 }
 
 void reduceOpTest(ANeuralNetworksOperationType operationCode, int32_t inputOperandType) {
-    bool isQuant = inputOperandType == ANEURALNETWORKS_TENSOR_QUANT8_ASYMM;
-    float scale = isQuant ? 1.f / 256 : 0.0f;
     uint32_t inputDimensions[4] = {2, 2, 2, 2};
-    ANeuralNetworksOperandType input1 = {
-            .type = inputOperandType,
-            .dimensionCount = 4,
-            .dimensions = inputDimensions,
-            .scale = scale,
-            .zeroPoint = 0,
-    };
+    ANeuralNetworksOperandType input1 = getOpType(inputOperandType, 4, inputDimensions);
     uint32_t axesDimensions[1] = {2};
-    ANeuralNetworksOperandType input2 = {
-            .type = ANEURALNETWORKS_TENSOR_INT32,
-            .dimensionCount = 1,
-            .dimensions = axesDimensions,
-    };
-    ANeuralNetworksOperandType input3 = {
-            .type = ANEURALNETWORKS_BOOL,
-            .dimensions = {},
-    };
-    ANeuralNetworksOperandType output = {
-            .type = inputOperandType,
-            .dimensionCount = 4,
-            .dimensions = inputDimensions,
-            .scale = scale,
-    };
+    ANeuralNetworksOperandType input2 = getOpType(ANEURALNETWORKS_TENSOR_INT32, 1, axesDimensions);
+    ANeuralNetworksOperandType input3 = getOpType(ANEURALNETWORKS_BOOL, 0);
+    ANeuralNetworksOperandType output = getOpType(inputOperandType, 4, inputDimensions);
     OperationTestBase test(operationCode, {input1, input2, input3}, {output});
     test.testOpsValidations();
 }
@@ -2905,12 +2885,14 @@ TEST(OperationValidationTest, REDUCE_MAX) {
     reduceOpTest(ANEURALNETWORKS_REDUCE_MAX, ANEURALNETWORKS_TENSOR_FLOAT16);
     reduceOpTest(ANEURALNETWORKS_REDUCE_MAX, ANEURALNETWORKS_TENSOR_FLOAT32);
     reduceOpTest(ANEURALNETWORKS_REDUCE_MAX, ANEURALNETWORKS_TENSOR_QUANT8_ASYMM);
+    reduceOpTest(ANEURALNETWORKS_REDUCE_MAX, ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED);
 }
 
 TEST(OperationValidationTest, REDUCE_MIN) {
     reduceOpTest(ANEURALNETWORKS_REDUCE_MIN, ANEURALNETWORKS_TENSOR_FLOAT16);
     reduceOpTest(ANEURALNETWORKS_REDUCE_MIN, ANEURALNETWORKS_TENSOR_FLOAT32);
     reduceOpTest(ANEURALNETWORKS_REDUCE_MIN, ANEURALNETWORKS_TENSOR_QUANT8_ASYMM);
+    reduceOpTest(ANEURALNETWORKS_REDUCE_MIN, ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED);
 }
 
 TEST(OperationValidationTest, REDUCE_ANY) {
