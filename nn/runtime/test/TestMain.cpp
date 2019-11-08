@@ -25,6 +25,7 @@
 #include <gtest/gtest.h>
 #include <cctype>
 #include <iostream>
+#include <sstream>
 #include <string>
 
 using namespace android::nn::test_wrapper;
@@ -75,12 +76,13 @@ static int test(bool useCpuOnly, Execution::ComputeMode computeMode, bool allowS
         return "<unknown ComputeMode>";
     };
 
-    LOG(INFO) << "test(useCpuOnly = " << useCpuOnly << ", computeMode = " << computeModeText()
-              << ", allowSyncExecHal = " << allowSyncExecHal << ")  // pass " << passIndex;
-    std::cout << "[**********] useCpuOnly = " << useCpuOnly
-              << ", computeMode = " << computeModeText()
-              << ", allowSyncExecHal = " << allowSyncExecHal << "  // pass " << passIndex
-              << std::endl;
+    std::stringstream stream;
+    stream << "useCpuOnly = " << useCpuOnly << ", computeMode = " << computeModeText()
+           << ", allowSyncExecHal = " << allowSyncExecHal << "  // pass " << passIndex;
+    const std::string message = stream.str();
+    LOG(INFO) << "NeuralNetworksTest: " << message;
+    std::cout << "[**********] " << message << std::endl;
+    SCOPED_TRACE(message);
 
     if (!((uint64_t(1) << passIndex) & allowedPasses)) {
         LOG(INFO) << "SKIPPED PASS";
