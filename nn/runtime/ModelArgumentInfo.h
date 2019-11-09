@@ -49,6 +49,12 @@ struct ModelArgumentInfo {
     int updateDimensionInfo(const hal::Operand& operand, const ANeuralNetworksOperandType* newType);
 };
 
+// Convert ModelArgumentInfo to HIDL RequestArgument. For pointer arguments, use the location
+// information in ptrArgsLocations.
+hal::hidl_vec<hal::RequestArgument> createRequestArguments(
+        const std::vector<ModelArgumentInfo>& argumentInfos,
+        const std::vector<hal::DataLocation>& ptrArgsLocations);
+
 }  // namespace nn
 }  // namespace android
 
