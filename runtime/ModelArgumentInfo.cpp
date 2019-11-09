@@ -89,5 +89,24 @@ int ModelArgumentInfo::updateDimensionInfo(const Operand& operand,
     return ANEURALNETWORKS_NO_ERROR;
 }
 
+hidl_vec<RequestArgument> createRequestArguments(
+        const std::vector<ModelArgumentInfo>& argumentInfos,
+        const std::vector<DataLocation>& ptrArgsLocations) {
+    const size_t count = argumentInfos.size();
+    hidl_vec<RequestArgument> ioInfos(count);
+    uint32_t ptrArgsIndex = 0;
+    for (size_t i = 0; i < count; i++) {
+        const auto& info = argumentInfos[i];
+        ioInfos[i] = {
+                .hasNoValue = info.state == ModelArgumentInfo::HAS_NO_VALUE,
+                .location = info.state == ModelArgumentInfo::POINTER
+                                    ? ptrArgsLocations[ptrArgsIndex++]
+                                    : info.locationAndLength,
+                .dimensions = info.dimensions,
+        };
+    }
+    return ioInfos;
+}
+
 }  // namespace nn
 }  // namespace android
