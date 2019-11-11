@@ -65,22 +65,23 @@ std::optional<Model> CreateModel(const TestModel& testModel) {
                 // Nothing to do here.
                 break;
         }
+        if (!model.isValid()) return std::nullopt;
     }
 
     // Operations.
     for (const auto& operation : testModel.operations) {
         model.addOperation(static_cast<int>(operation.type), operation.inputs, operation.outputs);
+        if (!model.isValid()) return std::nullopt;
     }
 
     // Inputs and outputs.
     model.identifyInputsAndOutputs(testModel.inputIndexes, testModel.outputIndexes);
+    if (!model.isValid()) return std::nullopt;
 
     // Relaxed computation.
     model.relaxComputationFloat32toFloat16(testModel.isRelaxed);
+    if (!model.isValid()) return std::nullopt;
 
-    if (!model.isValid()) {
-        return std::nullopt;
-    }
     if (model.finish() != Result::NO_ERROR) {
         return std::nullopt;
     }
