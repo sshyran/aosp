@@ -16,6 +16,11 @@
 
 #define LOG_TAG "Operations"
 
+#include <tensorflow/lite/kernels/internal/optimized/legacy_optimized_ops.h>
+
+#include <algorithm>
+#include <iterator>
+
 #include "CpuOperationUtils.h"
 #include "HalInterfaces.h"
 #include "OperationResolver.h"
@@ -23,14 +28,13 @@
 #include "Tracing.h"
 #include "Utils.h"
 
-#include <tensorflow/lite/kernels/internal/optimized/legacy_optimized_ops.h>
-
 namespace android {
 namespace nn {
 namespace conv_2d {
 
 constexpr char kOperationName[] = "CONV_2D";
 
+constexpr uint32_t kNumInputsArray[] = {7, 8, 10, 11, 13};
 constexpr uint32_t kInputTensor = 0;
 constexpr uint32_t kFilterTensor = 1;
 constexpr uint32_t kBiasTensor = 2;
@@ -402,6 +406,9 @@ bool convQuant8PerChannel(const uint8_t* inputData, const Shape& inputShape,
 }  // namespace
 
 bool validate(const IOperationValidationContext* context) {
+    const uint32_t numInputs = context->getNumInputs();
+    NN_RET_CHECK(
+            std::binary_search(std::begin(kNumInputsArray), std::end(kNumInputsArray), numInputs));
     NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
     auto inputCount = context->getNumInputs();
     auto inputType = context->getInputType(kInputTensor);
