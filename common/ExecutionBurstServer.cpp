@@ -48,7 +48,8 @@ constexpr Timing kNoTiming = {std::numeric_limits<uint64_t>::max(),
 // must be mapped and unmapped for each execution.
 class DefaultBurstExecutorWithCache : public ExecutionBurstServer::IBurstExecutorWithCache {
    public:
-    DefaultBurstExecutorWithCache(IPreparedModel* preparedModel) : mpPreparedModel(preparedModel) {}
+    DefaultBurstExecutorWithCache(V1_2::IPreparedModel* preparedModel)
+        : mpPreparedModel(preparedModel) {}
 
     bool isCacheEntryPresent(int32_t slot) const override {
         const auto it = mMemoryCache.find(slot);
@@ -96,7 +97,7 @@ class DefaultBurstExecutorWithCache : public ExecutionBurstServer::IBurstExecuto
     }
 
    private:
-    IPreparedModel* const mpPreparedModel;
+    V1_2::IPreparedModel* const mpPreparedModel;
     std::map<int32_t, hidl_memory> mMemoryCache;
 };
 
@@ -512,7 +513,7 @@ sp<ExecutionBurstServer> ExecutionBurstServer::create(
 
 sp<ExecutionBurstServer> ExecutionBurstServer::create(
         const sp<IBurstCallback>& callback, const MQDescriptorSync<FmqRequestDatum>& requestChannel,
-        const MQDescriptorSync<FmqResultDatum>& resultChannel, IPreparedModel* preparedModel,
+        const MQDescriptorSync<FmqResultDatum>& resultChannel, V1_2::IPreparedModel* preparedModel,
         std::chrono::microseconds pollingTimeWindow) {
     // check relevant input
     if (preparedModel == nullptr) {

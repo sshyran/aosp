@@ -708,21 +708,25 @@ class VersionedIPreparedModel {
      *
      * The general strategy is: HIDL returns a V1_0 prepared model object, which
      * (if not nullptr) could be v1.0, v1.2, or a greater version. The V1_0
-     * object is then "dynamically cast" to a V1_2 object. If successful,
-     * mPreparedModelV1_2 will point to the same object as mPreparedModelV1_0; otherwise,
-     * mPreparedModelV1_2 will be nullptr.
+     * object is then "dynamically cast" to objects of later versions. If successful,
+     * mPreparedModel* will point to the same object as mPreparedModelV1_0; otherwise,
+     * mPreparedModel* will be nullptr.
      *
      * In general:
-     * * If the prepared model is truly v1.0, mPreparedModelV1_0 will point to a valid object
-     *   and mPreparedModelV1_2 will be nullptr.
-     * * If the prepared model is truly v1.2 or later, both mPreparedModelV1_0 and
-     *   mPreparedModelV1_2 will point to the same valid object.
+     * * If the prepared model is truly v1.0, mPreparedModelV1_0 will point to a valid object,
+     *   both mPreparedModelV1_2 and mPreparedModelV1_3 will be nullptr.
+     * * If the prepared model is truly v1.2, both mPreparedModelV1_0 and mPreparedModelV1_2
+     *   will point to the same valid object, but mPreparedModelV1_3 will be nullptr.
+     * * If the prepared model is truly v1.3 or later, all of mPreparedModelV1_0,
+     *   mPreparedModelV1_2, and mPreparedModelV1_3 will point to the same valid object.
      *
-     * Idiomatic usage: if mPreparedModelV1_2 is non-null, do V1_2 dispatch; otherwise,
-     * do V1_0 dispatch.
+     * Idiomatic usage: if mPreparedModelV1_3 is non-null, do V1_3 dispatch;
+     *       otherwise, if mPreparedModelV1_2 is non-null, do V1_2 dispatch;
+     *       otherwise, do V1_0 dispatch.
      */
     sp<hal::V1_0::IPreparedModel> mPreparedModelV1_0;
     sp<hal::V1_2::IPreparedModel> mPreparedModelV1_2;
+    sp<hal::V1_3::IPreparedModel> mPreparedModelV1_3;
 
     /**
      * HIDL callback to be invoked if the service for mPreparedModelV1_0 crashes.

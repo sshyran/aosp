@@ -290,7 +290,7 @@ class ExecutionBurstServer : public hal::IBurstContext {
      */
     static sp<ExecutionBurstServer> create(
             const sp<hal::IBurstCallback>& callback, const FmqRequestDescriptor& requestChannel,
-            const FmqResultDescriptor& resultChannel, hal::IPreparedModel* preparedModel,
+            const FmqResultDescriptor& resultChannel, hal::V1_2::IPreparedModel* preparedModel,
             std::chrono::microseconds pollingTimeWindow = std::chrono::microseconds{0});
 
     ExecutionBurstServer(const sp<hal::IBurstCallback>& callback,
