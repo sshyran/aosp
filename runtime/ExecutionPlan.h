@@ -207,6 +207,7 @@ class ExecutionPlan {
                 mSubModelInputsAndOutputs;  // may be nullptr
         std::unique_ptr<MemoryAshmem> mTemporaries;
         size_t mNextStepIndex;
+        size_t mLastStepIndex;  // For fallback.
     };
 
     std::vector<std::shared_ptr<ExecutionBurstController>> makeBursts(int preference) const;
