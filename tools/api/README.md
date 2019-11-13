@@ -34,7 +34,7 @@ The "kind" is an arbitrary token that the specification file can reference with
 the `%kind` directive to help generate different text in different situations.
 It has no meaning to the tool itself.  Today, the following kinds are used:
 `ndk` (when generating `NeuralNetworks.h`), `hal_1.0` (when generating
-`1.0/types.hal`), `hal_1.1`, and `hal_1.2`.
+`1.0/types.hal`), `hal_1.1`, `hal_1.2` and `hal_1.3`.
 
 ## Template File Syntax
 
@@ -84,7 +84,7 @@ Equivalently:
 
 A *null region* is a sequence of lines that is not part of any other region.
 For example, a specification file that contains no directives other than
-`%define` and `%kind-validate` consists of a single null region.
+`%define` and `%define-kinds` consists of a single null region.
 
 Within a null region, all lines other than directives are treated as comments
 and are ignored.
@@ -177,20 +177,32 @@ Permitted in regions: section
 `%kind *list*` creates a *conditional region* terminated by `%/kind`.
 
 The *list* consists of a space-delimited list of tokens, any of which may end in
-`*` to indicate a *wildcard pattern*.  If one of the non wildcard pattern tokens
-equals the "kind", or if one of the wildcard pattern tokens less the `*` is a
-prefix of the "kind", then the condition is **on**; otherwise, the condition is
-**off**.
+`*` to indicate a *wildcard pattern* or `+` to indicate a *lowest version
+pattern*. Any other pattern is a *simple pattern*. The condition is **on** in
+three cases:
+* One of the simple pattern tokens equals the "kind"
+* One of the wildcard pattern tokens less the `*` is a prefix of the "kind"
+* One of the lowest version pattern tokens less the `+` matches the "kind" or
+  the "kind" matches any token to the right from the lowest version pattern in
+  the list passed to %define-kinds
+
+In all other cases, the condition is **off**.
 
 Within the region, the condition is inverted every time the `%else` directive
 appears.
 
 Permitted in regions: null, section
 
-#### `%kind-validate *list*`
+#### `%define-kinds *list*`
 
-This is a sanity-checking directive: if the "kind" is not on the space-delimited
-*list* of tokens, `generate_api.py` terminates with an error.
+This directive has two purposes:
+
+* Sanity-checking. If the "kind" is not on the space-delimited *list* of tokens,
+  `generate_api.py` terminates with an error.
+* Ordering the possible kinds for the *lowest version pattern* (see the section
+  above for the explanation of the pattern).
+
+Only one such directive is allowed per specification file.
 
 Permitted in regions: null, section
 
