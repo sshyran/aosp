@@ -66,8 +66,8 @@ cc_library {
                 "libhidlmemory",
                 "liblog",
                 "libnativewindow",
+                "libnativewindow",
                 "libneuralnetworks_packageinfo",
-                "libui",
                 "libutils",
             ],
         },
@@ -77,6 +77,8 @@ cc_library {
         },
     },
 
+    // TODO(pszczepaniak, b/144488395): Use system libnativewindow,
+    // this would remove half of dependencies here.
     static_libs: [
         "libcrypto_static",
         "libneuralnetworks_common",
