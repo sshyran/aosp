@@ -131,6 +131,24 @@ class TestPreparedModelLatest : public IPreparedModel {
         }
     }
 
+    Return<void> executeSynchronously_1_3(const Request& request, MeasureTiming measure,
+                                          executeSynchronously_1_3_cb cb) override {
+        CHECK(mPreparedModelV1_3 != nullptr) << "V1_3 prepared model is nullptr.";
+        if (mErrorStatus == ErrorStatus::NONE) {
+            return mPreparedModelV1_3->executeSynchronously_1_3(
+                    request, measure,
+                    [&cb](ErrorStatus error, const hidl_vec<OutputShape>& outputShapes,
+                          const Timing& timing) { cb(error, outputShapes, timing); });
+        } else if (mErrorStatus == ErrorStatus::OUTPUT_INSUFFICIENT_SIZE) {
+            OutputShape shape = {.dimensions = {1}, .isSufficient = false};
+            cb(mErrorStatus, {shape}, kBadTiming);
+            return Void();
+        } else {
+            cb(mErrorStatus, {}, kBadTiming);
+            return Void();
+        }
+    }
+
     Return<void> configureExecutionBurst(
             const sp<V1_2::IBurstCallback>& callback,
             const MQDescriptorSync<V1_2::FmqRequestDatum>& requestChannel,
