@@ -111,6 +111,9 @@ class SamplePreparedModel : public hal::IPreparedModel {
             const sp<hal::V1_2::IExecutionCallback>& callback) override;
     hal::Return<void> executeSynchronously(const hal::Request& request, hal::MeasureTiming measure,
                                            executeSynchronously_cb cb) override;
+    hal::Return<void> executeSynchronously_1_3(const hal::Request& request,
+                                               hal::MeasureTiming measure,
+                                               executeSynchronously_1_3_cb cb) override;
     hal::Return<void> configureExecutionBurst(
             const sp<hal::V1_2::IBurstCallback>& callback,
             const MQDescriptorSync<hal::V1_2::FmqRequestDatum>& requestChannel,

@@ -77,7 +77,7 @@
  * waiting indefinitely for a result it will never receive.
  *
  * In the NNAPI, IDevice::prepareModel* and IPreparedModel::execute* (but not
- * IPreparedModel::executeSynchronously) are asynchronous calls across HIDL.
+ * IPreparedModel::executeSynchronously*) are asynchronous calls across HIDL.
  * Specifically, these asynchronous functions are called with a HIDL interface
  * callback object (IPrepareModelCallback for IDevice::prepareModel* and
  * IExecutionCallback for IPreparedModel::execute*) and are expected to quickly
@@ -260,7 +260,23 @@ std::tuple<int, std::vector<OutputShape>, Timing> VersionedIPreparedModel::execu
         const Request& request, MeasureTiming measure) const {
     const auto kFailure = getExecutionResult(ErrorStatus::GENERAL_FAILURE, {}, kNoTiming);
 
-    // version 1.2+ HAL
+    // version 1.3+ HAL
+    if (mPreparedModelV1_3 != nullptr) {
+        std::tuple<int, std::vector<OutputShape>, Timing> result;
+        Return<void> ret = mPreparedModelV1_3->executeSynchronously_1_3(
+                request, measure,
+                [&result](ErrorStatus error, const hidl_vec<OutputShape>& outputShapes,
+                          const Timing& timing) {
+                    result = getExecutionResult(error, outputShapes, timing);
+                });
+        if (!ret.isOk()) {
+            LOG(ERROR) << "executeSynchronously_1_3 failure: " << ret.description();
+            return kFailure;
+        }
+        return result;
+    }
+
+    // version 1.2 HAL
     if (mPreparedModelV1_2 != nullptr) {
         std::tuple<int, std::vector<OutputShape>, Timing> result;
         Return<void> ret = mPreparedModelV1_2->executeSynchronously(
