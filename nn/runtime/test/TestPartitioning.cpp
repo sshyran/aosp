@@ -305,6 +305,11 @@ class PartitioningDriver : public SampleDriver {
             cb(ErrorStatus::DEVICE_UNAVAILABLE, {}, kBadTiming);
             return Void();
         }
+        Return<void> executeSynchronously_1_3(const Request&, MeasureTiming,
+                                              executeSynchronously_1_3_cb cb) override {
+            cb(ErrorStatus::DEVICE_UNAVAILABLE, {}, kBadTiming);
+            return Void();
+        }
         Return<void> configureExecutionBurst(
                 const sp<V1_2::IBurstCallback>& /*callback*/,
                 const MQDescriptorSync<V1_2::FmqRequestDatum>& /*requestChannel*/,
