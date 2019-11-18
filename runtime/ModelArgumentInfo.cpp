@@ -77,28 +77,6 @@ int ModelArgumentInfo::setFromMemory(const Operand& operand, const ANeuralNetwor
     return ANEURALNETWORKS_NO_ERROR;
 }
 
-int ModelArgumentInfo::setFromTemporaryMemory(const Operand& operand, uint32_t poolIndex,
-                                              uint32_t offset, uint32_t length) {
-    NN_RETURN_IF_ERROR(updateDimensionInfo(operand, nullptr));
-    if (operand.type != OperandType::OEM) {
-        uint32_t neededLength = TypeManager::get()->getSizeOfData(operand.type, dimensions);
-        if (neededLength != length) {
-            LOG(ERROR) << "Setting argument with invalid length: " << length
-                       << ", expected length: " << neededLength;
-            return ANEURALNETWORKS_BAD_DATA;
-        }
-    }
-
-    state = ModelArgumentInfo::MEMORY;
-    locationAndLength = {
-            .poolIndex = poolIndex,
-            .offset = offset,
-            .length = length,
-    };
-    buffer = nullptr;
-    return ANEURALNETWORKS_NO_ERROR;
-}
-
 int ModelArgumentInfo::updateDimensionInfo(const Operand& operand,
                                            const ANeuralNetworksOperandType* newType) {
     if (newType == nullptr) {
