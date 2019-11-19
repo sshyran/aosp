@@ -1418,34 +1418,6 @@ int CpuExecutor::executeOperation(const Operation& operation, RunTimeOperandInfo
                       setInfoAndAllocateIfNeeded(&output, outShape, &result) &&
                       copyData(input.buffer, input.shape(), output.buffer, outShape);
         } break;
-        case OperationType::STRIDED_SLICE: {
-            if (!allParametersPresent(7, 1)) {
-                return ANEURALNETWORKS_BAD_DATA;
-            }
-            const RunTimeOperandInfo& input = operands[ins[0]];
-            const RunTimeOperandInfo& begins = operands[ins[1]];
-            const RunTimeOperandInfo& ends = operands[ins[2]];
-            const RunTimeOperandInfo& strides = operands[ins[3]];
-            int32_t beginMask = getScalarData<int32_t>(operands[ins[4]]);
-            int32_t endMask = getScalarData<int32_t>(operands[ins[5]]);
-            int32_t shrinkAxisMask = getScalarData<int32_t>(operands[ins[6]]);
-
-            RunTimeOperandInfo& output = operands[outs[0]];
-            Shape outShape = output.shape();
-
-            success =
-                    stridedSlicePrepare(
-                            input.shape(), reinterpret_cast<const int32_t*>(begins.buffer),
-                            begins.shape(), reinterpret_cast<const int32_t*>(ends.buffer),
-                            ends.shape(), reinterpret_cast<const int32_t*>(strides.buffer),
-                            strides.shape(), beginMask, endMask, shrinkAxisMask, &outShape) &&
-                    setInfoAndAllocateIfNeeded(&output, outShape, &result) &&
-                    stridedSliceGeneric(input.buffer, input.shape(),
-                                        reinterpret_cast<const int32_t*>(begins.buffer),
-                                        reinterpret_cast<const int32_t*>(ends.buffer),
-                                        reinterpret_cast<const int32_t*>(strides.buffer), beginMask,
-                                        endMask, shrinkAxisMask, output.buffer, outShape);
-        } break;
         case OperationType::MEAN: {
             if (!allParametersPresent(3, 1)) {
                 return ANEURALNETWORKS_BAD_DATA;
