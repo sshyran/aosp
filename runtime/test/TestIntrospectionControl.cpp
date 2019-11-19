@@ -307,9 +307,9 @@ std::set<Success> expectedPassSet = {Success::PASS_NEITHER, Success::PASS_DEVICE
 
 // For these tests we don't care about actually running an inference -- we
 // just want to dummy up execution status and timing results.
-class TestPreparedModel12 : public SamplePreparedModel {
+class TestPreparedModelLatest : public SamplePreparedModel {
    public:
-    TestPreparedModel12(const HidlModel& model, const SampleDriver* driver, Success success)
+    TestPreparedModelLatest(const HidlModel& model, const SampleDriver* driver, Success success)
         : SamplePreparedModel(model, driver, ExecutionPreference::FAST_SINGLE_ANSWER),
           mSuccess(success) {}
 
@@ -351,6 +351,11 @@ class TestPreparedModel12 : public SamplePreparedModel {
                 ADD_FAILURE() << "Unexpected Success kind";
                 return ErrorStatus::GENERAL_FAILURE;
         }
+    }
+
+    Return<ErrorStatus> execute_1_3(const Request& request, MeasureTiming measure,
+                                    const sp<V1_2::IExecutionCallback>& callback) override {
+        return execute_1_2(request, measure, callback);
     }
 
     Return<void> executeSynchronously(const Request&, MeasureTiming measure,
@@ -397,19 +402,55 @@ class TestPreparedModel12 : public SamplePreparedModel {
     Success mSuccess;
 };
 
-// Like TestPreparedModel12, but implementing 1.0
-class TestPreparedModel10 : public V1_0::IPreparedModel {
+using TestPreparedModel13 = TestPreparedModelLatest;
+
+// Like TestPreparedModelLatest, but implementing 1.2
+class TestPreparedModel12 : public V1_2::IPreparedModel {
    public:
-    TestPreparedModel10(const HidlModel& model, const SampleDriver* driver, Success success)
-        : m12PreparedModel(new TestPreparedModel12(model, driver, success)) {}
+    TestPreparedModel12(const HidlModel& model, const SampleDriver* driver, Success success)
+        : mLatestPreparedModel(new TestPreparedModelLatest(model, driver, success)) {}
 
     Return<ErrorStatus> execute(const Request& request,
                                 const sp<V1_0::IExecutionCallback>& callback) override {
-        return m12PreparedModel->execute(request, callback);
+        return mLatestPreparedModel->execute(request, callback);
+    }
+
+    Return<ErrorStatus> execute_1_2(const Request& request, MeasureTiming measure,
+                                    const sp<V1_2::IExecutionCallback>& callback) override {
+        return mLatestPreparedModel->execute_1_2(request, measure, callback);
+    }
+
+    Return<void> executeSynchronously(const Request& request, MeasureTiming measure,
+                                      executeSynchronously_cb cb) override {
+        return mLatestPreparedModel->executeSynchronously(request, measure, cb);
+    }
+
+    Return<void> configureExecutionBurst(
+            const sp<V1_2::IBurstCallback>& callback,
+            const MQDescriptorSync<V1_2::FmqRequestDatum>& requestChannel,
+            const MQDescriptorSync<V1_2::FmqResultDatum>& resultChannel,
+            configureExecutionBurst_cb cb) override {
+        return mLatestPreparedModel->configureExecutionBurst(callback, requestChannel,
+                                                             resultChannel, cb);
     }
 
    private:
-    const sp<V1_2::IPreparedModel> m12PreparedModel;
+    const sp<IPreparedModel> mLatestPreparedModel;
+};
+
+// Like TestPreparedModelLatest, but implementing 1.0
+class TestPreparedModel10 : public V1_0::IPreparedModel {
+   public:
+    TestPreparedModel10(const HidlModel& model, const SampleDriver* driver, Success success)
+        : mLatestPreparedModel(new TestPreparedModelLatest(model, driver, success)) {}
+
+    Return<ErrorStatus> execute(const Request& request,
+                                const sp<V1_0::IExecutionCallback>& callback) override {
+        return mLatestPreparedModel->execute(request, callback);
+    }
+
+   private:
+    const sp<IPreparedModel> mLatestPreparedModel;
 };
 
 // Behaves like SampleDriver, except that it produces customized IPrepareModel.
@@ -458,14 +499,14 @@ class TestDriver13 : public SampleDriver {
                                          const hidl_vec<hidl_handle>&, const hidl_vec<hidl_handle>&,
                                          const CacheToken&,
                                          const sp<IPreparedModelCallback>& callback) override {
-        callback->notify_1_2(ErrorStatus::NONE, new TestPreparedModel12(model, this, mSuccess));
+        callback->notify_1_3(ErrorStatus::NONE, new TestPreparedModel13(model, this, mSuccess));
         return ErrorStatus::NONE;
     }
 
-    Return<ErrorStatus> prepareModel_1_2(const V1_2::Model& model, ExecutionPreference,
-                                         const hidl_vec<hidl_handle>&, const hidl_vec<hidl_handle>&,
-                                         const CacheToken&,
-                                         const sp<IPreparedModelCallback>& callback) override {
+    Return<ErrorStatus> prepareModel_1_2(
+            const V1_2::Model& model, ExecutionPreference, const hidl_vec<hidl_handle>&,
+            const hidl_vec<hidl_handle>&, const CacheToken&,
+            const sp<V1_2::IPreparedModelCallback>& callback) override {
         callback->notify_1_2(ErrorStatus::NONE,
                              new TestPreparedModel12(nn::convertToV1_3(model), this, mSuccess));
         return ErrorStatus::NONE;
@@ -515,11 +556,10 @@ class TestDriver12 : public V1_2::IDevice {
                                         getSupportedOperations_cb _hidl_cb) override {
         return mLatestDriver->getSupportedOperations(model, _hidl_cb);
     }
-    Return<ErrorStatus> prepareModel_1_2(const V1_2::Model& model, ExecutionPreference preference,
-                                         const hidl_vec<hidl_handle>& modelCache,
-                                         const hidl_vec<hidl_handle>& dataCache,
-                                         const CacheToken& token,
-                                         const sp<IPreparedModelCallback>& callback) override {
+    Return<ErrorStatus> prepareModel_1_2(
+            const V1_2::Model& model, ExecutionPreference preference,
+            const hidl_vec<hidl_handle>& modelCache, const hidl_vec<hidl_handle>& dataCache,
+            const CacheToken& token, const sp<V1_2::IPreparedModelCallback>& callback) override {
         return mLatestDriver->prepareModel_1_2(model, preference, modelCache, dataCache, token,
                                                callback);
     }
