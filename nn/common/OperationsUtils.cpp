@@ -27,9 +27,6 @@
 #include "Operations.h"
 #include "Utils.h"
 
-#include "Operations.h"
-#include "Utils.h"
-
 namespace android {
 namespace nn {
 
@@ -779,61 +776,6 @@ bool meanPrepare(const Shape& input, const int32_t* axisData, const Shape& axisS
     }
 
     output->type = input.type;
-    output->offset = input.offset;
-    output->scale = input.scale;
-
-    return true;
-}
-
-bool stridedSlicePrepare(const Shape& input, const int32_t* beginData, const Shape& beginShape,
-                         const int32_t* endData, const Shape& endShape, const int32_t* stridesData,
-                         const Shape& stridesShape, int32_t beginMask, int32_t endMask,
-                         int32_t shrinkAxisMask, Shape* output) {
-    uint32_t numInputDims = getNumberOfDimensions(input);
-    // StridedSlice op only supports 1D-4D input arrays.
-    NN_OPS_CHECK(numInputDims <= 4);
-
-    NN_OPS_CHECK(getNumberOfDimensions(beginShape) == 1);
-    NN_OPS_CHECK(getNumberOfDimensions(endShape) == 1);
-    NN_OPS_CHECK(getNumberOfDimensions(stridesShape) == 1);
-
-    NN_OPS_CHECK(getSizeOfDimension(beginShape, 0) == numInputDims);
-    NN_OPS_CHECK(getSizeOfDimension(endShape, 0) == numInputDims);
-    NN_OPS_CHECK(getSizeOfDimension(stridesShape, 0) == numInputDims);
-
-    NN_OPS_CHECK(beginShape.type == OperandType::TENSOR_INT32);
-    NN_OPS_CHECK(endShape.type == OperandType::TENSOR_INT32);
-    NN_OPS_CHECK(stridesShape.type == OperandType::TENSOR_INT32);
-
-    // Determine size of output tensor and map indices
-    std::vector<uint32_t> outDims;
-    for (int32_t idx = 0; idx < static_cast<int32_t>(numInputDims); idx++) {
-        int32_t dim = static_cast<int32_t>(getSizeOfDimension(input, idx));
-        int32_t stride = stridesData[idx];
-        // stride value has to be non-zero
-        NN_OPS_CHECK(stride != 0);
-        bool positiveStride = stride > 0;
-
-        int32_t begin = beginMask & (1 << idx) ? positiveStride ? 0 : dim - 1
-                                               : ClampedIndex(beginData[idx], dim, positiveStride);
-        int32_t end = endMask & (1 << idx) ? positiveStride ? dim : -1
-                                           : ClampedIndex(endData[idx], dim, positiveStride);
-
-        // This is valid for both positive and negative strides
-        int32_t outDim = ceil((end - begin) / static_cast<float>(stride));
-        outDim = outDim < 0 ? 0 : static_cast<uint32_t>(outDim);
-        if (!(shrinkAxisMask & (1 << idx))) {
-            outDims.push_back(outDim);
-        } else {
-            if (outDim != 1) {
-                LOG(ERROR) << "Outdim " << idx << " is " << outDim << ", expected 1";
-                NN_OPS_CHECK(outDim == 1);
-            }
-        }
-    }
-
-    output->type = input.type;
-    output->dimensions = outDims;
     output->offset = input.offset;
     output->scale = input.scale;
 
