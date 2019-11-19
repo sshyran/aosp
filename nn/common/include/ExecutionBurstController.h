@@ -270,7 +270,7 @@ class ExecutionBurstController {
      * @return ExecutionBurstController Execution burst controller object.
      */
     static std::unique_ptr<ExecutionBurstController> create(
-            const sp<hal::IPreparedModel>& preparedModel,
+            const sp<hal::V1_2::IPreparedModel>& preparedModel,
             std::chrono::microseconds pollingTimeWindow);
 
     // prefer calling ExecutionBurstController::create

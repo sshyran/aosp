@@ -465,7 +465,8 @@ int32_t ExecutionBurstController::ExecutionBurstCallback::allocateSlotLocked() {
 }
 
 std::unique_ptr<ExecutionBurstController> ExecutionBurstController::create(
-        const sp<IPreparedModel>& preparedModel, std::chrono::microseconds pollingTimeWindow) {
+        const sp<V1_2::IPreparedModel>& preparedModel,
+        std::chrono::microseconds pollingTimeWindow) {
     // check inputs
     if (preparedModel == nullptr) {
         LOG(ERROR) << "ExecutionBurstController::create passed a nullptr";
