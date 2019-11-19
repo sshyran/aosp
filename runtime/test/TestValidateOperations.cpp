@@ -2330,6 +2330,10 @@ TEST(OperationValidationTest, STRIDED_SLICE_quant8) {
     stridedSliceOpTest(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM);
 }
 
+TEST(OperationValidationTest, STRIDED_SLICE_quant8_signed) {
+    stridedSliceOpTest(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED);
+}
+
 void roiAlignOpTest(int32_t inputOperandCode, int32_t roiOperandCode, int32_t scalarOperandCode) {
     uint32_t inDim[] = {1, 4, 4, 1}, roiDim[] = {4, 4}, batchSplitDim[] = {1};
     uint32_t outDim[] = {4, 2, 2, 1};

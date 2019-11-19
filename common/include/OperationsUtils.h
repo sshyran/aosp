@@ -334,11 +334,6 @@ bool squeezePrepare(const Shape& input, const int32_t* squeezeDims, const Shape&
 bool meanPrepare(const Shape& input, const int32_t* axisData, const Shape& axisShape, bool keepDims,
                  Shape* output);
 
-bool stridedSlicePrepare(const Shape& input, const int32_t* beginData, const Shape& beginShape,
-                         const int32_t* endData, const Shape& endShape, const int32_t* stridesData,
-                         const Shape& stridesShape, int32_t beginMask, int32_t endMask,
-                         int32_t shrinkAxisMask, Shape* output);
-
 bool argMinMaxPrepare(const Shape& input, int32_t axis, Shape* output);
 
 bool splitPrepare(const Shape& input, int32_t axis, int32_t numOutputs, std::vector<Shape>* output);
