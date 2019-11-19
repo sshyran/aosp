@@ -20,6 +20,8 @@
 
 #include <android-base/logging.h>
 #include <limits>
+#include <utility>
+#include <vector>
 
 namespace android::nn {
 
@@ -52,6 +54,11 @@ Return<void> PreparedModelCallback::notify(ErrorStatus errorStatus,
 
 Return<void> PreparedModelCallback::notify_1_2(ErrorStatus errorStatus,
                                                const sp<V1_2::IPreparedModel>& preparedModel) {
+    return notify(errorStatus, preparedModel);
+}
+
+Return<void> PreparedModelCallback::notify_1_3(ErrorStatus errorStatus,
+                                               const sp<V1_3::IPreparedModel>& preparedModel) {
     return notify(errorStatus, preparedModel);
 }
 

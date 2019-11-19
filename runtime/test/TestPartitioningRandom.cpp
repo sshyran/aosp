@@ -552,11 +552,10 @@ class TestDriver : public SampleDriver {
         return Void();
     }
 
-    Return<ErrorStatus> prepareModel_1_3(const HidlModel& model, ExecutionPreference preference,
-                                         const hidl_vec<hidl_handle>& modelCache,
-                                         const hidl_vec<hidl_handle>& dataCache,
-                                         const CacheToken& token,
-                                         const sp<IPreparedModelCallback>& callback) override {
+    Return<ErrorStatus> prepareModel_1_3(
+            const HidlModel& model, ExecutionPreference preference,
+            const hidl_vec<hidl_handle>& modelCache, const hidl_vec<hidl_handle>& dataCache,
+            const CacheToken& token, const sp<V1_3::IPreparedModelCallback>& callback) override {
         // NOTE: We verify that all operations in the model are supported.
         ErrorStatus outStatus = ErrorStatus::INVALID_ARGUMENT;
         auto ret = getSupportedOperations_1_3(
@@ -573,7 +572,7 @@ class TestDriver : public SampleDriver {
             return SampleDriver::prepareModel_1_3(model, preference, modelCache, dataCache, token,
                                                   callback);
         } else {
-            callback->notify_1_2(ErrorStatus::INVALID_ARGUMENT, nullptr);
+            callback->notify_1_3(ErrorStatus::INVALID_ARGUMENT, nullptr);
             return ErrorStatus::INVALID_ARGUMENT;
         }
     }
@@ -597,7 +596,8 @@ class TestDriverV1_2 : public V1_2::IDevice {
     Return<ErrorStatus> prepareModel_1_2(
             const V1_2::Model& model, ExecutionPreference preference,
             const hidl_vec<hidl_handle>& modelCache, const hidl_vec<hidl_handle>& dataCache,
-            const CacheToken& token, const sp<IPreparedModelCallback>& actualCallback) override {
+            const CacheToken& token,
+            const sp<V1_2::IPreparedModelCallback>& actualCallback) override {
         return mLatestDriver->prepareModel_1_2(model, preference, modelCache, dataCache, token,
                                                actualCallback);
     }
