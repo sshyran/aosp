@@ -168,6 +168,15 @@ static void notify(const sp<V1_2::IPreparedModelCallback>& callback, const Error
     }
 }
 
+static void notify(const sp<V1_3::IPreparedModelCallback>& callback, const ErrorStatus& status,
+                   const sp<SamplePreparedModel>& preparedModel) {
+    const auto ret = callback->notify_1_3(status, preparedModel);
+    if (!ret.isOk()) {
+        LOG(ERROR) << "Error when calling IPreparedModelCallback::notify_1_3: "
+                   << ret.description();
+    }
+}
+
 template <typename T_Model, typename T_IPreparedModelCallback>
 Return<ErrorStatus> prepareModelBase(const T_Model& model, const SampleDriver* driver,
                                      ExecutionPreference preference,
@@ -223,7 +232,7 @@ Return<ErrorStatus> SampleDriver::prepareModel_1_2(
 Return<ErrorStatus> SampleDriver::prepareModel_1_3(
         const V1_3::Model& model, ExecutionPreference preference, const hidl_vec<hidl_handle>&,
         const hidl_vec<hidl_handle>&, const CacheToken&,
-        const sp<V1_2::IPreparedModelCallback>& callback) {
+        const sp<V1_3::IPreparedModelCallback>& callback) {
     NNTRACE_FULL(NNTRACE_LAYER_DRIVER, NNTRACE_PHASE_COMPILATION, "SampleDriver::prepareModel_1_3");
     return prepareModelBase(model, this, preference, callback);
 }
@@ -233,6 +242,15 @@ Return<ErrorStatus> SampleDriver::prepareModelFromCache(
         const sp<V1_2::IPreparedModelCallback>& callback) {
     NNTRACE_FULL(NNTRACE_LAYER_DRIVER, NNTRACE_PHASE_COMPILATION,
                  "SampleDriver::prepareModelFromCache");
+    notify(callback, ErrorStatus::GENERAL_FAILURE, nullptr);
+    return ErrorStatus::GENERAL_FAILURE;
+}
+
+Return<ErrorStatus> SampleDriver::prepareModelFromCache_1_3(
+        const hidl_vec<hidl_handle>&, const hidl_vec<hidl_handle>&, const CacheToken&,
+        const sp<V1_3::IPreparedModelCallback>& callback) {
+    NNTRACE_FULL(NNTRACE_LAYER_DRIVER, NNTRACE_PHASE_COMPILATION,
+                 "SampleDriver::prepareModelFromCache_1_3");
     notify(callback, ErrorStatus::GENERAL_FAILURE, nullptr);
     return ErrorStatus::GENERAL_FAILURE;
 }
@@ -343,6 +361,11 @@ Return<ErrorStatus> SamplePreparedModel::execute(const Request& request,
 }
 
 Return<ErrorStatus> SamplePreparedModel::execute_1_2(const Request& request, MeasureTiming measure,
+                                                     const sp<V1_2::IExecutionCallback>& callback) {
+    return executeBase(request, measure, mModel, *mDriver, mPoolInfos, callback);
+}
+
+Return<ErrorStatus> SamplePreparedModel::execute_1_3(const Request& request, MeasureTiming measure,
                                                      const sp<V1_2::IExecutionCallback>& callback) {
     return executeBase(request, measure, mModel, *mDriver, mPoolInfos, callback);
 }

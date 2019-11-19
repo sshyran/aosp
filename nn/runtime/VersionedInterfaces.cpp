@@ -186,6 +186,7 @@ VersionedIPreparedModel::VersionedIPreparedModel(sp<V1_0::IPreparedModel> prepar
                                                  sp<IPreparedModelDeathHandler> deathHandler)
     : mPreparedModelV1_0(std::move(preparedModel)),
       mPreparedModelV1_2(V1_2::IPreparedModel::castFrom(mPreparedModelV1_0).withDefault(nullptr)),
+      mPreparedModelV1_3(V1_3::IPreparedModel::castFrom(mPreparedModelV1_0).withDefault(nullptr)),
       mDeathHandler(std::move(deathHandler)) {}
 
 VersionedIPreparedModel::~VersionedIPreparedModel() {
@@ -208,7 +209,22 @@ std::tuple<int, std::vector<OutputShape>, Timing> VersionedIPreparedModel::execu
     const sp<ExecutionCallback> callback = new ExecutionCallback();
     const auto scoped = mDeathHandler->protectCallback(callback);
 
-    // version 1.2+ HAL
+    // version 1.3+ HAL
+    if (mPreparedModelV1_3 != nullptr) {
+        Return<ErrorStatus> ret = mPreparedModelV1_3->execute_1_3(request, measure, callback);
+        if (!ret.isOk()) {
+            LOG(ERROR) << "execute_1_3 failure: " << ret.description();
+            return failWithStatus(ErrorStatus::GENERAL_FAILURE);
+        }
+        if (ret != ErrorStatus::NONE) {
+            LOG(ERROR) << "execute_1_3 returned " << toString(static_cast<ErrorStatus>(ret));
+            return failWithStatus(ret);
+        }
+        callback->wait();
+        return getResults(*callback);
+    }
+
+    // version 1.2 HAL
     if (mPreparedModelV1_2 != nullptr) {
         Return<ErrorStatus> ret = mPreparedModelV1_2->execute_1_2(request, measure, callback);
         if (!ret.isOk()) {
@@ -223,7 +239,7 @@ std::tuple<int, std::vector<OutputShape>, Timing> VersionedIPreparedModel::execu
         return getResults(*callback);
     }
 
-    // version 1.0+ HAL
+    // version 1.0 HAL
     if (mPreparedModelV1_0 != nullptr) {
         Return<ErrorStatus> ret = mPreparedModelV1_0->execute(request, callback);
         if (!ret.isOk()) {
@@ -1042,7 +1058,30 @@ VersionedIDevice::prepareModelFromCacheInternal(const hidl_vec<hidl_handle>& mod
     const std::pair<ErrorStatus, std::shared_ptr<VersionedIPreparedModel>> kFailure = {
             ErrorStatus::GENERAL_FAILURE, nullptr};
 
-    // version 1.2+ HAL
+    // version 1.3+ HAL
+    if (getDevice<V1_3::IDevice>() != nullptr) {
+        const sp<PreparedModelCallback> callback = new PreparedModelCallback();
+        const Return<ErrorStatus> ret = recoverable<ErrorStatus, V1_3::IDevice>(
+                __FUNCTION__,
+                [&modelCache, &dataCache, &token, &callback](const sp<V1_3::IDevice>& device) {
+                    return device->prepareModelFromCache_1_3(modelCache, dataCache, token,
+                                                             callback);
+                },
+                callback);
+        if (!ret.isOk()) {
+            LOG(ERROR) << "prepareModelFromCache_1_3 failure: " << ret.description();
+            return kFailure;
+        }
+        if (ret != ErrorStatus::NONE) {
+            LOG(ERROR) << "prepareModelFromCache_1_3 returned "
+                       << toString(static_cast<ErrorStatus>(ret));
+            return kFailure;
+        }
+        callback->wait();
+        return {callback->getStatus(), makeVersionedIPreparedModel(callback->getPreparedModel())};
+    }
+
+    // version 1.2 HAL
     if (getDevice<V1_2::IDevice>() != nullptr) {
         const sp<PreparedModelCallback> callback = new PreparedModelCallback();
         const Return<ErrorStatus> ret = recoverable<ErrorStatus, V1_2::IDevice>(

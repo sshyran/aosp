@@ -59,16 +59,17 @@ namespace {
 
 const Timing kBadTiming = {.timeOnDevice = UINT64_MAX, .timeInDriver = UINT64_MAX};
 
-// Wraps an V1_2::IPreparedModel to allow dummying up the execution status.
-class TestPreparedModel12 : public V1_2::IPreparedModel {
+// Wraps the latest version of IPreparedModel to allow dummying up the execution status.
+class TestPreparedModelLatest : public IPreparedModel {
    public:
     // If errorStatus is NONE, then execute behaves normally (and sends back
     // the actual execution status).  Otherwise, don't bother to execute, and
     // just send back errorStatus (as the execution status, not the launch
     // status).
-    TestPreparedModel12(sp<V1_0::IPreparedModel> preparedModel, ErrorStatus errorStatus)
+    TestPreparedModelLatest(sp<V1_0::IPreparedModel> preparedModel, ErrorStatus errorStatus)
         : mPreparedModelV1_0(preparedModel),
           mPreparedModelV1_2(V1_2::IPreparedModel::castFrom(preparedModel).withDefault(nullptr)),
+          mPreparedModelV1_3(V1_3::IPreparedModel::castFrom(preparedModel).withDefault(nullptr)),
           mErrorStatus(errorStatus) {}
 
     Return<ErrorStatus> execute(const Request& request,
@@ -87,6 +88,21 @@ class TestPreparedModel12 : public V1_2::IPreparedModel {
         CHECK(mPreparedModelV1_2 != nullptr) << "V1_2 prepared model is nullptr.";
         if (mErrorStatus == ErrorStatus::NONE) {
             return mPreparedModelV1_2->execute_1_2(request, measure, callback);
+        } else if (mErrorStatus == ErrorStatus::OUTPUT_INSUFFICIENT_SIZE) {
+            OutputShape shape = {.dimensions = {1}, .isSufficient = false};
+            callback->notify_1_2(mErrorStatus, {shape}, kBadTiming);
+            return ErrorStatus::NONE;
+        } else {
+            callback->notify_1_2(mErrorStatus, {}, kBadTiming);
+            return ErrorStatus::NONE;
+        }
+    }
+
+    Return<ErrorStatus> execute_1_3(const Request& request, MeasureTiming measure,
+                                    const sp<V1_2::IExecutionCallback>& callback) override {
+        CHECK(mPreparedModelV1_3 != nullptr) << "V1_3 prepared model is nullptr.";
+        if (mErrorStatus == ErrorStatus::NONE) {
+            return mPreparedModelV1_3->execute_1_3(request, measure, callback);
         } else if (mErrorStatus == ErrorStatus::OUTPUT_INSUFFICIENT_SIZE) {
             OutputShape shape = {.dimensions = {1}, .isSufficient = false};
             callback->notify_1_2(mErrorStatus, {shape}, kBadTiming);
@@ -120,6 +136,7 @@ class TestPreparedModel12 : public V1_2::IPreparedModel {
             const MQDescriptorSync<V1_2::FmqRequestDatum>& requestChannel,
             const MQDescriptorSync<V1_2::FmqResultDatum>& resultChannel,
             configureExecutionBurst_cb cb) override {
+        CHECK(mPreparedModelV1_2 != nullptr) << "V1_2 prepared model is nullptr.";
         if (mErrorStatus == ErrorStatus::NONE) {
             return mPreparedModelV1_2->configureExecutionBurst(callback, requestChannel,
                                                                resultChannel, cb);
@@ -132,22 +149,59 @@ class TestPreparedModel12 : public V1_2::IPreparedModel {
    private:
     const sp<V1_0::IPreparedModel> mPreparedModelV1_0;
     const sp<V1_2::IPreparedModel> mPreparedModelV1_2;
+    const sp<V1_3::IPreparedModel> mPreparedModelV1_3;
     ErrorStatus mErrorStatus;
 };
 
-// Like TestPreparedModel12, but implementing 1.0
-class TestPreparedModel10 : public V1_0::IPreparedModel {
+using TestPreparedModel13 = TestPreparedModelLatest;
+
+// Like TestPreparedModelLatest, but implementing 1.2
+class TestPreparedModel12 : public V1_2::IPreparedModel {
    public:
-    TestPreparedModel10(sp<V1_0::IPreparedModel> preparedModel, ErrorStatus errorStatus)
-        : m12PreparedModel(new TestPreparedModel12(preparedModel, errorStatus)) {}
+    TestPreparedModel12(sp<V1_0::IPreparedModel> preparedModel, ErrorStatus errorStatus)
+        : mLatestPreparedModel(new TestPreparedModelLatest(preparedModel, errorStatus)) {}
 
     Return<ErrorStatus> execute(const Request& request,
                                 const sp<V1_0::IExecutionCallback>& callback) override {
-        return m12PreparedModel->execute(request, callback);
+        return mLatestPreparedModel->execute(request, callback);
+    }
+
+    Return<ErrorStatus> execute_1_2(const Request& request, MeasureTiming measure,
+                                    const sp<V1_2::IExecutionCallback>& callback) override {
+        return mLatestPreparedModel->execute_1_2(request, measure, callback);
+    }
+
+    Return<void> executeSynchronously(const Request& request, MeasureTiming measure,
+                                      executeSynchronously_cb cb) override {
+        return mLatestPreparedModel->executeSynchronously(request, measure, cb);
+    }
+
+    Return<void> configureExecutionBurst(
+            const sp<V1_2::IBurstCallback>& callback,
+            const MQDescriptorSync<V1_2::FmqRequestDatum>& requestChannel,
+            const MQDescriptorSync<V1_2::FmqResultDatum>& resultChannel,
+            configureExecutionBurst_cb cb) override {
+        return mLatestPreparedModel->configureExecutionBurst(callback, requestChannel,
+                                                             resultChannel, cb);
     }
 
    private:
-    const sp<V1_2::IPreparedModel> m12PreparedModel;
+    const sp<IPreparedModel> mLatestPreparedModel;
+};
+
+// Like TestPreparedModelLatest, but implementing 1.0
+class TestPreparedModel10 : public V1_0::IPreparedModel {
+   public:
+    TestPreparedModel10(sp<V1_0::IPreparedModel> preparedModel, ErrorStatus errorStatus)
+        : mLatestPreparedModel(new TestPreparedModelLatest(preparedModel, errorStatus)) {}
+
+    Return<ErrorStatus> execute(const Request& request,
+                                const sp<V1_0::IExecutionCallback>& callback) override {
+        return mLatestPreparedModel->execute(request, callback);
+    }
+
+   private:
+    const sp<IPreparedModel> mLatestPreparedModel;
 };
 
 // Behaves like SampleDriver, except that it produces wrapped IPreparedModel.
@@ -189,7 +243,8 @@ class TestDriver13 : public SampleDriver {
     Return<ErrorStatus> prepareModel_1_3(
             const HidlModel& model, ExecutionPreference preference,
             const hidl_vec<hidl_handle>& modelCache, const hidl_vec<hidl_handle>& dataCache,
-            const CacheToken& token, const sp<IPreparedModelCallback>& actualCallback) override {
+            const CacheToken& token,
+            const sp<V1_3::IPreparedModelCallback>& actualCallback) override {
         sp<PreparedModelCallback> localCallback = new PreparedModelCallback;
         Return<ErrorStatus> prepareModelReturn = SampleDriver::prepareModel_1_3(
                 model, preference, modelCache, dataCache, token, localCallback);
@@ -197,20 +252,20 @@ class TestDriver13 : public SampleDriver {
             return prepareModelReturn;
         }
         if (prepareModelReturn != ErrorStatus::NONE) {
-            actualCallback->notify_1_2(
+            actualCallback->notify_1_3(
                     localCallback->getStatus(),
-                    V1_2::IPreparedModel::castFrom(localCallback->getPreparedModel()));
+                    V1_3::IPreparedModel::castFrom(localCallback->getPreparedModel()));
             return prepareModelReturn;
         }
         localCallback->wait();
         if (localCallback->getStatus() != ErrorStatus::NONE) {
-            actualCallback->notify_1_2(
+            actualCallback->notify_1_3(
                     localCallback->getStatus(),
-                    V1_2::IPreparedModel::castFrom(localCallback->getPreparedModel()));
+                    V1_3::IPreparedModel::castFrom(localCallback->getPreparedModel()));
         } else {
-            actualCallback->notify_1_2(
+            actualCallback->notify_1_3(
                     ErrorStatus::NONE,
-                    new TestPreparedModel12(localCallback->getPreparedModel(), mErrorStatus));
+                    new TestPreparedModel13(localCallback->getPreparedModel(), mErrorStatus));
         }
         return prepareModelReturn;
     }
@@ -218,7 +273,8 @@ class TestDriver13 : public SampleDriver {
     Return<ErrorStatus> prepareModel_1_2(
             const V1_2::Model& model, ExecutionPreference preference,
             const hidl_vec<hidl_handle>& modelCache, const hidl_vec<hidl_handle>& dataCache,
-            const CacheToken& token, const sp<IPreparedModelCallback>& actualCallback) override {
+            const CacheToken& token,
+            const sp<V1_2::IPreparedModelCallback>& actualCallback) override {
         sp<PreparedModelCallback> localCallback = new PreparedModelCallback;
         Return<ErrorStatus> prepareModelReturn = SampleDriver::prepareModel_1_2(
                 model, preference, modelCache, dataCache, token, localCallback);
@@ -308,7 +364,8 @@ class TestDriver12 : public V1_2::IDevice {
     Return<ErrorStatus> prepareModel_1_2(
             const V1_2::Model& model, ExecutionPreference preference,
             const hidl_vec<hidl_handle>& modelCache, const hidl_vec<hidl_handle>& dataCache,
-            const CacheToken& token, const sp<IPreparedModelCallback>& actualCallback) override {
+            const CacheToken& token,
+            const sp<V1_2::IPreparedModelCallback>& actualCallback) override {
         return mLatestDriver->prepareModel_1_2(model, preference, modelCache, dataCache, token,
                                                actualCallback);
     }
