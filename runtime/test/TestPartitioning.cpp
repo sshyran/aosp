@@ -296,6 +296,10 @@ class PartitioningDriver : public SampleDriver {
                                         const sp<V1_2::IExecutionCallback>&) override {
             return ErrorStatus::DEVICE_UNAVAILABLE;
         }
+        Return<ErrorStatus> execute_1_3(const Request&, MeasureTiming,
+                                        const sp<V1_2::IExecutionCallback>&) override {
+            return ErrorStatus::DEVICE_UNAVAILABLE;
+        }
         Return<void> executeSynchronously(const Request&, MeasureTiming,
                                           executeSynchronously_cb cb) override {
             cb(ErrorStatus::DEVICE_UNAVAILABLE, {}, kBadTiming);
@@ -345,7 +349,7 @@ class PartitioningDriver : public SampleDriver {
                 }
             }
         }
-        cb->notify_1_2(status, new PartitioningPreparedModel);
+        cb->notify_1_3(status, new PartitioningPreparedModel);
         return status;
     }
 
@@ -416,7 +420,8 @@ class PartitioningDriverV1_2 : public V1_2::IDevice {
     Return<ErrorStatus> prepareModel_1_2(
             const V1_2::Model& model, ExecutionPreference preference,
             const hidl_vec<hidl_handle>& modelCache, const hidl_vec<hidl_handle>& dataCache,
-            const CacheToken& token, const sp<IPreparedModelCallback>& actualCallback) override {
+            const CacheToken& token,
+            const sp<V1_2::IPreparedModelCallback>& actualCallback) override {
         return mLatestDriver->prepareModel_1_2(model, preference, modelCache, dataCache, token,
                                                actualCallback);
     }
