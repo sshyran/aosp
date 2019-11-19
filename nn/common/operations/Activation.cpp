@@ -16,14 +16,18 @@
 
 #define LOG_TAG "Operations"
 
+#include <tensorflow/lite/kernels/internal/optimized/legacy_optimized_ops.h>
+#include <tensorflow/lite/kernels/internal/optimized/optimized_ops.h>
+#include <tensorflow/lite/kernels/internal/reference/integer_ops/logistic.h>
+#include <tensorflow/lite/kernels/internal/reference/integer_ops/tanh.h>
+
+#include <algorithm>
+#include <limits>
+
 #include "ActivationFunctor.h"
 #include "CpuOperationUtils.h"
 #include "HalInterfaces.h"
 #include "OperationResolver.h"
-
-#include <tensorflow/lite/kernels/internal/optimized/legacy_optimized_ops.h>
-#include <tensorflow/lite/kernels/internal/optimized/optimized_ops.h>
-
 #include "Tracing.h"
 
 namespace android {
@@ -113,41 +117,40 @@ template bool logisticFloat<float>(const float* inputData, const Shape& inputSha
 template bool logisticFloat<_Float16>(const _Float16* inputData, const Shape& inputShape,
                                       _Float16* outputData, const Shape& outputShape);
 
-#define ANDROID_NN_RELUX_QUANT8(activation)                                           \
-    int numElements = getNumberOfElements(inputShape);                                \
-    int32_t output_activation_min = 0;                                                \
-    int32_t output_activation_max = 0;                                                \
-                                                                                      \
-    CalculateActivationRangeUint8(activation, inputShape, &output_activation_min,     \
-                                  &output_activation_max);                            \
-                                                                                      \
-    for (int i = 0; i < numElements; i++, inputData++, outputData++) {                \
-        *outputData = std::min((uint8_t)output_activation_max,                        \
-                               std::max((uint8_t)output_activation_min, *inputData)); \
+template <ActivationFn activation>
+inline bool reluXQuant8(const uint8_t* inputData, const Shape& inputShape, uint8_t* outputData,
+                        const Shape& outputShape) {
+    int numElements = getNumberOfElements(inputShape);
+    int32_t output_activation_min = 0;
+    int32_t output_activation_max = 0;
+
+    CalculateActivationRangeUint8(activation, inputShape, &output_activation_min,
+                                  &output_activation_max);
+
+    for (int i = 0; i < numElements; i++, inputData++, outputData++) {
+        *outputData = std::min((uint8_t)output_activation_max,
+                               std::max((uint8_t)output_activation_min, *inputData));
     }
+    return true;
+}
 
 bool reluQuant8(const uint8_t* inputData, const Shape& inputShape, uint8_t* outputData,
                 const Shape& outputShape) {
     NNTRACE_COMP("reluQuant8");
-    ANDROID_NN_RELUX_QUANT8(kActivationRelu)
-    return true;
+    return reluXQuant8<kActivationRelu>(inputData, inputShape, outputData, outputShape);
 }
 
 bool relu1Quant8(const uint8_t* inputData, const Shape& inputShape, uint8_t* outputData,
                  const Shape& outputShape) {
     NNTRACE_COMP("relu1Quant8");
-    ANDROID_NN_RELUX_QUANT8(kActivationRelu1)
-    return true;
+    return reluXQuant8<kActivationRelu1>(inputData, inputShape, outputData, outputShape);
 }
 
 bool relu6Quant8(const uint8_t* inputData, const Shape& inputShape, uint8_t* outputData,
                  const Shape& outputShape) {
     NNTRACE_COMP("relu6Quant8");
-    ANDROID_NN_RELUX_QUANT8(kActivationRelu6)
-    return true;
+    return reluXQuant8<kActivationRelu6>(inputData, inputShape, outputData, outputShape);
 }
-
-#undef ANDROID_NN_RELUX_QUANT8
 
 bool tanhQuant8(const uint8_t* inputData, const Shape& inputShape, uint8_t* outputData,
                 const Shape& outputShape) {
@@ -209,6 +212,99 @@ bool logisticQuant8(const uint8_t* inputData, const Shape& inputShape, uint8_t* 
     return true;
 }
 
+template <ActivationFn activation>
+inline bool reluXQuant8Signed(const int8_t* inputData, const Shape& inputShape, int8_t* outputData,
+                              const Shape& outputShape) {
+    int numElements = getNumberOfElements(inputShape);
+    int32_t output_activation_min = 0;
+    int32_t output_activation_max = 0;
+
+    CalculateActivationRangeInt8(activation, inputShape, &output_activation_min,
+                                 &output_activation_max);
+
+    for (int i = 0; i < numElements; i++, inputData++, outputData++) {
+        *outputData = std::min((int8_t)output_activation_max,
+                               std::max((int8_t)output_activation_min, *inputData));
+    }
+    return true;
+}
+
+bool reluQuant8Signed(const int8_t* inputData, const Shape& inputShape, int8_t* outputData,
+                      const Shape& outputShape) {
+    NNTRACE_COMP("reluQuant8");
+    return reluXQuant8Signed<kActivationRelu>(inputData, inputShape, outputData, outputShape);
+}
+
+bool relu1Quant8Signed(const int8_t* inputData, const Shape& inputShape, int8_t* outputData,
+                       const Shape& outputShape) {
+    NNTRACE_COMP("relu1Quant8");
+    return reluXQuant8Signed<kActivationRelu1>(inputData, inputShape, outputData, outputShape);
+}
+
+bool relu6Quant8Signed(const int8_t* inputData, const Shape& inputShape, int8_t* outputData,
+                       const Shape& outputShape) {
+    NNTRACE_COMP("relu6Quant8");
+    return reluXQuant8Signed<kActivationRelu6>(inputData, inputShape, outputData, outputShape);
+}
+
+bool tanhQuant8Signed(const int8_t* inputData, const Shape& inputShape, int8_t* outputData,
+                      const Shape& outputShape) {
+    NNTRACE_TRANS("tanhQuant8Signed");
+    if (outputShape.offset != 0 || outputShape.scale != 1.f / 128) {
+        LOG(ERROR) << "incorrect scale or offset for TANH output";
+        return false;
+    }
+
+    int numElements = getNumberOfElements(inputShape);
+    static constexpr int kInputIntegerBits = 4;
+
+    const double input_real_multiplier =
+            inputShape.scale * static_cast<double>(1 << (31 - kInputIntegerBits));
+
+    int32_t input_multiplier = 0;
+    int32_t input_left_shift = 0;
+    if (!QuantizeMultiplierGreaterThanOne(input_real_multiplier, &input_multiplier,
+                                          &input_left_shift)) {
+        return false;
+    }
+    int32_t input_range_radius = CalculateInputRadius(kInputIntegerBits, input_left_shift);
+
+    NNTRACE_COMP_SWITCH("reference_integer_ops::Tanh");
+    tflite::reference_integer_ops::Tanh(inputShape.offset, input_range_radius, input_multiplier,
+                                        input_left_shift, numElements, inputData, outputData);
+
+    return true;
+}
+
+bool logisticQuant8Signed(const int8_t* inputData, const Shape& inputShape, int8_t* outputData,
+                          const Shape& outputShape) {
+    NNTRACE_TRANS("logisticQuant8Signed");
+    if (outputShape.offset != -128 || outputShape.scale != 1.f / 256) {
+        LOG(ERROR) << "incorrect scale / offset for output";
+        return false;
+    }
+
+    int numElements = getNumberOfElements(inputShape);
+    static constexpr int kInputIntegerBits = 4;
+
+    const double input_real_multiplier =
+            inputShape.scale * static_cast<double>(1 << (31 - kInputIntegerBits));
+
+    int32_t input_multiplier = 0;
+    int32_t input_left_shift = 0;
+    if (!QuantizeMultiplierGreaterThanOne(input_real_multiplier, &input_multiplier,
+                                          &input_left_shift)) {
+        return false;
+    }
+    int32_t input_range_radius = CalculateInputRadius(kInputIntegerBits, input_left_shift);
+
+    NNTRACE_COMP_SWITCH("reference_integer_ops::Logistic");
+    tflite::reference_integer_ops::Logistic(inputShape.offset, input_range_radius, input_multiplier,
+                                            input_left_shift, numElements, inputData, outputData);
+
+    return true;
+}
+
 }  // namespace
 
 bool validate(OperationType opType, const IOperationValidationContext* context) {
@@ -225,6 +321,8 @@ bool validate(OperationType opType, const IOperationValidationContext* context) 
         } else {
             NN_RET_CHECK(validateHalVersion(context, HalVersion::V1_0));
         }
+    } else if (inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
+        NN_RET_CHECK(validateHalVersion(context, HalVersion::V1_3));
     } else {
         NN_RET_CHECK_FAIL() << "Unsupported tensor type for operation " << getOperationName(opType);
     }
@@ -235,7 +333,9 @@ bool prepare(OperationType opType, IOperationExecutionContext* context) {
     Shape input = context->getInputShape(kInputTensor);
     NN_RET_CHECK_LE(getNumberOfDimensions(input), 4);
     Shape output = input;
-    if (input.type == OperandType::TENSOR_QUANT8_ASYMM) {
+    if (input.type == OperandType::TENSOR_QUANT8_ASYMM ||
+        input.type == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
+        bool isSigned = input.type == OperandType::TENSOR_QUANT8_ASYMM_SIGNED;
         switch (opType) {
             case OperationType::RELU:
             case OperationType::RELU1:
@@ -243,11 +343,11 @@ bool prepare(OperationType opType, IOperationExecutionContext* context) {
                 break;
             case OperationType::LOGISTIC:
                 output.scale = 1.f / 256;
-                output.offset = 0;
+                output.offset = isSigned ? -128 : 0;
                 break;
             case OperationType::TANH:
                 output.scale = 1.f / 128;
-                output.offset = 128;
+                output.offset = isSigned ? 0 : 128;
                 break;
             default:
                 NN_RET_CHECK_FAIL() << "Unsupported operation type";
@@ -275,6 +375,11 @@ bool executeRelu(IOperationExecutionContext* context) {
                               context->getInputShape(kInputTensor),
                               context->getOutputBuffer<uint8_t>(kOutputTensor),
                               context->getOutputShape(kOutputTensor));
+        case OperandType::TENSOR_QUANT8_ASYMM_SIGNED:
+            return reluQuant8Signed(context->getInputBuffer<int8_t>(kInputTensor),
+                                    context->getInputShape(kInputTensor),
+                                    context->getOutputBuffer<int8_t>(kOutputTensor),
+                                    context->getOutputShape(kOutputTensor));
         default:
             NN_RET_CHECK_FAIL() << "Unsupported tensor type for operation RELU";
     }
@@ -299,6 +404,11 @@ bool executeRelu1(IOperationExecutionContext* context) {
                                context->getInputShape(kInputTensor),
                                context->getOutputBuffer<uint8_t>(kOutputTensor),
                                context->getOutputShape(kOutputTensor));
+        case OperandType::TENSOR_QUANT8_ASYMM_SIGNED:
+            return relu1Quant8Signed(context->getInputBuffer<int8_t>(kInputTensor),
+                                     context->getInputShape(kInputTensor),
+                                     context->getOutputBuffer<int8_t>(kOutputTensor),
+                                     context->getOutputShape(kOutputTensor));
         default:
             NN_RET_CHECK_FAIL() << "Unsupported tensor type for operation RELU1";
     }
@@ -323,6 +433,11 @@ bool executeRelu6(IOperationExecutionContext* context) {
                                context->getInputShape(kInputTensor),
                                context->getOutputBuffer<uint8_t>(kOutputTensor),
                                context->getOutputShape(kOutputTensor));
+        case OperandType::TENSOR_QUANT8_ASYMM_SIGNED:
+            return relu6Quant8Signed(context->getInputBuffer<int8_t>(kInputTensor),
+                                     context->getInputShape(kInputTensor),
+                                     context->getOutputBuffer<int8_t>(kOutputTensor),
+                                     context->getOutputShape(kOutputTensor));
         default:
             NN_RET_CHECK_FAIL() << "Unsupported tensor type for operation RELU6";
     }
@@ -347,6 +462,11 @@ bool executeLogistic(IOperationExecutionContext* context) {
                                   context->getInputShape(kInputTensor),
                                   context->getOutputBuffer<uint8_t>(kOutputTensor),
                                   context->getOutputShape(kOutputTensor));
+        case OperandType::TENSOR_QUANT8_ASYMM_SIGNED:
+            return logisticQuant8Signed(context->getInputBuffer<int8_t>(kInputTensor),
+                                        context->getInputShape(kInputTensor),
+                                        context->getOutputBuffer<int8_t>(kOutputTensor),
+                                        context->getOutputShape(kOutputTensor));
         default:
             NN_RET_CHECK_FAIL() << "Unsupported tensor type for operation LOGISTIC";
     }
@@ -371,6 +491,11 @@ bool executeTanh(IOperationExecutionContext* context) {
                               context->getInputShape(kInputTensor),
                               context->getOutputBuffer<uint8_t>(kOutputTensor),
                               context->getOutputShape(kOutputTensor));
+        case OperandType::TENSOR_QUANT8_ASYMM_SIGNED:
+            return tanhQuant8Signed(context->getInputBuffer<int8_t>(kInputTensor),
+                                    context->getInputShape(kInputTensor),
+                                    context->getOutputBuffer<int8_t>(kOutputTensor),
+                                    context->getOutputShape(kOutputTensor));
         default:
             NN_RET_CHECK_FAIL() << "Unsupported tensor type for operation TANH";
     }
