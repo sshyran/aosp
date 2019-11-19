@@ -117,8 +117,8 @@ class DriverPreparedModel : public PreparedModel {
             MeasureTiming measure) const override;
 
     std::shared_ptr<ExecutionBurstController> configureExecutionBurst(
-            bool blocking) const override {
-        return mPreparedModel->configureExecutionBurst(blocking);
+            bool preferPowerOverLatency) const override {
+        return mPreparedModel->configureExecutionBurst(preferPowerOverLatency);
     }
 
    private:
@@ -456,7 +456,8 @@ class CpuPreparedModel : public PreparedModel {
             const std::shared_ptr<ExecutionBurstController>& burstController,
             MeasureTiming measure) const override;
 
-    std::shared_ptr<ExecutionBurstController> configureExecutionBurst(bool) const override {
+    std::shared_ptr<ExecutionBurstController> configureExecutionBurst(
+            bool /*preferPowerOverLatency*/) const override {
         return nullptr;
     }
 
