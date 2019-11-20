@@ -17,11 +17,15 @@
 #define LOG_TAG "OperationsUtils"
 
 #include "OperationsUtils.h"
+
+#include <algorithm>
+#include <cmath>
+#include <limits>
+#include <sstream>
+#include <vector>
+
 #include "Operations.h"
 #include "Utils.h"
-
-#include <cmath>
-#include <sstream>
 
 namespace android {
 namespace nn {
@@ -353,6 +357,14 @@ uint8_t requantize(uint8_t value, const Shape& oldShape, const Shape& newShape) 
     if (doubleRet < 0) return 0;
     if (doubleRet > 255) return 255;
     return static_cast<uint8_t>(std::round(doubleRet));
+}
+
+int8_t requantize(int8_t value, const Shape& oldShape, const Shape& newShape) {
+    double doubleValue = (value - oldShape.offset) * oldShape.scale;
+    double doubleRet = doubleValue / newShape.scale + newShape.offset;
+    if (doubleRet < -128) return -128;
+    if (doubleRet > 127) return 127;
+    return static_cast<int8_t>(std::round(doubleRet));
 }
 
 bool floorPrepare(const Shape& input, Shape* output) {

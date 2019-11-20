@@ -23,7 +23,7 @@
 #include <vector>
 
 #include "HalInterfaces.h"
-#include "SampleDriver.h"
+#include "SampleDriverPartial.h"
 #include "Utils.h"
 #include "ValidateHal.h"
 
@@ -33,12 +33,13 @@ namespace sample_driver {
 
 using namespace hal;
 
-class SampleDriverFloatSlow : public SampleDriver {
+class SampleDriverFloatSlow : public SampleDriverPartial {
    public:
-    SampleDriverFloatSlow() : SampleDriver("sample-float-slow") {}
+    SampleDriverFloatSlow() : SampleDriverPartial("sample-float-slow") {}
     Return<void> getCapabilities_1_3(getCapabilities_1_3_cb cb) override;
-    Return<void> getSupportedOperations_1_3(const V1_3::Model& model,
-                                            getSupportedOperations_1_3_cb cb) override;
+
+   private:
+    std::vector<bool> getSupportedOperationsImpl(const V1_3::Model& model) const override;
 };
 
 Return<void> SampleDriverFloatSlow::getCapabilities_1_3(getCapabilities_1_3_cb cb) {
@@ -58,25 +59,18 @@ Return<void> SampleDriverFloatSlow::getCapabilities_1_3(getCapabilities_1_3_cb c
     return Void();
 }
 
-Return<void> SampleDriverFloatSlow::getSupportedOperations_1_3(const V1_3::Model& model,
-                                                               getSupportedOperations_1_3_cb cb) {
-    VLOG(DRIVER) << "getSupportedOperations()";
-    if (validateModel(model)) {
-        const size_t count = model.operations.size();
-        std::vector<bool> supported(count);
-        for (size_t i = 0; i < count; i++) {
-            const Operation& operation = model.operations[i];
-            if (operation.inputs.size() > 0) {
-                const Operand& firstOperand = model.operands[operation.inputs[0]];
-                supported[i] = firstOperand.type == OperandType::TENSOR_FLOAT32;
-            }
+std::vector<bool> SampleDriverFloatSlow::getSupportedOperationsImpl(
+        const V1_3::Model& model) const {
+    const size_t count = model.operations.size();
+    std::vector<bool> supported(count);
+    for (size_t i = 0; i < count; i++) {
+        const Operation& operation = model.operations[i];
+        if (operation.inputs.size() > 0) {
+            const Operand& firstOperand = model.operands[operation.inputs[0]];
+            supported[i] = firstOperand.type == OperandType::TENSOR_FLOAT32;
         }
-        cb(ErrorStatus::NONE, supported);
-    } else {
-        std::vector<bool> supported;
-        cb(ErrorStatus::INVALID_ARGUMENT, supported);
     }
-    return Void();
+    return supported;
 }
 
 }  // namespace sample_driver
