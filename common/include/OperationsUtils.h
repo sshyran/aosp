@@ -17,11 +17,12 @@
 #ifndef ANDROID_FRAMEWORKS_ML_NN_COMMON_OPERATIONS_UTILS_H
 #define ANDROID_FRAMEWORKS_ML_NN_COMMON_OPERATIONS_UTILS_H
 
-#include "HalInterfaces.h"
-#include "Utils.h"
-
+#include <algorithm>
 #include <cstdint>
 #include <vector>
+
+#include "HalInterfaces.h"
+#include "Utils.h"
 
 namespace android {
 namespace nn {
@@ -178,10 +179,17 @@ inline int32_t computeOutSizeTransposeConv(int32_t imageSize, int32_t filterSize
     return imageSize * stride + filterSize - stride - paddingHead - paddingTail;
 }
 
-__wur bool QuantizeMultiplier(double double_multiplier, int32_t* quantized_multiplier, int* shift);
+__wur bool QuantizeMultiplier(double double_multiplier, int32_t* quantized_multiplier,
+                              int32_t* shift);
 
 __wur bool QuantizeMultiplierSmallerThanOne(double double_multiplier, int32_t* quantized_multiplier,
                                             int32_t* right_shift);
+
+// Same as QuantizeMultiplierSmallerThanOne but returns left shift (i.e. negated
+// right shift), so that it has the same interface as
+// QuantizeMultiplierGreaterThanOne and QuantizeMultiplier functions.
+__wur bool QuantizeMultiplierSmallerThanOneExp(double double_multiplier,
+                                               int32_t* quantized_multiplier, int32_t* left_shift);
 
 __wur bool QuantizeMultiplierGreaterThanOne(double double_multiplier, int32_t* quantized_multiplier,
                                             int* left_shift);
@@ -192,6 +200,9 @@ __wur bool GetQuantizedConvolutionMultipler(const Shape& inputShape, const Shape
 
 void CalculateActivationRangeUint8(int32_t activation, const Shape& outputShape, int32_t* act_min,
                                    int32_t* act_max);
+
+void CalculateActivationRangeInt8(int32_t activation, const Shape& outputShape, int32_t* act_min,
+                                  int32_t* act_max);
 
 void CalculateActivationRangeFloat(int32_t activation, float* activation_min,
                                    float* activation_max);
