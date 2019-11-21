@@ -563,78 +563,91 @@ Return<T_Return> VersionedIDevice::recoverable(
     return ret;
 }
 
-std::pair<ErrorStatus, Capabilities> VersionedIDevice::getCapabilitiesInternal() const {
+static std::pair<ErrorStatus, Capabilities> getCapabilitiesFunction(V1_3::IDevice* device) {
+    CHECK(device != nullptr);
+    NNTRACE_FULL(NNTRACE_LAYER_IPC, NNTRACE_PHASE_INITIALIZATION, "getCapabilities_1_3");
     const std::pair<ErrorStatus, Capabilities> kFailure = {ErrorStatus::GENERAL_FAILURE, {}};
-    std::pair<ErrorStatus, Capabilities> result;
+    std::pair<ErrorStatus, Capabilities> result = kFailure;
+    const Return<void> ret = device->getCapabilities_1_3(
+            [&result](ErrorStatus error, const Capabilities& capabilities) {
+                result = std::make_pair(error, capabilities);
+            });
+    if (!ret.isOk()) {
+        LOG(ERROR) << "getCapabilities_1_3 failure: " << ret.description();
+        return kFailure;
+    }
+    return result;
+}
 
+static std::pair<ErrorStatus, Capabilities> getCapabilitiesFunction(V1_2::IDevice* device) {
+    CHECK(device != nullptr);
+    NNTRACE_FULL(NNTRACE_LAYER_IPC, NNTRACE_PHASE_INITIALIZATION, "getCapabilities_1_2");
+    const std::pair<ErrorStatus, Capabilities> kFailure = {ErrorStatus::GENERAL_FAILURE, {}};
+    std::pair<ErrorStatus, Capabilities> result = kFailure;
+    const Return<void> ret = device->getCapabilities_1_2(
+            [&result](ErrorStatus error, const V1_2::Capabilities& capabilities) {
+                result = std::make_pair(error, convertToV1_3(capabilities));
+            });
+    if (!ret.isOk()) {
+        LOG(ERROR) << "getCapabilities_1_2 failure: " << ret.description();
+        return kFailure;
+    }
+    return result;
+}
+
+static std::pair<ErrorStatus, Capabilities> getCapabilitiesFunction(V1_1::IDevice* device) {
+    CHECK(device != nullptr);
+    NNTRACE_FULL(NNTRACE_LAYER_IPC, NNTRACE_PHASE_INITIALIZATION, "getCapabilities_1_1");
+    const std::pair<ErrorStatus, Capabilities> kFailure = {ErrorStatus::GENERAL_FAILURE, {}};
+    std::pair<ErrorStatus, Capabilities> result = kFailure;
+    const Return<void> ret = device->getCapabilities_1_1(
+            [&result](ErrorStatus error, const V1_1::Capabilities& capabilities) {
+                // Time taken to convert capabilities is trivial
+                result = std::make_pair(error, convertToV1_3(capabilities));
+            });
+    if (!ret.isOk()) {
+        LOG(ERROR) << "getCapabilities_1_1 failure: " << ret.description();
+        return kFailure;
+    }
+    return result;
+}
+
+static std::pair<ErrorStatus, Capabilities> getCapabilitiesFunction(V1_0::IDevice* device) {
+    CHECK(device != nullptr);
+    NNTRACE_FULL(NNTRACE_LAYER_IPC, NNTRACE_PHASE_INITIALIZATION, "getCapabilities");
+    const std::pair<ErrorStatus, Capabilities> kFailure = {ErrorStatus::GENERAL_FAILURE, {}};
+    std::pair<ErrorStatus, Capabilities> result = kFailure;
+    const Return<void> ret = device->getCapabilities(
+            [&result](ErrorStatus error, const V1_0::Capabilities& capabilities) {
+                // Time taken to convert capabilities is trivial
+                result = std::make_pair(error, convertToV1_3(capabilities));
+            });
+    if (!ret.isOk()) {
+        LOG(ERROR) << "getCapabilities failure: " << ret.description();
+        return kFailure;
+    }
+    return result;
+}
+
+std::pair<ErrorStatus, Capabilities> VersionedIDevice::getCapabilitiesInternal() const {
     // version 1.3+ HAL
-    if (getDevice<V1_3::IDevice>() != nullptr) {
-        NNTRACE_FULL(NNTRACE_LAYER_IPC, NNTRACE_PHASE_INITIALIZATION, "getCapabilities_1_3");
-        Return<void> ret = recoverable<void, V1_3::IDevice>(
-                __FUNCTION__, [&result](const sp<V1_3::IDevice>& device) {
-                    return device->getCapabilities_1_3(
-                            [&result](ErrorStatus error, const Capabilities& capabilities) {
-                                result = std::make_pair(error, capabilities);
-                            });
-                });
-        if (!ret.isOk()) {
-            LOG(ERROR) << "getCapabilities_1_3 failure: " << ret.description();
-            return {ErrorStatus::GENERAL_FAILURE, {}};
-        }
-        return result;
+    if (const auto device = getDevice<V1_3::IDevice>()) {
+        return getCapabilitiesFunction(device.get());
     }
 
     // version 1.2 HAL
-    if (getDevice<V1_2::IDevice>() != nullptr) {
-        NNTRACE_FULL(NNTRACE_LAYER_IPC, NNTRACE_PHASE_INITIALIZATION, "getCapabilities_1_2");
-        Return<void> ret = recoverable<void, V1_2::IDevice>(
-                __FUNCTION__, [&result](const sp<V1_2::IDevice>& device) {
-                    return device->getCapabilities_1_2(
-                            [&result](ErrorStatus error, const V1_2::Capabilities& capabilities) {
-                                result = std::make_pair(error, convertToV1_3(capabilities));
-                            });
-                });
-        if (!ret.isOk()) {
-            LOG(ERROR) << "getCapabilities_1_2 failure: " << ret.description();
-            return {ErrorStatus::GENERAL_FAILURE, {}};
-        }
-        return result;
+    if (const auto device = getDevice<V1_2::IDevice>()) {
+        return getCapabilitiesFunction(device.get());
     }
 
     // version 1.1 HAL
-    if (getDevice<V1_1::IDevice>() != nullptr) {
-        NNTRACE_FULL(NNTRACE_LAYER_IPC, NNTRACE_PHASE_INITIALIZATION, "getCapabilities_1_1");
-        Return<void> ret = recoverable<void, V1_1::IDevice>(
-                __FUNCTION__, [&result](const sp<V1_1::IDevice>& device) {
-                    return device->getCapabilities_1_1(
-                            [&result](ErrorStatus error, const V1_1::Capabilities& capabilities) {
-                                // Time taken to convert capabilities is trivial
-                                result = std::make_pair(error, convertToV1_3(capabilities));
-                            });
-                });
-        if (!ret.isOk()) {
-            LOG(ERROR) << "getCapabilities_1_1 failure: " << ret.description();
-            return kFailure;
-        }
-        return result;
+    if (const auto device = getDevice<V1_1::IDevice>()) {
+        return getCapabilitiesFunction(device.get());
     }
 
     // version 1.0 HAL
-    if (getDevice<V1_0::IDevice>() != nullptr) {
-        NNTRACE_FULL(NNTRACE_LAYER_IPC, NNTRACE_PHASE_INITIALIZATION, "getCapabilities");
-        Return<void> ret = recoverable<void, V1_0::IDevice>(
-                __FUNCTION__, [&result](const sp<V1_0::IDevice>& device) {
-                    return device->getCapabilities(
-                            [&result](ErrorStatus error, const V1_0::Capabilities& capabilities) {
-                                // Time taken to convert capabilities is trivial
-                                result = std::make_pair(error, convertToV1_3(capabilities));
-                            });
-                });
-        if (!ret.isOk()) {
-            LOG(ERROR) << "getCapabilities failure: " << ret.description();
-            return kFailure;
-        }
-        return result;
+    if (const auto device = getDevice<V1_0::IDevice>()) {
+        return getCapabilitiesFunction(device.get());
     }
 
     // No device available
@@ -646,31 +659,39 @@ const Capabilities& VersionedIDevice::getCapabilities() const {
     return mCapabilities;
 }
 
+static std::pair<ErrorStatus, hidl_vec<Extension>> getSupportedExtensionsFunction(
+        V1_2::IDevice* device) {
+    CHECK(device != nullptr);
+    NNTRACE_FULL(NNTRACE_LAYER_IPC, NNTRACE_PHASE_INITIALIZATION, "getSupportedExtensions");
+    const std::pair<ErrorStatus, hidl_vec<Extension>> kFailure = {ErrorStatus::GENERAL_FAILURE, {}};
+    std::pair<ErrorStatus, hidl_vec<Extension>> result = kFailure;
+    const Return<void> ret = device->getSupportedExtensions(
+            [&result](ErrorStatus error, const hidl_vec<Extension>& extensions) {
+                result = std::make_pair(error, extensions);
+            });
+    if (!ret.isOk()) {
+        LOG(ERROR) << "getSupportedExtensions failure: " << ret.description();
+        return kFailure;
+    }
+    return result;
+}
+
+static std::pair<ErrorStatus, hidl_vec<Extension>> getSupportedExtensionsFunction(
+        V1_0::IDevice* device) {
+    CHECK(device != nullptr);
+    return {ErrorStatus::NONE, {/* No extensions. */}};
+}
+
 std::pair<ErrorStatus, hidl_vec<Extension>> VersionedIDevice::getSupportedExtensionsInternal()
         const {
-    const std::pair<ErrorStatus, hidl_vec<Extension>> kFailure = {ErrorStatus::GENERAL_FAILURE, {}};
-
     // version 1.2+ HAL
-    if (getDevice<V1_2::IDevice>() != nullptr) {
-        NNTRACE_FULL(NNTRACE_LAYER_IPC, NNTRACE_PHASE_INITIALIZATION, "getSupportedExtensions");
-        std::pair<ErrorStatus, hidl_vec<Extension>> result;
-        Return<void> ret = recoverable<void, V1_2::IDevice>(
-                __FUNCTION__, [&result](const sp<V1_2::IDevice>& device) {
-                    return device->getSupportedExtensions(
-                            [&result](ErrorStatus error, const hidl_vec<Extension>& extensions) {
-                                result = std::make_pair(error, extensions);
-                            });
-                });
-        if (!ret.isOk()) {
-            LOG(ERROR) << "getSupportedExtensions failure: " << ret.description();
-            return kFailure;
-        }
-        return result;
+    if (const auto device = getDevice<V1_2::IDevice>()) {
+        return getSupportedExtensionsFunction(device.get());
     }
 
     // version too low
-    if (getDevice<V1_0::IDevice>() != nullptr) {
-        return {ErrorStatus::NONE, {/* No extensions. */}};
+    if (const auto device = getDevice<V1_0::IDevice>()) {
+        return getSupportedExtensionsFunction(device.get());
     }
 
     // No device available
@@ -1205,35 +1226,42 @@ int64_t VersionedIDevice::getFeatureLevel() const {
     }
 }
 
-int32_t VersionedIDevice::getTypeInternal() const {
+static int32_t getTypeFunction(V1_2::IDevice* device) {
+    CHECK(device != nullptr);
     constexpr int32_t kFailure = -1;
-
-    // version 1.2+ HAL
-    if (getDevice<V1_2::IDevice>() != nullptr) {
-        int32_t result = kFailure;
-        Return<void> ret = recoverable<void, V1_2::IDevice>(
-                __FUNCTION__, [&result](const sp<V1_2::IDevice>& device) {
-                    return device->getType([&result](ErrorStatus error, DeviceType deviceType) {
-                        if (error == ErrorStatus::NONE) {
-                            result = static_cast<int32_t>(deviceType);
-                        }
-                    });
-                });
-        if (!ret.isOk()) {
-            LOG(ERROR) << "getType failure: " << ret.description();
-            return kFailure;
+    int32_t result = kFailure;
+    const Return<void> ret = device->getType([&result](ErrorStatus error, DeviceType deviceType) {
+        if (error == ErrorStatus::NONE) {
+            result = static_cast<int32_t>(deviceType);
         }
-        return result;
+    });
+    if (!ret.isOk()) {
+        LOG(ERROR) << "getType failure: " << ret.description();
+        return kFailure;
+    }
+    return result;
+}
+
+static int32_t getTypeFunction(V1_0::IDevice* device) {
+    CHECK(device != nullptr);
+    LOG(INFO) << "Unknown NNAPI device type.";
+    return ANEURALNETWORKS_DEVICE_UNKNOWN;
+}
+
+int32_t VersionedIDevice::getTypeInternal() const {
+    // version 1.2+ HAL
+    if (const auto device = getDevice<V1_2::IDevice>()) {
+        return getTypeFunction(device.get());
     }
 
     // version too low
-    if (getDevice<V1_0::IDevice>() != nullptr) {
-        LOG(INFO) << "Unknown NNAPI device type.";
-        return ANEURALNETWORKS_DEVICE_UNKNOWN;
+    if (const auto device = getDevice<V1_0::IDevice>()) {
+        return getTypeFunction(device.get());
     }
 
-    // No device available
+    // no device available
     LOG(ERROR) << "Could not handle getType";
+    constexpr int32_t kFailure = -1;
     return kFailure;
 }
 
@@ -1241,71 +1269,84 @@ int32_t VersionedIDevice::getType() const {
     return mType;
 }
 
-std::pair<ErrorStatus, hidl_string> VersionedIDevice::getVersionStringInternal() const {
+static std::pair<ErrorStatus, hidl_string> getVersionStringFunction(V1_2::IDevice* device) {
+    CHECK(device != nullptr);
     const std::pair<ErrorStatus, hidl_string> kFailure = {ErrorStatus::GENERAL_FAILURE, ""};
+    std::pair<ErrorStatus, hidl_string> result = kFailure;
+    const Return<void> ret =
+            device->getVersionString([&result](ErrorStatus error, const hidl_string& version) {
+                result = std::make_pair(error, version);
+            });
+    if (!ret.isOk()) {
+        LOG(ERROR) << "getVersion failure: " << ret.description();
+        return kFailure;
+    }
+    return result;
+}
 
+static std::pair<ErrorStatus, hidl_string> getVersionStringFunction(V1_0::IDevice* device) {
+    CHECK(device != nullptr);
+    return {ErrorStatus::NONE, "UNKNOWN"};
+}
+
+std::pair<ErrorStatus, hidl_string> VersionedIDevice::getVersionStringInternal() const {
     // version 1.2+ HAL
-    if (getDevice<V1_2::IDevice>() != nullptr) {
-        std::pair<ErrorStatus, hidl_string> result;
-        Return<void> ret = recoverable<void, V1_2::IDevice>(
-                __FUNCTION__, [&result](const sp<V1_2::IDevice>& device) {
-                    return device->getVersionString(
-                            [&result](ErrorStatus error, const hidl_string& version) {
-                                result = std::make_pair(error, version);
-                            });
-                });
-        if (!ret.isOk()) {
-            LOG(ERROR) << "getVersion failure: " << ret.description();
-            return kFailure;
-        }
-        return result;
+    if (const auto device = getDevice<V1_2::IDevice>()) {
+        return getVersionStringFunction(device.get());
     }
 
     // version too low
-    if (getDevice<V1_0::IDevice>() != nullptr) {
-        return {ErrorStatus::NONE, "UNKNOWN"};
+    if (const auto device = getDevice<V1_0::IDevice>()) {
+        return getVersionStringFunction(device.get());
     }
 
     // No device available
     LOG(ERROR) << "Could not handle getVersionString";
-    return kFailure;
+    return {ErrorStatus::GENERAL_FAILURE, ""};
 }
 
 const std::string& VersionedIDevice::getVersionString() const {
     return mVersionString;
 }
 
-std::tuple<ErrorStatus, uint32_t, uint32_t> VersionedIDevice::getNumberOfCacheFilesNeededInternal()
-        const {
+static std::tuple<ErrorStatus, uint32_t, uint32_t> getNumberOfCacheFilesNeededFunction(
+        V1_2::IDevice* device) {
+    CHECK(device != nullptr);
     constexpr std::tuple<ErrorStatus, uint32_t, uint32_t> kFailure = {ErrorStatus::GENERAL_FAILURE,
                                                                       0, 0};
+    std::tuple<ErrorStatus, uint32_t, uint32_t> result = kFailure;
+    const Return<void> ret = device->getNumberOfCacheFilesNeeded(
+            [&result](ErrorStatus error, uint32_t numModelCache, uint32_t numDataCache) {
+                result = {error, numModelCache, numDataCache};
+            });
+    if (!ret.isOk()) {
+        LOG(ERROR) << "getNumberOfCacheFilesNeeded failure: " << ret.description();
+        return kFailure;
+    }
+    return result;
+}
 
+static std::tuple<ErrorStatus, uint32_t, uint32_t> getNumberOfCacheFilesNeededFunction(
+        V1_0::IDevice* device) {
+    CHECK(device != nullptr);
+    return {ErrorStatus::NONE, 0, 0};
+}
+
+std::tuple<ErrorStatus, uint32_t, uint32_t> VersionedIDevice::getNumberOfCacheFilesNeededInternal()
+        const {
     // version 1.2+ HAL
-    if (getDevice<V1_2::IDevice>() != nullptr) {
-        std::tuple<ErrorStatus, uint32_t, uint32_t> result;
-        Return<void> ret = recoverable<void, V1_2::IDevice>(
-                __FUNCTION__, [&result](const sp<V1_2::IDevice>& device) {
-                    return device->getNumberOfCacheFilesNeeded([&result](ErrorStatus error,
-                                                                         uint32_t numModelCache,
-                                                                         uint32_t numDataCache) {
-                        result = {error, numModelCache, numDataCache};
-                    });
-                });
-        if (!ret.isOk()) {
-            LOG(ERROR) << "getNumberOfCacheFilesNeeded failure: " << ret.description();
-            return kFailure;
-        }
-        return result;
+    if (const auto device = getDevice<V1_2::IDevice>()) {
+        return getNumberOfCacheFilesNeededFunction(device.get());
     }
 
     // version too low
-    if (getDevice<V1_0::IDevice>() != nullptr) {
-        return {ErrorStatus::NONE, 0, 0};
+    if (const auto device = getDevice<V1_0::IDevice>()) {
+        return getNumberOfCacheFilesNeededFunction(device.get());
     }
 
     // No device available
     LOG(ERROR) << "Could not handle getNumberOfCacheFilesNeeded";
-    return kFailure;
+    return {ErrorStatus::GENERAL_FAILURE, 0, 0};
 }
 
 std::pair<uint32_t, uint32_t> VersionedIDevice::getNumberOfCacheFilesNeeded() const {
