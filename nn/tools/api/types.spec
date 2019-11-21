@@ -4200,13 +4200,26 @@
     /**
      * Quantizes the input tensor.
      *
-     * The formula is:
+     * The formula for {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM} output tensor is:
      *
      *     output = max(0, min(255, round(input / scale) + zeroPoint)
      *
-     * Supported tensor {@link %{OperandType}}:
+%kind ndk hal_1.3+
+     * The formula for {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM_SIGNED} output
+     * tensor is:
+     *
+     *     output = max(-128, min(127, round(input / scale) + zeroPoint)
+     *
+%/kind
+     * Supported input tensor {@link %{OperandType}}:
      * * {@link %{OperandTypeLinkPfx}TENSOR_FLOAT16}
      * * {@link %{OperandTypeLinkPfx}TENSOR_FLOAT32}
+     *
+     * Supported output tensor {@link %{OperandType}}:
+     * * {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM}
+%kind ndk hal_1.3+
+     * * {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM_SIGNED} (since %{APILevel30})
+%/kind
      *
      * Supported tensor rank: from 1
      *
@@ -4215,7 +4228,12 @@
      *
      * Outputs:
      * * 0: The output tensor of same shape as input0, but with
+%kind ndk hal_1.3+
+     *      {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM} or.
+     *      {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM_SIGNED}.
+%else
      *      {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM}.
+%/kind
 %insert-lines AVAIL29
      */
     %{DeclareOperation_1.2 QUANTIZE 72},
