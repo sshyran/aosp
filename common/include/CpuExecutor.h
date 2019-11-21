@@ -23,7 +23,6 @@
 #include "Utils.h"
 
 #include <android-base/macros.h>
-#include <ui/GraphicBuffer.h>
 
 #include <algorithm>
 #include <memory>
