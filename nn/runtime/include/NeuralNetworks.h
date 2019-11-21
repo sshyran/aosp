@@ -3907,13 +3907,22 @@ typedef enum {
     /**
      * Quantizes the input tensor.
      *
-     * The formula is:
+     * The formula for {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} output tensor is:
      *
      *     output = max(0, min(255, round(input / scale) + zeroPoint)
      *
-     * Supported tensor {@link OperandCode}:
+     * The formula for {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED} output
+     * tensor is:
+     *
+     *     output = max(-128, min(127, round(input / scale) + zeroPoint)
+     *
+     * Supported input tensor {@link OperandCode}:
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT16}
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
+     *
+     * Supported output tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
+     * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED} (since API level 30)
      *
      * Supported tensor rank: from 1
      *
@@ -3922,7 +3931,8 @@ typedef enum {
      *
      * Outputs:
      * * 0: The output tensor of same shape as input0, but with
-     *      {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}.
+     *      {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} or.
+     *      {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED}.
      *
      * Available since API level 29.
      */
