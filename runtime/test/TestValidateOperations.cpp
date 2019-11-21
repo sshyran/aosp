@@ -213,6 +213,7 @@ class OperationTestBase {
                      newOperandCode == ANEURALNETWORKS_TENSOR_FLOAT32)) {
                     continue;
                 }
+
                 // ARGMIN/MAX supports four input types and has a fixed output type.
                 if ((mOpCode == ANEURALNETWORKS_ARGMIN || mOpCode == ANEURALNETWORKS_ARGMAX) &&
                     i == 0 &&
@@ -270,6 +271,15 @@ class OperationTestBase {
                      newOperandCode == ANEURALNETWORKS_TENSOR_FLOAT32)) {
                     continue;
                 }
+
+                // QUANTIZE's output can be either TENSOR_QUANT8_ASYMM or
+                // TENSOR_QUANT8_ASYMM_SIGNED.
+                if (mOpCode == ANEURALNETWORKS_QUANTIZE && i == 0 &&
+                    (newOperandCode == ANEURALNETWORKS_TENSOR_QUANT8_ASYMM ||
+                     newOperandCode == ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED)) {
+                    continue;
+                }
+
                 // CAST accepts any of supported types for any of input types
                 if (mOpCode == ANEURALNETWORKS_CAST && i == 0 &&
                     (newOperandCode == ANEURALNETWORKS_TENSOR_FLOAT16 ||
@@ -433,11 +443,11 @@ TEST(OperationValidationTest, GATHER) {
     gatherTest(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM);
 }
 
-void quantizeOpTest(int32_t operandCode) {
+void quantizeOpTest(int32_t inputOperandCode, int32_t outputOperandCode) {
     uint32_t inputDimensions[4] = {2, 2, 2, 2};
     ANeuralNetworksOperandType input = {
-            .type = operandCode, .dimensionCount = 4, .dimensions = inputDimensions};
-    ANeuralNetworksOperandType output = {.type = ANEURALNETWORKS_TENSOR_QUANT8_ASYMM,
+            .type = inputOperandCode, .dimensionCount = 4, .dimensions = inputDimensions};
+    ANeuralNetworksOperandType output = {.type = outputOperandCode,
                                          .dimensionCount = 4,
                                          .dimensions = inputDimensions,
                                          .scale = 1.0f,
@@ -447,11 +457,13 @@ void quantizeOpTest(int32_t operandCode) {
 }
 
 TEST(OperationValidationTest, QUANTIZE_float16) {
-    quantizeOpTest(ANEURALNETWORKS_TENSOR_FLOAT16);
+    quantizeOpTest(ANEURALNETWORKS_TENSOR_FLOAT16, ANEURALNETWORKS_TENSOR_QUANT8_ASYMM);
+    quantizeOpTest(ANEURALNETWORKS_TENSOR_FLOAT16, ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED);
 }
 
 TEST(OperationValidationTest, QUANTIZE_float32) {
-    quantizeOpTest(ANEURALNETWORKS_TENSOR_FLOAT32);
+    quantizeOpTest(ANEURALNETWORKS_TENSOR_FLOAT32, ANEURALNETWORKS_TENSOR_QUANT8_ASYMM);
+    quantizeOpTest(ANEURALNETWORKS_TENSOR_FLOAT32, ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED);
 }
 
 TEST(OperationValidationTest, QUANTIZED_16BIT_LSTM) {
