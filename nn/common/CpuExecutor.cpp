@@ -20,6 +20,7 @@
 
 #include <android/hardware_buffer.h>
 #include <sys/mman.h>
+#include <vndk/hardware_buffer.h>
 
 #include <Eigen/Core>
 #include <memory>
@@ -258,7 +259,7 @@ bool OperationExecutionContext::checkNoZeroSizedInput() const {
 class RunTimePoolInfo::RunTimePoolInfoImpl {
    public:
     RunTimePoolInfoImpl(const hidl_memory& hidlMemory, uint8_t* buffer, const sp<IMemory>& memory,
-                        const sp<GraphicBuffer>& graphicBuffer);
+                        AHardwareBuffer* hardwareBuffer);
 
     // rule of five...
     ~RunTimePoolInfoImpl();
@@ -277,15 +278,15 @@ class RunTimePoolInfo::RunTimePoolInfoImpl {
     const hidl_memory mHidlMemory;     // always used
     uint8_t* const mBuffer = nullptr;  // always used
     const sp<IMemory> mMemory;         // only used when hidlMemory.name() == "ashmem"
-    const sp<GraphicBuffer>
-            mGraphicBuffer;  // only used when hidlMemory.name() == "hardware_buffer_blob"
+    AHardwareBuffer*
+            mAHardwareBuffer;  // only used when hidlMemory.name() == "hardware_buffer_blob"
 };
 
 RunTimePoolInfo::RunTimePoolInfoImpl::RunTimePoolInfoImpl(const hidl_memory& hidlMemory,
                                                           uint8_t* buffer,
                                                           const sp<IMemory>& memory,
-                                                          const sp<GraphicBuffer>& graphicBuffer)
-    : mHidlMemory(hidlMemory), mBuffer(buffer), mMemory(memory), mGraphicBuffer(graphicBuffer) {}
+                                                          AHardwareBuffer* hardwareBuffer)
+    : mHidlMemory(hidlMemory), mBuffer(buffer), mMemory(memory), mAHardwareBuffer(hardwareBuffer) {}
 
 RunTimePoolInfo::RunTimePoolInfoImpl::~RunTimePoolInfoImpl() {
     if (mBuffer == nullptr) {
@@ -301,11 +302,15 @@ RunTimePoolInfo::RunTimePoolInfoImpl::~RunTimePoolInfoImpl() {
             LOG(ERROR) << "RunTimePoolInfoImpl::~RunTimePoolInfo(): Can't munmap";
         }
     } else if (memType == "hardware_buffer_blob") {
-        mGraphicBuffer->unlock();
+        AHardwareBuffer_unlock(mAHardwareBuffer, nullptr);
     } else if (memType == "") {
         // Represents a POINTER argument; nothing to do
     } else {
         LOG(ERROR) << "RunTimePoolInfoImpl::~RunTimePoolInfoImpl(): unsupported hidl_memory type";
+    }
+
+    if (mAHardwareBuffer != nullptr) {
+        AHardwareBuffer_release(mAHardwareBuffer);
     }
 }
 
@@ -329,7 +334,7 @@ std::optional<RunTimePoolInfo> RunTimePoolInfo::createFromHidlMemory(
         const hidl_memory& hidlMemory) {
     uint8_t* buffer = nullptr;
     sp<IMemory> memory;
-    sp<GraphicBuffer> graphicBuffer;
+    AHardwareBuffer* hardwareBuffer = nullptr;
 
     const auto& memType = hidlMemory.name();
     if (memType == "ashmem") {
@@ -361,14 +366,26 @@ std::optional<RunTimePoolInfo> RunTimePoolInfo::createFromHidlMemory(
         const uint32_t height = 1;  // height is always 1 for BLOB mode AHardwareBuffer.
         const uint32_t layers = 1;  // layers is always 1 for BLOB mode AHardwareBuffer.
         const uint32_t stride = hidlMemory.size();
-        graphicBuffer = new GraphicBuffer(handle, GraphicBuffer::HandleWrapMethod::CLONE_HANDLE,
-                                          width, height, format, layers, usage, stride);
-        void* gBuffer = nullptr;
-        int32_t outBytesPerPixel, outBytesPerStride;
-        status_t status =
-                graphicBuffer->lock(usage, &gBuffer, &outBytesPerPixel, &outBytesPerStride);
+
+        AHardwareBuffer_Desc desc{
+                .width = width,
+                .format = format,
+                .height = height,
+                .layers = layers,
+                .usage = usage,
+                .stride = stride,
+        };
+        status_t status = AHardwareBuffer_createFromHandle(
+                &desc, handle, AHARDWAREBUFFER_CREATE_FROM_HANDLE_METHOD_CLONE, &hardwareBuffer);
         if (status != NO_ERROR) {
-            LOG(ERROR) << "RunTimePoolInfo Can't lock the AHardwareBuffer.";
+            LOG(ERROR) << "RunTimePoolInfo Can't create AHardwareBuffer from handle. Error: "
+                       << status;
+            return std::nullopt;
+        }
+        void* gBuffer = nullptr;
+        status = AHardwareBuffer_lock(hardwareBuffer, usage, -1, nullptr, &gBuffer);
+        if (status != NO_ERROR) {
+            LOG(ERROR) << "RunTimePoolInfo Can't lock the AHardwareBuffer. Error: " << status;
             return std::nullopt;
         }
         buffer = static_cast<uint8_t*>(gBuffer);
@@ -378,7 +395,7 @@ std::optional<RunTimePoolInfo> RunTimePoolInfo::createFromHidlMemory(
     }
 
     const auto impl =
-            std::make_shared<const RunTimePoolInfoImpl>(hidlMemory, buffer, memory, graphicBuffer);
+            std::make_shared<const RunTimePoolInfoImpl>(hidlMemory, buffer, memory, hardwareBuffer);
     return {RunTimePoolInfo(impl)};
 }
 
