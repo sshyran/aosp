@@ -558,6 +558,7 @@ TEST(OperationValidationTest, TILE) {
     tileTest(ANEURALNETWORKS_TENSOR_FLOAT32);
     tileTest(ANEURALNETWORKS_TENSOR_INT32);
     tileTest(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM);
+    tileTest(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED);
 }
 
 void topkV2Test(int32_t inputOperandType) {
