@@ -4509,6 +4509,7 @@ typedef enum {
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
      * * {@link ANEURALNETWORKS_TENSOR_INT32}
      * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
+     * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED} (since API level 30)
      *
      * Supported tensor rank: from 1
      *
@@ -4519,7 +4520,8 @@ typedef enum {
      *
      * Outputs:
      * * 0: A tiled tensor of the same {@link OperandCode} and rank as `input`.
-     *      For a {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} tensor,
+     *      For a {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} and
+     *      {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED} tensor,
      *      the scale and zeroPoint must be the same as input0.
      *
      * Available since API level 29.
