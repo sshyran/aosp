@@ -176,7 +176,6 @@ cc_library_static {
         "liblog",
         "libnativewindow",
         "libtextclassifier_hash",
-        "libui",
         "libutils",
     ],
     header_libs: [
