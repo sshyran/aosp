@@ -415,8 +415,9 @@ hal::V1_3::Model convertToV1_3(const hal::V1_1::Model& model);
 hal::V1_3::Model convertToV1_3(const hal::V1_2::Model& model);
 hal::V1_3::Model convertToV1_3(const hal::V1_3::Model& model);
 
-hal::V1_0::OperationType uncheckedConvertToV1_0(hal::V1_2::OperationType type);
-hal::V1_1::OperationType uncheckedConvertToV1_1(hal::V1_2::OperationType type);
+hal::V1_0::OperationType uncheckedConvertToV1_0(hal::V1_3::OperationType type);
+hal::V1_1::OperationType uncheckedConvertToV1_1(hal::V1_3::OperationType type);
+hal::V1_2::OperationType uncheckedConvertToV1_2(hal::V1_3::OperationType type);
 
 hal::V1_0::Operand convertToV1_0(const hal::V1_2::Operand& operand);
 hal::V1_0::Operand convertToV1_0(const hal::V1_3::Operand& operand);
