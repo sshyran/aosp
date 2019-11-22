@@ -757,6 +757,9 @@
 %/kind
      * * {@link %{OperandTypeLinkPfx}TENSOR_FLOAT32}
      * * {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM}
+%kind ndk hal_1.3+
+     * * {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM_SIGNED} (since %{APILevel30})
+%/kind
      *
 %insert-lines NHWC_NCHW
      *
@@ -775,8 +778,14 @@
      * Outputs:
      * * 0: The output 4-D tensor, of shape [batch, height*block_size,
      *      width*block_size, depth/(block_size*block_size)].
+%kind ndk hal_1.3+
+     *      For a {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM} and
+     *      {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM_SIGNED} tensor,
+     *      the scale and zeroPoint must be the same as input0.
+%else
      *      For a {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM} tensor,
      *      the scale and zeroPoint must be the same as input0.
+%/kind
 %insert-lines AVAIL27
      */
     %{DeclareOperation DEPTH_TO_SPACE 5},
@@ -2036,6 +2045,9 @@
 %/kind
      * * {@link %{OperandTypeLinkPfx}TENSOR_FLOAT32}
      * * {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM}
+%kind ndk hal_1.3+
+     * * {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM_SIGNED} (since %{APILevel30})
+%/kind
      *
 %insert-lines NHWC_NCHW
      *
@@ -2054,8 +2066,14 @@
      * Outputs:
      * * 0: The output 4-D tensor, of shape [batches, height/block_size,
      *      width/block_size, depth_in*block_size*block_size].
+%kind ndk hal_1.3+
+     *      For a {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM} and
+     *      {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM_SIGNED} tensor,
+     *      the scale and zeroPoint must be the same as input0.
+%else
      *      For a {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM} tensor,
      *      the scale and zeroPoint must be the same as input0.
+%/kind
 %insert-lines AVAIL27
      */
     %{DeclareOperation SPACE_TO_DEPTH 26},
@@ -2204,6 +2222,9 @@
 %/kind
      * * {@link %{OperandTypeLinkPfx}TENSOR_FLOAT32}
      * * {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM}
+%kind ndk hal_1.3+
+     * * {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM_SIGNED} (since %{APILevel30})
+%/kind
      *
 %insert-lines NHWC_NCHW
      *
@@ -2220,8 +2241,14 @@
      *
      * Outputs:
      * * 0: A tensor of the same {@link %{OperandType}} as input0.
+%kind ndk hal_1.3+
+     *      For a {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM} and
+     *      {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM_SIGNED} tensor,
+     *      the scale and zeroPoint must be the same as input0.
+%else
      *      For a {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM} tensor,
      *      the scale and zeroPoint must be the same as input0.
+%/kind
 %insert-lines AVAIL28
      */
     %{DeclareOperation BATCH_TO_SPACE_ND 29},
@@ -2319,6 +2346,9 @@
 %/kind
      * * {@link %{OperandTypeLinkPfx}TENSOR_FLOAT32}
      * * {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM}
+%kind ndk hal_1.3+
+     * * {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM_SIGNED} (since %{APILevel30})
+%/kind
 %kind ndk hal_1.2+
      *   (full support since %{APILevel29}, see the output section)
 %else
@@ -2345,8 +2375,14 @@
      *      of the padding:
      *          output0.dimension[i] =
      *              padding[i, 0] + input0.dimension[i] + padding[i, 1]
+%kind ndk hal_1.3+
+     *      For a {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM} and
+     *      {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM_SIGNED} tensor,
+     *      the scale and zeroPoint must be the same as input0.
+%else
      *      For a {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM} tensor,
      *      the scale and zeroPoint must be the same as input0.
+%/kind
 %kind ndk hal_1.2+
      *
      *      NOTE: Before %{APILevel29}, the pad value for
@@ -2374,6 +2410,9 @@
 %/kind
      * * {@link %{OperandTypeLinkPfx}TENSOR_FLOAT32}
      * * {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM}
+%kind ndk hal_1.3+
+     * * {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM_SIGNED} (since %{APILevel30})
+%/kind
 %kind ndk hal_1.2+
      *   (full support since %{APILevel29}, see the output section)
 %else
@@ -2403,8 +2442,14 @@
      *
      * Outputs:
      * * 0: A tensor of the same {@link %{OperandType}} as input0.
+%kind ndk hal_1.3+
+     *      For a {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM} and
+     *      {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM_SIGNED} tensor,
+     *      the scale and zeroPoint must be the same as input0.
+%else
      *      For a {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM} tensor,
      *      the scale and zeroPoint must be the same as input0.
+%/kind
 %kind ndk hal_1.2+
      *
      *      NOTE: Before %{APILevel29}, the pad value for
@@ -4091,6 +4136,9 @@
      * * {@link %{OperandTypeLinkPfx}TENSOR_FLOAT16}
      * * {@link %{OperandTypeLinkPfx}TENSOR_FLOAT32}
      * * {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM}
+%kind ndk hal_1.3+
+     * * {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM_SIGNED} (since %{APILevel30})
+%/kind
      *
      * Supported tensor rank: up to 4
      *
@@ -4108,7 +4156,12 @@
      *      pad value must be of {@link %{OperandTypeLinkPfx}FLOAT16}.
      *      For input tensor of {@link %{OperandTypeLinkPfx}TENSOR_FLOAT32}, the
      *      pad value must be of {@link %{OperandTypeLinkPfx}FLOAT32}.
+%kind ndk hal_1.3+
+     *      For input tensor of {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM} and
+     *      {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM_SIGNED},
+%else
      *      For input tensor of {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM},
+%/kind
      *      the pad value must be of {@link %{OperandTypeLinkPfx}INT32}. The
      *      scale and zeroPoint are assumed to be the same as in input0.
      *
@@ -4120,8 +4173,14 @@
      *      of the padding:
      *          output0.dimension[i] =
      *              padding[i, 0] + input0.dimension[i] + padding[i, 1]
+%kind ndk hal_1.3+
+     *      For a {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM} and
+     *      {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM_SIGNED} tensor,
+     *      the scale and zeroPoint must be the same as input0.
+%else
      *      For a {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM} tensor,
      *      the scale and zeroPoint must be the same as input0.
+%/kind
 %insert-lines AVAIL29
      */
     %{DeclareOperation_1.2 PAD_V2 69},
