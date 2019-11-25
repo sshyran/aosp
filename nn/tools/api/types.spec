@@ -3200,7 +3200,7 @@
     %{DeclareOperation_1.2 BOX_WITH_NMS_LIMIT 44},
 
     /**
-     * Casts a tensor to a new type.
+     * Casts a tensor to a type.
      *
      * This operation ignores the scale and zeroPoint of quanized tensors,
      * e.g. it treats a {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM} input
@@ -3211,6 +3211,16 @@
      * * {@link %{OperandTypeLinkPfx}TENSOR_FLOAT32}
      * * {@link %{OperandTypeLinkPfx}TENSOR_INT32}
      * * {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM}
+%kind ndk hal_1.3+
+     * Since %{APILevel30}, casting tensors of the following
+     * {@link %{OperandType}} to the same {@link %{OperandType}} is supported:
+     * * {@link %{OperandTypeLinkPfx}TENSOR_BOOL8}
+     * * {@link %{OperandTypeLinkPfx}TENSOR_INT32}
+     * * {@link %{OperandTypeLinkPfx}TENSOR_QUANT16_ASYMM}
+     * * {@link %{OperandTypeLinkPfx}TENSOR_QUANT16_SYMM}
+     * * {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM_SIGNED}
+     * * {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_SYMM}
+%/kind
      *
      * Supported tensor rank: from 1
      *

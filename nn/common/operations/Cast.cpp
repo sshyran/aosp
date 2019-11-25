@@ -18,7 +18,10 @@
 
 #include "Cast.h"
 #include "HalInterfaces.h"
+#include "Operations.h"
 #include "Tracing.h"
+
+#include <algorithm>
 
 namespace android {
 namespace nn {
@@ -90,8 +93,12 @@ bool eval(const uint8_t* inputData, const Shape& inputShape, uint8_t* outputData
         ANDROID_NN_COPY_TO_TENSOR(OperandType::TENSOR_INT32, int32_t);
         ANDROID_NN_COPY_TO_TENSOR(OperandType::TENSOR_QUANT8_ASYMM, uint8_t);
         default:
-            LOG(ERROR) << "Unsupported CAST input type";
-            return false;
+            if (inputShape.type == outputShape.type) {
+                return copyData(inputData, inputShape, outputData, outputShape);
+            } else {
+                LOG(ERROR) << "Unsupported CAST input type";
+                return false;
+            }
     }
 #undef ANDROID_NN_COPY_TO_TENSOR
 }
