@@ -547,6 +547,7 @@ TEST(OperationValidationTest, SPLIT) {
     splitTest(ANEURALNETWORKS_TENSOR_FLOAT32);
     splitTest(ANEURALNETWORKS_TENSOR_INT32);
     splitTest(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM);
+    splitTest(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED);
 }
 
 void tileTest(int32_t inputOperandType) {
