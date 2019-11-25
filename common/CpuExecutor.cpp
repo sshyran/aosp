@@ -1399,25 +1399,6 @@ int CpuExecutor::executeOperation(const Operation& operation, RunTimeOperandInfo
                       setInfoAndAllocateIfNeeded(&output, outShape, &result) &&
                       cast::eval(input.buffer, input.shape(), output.buffer, outShape);
         } break;
-        case OperationType::SQUEEZE: {
-            if (ins.size() != 2 || outs.size() != 1 ||
-                operands[ins[0]].lifetime == OperandLifeTime::NO_VALUE ||
-                operands[outs[0]].lifetime == OperandLifeTime::NO_VALUE) {
-                LOG(ERROR) << "Wrong input/output count or lifetime for SQUEEZE op.";
-                return ANEURALNETWORKS_BAD_DATA;
-            }
-            const RunTimeOperandInfo& input = operands[ins[0]];
-            const RunTimeOperandInfo& squeezeDims = operands[ins[1]];
-
-            RunTimeOperandInfo& output = operands[outs[0]];
-            Shape outShape = output.shape();
-
-            success = squeezePrepare(input.shape(),
-                                     reinterpret_cast<const int32_t*>(squeezeDims.buffer),
-                                     squeezeDims.shape(), &outShape) &&
-                      setInfoAndAllocateIfNeeded(&output, outShape, &result) &&
-                      copyData(input.buffer, input.shape(), output.buffer, outShape);
-        } break;
         case OperationType::MEAN: {
             if (!allParametersPresent(3, 1)) {
                 return ANEURALNETWORKS_BAD_DATA;
