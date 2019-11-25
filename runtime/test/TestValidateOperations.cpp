@@ -363,9 +363,8 @@ TEST(OperationValidationTest, ARGMAX) {
 }
 
 void dequantizeOpTest(int32_t inputOperandType, int32_t outputOperandType) {
-    std::string scope = "inputType: " + std::to_string(inputOperandType) +
-                        ", outputType: " + std::to_string(outputOperandType);
-    SCOPED_TRACE(scope);
+    SCOPED_TRACE(testing::Message()
+                 << "inputType: " << inputOperandType << ", outputType: " << outputOperandType);
     uint32_t inputDimensions[4] = {2, 2, 2, 2};
     ANeuralNetworksOperandType input = getOpType(inputOperandType, 4, inputDimensions);
     ANeuralNetworksOperandType output = getOpType(outputOperandType, 4, inputDimensions);
@@ -2930,6 +2929,8 @@ TEST(OperationValidationTest, BOX_WITH_NMS_LIMIT_quant) {
 }
 
 void castOpTest(int32_t inputOperandCode, int32_t outputOperandCode) {
+    SCOPED_TRACE(testing::Message()
+                 << "inputType: " << inputOperandCode << ", outputType: " << outputOperandCode);
     uint32_t inputDimensions[3] = {2, 2, 2};
     ANeuralNetworksOperandType input = getOpType(inputOperandCode, 3, inputDimensions);
     ANeuralNetworksOperandType output = getOpType(outputOperandCode, 3, inputDimensions);
@@ -2946,6 +2947,23 @@ TEST(OperationValidationTest, CAST) {
         for (auto outputType : outputTypes) {
             castOpTest(inputType, outputType);
         }
+    }
+}
+
+TEST(OperationValidationTest, CAST_identity) {
+    std::vector<int32_t> inputTypes = {
+            ANEURALNETWORKS_TENSOR_FLOAT32,
+            ANEURALNETWORKS_TENSOR_INT32,
+            ANEURALNETWORKS_TENSOR_QUANT8_ASYMM,
+            ANEURALNETWORKS_TENSOR_QUANT16_SYMM,
+            ANEURALNETWORKS_TENSOR_FLOAT16,
+            ANEURALNETWORKS_TENSOR_BOOL8,
+            ANEURALNETWORKS_TENSOR_QUANT16_ASYMM,
+            ANEURALNETWORKS_TENSOR_QUANT8_SYMM,
+            ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED,
+    };
+    for (auto inputType : inputTypes) {
+        castOpTest(inputType, inputType);
     }
 }
 
