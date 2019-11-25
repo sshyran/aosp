@@ -239,6 +239,7 @@ typedef enum {
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
      * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
      * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED} (since API level 30)
+     * * {@link ANEURALNETWORKS_TENSOR_INT32} (since API level 30)
      *
      * Supported tensor rank: up to 4
      *
@@ -252,6 +253,8 @@ typedef enum {
      * * 2: An {@link ANEURALNETWORKS_INT32} scalar, and has to be one of the
      *      {@link FuseCode} values. Specifies the activation to
      *      invoke on the result.
+     *      For a {@link ANEURALNETWORKS_TENSOR_INT32} tensor,
+     *      the {@link FuseCode} must be "NONE".
      *
      * Outputs:
      * * 0: The sum, a tensor of the same {@link OperandCode} as input0.
