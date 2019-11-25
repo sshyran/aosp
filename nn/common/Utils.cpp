@@ -1638,8 +1638,9 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
                                    OperandType::INT32,          OperandType::INT32,
                                    OperandType::INT32,          OperandType::INT32};
                 outExpectedTypes = {OperandType::TENSOR_FLOAT16};
-            } else if (inputType == OperandType::TENSOR_QUANT8_ASYMM) {
-                if (filterType != OperandType::TENSOR_QUANT8_ASYMM &&
+            } else if (inputType == OperandType::TENSOR_QUANT8_ASYMM ||
+                       inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
+                if (filterType != inputType &&
                     filterType != OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL) {
                     LOG(ERROR) << "Unsupported filter tensor type for operation "
                                << getOperationName(opType);
@@ -1653,15 +1654,11 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
                     return ANEURALNETWORKS_BAD_DATA;
                 }
 
-                inExpectedTypes = {OperandType::TENSOR_QUANT8_ASYMM,
-                                   filterType,
-                                   OperandType::TENSOR_INT32,
-                                   OperandType::INT32,
-                                   OperandType::INT32,
-                                   OperandType::INT32,
-                                   OperandType::INT32,
-                                   OperandType::INT32};
-                outExpectedTypes = {OperandType::TENSOR_QUANT8_ASYMM};
+                inExpectedTypes = {
+                        inputType,          filterType,         OperandType::TENSOR_INT32,
+                        OperandType::INT32, OperandType::INT32, OperandType::INT32,
+                        OperandType::INT32, OperandType::INT32};
+                outExpectedTypes = {inputType};
             } else {
                 LOG(ERROR) << "Unsupported input tensor type for operation "
                            << getOperationName(opType);
@@ -1674,7 +1671,11 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
                                        explicitScalarTypes.end());
             }
             inExpectedTypes.push_back(OperandType::BOOL);
-            NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_2));
+            if (inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
+                NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_3));
+            } else {
+                NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_2));
+            }
             return validateOperationOperandTypes(operands, inputCount, inputIndexes,
                                                  inExpectedTypes, outputCount, outputIndexes,
                                                  outExpectedTypes);
