@@ -1567,6 +1567,15 @@ int CpuExecutor::executeOperation(const Operation& operation) {
                               splitQuant8(reinterpret_cast<const uint8_t*>(input.buffer),
                                           input.shape(), axis, &outputDataPtrs, outputShapes);
                 } break;
+                case OperandType::TENSOR_QUANT8_ASYMM_SIGNED: {
+                    std::vector<int8_t*> outputDataPtrs(numOutputs);
+                    for (int i = 0; i < numOutputs; ++i) {
+                        outputDataPtrs[i] = reinterpret_cast<int8_t*>(mOperands[outs[i]].buffer);
+                    }
+                    success = success &&
+                              splitQuant8Signed(reinterpret_cast<const int8_t*>(input.buffer),
+                                                input.shape(), axis, &outputDataPtrs, outputShapes);
+                } break;
                 default: {
                     return ANEURALNETWORKS_BAD_DATA;
                 }

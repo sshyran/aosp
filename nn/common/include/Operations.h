@@ -138,6 +138,10 @@ bool splitQuant8(const uint8_t* inputData, const Shape& inputShape, const int32_
                  const std::vector<uint8_t*>* outputDataPtrs,
                  const std::vector<Shape>& outputShapes);
 
+bool splitQuant8Signed(const int8_t* inputData, const Shape& inputShape, const int32_t axis,
+                       const std::vector<int8_t*>* outputDataPtrs,
+                       const std::vector<Shape>& outputShapes);
+
 bool groupedConvFloat16(const _Float16* inputData, const Shape& inputShape,
                         const _Float16* filterData, const Shape& filterShape,
                         const _Float16* biasData, const Shape& biasShape, int32_t numGroups,
