@@ -53,6 +53,7 @@ cc_defaults {
         "operations/Select.cpp",
         "operations/Slice.cpp",
         "operations/Softmax.cpp",
+        "operations/Squeeze.cpp",
         "operations/StridedSlice.cpp",
         "operations/Transpose.cpp",
         "operations/TransposeConv2D.cpp",

@@ -328,9 +328,6 @@ bool spaceToBatchPrepare(const Shape& input, const int32_t* blockSizeData,
                          const Shape& blockSizeShape, const int32_t* paddingsData,
                          const Shape& paddingsShape, Shape* output);
 
-bool squeezePrepare(const Shape& input, const int32_t* squeezeDims, const Shape& squeezeDimsShape,
-                    Shape* output);
-
 bool meanPrepare(const Shape& input, const int32_t* axisData, const Shape& axisShape, bool keepDims,
                  Shape* output);
 
