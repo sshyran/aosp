@@ -886,6 +886,7 @@ TEST(OperationValidationTest, RESHAPE) {
     reshapeOpTest(ANEURALNETWORKS_TENSOR_FLOAT16);
     reshapeOpTest(ANEURALNETWORKS_TENSOR_FLOAT32);
     reshapeOpTest(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM);
+    reshapeOpTest(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED);
 }
 
 void logSoftmaxOpTest(int32_t inputOperandCode) {
