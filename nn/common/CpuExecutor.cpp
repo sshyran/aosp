@@ -1430,6 +1430,11 @@ int CpuExecutor::executeOperation(const Operation& operation, RunTimeOperandInfo
                         reinterpret_cast<uint8_t*>(input.buffer), input.shape(),
                         reinterpret_cast<const int32_t*>(axis.buffer), axis.shape(), keepDims > 0,
                         reinterpret_cast<uint8_t*>(output.buffer), outShape);
+            } else if (input.type == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
+                success = meanGeneric<int8_t, int32_t>(
+                        reinterpret_cast<int8_t*>(input.buffer), input.shape(),
+                        reinterpret_cast<const int32_t*>(axis.buffer), axis.shape(), keepDims > 0,
+                        reinterpret_cast<int8_t*>(output.buffer), outShape);
             }
         } break;
         case OperationType::ARGMAX:
