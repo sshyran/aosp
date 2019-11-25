@@ -1286,6 +1286,10 @@ TEST(OperationValidationTest, SQUEEZE_quant8) {
     transposeAndSqueezeOpTest(ANEURALNETWORKS_SQUEEZE, ANEURALNETWORKS_TENSOR_QUANT8_ASYMM);
 }
 
+TEST(OperationValidationTest, SQUEEZE_quant8_signed) {
+    transposeAndSqueezeOpTest(ANEURALNETWORKS_SQUEEZE, ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED);
+}
+
 void convOpTest(int32_t inputOperandCode, int32_t filterOperandCode) {
     uint32_t inputDimensions[4] = {2, 4, 4, 2};
     ANeuralNetworksOperandType input = getOpType(inputOperandCode, 4, inputDimensions);
