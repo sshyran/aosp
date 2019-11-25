@@ -1275,6 +1275,11 @@ TEST(OperationValidationTest, TRANSPOSE_quant8) {
     transposeAndSqueezeOpTest(ANEURALNETWORKS_TRANSPOSE, ANEURALNETWORKS_TENSOR_QUANT8_ASYMM);
 }
 
+TEST(OperationValidationTest, TRANSPOSE_quant8signed) {
+    transposeAndSqueezeOpTest(ANEURALNETWORKS_TRANSPOSE,
+                              ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED);
+}
+
 TEST(OperationValidationTest, SQUEEZE_quant8) {
     transposeAndSqueezeOpTest(ANEURALNETWORKS_SQUEEZE, ANEURALNETWORKS_TENSOR_QUANT8_ASYMM);
 }
