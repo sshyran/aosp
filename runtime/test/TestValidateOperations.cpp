@@ -950,6 +950,10 @@ TEST(OperationValidationTest, MEAN_quant8) {
     meanOpTest(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM);
 }
 
+TEST(OperationValidationTest, MEAN_quant8_signed) {
+    meanOpTest(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED);
+}
+
 void padOpTest(int32_t inputOperandCode) {
     SCOPED_TRACE(inputOperandCode);
     uint32_t inputDimensions[4] = {2, 2, 2, 2};
