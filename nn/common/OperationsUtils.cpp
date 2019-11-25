@@ -662,53 +662,6 @@ bool spaceToBatchPrepare(const Shape& input, const int32_t* blockSizeData,
     return true;
 }
 
-bool squeezePrepare(const Shape& input, const int32_t* squeezeDims, const Shape& squeezeDimsShape,
-                    Shape* output) {
-    int32_t numInputDims = static_cast<int32_t>(getNumberOfDimensions(input));
-
-    // squeezeDims need to be provided as a 1-D int32 tensor.
-    NN_OPS_CHECK(squeezeDimsShape.type == OperandType::TENSOR_INT32);
-    NN_OPS_CHECK(getNumberOfDimensions(squeezeDimsShape) == 1);
-
-    int32_t squeezeDimsSize = static_cast<int32_t>(getSizeOfDimension(squeezeDimsShape, 0));
-    std::vector<bool> shouldSqueeze(numInputDims, false);
-    int32_t numDimsSqueezed = 0;
-
-    if (squeezeDimsSize == 0) {
-        // If squeezeDimsSize is 0, all dims with value 1 will be squeezed.
-        for (int32_t idx = 0; idx < numInputDims; ++idx) {
-            if (getSizeOfDimension(input, idx) == 1) {
-                shouldSqueeze[idx] = true;
-                ++numDimsSqueezed;
-            }
-        }
-    } else {
-        for (int32_t idx = 0; idx < squeezeDimsSize; ++idx) {
-            int32_t current =
-                    squeezeDims[idx] < 0 ? squeezeDims[idx] + numInputDims : squeezeDims[idx];
-            NN_OPS_CHECK(current >= 0 && current < numInputDims &&
-                         getSizeOfDimension(input, current) == 1);
-            if (!shouldSqueeze[current]) ++numDimsSqueezed;
-            shouldSqueeze[current] = true;
-        }
-    }
-
-    // Sets output dimensions.
-    std::vector<uint32_t> outDims(numInputDims - numDimsSqueezed);
-    for (int32_t inIdx = 0, outIdx = 0; inIdx < numInputDims; ++inIdx) {
-        if (!shouldSqueeze[inIdx]) {
-            outDims[outIdx++] = getSizeOfDimension(input, inIdx);
-        }
-    }
-
-    output->type = input.type;
-    output->dimensions = outDims;
-    output->offset = input.offset;
-    output->scale = input.scale;
-
-    return true;
-}
-
 bool meanPrepare(const Shape& input, const int32_t* axisData, const Shape& axisShape, bool keepDims,
                  Shape* output) {
     // perm need to be provided as a 1-D int32 tensor.
