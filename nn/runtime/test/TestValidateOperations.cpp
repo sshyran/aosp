@@ -2583,6 +2583,10 @@ TEST(OperationValidationTest, CHANNEL_SHUFFLE_quant8) {
     channelShuffleOpTest(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM);
 }
 
+TEST(OperationValidationTest, CHANNEL_SHUFFLE_quant8signed) {
+    channelShuffleOpTest(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED);
+}
+
 void detectionPostprocessingOpTest(int32_t inputOperandCode) {
     SCOPED_TRACE(inputOperandCode);
     const int numBatches = 2;
