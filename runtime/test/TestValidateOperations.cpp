@@ -592,6 +592,7 @@ TEST(OperationValidationTest, TOPK_V2) {
     topkV2Test(ANEURALNETWORKS_TENSOR_FLOAT32);
     topkV2Test(ANEURALNETWORKS_TENSOR_INT32);
     topkV2Test(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM);
+    topkV2Test(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED);
 }
 
 void simpleMathOpTest(ANeuralNetworksOperationType operationCode, int32_t operandCode) {
