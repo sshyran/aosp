@@ -155,13 +155,10 @@ class DeathHandler : public hidl_death_recipient {
 class IDeviceDeathHandler : public DeathHandler<IPreparedModelCallback> {};
 class IPreparedModelDeathHandler : public DeathHandler<IExecutionCallback> {};
 
-static std::shared_ptr<VersionedIPreparedModel> makeVersionedIPreparedModel(
+static std::pair<int, std::shared_ptr<VersionedIPreparedModel>> makeVersionedIPreparedModel(
         sp<V1_0::IPreparedModel> preparedModel) {
-    // verify input
-    if (preparedModel == nullptr) {
-        LOG(ERROR) << "makeVersionedIPreparedModel passed invalid preparedModel object.";
-        return nullptr;
-    }
+    CHECK(preparedModel != nullptr)
+            << "makeVersionedIPreparedModel passed invalid preparedModel object.";
 
     // create death handler object
     sp<IPreparedModelDeathHandler> deathHandler = new IPreparedModelDeathHandler();
@@ -174,12 +171,12 @@ static std::shared_ptr<VersionedIPreparedModel> makeVersionedIPreparedModel(
     if (!ret.isOk() || ret != true) {
         LOG(ERROR) << "makeVersionedIPreparedModel failed to register a death recipient for the "
                       "IPreparedModel object.";
-        return nullptr;
+        return {ANEURALNETWORKS_OP_FAILED, nullptr};
     }
 
     // return a valid VersionedIPreparedModel object
-    return std::make_shared<VersionedIPreparedModel>(std::move(preparedModel),
-                                                     std::move(deathHandler));
+    return {ANEURALNETWORKS_NO_ERROR, std::make_shared<VersionedIPreparedModel>(
+                                              std::move(preparedModel), std::move(deathHandler))};
 }
 
 VersionedIPreparedModel::VersionedIPreparedModel(sp<V1_0::IPreparedModel> preparedModel,
@@ -914,13 +911,49 @@ static bool getCacheHandles(const std::string& cacheDir, const CacheToken& token
     return true;
 }
 
-std::pair<ErrorStatus, std::shared_ptr<VersionedIPreparedModel>>
-VersionedIDevice::prepareModelInternal(const Model& model, ExecutionPreference preference,
-                                       const hidl_vec<hidl_handle>& modelCache,
-                                       const hidl_vec<hidl_handle>& dataCache,
-                                       const CacheToken& token) const {
-    const std::pair<ErrorStatus, std::shared_ptr<VersionedIPreparedModel>> kFailure = {
-            ErrorStatus::GENERAL_FAILURE, nullptr};
+static std::pair<int, std::shared_ptr<VersionedIPreparedModel>> prepareModelFailure(
+        ErrorStatus status = ErrorStatus::GENERAL_FAILURE) {
+    return {convertErrorStatusToResultCode(status), nullptr};
+}
+
+static std::pair<int, std::shared_ptr<VersionedIPreparedModel>> prepareModelResult(
+        const PreparedModelCallback& callback, const char* prepareName,
+        const std::string& serviceName) {
+    callback.wait();
+    const ErrorStatus status = callback.getStatus();
+    const sp<V1_0::IPreparedModel> preparedModel = callback.getPreparedModel();
+
+    if (status != ErrorStatus::NONE) {
+        LOG(ERROR) << prepareName << " on " << serviceName << " failed: "
+                   << "prepareReturnStatus=" << toString(status);
+        return prepareModelFailure(status);
+    }
+    if (preparedModel == nullptr) {
+        LOG(ERROR) << prepareName << " on " << serviceName << " failed: preparedModel is nullptr";
+        return prepareModelFailure();
+    }
+
+    return makeVersionedIPreparedModel(preparedModel);
+}
+
+std::pair<int, std::shared_ptr<VersionedIPreparedModel>> VersionedIDevice::prepareModelInternal(
+        const Model& model, ExecutionPreference preference, const std::string& cacheDir,
+        const std::optional<CacheToken>& maybeToken) const {
+    // Note that some work within VersionedIDevice will be subtracted from the IPC layer
+    NNTRACE_FULL(NNTRACE_LAYER_IPC, NNTRACE_PHASE_COMPILATION, "prepareModel");
+
+    // Get cache files if they exist, otherwise create them.
+    hidl_vec<hidl_handle> modelCache, dataCache;
+    if (!maybeToken.has_value() ||
+        !getCacheHandles(cacheDir, *maybeToken, mNumberOfCacheFilesNeeded,
+                         /*createIfNotExist=*/true, &modelCache, &dataCache)) {
+        modelCache.resize(0);
+        dataCache.resize(0);
+    }
+
+    // Get the token if it exists, otherwise get a null token.
+    static const CacheToken kNullToken{};
+    const CacheToken token = maybeToken.value_or(kNullToken);
 
     const sp<PreparedModelCallback> callback = new PreparedModelCallback();
 
@@ -936,14 +969,13 @@ VersionedIDevice::prepareModelInternal(const Model& model, ExecutionPreference p
                 callback);
         if (!ret.isOk()) {
             LOG(ERROR) << "prepareModel_1_3 failure: " << ret.description();
-            return kFailure;
+            return prepareModelFailure();
         }
         if (ret != ErrorStatus::NONE) {
             LOG(ERROR) << "prepareModel_1_3 returned " << toString(static_cast<ErrorStatus>(ret));
-            return kFailure;
+            return prepareModelFailure(ret);
         }
-        callback->wait();
-        return {callback->getStatus(), makeVersionedIPreparedModel(callback->getPreparedModel())};
+        return prepareModelResult(*callback, "prepareModel_1_3", mServiceName);
     }
 
     // If 1.2 device, try preparing model (requires conversion)
@@ -972,20 +1004,18 @@ VersionedIDevice::prepareModelInternal(const Model& model, ExecutionPreference p
                     callback);
             if (!ret.isOk()) {
                 LOG(ERROR) << "prepareModel_1_2 failure: " << ret.description();
-                return kFailure;
+                return prepareModelFailure();
             }
             if (ret != ErrorStatus::NONE) {
                 LOG(ERROR) << "prepareModel_1_2 returned "
                            << toString(static_cast<ErrorStatus>(ret));
-                return kFailure;
+                return prepareModelFailure(ret);
             }
-            callback->wait();
-            return {callback->getStatus(),
-                    makeVersionedIPreparedModel(callback->getPreparedModel())};
+            return prepareModelResult(*callback, "prepareModel_1_2", mServiceName);
         }
 
         LOG(ERROR) << "Could not handle prepareModel_1_2!";
-        return kFailure;
+        return prepareModelFailure();
     }
 
     // If 1.1 device, try preparing model (requires conversion)
@@ -1012,20 +1042,18 @@ VersionedIDevice::prepareModelInternal(const Model& model, ExecutionPreference p
                     callback);
             if (!ret.isOk()) {
                 LOG(ERROR) << "prepareModel_1_1 failure: " << ret.description();
-                return kFailure;
+                return prepareModelFailure();
             }
             if (ret != ErrorStatus::NONE) {
                 LOG(ERROR) << "prepareModel_1_1 returned "
                            << toString(static_cast<ErrorStatus>(ret));
-                return kFailure;
+                return prepareModelFailure(ret);
             }
-            callback->wait();
-            return {callback->getStatus(),
-                    makeVersionedIPreparedModel(callback->getPreparedModel())};
+            return prepareModelResult(*callback, "prepareModel_1_1", mServiceName);
         }
 
         LOG(ERROR) << "Could not handle prepareModel_1_1!";
-        return kFailure;
+        return prepareModelFailure();
     }
 
     // If 1.0 device, try preparing model (requires conversion)
@@ -1052,32 +1080,37 @@ VersionedIDevice::prepareModelInternal(const Model& model, ExecutionPreference p
                     callback);
             if (!ret.isOk()) {
                 LOG(ERROR) << "prepareModel failure: " << ret.description();
-                return kFailure;
+                return prepareModelFailure();
             }
             if (ret != ErrorStatus::NONE) {
                 LOG(ERROR) << "prepareModel returned " << toString(static_cast<ErrorStatus>(ret));
-                return kFailure;
+                return prepareModelFailure(ret);
             }
-            callback->wait();
-            return {callback->getStatus(),
-                    makeVersionedIPreparedModel(callback->getPreparedModel())};
+            return prepareModelResult(*callback, "prepareModel", mServiceName);
         }
 
         LOG(ERROR) << "Could not handle prepareModel!";
-        return kFailure;
+        return prepareModelFailure();
     }
 
     // Return error because there is no valid device
     LOG(ERROR) << "prepareModel called with no device";
-    return kFailure;
+    return prepareModelFailure();
 }
 
-std::pair<ErrorStatus, std::shared_ptr<VersionedIPreparedModel>>
-VersionedIDevice::prepareModelFromCacheInternal(const hidl_vec<hidl_handle>& modelCache,
-                                                const hidl_vec<hidl_handle>& dataCache,
+std::pair<int, std::shared_ptr<VersionedIPreparedModel>>
+VersionedIDevice::prepareModelFromCacheInternal(const std::string& cacheDir,
                                                 const CacheToken& token) const {
-    const std::pair<ErrorStatus, std::shared_ptr<VersionedIPreparedModel>> kFailure = {
-            ErrorStatus::GENERAL_FAILURE, nullptr};
+    // Note that some work within VersionedIDevice will be subtracted from the IPC layer
+    NNTRACE_FULL(NNTRACE_LAYER_IPC, NNTRACE_PHASE_COMPILATION, "prepareModelFromCache");
+    VLOG(COMPILATION) << "prepareModelFromCache";
+
+    // Get cache files if they exist, otherwise return from the function early.
+    hidl_vec<hidl_handle> modelCache, dataCache;
+    if (!getCacheHandles(cacheDir, token, mNumberOfCacheFilesNeeded,
+                         /*createIfNotExist=*/false, &modelCache, &dataCache)) {
+        return prepareModelFailure();
+    }
 
     // version 1.3+ HAL
     if (getDevice<V1_3::IDevice>() != nullptr) {
@@ -1091,15 +1124,14 @@ VersionedIDevice::prepareModelFromCacheInternal(const hidl_vec<hidl_handle>& mod
                 callback);
         if (!ret.isOk()) {
             LOG(ERROR) << "prepareModelFromCache_1_3 failure: " << ret.description();
-            return kFailure;
+            return prepareModelFailure();
         }
         if (ret != ErrorStatus::NONE) {
             LOG(ERROR) << "prepareModelFromCache_1_3 returned "
                        << toString(static_cast<ErrorStatus>(ret));
-            return kFailure;
+            return prepareModelFailure(ret);
         }
-        callback->wait();
-        return {callback->getStatus(), makeVersionedIPreparedModel(callback->getPreparedModel())};
+        return prepareModelResult(*callback, "prepareModelFromCache_1_3", mServiceName);
     }
 
     // version 1.2 HAL
@@ -1113,82 +1145,42 @@ VersionedIDevice::prepareModelFromCacheInternal(const hidl_vec<hidl_handle>& mod
                 callback);
         if (!ret.isOk()) {
             LOG(ERROR) << "prepareModelFromCache failure: " << ret.description();
-            return kFailure;
+            return prepareModelFailure();
         }
         if (ret != ErrorStatus::NONE) {
             LOG(ERROR) << "prepareModelFromCache returned "
                        << toString(static_cast<ErrorStatus>(ret));
-            return kFailure;
+            return prepareModelFailure(ret);
         }
-        callback->wait();
-        return {callback->getStatus(), makeVersionedIPreparedModel(callback->getPreparedModel())};
+        return prepareModelResult(*callback, "prepareModelFromCache", mServiceName);
     }
 
     // version too low
     if (getDevice<V1_0::IDevice>() != nullptr) {
         LOG(ERROR) << "prepareModelFromCache called on V1_1 or V1_0 device";
-        return kFailure;
+        return prepareModelFailure();
     }
 
     // No device available
     LOG(ERROR) << "prepareModelFromCache called with no device";
-    return kFailure;
-}
-
-static std::pair<int, std::shared_ptr<VersionedIPreparedModel>> prepareModelCheck(
-        ErrorStatus status, const std::shared_ptr<VersionedIPreparedModel>& preparedModel,
-        const char* prepareName, const std::string& serviceName) {
-    if (status != ErrorStatus::NONE) {
-        LOG(ERROR) << prepareName << " on " << serviceName << " failed: "
-                   << "prepareReturnStatus=" << toString(status);
-        return {ANEURALNETWORKS_OP_FAILED, nullptr};
-    }
-    if (preparedModel == nullptr) {
-        LOG(ERROR) << prepareName << " on " << serviceName << " failed: preparedModel is nullptr";
-        return {ANEURALNETWORKS_OP_FAILED, nullptr};
-    }
-
-    return {ANEURALNETWORKS_NO_ERROR, preparedModel};
+    return prepareModelFailure();
 }
 
 std::pair<int, std::shared_ptr<VersionedIPreparedModel>> VersionedIDevice::prepareModel(
-        const Model& model, ExecutionPreference preference, const std::string& cacheDir,
+        const ModelFactory& makeModel, ExecutionPreference preference, const std::string& cacheDir,
         const std::optional<CacheToken>& maybeToken) const {
-    // Note that some work within VersionedIDevice will be subtracted from the IPC layer
-    NNTRACE_FULL(NNTRACE_LAYER_IPC, NNTRACE_PHASE_COMPILATION, "prepareModel");
-
-    hidl_vec<hidl_handle> modelCache, dataCache;
-    if (!maybeToken.has_value() ||
-        !getCacheHandles(cacheDir, *maybeToken, mNumberOfCacheFilesNeeded,
-                         /*createIfNotExist=*/true, &modelCache, &dataCache)) {
-        modelCache.resize(0);
-        dataCache.resize(0);
+    // Attempt to compile from cache if token is present.
+    if (maybeToken.has_value()) {
+        const auto [n, preparedModel] = prepareModelFromCacheInternal(cacheDir, *maybeToken);
+        if (n == ANEURALNETWORKS_NO_ERROR) {
+            return {n, preparedModel};
+        }
     }
 
-    static const CacheToken kNullToken{};
-    const CacheToken token = maybeToken.value_or(kNullToken);
-    const auto [status, preparedModel] =
-            prepareModelInternal(model, preference, modelCache, dataCache, token);
-
-    return prepareModelCheck(status, preparedModel, "prepareModel", mServiceName);
-}
-
-std::pair<int, std::shared_ptr<VersionedIPreparedModel>> VersionedIDevice::prepareModelFromCache(
-        const std::string& cacheDir, const CacheToken& token) const {
-    // Note that some work within VersionedIDevice will be subtracted from the IPC layer
-    NNTRACE_FULL(NNTRACE_LAYER_IPC, NNTRACE_PHASE_COMPILATION, "prepareModelFromCache");
-    VLOG(COMPILATION) << "prepareModelFromCache";
-
-    hidl_vec<hidl_handle> modelCache, dataCache;
-    if (!getCacheHandles(cacheDir, token, mNumberOfCacheFilesNeeded,
-                         /*createIfNotExist=*/false, &modelCache, &dataCache)) {
-        return {ANEURALNETWORKS_OP_FAILED, nullptr};
-    }
-
-    const auto [status, preparedModel] =
-            prepareModelFromCacheInternal(modelCache, dataCache, token);
-
-    return prepareModelCheck(status, preparedModel, "prepareModelFromCache", mServiceName);
+    // Fallback to full compilation (possibly with token) if
+    // prepareModelFromCache could not be used or failed.
+    const Model model = makeModel();
+    return prepareModelInternal(model, preference, cacheDir, maybeToken);
 }
 
 DeviceStatus VersionedIDevice::getStatus() const {
