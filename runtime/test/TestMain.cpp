@@ -14,6 +14,9 @@
  * limitations under the License.
  */
 
+#define LOG_TAG "NeuralNetworksTest"
+
+#include "LogTestCaseToLogcat.h"
 #include "TestNeuralNetworksWrapper.h"
 
 #ifndef NNTEST_ONLY_PUBLIC_API
@@ -23,10 +26,13 @@
 
 #include <android-base/logging.h>
 #include <gtest/gtest.h>
+
 #include <cctype>
 #include <iostream>
 #include <sstream>
 #include <string>
+
+namespace {
 
 using namespace android::nn::test_wrapper;
 
@@ -80,7 +86,7 @@ static int test(bool useCpuOnly, Execution::ComputeMode computeMode, bool allowS
     stream << "useCpuOnly = " << useCpuOnly << ", computeMode = " << computeModeText()
            << ", allowSyncExecHal = " << allowSyncExecHal << "  // pass " << passIndex;
     const std::string message = stream.str();
-    LOG(INFO) << "NeuralNetworksTest: " << message;
+    LOG(INFO) << message;
     std::cout << "[**********] " << message << std::endl;
     SCOPED_TRACE(message);
 
@@ -100,8 +106,11 @@ void checkArgs(int argc, char** argv, int nextArg) {
     }
 }
 
+}  // namespace
+
 int main(int argc, char** argv) {
-    ::testing::InitGoogleTest(&argc, argv);
+    testing::InitGoogleTest(&argc, argv);
+    testing::UnitTest::GetInstance()->listeners().Append(new android::nn::LogTestCaseToLogcat());
 
     if ((argc > 1) && std::isdigit(argv[1][0])) {
         allowedPasses = std::stoull(argv[1]);
