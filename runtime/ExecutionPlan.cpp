@@ -542,7 +542,8 @@ ExecutionPlan::Controller::Controller(
       mExecutionBuilder(executionBuilder),
       mBurstBuilder(burstBuilder),
       mSubModelInputsAndOutputs(subModelInputsAndOutputs),
-      mNextStepIndex(0) {
+      mNextStepIndex(0),
+      mLastStepIndex(kBadStepIndex) {
     if (totalSizeOfTemporaries) {
         int n;
         std::tie(n, mTemporaries) = MemoryAshmem::create(totalSizeOfTemporaries);
@@ -660,7 +661,7 @@ int ExecutionPlan::fallback(std::shared_ptr<Controller> controller,
     VLOG(EXECUTION) << "ExecutionPlan::fallback(" << controller << ", " << executor
                     << "): mNextStepIndex = " << controller->mNextStepIndex;
 
-    if (controller->mNextStepIndex == 0) {
+    if (controller->mLastStepIndex == Controller::kBadStepIndex) {
         // We haven't called next().
         return ANEURALNETWORKS_OP_FAILED;
     }
@@ -670,13 +671,14 @@ int ExecutionPlan::fallback(std::shared_ptr<Controller> controller,
         return ANEURALNETWORKS_OP_FAILED;
     }
 
-    --controller->mNextStepIndex;
+    controller->mNextStepIndex = controller->mLastStepIndex;
     return next(controller, executor);
 }
 
 int ExecutionPlan::next(std::shared_ptr<Controller> controller,
                         std::shared_ptr<StepExecutor>* executor,
                         std::shared_ptr<ExecutionBurstController>* burstController) const {
+    controller->mLastStepIndex = controller->mNextStepIndex;
     *executor = nullptr;
     if (burstController != nullptr) {
         *burstController = nullptr;
