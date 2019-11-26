@@ -35,6 +35,7 @@
 #include "CpuExecutor.h"
 #include "ExecutionBurstServer.h"
 #include "HalInterfaces.h"
+#include "SampleDriverUtils.h"
 #include "Tracing.h"
 #include "ValidateHal.h"
 
@@ -151,63 +152,6 @@ Return<void> SampleDriver::getNumberOfCacheFilesNeeded(getNumberOfCacheFilesNeed
     return Void();
 }
 
-static void notify(const sp<V1_0::IPreparedModelCallback>& callback, const ErrorStatus& status,
-                   const sp<SamplePreparedModel>& preparedModel) {
-    const auto ret = callback->notify(status, preparedModel);
-    if (!ret.isOk()) {
-        LOG(ERROR) << "Error when calling IPreparedModelCallback::notify: " << ret.description();
-    }
-}
-
-static void notify(const sp<V1_2::IPreparedModelCallback>& callback, const ErrorStatus& status,
-                   const sp<SamplePreparedModel>& preparedModel) {
-    const auto ret = callback->notify_1_2(status, preparedModel);
-    if (!ret.isOk()) {
-        LOG(ERROR) << "Error when calling IPreparedModelCallback::notify_1_2: "
-                   << ret.description();
-    }
-}
-
-static void notify(const sp<V1_3::IPreparedModelCallback>& callback, const ErrorStatus& status,
-                   const sp<SamplePreparedModel>& preparedModel) {
-    const auto ret = callback->notify_1_3(status, preparedModel);
-    if (!ret.isOk()) {
-        LOG(ERROR) << "Error when calling IPreparedModelCallback::notify_1_3: "
-                   << ret.description();
-    }
-}
-
-template <typename T_Model, typename T_IPreparedModelCallback>
-Return<ErrorStatus> prepareModelBase(const T_Model& model, const SampleDriver* driver,
-                                     ExecutionPreference preference,
-                                     const sp<T_IPreparedModelCallback>& callback) {
-    if (callback.get() == nullptr) {
-        LOG(ERROR) << "invalid callback passed to prepareModelBase";
-        return ErrorStatus::INVALID_ARGUMENT;
-    }
-    if (VLOG_IS_ON(DRIVER)) {
-        VLOG(DRIVER) << "prepareModelBase";
-        logModelToInfo(model);
-    }
-    if (!validateModel(model) || !validateExecutionPreference(preference)) {
-        notify(callback, ErrorStatus::INVALID_ARGUMENT, nullptr);
-        return ErrorStatus::INVALID_ARGUMENT;
-    }
-
-    // asynchronously prepare the model from a new, detached thread
-    std::thread([model, driver, preference, callback] {
-        sp<SamplePreparedModel> preparedModel =
-                new SamplePreparedModel(convertToV1_3(model), driver, preference);
-        if (!preparedModel->initialize()) {
-            notify(callback, ErrorStatus::INVALID_ARGUMENT, nullptr);
-            return;
-        }
-        notify(callback, ErrorStatus::NONE, preparedModel);
-    }).detach();
-
-    return ErrorStatus::NONE;
-}
-
 Return<ErrorStatus> SampleDriver::prepareModel(const V1_0::Model& model,
                                                const sp<V1_0::IPreparedModelCallback>& callback) {
     NNTRACE_FULL(NNTRACE_LAYER_DRIVER, NNTRACE_PHASE_COMPILATION, "SampleDriver::prepareModel");
@@ -274,22 +218,6 @@ int SampleDriver::run() {
 
 bool SamplePreparedModel::initialize() {
     return setRunTimePoolInfosFromHidlMemories(&mPoolInfos, mModel.pools);
-}
-
-static void notify(const sp<V1_0::IExecutionCallback>& callback, const ErrorStatus& status,
-                   const hidl_vec<OutputShape>&, Timing) {
-    const auto ret = callback->notify(status);
-    if (!ret.isOk()) {
-        LOG(ERROR) << "Error when calling IExecutionCallback::notify: " << ret.description();
-    }
-}
-
-static void notify(const sp<V1_2::IExecutionCallback>& callback, const ErrorStatus& status,
-                   const hidl_vec<OutputShape>& outputShapes, Timing timing) {
-    const auto ret = callback->notify_1_2(status, outputShapes, timing);
-    if (!ret.isOk()) {
-        LOG(ERROR) << "Error when calling IExecutionCallback::notify_1_2: " << ret.description();
-    }
 }
 
 template <typename T_IExecutionCallback>
