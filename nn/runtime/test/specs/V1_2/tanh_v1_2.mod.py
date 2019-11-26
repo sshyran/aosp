@@ -14,6 +14,8 @@
 # limitations under the License.
 #
 
+import math
+
 # TEST 1
 input0 = Input("input0", "TENSOR_FLOAT16", "{1, 2, 2, 1}")
 output0 = Output("output0", "TENSOR_FLOAT16", "{1, 2, 2, 1}")
