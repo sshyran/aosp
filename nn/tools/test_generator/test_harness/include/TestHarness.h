@@ -292,6 +292,24 @@ struct TestModel {
 
     // The minimum supported HAL version.
     TestHalVersion minSupportedVersion = TestHalVersion::UNKNOWN;
+
+    // Explicitly create a deep copy.
+    TestModel copy() const {
+        TestModel newTestModel(*this);
+        for (TestOperand& operand : newTestModel.operands) {
+            operand.data = operand.data.copy();
+        }
+        return newTestModel;
+    }
+
+    bool hasQuant8AsymmOperands() const {
+        for (const TestOperand& operand : operands) {
+            if (operand.type == test_helper::TestOperandType::TENSOR_QUANT8_ASYMM) {
+                return true;
+            }
+        }
+        return false;
+    }
 };
 
 // Manages all generated test models.
@@ -334,6 +352,8 @@ class TestModelManager {
 // GTEST_ASSERT/EXPECT. The index of the results corresponds to the index in model.outputIndexes.
 // E.g., results[i] corresponds to model.outputIndexes[i].
 void checkResults(const TestModel& model, const std::vector<TestBuffer>& results);
+
+TestModel convertQuant8AsymmOperandsToSigned(const TestModel& testModel);
 
 }  // namespace test_helper
 
