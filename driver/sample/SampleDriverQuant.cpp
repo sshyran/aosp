@@ -23,7 +23,7 @@
 #include <vector>
 
 #include "HalInterfaces.h"
-#include "SampleDriver.h"
+#include "SampleDriverPartial.h"
 #include "Utils.h"
 #include "ValidateHal.h"
 
@@ -33,12 +33,13 @@ namespace sample_driver {
 
 using namespace hal;
 
-class SampleDriverQuant : public SampleDriver {
+class SampleDriverQuant : public SampleDriverPartial {
    public:
-    SampleDriverQuant() : SampleDriver("sample-quant") {}
+    SampleDriverQuant() : SampleDriverPartial("sample-quant") {}
     Return<void> getCapabilities_1_3(getCapabilities_1_3_cb cb) override;
-    Return<void> getSupportedOperations_1_3(const V1_3::Model& model,
-                                            getSupportedOperations_1_3_cb cb) override;
+
+   private:
+    std::vector<bool> getSupportedOperationsImpl(const V1_3::Model& model) const override;
 };
 
 Return<void> SampleDriverQuant::getCapabilities_1_3(getCapabilities_1_3_cb cb) {
@@ -54,25 +55,26 @@ Return<void> SampleDriverQuant::getCapabilities_1_3(getCapabilities_1_3_cb cb) {
     return Void();
 }
 
-Return<void> SampleDriverQuant::getSupportedOperations_1_3(const V1_3::Model& model,
-                                                           getSupportedOperations_1_3_cb cb) {
-    VLOG(DRIVER) << "getSupportedOperations()";
-    if (validateModel(model)) {
-        const size_t count = model.operations.size();
-        std::vector<bool> supported(count);
-        for (size_t i = 0; i < count; i++) {
-            const Operation& operation = model.operations[i];
-            if (operation.inputs.size() > 0) {
-                const Operand& firstOperand = model.operands[operation.inputs[0]];
-                supported[i] = firstOperand.type == OperandType::TENSOR_QUANT8_ASYMM;
+static bool isQuantized(OperandType opType) {
+    return opType == OperandType::TENSOR_QUANT8_ASYMM ||
+           opType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED;
+}
+
+std::vector<bool> SampleDriverQuant::getSupportedOperationsImpl(const V1_3::Model& model) const {
+    const size_t count = model.operations.size();
+    std::vector<bool> supported(count);
+    for (size_t i = 0; i < count; i++) {
+        const Operation& operation = model.operations[i];
+        if (operation.inputs.size() > 0) {
+            const Operand& firstOperand = model.operands[operation.inputs[0]];
+            supported[i] = isQuantized(firstOperand.type);
+            if (operation.type == OperationType::SELECT) {
+                const Operand& secondOperand = model.operands[operation.inputs[1]];
+                supported[i] = isQuantized(secondOperand.type);
             }
         }
-        cb(ErrorStatus::NONE, supported);
-    } else {
-        std::vector<bool> supported;
-        cb(ErrorStatus::INVALID_ARGUMENT, supported);
     }
-    return Void();
+    return supported;
 }
 
 }  // namespace sample_driver
