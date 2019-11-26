@@ -46,8 +46,6 @@ struct ModelArgumentInfo {
                        void* buffer, uint32_t length);
     int setFromMemory(const hal::Operand& operand, const ANeuralNetworksOperandType* type,
                       uint32_t poolIndex, uint32_t offset, uint32_t length);
-    int setFromTemporaryMemory(const hal::Operand& operand, uint32_t poolIndex, uint32_t offset,
-                               uint32_t length);
     int updateDimensionInfo(const hal::Operand& operand, const ANeuralNetworksOperandType* newType);
 };
 
