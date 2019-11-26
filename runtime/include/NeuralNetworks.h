@@ -2592,15 +2592,17 @@ typedef enum {
      *       then clipping is disabled.
      *       If all the input tensors have type {@link ANEURALNETWORKS_TENSOR_FLOAT32},
      *       this scalar must be of the type {@link ANEURALNETWORKS_FLOAT32},
-     *       otherwise if all the input tensors have the type {@link ANEURALNETWORKS_TENSOR_FLOAT16},
-     *       this scalar must be of type {@link ANEURALNETWORKS_FLOAT16}.
+     *       otherwise if all the input tensors have the type
+     *       {@link ANEURALNETWORKS_TENSOR_FLOAT16}, this scalar must be
+     *       of type {@link ANEURALNETWORKS_FLOAT16}.
      * * 50: The clipping threshold for the output from the
      *       projection layer, such that values are bound within
      *       [-proj_clip, proj_clip]. If set to 0.0 then clipping is disabled.
      *       If all the input tensors have type {@link ANEURALNETWORKS_TENSOR_FLOAT32},
      *       this scalar must be of the type {@link ANEURALNETWORKS_FLOAT32},
-     *       otherwise if all the input tensors have the type {@link ANEURALNETWORKS_TENSOR_FLOAT16},
-     *       this scalar must be of type {@link ANEURALNETWORKS_FLOAT16}.
+     *       otherwise if all the input tensors have the type
+     *       {@link ANEURALNETWORKS_TENSOR_FLOAT16}, this scalar must be
+     *       of type {@link ANEURALNETWORKS_FLOAT16}.
      * * 51: merge_outputs
      *       An {@link ANEURALNETWORKS_BOOL} scalar specifying if the outputs
      *       from forward and backward cells should be merged.
@@ -4341,6 +4343,7 @@ typedef enum {
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
      * * {@link ANEURALNETWORKS_TENSOR_INT32}
      * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
+     * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED} (since API level 30)
      *
      * Supported tensor rank: from 1
      *
@@ -4351,7 +4354,8 @@ typedef enum {
      *      true) or input2 (if false).
      * * 1: An input tensor of the same shape as input0.
      * * 2: An input tensor of the same shape and type as input1.
-     *      For a {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} tensor,
+     *      For a {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
+     *      and {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED} tensor,
      *      the scales and zeroPoint can be different from input1 scale and zeroPoint.
      *
      * Outputs:
@@ -4359,6 +4363,7 @@ typedef enum {
      *      For a {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} tensor,
      *      the scale and zeroPoint can be different from inputs' scale and zeroPoint.
      *
+     * Available since API level 29.
      */
     ANEURALNETWORKS_SELECT = 84,
 

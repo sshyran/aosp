@@ -24,7 +24,7 @@
 
 #include "HalInterfaces.h"
 #include "NeuralNetworksOEM.h"
-#include "SampleDriver.h"
+#include "SampleDriverPartial.h"
 #include "Utils.h"
 #include "ValidateHal.h"
 
@@ -34,12 +34,13 @@ namespace sample_driver {
 
 using namespace hal;
 
-class SampleDriverMinimal : public SampleDriver {
+class SampleDriverMinimal : public SampleDriverPartial {
    public:
-    SampleDriverMinimal() : SampleDriver("sample-minimal") {}
+    SampleDriverMinimal() : SampleDriverPartial("sample-minimal") {}
     Return<void> getCapabilities_1_3(getCapabilities_1_3_cb cb) override;
-    Return<void> getSupportedOperations_1_3(const V1_3::Model& model,
-                                            getSupportedOperations_1_3_cb cb) override;
+
+   private:
+    std::vector<bool> getSupportedOperationsImpl(const V1_3::Model& model) const override;
 };
 
 Return<void> SampleDriverMinimal::getCapabilities_1_3(getCapabilities_1_3_cb cb) {
@@ -59,36 +60,28 @@ Return<void> SampleDriverMinimal::getCapabilities_1_3(getCapabilities_1_3_cb cb)
     return Void();
 }
 
-Return<void> SampleDriverMinimal::getSupportedOperations_1_3(const V1_3::Model& model,
-                                                             getSupportedOperations_1_3_cb cb) {
-    VLOG(DRIVER) << "getSupportedOperations()";
-    if (validateModel(model)) {
-        const size_t count = model.operations.size();
-        std::vector<bool> supported(count);
-        // Simulate supporting just a few ops
-        for (size_t i = 0; i < count; i++) {
-            supported[i] = false;
-            const Operation& operation = model.operations[i];
-            switch (operation.type) {
-                case OperationType::ADD:
-                case OperationType::CONCATENATION:
-                case OperationType::CONV_2D: {
-                    const Operand& firstOperand = model.operands[operation.inputs[0]];
-                    if (firstOperand.type == OperandType::TENSOR_FLOAT32) {
-                        supported[i] = true;
-                    }
-                    break;
+std::vector<bool> SampleDriverMinimal::getSupportedOperationsImpl(const V1_3::Model& model) const {
+    const size_t count = model.operations.size();
+    std::vector<bool> supported(count);
+    // Simulate supporting just a few ops
+    for (size_t i = 0; i < count; i++) {
+        supported[i] = false;
+        const Operation& operation = model.operations[i];
+        switch (operation.type) {
+            case OperationType::ADD:
+            case OperationType::CONCATENATION:
+            case OperationType::CONV_2D: {
+                const Operand& firstOperand = model.operands[operation.inputs[0]];
+                if (firstOperand.type == OperandType::TENSOR_FLOAT32) {
+                    supported[i] = true;
                 }
-                default:
-                    break;
+                break;
             }
+            default:
+                break;
         }
-        cb(ErrorStatus::NONE, supported);
-    } else {
-        std::vector<bool> supported;
-        cb(ErrorStatus::INVALID_ARGUMENT, supported);
     }
-    return Void();
+    return supported;
 }
 
 }  // namespace sample_driver

@@ -22,6 +22,8 @@ cc_defaults {
     srcs: [
         "SampleDriver.cpp",
         "SampleDriverFull.cpp",
+        "SampleDriverPartial.cpp",
+        "SampleDriverUtils.cpp",
     ],
     header_libs: [
         "libneuralnetworks_headers",

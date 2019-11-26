@@ -14,12 +14,15 @@
  * limitations under the License.
  */
 
-#include "NeuralNetworksOEM.h"
-#include "NeuralNetworksWrapper.h"
-
 #include <gtest/gtest.h>
+
 #include <optional>
 #include <set>
+#include <string>
+#include <vector>
+
+#include "NeuralNetworksOEM.h"
+#include "NeuralNetworksWrapper.h"
 
 using namespace android::nn::wrapper;
 
@@ -48,6 +51,7 @@ ANeuralNetworksOperandType getOpType(int32_t opcode, uint32_t dimCount = 0,
                                          .scale = 0.0,
                                          .zeroPoint = 0};
     if (opcode == ANEURALNETWORKS_TENSOR_QUANT8_ASYMM ||
+        opcode == ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED ||
         opcode == ANEURALNETWORKS_TENSOR_QUANT8_SYMM ||
         opcode == ANEURALNETWORKS_TENSOR_QUANT16_ASYMM ||
         opcode == ANEURALNETWORKS_TENSOR_QUANT16_SYMM) {
@@ -2852,6 +2856,7 @@ TEST(OperationValidationTest, SELECT) {
     selectTest(ANEURALNETWORKS_SELECT, ANEURALNETWORKS_TENSOR_FLOAT32);
     selectTest(ANEURALNETWORKS_SELECT, ANEURALNETWORKS_TENSOR_INT32);
     selectTest(ANEURALNETWORKS_SELECT, ANEURALNETWORKS_TENSOR_QUANT8_ASYMM);
+    selectTest(ANEURALNETWORKS_SELECT, ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED);
 }
 
 void powTest(int32_t inputOperandType) {
