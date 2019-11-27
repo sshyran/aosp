@@ -17,11 +17,12 @@
 #ifndef ANDROID_FRAMEWORKS_ML_NN_RUNTIME_COMPILATION_BUILDER_H
 #define ANDROID_FRAMEWORKS_ML_NN_RUNTIME_COMPILATION_BUILDER_H
 
+#include <memory>
+#include <string>
+#include <vector>
+
 #include "ExecutionPlan.h"
 #include "NeuralNetworks.h"
-
-#include <memory>
-#include <vector>
 
 namespace android {
 namespace nn {
@@ -53,6 +54,11 @@ class CompilationBuilder {
     int createExecution(ExecutionBuilder** execution);
 
     int createBurst(BurstBuilder** burst);
+
+    const ModelBuilder* getModel() const { return mModel; }
+
+    int forEachStepRoleOfInput(uint32_t index, const StepRoleCallback& callback) const;
+    int forEachStepRoleOfOutput(uint32_t index, const StepRoleCallback& callback) const;
 
     const ExecutionPlan& forTest_getExecutionPlan() const { return mPlan; }
 
