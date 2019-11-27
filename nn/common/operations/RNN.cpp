@@ -31,7 +31,7 @@ namespace nn {
 
 using namespace hal;
 
-RNN::RNN(const Operation& operation, std::vector<RunTimeOperandInfo>& operands) {
+RNN::RNN(const Operation& operation, RunTimeOperandInfo* operands) {
     NNTRACE_TRANS("RNN::RNN");
     input_ = GetInput(operation, operands, kInputTensor);
     weights_ = GetInput(operation, operands, kWeightsTensor);
@@ -46,8 +46,8 @@ RNN::RNN(const Operation& operation, std::vector<RunTimeOperandInfo>& operands) 
     output_ = GetOutput(operation, operands, kOutputTensor);
 }
 
-bool RNN::Prepare(const Operation& operation, std::vector<RunTimeOperandInfo>& operands,
-                  Shape* hiddenStateShape, Shape* outputShape) {
+bool RNN::Prepare(const Operation& operation, RunTimeOperandInfo* operands, Shape* hiddenStateShape,
+                  Shape* outputShape) {
     NNTRACE_TRANS("RNN::Prepare");
     // Check we have all the inputs and outputs we need.
     const int num_inputs = NumInputsWithValues(operation, operands);
