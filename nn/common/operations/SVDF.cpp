@@ -22,6 +22,7 @@
 #include "CpuOperationUtils.h"
 #include "HalInterfaces.h"
 
+#include <vector>
 #include "Tracing.h"
 
 namespace android {
@@ -29,7 +30,7 @@ namespace nn {
 
 using namespace hal;
 
-SVDF::SVDF(const Operation& operation, std::vector<RunTimeOperandInfo>& operands) {
+SVDF::SVDF(const Operation& operation, RunTimeOperandInfo* operands) {
     NNTRACE_TRANS("SVDF::SVDF");
     input_ = GetInput(operation, operands, kInputTensor);
     weights_feature_ = GetInput(operation, operands, kWeightsFeatureTensor);
@@ -45,8 +46,8 @@ SVDF::SVDF(const Operation& operation, std::vector<RunTimeOperandInfo>& operands
     output_ = GetOutput(operation, operands, kOutputTensor);
 }
 
-bool SVDF::Prepare(const Operation& operation, std::vector<RunTimeOperandInfo>& operands,
-                   Shape* stateShape, Shape* outputShape) {
+bool SVDF::Prepare(const Operation& operation, RunTimeOperandInfo* operands, Shape* stateShape,
+                   Shape* outputShape) {
     NNTRACE_TRANS("SVDF::Prepare");
     // Check we have all the inputs and outputs we need.
     const int num_inputs = NumInputsWithValues(operation, operands);

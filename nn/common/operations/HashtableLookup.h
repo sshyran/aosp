@@ -28,7 +28,7 @@ struct RunTimeOperandInfo;
 
 class HashtableLookup {
    public:
-    HashtableLookup(const hal::Operation& operation, std::vector<RunTimeOperandInfo>& operands);
+    HashtableLookup(const hal::Operation& operation, RunTimeOperandInfo* operands);
 
     bool Eval();
 
