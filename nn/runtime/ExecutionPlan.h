@@ -89,8 +89,14 @@ class ExecutionStep {
         return mTempsAsStepModelOutputs;
     }
     const RemapVectorType& getOutputsAsStepModelInputs() const { return mOutputsAsStepModelInputs; }
+    const std::vector<uint32_t>& getInputIndexStepModelToMainModel() const {
+        return mInputIndexStepModelToMainModel;
+    }
     const std::vector<uint32_t>& getOutputIndexStepModelToMainModel() const {
         return mOutputIndexStepModelToMainModel;
+    }
+    const std::vector<uint32_t>& getOutputsAsStepModelInputsIndexToMainModel() const {
+        return mOutputsAsStepModelInputsIndexToMainModel;
     }
 
     void recordTempAsStepModelOutput(uint32_t sourceOperandIndex);
@@ -169,12 +175,30 @@ class ExecutionStep {
     RemapVectorType mOutputsAsStepModelInputs;
     // Converts operand indexes from the source model to the step model.
     std::unordered_map<uint32_t, uint32_t> mOperandMap;
+    // Converts input indexes from the step model to the main model
+    // (these are input indexes, not operand indexes).  This vector
+    // only describes inputs of the step model that are also inputs of
+    // the main model -- that is, mModelInputs but not mTempsAsStepModelInputs.
+    std::vector<uint32_t> mInputIndexStepModelToMainModel;
     // Converts output indexes from the step model to the main model
     // (these are output indexes, not operand indexes).  This vector
     // only describes outputs of the step model that are also outputs of
     // the main model -- that is, mModelOutputs but not
     // mTempsAsStepModelOutputs.
     std::vector<uint32_t> mOutputIndexStepModelToMainModel;
+    // Converts indexes into mOutputsAsStepModelInputs to indexes into
+    // main model outputs (these are input and output indexes, not
+    // operand indexes).  To be specific, if the main model outputs
+    // are mainModelOutputs,
+    //
+    //     mOutputsAsStepModelInputsIndexToMainModel.size() ==
+    //     mOutputsAsStepModelInputs.size()
+    //
+    // and when (0 <= i < mOutputsAsStepModelInputs.size()),
+    //
+    //     mainModelOutputs[mOutputsAsStepModelInputsIndexToMainModel[i]] ==
+    //     mOutputsAsStepModelInputs[i].first
+    std::vector<uint32_t> mOutputsAsStepModelInputsIndexToMainModel;
 
     // The compilation caching token.
     TokenHasher mToken;
@@ -259,6 +283,16 @@ class ExecutionPlan {
     const std::string* getCacheDir() const { return mCacheDir; }
     const uint8_t* getCacheToken() const { return mToken; }
 
+    // The caller is responsible for making sure the index is not out of range.
+    void forEachStepRoleOfInput(uint32_t index, const StepRoleCallback& callback) const {
+        CHECK(mBody != nullptr);
+        mBody->forEachStepRoleOfInput(index, callback);
+    }
+    void forEachStepRoleOfOutput(uint32_t index, const StepRoleCallback& callback) const {
+        CHECK(mBody != nullptr);
+        mBody->forEachStepRoleOfOutput(index, callback);
+    }
+
     // These functions are solely intended for use by unit tests of
     // the partitioning algorithm.
     enum class Kind {
@@ -281,6 +315,10 @@ class ExecutionPlan {
         virtual void dump() const = 0;
         virtual int finish(const ModelBuilder* mainModel, int32_t executionPreference) = 0;
         virtual bool hasStepModelOutputsOfUnknownSize() const = 0;
+        virtual void forEachStepRoleOfInput(uint32_t index,
+                                            const StepRoleCallback& callback) const = 0;
+        virtual void forEachStepRoleOfOutput(uint32_t index,
+                                             const StepRoleCallback& callback) const = 0;
         bool mSuccessfulFinish = false;
     };
 
@@ -291,7 +329,11 @@ class ExecutionPlan {
 
         void dump() const override;
         int finish(const ModelBuilder* mainModel, int32_t executionPreference) override;
-        virtual bool hasStepModelOutputsOfUnknownSize() const override { return false; }
+        bool hasStepModelOutputsOfUnknownSize() const override { return false; }
+        void forEachStepRoleOfInput(uint32_t index,
+                                    const StepRoleCallback& callback) const override;
+        void forEachStepRoleOfOutput(uint32_t index,
+                                     const StepRoleCallback& callback) const override;
 
         std::shared_ptr<Device> mDevice;
         const ModelBuilder* mModel;
@@ -304,9 +346,13 @@ class ExecutionPlan {
     struct CompoundBody : Body {
         void dump() const override;
         int finish(const ModelBuilder* mainModel, int32_t executionPreference) override;
-        virtual bool hasStepModelOutputsOfUnknownSize() const override {
+        bool hasStepModelOutputsOfUnknownSize() const override {
             return mHasStepModelOutputOfUnknownSize;
         }
+        void forEachStepRoleOfInput(uint32_t index,
+                                    const StepRoleCallback& callback) const override;
+        void forEachStepRoleOfOutput(uint32_t index,
+                                     const StepRoleCallback& callback) const override;
 
         // TODO: Some of the data is working state information that
         // shouldn't be needed after we've constructed but not

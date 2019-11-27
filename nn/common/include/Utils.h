@@ -337,6 +337,10 @@ int convertErrorStatusToResultCode(hal::ErrorStatus status);
 std::tuple<int, std::vector<hal::OutputShape>, hal::Timing> getExecutionResult(
         hal::ErrorStatus status, std::vector<hal::OutputShape> outputShapes, hal::Timing timing);
 
+// Combine two tensor dimensions, both may have unspecified dimensions or rank.
+std::optional<std::vector<uint32_t>> combineDimensions(const std::vector<uint32_t>& lhs,
+                                                       const std::vector<uint32_t>& rhs);
+
 // Versioning
 
 bool compliantWithV1_0(const hal::V1_0::Capabilities& capabilities);

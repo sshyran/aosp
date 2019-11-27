@@ -173,13 +173,13 @@ bool setInfoAndAllocateIfNeeded(RunTimeOperandInfo* info, const Shape& shape, in
         }
     }
 
-    std::vector<uint32_t> combined;
-    if (!combineDimensions(shape.dimensions, info->dimensions, &combined)) {
+    auto combined = combineDimensions(shape.dimensions, info->dimensions);
+    if (!combined.has_value()) {
         LOG(ERROR) << "Invalid dimensions for model operand";
         *result = ANEURALNETWORKS_OP_FAILED;
         return false;
     }
-    info->dimensions = combined;
+    info->dimensions = std::move(combined.value());
     info->type = shape.type;
     info->scale = shape.scale;
     info->zeroPoint = shape.offset;
