@@ -62,11 +62,12 @@ int ModelArgumentInfo::setFromPointer(const Operand& operand,
 int ModelArgumentInfo::setFromMemory(const Operand& operand, const ANeuralNetworksOperandType* type,
                                      uint32_t poolIndex, uint32_t offset, uint32_t length) {
     NN_RETURN_IF_ERROR(updateDimensionInfo(operand, type));
-    if (operand.type != OperandType::OEM) {
-        uint32_t neededLength = TypeManager::get()->getSizeOfData(operand.type, dimensions);
+    const bool isMemorySizeKnown = offset != 0 || length != 0;
+    if (isMemorySizeKnown && operand.type != OperandType::OEM) {
+        const uint32_t neededLength = TypeManager::get()->getSizeOfData(operand.type, dimensions);
         if (neededLength != length && neededLength != 0) {
             LOG(ERROR) << "Setting argument with invalid length: " << length
-                       << ", expected length: " << neededLength;
+                       << " (offset: " << offset << "), expected length: " << neededLength;
             return ANEURALNETWORKS_BAD_DATA;
         }
     }

@@ -298,19 +298,16 @@ int ModelBuilder::setOperandValueFromMemory(uint32_t index, const Memory* memory
                    << " which has operand type that is not fully specified";
         return ANEURALNETWORKS_BAD_DATA;
     }
-    // Only BLOB format AHardwareBuffer can be used for constant data.
-    if (memory->getHidlMemory().name() == "hardware_buffer") {
-        LOG(ERROR) << "ANeuralNetworksModel_setOperandValueFromMemory passed an AHardwareBuffer"
-                   << " that is not in AHARDWAREBUFFER_FORMAT_BLOB format";
-        return ANEURALNETWORKS_UNMAPPABLE;
-    }
     uint32_t neededLength = TypeManager::get()->getSizeOfData(operand);
     if (neededLength != length) {
         LOG(ERROR) << "ANeuralNetworksModel_setOperandValueFromMemory setting " << length
                    << " bytes when needing " << neededLength;
         return ANEURALNETWORKS_BAD_DATA;
     }
-    if (!memory->validateSize(offset, length)) {
+    // Set compilation = nullptr to indicate that the memory is used for a model constant.
+    // In this case, IOType::INPUT is a dummy value that is ignored by the validator.
+    if (!memory->getValidator().validate(/*compilation=*/nullptr, /*dummy*/ IOType::INPUT, index,
+                                         nullptr, offset, length)) {
         return ANEURALNETWORKS_BAD_DATA;
     }
     operand.lifetime = OperandLifeTime::CONSTANT_REFERENCE;
