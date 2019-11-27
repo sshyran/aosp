@@ -562,34 +562,36 @@ int CpuExecutor::run(const Model& model, const Request& request,
 #endif  // NNAPI_OPENMP
 
     mModel = &model;
-    initializeRunTimeInfo(request, modelPoolInfos, requestPoolInfos);
+    std::vector<RunTimeOperandInfo> operands;
+    initializeRunTimeInfo(request, modelPoolInfos, requestPoolInfos, &operands);
     // The model has serialized the operation in execution order.
     for (const auto& operation : model.operations) {
-        int n = executeOperation(operation);
+        int n = executeOperation(operation, operands.data());
         if (n != ANEURALNETWORKS_NO_ERROR) {
-            finish(n);
+            finish(n, &operands);
             return n;
         }
     }
     for (auto& runtimeInfo : requestPoolInfos) {
         runtimeInfo.flush();
     }
-    finish(ANEURALNETWORKS_NO_ERROR);
+    finish(ANEURALNETWORKS_NO_ERROR, &operands);
     VLOG(CPUEXE) << "Completed run normally";
     return ANEURALNETWORKS_NO_ERROR;
 }
 
 bool CpuExecutor::initializeRunTimeInfo(const Request& request,
                                         const std::vector<RunTimePoolInfo>& modelPoolInfos,
-                                        const std::vector<RunTimePoolInfo>& requestPoolInfos) {
+                                        const std::vector<RunTimePoolInfo>& requestPoolInfos,
+                                        std::vector<RunTimeOperandInfo>* operands) {
     VLOG(CPUEXE) << "CpuExecutor::initializeRunTimeInfo";
     const size_t count = mModel->operands.size();
-    mOperands.resize(count);
+    operands->resize(count);
 
     // Start by setting the runtime info to what's in the model.
     for (size_t i = 0; i < count; i++) {
         const Operand& from = mModel->operands[i];
-        RunTimeOperandInfo& to = mOperands[i];
+        RunTimeOperandInfo& to = (*operands)[i];
         to.type = from.type;
         to.dimensions = from.dimensions;
         to.scale = from.scale;
@@ -628,14 +630,14 @@ bool CpuExecutor::initializeRunTimeInfo(const Request& request,
 
     // Adjust the runtime info for the arguments passed to the model,
     // modifying the buffer location, and possibly the dimensions.
-    auto updateForArguments = [this, &requestPoolInfos](
+    auto updateForArguments = [&operands, &requestPoolInfos](
                                       const std::vector<uint32_t>& indexes,
                                       const hidl_vec<RequestArgument>& arguments) {
         nnAssert(indexes.size() == arguments.size());
         for (size_t i = 0; i < indexes.size(); i++) {
             const uint32_t operandIndex = indexes[i];
             const RequestArgument& from = arguments[i];
-            RunTimeOperandInfo& to = mOperands[operandIndex];
+            RunTimeOperandInfo& to = (*operands)[operandIndex];
             if (from.dimensions.size() > 0) {
                 // It's the responsibility of the caller to validate that
                 // from.dimensions only modifies the dimensions that were
@@ -663,9 +665,10 @@ bool CpuExecutor::initializeRunTimeInfo(const Request& request,
     return true;
 }
 
-void CpuExecutor::freeNoLongerUsedOperands(const std::vector<uint32_t>& inputs) {
+void CpuExecutor::freeNoLongerUsedOperands(const std::vector<uint32_t>& inputs,
+                                           RunTimeOperandInfo* operands) {
     for (uint32_t i : inputs) {
-        auto& info = mOperands[i];
+        auto& info = operands[i];
         // Check if it's a static or model input/output.
         if (info.numberOfUsesLeft == 0) {
             continue;
@@ -678,7 +681,7 @@ void CpuExecutor::freeNoLongerUsedOperands(const std::vector<uint32_t>& inputs) 
     }
 }
 
-int CpuExecutor::executeOperation(const Operation& operation) {
+int CpuExecutor::executeOperation(const Operation& operation, RunTimeOperandInfo* operands) {
     // VLOG(CPUEXE) << "CpuExecutor::executeOperation(" << toString(operation) << ")";
     const hidl_vec<uint32_t>& ins = operation.inputs;
     const hidl_vec<uint32_t>& outs = operation.outputs;
@@ -690,10 +693,11 @@ int CpuExecutor::executeOperation(const Operation& operation) {
     // values. This function is to be used only for operations that do not
     // accept optional arguments.
     // TODO Have a version that works for optional arguments.
-    auto allParametersPresent = [&operation, &ins, &outs, this](size_t requiredIns,
-                                                                size_t requiredOuts) -> bool {
-        auto verify = [&operation, this](size_t requiredCount, const hidl_vec<uint32_t>& indexes,
-                                         const char* type) -> bool {
+    auto allParametersPresent = [&operation, &operands, &ins, &outs](size_t requiredIns,
+                                                                     size_t requiredOuts) -> bool {
+        auto verify = [&operation, &operands](size_t requiredCount,
+                                              const hidl_vec<uint32_t>& indexes,
+                                              const char* type) -> bool {
             size_t actualCount = indexes.size();
             if (actualCount != requiredCount) {
                 LOG(ERROR) << getOperationName(operation.type) << ": Invalid number of " << type
@@ -701,7 +705,7 @@ int CpuExecutor::executeOperation(const Operation& operation) {
                 return false;
             }
             for (size_t i = 0; i < actualCount; i++) {
-                if (mOperands[indexes[i]].lifetime == OperandLifeTime::NO_VALUE) {
+                if (operands[indexes[i]].lifetime == OperandLifeTime::NO_VALUE) {
                     LOG(ERROR) << getOperationName(operation.type) << " " << type << " operand "
                                << i << " is required but missing.";
                     return false;
@@ -710,10 +714,10 @@ int CpuExecutor::executeOperation(const Operation& operation) {
             return true;
         };
 
-        auto verifyNoZeroSizedInputs = [&operation, this](const hidl_vec<uint32_t>& indexes) {
+        auto verifyNoZeroSizedInputs = [&operation, &operands](const hidl_vec<uint32_t>& indexes) {
             for (size_t i = 0; i < indexes.size(); i++) {
-                for (size_t j = 0; j < mOperands[indexes[i]].dimensions.size(); j++) {
-                    if (mOperands[indexes[i]].dimensions[j] == 0) {
+                for (size_t j = 0; j < operands[indexes[i]].dimensions.size(); j++) {
+                    if (operands[indexes[i]].dimensions[j] == 0) {
                         LOG(ERROR) << getOperationName(operation.type)
                                    << " does not support zero-sized tensor, but input " << i
                                    << " dimension " << j << " is zero.";
@@ -737,8 +741,8 @@ int CpuExecutor::executeOperation(const Operation& operation) {
             if (!allParametersPresent(1, 1)) {
                 return ANEURALNETWORKS_BAD_DATA;
             }
-            const RunTimeOperandInfo& input = mOperands[ins[0]];
-            RunTimeOperandInfo& output = mOperands[outs[0]];
+            const RunTimeOperandInfo& input = operands[ins[0]];
+            RunTimeOperandInfo& output = operands[outs[0]];
             Shape outShape = output.shape();
 
             if (!floorPrepare(input.shape(), &outShape) ||
@@ -759,9 +763,9 @@ int CpuExecutor::executeOperation(const Operation& operation) {
                 !allParametersPresent(inCount, 1)) {
                 return ANEURALNETWORKS_BAD_DATA;
             }
-            const RunTimeOperandInfo& input = mOperands[ins[0]];
-            const RunTimeOperandInfo& filter = mOperands[ins[1]];
-            const RunTimeOperandInfo& bias = mOperands[ins[2]];
+            const RunTimeOperandInfo& input = operands[ins[0]];
+            const RunTimeOperandInfo& filter = operands[ins[1]];
+            const RunTimeOperandInfo& bias = operands[ins[2]];
 
             int32_t padding_left, padding_right;
             int32_t padding_top, padding_bottom;
@@ -773,41 +777,41 @@ int CpuExecutor::executeOperation(const Operation& operation) {
             bool data_layout = false;
             bool useImplicitPadding = false;
 
-            if ((inCount >= 9 && mOperands[ins[8]].type == OperandType::BOOL) || inCount == 8) {
-                padding_implicit = getScalarData<int32_t>(mOperands[ins[3]]);
-                stride_width = getScalarData<int32_t>(mOperands[ins[4]]);
-                stride_height = getScalarData<int32_t>(mOperands[ins[5]]);
-                depth_multiplier = getScalarData<int32_t>(mOperands[ins[6]]);
-                activation = getScalarData<int32_t>(mOperands[ins[7]]);
+            if ((inCount >= 9 && operands[ins[8]].type == OperandType::BOOL) || inCount == 8) {
+                padding_implicit = getScalarData<int32_t>(operands[ins[3]]);
+                stride_width = getScalarData<int32_t>(operands[ins[4]]);
+                stride_height = getScalarData<int32_t>(operands[ins[5]]);
+                depth_multiplier = getScalarData<int32_t>(operands[ins[6]]);
+                activation = getScalarData<int32_t>(operands[ins[7]]);
                 if (inCount >= 9) {
-                    data_layout = getScalarData<bool>(mOperands[ins[8]]);
+                    data_layout = getScalarData<bool>(operands[ins[8]]);
                 }
                 if (inCount == 11) {
-                    dilation_width_factor = getScalarData<int32_t>(mOperands[ins[9]]);
-                    dilation_height_factor = getScalarData<int32_t>(mOperands[ins[10]]);
+                    dilation_width_factor = getScalarData<int32_t>(operands[ins[9]]);
+                    dilation_height_factor = getScalarData<int32_t>(operands[ins[10]]);
                 }
                 useImplicitPadding = true;
-            } else if (inCount >= 11 && mOperands[ins[8]].type == OperandType::INT32) {
-                padding_left = getScalarData<int32_t>(mOperands[ins[3]]);
-                padding_right = getScalarData<int32_t>(mOperands[ins[4]]);
-                padding_top = getScalarData<int32_t>(mOperands[ins[5]]);
-                padding_bottom = getScalarData<int32_t>(mOperands[ins[6]]);
-                stride_width = getScalarData<int32_t>(mOperands[ins[7]]);
-                stride_height = getScalarData<int32_t>(mOperands[ins[8]]);
-                depth_multiplier = getScalarData<int32_t>(mOperands[ins[9]]);
-                activation = getScalarData<int32_t>(mOperands[ins[10]]);
+            } else if (inCount >= 11 && operands[ins[8]].type == OperandType::INT32) {
+                padding_left = getScalarData<int32_t>(operands[ins[3]]);
+                padding_right = getScalarData<int32_t>(operands[ins[4]]);
+                padding_top = getScalarData<int32_t>(operands[ins[5]]);
+                padding_bottom = getScalarData<int32_t>(operands[ins[6]]);
+                stride_width = getScalarData<int32_t>(operands[ins[7]]);
+                stride_height = getScalarData<int32_t>(operands[ins[8]]);
+                depth_multiplier = getScalarData<int32_t>(operands[ins[9]]);
+                activation = getScalarData<int32_t>(operands[ins[10]]);
                 if (inCount >= 12) {
-                    data_layout = getScalarData<bool>(mOperands[ins[11]]);
+                    data_layout = getScalarData<bool>(operands[ins[11]]);
                 }
                 if (inCount == 14) {
-                    dilation_width_factor = getScalarData<int32_t>(mOperands[ins[12]]);
-                    dilation_height_factor = getScalarData<int32_t>(mOperands[ins[13]]);
+                    dilation_width_factor = getScalarData<int32_t>(operands[ins[12]]);
+                    dilation_height_factor = getScalarData<int32_t>(operands[ins[13]]);
                 }
             } else {
                 return ANEURALNETWORKS_BAD_DATA;
             }
 
-            RunTimeOperandInfo& output = mOperands[outs[0]];
+            RunTimeOperandInfo& output = operands[outs[0]];
             Shape outShape = output.shape();
 
             RunTimeOperandInfo input_tmp, output_tmp;
@@ -895,20 +899,20 @@ int CpuExecutor::executeOperation(const Operation& operation) {
             if ((inCount != 6 && inCount != 5) || !allParametersPresent(inCount, 1)) {
                 return ANEURALNETWORKS_BAD_DATA;
             }
-            const RunTimeOperandInfo& input = mOperands[ins[0]];
-            int32_t radius = getScalarData<int32_t>(mOperands[ins[1]]);
+            const RunTimeOperandInfo& input = operands[ins[0]];
+            int32_t radius = getScalarData<int32_t>(operands[ins[1]]);
             float bias = (input.type == OperandType::TENSOR_FLOAT16)
-                                 ? getScalarData<_Float16>(mOperands[ins[2]])
-                                 : getScalarData<float>(mOperands[ins[2]]);
+                                 ? getScalarData<_Float16>(operands[ins[2]])
+                                 : getScalarData<float>(operands[ins[2]]);
             float alpha = (input.type == OperandType::TENSOR_FLOAT16)
-                                  ? getScalarData<_Float16>(mOperands[ins[3]])
-                                  : getScalarData<float>(mOperands[ins[3]]);
+                                  ? getScalarData<_Float16>(operands[ins[3]])
+                                  : getScalarData<float>(operands[ins[3]]);
             float beta = (input.type == OperandType::TENSOR_FLOAT16)
-                                 ? getScalarData<_Float16>(mOperands[ins[4]])
-                                 : getScalarData<float>(mOperands[ins[4]]);
-            const int32_t axis = inCount == 6 ? getScalarData<int32_t>(mOperands[ins[5]]) : -1;
+                                 ? getScalarData<_Float16>(operands[ins[4]])
+                                 : getScalarData<float>(operands[ins[4]]);
+            const int32_t axis = inCount == 6 ? getScalarData<int32_t>(operands[ins[5]]) : -1;
 
-            RunTimeOperandInfo& output = mOperands[outs[0]];
+            RunTimeOperandInfo& output = operands[outs[0]];
             Shape outShape = output.shape();
 
             if (!genericNormalizationPrepare(input.shape(), &outShape) ||
@@ -931,10 +935,10 @@ int CpuExecutor::executeOperation(const Operation& operation) {
             if (!allParametersPresent(2, 1)) {
                 return ANEURALNETWORKS_BAD_DATA;
             }
-            const RunTimeOperandInfo& input = mOperands[ins[0]];
-            const RunTimeOperandInfo& targetShape = mOperands[ins[1]];
+            const RunTimeOperandInfo& input = operands[ins[0]];
+            const RunTimeOperandInfo& targetShape = operands[ins[1]];
 
-            RunTimeOperandInfo& output = mOperands[outs[0]];
+            RunTimeOperandInfo& output = operands[outs[0]];
             Shape outShape = output.shape();
 
             success = reshapePrepare(input.shape(),
@@ -948,11 +952,11 @@ int CpuExecutor::executeOperation(const Operation& operation) {
             if ((inCount != 3 && inCount != 2) || !allParametersPresent(inCount, 1)) {
                 return ANEURALNETWORKS_BAD_DATA;
             }
-            const RunTimeOperandInfo& input = mOperands[ins[0]];
-            int32_t blockSize = getScalarData<int32_t>(mOperands[ins[1]]);
-            bool data_layout = inCount == 3 ? getScalarData<bool>(mOperands[ins[2]]) : false;
+            const RunTimeOperandInfo& input = operands[ins[0]];
+            int32_t blockSize = getScalarData<int32_t>(operands[ins[1]]);
+            bool data_layout = inCount == 3 ? getScalarData<bool>(operands[ins[2]]) : false;
 
-            RunTimeOperandInfo& output = mOperands[outs[0]];
+            RunTimeOperandInfo& output = operands[outs[0]];
             Shape outShape = output.shape();
 
             RunTimeOperandInfo input_tmp, output_tmp;
@@ -1006,11 +1010,11 @@ int CpuExecutor::executeOperation(const Operation& operation) {
             if ((inCount != 3 && inCount != 2) || !allParametersPresent(inCount, 1)) {
                 return ANEURALNETWORKS_BAD_DATA;
             }
-            const RunTimeOperandInfo& input = mOperands[ins[0]];
-            int32_t blockSize = getScalarData<int32_t>(mOperands[ins[1]]);
-            bool data_layout = inCount == 3 ? getScalarData<bool>(mOperands[ins[2]]) : false;
+            const RunTimeOperandInfo& input = operands[ins[0]];
+            int32_t blockSize = getScalarData<int32_t>(operands[ins[1]]);
+            bool data_layout = inCount == 3 ? getScalarData<bool>(operands[ins[2]]) : false;
 
-            RunTimeOperandInfo& output = mOperands[outs[0]];
+            RunTimeOperandInfo& output = operands[outs[0]];
             Shape outShape = output.shape();
 
             RunTimeOperandInfo input_tmp, output_tmp;
@@ -1061,26 +1065,26 @@ int CpuExecutor::executeOperation(const Operation& operation) {
             }
         } break;
         case OperationType::EMBEDDING_LOOKUP: {
-            const RunTimeOperandInfo& values = mOperands[ins[EmbeddingLookup::kValueTensor]];
-            const RunTimeOperandInfo& lookups = mOperands[ins[EmbeddingLookup::kLookupTensor]];
-            RunTimeOperandInfo& output = mOperands[outs[EmbeddingLookup::kOutputTensor]];
+            const RunTimeOperandInfo& values = operands[ins[EmbeddingLookup::kValueTensor]];
+            const RunTimeOperandInfo& lookups = operands[ins[EmbeddingLookup::kLookupTensor]];
+            RunTimeOperandInfo& output = operands[outs[EmbeddingLookup::kOutputTensor]];
 
             Shape outputShape;
-            EmbeddingLookup lookup(operation, mOperands);
+            EmbeddingLookup lookup(operation, operands);
 
             success = embeddingLookupPrepare(values.shape(), lookups.shape(), &outputShape) &&
                       setInfoAndAllocateIfNeeded(&output, outputShape, &result) && lookup.Eval();
         } break;
         case OperationType::HASHTABLE_LOOKUP: {
-            const RunTimeOperandInfo& lookups = mOperands[ins[HashtableLookup::kLookupTensor]];
-            const RunTimeOperandInfo& keys = mOperands[ins[HashtableLookup::kKeyTensor]];
-            const RunTimeOperandInfo& values = mOperands[ins[HashtableLookup::kValueTensor]];
+            const RunTimeOperandInfo& lookups = operands[ins[HashtableLookup::kLookupTensor]];
+            const RunTimeOperandInfo& keys = operands[ins[HashtableLookup::kKeyTensor]];
+            const RunTimeOperandInfo& values = operands[ins[HashtableLookup::kValueTensor]];
 
-            RunTimeOperandInfo& output = mOperands[outs[HashtableLookup::kOutputTensor]];
-            RunTimeOperandInfo& hits = mOperands[outs[HashtableLookup::kHitsTensor]];
+            RunTimeOperandInfo& output = operands[outs[HashtableLookup::kOutputTensor]];
+            RunTimeOperandInfo& hits = operands[outs[HashtableLookup::kHitsTensor]];
 
             Shape outputShape, hitShape;
-            HashtableLookup lookup(operation, mOperands);
+            HashtableLookup lookup(operation, operands);
 
             success = hashtableLookupPrepare(lookups.shape(), keys.shape(), values.shape(),
                                              &outputShape, &hitShape) &&
@@ -1088,15 +1092,15 @@ int CpuExecutor::executeOperation(const Operation& operation) {
                       setInfoAndAllocateIfNeeded(&hits, hitShape, &result) && lookup.Eval();
         } break;
         case OperationType::LSH_PROJECTION: {
-            RunTimeOperandInfo& output = mOperands[outs[LSHProjection::kOutputTensor]];
+            RunTimeOperandInfo& output = operands[outs[LSHProjection::kOutputTensor]];
             Shape outputShape;
-            if (!LSHProjection::Prepare(operation, mOperands, &outputShape) ||
+            if (!LSHProjection::Prepare(operation, operands, &outputShape) ||
                 !setInfoAndAllocateIfNeeded(&output, outputShape, &result)) {
                 break;
             }
 
-            LSHProjection lsh(operation, mOperands);
-            const RunTimeOperandInfo& hash = mOperands[ins[LSHProjection::kHashTensor]];
+            LSHProjection lsh(operation, operands);
+            const RunTimeOperandInfo& hash = operands[ins[LSHProjection::kHashTensor]];
             switch (hash.type) {
                 case OperandType::TENSOR_FLOAT32: {
                     success = lsh.Eval<float>();
@@ -1114,31 +1118,31 @@ int CpuExecutor::executeOperation(const Operation& operation) {
         } break;
         case OperationType::BIDIRECTIONAL_SEQUENCE_LSTM: {
             const auto merge_outputs = getScalarData<bool>(
-                    mOperands[ins[BidirectionalSequenceLSTM::kMergeOutputsParam]]);
+                    operands[ins[BidirectionalSequenceLSTM::kMergeOutputsParam]]);
             RunTimeOperandInfo& fwOutput =
-                    mOperands[outs[BidirectionalSequenceLSTM::kFwOutputTensor]];
+                    operands[outs[BidirectionalSequenceLSTM::kFwOutputTensor]];
             Shape fwOutputShape, bwOutputShape;
 
-            BidirectionalSequenceLSTM lstm(operation, mOperands);
-            success = lstm.Prepare(operation, mOperands, &fwOutputShape, &bwOutputShape) &&
+            BidirectionalSequenceLSTM lstm(operation, operands);
+            success = lstm.Prepare(operation, operands, &fwOutputShape, &bwOutputShape) &&
                       setInfoAndAllocateIfNeeded(&fwOutput, fwOutputShape, &result);
             if (!merge_outputs) {
                 RunTimeOperandInfo& bwOutput =
-                        mOperands[outs[BidirectionalSequenceLSTM::kBwOutputTensor]];
+                        operands[outs[BidirectionalSequenceLSTM::kBwOutputTensor]];
                 success = success && setInfoAndAllocateIfNeeded(&bwOutput, bwOutputShape, &result);
             }
             success = success && lstm.Eval();
         } break;
         case OperationType::LSTM: {
-            RunTimeOperandInfo& scratch = mOperands[outs[LSTMCell::kScratchBufferTensor]];
-            RunTimeOperandInfo& outputStateOut = mOperands[outs[LSTMCell::kOutputStateOutTensor]];
-            RunTimeOperandInfo& cellStateOut = mOperands[outs[LSTMCell::kCellStateOutTensor]];
-            RunTimeOperandInfo& output = mOperands[outs[LSTMCell::kOutputTensor]];
+            RunTimeOperandInfo& scratch = operands[outs[LSTMCell::kScratchBufferTensor]];
+            RunTimeOperandInfo& outputStateOut = operands[outs[LSTMCell::kOutputStateOutTensor]];
+            RunTimeOperandInfo& cellStateOut = operands[outs[LSTMCell::kCellStateOutTensor]];
+            RunTimeOperandInfo& output = operands[outs[LSTMCell::kOutputTensor]];
 
             Shape scratchShape, outputStateShape, cellStateShape, outputShape;
-            LSTMCell lstm_cell(operation, mOperands);
+            LSTMCell lstm_cell(operation, operands);
 
-            success = lstm_cell.Prepare(operation, mOperands, &scratchShape, &outputStateShape,
+            success = lstm_cell.Prepare(operation, operands, &scratchShape, &outputStateShape,
                                         &cellStateShape, &outputShape) &&
                       setInfoAndAllocateIfNeeded(&scratch, scratchShape, &result) &&
                       setInfoAndAllocateIfNeeded(&outputStateOut, outputStateShape, &result) &&
@@ -1146,37 +1150,37 @@ int CpuExecutor::executeOperation(const Operation& operation) {
                       setInfoAndAllocateIfNeeded(&output, outputShape, &result) && lstm_cell.Eval();
         } break;
         case OperationType::RANDOM_MULTINOMIAL: {
-            const RunTimeOperandInfo& lookups = mOperands[ins[HashtableLookup::kLookupTensor]];
-            const RunTimeOperandInfo& keys = mOperands[ins[HashtableLookup::kKeyTensor]];
-            const RunTimeOperandInfo& values = mOperands[ins[HashtableLookup::kValueTensor]];
-            RunTimeOperandInfo& output = mOperands[outs[Multinomial::kOutputTensor]];
+            const RunTimeOperandInfo& lookups = operands[ins[HashtableLookup::kLookupTensor]];
+            const RunTimeOperandInfo& keys = operands[ins[HashtableLookup::kKeyTensor]];
+            const RunTimeOperandInfo& values = operands[ins[HashtableLookup::kValueTensor]];
+            RunTimeOperandInfo& output = operands[outs[Multinomial::kOutputTensor]];
 
             Shape outputShape;
-            Multinomial multinomial(operation, mOperands);
+            Multinomial multinomial(operation, operands);
 
-            success = Multinomial::Prepare(operation, mOperands, &outputShape) &&
+            success = Multinomial::Prepare(operation, operands, &outputShape) &&
                       setInfoAndAllocateIfNeeded(&output, outputShape, &result) &&
                       multinomial.Eval();
         } break;
         case OperationType::RNN: {
-            RunTimeOperandInfo& hiddenStateOut = mOperands[outs[RNN::kHiddenStateOutTensor]];
-            RunTimeOperandInfo& output = mOperands[outs[RNN::kOutputTensor]];
+            RunTimeOperandInfo& hiddenStateOut = operands[outs[RNN::kHiddenStateOutTensor]];
+            RunTimeOperandInfo& output = operands[outs[RNN::kOutputTensor]];
 
             Shape hiddenStateShape, outputShape;
-            RNN rnn_cell(operation, mOperands);
+            RNN rnn_cell(operation, operands);
 
-            success = RNN::Prepare(operation, mOperands, &hiddenStateShape, &outputShape) &&
+            success = RNN::Prepare(operation, operands, &hiddenStateShape, &outputShape) &&
                       setInfoAndAllocateIfNeeded(&hiddenStateOut, hiddenStateShape, &result) &&
                       setInfoAndAllocateIfNeeded(&output, outputShape, &result) && rnn_cell.Eval();
         } break;
         case OperationType::SVDF: {
-            RunTimeOperandInfo& stateOut = mOperands[outs[SVDF::kStateOutTensor]];
-            RunTimeOperandInfo& output = mOperands[outs[SVDF::kOutputTensor]];
+            RunTimeOperandInfo& stateOut = operands[outs[SVDF::kStateOutTensor]];
+            RunTimeOperandInfo& output = operands[outs[SVDF::kOutputTensor]];
 
             Shape stateShape, outputShape;
-            SVDF svdf(operation, mOperands);
+            SVDF svdf(operation, operands);
 
-            success = SVDF::Prepare(operation, mOperands, &stateShape, &outputShape) &&
+            success = SVDF::Prepare(operation, operands, &stateShape, &outputShape) &&
                       setInfoAndAllocateIfNeeded(&stateOut, stateShape, &result) &&
                       setInfoAndAllocateIfNeeded(&output, outputShape, &result) && svdf.Eval();
         } break;
@@ -1185,11 +1189,11 @@ int CpuExecutor::executeOperation(const Operation& operation) {
             if ((inCount != 3 && inCount != 2) || !allParametersPresent(inCount, 1)) {
                 return ANEURALNETWORKS_BAD_DATA;
             }
-            const RunTimeOperandInfo& input = mOperands[ins[0]];
-            const RunTimeOperandInfo& blockSize = mOperands[ins[1]];
-            bool data_layout = inCount == 3 ? getScalarData<bool>(mOperands[ins[2]]) : false;
+            const RunTimeOperandInfo& input = operands[ins[0]];
+            const RunTimeOperandInfo& blockSize = operands[ins[1]];
+            bool data_layout = inCount == 3 ? getScalarData<bool>(operands[ins[2]]) : false;
 
-            RunTimeOperandInfo& output = mOperands[outs[0]];
+            RunTimeOperandInfo& output = operands[outs[0]];
             Shape outShape = output.shape();
 
             RunTimeOperandInfo input_tmp, output_tmp;
@@ -1249,12 +1253,12 @@ int CpuExecutor::executeOperation(const Operation& operation) {
             if ((inCount != 4 && inCount != 3) || !allParametersPresent(inCount, 1)) {
                 return ANEURALNETWORKS_BAD_DATA;
             }
-            const RunTimeOperandInfo& input = mOperands[ins[0]];
-            const RunTimeOperandInfo& blockSize = mOperands[ins[1]];
-            const RunTimeOperandInfo& paddings = mOperands[ins[2]];
-            bool data_layout = inCount == 4 ? getScalarData<bool>(mOperands[ins[3]]) : false;
+            const RunTimeOperandInfo& input = operands[ins[0]];
+            const RunTimeOperandInfo& blockSize = operands[ins[1]];
+            const RunTimeOperandInfo& paddings = operands[ins[2]];
+            bool data_layout = inCount == 4 ? getScalarData<bool>(operands[ins[3]]) : false;
 
-            RunTimeOperandInfo& output = mOperands[outs[0]];
+            RunTimeOperandInfo& output = operands[outs[0]];
             Shape outShape = output.shape();
 
             RunTimeOperandInfo input_tmp, output_tmp;
@@ -1319,10 +1323,10 @@ int CpuExecutor::executeOperation(const Operation& operation) {
             if (!allParametersPresent(isV2 ? 3 : 2, 1)) {
                 return ANEURALNETWORKS_BAD_DATA;
             }
-            const RunTimeOperandInfo& input = mOperands[ins[0]];
-            const RunTimeOperandInfo& paddings = mOperands[ins[1]];
+            const RunTimeOperandInfo& input = operands[ins[0]];
+            const RunTimeOperandInfo& paddings = operands[ins[1]];
 
-            RunTimeOperandInfo& output = mOperands[outs[0]];
+            RunTimeOperandInfo& output = operands[outs[0]];
             Shape outShape = output.shape();
 
             if (!padPrepare(input.shape(), reinterpret_cast<const int32_t*>(paddings.buffer),
@@ -1331,19 +1335,19 @@ int CpuExecutor::executeOperation(const Operation& operation) {
                 break;
             }
             if (input.type == OperandType::TENSOR_FLOAT32) {
-                float pad_value = isV2 ? getScalarData<float>(mOperands[ins[2]]) : 0;
+                float pad_value = isV2 ? getScalarData<float>(operands[ins[2]]) : 0;
                 success = padGeneric(reinterpret_cast<const float*>(input.buffer), input.shape(),
                                      reinterpret_cast<const int32_t*>(paddings.buffer), pad_value,
                                      reinterpret_cast<float*>(output.buffer), outShape);
             } else if (input.type == OperandType::TENSOR_FLOAT16) {
-                _Float16 pad_value = isV2 ? getScalarData<_Float16>(mOperands[ins[2]]) : 0;
+                _Float16 pad_value = isV2 ? getScalarData<_Float16>(operands[ins[2]]) : 0;
                 success = padGeneric(reinterpret_cast<const _Float16*>(input.buffer), input.shape(),
                                      reinterpret_cast<const int32_t*>(paddings.buffer),
                                      static_cast<_Float16>(pad_value),
                                      reinterpret_cast<_Float16*>(output.buffer), outShape);
             } else if (input.type == OperandType::TENSOR_QUANT8_ASYMM) {
                 uint8_t pad_value =
-                        isV2 ? getScalarData<uint8_t>(mOperands[ins[2]]) : outShape.offset;
+                        isV2 ? getScalarData<uint8_t>(operands[ins[2]]) : outShape.offset;
                 success = padGeneric(input.buffer, input.shape(),
                                      reinterpret_cast<const int32_t*>(paddings.buffer), pad_value,
                                      output.buffer, outShape);
@@ -1353,9 +1357,9 @@ int CpuExecutor::executeOperation(const Operation& operation) {
             if (!allParametersPresent(1, 1)) {
                 return ANEURALNETWORKS_BAD_DATA;
             }
-            const RunTimeOperandInfo& input = mOperands[ins[0]];
+            const RunTimeOperandInfo& input = operands[ins[0]];
 
-            RunTimeOperandInfo& output = mOperands[outs[0]];
+            RunTimeOperandInfo& output = operands[outs[0]];
             Shape outShape = output.shape();
 
             success = cast::prepare(input.shape(), &outShape) &&
@@ -1364,15 +1368,15 @@ int CpuExecutor::executeOperation(const Operation& operation) {
         } break;
         case OperationType::SQUEEZE: {
             if (ins.size() != 2 || outs.size() != 1 ||
-                mOperands[ins[0]].lifetime == OperandLifeTime::NO_VALUE ||
-                mOperands[outs[0]].lifetime == OperandLifeTime::NO_VALUE) {
+                operands[ins[0]].lifetime == OperandLifeTime::NO_VALUE ||
+                operands[outs[0]].lifetime == OperandLifeTime::NO_VALUE) {
                 LOG(ERROR) << "Wrong input/output count or lifetime for SQUEEZE op.";
                 return ANEURALNETWORKS_BAD_DATA;
             }
-            const RunTimeOperandInfo& input = mOperands[ins[0]];
-            const RunTimeOperandInfo& squeezeDims = mOperands[ins[1]];
+            const RunTimeOperandInfo& input = operands[ins[0]];
+            const RunTimeOperandInfo& squeezeDims = operands[ins[1]];
 
-            RunTimeOperandInfo& output = mOperands[outs[0]];
+            RunTimeOperandInfo& output = operands[outs[0]];
             Shape outShape = output.shape();
 
             success = squeezePrepare(input.shape(),
@@ -1385,15 +1389,15 @@ int CpuExecutor::executeOperation(const Operation& operation) {
             if (!allParametersPresent(7, 1)) {
                 return ANEURALNETWORKS_BAD_DATA;
             }
-            const RunTimeOperandInfo& input = mOperands[ins[0]];
-            const RunTimeOperandInfo& begins = mOperands[ins[1]];
-            const RunTimeOperandInfo& ends = mOperands[ins[2]];
-            const RunTimeOperandInfo& strides = mOperands[ins[3]];
-            int32_t beginMask = getScalarData<int32_t>(mOperands[ins[4]]);
-            int32_t endMask = getScalarData<int32_t>(mOperands[ins[5]]);
-            int32_t shrinkAxisMask = getScalarData<int32_t>(mOperands[ins[6]]);
+            const RunTimeOperandInfo& input = operands[ins[0]];
+            const RunTimeOperandInfo& begins = operands[ins[1]];
+            const RunTimeOperandInfo& ends = operands[ins[2]];
+            const RunTimeOperandInfo& strides = operands[ins[3]];
+            int32_t beginMask = getScalarData<int32_t>(operands[ins[4]]);
+            int32_t endMask = getScalarData<int32_t>(operands[ins[5]]);
+            int32_t shrinkAxisMask = getScalarData<int32_t>(operands[ins[6]]);
 
-            RunTimeOperandInfo& output = mOperands[outs[0]];
+            RunTimeOperandInfo& output = operands[outs[0]];
             Shape outShape = output.shape();
 
             success =
@@ -1413,11 +1417,11 @@ int CpuExecutor::executeOperation(const Operation& operation) {
             if (!allParametersPresent(3, 1)) {
                 return ANEURALNETWORKS_BAD_DATA;
             }
-            const RunTimeOperandInfo& input = mOperands[ins[0]];
-            const RunTimeOperandInfo& axis = mOperands[ins[1]];
-            int32_t keepDims = getScalarData<int32_t>(mOperands[ins[2]]);
+            const RunTimeOperandInfo& input = operands[ins[0]];
+            const RunTimeOperandInfo& axis = operands[ins[1]];
+            int32_t keepDims = getScalarData<int32_t>(operands[ins[2]]);
 
-            RunTimeOperandInfo& output = mOperands[outs[0]];
+            RunTimeOperandInfo& output = operands[outs[0]];
             Shape outShape = output.shape();
 
             if (!meanPrepare(input.shape(), reinterpret_cast<const int32_t*>(axis.buffer),
@@ -1447,10 +1451,10 @@ int CpuExecutor::executeOperation(const Operation& operation) {
             if (!allParametersPresent(2, 1)) {
                 return ANEURALNETWORKS_BAD_DATA;
             }
-            const RunTimeOperandInfo& input = mOperands[ins[0]];
-            int32_t axis = getScalarData<int32_t>(mOperands[ins[1]]);
+            const RunTimeOperandInfo& input = operands[ins[0]];
+            int32_t axis = getScalarData<int32_t>(operands[ins[1]]);
 
-            RunTimeOperandInfo& output = mOperands[outs[0]];
+            RunTimeOperandInfo& output = operands[outs[0]];
             Shape outShape = output.shape();
 
             const bool isArgMin = operation.type == OperationType::ARGMIN;
@@ -1463,10 +1467,10 @@ int CpuExecutor::executeOperation(const Operation& operation) {
             if (!allParametersPresent(2, 1)) {
                 return ANEURALNETWORKS_BAD_DATA;
             }
-            const RunTimeOperandInfo& input = mOperands[ins[0]];
-            int32_t axis = getScalarData<int32_t>(mOperands[ins[1]]);
+            const RunTimeOperandInfo& input = operands[ins[0]];
+            int32_t axis = getScalarData<int32_t>(operands[ins[1]]);
 
-            RunTimeOperandInfo& output = mOperands[outs[0]];
+            RunTimeOperandInfo& output = operands[outs[0]];
             Shape outShape = output.shape();
 
             success = expand_dims::prepare(input.shape(), axis, &outShape) &&
@@ -1479,9 +1483,9 @@ int CpuExecutor::executeOperation(const Operation& operation) {
                 return ANEURALNETWORKS_BAD_DATA;
             }
 
-            const RunTimeOperandInfo& input = mOperands[ins[0]];
-            const int32_t axis = getScalarData<int32_t>(mOperands[ins[1]]);
-            const int32_t numOutputs = getScalarData<int32_t>(mOperands[ins[2]]);
+            const RunTimeOperandInfo& input = operands[ins[0]];
+            const int32_t axis = getScalarData<int32_t>(operands[ins[1]]);
+            const int32_t numOutputs = getScalarData<int32_t>(operands[ins[2]]);
 
             if (numOutputs != outs.size()) {
                 return ANEURALNETWORKS_BAD_DATA;
@@ -1489,19 +1493,19 @@ int CpuExecutor::executeOperation(const Operation& operation) {
 
             std::vector<Shape> outputShapes(numOutputs);
             for (int i = 0; i < numOutputs; ++i) {
-                outputShapes[i] = mOperands[outs[i]].shape();
+                outputShapes[i] = operands[outs[i]].shape();
             }
 
             success = splitPrepare(input.shape(), axis, numOutputs, &outputShapes);
             for (int i = 0; i < numOutputs; ++i) {
-                success = success && setInfoAndAllocateIfNeeded(&(mOperands[outs[i]]),
+                success = success && setInfoAndAllocateIfNeeded(&(operands[outs[i]]),
                                                                 outputShapes[i], &result);
             }
             switch (input.type) {
                 case OperandType::TENSOR_FLOAT16: {
                     std::vector<_Float16*> outputDataPtrs(numOutputs);
                     for (int i = 0; i < numOutputs; ++i) {
-                        outputDataPtrs[i] = reinterpret_cast<_Float16*>(mOperands[outs[i]].buffer);
+                        outputDataPtrs[i] = reinterpret_cast<_Float16*>(operands[outs[i]].buffer);
                     }
                     success = success &&
                               splitFloat16(reinterpret_cast<const _Float16*>(input.buffer),
@@ -1510,7 +1514,7 @@ int CpuExecutor::executeOperation(const Operation& operation) {
                 case OperandType::TENSOR_FLOAT32: {
                     std::vector<float*> outputDataPtrs(numOutputs);
                     for (int i = 0; i < numOutputs; ++i) {
-                        outputDataPtrs[i] = reinterpret_cast<float*>(mOperands[outs[i]].buffer);
+                        outputDataPtrs[i] = reinterpret_cast<float*>(operands[outs[i]].buffer);
                     }
                     success = success &&
                               splitFloat32(reinterpret_cast<const float*>(input.buffer),
@@ -1519,7 +1523,7 @@ int CpuExecutor::executeOperation(const Operation& operation) {
                 case OperandType::TENSOR_INT32: {
                     std::vector<int32_t*> outputDataPtrs(numOutputs);
                     for (int i = 0; i < numOutputs; ++i) {
-                        outputDataPtrs[i] = reinterpret_cast<int32_t*>(mOperands[outs[i]].buffer);
+                        outputDataPtrs[i] = reinterpret_cast<int32_t*>(operands[outs[i]].buffer);
                     }
                     success = success &&
                               splitInt32(reinterpret_cast<const int32_t*>(input.buffer),
@@ -1528,7 +1532,7 @@ int CpuExecutor::executeOperation(const Operation& operation) {
                 case OperandType::TENSOR_QUANT8_ASYMM: {
                     std::vector<uint8_t*> outputDataPtrs(numOutputs);
                     for (int i = 0; i < numOutputs; ++i) {
-                        outputDataPtrs[i] = reinterpret_cast<uint8_t*>(mOperands[outs[i]].buffer);
+                        outputDataPtrs[i] = reinterpret_cast<uint8_t*>(operands[outs[i]].buffer);
                     }
                     success = success &&
                               splitQuant8(reinterpret_cast<const uint8_t*>(input.buffer),
@@ -1544,10 +1548,10 @@ int CpuExecutor::executeOperation(const Operation& operation) {
             if (!allParametersPresent(2, 1)) {
                 return ANEURALNETWORKS_BAD_DATA;
             }
-            const RunTimeOperandInfo& in1 = mOperands[ins[0]];
-            const RunTimeOperandInfo& in2 = mOperands[ins[1]];
+            const RunTimeOperandInfo& in1 = operands[ins[0]];
+            const RunTimeOperandInfo& in2 = operands[ins[1]];
 
-            RunTimeOperandInfo& output = mOperands[outs[0]];
+            RunTimeOperandInfo& output = operands[outs[0]];
             Shape outputShape = output.shape();
 
             const bool isMinimum = operation.type == OperationType::MINIMUM;
@@ -1561,9 +1565,9 @@ int CpuExecutor::executeOperation(const Operation& operation) {
             if ((inCount != 12 && inCount != 9) || !allParametersPresent(inCount, 1)) {
                 return ANEURALNETWORKS_BAD_DATA;
             }
-            const RunTimeOperandInfo& input = mOperands[ins[0]];
-            const RunTimeOperandInfo& filter = mOperands[ins[1]];
-            const RunTimeOperandInfo& bias = mOperands[ins[2]];
+            const RunTimeOperandInfo& input = operands[ins[0]];
+            const RunTimeOperandInfo& filter = operands[ins[1]];
+            const RunTimeOperandInfo& bias = operands[ins[2]];
 
             int32_t padding_left, padding_right;
             int32_t padding_top, padding_bottom;
@@ -1574,25 +1578,25 @@ int CpuExecutor::executeOperation(const Operation& operation) {
             bool data_layout = false;
 
             if (inCount == 12) {
-                padding_left = getScalarData<int32_t>(mOperands[ins[3]]);
-                padding_right = getScalarData<int32_t>(mOperands[ins[4]]);
-                padding_top = getScalarData<int32_t>(mOperands[ins[5]]);
-                padding_bottom = getScalarData<int32_t>(mOperands[ins[6]]);
-                stride_width = getScalarData<int32_t>(mOperands[ins[7]]);
-                stride_height = getScalarData<int32_t>(mOperands[ins[8]]);
-                numGroups = getScalarData<int32_t>(mOperands[ins[9]]);
-                activation = getScalarData<int32_t>(mOperands[ins[10]]);
-                data_layout = getScalarData<bool>(mOperands[ins[11]]);
+                padding_left = getScalarData<int32_t>(operands[ins[3]]);
+                padding_right = getScalarData<int32_t>(operands[ins[4]]);
+                padding_top = getScalarData<int32_t>(operands[ins[5]]);
+                padding_bottom = getScalarData<int32_t>(operands[ins[6]]);
+                stride_width = getScalarData<int32_t>(operands[ins[7]]);
+                stride_height = getScalarData<int32_t>(operands[ins[8]]);
+                numGroups = getScalarData<int32_t>(operands[ins[9]]);
+                activation = getScalarData<int32_t>(operands[ins[10]]);
+                data_layout = getScalarData<bool>(operands[ins[11]]);
             } else {
-                padding_implicit = getScalarData<int32_t>(mOperands[ins[3]]);
-                stride_width = getScalarData<int32_t>(mOperands[ins[4]]);
-                stride_height = getScalarData<int32_t>(mOperands[ins[5]]);
-                numGroups = getScalarData<int32_t>(mOperands[ins[6]]);
-                activation = getScalarData<int32_t>(mOperands[ins[7]]);
-                data_layout = getScalarData<bool>(mOperands[ins[8]]);
+                padding_implicit = getScalarData<int32_t>(operands[ins[3]]);
+                stride_width = getScalarData<int32_t>(operands[ins[4]]);
+                stride_height = getScalarData<int32_t>(operands[ins[5]]);
+                numGroups = getScalarData<int32_t>(operands[ins[6]]);
+                activation = getScalarData<int32_t>(operands[ins[7]]);
+                data_layout = getScalarData<bool>(operands[ins[8]]);
             }
 
-            RunTimeOperandInfo& output = mOperands[outs[0]];
+            RunTimeOperandInfo& output = operands[outs[0]];
             Shape outShape = output.shape();
 
             RunTimeOperandInfo input_tmp, output_tmp;
@@ -1676,10 +1680,10 @@ int CpuExecutor::executeOperation(const Operation& operation) {
             if (!allParametersPresent(2, 1)) {
                 return ANEURALNETWORKS_BAD_DATA;
             }
-            const RunTimeOperandInfo& input = mOperands[ins[0]];
-            const RunTimeOperandInfo& multiples = mOperands[ins[1]];
+            const RunTimeOperandInfo& input = operands[ins[0]];
+            const RunTimeOperandInfo& multiples = operands[ins[1]];
 
-            RunTimeOperandInfo& output = mOperands[outs[0]];
+            RunTimeOperandInfo& output = operands[outs[0]];
             Shape outShape = output.shape();
 
             success =
@@ -1696,13 +1700,13 @@ int CpuExecutor::executeOperation(const Operation& operation) {
             }
 
             RunTimeOperandInfo& cellStateOut =
-                    mOperands[outs[QuantizedLSTMCell::kCellStateOutTensor]];
-            RunTimeOperandInfo& output = mOperands[outs[QuantizedLSTMCell::kOutputTensor]];
+                    operands[outs[QuantizedLSTMCell::kCellStateOutTensor]];
+            RunTimeOperandInfo& output = operands[outs[QuantizedLSTMCell::kOutputTensor]];
 
             Shape cellStateOutShape, outputShape;
-            QuantizedLSTMCell quantizedLSTMCell(operation, mOperands);
+            QuantizedLSTMCell quantizedLSTMCell(operation, operands);
 
-            success = QuantizedLSTMCell::prepare(operation, mOperands, &cellStateOutShape,
+            success = QuantizedLSTMCell::prepare(operation, operands, &cellStateOutShape,
                                                  &outputShape) &&
                       setInfoAndAllocateIfNeeded(&cellStateOut, cellStateOutShape, &result) &&
                       setInfoAndAllocateIfNeeded(&output, outputShape, &result) &&
@@ -1712,10 +1716,10 @@ int CpuExecutor::executeOperation(const Operation& operation) {
             if (!allParametersPresent(2, 1)) {
                 return ANEURALNETWORKS_BAD_DATA;
             }
-            const RunTimeOperandInfo& base = mOperands[ins[0]];
-            const RunTimeOperandInfo& exponent = mOperands[ins[1]];
+            const RunTimeOperandInfo& base = operands[ins[0]];
+            const RunTimeOperandInfo& exponent = operands[ins[1]];
 
-            RunTimeOperandInfo& output = mOperands[outs[0]];
+            RunTimeOperandInfo& output = operands[outs[0]];
             Shape outShape = output.shape();
 
             success = pow::prepare(base.shape(), exponent.shape(), &outShape) &&
@@ -1727,12 +1731,12 @@ int CpuExecutor::executeOperation(const Operation& operation) {
             if (!allParametersPresent(2, 2)) {
                 return ANEURALNETWORKS_BAD_DATA;
             }
-            const RunTimeOperandInfo& input = mOperands[ins[0]];
-            int32_t k = getScalarData<int32_t>(mOperands[ins[1]]);
+            const RunTimeOperandInfo& input = operands[ins[0]];
+            int32_t k = getScalarData<int32_t>(operands[ins[1]]);
 
-            RunTimeOperandInfo& values = mOperands[outs[0]];
+            RunTimeOperandInfo& values = operands[outs[0]];
             Shape valuesShape = values.shape();
-            RunTimeOperandInfo& indices = mOperands[outs[1]];
+            RunTimeOperandInfo& indices = operands[outs[1]];
             Shape indicesShape = indices.shape();
 
             success = topk_v2::prepare(input.shape(), k, &valuesShape, &indicesShape) &&
@@ -1751,7 +1755,7 @@ int CpuExecutor::executeOperation(const Operation& operation) {
                 LOG(ERROR) << "Incomplete operation registration: "
                            << getOperationName(operation.type);
             } else {
-                OperationExecutionContext context(&operation, mOperands.data());
+                OperationExecutionContext context(&operation, operands);
                 success = operationRegistration->flags.allowOmittedOperand ||
                           context.checkNoOmittedOperand();
                 success = success && (operationRegistration->flags.allowZeroSizedInput ||
@@ -1770,13 +1774,13 @@ int CpuExecutor::executeOperation(const Operation& operation) {
         return result;
     }
 
-    freeNoLongerUsedOperands(ins);
+    freeNoLongerUsedOperands(ins, operands);
     return ANEURALNETWORKS_NO_ERROR;
 }
 
-void CpuExecutor::finish(int result) {
+void CpuExecutor::finish(int result, std::vector<RunTimeOperandInfo>* operands) {
     // Free allocated temporary operands.
-    for (auto& info : mOperands) {
+    for (auto& info : *operands) {
         if (info.lifetime == OperandLifeTime::TEMPORARY_VARIABLE && info.buffer != nullptr) {
             delete[] info.buffer;
             info.buffer = nullptr;
@@ -1790,7 +1794,7 @@ void CpuExecutor::finish(int result) {
         mOutputShapes.resize(outputs.size());
         for (uint32_t i = 0; i < outputs.size(); i++) {
             const uint32_t operandIndex = outputs[i];
-            RunTimeOperandInfo& from = mOperands[operandIndex];
+            RunTimeOperandInfo& from = (*operands)[operandIndex];
             mOutputShapes[i].dimensions = from.dimensions;
             mOutputShapes[i].isSufficient = from.isSufficient();
         }
@@ -1799,7 +1803,6 @@ void CpuExecutor::finish(int result) {
     }
 
     mModel = nullptr;
-    mRequest = nullptr;
     mFinished = true;
 }
 

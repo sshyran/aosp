@@ -29,8 +29,7 @@ namespace nn {
 
 using namespace hal;
 
-EmbeddingLookup::EmbeddingLookup(const Operation& operation,
-                                 std::vector<RunTimeOperandInfo>& operands) {
+EmbeddingLookup::EmbeddingLookup(const Operation& operation, RunTimeOperandInfo* operands) {
     value_ = GetInput(operation, operands, kValueTensor);
     lookup_ = GetInput(operation, operands, kLookupTensor);
 
