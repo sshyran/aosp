@@ -37,8 +37,7 @@ int greater(const void* a, const void* b) {
 
 }  // anonymous namespace
 
-HashtableLookup::HashtableLookup(const Operation& operation,
-                                 std::vector<RunTimeOperandInfo>& operands) {
+HashtableLookup::HashtableLookup(const Operation& operation, RunTimeOperandInfo* operands) {
     lookup_ = GetInput(operation, operands, kLookupTensor);
     key_ = GetInput(operation, operands, kKeyTensor);
     value_ = GetInput(operation, operands, kValueTensor);

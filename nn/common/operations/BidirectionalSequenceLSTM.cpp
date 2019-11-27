@@ -52,7 +52,7 @@ inline const T* GetOptionalBuffer(const RunTimeOperandInfo* operand) {
 }  // anonymous namespace
 
 BidirectionalSequenceLSTM::BidirectionalSequenceLSTM(const Operation& operation,
-                                                     std::vector<RunTimeOperandInfo>& operands) {
+                                                     RunTimeOperandInfo* operands) {
     input_ = GetInput(operation, operands, kInputTensor);
 
     fw_input_to_input_weights_ =
@@ -163,8 +163,7 @@ BidirectionalSequenceLSTM::BidirectionalSequenceLSTM(const Operation& operation,
     }
 }
 
-bool BidirectionalSequenceLSTM::Prepare(const Operation& operation,
-                                        std::vector<RunTimeOperandInfo>& operands,
+bool BidirectionalSequenceLSTM::Prepare(const Operation& operation, RunTimeOperandInfo* operands,
                                         Shape* fwOutputShape, Shape* bwOutputShape) {
     // Inferring batch size, number of outputs and number of cells from the
     // input tensors.

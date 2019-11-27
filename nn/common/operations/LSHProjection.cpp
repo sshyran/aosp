@@ -24,14 +24,14 @@
 #include "Utils.h"
 
 #include <utils/hash/farmhash.h>
+#include <memory>
 
 namespace android {
 namespace nn {
 
 using namespace hal;
 
-LSHProjection::LSHProjection(const Operation& operation,
-                             std::vector<RunTimeOperandInfo>& operands) {
+LSHProjection::LSHProjection(const Operation& operation, RunTimeOperandInfo* operands) {
     input_ = GetInput(operation, operands, kInputTensor);
     weight_ = GetInput(operation, operands, kWeightTensor);
     hash_ = GetInput(operation, operands, kHashTensor);
@@ -42,7 +42,7 @@ LSHProjection::LSHProjection(const Operation& operation,
     output_ = GetOutput(operation, operands, kOutputTensor);
 }
 
-bool LSHProjection::Prepare(const Operation& operation, std::vector<RunTimeOperandInfo>& operands,
+bool LSHProjection::Prepare(const Operation& operation, RunTimeOperandInfo* operands,
                             Shape* outputShape) {
     const int num_inputs = NumInputsWithValues(operation, operands);
     NN_CHECK(num_inputs == 3 || num_inputs == 4);
