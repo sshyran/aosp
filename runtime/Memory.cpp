@@ -27,6 +27,7 @@
 
 #include "CompilationBuilder.h"
 #include "ExecutionBurstController.h"
+#include "Manager.h"
 #include "MemoryUtils.h"
 #include "TypeManager.h"
 #include "Utils.h"
@@ -35,8 +36,6 @@ namespace android {
 namespace nn {
 
 using namespace hal;
-
-Memory::Memory(hidl_memory memory) : kHidlMemory(std::move(memory)) {}
 
 Memory::~Memory() {
     for (const auto [ptr, weakBurst] : mUsedBy) {
@@ -179,14 +178,90 @@ int MemoryBuilder::setDimensions(const std::vector<uint32_t>& dimensions) {
     return ANEURALNETWORKS_NO_ERROR;
 }
 
+static void logMemoryDescriptorToInfo(const MemoryDescriptor& desc, const Operand& operand) {
+    LOG(INFO) << "MemoryDescriptor start";
+    LOG(INFO) << "    Data type: " << toString(operand.type);
+    LOG(INFO) << "    Scale: " << toString(operand.scale);
+    LOG(INFO) << "    Zero point: " << toString(operand.zeroPoint);
+    LOG(INFO) << "    Extra params: " << toString(operand.extraParams);
+    LOG(INFO) << "    Dimensions: " << toString(desc.dimensions);
+    LOG(INFO) << "    Submodels [" << desc.preparedModels.size() << "]:";
+    for (const auto* preparedModel : desc.preparedModels) {
+        LOG(INFO) << "        service = " << preparedModel->getDevice()->getName();
+    }
+    LOG(INFO) << "    Input roles [" << desc.inputRoles.size() << "]:";
+    for (const auto& usage : desc.inputRoles) {
+        LOG(INFO) << "        " << toString(usage);
+    }
+    LOG(INFO) << "    Output roles [" << desc.outputRoles.size() << "]:";
+    for (const auto& usage : desc.outputRoles) {
+        LOG(INFO) << "        " << toString(usage);
+    }
+    LOG(INFO) << "MemoryDescriptor end";
+}
+
+static const Device* selectDeviceMemoryAllocator(const MemoryDescriptor& desc) {
+    const Device* allocator = nullptr;
+    for (const auto* preparedModel : desc.preparedModels) {
+        const auto* device = preparedModel->getDevice();
+        if (allocator == nullptr) {
+            allocator = device;
+        } else if (allocator != device) {
+            LOG(INFO) << "selectDeviceMemoryAllocator -- cannot handle multiple devices.";
+            return nullptr;
+        }
+    }
+    CHECK(allocator != nullptr);
+    VLOG(MEMORY) << "Using " << allocator->getName() << " as allocator.";
+    return allocator;
+}
+
 int MemoryBuilder::finish() {
     if (badState("finish")) return ANEURALNETWORKS_BAD_STATE;
     if (mRoles.empty()) {
         LOG(ERROR) << "ANeuralNetworksMemoryDesc_finish -- no role has been specified.";
         return ANEURALNETWORKS_BAD_DATA;
     }
+    CHECK(mOperand.has_value());
+    if (VLOG_IS_ON(MEMORY)) {
+        logMemoryDescriptorToInfo(mDesc, mOperand.value());
+    }
+    mAllocator = selectDeviceMemoryAllocator(mDesc);
     mFinished = true;
     return ANEURALNETWORKS_NO_ERROR;
+}
+
+std::pair<int, std::unique_ptr<Memory>> MemoryBuilder::allocate() const {
+    if (!mFinished) {
+        LOG(ERROR) << "ANeuralNetworksMemory_createFromDesc -- passed an unfinished descriptor";
+        return {ANEURALNETWORKS_BAD_STATE, nullptr};
+    }
+
+    // TODO(xusongw): Does not support dynamic output shape for now.
+    CHECK(mOperand.has_value());
+    uint32_t size = TypeManager::get()->getSizeOfData(mOperand->type, mDesc.dimensions);
+    if (size == 0) {
+        LOG(ERROR)
+                << "ANeuralNetworksMemory_createFromDesc -- does not support unknown dimensions.";
+        return {ANEURALNETWORKS_OP_FAILED, nullptr};
+    }
+
+    int n = ANEURALNETWORKS_OP_FAILED;
+    std::unique_ptr<Memory> memory;
+
+    // Try allocate the memory on device.
+    if (mAllocator != nullptr) {
+        std::tie(n, memory) = mAllocator->allocate(mDesc);
+    }
+
+    // If failed, fallback to ashmem.
+    // TODO(xusongw): Decide on the fallback strategy.
+    // TODO(xusongw): Use BLOB mode hardware buffer when possible.
+    if (n != ANEURALNETWORKS_NO_ERROR) {
+        VLOG(MEMORY) << "MemoryBuilder::allocate -- fallback to ashmem.";
+        std::tie(n, memory) = MemoryAshmem::create(size);
+    }
+    return {n, std::move(memory)};
 }
 
 std::pair<int, std::unique_ptr<MemoryAshmem>> MemoryAshmem::create(uint32_t size) {
@@ -280,6 +355,22 @@ bool MemoryAHWB::validateSize(uint32_t offset, uint32_t length) const {
 
 MemoryAHWB::MemoryAHWB(const AHardwareBuffer_Desc& desc, hidl_memory memory)
     : Memory(std::move(memory)), kBlobMode(desc.format == AHARDWAREBUFFER_FORMAT_BLOB) {}
+
+std::pair<int, std::unique_ptr<MemoryFromDevice>> MemoryFromDevice::create(sp<hal::IBuffer> buffer,
+                                                                           int32_t token) {
+    if (buffer == nullptr) {
+        LOG(ERROR) << "nullptr IBuffer for device memory.";
+        return {ANEURALNETWORKS_BAD_DATA, nullptr};
+    }
+    if (token <= 0) {
+        LOG(ERROR) << "Invalid token for device memory: " << token;
+        return {ANEURALNETWORKS_BAD_DATA, nullptr};
+    }
+    return {ANEURALNETWORKS_NO_ERROR, std::make_unique<MemoryFromDevice>(std::move(buffer), token)};
+};
+
+MemoryFromDevice::MemoryFromDevice(sp<hal::IBuffer> buffer, int32_t token)
+    : Memory(std::move(buffer), token) {}
 
 }  // namespace nn
 }  // namespace android

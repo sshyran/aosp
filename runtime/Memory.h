@@ -40,6 +40,7 @@ namespace android {
 namespace nn {
 
 class CompilationBuilder;
+class Device;
 class ExecutionBurstController;
 class ModelBuilder;
 class PreparedModel;
@@ -113,6 +114,7 @@ class Memory {
 
     hal::Request::MemoryPool getMemoryPool() const;
     const hal::hidl_memory& getHidlMemory() const { return kHidlMemory; }
+    const sp<hal::IBuffer>& getIBuffer() const { return kBuffer; }
 
     virtual bool validateSize(uint32_t offset, uint32_t length) const;
 
@@ -125,11 +127,13 @@ class Memory {
     void usedBy(const std::shared_ptr<ExecutionBurstController>& burst) const;
 
    protected:
-    Memory(hal::hidl_memory memory);
+    Memory(hal::hidl_memory memory) : kHidlMemory(std::move(memory)) {}
+    Memory(sp<hal::IBuffer> buffer, int32_t token) : kBuffer(std::move(buffer)), kToken(token) {}
 
     // The HIDL representation for this memory.  We will use one of the following values
     // when communicating with the drivers.
     const hal::hidl_memory kHidlMemory;
+    const sp<hal::IBuffer> kBuffer;
     const int32_t kToken = 0;
 
    private:
@@ -156,6 +160,8 @@ class MemoryBuilder {
 
     int finish();
 
+    std::pair<int, std::unique_ptr<Memory>> allocate() const;
+
    private:
     bool badState(const char* name) const;
 
@@ -173,6 +179,8 @@ class MemoryBuilder {
 
     // Once the descriptor has been finished, we should not allow further modifications.
     bool mFinished = false;
+
+    const Device* mAllocator = nullptr;
 };
 
 class MemoryAshmem : public Memory {
@@ -232,6 +240,20 @@ class MemoryAHWB : public Memory {
 
    private:
     const bool kBlobMode;
+};
+
+class MemoryFromDevice : public Memory {
+   public:
+    // Create a memory object to keep track of a driver-allocated device memory.
+    // The memory is recognized by the driver via a token.
+    //
+    // On success, returns ANEURALNETWORKS_NO_ERROR and a memory object.
+    // On error, returns the appropriate NNAPI error code and nullptr.
+    static std::pair<int, std::unique_ptr<MemoryFromDevice>> create(sp<hal::IBuffer> buffer,
+                                                                    int32_t token);
+
+    // prefer using MemoryFromDevice::create
+    MemoryFromDevice(sp<hal::IBuffer> buffer, int32_t token);
 };
 
 using MemoryTracker = ObjectTracker<Memory>;
