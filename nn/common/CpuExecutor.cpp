@@ -1380,7 +1380,7 @@ int CpuExecutor::executeOperation(const Operation& operation, RunTimeOperandInfo
                                      output.buffer, outShape);
             } else if (input.type == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
                 uint8_t pad_value =
-                        isV2 ? getScalarData<int8_t>(mOperands[ins[2]]) : outShape.offset;
+                        isV2 ? getScalarData<int8_t>(operands[ins[2]]) : outShape.offset;
                 success = padGeneric(input.buffer, input.shape(),
                                      reinterpret_cast<const int32_t*>(paddings.buffer), pad_value,
                                      output.buffer, outShape);
@@ -1574,7 +1574,7 @@ int CpuExecutor::executeOperation(const Operation& operation, RunTimeOperandInfo
                 case OperandType::TENSOR_QUANT8_ASYMM_SIGNED: {
                     std::vector<int8_t*> outputDataPtrs(numOutputs);
                     for (int i = 0; i < numOutputs; ++i) {
-                        outputDataPtrs[i] = reinterpret_cast<int8_t*>(mOperands[outs[i]].buffer);
+                        outputDataPtrs[i] = reinterpret_cast<int8_t*>(operands[outs[i]].buffer);
                     }
                     success = success &&
                               splitQuant8Signed(reinterpret_cast<const int8_t*>(input.buffer),
