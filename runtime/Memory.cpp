@@ -18,10 +18,17 @@
 
 #include "Memory.h"
 
+#include <algorithm>
 #include <memory>
+#include <set>
+#include <tuple>
 #include <utility>
+#include <vector>
+
+#include "CompilationBuilder.h"
 #include "ExecutionBurstController.h"
 #include "MemoryUtils.h"
+#include "TypeManager.h"
 #include "Utils.h"
 
 namespace android {
@@ -64,6 +71,122 @@ intptr_t Memory::getKey() const {
 void Memory::usedBy(const std::shared_ptr<ExecutionBurstController>& burst) const {
     std::lock_guard<std::mutex> guard(mMutex);
     mUsedBy.emplace(burst.get(), burst);
+}
+
+bool MemoryBuilder::badState(const char* name) const {
+    if (mFinished) {
+        LOG(ERROR) << "ANeuralNetworksMemoryDesc_" << name << " can't modify after finished";
+        return true;
+    }
+    return false;
+}
+
+int MemoryBuilder::addRole(const CompilationBuilder& compilation, IOType ioType, uint32_t index,
+                           float freq) {
+    const char* tag = ioType == IOType::INPUT ? "addInputRole" : "addOutputRole";
+    if (badState(tag)) {
+        return ANEURALNETWORKS_BAD_STATE;
+    }
+    if (mRoles.count({&compilation, ioType, index}) > 0) {
+        LOG(ERROR) << "ANeuralNetworksMemoryDesc_" << tag
+                   << " -- the same operand is specified twice.";
+        return ANEURALNETWORKS_BAD_DATA;
+    }
+
+    std::vector<std::tuple<const PreparedModel*, IOType, uint32_t>> roles;
+    auto callback = [&roles](const auto* preparedModel, IOType type, uint32_t index) {
+        roles.emplace_back(preparedModel, type, index);
+    };
+    if (ioType == IOType::INPUT) {
+        if (compilation.forEachStepRoleOfInput(index, callback) != ANEURALNETWORKS_NO_ERROR) {
+            return ANEURALNETWORKS_BAD_DATA;
+        }
+    } else {
+        if (compilation.forEachStepRoleOfOutput(index, callback) != ANEURALNETWORKS_NO_ERROR) {
+            return ANEURALNETWORKS_BAD_DATA;
+        }
+    }
+
+    const ModelBuilder* model = compilation.getModel();
+    CHECK(model != nullptr);
+    Operand operand;
+    if (ioType == IOType::INPUT) {
+        if (index >= model->inputCount()) {
+            LOG(ERROR) << "ANeuralNetworksMemoryDesc_addInputRole -- input index out of range.";
+            return ANEURALNETWORKS_BAD_DATA;
+        }
+        operand = model->getInputOperand(index);
+    } else {
+        if (index >= model->outputCount()) {
+            LOG(ERROR) << "ANeuralNetworksMemoryDesc_addOutputRole -- output index out of range.";
+            return ANEURALNETWORKS_BAD_DATA;
+        }
+        operand = model->getOutputOperand(index);
+    }
+    if (mOperand.has_value()) {
+        if (operand.type != mOperand->type || operand.scale != mOperand->scale ||
+            operand.zeroPoint != mOperand->zeroPoint ||
+            operand.extraParams != mOperand->extraParams) {
+            LOG(ERROR) << "ANeuralNetworksMemoryDesc_" << tag
+                       << " -- incompatible operand metadata.";
+            return ANEURALNETWORKS_BAD_DATA;
+        }
+    }
+    if (!TypeManager::get()->isTensorType(operand.type) && !mDesc.dimensions.empty()) {
+        LOG(ERROR) << "ANeuralNetworksMemoryDesc_" << tag << " -- incompatible dimensions.";
+        return ANEURALNETWORKS_BAD_DATA;
+    }
+    auto combined = combineDimensions(mDesc.dimensions, operand.dimensions);
+    if (!combined.has_value()) {
+        LOG(ERROR) << "ANeuralNetworksMemoryDesc_" << tag << " -- incompatible dimensions.";
+        return ANEURALNETWORKS_BAD_DATA;
+    }
+
+    if (freq > 1.0f || freq <= 0.0f) {
+        LOG(ERROR) << "ANeuralNetworksMemoryDesc_" << tag << " -- invalid frequency " << freq;
+        return ANEURALNETWORKS_BAD_DATA;
+    }
+
+    mRoles.emplace(&compilation, ioType, index);
+    for (const auto [preparedModel, type, ind] : roles) {
+        uint32_t modelIndex = mDesc.preparedModels.add(preparedModel);
+        BufferRole role = {.modelIndex = modelIndex, .ioIndex = ind, .frequency = freq};
+        if (type == IOType::INPUT) {
+            mDesc.inputRoles.push_back(role);
+        } else {
+            mDesc.outputRoles.push_back(role);
+        }
+    }
+    mOperand = std::move(operand);
+    mDesc.dimensions = std::move(combined.value());
+    return ANEURALNETWORKS_NO_ERROR;
+}
+
+int MemoryBuilder::setDimensions(const std::vector<uint32_t>& dimensions) {
+    if (badState("setDimensions")) return ANEURALNETWORKS_BAD_STATE;
+    if (mOperand.has_value() && !TypeManager::get()->isTensorType(mOperand->type) &&
+        !dimensions.empty()) {
+        LOG(ERROR) << "ANeuralNetworksMemoryDesc_setDimensions -- incompatible dimensions for "
+                      "scalars.";
+        return ANEURALNETWORKS_BAD_DATA;
+    }
+    auto combined = combineDimensions(mDesc.dimensions, dimensions);
+    if (!combined.has_value()) {
+        LOG(ERROR) << "ANeuralNetworksMemoryDesc_setDimensions -- incompatible dimensions.";
+        return ANEURALNETWORKS_BAD_DATA;
+    }
+    mDesc.dimensions = std::move(combined.value());
+    return ANEURALNETWORKS_NO_ERROR;
+}
+
+int MemoryBuilder::finish() {
+    if (badState("finish")) return ANEURALNETWORKS_BAD_STATE;
+    if (mRoles.empty()) {
+        LOG(ERROR) << "ANeuralNetworksMemoryDesc_finish -- no role has been specified.";
+        return ANEURALNETWORKS_BAD_DATA;
+    }
+    mFinished = true;
+    return ANEURALNETWORKS_NO_ERROR;
 }
 
 std::pair<int, std::unique_ptr<MemoryAshmem>> MemoryAshmem::create(uint32_t size) {
@@ -157,27 +280,6 @@ bool MemoryAHWB::validateSize(uint32_t offset, uint32_t length) const {
 
 MemoryAHWB::MemoryAHWB(const AHardwareBuffer_Desc& desc, hidl_memory memory)
     : Memory(std::move(memory)), kBlobMode(desc.format == AHARDWAREBUFFER_FORMAT_BLOB) {}
-
-uint32_t MemoryTracker::add(const Memory* memory) {
-    VLOG(MODEL) << __func__ << "(" << SHOW_IF_DEBUG(memory) << ")";
-    // See if we already have this memory. If so,
-    // return its index.
-    auto i = mKnown.find(memory);
-    if (i != mKnown.end()) {
-        return i->second;
-    }
-    VLOG(MODEL) << "It's new";
-    // It's a new one.  Save it an assign an index to it.
-    size_t next = mKnown.size();
-    if (next > 0xFFFFFFFF) {
-        LOG(ERROR) << "ANeuralNetworks more than 2^32 memories.";
-        return ANEURALNETWORKS_BAD_DATA;
-    }
-    uint32_t idx = static_cast<uint32_t>(next);
-    mKnown[memory] = idx;
-    mMemories.push_back(memory);
-    return idx;
-}
 
 }  // namespace nn
 }  // namespace android

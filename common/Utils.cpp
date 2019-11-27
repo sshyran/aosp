@@ -1702,6 +1702,26 @@ std::tuple<int, std::vector<OutputShape>, Timing> getExecutionResult(
     return {n, std::move(outputShapes), timing};
 }
 
+std::optional<std::vector<uint32_t>> combineDimensions(const std::vector<uint32_t>& lhs,
+                                                       const std::vector<uint32_t>& rhs) {
+    if (rhs.empty()) return lhs;
+    if (lhs.empty()) return rhs;
+    if (lhs.size() != rhs.size()) {
+        LOG(ERROR) << "Incompatible ranks: " << toString(lhs) << " and " << toString(rhs);
+        return std::nullopt;
+    }
+    std::vector<uint32_t> combined = lhs;
+    for (uint32_t i = 0; i < lhs.size(); i++) {
+        if (lhs[i] == 0) {
+            combined[i] = rhs[i];
+        } else if (rhs[i] != 0 && lhs[i] != rhs[i]) {
+            LOG(ERROR) << "Incompatible dimensions: " << toString(lhs) << " and " << toString(rhs);
+            return std::nullopt;
+        }
+    }
+    return combined;
+}
+
 // Capabilities::operandPerformance utilities.
 // The field Capabilities::operandPerformance is a vector sorted by the field
 // Capabilities::OperandPerformance::type.

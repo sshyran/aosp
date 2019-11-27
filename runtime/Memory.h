@@ -17,25 +17,89 @@
 #ifndef ANDROID_FRAMEWORKS_ML_NN_RUNTIME_MEMORY_H
 #define ANDROID_FRAMEWORKS_ML_NN_RUNTIME_MEMORY_H
 
-#include "HalInterfaces.h"
-#include "NeuralNetworks.h"
-#include "Utils.h"
-
 #include <android-base/macros.h>
 #include <cutils/native_handle.h>
 #include <sys/mman.h>
 #include <vndk/hardware_buffer.h>
+
+#include <algorithm>
+#include <map>
 #include <memory>
 #include <mutex>
+#include <set>
+#include <tuple>
 #include <unordered_map>
 #include <utility>
 #include <vector>
 
+#include "HalInterfaces.h"
+#include "NeuralNetworks.h"
+#include "Utils.h"
+
 namespace android {
 namespace nn {
 
+class CompilationBuilder;
 class ExecutionBurstController;
 class ModelBuilder;
+class PreparedModel;
+
+// A utility template class to accumulate multiple objects and assign each
+// a distinct index number, starting with 0.
+//
+// The user of this class is responsible for avoiding concurrent calls
+// to this class from multiple threads.
+template <typename ObjectType>
+class ObjectTracker {
+   public:
+    // Adds the object, if it does not already exists.  Returns its index.
+    // The objects should survive the tracker.
+    uint32_t add(const ObjectType* object) {
+        VLOG(MEMORY) << __func__ << "(" << SHOW_IF_DEBUG(object) << ")";
+        // See if we already have this object. If so, return its index.
+        auto i = mKnown.find(object);
+        if (i != mKnown.end()) {
+            return i->second;
+        }
+        VLOG(MEMORY) << "It's new";
+        // It's a new one.  Save it an assign an index to it.
+        size_t next = mKnown.size();
+        uint32_t idx = static_cast<uint32_t>(next);
+        mKnown[object] = idx;
+        mObjects.push_back(object);
+        return idx;
+    }
+
+    // Returns the number of objects contained.
+    uint32_t size() const { return mObjects.size(); }
+    // Returns the ith object.
+    const ObjectType* operator[](size_t i) const {
+        CHECK(i < size());
+        return mObjects[i];
+    }
+    // Iteration
+    auto begin() { return mObjects.begin(); }
+    auto end() { return mObjects.end(); }
+    auto begin() const { return mObjects.begin(); }
+    auto end() const { return mObjects.end(); }
+
+   private:
+    // The vector of object pointers we are building.
+    std::vector<const ObjectType*> mObjects;
+    // A faster way to see if we already have an object than doing find().
+    std::unordered_map<const ObjectType*, uint32_t> mKnown;
+};
+
+enum class IOType { INPUT = 0, OUTPUT = 1 };
+
+using CompilationRole = std::tuple<const CompilationBuilder*, IOType, uint32_t>;
+using StepRoleCallback = std::function<void(const PreparedModel*, IOType, uint32_t)>;
+
+struct MemoryDescriptor {
+    std::vector<uint32_t> dimensions;
+    ObjectTracker<PreparedModel> preparedModels;
+    std::vector<hal::BufferRole> inputRoles, outputRoles;
+};
 
 // Represents a memory region.
 class Memory {
@@ -79,6 +143,36 @@ class Memory {
     mutable std::unordered_map<const ExecutionBurstController*,
                                std::weak_ptr<ExecutionBurstController>>
             mUsedBy;
+};
+
+class MemoryBuilder {
+    DISALLOW_COPY_AND_ASSIGN(MemoryBuilder);
+
+   public:
+    MemoryBuilder() = default;
+
+    int addRole(const CompilationBuilder& compilation, IOType ioType, uint32_t index, float freq);
+    int setDimensions(const std::vector<uint32_t>& dimensions);
+
+    int finish();
+
+   private:
+    bool badState(const char* name) const;
+
+    // The memory descriptor that the MemoryBuilder is building.
+    MemoryDescriptor mDesc;
+
+    // The roles that have been specified via addRole.
+    // This is to check whether a new role has been seen before or not.
+    std::set<CompilationRole> mRoles;
+
+    // Keep track of the data type, scale, zero point, and extra parameters of the target operand.
+    // Other fields will be ignored, including dimensions, lifetime, location, etc.
+    // It is std::nullopt if no usage has been specified yet.
+    std::optional<hal::Operand> mOperand;
+
+    // Once the descriptor has been finished, we should not allow further modifications.
+    bool mFinished = false;
 };
 
 class MemoryAshmem : public Memory {
@@ -140,32 +234,7 @@ class MemoryAHWB : public Memory {
     const bool kBlobMode;
 };
 
-// A utility class to accumulate mulitple Memory objects and assign each
-// a distinct index number, starting with 0.
-//
-// The user of this class is responsible for avoiding concurrent calls
-// to this class from multiple threads.
-class MemoryTracker {
-   private:
-    // The vector of Memory pointers we are building.
-    std::vector<const Memory*> mMemories;
-    // A faster way to see if we already have a memory than doing find().
-    std::unordered_map<const Memory*, uint32_t> mKnown;
-
-   public:
-    // Adds the memory, if it does not already exists.  Returns its index.
-    // The memories should survive the tracker.
-    uint32_t add(const Memory* memory);
-    // Returns the number of memories contained.
-    uint32_t size() const { return static_cast<uint32_t>(mKnown.size()); }
-    // Returns the ith memory.
-    const Memory* operator[](size_t i) const { return mMemories[i]; }
-    // Iteration
-    auto begin() { return mMemories.begin(); }
-    auto end() { return mMemories.end(); }
-    auto begin() const { return mMemories.begin(); }
-    auto end() const { return mMemories.end(); }
-};
+using MemoryTracker = ObjectTracker<Memory>;
 
 }  // namespace nn
 }  // namespace android
