@@ -68,7 +68,8 @@ void initVLogMask() {
                                                       {"execution", EXECUTION},
                                                       {"cpuexe", CPUEXE},
                                                       {"manager", MANAGER},
-                                                      {"driver", DRIVER}};
+                                                      {"driver", DRIVER},
+                                                      {"memory", MEMORY}};
 
     std::vector<std::string> elements = android::base::Split(vLogSetting, " ,:");
     for (const auto& elem : elements) {
