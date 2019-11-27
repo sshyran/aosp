@@ -23,6 +23,7 @@
 #include "HalInterfaces.h"
 #include "OperationsUtils.h"
 
+#include <vector>
 #include "Tracing.h"
 #include "Utils.h"
 
@@ -50,7 +51,7 @@ inline const T* GetOptionalBuffer(const RunTimeOperandInfo* operand) {
 
 }  // anonymous namespace
 
-LSTMCell::LSTMCell(const Operation& operation, std::vector<RunTimeOperandInfo>& operands) {
+LSTMCell::LSTMCell(const Operation& operation, RunTimeOperandInfo* operands) {
     input_ = GetInput(operation, operands, kInputTensor);
 
     input_to_input_weights_ =
@@ -295,7 +296,7 @@ bool LSTMCell::CheckInputTensorDimensions(
     return true;
 }
 
-bool LSTMCell::Prepare(const Operation& operation, std::vector<RunTimeOperandInfo>& operands,
+bool LSTMCell::Prepare(const Operation& operation, RunTimeOperandInfo* operands,
                        Shape* scratchShape, Shape* outputStateShape, Shape* cellStateShape,
                        Shape* outputShape) {
     // Check we have all the inputs and outputs we need.

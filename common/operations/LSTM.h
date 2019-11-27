@@ -47,11 +47,10 @@ struct Shape;
 
 class LSTMCell {
    public:
-    LSTMCell(const hal::Operation& operation, std::vector<RunTimeOperandInfo>& operands);
+    LSTMCell(const hal::Operation& operation, RunTimeOperandInfo* operands);
 
-    bool Prepare(const hal::Operation& operation, std::vector<RunTimeOperandInfo>& operands,
-                 Shape* scratchShape, Shape* outputStateShape, Shape* cellStateShape,
-                 Shape* outputShape);
+    bool Prepare(const hal::Operation& operation, RunTimeOperandInfo* operands, Shape* scratchShape,
+                 Shape* outputStateShape, Shape* cellStateShape, Shape* outputShape);
     bool Eval();
 
     // Input Tensors of size {n_batch, n_input}

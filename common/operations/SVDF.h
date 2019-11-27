@@ -38,9 +38,9 @@ struct Shape;
 
 class SVDF {
    public:
-    SVDF(const hal::Operation& operation, std::vector<RunTimeOperandInfo>& operands);
+    SVDF(const hal::Operation& operation, RunTimeOperandInfo* operands);
 
-    static bool Prepare(const hal::Operation& operation, std::vector<RunTimeOperandInfo>& operands,
+    static bool Prepare(const hal::Operation& operation, RunTimeOperandInfo* operands,
                         Shape* stateShape, Shape* outputShape);
     bool Eval();
 
