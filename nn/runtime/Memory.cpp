@@ -37,6 +37,124 @@ namespace nn {
 
 using namespace hal;
 
+namespace {
+
+// The validator for a client-managed single-dimensional memory pool with a known size.
+// The memory may be used for request inputs, request outputs, or model constants.
+class SizedMemoryValidator : public MemoryValidatorBase {
+   public:
+    SizedMemoryValidator(uint32_t size) : kSize(size) {}
+
+    bool validate(const CompilationBuilder*, IOType, uint32_t, const ANeuralNetworksOperandType*,
+                  uint32_t offset, uint32_t length) const override {
+        NN_RET_CHECK(offset + length <= kSize) << "request size larger than the memory size.";
+        NN_RET_CHECK(offset != 0 || length != 0) << "memory size cannot be implied.";
+        return true;
+    }
+
+   private:
+    const uint32_t kSize;
+};
+
+// The validator for an AHardwareBuffer with Non-BLOB format.
+// We require the memory only used for request inputs or request outputs,
+// with both offset and length set to zero.
+class AHardwareBufferNonBlobValidator : public MemoryValidatorBase {
+   public:
+    AHardwareBufferNonBlobValidator() = default;
+
+    bool validate(const CompilationBuilder* compilation, IOType, uint32_t,
+                  const ANeuralNetworksOperandType*, uint32_t offset,
+                  uint32_t length) const override {
+        NN_RET_CHECK(compilation != nullptr)
+                << "cannot use Non-BLOB AHardwareBuffer as model constant";
+        NN_RET_CHECK(offset == 0 && length == 0)
+                << "non-zero offset (" << offset << ") and/or length (" << length
+                << ") for Non-BLOB format AHardwareBuffer.";
+        return true;
+    }
+};
+
+// The validator for a memory created from ANNMemory_createFromDesc.
+// We require the memory only used as one of the pre-specified roles,
+// with both offset and length set to zero.
+class DeviceMemoryValidator : public MemoryValidatorBase {
+   public:
+    DeviceMemoryValidator(std::set<CompilationRole> roles, hal::OperandType type,
+                          std::vector<uint32_t> dimensions)
+        : kCompilationRoles(std::move(roles)),
+          mDataType(type),
+          kInitialDimensions(std::move(dimensions)),
+          mUpdatedDimensions(kInitialDimensions) {}
+
+    bool validate(const CompilationBuilder* compilation, IOType ioType, uint32_t index,
+                  const ANeuralNetworksOperandType* type, uint32_t offset,
+                  uint32_t length) const override {
+        NN_RET_CHECK(kCompilationRoles.count({compilation, ioType, index}) > 0)
+                << "invalid compilation role.";
+        NN_RET_CHECK(offset == 0 && length == 0)
+                << "non-zero offset and/or length for driver-allocated memory.";
+        if (type) {
+            const bool isTensor = TypeManager::get()->isTensorType(mDataType);
+            NN_RET_CHECK(isTensor || type->dimensionCount == 0)
+                    << "invalid dimensions for scalar memory.";
+            std::vector<uint32_t> dimensions(type->dimensions,
+                                             type->dimensions + type->dimensionCount);
+            // We only check against kInitialDimensions here.
+            // For input memories, mUpdatedDimensions will be checked in validateInputDimensions
+            // at the beginning of a computation.
+            const auto combined = combineDimensions(dimensions, kInitialDimensions);
+            NN_RET_CHECK(combined.has_value())
+                    << "incompatible dimensions between request and memory. (request: "
+                    << toString(dimensions) << ", memory: " << toString(kInitialDimensions) << ")";
+        }
+        return true;
+    }
+
+    bool validateInputDimensions(const std::vector<uint32_t>& dimensions) const override {
+        NN_RET_CHECK(mInitialized) << "using an uninitialized memory as input";
+        NN_RET_CHECK(dimensions == mUpdatedDimensions)
+                << "incompatible input dimensions between request and memory. (request: "
+                << toString(dimensions) << ", memory: " << toString(mUpdatedDimensions) << ")";
+        return true;
+    }
+
+    bool updateDimensions(const std::vector<uint32_t>& dimensions) override {
+        NN_RET_CHECK(TypeManager::get()->isTensorType(mDataType) || dimensions.empty());
+        auto combined = combineDimensions(dimensions, kInitialDimensions);
+        NN_RET_CHECK(combined.has_value());
+        mUpdatedDimensions = std::move(combined.value());
+        return true;
+    }
+
+    void setInitialized(bool initialized) override { mInitialized = initialized; }
+
+   private:
+    const std::set<CompilationRole> kCompilationRoles;
+    OperandType mDataType;
+
+    // The dimensions of the memory when the memory object is created.
+    // May have unknown dimensions or rank.
+    const std::vector<uint32_t> kInitialDimensions;
+
+    // The updated dimensions after a successful execution or memory copying.
+    std::vector<uint32_t> mUpdatedDimensions;
+
+    bool mInitialized = false;
+};
+
+}  // namespace
+
+Memory::Memory(hal::hidl_memory memory)
+    : kHidlMemory(std::move(memory)),
+      mValidator(std::make_unique<SizedMemoryValidator>(kHidlMemory.size())) {}
+
+Memory::Memory(hal::hidl_memory memory, std::unique_ptr<MemoryValidatorBase> validator)
+    : kHidlMemory(std::move(memory)), mValidator(std::move(validator)) {}
+
+Memory::Memory(sp<hal::IBuffer> buffer, int32_t token)
+    : kBuffer(std::move(buffer)), kToken(token) {}
+
 Memory::~Memory() {
     for (const auto [ptr, weakBurst] : mUsedBy) {
         if (const std::shared_ptr<ExecutionBurstController> burst = weakBurst.lock()) {
@@ -53,14 +171,6 @@ hal::Request::MemoryPool Memory::getMemoryPool() const {
         pool.hidlMemory(kHidlMemory);
     }
     return pool;
-}
-
-bool Memory::validateSize(uint32_t offset, uint32_t length) const {
-    if (offset + length > kHidlMemory.size()) {
-        LOG(ERROR) << "Request size larger than the memory size.";
-        return false;
-    }
-    return true;
 }
 
 intptr_t Memory::getKey() const {
@@ -261,6 +371,13 @@ std::pair<int, std::unique_ptr<Memory>> MemoryBuilder::allocate() const {
         VLOG(MEMORY) << "MemoryBuilder::allocate -- fallback to ashmem.";
         std::tie(n, memory) = MemoryAshmem::create(size);
     }
+
+    if (n == ANEURALNETWORKS_NO_ERROR) {
+        CHECK(memory != nullptr);
+        auto validator =
+                std::make_unique<DeviceMemoryValidator>(mRoles, mOperand->type, mDesc.dimensions);
+        memory->setValidator(std::move(validator));
+    }
     return {n, std::move(memory)};
 }
 
@@ -331,30 +448,19 @@ std::pair<int, std::unique_ptr<MemoryAHWB>> MemoryAHWB::create(const AHardwareBu
     AHardwareBuffer_describe(&ahwb, &bufferDesc);
     const native_handle_t* handle = AHardwareBuffer_getNativeHandle(&ahwb);
     hidl_memory hidlMemory;
+    std::unique_ptr<MemoryAHWB> memory;
+    std::unique_ptr<MemoryValidatorBase> validator;
     if (bufferDesc.format == AHARDWAREBUFFER_FORMAT_BLOB) {
         hidlMemory = hidl_memory("hardware_buffer_blob", handle, bufferDesc.width);
+        validator = std::make_unique<SizedMemoryValidator>(bufferDesc.width);
     } else {
         // memory size is not used.
         hidlMemory = hidl_memory("hardware_buffer", handle, 0);
+        validator = std::make_unique<AHardwareBufferNonBlobValidator>();
     }
-
-    std::unique_ptr<MemoryAHWB> memory =
-            std::make_unique<MemoryAHWB>(bufferDesc, std::move(hidlMemory));
+    memory = std::make_unique<MemoryAHWB>(std::move(hidlMemory), std::move(validator));
     return {ANEURALNETWORKS_NO_ERROR, std::move(memory)};
 };
-
-bool MemoryAHWB::validateSize(uint32_t offset, uint32_t length) const {
-    // validateSize should only be called on BLOB mode buffer.
-    if (!kBlobMode) {
-        LOG(ERROR) << "Invalid AHARDWAREBUFFER_FORMAT, must be AHARDWAREBUFFER_FORMAT_BLOB.";
-        return false;
-    }
-    // Use normal validation.
-    return Memory::validateSize(offset, length);
-}
-
-MemoryAHWB::MemoryAHWB(const AHardwareBuffer_Desc& desc, hidl_memory memory)
-    : Memory(std::move(memory)), kBlobMode(desc.format == AHARDWAREBUFFER_FORMAT_BLOB) {}
 
 std::pair<int, std::unique_ptr<MemoryFromDevice>> MemoryFromDevice::create(sp<hal::IBuffer> buffer,
                                                                            int32_t token) {
