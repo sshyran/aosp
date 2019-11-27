@@ -138,6 +138,10 @@ bool splitQuant8(const uint8_t* inputData, const Shape& inputShape, const int32_
                  const std::vector<uint8_t*>* outputDataPtrs,
                  const std::vector<Shape>& outputShapes);
 
+bool splitQuant8Signed(const int8_t* inputData, const Shape& inputShape, const int32_t axis,
+                       const std::vector<int8_t*>* outputDataPtrs,
+                       const std::vector<Shape>& outputShapes);
+
 bool groupedConvFloat16(const _Float16* inputData, const Shape& inputShape,
                         const _Float16* filterData, const Shape& filterShape,
                         const _Float16* biasData, const Shape& biasShape, int32_t numGroups,
@@ -152,20 +156,22 @@ bool groupedConvFloat32(const float* inputData, const Shape& inputShape, const f
                         int32_t stride_height, int32_t activation, float* outputData,
                         const Shape& outputShape);
 
-bool groupedConvQuant8(const uint8_t* inputData, const Shape& inputShape, const uint8_t* filterData,
+template <typename T>
+bool groupedConvQuant8(const T* inputData, const Shape& inputShape, const T* filterData,
                        const Shape& filterShape, const int32_t* biasData, const Shape& biasShape,
                        int32_t numGroups, int32_t padding_left, int32_t padding_right,
                        int32_t padding_top, int32_t padding_bottom, int32_t stride_width,
-                       int32_t stride_height, int32_t activation, uint8_t* outputData,
+                       int32_t stride_height, int32_t activation, T* outputData,
                        const Shape& outputShape);
 
-bool groupedConvQuant8PerChannel(const uint8_t* inputData, const Shape& inputShape,
+template <typename T>
+bool groupedConvQuant8PerChannel(const T* inputData, const Shape& inputShape,
                                  const int8_t* filterData, const Shape& filterShape,
                                  const float* filterScales, const int32_t* biasData,
                                  const Shape& biasShape, int32_t padding_left,
                                  int32_t padding_right, int32_t padding_top, int32_t padding_bottom,
                                  int32_t stride_width, int32_t stride_height, int32_t numGroups,
-                                 int32_t activation, uint8_t* outputData, const Shape& outputShape);
+                                 int32_t activation, T* outputData, const Shape& outputShape);
 
 bool channelShuffleGeneric(const uint8_t* inputData, const Shape& inputShape, int32_t numGroups,
                            int32_t axis, uint8_t* outputData, const Shape& outputShape);

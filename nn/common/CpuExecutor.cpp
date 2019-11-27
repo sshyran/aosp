@@ -992,6 +992,12 @@ int CpuExecutor::executeOperation(const Operation& operation, RunTimeOperandInfo
                             blockSize, reinterpret_cast<uint8_t*>(output_tmp.buffer), outShape);
                     break;
                 }
+                case OperandType::TENSOR_QUANT8_ASYMM_SIGNED: {
+                    success = depthToSpaceGeneric(
+                            reinterpret_cast<const int8_t*>(input_tmp.buffer), input_tmp.shape(),
+                            blockSize, reinterpret_cast<int8_t*>(output_tmp.buffer), outShape);
+                    break;
+                }
                 default: {
                     LOG(ERROR) << "Unsupported data type";
                     success = false;
@@ -1049,6 +1055,12 @@ int CpuExecutor::executeOperation(const Operation& operation, RunTimeOperandInfo
                     success = spaceToDepthGeneric(
                             reinterpret_cast<const uint8_t*>(input_tmp.buffer), input_tmp.shape(),
                             blockSize, reinterpret_cast<uint8_t*>(output_tmp.buffer), outShape);
+                    break;
+                }
+                case OperandType::TENSOR_QUANT8_ASYMM_SIGNED: {
+                    success = spaceToDepthGeneric(
+                            reinterpret_cast<const int8_t*>(input_tmp.buffer), input_tmp.shape(),
+                            blockSize, reinterpret_cast<int8_t*>(output_tmp.buffer), outShape);
                     break;
                 }
                 default: {
@@ -1235,6 +1247,13 @@ int CpuExecutor::executeOperation(const Operation& operation, RunTimeOperandInfo
                             reinterpret_cast<uint8_t*>(output_tmp.buffer), outShape);
                     break;
                 }
+                case OperandType::TENSOR_QUANT8_ASYMM_SIGNED: {
+                    success = batchToSpaceGeneric(
+                            reinterpret_cast<const uint8_t*>(input_tmp.buffer), input_tmp.shape(),
+                            reinterpret_cast<const int32_t*>(blockSize.buffer),
+                            reinterpret_cast<uint8_t*>(output_tmp.buffer), outShape);
+                    break;
+                }
                 default: {
                     LOG(ERROR) << "Unsupported data type";
                     success = false;
@@ -1304,6 +1323,14 @@ int CpuExecutor::executeOperation(const Operation& operation, RunTimeOperandInfo
                             reinterpret_cast<uint8_t*>(output_tmp.buffer), outShape);
                     break;
                 }
+                case OperandType::TENSOR_QUANT8_ASYMM_SIGNED: {
+                    success = spaceToBatchGeneric(
+                            reinterpret_cast<const int8_t*>(input_tmp.buffer), input_tmp.shape(),
+                            reinterpret_cast<const int32_t*>(blockSize.buffer),
+                            reinterpret_cast<const int32_t*>(paddings.buffer), paddings.shape(),
+                            reinterpret_cast<int8_t*>(output_tmp.buffer), outShape);
+                    break;
+                }
                 default: {
                     LOG(ERROR) << "Unsupported data type";
                     success = false;
@@ -1348,6 +1375,12 @@ int CpuExecutor::executeOperation(const Operation& operation, RunTimeOperandInfo
             } else if (input.type == OperandType::TENSOR_QUANT8_ASYMM) {
                 uint8_t pad_value =
                         isV2 ? getScalarData<uint8_t>(operands[ins[2]]) : outShape.offset;
+                success = padGeneric(input.buffer, input.shape(),
+                                     reinterpret_cast<const int32_t*>(paddings.buffer), pad_value,
+                                     output.buffer, outShape);
+            } else if (input.type == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
+                uint8_t pad_value =
+                        isV2 ? getScalarData<int8_t>(mOperands[ins[2]]) : outShape.offset;
                 success = padGeneric(input.buffer, input.shape(),
                                      reinterpret_cast<const int32_t*>(paddings.buffer), pad_value,
                                      output.buffer, outShape);
@@ -1538,6 +1571,15 @@ int CpuExecutor::executeOperation(const Operation& operation, RunTimeOperandInfo
                               splitQuant8(reinterpret_cast<const uint8_t*>(input.buffer),
                                           input.shape(), axis, &outputDataPtrs, outputShapes);
                 } break;
+                case OperandType::TENSOR_QUANT8_ASYMM_SIGNED: {
+                    std::vector<int8_t*> outputDataPtrs(numOutputs);
+                    for (int i = 0; i < numOutputs; ++i) {
+                        outputDataPtrs[i] = reinterpret_cast<int8_t*>(mOperands[outs[i]].buffer);
+                    }
+                    success = success &&
+                              splitQuant8Signed(reinterpret_cast<const int8_t*>(input.buffer),
+                                                input.shape(), axis, &outputDataPtrs, outputShapes);
+                } break;
                 default: {
                     return ANEURALNETWORKS_BAD_DATA;
                 }
@@ -1665,6 +1707,25 @@ int CpuExecutor::executeOperation(const Operation& operation, RunTimeOperandInfo
                             padding_left, padding_right, padding_top, padding_bottom, stride_width,
                             stride_height, numGroups, activation,
                             reinterpret_cast<uint8_t*>(output_tmp.buffer), outShape);
+                }
+            } else if (input_tmp.type == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
+                if (filter.type == OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL) {
+                    success = groupedConvQuant8PerChannel(
+                            reinterpret_cast<const int8_t*>(input_tmp.buffer), input_tmp.shape(),
+                            reinterpret_cast<const int8_t*>(filter.buffer), filter.shape(),
+                            filter.extraParams.channelQuant().scales.data(),
+                            reinterpret_cast<const int32_t*>(bias.buffer), bias.shape(),
+                            padding_left, padding_right, padding_top, padding_bottom, stride_width,
+                            stride_height, numGroups, activation,
+                            reinterpret_cast<int8_t*>(output_tmp.buffer), outShape);
+                } else if (filter.type == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
+                    success = groupedConvQuant8(
+                            reinterpret_cast<const int8_t*>(input_tmp.buffer), input_tmp.shape(),
+                            reinterpret_cast<const int8_t*>(filter.buffer), filter.shape(),
+                            reinterpret_cast<const int32_t*>(bias.buffer), bias.shape(),
+                            padding_left, padding_right, padding_top, padding_bottom, stride_width,
+                            stride_height, numGroups, activation,
+                            reinterpret_cast<int8_t*>(output_tmp.buffer), outShape);
                 }
             }
 
