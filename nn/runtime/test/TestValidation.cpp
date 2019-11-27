@@ -2142,6 +2142,19 @@ TEST_F(ValidationTestMemoryDesc, Finish) {
     EXPECT_EQ(ANeuralNetworksMemoryDesc_finish(mDesc), ANEURALNETWORKS_BAD_STATE);
 }
 
+TEST_F(ValidationTestMemoryDesc, CreateMemory) {
+    ANeuralNetworksMemory* memory = nullptr;
+    EXPECT_EQ(ANeuralNetworksMemory_createFromDesc(nullptr, &memory),
+              ANEURALNETWORKS_UNEXPECTED_NULL);
+    EXPECT_EQ(ANeuralNetworksMemory_createFromDesc(mDesc, nullptr),
+              ANEURALNETWORKS_UNEXPECTED_NULL);
+
+    // Unfinished descriptor.
+    EXPECT_EQ(ANeuralNetworksMemory_createFromDesc(mDesc, &memory), ANEURALNETWORKS_BAD_STATE);
+
+    ANeuralNetworksMemory_free(memory);
+}
+
 #ifndef NNTEST_ONLY_PUBLIC_API
 TEST(ValidationTestDevice, GetExtensionSupport) {
     bool result;
