@@ -102,6 +102,42 @@ struct MemoryDescriptor {
     std::vector<hal::BufferRole> inputRoles, outputRoles;
 };
 
+class MemoryValidatorBase {
+    DISALLOW_COPY_AND_ASSIGN(MemoryValidatorBase);
+
+   public:
+    MemoryValidatorBase() = default;
+    virtual ~MemoryValidatorBase() = default;
+
+    // Validate the memory usage and size information when passed in
+    // ANeuralNetworks{Model,Compilation}_set*FromMemory.
+    //
+    // This method only validates the arguments against the memory. It does not validate the
+    // correctness of the arguments themselves. E.g. it does not validate if the index is out of
+    // range.
+    //
+    // Usages:
+    //   - ANeuralNetworksModel_setOperandValueFromMemory:
+    //         validate(nullptr, IOType::INPUT, operandIndex, nullptr, offset, length)
+    //
+    //   - ANeuralNetworksExecution_setInputFromMemory:
+    //         validate(compilation, IOType::INPUT, inputIndex, type, offset, length)
+    //
+    //   - ANeuralNetworksExecution_setOutputFromMemory:
+    //         validate(compilation, IOType::OUTPUT, outputIndex, type, offset, length)
+    //
+    virtual bool validate(const CompilationBuilder* compilation, IOType ioType, uint32_t index,
+                          const ANeuralNetworksOperandType* type, uint32_t offset,
+                          uint32_t length) const = 0;
+
+    // Validate the memory dimensional information at the beginning of a computation.
+    virtual bool validateInputDimensions(const std::vector<uint32_t>&) const { return true; }
+
+    virtual bool updateDimensions(const std::vector<uint32_t>&) { return true; }
+
+    virtual void setInitialized(bool) {}
+};
+
 // Represents a memory region.
 class Memory {
     // Disallow copy and assign to prevent slicing
@@ -116,7 +152,14 @@ class Memory {
     const hal::hidl_memory& getHidlMemory() const { return kHidlMemory; }
     const sp<hal::IBuffer>& getIBuffer() const { return kBuffer; }
 
-    virtual bool validateSize(uint32_t offset, uint32_t length) const;
+    MemoryValidatorBase& getValidator() const {
+        CHECK(mValidator != nullptr);
+        return *mValidator;
+    }
+
+    void setValidator(std::unique_ptr<MemoryValidatorBase> validator) {
+        mValidator = std::move(validator);
+    }
 
     // Unique key representing this memory object.
     intptr_t getKey() const;
@@ -127,14 +170,17 @@ class Memory {
     void usedBy(const std::shared_ptr<ExecutionBurstController>& burst) const;
 
    protected:
-    Memory(hal::hidl_memory memory) : kHidlMemory(std::move(memory)) {}
-    Memory(sp<hal::IBuffer> buffer, int32_t token) : kBuffer(std::move(buffer)), kToken(token) {}
+    Memory(hal::hidl_memory memory);
+    Memory(hal::hidl_memory memory, std::unique_ptr<MemoryValidatorBase> validator);
+    Memory(sp<hal::IBuffer> buffer, int32_t token);
 
     // The HIDL representation for this memory.  We will use one of the following values
     // when communicating with the drivers.
     const hal::hidl_memory kHidlMemory;
     const sp<hal::IBuffer> kBuffer;
     const int32_t kToken = 0;
+
+    std::unique_ptr<MemoryValidatorBase> mValidator;
 
    private:
     mutable std::mutex mMutex;
@@ -230,16 +276,10 @@ class MemoryAHWB : public Memory {
     // On error, returns the appropriate NNAPI error code and nullptr.
     static std::pair<int, std::unique_ptr<MemoryAHWB>> create(const AHardwareBuffer& ahwb);
 
-    // validateSize should only be called for blob mode AHardwareBuffer.
-    // Calling it on non-blob mode AHardwareBuffer will result in an error.
     // TODO(miaowang): consider separate blob and non-blob into different classes.
-    bool validateSize(uint32_t offset, uint32_t length) const override;
-
     // prefer using MemoryAHWB::create
-    MemoryAHWB(const AHardwareBuffer_Desc& desc, hal::hidl_memory memory);
-
-   private:
-    const bool kBlobMode;
+    MemoryAHWB(hal::hidl_memory memory, std::unique_ptr<MemoryValidatorBase> validator)
+        : Memory(std::move(memory), std::move(validator)) {}
 };
 
 class MemoryFromDevice : public Memory {

@@ -105,11 +105,12 @@ struct RunTimeOperandInfo {
 class RunTimePoolInfo {
    public:
     static std::optional<RunTimePoolInfo> createFromHidlMemory(const hal::hidl_memory& hidlMemory);
-    static RunTimePoolInfo createFromExistingBuffer(uint8_t* buffer);
+    static RunTimePoolInfo createFromExistingBuffer(uint8_t* buffer, uint32_t size = 0);
 
     uint8_t* getBuffer() const;
     bool flush() const;
-    hal::hidl_memory getHidlMemory() const;
+    const hal::hidl_memory& getHidlMemory() const;
+    uint32_t getSize() const;
 
    private:
     class RunTimePoolInfoImpl;
