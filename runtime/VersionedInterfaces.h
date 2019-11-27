@@ -316,6 +316,64 @@ class VersionedIDevice {
      */
     const std::string& getName() const;
 
+    /**
+     * Allocates a driver-managed buffer with the properties specified by the descriptor as well as
+     * the input and output roles of prepared models.
+     *
+     * The allocate function must verify the inputs to the allocate function are correct. If there
+     * is an error, or if a certain role or property is not supported by the driver, the allocate
+     * function must return with an appropriate ErrorStatus, a nullptr as the IBuffer, and 0 as the
+     * buffer token. If the allocation is successful, this method must return with ErrorStatus::NONE
+     * and the produced IBuffer with a positive token identifying the allocated buffer. A successful
+     * allocation must accommodate all of the specified roles and buffer properties.
+     *
+     * The buffer is allocated as an uninitialized state. An uninitialized buffer may only be used
+     * in ways that are specified by outputRoles. A buffer is initialized after it is used as an
+     * output in a successful execution, or after a successful invocation of IBuffer::copyFrom on
+     * the buffer. An initialized buffer may be used according to all roles specified in inputRoles
+     * and outputRoles. A buffer will return to the uninitialized state if it is used as an output
+     * in a failed execution, or after a failed invocation of IBuffer::copyFrom on the buffer.
+     *
+     * The driver may deduce the dimensions of the buffer according to the buffer descriptor as
+     * well as the input and output roles. The dimensions or rank of the buffer may be unknown at
+     * this stage. As such, some driver services may only create a placeholder and defer the actual
+     * allocation until execution time. Note that the same buffer may be used for different shapes
+     * of outputs on different executions. When the buffer is used as an input, the input shape
+     * must be the same as the output shape from the last execution using this buffer as an output.
+     *
+     * The driver must apply proper validatation upon every usage of the buffer, and fail the
+     * execution immediately if the usage is illegal.
+     *
+     * @param desc A buffer descriptor specifying the properties of the buffer to allocate.
+     * @param preparedModels A vector of IPreparedModel objects. Must only contain IPreparedModel
+     *     objects from the same IDevice as this method invoked on.
+     * @param inputRoles A vector of roles with each specifying an input to a prepared model.
+     * @param outputRoles A vector of roles with each specifying an output to a prepared model.
+     *     Each role specified in inputRoles and outputRoles must be unique. The corresponding
+     *     model operands of the roles must have the same OperandType, scale, zero point, and
+     *     ExtraParams. The dimensions of the operands and the dimensions specified in the buffer
+     *     descriptor must be compatible with each other. Two dimensions are incompatible if there
+     *     is at least one axis that is fully specified in both but has different values.
+     * @return A tuple consisting of:
+     *     - Error status of the buffer allocation. Must be:
+     *         - NONE if successful
+     *         - DEVICE_UNAVAILABLE if driver is offline or busy
+     *         - GENERAL_FAILURE if a certain buffer property or a certain role is not supported,
+     *           or if there is an unspecified error
+     *         - INVALID_ARGUMENT if one of the input arguments is invalid
+     *     - The allocated IBuffer object. If the buffer was unable to be allocated
+     *       due to an error, nullptr must be returned.
+     *     - A positive token identifying the allocated buffer. The same token will be
+     *       provided when referencing the buffer as one of the memory pools in the request of an
+     *       execution. If the buffer was unable to be allocated due to an error, the token must be
+     *       0.
+     */
+    std::tuple<hal::ErrorStatus, sp<hal::IBuffer>, int32_t> allocate(
+            const hal::BufferDesc& desc,
+            const std::vector<std::shared_ptr<VersionedIPreparedModel>>& preparedModels,
+            const hal::hidl_vec<hal::BufferRole>& inputRoles,
+            const hal::hidl_vec<hal::BufferRole>& outputRoles) const;
+
    private:
     // Cached initialization results.
     const hal::Capabilities kCapabilities;
@@ -608,10 +666,19 @@ class VersionedIPreparedModel {
             bool preferPowerOverLatency) const;
 
    private:
+    friend class VersionedIDevice;
+
     std::tuple<int, std::vector<hal::OutputShape>, hal::Timing> executeAsynchronously(
             const hal::Request& request, hal::MeasureTiming timing) const;
     std::tuple<int, std::vector<hal::OutputShape>, hal::Timing> executeSynchronously(
             const hal::Request& request, hal::MeasureTiming measure) const;
+
+    /**
+     * Returns sp<V1_3::IPreparedModel> that is a downcast of the sp<V1_0::IPreparedModel>
+     * passed to the constructor.  This will be nullptr if that IPreparedModel is
+     * not actually of the specified downcast type.
+     */
+    sp<hal::V1_3::IPreparedModel> getV1_3() const { return mPreparedModelV1_3; }
 
     /**
      * All versions of IPreparedModel are necessary because the preparedModel could be v1.0,

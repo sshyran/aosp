@@ -890,10 +890,23 @@ int ANeuralNetworksMemoryDesc_finish(ANeuralNetworksMemoryDesc* desc) {
     return mb->finish();
 }
 
-int ANeuralNetworksMemory_createFromDesc(const ANeuralNetworksMemoryDesc* /*desc*/,
-                                         ANeuralNetworksMemory** /*memory*/) {
-    // TODO(xusongw): Implement.
-    return ANEURALNETWORKS_OP_FAILED;
+int ANeuralNetworksMemory_createFromDesc(const ANeuralNetworksMemoryDesc* desc,
+                                         ANeuralNetworksMemory** memory) {
+    NNTRACE_RT(NNTRACE_PHASE_COMPILATION, "ANeuralNetworksMemory_createFromDesc");
+    if (memory != nullptr) {
+        *memory = nullptr;
+    }
+    if (!desc || !memory) {
+        LOG(ERROR) << "ANeuralNetworksMemory_createFromDesc passed a nullptr";
+        return ANEURALNETWORKS_UNEXPECTED_NULL;
+    }
+    const MemoryBuilder* mb = reinterpret_cast<const MemoryBuilder*>(desc);
+    auto [n, m] = mb->allocate();
+    if (n != ANEURALNETWORKS_NO_ERROR) {
+        return n;
+    }
+    *memory = reinterpret_cast<ANeuralNetworksMemory*>(m.release());
+    return ANEURALNETWORKS_NO_ERROR;
 }
 
 int ANeuralNetworksMemory_copy(const ANeuralNetworksMemory* /*src*/,
