@@ -53,7 +53,7 @@ const int kOEMCodeBase = 10000;
  * forget to update the corresponding 'tags' table in
  * the initVlogMask() function implemented in Utils.cpp.
  */
-enum VLogFlags { MODEL = 0, COMPILATION, EXECUTION, CPUEXE, MANAGER, DRIVER };
+enum VLogFlags { MODEL = 0, COMPILATION, EXECUTION, CPUEXE, MANAGER, DRIVER, MEMORY };
 
 #define VLOG_IS_ON(TAG) ((vLogMask & (1 << (TAG))) != 0)
 
