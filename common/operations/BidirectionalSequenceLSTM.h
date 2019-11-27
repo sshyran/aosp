@@ -34,10 +34,9 @@ struct RunTimeOperandInfo;
 
 class BidirectionalSequenceLSTM {
    public:
-    BidirectionalSequenceLSTM(const hal::Operation& operation,
-                              std::vector<RunTimeOperandInfo>& operands);
+    BidirectionalSequenceLSTM(const hal::Operation& operation, RunTimeOperandInfo* operands);
 
-    bool Prepare(const hal::Operation& operation, std::vector<RunTimeOperandInfo>& operands,
+    bool Prepare(const hal::Operation& operation, RunTimeOperandInfo* operands,
                  Shape* fwOutputShape, Shape* bwOutputShape);
     bool Eval();
 
