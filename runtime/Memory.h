@@ -133,9 +133,27 @@ class MemoryValidatorBase {
     // Validate the memory dimensional information at the beginning of a computation.
     virtual bool validateInputDimensions(const std::vector<uint32_t>&) const { return true; }
 
-    virtual bool updateDimensions(const std::vector<uint32_t>&) { return true; }
+    // The validation metadata for this memory.
+    struct Metadata {
+        // The byte size of the memory when it is transformed to a closely packed layout.
+        // Set to 0 if unknown (e.g. non-BLOB mode AHWB or device memory with dynamic shape).
+        uint32_t logicalSize;
+
+        // The dimensions of the memory. Set to empty if undefined.
+        std::vector<uint32_t> dimensions;
+
+        // The data type, scale, zero point, and extra parameters of the target operand.
+        // Other fields will be ignored, including dimensions, lifetime, location, etc.
+        // Set to std::nullopt if undefined.
+        std::optional<hal::Operand> operand;
+    };
+    virtual Metadata getMetadata() const;
+
+    // Try update the memory metadata with the provided metadata. Return false if incompatible.
+    virtual bool updateMetadata(const Metadata& metadata);
 
     virtual void setInitialized(bool) {}
+    virtual bool isInitialized() const { return true; }
 };
 
 // Represents a memory region.
@@ -151,6 +169,7 @@ class Memory {
     hal::Request::MemoryPool getMemoryPool() const;
     const hal::hidl_memory& getHidlMemory() const { return kHidlMemory; }
     const sp<hal::IBuffer>& getIBuffer() const { return kBuffer; }
+    virtual uint32_t getSize() const { return getHidlMemory().size(); }
 
     MemoryValidatorBase& getValidator() const {
         CHECK(mValidator != nullptr);
@@ -168,6 +187,8 @@ class Memory {
     // memory object is destroyed, it will automatically free this memory from
     // the bursts' memory cache.
     void usedBy(const std::shared_ptr<ExecutionBurstController>& burst) const;
+
+    static int copy(const Memory& src, const Memory& dst);
 
    protected:
     Memory(hal::hidl_memory memory);
