@@ -909,10 +909,15 @@ int ANeuralNetworksMemory_createFromDesc(const ANeuralNetworksMemoryDesc* desc,
     return ANEURALNETWORKS_NO_ERROR;
 }
 
-int ANeuralNetworksMemory_copy(const ANeuralNetworksMemory* /*src*/,
-                               const ANeuralNetworksMemory* /*dst*/) {
-    // TODO(xusongw): Implement.
-    return ANEURALNETWORKS_OP_FAILED;
+int ANeuralNetworksMemory_copy(const ANeuralNetworksMemory* src, const ANeuralNetworksMemory* dst) {
+    NNTRACE_RT(NNTRACE_PHASE_EXECUTION, "ANeuralNetworksMemory_copy");
+    if (!src || !dst) {
+        LOG(ERROR) << "ANeuralNetworksMemory_copy passed a nullptr";
+        return ANEURALNETWORKS_UNEXPECTED_NULL;
+    }
+    const Memory* s = reinterpret_cast<const Memory*>(src);
+    const Memory* d = reinterpret_cast<const Memory*>(dst);
+    return Memory::copy(*s, *d);
 }
 
 int ANeuralNetworksMemory_createFromFd(size_t size, int prot, int fd, size_t offset,
