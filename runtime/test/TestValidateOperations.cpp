@@ -724,6 +724,10 @@ TEST(OperationValidationTest, MAXIMUM_quant8) {
     binaryOpTest(ANEURALNETWORKS_MAXIMUM, ANEURALNETWORKS_TENSOR_QUANT8_ASYMM);
 }
 
+TEST(OperationValidationTest, MAXIMUM_quant8signed) {
+    binaryOpTest(ANEURALNETWORKS_MAXIMUM, ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED);
+}
+
 TEST(OperationValidationTest, MINIMUM_float16) {
     binaryOpTest(ANEURALNETWORKS_MINIMUM, ANEURALNETWORKS_TENSOR_FLOAT16);
 }
@@ -738,6 +742,10 @@ TEST(OperationValidationTest, MINIMUM_int32) {
 
 TEST(OperationValidationTest, MINIMUM_quant8) {
     binaryOpTest(ANEURALNETWORKS_MINIMUM, ANEURALNETWORKS_TENSOR_QUANT8_ASYMM);
+}
+
+TEST(OperationValidationTest, MINIMUM_quant8signed) {
+    binaryOpTest(ANEURALNETWORKS_MINIMUM, ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED);
 }
 
 void activationOpTest(ANeuralNetworksOperationType operationCode, int32_t operandCode) {
