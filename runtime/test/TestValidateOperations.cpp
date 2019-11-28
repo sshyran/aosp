@@ -2717,6 +2717,10 @@ TEST(OperationValidationTest, PRELU_quant8) {
     preluOpTest(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM);
 }
 
+TEST(OperationValidationTest, PRELU_quant8signed) {
+    preluOpTest(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED);
+}
+
 void normalizationOpTest(ANeuralNetworksOperationType operationCode, int32_t operandCode) {
     uint32_t inputDim[] = {2, 2, 2, 2};
     OperationTestBase normalizationTest(operationCode, {getOpType(operandCode, 4, inputDim)},
