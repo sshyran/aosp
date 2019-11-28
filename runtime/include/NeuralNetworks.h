@@ -2912,7 +2912,7 @@ typedef enum {
     ANEURALNETWORKS_BOX_WITH_NMS_LIMIT = 44,
 
     /**
-     * Casts a tensor to a new type.
+     * Casts a tensor to a type.
      *
      * This operation ignores the scale and zeroPoint of quanized tensors,
      * e.g. it treats a {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} input
@@ -2923,6 +2923,14 @@ typedef enum {
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
      * * {@link ANEURALNETWORKS_TENSOR_INT32}
      * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
+     * Since API level 30, casting tensors of the following
+     * {@link OperandCode} to the same {@link OperandCode} is supported:
+     * * {@link ANEURALNETWORKS_TENSOR_BOOL8}
+     * * {@link ANEURALNETWORKS_TENSOR_INT32}
+     * * {@link ANEURALNETWORKS_TENSOR_QUANT16_ASYMM}
+     * * {@link ANEURALNETWORKS_TENSOR_QUANT16_SYMM}
+     * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED}
+     * * {@link ANEURALNETWORKS_TENSOR_QUANT8_SYMM}
      *
      * Supported tensor rank: from 1
      *
