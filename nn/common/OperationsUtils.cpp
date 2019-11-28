@@ -27,6 +27,9 @@
 #include "Operations.h"
 #include "Utils.h"
 
+#include "Operations.h"
+#include "Utils.h"
+
 namespace android {
 namespace nn {
 
@@ -45,6 +48,32 @@ bool validateOperandTypes(const std::vector<OperandType>& expectedTypes, const c
                 << i << ", expected " << toString(expectedTypes[i]);
     }
     return true;
+}
+
+void CalculateActivationRangeImpl(int32_t activation, const Shape& outputShape, int32_t qmin,
+                                  int32_t qmax, int32_t* act_min, int32_t* act_max) {
+    const auto scale = outputShape.scale;
+    const auto zero_point = outputShape.offset;
+
+    auto quantize = [scale, zero_point](float f) {
+        return zero_point + static_cast<int32_t>(std::round(f / scale));
+    };
+
+    if (activation == kActivationRelu) {
+        *act_min = std::max(qmin, quantize(0.0));
+        *act_max = qmax;
+    } else if (activation == kActivationRelu6) {
+        *act_min = std::max(qmin, quantize(0.0));
+        *act_max = std::min(qmax, quantize(6.0));
+    } else if (activation == kActivationRelu1) {
+        *act_min = std::max(qmin, quantize(-1.0));
+        *act_max = std::min(qmax, quantize(1.0));
+    } else if (activation == kActivationNone) {
+        *act_min = qmin;
+        *act_max = qmax;
+    } else {
+        LOG(ERROR) << "Unsupported fused activation function.";
+    }
 }
 
 }  // namespace
@@ -171,7 +200,7 @@ bool handleNegativeAxis(int32_t numberOfDimensions, int32_t* axis) {
     return true;
 }
 
-bool QuantizeMultiplier(double double_multiplier, int32_t* quantized_multiplier, int* shift) {
+bool QuantizeMultiplier(double double_multiplier, int32_t* quantized_multiplier, int32_t* shift) {
     if (double_multiplier == 0.) {
         *quantized_multiplier = 0;
         *shift = 0;
@@ -186,6 +215,15 @@ bool QuantizeMultiplier(double double_multiplier, int32_t* quantized_multiplier,
     }
     NN_RET_CHECK_LE(q_fixed, std::numeric_limits<int32_t>::max());
     *quantized_multiplier = static_cast<int32_t>(q_fixed);
+    return true;
+}
+
+bool QuantizeMultiplierSmallerThanOneExp(double double_multiplier, int32_t* quantized_multiplier,
+                                         int32_t* left_shift) {
+    NN_RET_CHECK(double_multiplier > 0.);
+    NN_RET_CHECK(double_multiplier < 1.);
+    NN_RET_CHECK(QuantizeMultiplier(double_multiplier, quantized_multiplier, left_shift));
+    NN_RET_CHECK(*left_shift <= 0);
     return true;
 }
 
@@ -249,28 +287,15 @@ void CalculateActivationRangeUint8(int32_t activation, const Shape& outputShape,
     const int32_t qmin = std::numeric_limits<uint8_t>::min();
     const int32_t qmax = std::numeric_limits<uint8_t>::max();
 
-    const auto scale = outputShape.scale;
-    const auto zero_point = outputShape.offset;
+    CalculateActivationRangeImpl(activation, outputShape, qmin, qmax, act_min, act_max);
+}
 
-    auto quantize = [scale, zero_point](float f) {
-        return zero_point + static_cast<int32_t>(std::round(f / scale));
-    };
+void CalculateActivationRangeInt8(int32_t activation, const Shape& outputShape, int32_t* act_min,
+                                  int32_t* act_max) {
+    const int32_t qmin = std::numeric_limits<int8_t>::min();
+    const int32_t qmax = std::numeric_limits<int8_t>::max();
 
-    if (activation == kActivationRelu) {
-        *act_min = std::max(qmin, quantize(0.0));
-        *act_max = qmax;
-    } else if (activation == kActivationRelu6) {
-        *act_min = std::max(qmin, quantize(0.0));
-        *act_max = std::min(qmax, quantize(6.0));
-    } else if (activation == kActivationRelu1) {
-        *act_min = std::max(qmin, quantize(-1.0));
-        *act_max = std::min(qmax, quantize(1.0));
-    } else if (activation == kActivationNone) {
-        *act_min = qmin;
-        *act_max = qmax;
-    } else {
-        LOG(ERROR) << "Unsupported fused activation function.";
-    }
+    CalculateActivationRangeImpl(activation, outputShape, qmin, qmax, act_min, act_max);
 }
 
 void CalculateActivationRangeFloat(int32_t activation, float* activation_min,
