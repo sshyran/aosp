@@ -952,6 +952,7 @@ typedef enum {
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT16} (since API level 29)
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
      * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} (since API level 29)
+     * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED} (since API level 30)
      *
      * Supported tensor rank: up to 4
      * Tensors with rank less than 4 are only supported since API level 29.
@@ -968,6 +969,8 @@ typedef enum {
      * * 0: A tensor of the same {@link OperandCode} and same shape as input0.
      *      For {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM},
      *      the scale must be 1.f / 128 and the zeroPoint must be 128.
+     *      For {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED},
+     *      the scale must be 1.f / 128 and the zeroPoint must be 0.
      *
      * Available since API level 27.
      */
