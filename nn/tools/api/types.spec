@@ -2864,6 +2864,9 @@
      * * {@link %{OperandTypeLinkPfx}TENSOR_FLOAT32}
      * * {@link %{OperandTypeLinkPfx}TENSOR_INT32}
      * * {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM}
+%kind ndk hal_1.3+
+     * * {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM_SIGNED} (since %{APILevel30})
+%/kind
      *
      * Supported tensor rank: from 1
      *
@@ -2889,6 +2892,9 @@
      * * {@link %{OperandTypeLinkPfx}TENSOR_FLOAT32}
      * * {@link %{OperandTypeLinkPfx}TENSOR_INT32}
      * * {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM}
+%kind ndk hal_1.3+
+     * * {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM_SIGNED} (since %{APILevel30})
+%/kind
      *
      * Supported tensor rank: from 1
      *
