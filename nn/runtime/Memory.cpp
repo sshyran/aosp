@@ -26,6 +26,7 @@
 #include <vector>
 
 #include "CompilationBuilder.h"
+#include "CpuExecutor.h"
 #include "ExecutionBurstController.h"
 #include "Manager.h"
 #include "MemoryUtils.h"
@@ -52,6 +53,11 @@ class SizedMemoryValidator : public MemoryValidatorBase {
         return true;
     }
 
+    Metadata getMetadata() const override { return {.logicalSize = kSize}; }
+    bool updateMetadata(const Metadata& metadata) override {
+        return metadata.logicalSize == 0 || metadata.logicalSize == kSize;
+    }
+
    private:
     const uint32_t kSize;
 };
@@ -73,6 +79,9 @@ class AHardwareBufferNonBlobValidator : public MemoryValidatorBase {
                 << ") for Non-BLOB format AHardwareBuffer.";
         return true;
     }
+
+    Metadata getMetadata() const override { return {}; }
+    bool updateMetadata(const Metadata&) override { return true; }
 };
 
 // The validator for a memory created from ANNMemory_createFromDesc.
@@ -80,10 +89,10 @@ class AHardwareBufferNonBlobValidator : public MemoryValidatorBase {
 // with both offset and length set to zero.
 class DeviceMemoryValidator : public MemoryValidatorBase {
    public:
-    DeviceMemoryValidator(std::set<CompilationRole> roles, hal::OperandType type,
+    DeviceMemoryValidator(std::set<CompilationRole> roles, Operand operand,
                           std::vector<uint32_t> dimensions)
         : kCompilationRoles(std::move(roles)),
-          mDataType(type),
+          kOperand(std::move(operand)),
           kInitialDimensions(std::move(dimensions)),
           mUpdatedDimensions(kInitialDimensions) {}
 
@@ -95,7 +104,7 @@ class DeviceMemoryValidator : public MemoryValidatorBase {
         NN_RET_CHECK(offset == 0 && length == 0)
                 << "non-zero offset and/or length for driver-allocated memory.";
         if (type) {
-            const bool isTensor = TypeManager::get()->isTensorType(mDataType);
+            const bool isTensor = TypeManager::get()->isTensorType(kOperand.type);
             NN_RET_CHECK(isTensor || type->dimensionCount == 0)
                     << "invalid dimensions for scalar memory.";
             std::vector<uint32_t> dimensions(type->dimensions,
@@ -119,19 +128,40 @@ class DeviceMemoryValidator : public MemoryValidatorBase {
         return true;
     }
 
-    bool updateDimensions(const std::vector<uint32_t>& dimensions) override {
-        NN_RET_CHECK(TypeManager::get()->isTensorType(mDataType) || dimensions.empty());
-        auto combined = combineDimensions(dimensions, kInitialDimensions);
+    Metadata getMetadata() const override {
+        CHECK(mInitialized);
+        return {.logicalSize = TypeManager::get()->getSizeOfData(kOperand.type, mUpdatedDimensions),
+                .dimensions = mUpdatedDimensions,
+                .operand = kOperand};
+    }
+
+    bool updateMetadata(const Metadata& metadata) override {
+        NN_RET_CHECK(!metadata.operand.has_value() ||
+                     (metadata.operand->type == kOperand.type &&
+                      metadata.operand->scale == kOperand.scale &&
+                      metadata.operand->zeroPoint == kOperand.zeroPoint &&
+                      metadata.operand->extraParams == kOperand.extraParams));
+
+        NN_RET_CHECK(metadata.dimensions.empty() ||
+                     TypeManager::get()->isTensorType(kOperand.type));
+        auto combined = combineDimensions(metadata.dimensions, kInitialDimensions);
         NN_RET_CHECK(combined.has_value());
+        NN_RET_CHECK(metadata.logicalSize == 0 ||
+                     metadata.logicalSize ==
+                             TypeManager::get()->getSizeOfData(kOperand.type, combined.value()));
         mUpdatedDimensions = std::move(combined.value());
         return true;
     }
 
     void setInitialized(bool initialized) override { mInitialized = initialized; }
+    bool isInitialized() const override { return mInitialized; }
 
    private:
     const std::set<CompilationRole> kCompilationRoles;
-    OperandType mDataType;
+
+    // Keep track of the data type, scale, zero point, and extra parameters of the target operand.
+    // Other fields will be ignored, including dimensions, lifetime, location, etc.
+    const Operand kOperand;
 
     // The dimensions of the memory when the memory object is created.
     // May have unknown dimensions or rank.
@@ -180,6 +210,90 @@ intptr_t Memory::getKey() const {
 void Memory::usedBy(const std::shared_ptr<ExecutionBurstController>& burst) const {
     std::lock_guard<std::mutex> guard(mMutex);
     mUsedBy.emplace(burst.get(), burst);
+}
+
+static int copyHidlMemories(const hidl_memory& src, const hidl_memory& dst) {
+    if (src.size() != dst.size()) {
+        LOG(ERROR) << "ANeuralNetworksMemory_copy -- incompatible memory size";
+        return ANEURALNETWORKS_BAD_DATA;
+    }
+    auto srcPool = RunTimePoolInfo::createFromHidlMemory(src);
+    auto dstPool = RunTimePoolInfo::createFromHidlMemory(dst);
+    if (!srcPool.has_value() || !dstPool.has_value()) {
+        LOG(ERROR) << "ANeuralNetworksMemory_copy -- unable to map memory";
+        return ANEURALNETWORKS_UNMAPPABLE;
+    }
+    CHECK(srcPool->getBuffer() != nullptr);
+    CHECK(dstPool->getBuffer() != nullptr);
+    std::copy(srcPool->getBuffer(), srcPool->getBuffer() + src.size(), dstPool->getBuffer());
+    dstPool->flush();
+    return ANEURALNETWORKS_NO_ERROR;
+}
+
+static int copyIBufferToHidlMemory(const sp<IBuffer>& src, const hidl_memory& dst) {
+    const auto ret = src->copyTo(dst);
+    if (!ret.isOk()) {
+        LOG(ERROR) << "ANeuralNetworksMemory_copy failure: " << ret.description();
+        return ANEURALNETWORKS_OP_FAILED;
+    }
+    return convertErrorStatusToResultCode(static_cast<ErrorStatus>(ret));
+}
+
+static int copyHidlMemoryToIBuffer(const hidl_memory& src, const sp<IBuffer>& dst,
+                                   const std::vector<uint32_t>& dimensions) {
+    const auto ret = dst->copyFrom(src, dimensions);
+    if (!ret.isOk()) {
+        LOG(ERROR) << "ANeuralNetworksMemory_copy failure: " << ret.description();
+        return ANEURALNETWORKS_OP_FAILED;
+    }
+    return convertErrorStatusToResultCode(static_cast<ErrorStatus>(ret));
+}
+
+static int copyIBuffers(const sp<IBuffer>& src, const sp<IBuffer>& dst,
+                        const MemoryValidatorBase::Metadata& srcMetadata) {
+    // TODO(xusongw): Use BLOB mode AHardwareBuffer.
+    hidl_memory hidlMemory = allocateSharedMemory(srcMetadata.logicalSize);
+    if (!hidlMemory.valid()) return ANEURALNETWORKS_OUT_OF_MEMORY;
+    NN_RETURN_IF_ERROR(copyIBufferToHidlMemory(src, hidlMemory));
+    NN_RETURN_IF_ERROR(copyHidlMemoryToIBuffer(hidlMemory, dst, srcMetadata.dimensions));
+    return ANEURALNETWORKS_NO_ERROR;
+}
+
+static int copyInternal(const Memory& src, const Memory& dst) {
+    if (&src == &dst) return ANEURALNETWORKS_NO_ERROR;
+
+    if (!src.getValidator().isInitialized()) {
+        LOG(ERROR) << "ANeuralNetworksMemory_copy -- uninitialized source memory";
+        return ANEURALNETWORKS_BAD_DATA;
+    }
+
+    const auto srcMetadata = src.getValidator().getMetadata();
+    if (!dst.getValidator().updateMetadata(srcMetadata)) {
+        LOG(ERROR) << "ANeuralNetworksMemory_copy -- incompatible memories";
+        return ANEURALNETWORKS_BAD_DATA;
+    }
+
+    bool srcHasHidlMemory = src.getHidlMemory().valid();
+    bool dstHasHidlMemory = dst.getHidlMemory().valid();
+    bool srcHasIBuffer = src.getIBuffer() != nullptr;
+    bool dstHasIBuffer = dst.getIBuffer() != nullptr;
+    if (srcHasIBuffer && dstHasIBuffer) {
+        return copyIBuffers(src.getIBuffer(), dst.getIBuffer(), srcMetadata);
+    } else if (srcHasHidlMemory && dstHasHidlMemory) {
+        return copyHidlMemories(src.getHidlMemory(), dst.getHidlMemory());
+    } else if (srcHasHidlMemory && dstHasIBuffer) {
+        return copyHidlMemoryToIBuffer(src.getHidlMemory(), dst.getIBuffer(),
+                                       srcMetadata.dimensions);
+    } else if (srcHasIBuffer && dstHasHidlMemory) {
+        return copyIBufferToHidlMemory(src.getIBuffer(), dst.getHidlMemory());
+    }
+    return ANEURALNETWORKS_OP_FAILED;
+}
+
+int Memory::copy(const Memory& src, const Memory& dst) {
+    int n = copyInternal(src, dst);
+    dst.getValidator().setInitialized(n == ANEURALNETWORKS_NO_ERROR);
+    return n;
 }
 
 bool MemoryBuilder::badState(const char* name) const {
@@ -375,7 +489,7 @@ std::pair<int, std::unique_ptr<Memory>> MemoryBuilder::allocate() const {
     if (n == ANEURALNETWORKS_NO_ERROR) {
         CHECK(memory != nullptr);
         auto validator =
-                std::make_unique<DeviceMemoryValidator>(mRoles, mOperand->type, mDesc.dimensions);
+                std::make_unique<DeviceMemoryValidator>(mRoles, mOperand.value(), mDesc.dimensions);
         memory->setValidator(std::move(validator));
     }
     return {n, std::move(memory)};

@@ -225,10 +225,25 @@ class ValidationTestMemoryDesc : public ValidationTestCompilation {
     }
     virtual void TearDown() {
         ANeuralNetworksMemoryDesc_free(mDesc);
+        for (auto* memory : mMemories) ANeuralNetworksMemory_free(memory);
+        for (int fd : mFds) close(fd);
         ValidationTestCompilation::TearDown();
     }
 
+    ANeuralNetworksMemory* createAshmem(uint32_t size) {
+        int fd = ASharedMemory_create("nnMemory", size);
+        EXPECT_GT(fd, 0);
+        mFds.push_back(fd);
+        ANeuralNetworksMemory* ashmem = nullptr;
+        EXPECT_EQ(ANeuralNetworksMemory_createFromFd(size, PROT_READ | PROT_WRITE, fd, 0, &ashmem),
+                  ANEURALNETWORKS_NO_ERROR);
+        mMemories.push_back(ashmem);
+        return ashmem;
+    }
+
     ANeuralNetworksMemoryDesc* mDesc = nullptr;
+    std::vector<ANeuralNetworksMemory*> mMemories;
+    std::vector<int> mFds;
 };
 
 class ValidationTestExecutionDeviceMemory : public ValidationTest {
@@ -2416,6 +2431,64 @@ TEST_F(ValidationTestMemoryDesc, CreateMemory) {
     EXPECT_EQ(ANeuralNetworksMemory_createFromDesc(mDesc, &memory), ANEURALNETWORKS_BAD_STATE);
 
     ANeuralNetworksMemory_free(memory);
+}
+
+TEST_F(ValidationTestMemoryDesc, MemoryCopying) {
+    ASSERT_EQ(ANeuralNetworksCompilation_finish(mCompilation), ANEURALNETWORKS_NO_ERROR);
+
+    uint32_t goodSize = sizeof(float) * 2, badSize1 = sizeof(float), badSize2 = sizeof(float) * 4;
+    ANeuralNetworksMemory* goodAshmem = createAshmem(goodSize);
+    ANeuralNetworksMemory* badAshmem1 = createAshmem(badSize1);
+    ANeuralNetworksMemory* badAshmem2 = createAshmem(badSize2);
+
+    ANeuralNetworksMemory *deviceMemory1 = nullptr, *deviceMemory2 = nullptr;
+    EXPECT_EQ(ANeuralNetworksMemoryDesc_create(&mDesc), ANEURALNETWORKS_NO_ERROR);
+    EXPECT_EQ(ANeuralNetworksMemoryDesc_addInputRole(mDesc, mCompilation, 0, 1.0f),
+              ANEURALNETWORKS_NO_ERROR);
+    EXPECT_EQ(ANeuralNetworksMemoryDesc_finish(mDesc), ANEURALNETWORKS_NO_ERROR);
+    EXPECT_EQ(ANeuralNetworksMemory_createFromDesc(mDesc, &deviceMemory1),
+              ANEURALNETWORKS_NO_ERROR);
+    EXPECT_EQ(ANeuralNetworksMemory_createFromDesc(mDesc, &deviceMemory2),
+              ANEURALNETWORKS_NO_ERROR);
+
+    EXPECT_EQ(ANeuralNetworksMemory_copy(nullptr, deviceMemory1), ANEURALNETWORKS_UNEXPECTED_NULL);
+    EXPECT_EQ(ANeuralNetworksMemory_copy(deviceMemory1, nullptr), ANEURALNETWORKS_UNEXPECTED_NULL);
+
+    // Ashmem -> Ashmem
+    // Bad memory size.
+    EXPECT_EQ(ANeuralNetworksMemory_copy(goodAshmem, badAshmem1), ANEURALNETWORKS_BAD_DATA);
+    EXPECT_EQ(ANeuralNetworksMemory_copy(goodAshmem, badAshmem2), ANEURALNETWORKS_BAD_DATA);
+    EXPECT_EQ(ANeuralNetworksMemory_copy(badAshmem1, goodAshmem), ANEURALNETWORKS_BAD_DATA);
+    EXPECT_EQ(ANeuralNetworksMemory_copy(badAshmem2, goodAshmem), ANEURALNETWORKS_BAD_DATA);
+
+    // Ashmem -> Device Memory
+    // Bad memory size.
+    EXPECT_EQ(ANeuralNetworksMemory_copy(badAshmem1, deviceMemory1), ANEURALNETWORKS_BAD_DATA);
+    EXPECT_EQ(ANeuralNetworksMemory_copy(badAshmem2, deviceMemory1), ANEURALNETWORKS_BAD_DATA);
+
+    // Device Memory -> Ashmem
+    // Uninitialized source device memory.
+    EXPECT_EQ(ANeuralNetworksMemory_copy(deviceMemory1, goodAshmem), ANEURALNETWORKS_BAD_DATA);
+    // Bad memory size.
+    EXPECT_EQ(ANeuralNetworksMemory_copy(goodAshmem, deviceMemory1), ANEURALNETWORKS_NO_ERROR);
+    EXPECT_EQ(ANeuralNetworksMemory_copy(deviceMemory1, badAshmem1), ANEURALNETWORKS_BAD_DATA);
+    // Uninitialized source device memory (after a failed copy).
+    EXPECT_EQ(ANeuralNetworksMemory_copy(badAshmem1, deviceMemory1), ANEURALNETWORKS_BAD_DATA);
+    EXPECT_EQ(ANeuralNetworksMemory_copy(deviceMemory1, goodAshmem), ANEURALNETWORKS_BAD_DATA);
+    // Bad memory size.
+    EXPECT_EQ(ANeuralNetworksMemory_copy(goodAshmem, deviceMemory1), ANEURALNETWORKS_NO_ERROR);
+    EXPECT_EQ(ANeuralNetworksMemory_copy(deviceMemory1, badAshmem2), ANEURALNETWORKS_BAD_DATA);
+
+    // Device Memory -> Device Memory
+    // Uninitialized source device memory.
+    EXPECT_EQ(ANeuralNetworksMemory_copy(deviceMemory2, deviceMemory1), ANEURALNETWORKS_BAD_DATA);
+
+    // TODO: Additionally validate the following:
+    //       - Device memories with incompatible dimensions
+    //       - Deinitialized device memory
+
+    ANeuralNetworksMemory_free(deviceMemory1);
+    ANeuralNetworksMemory_free(deviceMemory2);
 }
 
 #ifndef NNTEST_ONLY_PUBLIC_API
