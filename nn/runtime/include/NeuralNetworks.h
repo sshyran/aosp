@@ -2438,6 +2438,7 @@ typedef enum {
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
      * * {@link ANEURALNETWORKS_TENSOR_INT32}
      * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
+     * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED} (since API level 30)
      *
      * Supported tensor rank: from 1
      *
@@ -2464,6 +2465,7 @@ typedef enum {
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
      * * {@link ANEURALNETWORKS_TENSOR_INT32}
      * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
+     * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED} (since API level 30)
      *
      * Supported tensor rank: from 1
      *
@@ -3769,6 +3771,7 @@ typedef enum {
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
      * * {@link ANEURALNETWORKS_TENSOR_INT32}
      * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
+     * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED} (since API level 30)
      *
      * Supported tensor rank: from 1.
      *
@@ -3781,7 +3784,8 @@ typedef enum {
      *
      * Outputs:
      * * 0: A tensor of the same {@link OperandCode} as input0.
-     *      For a {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} tensor,
+     *      For a {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} and
+     *      {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} tensor,
      *      the scale and zeroPoint can be different from inputs' scale and zeroPoint.
      *
      * Available since API level 29.
@@ -3796,6 +3800,7 @@ typedef enum {
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
      * * {@link ANEURALNETWORKS_TENSOR_INT32}
      * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
+     * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED} (since API level 30)
      *
      * Supported tensor rank: from 1.
      *
@@ -3808,7 +3813,8 @@ typedef enum {
      *
      * Outputs:
      * * 0: A tensor of the same {@link OperandCode} as input0.
-     *      For a {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} tensor,
+     *      For a {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} and
+     *      {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} tensor,
      *      the scale and zeroPoint can be different from inputs' scale and zeroPoint.
      *
      * Available since API level 29.
