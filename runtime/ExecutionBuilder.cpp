@@ -603,7 +603,7 @@ bool ExecutionBuilder::updateMemories() {
     for (const auto& output : mOutputs) {
         if (output.state != ModelArgumentInfo::MEMORY) continue;
         const Memory* memory = mMemories[output.locationAndLength.poolIndex];
-        NN_RET_CHECK(memory->getValidator().updateDimensions(output.dimensions));
+        NN_RET_CHECK(memory->getValidator().updateMetadata({.dimensions = output.dimensions}));
     }
     return true;
 }
