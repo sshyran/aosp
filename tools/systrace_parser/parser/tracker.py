@@ -85,6 +85,9 @@ class Tracker(object):
       # TODO(mikie): remove later
       if ("ANeuralNetworksEvent_free" in mark) or ("ANeuralNetworksExecution_free" in mark):
         mark = mark.replace("_PT", "_PE")
+      # Workarounds for trace marker for getSupportedExtensions (fixed in ag/9484333)
+      if ("getSupportedExtensions" in mark):
+        mark = mark.replace("_PC", "_PI")  
       elif ("[SW][NN_LA_PR]executeWithCompilation" in mark):
         mark = mark.replace("[SW]", "")
       if MARKER_SWITCH in mark:
