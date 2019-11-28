@@ -373,7 +373,8 @@ bool calculateBroadcastedShape(const Shape& in1, const Shape& in2, Shape* out) {
     return true;
 }
 
-uint8_t requantize(uint8_t value, const Shape& oldShape, const Shape& newShape) {
+template <>
+uint8_t requantize<uint8_t>(uint8_t value, const Shape& oldShape, const Shape& newShape) {
     double doubleValue = (value - oldShape.offset) * oldShape.scale;
     double doubleRet = doubleValue / newShape.scale + newShape.offset;
     if (doubleRet < 0) return 0;
@@ -381,7 +382,8 @@ uint8_t requantize(uint8_t value, const Shape& oldShape, const Shape& newShape) 
     return static_cast<uint8_t>(std::round(doubleRet));
 }
 
-int8_t requantize(int8_t value, const Shape& oldShape, const Shape& newShape) {
+template <>
+int8_t requantize<int8_t>(int8_t value, const Shape& oldShape, const Shape& newShape) {
     double doubleValue = (value - oldShape.offset) * oldShape.scale;
     double doubleRet = doubleValue / newShape.scale + newShape.offset;
     if (doubleRet < -128) return -128;
