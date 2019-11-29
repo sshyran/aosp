@@ -161,10 +161,12 @@ class OperationTestBase {
             // Transposed conv can have either fully quantized or per-channel
             // quantized filter for the quantized version of the op.
             if (mOpCode == ANEURALNETWORKS_TRANSPOSE_CONV_2D && i == 1) {
-                if (originalOperandCode == ANEURALNETWORKS_TENSOR_QUANT8_ASYMM) {
+                if (originalOperandCode == ANEURALNETWORKS_TENSOR_QUANT8_ASYMM ||
+                    originalOperandCode == ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED) {
                     operandTypesToSkip.insert(ANEURALNETWORKS_TENSOR_QUANT8_SYMM_PER_CHANNEL);
                 } else if (originalOperandCode == ANEURALNETWORKS_TENSOR_QUANT8_SYMM_PER_CHANNEL) {
                     operandTypesToSkip.insert(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM);
+                    operandTypesToSkip.insert(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED);
                 }
             }
             // CAST accepts any of supported types for any of output types
@@ -1320,6 +1322,10 @@ void convOpTest(int32_t inputOperandCode, int32_t filterOperandCode) {
         bias.type = ANEURALNETWORKS_TENSOR_INT32;
         bias.scale = 0.25f;
     }
+    if (filterOperandCode == ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED) {
+        bias.type = ANEURALNETWORKS_TENSOR_INT32;
+        bias.scale = 0.25f;
+    }
     if (filterOperandCode == ANEURALNETWORKS_TENSOR_QUANT8_SYMM_PER_CHANNEL) {
         bias.type = ANEURALNETWORKS_TENSOR_INT32;
         bias.scale = 0.0f;
@@ -1418,6 +1424,16 @@ TEST(OperationValidationTest, CONV_2D_quant8) {
 
 TEST(OperationValidationTest, CONV_2D_quant8_per_channel) {
     convOpTest(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM, ANEURALNETWORKS_TENSOR_QUANT8_SYMM_PER_CHANNEL);
+}
+
+TEST(OperationValidationTest, CONV_2D_quant8_signed) {
+    convOpTest(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED,
+               ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED);
+}
+
+TEST(OperationValidationTest, CONV_2D_quant8_signed_per_channel) {
+    convOpTest(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED,
+               ANEURALNETWORKS_TENSOR_QUANT8_SYMM_PER_CHANNEL);
 }
 
 void depthwiseConvOpTest(int32_t inputOperandCode, int32_t filterOperandCode) {
