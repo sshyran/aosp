@@ -34,6 +34,10 @@ cc_library {
     host_supported: false,
     // b/109953668, disable OpenMP
     // openmp: true,
+    apex_available: [
+        "com.android.neuralnetworks",
+        "test_com.android.neuralnetworks",
+    ],
 
     srcs: [
         "BurstBuilder.cpp",
