@@ -18,6 +18,10 @@
 
 #include <tensorflow/lite/kernels/internal/reference/reference_ops.h>
 
+#include <algorithm>
+#include <limits>
+#include <vector>
+
 #include "HalInterfaces.h"
 #include "OperationResolver.h"
 #include "OperationsUtils.h"
@@ -84,12 +88,17 @@ bool validateMaxMin(const IOperationValidationContext* context) {
     OperandType inputType = context->getInputType(kInputTensor);
     NN_RET_CHECK(inputType == OperandType::TENSOR_FLOAT16 ||
                  inputType == OperandType::TENSOR_FLOAT32 ||
-                 inputType == OperandType::TENSOR_QUANT8_ASYMM)
+                 inputType == OperandType::TENSOR_QUANT8_ASYMM ||
+                 inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED)
             << "Unsupported tensor type for REDUCE_MAX or REDUCE_MIN";
     NN_RET_CHECK(
             validateInputTypes(context, {inputType, OperandType::TENSOR_INT32, OperandType::BOOL}));
     NN_RET_CHECK(validateOutputTypes(context, {inputType}));
-    return validateHalVersion(context, HalVersion::V1_2);
+    auto minHalVersion = HalVersion::V1_2;
+    if (inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
+        minHalVersion = HalVersion::V1_3;
+    }
+    return validateHalVersion(context, minHalVersion);
 }
 
 bool validateLogical(const IOperationValidationContext* context) {
@@ -169,6 +178,9 @@ bool executeMax(IOperationExecutionContext* context) {
         case OperandType::TENSOR_QUANT8_ASYMM:
             return compute<uint8_t>(context, std::numeric_limits<uint8_t>::lowest(),
                                     [](uint8_t a, uint8_t b) { return std::max(a, b); });
+        case OperandType::TENSOR_QUANT8_ASYMM_SIGNED:
+            return compute<int8_t>(context, std::numeric_limits<int8_t>::lowest(),
+                                   [](int8_t a, int8_t b) { return std::max(a, b); });
         default:
             NN_RET_CHECK_FAIL() << "Unsupported tensor type for operation REDUCE_MAX";
     }
@@ -185,6 +197,9 @@ bool executeMin(IOperationExecutionContext* context) {
         case OperandType::TENSOR_QUANT8_ASYMM:
             return compute<uint8_t>(context, std::numeric_limits<uint8_t>::max(),
                                     [](uint8_t a, uint8_t b) { return std::min(a, b); });
+        case OperandType::TENSOR_QUANT8_ASYMM_SIGNED:
+            return compute<int8_t>(context, std::numeric_limits<int8_t>::max(),
+                                   [](int8_t a, int8_t b) { return std::min(a, b); });
         default:
             NN_RET_CHECK_FAIL() << "Unsupported tensor type for operation REDUCE_MIN";
     }

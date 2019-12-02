@@ -22,6 +22,8 @@
 #include "OperationsUtils.h"
 
 #include <algorithm>
+#include <utility>
+#include <vector>
 
 namespace android {
 namespace nn {
@@ -91,6 +93,11 @@ bool eval(const void* inputData, const Shape& inputShape, const int32_t k, void*
         case OperandType::TENSOR_QUANT8_ASYMM: {
             return evalGeneric(reinterpret_cast<const uint8_t*>(inputData), inputShape, k,
                                reinterpret_cast<uint8_t*>(valuesData), valuesShape,
+                               reinterpret_cast<int32_t*>(indicesData), indicesShape);
+        } break;
+        case OperandType::TENSOR_QUANT8_ASYMM_SIGNED: {
+            return evalGeneric(reinterpret_cast<const int8_t*>(inputData), inputShape, k,
+                               reinterpret_cast<int8_t*>(valuesData), valuesShape,
                                reinterpret_cast<int32_t*>(indicesData), indicesShape);
         } break;
         default: {
