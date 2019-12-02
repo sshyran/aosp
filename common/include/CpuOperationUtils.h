@@ -212,6 +212,25 @@ class OutputWithLayout {
     bool mUseNchw;
 };
 
+template <typename T>
+inline void CalculateActivationRange(int32_t activation, const Shape& outputShape,
+                                     int32_t* outputActivationMin, int32_t* outputActivationMax);
+
+template <>
+inline void CalculateActivationRange<uint8_t>(int32_t activation, const Shape& outputShape,
+                                              int32_t* outputActivationMin,
+                                              int32_t* outputActivationMax) {
+    CalculateActivationRangeUint8(activation, outputShape, outputActivationMin,
+                                  outputActivationMax);
+}
+
+template <>
+inline void CalculateActivationRange<int8_t>(int32_t activation, const Shape& outputShape,
+                                             int32_t* outputActivationMin,
+                                             int32_t* outputActivationMax) {
+    CalculateActivationRangeInt8(activation, outputShape, outputActivationMin, outputActivationMax);
+}
+
 }  // namespace nn
 }  // namespace android
 
