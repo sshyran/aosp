@@ -328,16 +328,8 @@ bool spaceToBatchPrepare(const Shape& input, const int32_t* blockSizeData,
                          const Shape& blockSizeShape, const int32_t* paddingsData,
                          const Shape& paddingsShape, Shape* output);
 
-bool squeezePrepare(const Shape& input, const int32_t* squeezeDims, const Shape& squeezeDimsShape,
-                    Shape* output);
-
 bool meanPrepare(const Shape& input, const int32_t* axisData, const Shape& axisShape, bool keepDims,
                  Shape* output);
-
-bool stridedSlicePrepare(const Shape& input, const int32_t* beginData, const Shape& beginShape,
-                         const int32_t* endData, const Shape& endShape, const int32_t* stridesData,
-                         const Shape& stridesShape, int32_t beginMask, int32_t endMask,
-                         int32_t shrinkAxisMask, Shape* output);
 
 bool argMinMaxPrepare(const Shape& input, int32_t axis, Shape* output);
 

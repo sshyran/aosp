@@ -28,7 +28,7 @@ struct RunTimeOperandInfo;
 
 class EmbeddingLookup {
    public:
-    EmbeddingLookup(const hal::Operation& operation, std::vector<RunTimeOperandInfo>& operands);
+    EmbeddingLookup(const hal::Operation& operation, RunTimeOperandInfo* operands);
 
     bool Eval();
 

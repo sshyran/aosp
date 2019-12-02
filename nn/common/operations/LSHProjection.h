@@ -36,9 +36,9 @@ struct Shape;
 
 class LSHProjection {
    public:
-    LSHProjection(const hal::Operation& operation, std::vector<RunTimeOperandInfo>& operands);
+    LSHProjection(const hal::Operation& operation, RunTimeOperandInfo* operands);
 
-    static bool Prepare(const hal::Operation& operation, std::vector<RunTimeOperandInfo>& operands,
+    static bool Prepare(const hal::Operation& operation, RunTimeOperandInfo* operands,
                         Shape* outputShape);
     template <typename T>
     bool Eval();

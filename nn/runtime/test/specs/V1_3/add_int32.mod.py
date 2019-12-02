@@ -1,4 +1,3 @@
-#!/bin/bash
 #
 # Copyright (C) 2019 The Android Open Source Project
 #
@@ -13,17 +12,14 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+#
 
-set -Eeuox pipefail
-cd "$(dirname "$0")/.."  # runtime/test
+model = Model()
+input0 = Input("input0", "TENSOR_INT32", "{1, 2}")
+input1 = Input("input1", "TENSOR_INT32", "{1, 2}")
+output = Output("output", "TENSOR_INT32", "{1, 2}")
+model = model.Operation("ADD", input0, input1, 0).To(output)
 
-NNAPI_VERSIONS="V1_0 V1_1 V1_2 V1_3"
-EXAMPLE_GENERATOR="../../tools/test_generator/example_generator.py"
-
-for source_version in $NNAPI_VERSIONS; do
-  generated_dir="generated/spec_$source_version"
-  mkdir -p "$generated_dir"
-  "$EXAMPLE_GENERATOR" "specs/$source_version" \
-    --example="$generated_dir" \
-    "$@"
-done
+Example({input0: [1, 2],
+         input1: [3, 4],
+         output: [4, 6]})
