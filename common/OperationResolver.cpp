@@ -82,6 +82,8 @@ const OperationRegistration* register_SIN();
 const OperationRegistration* register_SLICE();
 const OperationRegistration* register_SOFTMAX();
 const OperationRegistration* register_SQRT();
+const OperationRegistration* register_SQUEEZE();
+const OperationRegistration* register_STRIDED_SLICE();
 const OperationRegistration* register_SUB();
 const OperationRegistration* register_TANH();
 const OperationRegistration* register_TRANSPOSE();
@@ -146,6 +148,8 @@ BuiltinOperationResolver::BuiltinOperationResolver() {
     registerOperation(register_SLICE());
     registerOperation(register_SOFTMAX());
     registerOperation(register_SQRT());
+    registerOperation(register_SQUEEZE());
+    registerOperation(register_STRIDED_SLICE());
     registerOperation(register_SUB());
     registerOperation(register_TANH());
     registerOperation(register_TRANSPOSE());
