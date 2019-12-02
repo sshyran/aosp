@@ -30,9 +30,9 @@ struct Shape;
 
 class RNN {
    public:
-    RNN(const hal::Operation& operation, std::vector<RunTimeOperandInfo>& operands);
+    RNN(const hal::Operation& operation, RunTimeOperandInfo* operands);
 
-    static bool Prepare(const hal::Operation& operation, std::vector<RunTimeOperandInfo>& operands,
+    static bool Prepare(const hal::Operation& operation, RunTimeOperandInfo* operands,
                         Shape* hiddenStateShape, Shape* outputShape);
     bool Eval();
 

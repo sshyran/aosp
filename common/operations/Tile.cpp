@@ -16,6 +16,9 @@
 
 #define LOG_TAG "Operations"
 
+#include <algorithm>
+#include <utility>
+
 #include "Tile.h"
 #include "HalInterfaces.h"
 #include "Tracing.h"
@@ -102,6 +105,7 @@ bool eval(const uint8_t* inputData, const Shape& inputShape, const int32_t* mult
         ANDROID_NN_IMPL_TILE(OperandType::TENSOR_FLOAT32, float);
         ANDROID_NN_IMPL_TILE(OperandType::TENSOR_INT32, int32_t);
         ANDROID_NN_IMPL_TILE(OperandType::TENSOR_QUANT8_ASYMM, uint8_t);
+        ANDROID_NN_IMPL_TILE(OperandType::TENSOR_QUANT8_ASYMM_SIGNED, int8_t);
         default:
             LOG(ERROR) << "Unsupported data type";
             return false;

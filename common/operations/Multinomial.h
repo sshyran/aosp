@@ -33,9 +33,9 @@ struct Shape;
 
 class Multinomial {
    public:
-    Multinomial(const hal::Operation& operation, std::vector<RunTimeOperandInfo>& operands);
+    Multinomial(const hal::Operation& operation, RunTimeOperandInfo* operands);
 
-    static bool Prepare(const hal::Operation& operation, std::vector<RunTimeOperandInfo>& operands,
+    static bool Prepare(const hal::Operation& operation, RunTimeOperandInfo* operands,
                         Shape* outputShape);
     bool Eval();
 
