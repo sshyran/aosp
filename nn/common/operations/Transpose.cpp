@@ -16,6 +16,8 @@
 
 #define LOG_TAG "Operations"
 
+#include <vector>
+
 #include "CpuOperationUtils.h"
 #include "HalInterfaces.h"
 #include "OperationResolver.h"
@@ -80,6 +82,8 @@ bool validate(const IOperationValidationContext* context) {
         NN_RET_CHECK(validateHalVersion(context, HalVersion::V1_1));
     } else if (inputType == OperandType::TENSOR_FLOAT16) {
         NN_RET_CHECK(validateHalVersion(context, HalVersion::V1_2));
+    } else if (inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
+        NN_RET_CHECK(validateHalVersion(context, HalVersion::V1_3));
     } else {
         NN_RET_CHECK_FAIL() << "Unsupported tensor type for operation " << kOperationName;
     }
@@ -150,6 +154,13 @@ bool execute(IOperationExecutionContext* context) {
                                     context->getInputBuffer<int32_t>(kPermTensor),
                                     context->getInputShape(kPermTensor),
                                     context->getOutputBuffer<uint8_t>(kOutputTensor),
+                                    context->getOutputShape(kOutputTensor));
+        case OperandType::TENSOR_QUANT8_ASYMM_SIGNED:
+            return transposeGeneric(context->getInputBuffer<int8_t>(kInputTensor),
+                                    context->getInputShape(kInputTensor),
+                                    context->getInputBuffer<int32_t>(kPermTensor),
+                                    context->getInputShape(kPermTensor),
+                                    context->getOutputBuffer<int8_t>(kOutputTensor),
                                     context->getOutputShape(kOutputTensor));
         default:
             NN_RET_CHECK_FAIL() << "Unsupported tensor type for operation " << kOperationName;

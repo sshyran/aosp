@@ -18,12 +18,13 @@
 
 #define LOG_TAG "Operations"
 
-#include "CpuOperationUtils.h"
-#include "Operations.h"
-
 #include <tensorflow/lite/kernels/internal/optimized/legacy_optimized_ops.h>
 #include <tensorflow/lite/kernels/internal/reference/legacy_reference_ops.h>
 
+#include <vector>
+
+#include "CpuOperationUtils.h"
+#include "Operations.h"
 #include "Tracing.h"
 
 namespace android {
@@ -99,6 +100,10 @@ template bool meanGeneric<uint8_t, int32_t>(uint8_t* inputData, const Shape& inp
                                             const int32_t* axis, const Shape& axisShape,
                                             bool keepDims, uint8_t* outputData,
                                             const Shape& outputShape);
+template bool meanGeneric<int8_t, int32_t>(int8_t* inputData, const Shape& inputShape,
+                                           const int32_t* axis, const Shape& axisShape,
+                                           bool keepDims, int8_t* outputData,
+                                           const Shape& outputShape);
 
 }  // namespace nn
 }  // namespace android
