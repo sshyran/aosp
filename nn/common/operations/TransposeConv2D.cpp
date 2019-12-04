@@ -39,6 +39,8 @@ constexpr uint32_t kInputTensor = 0;
 constexpr uint32_t kFilterTensor = 1;
 constexpr uint32_t kBiasTensor = 2;
 
+constexpr uint32_t kNumInputs1 = 9;
+constexpr uint32_t kNumInputs2 = 11;
 constexpr uint32_t kNumOutputs = 1;
 constexpr uint32_t kOutputTensor = 0;
 
@@ -435,8 +437,9 @@ bool transposeConvQuant8PerChannel(const T* inputData, const Shape& inputShape,
 }  // namespace
 
 bool validate(const IOperationValidationContext* context) {
+    const uint32_t inputCount = context->getNumInputs();
+    NN_RET_CHECK(inputCount == kNumInputs1 || inputCount == kNumInputs2);
     NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
-    const auto inputCount = context->getNumInputs();
     const auto inputType = context->getInputType(kInputTensor);
     const auto filterType = context->getInputType(kFilterTensor);
     std::vector<OperandType> inExpectedTypes;
