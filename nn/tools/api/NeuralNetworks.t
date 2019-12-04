@@ -75,6 +75,10 @@ typedef enum {
     // Operations below are available since API level 29.
 
 %insert Operation_1.2
+
+    // Operations below are available since API level 30.
+
+%insert Operation_1.3
 } OperationCode;
 
 /**
