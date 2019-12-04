@@ -585,7 +585,8 @@ bool validate(const IOperationValidationContext* context) {
 
     if (inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
         NN_RET_CHECK(validateHalVersion(context, HalVersion::V1_3));
-    } else if (filterType == OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL || withLayout ||
+    } else if (inputType == OperandType::TENSOR_FLOAT16 ||
+               filterType == OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL || withLayout ||
                withDilation || !meetsQuantizedScaleConstraintBeforeV1_2) {
         NN_RET_CHECK(validateHalVersion(context, HalVersion::V1_2));
     } else {
