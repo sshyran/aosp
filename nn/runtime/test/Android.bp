@@ -288,6 +288,7 @@ cc_library_static {
     name: "CtsNNAPITests_static",
     srcs: [
         ":libneuralnetworks_generated_test_harness_for_cts",
+        "CtsMain.cpp",
         "TestFree.cpp",
         "TestGenerated.cpp",
         "TestMemory.cpp",
