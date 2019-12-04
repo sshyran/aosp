@@ -64,6 +64,7 @@ const OperationRegistration* register_NEG();
 const OperationRegistration* register_NOT_EQUAL();
 const OperationRegistration* register_PRELU();
 const OperationRegistration* register_QUANTIZE();
+const OperationRegistration* register_QUANTIZED_LSTM();
 const OperationRegistration* register_REDUCE_ALL();
 const OperationRegistration* register_REDUCE_ANY();
 const OperationRegistration* register_REDUCE_MAX();
@@ -131,6 +132,7 @@ BuiltinOperationResolver::BuiltinOperationResolver() {
     registerOperation(register_NOT_EQUAL());
     registerOperation(register_PRELU());
     registerOperation(register_QUANTIZE());
+    registerOperation(register_QUANTIZED_LSTM());
     registerOperation(register_REDUCE_ALL());
     registerOperation(register_REDUCE_ANY());
     registerOperation(register_REDUCE_MAX());
