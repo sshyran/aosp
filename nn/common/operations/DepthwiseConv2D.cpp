@@ -237,17 +237,48 @@ bool depthwiseConvNhwc(const uint8_t* inputData, const Shape& inputShape, const 
     return true;
 }
 
-bool depthwiseConvQuant8PerChannelNhwc(const uint8_t* inputData, const Shape& inputShape,
-                                       const int8_t* filterData, const Shape& filterShape,
-                                       const float* filterScales, const int32_t* biasData,
-                                       const Shape& biasShape, int32_t paddingLeft,
-                                       int32_t paddingRight, int32_t paddingTop,
-                                       int32_t paddingBottom, int32_t strideWidth,
-                                       int32_t strideHeight, int32_t dilationWidthFactor,
-                                       int32_t dilationHeightFactor,
+// Passing input, filter and output shapes by value, so that we can change the
+// offsets without modifying the actual shapes.
+bool depthwiseConvNhwc(const int8_t* inputData, Shape inputShape, const int8_t* filterData,
+                       Shape filterShape, const int32_t* biasData, const Shape& biasShape,
+                       int32_t paddingLeft, int32_t paddingRight, int32_t paddingTop,
+                       int32_t paddingBottom, int32_t strideWidth, int32_t strideHeight,
+                       int32_t dilationWidthFactor, int32_t dilationHeightFactor,
+                       int32_t depthMultiplier, int32_t activation, int8_t* outputData,
+                       Shape outputShape) {
+    NNTRACE_TRANS("depthwiseConvQuant8");
 
-                                       int32_t depthMultiplier, int32_t activation,
-                                       uint8_t* outputData, const Shape& outputShape) {
+    std::vector<uint8_t> unsignedInput(getNumberOfElements(inputShape));
+    convertInt8ToUInt8(inputData, &unsignedInput);
+    inputShape.offset += 128;
+
+    std::vector<uint8_t> unsignedFilter(getNumberOfElements(filterShape));
+    convertInt8ToUInt8(filterData, &unsignedFilter);
+    filterShape.offset += 128;
+
+    std::vector<uint8_t> unsignedOutput(getNumberOfElements(outputShape));
+    outputShape.offset += 128;
+
+    NN_RET_CHECK(depthwiseConvNhwc(unsignedInput.data(), inputShape, unsignedFilter.data(),
+                                   filterShape, biasData, biasShape, paddingLeft, paddingRight,
+                                   paddingTop, paddingBottom, strideWidth, strideHeight,
+                                   dilationWidthFactor, dilationHeightFactor, depthMultiplier,
+                                   activation, unsignedOutput.data(), outputShape));
+
+    convertUInt8ToInt8(unsignedOutput, outputData);
+
+    return true;
+}
+
+template <typename T>
+bool depthwiseConvQuant8PerChannelNhwc(
+        const T* inputData, const Shape& inputShape, const int8_t* filterData,
+        const Shape& filterShape, const float* filterScales, const int32_t* biasData,
+        const Shape& biasShape, int32_t paddingLeft, int32_t paddingRight, int32_t paddingTop,
+        int32_t paddingBottom, int32_t strideWidth, int32_t strideHeight,
+        int32_t dilationWidthFactor, int32_t dilationHeightFactor,
+
+        int32_t depthMultiplier, int32_t activation, T* outputData, const Shape& outputShape) {
     NNTRACE_TRANS("depthwiseConvQuant8");
 
     uint32_t paddingHeight = (uint32_t)paddingTop;
@@ -284,11 +315,11 @@ bool depthwiseConvQuant8PerChannelNhwc(const uint8_t* inputData, const Shape& in
     }
 
     int32_t output_activation_min = 0, output_activation_max = 0;
-    CalculateActivationRangeUint8(activation, outputShape, &output_activation_min,
-                                  &output_activation_max);
+    CalculateActivationRange<T>(activation, outputShape, &output_activation_min,
+                                &output_activation_max);
 
-    const uint8_t* inputBase = inputData;
-    uint8_t* outPtr = outputData;
+    const T* inputBase = inputData;
+    T* outPtr = outputData;
     for (uint32_t b = 0; b < numBatches; b++) {
         for (uint32_t h = 0; h < outputHeight; h++) {
             for (uint32_t w = 0; w < outputWidth; w++) {
@@ -324,7 +355,7 @@ bool depthwiseConvQuant8PerChannelNhwc(const uint8_t* inputData, const Shape& in
                                                                     -outputShift[oc]);
                         sum += outputOffset;
                         sum = std::max(std::min(sum, output_activation_max), output_activation_min);
-                        outPtr[m] = static_cast<uint8_t>(sum);
+                        outPtr[m] = static_cast<T>(sum);
                     }
                     outPtr += depthMultiplier;
                 }
@@ -406,9 +437,10 @@ bool validate(const IOperationValidationContext* context) {
                 OperandType::INT32,          OperandType::INT32,
                 OperandType::INT32,          OperandType::INT32,
         };
-    } else if (inputType == OperandType::TENSOR_QUANT8_ASYMM) {
-        NN_RET_CHECK(filterType == OperandType::TENSOR_QUANT8_ASYMM ||
-                     filterType == OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL)
+    } else if (inputType == OperandType::TENSOR_QUANT8_ASYMM ||
+               inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
+        NN_RET_CHECK(filterType == OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL ||
+                     filterType == inputType)
                 << "Unsupported filter tensor type for operation " << kOperationName;
         if (filterType == OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL) {
             NN_RET_CHECK_EQ(context->getInputExtraParams(kFilterTensor).channelQuant().channelDim,
@@ -417,14 +449,9 @@ bool validate(const IOperationValidationContext* context) {
                     << kOperationName;
         }
         inExpectedTypes = {
-                OperandType::TENSOR_QUANT8_ASYMM,
-                filterType,
-                OperandType::TENSOR_INT32,
-                OperandType::INT32,
-                OperandType::INT32,
-                OperandType::INT32,
-                OperandType::INT32,
-                OperandType::INT32,
+                inputType,          filterType,         OperandType::TENSOR_INT32,
+                OperandType::INT32, OperandType::INT32, OperandType::INT32,
+                OperandType::INT32, OperandType::INT32,
         };
     } else {
         NN_RET_CHECK_FAIL() << "Unsupported input tensor type for operation " << kOperationName;
@@ -468,9 +495,11 @@ bool validate(const IOperationValidationContext* context) {
         }
     }
 
-    if (inputType == OperandType::TENSOR_FLOAT16 ||
-        filterType == OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL || withLayout || withDilation ||
-        !meetsQuantizedScaleConstraintBeforeV1_2) {
+    if (inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
+        NN_RET_CHECK(validateHalVersion(context, HalVersion::V1_3));
+    } else if (inputType == OperandType::TENSOR_FLOAT16 ||
+               filterType == OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL || withLayout ||
+               withDilation || !meetsQuantizedScaleConstraintBeforeV1_2) {
         NN_RET_CHECK(validateHalVersion(context, HalVersion::V1_2));
     } else {
         NN_RET_CHECK(validateHalVersion(context, HalVersion::V1_0));
@@ -485,11 +514,13 @@ bool prepare(IOperationExecutionContext* context) {
     Shape bias = context->getInputShape(kBiasTensor);
 
     if (filter.type == OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL) {
-        NN_OPS_CHECK(input.type == OperandType::TENSOR_QUANT8_ASYMM);
+        NN_OPS_CHECK(input.type == OperandType::TENSOR_QUANT8_ASYMM ||
+                     input.type == OperandType::TENSOR_QUANT8_ASYMM_SIGNED);
     } else {
         NN_OPS_CHECK(input.type == filter.type);
     }
-    if (input.type == OperandType::TENSOR_QUANT8_ASYMM) {
+    if (input.type == OperandType::TENSOR_QUANT8_ASYMM ||
+        input.type == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
         NN_OPS_CHECK(bias.type == OperandType::TENSOR_INT32);
     } else {
         NN_OPS_CHECK(input.type == bias.type);
@@ -595,6 +626,39 @@ bool execute(IOperationExecutionContext* context) {
                                      param.dilation_width_factor, param.dilation_height_factor,
                                      param.depth_multiplier, param.activation, param.useNchw,
                                      context->getOutputBuffer<uint8_t>(kOutputTensor),
+                                     context->getOutputShape(kOutputTensor));
+            } else {
+                NN_RET_CHECK_FAIL() << "Unsupported filter type for operation " << kOperationName;
+            }
+        case OperandType::TENSOR_QUANT8_ASYMM_SIGNED:
+            if (context->getInputType(kFilterTensor) ==
+                OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL) {
+                return depthwiseConvQuant8PerChannel(
+                        context->getInputBuffer<int8_t>(kInputTensor),
+                        context->getInputShape(kInputTensor),
+                        context->getInputBuffer<int8_t>(kFilterTensor),
+                        context->getInputShape(kFilterTensor),
+                        context->getInputExtraParams(kFilterTensor).channelQuant().scales.data(),
+                        context->getInputBuffer<int32_t>(kBiasTensor),
+                        context->getInputShape(kBiasTensor), param.padding_left,
+                        param.padding_right, param.padding_top, param.padding_bottom,
+                        param.stride_width, param.stride_height, param.dilation_width_factor,
+                        param.dilation_height_factor, param.depth_multiplier, param.activation,
+                        param.useNchw, context->getOutputBuffer<int8_t>(kOutputTensor),
+                        context->getOutputShape(kOutputTensor));
+            } else if (context->getInputType(kFilterTensor) ==
+                       OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
+                return depthwiseConv(context->getInputBuffer<int8_t>(kInputTensor),
+                                     context->getInputShape(kInputTensor),
+                                     context->getInputBuffer<int8_t>(kFilterTensor),
+                                     context->getInputShape(kFilterTensor),
+                                     context->getInputBuffer<int32_t>(kBiasTensor),
+                                     context->getInputShape(kBiasTensor), param.padding_left,
+                                     param.padding_right, param.padding_top, param.padding_bottom,
+                                     param.stride_width, param.stride_height,
+                                     param.dilation_width_factor, param.dilation_height_factor,
+                                     param.depth_multiplier, param.activation, param.useNchw,
+                                     context->getOutputBuffer<int8_t>(kOutputTensor),
                                      context->getOutputShape(kOutputTensor));
             } else {
                 NN_RET_CHECK_FAIL() << "Unsupported filter type for operation " << kOperationName;
