@@ -1611,7 +1611,8 @@ void fullyConnectedOpTest(int32_t operandCode) {
                                        .dimensions = biasDimensions,
                                        .scale = 0.0f,
                                        .zeroPoint = 0};
-    if (operandCode == ANEURALNETWORKS_TENSOR_QUANT8_ASYMM) {
+    if (operandCode == ANEURALNETWORKS_TENSOR_QUANT8_ASYMM ||
+        operandCode == ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED) {
         bias.type = ANEURALNETWORKS_TENSOR_INT32;
         bias.scale = 0.25f;
     }
@@ -1637,6 +1638,10 @@ TEST(OperationValidationTest, FULLY_CONNECTED_float32) {
 
 TEST(OperationValidationTest, FULLY_CONNECTED_quant8) {
     fullyConnectedOpTest(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM);
+}
+
+TEST(OperationValidationTest, FULLY_CONNECTED_quant8_signed) {
+    fullyConnectedOpTest(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED);
 }
 
 void concatenationTest(int32_t operandCode) {

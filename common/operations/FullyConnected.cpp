@@ -14,15 +14,18 @@
  * limitations under the License.
  */
 
+#include "tensorflow/lite/kernels/internal/types.h"
 #define LOG_TAG "Operations"
+
+#include <tensorflow/lite/kernels/internal/optimized/legacy_optimized_ops.h>
+#include <tensorflow/lite/kernels/internal/reference/integer_ops/fully_connected.h>
+#include <tensorflow/lite/kernels/internal/reference/reference_ops.h>
+
+#include <vector>
 
 #include "CpuOperationUtils.h"
 #include "HalInterfaces.h"
 #include "OperationResolver.h"
-
-#include <tensorflow/lite/kernels/internal/optimized/legacy_optimized_ops.h>
-#include <tensorflow/lite/kernels/internal/reference/reference_ops.h>
-
 #include "Tracing.h"
 
 namespace android {
@@ -141,6 +144,42 @@ bool fullyConnectedQuant8(const uint8_t* inputData, const Shape& inputShape,
     return true;
 }
 
+bool fullyConnectedQuant8(const int8_t* inputData, const Shape& inputShape,
+                          const int8_t* weightsData, const Shape& weightsShape,
+                          const int32_t* biasData, const Shape& biasShape, int32_t activation,
+                          int8_t* outputData, const Shape& outputShape) {
+    NNTRACE_TRANS("fullyConnectedQuant8Signed");
+
+    double realMultiplier = 0.0;
+    int32_t outputMultiplier = 0;
+    int32_t outputShift = 0;
+    int32_t outputActivationMin = 0;
+    int32_t outputActivationMax = 0;
+
+    NN_RET_CHECK(GetQuantizedConvolutionMultipler(inputShape, weightsShape, biasShape, outputShape,
+                                                  &realMultiplier));
+    NN_RET_CHECK(QuantizeMultiplier(realMultiplier, &outputMultiplier, &outputShift));
+    CalculateActivationRangeInt8(activation, outputShape, &outputActivationMin,
+                                 &outputActivationMax);
+
+    tflite::FullyConnectedParams params;
+    params.input_offset = -inputShape.offset;
+    params.weights_offset = -weightsShape.offset;
+    params.output_offset = outputShape.offset;
+    params.output_multiplier = outputMultiplier;
+    params.output_shift = outputShift;
+    params.quantized_activation_min = outputActivationMin;
+    params.quantized_activation_max = outputActivationMax;
+
+    NNTRACE_COMP_SWITCH("reference_integer_ops::FullyConnected");
+    tflite::reference_integer_ops::FullyConnected(
+            params, convertShapeToTflshape(inputShape), inputData,
+            convertShapeToTflshape(weightsShape), weightsData, convertShapeToTflshape(biasShape),
+            biasData, convertShapeToTflshape(outputShape), outputData);
+
+    return true;
+}
+
 }  // namespace
 
 bool validate(const IOperationValidationContext* context) {
@@ -186,6 +225,15 @@ bool validate(const IOperationValidationContext* context) {
                 OperandType::TENSOR_INT32,
                 OperandType::INT32,
         };
+    } else if (inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
+        NN_RET_CHECK(validateHalVersion(context, HalVersion::V1_3));
+
+        inExpectedTypes = {
+                OperandType::TENSOR_QUANT8_ASYMM_SIGNED,
+                OperandType::TENSOR_QUANT8_ASYMM_SIGNED,
+                OperandType::TENSOR_INT32,
+                OperandType::INT32,
+        };
     } else {
         NN_RET_CHECK_FAIL() << "Unsupported input tensor type for operation " << kOperationName;
         return false;
@@ -203,7 +251,8 @@ bool prepare(IOperationExecutionContext* context) {
     // Check all the parameters of tensor match within themselves and match the
     // input configuration.
     NN_RET_CHECK(input.type == weights.type);
-    if (input.type == OperandType::TENSOR_QUANT8_ASYMM) {
+    if (input.type == OperandType::TENSOR_QUANT8_ASYMM ||
+        input.type == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
         NN_RET_CHECK(bias.type == OperandType::TENSOR_INT32);
     } else {
         NN_RET_CHECK(input.type == bias.type);
@@ -261,6 +310,16 @@ bool execute(IOperationExecutionContext* context) {
                                         context->getInputShape(kBiasTensor),
                                         context->getInputValue<int32_t>(kActivationScalar),
                                         context->getOutputBuffer<uint8_t>(kOutputTensor),
+                                        context->getOutputShape(kOutputTensor));
+        case OperandType::TENSOR_QUANT8_ASYMM_SIGNED:
+            return fullyConnectedQuant8(context->getInputBuffer<int8_t>(kInputTensor),
+                                        context->getInputShape(kInputTensor),
+                                        context->getInputBuffer<int8_t>(kWeightsTensor),
+                                        context->getInputShape(kWeightsTensor),
+                                        context->getInputBuffer<int32_t>(kBiasTensor),
+                                        context->getInputShape(kBiasTensor),
+                                        context->getInputValue<int32_t>(kActivationScalar),
+                                        context->getOutputBuffer<int8_t>(kOutputTensor),
                                         context->getOutputShape(kOutputTensor));
         default:
             NN_RET_CHECK_FAIL() << "Unsupported tensor type for operation " << kOperationName;
