@@ -1845,6 +1845,7 @@ typedef enum {
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT16} (since API level 29)
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
      * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
+     * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED} (since API level 30)
      *
      * Supported tensor rank: up to 4.
      * Tensors with rank other than 2 or 4 are only supported since API level 29.
@@ -1853,9 +1854,10 @@ typedef enum {
      * * 0: A 2-D or 4-D tensor, specifying the tensor to be reshaped.
      *      Since API level 29, this tensor may be zero-sized.
      * * 1: A scalar, specifying the positive scaling factor for the exponent,
-     *      beta. If input0 is of {@link ANEURALNETWORKS_TENSOR_FLOAT32} or
-     *      {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}, the scalar must be of
-     *      {@link ANEURALNETWORKS_FLOAT32}.
+     *      beta. If input0 is of {@link ANEURALNETWORKS_TENSOR_FLOAT32},
+     *      {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} or
+     *      {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED}, the scalar
+     *      must be of {@link ANEURALNETWORKS_FLOAT32}.
      *      If input0 is of {@link ANEURALNETWORKS_TENSOR_FLOAT16}, then the
      *      scalar must be of {@link ANEURALNETWORKS_FLOAT16}.
      * * 2: An optional {@link ANEURALNETWORKS_INT32} scalar, default to -1,
@@ -1868,6 +1870,8 @@ typedef enum {
      * * 0: The output tensor of same shape as input0.
      *      For {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM},
      *      the scale must be 1.f / 256 and the zeroPoint must be 0.
+     *      For {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED},
+     *      the scale must be 1.f / 256 and the zeroPoint must be -128.
      *
      * Available since API level 27.
      */
