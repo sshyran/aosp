@@ -914,9 +914,17 @@
      * and an error must be reported.
      *
      * Supported value tensor {@link %{OperandType}}:
+%kind ndk hal_1.3+
+     * * {@link %{OperandTypeLinkPfx}TENSOR_FLOAT16} (since %{APILevel30})
+%/kind
      * * {@link %{OperandTypeLinkPfx}TENSOR_FLOAT32}
-     * * {@link %{OperandTypeLinkPfx}TENSOR_INT32}
-     * * {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM}
+%kind ndk hal_1.2+
+     * * {@link %{OperandTypeLinkPfx}TENSOR_INT32} (since %{APILevel29})
+     * * {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM} (since %{APILevel29})
+%/kind
+%kind ndk hal_1.3+
+     * * {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM_SIGNED} (since %{APILevel30})
+%/kind
      *
      * Supported value tensor rank: from 2
      *
@@ -930,7 +938,12 @@
      * * 0: A n-D tensor with the same rank and shape as the Values
      *      tensor, except for the first dimension which has the same size
      *      as Lookups' only dimension.
+%kind ndk hal_1.3+
+     *      For a {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM} and
+     *      {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM_SIGNED} tensor,
+%else
      *      For a {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM} tensor,
+%/kind
      *      the scale and zeroPoint must be the same as input1.
 %insert-lines AVAIL27
      */
