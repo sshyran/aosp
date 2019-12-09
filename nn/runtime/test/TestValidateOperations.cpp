@@ -1047,6 +1047,10 @@ TEST(OperationValidationTest, SOFTMAX_quant8) {
     softmaxOpTest(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM);
 }
 
+TEST(OperationValidationTest, SOFTMAX_quant8_signed) {
+    softmaxOpTest(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED);
+}
+
 void poolingOpTest(ANeuralNetworksOperationType operationCode, int32_t operandCode) {
     uint32_t inputDimensions[4] = {2, 4, 4, 2};
     ANeuralNetworksOperandType input = getOpType(operandCode, 4, inputDimensions);
