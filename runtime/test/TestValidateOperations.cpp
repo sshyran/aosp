@@ -1740,6 +1740,10 @@ TEST(OperationValidationTest, EMBEDDING_LOOKUP_quant8) {
     embeddingLookupTest(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM);
 }
 
+TEST(OperationValidationTest, EMBEDDING_LOOKUP_quant8_signed) {
+    embeddingLookupTest(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED);
+}
+
 void hashtableLookupTest(int32_t operandCode) {
     uint32_t lookupDimensions[1] = {5};
     ANeuralNetworksOperandType lookup = {.type = ANEURALNETWORKS_TENSOR_INT32,
