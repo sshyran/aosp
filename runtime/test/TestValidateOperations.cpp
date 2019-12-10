@@ -161,10 +161,12 @@ class OperationTestBase {
             // Transposed conv can have either fully quantized or per-channel
             // quantized filter for the quantized version of the op.
             if (mOpCode == ANEURALNETWORKS_TRANSPOSE_CONV_2D && i == 1) {
-                if (originalOperandCode == ANEURALNETWORKS_TENSOR_QUANT8_ASYMM) {
-                    operandTypesToSkip.insert(ANEURALNETWORKS_TENSOR_QUANT8_SYMM_PER_CHANNEL);
-                } else if (originalOperandCode == ANEURALNETWORKS_TENSOR_QUANT8_SYMM_PER_CHANNEL) {
+                if (originalOperandCode == ANEURALNETWORKS_TENSOR_QUANT8_ASYMM ||
+                    originalOperandCode == ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED ||
+                    originalOperandCode == ANEURALNETWORKS_TENSOR_QUANT8_SYMM_PER_CHANNEL) {
                     operandTypesToSkip.insert(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM);
+                    operandTypesToSkip.insert(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED);
+                    operandTypesToSkip.insert(ANEURALNETWORKS_TENSOR_QUANT8_SYMM_PER_CHANNEL);
                 }
             }
             // CAST accepts any of supported types for any of output types
@@ -1320,6 +1322,10 @@ void convOpTest(int32_t inputOperandCode, int32_t filterOperandCode) {
         bias.type = ANEURALNETWORKS_TENSOR_INT32;
         bias.scale = 0.25f;
     }
+    if (filterOperandCode == ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED) {
+        bias.type = ANEURALNETWORKS_TENSOR_INT32;
+        bias.scale = 0.25f;
+    }
     if (filterOperandCode == ANEURALNETWORKS_TENSOR_QUANT8_SYMM_PER_CHANNEL) {
         bias.type = ANEURALNETWORKS_TENSOR_INT32;
         bias.scale = 0.0f;
@@ -1418,6 +1424,16 @@ TEST(OperationValidationTest, CONV_2D_quant8) {
 
 TEST(OperationValidationTest, CONV_2D_quant8_per_channel) {
     convOpTest(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM, ANEURALNETWORKS_TENSOR_QUANT8_SYMM_PER_CHANNEL);
+}
+
+TEST(OperationValidationTest, CONV_2D_quant8_signed) {
+    convOpTest(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED,
+               ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED);
+}
+
+TEST(OperationValidationTest, CONV_2D_quant8_signed_per_channel) {
+    convOpTest(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED,
+               ANEURALNETWORKS_TENSOR_QUANT8_SYMM_PER_CHANNEL);
 }
 
 void depthwiseConvOpTest(int32_t inputOperandCode, int32_t filterOperandCode) {
@@ -2543,7 +2559,8 @@ void transposeConvOpTest(int32_t inputOperandCode, int32_t filterOperandCode) {
     };
 
     ANeuralNetworksOperandType bias = getOpType(inputOperandCode, 1, biasDim);
-    if (filterOperandCode == ANEURALNETWORKS_TENSOR_QUANT8_ASYMM) {
+    if (filterOperandCode == ANEURALNETWORKS_TENSOR_QUANT8_ASYMM ||
+        filterOperandCode == ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED) {
         bias.type = ANEURALNETWORKS_TENSOR_INT32;
         bias.scale = 0.25f;
     }
@@ -2590,6 +2607,16 @@ TEST(OperationValidationTest, TRANSPOSE_CONV_2D_quant8) {
 
 TEST(OperationValidationTest, TRANSPOSE_CONV_2D_quant8_per_channel) {
     transposeConvOpTest(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM,
+                        ANEURALNETWORKS_TENSOR_QUANT8_SYMM_PER_CHANNEL);
+}
+
+TEST(OperationValidationTest, TRANSPOSE_CONV_2D_quant8_signed) {
+    transposeConvOpTest(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED,
+                        ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED);
+}
+
+TEST(OperationValidationTest, TRANSPOSE_CONV_2D_quant8_signed_per_channel) {
+    transposeConvOpTest(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED,
                         ANEURALNETWORKS_TENSOR_QUANT8_SYMM_PER_CHANNEL);
 }
 
@@ -2710,6 +2737,11 @@ TEST(OperationValidationTest, L2_NORMALIZATION_float32) {
 
 TEST(OperationValidationTest, L2_NORMALIZATION_quant8) {
     normalizationOpTest(ANEURALNETWORKS_L2_NORMALIZATION, ANEURALNETWORKS_TENSOR_QUANT8_ASYMM);
+}
+
+TEST(OperationValidationTest, L2_NORMALIZATION_quant8_signed) {
+    normalizationOpTest(ANEURALNETWORKS_L2_NORMALIZATION,
+                        ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED);
 }
 
 void localResponseNormOpTest(int32_t operandCode) {
