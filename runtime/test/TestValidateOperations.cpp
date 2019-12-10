@@ -413,6 +413,7 @@ TEST(OperationValidationTest, EXPAND_DIMS) {
     expandDimsTest(ANEURALNETWORKS_TENSOR_FLOAT32);
     expandDimsTest(ANEURALNETWORKS_TENSOR_INT32);
     expandDimsTest(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM);
+    expandDimsTest(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED);
 }
 
 void gatherTest(int32_t inputOperandType) {
