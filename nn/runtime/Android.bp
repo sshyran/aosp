@@ -50,6 +50,12 @@ cc_library {
         "VersionedInterfaces.cpp",
     ],
 
+    stubs: {
+        versions: [
+            "29",
+        ],
+        symbol_file: "libneuralnetworks.map.txt",
+    },
     target: {
         android: {
             version_script: "libneuralnetworks.map.txt",
