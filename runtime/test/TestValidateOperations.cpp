@@ -440,6 +440,7 @@ TEST(OperationValidationTest, GATHER) {
     gatherTest(ANEURALNETWORKS_TENSOR_FLOAT32);
     gatherTest(ANEURALNETWORKS_TENSOR_INT32);
     gatherTest(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM);
+    gatherTest(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED);
 }
 
 void quantizeOpTest(int32_t inputOperandCode, int32_t outputOperandCode) {
