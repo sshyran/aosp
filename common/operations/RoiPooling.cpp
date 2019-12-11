@@ -21,8 +21,10 @@
 #include "OperationResolver.h"
 #include "OperationsUtils.h"
 
+#include <algorithm>
 #include <cfloat>
 #include <cmath>
+#include <vector>
 
 #include "Tracing.h"
 
@@ -186,8 +188,9 @@ bool validate(const IOperationValidationContext* context) {
                            OperandType::TENSOR_INT32,   OperandType::INT32,
                            OperandType::INT32,          OperandType::FLOAT16,
                            OperandType::FLOAT16,        OperandType::BOOL};
-    } else if (inputType == OperandType::TENSOR_QUANT8_ASYMM) {
-        inExpectedTypes = {OperandType::TENSOR_QUANT8_ASYMM,
+    } else if (inputType == OperandType::TENSOR_QUANT8_ASYMM ||
+               inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
+        inExpectedTypes = {inputType,
                            OperandType::TENSOR_QUANT16_ASYMM,
                            OperandType::TENSOR_INT32,
                            OperandType::INT32,
@@ -201,7 +204,12 @@ bool validate(const IOperationValidationContext* context) {
     }
     NN_RET_CHECK(validateInputTypes(context, inExpectedTypes));
     NN_RET_CHECK(validateOutputTypes(context, {inputType}));
-    return validateHalVersion(context, HalVersion::V1_2);
+    if (inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
+        return validateHalVersion(context, HalVersion::V1_3);
+        ;
+    } else {
+        return validateHalVersion(context, HalVersion::V1_2);
+    }
 }
 
 bool prepare(IOperationExecutionContext* context) {
@@ -288,6 +296,18 @@ bool execute(IOperationExecutionContext* context) {
                               context->getInputValue<float>(kWidthStrideScalar),
                               context->getInputValue<bool>(kLayoutScalar),
                               context->getOutputBuffer<uint8_t>(kOutputTensor),
+                              context->getOutputShape(kOutputTensor));
+        case OperandType::TENSOR_QUANT8_ASYMM_SIGNED:
+            return roiPooling(context->getInputBuffer<int8_t>(kInputTensor),
+                              context->getInputShape(kInputTensor),
+                              context->getInputBuffer<uint16_t>(kRoiTensor),
+                              context->getInputShape(kRoiTensor),
+                              context->getInputBuffer<int32_t>(kBatchSplitTensor),
+                              context->getInputShape(kBatchSplitTensor),
+                              context->getInputValue<float>(kHeightStrideSalar),
+                              context->getInputValue<float>(kWidthStrideScalar),
+                              context->getInputValue<bool>(kLayoutScalar),
+                              context->getOutputBuffer<int8_t>(kOutputTensor),
                               context->getOutputShape(kOutputTensor));
         default:
             NN_RET_CHECK_FAIL() << "Unsupported tensor type for operation " << kOperationName;
