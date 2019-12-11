@@ -383,6 +383,11 @@ class TestPreparedModelLatest : public SamplePreparedModel {
         }
     }
 
+    Return<void> executeSynchronously_1_3(const Request& request, MeasureTiming measure,
+                                          executeSynchronously_1_3_cb cb) override {
+        return executeSynchronously(request, measure, cb);
+    }
+
     // ExecutionBurstServer::create has an overload that will use
     // IPreparedModel::executeSynchronously(), so we can rely on that, rather
     // than having to implement ExecutionBurstServer::IExecutorWithCache.

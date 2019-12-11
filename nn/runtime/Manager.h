@@ -182,7 +182,7 @@ class DeviceManager {
 
     // synchronous execution
     bool mSyncExecCpu = true;
-    bool mSyncExecHal = true;         // Call executeSynchronously() when available on device.
+    bool mSyncExecHal = true;         // Call executeSynchronously*() when available on device.
     bool mSyncExecHalSetter = false;  // Has mSyncExecHal been set by setSyncExecHal()?
                                       // If so, don't allow the setting to be overridden
                                       //     by system property debug.nn.syncexec-hal
