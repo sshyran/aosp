@@ -2468,6 +2468,11 @@ TEST(OperationValidationTest, ROI_POOLING_quant8) {
                      ANEURALNETWORKS_FLOAT32);
 }
 
+TEST(OperationValidationTest, ROI_POOLING_quant8signed) {
+    roiPoolingOpTest(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED,
+                     ANEURALNETWORKS_TENSOR_QUANT16_ASYMM, ANEURALNETWORKS_FLOAT32);
+}
+
 void heatmapMaxKeypointOpTest(int32_t heatmapOperandCode, int32_t roiOperandCode) {
     uint32_t heatmapDim[] = {6, 4, 4, 1}, boxDim[] = {6, 4}, outScoreDim[] = {6, 1},
              outKeypointDim[] = {6, 1, 2};
