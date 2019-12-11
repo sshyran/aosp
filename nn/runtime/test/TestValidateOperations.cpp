@@ -2877,6 +2877,9 @@ TEST(OperationValidationTest, SLICE_int32) {
 TEST(OperationValidationTest, SLICE_uint8) {
     sliceTest(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM);
 }
+TEST(OperationValidationTest, SLICE_int8) {
+    sliceTest(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED);
+}
 TEST(OperationValidationTest, SLICE_float16) {
     sliceTest(ANEURALNETWORKS_TENSOR_FLOAT16);
 }
