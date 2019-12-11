@@ -4884,6 +4884,9 @@
      * * {@link %{OperandTypeLinkPfx}TENSOR_FLOAT16}
      * * {@link %{OperandTypeLinkPfx}TENSOR_FLOAT32}
      * * {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM}
+%kind ndk hal_1.3+
+     * * {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM_SIGNED} (since %{APILevel30})
+%/kind
      *
      * Supported tensor rank: 4, with "NHWC" or "NCHW" data layout.
      * With the default data layout NHWC, the data is stored in the order of:
@@ -4922,7 +4925,12 @@
      * Outputs:
      * * 0: A tensor of the same {@link %{OperandType}} as input0. The output
      *      shape is [num_rois, out_height, out_width, depth].
+%kind ndk hal_1.3+
+     *      For a {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM} and
+     *      {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM_SIGNED} tensor,
+%else
      *      For a {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM} tensor,
+%/kind
      *      the scale and zeroPoint can be different from the input0 scale and zeroPoint.
 %insert-lines AVAIL29
      */
