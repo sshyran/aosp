@@ -217,6 +217,15 @@ static_assert(ANEURALNETWORKS_OUTPUT_INSUFFICIENT_SIZE == 8,
               "ANEURALNETWORKS_OUTPUT_INSUFFICIENT_SIZE has changed");
 static_assert(ANEURALNETWORKS_UNAVAILABLE_DEVICE == 9,
               "ANEURALNETWORKS_UNAVAILABLE_DEVICE has changed");
+static_assert(ANEURALNETWORKS_MISSED_DEADLINE_TRANSIENT == 10,
+              "ANEURALNETWORKS_MISSED_DEADLINE_TRANSIENT has changed");
+static_assert(ANEURALNETWORKS_MISSED_DEADLINE_PERSISTENT == 11,
+              "ANEURALNETWORKS_MISSED_DEADLINE_PERSISTENT has changed");
+static_assert(ANEURALNETWORKS_RESOURCE_EXHAUSTED_TRANSIENT == 12,
+              "ANEURALNETWORKS_RESOURCE_EXHAUSTED_TRANSIENT has changed");
+static_assert(ANEURALNETWORKS_RESOURCE_EXHAUSTED_PERSISTENT == 13,
+              "ANEURALNETWORKS_RESOURCE_EXHAUSTED_PERSISTENT has changed");
+static_assert(ANEURALNETWORKS_DEAD_OBJECT == 14, "ANEURALNETWORKS_DEAD_OBJECT has changed");
 
 static_assert(ANEURALNETWORKS_MAX_SIZE_OF_IMMEDIATELY_COPIED_VALUES == 128,
               "ANEURALNETWORKS_MAX_SIZE_OF_IMMEDIATELY_COPIED_VALUES has changed");
@@ -553,6 +562,13 @@ static_assert(static_cast<uint32_t>(Constant::BYTE_SIZE_OF_CACHE_TOKEN) ==
                       ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN,
               "Constant::BYTE_SIZE_OF_CACHE_TOKEN != ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN");
 
+// Asserts for compilation priority
+static_assert(ANEURALNETWORKS_PRIORITY_LOW == 0, "ANEURALNETWORKS_PRIORITY_LOW has changed");
+static_assert(ANEURALNETWORKS_PRIORITY_MEDIUM == 1, "ANEURALNETWORKS_PRIORITY_MEDIUM has changed");
+static_assert(ANEURALNETWORKS_PRIORITY_HIGH == 2, "ANEURALNETWORKS_PRIORITY_HIGH has changed");
+static_assert(ANEURALNETWORKS_PRIORITY_DEFAULT == ANEURALNETWORKS_PRIORITY_MEDIUM,
+              "ANEURALNETWORKS_PRIORITY_DEFAULT has changed");
+
 using namespace android::nn;
 
 int ANeuralNetworks_getDeviceCount(uint32_t* numDevices) {
@@ -625,6 +641,21 @@ int ANeuralNetworksDevice_getFeatureLevel(const ANeuralNetworksDevice* device,
     }
     *featureLevel = dFeatureLevel;
     return ANEURALNETWORKS_NO_ERROR;
+}
+
+bool ANeuralNetworksDevice_supportsCompilationTimeout(const ANeuralNetworksDevice* device) {
+    (void)device;
+    return false;
+}
+
+bool ANeuralNetworksDevice_supportsExecutionTimeout(const ANeuralNetworksDevice* device) {
+    (void)device;
+    return false;
+}
+
+int ANeuralNetworksDevice_wait(const ANeuralNetworksDevice* device) {
+    (void)device;
+    return ANEURALNETWORKS_OP_FAILED;
 }
 
 int ANeuralNetworksModel_getSupportedOperationsForDevices(
@@ -1131,6 +1162,21 @@ int ANeuralNetworksCompilation_finish(ANeuralNetworksCompilation* compilation) {
     return c->finish();
 }
 
+int ANeuralNetworksCompilation_setPriority(ANeuralNetworksCompilation* compilation, int priority) {
+    NNTRACE_RT(NNTRACE_PHASE_COMPILATION, "ANeuralNetworksCompilation_setPriority");
+    (void)compilation;
+    (void)priority;
+    return ANEURALNETWORKS_OP_FAILED;
+}
+
+int ANeuralNetworksCompilation_setTimeout(ANeuralNetworksCompilation* compilation,
+                                          uint64_t duration) {
+    NNTRACE_RT(NNTRACE_PHASE_COMPILATION, "ANeuralNetworksCompilation_setTimeout");
+    (void)compilation;
+    (void)duration;
+    return ANEURALNETWORKS_OP_FAILED;
+}
+
 int ANeuralNetworksExecution_create(ANeuralNetworksCompilation* compilation,
                                     ANeuralNetworksExecution** execution) {
     NNTRACE_RT(NNTRACE_PHASE_EXECUTION, "ANeuralNetworksExecution_create");
@@ -1260,6 +1306,13 @@ int ANeuralNetworksExecution_startCompute(ANeuralNetworksExecution* execution,
     }
     *event = reinterpret_cast<ANeuralNetworksEvent*>(e.release());
     return ANEURALNETWORKS_NO_ERROR;
+}
+
+int ANeuralNetworksExecution_setTimeout(ANeuralNetworksExecution* execution, uint64_t duration) {
+    NNTRACE_RT(NNTRACE_PHASE_EXECUTION, "ANeuralNetworksExecution_setTimeout");
+    (void)execution;
+    (void)duration;
+    return ANEURALNETWORKS_OP_FAILED;
 }
 
 int ANeuralNetworksEvent_wait(ANeuralNetworksEvent* event) {
