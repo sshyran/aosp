@@ -291,7 +291,8 @@ inline int32_t ClampedIndex(int32_t index, int dim, bool pos_stride) {
 bool calculateBroadcastedShape(const Shape& in1, const Shape& in2, Shape* out);
 
 // Dequantizes a value and quantizes it back using new scale and offset.
-uint8_t requantize(uint8_t value, const Shape& oldShape, const Shape& newShape);
+template <typename T>
+T requantize(T value, const Shape& oldShape, const Shape& newShape);
 
 // Preparation functions for the corresponding ops
 bool floorPrepare(const Shape& input, Shape* output);
