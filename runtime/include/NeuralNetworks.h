@@ -5492,6 +5492,47 @@ typedef enum {
      * Failure caused by a device not being available.
      */
     ANEURALNETWORKS_UNAVAILABLE_DEVICE = 9,
+
+    /**
+     * Failure because a deadline could not be met for a task, but future
+     * deadlines may still be met for the same task after a short delay.
+     *
+     * Available since API level 30.
+     */
+    ANEURALNETWORKS_MISSED_DEADLINE_TRANSIENT = 10,
+
+    /**
+     * Failure because a deadline could not be met for a task, and future
+     * deadlines will likely also not be met for the same task even after a
+     * short delay.
+     *
+     * Available since API level 30.
+     */
+    ANEURALNETWORKS_MISSED_DEADLINE_PERSISTENT = 11,
+
+    /**
+     * Failure because of a resource limitation within the driver, but future
+     * calls for the same task may still succeed after a short delay.
+     *
+     * Available since API level 30.
+     */
+    ANEURALNETWORKS_RESOURCE_EXHAUSTED_TRANSIENT = 12,
+
+    /**
+     * Failure because of a resource limitation within the driver, and future
+     * calls for the same task will likely also fail even after a short
+     * delay.
+     *
+     * Available since API level 30.
+     */
+    ANEURALNETWORKS_RESOURCE_EXHAUSTED_PERSISTENT = 13,
+
+    /**
+     * Failure indicating an object is in a dead state.
+     *
+     * Available since API level 30.
+     */
+    ANEURALNETWORKS_DEAD_OBJECT = 14,
 } ResultCode;
 
 /**
@@ -5510,6 +5551,20 @@ enum { ANEURALNETWORKS_MAX_SIZE_OF_IMMEDIATELY_COPIED_VALUES = 128 };
  * Available since API level 29.
  */
 enum { ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN = 32 };
+
+#if __ANDROID_API__ >= __ANDROID_API_R__
+/**
+ * Relative execution priority.
+ *
+ * Available since API level 30.
+ */
+typedef enum {
+    ANEURALNETWORKS_PRIORITY_LOW = 90,
+    ANEURALNETWORKS_PRIORITY_MEDIUM = 100,
+    ANEURALNETWORKS_PRIORITY_HIGH = 110,
+    ANEURALNETWORKS_PRIORITY_DEFAULT = ANEURALNETWORKS_PRIORITY_MEDIUM,
+} PriorityCode;
+#endif  // __ANDROID_API__ >= __ANDROID_API_R__
 
 /**
  * ANeuralNetworksMemory is an opaque type that represents memory.
@@ -5855,8 +5910,8 @@ typedef struct ANeuralNetworksDevice ANeuralNetworksDevice;
  *
  * To use:
  *   - Create a new memory descriptor by calling {@link ANeuralNetworksMemoryDesc_create}.
- *   - Specify all of the intended input and output roles by calling
- *     {@link ANeuralNetworksMemoryDesc_addInputRole} and
+ *   - Specify all of the intended input or output roles by calling
+ *     {@link ANeuralNetworksMemoryDesc_addInputRole} or
  *     {@link ANeuralNetworksMemoryDesc_addOutputRole}.
  *   - Optionally, specify the memory dimensions by calling
  *     {@link ANeuralNetworksMemoryDesc_setDimensions}.
@@ -5868,7 +5923,7 @@ typedef struct ANeuralNetworksDevice ANeuralNetworksDevice;
  * A memory descriptor is completed by calling {@link ANeuralNetworksMemoryDesc_finish}.
  * A memory descriptor is destroyed by calling {@link ANeuralNetworksMemoryDesc_free}.
  *
- * A memory descriptor must not be modified once {@link ANeuralNetworksMemoryDesc_finish}
+ * A memory descriptor cannot be modified once {@link ANeuralNetworksMemoryDesc_finish}
  * has been called on it.
  *
  * It is the application's responsibility to make sure that only
@@ -5893,9 +5948,9 @@ typedef struct ANeuralNetworksMemoryDesc ANeuralNetworksMemoryDesc;
  * {@link ANeuralNetworksMemoryDesc_addOutputRole}, and
  * {@link ANeuralNetworksMemoryDesc_setDimensions}.
  *
- * {@link ANeuralNetworksMemoryDesc_finish} must be called once all properties have been set.
+ * {@link ANeuralNetworksMemoryDesc_finish} should be called once all properties have been set.
  *
- * {@link ANeuralNetworksMemoryDesc_free} must be called once the memory descriptor
+ * {@link ANeuralNetworksMemoryDesc_free} should be called once the memory descriptor
  * is no longer needed.
  *
  * Available since API level 30.
@@ -5953,7 +6008,7 @@ void ANeuralNetworksMemoryDesc_free(ANeuralNetworksMemoryDesc* desc) __INTRODUCE
  * @param compilation The compilation object. It must already have been finished by calling
  *                    {@link ANeuralNetworksCompilation_finish}, and must outlive the memory
  *                    descriptor.
- * @param index The index of the input argument we are referencing from the compilation. It is
+ * @param index The index of the input argument we are referencing. It is
  *              an index into the inputs list passed to
  *              {@link ANeuralNetworksModel_identifyInputsAndOutputs}. It is not
  *              the index associated with {@link ANeuralNetworksModel_addOperand}.
@@ -5999,7 +6054,7 @@ int ANeuralNetworksMemoryDesc_addInputRole(ANeuralNetworksMemoryDesc* desc,
  * @param compilation The compilation object. It must already have been finished by calling
  *                    {@link ANeuralNetworksCompilation_finish}, and must outlive the memory
  *                    descriptor.
- * @param index The index of the output argument we are referencing from the compilation. It is
+ * @param index The index of the output argument we are referencing. It is
  *              an index into the outputs list passed to
  *              {@link ANeuralNetworksModel_identifyInputsAndOutputs}. It is not
  *              the index associated with {@link ANeuralNetworksModel_addOperand}.
@@ -6059,15 +6114,12 @@ int ANeuralNetworksMemoryDesc_finish(ANeuralNetworksMemoryDesc* desc) __INTRODUC
 /**
  * Creates a memory object from a memory descriptor.
  *
- * The memory object is created with an uninitialized buffer. A memory object with an uninitialized
- * buffer may only be used according to the roles specified by {@link
- * ANeuralNetworksMemoryDesc_addOutputRole}, or as the destination memory in {@link
- * ANeuralNetworksMemory_copy}. The buffer of a memory object is initialized after the memory object
- * is used as an output in a successful execution, or used as the destination memory in a successful
- * {@link ANeuralNetworksMemory_copy}. A memory object with an initialized buffer may be used
- * according to all roles specified in {@link ANeuralNetworksMemoryDesc}, or as the source or
- * destination memory in {@link ANeuralNetworksMemory_copy}. The buffer of a memory object will
- * return to the uninitialized state if the memory object is used as an output in a failed
+ * The memory object is created uninitialized. An uninitialized memory object may only be used
+ * according to the roles specified by {@link ANeuralNetworksMemoryDesc_addOutputRole}. A memory
+ * object is initialized after it is used as an output in a successful execution, or used as the
+ * destination memory in a successful {@link ANeuralNetworksMemory_copy}. An initialized memory
+ * object may be used according to all roles specified in {@link ANeuralNetworksMemoryDesc}. A
+ * memory object will return to the uninitialized state if it is used as an output in a failed
  * execution, or used as the destination memory in a failed {@link ANeuralNetworksMemory_copy}.
  *
  * The dimensions of the memory descriptor are deduced from the dimensions of the corresponding
@@ -6077,8 +6129,7 @@ int ANeuralNetworksMemoryDesc_finish(ANeuralNetworksMemoryDesc* desc) __INTRODUC
  * unspecified dimensions or rank. In such a case, the same memory object may be used with different
  * shapes of outputs in different executions. When the memory is used as an input, the input shape
  * must be the same as the output shape from the last execution using this memory object as an
- * output, or the last {@link ANeuralNetworkMemory_copy} using this memory object as the destination
- * memory. Creating a memory object with unspecified dimensions or rank may fail for certain sets of
+ * output. Creating a memory object with unspecified dimensions or rank may fail for certain sets of
  * roles.
  *
  * Using the memory in roles or shapes that are not compatible with the rules specified above will
@@ -6092,7 +6143,7 @@ int ANeuralNetworksMemoryDesc_finish(ANeuralNetworksMemoryDesc* desc) __INTRODUC
  * Calling {@link ANeuralNetworksModel_setOperandValueFromMemory} with the memory created from this
  * function will return an error.
  *
- * {@link ANeuralNetworksMemory_free} must be called once the memory is no longer needed.
+ * {@link ANeuralNetworksMemory_free} should be called once the memory is no longer needed.
  *
  * Attempting to create memory from an unfinished memory descriptor will return an error.
  *
@@ -6268,6 +6319,52 @@ int ANeuralNetworksDevice_getVersion(const ANeuralNetworksDevice* device, const 
 int ANeuralNetworksDevice_getFeatureLevel(const ANeuralNetworksDevice* device,
                                           int64_t* featureLevel) __INTRODUCED_IN(29);
 
+#if __ANDROID_API__ >= __ANDROID_API_R__
+
+/**
+ * Returns whether a device is able to complete or abort finishing a compilation
+ * within a specified duration.
+ *
+ * @param device The representation of the specified device.
+ * @return 'true' if {@link ANeuralNetworksCompilation_setTimeout} is supported,
+ *     'false' otherwise.
+ *
+ * Available since API level 30.
+ */
+bool ANeuralNetworksDevice_supportsCompilationTimeout(const ANeuralNetworksDevice* device)
+        __INTRODUCED_IN(30);
+
+/**
+ * Returns whether a device is able to complete or abort an execution within a
+ * specified duration.
+ *
+ * @param device The representation of the specified device.
+ * @return 'true' if {@link ANeuralNetworksExecution_setTimeout} is supported,
+ *     'false' otherwise.
+ *
+ * Available since API level 30.
+ */
+bool ANeuralNetworksDevice_supportsExecutionTimeout(const ANeuralNetworksDevice* device)
+        __INTRODUCED_IN(30);
+
+/**
+ * Wait until the device is in a live state.
+ *
+ * A device may encounter internal errors and temporarily enter a dead state. A
+ * call that uses a device in such a state will return with the error
+ * {@link ANEURALNETWORKS_DEAD_OBJECT}. ANeuralNetworksDevice_wait will block until
+ * the device is in a live state.
+ *
+ * @param device The representation of the specified device.
+ *
+ * @return ANEURALNETWORKS_NO_ERROR if successful.
+ *
+ * Available since API level 30.
+ */
+int ANeuralNetworksDevice_wait(const ANeuralNetworksDevice* device) __INTRODUCED_IN(30);
+
+#endif  // __ANDROID_API__ >= __ANDROID_API_R__
+
 /**
  * Get the supported operations for a specified set of devices. If multiple devices
  * are selected, the supported operation list is a union of supported operations of all
@@ -6357,6 +6454,11 @@ int ANeuralNetworksCompilation_setCaching(ANeuralNetworksCompilation* compilatio
  * <p>Schedules synchronous evaluation of the execution. Returns once the
  * execution has completed and the outputs are ready to be consumed.
  * </p>
+ *
+ * If {@link ANeuralNetworksExecution_setTimeout} was called on this execution,
+ * and the execution is not able to complete before the timeout duration is
+ * exceeded, then execution will be aborted and
+ * {@link ANEURALNETWORKS_MISSED_DEADLINE_*} will be returned.
  *
  * See {@link ANeuralNetworksExecution} for information on multithreaded usage.
  *
@@ -6458,6 +6560,11 @@ void ANeuralNetworksBurst_free(ANeuralNetworksBurst* burst) __INTRODUCED_IN(29);
  * <p>Schedules synchronous evaluation of the execution. Returns once the
  * execution has completed and the outputs are ready to be consumed.</p>
  *
+ * If {@link ANeuralNetworksExecution_setTimeout} was called on the execution,
+ * and the execution is not able to complete before the timeout duration is
+ * exceeded, then execution will be aborted and
+ * {@link ANEURALNETWORKS_MISSED_DEADLINE_*} will be returned.
+ *
  * <p>There must be at most one {@link ANeuralNetworksExecution} processing at
  * any given time for any given burst object. Any
  * {@link ANeuralNetworksExecution} launched before the previous has finished
@@ -6519,7 +6626,8 @@ int ANeuralNetworksMemory_createFromAHardwareBuffer(const AHardwareBuffer* ahwb,
  *
  * By default, duration is not measured.
  *
- * The {@link ANeuralNetworksExecution} must have been created with
+ * The {@link ANeuralNetworksExecution} must have been created from an
+ * {@link ANeuralNetworksCompilation} which in turn was created from
  * {@link ANeuralNetworksCompilation_createForDevices} with numDevices = 1.
  *
  * See {@link ANeuralNetworksExecution} for information on multithreaded usage.
@@ -7028,12 +7136,18 @@ int ANeuralNetworksCompilation_setPreference(ANeuralNetworksCompilation* compila
 
 /**
  * Indicate that we have finished modifying a compilation. Required before
- * calling {@link ANeuralNetworksExecution_create}.
+ * calling {@link ANeuralNetworksBurst_create} or
+ * {@link ANeuralNetworksExecution_create}.
  *
  * An application must ensure that no other thread uses the compilation at the
  * same time.
  *
  * This function must only be called once for a given compilation.
+ *
+ * If {@link ANeuralNetworksCompilation_setTimeout} was called on this
+ * compilation, and the compilation is not able to be finished before the
+ * timeout duration is exceeded, then compilation will be aborted and
+ * {@link ANEURALNETWORKS_MISSED_DEADLINE_*} will be returned.
  *
  * See {@link ANeuralNetworksCompilation} for information on multithreaded usage.
  *
@@ -7044,6 +7158,66 @@ int ANeuralNetworksCompilation_setPreference(ANeuralNetworksCompilation* compila
  * @return ANEURALNETWORKS_NO_ERROR if successful.
  */
 int ANeuralNetworksCompilation_finish(ANeuralNetworksCompilation* compilation) __INTRODUCED_IN(27);
+
+#if __ANDROID_API__ >= __ANDROID_API_R__
+
+/**
+ * Set the execution priority.
+ *
+ * Execution priorities are relative to other executions created by the same
+ * application (specifically same uid) for the same device. Specifically,
+ * priorities of executions from one application will not affect executions from
+ * another application. Similarly, priorities of executions on one device will
+ * not affect executions on another device.
+ *
+ * Higher priority executions may use more compute resources than lower priority
+ * executions, and may preempt or starve lower priority executions.
+ *
+ * See {@link ANeuralNetworksCompilation} for information on multithreaded usage.
+ *
+ * Available since API level 30.
+ *
+ * @param compilation The compilation to be modified.
+ * @param priority The relative priority of the execution compared to other
+ *     executions created by the application. Must be one of
+ *     ANEURALNETWORKS_PRIORITY_*.
+ *
+ * @return ANEURALNETWORKS_NO_ERROR if successful.
+ */
+int ANeuralNetworksCompilation_setPriority(ANeuralNetworksCompilation* compilation, int priority)
+        __INTRODUCED_IN(30);
+
+/**
+ * Set the maximum duration for compiling the model.
+ *
+ * If the device is not able to complete the compilation within the specified
+ * duration, the compilation must be aborted. The timeout duration begins at the
+ * call to {@link ANeuralNetworksCompilation_finish}.
+ *
+ * By default (i.e., unless ANeuralNetworksCompilation_setTimeout is called),
+ * the timeout duration for compiling the model is considered infinite.
+ *
+ * The {@link ANeuralNetworksCompilation} must have been created with
+ * {@link ANeuralNetworksCompilation_createForDevices} with numDevices = 1, and
+ * the device must support compilation timeout as indicated by
+ * {@link ANeuralNetworksDevice_supportsCompilationTimeout}, otherwise this
+ * function will fail with ANEURALNETWORKS_BAD_DATA.
+ *
+ * See {@link ANeuralNetworksCompilation} for information on multithreaded usage.
+ *
+ * @param compilation The compilation to be modified.
+ * @param duration The maximum amount of time in nanoseconds that can be spent
+ *     finishing a compilation. If this duration is exceeded, the compilation
+ *     must be aborted.
+ *
+ * @return ANEURALNETWORKS_NO_ERROR if successful.
+ *
+ * Available since API level 30.
+ */
+int ANeuralNetworksCompilation_setTimeout(ANeuralNetworksCompilation* compilation,
+                                          uint64_t duration) __INTRODUCED_IN(30);
+
+#endif  // __ANDROID_API__ >= __ANDROID_API_R__
 
 /**
  * Create a {@link ANeuralNetworksExecution} to apply the given compilation.
@@ -7293,6 +7467,16 @@ int ANeuralNetworksExecution_setOutputFromMemory(ANeuralNetworksExecution* execu
  * ANeuralNetworksEvent_wait must be called to recuperate the resources used
  * by the execution.
  *
+ * If {@link ANeuralNetworksExecution_setTimeout} was called on this execution,
+ * and the execution is not able to complete before the timeout duration is
+ * exceeded, then execution will be aborted and
+ * {@link ANEURALNETWORKS_MISSED_DEADLINE_*} will be returned through
+ * {@link ANeuralNetworksEvent_wait} on the event object.
+ *
+ * If the device can detect before the execution has started that the execution
+ * will not complete within the timeout duration, the device may choose to skip
+ * the execution and instead return {@link ANEURALNETWORKS_MISSED_DEADLINE_*}.
+ *
  * See {@link ANeuralNetworksExecution} for information on multithreaded usage.
  *
  * See {@link ANeuralNetworksExecution_compute} for synchronous execution.
@@ -7309,11 +7493,54 @@ int ANeuralNetworksExecution_setOutputFromMemory(ANeuralNetworksExecution* execu
 int ANeuralNetworksExecution_startCompute(ANeuralNetworksExecution* execution,
                                           ANeuralNetworksEvent** event) __INTRODUCED_IN(27);
 
+#if __ANDROID_API__ >= __ANDROID_API_R__
+
+/**
+ * Set the maximum duration of the specified execution.
+ *
+ * If the device is not able to complete the execution within the specified
+ * duration, the execution must be aborted. The timeout duration begins at a
+ * call to one of:
+ * - {@link ANeuralNetworksExecution_startCompute}
+ * - {@link ANeuralNetworksExecution_compute}
+ * - {@link ANeuralNetworksExecution_burstCompute}
+ *
+ * By default (i.e., unless ANeuralNetworksExecution_setTimeout is called),
+ * the timeout duration for execution is considered infinite.
+ *
+ * The {@link ANeuralNetworksExecution} must have been created from an
+ * {@link ANeuralNetworksCompilation} which in turn was created from
+ * {@link ANeuralNetworksCompilation_createForDevices} with numDevices = 1, and
+ * the device must support execution timeout as indicated by
+ * {@link ANeuralNetworksDevice_supportsExecutionTimeout}, otherwise this
+ * function will fail with ANEURALNETWORKS_BAD_DATA.
+ *
+ * See {@link ANeuralNetworksExecution} for information on multithreaded usage.
+ *
+ * @param execution The execution to be modified.
+ * @param duration The maximum amount of time in nanoseconds that can be spent
+ *     executing a model. If this time duration is exceeded, the execution
+ *     must be aborted.
+ *
+ * @return ANEURALNETWORKS_NO_ERROR if successful.
+ *
+ * Available since API level 30.
+ */
+int ANeuralNetworksExecution_setTimeout(ANeuralNetworksExecution* execution, uint64_t duration)
+        __INTRODUCED_IN(30);
+
+#endif  // __ANDROID_API__ >= __ANDROID_API_R__
+
 /**
  * Waits until the execution completes.
  *
  * More than one thread can wait on an event. When the execution completes,
  * all threads will be released.
+ *
+ * If {@link ANeuralNetworksExecution_setTimeout} was called on the execution
+ * corresponding to this event, and the execution is not able to complete
+ * before the duration is exceeded, the execution will be aborted, and
+ * {@link ANEURALNETWORKS_MISSED_DEADLINE_*} will be returned here.
  *
  * See {@link ANeuralNetworksExecution} for information on multithreaded usage.
  *
