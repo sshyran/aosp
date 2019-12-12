@@ -196,6 +196,13 @@ class OperationTestBase {
                 operandTypesToSkip.insert(ANEURALNETWORKS_TENSOR_QUANT8_SYMM);
                 operandTypesToSkip.insert(ANEURALNETWORKS_TENSOR_QUANT8_SYMM_PER_CHANNEL);
             }
+            // AXIS_ALIGNED_BBOX_TRANSFORM's second input cab be either QUANT8_ASYMM or
+            // QUANT8_ASYMM_SIGNED
+            if (mOpCode == ANEURALNETWORKS_AXIS_ALIGNED_BBOX_TRANSFORM && i == 1) {
+                operandTypesToSkip.insert(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM);
+                operandTypesToSkip.insert(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED);
+            }
+
             for (int32_t newOperandCode : kAvailableOperandCodes) {
                 if (newOperandCode == originalOperandCode ||
                     operandTypesToSkip.find(newOperandCode) != operandTypesToSkip.end()) {
@@ -2858,6 +2865,11 @@ TEST(OperationValidationTest, AXIS_ALIGNED_BBOX_TRANSFORM_quant) {
                                    ANEURALNETWORKS_TENSOR_QUANT8_ASYMM);
 }
 
+TEST(OperationValidationTest, AXIS_ALIGNED_BBOX_TRANSFORM_quant_signed) {
+    axisAlignedBBoxTransformOpTest(ANEURALNETWORKS_TENSOR_QUANT16_ASYMM,
+                                   ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED);
+}
+
 void sliceTest(int32_t operandCode) {
     uint32_t inputDim[] = {3, 3, 3};
     uint32_t startDim[] = {3};
@@ -3086,6 +3098,11 @@ TEST(OperationValidationTest, BOX_WITH_NMS_LIMIT_float32) {
 TEST(OperationValidationTest, BOX_WITH_NMS_LIMIT_quant) {
     boxWithNmsLimitOpTest(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM, ANEURALNETWORKS_TENSOR_QUANT16_ASYMM,
                           ANEURALNETWORKS_FLOAT32);
+}
+
+TEST(OperationValidationTest, BOX_WITH_NMS_LIMIT_quant_signed) {
+    boxWithNmsLimitOpTest(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED,
+                          ANEURALNETWORKS_TENSOR_QUANT16_ASYMM, ANEURALNETWORKS_FLOAT32);
 }
 
 void castOpTest(int32_t inputOperandCode, int32_t outputOperandCode) {
@@ -3458,6 +3475,13 @@ TEST(OperationValidationTest, GENERATE_PROPOSALS_float32) {
 TEST(OperationValidationTest, GENERATE_PROPOSALS_quant) {
     generateProposalsOpTest(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM,
                             ANEURALNETWORKS_TENSOR_QUANT8_ASYMM,
+                            ANEURALNETWORKS_TENSOR_QUANT16_SYMM,
+                            ANEURALNETWORKS_TENSOR_QUANT16_ASYMM, ANEURALNETWORKS_FLOAT32);
+}
+
+TEST(OperationValidationTest, GENERATE_PROPOSALS_quant_signed) {
+    generateProposalsOpTest(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED,
+                            ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED,
                             ANEURALNETWORKS_TENSOR_QUANT16_SYMM,
                             ANEURALNETWORKS_TENSOR_QUANT16_ASYMM, ANEURALNETWORKS_FLOAT32);
 }
