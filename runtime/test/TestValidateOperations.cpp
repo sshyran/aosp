@@ -160,7 +160,9 @@ class OperationTestBase {
             std::set<int32_t> operandTypesToSkip;
             // Transposed conv can have either fully quantized or per-channel
             // quantized filter for the quantized version of the op.
-            if (mOpCode == ANEURALNETWORKS_TRANSPOSE_CONV_2D && i == 1) {
+            if ((mOpCode == ANEURALNETWORKS_TRANSPOSE_CONV_2D ||
+                 mOpCode == ANEURALNETWORKS_DEPTHWISE_CONV_2D) &&
+                i == 1) {
                 if (originalOperandCode == ANEURALNETWORKS_TENSOR_QUANT8_ASYMM ||
                     originalOperandCode == ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED ||
                     originalOperandCode == ANEURALNETWORKS_TENSOR_QUANT8_SYMM_PER_CHANNEL) {
@@ -1472,7 +1474,8 @@ void depthwiseConvOpTest(int32_t inputOperandCode, int32_t filterOperandCode) {
                                        .dimensions = biasDimensions,
                                        .scale = 0.0f,
                                        .zeroPoint = 0};
-    if (filterOperandCode == ANEURALNETWORKS_TENSOR_QUANT8_ASYMM) {
+    if (filterOperandCode == ANEURALNETWORKS_TENSOR_QUANT8_ASYMM ||
+        filterOperandCode == ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED) {
         bias.type = ANEURALNETWORKS_TENSOR_INT32;
         bias.scale = 0.25f;
     }
@@ -1550,6 +1553,10 @@ void depthwiseConvOpTest(int32_t inputOperandCode, int32_t filterOperandCode) {
             {input, filter, bias, padLeft, padRight, padTop, padBottom, strideWidth, strideHeight,
              multiplier, activation, layout, dilationWidthFactor, dilationHeightFactor},
             {output});
+    if (filterOperandCode == ANEURALNETWORKS_TENSOR_QUANT8_SYMM_PER_CHANNEL) {
+        explicitDilationDepthwiseConvTest.setInputSymmPerChannelQuantParams(
+                1, filterChannelQuantParams);
+    }
     explicitDilationDepthwiseConvTest.testOpsValidations();
 
     OperationTestBase implicitDilationDepthwiseConvTest(
@@ -1557,6 +1564,10 @@ void depthwiseConvOpTest(int32_t inputOperandCode, int32_t filterOperandCode) {
             {input, filter, bias, padImplicit, strideWidth, strideHeight, multiplier, activation,
              layout, dilationWidthFactor, dilationHeightFactor},
             {output});
+    if (filterOperandCode == ANEURALNETWORKS_TENSOR_QUANT8_SYMM_PER_CHANNEL) {
+        implicitDilationDepthwiseConvTest.setInputSymmPerChannelQuantParams(
+                1, filterChannelQuantParams);
+    }
     implicitDilationDepthwiseConvTest.testOpsValidations();
 }
 
@@ -1574,6 +1585,16 @@ TEST(OperationValidationTest, DEPTHWISE_CONV_2D_quant8) {
 
 TEST(OperationValidationTest, DEPTHWISE_CONV_2D_quant8_per_channel) {
     depthwiseConvOpTest(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM,
+                        ANEURALNETWORKS_TENSOR_QUANT8_SYMM_PER_CHANNEL);
+}
+
+TEST(OperationValidationTest, DEPTHWISE_CONV_2D_quant8_signed) {
+    depthwiseConvOpTest(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED,
+                        ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED);
+}
+
+TEST(OperationValidationTest, DEPTHWISE_CONV_2D_quant8_signed_per_channel) {
+    depthwiseConvOpTest(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED,
                         ANEURALNETWORKS_TENSOR_QUANT8_SYMM_PER_CHANNEL);
 }
 

@@ -664,6 +664,20 @@
      * * * each value scaling is separate and equal to input.scale * filter.scales[channel]).
      *
 %/kind
+%kind ndk hal_1.3+
+     * Available since %{APILevel30}:
+     * * Quantized signed (since %{APILevel30}):
+     * * * {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM_SIGNED} for input, filter, and output.
+     * * * {@link %{OperandTypeLinkPfx}TENSOR_INT32} for bias (with scale set to
+     * * * input.scale * filter.scale).
+     *
+     * * Quantized signed with filter symmetric per channel quantization (since %{APILevel30}):
+     * * * {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM_SIGNED} for input, and output.
+     * * * {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_SYMM_PER_CHANNEL} for filter.
+     * * * {@link %{OperandTypeLinkPfx}TENSOR_INT32} for bias (scale set to 0.0,
+     * * * each value scaling is separate and equal to input.scale * filter.scales[channel]).
+     *
+%/kind
 %insert-lines NHWC_NCHW
      *
      * Both explicit padding and implicit padding are supported.
@@ -680,8 +694,13 @@
 %/kind
      * * 2: A 1-D tensor, of shape [depth_out], specifying the bias. For input
      *      tensor of type {@link %{OperandTypeLinkPfx}TENSOR_FLOAT32}
-     *      %{or_1.2 TENSOR_FLOAT16}the bias must be of the same
-     *      type. For filter tensor of {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM},
+     *      %{or_1.2 TENSOR_FLOAT16}the bias must be of the same type.
+%kind ndk hal_1.3+
+     *      For filter tensor of {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM}
+     *      and {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM_SIGNED},
+%else
+     *      For filter tensor of {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM},
+%/kind
      *      the bias should be of {@link %{OperandTypeLinkPfx}TENSOR_INT32}, with zeroPoint
      *      of 0 and bias_scale == input_scale * filter_scale.
 %kind ndk hal_1.2+
@@ -730,8 +749,13 @@
      *      specifying the filter.
      * * 2: A 1-D tensor, of shape [depth_out], specifying the bias. For input
      *      tensor of type {@link %{OperandTypeLinkPfx}TENSOR_FLOAT32}
-     *      %{or_1.2 TENSOR_FLOAT16}the bias must be of the same
-     *      type. For filter tensor of {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM},
+     *      %{or_1.2 TENSOR_FLOAT16}the bias must be of the same type.
+%kind ndk hal_1.3+
+     *      For filter tensor of {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM}
+     *      and {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM_SIGNED},
+%else
+     *      For filter tensor of {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM},
+%/kind
      *      the bias should be of {@link %{OperandTypeLinkPfx}TENSOR_INT32}, with zeroPoint
      *      of 0 and bias_scale == input_scale * filter_scale.
 %kind ndk hal_1.2+

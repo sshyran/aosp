@@ -35,6 +35,7 @@ const OperationRegistration* register_BOX_WITH_NMS_LIMIT();
 const OperationRegistration* register_CHANNEL_SHUFFLE();
 const OperationRegistration* register_CONCATENATION();
 const OperationRegistration* register_CONV_2D();
+const OperationRegistration* register_DEPTHWISE_CONV_2D();
 const OperationRegistration* register_DEQUANTIZE();
 const OperationRegistration* register_DETECTION_POSTPROCESSING();
 const OperationRegistration* register_DIV();
@@ -101,6 +102,7 @@ BuiltinOperationResolver::BuiltinOperationResolver() {
     registerOperation(register_CHANNEL_SHUFFLE());
     registerOperation(register_CONCATENATION());
     registerOperation(register_CONV_2D());
+    registerOperation(register_DEPTHWISE_CONV_2D());
     registerOperation(register_DEQUANTIZE());
     registerOperation(register_DETECTION_POSTPROCESSING());
     registerOperation(register_DIV());
