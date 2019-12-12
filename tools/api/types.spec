@@ -971,6 +971,9 @@
 %/kind
      * * {@link %{OperandTypeLinkPfx}TENSOR_FLOAT32}
      * * {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM}
+%kind ndk hal_1.3+
+     * * {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM_SIGNED} (since %{APILevel30})
+%/kind
      *
      * Supported tensor rank: up to 4.
      *
@@ -990,10 +993,15 @@
      *      of output nodes.
      * * 2: A 1-D tensor, of shape [num_units], specifying the bias. For input
      *      tensor of {@link %{OperandTypeLinkPfx}TENSOR_FLOAT32}, the bias should
-     *      also be of {@link %{OperandTypeLinkPfx}TENSOR_FLOAT32}. For input tensor
-     *      of {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM}, the bias should be
-     *      of {@link %{OperandTypeLinkPfx}TENSOR_INT32}, with zeroPoint of 0 and
-     *      bias_scale == input_scale * filter_scale.
+     *      also be of {@link %{OperandTypeLinkPfx}TENSOR_FLOAT32}.
+%kind ndk hal_1.3+
+     *      For input tensor of {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM}
+     *      and {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM_SIGNED},
+%else
+     *      For input tensor of {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM},
+%/kind
+     *      the bias should be of {@link %{OperandTypeLinkPfx}TENSOR_INT32},
+     *      with zeroPoint of 0 and bias_scale == input_scale * filter_scale.
      * * 3: An {@link %{OperandTypeLinkPfx}INT32} scalar, and has to be one of the
      *      {@link %{FusedActivationFunc}} values. Specifies the activation to
      *      invoke on the result.
@@ -2072,6 +2080,9 @@
 %/kind
      * * {@link %{OperandTypeLinkPfx}TENSOR_FLOAT32}
      * * {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM}
+%kind ndk hal_1.3+
+     * * {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM_SIGNED} (since %{APILevel30})
+%/kind
      *
 %kind hal_1.0 hal_1.1
      * Supported tensor rank: 2 or 4.
@@ -2086,10 +2097,18 @@
 %kind ndk hal_1.2+
      *      Since %{APILevel29}, this tensor may be zero-sized.
 %/kind
+%kind ndk hal_1.3+
+     * * 1: A scalar, specifying the positive scaling factor for the exponent,
+     *      beta. If input0 is of {@link %{OperandTypeLinkPfx}TENSOR_FLOAT32},
+     *      {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM} or
+     *      {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM_SIGNED}, the scalar
+     *      must be of {@link %{OperandTypeLinkPfx}FLOAT32}.
+%else
      * * 1: A scalar, specifying the positive scaling factor for the exponent,
      *      beta. If input0 is of {@link %{OperandTypeLinkPfx}TENSOR_FLOAT32} or
      *      {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM}, the scalar must be of
      *      {@link %{OperandTypeLinkPfx}FLOAT32}.
+%/kind
 %kind ndk hal_1.2+
      *      If input0 is of {@link %{OperandTypeLinkPfx}TENSOR_FLOAT16}, then the
      *      scalar must be of {@link %{OperandTypeLinkPfx}FLOAT16}.
@@ -2106,6 +2125,10 @@
      * * 0: The output tensor of same shape as input0.
      *      For {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM},
      *      the scale must be 1.f / 256 and the zeroPoint must be 0.
+%kind ndk hal_1.3+
+     *      For {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM_SIGNED},
+     *      the scale must be 1.f / 256 and the zeroPoint must be -128.
+%/kind
 %insert-lines AVAIL27
      */
     %{DeclareOperation SOFTMAX 25},
