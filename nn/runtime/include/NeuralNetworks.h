@@ -2533,7 +2533,8 @@ typedef enum {
      *      and height, dw and dh is the log-scale relative correction factor
      *      for the width and height. For input0 of type
      *      {@link ANEURALNETWORKS_TENSOR_QUANT16_ASYMM}, this tensor should be
-     *      of {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}. Zero num_rois is
+     *      of {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} or
+     *      {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED}. Zero num_rois is
      *      supported for this tensor.
      * * 2: An 1-D {@link ANEURALNETWORKS_TENSOR_INT32} tensor, of shape
      *      [num_rois], specifying the batch index of each box. Boxes with
@@ -2902,6 +2903,7 @@ typedef enum {
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT16}
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
      * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
+     * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED} (since API level 30)
      *
      * Inputs:
      * * 0: A 2-D Tensor of shape [num_rois, num_classes], specifying the score
@@ -2913,7 +2915,11 @@ typedef enum {
      *      order of the boxes corresponds with input0. For input0 of type
      *      {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}, this tensor should be of
      *      {@link ANEURALNETWORKS_TENSOR_QUANT16_ASYMM}, with zeroPoint of 0 and
-     *      scale of 0.125. Zero num_rois is supported for this tensor.
+     *      scale of 0.125.
+     *      For input0 of type {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED},
+     *      this tensor should be of {@link ANEURALNETWORKS_TENSOR_QUANT16_ASYMM},
+     *      with zeroPoint of -128 and scale of 0.125.
+     *      Zero num_rois is supported for this tensor.
      * * 2: A 1-D {@link ANEURALNETWORKS_TENSOR_INT32} tensor, of shape
      *      [num_rois], specifying the batch index of each box. Boxes with
      *      the same batch index are grouped together.
@@ -2940,6 +2946,8 @@ typedef enum {
      *      [num_output_rois], specifying the score of each output box. The boxes
      *      are grouped by batches, but the sequential order in each batch is not
      *      guaranteed. For type of {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM},
+     *      guaranteed. For type of {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
+     *      or {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED},
      *      the scale and zero point must be the same as input0.
      * * 1: A 2-D Tensor of the same {@link OperandCode} as input1, with shape
      *      [num_output_rois, 4], specifying the coordinates of each
@@ -3252,6 +3260,7 @@ typedef enum {
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT16}
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
      * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
+     * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED} (since API level 30)
      *
      * Inputs:
      * * 0: A 4-D Tensor specifying the score of each anchor at each
@@ -3269,11 +3278,13 @@ typedef enum {
      *      dimensions is the channel dimension.
      * * 2: A 2-D Tensor of shape [num_anchors, 4], specifying the shape of each
      *      predefined anchor, with format [x1, y1, x2, y2]. For input0 of type
-     *      {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}, this tensor should be of
+     *      {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} or
+     *      {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED}, this tensor should be of
      *      {@link ANEURALNETWORKS_TENSOR_QUANT16_SYMM}, with scale of 0.125.
      * * 3: A 2-D Tensor of shape [batches, 2], specifying the size of
      *      each image in the batch, with format [image_height, image_width].
-     *      For input0 of type {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}, this
+     *      For input0 of type {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} or
+     *      {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED}, this
      *      tensor should be of {@link ANEURALNETWORKS_TENSOR_QUANT16_SYMM}, with
      *      scale of 0.125.
      * * 4: An {@link ANEURALNETWORKS_FLOAT32} scalar, specifying the ratio
@@ -3300,7 +3311,8 @@ typedef enum {
      *      [num_output_rois], specifying the score of each output box.
      *      The boxes are grouped by batches, but the sequential order in
      *      each batch is not guaranteed. For type of
-     *      {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}, the scale and zero
+     *      {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} or
+     *      {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED}, the scale and zero
      *      point must be the same as input0.
      * * 1: A tensor of the same {@link OperandCode} as input3, of shape
      *      [num_output_rois, 4], specifying the coordinates of each output
