@@ -764,6 +764,7 @@ typedef enum {
      * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
      * * {@link ANEURALNETWORKS_TENSOR_QUANT8_SYMM} (since API level 29)
      * * {@link ANEURALNETWORKS_TENSOR_QUANT8_SYMM_PER_CHANNEL} (since API level 29)
+     * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED} (since API level 30)
      *
      * Supported output tensor {@link OperandCode}:
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT16} (since API level 29)

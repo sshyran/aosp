@@ -845,6 +845,9 @@
      * * {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_SYMM} (since %{APILevel29})
      * * {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_SYMM_PER_CHANNEL} (since %{APILevel29})
 %/kind
+%kind ndk hal_1.3+
+     * * {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM_SIGNED} (since %{APILevel30})
+%/kind
      *
      * Supported output tensor {@link %{OperandType}}:
 %kind ndk hal_1.2+

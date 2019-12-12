@@ -89,6 +89,7 @@ bool validate(const IOperationValidationContext* context) {
     }
 
     NN_RET_CHECK(inputType == OperandType::TENSOR_QUANT8_ASYMM ||
+                 inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED ||
                  inputType == OperandType::TENSOR_QUANT8_SYMM ||
                  inputType == OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL)
             << "Unsupported input operand type for DEQUANTIZE op: " << toString(inputType);
@@ -122,6 +123,14 @@ bool execute(IOperationExecutionContext* context) {
             return compute(inputBuffer, inputShape, context->getOutputBuffer<float>(kOutputTensor));
         }
     } else if (inputType == OperandType::TENSOR_QUANT8_SYMM) {
+        const int8_t* inputBuffer = context->getInputBuffer<int8_t>(kInputTensor);
+        if (outputType == OperandType::TENSOR_FLOAT16) {
+            return compute(inputBuffer, inputShape,
+                           context->getOutputBuffer<_Float16>(kOutputTensor));
+        } else if (outputType == OperandType::TENSOR_FLOAT32) {
+            return compute(inputBuffer, inputShape, context->getOutputBuffer<float>(kOutputTensor));
+        }
+    } else if (inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
         const int8_t* inputBuffer = context->getInputBuffer<int8_t>(kInputTensor);
         if (outputType == OperandType::TENSOR_FLOAT16) {
             return compute(inputBuffer, inputShape,

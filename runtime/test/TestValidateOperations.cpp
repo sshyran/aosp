@@ -190,6 +190,7 @@ class OperationTestBase {
             // output types.
             if (mOpCode == ANEURALNETWORKS_DEQUANTIZE && i == 0) {
                 operandTypesToSkip.insert(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM);
+                operandTypesToSkip.insert(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED);
                 operandTypesToSkip.insert(ANEURALNETWORKS_TENSOR_QUANT8_SYMM);
                 operandTypesToSkip.insert(ANEURALNETWORKS_TENSOR_QUANT8_SYMM_PER_CHANNEL);
             }
@@ -397,6 +398,8 @@ TEST(OperationValidationTest, DEQUANTIZE) {
                      ANEURALNETWORKS_TENSOR_FLOAT16);
     dequantizeOpTest(ANEURALNETWORKS_TENSOR_QUANT8_SYMM_PER_CHANNEL,
                      ANEURALNETWORKS_TENSOR_FLOAT32);
+    dequantizeOpTest(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED, ANEURALNETWORKS_TENSOR_FLOAT16);
+    dequantizeOpTest(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED, ANEURALNETWORKS_TENSOR_FLOAT32);
 }
 
 void expandDimsTest(int32_t inputOperandType) {
