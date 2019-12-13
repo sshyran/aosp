@@ -93,6 +93,8 @@ using V1_3::OperandTypeRange;
 using V1_3::Operation;
 using V1_3::OperationType;
 using V1_3::Request;
+using ExtensionNameAndPrefix = V1_2::Model::ExtensionNameAndPrefix;
+using ExtensionTypeEncoding = V1_2::Model::ExtensionTypeEncoding;
 
 using CacheToken =
         hardware::hidl_array<uint8_t, static_cast<uint32_t>(Constant::BYTE_SIZE_OF_CACHE_TOKEN)>;
