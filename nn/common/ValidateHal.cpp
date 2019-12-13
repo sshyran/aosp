@@ -554,7 +554,27 @@ bool validateModel(const T_Model& model) {
 template bool validateModel<V1_0::Model>(const V1_0::Model& model);
 template bool validateModel<V1_1::Model>(const V1_1::Model& model);
 template bool validateModel<V1_2::Model>(const V1_2::Model& model);
-template bool validateModel<V1_3::Model>(const V1_3::Model& model);
+
+template <>
+bool validateModel(const V1_3::Model& model) {
+    NNTRACE_FULL(NNTRACE_LAYER_UTILITY, NNTRACE_PHASE_UNSPECIFIED, "validateModel");
+    if (model.main.operations.size() == 0 || model.main.operands.size() == 0) {
+        LOG(ERROR) << "Invalid empty model.";
+        return false;
+    }
+    auto validateSubgraph = [&model](const Subgraph& subgraph) -> bool {
+        return (validateOperands(subgraph.operands, model.operandValues, model.pools,
+                                 /*allowUnspecifiedRank=*/true) &&
+                validateOperations(subgraph.operations, subgraph.operands) &&
+                validateModelInputOutputs(subgraph.inputIndexes, subgraph.operands,
+                                          OperandLifeTime::SUBGRAPH_INPUT) &&
+                validateModelInputOutputs(subgraph.outputIndexes, subgraph.operands,
+                                          OperandLifeTime::SUBGRAPH_OUTPUT));
+    };
+    return (validateSubgraph(model.main) &&
+            std::all_of(model.referenced.begin(), model.referenced.end(), validateSubgraph) &&
+            validatePools(model.pools, HalVersion::V1_3));
+}
 
 // Validates the arguments of a request. type is either "input" or "output" and is used
 // for printing error messages. The operandIndexes is the appropriate array of input
@@ -653,8 +673,17 @@ template bool validateRequest<V1_0::Request, V1_1::Model>(const V1_0::Request& r
                                                           const V1_1::Model& model);
 template bool validateRequest<V1_0::Request, V1_2::Model>(const V1_0::Request& request,
                                                           const V1_2::Model& model);
-template bool validateRequest<V1_3::Request, V1_3::Model>(const V1_3::Request& request,
-                                                          const V1_3::Model& model);
+
+template <>
+bool validateRequest(const V1_3::Request& request, const V1_3::Model& model) {
+    return (validateRequestArguments(request.inputs, model.main.inputIndexes, model.main.operands,
+                                     request.pools,
+                                     /*allowUnspecified=*/false, "input") &&
+            validateRequestArguments(request.outputs, model.main.outputIndexes, model.main.operands,
+                                     request.pools,
+                                     /*allowUnspecified=*/true, "output") &&
+            validatePools(request.pools, HalVersion::V1_3));
+}
 
 bool validateExecutionPreference(ExecutionPreference preference) {
     return preference == ExecutionPreference::LOW_POWER ||
