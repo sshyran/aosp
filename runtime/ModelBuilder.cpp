@@ -368,8 +368,33 @@ int ModelBuilder::addOperation(ANeuralNetworksOperationType type, uint32_t input
             return ANEURALNETWORKS_BAD_DATA;
         }
     }
+
+    auto isValidSubgraphReference = [this](const Operand& modelOperand) -> bool {
+        NN_RET_CHECK(modelOperand.type == OperandType::SUBGRAPH)
+                << "Unexpected operand type: " << toString(modelOperand.type);
+        NN_RET_CHECK_LT(modelOperand.location.offset, referencedModelCount())
+                << "Invalid subgraph model reference";
+        return true;
+    };
+    auto getInputCount = [this](const Operand& modelOperand) {
+        return getReferencedModel(modelOperand)->inputCount();
+    };
+    auto getOutputCount = [this](const Operand& modelOperand) {
+        return getReferencedModel(modelOperand)->outputCount();
+    };
+    auto getInputOperand = [this](const Operand& modelOperand, uint32_t index) {
+        return getReferencedModel(modelOperand)->getInputOperand(index);
+    };
+    auto getOutputOperand = [this](const Operand& modelOperand, uint32_t index) {
+        return getReferencedModel(modelOperand)->getOutputOperand(index);
+    };
     NN_RETURN_IF_ERROR(validateOperation(type, inputCount, inputs, outputCount, outputs, mOperands,
-                                         HalVersion::LATEST));
+                                         HalVersion::LATEST,
+                                         {.isValidSubgraphReference = isValidSubgraphReference,
+                                          .getSubgraphInputCount = getInputCount,
+                                          .getSubgraphOutputCount = getOutputCount,
+                                          .getSubgraphInputOperand = getInputOperand,
+                                          .getSubgraphOutputOperand = getOutputOperand}));
 
     uint32_t operationIndex = operationCount();
     if (operationIndex >= MAX_NUMBER_OF_OPERATIONS) {
