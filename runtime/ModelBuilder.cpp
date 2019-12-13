@@ -546,8 +546,8 @@ Model ModelBuilder::makeHidlModel() const {
     return model;
 }
 
-std::vector<Model::ExtensionNameAndPrefix> ModelBuilder::getExtensionNameToPrefixMap() const {
-    std::vector<Model::ExtensionNameAndPrefix> extensionNameToPrefix;
+std::vector<ExtensionNameAndPrefix> ModelBuilder::getExtensionNameToPrefixMap() const {
+    std::vector<ExtensionNameAndPrefix> extensionNameToPrefix;
     std::set<uint16_t> prefixSet;
 
     auto addExtensionWithPrefix = [&extensionNameToPrefix, &prefixSet](uint16_t prefix) {
@@ -562,8 +562,7 @@ std::vector<Model::ExtensionNameAndPrefix> ModelBuilder::getExtensionNameToPrefi
         });
     };
 
-    constexpr uint8_t kLowBitsType =
-            static_cast<uint8_t>(Model::ExtensionTypeEncoding::LOW_BITS_TYPE);
+    constexpr uint8_t kLowBitsType = static_cast<uint8_t>(ExtensionTypeEncoding::LOW_BITS_TYPE);
     for (const auto& operand : mOperands) {
         if (isExtensionOperandType(operand.type)) {
             addExtensionWithPrefix(static_cast<uint32_t>(operand.type) >> kLowBitsType);
