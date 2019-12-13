@@ -164,17 +164,17 @@ std::vector<bool> DriverDevice::getSupportedOperations(const MetaModel& metaMode
     std::tie(status, supportedOperations) = kInterface->getSupportedOperations(metaModel);
 
     const Model& hidlModel = metaModel.getModel();
+    const uint32_t operationCount = hidlModel.main.operations.size();
     if (status != ErrorStatus::NONE) {
         LOG(ERROR) << "IDevice::getSupportedOperations returned the error " << toString(status);
         // Set the supported operation vectors to all false, so we won't use this driver.
-        return std::vector<bool>(hidlModel.operations.size(), false);
+        return std::vector<bool>(operationCount, false);
     }
-    if (supportedOperations.size() != hidlModel.operations.size()) {
+    if (supportedOperations.size() != operationCount) {
         LOG(ERROR) << "IDevice::getSupportedOperations returned a vector of length "
-                   << supportedOperations.size() << " when expecting "
-                   << hidlModel.operations.size();
+                   << supportedOperations.size() << " when expecting " << operationCount;
         // Set the supported operation vectors to all false, so we won't use this driver.
-        return std::vector<bool>(hidlModel.operations.size(), false);
+        return std::vector<bool>(operationCount, false);
     }
 
 #ifdef NN_DEBUGGABLE
@@ -189,11 +189,11 @@ std::vector<bool> DriverDevice::getSupportedOperations(const MetaModel& metaMode
         }
 
         uint32_t accumulator = baseAccumulator;
-        const Operation& operation = hidlModel.operations[operationIndex];
+        const Operation& operation = hidlModel.main.operations[operationIndex];
         accumulator ^= static_cast<uint32_t>(operation.type);
         auto accumulateOperands = [&hidlModel, &accumulator](const hidl_vec<uint32_t>& operands) {
             for (uint32_t operandIndex : operands) {
-                const Operand& operand = hidlModel.operands[operandIndex];
+                const Operand& operand = hidlModel.main.operands[operandIndex];
                 accumulator ^= static_cast<uint32_t>(operand.type);
                 accumulator ^= operand.dimensions.size();
                 for (uint32_t dimension : operand.dimensions) {
@@ -482,13 +482,13 @@ class CpuPreparedModel : public PreparedModel {
 
 std::vector<bool> CpuDevice::getSupportedOperations(const MetaModel& metaModel) const {
     const Model& hidlModel = metaModel.getModel();
-    const size_t count = hidlModel.operations.size();
+    const size_t count = hidlModel.main.operations.size();
     std::vector<bool> result(count, false);
     for (size_t i = 0; i < count; i++) {
         // TODO(b/119870033): Decide whether and how post-P operations would be supported on CPU.
         //                    We may want to use the slicer for CpuDevice just as we do for
         //                    DriverDevice.
-        OperationType operationType = hidlModel.operations[i].type;
+        OperationType operationType = hidlModel.main.operations[i].type;
         result[i] = !isExtensionOperationType(operationType) &&
                     operationType != OperationType::OEM_OPERATION;
     }
