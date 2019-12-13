@@ -820,6 +820,52 @@ int ANeuralNetworksExecution_burstCompute(ANeuralNetworksExecution* execution,
     return n;
 }
 
+int ANeuralNetworksMemoryDesc_create(ANeuralNetworksMemoryDesc** /*desc*/) {
+    // TODO(xusongw): Implement.
+    return ANEURALNETWORKS_OP_FAILED;
+}
+
+void ANeuralNetworksMemoryDesc_free(ANeuralNetworksMemoryDesc* /*desc*/) {
+    // TODO(xusongw): Implement.
+}
+
+int ANeuralNetworksMemoryDesc_addInputRole(ANeuralNetworksMemoryDesc* /*desc*/,
+                                           const ANeuralNetworksCompilation* /*compilation*/,
+                                           uint32_t /*index*/, float /*frequency*/) {
+    // TODO(xusongw): Implement.
+    return ANEURALNETWORKS_OP_FAILED;
+}
+
+int ANeuralNetworksMemoryDesc_addOutputRole(ANeuralNetworksMemoryDesc* /*desc*/,
+                                            const ANeuralNetworksCompilation* /*compilation*/,
+                                            uint32_t /*index*/, float /*frequency*/) {
+    // TODO(xusongw): Implement.
+    return ANEURALNETWORKS_OP_FAILED;
+}
+
+int ANeuralNetworksMemoryDesc_setDimensions(ANeuralNetworksMemoryDesc* /*desc*/, uint32_t /*rank*/,
+                                            const uint32_t* /*dimensions*/) {
+    // TODO(xusongw): Implement.
+    return ANEURALNETWORKS_OP_FAILED;
+}
+
+int ANeuralNetworksMemoryDesc_finish(ANeuralNetworksMemoryDesc* /*desc*/) {
+    // TODO(xusongw): Implement.
+    return ANEURALNETWORKS_OP_FAILED;
+}
+
+int ANeuralNetworksMemory_createFromDesc(const ANeuralNetworksMemoryDesc* /*desc*/,
+                                         ANeuralNetworksMemory** /*memory*/) {
+    // TODO(xusongw): Implement.
+    return ANEURALNETWORKS_OP_FAILED;
+}
+
+int ANeuralNetworksMemory_copy(const ANeuralNetworksMemory* /*src*/,
+                               const ANeuralNetworksMemory* /*dst*/) {
+    // TODO(xusongw): Implement.
+    return ANEURALNETWORKS_OP_FAILED;
+}
+
 int ANeuralNetworksMemory_createFromFd(size_t size, int prot, int fd, size_t offset,
                                        ANeuralNetworksMemory** memory) {
     NNTRACE_RT(NNTRACE_PHASE_PREPARATION, "ANeuralNetworksMemory_createFromFd");
