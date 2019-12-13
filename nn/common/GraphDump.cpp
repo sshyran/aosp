@@ -169,10 +169,10 @@ void graphDump(const char* name, const Model& model, std::ostream* outStream) {
             case OperandLifeTime::CONSTANT_REFERENCE:
                 kind = "REF";
                 break;
-            case OperandLifeTime::MODEL_INPUT:
+            case OperandLifeTime::SUBGRAPH_INPUT:
                 io = "input";
                 break;
-            case OperandLifeTime::MODEL_OUTPUT:
+            case OperandLifeTime::SUBGRAPH_OUTPUT:
                 io = "output";
                 break;
             case OperandLifeTime::NO_VALUE:
