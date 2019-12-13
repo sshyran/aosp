@@ -97,7 +97,7 @@ int CompilationBuilder::finish() {
     VLOG(COMPILATION) << "CompilationBuilder::finish with CPU fallback";
     mPlan.reset();
     mPlan.becomeSingleStep(DeviceManager::getCpuDevice(), mModel);
-    return mPlan.finish(mModel, mPreference, mPriority, timeout);
+    return mPlan.finish(mPreference, mPriority, timeout);
 }
 
 int CompilationBuilder::setPreference(int32_t preference) {

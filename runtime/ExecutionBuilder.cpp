@@ -95,7 +95,12 @@ ExecutionBuilder::ExecutionBuilder(const CompilationBuilder* compilation)
       mPartitioning(compilation->mPartitioning),
       mInputs(mModel->inputCount()),
       mOutputs(mModel->outputCount()) {
-    VLOG(EXECUTION) << "ExecutionBuilder::ExecutionBuilder";
+    VLOG(EXECUTION) << "ExecutionBuilder::ExecutionBuilder with " << mInputs.size()
+                    << " inputs and " << mOutputs.size() << " outputs";
+}
+
+const ModelBuilder* ExecutionBuilder::getSourceModel(uint32_t index) const {
+    return mPlan->getSourceModels().getModel(index);
 }
 
 int ExecutionBuilder::setInput(uint32_t index, const ANeuralNetworksOperandType* type,
@@ -125,7 +130,7 @@ int ExecutionBuilder::setInput(uint32_t index, const ANeuralNetworksOperandType*
 
 int ExecutionBuilder::setInputFromMemory(uint32_t index, const ANeuralNetworksOperandType* type,
                                          const Memory* memory, size_t offset, size_t length) {
-    // Should be similar to StepExecutor::setInputOrOutputFromTemporaryMemory()
+    // Should be similar to StepExecutor::setInputOrOutputFromMemory()
 
     if (mStarted) {
         LOG(ERROR) << "ANeuralNetworksExecution_setInputFromMemory called after the "
@@ -186,7 +191,7 @@ int ExecutionBuilder::setOutput(uint32_t index, const ANeuralNetworksOperandType
 
 int ExecutionBuilder::setOutputFromMemory(uint32_t index, const ANeuralNetworksOperandType* type,
                                           const Memory* memory, size_t offset, size_t length) {
-    // Should be similar to StepExecutor::setInputOrOutputFromTemporaryMemory()
+    // Should be similar to StepExecutor::setInputOrOutputFromMemory()
 
     if (mStarted) {
         LOG(ERROR) << "ANeuralNetworksExecution_setOutputFromMemory called after the "
@@ -897,14 +902,17 @@ bool StepExecutor::updateOutputShapes(const std::vector<OutputShape>& from,
 
 StepExecutor::StepExecutor(ExecutionBuilder* executionBuilder, const ModelBuilder* model,
                            std::shared_ptr<Device> device,
-                           std::shared_ptr<PreparedModel> preparedModel)
+                           std::shared_ptr<PreparedModel> preparedModel, const ExecutionStep* step)
     : mExecutionBuilder(executionBuilder),
+      mExecutionStep(step),
       mModel(model),
       mDevice(device),
       mPreparedModel(preparedModel),
       mInputs(model->inputCount()),
       mOutputs(model->outputCount()) {
     CHECK(mDevice != nullptr);
+    VLOG(EXECUTION) << "StepExecutor::StepExecutor with " << mInputs.size() << " inputs and "
+                    << mOutputs.size() << " outputs";
 }
 
 void StepExecutor::mapInputsAndOutputsTrivially() {
@@ -918,7 +926,7 @@ void StepExecutor::mapInputOrOutput(const ModelArgumentInfo& builderInputOrOutpu
     *executorInputOrOutput = builderInputOrOutput;
     switch (executorInputOrOutput->state) {
         default:
-            nnAssert(!"unexpected ModelArgumentInfo::state");
+            CHECK(false) << "unexpected ModelArgumentInfo::state";
             break;
         case ModelArgumentInfo::HAS_NO_VALUE:
         case ModelArgumentInfo::POINTER:
@@ -934,9 +942,9 @@ void StepExecutor::mapInputOrOutput(const ModelArgumentInfo& builderInputOrOutpu
     }
 }
 
-int StepExecutor::setInputOrOutputFromTemporaryMemory(const Operand& inputOrOutputOperand,
-                                                      const Memory* memory, uint32_t offset,
-                                                      ModelArgumentInfo* inputOrOutputInfo) {
+int StepExecutor::setInputOrOutputFromMemory(const Operand& inputOrOutputOperand,
+                                             const Memory* memory, uint32_t offset,
+                                             ModelArgumentInfo* inputOrOutputInfo) {
     // Should be similar to
     //     ExecutionBuilder::setInputFromMemory()
     //     ExecutionBuilder::setOutputFromMemory()

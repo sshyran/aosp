@@ -20,6 +20,7 @@
 #include <atomic>
 #include <memory>
 #include <tuple>
+#include <utility>
 #include <vector>
 
 #include "Callbacks.h"
@@ -88,6 +89,11 @@ class ExecutionBuilder {
 
     const CompilationBuilder* getCompilation() const { return mCompilation; }
     const ModelBuilder* getModel() const { return mModel; }
+    const ModelBuilder* getSourceModel(uint32_t index) const;
+    const hal::Operand& getSourceOperand(
+            const std::pair<uint32_t, uint32_t>& sourceOperandIndex) const {
+        return getSourceModel(sourceOperandIndex.first)->getOperand(sourceOperandIndex.second);
+    }
 
     hal::ErrorStatus finish(hal::ErrorStatus error,
                             const std::vector<hal::OutputShape>& outputShapes);
@@ -98,6 +104,9 @@ class ExecutionBuilder {
     }
 
     bool inFlight() const { return mStarted && !mFinished; }
+
+    const ModelArgumentInfo& getInputInfo(uint32_t index) const { return mInputs[index]; }
+    const ModelArgumentInfo& getOutputInfo(uint32_t index) const { return mOutputs[index]; }
 
    private:
     // If a callback is provided, then this is asynchronous. If a callback is
@@ -178,8 +187,13 @@ class StepExecutor {
     //     The device on which to execute the "step", and the prepared
     //     model to execute on that device.  (Both are nullptr in the
     //     case of CPU.)
+    // step
+    //     Contains the output index mapping from the excerpted "step" model to
+    //     main model if the execution has multiple "steps". Must be nullptr
+    //     otherwise.
     StepExecutor(ExecutionBuilder* executionBuilder, const ModelBuilder* model,
-                 std::shared_ptr<Device> device, std::shared_ptr<PreparedModel> preparedModel);
+                 std::shared_ptr<Device> device, std::shared_ptr<PreparedModel> preparedModel,
+                 const ExecutionStep* step = nullptr);
 
     // Map inputs and outputs from ExecutionBuilder to StepExecutor,
     // in the case where we have a single-"step" execution (i.e., the executor
@@ -205,13 +219,13 @@ class StepExecutor {
 
     // The input or output is assumed to have the size of the
     // corresponding operand.
-    int setInputFromTemporaryMemory(uint32_t inputIndex, const Memory* memory, uint32_t offset) {
-        return setInputOrOutputFromTemporaryMemory(mModel->getInputOperand(inputIndex), memory,
-                                                   offset, &mInputs.at(inputIndex));
+    int setInputFromMemory(uint32_t inputIndex, const Memory* memory, uint32_t offset) {
+        return setInputOrOutputFromMemory(mModel->getInputOperand(inputIndex), memory, offset,
+                                          &mInputs.at(inputIndex));
     }
-    int setOutputFromTemporaryMemory(uint32_t outputIndex, const Memory* memory, uint32_t offset) {
-        return setInputOrOutputFromTemporaryMemory(mModel->getOutputOperand(outputIndex), memory,
-                                                   offset, &mOutputs.at(outputIndex));
+    int setOutputFromMemory(uint32_t outputIndex, const Memory* memory, uint32_t offset) {
+        return setInputOrOutputFromMemory(mModel->getOutputOperand(outputIndex), memory, offset,
+                                          &mOutputs.at(outputIndex));
     }
 
     // Executes using the (driver, preparedModel) specified at construction time.
@@ -224,11 +238,6 @@ class StepExecutor {
 
     bool isCpu() const;
 
-    // ExecutionStep has the index mapping between ExecutionBuilder and StepExecutor.
-    void setExecutionStep(const std::shared_ptr<const ExecutionStep>& step) {
-        mExecutionStep = step;
-    }
-
     // Perform fenced execution and return error_code, sync_fence_fd and a
     // callback.
     std::tuple<int, int, sp<hal::IFencedExecutionCallback>> computeFenced(
@@ -238,15 +247,14 @@ class StepExecutor {
     void mapInputOrOutput(const ModelArgumentInfo& builderInputOrOutput,
                           ModelArgumentInfo* executorInputOrOutput);
 
-    int setInputOrOutputFromTemporaryMemory(const hal::Operand& inputOrOutputOperand,
-                                            const Memory* memory, uint32_t offset,
-                                            ModelArgumentInfo* inputOrOutputInfo);
+    int setInputOrOutputFromMemory(const hal::Operand& inputOrOutputOperand, const Memory* memory,
+                                   uint32_t offset, ModelArgumentInfo* inputOrOutputInfo);
 
     // describes the full (possibly multiple-"step") execution
     ExecutionBuilder* mExecutionBuilder;
 
     // describes the single execution step
-    std::shared_ptr<const ExecutionStep> mExecutionStep = nullptr;
+    const ExecutionStep* mExecutionStep = nullptr;
 
     // model to be executed on the executor, in both original and
     // compiled forms; and device on which to execute it
