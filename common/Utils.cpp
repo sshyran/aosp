@@ -2740,28 +2740,6 @@ V1_1::Model convertToV1_1(const V1_3::Model& model) {
             .relaxComputationFloat32toFloat16 = model.relaxComputationFloat32toFloat16};
 }
 
-static hidl_vec<V1_2::Model::ExtensionNameAndPrefix> convertToV1_2(
-        const hidl_vec<V1_3::Model::ExtensionNameAndPrefix>& extensionNameAndPrefix) {
-    hidl_vec<V1_2::Model::ExtensionNameAndPrefix> result(extensionNameAndPrefix.size());
-    std::transform(extensionNameAndPrefix.begin(), extensionNameAndPrefix.end(), result.begin(),
-                   [](const V1_3::Model::ExtensionNameAndPrefix& nameAndPrefix)
-                           -> V1_2::Model::ExtensionNameAndPrefix {
-                       return {.name = nameAndPrefix.name, .prefix = nameAndPrefix.prefix};
-                   });
-    return result;
-}
-
-static hidl_vec<V1_3::Model::ExtensionNameAndPrefix> convertToV1_3(
-        const hidl_vec<V1_2::Model::ExtensionNameAndPrefix>& extensionNameAndPrefix) {
-    hidl_vec<V1_3::Model::ExtensionNameAndPrefix> result(extensionNameAndPrefix.size());
-    std::transform(extensionNameAndPrefix.begin(), extensionNameAndPrefix.end(), result.begin(),
-                   [](const V1_2::Model::ExtensionNameAndPrefix& nameAndPrefix)
-                           -> V1_3::Model::ExtensionNameAndPrefix {
-                       return {.name = nameAndPrefix.name, .prefix = nameAndPrefix.prefix};
-                   });
-    return result;
-}
-
 V1_2::Model convertToV1_2(const V1_0::Model& model) {
     return {.operands = convertToV1_2(model.operands),
             .operations = convertToV1_2(model.operations),
@@ -2798,7 +2776,7 @@ V1_2::Model convertToV1_2(const V1_3::Model& model) {
             .operandValues = model.operandValues,
             .pools = model.pools,
             .relaxComputationFloat32toFloat16 = model.relaxComputationFloat32toFloat16,
-            .extensionNameToPrefix = convertToV1_2(model.extensionNameToPrefix)};
+            .extensionNameToPrefix = model.extensionNameToPrefix};
 }
 
 V1_3::Model convertToV1_3(const V1_0::Model& model) {
@@ -2829,7 +2807,7 @@ V1_3::Model convertToV1_3(const V1_2::Model& model) {
             .operandValues = model.operandValues,
             .pools = model.pools,
             .relaxComputationFloat32toFloat16 = model.relaxComputationFloat32toFloat16,
-            .extensionNameToPrefix = convertToV1_3(model.extensionNameToPrefix)};
+            .extensionNameToPrefix = model.extensionNameToPrefix};
 }
 
 V1_3::Model convertToV1_3(const V1_3::Model& model) {
