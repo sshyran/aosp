@@ -60,7 +60,7 @@ model {
       }
       scale: 0.05
       zero_point: 0
-      lifetime: MODEL_INPUT
+      lifetime: SUBGRAPH_INPUT
       channel_quant {
         scales {
         }
@@ -112,7 +112,7 @@ model {
       }
       scale: 0.084
       zero_point: 127
-      lifetime: MODEL_INPUT
+      lifetime: SUBGRAPH_INPUT
       channel_quant {
         scales {
         }
@@ -131,7 +131,7 @@ model {
       }
       scale: 0.089
       zero_point: 123
-      lifetime: MODEL_INPUT
+      lifetime: SUBGRAPH_INPUT
       channel_quant {
         scales {
         }
@@ -299,7 +299,7 @@ model {
       }
       scale: 0.029
       zero_point: 0
-      lifetime: MODEL_INPUT
+      lifetime: SUBGRAPH_INPUT
       channel_quant {
         scales {
         }
@@ -334,7 +334,7 @@ model {
       }
       scale: 0.1
       zero_point: 127
-      lifetime: MODEL_OUTPUT
+      lifetime: SUBGRAPH_OUTPUT
       channel_quant {
         scales {
         }

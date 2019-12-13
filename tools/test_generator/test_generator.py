@@ -333,7 +333,7 @@ class InOut(Operand):
 
     def __init__(self, name, opType, backward=None, skipRenaming=False, extraParams=None):
         Operand.__init__(self, name, opType, backward, None, skipRenaming=skipRenaming, extraParams=extraParams)
-        self.lifetime = "MODEL_INPUT"
+        self.lifetime = "SUBGRAPH_INPUT"
         self.index = 0
 
     def Feed(self, value):
@@ -344,19 +344,19 @@ class InOut(Operand):
 class Input(InOut):
     def __init__(self, name, opType, backward=None, skipRenaming=False, extraParams=None):
         InOut.__init__(self, name, opType, backward, skipRenaming=skipRenaming, extraParams=extraParams)
-        self.lifetime = "MODEL_INPUT"
+        self.lifetime = "SUBGRAPH_INPUT"
 
 # A user-declared output operand
 class Output(InOut):
     def __init__(self, name, opType, backward=None, skipRenaming=False):
         InOut.__init__(self, name, opType, backward, skipRenaming=skipRenaming)
-        self.lifetime = "MODEL_OUTPUT"
+        self.lifetime = "SUBGRAPH_OUTPUT"
 
 # An output that we don't want to compare the results
 class IgnoredOutput(Output):
     def __init__(self, name, opType, backward=None, skipRenaming=False):
         Output.__init__(self, name, opType, backward, skipRenaming=skipRenaming)
-        self.lifetime = "MODEL_OUTPUT"
+        self.lifetime = "SUBGRAPH_OUTPUT"
     def Feed(self, value):
         numElements = reduce(lambda x,y: x*y, self.type.dimensions, 1)
         self.value = [0 for x in range(numElements)]
