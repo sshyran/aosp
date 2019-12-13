@@ -32,8 +32,8 @@ constexpr Timing kNoTiming = {.timeOnDevice = std::numeric_limits<uint64_t>::max
 
 // PreparedModelCallback methods begin here
 
-Return<void> PreparedModelCallback::notify(ErrorStatus errorStatus,
-                                           const sp<V1_0::IPreparedModel>& preparedModel) {
+Return<void> PreparedModelCallback::notifyInternal(ErrorStatus errorStatus,
+                                                   const sp<V1_0::IPreparedModel>& preparedModel) {
     {
         std::lock_guard<std::mutex> hold(mMutex);
 
@@ -52,14 +52,19 @@ Return<void> PreparedModelCallback::notify(ErrorStatus errorStatus,
     return Void();
 }
 
-Return<void> PreparedModelCallback::notify_1_2(ErrorStatus errorStatus,
+Return<void> PreparedModelCallback::notify(V1_0::ErrorStatus errorStatus,
+                                           const sp<V1_0::IPreparedModel>& preparedModel) {
+    return notifyInternal(static_cast<ErrorStatus>(errorStatus), preparedModel);
+}
+
+Return<void> PreparedModelCallback::notify_1_2(V1_0::ErrorStatus errorStatus,
                                                const sp<V1_2::IPreparedModel>& preparedModel) {
-    return notify(errorStatus, preparedModel);
+    return notifyInternal(static_cast<ErrorStatus>(errorStatus), preparedModel);
 }
 
 Return<void> PreparedModelCallback::notify_1_3(ErrorStatus errorStatus,
                                                const sp<V1_3::IPreparedModel>& preparedModel) {
-    return notify(errorStatus, preparedModel);
+    return notifyInternal(errorStatus, preparedModel);
 }
 
 void PreparedModelCallback::wait() const {
@@ -79,32 +84,20 @@ sp<V1_0::IPreparedModel> PreparedModelCallback::getPreparedModel() const {
 
 // ExecutionCallback methods begin here
 
-Return<void> ExecutionCallback::notify(ErrorStatus errorStatus) {
-    notifyInternal(errorStatus, {}, kNoTiming);
-    return Void();
+Return<void> ExecutionCallback::notify(V1_0::ErrorStatus errorStatus) {
+    return notifyInternal(static_cast<ErrorStatus>(errorStatus), {}, kNoTiming);
 }
 
-Return<void> ExecutionCallback::notify_1_2(ErrorStatus errorStatus,
+Return<void> ExecutionCallback::notify_1_2(V1_0::ErrorStatus errorStatus,
                                            const hidl_vec<OutputShape>& outputShapes,
                                            const Timing& timing) {
-    if (errorStatus == ErrorStatus::OUTPUT_INSUFFICIENT_SIZE) {
-        // outputShapes must not be empty if OUTPUT_INSUFFICIENT_SIZE.
-        if (outputShapes.size() == 0) {
-            LOG(ERROR) << "Notified with empty output shape vector when OUTPUT_INSUFFICIENT_SIZE";
-            notifyInternal(ErrorStatus::GENERAL_FAILURE, {}, kNoTiming);
-            return Void();
-        }
-    } else if (errorStatus != ErrorStatus::NONE) {
-        // outputShapes must be empty if errorStatus is neither NONE nor OUTPUT_INSUFFICIENT_SIZE.
-        if (outputShapes.size() != 0) {
-            LOG(ERROR) << "Notified with non-empty output shape vector when error status is "
-                          "neither NONE nor OUTPUT_INSUFFICIENT_SIZE";
-            notifyInternal(ErrorStatus::GENERAL_FAILURE, {}, kNoTiming);
-            return Void();
-        }
-    }
-    notifyInternal(errorStatus, outputShapes, timing);
-    return Void();
+    return notifyInternal(static_cast<ErrorStatus>(errorStatus), outputShapes, timing);
+}
+
+Return<void> ExecutionCallback::notify_1_3(V1_3::ErrorStatus errorStatus,
+                                           const hidl_vec<OutputShape>& outputShapes,
+                                           const Timing& timing) {
+    return notifyInternal(errorStatus, outputShapes, timing);
 }
 
 void ExecutionCallback::wait() const {
@@ -187,15 +180,35 @@ void ExecutionCallback::setOnFinish(const ExecutionFinish& finish) {
     mOnFinish = finish;
 }
 
-void ExecutionCallback::notifyInternal(ErrorStatus errorStatus,
-                                       const hidl_vec<OutputShape>& outputShapes,
-                                       const Timing& timing) {
+Return<void> ExecutionCallback::notifyInternal(ErrorStatus errorStatus,
+                                               hidl_vec<OutputShape> outputShapes, Timing timing) {
+    // check results
+    if (errorStatus == ErrorStatus::OUTPUT_INSUFFICIENT_SIZE) {
+        // outputShapes must not be empty if OUTPUT_INSUFFICIENT_SIZE.
+        if (outputShapes.size() == 0) {
+            LOG(ERROR) << "Notified with empty output shape vector when OUTPUT_INSUFFICIENT_SIZE";
+            errorStatus = ErrorStatus::GENERAL_FAILURE;
+            outputShapes = {};
+            timing = kNoTiming;
+        }
+    } else if (errorStatus != ErrorStatus::NONE) {
+        // outputShapes must be empty if errorStatus is neither NONE nor OUTPUT_INSUFFICIENT_SIZE.
+        if (outputShapes.size() != 0) {
+            LOG(ERROR) << "Notified with non-empty output shape vector when error status is "
+                          "neither NONE nor OUTPUT_INSUFFICIENT_SIZE";
+            errorStatus = ErrorStatus::GENERAL_FAILURE;
+            outputShapes = {};
+            timing = kNoTiming;
+        }
+    }
+
+    // store results
     {
         std::lock_guard<std::mutex> hold(mMutex);
 
         // quick-return if object has already been notified
         if (mNotified) {
-            return;
+            return Void();
         }
 
         mErrorStatus = errorStatus;
@@ -212,6 +225,7 @@ void ExecutionCallback::notifyInternal(ErrorStatus errorStatus,
         }
     }
     mCondition.notify_all();
+    return Void();
 }
 
 }  // namespace android::nn

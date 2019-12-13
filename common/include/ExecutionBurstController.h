@@ -64,8 +64,8 @@ std::vector<hal::FmqRequestDatum> serialize(const hal::V1_0::Request& request,
  * @param data Serialized FMQ result data.
  * @return Result object if successfully deserialized, std::nullopt otherwise.
  */
-std::optional<std::tuple<hal::ErrorStatus, std::vector<hal::OutputShape>, hal::Timing>> deserialize(
-        const std::vector<hal::FmqResultDatum>& data);
+std::optional<std::tuple<hal::V1_0::ErrorStatus, std::vector<hal::OutputShape>, hal::Timing>>
+deserialize(const std::vector<hal::FmqResultDatum>& data);
 
 /**
  * ResultChannelReceiver is responsible for waiting on the channel until the
@@ -108,7 +108,7 @@ class ResultChannelReceiver {
      * @return Result object if successfully received, std::nullopt if error or
      *     if the receiver object was invalidated.
      */
-    std::optional<std::tuple<hal::ErrorStatus, std::vector<hal::OutputShape>, hal::Timing>>
+    std::optional<std::tuple<hal::V1_0::ErrorStatus, std::vector<hal::OutputShape>, hal::Timing>>
     getBlocking();
 
     /**
