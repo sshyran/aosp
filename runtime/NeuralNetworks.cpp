@@ -1100,10 +1100,16 @@ int ANeuralNetworksModel_setOperandValueFromMemory(ANeuralNetworksModel* model, 
     return m->setOperandValueFromMemory(index, mem, offset, length);
 }
 
-int ANeuralNetworksModel_setOperandValueFromModel(ANeuralNetworksModel*, int32_t,
-                                                  const ANeuralNetworksModel*) {
-    // To be implemented...
-    return ANEURALNETWORKS_OP_FAILED;
+int ANeuralNetworksModel_setOperandValueFromModel(ANeuralNetworksModel* model, int32_t index,
+                                                  const ANeuralNetworksModel* value) {
+    NNTRACE_RT(NNTRACE_PHASE_PREPARATION, "ANeuralNetworksModel_setOperandValueFromModel");
+    if (!model || !value) {
+        LOG(ERROR) << "ANeuralNetworksModel_setOperandValueFromModel passed a nullptr";
+        return ANEURALNETWORKS_UNEXPECTED_NULL;
+    }
+    const ModelBuilder* val = reinterpret_cast<const ModelBuilder*>(value);
+    ModelBuilder* m = reinterpret_cast<ModelBuilder*>(model);
+    return m->setOperandValueFromModel(index, val);
 }
 
 int ANeuralNetworksModel_addOperation(ANeuralNetworksModel* model,
