@@ -257,7 +257,7 @@ static const char* kTypeNames[] = {
 };
 
 static const char* kLifeTimeNames[6] = {
-        "TEMPORARY_VARIABLE", "MODEL_INPUT",        "MODEL_OUTPUT",
+        "TEMPORARY_VARIABLE", "SUBGRAPH_INPUT",     "SUBGRAPH_OUTPUT",
         "CONSTANT_COPY",      "CONSTANT_REFERENCE", "NO_VALUE",
 };
 

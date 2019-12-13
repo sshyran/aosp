@@ -901,7 +901,7 @@ class PartitioningTest : public ::testing::Test {
     // comparison algorithm, we encode the "defining operation" index of
     // such an operand as follows:
     // - NO_VALUE       kPseudoDefiningOperationNoValue
-    // - MODEL_INPUT    kPseudoDefiningOperationModelInput0 + (position in list of inputs)
+    // - SUBGRAPH_INPUT kPseudoDefiningOperationModelInput0 + (position in list of inputs)
     // - CONSTANT_COPY  kPseudoDefiningOperationConstantCopy0 + (constant value)
     //                    Note: For the graphs we build in this test, we
     //                          only expect to see 4-byte constants within
@@ -960,8 +960,8 @@ class PartitioningTest : public ::testing::Test {
                     break;
                 }
                 case OperandLifeTime::TEMPORARY_VARIABLE:
-                case OperandLifeTime::MODEL_INPUT:
-                case OperandLifeTime::MODEL_OUTPUT:
+                case OperandLifeTime::SUBGRAPH_INPUT:
+                case OperandLifeTime::SUBGRAPH_OUTPUT:
                     // already handled
                     break;
                 default:
