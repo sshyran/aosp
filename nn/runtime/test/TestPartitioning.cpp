@@ -145,6 +145,7 @@ using ExecutionPlan = ::android::nn::ExecutionPlan;
 using ExecutionStep = ::android::nn::ExecutionStep;
 using HalVersion = ::android::nn::HalVersion;
 using HidlModel = V1_3::Model;
+using LogicalStep = ::android::nn::LogicalStep;
 using ModelBuilder = ::android::nn::ModelBuilder;
 using Result = ::android::nn::test_wrapper::Result;
 using SampleDriver = ::android::nn::sample_driver::SampleDriver;
@@ -1207,7 +1208,7 @@ class PartitioningTest : public ::testing::Test {
     // output operand numbers of "model" to the corresponding operand numbers of
     // the step model from "step".  If the comparison returns false, the contents
     // of the map are undefined.
-    bool compare(std::shared_ptr<const ExecutionStep> step, const PartitioningModel* model,
+    bool compare(const ExecutionStep* step, const PartitioningModel* model,
                  std::shared_ptr<Device> device,
                  std::map<uint32_t, uint32_t>* inputsAndOutputsModelToStep) {
         return (step->getDevice() == device) &&
@@ -1216,11 +1217,13 @@ class PartitioningTest : public ::testing::Test {
                        inputsAndOutputsModelToStep);
     }
 
-    void compare(std::shared_ptr<const ExecutionStep> step, const PartitioningModel* model,
+    void compare(const std::shared_ptr<LogicalStep> logicalStep, const PartitioningModel* model,
                  std::shared_ptr<Device> device, const RemapVectorType& modelInputs,
                  const RemapVectorType& modelOutputs, const RemapVectorType& tempsAsStepModelInputs,
                  const StepModelOutputSetType& tempsAsStepModelOutputs,
                  const RemapVectorType& outputsAsStepModelInputs) {
+        ASSERT_TRUE(logicalStep->isExecution());
+        const ExecutionStep* step = logicalStep->executionStep();
         std::map<uint32_t, uint32_t> inputsAndOutputsModelToStep;
         ASSERT_NO_FATAL_FAILURE(
                 ASSERT_TRUE(compare(step, model, device, &inputsAndOutputsModelToStep)));
@@ -1905,9 +1908,9 @@ class CacheTest : public PartitioningTest {
             for (const auto& step : steps) {
                 // In general, two or more partitions can be on the same device. However, this will
                 // not happen on the test models with only 2 operations.
-                if (step->getDevice()->getName() == deviceName) {
+                if (step->executionStep()->getDevice()->getName() == deviceName) {
                     ASSERT_FALSE(found);
-                    token = step->forTest_getCacheToken();
+                    token = step->executionStep()->forTest_getCacheToken();
                     found = true;
                 }
             }
