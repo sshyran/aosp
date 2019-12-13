@@ -179,8 +179,8 @@ Extension {
 ```
 
 Of the 32 bits used to identify types and operations, the high
-`Model::ExtensionTypeEncoding::HIGH_BITS_PREFIX` bits is the extension
-_prefix_ and the low `Model::ExtensionTypeEncoding::LOW_BITS_TYPE`
+`ExtensionTypeEncoding::HIGH_BITS_PREFIX` bits is the extension
+_prefix_ and the low `ExtensionTypeEncoding::LOW_BITS_TYPE`
 bits represents the type or operation of the extension.
 
 When handling an operation or operand type, the driver must check the extension
