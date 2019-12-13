@@ -45,20 +45,20 @@ class TestDriver : public SampleDriver {
     ~TestDriver() override {}
 
     Return<void> getSupportedExtensions(getSupportedExtensions_cb cb) override {
-        cb(ErrorStatus::NONE, {
-                                      {.name = kTestExtension1},
-                                      {.name = kTestExtension2},
-                                      {.name = kTestExtension3},
-                              });
+        cb(V1_0::ErrorStatus::NONE, {
+                                            {.name = kTestExtension1},
+                                            {.name = kTestExtension2},
+                                            {.name = kTestExtension3},
+                                    });
         return Void();
     }
 
     Return<void> getCapabilities_1_3(getCapabilities_1_3_cb cb) override {
-        cb(ErrorStatus::NONE, {/* Dummy zero-filled capabilities. */});
+        cb(V1_3::ErrorStatus::NONE, {/* Dummy zero-filled capabilities. */});
         return Void();
     }
 
-    Return<void> getSupportedOperations_1_3(const Model&, getSupportedOperations_cb) override {
+    Return<void> getSupportedOperations_1_3(const Model&, getSupportedOperations_1_3_cb) override {
         CHECK(false) << "not implemented";
         return Void();
     }
