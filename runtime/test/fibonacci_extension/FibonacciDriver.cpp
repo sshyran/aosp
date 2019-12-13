@@ -67,8 +67,8 @@ bool validate(const Operation& operation, const Model& model) {
     NN_RET_CHECK(isFibonacciOperation(operation, model));
     NN_RET_CHECK_EQ(operation.inputs.size(), kNumInputs);
     NN_RET_CHECK_EQ(operation.outputs.size(), kNumOutputs);
-    int32_t inputType = static_cast<int32_t>(model.operands[operation.inputs[0]].type);
-    int32_t outputType = static_cast<int32_t>(model.operands[operation.outputs[0]].type);
+    int32_t inputType = static_cast<int32_t>(model.main.operands[operation.inputs[0]].type);
+    int32_t outputType = static_cast<int32_t>(model.main.operands[operation.outputs[0]].type);
     uint16_t prefix;
     NN_RET_CHECK(getFibonacciExtensionPrefix(model, &prefix));
     NN_RET_CHECK(inputType == ((prefix << kLowBitsType) | EXAMPLE_INT64) ||
@@ -191,10 +191,10 @@ Return<void> FibonacciDriver::getSupportedOperations_1_3(const V1_3::Model& mode
         cb(ErrorStatus::INVALID_ARGUMENT, {});
         return Void();
     }
-    const size_t count = model.operations.size();
+    const size_t count = model.main.operations.size();
     std::vector<bool> supported(count);
     for (size_t i = 0; i < count; ++i) {
-        const Operation& operation = model.operations[i];
+        const Operation& operation = model.main.operations[i];
         if (fibonacci_op::isFibonacciOperation(operation, model)) {
             if (!fibonacci_op::validate(operation, model)) {
                 cb(ErrorStatus::INVALID_ARGUMENT, {});

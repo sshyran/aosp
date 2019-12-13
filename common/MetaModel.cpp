@@ -184,6 +184,12 @@ template MetaModel::ReturnedSlice<hal::V1_1::Model> MetaModel::getSlice(
         Slice<hal::V1_1::Model>* slice) const;
 template MetaModel::ReturnedSlice<hal::V1_2::Model> MetaModel::getSlice(
         Slice<hal::V1_2::Model>* slice) const;
+// When adding HAL version 1.4, make sure to handle control flow and referenced
+// subgraphs here properly. A V1_3 sliced model should contain an IF/WHILE and
+// its referenced subgraphs only if there are no V1_4+ operations in those
+// subgraphs.
+// template MetaModel::ReturnedSlice<hal::V1_3::Model> MetaModel::getSlice(
+//         Slice<hal::V1_3::Model>* slice) const;
 
 // Utility class for makeSlice().
 //
@@ -310,8 +316,8 @@ void MetaModel::processOperations(
     using SlicedOperation = typename Slice<T_SlicedModel>::Operation;
     using SlicedOperationType = typename Slice<T_SlicedModel>::OperationType;
 
-    const auto& origOperands = mHidlModel.operands;
-    const auto& origOperations = mHidlModel.operations;
+    const auto& origOperands = mHidlModel.main.operands;
+    const auto& origOperations = mHidlModel.main.operations;
     auto& slicedOperands = slice->mHidlModel.operands;
     auto& slicedOperations = slice->mHidlModel.operations;
 
@@ -406,8 +412,8 @@ MetaModel::Slice<T_SlicedModel> MetaModel::makeSlice() const {
 
     Slice<T_SlicedModel> slice;
 
-    const auto& origOperands = mHidlModel.operands;
-    const auto& origOperations = mHidlModel.operations;
+    const auto& origOperands = mHidlModel.main.operands;
+    const auto& origOperations = mHidlModel.main.operations;
     auto& slicedOperands = slice.mHidlModel.operands;
 
     // Indexes of elements of noncompliant origOperations
@@ -461,7 +467,7 @@ MetaModel::Slice<T_SlicedModel> MetaModel::makeSlice() const {
     // only if it is consumed by at least one compliant operation.  Note that in
     // the sliced model we share all model inputs of the same "type"; and that
     // we may later add model inputs to the sliced model.
-    for (uint32_t origInputIndex : mHidlModel.inputIndexes) {
+    for (uint32_t origInputIndex : mHidlModel.main.inputIndexes) {
         if (inputOperandIndexesOfCompliantOperations.count(origInputIndex)) {
             const uint32_t slicedIndex =
                     origOperandToSlicedInputOperandIndex.getIndex(origOperands[origInputIndex]);
