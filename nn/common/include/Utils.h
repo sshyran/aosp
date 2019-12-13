@@ -284,6 +284,13 @@ std::string toString(const std::vector<Type>& range) {
     return os += "]";
 }
 
+template <typename A, typename B>
+std::string toString(const std::pair<A, B>& pair) {
+    std::ostringstream oss;
+    oss << "(" << toString(pair.first) << ", " << toString(pair.second) << ")";
+    return oss.str();
+}
+
 inline std::string toString(HalVersion halVersion) {
     switch (halVersion) {
         case HalVersion::UNKNOWN:
