@@ -38,11 +38,15 @@ void notify(const sp<hal::V1_0::IExecutionCallback>& callback, const hal::ErrorS
 void notify(const sp<hal::V1_2::IExecutionCallback>& callback, const hal::ErrorStatus& status,
             const hal::hidl_vec<hal::OutputShape>& outputShapes, hal::Timing timing);
 
+void notify(const sp<hal::V1_3::IExecutionCallback>& callback, const hal::ErrorStatus& status,
+            const hal::hidl_vec<hal::OutputShape>& outputShapes, hal::Timing timing);
+
 template <typename T_Model, typename T_IPreparedModelCallback>
-hal::Return<hal::ErrorStatus> prepareModelBase(const T_Model& model, const SampleDriver* driver,
-                                               hal::ExecutionPreference preference,
-                                               const sp<T_IPreparedModelCallback>& callback,
-                                               bool isFullModelSupported = true) {
+hal::ErrorStatus prepareModelBase(const T_Model& model, const SampleDriver* driver,
+                                  hal::ExecutionPreference preference, hal::Priority /*priority*/,
+                                  const hal::OptionalTimePoint& /*deadline*/,
+                                  const sp<T_IPreparedModelCallback>& callback,
+                                  bool isFullModelSupported = true) {
     if (callback.get() == nullptr) {
         LOG(ERROR) << "invalid callback passed to prepareModelBase";
         return hal::ErrorStatus::INVALID_ARGUMENT;

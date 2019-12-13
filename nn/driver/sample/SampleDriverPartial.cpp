@@ -49,13 +49,15 @@ Return<void> SampleDriverPartial::getSupportedOperations_1_3(const V1_3::Model& 
 }
 
 Return<ErrorStatus> SampleDriverPartial::prepareModel_1_3(
-        const V1_3::Model& model, ExecutionPreference preference, const hidl_vec<hidl_handle>&,
+        const V1_3::Model& model, ExecutionPreference preference, Priority priority,
+        const OptionalTimePoint& deadline, const hidl_vec<hidl_handle>&,
         const hidl_vec<hidl_handle>&, const CacheToken&,
         const sp<V1_3::IPreparedModelCallback>& callback) {
     std::vector<bool> supported = getSupportedOperationsImpl(model);
     bool isModelFullySupported =
             std::all_of(supported.begin(), supported.end(), [](bool v) { return v; });
-    return prepareModelBase(model, this, preference, callback, isModelFullySupported);
+    return prepareModelBase(model, this, preference, priority, deadline, callback,
+                            isModelFullySupported);
 }
 
 }  // namespace sample_driver

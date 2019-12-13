@@ -27,7 +27,7 @@ using namespace hal;
 
 void notify(const sp<V1_0::IPreparedModelCallback>& callback, const ErrorStatus& status,
             const sp<SamplePreparedModel>& preparedModel) {
-    const auto ret = callback->notify(status, preparedModel);
+    const auto ret = callback->notify(convertToV1_0(status), preparedModel);
     if (!ret.isOk()) {
         LOG(ERROR) << "Error when calling IPreparedModelCallback::notify: " << ret.description();
     }
@@ -35,7 +35,7 @@ void notify(const sp<V1_0::IPreparedModelCallback>& callback, const ErrorStatus&
 
 void notify(const sp<V1_2::IPreparedModelCallback>& callback, const ErrorStatus& status,
             const sp<SamplePreparedModel>& preparedModel) {
-    const auto ret = callback->notify_1_2(status, preparedModel);
+    const auto ret = callback->notify_1_2(convertToV1_0(status), preparedModel);
     if (!ret.isOk()) {
         LOG(ERROR) << "Error when calling IPreparedModelCallback::notify_1_2: "
                    << ret.description();
@@ -53,7 +53,7 @@ void notify(const sp<V1_3::IPreparedModelCallback>& callback, const ErrorStatus&
 
 void notify(const sp<V1_0::IExecutionCallback>& callback, const ErrorStatus& status,
             const hidl_vec<OutputShape>&, Timing) {
-    const auto ret = callback->notify(status);
+    const auto ret = callback->notify(convertToV1_0(status));
     if (!ret.isOk()) {
         LOG(ERROR) << "Error when calling IExecutionCallback::notify: " << ret.description();
     }
@@ -61,9 +61,17 @@ void notify(const sp<V1_0::IExecutionCallback>& callback, const ErrorStatus& sta
 
 void notify(const sp<V1_2::IExecutionCallback>& callback, const ErrorStatus& status,
             const hidl_vec<OutputShape>& outputShapes, Timing timing) {
-    const auto ret = callback->notify_1_2(status, outputShapes, timing);
+    const auto ret = callback->notify_1_2(convertToV1_0(status), outputShapes, timing);
     if (!ret.isOk()) {
         LOG(ERROR) << "Error when calling IExecutionCallback::notify_1_2: " << ret.description();
+    }
+}
+
+void notify(const sp<V1_3::IExecutionCallback>& callback, const ErrorStatus& status,
+            const hidl_vec<OutputShape>& outputShapes, Timing timing) {
+    const auto ret = callback->notify_1_3(status, outputShapes, timing);
+    if (!ret.isOk()) {
+        LOG(ERROR) << "Error when calling IExecutionCallback::notify_1_3" << ret.description();
     }
 }
 
