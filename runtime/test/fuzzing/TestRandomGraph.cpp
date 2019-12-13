@@ -440,18 +440,29 @@ const AccuracyCriteria kMediumCriteria = {
         .float32 = {.bias = 1e-6f, .mse = 1e-8f, .atol = 1e-5f, .rtol = 1e-5f},
         .float16 = {.bias = 1e-3f, .mse = 1e-6f, .atol = 1e-2f, .rtol = 1e-2f},
         .int32 = {.atol = 1},
-        .quant8Asymm = {.bias = 0.5f, .mse = 0.5f, .atol = 2},
-        .quant8Symm = {.bias = 0.5f, .mse = 0.5f, .atol = 2},
-        .quant16Asymm = {.bias = 0.5f, .mse = 0.5f, .atol = 2},
-        .quant16Symm = {.bias = 0.5f, .mse = 0.5f, .atol = 2},
+        .quant8Asymm = {.bias = 1.2, .mse = 1.2, .atol = 2},
+        .quant8Symm = {.bias = 1.2, .mse = 1.2, .atol = 2},
+        .quant16Asymm = {.bias = 1.2, .mse = 1.2, .atol = 2},
+        .quant16Symm = {.bias = 1.2, .mse = 1.2, .atol = 2},
 };
 
 // This is for operations that involve sophisticated computations on buffer values, either a single
 // but complex transformation, e.g. LOGISTIC, or multiple transformations with accumulated errors,
-// e.g. CONV_2D, REDUCE_*.
+// e.g. L2_NORMALIZATION, REDUCE_*.
 const AccuracyCriteria kRelaxedCriteria = {
-        .float32 = {.bias = 2e-5f, .mse = 1e-7f, .atol = 1e-3f, .rtol = 1e-3f},
-        .float16 = {.bias = 5e-3f, .mse = 1e-4f, .atol = 1.0f, .rtol = 1.0f},
+        .float32 = {.bias = 3e-5f, .mse = 1e-6f, .atol = 1e-3f, .rtol = 1e-3f},
+        .float16 = {.bias = 5e-3f, .mse = 1e-3f, .atol = 1.0f, .rtol = 1.0f},
+        .int32 = {.atol = 1},
+        .quant8Asymm = {.bias = 1.5, .mse = 1.5, .atol = 10},
+        .quant8Symm = {.bias = 1.5, .mse = 1.5, .atol = 10},
+        .quant16Asymm = {.bias = 1.5, .mse = 1.5, .atol = 10},
+        .quant16Symm = {.bias = 1.5, .mse = 1.5, .atol = 10},
+};
+
+// This is for convolution operations with potentially large kernel size.
+const AccuracyCriteria kConvCriteria = {
+        .float32 = {.bias = 4e-4f, .mse = 1e-5f, .atol = 2e-2f, .rtol = 2e-2f},
+        .float16 = {.bias = 5e-2f, .mse = 1e-2f, .atol = 1.0f, .rtol = 1.0f},
         .int32 = {.atol = 1},
         .quant8Asymm = {.bias = 1.5, .mse = 1.5, .atol = 10},
         .quant8Symm = {.bias = 1.5, .mse = 1.5, .atol = 10},
@@ -481,8 +492,8 @@ TEST_SINGLE_OPERATION(LOCAL_RESPONSE_NORMALIZATION, V1_0, kRelaxedCriteria);
 TEST_SINGLE_OPERATION(AVERAGE_POOL_2D, V1_0, kRelaxedCriteria);
 TEST_SINGLE_OPERATION(L2_POOL_2D, V1_0, kRelaxedCriteria);
 TEST_SINGLE_OPERATION(MAX_POOL_2D, V1_0, kRelaxedCriteria);
-TEST_SINGLE_OPERATION(CONV_2D, V1_0, kRelaxedCriteria);
-TEST_SINGLE_OPERATION(DEPTHWISE_CONV_2D, V1_0, kRelaxedCriteria);
+TEST_SINGLE_OPERATION(CONV_2D, V1_0, kConvCriteria);
+TEST_SINGLE_OPERATION(DEPTHWISE_CONV_2D, V1_0, kConvCriteria);
 TEST_SINGLE_OPERATION(CONCATENATION, V1_0, kMediumCriteria);
 TEST_SINGLE_OPERATION(RESIZE_BILINEAR, V1_0, kRelaxedCriteria);
 TEST_SINGLE_OPERATION(DEPTH_TO_SPACE, V1_0, kStrictCriteria);
@@ -527,8 +538,8 @@ TEST_SINGLE_OPERATION(RESHAPE, V1_2, kStrictCriteria);
 TEST_SINGLE_OPERATION(MEAN, V1_2, kRelaxedCriteria);
 TEST_SINGLE_OPERATION(PAD, V1_2, kStrictCriteria);
 TEST_SINGLE_OPERATION(TRANSPOSE, V1_2, kStrictCriteria);
-TEST_SINGLE_OPERATION(CONV_2D, V1_2, kRelaxedCriteria);
-TEST_SINGLE_OPERATION(DEPTHWISE_CONV_2D, V1_2, kRelaxedCriteria);
+TEST_SINGLE_OPERATION(CONV_2D, V1_2, kConvCriteria);
+TEST_SINGLE_OPERATION(DEPTHWISE_CONV_2D, V1_2, kConvCriteria);
 TEST_SINGLE_OPERATION(AVERAGE_POOL_2D, V1_2, kRelaxedCriteria);
 TEST_SINGLE_OPERATION(L2_POOL_2D, V1_2, kRelaxedCriteria);
 TEST_SINGLE_OPERATION(MAX_POOL_2D, V1_2, kRelaxedCriteria);
@@ -585,8 +596,8 @@ TEST_SINGLE_OPERATION(REDUCE_SUM, V1_2, kRelaxedCriteria);
 TEST_SINGLE_OPERATION(CHANNEL_SHUFFLE, V1_2, kStrictCriteria);
 TEST_SINGLE_OPERATION(INSTANCE_NORMALIZATION, V1_2, kRelaxedCriteria);
 TEST_SINGLE_OPERATION(LOG_SOFTMAX, V1_2, kRelaxedCriteria);
-TEST_SINGLE_OPERATION(GROUPED_CONV_2D, V1_2, kRelaxedCriteria);
-TEST_SINGLE_OPERATION(TRANSPOSE_CONV_2D, V1_2, kRelaxedCriteria);
+TEST_SINGLE_OPERATION(GROUPED_CONV_2D, V1_2, kConvCriteria);
+TEST_SINGLE_OPERATION(TRANSPOSE_CONV_2D, V1_2, kConvCriteria);
 TEST_SINGLE_OPERATION(RESIZE_NEAREST_NEIGHBOR, V1_2, kRelaxedCriteria);
 TEST_SINGLE_OPERATION(PAD_V2, V1_2, kStrictCriteria);
 TEST_SINGLE_OPERATION(QUANTIZE, V1_2, kMediumCriteria);
@@ -603,8 +614,8 @@ TEST_SINGLE_OPERATION(ROI_POOLING, V1_2, kRelaxedCriteria);
 TEST_SINGLE_OPERATION(HEATMAP_MAX_KEYPOINT, V1_2, kRelaxedCriteria);
 
 const AccuracyCriteria kSmallGraphCriteria = {
-        .float32 = {.bias = 2e-5f, .mse = 1e-7f, .atol = 1e-2f, .rtol = 1e-2f},
-        .float16 = {.bias = 5e-3f, .mse = 1e-4f, .atol = 1.0f, .rtol = 1.0f},
+        .float32 = {.bias = 4e-4f, .mse = 1e-5f, .atol = 1e-2f, .rtol = 1e-2f},
+        .float16 = {.bias = 5e-2f, .mse = 1e-2f, .atol = 1.0f, .rtol = 1.0f},
         .int32 = {.atol = 1},
         .quant8Asymm = {.bias = 2, .mse = 2, .atol = 12},
         .quant8Symm = {.bias = 2, .mse = 2, .atol = 12},
