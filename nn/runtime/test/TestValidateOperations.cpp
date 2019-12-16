@@ -2443,6 +2443,11 @@ TEST(OperationValidationTest, ROI_ALIGN_quant8) {
                    ANEURALNETWORKS_FLOAT32);
 }
 
+TEST(OperationValidationTest, ROI_ALIGN_quant8signed) {
+    roiAlignOpTest(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED, ANEURALNETWORKS_TENSOR_QUANT16_ASYMM,
+                   ANEURALNETWORKS_FLOAT32);
+}
+
 void roiPoolingOpTest(int32_t inputOperandCode, int32_t roiOperandCode, int32_t scalarOperandCode) {
     uint32_t inDim[] = {1, 4, 4, 1}, roiDim[] = {4, 4}, batchSplitDim[] = {1};
     uint32_t outDim[] = {4, 2, 2, 1};
