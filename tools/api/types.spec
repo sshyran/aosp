@@ -3000,7 +3000,12 @@
      *      and height, dw and dh is the log-scale relative correction factor
      *      for the width and height. For input0 of type
      *      {@link %{OperandTypeLinkPfx}TENSOR_QUANT16_ASYMM}, this tensor should be
+%kind ndk hal_1.3+
+     *      of {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM} or
+     *      {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM_SIGNED}. Zero num_rois is
+%else
      *      of {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM}. Zero num_rois is
+%/kind
      *      supported for this tensor.
      * * 2: An 1-D {@link %{OperandTypeLinkPfx}TENSOR_INT32} tensor, of shape
      *      [num_rois], specifying the batch index of each box. Boxes with
@@ -3360,6 +3365,9 @@
      * * {@link %{OperandTypeLinkPfx}TENSOR_FLOAT16}
      * * {@link %{OperandTypeLinkPfx}TENSOR_FLOAT32}
      * * {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM}
+%kind ndk hal_1.3+
+     * * {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM_SIGNED} (since %{APILevel30})
+%/kind
      *
      * Inputs:
      * * 0: A 2-D Tensor of shape [num_rois, num_classes], specifying the score
@@ -3371,7 +3379,13 @@
      *      order of the boxes corresponds with input0. For input0 of type
      *      {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM}, this tensor should be of
      *      {@link %{OperandTypeLinkPfx}TENSOR_QUANT16_ASYMM}, with zeroPoint of 0 and
-     *      scale of 0.125. Zero num_rois is supported for this tensor.
+     *      scale of 0.125.
+%kind ndk hal_1.3+
+     *      For input0 of type {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM_SIGNED},
+     *      this tensor should be of {@link %{OperandTypeLinkPfx}TENSOR_QUANT16_ASYMM},
+     *      with zeroPoint of -128 and scale of 0.125.
+%/kind
+     *      Zero num_rois is supported for this tensor.
      * * 2: A 1-D {@link %{OperandTypeLinkPfx}TENSOR_INT32} tensor, of shape
      *      [num_rois], specifying the batch index of each box. Boxes with
      *      the same batch index are grouped together.
@@ -3398,6 +3412,12 @@
      *      [num_output_rois], specifying the score of each output box. The boxes
      *      are grouped by batches, but the sequential order in each batch is not
      *      guaranteed. For type of {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM},
+%kind ndk hal_1.3+
+     *      guaranteed. For type of {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM}
+     *      or {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM_SIGNED},
+%else
+     *      guaranteed. For type of {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM}
+%/kind
      *      the scale and zero point must be the same as input0.
      * * 1: A 2-D Tensor of the same {@link %{OperandType}} as input1, with shape
      *      [num_output_rois, 4], specifying the coordinates of each
@@ -3725,6 +3745,9 @@
      * * {@link %{OperandTypeLinkPfx}TENSOR_FLOAT16}
      * * {@link %{OperandTypeLinkPfx}TENSOR_FLOAT32}
      * * {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM}
+%kind ndk hal_1.3+
+     * * {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM_SIGNED} (since %{APILevel30})
+%/kind
      *
      * Inputs:
      * * 0: A 4-D Tensor specifying the score of each anchor at each
@@ -3742,11 +3765,21 @@
      *      dimensions is the channel dimension.
      * * 2: A 2-D Tensor of shape [num_anchors, 4], specifying the shape of each
      *      predefined anchor, with format [x1, y1, x2, y2]. For input0 of type
+%kind ndk hal_1.3+
+     *      {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM} or
+     *      {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM_SIGNED}, this tensor should be of
+%else
      *      {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM}, this tensor should be of
+%/kind
      *      {@link %{OperandTypeLinkPfx}TENSOR_QUANT16_SYMM}, with scale of 0.125.
      * * 3: A 2-D Tensor of shape [batches, 2], specifying the size of
      *      each image in the batch, with format [image_height, image_width].
+%kind ndk hal_1.3+
+     *      For input0 of type {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM} or
+     *      {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM_SIGNED}, this
+%else
      *      For input0 of type {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM}, this
+%/kind
      *      tensor should be of {@link %{OperandTypeLinkPfx}TENSOR_QUANT16_SYMM}, with
      *      scale of 0.125.
      * * 4: An {@link %{OperandTypeLinkPfx}FLOAT32} scalar, specifying the ratio
@@ -3773,7 +3806,12 @@
      *      [num_output_rois], specifying the score of each output box.
      *      The boxes are grouped by batches, but the sequential order in
      *      each batch is not guaranteed. For type of
+%kind ndk hal_1.3+
+     *      {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM} or
+     *      {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM_SIGNED}, the scale and zero
+%else
      *      {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM}, the scale and zero
+%/kind
      *      point must be the same as input0.
      * * 1: A tensor of the same {@link %{OperandType}} as input3, of shape
      *      [num_output_rois, 4], specifying the coordinates of each output
