@@ -52,7 +52,7 @@ cc_library {
 
     stubs: {
         versions: [
-            "29",
+            "30",
         ],
         symbol_file: "libneuralnetworks.map.txt",
     },
