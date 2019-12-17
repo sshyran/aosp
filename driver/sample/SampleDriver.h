@@ -17,6 +17,8 @@
 #ifndef ANDROID_FRAMEWORKS_ML_NN_DRIVER_SAMPLE_SAMPLE_DRIVER_H
 #define ANDROID_FRAMEWORKS_ML_NN_DRIVER_SAMPLE_SAMPLE_DRIVER_H
 
+#include <hwbinder/IPCThreadState.h>
+
 #include <string>
 #include <vector>
 
@@ -42,7 +44,6 @@ class SampleDriver : public hal::IDevice {
         : mName(name), mOperationResolver(operationResolver) {
         android::nn::initVLogMask();
     }
-    ~SampleDriver() override {}
     hal::Return<void> getCapabilities(getCapabilities_cb cb) override;
     hal::Return<void> getCapabilities_1_1(getCapabilities_1_1_cb cb) override;
     hal::Return<void> getCapabilities_1_2(getCapabilities_1_2_cb cb) override;
@@ -104,9 +105,15 @@ class SampleDriver : public hal::IDevice {
 class SamplePreparedModel : public hal::IPreparedModel {
    public:
     SamplePreparedModel(const hal::Model& model, const SampleDriver* driver,
-                        hal::ExecutionPreference preference)
-        : mModel(model), mDriver(driver), kPreference(preference) {}
-    ~SamplePreparedModel() override {}
+                        hal::ExecutionPreference preference, uid_t userId, hal::Priority priority)
+        : mModel(model),
+          mDriver(driver),
+          kPreference(preference),
+          kUserId(userId),
+          kPriority(priority) {
+        (void)kUserId;
+        (void)kPriority;
+    }
     bool initialize();
     hal::Return<hal::V1_0::ErrorStatus> execute(
             const hal::V1_0::Request& request,
@@ -136,6 +143,8 @@ class SamplePreparedModel : public hal::IPreparedModel {
     const SampleDriver* mDriver;
     std::vector<RunTimePoolInfo> mPoolInfos;
     const hal::ExecutionPreference kPreference;
+    const uid_t kUserId;
+    const hal::Priority kPriority;
 };
 
 }  // namespace sample_driver

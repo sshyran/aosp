@@ -19,6 +19,7 @@
 #include "ExecutionBuilder.h"
 
 #include <algorithm>
+#include <limits>
 #include <memory>
 #include <mutex>
 #include <optional>
@@ -265,6 +266,32 @@ int ExecutionBuilder::getDuration(int32_t durationCode, uint64_t* duration) cons
 
     VLOG(EXECUTION) << "getDuration(" << durationCode << "): " << *duration;
     return ANEURALNETWORKS_NO_ERROR;
+}
+
+int ExecutionBuilder::setTimeoutDuration(uint64_t duration) {
+    if (!mCompilation->mExplicitDeviceList || (mCompilation->mDevices.size() != 1)) {
+        LOG(ERROR) << "ANeuralNetworksExecution_setTimeout called on an ANeuralNetworksExecution "
+                      "created from an ANeuralNetworksCompilation that was not created by "
+                      "ANeuralNetworksCompilation_createForDevices with numDevices = 1";
+        return ANEURALNETWORKS_BAD_DATA;
+    }
+    const auto& device = mCompilation->mDevices.front();
+    const bool supportsExecutionDeadline = device->supportsDeadlines().second;
+    if (!supportsExecutionDeadline) {
+        LOG(ERROR) << "ANeuralNetworksExecution_setTimeout called on device that does not support "
+                      "execution timeouts.";
+        return ANEURALNETWORKS_BAD_DATA;
+    }
+    if (mStarted) {
+        LOG(ERROR) << "ANeuralNetworksExecution_setTimeout called after the execution has started.";
+        return ANEURALNETWORKS_BAD_STATE;
+    }
+    mTimeoutDuration = duration;
+    return ANEURALNETWORKS_NO_ERROR;
+}
+
+std::optional<uint64_t> ExecutionBuilder::getTimeoutDuration() const {
+    return mTimeoutDuration;
 }
 
 int ExecutionBuilder::getOutputOperandDimensions(uint32_t index, uint32_t* dimensions) {
@@ -740,8 +767,12 @@ std::tuple<int, std::vector<OutputShape>, Timing> StepExecutor::compute(
     }
 
     const MeasureTiming measure = measureTiming(mExecutionBuilder);
-    const auto [n, outputShapes, timing] =
-            mPreparedModel->execute(mInputs, mOutputs, mMemories, burstController, measure);
+    const auto [timePointN, deadline] = makeTimePoint(mExecutionBuilder->getTimeoutDuration());
+    if (timePointN != ANEURALNETWORKS_NO_ERROR) {
+        return {timePointN, {}, kNoTiming};
+    }
+    const auto [n, outputShapes, timing] = mPreparedModel->execute(
+            mInputs, mOutputs, mMemories, burstController, measure, deadline);
     mExecutionBuilder->reportTiming(timing);
 
     return {n, std::move(outputShapes), timing};
@@ -754,11 +785,14 @@ std::tuple<int, std::vector<OutputShape>, Timing> StepExecutor::computeOnCpuFall
     mDevice = DeviceManager::getCpuDevice();
     mPreparedModel = nullptr;
     const ModelFactory makeModel = [this] { return mModel->makeHidlModel(); };
-    // TODO: Propagate user preference to this point instead of using default value of
-    // ANEURALNETWORKS_PREFER_FAST_SINGLE_ANSWER.
+    // TODO: Propagate user preference and compilation priority to this point instead of using
+    // default values of ANEURALNETWORKS_PREFER_FAST_SINGLE_ANSWER and
+    // ANEURALNETWORKS_PRIORITY_MEDIUM
     const ExecutionPreference preference =
             static_cast<ExecutionPreference>(ANEURALNETWORKS_PREFER_FAST_SINGLE_ANSWER);
-    const auto [n, preparedModel] = mDevice->prepareModel(makeModel, preference, {}, {});
+    const Priority priority = convertToHalPriority(ANEURALNETWORKS_PRIORITY_DEFAULT);
+    const auto [n, preparedModel] =
+            mDevice->prepareModel(makeModel, preference, priority, {}, {}, {});
     mPreparedModel = preparedModel;
     if (n != ANEURALNETWORKS_NO_ERROR) {
         return {n, {}, kNoTiming};

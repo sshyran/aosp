@@ -58,7 +58,7 @@ class PreparedModel {
             const std::vector<ModelArgumentInfo>& inputs,
             const std::vector<ModelArgumentInfo>& outputs, const MemoryTracker& memories,
             const std::shared_ptr<ExecutionBurstController>& burstController,
-            hal::MeasureTiming measure) const = 0;
+            hal::MeasureTiming measure, const hal::OptionalTimePoint& deadline) const = 0;
 
     virtual std::shared_ptr<ExecutionBurstController> configureExecutionBurst(
             bool preferPowerOverLatency) const = 0;
@@ -86,9 +86,12 @@ class Device {
     virtual hal::PerformanceInfo getRelaxedFloat32toFloat16PerformanceScalar() const = 0;
     virtual hal::PerformanceInfo getRelaxedFloat32toFloat16PerformanceTensor() const = 0;
     virtual bool isCachingSupported() const = 0;
+    virtual std::pair<bool, bool> supportsDeadlines() const = 0;
+    virtual int wait() const = 0;
 
     virtual std::pair<int, std::shared_ptr<PreparedModel>> prepareModel(
             const hal::ModelFactory& makeModel, hal::ExecutionPreference preference,
+            hal::Priority priority, const hal::OptionalTimePoint& deadline,
             const std::string& cacheDir,
             const std::optional<hal::CacheToken>& maybeToken) const = 0;
 
