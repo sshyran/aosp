@@ -293,7 +293,7 @@ void asyncExecute(const Request& request, MeasureTiming measure, time_point driv
 template <typename T_IExecutionCallback>
 ErrorStatus executeBase(const Request& request, MeasureTiming measure, const Model& model,
                         const SampleDriver& driver, const std::vector<RunTimePoolInfo>& poolInfos,
-                        const OptionalTimePoint& /*deadline*/,
+                        const OptionalTimePoint& deadline,
                         const sp<T_IExecutionCallback>& callback) {
     NNTRACE_FULL(NNTRACE_LAYER_DRIVER, NNTRACE_PHASE_EXECUTION, "SampleDriver::executeBase");
     VLOG(DRIVER) << "executeBase(" << SHOW_IF_DEBUG(toString(request)) << ")";
@@ -306,6 +306,10 @@ ErrorStatus executeBase(const Request& request, MeasureTiming measure, const Mod
         return ErrorStatus::INVALID_ARGUMENT;
     }
     if (!validateRequest(request, model)) {
+        notify(callback, ErrorStatus::INVALID_ARGUMENT, {}, kNoTiming);
+        return ErrorStatus::INVALID_ARGUMENT;
+    }
+    if (deadline.getDiscriminator() != OptionalTimePoint::hidl_discriminator::none) {
         notify(callback, ErrorStatus::INVALID_ARGUMENT, {}, kNoTiming);
         return ErrorStatus::INVALID_ARGUMENT;
     }
@@ -343,7 +347,7 @@ Return<V1_3::ErrorStatus> SamplePreparedModel::execute_1_3(
 static std::tuple<ErrorStatus, hidl_vec<OutputShape>, Timing> executeSynchronouslyBase(
         const Request& request, MeasureTiming measure, const Model& model,
         const SampleDriver& driver, const std::vector<RunTimePoolInfo>& poolInfos,
-        const OptionalTimePoint& /*deadline*/) {
+        const OptionalTimePoint& deadline) {
     NNTRACE_FULL(NNTRACE_LAYER_DRIVER, NNTRACE_PHASE_EXECUTION,
                  "SampleDriver::executeSynchronouslyBase");
     VLOG(DRIVER) << "executeSynchronouslyBase(" << SHOW_IF_DEBUG(toString(request)) << ")";
@@ -352,6 +356,9 @@ static std::tuple<ErrorStatus, hidl_vec<OutputShape>, Timing> executeSynchronous
     if (measure == MeasureTiming::YES) driverStart = now();
 
     if (!validateRequest(request, model)) {
+        return {ErrorStatus::INVALID_ARGUMENT, {}, kNoTiming};
+    }
+    if (deadline.getDiscriminator() != OptionalTimePoint::hidl_discriminator::none) {
         return {ErrorStatus::INVALID_ARGUMENT, {}, kNoTiming};
     }
 
@@ -509,7 +516,7 @@ Return<void> SamplePreparedModel::configureExecutionBurst(
     NNTRACE_FULL(NNTRACE_LAYER_DRIVER, NNTRACE_PHASE_EXECUTION,
                  "SampleDriver::configureExecutionBurst");
 
-    const bool preferPowerOverLatency = (kPreference == hal::ExecutionPreference::LOW_POWER);
+    const bool preferPowerOverLatency = (kPreference == ExecutionPreference::LOW_POWER);
     const auto pollingTimeWindow =
             (preferPowerOverLatency ? std::chrono::microseconds{0} : getPollingTimeWindow());
 

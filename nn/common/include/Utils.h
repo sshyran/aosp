@@ -131,6 +131,12 @@ void initVLogMask();
 #define NN_RET_CHECK_GE(x, y) NN_RET_CHECK_OP(x, y, >=)
 #define NN_RET_CHECK_GT(x, y) NN_RET_CHECK_OP(x, y, >)
 
+// Make an optional time point from an optional duration. If the operation
+// succeeds, a pair of {ANEURALNETWORKS_NO_ERROR, timepoint} is returned. If an
+// overflow occurs in this function, {ANEURALNETWORKS_BAD_DATA, empty} is
+// returned.
+std::pair<int, hal::OptionalTimePoint> makeTimePoint(std::optional<uint64_t> duration);
+
 // Ensure that every user of FalseyErrorStream is linked to the
 // correct instance, using the correct LOG_TAG
 namespace {
