@@ -143,6 +143,11 @@ class PreparedModelCallback : public hal::IPreparedModelCallback {
                                  const sp<hal::V1_3::IPreparedModel>& preparedModel) override;
 
     /**
+     * Mark the callback object as a dead object. This acts as a call to notify.
+     */
+    void notifyAsDeadObject();
+
+    /**
      * PreparedModelCallback::wait blocks until notify* has been called on the
      * callback object.
      */
@@ -178,13 +183,21 @@ class PreparedModelCallback : public hal::IPreparedModelCallback {
      */
     sp<hal::V1_0::IPreparedModel> getPreparedModel() const;
 
+    /**
+     * Queries whether the object is dead.
+     *
+     * @return 'true' if dead, 'false' otherwise.
+     */
+    bool isDeadObject() const;
+
    private:
-    hal::Return<void> notifyInternal(hal::ErrorStatus errorStatus,
+    hal::Return<void> notifyInternal(bool deadObject, hal::ErrorStatus errorStatus,
                                      const sp<hal::V1_0::IPreparedModel>& preparedModel);
 
     mutable std::mutex mMutex;
     mutable std::condition_variable mCondition;
     bool mNotified GUARDED_BY(mMutex) = false;
+    bool mDeadObject = false;
     hal::ErrorStatus mErrorStatus = hal::ErrorStatus::GENERAL_FAILURE;
     sp<hal::V1_0::IPreparedModel> mPreparedModel;
 };
@@ -317,6 +330,11 @@ class ExecutionCallback : public hal::IExecutionCallback {
     }
 
     /**
+     * Mark the callback object as a dead object. This acts as a call to notify.
+     */
+    void notifyAsDeadObject();
+
+    /**
      * ExecutionCallback::wait blocks until notify* has been called on the
      * callback object.
      */
@@ -428,6 +446,13 @@ class ExecutionCallback : public hal::IExecutionCallback {
      */
     void setOnFinish(const ExecutionFinish& finish);
 
+    /**
+     * Queries whether the object is dead.
+     *
+     * @return 'true' if dead, 'false' otherwise.
+     */
+    bool isDeadObject() const;
+
    private:
     /*
      * ExecutionCallback::notifyInternal stores the results of the execution
@@ -436,8 +461,8 @@ class ExecutionCallback : public hal::IExecutionCallback {
      * before any call to wait or get* return. It then enables all prior and
      * future wait calls on the ExecutionCallback object to proceed.
      */
-    hal::Return<void> notifyInternal(hal::ErrorStatus errorStatus,
-                                     hal::hidl_vec<hal::OutputShape> outputShapes,
+    hal::Return<void> notifyInternal(bool deadObject, hal::ErrorStatus errorStatus,
+                                     std::vector<hal::OutputShape> outputShapes,
                                      hal::Timing timing);
 
     // members
@@ -446,6 +471,7 @@ class ExecutionCallback : public hal::IExecutionCallback {
     mutable std::thread mThread GUARDED_BY(mMutex);
     ExecutionFinish mOnFinish GUARDED_BY(mMutex);
     bool mNotified GUARDED_BY(mMutex) = false;
+    bool mDeadObject = false;
     hal::ErrorStatus mErrorStatus = hal::ErrorStatus::GENERAL_FAILURE;
     std::vector<hal::OutputShape> mOutputShapes;
     hal::Timing mTiming = {};

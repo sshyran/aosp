@@ -90,6 +90,29 @@ void initVLogMask() {
     }
 }
 
+static std::pair<int, OptionalTimePoint> makeTimePoint(uint64_t duration) {
+    const auto currentTime = std::chrono::steady_clock::now();
+    const auto currentTimeInNanoseconds =
+            std::chrono::time_point_cast<std::chrono::nanoseconds>(currentTime);
+    const uint64_t nanosecondsSinceEpoch = currentTimeInNanoseconds.time_since_epoch().count();
+
+    // check for overflow
+    if (std::numeric_limits<uint64_t>::max() - nanosecondsSinceEpoch < duration) {
+        LOG(ERROR) << "Launching execution failed due to time point overflow";
+        return {ANEURALNETWORKS_BAD_DATA, {}};
+    }
+    const uint64_t nanosecondsAtTimeout = nanosecondsSinceEpoch + duration;
+
+    OptionalTimePoint otp;
+    otp.nanoseconds(nanosecondsAtTimeout);
+    return {ANEURALNETWORKS_NO_ERROR, otp};
+}
+
+std::pair<int, OptionalTimePoint> makeTimePoint(std::optional<uint64_t> duration) {
+    const std::pair<int, OptionalTimePoint> empty = {ANEURALNETWORKS_NO_ERROR, {}};
+    return duration.has_value() ? makeTimePoint(*duration) : empty;
+}
+
 static bool isExtensionOperandType(int32_t type) {
     return static_cast<uint32_t>(type) > static_cast<uint32_t>(OperandTypeRange::BASE_MAX);
 }
