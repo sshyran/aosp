@@ -302,10 +302,40 @@ struct TestModel {
         return newTestModel;
     }
 
-    bool hasQuant8AsymmOperands() const {
-        for (const TestOperand& operand : operands) {
-            if (operand.type == test_helper::TestOperandType::TENSOR_QUANT8_ASYMM) {
-                return true;
+    bool hasQuant8CoupledOperands() const {
+        for (const TestOperation& operation : operations) {
+            /*
+             *  There are several ops that are exceptions to the general quant8
+             *  types coupling:
+             *  HASHTABLE_LOOKUP -- due to legacy reasons uses
+             *    TENSOR_QUANT8_ASYMM tensor as if it was TENSOR_BOOL. It
+             *    doesn't make sense to have coupling in this case.
+             *  LSH_PROJECTION -- hashes an input tensor treating it as raw
+             *    bytes. We can't expect same results for coupled inputs.
+             *  PAD_V2 -- pad_value is set using int32 scalar, so coupling
+             *    produces a wrong result.
+             *  CAST -- converts tensors without taking into account input's
+             *    scale and zero point. Coupled models shouldn't produce same
+             *    results.
+             *  QUANTIZED_16BIT_LSTM -- the op is made for a specific use case,
+             *    supporting signed quantization is not worth the compications.
+             */
+            if (operation.type == TestOperationType::HASHTABLE_LOOKUP ||
+                operation.type == TestOperationType::LSH_PROJECTION ||
+                operation.type == TestOperationType::PAD_V2 ||
+                operation.type == TestOperationType::CAST ||
+                operation.type == TestOperationType::QUANTIZED_16BIT_LSTM) {
+                continue;
+            }
+            for (const auto operandIndex : operation.inputs) {
+                if (operands[operandIndex].type == TestOperandType::TENSOR_QUANT8_ASYMM) {
+                    return true;
+                }
+            }
+            for (const auto operandIndex : operation.outputs) {
+                if (operands[operandIndex].type == TestOperandType::TENSOR_QUANT8_ASYMM) {
+                    return true;
+                }
             }
         }
         return false;
