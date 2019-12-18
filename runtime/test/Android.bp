@@ -175,6 +175,9 @@ cc_fuzz {
     name: "libneuralnetworks_fuzzer",
     defaults: ["NeuralNetworksTest_default_libs"],
     owner: "google",
+    fuzz_config: {
+        cc: ["butlermichael@google.com"],
+    },
     srcs: [
         "android_fuzzing/Converter.cpp",
         "android_fuzzing/FuzzTest.cpp",
