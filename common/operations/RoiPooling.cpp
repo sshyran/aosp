@@ -16,16 +16,15 @@
 
 #define LOG_TAG "Operations"
 
-#include "CpuOperationUtils.h"
-#include "HalInterfaces.h"
-#include "OperationResolver.h"
-#include "OperationsUtils.h"
-
 #include <algorithm>
 #include <cfloat>
 #include <cmath>
 #include <vector>
 
+#include "CpuOperationUtils.h"
+#include "HalInterfaces.h"
+#include "OperationResolver.h"
+#include "OperationsUtils.h"
 #include "Tracing.h"
 
 namespace android {
@@ -163,6 +162,21 @@ inline bool roiPooling<uint8_t, uint16_t>(const uint8_t* inputData, const Shape&
                                           const Shape& batchSplitShape, float heightStride,
                                           float widthStride, bool useNchw, uint8_t* outputData,
                                           const Shape& outputShape) {
+    std::vector<float> roi_float32(getNumberOfElements(roiShape));
+    convertQuantToFloat32(roiData, roiShape.scale, roiShape.offset, &roi_float32);
+    NN_RET_CHECK(roiPooling(inputData, inputShape, roi_float32.data(), roiShape, batchSplitData,
+                            batchSplitShape, heightStride, widthStride, useNchw, outputData,
+                            outputShape));
+    return true;
+}
+
+template <>
+inline bool roiPooling<int8_t, uint16_t>(const int8_t* inputData, const Shape& inputShape,
+                                         const uint16_t* roiData, const Shape& roiShape,
+                                         const int32_t* batchSplitData,
+                                         const Shape& batchSplitShape, float heightStride,
+                                         float widthStride, bool useNchw, int8_t* outputData,
+                                         const Shape& outputShape) {
     std::vector<float> roi_float32(getNumberOfElements(roiShape));
     convertQuantToFloat32(roiData, roiShape.scale, roiShape.offset, &roi_float32);
     NN_RET_CHECK(roiPooling(inputData, inputShape, roi_float32.data(), roiShape, batchSplitData,
