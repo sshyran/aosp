@@ -40,8 +40,10 @@ row = 52
 col = 60
 chn = 3
 std = 5
-flt = 100
-pad = 50
+# This was lowered from values in avg_pool_float_2, as it wasn't possible
+# to evaluate it with expected accuracy requirements with fp16 accumulator.
+flt = 35
+pad = 30
 output_row = (row + 2 * pad - flt + std) // std
 output_col = (col + 2 * pad - flt + std) // std
 
