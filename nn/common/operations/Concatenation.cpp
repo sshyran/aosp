@@ -111,8 +111,11 @@ inline bool concatenation<int8_t>(IOperationExecutionContext* context) {
     uint32_t inputCount = context->getNumInputs() - 1;
     std::vector<std::vector<uint8_t>> inputs_uint8(inputCount);
     for (int i = 0; i < inputCount; ++i) {
-        inputs_uint8[i].resize(getNumberOfElements(context->getInputShape(i)));
-        convertInt8ToUInt8(context->getInputBuffer<int8_t>(i), &inputs_uint8[i]);
+        const auto currentSize = getNumberOfElements(context->getInputShape(i));
+        inputs_uint8[i].resize(currentSize);
+        if (currentSize != 0) {
+            convertInt8ToUInt8(context->getInputBuffer<int8_t>(i), &inputs_uint8[i]);
+        }
     }
     std::vector<const uint8_t*> inputDatas;
     std::vector<Shape> inputShapes;
