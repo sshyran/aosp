@@ -303,7 +303,7 @@ void expectNear(const RandomOperand& op, const OperandBuffer& test,
 
         // Accumulate bias and MSE. Use relative bias and MSE for floating point values.
         double diff = actual - expected;
-        if constexpr (NN_IS_FLOAT(T)) {
+        if constexpr (nnIsFloat<T>) {
             diff /= std::max(1.0, std::abs(expected));
         }
         bias += diff;
