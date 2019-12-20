@@ -15,7 +15,24 @@
  */
 
 cc_defaults {
+    name: "neuralnetworks_float16",
+    arch: {
+        x86: {
+            cflags: [ "-D_Float16=__fp16",
+                      "-Xclang", "-fnative-half-type",
+                      "-Xclang", "-fallow-half-arguments-and-returns" ],
+        },
+        x86_64: {
+            cflags: [ "-D_Float16=__fp16",
+                      "-Xclang", "-fnative-half-type",
+                      "-Xclang", "-fallow-half-arguments-and-returns" ],
+        },
+    },
+}
+
+cc_defaults {
     name: "neuralnetworks_defaults",
+    defaults: ["neuralnetworks_float16"],
     cflags: [
         "-O3",
         "-Wall",

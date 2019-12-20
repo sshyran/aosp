@@ -289,6 +289,7 @@ cc_test {
 
 cc_library_static {
     name: "CtsNNAPITests_static",
+    defaults: ["neuralnetworks_float16"],
     srcs: [
         ":libneuralnetworks_generated_test_harness_for_cts",
         "CtsMain.cpp",
@@ -338,24 +339,28 @@ cc_library_static {
 
 cc_library_static {
     name: "neuralnetworks_generated_V1_0_example",
+    defaults: ["neuralnetworks_float16"],
     srcs: ["generated/spec_V1_0/*.example.cpp"],
     static_libs: ["libneuralnetworks_generated_test_harness"],
 }
 
 cc_library_static {
     name: "neuralnetworks_generated_V1_1_example",
+    defaults: ["neuralnetworks_float16"],
     srcs: ["generated/spec_V1_1/*.example.cpp"],
     static_libs: ["libneuralnetworks_generated_test_harness"],
 }
 
 cc_library_static {
     name: "neuralnetworks_generated_V1_2_example",
+    defaults: ["neuralnetworks_float16"],
     srcs: ["generated/spec_V1_2/*.example.cpp"],
     static_libs: ["libneuralnetworks_generated_test_harness"],
 }
 
 cc_library_static {
     name: "neuralnetworks_generated_V1_3_example",
+    defaults: ["neuralnetworks_float16"],
     srcs: ["generated/spec_V1_3/*.example.cpp"],
     static_libs: ["libneuralnetworks_generated_test_harness"],
 }
