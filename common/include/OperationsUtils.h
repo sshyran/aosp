@@ -45,10 +45,10 @@ enum PaddingScheme {
 
 // Stores operand type information. "Shape" is a historical name.
 struct Shape {
-    hal::OperandType type;
+    hal::OperandType type = hal::OperandType::FLOAT32;
     std::vector<uint32_t> dimensions;
-    float scale;
-    int32_t offset;
+    float scale = 0.0f;
+    int32_t offset = 0;
     hal::Operand::ExtraParams extraParams;
 };
 
