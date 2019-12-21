@@ -83,6 +83,7 @@ cc_defaults {
         "libmath",
         "libneuralnetworks_common",
         "libprocessgroup",
+        "libsync",
         "libtextclassifier_hash_static",
         "libutils",
     ],

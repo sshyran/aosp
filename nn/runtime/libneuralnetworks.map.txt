@@ -73,9 +73,12 @@ LIBNEURALNETWORKS {
     ANeuralNetworksExecution_setOutput;
     ANeuralNetworksExecution_setOutputFromMemory;
     ANeuralNetworksExecution_startCompute;
+    ANeuralNetworksExecution_startComputeWithDependencies; # introduced=30
     ANeuralNetworksExecution_getOutputOperandDimensions; # introduced=Q
     ANeuralNetworksExecution_getOutputOperandRank; # introduced=Q
     ANeuralNetworksExecution_setTimeout; # introduced=30
+    ANeuralNetworksEvent_createFromSyncFenceFd; # introduced=30
+    ANeuralNetworksEvent_getSyncFenceFd; # introduced=30
     ANeuralNetworksEvent_wait;
     ANeuralNetworksEvent_free;
   local:

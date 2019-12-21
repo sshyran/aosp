@@ -19,6 +19,7 @@
 #include "Manager.h"
 
 #include <android/hidl/manager/1.2/IServiceManager.h>
+#include <android/sync.h>
 #include <build/version.h>
 #include <hidl/HidlTransportSupport.h>
 #include <hidl/ServiceManagement.h>
@@ -127,6 +128,11 @@ class DriverPreparedModel : public PreparedModel {
             const std::vector<ModelArgumentInfo>& outputs, const MemoryTracker& memories,
             const std::shared_ptr<ExecutionBurstController>& burstController, MeasureTiming measure,
             const OptionalTimePoint& deadline) const override;
+
+    std::tuple<int, int, sp<hal::IFencedExecutionCallback>, hal::Timing> executeFenced(
+            const std::vector<ModelArgumentInfo>& inputs,
+            const std::vector<ModelArgumentInfo>& outputs, const MemoryTracker& memories,
+            const std::vector<int>& wait_for, MeasureTiming measure) const override;
 
     std::shared_ptr<ExecutionBurstController> configureExecutionBurst(
             bool preferPowerOverLatency) const override {
@@ -405,6 +411,125 @@ std::tuple<int, std::vector<OutputShape>, Timing> DriverPreparedModel::execute(
     return {ANEURALNETWORKS_NO_ERROR, std::move(outputShapes), timing};
 }
 
+std::tuple<int, int, sp<hal::IFencedExecutionCallback>, hal::Timing>
+DriverPreparedModel::executeFenced(const std::vector<ModelArgumentInfo>& inputs,
+                                   const std::vector<ModelArgumentInfo>& outputs,
+                                   const MemoryTracker& memories, const std::vector<int>& wait_for,
+                                   hal::MeasureTiming measure) const {
+    NNTRACE_RT(NNTRACE_PHASE_INPUTS_AND_OUTPUTS, "DriverPreparedModel::executeFenced");
+
+    // Make a copy of the memory tracker as we will append memory pools for pointer arguments.
+    MemoryTracker localMemories = memories;
+    sp<hal::IFencedExecutionCallback> executeFenced_callback;
+    hal::Timing timing = kNoTiming;
+
+    // We separate the input & output pools so accelerators only need to copy
+    // the contents of the input pools. We could also use it to set protection
+    // on read only memory but that's not currently done.
+
+    // Layout the input and output data
+    const auto [n1, inputPtrArgsMemory, inputPtrArgsLocations] =
+            allocatePointerArgumentsToPool(inputs, &localMemories);
+    if (n1 != ANEURALNETWORKS_NO_ERROR) {
+        return {n1, -1, nullptr, timing};
+    }
+    const auto [n2, outputPtrArgsMemory, outputPtrArgsLocations] =
+            allocatePointerArgumentsToPool(outputs, &localMemories);
+    if (n2 != ANEURALNETWORKS_NO_ERROR) {
+        return {n2, -1, nullptr, timing};
+    }
+
+    // Copy the input data that was specified via a pointer.
+    if (inputPtrArgsMemory != nullptr) {
+        uint32_t ptrInputIndex = 0;
+        for (const auto& info : inputs) {
+            if (info.state == ModelArgumentInfo::POINTER) {
+                const DataLocation& loc = inputPtrArgsLocations[ptrInputIndex++];
+                uint8_t* const data = inputPtrArgsMemory->getPointer();
+                memcpy(data + loc.offset, info.buffer, loc.length);
+            }
+        }
+    }
+
+    Request request;
+    request.inputs = createRequestArguments(inputs, inputPtrArgsLocations);
+    request.outputs = createRequestArguments(outputs, outputPtrArgsLocations);
+    uint32_t count = localMemories.size();
+    request.pools.resize(count);
+    for (uint32_t i = 0; i < count; i++) {
+        request.pools[i] = localMemories[i]->getMemoryPool();
+    }
+
+    NNTRACE_FULL_SWITCH(NNTRACE_LAYER_IPC, NNTRACE_PHASE_EXECUTION,
+                        "DriverPreparedModel::executeFenced");
+
+    int n = ANEURALNETWORKS_OP_FAILED;
+    hidl_vec<hidl_handle> wait_for_handles;
+    wait_for_handles.resize(wait_for.size());
+    for (uint32_t i = 0; i < wait_for.size(); i++) {
+        // Return if FD is invalid.
+        if (wait_for[i] <= 0) {
+            LOG(ERROR) << "Invalid file descriptor";
+            return {ANEURALNETWORKS_BAD_DATA, -1, nullptr, timing};
+        }
+        native_handle_t* nativeHandle = native_handle_create(1, 0);
+        if (nativeHandle == nullptr) {
+            LOG(ERROR) << "Failed to create native_handle";
+            return {n, -1, nullptr, timing};
+        }
+        int dup_fd = dup(wait_for[i]);
+        if (dup_fd <= 0) {
+            LOG(ERROR) << "Unable to dup the file descriptor";
+            return {n, -1, nullptr, timing};
+        }
+        nativeHandle->data[0] = dup_fd;
+        hidl_handle hidlHandle;
+        hidlHandle.setTo(nativeHandle, /*shouldOwn=*/true);
+        wait_for_handles[i] = std::move(hidlHandle);
+    }
+
+    hidl_handle sync_fence;
+    std::tie(n, sync_fence, executeFenced_callback, timing) =
+            mPreparedModel->executeFenced(request, wait_for_handles, measure);
+
+    if (n != ANEURALNETWORKS_NO_ERROR) {
+        VLOG(EXECUTION) << "**executeFenced failed**";
+        return {n, -1, nullptr, timing};
+    }
+
+    int sync_fence_fd = -1;
+    if (sync_fence.getNativeHandle()) {
+        sync_fence_fd = dup(sync_fence.getNativeHandle()->data[0]);
+        if (sync_fence_fd < 0) {
+            LOG(ERROR) << "Failed to dup the file descriptor";
+            return {ANEURALNETWORKS_OP_FAILED, -1, nullptr, timing};
+        }
+    }
+    // If output buffer is provided as a malloc pointer, wait for the execution to finish.
+    // Then copy the output data from shared memory to the output buffers.
+    if (outputPtrArgsMemory != nullptr) {
+        NNTRACE_RT_SWITCH(NNTRACE_PHASE_RESULTS, "DriverPreparedModel::executeFenced");
+        if (sync_fence_fd > 0) {
+            int r = sync_wait(sync_fence_fd, -1);
+            if (r < 0) {
+                LOG(ERROR) << "sync wait failed, fd: " << sync_fence_fd;
+                return {ANEURALNETWORKS_OP_FAILED, sync_fence_fd, nullptr, timing};
+            }
+        }
+        uint32_t ptrOutputIndex = 0;
+        for (const auto& info : outputs) {
+            if (info.state == ModelArgumentInfo::POINTER) {
+                const DataLocation& loc = outputPtrArgsLocations[ptrOutputIndex++];
+                const uint8_t* const data = outputPtrArgsMemory->getPointer();
+                memcpy(info.buffer, data + loc.offset, loc.length);
+            }
+        }
+    }
+
+    VLOG(EXECUTION) << "DriverPreparedModel::executeFenced completed";
+    return {ANEURALNETWORKS_NO_ERROR, sync_fence_fd, executeFenced_callback, timing};
+}
+
 // A special abstracted device for the CPU. Only one instance of this class will exist.
 // Use get() to retrieve it.
 class CpuDevice : public Device {
@@ -480,6 +605,11 @@ class CpuPreparedModel : public PreparedModel {
         return nullptr;
     }
 
+    std::tuple<int, int, sp<hal::IFencedExecutionCallback>, hal::Timing> executeFenced(
+            const std::vector<ModelArgumentInfo>& inputs,
+            const std::vector<ModelArgumentInfo>& outputs, const MemoryTracker& memories,
+            const std::vector<int>& wait_for, MeasureTiming measure) const override;
+
     // Prefer to use CpuPreparedModel::create.
     CpuPreparedModel(Model model, std::vector<RunTimePoolInfo> poolInfos)
         : mModel(std::move(model)), mModelPoolInfos(std::move(poolInfos)) {}
@@ -543,6 +673,27 @@ static std::tuple<int, std::vector<OutputShape>, Timing> computeOnCpu(
     int err = executor.run(model, request, modelPoolInfos, requestPoolInfos);
     const auto& outputShapes = executor.getOutputShapes();
     return {err, outputShapes, kNoTiming};
+}
+
+std::tuple<int, int, sp<hal::IFencedExecutionCallback>, hal::Timing>
+CpuPreparedModel::executeFenced(const std::vector<ModelArgumentInfo>& inputs,
+                                const std::vector<ModelArgumentInfo>& outputs,
+                                const MemoryTracker& memories, const std::vector<int>& wait_for,
+                                hal::MeasureTiming measure) const {
+    VLOG(EXECUTION)
+            << "CpuPreparedModel::executeFenced wait for sync fences to signal before execution";
+    for (int sync_fd : wait_for) {
+        if (sync_fd > 0) {
+            int r = sync_wait(sync_fd, -1);
+            if (r < 0) {
+                LOG(ERROR) << "sync wait failed, fd: " << sync_fd;
+                return {ANEURALNETWORKS_OP_FAILED, -1, nullptr, {UINT64_MAX, UINT64_MAX}};
+            }
+        }
+    }
+    const auto [result, outputShapes, timing] =
+            execute(inputs, outputs, memories, nullptr, measure, {});
+    return {result, -1, nullptr, timing};
 }
 
 // Perform computation on NNAPI CPU reference implementation.

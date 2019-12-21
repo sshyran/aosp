@@ -60,6 +60,14 @@ class PreparedModel {
             const std::shared_ptr<ExecutionBurstController>& burstController,
             hal::MeasureTiming measure, const hal::OptionalTimePoint& deadline) const = 0;
 
+    // Perform fenced computation with given input/output argument info and memory pools.
+    // The returned timing information is only valid if the callback is nullptr.
+    // Returns error_code, sync_fence, callback and timing.
+    virtual std::tuple<int, int, sp<hal::IFencedExecutionCallback>, hal::Timing> executeFenced(
+            const std::vector<ModelArgumentInfo>& inputs,
+            const std::vector<ModelArgumentInfo>& outputs, const MemoryTracker& memories,
+            const std::vector<int>& wait_for, hal::MeasureTiming measure) const = 0;
+
     virtual std::shared_ptr<ExecutionBurstController> configureExecutionBurst(
             bool preferPowerOverLatency) const = 0;
 };
