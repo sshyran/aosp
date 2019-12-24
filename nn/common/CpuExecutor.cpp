@@ -496,6 +496,9 @@ static bool convertToNhwc(RunTimeOperandInfo& to, const RunTimeOperandInfo& from
             return convertToNhwcImpl<uint8_t>(reinterpret_cast<uint8_t*>(to.buffer),
                                               reinterpret_cast<const uint8_t*>(from.buffer),
                                               fromDim);
+        } else if (from.type == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
+            return convertToNhwcImpl<int8_t>(reinterpret_cast<int8_t*>(to.buffer),
+                                             reinterpret_cast<const int8_t*>(from.buffer), fromDim);
         } else {
             LOG(ERROR) << "Unsupported data type";
             return false;
@@ -533,6 +536,10 @@ static bool convertFromNhwc(RunTimeOperandInfo& to, const RunTimeOperandInfo& fr
             return convertFromNhwcImpl<uint8_t>(reinterpret_cast<uint8_t*>(to.buffer),
                                                 reinterpret_cast<const uint8_t*>(from.buffer),
                                                 fromDim);
+        } else if (from.type == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
+            return convertFromNhwcImpl<int8_t>(reinterpret_cast<int8_t*>(to.buffer),
+                                               reinterpret_cast<const int8_t*>(from.buffer),
+                                               fromDim);
         } else {
             LOG(ERROR) << "Unsupported data type";
             return false;
@@ -1112,9 +1119,9 @@ int CpuExecutor::executeOperation(const Operation& operation, RunTimeOperandInfo
                 }
                 case OperandType::TENSOR_QUANT8_ASYMM_SIGNED: {
                     success = batchToSpaceGeneric(
-                            reinterpret_cast<const uint8_t*>(input_tmp.buffer), input_tmp.shape(),
+                            reinterpret_cast<const int8_t*>(input_tmp.buffer), input_tmp.shape(),
                             reinterpret_cast<const int32_t*>(blockSize.buffer),
-                            reinterpret_cast<uint8_t*>(output_tmp.buffer), outShape);
+                            reinterpret_cast<int8_t*>(output_tmp.buffer), outShape);
                     break;
                 }
                 default: {

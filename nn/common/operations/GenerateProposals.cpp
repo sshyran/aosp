@@ -16,11 +16,6 @@
 
 #define LOG_TAG "Operations"
 
-#include "CpuOperationUtils.h"
-#include "HalInterfaces.h"
-#include "OperationResolver.h"
-#include "OperationsUtils.h"
-
 #include <algorithm>
 #include <cfloat>
 #include <cmath>
@@ -28,6 +23,10 @@
 #include <utility>
 #include <vector>
 
+#include "CpuOperationUtils.h"
+#include "HalInterfaces.h"
+#include "OperationResolver.h"
+#include "OperationsUtils.h"
 #include "Tracing.h"
 
 namespace android {
@@ -771,15 +770,12 @@ bool prepare(IOperationExecutionContext* context) {
     NN_RET_CHECK(getSizeOfDimension(batchesShape, 0) == numRois);
     NN_RET_CHECK_GT(numClasses, 1);
 
-    if (scoreShape.type == OperandType::TENSOR_QUANT8_ASYMM) {
+    if (scoreShape.type == OperandType::TENSOR_QUANT8_ASYMM ||
+        scoreShape.type == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
         NN_RET_CHECK_EQ(roiShape.scale, 0.125f);
         NN_RET_CHECK_EQ(roiShape.offset, 0);
     }
 
-    if (scoreShape.type == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
-        NN_RET_CHECK_EQ(roiShape.scale, 0.125f);
-        NN_RET_CHECK_EQ(roiShape.offset, -128);
-    }
     outputScoreShape.type = scoreShape.type;
     outputScoreShape.dimensions = {0};
     outputScoreShape.scale = scoreShape.scale;
