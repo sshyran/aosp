@@ -328,6 +328,9 @@ class Event {
         mEvent = newEvent;
     }
 
+    // Only for use by Execution
+    ANeuralNetworksEvent* getHandle() const { return mEvent; }
+
    private:
     ANeuralNetworksEvent* mEvent = nullptr;
 };
