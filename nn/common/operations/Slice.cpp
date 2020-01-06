@@ -86,11 +86,17 @@ bool validate(const IOperationValidationContext* context) {
     NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
 
     const OperandType inputType = context->getInputType(kInputTensor);
-    NN_RET_CHECK(
-            inputType == OperandType::TENSOR_FLOAT16 || inputType == OperandType::TENSOR_FLOAT32 ||
-            inputType == OperandType::TENSOR_INT32 || inputType == OperandType::TENSOR_QUANT8_ASYMM)
+    NN_RET_CHECK(inputType == OperandType::TENSOR_FLOAT16 ||
+                 inputType == OperandType::TENSOR_FLOAT32 ||
+                 inputType == OperandType::TENSOR_INT32 ||
+                 inputType == OperandType::TENSOR_QUANT8_ASYMM ||
+                 inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED)
             << "Unsupported tensor type for operation " << kOperationName;
-    NN_RET_CHECK(validateHalVersion(context, HalVersion::V1_2));
+    if (inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
+        NN_RET_CHECK(validateHalVersion(context, HalVersion::V1_3));
+    } else {
+        NN_RET_CHECK(validateHalVersion(context, HalVersion::V1_2));
+    }
     return validateInputTypes(context,
                               {inputType, OperandType::TENSOR_INT32, OperandType::TENSOR_INT32}) &&
            validateOutputTypes(context, {inputType});
@@ -167,6 +173,15 @@ bool execute(IOperationExecutionContext* context) {
                                context->getInputBuffer<int32_t>(kSizeTensor),
                                context->getInputShape(kSizeTensor),
                                context->getOutputBuffer<uint8_t>(kOutputTensor),
+                               context->getOutputShape(kOutputTensor));
+        case OperandType::TENSOR_QUANT8_ASYMM_SIGNED:
+            return evalGeneric(context->getInputBuffer<int8_t>(kInputTensor),
+                               context->getInputShape(kInputTensor),
+                               context->getInputBuffer<int32_t>(kBeginTensor),
+                               context->getInputShape(kBeginTensor),
+                               context->getInputBuffer<int32_t>(kSizeTensor),
+                               context->getInputShape(kSizeTensor),
+                               context->getOutputBuffer<int8_t>(kOutputTensor),
                                context->getOutputShape(kOutputTensor));
         default:
             NN_RET_CHECK_FAIL() << "Unsupported tensor type for operation " << kOperationName;

@@ -373,7 +373,8 @@ bool calculateBroadcastedShape(const Shape& in1, const Shape& in2, Shape* out) {
     return true;
 }
 
-uint8_t requantize(uint8_t value, const Shape& oldShape, const Shape& newShape) {
+template <>
+uint8_t requantize<uint8_t>(uint8_t value, const Shape& oldShape, const Shape& newShape) {
     double doubleValue = (value - oldShape.offset) * oldShape.scale;
     double doubleRet = doubleValue / newShape.scale + newShape.offset;
     if (doubleRet < 0) return 0;
@@ -381,7 +382,8 @@ uint8_t requantize(uint8_t value, const Shape& oldShape, const Shape& newShape) 
     return static_cast<uint8_t>(std::round(doubleRet));
 }
 
-int8_t requantize(int8_t value, const Shape& oldShape, const Shape& newShape) {
+template <>
+int8_t requantize<int8_t>(int8_t value, const Shape& oldShape, const Shape& newShape) {
     double doubleValue = (value - oldShape.offset) * oldShape.scale;
     double doubleRet = doubleValue / newShape.scale + newShape.offset;
     if (doubleRet < -128) return -128;
@@ -391,53 +393,6 @@ int8_t requantize(int8_t value, const Shape& oldShape, const Shape& newShape) {
 
 bool floorPrepare(const Shape& input, Shape* output) {
     return SetShape(input, output);
-}
-
-bool depthwiseConvPrepare(const Shape& input, const Shape& filter, const Shape& bias,
-                          int32_t padding_left, int32_t padding_right, int32_t padding_top,
-                          int32_t padding_bottom, int32_t stride_width, int32_t stride_height,
-                          int32_t depth_multiplier, int32_t dilation_width_factor,
-                          int32_t dilation_height_factor, Shape* output) {
-    if (filter.type == OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL) {
-        NN_OPS_CHECK(input.type == OperandType::TENSOR_QUANT8_ASYMM);
-    } else {
-        NN_OPS_CHECK(input.type == filter.type);
-    }
-    if (input.type == OperandType::TENSOR_QUANT8_ASYMM) {
-        NN_OPS_CHECK(bias.type == OperandType::TENSOR_INT32);
-    } else {
-        NN_OPS_CHECK(input.type == bias.type);
-    }
-    NN_OPS_CHECK(getNumberOfDimensions(input) == 4);
-    NN_OPS_CHECK(getNumberOfDimensions(filter) == 4);
-    NN_OPS_CHECK(getNumberOfDimensions(bias) == 1);
-
-    NN_OPS_CHECK(getSizeOfDimension(filter, 3) == getSizeOfDimension(bias, 0));
-
-    uint32_t channels_out = getSizeOfDimension(filter, 3);
-    uint32_t channels_in = getSizeOfDimension(input, 3);
-    uint32_t width = getSizeOfDimension(input, 2);
-    uint32_t height = getSizeOfDimension(input, 1);
-    uint32_t filterWidth = getSizeOfDimension(filter, 2);
-    uint32_t filterHeight = getSizeOfDimension(filter, 1);
-    uint32_t batches = getSizeOfDimension(input, 0);
-
-    NN_OPS_CHECK(depth_multiplier * channels_in == channels_out);
-    int32_t effectiveFilterWidth = (filterWidth - 1) * dilation_width_factor + 1;
-    int32_t effectiveFilterHeight = (filterHeight - 1) * dilation_height_factor + 1;
-    NN_RET_CHECK_GT(effectiveFilterWidth, padding_left);
-    NN_RET_CHECK_GT(effectiveFilterWidth, padding_right);
-    NN_RET_CHECK_GT(effectiveFilterHeight, padding_top);
-    NN_RET_CHECK_GT(effectiveFilterHeight, padding_bottom);
-
-    uint32_t outWidth = computeOutSize(width, filterWidth, stride_width, dilation_width_factor,
-                                       padding_left, padding_right);
-    uint32_t outHeight = computeOutSize(height, filterHeight, stride_height, dilation_height_factor,
-                                        padding_top, padding_bottom);
-
-    output->type = input.type;
-    output->dimensions = {batches, outHeight, outWidth, channels_out};
-    return true;
 }
 
 bool genericActivationPrepare(const Shape& input, Shape* output) {
@@ -774,11 +729,13 @@ bool groupedConvPrepare(const Shape& input, const Shape& filter, const Shape& bi
                         int32_t padding_bottom, int32_t stride_width, int32_t stride_height,
                         int32_t numGroups, Shape* output) {
     if (filter.type == OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL) {
-        NN_OPS_CHECK(input.type == OperandType::TENSOR_QUANT8_ASYMM);
+        NN_OPS_CHECK(input.type == OperandType::TENSOR_QUANT8_ASYMM ||
+                     input.type == OperandType::TENSOR_QUANT8_ASYMM_SIGNED);
     } else {
         NN_OPS_CHECK(input.type == filter.type);
     }
-    if (input.type == OperandType::TENSOR_QUANT8_ASYMM) {
+    if (input.type == OperandType::TENSOR_QUANT8_ASYMM ||
+        input.type == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
         NN_OPS_CHECK(bias.type == OperandType::TENSOR_INT32);
     } else {
         NN_OPS_CHECK(input.type == bias.type);
