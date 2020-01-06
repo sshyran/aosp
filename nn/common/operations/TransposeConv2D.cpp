@@ -16,14 +16,18 @@
 
 #define LOG_TAG "Operations"
 
+#include <tensorflow/lite/kernels/internal/common.h>
+
+#include <algorithm>
+#include <cfloat>
+#include <cmath>
+#include <memory>
+#include <vector>
+
 #include "CpuOperationUtils.h"
 #include "HalInterfaces.h"
 #include "OperationResolver.h"
 #include "Tracing.h"
-
-#include <tensorflow/lite/kernels/internal/common.h>
-#include <cfloat>
-#include <cmath>
 
 namespace android {
 namespace nn {
@@ -172,10 +176,10 @@ bool transposeConvNhwc(const float* inputData, const Shape& inputShape, const fl
     return true;
 }
 
-bool transposeConvNhwc(const uint8_t* inputData, const Shape& inputShape, const uint8_t* filterData,
+template <typename T>
+bool transposeConvNhwc(const T* inputData, const Shape& inputShape, const T* filterData,
                        const Shape& filterShape, const int32_t* biasData, const Shape& biasShape,
-                       const TransposeConv2dParam& param, uint8_t* outputData,
-                       const Shape& outputShape) {
+                       const TransposeConv2dParam& param, T* outputData, const Shape& outputShape) {
     NNTRACE_TRANS("transposeConvQuant8");
     ANDROID_NN_TRANSPOSE_CONV_PARAMETERS
 
@@ -207,14 +211,14 @@ bool transposeConvNhwc(const uint8_t* inputData, const Shape& inputShape, const 
     outputShift = -exponent;
 
     int32_t outputActivationMin = 0, outputActivationMax = 0;
-    CalculateActivationRangeUint8(activation, outputShape, &outputActivationMin,
-                                  &outputActivationMax);
+    CalculateActivationRange<T>(activation, outputShape, &outputActivationMin,
+                                &outputActivationMax);
 
     // Prevent concurrent executions that may access the scratch buffer
     std::unique_lock<std::mutex> lock(executionMutex);
     memset(tempBuffer, 0, tempBufferByteSize);
 
-    const uint8_t* inputPtr = inputData;
+    const T* inputPtr = inputData;
     int32_t* outputBase = tempBuffer;
     for (uint32_t b = 0; b < numBatches; b++) {
         for (uint32_t h = 0; h < inputHeight; h++) {
@@ -253,14 +257,14 @@ bool transposeConvNhwc(const uint8_t* inputData, const Shape& inputShape, const 
 
     const uint32_t outerSize = numBatches * outputHeight * outputWidth;
     int32_t* bufferPtr = tempBuffer;
-    uint8_t* outPtr = outputData;
+    T* outPtr = outputData;
     for (uint32_t i = 0; i < outerSize; i++) {
         for (uint32_t d = 0; d < outputDepth; d++, bufferPtr++, outPtr++) {
             int32_t outVal = *bufferPtr + biasData[d];
             outVal = tflite::MultiplyByQuantizedMultiplier(outVal, outputMultiplier, -outputShift);
             outVal += outputOffset;
             outVal = std::max(std::min(outVal, outputActivationMax), outputActivationMin);
-            *outPtr = static_cast<uint8_t>(outVal);
+            *outPtr = static_cast<T>(outVal);
         }
     }
 
@@ -306,11 +310,12 @@ bool transposeConv(const T_Input* inputData, const Shape& inputShape, const T_Fi
     return true;
 }
 
-bool transposeConvQuant8PerChannelNhwc(const uint8_t* inputData, const Shape& inputShape,
+template <typename T>
+bool transposeConvQuant8PerChannelNhwc(const T* inputData, const Shape& inputShape,
                                        const int8_t* filterData, const Shape& filterShape,
                                        const float* filterScales, const int32_t* biasData,
                                        const Shape& biasShape, const TransposeConv2dParam& param,
-                                       uint8_t* outputData, const Shape& outputShape) {
+                                       T* outputData, const Shape& outputShape) {
     NNTRACE_TRANS("transposeConvQuant8PerChannel");
     ANDROID_NN_TRANSPOSE_CONV_PARAMETERS
 
@@ -348,14 +353,14 @@ bool transposeConvQuant8PerChannelNhwc(const uint8_t* inputData, const Shape& in
     }
 
     int32_t outputActivationMin = 0, outputActivationMax = 0;
-    CalculateActivationRangeUint8(activation, outputShape, &outputActivationMin,
-                                  &outputActivationMax);
+    CalculateActivationRange<T>(activation, outputShape, &outputActivationMin,
+                                &outputActivationMax);
 
     // Prevent concurrent executions that may access the scratch buffer
     std::unique_lock<std::mutex> lock(executionMutex);
     memset(tempBuffer, 0, tempBufferByteSize);
 
-    const uint8_t* inputPtr = inputData;
+    const T* inputPtr = inputData;
     int32_t* outputBase = tempBuffer;
     for (uint32_t b = 0; b < numBatches; b++) {
         for (uint32_t h = 0; h < inputHeight; h++) {
@@ -393,7 +398,7 @@ bool transposeConvQuant8PerChannelNhwc(const uint8_t* inputData, const Shape& in
 
     const uint32_t outerSize = numBatches * outputHeight * outputWidth;
     int32_t* bufferPtr = tempBuffer;
-    uint8_t* outPtr = outputData;
+    T* outPtr = outputData;
     for (uint32_t i = 0; i < outerSize; i++) {
         for (uint32_t d = 0; d < outputDepth; d++, bufferPtr++, outPtr++) {
             int32_t outVal = *bufferPtr + biasData[d];
@@ -401,20 +406,21 @@ bool transposeConvQuant8PerChannelNhwc(const uint8_t* inputData, const Shape& in
                                                            -outputShift[d]);
             outVal += outputOffset;
             outVal = std::max(std::min(outVal, outputActivationMax), outputActivationMin);
-            *outPtr = static_cast<uint8_t>(outVal);
+            *outPtr = static_cast<T>(outVal);
         }
     }
 
     return true;
 }
 
-bool transposeConvQuant8PerChannel(const uint8_t* inputData, const Shape& inputShape,
+template <typename T>
+bool transposeConvQuant8PerChannel(const T* inputData, const Shape& inputShape,
                                    const int8_t* filterData, const Shape& filterShape,
                                    const float* filterScales, const int32_t* biasData,
                                    const Shape& biasShape, const TransposeConv2dParam& param,
-                                   uint8_t* outputData, const Shape& outputShape) {
-    InputWithLayout<uint8_t> input(param.useNchw);
-    OutputWithLayout<uint8_t> output(param.useNchw);
+                                   T* outputData, const Shape& outputShape) {
+    InputWithLayout<T> input(param.useNchw);
+    OutputWithLayout<T> output(param.useNchw);
     NN_RET_CHECK(input.initialize(inputData, inputShape));
     NN_RET_CHECK(output.initialize(outputData, outputShape));
     NN_RET_CHECK(transposeConvQuant8PerChannelNhwc(
@@ -430,15 +436,17 @@ bool transposeConvQuant8PerChannel(const uint8_t* inputData, const Shape& inputS
 
 bool validate(const IOperationValidationContext* context) {
     NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
-    auto inputCount = context->getNumInputs();
-    auto inputType = context->getInputType(kInputTensor);
-    auto filterType = context->getInputType(kFilterTensor);
+    const auto inputCount = context->getNumInputs();
+    const auto inputType = context->getInputType(kInputTensor);
+    const auto filterType = context->getInputType(kFilterTensor);
     std::vector<OperandType> inExpectedTypes;
+    HalVersion minSupportedHalVersion = HalVersion::V1_2;
     if (inputType == OperandType::TENSOR_FLOAT32 || inputType == OperandType::TENSOR_FLOAT16) {
         inExpectedTypes = {inputType, inputType, inputType};
-    } else if (inputType == OperandType::TENSOR_QUANT8_ASYMM) {
-        NN_RET_CHECK(filterType == OperandType::TENSOR_QUANT8_ASYMM ||
-                     filterType == OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL)
+    } else if (inputType == OperandType::TENSOR_QUANT8_ASYMM ||
+               inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
+        NN_RET_CHECK(filterType == OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL ||
+                     filterType == inputType)
                 << "Unsupported filter tensor type for operation " << kOperationName;
         if (filterType == OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL) {
             NN_RET_CHECK_EQ(context->getInputExtraParams(kFilterTensor).channelQuant().channelDim,
@@ -447,6 +455,9 @@ bool validate(const IOperationValidationContext* context) {
                     << kOperationName;
         }
         inExpectedTypes = {inputType, filterType, OperandType::TENSOR_INT32};
+        if (inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
+            minSupportedHalVersion = HalVersion::V1_3;
+        }
     } else {
         NN_RET_CHECK_FAIL() << "Unsupported input tensor type for operation " << kOperationName;
     }
@@ -461,7 +472,7 @@ bool validate(const IOperationValidationContext* context) {
                             OperandType::INT32,        OperandType::INT32, OperandType::BOOL};
     }
     inExpectedTypes.insert(inExpectedTypes.end(), argExpectedTypes.begin(), argExpectedTypes.end());
-    NN_RET_CHECK(validateHalVersion(context, HalVersion::V1_2));
+    NN_RET_CHECK(validateHalVersion(context, minSupportedHalVersion));
     return validateInputTypes(context, inExpectedTypes) &&
            validateOutputTypes(context, {inputType});
 }
@@ -472,11 +483,13 @@ bool prepare(IOperationExecutionContext* context) {
     Shape bias = context->getInputShape(kBiasTensor);
 
     if (filter.type == OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL) {
-        NN_RET_CHECK(input.type == OperandType::TENSOR_QUANT8_ASYMM);
+        NN_RET_CHECK(input.type == OperandType::TENSOR_QUANT8_ASYMM ||
+                     input.type == OperandType::TENSOR_QUANT8_ASYMM_SIGNED);
     } else {
         NN_RET_CHECK(input.type == filter.type);
     }
-    if (input.type == OperandType::TENSOR_QUANT8_ASYMM) {
+    if (input.type == OperandType::TENSOR_QUANT8_ASYMM ||
+        input.type == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
         NN_RET_CHECK(bias.type == OperandType::TENSOR_INT32);
     } else {
         NN_RET_CHECK(input.type == bias.type);
@@ -567,6 +580,32 @@ bool execute(IOperationExecutionContext* context) {
                                      context->getInputBuffer<int32_t>(kBiasTensor),
                                      context->getInputShape(kBiasTensor), param,
                                      context->getOutputBuffer<uint8_t>(kOutputTensor),
+                                     context->getOutputShape(kOutputTensor));
+            } else {
+                NN_RET_CHECK_FAIL() << "Unsupported filter type for operation " << kOperationName;
+            }
+        case OperandType::TENSOR_QUANT8_ASYMM_SIGNED:
+            if (context->getInputType(kFilterTensor) ==
+                OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL) {
+                return transposeConvQuant8PerChannel(
+                        context->getInputBuffer<int8_t>(kInputTensor),
+                        context->getInputShape(kInputTensor),
+                        context->getInputBuffer<int8_t>(kFilterTensor),
+                        context->getInputShape(kFilterTensor),
+                        context->getInputExtraParams(kFilterTensor).channelQuant().scales.data(),
+                        context->getInputBuffer<int32_t>(kBiasTensor),
+                        context->getInputShape(kBiasTensor), param,
+                        context->getOutputBuffer<int8_t>(kOutputTensor),
+                        context->getOutputShape(kOutputTensor));
+            } else if (context->getInputType(kFilterTensor) ==
+                       OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
+                return transposeConv(context->getInputBuffer<int8_t>(kInputTensor),
+                                     context->getInputShape(kInputTensor),
+                                     context->getInputBuffer<int8_t>(kFilterTensor),
+                                     context->getInputShape(kFilterTensor),
+                                     context->getInputBuffer<int32_t>(kBiasTensor),
+                                     context->getInputShape(kBiasTensor), param,
+                                     context->getOutputBuffer<int8_t>(kOutputTensor),
                                      context->getOutputShape(kOutputTensor));
             } else {
                 NN_RET_CHECK_FAIL() << "Unsupported filter type for operation " << kOperationName;
