@@ -3548,6 +3548,7 @@ typedef enum {
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT16}
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
      * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
+     * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED} (since API level 30)
      *
      * Supported tensor rank: 4, with "NHWC" or "NCHW" data layout.
      * With the default data layout NHWC, the data is stored in the order of:
@@ -3564,13 +3565,18 @@ typedef enum {
      *      {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}, this tensor should
      *      be of {@link ANEURALNETWORKS_TENSOR_QUANT16_ASYMM}, with zeroPoint
      *      of 0 and scale of 0.125.
+     *      For input0 of type
+     *      {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED}, this tensor
+     *      should be of {@link ANEURALNETWORKS_TENSOR_QUANT16_ASYMM}, with
+     *      zeroPoint of -128 and scale of 0.125.
      * * 2: An {@link ANEURALNETWORKS_BOOL} scalar, set to true to specify
      *      NCHW data layout for input0. Set to false for NHWC.
      *
      * Outputs:
      * * 0: A tensor of the same {@link OperandCode} as input0, with shape
      *      [num_boxes, num_keypoints], specifying score of the keypoints.
-     *      For a {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} tensor,
+     *      For a {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} or
+     *      {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED} tensor,
      *      the scale and zeroPoint can be different from input0 scale and zeroPoint.
      * * 1: A tensor of the same {@link OperandCode} as input1, with shape
      *      [num_boxes, num_keypoints, 2], specifying the location of
