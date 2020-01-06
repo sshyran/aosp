@@ -17,13 +17,14 @@
 #ifndef ANDROID_FRAMEWORKS_ML_NN_COMMON_CPU_OPERATION_UTILS_H
 #define ANDROID_FRAMEWORKS_ML_NN_COMMON_CPU_OPERATION_UTILS_H
 
-#include "OperationsUtils.h"
+#include <tensorflow/lite/kernels/internal/types.h>
 
 #include <algorithm>
 #include <cmath>
 #include <limits>
+#include <vector>
 
-#include <tensorflow/lite/kernels/internal/types.h>
+#include "OperationsUtils.h"
 
 namespace android {
 namespace nn {
@@ -70,6 +71,25 @@ inline void convertFloat32ToFloat16(const std::vector<float>& input, _Float16* o
     CHECK(output != nullptr);
     for (int i = 0; i < input.size(); ++i) {
         output[i] = input[i];
+    }
+}
+
+// Convert int8 quantized values to uint8 assuming that the scale is the same
+// and the distance between offsets is 128.
+inline void convertInt8ToUInt8(const int8_t* input, std::vector<uint8_t>* output) {
+    CHECK(input != nullptr);
+    CHECK(output != nullptr);
+    for (int i = 0; i < output->size(); ++i) {
+        (*output)[i] = static_cast<uint8_t>(static_cast<int32_t>(input[i]) + 128);
+    }
+}
+
+// Convert uint8 quantized values to int8 assuming that the scale is the same
+// and the distance between offsets is 128.
+inline void convertUInt8ToInt8(const std::vector<uint8_t>& input, int8_t* output) {
+    CHECK(output != nullptr);
+    for (int i = 0; i < input.size(); ++i) {
+        output[i] = static_cast<int8_t>(static_cast<int32_t>(input[i]) - 128);
     }
 }
 
@@ -191,6 +211,25 @@ class OutputWithLayout {
     Shape mShape;
     bool mUseNchw;
 };
+
+template <typename T>
+inline void CalculateActivationRange(int32_t activation, const Shape& outputShape,
+                                     int32_t* outputActivationMin, int32_t* outputActivationMax);
+
+template <>
+inline void CalculateActivationRange<uint8_t>(int32_t activation, const Shape& outputShape,
+                                              int32_t* outputActivationMin,
+                                              int32_t* outputActivationMax) {
+    CalculateActivationRangeUint8(activation, outputShape, outputActivationMin,
+                                  outputActivationMax);
+}
+
+template <>
+inline void CalculateActivationRange<int8_t>(int32_t activation, const Shape& outputShape,
+                                             int32_t* outputActivationMin,
+                                             int32_t* outputActivationMax) {
+    CalculateActivationRangeInt8(activation, outputShape, outputActivationMin, outputActivationMax);
+}
 
 }  // namespace nn
 }  // namespace android

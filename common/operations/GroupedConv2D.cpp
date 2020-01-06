@@ -16,15 +16,16 @@
 
 #define LOG_TAG "Operations"
 
-#include "CpuOperationUtils.h"
-#include "Operations.h"
-#include "Tracing.h"
-
 #include <tensorflow/lite/kernels/internal/common.h>
+
 #include <algorithm>
 #include <cfloat>
 #include <cmath>
 #include <vector>
+
+#include "CpuOperationUtils.h"
+#include "Operations.h"
+#include "Tracing.h"
 
 namespace android {
 namespace nn {
@@ -100,22 +101,6 @@ bool groupedConvFloat32(const float* inputData, const Shape& inputShape, const f
 }
 
 template <typename T>
-void calcActivationRange(int32_t activation, const Shape& outputShape, int32_t* outputActivationMin,
-                         int32_t* outputActivationMax);
-
-template <>
-void calcActivationRange<uint8_t>(int32_t activation, const Shape& outputShape,
-                                  int32_t* outputActivationMin, int32_t* outputActivationMax) {
-    CalculateActivationRangeUint8(activation, outputShape, outputActivationMin,
-                                  outputActivationMax);
-}
-template <>
-void calcActivationRange<int8_t>(int32_t activation, const Shape& outputShape,
-                                 int32_t* outputActivationMin, int32_t* outputActivationMax) {
-    CalculateActivationRangeInt8(activation, outputShape, outputActivationMin, outputActivationMax);
-}
-
-template <typename T>
 bool groupedConvQuant8(const T* inputData, const Shape& inputShape, const T* filterData,
                        const Shape& filterShape, const int32_t* biasData, const Shape& biasShape,
                        int32_t padding_left, int32_t padding_right, int32_t padding_top,
@@ -139,7 +124,8 @@ bool groupedConvQuant8(const T* inputData, const Shape& inputShape, const T* fil
     outputShift = -exponent;
 
     int32_t output_activation_min = 0, output_activation_max = 0;
-    calcActivationRange<T>(activation, outputShape, &output_activation_min, &output_activation_max);
+    CalculateActivationRange<T>(activation, outputShape, &output_activation_min,
+                                &output_activation_max);
 
     const T* inputBase = inputData;
     T* outPtr = outputData;
@@ -242,7 +228,8 @@ bool groupedConvQuant8PerChannel(const T* inputData, const Shape& inputShape,
     }
 
     int32_t output_activation_min = 0, output_activation_max = 0;
-    calcActivationRange<T>(activation, outputShape, &output_activation_min, &output_activation_max);
+    CalculateActivationRange<T>(activation, outputShape, &output_activation_min,
+                                &output_activation_max);
 
     const T* inputBase = inputData;
     T* outPtr = outputData;
