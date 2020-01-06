@@ -84,12 +84,22 @@ class VersionedIDevice {
      * VersionedIDevice will default to using the latest version of all IDevice
      * interface methods automatically.
      *
+     * @param capabilities Performance capabilities of the driver.
+     * @param supportedExtensions Extensions supported by the driver.
+     * @param type The device type of the driver.
+     * @param versionString The version string of the driver.
+     * @param numberOfCacheFilesNeeded Number of model cache and data cache
+     *     files needed by the driver.
      * @param serviceName The name of the service that provides core.getDevice<V1_0::IDevice>().
      * @param core An object that encapsulates a V1_0::IDevice, any appropriate downcasts to
      *             newer interfaces, and a hidl_death_recipient that will proactively handle
      *             the case when the service containing the IDevice object crashes.
      */
-    VersionedIDevice(std::string serviceName, Core core);
+    VersionedIDevice(hal::Capabilities capabilities,
+                     std::vector<hal::Extension> supportedExtensions, int32_t type,
+                     std::string versionString,
+                     std::pair<uint32_t, uint32_t> numberOfCacheFilesNeeded,
+                     std::string serviceName, Core core);
 
     /**
      * Gets the capabilities of a driver.
@@ -307,24 +317,12 @@ class VersionedIDevice {
     const std::string& getName() const;
 
    private:
-    // initializeInternal is called once during VersionedIDevice creation.
-    // 'true' indicates successful initialization.
-    bool initializeInternal();
-
-    // internal helper methods
-    std::pair<hal::ErrorStatus, hal::Capabilities> getCapabilitiesInternal() const;
-    std::pair<hal::ErrorStatus, hal::hidl_vec<hal::Extension>> getSupportedExtensionsInternal()
-            const;
-    int32_t getTypeInternal() const;
-    std::pair<hal::ErrorStatus, hal::hidl_string> getVersionStringInternal() const;
-    std::tuple<hal::ErrorStatus, uint32_t, uint32_t> getNumberOfCacheFilesNeededInternal() const;
-
-    // internal members for the cached results of the internal methods above
-    hal::Capabilities mCapabilities;
-    std::vector<hal::Extension> mSupportedExtensions;
-    int32_t mType;
-    std::string mVersionString;
-    std::pair<uint32_t, uint32_t> mNumberOfCacheFilesNeeded;
+    // Cached initialization results.
+    const hal::Capabilities kCapabilities;
+    const std::vector<hal::Extension> kSupportedExtensions;
+    const int32_t kType;
+    const std::string kVersionString;
+    const std::pair<uint32_t, uint32_t> kNumberOfCacheFilesNeeded;
 
     // internal methods to prepare a model
     std::pair<int, std::shared_ptr<VersionedIPreparedModel>> prepareModelInternal(
@@ -490,7 +488,7 @@ class VersionedIDevice {
             const T_Callback& callback = nullptr) const EXCLUDES(mMutex);
 
     // The name of the service that implements the driver.
-    const std::string mServiceName;
+    const std::string kServiceName;
 
     // Guards access to mCore.
     mutable std::shared_mutex mMutex;
