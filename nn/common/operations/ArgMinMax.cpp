@@ -69,6 +69,7 @@ bool argMinMaxGeneric(const uint8_t* inputData, const Shape& inputShape, int32 a
     NNAPI_IMPL_ARG_MIN_MAX(OperandType::TENSOR_FLOAT32, float);
     NNAPI_IMPL_ARG_MIN_MAX(OperandType::TENSOR_INT32, int32_t);
     NNAPI_IMPL_ARG_MIN_MAX(OperandType::TENSOR_QUANT8_ASYMM, uint8_t);
+    NNAPI_IMPL_ARG_MIN_MAX(OperandType::TENSOR_QUANT8_ASYMM_SIGNED, int8_t);
 #undef NNAPI_IMPL_ARG_MIN_MAX
 
     LOG(ERROR) << "Unsupported data type";

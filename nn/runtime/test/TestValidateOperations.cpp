@@ -175,6 +175,7 @@ class OperationTestBase {
                 operandTypesToSkip.insert(ANEURALNETWORKS_TENSOR_FLOAT32);
                 operandTypesToSkip.insert(ANEURALNETWORKS_TENSOR_INT32);
                 operandTypesToSkip.insert(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM);
+                operandTypesToSkip.insert(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED);
             }
             // RANDOM_MULTINOMIAL's first input can be either of float16 or
             // float32 type while everything else has the same types.
@@ -222,7 +223,8 @@ class OperationTestBase {
                     (newOperandCode == ANEURALNETWORKS_TENSOR_FLOAT16 ||
                      newOperandCode == ANEURALNETWORKS_TENSOR_FLOAT32 ||
                      newOperandCode == ANEURALNETWORKS_TENSOR_INT32 ||
-                     newOperandCode == ANEURALNETWORKS_TENSOR_QUANT8_ASYMM)) {
+                     newOperandCode == ANEURALNETWORKS_TENSOR_QUANT8_ASYMM ||
+                     newOperandCode == ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED)) {
                     continue;
                 }
 
@@ -365,6 +367,7 @@ TEST(OperationValidationTest, ARGMIN) {
     argMinMaxTest(ANEURALNETWORKS_ARGMIN, ANEURALNETWORKS_TENSOR_FLOAT32);
     argMinMaxTest(ANEURALNETWORKS_ARGMIN, ANEURALNETWORKS_TENSOR_INT32);
     argMinMaxTest(ANEURALNETWORKS_ARGMIN, ANEURALNETWORKS_TENSOR_QUANT8_ASYMM);
+    argMinMaxTest(ANEURALNETWORKS_ARGMIN, ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED);
 }
 
 TEST(OperationValidationTest, ARGMAX) {
@@ -372,6 +375,7 @@ TEST(OperationValidationTest, ARGMAX) {
     argMinMaxTest(ANEURALNETWORKS_ARGMAX, ANEURALNETWORKS_TENSOR_FLOAT32);
     argMinMaxTest(ANEURALNETWORKS_ARGMAX, ANEURALNETWORKS_TENSOR_INT32);
     argMinMaxTest(ANEURALNETWORKS_ARGMAX, ANEURALNETWORKS_TENSOR_QUANT8_ASYMM);
+    argMinMaxTest(ANEURALNETWORKS_ARGMAX, ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED);
 }
 
 void dequantizeOpTest(int32_t inputOperandType, int32_t outputOperandType) {
