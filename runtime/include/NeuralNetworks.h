@@ -259,7 +259,7 @@ typedef enum {
      * Outputs:
      * * 0: The sum, a tensor of the same {@link OperandCode} as input0.
      *      For a {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} and
-     *      {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} tensor,
+     *      {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED} tensor,
      *      the scale and zeroPoint can be different from inputs' scale and zeroPoint.
      *
      * Available since API level 27.
@@ -596,6 +596,18 @@ typedef enum {
      * * * {@link ANEURALNETWORKS_TENSOR_INT32} for bias (scale set to 0.0,
      * * * each value scaling is separate and equal to input.scale * filter.scales[channel]).
      *
+     * Available since API level 30:
+     * * Quantized signed (since API level 30):
+     * * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED} for input, filter, and output.
+     * * * {@link ANEURALNETWORKS_TENSOR_INT32} for bias (with scale set to
+     * * * input.scale * filter.scale).
+     *
+     * * Quantized signed with filter symmetric per channel quantization (since API level 30):
+     * * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED} for input, and output.
+     * * * {@link ANEURALNETWORKS_TENSOR_QUANT8_SYMM_PER_CHANNEL} for filter.
+     * * * {@link ANEURALNETWORKS_TENSOR_INT32} for bias (scale set to 0.0,
+     * * * each value scaling is separate and equal to input.scale * filter.scales[channel]).
+     *
      * Supported tensor rank: 4, with "NHWC" or "NCHW" data layout.
      * With the default data layout NHWC, the data is stored in the order of:
      * [batch, height, width, channels]. Alternatively, the data layout could
@@ -614,8 +626,9 @@ typedef enum {
      *      must be set to 3.
      * * 2: A 1-D tensor, of shape [depth_out], specifying the bias. For input
      *      tensor of type {@link ANEURALNETWORKS_TENSOR_FLOAT32}
-     *      or {@link ANEURALNETWORKS_TENSOR_FLOAT16} the bias must be of the same
-     *      type. For filter tensor of {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM},
+     *      or {@link ANEURALNETWORKS_TENSOR_FLOAT16} the bias must be of the same type.
+     *      For filter tensor of {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
+     *      and {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED},
      *      the bias should be of {@link ANEURALNETWORKS_TENSOR_INT32}, with zeroPoint
      *      of 0 and bias_scale == input_scale * filter_scale.
      *      For filter tensor of {@link ANEURALNETWORKS_TENSOR_QUANT8_SYMM_PER_CHANNEL},
@@ -660,8 +673,9 @@ typedef enum {
      *      specifying the filter.
      * * 2: A 1-D tensor, of shape [depth_out], specifying the bias. For input
      *      tensor of type {@link ANEURALNETWORKS_TENSOR_FLOAT32}
-     *      or {@link ANEURALNETWORKS_TENSOR_FLOAT16} the bias must be of the same
-     *      type. For filter tensor of {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM},
+     *      or {@link ANEURALNETWORKS_TENSOR_FLOAT16} the bias must be of the same type.
+     *      For filter tensor of {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
+     *      and {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED},
      *      the bias should be of {@link ANEURALNETWORKS_TENSOR_INT32}, with zeroPoint
      *      of 0 and bias_scale == input_scale * filter_scale.
      *      For filter tensor of {@link ANEURALNETWORKS_TENSOR_QUANT8_SYMM_PER_CHANNEL},
@@ -764,6 +778,7 @@ typedef enum {
      * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
      * * {@link ANEURALNETWORKS_TENSOR_QUANT8_SYMM} (since API level 29)
      * * {@link ANEURALNETWORKS_TENSOR_QUANT8_SYMM_PER_CHANNEL} (since API level 29)
+     * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED} (since API level 30)
      *
      * Supported output tensor {@link OperandCode}:
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT16} (since API level 29)
@@ -803,9 +818,11 @@ typedef enum {
      * and an error must be reported.
      *
      * Supported value tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT16} (since API level 30)
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
-     * * {@link ANEURALNETWORKS_TENSOR_INT32}
-     * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
+     * * {@link ANEURALNETWORKS_TENSOR_INT32} (since API level 29)
+     * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} (since API level 29)
+     * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED} (since API level 30)
      *
      * Supported value tensor rank: from 2
      *
@@ -819,7 +836,8 @@ typedef enum {
      * * 0: A n-D tensor with the same rank and shape as the Values
      *      tensor, except for the first dimension which has the same size
      *      as Lookups' only dimension.
-     *      For a {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} tensor,
+     *      For a {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} and
+     *      {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED} tensor,
      *      the scale and zeroPoint must be the same as input1.
      *
      * Available since API level 27.
@@ -858,6 +876,7 @@ typedef enum {
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT16} (since API level 29)
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
      * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
+     * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED} (since API level 30)
      *
      * Supported tensor rank: up to 4.
      *
@@ -875,10 +894,11 @@ typedef enum {
      *      of output nodes.
      * * 2: A 1-D tensor, of shape [num_units], specifying the bias. For input
      *      tensor of {@link ANEURALNETWORKS_TENSOR_FLOAT32}, the bias should
-     *      also be of {@link ANEURALNETWORKS_TENSOR_FLOAT32}. For input tensor
-     *      of {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}, the bias should be
-     *      of {@link ANEURALNETWORKS_TENSOR_INT32}, with zeroPoint of 0 and
-     *      bias_scale == input_scale * filter_scale.
+     *      also be of {@link ANEURALNETWORKS_TENSOR_FLOAT32}.
+     *      For input tensor of {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
+     *      and {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED},
+     *      the bias should be of {@link ANEURALNETWORKS_TENSOR_INT32},
+     *      with zeroPoint of 0 and bias_scale == input_scale * filter_scale.
      * * 3: An {@link ANEURALNETWORKS_INT32} scalar, and has to be one of the
      *      {@link FuseCode} values. Specifies the activation to
      *      invoke on the result.
@@ -1828,6 +1848,7 @@ typedef enum {
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT16} (since API level 29)
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
      * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
+     * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED} (since API level 30)
      *
      * Supported tensor rank: up to 4.
      * Tensors with rank other than 2 or 4 are only supported since API level 29.
@@ -1836,9 +1857,10 @@ typedef enum {
      * * 0: A 2-D or 4-D tensor, specifying the tensor to be reshaped.
      *      Since API level 29, this tensor may be zero-sized.
      * * 1: A scalar, specifying the positive scaling factor for the exponent,
-     *      beta. If input0 is of {@link ANEURALNETWORKS_TENSOR_FLOAT32} or
-     *      {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}, the scalar must be of
-     *      {@link ANEURALNETWORKS_FLOAT32}.
+     *      beta. If input0 is of {@link ANEURALNETWORKS_TENSOR_FLOAT32},
+     *      {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} or
+     *      {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED}, the scalar
+     *      must be of {@link ANEURALNETWORKS_FLOAT32}.
      *      If input0 is of {@link ANEURALNETWORKS_TENSOR_FLOAT16}, then the
      *      scalar must be of {@link ANEURALNETWORKS_FLOAT16}.
      * * 2: An optional {@link ANEURALNETWORKS_INT32} scalar, default to -1,
@@ -1851,6 +1873,8 @@ typedef enum {
      * * 0: The output tensor of same shape as input0.
      *      For {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM},
      *      the scale must be 1.f / 256 and the zeroPoint must be 0.
+     *      For {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED},
+     *      the scale must be 1.f / 256 and the zeroPoint must be -128.
      *
      * Available since API level 27.
      */
@@ -2402,7 +2426,7 @@ typedef enum {
      * Outputs:
      * * 0: A tensor of the same {@link OperandCode} as input0.
      *      For a {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} and
-     *      {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} tensor,
+     *      {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED} tensor,
      *      the scale and zeroPoint must be the same as input0.
      *
      * Available since API level 28.
@@ -2509,7 +2533,8 @@ typedef enum {
      *      and height, dw and dh is the log-scale relative correction factor
      *      for the width and height. For input0 of type
      *      {@link ANEURALNETWORKS_TENSOR_QUANT16_ASYMM}, this tensor should be
-     *      of {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}. Zero num_rois is
+     *      of {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} or
+     *      {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED}. Zero num_rois is
      *      supported for this tensor.
      * * 2: An 1-D {@link ANEURALNETWORKS_TENSOR_INT32} tensor, of shape
      *      [num_rois], specifying the batch index of each box. Boxes with
@@ -2878,6 +2903,7 @@ typedef enum {
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT16}
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
      * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
+     * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED} (since API level 30)
      *
      * Inputs:
      * * 0: A 2-D Tensor of shape [num_rois, num_classes], specifying the score
@@ -2889,7 +2915,11 @@ typedef enum {
      *      order of the boxes corresponds with input0. For input0 of type
      *      {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}, this tensor should be of
      *      {@link ANEURALNETWORKS_TENSOR_QUANT16_ASYMM}, with zeroPoint of 0 and
-     *      scale of 0.125. Zero num_rois is supported for this tensor.
+     *      scale of 0.125.
+     *      For input0 of type {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED},
+     *      this tensor should be of {@link ANEURALNETWORKS_TENSOR_QUANT16_ASYMM},
+     *      with zeroPoint of -128 and scale of 0.125.
+     *      Zero num_rois is supported for this tensor.
      * * 2: A 1-D {@link ANEURALNETWORKS_TENSOR_INT32} tensor, of shape
      *      [num_rois], specifying the batch index of each box. Boxes with
      *      the same batch index are grouped together.
@@ -2916,6 +2946,8 @@ typedef enum {
      *      [num_output_rois], specifying the score of each output box. The boxes
      *      are grouped by batches, but the sequential order in each batch is not
      *      guaranteed. For type of {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM},
+     *      guaranteed. For type of {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
+     *      or {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED},
      *      the scale and zero point must be the same as input0.
      * * 1: A 2-D Tensor of the same {@link OperandCode} as input1, with shape
      *      [num_output_rois, 4], specifying the coordinates of each
@@ -3002,7 +3034,7 @@ typedef enum {
      * Outputs:
      * * 0: A tensor of the same {@link OperandCode} and same shape as input0.
      *      For a {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} and
-     *      {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} tensor,
+     *      {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED} tensor,
      *      the scale and zeroPoint must be the same as input0.
      *
      * Available since API level 29.
@@ -3205,7 +3237,7 @@ typedef enum {
      * Outputs:
      * * 0: An (n + k - 1)-D tensor with the same {@link OperandCode} as input0.
      *      For a {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} and
-     *      {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} tensor,
+     *      {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED} tensor,
      *      the scale and zeroPoint must be the same as input0.
      *
      * Available since API level 29.
@@ -3228,6 +3260,7 @@ typedef enum {
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT16}
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
      * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
+     * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED} (since API level 30)
      *
      * Inputs:
      * * 0: A 4-D Tensor specifying the score of each anchor at each
@@ -3245,11 +3278,13 @@ typedef enum {
      *      dimensions is the channel dimension.
      * * 2: A 2-D Tensor of shape [num_anchors, 4], specifying the shape of each
      *      predefined anchor, with format [x1, y1, x2, y2]. For input0 of type
-     *      {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}, this tensor should be of
+     *      {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} or
+     *      {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED}, this tensor should be of
      *      {@link ANEURALNETWORKS_TENSOR_QUANT16_SYMM}, with scale of 0.125.
      * * 3: A 2-D Tensor of shape [batches, 2], specifying the size of
      *      each image in the batch, with format [image_height, image_width].
-     *      For input0 of type {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}, this
+     *      For input0 of type {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} or
+     *      {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED}, this
      *      tensor should be of {@link ANEURALNETWORKS_TENSOR_QUANT16_SYMM}, with
      *      scale of 0.125.
      * * 4: An {@link ANEURALNETWORKS_FLOAT32} scalar, specifying the ratio
@@ -3276,7 +3311,8 @@ typedef enum {
      *      [num_output_rois], specifying the score of each output box.
      *      The boxes are grouped by batches, but the sequential order in
      *      each batch is not guaranteed. For type of
-     *      {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}, the scale and zero
+     *      {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} or
+     *      {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED}, the scale and zero
      *      point must be the same as input0.
      * * 1: A tensor of the same {@link OperandCode} as input3, of shape
      *      [num_output_rois, 4], specifying the coordinates of each output
@@ -3490,7 +3526,7 @@ typedef enum {
      * * 0: The output 4-D tensor, of shape
      *      [batches, out_height, out_width, depth_out].
      *      For a {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} and
-     *      {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} tensor,
+     *      {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED} tensor,
      *      the scale and zeroPoint can be different from inputs' scale and zeroPoint.
      *
      * Available since API level 29.
@@ -4347,6 +4383,7 @@ typedef enum {
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT16}
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
      * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
+     * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED} (since API level 30)
      *
      * Supported tensor rank: 4, with "NHWC" or "NCHW" data layout.
      * With the default data layout NHWC, the data is stored in the order of:
@@ -4385,7 +4422,8 @@ typedef enum {
      * Outputs:
      * * 0: A tensor of the same {@link OperandCode} as input0. The output
      *      shape is [num_rois, out_height, out_width, depth].
-     *      For a {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} tensor,
+     *      For a {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} and
+     *      {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED} tensor,
      *      the scale and zeroPoint can be different from the input0 scale and zeroPoint.
      *
      * Available since API level 29.
@@ -4408,6 +4446,7 @@ typedef enum {
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT16}
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
      * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
+     * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED} (since API level 30)
      *
      * Supported tensor rank: 4, with "NHWC" or "NCHW" data layout.
      * With the default data layout NHWC, the data is stored in the order of:
@@ -4418,7 +4457,8 @@ typedef enum {
      * * 0: A 4-D tensor, specifying the feature map.
      * * 1: A 2-D Tensor of shape [num_rois, 4], specifying the locations of
      *      the regions of interest, each line with format [x1, y1, x2, y2].
-     *      For input0 of type {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM},
+     *      For input0 of type {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} and
+     *      {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED} tensor,
      *      this tensor should be of {@link ANEURALNETWORKS_TENSOR_QUANT16_ASYMM},
      *      with zeroPoint of 0 and scale of 0.125.
      * * 2: An 1-D {@link ANEURALNETWORKS_TENSOR_INT32} tensor, of shape
@@ -4438,7 +4478,8 @@ typedef enum {
      * Outputs:
      * * 0: A tensor of the same {@link OperandCode} as input0. The output
      *      shape is [num_rois, out_height, out_width, depth].
-     *      For a {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} tensor,
+     *      For input0 of type {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} and
+     *      {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED} tensor,
      *      the scale and zeroPoint must be the same as input0.
      *
      * Available since API level 29.
@@ -4535,6 +4576,7 @@ typedef enum {
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
      * * {@link ANEURALNETWORKS_TENSOR_INT32}
      * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
+     * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED} (since API level 30)
      *
      * Supported tensor rank: from 1
      *
@@ -4547,7 +4589,8 @@ typedef enum {
      *
      * Outputs:
      * * 0: An n-D tensor of the same type as the input containing the slice.
-     *      For a {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} tensor,
+     *      For a {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} and
+     *      {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED} tensor,
      *      its scale and zeroPoint has to be same as the input0 scale and zeroPoint.
      *
      * Available since API level 29.
@@ -4794,7 +4837,7 @@ typedef enum {
      * * 0: The output 4-D tensor, of shape
      *      [batches, out_height, out_width, depth_out].
      *      For a {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} and
-     *      {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} tensor,
+     *      {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED} tensor,
      *      the scale and zeroPoint can be different from inputs' scale and zeroPoint.
      *
      * Available since API level 29.

@@ -219,26 +219,6 @@ std::pair<int, std::shared_ptr<PreparedModel>> DriverDevice::prepareModel(
     return {ANEURALNETWORKS_NO_ERROR, std::make_shared<DriverPreparedModel>(preparedModel)};
 }
 
-// Convert ModelArgumentInfo to HIDL RequestArgument. For pointer arguments, use the location
-// information in ptrArgsLocations.
-static void setRequestArgumentArray(const std::vector<ModelArgumentInfo>& argumentInfos,
-                                    const std::vector<DataLocation>& ptrArgsLocations,
-                                    hidl_vec<RequestArgument>* ioInfos) {
-    size_t count = argumentInfos.size();
-    ioInfos->resize(count);
-    uint32_t ptrArgsIndex = 0;
-    for (size_t i = 0; i < count; i++) {
-        const auto& info = argumentInfos[i];
-        (*ioInfos)[i] = {
-                .hasNoValue = info.state == ModelArgumentInfo::HAS_NO_VALUE,
-                .location = info.state == ModelArgumentInfo::POINTER
-                                    ? ptrArgsLocations[ptrArgsIndex++]
-                                    : info.locationAndLength,
-                .dimensions = info.dimensions,
-        };
-    }
-}
-
 // Figures out how to place each of the input or outputs in a buffer. This just
 // does the layout and memory allocation, it does not copy data.  Aligns each
 // input a bit.
@@ -324,8 +304,8 @@ std::tuple<int, std::vector<OutputShape>, Timing> DriverPreparedModel::execute(
     }
 
     Request request;
-    setRequestArgumentArray(inputs, inputPtrArgsLocations, &request.inputs);
-    setRequestArgumentArray(outputs, outputPtrArgsLocations, &request.outputs);
+    request.inputs = createRequestArguments(inputs, inputPtrArgsLocations);
+    request.outputs = createRequestArguments(outputs, outputPtrArgsLocations);
     uint32_t count = localMemories.size();
     request.pools.resize(count);
     for (uint32_t i = 0; i < count; i++) {
@@ -551,8 +531,8 @@ std::tuple<int, std::vector<OutputShape>, Timing> CpuPreparedModel::execute(
     const std::vector<DataLocation> outputPtrArgsLocations = fixPointerArguments(outputs);
 
     Request request;
-    setRequestArgumentArray(inputs, inputPtrArgsLocations, &request.inputs);
-    setRequestArgumentArray(outputs, outputPtrArgsLocations, &request.outputs);
+    request.inputs = createRequestArguments(inputs, inputPtrArgsLocations);
+    request.outputs = createRequestArguments(outputs, outputPtrArgsLocations);
 
     if (!DeviceManager::get()->syncExecCpu()) {
         // TODO: use a thread pool

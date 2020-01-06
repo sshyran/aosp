@@ -298,34 +298,32 @@ Return<ErrorStatus> SamplePreparedModel::execute_1_3(const Request& request, Mea
     return executeBase(request, measure, mModel, *mDriver, mPoolInfos, callback);
 }
 
-Return<void> SamplePreparedModel::executeSynchronously(const Request& request,
-                                                       MeasureTiming measure,
-                                                       executeSynchronously_cb cb) {
+static std::tuple<ErrorStatus, hidl_vec<OutputShape>, Timing> executeSynchronouslyBase(
+        const Request& request, MeasureTiming measure, const Model& model,
+        const SampleDriver& driver, const std::vector<RunTimePoolInfo>& poolInfos) {
     NNTRACE_FULL(NNTRACE_LAYER_DRIVER, NNTRACE_PHASE_EXECUTION,
-                 "SampleDriver::executeSynchronously");
-    VLOG(DRIVER) << "executeSynchronously(" << SHOW_IF_DEBUG(toString(request)) << ")";
+                 "SampleDriver::executeSynchronouslyBase");
+    VLOG(DRIVER) << "executeSynchronouslyBase(" << SHOW_IF_DEBUG(toString(request)) << ")";
 
     time_point driverStart, driverEnd, deviceStart, deviceEnd;
     if (measure == MeasureTiming::YES) driverStart = now();
 
-    if (!validateRequest(request, mModel)) {
-        cb(ErrorStatus::INVALID_ARGUMENT, {}, kNoTiming);
-        return Void();
+    if (!validateRequest(request, model)) {
+        return {ErrorStatus::INVALID_ARGUMENT, {}, kNoTiming};
     }
 
     NNTRACE_FULL_SWITCH(NNTRACE_LAYER_DRIVER, NNTRACE_PHASE_INPUTS_AND_OUTPUTS,
-                        "SampleDriver::executeSynchronously");
+                        "SampleDriver::executeSynchronouslyBase");
     std::vector<RunTimePoolInfo> requestPoolInfos;
     if (!setRunTimePoolInfosFromHidlMemories(&requestPoolInfos, request.pools)) {
-        cb(ErrorStatus::GENERAL_FAILURE, {}, kNoTiming);
-        return Void();
+        return {ErrorStatus::GENERAL_FAILURE, {}, kNoTiming};
     }
 
     NNTRACE_FULL_SWITCH(NNTRACE_LAYER_DRIVER, NNTRACE_PHASE_EXECUTION,
-                        "SampleDriver::executeSynchronously");
-    CpuExecutor executor = mDriver->getExecutor();
+                        "SampleDriver::executeSynchronouslyBase");
+    CpuExecutor executor = driver.getExecutor();
     if (measure == MeasureTiming::YES) deviceStart = now();
-    int n = executor.run(mModel, request, mPoolInfos, requestPoolInfos);
+    int n = executor.run(model, request, poolInfos, requestPoolInfos);
     if (measure == MeasureTiming::YES) deviceEnd = now();
     VLOG(DRIVER) << "executor.run returned " << n;
     ErrorStatus executionStatus = convertResultCodeToErrorStatus(n);
@@ -334,11 +332,27 @@ Return<void> SamplePreparedModel::executeSynchronously(const Request& request,
         driverEnd = now();
         Timing timing = {.timeOnDevice = uint64_t(microsecondsDuration(deviceEnd, deviceStart)),
                          .timeInDriver = uint64_t(microsecondsDuration(driverEnd, driverStart))};
-        VLOG(DRIVER) << "executeSynchronously timing = " << toString(timing);
-        cb(executionStatus, outputShapes, timing);
-    } else {
-        cb(executionStatus, outputShapes, kNoTiming);
+        VLOG(DRIVER) << "executeSynchronouslyBase timing = " << toString(timing);
+        return {executionStatus, std::move(outputShapes), timing};
     }
+    return {executionStatus, std::move(outputShapes), kNoTiming};
+}
+
+Return<void> SamplePreparedModel::executeSynchronously(const Request& request,
+                                                       MeasureTiming measure,
+                                                       executeSynchronously_cb cb) {
+    auto [status, outputShapes, timing] =
+            executeSynchronouslyBase(request, measure, mModel, *mDriver, mPoolInfos);
+    cb(status, std::move(outputShapes), timing);
+    return Void();
+}
+
+Return<void> SamplePreparedModel::executeSynchronously_1_3(const Request& request,
+                                                           MeasureTiming measure,
+                                                           executeSynchronously_1_3_cb cb) {
+    auto [status, outputShapes, timing] =
+            executeSynchronouslyBase(request, measure, mModel, *mDriver, mPoolInfos);
+    cb(status, std::move(outputShapes), timing);
     return Void();
 }
 
