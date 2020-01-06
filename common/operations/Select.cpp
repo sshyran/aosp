@@ -47,10 +47,10 @@ bool compute(const bool8* conditionData, const Shape& conditionShape, const T* a
     for (uint32_t i = 0; i < size; ++i) {
         T a = aData[i];
         T b = bData[i];
-        if (aShape.type == OperandType::TENSOR_QUANT8_ASYMM ||
-            aShape.type == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
-            a = requantize(a, aShape, outputShape);
-            b = requantize(b, bShape, outputShape);
+
+        if constexpr (std::is_same_v<T, uint8_t> || std::is_same_v<T, int8_t>) {
+            a = requantize<T>(a, aShape, outputShape);
+            b = requantize<T>(b, bShape, outputShape);
         }
         outputData[i] = conditionData[i] ? a : b;
     }
