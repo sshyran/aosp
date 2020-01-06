@@ -398,6 +398,19 @@ inline bool mergeThirdDimension(const T* bufferA, const std::vector<uint32_t>& d
     return true;
 }
 
+template <typename T>
+inline T saturateCast(int32_t val);
+
+template <>
+inline uint8_t saturateCast<uint8_t>(int32_t val) {
+    return static_cast<int8_t>(std::max(0, std::min(255, val)));
+}
+
+template <>
+inline int8_t saturateCast<int8_t>(int32_t val) {
+    return static_cast<int8_t>(std::max(-128, std::min(127, val)));
+}
+
 }  // namespace nn
 }  // namespace android
 
