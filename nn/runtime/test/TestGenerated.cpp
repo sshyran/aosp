@@ -359,7 +359,7 @@ INSTANTIATE_GENERATED_TEST(GeneratedValidationTests,
                            [](const TestModel& testModel) { return testModel.expectFailure; });
 
 INSTANTIATE_GENERATED_TEST(DISABLED_QuantizationCouplingTest, [](const TestModel& testModel) {
-    return testModel.hasQuant8AsymmOperands() && testModel.operations.size() == 1;
+    return testModel.operations.size() == 1 && testModel.hasQuant8CoupledOperands();
 });
 
 }  // namespace android::nn::generated_tests
