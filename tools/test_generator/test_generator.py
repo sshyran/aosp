@@ -74,6 +74,8 @@ def Quantize(v, ty):
         v = np.minimum(np.maximum(v, -127), 127)
     elif ty.type == "UINT32":
         v = np.maximum(v, 0)
+    elif ty.type == "TENSOR_QUANT8_ASYMM_SIGNED":
+        v = np.minimum(np.maximum(v, -128), 127)
     return v
 
 # Tracking objects inside a model with a unique name
@@ -145,6 +147,7 @@ class Type(NamedVariable):
         "TENSOR_QUANT16_SYMM": "int16_t",
         "TENSOR_BOOL8": "bool8",
         "TENSOR_QUANT8_SYMM_PER_CHANNEL": "int8_t",
+        "TENSOR_QUANT8_ASYMM_SIGNED": "int8_t",
     #     "OEM_SCALAR": this is service-defined.
         "TENSOR_OEM_BYTE": "uint8_t",
     }
@@ -693,6 +696,8 @@ class DataTypeConverter(ModelVariation, ImplicitVariation):
             self.name = "channelQuant8"
         elif "TENSOR_QUANT8_ASYMM" in targetTypes:
             self.name = "quant8"
+        elif "TENSOR_QUANT8_ASYMM_SIGNED" in targetTypes:
+            self.name = "quant8_signed"
         elif "TENSOR_INT32" in targetTypes:
             self.name = "int32"
         elif "TENSOR_FLOAT16" in targetTypes:
@@ -925,7 +930,8 @@ class AllInputsAsInternalCoverter(ModelVariation):
         # Find all input tensors that can be an output of the ADD operation.
         # Currently ADD only support FLOAT32/16 and QUANT8_ASYMM tensors with rank <= 4.
         CompatibleWithADD = lambda op: len(op.type.dimensions) <= 4 and len(op.value) > 0 and \
-            op.type.type in ["TENSOR_FLOAT32", "TENSOR_QUANT8_ASYMM", "TENSOR_FLOAT16"]
+            op.type.type in ["TENSOR_FLOAT32", "TENSOR_QUANT8_ASYMM",
+                             "TENSOR_FLOAT16", "TENSOR_QUANT8_ASYMM_SIGNED"]
         modelInputs = [i for i in model.GetInputs() if CompatibleWithADD(i)]
         if not modelInputs:
             raise SkipVariation
