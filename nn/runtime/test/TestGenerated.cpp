@@ -16,6 +16,10 @@
 
 #include "TestGenerated.h"
 
+#include <android-base/logging.h>
+#include <android-base/mapped_file.h>
+#include <android-base/unique_fd.h>
+#include <android/sharedmem.h>
 #include <ftw.h>
 #include <gtest/gtest.h>
 #include <unistd.h>
@@ -26,8 +30,10 @@
 #include <fstream>
 #include <iostream>
 #include <map>
+#include <memory>
 #include <string>
 #include <thread>
+#include <utility>
 #include <vector>
 
 #include "TestHarness.h"
@@ -71,6 +77,7 @@ class GeneratedTests : public GeneratedTestBase {
     bool mTestDynamicOutputShape = false;
     bool mExpectFailure = false;
     bool mTestQuantizationCoupling = false;
+    bool mTestDeviceMemory = false;
 };
 
 // Tag for the dynamic output shape tests
@@ -88,6 +95,11 @@ class GeneratedValidationTests : public GeneratedTests {
 class QuantizationCouplingTest : public GeneratedTests {
    protected:
     QuantizationCouplingTest() { mTestQuantizationCoupling = true; }
+};
+
+class DeviceMemoryTest : public GeneratedTests {
+   protected:
+    DeviceMemoryTest() { mTestDeviceMemory = true; }
 };
 
 static OperandType getOperandType(const TestOperand& op, bool testDynamicOutputShape) {
@@ -199,27 +211,173 @@ std::optional<Compilation> GeneratedTests::compileModel(const Model& model) {
     }
 }
 
+static void computeWithPtrs(const TestModel& testModel, Execution* execution, Result* result,
+                            std::vector<TestBuffer>* outputs) {
+    {
+        NNTRACE_APP(NNTRACE_PHASE_INPUTS_AND_OUTPUTS, "computeWithPtrs example");
+        createRequest(testModel, execution, outputs);
+    }
+    *result = execution->compute();
+}
+
+// Convenience class to manage the file, mapping, and memory object.
+class TestAshmem {
+   public:
+    TestAshmem(::android::base::unique_fd fd, std::unique_ptr<::android::base::MappedFile> mapped,
+               Memory memory)
+        : mFd(std::move(fd)), mMapped(std::move(mapped)), mMemory(std::move(memory)) {}
+
+    // Factory function for TestAshmem; prefer this over the raw constructor
+    static std::unique_ptr<TestAshmem> createFrom(const TestBuffer& buffer) {
+        // Create ashmem-based fd.
+        int fd = ASharedMemory_create(nullptr, buffer.size());
+        if (fd <= 0) return nullptr;
+        ::android::base::unique_fd managedFd(fd);
+
+        // Map and populate ashmem.
+        auto mappedFile =
+                ::android::base::MappedFile::FromFd(fd, 0, buffer.size(), PROT_READ | PROT_WRITE);
+        if (!mappedFile) return nullptr;
+        memcpy(mappedFile->data(), buffer.get<void>(), buffer.size());
+
+        // Create NNAPI memory object.
+        Memory memory(buffer.size(), PROT_READ | PROT_WRITE, fd, 0);
+        if (!memory.isValid()) return nullptr;
+
+        // Store everything in managing class.
+        return std::make_unique<TestAshmem>(std::move(managedFd), std::move(mappedFile),
+                                            std::move(memory));
+    }
+
+    size_t size() { return mMapped->size(); }
+    Memory* get() { return &mMemory; }
+
+    template <typename Type>
+    Type* dataAs() {
+        return static_cast<Type*>(static_cast<void*>(mMapped->data()));
+    }
+
+   private:
+    ::android::base::unique_fd mFd;
+    std::unique_ptr<::android::base::MappedFile> mMapped;
+    Memory mMemory;
+};
+
+static ANeuralNetworksMemory* createDeviceMemoryForInput(const Compilation& compilation,
+                                                         uint32_t index) {
+    ANeuralNetworksMemoryDesc* desc = nullptr;
+    EXPECT_EQ(ANeuralNetworksMemoryDesc_create(&desc), ANEURALNETWORKS_NO_ERROR);
+    EXPECT_EQ(ANeuralNetworksMemoryDesc_addInputRole(desc, compilation.getHandle(), index, 1.0f),
+              ANEURALNETWORKS_NO_ERROR);
+    EXPECT_EQ(ANeuralNetworksMemoryDesc_finish(desc), ANEURALNETWORKS_NO_ERROR);
+    ANeuralNetworksMemory* memory = nullptr;
+    ANeuralNetworksMemory_createFromDesc(desc, &memory);
+    ANeuralNetworksMemoryDesc_free(desc);
+    return memory;
+}
+
+static ANeuralNetworksMemory* createDeviceMemoryForOutput(const Compilation& compilation,
+                                                          uint32_t index) {
+    ANeuralNetworksMemoryDesc* desc = nullptr;
+    EXPECT_EQ(ANeuralNetworksMemoryDesc_create(&desc), ANEURALNETWORKS_NO_ERROR);
+    EXPECT_EQ(ANeuralNetworksMemoryDesc_addOutputRole(desc, compilation.getHandle(), index, 1.0f),
+              ANEURALNETWORKS_NO_ERROR);
+    EXPECT_EQ(ANeuralNetworksMemoryDesc_finish(desc), ANEURALNETWORKS_NO_ERROR);
+    ANeuralNetworksMemory* memory = nullptr;
+    ANeuralNetworksMemory_createFromDesc(desc, &memory);
+    ANeuralNetworksMemoryDesc_free(desc);
+    return memory;
+}
+
+// Set result = Result::NO_ERROR and outputs = {} if the test should be skipped.
+static void computeWithDeviceMemories(const Compilation& compilation, const TestModel& testModel,
+                                      Execution* execution, Result* result,
+                                      std::vector<TestBuffer>* outputs) {
+    ASSERT_NE(execution, nullptr);
+    ASSERT_NE(result, nullptr);
+    ASSERT_NE(outputs, nullptr);
+    outputs->clear();
+    std::vector<Memory> inputMemories, outputMemories;
+
+    {
+        NNTRACE_APP(NNTRACE_PHASE_INPUTS_AND_OUTPUTS, "computeWithDeviceMemories example");
+        // Model inputs.
+        for (uint32_t i = 0; i < testModel.inputIndexes.size(); i++) {
+            SCOPED_TRACE("Input index: " + std::to_string(i));
+            const auto& operand = testModel.operands[testModel.inputIndexes[i]];
+            // Omitted input.
+            if (operand.data.size() == 0) {
+                ASSERT_EQ(Result::NO_ERROR, execution->setInput(i, nullptr, 0));
+                continue;
+            }
+
+            // Create device memory.
+            ANeuralNetworksMemory* memory = createDeviceMemoryForInput(compilation, i);
+            ASSERT_NE(memory, nullptr);
+            auto& wrapperMemory = inputMemories.emplace_back(memory);
+
+            // Copy data from TestBuffer to device memory.
+            auto ashmem = TestAshmem::createFrom(operand.data);
+            ASSERT_NE(ashmem, nullptr);
+            ASSERT_EQ(ANeuralNetworksMemory_copy(ashmem->get()->get(), memory),
+                      ANEURALNETWORKS_NO_ERROR);
+            ASSERT_EQ(Result::NO_ERROR, execution->setInputFromMemory(i, &wrapperMemory, 0, 0));
+        }
+
+        // Model outputs.
+        for (uint32_t i = 0; i < testModel.outputIndexes.size(); i++) {
+            SCOPED_TRACE("Output index: " + std::to_string(i));
+            ANeuralNetworksMemory* memory = createDeviceMemoryForOutput(compilation, i);
+            ASSERT_NE(memory, nullptr);
+            auto& wrapperMemory = outputMemories.emplace_back(memory);
+            ASSERT_EQ(Result::NO_ERROR, execution->setOutputFromMemory(i, &wrapperMemory, 0, 0));
+        }
+    }
+
+    *result = execution->compute();
+
+    // Copy out output results.
+    for (uint32_t i = 0; i < testModel.outputIndexes.size(); i++) {
+        SCOPED_TRACE("Output index: " + std::to_string(i));
+        const auto& operand = testModel.operands[testModel.outputIndexes[i]];
+        const size_t bufferSize = operand.data.size();
+        auto& output = outputs->emplace_back(bufferSize);
+
+        auto ashmem = TestAshmem::createFrom(output);
+        ASSERT_NE(ashmem, nullptr);
+        ASSERT_EQ(ANeuralNetworksMemory_copy(outputMemories[i].get(), ashmem->get()->get()),
+                  ANEURALNETWORKS_NO_ERROR);
+        std::copy(ashmem->dataAs<uint8_t>(), ashmem->dataAs<uint8_t>() + bufferSize,
+                  output.getMutable<uint8_t>());
+    }
+}
+
 void GeneratedTests::executeWithCompilation(const Compilation& compilation,
                                             const TestModel& testModel) {
     NNTRACE_APP(NNTRACE_PHASE_EXECUTION, "executeWithCompilation example");
 
     Execution execution(&compilation);
+    Result result;
     std::vector<TestBuffer> outputs;
-    {
-        NNTRACE_APP(NNTRACE_PHASE_INPUTS_AND_OUTPUTS, "executeWithCompilation example");
-        createRequest(testModel, &execution, &outputs);
+
+    if (mTestDeviceMemory) {
+        computeWithDeviceMemories(compilation, testModel, &execution, &result, &outputs);
+    } else {
+        computeWithPtrs(testModel, &execution, &result, &outputs);
     }
 
-    Result result = execution.compute();
-    if (mExpectFailure) {
-        ASSERT_NE(result, Result::NO_ERROR);
+    if (result == Result::NO_ERROR && outputs.empty()) {
         return;
-    } else {
-        ASSERT_EQ(result, Result::NO_ERROR);
     }
 
     {
         NNTRACE_APP(NNTRACE_PHASE_RESULTS, "executeWithCompilation example");
+        if (mExpectFailure) {
+            ASSERT_NE(result, Result::NO_ERROR);
+            return;
+        } else {
+            ASSERT_EQ(result, Result::NO_ERROR);
+        }
 
         // Check output dimensions.
         for (uint32_t i = 0; i < testModel.outputIndexes.size(); i++) {
@@ -349,6 +507,10 @@ TEST_P(QuantizationCouplingTest, Test) {
     execute(convertQuant8AsymmOperandsToSigned(testModel));
 }
 
+TEST_P(DeviceMemoryTest, Test) {
+    execute(testModel);
+}
+
 INSTANTIATE_GENERATED_TEST(GeneratedTests,
                            [](const TestModel& testModel) { return !testModel.expectFailure; });
 
@@ -360,6 +522,14 @@ INSTANTIATE_GENERATED_TEST(GeneratedValidationTests,
 
 INSTANTIATE_GENERATED_TEST(QuantizationCouplingTest, [](const TestModel& testModel) {
     return testModel.operations.size() == 1 && testModel.hasQuant8CoupledOperands();
+});
+
+INSTANTIATE_GENERATED_TEST(DeviceMemoryTest, [](const TestModel& testModel) {
+    return !testModel.expectFailure &&
+           std::all_of(testModel.outputIndexes.begin(), testModel.outputIndexes.end(),
+                       [&testModel](uint32_t index) {
+                           return testModel.operands[index].data.size() > 0;
+                       });
 });
 
 }  // namespace android::nn::generated_tests
