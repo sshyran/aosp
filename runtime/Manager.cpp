@@ -309,7 +309,7 @@ std::tuple<int, std::vector<OutputShape>, Timing> DriverPreparedModel::execute(
     uint32_t count = localMemories.size();
     request.pools.resize(count);
     for (uint32_t i = 0; i < count; i++) {
-        request.pools[i] = localMemories[i]->getHidlMemory();
+        request.pools[i] = localMemories[i]->getMemoryPool();
     }
 
     NNTRACE_FULL_SWITCH(NNTRACE_LAYER_IPC, NNTRACE_PHASE_EXECUTION,
@@ -321,19 +321,23 @@ std::tuple<int, std::vector<OutputShape>, Timing> DriverPreparedModel::execute(
 
     // compute using burst if present
     const bool burstCompute = (burstController != nullptr);
-    bool burstFallback = false;
+    bool burstFallback = true;
     if (burstCompute) {
-        std::vector<intptr_t> memoryIds;
-        memoryIds.reserve(localMemories.size());
-        for (const Memory* memory : localMemories) {
-            memory->usedBy(burstController);
-            memoryIds.push_back(memory->getKey());
-        }
+        const bool compliant = compliantWithV1_0(request);
+        if (compliant) {
+            V1_0::Request request10 = convertToV1_0(request);
+            std::vector<intptr_t> memoryIds;
+            memoryIds.reserve(localMemories.size());
+            for (const Memory* memory : localMemories) {
+                memory->usedBy(burstController);
+                memoryIds.push_back(memory->getKey());
+            }
 
-        VLOG(EXECUTION) << "Before ExecutionBurstController->compute() "
-                        << SHOW_IF_DEBUG(toString(request));
-        std::tie(n, outputShapes, timing, burstFallback) =
-                burstController->compute(request, measure, memoryIds);
+            VLOG(EXECUTION) << "Before ExecutionBurstController->compute() "
+                            << SHOW_IF_DEBUG(toString(request10));
+            std::tie(n, outputShapes, timing, burstFallback) =
+                    burstController->compute(request10, measure, memoryIds);
+        }
     }
 
     // compute from IPreparedModel if either:

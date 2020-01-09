@@ -313,7 +313,7 @@ class TestPreparedModelLatest : public SamplePreparedModel {
         : SamplePreparedModel(model, driver, ExecutionPreference::FAST_SINGLE_ANSWER),
           mSuccess(success) {}
 
-    Return<ErrorStatus> execute(const Request&,
+    Return<ErrorStatus> execute(const V1_0::Request&,
                                 const sp<V1_0::IExecutionCallback>& callback) override {
         switch (mSuccess) {
             case Success::PASS_NEITHER:
@@ -331,7 +331,7 @@ class TestPreparedModelLatest : public SamplePreparedModel {
         }
     }
 
-    Return<ErrorStatus> execute_1_2(const Request&, MeasureTiming measure,
+    Return<ErrorStatus> execute_1_2(const V1_0::Request&, MeasureTiming measure,
                                     const sp<V1_2::IExecutionCallback>& callback) override {
         EXPECT_EQ(measure, MeasureTiming::YES);
         switch (mSuccess) {
@@ -353,12 +353,13 @@ class TestPreparedModelLatest : public SamplePreparedModel {
         }
     }
 
-    Return<ErrorStatus> execute_1_3(const Request& request, MeasureTiming measure,
+    Return<ErrorStatus> execute_1_3(const V1_3::Request&, MeasureTiming measure,
                                     const sp<V1_2::IExecutionCallback>& callback) override {
-        return execute_1_2(request, measure, callback);
+        // Use a dummy V1_0::Request because execute_1_2 ignores request entirely.
+        return execute_1_2(V1_0::Request{}, measure, callback);
     }
 
-    Return<void> executeSynchronously(const Request&, MeasureTiming measure,
+    Return<void> executeSynchronously(const V1_0::Request&, MeasureTiming measure,
                                       executeSynchronously_cb cb) override {
         EXPECT_EQ(measure, MeasureTiming::YES);
         switch (mSuccess) {
@@ -383,9 +384,10 @@ class TestPreparedModelLatest : public SamplePreparedModel {
         }
     }
 
-    Return<void> executeSynchronously_1_3(const Request& request, MeasureTiming measure,
+    Return<void> executeSynchronously_1_3(const V1_3::Request&, MeasureTiming measure,
                                           executeSynchronously_1_3_cb cb) override {
-        return executeSynchronously(request, measure, cb);
+        // Use a dummy V1_0::Request because executeSynchronously ignores request entirely.
+        return executeSynchronously(V1_0::Request{}, measure, cb);
     }
 
     // ExecutionBurstServer::create has an overload that will use
@@ -415,17 +417,17 @@ class TestPreparedModel12 : public V1_2::IPreparedModel {
     TestPreparedModel12(const HidlModel& model, const SampleDriver* driver, Success success)
         : mLatestPreparedModel(new TestPreparedModelLatest(model, driver, success)) {}
 
-    Return<ErrorStatus> execute(const Request& request,
+    Return<ErrorStatus> execute(const V1_0::Request& request,
                                 const sp<V1_0::IExecutionCallback>& callback) override {
         return mLatestPreparedModel->execute(request, callback);
     }
 
-    Return<ErrorStatus> execute_1_2(const Request& request, MeasureTiming measure,
+    Return<ErrorStatus> execute_1_2(const V1_0::Request& request, MeasureTiming measure,
                                     const sp<V1_2::IExecutionCallback>& callback) override {
         return mLatestPreparedModel->execute_1_2(request, measure, callback);
     }
 
-    Return<void> executeSynchronously(const Request& request, MeasureTiming measure,
+    Return<void> executeSynchronously(const V1_0::Request& request, MeasureTiming measure,
                                       executeSynchronously_cb cb) override {
         return mLatestPreparedModel->executeSynchronously(request, measure, cb);
     }
@@ -449,7 +451,7 @@ class TestPreparedModel10 : public V1_0::IPreparedModel {
     TestPreparedModel10(const HidlModel& model, const SampleDriver* driver, Success success)
         : mLatestPreparedModel(new TestPreparedModelLatest(model, driver, success)) {}
 
-    Return<ErrorStatus> execute(const Request& request,
+    Return<ErrorStatus> execute(const V1_0::Request& request,
                                 const sp<V1_0::IExecutionCallback>& callback) override {
         return mLatestPreparedModel->execute(request, callback);
     }
