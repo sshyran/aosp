@@ -698,6 +698,10 @@ TEST(OperationValidationTest, DIV_float32) {
     simpleMathOpTest(ANEURALNETWORKS_DIV, ANEURALNETWORKS_TENSOR_FLOAT32);
 }
 
+TEST(OperationValidationTest, DIV_int32) {
+    simpleMathOpTest(ANEURALNETWORKS_DIV, ANEURALNETWORKS_TENSOR_INT32);
+}
+
 TEST(OperationValidationTest, MUL_quant8_bad_output_scale) {
     uint32_t inputDimensions[4] = {2, 2, 2, 2};
     ANeuralNetworksOperandType input1 =
