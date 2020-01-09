@@ -121,6 +121,9 @@ class RunTimePoolInfo {
 bool setRunTimePoolInfosFromHidlMemories(std::vector<RunTimePoolInfo>* poolInfos,
                                          const hal::hidl_vec<hal::hidl_memory>& pools);
 
+bool setRunTimePoolInfosFromMemoryPools(std::vector<RunTimePoolInfo>* poolInfos,
+                                        const hal::hidl_vec<hal::Request::MemoryPool>& pools);
+
 // This class is used to execute a model on the CPU.
 class CpuExecutor {
    public:

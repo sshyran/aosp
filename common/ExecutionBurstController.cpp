@@ -63,7 +63,7 @@ class BurstContextDeathHandler : public hidl_death_recipient {
 }  // anonymous namespace
 
 // serialize a request into a packet
-std::vector<FmqRequestDatum> serialize(const Request& request, MeasureTiming measure,
+std::vector<FmqRequestDatum> serialize(const V1_0::Request& request, MeasureTiming measure,
                                        const std::vector<int32_t>& slots) {
     // count how many elements need to be sent for a request
     size_t count = 2 + request.inputs.size() + request.outputs.size() + request.pools.size();
@@ -356,7 +356,7 @@ RequestChannelSender::create(size_t channelLength) {
 RequestChannelSender::RequestChannelSender(std::unique_ptr<FmqRequestChannel> fmqRequestChannel)
     : mFmqRequestChannel(std::move(fmqRequestChannel)) {}
 
-bool RequestChannelSender::send(const Request& request, MeasureTiming measure,
+bool RequestChannelSender::send(const V1_0::Request& request, MeasureTiming measure,
                                 const std::vector<int32_t>& slots) {
     const std::vector<FmqRequestDatum> serialized = serialize(request, measure, slots);
     return sendPacket(serialized);
@@ -572,7 +572,8 @@ static std::tuple<int, std::vector<OutputShape>, Timing, bool> getExecutionResul
 }
 
 std::tuple<int, std::vector<OutputShape>, Timing, bool> ExecutionBurstController::compute(
-        const Request& request, MeasureTiming measure, const std::vector<intptr_t>& memoryIds) {
+        const V1_0::Request& request, MeasureTiming measure,
+        const std::vector<intptr_t>& memoryIds) {
     // This is the first point when we know an execution is occurring, so begin
     // to collect systraces. Note that the first point we can begin collecting
     // systraces in ExecutionBurstServer is when the RequestChannelReceiver

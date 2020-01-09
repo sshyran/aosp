@@ -81,6 +81,11 @@ class SampleDriver : public hal::IDevice {
             const hal::hidl_vec<hal::hidl_handle>& dataCache, const hal::CacheToken& token,
             const sp<hal::V1_3::IPreparedModelCallback>& callback) override;
     hal::Return<hal::DeviceStatus> getStatus() override;
+    hal::Return<void> allocate(const hal::V1_3::BufferDesc& desc,
+                               const hal::hidl_vec<sp<hal::V1_3::IPreparedModel>>& preparedModels,
+                               const hal::hidl_vec<hal::V1_3::BufferRole>& inputRoles,
+                               const hal::hidl_vec<hal::V1_3::BufferRole>& outputRoles,
+                               allocate_cb cb) override;
 
     // Starts and runs the driver service.  Typically called from main().
     // This will return only once the service shuts down.
@@ -101,17 +106,18 @@ class SamplePreparedModel : public hal::IPreparedModel {
     ~SamplePreparedModel() override {}
     bool initialize();
     hal::Return<hal::ErrorStatus> execute(
-            const hal::Request& request,
+            const hal::V1_0::Request& request,
             const sp<hal::V1_0::IExecutionCallback>& callback) override;
     hal::Return<hal::ErrorStatus> execute_1_2(
-            const hal::Request& request, hal::MeasureTiming measure,
+            const hal::V1_0::Request& request, hal::MeasureTiming measure,
             const sp<hal::V1_2::IExecutionCallback>& callback) override;
     hal::Return<hal::ErrorStatus> execute_1_3(
-            const hal::Request& request, hal::MeasureTiming measure,
+            const hal::V1_3::Request& request, hal::MeasureTiming measure,
             const sp<hal::V1_2::IExecutionCallback>& callback) override;
-    hal::Return<void> executeSynchronously(const hal::Request& request, hal::MeasureTiming measure,
+    hal::Return<void> executeSynchronously(const hal::V1_0::Request& request,
+                                           hal::MeasureTiming measure,
                                            executeSynchronously_cb cb) override;
-    hal::Return<void> executeSynchronously_1_3(const hal::Request& request,
+    hal::Return<void> executeSynchronously_1_3(const hal::V1_3::Request& request,
                                                hal::MeasureTiming measure,
                                                executeSynchronously_1_3_cb cb) override;
     hal::Return<void> configureExecutionBurst(

@@ -39,6 +39,16 @@ Memory::~Memory() {
     }
 }
 
+hal::Request::MemoryPool Memory::getMemoryPool() const {
+    hal::Request::MemoryPool pool;
+    if (kToken > 0) {
+        pool.token(kToken);
+    } else {
+        pool.hidlMemory(kHidlMemory);
+    }
+    return pool;
+}
+
 bool Memory::validateSize(uint32_t offset, uint32_t length) const {
     if (offset + length > kHidlMemory.size()) {
         LOG(ERROR) << "Request size larger than the memory size.";
