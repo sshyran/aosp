@@ -60,7 +60,21 @@ class MemoryAccessVerifier {
             mPoolSizes[i] = pools[i].size();
         }
     }
-    bool validate(const DataLocation& location) {
+    MemoryAccessVerifier(const hidl_vec<V1_3::Request::MemoryPool>& pools)
+        : mPoolCount(pools.size()), mPoolSizes(mPoolCount) {
+        for (size_t i = 0; i < mPoolCount; i++) {
+            switch (pools[i].getDiscriminator()) {
+                case Request::MemoryPool::hidl_discriminator::hidlMemory:
+                    mPoolSizes[i] = pools[i].hidlMemory().size();
+                    break;
+                case Request::MemoryPool::hidl_discriminator::token:
+                    // Set size to 0 to enforce length == 0 && offset == 0.
+                    mPoolSizes[i] = 0;
+                    break;
+            }
+        }
+    }
+    bool validate(const DataLocation& location) const {
         if (location.poolIndex >= mPoolCount) {
             LOG(ERROR) << "Invalid poolIndex " << location.poolIndex << "/" << mPoolCount;
             return false;
@@ -473,9 +487,21 @@ bool validatePool(const hidl_memory& pool, HalVersion ver) {
     return true;
 }
 
-static bool validatePools(const hidl_vec<hidl_memory>& pools, HalVersion ver) {
+bool validatePool(const V1_3::Request::MemoryPool& pool, HalVersion ver) {
+    switch (pool.getDiscriminator()) {
+        case Request::MemoryPool::hidl_discriminator::hidlMemory:
+            return validatePool(pool.hidlMemory(), ver);
+        case Request::MemoryPool::hidl_discriminator::token:
+            return pool.token() > 0;
+    }
+    LOG(FATAL) << "unknown MemoryPool discriminator";
+    return false;
+}
+
+template <class T_MemoryPool>
+static bool validatePools(const hidl_vec<T_MemoryPool>& pools, HalVersion ver) {
     return std::all_of(pools.begin(), pools.end(),
-                       [ver](const hidl_memory& pool) { return validatePool(pool, ver); });
+                       [ver](const auto& pool) { return validatePool(pool, ver); });
 }
 
 static bool validateModelInputOutputs(const hidl_vec<uint32_t> indexes,
@@ -536,9 +562,8 @@ template bool validateModel<V1_3::Model>(const V1_3::Model& model);
 static bool validateRequestArguments(const hidl_vec<RequestArgument>& requestArguments,
                                      const hidl_vec<uint32_t>& operandIndexes,
                                      const hidl_vec<Operand>& operands,
-                                     const hidl_vec<hidl_memory>& pools, bool allowUnspecified,
-                                     const char* type) {
-    MemoryAccessVerifier poolVerifier(pools);
+                                     const MemoryAccessVerifier& poolVerifier,
+                                     bool allowUnspecified, const char* type) {
     // The request should specify as many arguments as were described in the model.
     const size_t requestArgumentCount = requestArguments.size();
     if (requestArgumentCount != operandIndexes.size()) {
@@ -609,22 +634,27 @@ static bool validateRequestArguments(const hidl_vec<RequestArgument>& requestArg
     return true;
 }
 
-template <class T_Model>
-bool validateRequest(const Request& request, const T_Model& model) {
+template <class T_Request, class T_Model>
+bool validateRequest(const T_Request& request, const T_Model& model) {
     HalVersion version = ModelToHalVersion<T_Model>::version;
+    MemoryAccessVerifier poolVerifier(request.pools);
     return (validateRequestArguments(request.inputs, model.inputIndexes,
-                                     convertToV1_3(model.operands), request.pools,
+                                     convertToV1_3(model.operands), poolVerifier,
                                      /*allowUnspecified=*/false, "input") &&
             validateRequestArguments(request.outputs, model.outputIndexes,
-                                     convertToV1_3(model.operands), request.pools,
+                                     convertToV1_3(model.operands), poolVerifier,
                                      /*allowUnspecified=*/version >= HalVersion::V1_2, "output") &&
             validatePools(request.pools, version));
 }
 
-template bool validateRequest<V1_0::Model>(const Request& request, const V1_0::Model& model);
-template bool validateRequest<V1_1::Model>(const Request& request, const V1_1::Model& model);
-template bool validateRequest<V1_2::Model>(const Request& request, const V1_2::Model& model);
-template bool validateRequest<V1_3::Model>(const Request& request, const V1_3::Model& model);
+template bool validateRequest<V1_0::Request, V1_0::Model>(const V1_0::Request& request,
+                                                          const V1_0::Model& model);
+template bool validateRequest<V1_0::Request, V1_1::Model>(const V1_0::Request& request,
+                                                          const V1_1::Model& model);
+template bool validateRequest<V1_0::Request, V1_2::Model>(const V1_0::Request& request,
+                                                          const V1_2::Model& model);
+template bool validateRequest<V1_3::Request, V1_3::Model>(const V1_3::Request& request,
+                                                          const V1_3::Model& model);
 
 bool validateExecutionPreference(ExecutionPreference preference) {
     return preference == ExecutionPreference::LOW_POWER ||

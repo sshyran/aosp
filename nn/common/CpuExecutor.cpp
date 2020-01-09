@@ -24,6 +24,7 @@
 
 #include <Eigen/Core>
 #include <memory>
+#include <utility>
 #include <vector>
 
 // b/109953668, disable OpenMP
@@ -427,6 +428,29 @@ bool setRunTimePoolInfosFromHidlMemories(std::vector<RunTimePoolInfo>* poolInfos
     poolInfos->reserve(pools.size());
     for (const auto& pool : pools) {
         if (std::optional<RunTimePoolInfo> poolInfo = RunTimePoolInfo::createFromHidlMemory(pool)) {
+            poolInfos->push_back(*poolInfo);
+        } else {
+            LOG(ERROR) << "Could not map pools";
+            poolInfos->clear();
+            return false;
+        }
+    }
+    return true;
+}
+
+bool setRunTimePoolInfosFromMemoryPools(std::vector<RunTimePoolInfo>* poolInfos,
+                                        const hidl_vec<Request::MemoryPool>& pools) {
+    CHECK(poolInfos != nullptr);
+    poolInfos->clear();
+    poolInfos->reserve(pools.size());
+    for (const auto& pool : pools) {
+        if (pool.getDiscriminator() != Request::MemoryPool::hidl_discriminator::hidlMemory) {
+            LOG(ERROR) << "Unknown memory token";
+            poolInfos->clear();
+            return false;
+        }
+        if (std::optional<RunTimePoolInfo> poolInfo =
+                    RunTimePoolInfo::createFromHidlMemory(pool.hidlMemory())) {
             poolInfos->push_back(*poolInfo);
         } else {
             LOG(ERROR) << "Could not map pools";
