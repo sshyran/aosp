@@ -666,6 +666,10 @@ TEST(OperationValidationTest, MUL_quant8_signed) {
     simpleMathOpTest(ANEURALNETWORKS_MUL, ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED);
 }
 
+TEST(OperationValidationTest, MUL_int32) {
+    simpleMathOpTest(ANEURALNETWORKS_MUL, ANEURALNETWORKS_TENSOR_INT32);
+}
+
 TEST(OperationValidationTest, SUB_float16) {
     simpleMathOpTest(ANEURALNETWORKS_SUB, ANEURALNETWORKS_TENSOR_FLOAT16);
 }
