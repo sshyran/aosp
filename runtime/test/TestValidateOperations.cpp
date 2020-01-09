@@ -853,6 +853,10 @@ TEST(OperationValidationTest, TANH_quant8) {
     activationOpTest(ANEURALNETWORKS_TANH, ANEURALNETWORKS_TENSOR_QUANT8_ASYMM);
 }
 
+TEST(OperationValidationTest, TANH_quant8_signed) {
+    activationOpTest(ANEURALNETWORKS_TANH, ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED);
+}
+
 TEST(OperationValidationTest, RELU_float16) {
     activationOpTest(ANEURALNETWORKS_RELU, ANEURALNETWORKS_TENSOR_FLOAT16);
 }
@@ -877,14 +881,6 @@ TEST(OperationValidationTest, RELU6_float32) {
     activationOpTest(ANEURALNETWORKS_RELU, ANEURALNETWORKS_TENSOR_FLOAT32);
 }
 
-TEST(OperationValidationTest, LOGISTIC_float16) {
-    activationOpTest(ANEURALNETWORKS_LOGISTIC, ANEURALNETWORKS_TENSOR_FLOAT16);
-}
-
-TEST(OperationValidationTest, LOGISTIC_float32) {
-    activationOpTest(ANEURALNETWORKS_LOGISTIC, ANEURALNETWORKS_TENSOR_FLOAT32);
-}
-
 TEST(OperationValidationTest, RELU_quant8) {
     activationOpTest(ANEURALNETWORKS_RELU, ANEURALNETWORKS_TENSOR_QUANT8_ASYMM);
 }
@@ -897,8 +893,32 @@ TEST(OperationValidationTest, RELU6_quant8) {
     activationOpTest(ANEURALNETWORKS_RELU, ANEURALNETWORKS_TENSOR_QUANT8_ASYMM);
 }
 
+TEST(OperationValidationTest, RELU_quant8_signed) {
+    activationOpTest(ANEURALNETWORKS_RELU, ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED);
+}
+
+TEST(OperationValidationTest, RELU1_quant8_signed) {
+    activationOpTest(ANEURALNETWORKS_RELU, ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED);
+}
+
+TEST(OperationValidationTest, RELU6_quant8_signed) {
+    activationOpTest(ANEURALNETWORKS_RELU, ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED);
+}
+
+TEST(OperationValidationTest, LOGISTIC_float16) {
+    activationOpTest(ANEURALNETWORKS_LOGISTIC, ANEURALNETWORKS_TENSOR_FLOAT16);
+}
+
+TEST(OperationValidationTest, LOGISTIC_float32) {
+    activationOpTest(ANEURALNETWORKS_LOGISTIC, ANEURALNETWORKS_TENSOR_FLOAT32);
+}
+
 TEST(OperationValidationTest, LOGISTIC_quant8) {
     activationOpTest(ANEURALNETWORKS_LOGISTIC, ANEURALNETWORKS_TENSOR_QUANT8_ASYMM);
+}
+
+TEST(OperationValidationTest, LOGISTIC_quant8_signed) {
+    activationOpTest(ANEURALNETWORKS_LOGISTIC, ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED);
 }
 
 void reshapeOpTest(int32_t inputOperandCode) {
@@ -2511,6 +2531,11 @@ TEST(OperationValidationTest, HEATMAP_MAX_KEYPOINT_float32) {
 
 TEST(OperationValidationTest, HEATMAP_MAX_KEYPOINT_quant) {
     heatmapMaxKeypointOpTest(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM,
+                             ANEURALNETWORKS_TENSOR_QUANT16_ASYMM);
+}
+
+TEST(OperationValidationTest, HEATMAP_MAX_KEYPOINT_quant_signed) {
+    heatmapMaxKeypointOpTest(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED,
                              ANEURALNETWORKS_TENSOR_QUANT16_ASYMM);
 }
 
