@@ -682,6 +682,10 @@ TEST(OperationValidationTest, SUB_quant8_signed) {
     simpleMathOpTest(ANEURALNETWORKS_SUB, ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED);
 }
 
+TEST(OperationValidationTest, SUB_int32) {
+    simpleMathOpTest(ANEURALNETWORKS_SUB, ANEURALNETWORKS_TENSOR_INT32);
+}
+
 TEST(OperationValidationTest, DIV_float16) {
     simpleMathOpTest(ANEURALNETWORKS_DIV, ANEURALNETWORKS_TENSOR_FLOAT16);
 }

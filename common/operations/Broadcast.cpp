@@ -205,8 +205,9 @@ bool addQuant8(const T* in1, const Shape& shape1, const T* in2, const Shape& sha
     return true;
 }
 
-bool addInt32(const int32_t* aData, const Shape& aShape, const int32_t* bData, const Shape& bShape,
-              int32_t activation, int32_t* outputData, const Shape& outputShape) {
+bool executeInt32(const int32_t* aData, const Shape& aShape, const int32_t* bData,
+                  const Shape& bShape, int32_t activation, int32_t* outputData,
+                  const Shape& outputShape, int32_t func(int32_t, int32_t)) {
     NN_RET_CHECK_EQ(activation, ANEURALNETWORKS_FUSED_NONE);
     IndexedShapeWrapper aShapeIndexed(aShape);
     IndexedShapeWrapper bShapeIndexed(bShape);
@@ -221,7 +222,7 @@ bool addInt32(const int32_t* aData, const Shape& aShape, const int32_t* bData, c
         uint32_t bFlatIndex;
         NN_RET_CHECK(bShapeIndexed.broadcastedIndexToFlatIndex(curIndex, &bFlatIndex));
 
-        outputData[outputFlatIndex] = aData[aFlatIndex] + bData[bFlatIndex];
+        outputData[outputFlatIndex] = func(aData[aFlatIndex], bData[bFlatIndex]);
 
         NN_RET_CHECK(outputShapeIndexed.nextIndexInplace(&curIndex, &lastIndex));
     } while (!lastIndex);
@@ -461,7 +462,8 @@ bool validate(OperationType opType, const IOperationValidationContext* context) 
         }
     } else if (inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
         NN_RET_CHECK(validateHalVersion(context, std::max(HalVersion::V1_3, opIntroducedAt)));
-    } else if (inputType == OperandType::TENSOR_INT32 && opType == OperationType::ADD) {
+    } else if (inputType == OperandType::TENSOR_INT32 &&
+               (opType == OperationType::ADD || opType == OperationType::SUB)) {
         NN_RET_CHECK(validateHalVersion(context, HalVersion::V1_3));
     } else {
         NN_RET_CHECK_FAIL() << "Unsupported tensor type for operation " << getOperationName(opType);
@@ -517,13 +519,14 @@ bool executeAdd(IOperationExecutionContext* context) {
                              context->getOutputBuffer<int8_t>(kOutputTensor),
                              context->getOutputShape(kOutputTensor));
         case OperandType::TENSOR_INT32:
-            return addInt32(context->getInputBuffer<int32_t>(kInputTensor1),
-                            context->getInputShape(kInputTensor1),
-                            context->getInputBuffer<int32_t>(kInputTensor2),
-                            context->getInputShape(kInputTensor2),
-                            context->getInputValue<int32_t>(kActivationScalar),
-                            context->getOutputBuffer<int32_t>(kOutputTensor),
-                            context->getOutputShape(kOutputTensor));
+            return executeInt32(context->getInputBuffer<int32_t>(kInputTensor1),
+                                context->getInputShape(kInputTensor1),
+                                context->getInputBuffer<int32_t>(kInputTensor2),
+                                context->getInputShape(kInputTensor2),
+                                context->getInputValue<int32_t>(kActivationScalar),
+                                context->getOutputBuffer<int32_t>(kOutputTensor),
+                                context->getOutputShape(kOutputTensor),
+                                [](int32_t a, int32_t b) { return a + b; });
         default:
             NN_RET_CHECK_FAIL() << "Unsupported tensor type for operation ADD";
     }
@@ -606,6 +609,15 @@ bool executeSub(IOperationExecutionContext* context) {
                              context->getInputValue<int32_t>(kActivationScalar),
                              context->getOutputBuffer<int8_t>(kOutputTensor),
                              context->getOutputShape(kOutputTensor));
+        case OperandType::TENSOR_INT32:
+            return executeInt32(context->getInputBuffer<int32_t>(kInputTensor1),
+                                context->getInputShape(kInputTensor1),
+                                context->getInputBuffer<int32_t>(kInputTensor2),
+                                context->getInputShape(kInputTensor2),
+                                context->getInputValue<int32_t>(kActivationScalar),
+                                context->getOutputBuffer<int32_t>(kOutputTensor),
+                                context->getOutputShape(kOutputTensor),
+                                [](int32_t a, int32_t b) { return a - b; });
         default:
             NN_RET_CHECK_FAIL() << "Unsupported tensor type for operation SUB";
     }
