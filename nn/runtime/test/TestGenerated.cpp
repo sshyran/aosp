@@ -85,9 +85,9 @@ class GeneratedValidationTests : public GeneratedTests {
     GeneratedValidationTests() { mExpectFailure = true; }
 };
 
-class DISABLED_QuantizationCouplingTest : public GeneratedTests {
+class QuantizationCouplingTest : public GeneratedTests {
    protected:
-    DISABLED_QuantizationCouplingTest() { mTestQuantizationCoupling = true; }
+    QuantizationCouplingTest() { mTestQuantizationCoupling = true; }
 };
 
 static OperandType getOperandType(const TestOperand& op, bool testDynamicOutputShape) {
@@ -344,7 +344,7 @@ TEST_P(GeneratedValidationTests, Test) {
     execute(testModel);
 }
 
-TEST_P(DISABLED_QuantizationCouplingTest, Test) {
+TEST_P(QuantizationCouplingTest, Test) {
     execute(testModel);
     execute(convertQuant8AsymmOperandsToSigned(testModel));
 }
@@ -358,7 +358,7 @@ INSTANTIATE_GENERATED_TEST(DynamicOutputShapeTest,
 INSTANTIATE_GENERATED_TEST(GeneratedValidationTests,
                            [](const TestModel& testModel) { return testModel.expectFailure; });
 
-INSTANTIATE_GENERATED_TEST(DISABLED_QuantizationCouplingTest, [](const TestModel& testModel) {
+INSTANTIATE_GENERATED_TEST(QuantizationCouplingTest, [](const TestModel& testModel) {
     return testModel.operations.size() == 1 && testModel.hasQuant8CoupledOperands();
 });
 
