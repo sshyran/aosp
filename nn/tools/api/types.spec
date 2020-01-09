@@ -2937,6 +2937,9 @@
      * Supported tensor {@link %{OperandType}}:
      * * {@link %{OperandTypeLinkPfx}TENSOR_FLOAT16}
      * * {@link %{OperandTypeLinkPfx}TENSOR_FLOAT32}
+%kind ndk hal_1.3+
+     * * {@link %{OperandTypeLinkPfx}TENSOR_INT32} (since %{APILevel30})
+%/kind
      *
      * Supported tensor rank: from 1.
      *
