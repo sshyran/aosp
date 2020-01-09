@@ -1761,6 +1761,7 @@
      * * {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM}
 %kind ndk hal_1.3+
      * * {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM_SIGNED} (since %{APILevel30})
+     * * {@link %{OperandTypeLinkPfx}TENSOR_INT32} (since %{APILevel30})
 %/kind
      *
      * Supported tensor rank: up to 4
@@ -1772,6 +1773,10 @@
      * * 2: An {@link %{OperandTypeLinkPfx}INT32} scalar, and has to be one of the
      *      {@link %{FusedActivationFunc}} values. Specifies the activation to
      *      invoke on the result.
+%kind ndk hal_1.3+
+     *      For a {@link %{OperandTypeLinkPfx}TENSOR_INT32} tensor,
+     *      the {@link %{FusedActivationFunc}} must be "NONE".
+%/kind
      *
      * Outputs:
      * * 0: The product, a tensor of the same {@link %{OperandType}} as input0.
