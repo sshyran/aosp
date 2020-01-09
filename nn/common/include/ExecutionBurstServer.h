@@ -60,7 +60,7 @@ std::vector<hal::FmqResultDatum> serialize(hal::ErrorStatus errorStatus,
  * @param data Serialized FMQ request data.
  * @return Request object if successfully deserialized, std::nullopt otherwise.
  */
-std::optional<std::tuple<hal::Request, std::vector<int32_t>, hal::MeasureTiming>> deserialize(
+std::optional<std::tuple<hal::V1_0::Request, std::vector<int32_t>, hal::MeasureTiming>> deserialize(
         const std::vector<hal::FmqRequestDatum>& data);
 
 /**
@@ -103,7 +103,8 @@ class RequestChannelReceiver {
      * @return Request object if successfully received, std::nullopt if error or
      *     if the receiver object was invalidated.
      */
-    std::optional<std::tuple<hal::Request, std::vector<int32_t>, hal::MeasureTiming>> getBlocking();
+    std::optional<std::tuple<hal::V1_0::Request, std::vector<int32_t>, hal::MeasureTiming>>
+    getBlocking();
 
     /**
      * Method to mark the channel as invalid, unblocking any current or future
@@ -233,7 +234,7 @@ class ExecutionBurstServer : public hal::IBurstContext {
          *     execution, dynamic output shapes, and any timing information.
          */
         virtual std::tuple<hal::ErrorStatus, hal::hidl_vec<hal::OutputShape>, hal::Timing> execute(
-                const hal::Request& request, const std::vector<int32_t>& slots,
+                const hal::V1_0::Request& request, const std::vector<int32_t>& slots,
                 hal::MeasureTiming measure) = 0;
     };
 

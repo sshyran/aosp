@@ -17,6 +17,7 @@
 #include <gtest/gtest.h>
 
 #include "HalInterfaces.h"
+#include "MemoryUtils.h"
 #include "ModelBuilder.h"
 #include "TestGenerated.h"
 #include "TestNeuralNetworksWrapper.h"
@@ -43,32 +44,36 @@ static HidlModel createHidlModel(std::function<void(WrapperModel*)> createModel)
     return modelBuilder->makeHidlModel();
 }
 
-void testAvailableSinceV1_3(std::function<void(WrapperModel*)> createModel) {
+static void testAvailableSinceV1_3(std::function<void(WrapperModel*)> createModel) {
     HidlModel model = createHidlModel(createModel);
     ASSERT_FALSE(compliantWithV1_2(model));
     ASSERT_FALSE(compliantWithV1_1(model));
     ASSERT_FALSE(compliantWithV1_0(model));
 }
 
-void testAvailableSinceV1_2(std::function<void(WrapperModel*)> createModel) {
+static void testAvailableSinceV1_2(std::function<void(WrapperModel*)> createModel) {
     HidlModel model = createHidlModel(createModel);
     ASSERT_TRUE(compliantWithV1_2(model));
     ASSERT_FALSE(compliantWithV1_1(model));
     ASSERT_FALSE(compliantWithV1_0(model));
 }
 
-void testAvailableSinceV1_1(std::function<void(WrapperModel*)> createModel) {
+static void testAvailableSinceV1_1(std::function<void(WrapperModel*)> createModel) {
     HidlModel model = createHidlModel(createModel);
     ASSERT_TRUE(compliantWithV1_2(model));
     ASSERT_TRUE(compliantWithV1_1(model));
     ASSERT_FALSE(compliantWithV1_0(model));
 }
 
-void testAvailableSinceV1_0(std::function<void(WrapperModel*)> createModel) {
+static void testAvailableSinceV1_0(std::function<void(WrapperModel*)> createModel) {
     HidlModel model = createHidlModel(createModel);
     ASSERT_TRUE(compliantWithV1_2(model));
     ASSERT_TRUE(compliantWithV1_1(model));
     ASSERT_TRUE(compliantWithV1_0(model));
+}
+
+static void testAvailableSinceV1_3(const Request& request) {
+    ASSERT_FALSE(compliantWithV1_0(request));
 }
 
 static const WrapperOperandType kTypeTensorFloat(WrapperType::TENSOR_FLOAT32, {1});
@@ -154,6 +159,27 @@ TEST_F(ComplianceTest, HardwareBuffer) {
     });
 
     AHardwareBuffer_release(buffer);
+}
+
+TEST_F(ComplianceTest, DeviceMemory) {
+    Request::MemoryPool sharedMemoryPool, deviceMemoryPool;
+    sharedMemoryPool.hidlMemory(allocateSharedMemory(1024));
+    ASSERT_TRUE(sharedMemoryPool.hidlMemory().valid());
+    deviceMemoryPool.token(1);
+
+    // Device memory as input.
+    testAvailableSinceV1_3(Request{
+            .inputs = {{.hasNoValue = false, .location = {.poolIndex = 0}, .dimensions = {}}},
+            .outputs = {{.hasNoValue = false, .location = {.poolIndex = 1}, .dimensions = {}}},
+            .pools = {deviceMemoryPool, sharedMemoryPool},
+    });
+
+    // Device memory as output.
+    testAvailableSinceV1_3(Request{
+            .inputs = {{.hasNoValue = false, .location = {.poolIndex = 0}, .dimensions = {}}},
+            .outputs = {{.hasNoValue = false, .location = {.poolIndex = 1}, .dimensions = {}}},
+            .pools = {sharedMemoryPool, deviceMemoryPool},
+    });
 }
 
 class GeneratedComplianceTest : public generated_tests::GeneratedTestBase {};

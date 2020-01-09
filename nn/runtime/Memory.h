@@ -47,6 +47,7 @@ class Memory {
     // this memory that it is being freed.
     virtual ~Memory();
 
+    hal::Request::MemoryPool getMemoryPool() const;
     const hal::hidl_memory& getHidlMemory() const { return kHidlMemory; }
 
     virtual bool validateSize(uint32_t offset, uint32_t length) const;
@@ -62,9 +63,10 @@ class Memory {
    protected:
     Memory(hal::hidl_memory memory);
 
-    // The hidl_memory handle for this shared memory.  We will pass this value when
-    // communicating with the drivers.
+    // The HIDL representation for this memory.  We will use one of the following values
+    // when communicating with the drivers.
     const hal::hidl_memory kHidlMemory;
+    const int32_t kToken = 0;
 
    private:
     mutable std::mutex mMutex;
