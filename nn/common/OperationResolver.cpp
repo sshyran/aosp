@@ -39,6 +39,7 @@ const OperationRegistration* register_DEPTHWISE_CONV_2D();
 const OperationRegistration* register_DEQUANTIZE();
 const OperationRegistration* register_DETECTION_POSTPROCESSING();
 const OperationRegistration* register_DIV();
+const OperationRegistration* register_ELU();
 const OperationRegistration* register_EQUAL();
 const OperationRegistration* register_EXP();
 const OperationRegistration* register_FULLY_CONNECTED();
@@ -107,6 +108,7 @@ BuiltinOperationResolver::BuiltinOperationResolver() {
     registerOperation(register_DEQUANTIZE());
     registerOperation(register_DETECTION_POSTPROCESSING());
     registerOperation(register_DIV());
+    registerOperation(register_ELU());
     registerOperation(register_EQUAL());
     registerOperation(register_EXP());
     registerOperation(register_FULLY_CONNECTED());
