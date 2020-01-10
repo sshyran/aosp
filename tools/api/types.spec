@@ -7,6 +7,7 @@
 %define Ann ANeuralNetworks
 %define DeclareOperation ANEURALNETWORKS_%{1} = %{2}
 %define DeclareOperation_1.2 ANEURALNETWORKS_%{1} = %{2}
+%define DeclareOperation_1.3 ANEURALNETWORKS_%{1} = %{2}
 %define FusedActivationFunc FuseCode
 %define OperandType OperandCode
 %define OperandTypeLinkPfx ANEURALNETWORKS_
@@ -83,6 +84,7 @@
 %define-lines ZeroBatchesAPI29
 %/define-lines
 %define DeclareOperation_1.2 @@@NOT_DEFINED@@@
+%define DeclareOperation_1.3 @@@NOT_DEFINED@@@
 %/kind
 
 %kind hal_1.2 hal_1.3
@@ -93,11 +95,13 @@
 %kind hal_1.2
 %define DeclareOperation %{1} = @1.1::OperationType:%{1}
 %define DeclareOperation_1.2 %{1} = %{2}
+%define DeclareOperation_1.3 @@@NOT_DEFINED@@@
 %/kind
 
 %kind hal_1.3
 %define DeclareOperation %{1} = @1.2::OperationType:%{1}
 %define DeclareOperation_1.2 %{1} = @1.2::OperationType:%{1}
+%define DeclareOperation_1.3 %{1} = %{2}
 %/kind
 
 %kind ndk hal_1.2 hal_1.3
@@ -5732,6 +5736,143 @@
     FUNDAMENTAL_MAX = 14,
 %/section
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% HAL OperationType for 1.3
+%% NDK OperationCode for API 30
+
+%section Operation_1.3
+    /**
+     * Quantized version of {@link OperationType:LSTM}.
+     *
+     * The input and the output use asymmetric quantized types, while the rest
+     * use symmetric ones.
+     *
+     * Inputs:
+     * * 0: The input to the LSTM cell.
+     *      Type: {@link OperandType::TENSOR_QUANT8_ASYMM_SIGNED}
+     *      Shape: [batchSize, inputSize]
+     * * 1: The input-to-input weights. Optional.
+     *      Type: {@link OperandType::TENSOR_QUANT8_SYMM}
+     *      Shape: [numUnits, inputSize]
+     * * 2: The input-to-forget weights.
+     *      Type: {@link OperandType::TENSOR_QUANT8_SYMM}
+     *      Shape: [numUnits, inputSize]
+     * * 3: The input-to-cell weights.
+     *      Type: {@link OperandType::TENSOR_QUANT8_SYMM}
+     *      Shape: [numUnits, inputSize]
+     * * 4: The input-to-output weights.
+     *      Type: {@link OperandType::TENSOR_QUANT8_SYMM}
+     *      Shape: [numUnits, inputSize]
+     * * 5: The recurrent-to-input weights. Optional.
+     *      Type: {@link OperandType::TENSOR_QUANT8_SYMM}
+     *      Shape: [numUnits, outputSize]
+     * * 6: The recurrent-to-forget weights.
+     *      Type: {@link OperandType::TENSOR_QUANT8_SYMM}
+     *      Shape: [numUnits, outputSize]
+     * * 7: The recurrent-to-cell weights.
+     *      Type: {@link OperandType::TENSOR_QUANT8_SYMM}
+     *      Shape: [numUnits, outputSize]
+     * * 8: The recurrent-to-output weights.
+     *      Type: {@link OperandType::TENSOR_QUANT8_SYMM}
+     *      Shape: [numUnits, outputSize]
+     * * 9: The cell-to-input weights (for peephole). Optional.
+     *      Type: {@link OperandType::TENSOR_QUANT16_SYMM}
+     *      Shape: [numUnits]
+     * * 10: The cell-to-forget weights (for peephole). Optional.
+     *       Type: {@link OperandType::TENSOR_QUANT16_SYMM}
+     *       Shape: [numUnits]
+     * * 11: The cell-to-output weights (for peephole). Optional.
+     *       Type: {@link OperandType::TENSOR_QUANT16_SYMM}
+     *       Shape: [numUnits]
+     * * 12: The input gate bias. Quantized with scale being the
+     *       product of input and weights scales and zeroPoint equal to 0.
+     *       Optional.
+     *       Type: {@link OperandType::TENSOR_INT32}
+     *       Shape: [numUnits]
+     * * 13: The forget gate bias. Quantized with scale being the
+     *       product of input and weights scales and zeroPoint equal to 0.
+     *       Type: {@link OperandType::TENSOR_INT32}
+     *       Shape: [numUnits]
+     * * 14: The cell bias. Quantized with scale being the
+     *       product of input and weights scales and zeroPoint equal to 0.
+     *       Type: {@link OperandType::TENSOR_INT32}
+     *       Shape: [numUnits]
+     * * 15: The output gate bias. Quantized with scale being the
+     *       product of input and weights scales and zeroPoint equal to 0.
+     *       Type: {@link OperandType::TENSOR_INT32}
+     *       Shape: [numUnits]
+     * * 16: The projection weights. Optional.
+     *       Type: {@link OperandType::TENSOR_QUANT8_SYMM}
+     *       Shape: [outputSize, numUnits]
+     * * 17: The projection bias. Quantized with scale being the
+     *       product of input and weights scales and zeroPoint equal to 0.
+     *       Optional.
+     *       Type: {@link OperandType::TENSOR_INT32}
+     *       Shape: [outputSize]
+     * * 18: The output from the previous time step.
+     *       Type: {@link OperandType::TENSOR_QUANT8_ASYMM_SIGNED}
+     *       Shape: [batchSize, outputSize]
+     * * 19: The cell state from the previous time step.
+     *       Type: {@link OperandType::TENSOR_QUANT16_SYMM}
+     *       Shape: [batchSize, numUnits]
+     * * 20: The input layer normalization weights. Used to rescale
+     *       normalized inputs to activation at input gate. Optional.
+     *       Type: {@link OperandType::TENSOR_QUANT16_SYMM}
+     *       Shape: [numUnits]
+     * * 21: The forget layer normalization weights. Used to
+     *       rescale normalized inputs to activation at forget gate. Optional.
+     *       Type: {@link OperandType::TENSOR_QUANT16_SYMM}
+     *       Shape: [numUnits]
+     * * 22: The cell layer normalization weights. Used to rescale
+     *       normalized inputs to activation at cell gate. Optional.
+     *       Type: {@link OperandType::TENSOR_QUANT16_SYMM}
+     *       Shape: [numUnits]
+     * * 23: The output layer normalization weights. Used to
+     *       rescale normalized inputs to activation at output gate. Optional.
+     *       Type: {@link OperandType::TENSOR_QUANT16_SYMM}
+     *       Shape: [numUnits]
+     * * 24: The cell clip. If provided the cell state is clipped
+     *       by this value prior to the cell output activation. Optional.
+     *       Type: {@link OperandType::FLOAT32}.
+     * * 25: The projection clip. If provided and projection is enabled,
+     *       this is used for clipping the projected values. Optional.
+     *       Type: {@link OperandType::FLOAT32}.
+     * * 26: The scale of the intermediate result of matmul,
+     *       i.e. input to layer normalization, at input gate.
+     *       Type: {@link OperandType::FLOAT32}.
+     * * 27: The scale of the intermediate result of matmul,
+     *       i.e. input to layer normalization, at forget gate.
+     *       Type: {@link OperandType::FLOAT32}.
+     * * 28: The scale of the intermediate result of matmul,
+     *       i.e. input to layer normalization, at cell gate.
+     *       Type: {@link OperandType::FLOAT32}.
+     * * 29: The scale of the intermediate result of matmul,
+     *       i.e. input to layer normalization, at output gate.
+     *       Type: {@link OperandType::FLOAT32}.
+     * * 30: The zero point of the hidden state, i.e. input to
+     *       projection.
+     *       Type: {@link OperandType::INT32}.
+     * * 31: The scale of the hidden state, i.e. input to
+     *       projection.
+     *       Type: {@link OperandType::FLOAT32}.
+     *
+     * Outputs:
+     * * 0: The output state (out).
+     *      Type: {@link OperandType::TENSOR_QUANT8_ASYMM_SIGNED}
+     *      Shape: [batchSize, outputSize]
+     * * 1: The cell state (out).
+     *      Type: {@link OperandType::TENSOR_QUANT16_SYMM}
+     *      Shape: [batchSize, numUnits]
+     * * 2: The output. This is effectively the same as the current
+     *      "output state (out)" value.
+     *      Type: {@link OperandType::TENSOR_QUANT8_ASYMM_SIGNED}
+     *      Shape: [batchSize, outputSize]
+%insert-lines AVAIL30
+     */
+    %{DeclareOperation_1.3 QUANTIZED_LSTM 95},
+%/section
+
 %section Operation_1.3_MAX
-    FUNDAMENTAL_MAX = 94,
+    FUNDAMENTAL_MAX = 95,
 %/section
