@@ -189,7 +189,12 @@ static_assert(ANEURALNETWORKS_UNIDIRECTIONAL_SEQUENCE_LSTM == 92,
               "ANEURALNETWORKS_UNIDIRECTIONAL_SEQUENCE_LSTM has changed");
 static_assert(ANEURALNETWORKS_UNIDIRECTIONAL_SEQUENCE_RNN == 93,
               "ANEURALNETWORKS_UNIDIRECTIONAL_SEQUENCE_RNN has changed");
+static_assert(ANEURALNETWORKS_RESIZE_NEAREST_NEIGHBOR == 94,
+              "ANEURALNETWORKS_RESIZE_NEAREST_NEIGHBOR has changed");
 static_assert(ANEURALNETWORKS_QUANTIZED_LSTM == 95, "ANEURALNETWORKS_QUANTIZED_LSTM has changed");
+static_assert(ANEURALNETWORKS_IF == 96, "ANEURALNETWORKS_IF has changed");
+static_assert(ANEURALNETWORKS_WHILE == 97, "ANEURALNETWORKS_WHILE has changed");
+static_assert(ANEURALNETWORKS_ELU == 98, "ANEURALNETWORKS_ELU has changed");
 
 static_assert(ANEURALNETWORKS_OEM_OPERATION == 10000, "ANEURALNETWORKS_OEM_OPERATION has changed");
 
@@ -517,6 +522,14 @@ static_assert(static_cast<int32_t>(OperationType::UNIDIRECTIONAL_SEQUENCE_RNN) =
 static_assert(static_cast<int32_t>(OperationType::RESIZE_NEAREST_NEIGHBOR) ==
                       ANEURALNETWORKS_RESIZE_NEAREST_NEIGHBOR,
               "OperationType::RESIZE_NEAREST_NEIGHBOR != ANEURALNETWORKS_RESIZE_NEAREST_NEIGHBOR");
+static_assert(static_cast<int32_t>(OperationType::QUANTIZED_LSTM) == ANEURALNETWORKS_QUANTIZED_LSTM,
+              "OperationType::QUANTIZED_LSTM != ANEURALNETWORKS_QUANTIZED_LSTM");
+static_assert(static_cast<int32_t>(OperationType::IF) == ANEURALNETWORKS_IF,
+              "OperationType::IF != ANEURALNETWORKS_IF");
+static_assert(static_cast<int32_t>(OperationType::WHILE) == ANEURALNETWORKS_WHILE,
+              "OperationType::WHILE != ANEURALNETWORKS_WHILE");
+static_assert(static_cast<int32_t>(OperationType::ELU) == ANEURALNETWORKS_ELU,
+              "OperationType::ELU != ANEURALNETWORKS_ELU");
 
 static_assert(static_cast<int32_t>(DeviceType::OTHER) == ANEURALNETWORKS_DEVICE_OTHER,
               "DeviceType::OTHER != ANEURALNETWORKS_DEVICE_OTHER");

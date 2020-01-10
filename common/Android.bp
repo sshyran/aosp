@@ -34,6 +34,7 @@ cc_defaults {
         "operations/DepthwiseConv2D.cpp",
         "operations/Dequantize.cpp",
         "operations/Elementwise.cpp",
+        "operations/Elu.cpp",
         "operations/FullyConnected.cpp",
         "operations/Gather.cpp",
         "operations/GenerateProposals.cpp",
