@@ -6034,10 +6034,37 @@
 %insert-lines AVAIL30
      */
     %{DeclareOperation_1.3 ELU 98},
+
+    /**
+     * Computes hard-swish activation on the input tensor element-wise.
+     *
+     * Hard swish activation is introduced in
+     * https://arxiv.org/pdf/1905.02244.pdf
+     *
+     * The output is calculated using the following formula:
+     *
+     *     h-swish(x) = x * max(0, min(6, (x + 3))) / 6
+
+     * Supported tensor {@link %{OperandType}}:
+     * * {@link %{OperandTypeLinkPfx}TENSOR_FLOAT16}
+     * * {@link %{OperandTypeLinkPfx}TENSOR_FLOAT32}
+     * * {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM}
+     * * {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM_SIGNED}
+     *
+     * Inputs:
+     * * 0: A tensor, specifying the input. May be zero-sized.
+     *
+     * Outputs:
+     * * 0: The output tensor of same shape and type as input0.
+     *      Scale and zero point of this tensor may be different from the input
+     *      tensor's parameters.
+%insert-lines AVAIL30
+     */
+    %{DeclareOperation_1.3 HARD_SWISH 99},
 %/section
 
 %section Operation_1.3_MAX
-    FUNDAMENTAL_MAX = 98,
+    FUNDAMENTAL_MAX = 99,
 %/section
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
