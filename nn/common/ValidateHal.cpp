@@ -21,6 +21,7 @@
 #include <android-base/logging.h>
 
 #include <algorithm>
+#include <set>
 #include <vector>
 
 #include "NeuralNetworks.h"
@@ -593,6 +594,31 @@ static bool validateModelInputOutputs(const hidl_vec<uint32_t> indexes,
     return true;
 }
 
+// Makes sure the model does not contain subgraph reference cycles.
+static bool checkNoReferenceCycles(const V1_3::Model& model, const V1_3::Subgraph& subgraph,
+                                   std::set<const V1_3::Subgraph*>* path) {
+    auto [_, isNew] = path->insert(&subgraph);
+    if (!isNew) {
+        LOG(ERROR) << "Model contains a circular subgraph reference";
+        return false;
+    }
+    for (const Operand& operand : subgraph.operands) {
+        if (operand.lifetime == OperandLifeTime::SUBGRAPH) {
+            uint32_t refSubgraphIndex = operand.location.offset;
+            if (!checkNoReferenceCycles(model, model.referenced[refSubgraphIndex], path)) {
+                return false;
+            }
+        }
+    }
+    path->erase(&subgraph);
+    return true;
+}
+
+static bool checkNoReferenceCycles(const V1_3::Model& model) {
+    std::set<const V1_3::Subgraph*> path;
+    return checkNoReferenceCycles(model, model.main, &path);
+}
+
 template <class T_Model>
 bool validateModel(const T_Model& model) {
     NNTRACE_FULL(NNTRACE_LAYER_UTILITY, NNTRACE_PHASE_UNSPECIFIED, "validateModel");
@@ -636,7 +662,7 @@ bool validateModel(const V1_3::Model& model) {
     };
     return (validateSubgraph(model.main) &&
             std::all_of(model.referenced.begin(), model.referenced.end(), validateSubgraph) &&
-            validatePools(model.pools, HalVersion::V1_3));
+            validatePools(model.pools, HalVersion::V1_3) && checkNoReferenceCycles(model));
 }
 
 // Validates the arguments of a request. type is either "input" or "output" and is used
