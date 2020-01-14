@@ -16,6 +16,10 @@
 
 #define LOG_TAG "Operations"
 
+#include <algorithm>
+#include <utility>
+#include <vector>
+
 #include "HalInterfaces.h"
 #include "OperationResolver.h"
 #include "RNN.h"
@@ -45,8 +49,15 @@ constexpr uint32_t kActivationParam = 12;
 constexpr uint32_t kTimeMajorParam = 13;
 constexpr uint32_t kMergeOutputsParam = 14;
 
+constexpr uint32_t kNumOutputs = 2;
+constexpr uint32_t kNumOutputsMerged = 1;
+constexpr uint32_t kNumOutputsWithState = 4;
+constexpr uint32_t kNumOutputsMergedWithState = 3;
+
 constexpr uint32_t kFwOutputTensor = 0;
 constexpr uint32_t kBwOutputTensor = 1;  // Only if mergeOutputs parameter is false
+constexpr uint32_t kFwOutputHiddenStateTensor = 2;
+constexpr uint32_t kBwOutputHiddenStateTensor = 3;
 
 namespace {
 
@@ -110,8 +121,8 @@ bool executeTyped(IOperationExecutionContext* context) {
     Shape bwAuxWeightsShape = context->getInputShape(kBwAuxWeightsTensor);
 
     int32_t activation = context->getInputValue<int32_t>(kActivationParam);
-    int32_t timeMajor = context->getInputValue<bool>(kTimeMajorParam);
-    int32_t mergeOutputs = context->getInputValue<bool>(kMergeOutputsParam);
+    bool timeMajor = context->getInputValue<bool>(kTimeMajorParam);
+    bool mergeOutputs = context->getInputValue<bool>(kMergeOutputsParam);
 
     T* fwOutput = context->getOutputBuffer<T>(kFwOutputTensor);
     Shape fwOutputShape = context->getOutputShape(kFwOutputTensor);
@@ -184,8 +195,22 @@ bool executeTyped(IOperationExecutionContext* context) {
         fixedTimeAuxInputShape = removeFirstDim(auxInputShape);
     }
 
+    const bool outputState = (context->getNumOutputs() == kNumOutputsWithState ||
+                              context->getNumOutputs() == kNumOutputsMergedWithState);
+    T* fwOutputHiddenState = nullptr;
+    T* bwOutputHiddenState = nullptr;
     // Create an additional buffer to store a hidden state between steps.
-    std::vector<T> tempHiddenState(batchSize * fwNumUnits);
+    std::vector<T> tempHiddenState;
+    if (outputState) {
+        const int delta = mergeOutputs ? 1 : 0;
+        fwOutputHiddenState = context->getOutputBuffer<T>(kFwOutputHiddenStateTensor - delta);
+        bwOutputHiddenState = context->getOutputBuffer<T>(kBwOutputHiddenStateTensor - delta);
+    } else {
+        tempHiddenState.resize(std::max(batchSize * fwNumUnits, batchSize * bwNumUnits));
+        fwOutputHiddenState = tempHiddenState.data();
+        bwOutputHiddenState = tempHiddenState.data();
+    }
+
     // Forward pass
     for (int i = 0; i < maxTime; ++i) {
         const T* inputBatchPtr = input + i * batchSize * inputSize;
@@ -200,12 +225,11 @@ bool executeTyped(IOperationExecutionContext* context) {
                         fixedTimeAuxInputShape, fwHiddenState, fwBias, fwWeights, fwWeightsShape,
                         fwAuxWeights, fwAuxWeightsShape, fwRecurrentWeights,
                         fwRecurrentWeightsShape, activation, fwOutputBatchStride,
-                        /*outputBatchOffset=*/0, fwOutputBatchPtr, tempHiddenState.data());
+                        /*outputBatchOffset=*/0, fwOutputBatchPtr, fwOutputHiddenState);
 
-        fwHiddenState = tempHiddenState.data();
+        fwHiddenState = fwOutputHiddenState;
     }
 
-    tempHiddenState.resize(batchSize * bwNumUnits);
     // Backward pass
     for (int i = maxTime - 1; i >= 0; --i) {
         const T* inputBatchPtr = input + i * batchSize * inputSize;
@@ -229,9 +253,9 @@ bool executeTyped(IOperationExecutionContext* context) {
                         fixedTimeAuxInputShape, bwHiddenState, bwBias, bwWeights, bwWeightsShape,
                         bwAuxWeights, bwAuxWeightsShape, bwRecurrentWeights,
                         bwRecurrentWeightsShape, activation, bwOutputBatchStride,
-                        bwOutputBatchOffset, bwOutputBatchPtr, tempHiddenState.data());
+                        bwOutputBatchOffset, bwOutputBatchPtr, bwOutputHiddenState);
 
-        bwHiddenState = tempHiddenState.data();
+        bwHiddenState = bwOutputHiddenState;
     }
 
     // If the inputs were in batch major format, transpose data in temporary
@@ -253,7 +277,10 @@ bool validate(const IOperationValidationContext* context) {
     NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
     // Exact number is dependent on the mergeOutputs parameter and checked
     // during preparation.
-    NN_RET_CHECK(context->getNumOutputs() == 1 || context->getNumOutputs() == 2);
+    const uint32_t numOutputs = context->getNumOutputs();
+    NN_RET_CHECK(numOutputs == kNumOutputs || numOutputs == kNumOutputsMerged ||
+                 numOutputs == kNumOutputsWithState || numOutputs == kNumOutputsMergedWithState);
+
     OperandType inputType = context->getInputType(kInputTensor);
     if (inputType != OperandType::TENSOR_FLOAT16 && inputType != OperandType::TENSOR_FLOAT32) {
         LOG(ERROR) << "Unsupported input operand type for UNIDIRECTIONAL_SEQUENCE_RNN op: "
@@ -264,20 +291,24 @@ bool validate(const IOperationValidationContext* context) {
             context, {inputType, inputType, inputType, inputType, inputType, inputType, inputType,
                       inputType, inputType, inputType, inputType, inputType, OperandType::INT32,
                       OperandType::BOOL, OperandType::BOOL}));
-    if (context->getNumOutputs() == 1) {
-        NN_RET_CHECK(validateOutputTypes(context, {inputType}));
-    } else {
-        NN_RET_CHECK(validateOutputTypes(context, {inputType, inputType}));
+
+    std::vector<OperandType> outExpectedTypes(numOutputs, inputType);
+    NN_RET_CHECK(validateOutputTypes(context, outExpectedTypes));
+
+    HalVersion minSupportedHalVersion = HalVersion::V1_2;
+    if (numOutputs == kNumOutputsWithState || numOutputs == kNumOutputsMergedWithState) {
+        minSupportedHalVersion = HalVersion::V1_3;
     }
-    return validateHalVersion(context, HalVersion::V1_2);
+    return validateHalVersion(context, minSupportedHalVersion);
 }
 
 bool prepare(IOperationExecutionContext* context) {
-    int32_t mergeOutputs = context->getInputValue<bool>(kMergeOutputsParam);
+    const bool mergeOutputs = context->getInputValue<bool>(kMergeOutputsParam);
+    const int32_t numOutputs = context->getNumOutputs();
     if (mergeOutputs) {
-        NN_RET_CHECK_EQ(context->getNumOutputs(), 1);
+        NN_RET_CHECK(numOutputs == kNumOutputsMerged || numOutputs == kNumOutputsMergedWithState);
     } else {
-        NN_RET_CHECK_EQ(context->getNumOutputs(), 2);
+        NN_RET_CHECK(numOutputs == kNumOutputs || numOutputs == kNumOutputsWithState);
     }
 
     // Check that none of the required inputs are omitted.
@@ -373,6 +404,16 @@ bool prepare(IOperationExecutionContext* context) {
         bwOutput.dimensions[1] = timeMajor ? batchSize : maxTime;
         bwOutput.dimensions[2] = bwNumUnits;
         NN_RET_CHECK(context->setOutputShape(kBwOutputTensor, bwOutput));
+    }
+
+    const bool outputState =
+            (numOutputs == kNumOutputsWithState || numOutputs == kNumOutputsMergedWithState);
+    if (outputState) {
+        const int delta = mergeOutputs ? 1 : 0;
+        NN_RET_CHECK(context->setOutputShape(kFwOutputHiddenStateTensor - delta,
+                                             context->getInputShape(kFwHiddenStateTensor)));
+        NN_RET_CHECK(context->setOutputShape(kBwOutputHiddenStateTensor - delta,
+                                             context->getInputShape(kBwHiddenStateTensor)));
     }
 
     return true;
