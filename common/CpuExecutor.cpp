@@ -1041,17 +1041,43 @@ int CpuExecutor::executeOperation(const Operation& operation, RunTimeOperandInfo
         case OperationType::BIDIRECTIONAL_SEQUENCE_LSTM: {
             const auto merge_outputs = getScalarData<bool>(
                     operands[ins[BidirectionalSequenceLSTM::kMergeOutputsParam]]);
+            const bool output_state = (outs.size() == 5 || outs.size() == 6);
             RunTimeOperandInfo& fwOutput =
                     operands[outs[BidirectionalSequenceLSTM::kFwOutputTensor]];
-            Shape fwOutputShape, bwOutputShape;
+            Shape fwOutputShape, bwOutputShape, fwOutputActivationStateShape,
+                    fwOutputCellStateShape, bwOutputActivationStateShape, bwOutputCellStateShape;
 
             BidirectionalSequenceLSTM lstm(operation, operands);
-            success = lstm.Prepare(operation, operands, &fwOutputShape, &bwOutputShape) &&
+            success = lstm.Prepare(operation, operands, &fwOutputShape, &bwOutputShape,
+                                   &fwOutputActivationStateShape, &fwOutputCellStateShape,
+                                   &bwOutputActivationStateShape, &bwOutputCellStateShape) &&
                       setInfoAndAllocateIfNeeded(&fwOutput, fwOutputShape, &result);
             if (!merge_outputs) {
                 RunTimeOperandInfo& bwOutput =
                         operands[outs[BidirectionalSequenceLSTM::kBwOutputTensor]];
                 success = success && setInfoAndAllocateIfNeeded(&bwOutput, bwOutputShape, &result);
+            }
+            if (output_state) {
+                uint32_t delta = merge_outputs ? 1 : 0;
+                RunTimeOperandInfo& fwOutputActivationState =
+                        operands[outs[BidirectionalSequenceLSTM::kFwOutputActivationStateTensor -
+                                      delta]];
+                RunTimeOperandInfo& fwOutputCellState =
+                        operands[outs[BidirectionalSequenceLSTM::kFwOutputCellStateTensor - delta]];
+                RunTimeOperandInfo& bwOutputActivationState =
+                        operands[outs[BidirectionalSequenceLSTM::kBwOutputActivationStateTensor -
+                                      delta]];
+                RunTimeOperandInfo& bwOutputCellState =
+                        operands[outs[BidirectionalSequenceLSTM::kBwOutputCellStateTensor - delta]];
+                success = success &&
+                          setInfoAndAllocateIfNeeded(&fwOutputActivationState,
+                                                     fwOutputActivationStateShape, &result) &&
+                          setInfoAndAllocateIfNeeded(&fwOutputCellState, fwOutputCellStateShape,
+                                                     &result) &&
+                          setInfoAndAllocateIfNeeded(&bwOutputActivationState,
+                                                     bwOutputActivationStateShape, &result) &&
+                          setInfoAndAllocateIfNeeded(&bwOutputCellState, bwOutputCellStateShape,
+                                                     &result);
             }
             success = success && lstm.Eval();
         } break;
