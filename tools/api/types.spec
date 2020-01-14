@@ -3402,6 +3402,20 @@
      *      (timeMajor). If it is set to true, then the shape is set to
      *      [maxTime, batchSize, bwNumUnits], otherwise the shape is set to
      *      [batchSize, maxTime, bwNumUnits].
+%kind ndk hal_1.3+
+     * * 2: The forward hidden state output.
+     *      A 2-D tensor of shape [batchSize, fwNumUnits] containing a hidden
+     *      state from the last time step in the sequence. This output is
+     *      optional and can be omitted. If this output is present then output
+     *      3 must be present as well.
+     *      Available since %{APILevel30}.
+     * * 3: The backward hidden state output.
+     *      A 2-D tensor of shape [batchSize, bwNumUnits] containing a hidden
+     *      state from the last time step in the sequence. This output is
+     *      optional and can be omitted. If this output is present then output
+     *      2 must be present as well.
+     *      Available since %{APILevel30}.
+%/kind
 %insert-lines AVAIL29
 %insert-lines OutputState
      */
