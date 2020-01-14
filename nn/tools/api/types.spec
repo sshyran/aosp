@@ -5614,6 +5614,17 @@
      *      A 3-D tensor of shape:
      *        If time-major: [max_time, batch_size, output_size]
      *        If batch-major: [batch_size, max_time, output_size]
+%kind ndk hal_1.3+
+     * * 1: A tensor of shape [batch_size, output_size] containing a hidden
+     *      state from the last time step in the sequence. This output is
+     *      optional and can be omitted. If this output is present then
+     *      output #2 must be present as well.
+     *      Available since %{APILevel30}.
+     * * 2: A tensor of shape [batch_size, cell_size] containing a cell state
+     *      from the last time step in the sequence. This output is optional
+     *      and can be omitted.
+     *      Available since %{APILevel30}.
+%/kind
 %insert-lines AVAIL29
 %insert-lines OutputState
      */

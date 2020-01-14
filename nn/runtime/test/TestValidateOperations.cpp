@@ -347,6 +347,9 @@ class OperationTestBase {
                 if (mOpCode == ANEURALNETWORKS_UNIDIRECTIONAL_SEQUENCE_RNN && i < 1) {
                     continue;
                 }
+                if (mOpCode == ANEURALNETWORKS_UNIDIRECTIONAL_SEQUENCE_LSTM && i < 3) {
+                    continue;
+                }
                 return false;
             }
         }
