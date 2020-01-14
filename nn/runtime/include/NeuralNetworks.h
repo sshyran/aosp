@@ -5042,6 +5042,10 @@ typedef enum {
      *      it is set to 1, then the output has a shape [maxTime, batchSize,
      *      numUnits], otherwise the output has a shape [batchSize, maxTime,
      *      numUnits].
+     * * 1: A tensor of shape [batchSize, numUnits] containing hidden state
+     *      from the last time step in the sequence. This output is optional
+     *      and can be omitted.
+     *      Available since API level 30.
      *
      * Available since API level 29.
      *
