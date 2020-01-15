@@ -27,18 +27,12 @@ cc_library_headers {
     export_include_dirs: ["."],
 }
 
-cc_library {
-    name: "libneuralnetworks",
-    defaults: ["neuralnetworks_defaults"],
-    use_version_lib: true,
+cc_defaults {
+    name: "libneuralnetworks_defaults",
     host_supported: false,
+    use_version_lib: true,
     // b/109953668, disable OpenMP
     // openmp: true,
-    apex_available: [
-        "com.android.neuralnetworks",
-        "test_com.android.neuralnetworks",
-    ],
-
     srcs: [
         "BurstBuilder.cpp",
         "Callbacks.cpp",
@@ -54,12 +48,6 @@ cc_library {
         "VersionedInterfaces.cpp",
     ],
 
-    stubs: {
-        versions: [
-            "30",
-        ],
-        symbol_file: "libneuralnetworks.map.txt",
-    },
     target: {
         android: {
             version_script: "libneuralnetworks.map.txt",
@@ -117,6 +105,35 @@ cc_library {
     export_header_lib_headers: [
         "libneuralnetworks_headers",
     ],
+}
+
+cc_library_shared {
+    name: "libneuralnetworks",
+    defaults: [
+        "neuralnetworks_defaults",
+        "libneuralnetworks_defaults",
+    ],
+    apex_available: [
+        "com.android.neuralnetworks",
+        "test_com.android.neuralnetworks",
+    ],
+
+    stubs: {
+        versions: [
+            "30",
+        ],
+        symbol_file: "libneuralnetworks.map.txt",
+    },
+}
+
+// Required for tests (b/147158681)
+cc_library_static {
+    name: "libneuralnetworks_static",
+    defaults: [
+        "neuralnetworks_defaults",
+        "libneuralnetworks_defaults",
+    ],
+    apex_available: ["//apex_available:platform"],
 }
 
 ndk_headers {
