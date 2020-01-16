@@ -16,12 +16,12 @@
 
 #define LOG_TAG "Operations"
 
+#include <cmath>
+
 #include "HalInterfaces.h"
 #include "OperationResolver.h"
 #include "OperationsUtils.h"
 #include "Tracing.h"
-
-#include <cmath>
 
 namespace android {
 namespace nn {
@@ -37,11 +37,12 @@ namespace {
 
 using namespace hal;
 
-template <typename T>
-inline bool compute(float func(float), const T* input, const Shape& shape, T* output) {
+template <typename IntermediateType, typename T>
+inline bool compute(IntermediateType func(IntermediateType), const T* input, const Shape& shape,
+                    T* output) {
     const auto size = getNumberOfElements(shape);
     for (uint32_t i = 0; i < size; ++i) {
-        output[i] = static_cast<T>(func(static_cast<float>(input[i])));
+        output[i] = static_cast<T>(func(static_cast<IntermediateType>(input[i])));
     }
     return true;
 }
@@ -49,19 +50,40 @@ inline bool compute(float func(float), const T* input, const Shape& shape, T* ou
 bool execute(IOperationExecutionContext* context, float func(float)) {
     switch (context->getInputType(kInputTensor)) {
         case OperandType::TENSOR_FLOAT16:
-            return compute(func, context->getInputBuffer<_Float16>(kInputTensor),
-                           context->getInputShape(kInputTensor),
-                           context->getOutputBuffer<_Float16>(kOutputTensor));
+            return compute<float, _Float16>(func, context->getInputBuffer<_Float16>(kInputTensor),
+                                            context->getInputShape(kInputTensor),
+                                            context->getOutputBuffer<_Float16>(kOutputTensor));
         case OperandType::TENSOR_FLOAT32:
-            return compute(func, context->getInputBuffer<float>(kInputTensor),
-                           context->getInputShape(kInputTensor),
-                           context->getOutputBuffer<float>(kOutputTensor));
+            return compute<float, float>(func, context->getInputBuffer<float>(kInputTensor),
+                                         context->getInputShape(kInputTensor),
+                                         context->getOutputBuffer<float>(kOutputTensor));
         default:
             NN_RET_CHECK_FAIL() << "Unsupported tensor type for elementwise operation";
     }
 }
 
 }  // namespace
+
+bool executeAbs(IOperationExecutionContext* context) {
+    switch (context->getInputType(kInputTensor)) {
+        case OperandType::TENSOR_FLOAT16:
+            return compute<float, _Float16>(std::abs,
+                                            context->getInputBuffer<_Float16>(kInputTensor),
+                                            context->getInputShape(kInputTensor),
+                                            context->getOutputBuffer<_Float16>(kOutputTensor));
+        case OperandType::TENSOR_FLOAT32:
+            return compute<float, float>(std::abs, context->getInputBuffer<float>(kInputTensor),
+                                         context->getInputShape(kInputTensor),
+                                         context->getOutputBuffer<float>(kOutputTensor));
+        case OperandType::TENSOR_INT32:
+            return compute<int32_t, int32_t>(std::abs,
+                                             context->getInputBuffer<int32_t>(kInputTensor),
+                                             context->getInputShape(kInputTensor),
+                                             context->getOutputBuffer<int32_t>(kOutputTensor));
+        default:
+            NN_RET_CHECK_FAIL() << "Unsupported tensor type for operation ABS";
+    }
+}
 
 bool validate(const IOperationValidationContext* context) {
     NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
@@ -75,15 +97,24 @@ bool validate(const IOperationValidationContext* context) {
     return validateHalVersion(context, HalVersion::V1_2);
 }
 
+bool validateAbs(const IOperationValidationContext* context) {
+    NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
+    NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
+    OperandType inputType = context->getInputType(kInputTensor);
+    NN_RET_CHECK(inputType == OperandType::TENSOR_FLOAT16 ||
+                 inputType == OperandType::TENSOR_FLOAT32 || inputType == OperandType::TENSOR_INT32)
+            << "Unsupported tensor type for operation ABS";
+    NN_RET_CHECK(validateInputTypes(context, {inputType}));
+    NN_RET_CHECK(validateOutputTypes(context, {inputType}));
+    return validateHalVersion(context, (inputType == OperandType::TENSOR_INT32 ? HalVersion::V1_3
+                                                                               : HalVersion::V1_2));
+}
+
 bool prepare(IOperationExecutionContext* context) {
     Shape input = context->getInputShape(kInputTensor);
     Shape output = context->getOutputShape(kOutputTensor);
     NN_RET_CHECK(SetShape(input, &output));
     return context->setOutputShape(kOutputTensor, output);
-}
-
-bool executeAbs(IOperationExecutionContext* context) {
-    return execute(context, std::abs);
 }
 
 bool executeExp(IOperationExecutionContext* context) {
@@ -108,7 +139,7 @@ bool executeSqrt(IOperationExecutionContext* context) {
 
 }  // namespace elementwise
 
-NN_REGISTER_OPERATION(ABS, "ABS", elementwise::validate, elementwise::prepare,
+NN_REGISTER_OPERATION(ABS, "ABS", elementwise::validateAbs, elementwise::prepare,
                       elementwise::executeAbs);
 NN_REGISTER_OPERATION(EXP, "EXP", elementwise::validate, elementwise::prepare,
                       elementwise::executeExp);
