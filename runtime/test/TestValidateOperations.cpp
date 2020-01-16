@@ -666,6 +666,10 @@ TEST(OperationValidationTest, MUL_quant8_signed) {
     simpleMathOpTest(ANEURALNETWORKS_MUL, ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED);
 }
 
+TEST(OperationValidationTest, MUL_int32) {
+    simpleMathOpTest(ANEURALNETWORKS_MUL, ANEURALNETWORKS_TENSOR_INT32);
+}
+
 TEST(OperationValidationTest, SUB_float16) {
     simpleMathOpTest(ANEURALNETWORKS_SUB, ANEURALNETWORKS_TENSOR_FLOAT16);
 }
@@ -692,6 +696,10 @@ TEST(OperationValidationTest, DIV_float16) {
 
 TEST(OperationValidationTest, DIV_float32) {
     simpleMathOpTest(ANEURALNETWORKS_DIV, ANEURALNETWORKS_TENSOR_FLOAT32);
+}
+
+TEST(OperationValidationTest, DIV_int32) {
+    simpleMathOpTest(ANEURALNETWORKS_DIV, ANEURALNETWORKS_TENSOR_INT32);
 }
 
 TEST(OperationValidationTest, MUL_quant8_bad_output_scale) {
@@ -779,6 +787,10 @@ TEST(OperationValidationTest, ABS_float16) {
 
 TEST(OperationValidationTest, ABS_float32) {
     activationOpTest(ANEURALNETWORKS_ABS, ANEURALNETWORKS_TENSOR_FLOAT32);
+}
+
+TEST(OperationValidationTest, ABS_int32) {
+    activationOpTest(ANEURALNETWORKS_ABS, ANEURALNETWORKS_TENSOR_INT32);
 }
 
 TEST(OperationValidationTest, EXP_float16) {
