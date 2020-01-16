@@ -1761,6 +1761,7 @@
      * * {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM}
 %kind ndk hal_1.3+
      * * {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM_SIGNED} (since %{APILevel30})
+     * * {@link %{OperandTypeLinkPfx}TENSOR_INT32} (since %{APILevel30})
 %/kind
      *
      * Supported tensor rank: up to 4
@@ -1772,6 +1773,10 @@
      * * 2: An {@link %{OperandTypeLinkPfx}INT32} scalar, and has to be one of the
      *      {@link %{FusedActivationFunc}} values. Specifies the activation to
      *      invoke on the result.
+%kind ndk hal_1.3+
+     *      For a {@link %{OperandTypeLinkPfx}TENSOR_INT32} tensor,
+     *      the {@link %{FusedActivationFunc}} must be "NONE".
+%/kind
      *
      * Outputs:
      * * 0: The product, a tensor of the same {@link %{OperandType}} as input0.
@@ -2387,6 +2392,13 @@
      * dimensions. The output is the result of dividing the first input tensor
      * by the second, optionally modified by an activation function.
      *
+%kind ndk hal_1.3+
+     * For inputs of {@link %{OperandTypeLinkPfx}TENSOR_INT32}, performs
+     * "floor division" ("//" in Python). For example,
+     *     5 // 2 = 2
+     *    -5 // 2 = -3
+%/kind
+     *
      * Two dimensions are compatible when:
      *     1. they are equal, or
      *     2. one of them is 1
@@ -2406,6 +2418,9 @@
      * * {@link %{OperandTypeLinkPfx}TENSOR_FLOAT16} (since %{APILevel29})
 %/kind
      * * {@link %{OperandTypeLinkPfx}TENSOR_FLOAT32}
+%kind ndk hal_1.3+
+     * * {@link %{OperandTypeLinkPfx}TENSOR_INT32} (since %{APILevel30})
+%/kind
      *
      * Supported tensor rank: up to 4
      *
@@ -2416,6 +2431,10 @@
      * * 2: An {@link %{OperandTypeLinkPfx}INT32} scalar, and has to be one of the
      *      {@link %{FusedActivationFunc}} values. Specifies the activation to
      *      invoke on the result.
+%kind ndk hal_1.3+
+     *      For a {@link %{OperandTypeLinkPfx}TENSOR_INT32} tensor,
+     *      the {@link %{FusedActivationFunc}} must be "NONE".
+%/kind
      *
      * Outputs:
      * * 0: A tensor of the same {@link %{OperandType}} as input0.
@@ -2918,6 +2937,9 @@
      * Supported tensor {@link %{OperandType}}:
      * * {@link %{OperandTypeLinkPfx}TENSOR_FLOAT16}
      * * {@link %{OperandTypeLinkPfx}TENSOR_FLOAT32}
+%kind ndk hal_1.3+
+     * * {@link %{OperandTypeLinkPfx}TENSOR_INT32} (since %{APILevel30})
+%/kind
      *
      * Supported tensor rank: from 1.
      *
