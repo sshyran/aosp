@@ -801,14 +801,14 @@ std::pair<ErrorStatus, hidl_vec<bool>> VersionedIDevice::getSupportedOperations(
 
     auto remappedResult = [&model](const std::pair<ErrorStatus, hidl_vec<bool>>& result,
                                    const std::function<uint32_t(uint32_t)>&
-                                           submodelOperationIndexToModelOperationIndex) {
+                                           slicedModelOperationIndexToModelOperationIndex) {
         const ErrorStatus status = result.first;
         const hidl_vec<bool>& supported = result.second;
         hidl_vec<bool> remappedSupported(model.operations.size());
         std::fill(remappedSupported.begin(), remappedSupported.end(), false);
         for (size_t i = 0; i < supported.size(); ++i) {
             if (supported[i]) {
-                remappedSupported[submodelOperationIndexToModelOperationIndex(i)] = true;
+                remappedSupported[slicedModelOperationIndexToModelOperationIndex(i)] = true;
             }
         }
         return std::make_pair(status, std::move(remappedSupported));
@@ -835,7 +835,7 @@ std::pair<ErrorStatus, hidl_vec<bool>> VersionedIDevice::getSupportedOperations(
     if (getDevice<V1_2::IDevice>() != nullptr) {
         const bool compliant = compliantWithV1_2(model);
         V1_2::Model model12;
-        std::function<uint32_t(uint32_t)> submodelOperationIndexToModelOperationIndex;
+        std::function<uint32_t(uint32_t)> slicedModelOperationIndexToModelOperationIndex;
         if (compliant) {
             model12 = convertToV1_2(model);
         } else {
@@ -843,7 +843,7 @@ std::pair<ErrorStatus, hidl_vec<bool>> VersionedIDevice::getSupportedOperations(
             if (!slice12.has_value()) {
                 return noneSupported();
             }
-            std::tie(model12, submodelOperationIndexToModelOperationIndex) = *slice12;
+            std::tie(model12, slicedModelOperationIndexToModelOperationIndex) = *slice12;
         }
         NNTRACE_FULL(NNTRACE_LAYER_IPC, NNTRACE_PHASE_COMPILATION, "getSupportedOperations_1_2");
         Return<void> ret = recoverable<void, V1_2::IDevice>(
@@ -858,7 +858,7 @@ std::pair<ErrorStatus, hidl_vec<bool>> VersionedIDevice::getSupportedOperations(
             return kFailure;
         }
         if (!compliant) {
-            return remappedResult(result, submodelOperationIndexToModelOperationIndex);
+            return remappedResult(result, slicedModelOperationIndexToModelOperationIndex);
         }
         return result;
     }
@@ -867,7 +867,7 @@ std::pair<ErrorStatus, hidl_vec<bool>> VersionedIDevice::getSupportedOperations(
     if (getDevice<V1_1::IDevice>() != nullptr) {
         const bool compliant = compliantWithV1_1(model);
         V1_1::Model model11;
-        std::function<uint32_t(uint32_t)> submodelOperationIndexToModelOperationIndex;
+        std::function<uint32_t(uint32_t)> slicedModelOperationIndexToModelOperationIndex;
         if (compliant) {
             model11 = convertToV1_1(model);
         } else {
@@ -875,7 +875,7 @@ std::pair<ErrorStatus, hidl_vec<bool>> VersionedIDevice::getSupportedOperations(
             if (!slice11.has_value()) {
                 return noneSupported();
             }
-            std::tie(model11, submodelOperationIndexToModelOperationIndex) = *slice11;
+            std::tie(model11, slicedModelOperationIndexToModelOperationIndex) = *slice11;
         }
         NNTRACE_FULL(NNTRACE_LAYER_IPC, NNTRACE_PHASE_COMPILATION, "getSupportedOperations_1_1");
         Return<void> ret = recoverable<void, V1_1::IDevice>(
@@ -890,7 +890,7 @@ std::pair<ErrorStatus, hidl_vec<bool>> VersionedIDevice::getSupportedOperations(
             return kFailure;
         }
         if (!compliant) {
-            return remappedResult(result, submodelOperationIndexToModelOperationIndex);
+            return remappedResult(result, slicedModelOperationIndexToModelOperationIndex);
         }
         return result;
     }
@@ -899,7 +899,7 @@ std::pair<ErrorStatus, hidl_vec<bool>> VersionedIDevice::getSupportedOperations(
     if (getDevice<V1_0::IDevice>() != nullptr) {
         const bool compliant = compliantWithV1_0(model);
         V1_0::Model model10;
-        std::function<uint32_t(uint32_t)> submodelOperationIndexToModelOperationIndex;
+        std::function<uint32_t(uint32_t)> slicedModelOperationIndexToModelOperationIndex;
         if (compliant) {
             model10 = convertToV1_0(model);
         } else {
@@ -907,7 +907,7 @@ std::pair<ErrorStatus, hidl_vec<bool>> VersionedIDevice::getSupportedOperations(
             if (!slice10.has_value()) {
                 return noneSupported();
             }
-            std::tie(model10, submodelOperationIndexToModelOperationIndex) = *slice10;
+            std::tie(model10, slicedModelOperationIndexToModelOperationIndex) = *slice10;
         }
         NNTRACE_FULL(NNTRACE_LAYER_IPC, NNTRACE_PHASE_COMPILATION, "getSupportedOperations");
         Return<void> ret = recoverable<void, V1_0::IDevice>(
@@ -922,7 +922,7 @@ std::pair<ErrorStatus, hidl_vec<bool>> VersionedIDevice::getSupportedOperations(
             return kFailure;
         }
         if (!compliant) {
-            return remappedResult(result, submodelOperationIndexToModelOperationIndex);
+            return remappedResult(result, slicedModelOperationIndexToModelOperationIndex);
         }
         return result;
     }
