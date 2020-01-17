@@ -88,7 +88,7 @@ typedef enum {
      *   real_value = (integer_value - zeroPoint) * scale.
      */
     ANEURALNETWORKS_TENSOR_QUANT8_ASYMM = 5,
-#if __ANDROID_API__ >= __ANDROID_API_Q__
+#if __ANDROID_API__ >= 29
     /**
      * An 8 bit boolean scalar value.
      *
@@ -180,8 +180,8 @@ typedef enum {
      * Available since API level 29.
      */
     ANEURALNETWORKS_TENSOR_QUANT8_SYMM = 13,
-#endif  // __ANDROID_API__ >= __ANDROID_API_Q__
-#if __ANDROID_API__ >= __ANDROID_API_R__
+#endif  // __ANDROID_API__ >= 29
+#if __ANDROID_API__ >= 30
     /**
      * A tensor of 8 bit signed integers that represent real numbers.
      *
@@ -206,7 +206,7 @@ typedef enum {
      * Available since API level 30.
      */
     ANEURALNETWORKS_MODEL = 15,
-#endif  // __ANDROID_API__ >= __ANDROID_API_R__
+#endif  // __ANDROID_API__ >= 30
 } OperandCode;
 
 /**
@@ -5660,7 +5660,7 @@ enum { ANEURALNETWORKS_MAX_SIZE_OF_IMMEDIATELY_COPIED_VALUES = 128 };
  */
 enum { ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN = 32 };
 
-#if __ANDROID_API__ >= __ANDROID_API_R__
+#if __ANDROID_API__ >= 30
 /**
  * Relative execution priority.
  *
@@ -5672,7 +5672,7 @@ typedef enum {
     ANEURALNETWORKS_PRIORITY_HIGH = 110,
     ANEURALNETWORKS_PRIORITY_DEFAULT = ANEURALNETWORKS_PRIORITY_MEDIUM,
 } PriorityCode;
-#endif  // __ANDROID_API__ >= __ANDROID_API_R__
+#endif  // __ANDROID_API__ >= 30
 
 /**
  * ANeuralNetworksMemory is an opaque type that represents memory.
@@ -5871,7 +5871,7 @@ typedef struct ANeuralNetworksCompilation ANeuralNetworksCompilation;
  */
 typedef struct ANeuralNetworksExecution ANeuralNetworksExecution;
 
-#if __ANDROID_API__ >= __ANDROID_API_Q__
+#if __ANDROID_API__ >= 29
 /**
  * Parameters for ANEURALNETWORKS_TENSOR_QUANT8_SYMM_PER_CHANNEL operand.
  */
@@ -5916,7 +5916,7 @@ typedef struct ANeuralNetworksSymmPerChannelQuantParams {
  * Available since API level 29.
  */
 typedef struct ANeuralNetworksBurst ANeuralNetworksBurst;
-#endif  //  __ANDROID_API__ >= __ANDROID_API_Q__
+#endif  //  __ANDROID_API__ >= 29
 
 /**
  * ANeuralNetworksOperandType describes the type of an operand.
@@ -6009,7 +6009,7 @@ typedef int32_t ANeuralNetworksOperationType;
  */
 typedef struct ANeuralNetworksEvent ANeuralNetworksEvent;
 
-#if __ANDROID_API__ >= __ANDROID_API_Q__
+#if __ANDROID_API__ >= 29
 
 /**
  * ANeuralNetworksDevice is an opaque type that represents a device.
@@ -6021,9 +6021,9 @@ typedef struct ANeuralNetworksEvent ANeuralNetworksEvent;
  */
 typedef struct ANeuralNetworksDevice ANeuralNetworksDevice;
 
-#endif  // __ANDROID_API__ >= __ANDROID_API_Q__
+#endif  // __ANDROID_API__ >= 29
 
-#if __ANDROID_API__ >= __ANDROID_API_R__
+#if __ANDROID_API__ >= 30
 
 /**
  * ANeuralNetworksMemoryDesc is an opaque type that represents a memory descriptor.
@@ -6329,9 +6329,9 @@ int ANeuralNetworksMemory_createFromDesc(const ANeuralNetworksMemoryDesc* desc,
 int ANeuralNetworksMemory_copy(const ANeuralNetworksMemory* src, const ANeuralNetworksMemory* dst)
         __INTRODUCED_IN(30);
 
-#endif  // __ANDROID_API__ >= __ANDROID_API_R__
+#endif  // __ANDROID_API__ >= 30
 
-#if __ANDROID_API__ >= __ANDROID_API_Q__
+#if __ANDROID_API__ >= 29
 
 /**
  * Get the number of available devices.
@@ -6446,7 +6446,7 @@ int ANeuralNetworksDevice_getVersion(const ANeuralNetworksDevice* device, const 
 int ANeuralNetworksDevice_getFeatureLevel(const ANeuralNetworksDevice* device,
                                           int64_t* featureLevel) __INTRODUCED_IN(29);
 
-#if __ANDROID_API__ >= __ANDROID_API_R__
+#if __ANDROID_API__ >= 30
 
 /**
  * Returns whether a device is able to complete or abort finishing a compilation
@@ -6490,7 +6490,7 @@ bool ANeuralNetworksDevice_supportsExecutionTimeout(const ANeuralNetworksDevice*
  */
 int ANeuralNetworksDevice_wait(const ANeuralNetworksDevice* device) __INTRODUCED_IN(30);
 
-#endif  // __ANDROID_API__ >= __ANDROID_API_R__
+#endif  // __ANDROID_API__ >= 30
 
 /**
  * Get the supported operations for a specified set of devices. If multiple devices
@@ -6825,7 +6825,7 @@ int ANeuralNetworksExecution_getDuration(const ANeuralNetworksExecution* executi
                                          int32_t durationCode, uint64_t* duration)
         __INTRODUCED_IN(29);
 
-#endif  // __ANDROID_API__ >= __ANDROID_API_Q__
+#endif  // __ANDROID_API__ >= 29
 
 #if __ANDROID_API__ >= 27
 
@@ -7024,7 +7024,7 @@ int ANeuralNetworksModel_addOperand(ANeuralNetworksModel* model,
 int ANeuralNetworksModel_setOperandValue(ANeuralNetworksModel* model, int32_t index,
                                          const void* buffer, size_t length) __INTRODUCED_IN(27);
 
-#if __ANDROID_API__ >= __ANDROID_API_Q__
+#if __ANDROID_API__ >= 29
 
 /**
  * Sets an operand's per channel quantization parameters.
@@ -7049,7 +7049,7 @@ int ANeuralNetworksModel_setOperandSymmPerChannelQuantParams(
         ANeuralNetworksModel* model, int32_t index,
         const ANeuralNetworksSymmPerChannelQuantParams* channelQuant) __INTRODUCED_IN(29);
 
-#endif  // __ANDROID_API__ >= __ANDROID_API_Q__
+#endif  // __ANDROID_API__ >= 29
 
 /**
  * Sets an operand to a value stored in a memory object.
@@ -7309,7 +7309,7 @@ int ANeuralNetworksCompilation_setPreference(ANeuralNetworksCompilation* compila
  */
 int ANeuralNetworksCompilation_finish(ANeuralNetworksCompilation* compilation) __INTRODUCED_IN(27);
 
-#if __ANDROID_API__ >= __ANDROID_API_R__
+#if __ANDROID_API__ >= 30
 
 /**
  * Set the execution priority.
@@ -7367,7 +7367,7 @@ int ANeuralNetworksCompilation_setPriority(ANeuralNetworksCompilation* compilati
 int ANeuralNetworksCompilation_setTimeout(ANeuralNetworksCompilation* compilation,
                                           uint64_t duration) __INTRODUCED_IN(30);
 
-#endif  // __ANDROID_API__ >= __ANDROID_API_R__
+#endif  // __ANDROID_API__ >= 30
 
 /**
  * Create a {@link ANeuralNetworksExecution} to apply the given compilation.
@@ -7648,7 +7648,7 @@ int ANeuralNetworksExecution_setOutputFromMemory(ANeuralNetworksExecution* execu
 int ANeuralNetworksExecution_startCompute(ANeuralNetworksExecution* execution,
                                           ANeuralNetworksEvent** event) __INTRODUCED_IN(27);
 
-#if __ANDROID_API__ >= __ANDROID_API_R__
+#if __ANDROID_API__ >= 30
 
 /**
  * Set the maximum duration of the specified execution.
@@ -7685,7 +7685,7 @@ int ANeuralNetworksExecution_startCompute(ANeuralNetworksExecution* execution,
 int ANeuralNetworksExecution_setTimeout(ANeuralNetworksExecution* execution, uint64_t duration)
         __INTRODUCED_IN(30);
 
-#endif  // __ANDROID_API__ >= __ANDROID_API_R__
+#endif  // __ANDROID_API__ >= 30
 
 /**
  * Waits until the execution completes.
@@ -7723,7 +7723,7 @@ void ANeuralNetworksEvent_free(ANeuralNetworksEvent* event) __INTRODUCED_IN(27);
 
 #endif  // __ANDROID_API__ >= 27
 
-#if __ANDROID_API__ >= __ANDROID_API_R__
+#if __ANDROID_API__ >= 30
 /**
  * Create a {@link ANeuralNetworksEvent} from a sync_fence file descriptor.
  *
@@ -7820,7 +7820,7 @@ int ANeuralNetworksExecution_startComputeWithDependencies(
         uint32_t num_dependencies, uint64_t duration, ANeuralNetworksEvent** event)
         __INTRODUCED_IN(30);
 
-#endif  // __ANDROID_API__ >= __ANDROID_API_R__
+#endif  // __ANDROID_API__ >= 30
 
 __END_DECLS
 
