@@ -98,23 +98,24 @@ class CachingDriver : public sample_driver::SampleDriver {
        public:
         CachingPreparedModel() = default;
 
-        Return<ErrorStatus> execute(const Request&, const sp<V1_0::IExecutionCallback>&) override {
+        Return<ErrorStatus> execute(const V1_0::Request&,
+                                    const sp<V1_0::IExecutionCallback>&) override {
             return ErrorStatus::DEVICE_UNAVAILABLE;
         }
-        Return<ErrorStatus> execute_1_2(const Request&, MeasureTiming,
+        Return<ErrorStatus> execute_1_2(const V1_0::Request&, MeasureTiming,
                                         const sp<V1_2::IExecutionCallback>&) override {
             return ErrorStatus::DEVICE_UNAVAILABLE;
         }
-        Return<ErrorStatus> execute_1_3(const Request&, MeasureTiming,
+        Return<ErrorStatus> execute_1_3(const V1_3::Request&, MeasureTiming,
                                         const sp<V1_2::IExecutionCallback>&) override {
             return ErrorStatus::DEVICE_UNAVAILABLE;
         }
-        Return<void> executeSynchronously(const Request&, MeasureTiming,
+        Return<void> executeSynchronously(const V1_0::Request&, MeasureTiming,
                                           executeSynchronously_cb cb) override {
             cb(ErrorStatus::DEVICE_UNAVAILABLE, {}, kBadTiming);
             return Void();
         }
-        Return<void> executeSynchronously_1_3(const Request&, MeasureTiming,
+        Return<void> executeSynchronously_1_3(const V1_3::Request&, MeasureTiming,
                                               executeSynchronously_1_3_cb cb) override {
             cb(ErrorStatus::DEVICE_UNAVAILABLE, {}, kBadTiming);
             return Void();

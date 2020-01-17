@@ -205,6 +205,17 @@ Return<DeviceStatus> SampleDriver::getStatus() {
     return DeviceStatus::AVAILABLE;
 }
 
+Return<void> SampleDriver::allocate(const V1_3::BufferDesc& /*desc*/,
+                                    const hidl_vec<sp<V1_3::IPreparedModel>>& /*preparedModels*/,
+                                    const hidl_vec<V1_3::BufferRole>& /*inputRoles*/,
+                                    const hidl_vec<V1_3::BufferRole>& /*outputRoles*/,
+                                    allocate_cb cb) {
+    VLOG(DRIVER) << "SampleDriver::allocate";
+    // TODO(xusongw): Implement memory domain in sample driver.
+    cb(ErrorStatus::GENERAL_FAILURE, nullptr, 0);
+    return Void();
+}
+
 int SampleDriver::run() {
     android::hardware::configureRpcThreadpool(4, true);
     if (registerAsService(mName) != android::OK) {
@@ -228,7 +239,7 @@ void asyncExecute(const Request& request, MeasureTiming measure, time_point driv
     NNTRACE_FULL(NNTRACE_LAYER_DRIVER, NNTRACE_PHASE_INPUTS_AND_OUTPUTS,
                  "SampleDriver::asyncExecute");
     std::vector<RunTimePoolInfo> requestPoolInfos;
-    if (!setRunTimePoolInfosFromHidlMemories(&requestPoolInfos, request.pools)) {
+    if (!setRunTimePoolInfosFromMemoryPools(&requestPoolInfos, request.pools)) {
         notify(callback, ErrorStatus::GENERAL_FAILURE, {}, kNoTiming);
         return;
     }
@@ -283,17 +294,20 @@ Return<ErrorStatus> executeBase(const Request& request, MeasureTiming measure, c
     return ErrorStatus::NONE;
 }
 
-Return<ErrorStatus> SamplePreparedModel::execute(const Request& request,
+Return<ErrorStatus> SamplePreparedModel::execute(const V1_0::Request& request,
                                                  const sp<V1_0::IExecutionCallback>& callback) {
-    return executeBase(request, MeasureTiming::NO, mModel, *mDriver, mPoolInfos, callback);
+    return executeBase(convertToV1_3(request), MeasureTiming::NO, mModel, *mDriver, mPoolInfos,
+                       callback);
 }
 
-Return<ErrorStatus> SamplePreparedModel::execute_1_2(const Request& request, MeasureTiming measure,
+Return<ErrorStatus> SamplePreparedModel::execute_1_2(const V1_0::Request& request,
+                                                     MeasureTiming measure,
                                                      const sp<V1_2::IExecutionCallback>& callback) {
-    return executeBase(request, measure, mModel, *mDriver, mPoolInfos, callback);
+    return executeBase(convertToV1_3(request), measure, mModel, *mDriver, mPoolInfos, callback);
 }
 
-Return<ErrorStatus> SamplePreparedModel::execute_1_3(const Request& request, MeasureTiming measure,
+Return<ErrorStatus> SamplePreparedModel::execute_1_3(const V1_3::Request& request,
+                                                     MeasureTiming measure,
                                                      const sp<V1_2::IExecutionCallback>& callback) {
     return executeBase(request, measure, mModel, *mDriver, mPoolInfos, callback);
 }
@@ -315,7 +329,7 @@ static std::tuple<ErrorStatus, hidl_vec<OutputShape>, Timing> executeSynchronous
     NNTRACE_FULL_SWITCH(NNTRACE_LAYER_DRIVER, NNTRACE_PHASE_INPUTS_AND_OUTPUTS,
                         "SampleDriver::executeSynchronouslyBase");
     std::vector<RunTimePoolInfo> requestPoolInfos;
-    if (!setRunTimePoolInfosFromHidlMemories(&requestPoolInfos, request.pools)) {
+    if (!setRunTimePoolInfosFromMemoryPools(&requestPoolInfos, request.pools)) {
         return {ErrorStatus::GENERAL_FAILURE, {}, kNoTiming};
     }
 
@@ -338,16 +352,16 @@ static std::tuple<ErrorStatus, hidl_vec<OutputShape>, Timing> executeSynchronous
     return {executionStatus, std::move(outputShapes), kNoTiming};
 }
 
-Return<void> SamplePreparedModel::executeSynchronously(const Request& request,
+Return<void> SamplePreparedModel::executeSynchronously(const V1_0::Request& request,
                                                        MeasureTiming measure,
                                                        executeSynchronously_cb cb) {
     auto [status, outputShapes, timing] =
-            executeSynchronouslyBase(request, measure, mModel, *mDriver, mPoolInfos);
+            executeSynchronouslyBase(convertToV1_3(request), measure, mModel, *mDriver, mPoolInfos);
     cb(status, std::move(outputShapes), timing);
     return Void();
 }
 
-Return<void> SamplePreparedModel::executeSynchronously_1_3(const Request& request,
+Return<void> SamplePreparedModel::executeSynchronously_1_3(const V1_3::Request& request,
                                                            MeasureTiming measure,
                                                            executeSynchronously_1_3_cb cb) {
     auto [status, outputShapes, timing] =
@@ -379,7 +393,7 @@ class BurstExecutorWithCache : public ExecutionBurstServer::IBurstExecutorWithCa
     void removeCacheEntry(int32_t slot) override { mMemoryCache.erase(slot); }
 
     std::tuple<ErrorStatus, hidl_vec<OutputShape>, Timing> execute(
-            const Request& request, const std::vector<int32_t>& slots,
+            const V1_0::Request& request, const std::vector<int32_t>& slots,
             MeasureTiming measure) override {
         NNTRACE_FULL(NNTRACE_LAYER_DRIVER, NNTRACE_PHASE_EXECUTION,
                      "BurstExecutorWithCache::execute");
@@ -394,10 +408,13 @@ class BurstExecutorWithCache : public ExecutionBurstServer::IBurstExecutorWithCa
         }
 
         // finish the request object (for validation)
-        hidl_vec<hidl_memory> pools(slots.size());
-        std::transform(slots.begin(), slots.end(), pools.begin(),
-                       [this](int32_t slot) { return mMemoryCache[slot]->getHidlMemory(); });
-        Request fullRequest = request;
+        hidl_vec<Request::MemoryPool> pools(slots.size());
+        std::transform(slots.begin(), slots.end(), pools.begin(), [this](int32_t slot) {
+            Request::MemoryPool pool;
+            pool.hidlMemory(mMemoryCache[slot]->getHidlMemory());
+            return pool;
+        });
+        Request fullRequest = {.inputs = request.inputs, .outputs = request.outputs};
         fullRequest.pools = std::move(pools);
 
         // validate request object against the model
@@ -414,7 +431,7 @@ class BurstExecutorWithCache : public ExecutionBurstServer::IBurstExecutorWithCa
         // execution
         CpuExecutor executor = mDriver->getExecutor();
         if (measure == MeasureTiming::YES) deviceStart = now();
-        int n = executor.run(mModel, request, mModelPoolInfos, requestPoolInfos);
+        int n = executor.run(mModel, fullRequest, mModelPoolInfos, requestPoolInfos);
         if (measure == MeasureTiming::YES) deviceEnd = now();
         VLOG(DRIVER) << "executor.run returned " << n;
         ErrorStatus executionStatus = convertResultCodeToErrorStatus(n);
