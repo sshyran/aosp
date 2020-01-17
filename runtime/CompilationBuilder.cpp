@@ -167,5 +167,43 @@ int CompilationBuilder::createBurst(BurstBuilder** burst) {
     return (*burst ? ANEURALNETWORKS_NO_ERROR : ANEURALNETWORKS_OUT_OF_MEMORY);
 }
 
+int CompilationBuilder::forEachStepRoleOfInput(uint32_t index,
+                                               const StepRoleCallback& callback) const {
+    if (!mFinished) {
+        LOG(ERROR) << "ANeuralNetworksMemoryDesc_addInputRole passed an unfinished compilation";
+        return ANEURALNETWORKS_BAD_STATE;
+    }
+    if (!mPlan.isValid()) {
+        LOG(ERROR) << "ANeuralNetworksMemoryDesc_addInputRole passed an invalid compilation";
+        return ANEURALNETWORKS_BAD_STATE;
+    }
+    if (index >= mModel->inputCount()) {
+        LOG(ERROR) << "ANeuralNetworksMemoryDesc_addInputRole passed an invalid input index "
+                   << index;
+        return ANEURALNETWORKS_BAD_DATA;
+    }
+    mPlan.forEachStepRoleOfInput(index, callback);
+    return ANEURALNETWORKS_NO_ERROR;
+}
+
+int CompilationBuilder::forEachStepRoleOfOutput(uint32_t index,
+                                                const StepRoleCallback& callback) const {
+    if (!mFinished) {
+        LOG(ERROR) << "ANeuralNetworksMemoryDesc_addOutputRole passed an unfinished compilation";
+        return ANEURALNETWORKS_BAD_STATE;
+    }
+    if (!mPlan.isValid()) {
+        LOG(ERROR) << "ANeuralNetworksMemoryDesc_addOutputRole passed an invalid compilation";
+        return ANEURALNETWORKS_BAD_STATE;
+    }
+    if (index >= mModel->outputCount()) {
+        LOG(ERROR) << "ANeuralNetworksMemoryDesc_addOutputRole passed an invalid output index "
+                   << index;
+        return ANEURALNETWORKS_BAD_DATA;
+    }
+    mPlan.forEachStepRoleOfOutput(index, callback);
+    return ANEURALNETWORKS_NO_ERROR;
+}
+
 }  // namespace nn
 }  // namespace android
