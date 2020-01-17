@@ -601,7 +601,7 @@ bool StepExecutor::updateOutputShapes(const std::vector<OutputShape>& from,
         return true;
     }
     if (mExecutionStep != nullptr) {
-        const auto& indexMapping = mExecutionStep->getOutputIndexSubModelToMainModel();
+        const auto& indexMapping = mExecutionStep->getOutputIndexStepModelToMainModel();
         NN_RET_CHECK_LE(indexMapping.size(), from.size());
         for (uint32_t i = 0, e = indexMapping.size(); i < e; i++) {
             uint32_t toIndex = indexMapping[i];
