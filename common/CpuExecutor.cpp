@@ -32,6 +32,7 @@
 #include <omp.h>
 #endif  // NNAPI_OPENMP
 
+#include "ControlFlow.h"
 #include "NeuralNetworks.h"
 #include "OperationResolver.h"
 #include "Operations.h"
@@ -186,9 +187,10 @@ bool setInfoAndAllocateIfNeeded(RunTimeOperandInfo* info, const Shape& shape, in
     info->extraParams = shape.extraParams;
 
     // Allocate the buffer only if the combined dimension is fully specified
-    if (info->lifetime == OperandLifeTime::TEMPORARY_VARIABLE && info->buffer == nullptr) {
+    if (info->buffer == nullptr && (info->lifetime == OperandLifeTime::TEMPORARY_VARIABLE ||
+                                    info->lifetime == OperandLifeTime::SUBGRAPH_OUTPUT)) {
         if (isExtensionOperandType(info->type)) {
-            LOG(ERROR) << "Cannot allocate a temporary variable of an extension type";
+            LOG(ERROR) << "Cannot allocate a variable of an extension type";
             *result = ANEURALNETWORKS_OP_FAILED;
             return false;
         }
@@ -590,130 +592,10 @@ static bool convertFromNhwc(RunTimeOperandInfo& to, const RunTimeOperandInfo& fr
     return true;
 }
 
-// Ignore the .pools entry in model and request.  This will have been taken care of
-// by the caller.
-int CpuExecutor::run(const Model& model, const Request& request,
-                     const std::vector<RunTimePoolInfo>& modelPoolInfos,
-                     const std::vector<RunTimePoolInfo>& requestPoolInfos) {
-    NNTRACE_CPU(NNTRACE_PHASE_EXECUTION, "run");
-    VLOG(CPUEXE) << "CpuExecutor::run() with request(" << SHOW_IF_DEBUG(toString(request)) << ")";
-
-    // b/109953668, disable OpenMP
-#ifdef NNAPI_OPENMP
-    ScopedOpenmpSettings openMpSettings;
-#endif  // NNAPI_OPENMP
-
-    mModel = &model;
-    std::vector<RunTimeOperandInfo> operands;
-    initializeRunTimeInfo(request, modelPoolInfos, requestPoolInfos, &operands);
-    // The model has serialized the operation in execution order.
-    for (const auto& operation : model.main.operations) {
-        int n = executeOperation(operation, operands.data());
-        if (n != ANEURALNETWORKS_NO_ERROR) {
-            finish(n, &operands);
-            return n;
-        }
-    }
-    for (auto& runtimeInfo : requestPoolInfos) {
-        runtimeInfo.flush();
-    }
-    finish(ANEURALNETWORKS_NO_ERROR, &operands);
-    VLOG(CPUEXE) << "Completed run normally";
-    return ANEURALNETWORKS_NO_ERROR;
-}
-
-bool CpuExecutor::initializeRunTimeInfo(const Request& request,
-                                        const std::vector<RunTimePoolInfo>& modelPoolInfos,
-                                        const std::vector<RunTimePoolInfo>& requestPoolInfos,
-                                        std::vector<RunTimeOperandInfo>* operands) {
-    VLOG(CPUEXE) << "CpuExecutor::initializeRunTimeInfo";
-    const size_t count = mModel->main.operands.size();
-    operands->resize(count);
-
-    // Start by setting the runtime info to what's in the model.
-    for (size_t i = 0; i < count; i++) {
-        const Operand& from = mModel->main.operands[i];
-        RunTimeOperandInfo& to = (*operands)[i];
-        to.type = from.type;
-        to.dimensions = from.dimensions;
-        to.scale = from.scale;
-        to.zeroPoint = from.zeroPoint;
-        to.length = from.location.length;
-        to.lifetime = from.lifetime;
-        to.extraParams = from.extraParams;
-        switch (from.lifetime) {
-            case OperandLifeTime::TEMPORARY_VARIABLE:
-                to.buffer = nullptr;
-                to.numberOfUsesLeft = from.numberOfConsumers;
-                break;
-            case OperandLifeTime::CONSTANT_COPY:
-                to.buffer = const_cast<uint8_t*>(&mModel->operandValues[from.location.offset]);
-                to.numberOfUsesLeft = 0;
-                break;
-            case OperandLifeTime::CONSTANT_REFERENCE: {
-                auto poolIndex = from.location.poolIndex;
-                nnAssert(poolIndex < modelPoolInfos.size());
-                auto& r = modelPoolInfos[poolIndex];
-                to.buffer = r.getBuffer() + from.location.offset;
-                to.numberOfUsesLeft = 0;
-                break;
-            }
-            case OperandLifeTime::SUBGRAPH_INPUT:
-            case OperandLifeTime::SUBGRAPH_OUTPUT:
-            case OperandLifeTime::NO_VALUE:
-                to.buffer = nullptr;
-                to.numberOfUsesLeft = 0;
-                break;
-            default:
-                nnAssert(false);
-                break;
-        }
-    }
-
-    // Adjust the runtime info for the arguments passed to the model,
-    // modifying the buffer location, and possibly the dimensions.
-    auto updateForArguments = [&operands, &requestPoolInfos](
-                                      const std::vector<uint32_t>& indexes,
-                                      const hidl_vec<RequestArgument>& arguments) {
-        nnAssert(indexes.size() == arguments.size());
-        for (size_t i = 0; i < indexes.size(); i++) {
-            const uint32_t operandIndex = indexes[i];
-            const RequestArgument& from = arguments[i];
-            RunTimeOperandInfo& to = (*operands)[operandIndex];
-            if (from.dimensions.size() > 0) {
-                // It's the responsibility of the caller to validate that
-                // from.dimensions only modifies the dimensions that were
-                // unspecified in the model.  That's the case in SampleDriver.cpp
-                // with the call to validateRequest().
-                // TODO make sure that's the case for the default CPU path.
-                to.dimensions = from.dimensions;
-            }
-            if (from.hasNoValue) {
-                to.lifetime = OperandLifeTime::NO_VALUE;
-                nnAssert(to.buffer == nullptr);
-                to.length = 0;
-            } else {
-                auto poolIndex = from.location.poolIndex;
-                nnAssert(poolIndex < requestPoolInfos.size());
-                auto& r = requestPoolInfos[poolIndex];
-                to.buffer = r.getBuffer() + from.location.offset;
-                if (from.location.offset == 0 && from.location.length == 0) {
-                    // Use the entire memory region.
-                    to.length = r.getSize();
-                } else {
-                    to.length = from.location.length;
-                }
-            }
-        }
-    };
-    updateForArguments(mModel->main.inputIndexes, request.inputs);
-    updateForArguments(mModel->main.outputIndexes, request.outputs);
-
-    return true;
-}
-
-void CpuExecutor::freeNoLongerUsedOperands(const std::vector<uint32_t>& inputs,
-                                           RunTimeOperandInfo* operands) {
+// Decrements the usage count for the operands listed.  Frees the memory
+// allocated for any temporary variable with a count of zero.
+static void consumeOperationInputs(const std::vector<uint32_t>& inputs,
+                                   RunTimeOperandInfo* operands) {
     for (uint32_t i : inputs) {
         auto& info = operands[i];
         // Check if it's a static or model input/output.
@@ -728,7 +610,173 @@ void CpuExecutor::freeNoLongerUsedOperands(const std::vector<uint32_t>& inputs,
     }
 }
 
+// This function only frees TEMPORARY_VARIABLE operands that are unused
+// outputs because consumeOperationInputs takes care of any operands
+// that are inputs to an operation.
+static void freeUnusedSubgraphOperands(std::vector<RunTimeOperandInfo>* operands) {
+    for (auto& info : *operands) {
+        if (info.lifetime == OperandLifeTime::TEMPORARY_VARIABLE && info.numberOfUsesLeft == 0 &&
+            info.buffer != nullptr) {
+            delete[] info.buffer;
+            info.buffer = nullptr;
+        }
+    }
+}
+
+// Ignore the .pools entry in model and request.  This will have been taken care of
+// by the caller.
+int CpuExecutor::run(const Model& model, const Request& request,
+                     const std::vector<RunTimePoolInfo>& modelPoolInfos,
+                     const std::vector<RunTimePoolInfo>& requestPoolInfos) {
+    NNTRACE_CPU(NNTRACE_PHASE_EXECUTION, "run");
+    VLOG(CPUEXE) << "CpuExecutor::run() with request(" << SHOW_IF_DEBUG(toString(request)) << ")";
+    mModelOperandValues = &model.operandValues;
+    mModelPoolInfos = &modelPoolInfos;
+    mReferencedSubgraphs = &model.referenced;
+
+    // b/109953668, disable OpenMP
+#ifdef NNAPI_OPENMP
+    ScopedOpenmpSettings openMpSettings;
+#endif  // NNAPI_OPENMP
+
+    std::vector<RunTimeOperandInfo> operands = initializeRunTimeInfo(model.main);
+    updateForArguments(model.main.inputIndexes, request.inputs, requestPoolInfos, operands.data());
+    updateForArguments(model.main.outputIndexes, request.outputs, requestPoolInfos,
+                       operands.data());
+    int result = executeSubgraph(model.main, operands.data());
+    freeUnusedSubgraphOperands(&operands);
+
+    if (result == ANEURALNETWORKS_NO_ERROR) {
+        VLOG(CPUEXE) << "Completed run normally";
+        for (auto& runtimeInfo : requestPoolInfos) {
+            runtimeInfo.flush();
+        }
+    }
+
+    // Only report the output shapes when the result code is NO_ERROR or OUTPUT_INSUFFICIENT_SIZE.
+    if (result == ANEURALNETWORKS_NO_ERROR || result == ANEURALNETWORKS_OUTPUT_INSUFFICIENT_SIZE) {
+        setOutputShapes(model.main.outputIndexes, operands);
+    } else {
+        mOutputShapes.clear();
+    }
+
+    mFinished = true;
+    mModelOperandValues = nullptr;
+    mModelPoolInfos = nullptr;
+    mReferencedSubgraphs = nullptr;
+    return result;
+}
+
+int CpuExecutor::executeSubgraph(const Subgraph& subgraph, RunTimeOperandInfo* operands) {
+    VLOG(CPUEXE) << "CpuExecutor::executeSubgraph " << toString(subgraph);
+    // The graph has serialized the operation in execution order.
+    for (const auto& operation : subgraph.operations) {
+        NN_RETURN_IF_ERROR(executeOperation(operation, operands));
+    }
+    return ANEURALNETWORKS_NO_ERROR;
+}
+
+std::vector<RunTimeOperandInfo> CpuExecutor::initializeRunTimeInfo(const Subgraph& subgraph) {
+    VLOG(CPUEXE) << "CpuExecutor::initializeRunTimeInfo";
+    const size_t count = subgraph.operands.size();
+    std::vector<RunTimeOperandInfo> operands(count);
+    for (size_t i = 0; i < count; i++) {
+        const Operand& from = subgraph.operands[i];
+        RunTimeOperandInfo& to = operands[i];
+        to.type = from.type;
+        to.dimensions = from.dimensions;
+        to.scale = from.scale;
+        to.zeroPoint = from.zeroPoint;
+        to.length = from.location.length;
+        to.lifetime = from.lifetime;
+        to.extraParams = from.extraParams;
+        switch (from.lifetime) {
+            case OperandLifeTime::TEMPORARY_VARIABLE:
+                to.buffer = nullptr;
+                to.numberOfUsesLeft = from.numberOfConsumers;
+                break;
+            case OperandLifeTime::CONSTANT_COPY:
+                to.buffer = const_cast<uint8_t*>(&(*mModelOperandValues)[from.location.offset]);
+                to.numberOfUsesLeft = 0;
+                break;
+            case OperandLifeTime::CONSTANT_REFERENCE: {
+                auto poolIndex = from.location.poolIndex;
+                CHECK_LT(poolIndex, mModelPoolInfos->size());
+                auto& r = (*mModelPoolInfos)[poolIndex];
+                to.buffer = r.getBuffer() + from.location.offset;
+                to.numberOfUsesLeft = 0;
+                break;
+            }
+            case OperandLifeTime::SUBGRAPH: {
+                auto subgraphIndex = from.location.offset;
+                CHECK_LT(subgraphIndex, mReferencedSubgraphs->size());
+                to.buffer = reinterpret_cast<uint8_t*>(
+                        const_cast<Subgraph*>(&(*mReferencedSubgraphs)[subgraphIndex]));
+                to.numberOfUsesLeft = 0;
+            } break;
+            case OperandLifeTime::SUBGRAPH_INPUT:
+            case OperandLifeTime::SUBGRAPH_OUTPUT:
+            case OperandLifeTime::NO_VALUE:
+                to.buffer = nullptr;
+                to.numberOfUsesLeft = 0;
+                break;
+        }
+    }
+    return operands;
+}
+
+void CpuExecutor::updateForArguments(const std::vector<uint32_t>& indexes,
+                                     const hal::hidl_vec<hal::RequestArgument>& arguments,
+                                     const std::vector<RunTimePoolInfo>& requestPoolInfos,
+                                     RunTimeOperandInfo* operands) {
+    CHECK_EQ(indexes.size(), arguments.size());
+    for (size_t i = 0; i < indexes.size(); i++) {
+        const uint32_t operandIndex = indexes[i];
+        const RequestArgument& from = arguments[i];
+        RunTimeOperandInfo& to = operands[operandIndex];
+        if (from.dimensions.size() > 0) {
+            // It's the responsibility of the caller to validate that
+            // from.dimensions only modifies the dimensions that were
+            // unspecified in the model.  That's the case in SampleDriver.cpp
+            // with the call to validateRequest().
+            // TODO make sure that's the case for the default CPU path.
+            to.dimensions = from.dimensions;
+        }
+        if (from.hasNoValue) {
+            to.lifetime = OperandLifeTime::NO_VALUE;
+            CHECK(to.buffer == nullptr);
+            to.length = 0;
+        } else {
+            auto poolIndex = from.location.poolIndex;
+            CHECK_LT(poolIndex, requestPoolInfos.size());
+            auto& r = requestPoolInfos[poolIndex];
+            to.buffer = r.getBuffer() + from.location.offset;
+            if (from.location.offset == 0 && from.location.length == 0) {
+                // Use the entire memory region.
+                to.length = r.getSize();
+            } else {
+                to.length = from.location.length;
+            }
+        }
+    }
+}
+
 int CpuExecutor::executeOperation(const Operation& operation, RunTimeOperandInfo* operands) {
+    if (operation.type == OperationType::IF) {
+        int result = executeIfOperation(operation, operands);
+        if (result != ANEURALNETWORKS_NO_ERROR) {
+            LOG(ERROR) << "IF failed.";
+        }
+        return result;
+    }
+    if (operation.type == OperationType::WHILE) {
+        int result = executeWhileOperation(operation, operands);
+        if (result != ANEURALNETWORKS_NO_ERROR) {
+            LOG(ERROR) << "WHILE failed.";
+        }
+        return result;
+    }
+
     // VLOG(CPUEXE) << "CpuExecutor::executeOperation(" << toString(operation) << ")";
     const hidl_vec<uint32_t>& ins = operation.inputs;
     const hidl_vec<uint32_t>& outs = operation.outputs;
@@ -1729,36 +1777,154 @@ int CpuExecutor::executeOperation(const Operation& operation, RunTimeOperandInfo
         return result;
     }
 
-    freeNoLongerUsedOperands(ins, operands);
+    consumeOperationInputs(ins, operands);
     return ANEURALNETWORKS_NO_ERROR;
 }
 
-void CpuExecutor::finish(int result, std::vector<RunTimeOperandInfo>* operands) {
-    // Free allocated temporary operands.
-    for (auto& info : *operands) {
-        if (info.lifetime == OperandLifeTime::TEMPORARY_VARIABLE && info.buffer != nullptr) {
-            delete[] info.buffer;
-            info.buffer = nullptr;
-        }
+// Copies RunTimeOperandInfo, preserving the original lifetime and numberOfUsesLeft
+// to prevent deallocation of subgraph inputs and outputs.
+static void setInfoExceptLifetime(RunTimeOperandInfo* to, const RunTimeOperandInfo& from) {
+    auto originalLifetime = to->lifetime;
+    auto originalNumberOfUsesLeft = to->numberOfUsesLeft;
+    *to = from;
+    to->lifetime = originalLifetime;
+    to->numberOfUsesLeft = originalNumberOfUsesLeft;
+}
+
+int CpuExecutor::executeIfOperation(const Operation& operation, RunTimeOperandInfo* operands) {
+    namespace op = operation_if;
+    const RunTimeOperandInfo& condOperand = operands[operation.inputs[op::kCondBoolOperand]];
+    const bool condValue = *reinterpret_cast<const bool8*>(condOperand.buffer);
+    VLOG(CPUEXE) << "CpuExecutor::executeIfOperation: condition value: " << condValue;
+
+    const uint32_t branchInputIndex = condValue ? op::kThenModelOperand : op::kElseModelOperand;
+    const RunTimeOperandInfo& branchOperand = operands[operation.inputs[branchInputIndex]];
+    const Subgraph& branchSubgraph = *reinterpret_cast<const Subgraph*>(branchOperand.buffer);
+    std::vector<RunTimeOperandInfo> branchOperands = initializeRunTimeInfo(branchSubgraph);
+
+    // Initialize inner input and output operands from outer operands.
+    for (uint32_t i = 0, n = branchSubgraph.inputIndexes.size(); i < n; ++i) {
+        setInfoExceptLifetime(&branchOperands[branchSubgraph.inputIndexes[i]],
+                              operands[operation.inputs[op::kFirstInput + i]]);
+    }
+    for (uint32_t i = 0, n = branchSubgraph.outputIndexes.size(); i < n; ++i) {
+        setInfoExceptLifetime(&branchOperands[branchSubgraph.outputIndexes[i]],
+                              operands[operation.outputs[i]]);
     }
 
-    // Only report the output shapes when the result code is NO_ERROR or
-    // OUTPUT_INSUFFICIENT_SIZE.
-    if (result == ANEURALNETWORKS_NO_ERROR || result == ANEURALNETWORKS_OUTPUT_INSUFFICIENT_SIZE) {
-        const auto& outputs = mModel->main.outputIndexes;
-        mOutputShapes.resize(outputs.size());
-        for (uint32_t i = 0; i < outputs.size(); i++) {
-            const uint32_t operandIndex = outputs[i];
-            RunTimeOperandInfo& from = (*operands)[operandIndex];
-            mOutputShapes[i].dimensions = from.dimensions;
-            mOutputShapes[i].isSufficient = from.isSufficient();
-        }
-    } else {
-        mOutputShapes.clear();
+    NN_RETURN_IF_ERROR(executeSubgraph(branchSubgraph, branchOperands.data()));
+    freeUnusedSubgraphOperands(&branchOperands);
+
+    // Update outer outputs.
+    for (uint32_t i = 0, n = operation.outputs.size(); i < n; ++i) {
+        setInfoExceptLifetime(&operands[operation.outputs[i]],
+                              branchOperands[branchSubgraph.outputIndexes[i]]);
     }
 
-    mModel = nullptr;
-    mFinished = true;
+    consumeOperationInputs(operation.inputs, operands);
+    return ANEURALNETWORKS_NO_ERROR;
+}
+
+int CpuExecutor::executeWhileOperation(const Operation& operation, RunTimeOperandInfo* operands) {
+    namespace op = operation_while;
+    const RunTimeOperandInfo& condModelOperand = operands[operation.inputs[op::kCondModelOperand]];
+    const RunTimeOperandInfo& bodyModelOperand = operands[operation.inputs[op::kBodyModelOperand]];
+    const Subgraph& condSubgraph = *reinterpret_cast<const Subgraph*>(condModelOperand.buffer);
+    const Subgraph& bodySubgraph = *reinterpret_cast<const Subgraph*>(bodyModelOperand.buffer);
+    std::vector<RunTimeOperandInfo> condOperands = initializeRunTimeInfo(condSubgraph);
+    std::vector<RunTimeOperandInfo> bodyOperands = initializeRunTimeInfo(bodySubgraph);
+
+    // The code below implements the following sequence of subgraph input and output buffer
+    // assignments:
+    // iteration = 0   cond inputs = body inputs = outer inputs   body outputs = tmp1
+    // iteration = 1   cond inputs = body inputs = tmp1           body outputs = tmp2
+    // iteration = 2   cond inputs = body inputs = tmp2           body outputs = tmp1
+    // iteration = 3   cond inputs = body inputs = ...            body outputs = ...
+
+    // For body output double buffering.
+    std::vector<uint8_t*> tmp1(bodySubgraph.outputIndexes.size());
+    std::vector<uint8_t*> tmp2(bodySubgraph.outputIndexes.size());
+
+    // Initialize condition inputs from outer operands.
+    for (uint32_t i = 0, n = condSubgraph.inputIndexes.size(); i < n; ++i) {
+        setInfoExceptLifetime(&condOperands[condSubgraph.inputIndexes[i]],
+                              operands[operation.inputs[op::kFirstInput + i]]);
+    }
+
+    // Store condition output on the stack.
+    RunTimeOperandInfo& condOutput = condOperands[condSubgraph.outputIndexes[0]];
+    bool8 condValue = {/* initialized memory */};
+    condOutput.buffer = &condValue;
+    condOutput.length = sizeof(condValue);
+
+    for (uint32_t iteration = 0;; ++iteration) {
+        VLOG(CPUEXE) << "CpuExecutor::executeWhileOperation: iteration " << iteration;
+        if (iteration != 0) {
+            // Set condition inputs from previous iteration outputs.
+            for (uint32_t i = 0, n = bodySubgraph.outputIndexes.size(); i < n; ++i) {
+                setInfoExceptLifetime(&condOperands[condSubgraph.inputIndexes[i]],
+                                      bodyOperands[bodySubgraph.outputIndexes[i]]);
+            }
+        }
+        NN_RETURN_IF_ERROR(executeSubgraph(condSubgraph, condOperands.data()));
+        VLOG(CPUEXE) << "CpuExecutor::executeWhileOperation: condition value: " << iteration;
+        if (!condValue) {
+            break;
+        }
+
+        // Set body inputs from condition inputs.
+        for (uint32_t i = 0, n = bodySubgraph.inputIndexes.size(); i < n; ++i) {
+            bodyOperands[bodySubgraph.inputIndexes[i]] = condOperands[condSubgraph.inputIndexes[i]];
+        }
+        // Switch body outputs.
+        auto& outputBuffer = iteration % 2 == 0 ? tmp1 : tmp2;
+        auto& otherBuffer = iteration % 2 == 0 ? tmp2 : tmp1;
+        for (uint32_t i = 0, n = bodySubgraph.outputIndexes.size(); i < n; ++i) {
+            RunTimeOperandInfo& info = bodyOperands[bodySubgraph.outputIndexes[i]];
+            otherBuffer[i] = info.buffer;
+            info.buffer = outputBuffer[i];
+        }
+
+        NN_RETURN_IF_ERROR(executeSubgraph(bodySubgraph, bodyOperands.data()));
+    }
+
+    // Copy body outputs to outer outputs.
+    for (uint32_t i = 0, n = operation.outputs.size(); i < n; ++i) {
+        RunTimeOperandInfo& outerOperand = operands[operation.outputs[i]];
+        RunTimeOperandInfo& innerOperand = condOperands[condSubgraph.inputIndexes[i]];
+        if (int error; !setInfoAndAllocateIfNeeded(&outerOperand, innerOperand.shape(), &error)) {
+            return error;
+        }
+        CHECK_EQ(outerOperand.length, innerOperand.length);
+        // TODO: Use the outer buffer as tmp1 to avoid copies.
+        memcpy(outerOperand.buffer, innerOperand.buffer, innerOperand.length);
+    }
+
+    auto freeLoopOutputs = [](const std::vector<uint8_t*>& tmp) {
+        for (auto buffer : tmp) {
+            if (buffer != nullptr) {
+                delete[] buffer;
+            }
+        }
+    };
+    freeLoopOutputs(tmp1);
+    freeLoopOutputs(tmp2);
+    freeUnusedSubgraphOperands(&condOperands);
+    freeUnusedSubgraphOperands(&bodyOperands);
+    consumeOperationInputs(operation.inputs, operands);
+
+    return ANEURALNETWORKS_NO_ERROR;
+}
+
+void CpuExecutor::setOutputShapes(const std::vector<uint32_t>& outputIndexes,
+                                  const std::vector<RunTimeOperandInfo>& operands) {
+    mOutputShapes.resize(outputIndexes.size());
+    for (uint32_t i = 0; i < outputIndexes.size(); i++) {
+        const uint32_t operandIndex = outputIndexes[i];
+        const RunTimeOperandInfo& from = operands[operandIndex];
+        mOutputShapes[i].dimensions = from.dimensions;
+        mOutputShapes[i].isSufficient = from.isSufficient();
+    }
 }
 
 // b/109953668, disable OpenMP
