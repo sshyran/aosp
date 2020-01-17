@@ -176,10 +176,14 @@ void OperandTracker::markProcessed(uint32_t operationIndex, OperationReadyCallba
 
 ExecutionStep::ExecutionStep(ExecutionPlan* plan, uint32_t stepIndex,
                              std::shared_ptr<Device> device)
-    : mPlan(plan), mIndex(stepIndex), mSubModel(), mDevice(device), mToken(plan->getCacheToken()) {}
+    : mPlan(plan),
+      mIndex(stepIndex),
+      mStepModel(),
+      mDevice(device),
+      mToken(plan->getCacheToken()) {}
 
 // Adds an operand if it has not been added already.
-// Sets the index in the submodel for the corresponding operand.
+// Sets the index in the step model for the corresponding operand.
 int ExecutionStep::addOperand(uint32_t sourceOperandIndex, uint32_t* toOperandIndex,
                               const ModelBuilder& sourceModel, OperandKind kind) {
     // Have we added this operand already?
@@ -191,10 +195,10 @@ int ExecutionStep::addOperand(uint32_t sourceOperandIndex, uint32_t* toOperandIn
     }
 
     // First time we add this operand.
-    *toOperandIndex = mSubModel.operandCount();
+    *toOperandIndex = mStepModel.operandCount();
     mOperandMap.emplace(sourceOperandIndex, *toOperandIndex);
 
-    // Add the operand to the submodel.
+    // Add the operand to the step model.
     const Operand& operand = sourceModel.getOperand(sourceOperandIndex);
     ANeuralNetworksOperandType type = {
             .type = static_cast<int32_t>(operand.type),
@@ -204,13 +208,13 @@ int ExecutionStep::addOperand(uint32_t sourceOperandIndex, uint32_t* toOperandIn
             .zeroPoint = operand.zeroPoint,
     };
 
-    int n = mSubModel.addOperand(type);
+    int n = mStepModel.addOperand(type);
     if (n != ANEURALNETWORKS_NO_ERROR) {
         LOG(ERROR) << "Previous error occurred when partitioning the graph";
         return n;
     }
 
-    n = copyOperandExtraParams(mSubModel, *toOperandIndex, operand);
+    n = copyOperandExtraParams(mStepModel, *toOperandIndex, operand);
     if (n != ANEURALNETWORKS_NO_ERROR) {
         LOG(ERROR) << "Error when copying extra parameters to the operand";
         return n;
@@ -220,7 +224,7 @@ int ExecutionStep::addOperand(uint32_t sourceOperandIndex, uint32_t* toOperandIn
     switch (operand.lifetime) {
         case OperandLifeTime::CONSTANT_COPY: {
             const uint8_t* data = sourceModel.getPointerToOperandValue(operand.location.offset);
-            n = mSubModel.setOperandValue(*toOperandIndex, data, operand.location.length);
+            n = mStepModel.setOperandValue(*toOperandIndex, data, operand.location.length);
             if (n != ANEURALNETWORKS_NO_ERROR) {
                 LOG(ERROR) << "Previous error occurred when partitioning the graph";
                 return n;
@@ -228,7 +232,7 @@ int ExecutionStep::addOperand(uint32_t sourceOperandIndex, uint32_t* toOperandIn
         } break;
         case OperandLifeTime::CONSTANT_REFERENCE: {
             const Memory* memory = sourceModel.getMemories()[operand.location.poolIndex];
-            n = mSubModel.setOperandValueFromMemory(
+            n = mStepModel.setOperandValueFromMemory(
                     *toOperandIndex, memory, operand.location.offset, operand.location.length);
             if (n != ANEURALNETWORKS_NO_ERROR) {
                 LOG(ERROR) << "Previous error occurred when partitioning the graph";
@@ -236,7 +240,7 @@ int ExecutionStep::addOperand(uint32_t sourceOperandIndex, uint32_t* toOperandIn
             }
         } break;
         case OperandLifeTime::NO_VALUE: {
-            n = mSubModel.setOperandValue(*toOperandIndex, nullptr, 0);
+            n = mStepModel.setOperandValue(*toOperandIndex, nullptr, 0);
             if (n != ANEURALNETWORKS_NO_ERROR) {
                 LOG(ERROR) << "Previous error occurred when partitioning the graph";
                 return n;
@@ -247,7 +251,7 @@ int ExecutionStep::addOperand(uint32_t sourceOperandIndex, uint32_t* toOperandIn
                 // The first time we've seen this operand is as an
                 // input.  That means it must be defined by a
                 // different partition, and is an input to this one.
-                mTempsAsSubModelInputs.emplace_back(sourceOperandIndex, *toOperandIndex);
+                mTempsAsStepModelInputs.emplace_back(sourceOperandIndex, *toOperandIndex);
             } else {
                 // The first time we've seen this operand is as an
                 // output.  It may be an input to a different
@@ -263,7 +267,7 @@ int ExecutionStep::addOperand(uint32_t sourceOperandIndex, uint32_t* toOperandIn
                 // The first time we've seen this operand is as an
                 // input.  That means it must be defined by a
                 // different partition, and is an input to this one.
-                mOutputsAsSubModelInputs.emplace_back(sourceOperandIndex, *toOperandIndex);
+                mOutputsAsStepModelInputs.emplace_back(sourceOperandIndex, *toOperandIndex);
             } else {
                 // The first time we've seen this operand is as an
                 // output.
@@ -316,8 +320,8 @@ int ExecutionStep::addOperation(int operationIndex, const ModelBuilder& sourceMo
         return n;
     }
 
-    return mSubModel.addOperation(static_cast<uint32_t>(operation.type), inputCount, inputs.data(),
-                                  outputCount, outputs.data());
+    return mStepModel.addOperation(static_cast<uint32_t>(operation.type), inputCount, inputs.data(),
+                                   outputCount, outputs.data());
 }
 
 void ExecutionStep::mapInputsAndOutputs(
@@ -352,35 +356,35 @@ void ExecutionStep::mapInputsAndOutputs(
                          << sourceOperandIndex;
         }
     };
-    for (uint32_t i = 0, n = mSubModelInputs.size(); i < n; ++i) {
-        mapInput(mSubModelInputs[i].first, i);
+    for (uint32_t i = 0, n = mStepModelInputs.size(); i < n; ++i) {
+        mapInput(mStepModelInputs[i].first, i);
     }
-    for (uint32_t i = 0, n = mSubModelOutputs.size(); i < n; ++i) {
-        mapOutput(mSubModelOutputs[i].first, i);
+    for (uint32_t i = 0, n = mStepModelOutputs.size(); i < n; ++i) {
+        mapOutput(mStepModelOutputs[i].first, i);
     }
 }
 
-void ExecutionPlan::CompoundBody::findTempsAsSubModelOutputs() {
+void ExecutionPlan::CompoundBody::findTempsAsStepModelOutputs() {
     for (const auto& step : mSteps) {
-        for (const auto& input : step->getTempsAsSubModelInputs()) {
+        for (const auto& input : step->getTempsAsStepModelInputs()) {
             const uint32_t sourceOperandIndex = input.first;
             const auto it = mTemporaryToDefiningStep.find(sourceOperandIndex);
             nnAssert(it != mTemporaryToDefiningStep.end());
             const uint32_t stepIndex = it->second;
             nnAssert(stepIndex < mSteps.size());
-            mSteps[stepIndex]->recordTempAsSubModelOutput(sourceOperandIndex);
+            mSteps[stepIndex]->recordTempAsStepModelOutput(sourceOperandIndex);
         }
     }
 }
 
-void ExecutionStep::recordTempAsSubModelOutput(uint32_t sourceOperandIndex) {
+void ExecutionStep::recordTempAsStepModelOutput(uint32_t sourceOperandIndex) {
     const auto it = mOperandMap.find(sourceOperandIndex);
     CHECK(it != mOperandMap.end());
-    mTempsAsSubModelOutputs.emplace(sourceOperandIndex, it->second);
+    mTempsAsStepModelOutputs.emplace(sourceOperandIndex, it->second);
 }
 
-void ExecutionStep::logSubModel() const {
-    VLOG(COMPILATION) << "ExecutionStep::finishSubModel, step " << mIndex;
+void ExecutionStep::logStepModel() const {
+    VLOG(COMPILATION) << "ExecutionStep::finishStepModel, step " << mIndex;
 
     auto logRemapEntry = [](std::string& toLog, const std::pair<uint32_t, uint32_t>& e) {
         if (!toLog.empty()) {
@@ -400,7 +404,7 @@ void ExecutionStep::logSubModel() const {
         }
         VLOG(COMPILATION) << name << ": " << toLog;
     };
-    auto logRemapSet = [&logRemapEntry](const char* name, const SubModelOutputSetType& set) {
+    auto logRemapSet = [&logRemapEntry](const char* name, const StepModelOutputSetType& set) {
         std::string toLog;
         for (const auto& e : set) {
             logRemapEntry(toLog, e);
@@ -408,21 +412,21 @@ void ExecutionStep::logSubModel() const {
         VLOG(COMPILATION) << name << ": " << toLog;
     };
 
-    logRemapVector("submodel inputs", mSubModelInputs);
-    logRemapVector("submodel outputs", mSubModelOutputs);
+    logRemapVector("step model inputs", mStepModelInputs);
+    logRemapVector("step model outputs", mStepModelOutputs);
     logRemapVector("model inputs", mModelInputs);
     logRemapVector("model outputs", mModelOutputs);
-    logRemapVector("temps as submodel inputs", mTempsAsSubModelInputs);
-    logRemapSet("temps as submodel outputs", mTempsAsSubModelOutputs);
-    logRemapVector("outputs as submodel inputs", mOutputsAsSubModelInputs);
+    logRemapVector("temps as step model inputs", mTempsAsStepModelInputs);
+    logRemapSet("temps as step model outputs", mTempsAsStepModelOutputs);
+    logRemapVector("outputs as step model inputs", mOutputsAsStepModelInputs);
 }
 
-int ExecutionStep::finishSubModel(const ModelBuilder* mainModel, bool* hasOutputOfUnknownSize,
-                                  int32_t executionPreference) {
+int ExecutionStep::finishStepModel(const ModelBuilder* mainModel, bool* hasOutputOfUnknownSize,
+                                   int32_t executionPreference) {
     CHECK(mDevice != nullptr);
 
-    for (const auto& subModelOutput : mTempsAsSubModelOutputs) {
-        const Operand& operand = mSubModel.getOperand(subModelOutput.second);
+    for (const auto& stepModelOutput : mTempsAsStepModelOutputs) {
+        const Operand& operand = mStepModel.getOperand(stepModelOutput.second);
         if (operand.dimensions.size() == 0) {
             *hasOutputOfUnknownSize = true;
         } else {
@@ -434,78 +438,78 @@ int ExecutionStep::finishSubModel(const ModelBuilder* mainModel, bool* hasOutput
             }
         }
         if (*hasOutputOfUnknownSize) {
-            VLOG(COMPILATION) << "SubModelOutput (operand#" << subModelOutput.first
+            VLOG(COMPILATION) << "StepModelOutput (operand#" << stepModelOutput.first
                               << " of source graph) has unknown size: " << toString(operand);
         }
     }
 
-    mSubModel.relaxComputationFloat32toFloat16(mainModel->isComputationFloat32RelaxedToFloat16());
+    mStepModel.relaxComputationFloat32toFloat16(mainModel->isComputationFloat32RelaxedToFloat16());
 
-    mSubModelInputs.insert(mSubModelInputs.end(), mModelInputs.begin(), mModelInputs.end());
-    mSubModelInputs.insert(mSubModelInputs.end(), mTempsAsSubModelInputs.begin(),
-                           mTempsAsSubModelInputs.end());
-    mSubModelInputs.insert(mSubModelInputs.end(), mOutputsAsSubModelInputs.begin(),
-                           mOutputsAsSubModelInputs.end());
+    mStepModelInputs.insert(mStepModelInputs.end(), mModelInputs.begin(), mModelInputs.end());
+    mStepModelInputs.insert(mStepModelInputs.end(), mTempsAsStepModelInputs.begin(),
+                            mTempsAsStepModelInputs.end());
+    mStepModelInputs.insert(mStepModelInputs.end(), mOutputsAsStepModelInputs.begin(),
+                            mOutputsAsStepModelInputs.end());
 
-    mSubModelOutputs.insert(mSubModelOutputs.end(), mModelOutputs.begin(), mModelOutputs.end());
-    mSubModelOutputs.insert(mSubModelOutputs.end(), mTempsAsSubModelOutputs.begin(),
-                            mTempsAsSubModelOutputs.end());
+    mStepModelOutputs.insert(mStepModelOutputs.end(), mModelOutputs.begin(), mModelOutputs.end());
+    mStepModelOutputs.insert(mStepModelOutputs.end(), mTempsAsStepModelOutputs.begin(),
+                             mTempsAsStepModelOutputs.end());
 
     std::map<uint32_t, uint32_t> mainModelOperandToOutputIndex;
     for (uint32_t i = 0, n = mainModel->outputCount(); i < n; ++i) {
         mainModelOperandToOutputIndex[mainModel->getOutputOperandIndex(i)] = i;
     }
-    // mOutputIndexSubModelToMainModel is ordered by submodel output index and relies on
-    // mModelOutputs being the first outputs, as specified by mSubModelOutputs.
-    mOutputIndexSubModelToMainModel.resize(mModelOutputs.size());
+    // mOutputIndexStepModelToMainModel is ordered by step model output index and relies on
+    // mModelOutputs being the first outputs, as specified by mStepModelOutputs.
+    mOutputIndexStepModelToMainModel.resize(mModelOutputs.size());
     std::transform(mModelOutputs.begin(), mModelOutputs.end(),
-                   mOutputIndexSubModelToMainModel.begin(),
+                   mOutputIndexStepModelToMainModel.begin(),
                    [&mainModelOperandToOutputIndex](auto& e) {
                        uint32_t sourceOperandIndex = e.first;
                        return mainModelOperandToOutputIndex[sourceOperandIndex];
                    });
 
     if (VLOG_IS_ON(COMPILATION)) {
-        logSubModel();
+        logStepModel();
     }
 
-    std::vector<uint32_t> inputs(mSubModelInputs.size());
-    std::vector<uint32_t> outputs(mSubModelOutputs.size());
-    std::transform(mSubModelInputs.begin(), mSubModelInputs.end(), inputs.begin(),
+    std::vector<uint32_t> inputs(mStepModelInputs.size());
+    std::vector<uint32_t> outputs(mStepModelOutputs.size());
+    std::transform(mStepModelInputs.begin(), mStepModelInputs.end(), inputs.begin(),
                    [](auto& e) { return e.second; });
-    std::transform(mSubModelOutputs.begin(), mSubModelOutputs.end(), outputs.begin(),
+    std::transform(mStepModelOutputs.begin(), mStepModelOutputs.end(), outputs.begin(),
                    [](auto& e) { return e.second; });
-    NN_RETURN_IF_ERROR(mSubModel.identifyInputsAndOutputs(inputs.size(), inputs.data(),
-                                                          outputs.size(), outputs.data()));
-    NN_RETURN_IF_ERROR(mSubModel.finish());
+    NN_RETURN_IF_ERROR(mStepModel.identifyInputsAndOutputs(inputs.size(), inputs.data(),
+                                                           outputs.size(), outputs.data()));
+    NN_RETURN_IF_ERROR(mStepModel.finish());
 
     // TODO: Move compilation elsewhere?
-    VLOG(COMPILATION) << "ExecutionStep::finishSubModel, compilation on " << mDevice->getName();
-    return compile(*mDevice, mSubModel, executionPreference, *mPlan->getCacheDir(), &mToken,
-                   &mPreparedSubModel);
+    VLOG(COMPILATION) << "ExecutionStep::finishStepModel, compilation on " << mDevice->getName();
+    return compile(*mDevice, mStepModel, executionPreference, *mPlan->getCacheDir(), &mToken,
+                   &mPreparedStepModel);
 }
 
 void ExecutionStep::dump() const {
     if (VLOG_IS_ON(COMPILATION)) {
         VLOG(COMPILATION) << "ExecutionStep#" << mIndex << " for " << mDevice->getName();
-        logModelToInfo(mSubModel.makeHidlModel());
+        logModelToInfo(mStepModel.makeHidlModel());
     }
 }
 
 int ExecutionPlan::CompoundBody::finish(const ModelBuilder* mainModel,
                                         int32_t executionPreference) {
-    findTempsAsSubModelOutputs();
+    findTempsAsStepModelOutputs();
     for (const auto& step : mSteps) {
-        int n = step->finishSubModel(mainModel, &mHasSubModelOutputOfUnknownSize,
-                                     executionPreference);
+        int n = step->finishStepModel(mainModel, &mHasStepModelOutputOfUnknownSize,
+                                      executionPreference);
         if (n != ANEURALNETWORKS_NO_ERROR) {
-            VLOG(COMPILATION) << "ExecutionPlan::CompoundBody::finish -- finishSubModel failed";
+            VLOG(COMPILATION) << "ExecutionPlan::CompoundBody::finish -- finishStepModel failed";
             return n;
         }
     }
-    if (mHasSubModelOutputOfUnknownSize) {
+    if (mHasStepModelOutputOfUnknownSize) {
         VLOG(COMPILATION)
-                << "ExecutionPlan::CompoundBody::finish -- mHasSubModelOutputOfUnknownSize";
+                << "ExecutionPlan::CompoundBody::finish -- mHasStepModelOutputOfUnknownSize";
         return ANEURALNETWORKS_OP_FAILED;
     }
 
@@ -567,7 +571,7 @@ std::vector<std::shared_ptr<ExecutionBurstController>> ExecutionPlan::makeBursts
             std::vector<std::shared_ptr<ExecutionBurstController>> bursts;
             bursts.reserve(compound()->mSteps.size());
             for (const auto& step : compound()->mSteps) {
-                if (const auto preparedModel = step->getPreparedSubModel()) {
+                if (const auto preparedModel = step->getPreparedStepModel()) {
                     const bool preferPowerOverLatency =
                             (preference == ANEURALNETWORKS_PREFER_LOW_POWER);
                     bursts.push_back(
@@ -626,7 +630,7 @@ std::shared_ptr<ExecutionPlan::Controller> ExecutionPlan::makeController(
     if (mState == COMPOUND) {
         const ModelBuilder* mainModel = executionBuilder->getModel();
         for (const auto& step : compound()->mSteps) {
-            for (const auto& output : step->getTempsAsSubModelOutputs()) {
+            for (const auto& output : step->getTempsAsStepModelOutputs()) {
                 const uint32_t mainModelOperandIndex = output.first;
                 const Operand& mainModelOperand = mainModel->getOperand(mainModelOperandIndex);
                 const uint32_t size = TypeManager::get()->getSizeOfData(mainModelOperand);
@@ -721,8 +725,8 @@ int ExecutionPlan::next(std::shared_ptr<Controller> controller,
     }
 
     const auto step = compoundBody->mSteps[controller->mNextStepIndex];
-    *executor = std::make_shared<StepExecutor>(controller->mExecutionBuilder, step->getSubModel(),
-                                               step->getDevice(), step->getPreparedSubModel());
+    *executor = std::make_shared<StepExecutor>(controller->mExecutionBuilder, step->getStepModel(),
+                                               step->getDevice(), step->getPreparedStepModel());
     (*executor)->setExecutionStep(step);
     step->mapInputsAndOutputs(*executor, controller->mTemporaries.get(),
                               controller->mSourceOperandToOffsetOfTemporary,
@@ -805,8 +809,8 @@ const std::vector<std::shared_ptr<ExecutionStep>>& ExecutionPlan::forTest_compou
     return compound()->mSteps;
 }
 
-bool ExecutionPlan::forTest_hasSubModelOutputsOfUnknownSize() const {
-    return mBody->hasSubModelOutputsOfUnknownSize();
+bool ExecutionPlan::forTest_hasStepModelOutputsOfUnknownSize() const {
+    return mBody->hasStepModelOutputsOfUnknownSize();
 }
 
 const uint8_t* ExecutionPlan::forTest_simpleGetCacheToken() const {

@@ -1152,7 +1152,7 @@ TEST_P(RandomPartitioningTest, Test) {
               Result::NO_ERROR);
     auto compilationResult = cNoFallback.finish();
     if (hasUnknownDimensions && compilationResult == Result::OP_FAILED &&
-        cNoFallback.getExecutionPlan().forTest_hasSubModelOutputsOfUnknownSize()) {
+        cNoFallback.getExecutionPlan().forTest_hasStepModelOutputsOfUnknownSize()) {
         ASSERT_EQ(cWithFallback.setPartitioning(DeviceManager::kPartitioningWithFallback),
                   Result::NO_ERROR);
         ASSERT_EQ(cWithFallback.finish(), Result::NO_ERROR);
@@ -1183,7 +1183,7 @@ TEST_P(RandomPartitioningTest, Test) {
                 std::cout << "plan: compound, " << steps.size() << " steps over "
                           << devicesInPlan.size() << " devices" << std::endl;
                 for (unsigned i = 0; i < steps.size(); i++) {
-                    std::cout << "Step " << i << ": " << ModelStats(steps[i]->getSubModel())
+                    std::cout << "Step " << i << ": " << ModelStats(steps[i]->getStepModel())
                               << ", device = " << steps[i]->getDevice()->getName() << std::endl;
                 }
                 break;

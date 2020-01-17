@@ -146,8 +146,8 @@ class StepExecutor {
     // executionBuilder
     //     Describes the full (possibly multiple-"step") execution.
     // model
-    //     The model to be executed by the executor.  Possibly a
-    //     submodel of the model from executionBuilder.
+    //     The model to be executed by the executor.  Possibly a single
+    //     "step" model of a multiple-"step" executionBuilder.
     // driver, preparedModel
     //     The device on which to execute the "step", and the prepared
     //     model to execute on that device.  (Both are nullptr in the
