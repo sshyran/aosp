@@ -63,13 +63,13 @@ class StepExecutor;
 //   at least one OperandType::MODEL operand within the set of models being
 //   compiled).
 // - A source model is either the main model or a referenced model.
-// - A step model (aka "a submodel") is a model excerpted from a source model
-//   during the partitioning process.
+// - A step model is a model excerpted from a source model during the
+//   partitioning process.
 
 class ExecutionStep {
    public:
     typedef std::vector<std::pair<uint32_t, uint32_t>> RemapVectorType;
-    typedef std::set<std::pair<uint32_t, uint32_t>> SubModelOutputSetType;
+    typedef std::set<std::pair<uint32_t, uint32_t>> StepModelOutputSetType;
 
     enum OperandKind { INPUT, OUTPUT };
 
@@ -81,31 +81,31 @@ class ExecutionStep {
     int addOperand(uint32_t sourceOperandIndex, uint32_t* toOperandIndex,
                    const ModelBuilder& sourceModel, OperandKind kind);
 
-    // Each container entry is of the form (source model operand index, submodel operand index)
+    // Each container entry is of the form (source model operand index, step model operand index)
     const RemapVectorType& getModelInputs() const { return mModelInputs; }
     const RemapVectorType& getModelOutputs() const { return mModelOutputs; }
-    const RemapVectorType& getTempsAsSubModelInputs() const { return mTempsAsSubModelInputs; }
-    const SubModelOutputSetType& getTempsAsSubModelOutputs() const {
-        return mTempsAsSubModelOutputs;
+    const RemapVectorType& getTempsAsStepModelInputs() const { return mTempsAsStepModelInputs; }
+    const StepModelOutputSetType& getTempsAsStepModelOutputs() const {
+        return mTempsAsStepModelOutputs;
     }
-    const RemapVectorType& getOutputsAsSubModelInputs() const { return mOutputsAsSubModelInputs; }
-    const std::vector<uint32_t>& getOutputIndexSubModelToMainModel() const {
-        return mOutputIndexSubModelToMainModel;
+    const RemapVectorType& getOutputsAsStepModelInputs() const { return mOutputsAsStepModelInputs; }
+    const std::vector<uint32_t>& getOutputIndexStepModelToMainModel() const {
+        return mOutputIndexStepModelToMainModel;
     }
 
-    void recordTempAsSubModelOutput(uint32_t sourceOperandIndex);
+    void recordTempAsStepModelOutput(uint32_t sourceOperandIndex);
 
-    // If this step has a submodel output of unknown size, sets
+    // If this step has a step model output of unknown size, sets
     // *hasOutputOfUnknownSize to true; otherwise, leaves it
     // unchanged.
-    int finishSubModel(const ModelBuilder* mainModel, bool* hasOutputOfUnknownSize,
-                       int32_t executionPreference);
+    int finishStepModel(const ModelBuilder* mainModel, bool* hasOutputOfUnknownSize,
+                        int32_t executionPreference);
 
-    const ModelBuilder* getSubModel() const { return &mSubModel; }
+    const ModelBuilder* getStepModel() const { return &mStepModel; }
     std::shared_ptr<Device> getDevice() const { return mDevice; }
 
-    // only available after calling finishSubModel()
-    std::shared_ptr<PreparedModel> getPreparedSubModel() const { return mPreparedSubModel; }
+    // only available after calling finishStepModel()
+    std::shared_ptr<PreparedModel> getPreparedStepModel() const { return mPreparedStepModel; }
 
     // Map inputs and outputs from ExecutionBuilder to StepExecutor.
     void mapInputsAndOutputs(std::shared_ptr<StepExecutor> stepExecutor,
@@ -120,7 +120,7 @@ class ExecutionStep {
     const uint8_t* forTest_getCacheToken() const { return mToken.getCacheToken(); }
 
    private:
-    void logSubModel() const;
+    void logStepModel() const;
 
     // TODO: Some of the data is working state information that
     // shouldn't be needed after we've constructed but not executed
@@ -128,53 +128,53 @@ class ExecutionStep {
 
     ExecutionPlan* mPlan;
     uint32_t mIndex;  // index of step within plan
-    ModelBuilder mSubModel;
+    ModelBuilder mStepModel;
     std::shared_ptr<Device> mDevice;
-    std::shared_ptr<PreparedModel> mPreparedSubModel;
+    std::shared_ptr<PreparedModel> mPreparedStepModel;
 
-    // All inputs of this submodel:
-    //     (source model operand index, submodel operand index)
+    // All inputs of this step model:
+    //     (source model operand index, step model operand index)
     //
     // Depending on whether the source operand is an input or output of the main
     // model, the memory should be mapped using
     // ExecutionPlan::CompoundBody::mSourceOperandToInputIndex,
     // ExecutionPlan::Controller::mSourceOperandToOffsetOfTemporary, or
     // ExecutionPlan::CompoundBody::mSourceOperandToOutputIndex.
-    RemapVectorType mSubModelInputs;
-    // All outputs of this submodel:
-    //     (source model operand index, submodel operand index)
+    RemapVectorType mStepModelInputs;
+    // All outputs of this step model:
+    //     (source model operand index, step model operand index)
     //
     // Depending on whether the source operand is an output of the main model,
     // the memory should be mapped using
     // ExecutionPlan::CompoundBody::mSourceOperandToOutputIndex or
     // ExecutionPlan::Controller::mSourceOperandToOffsetOfTemporary.
     //
-    // mOutputIndexSubModelToMainModel relies on mModelOutputs being a prefix of
-    // mSubModelOutputs.
-    RemapVectorType mSubModelOutputs;
-    // Inputs of main model that are also inputs of this submodel:
-    //     (main model operand index, submodel operand index)
+    // mOutputIndexStepModelToMainModel relies on mModelOutputs being a prefix of
+    // mStepModelOutputs.
+    RemapVectorType mStepModelOutputs;
+    // Inputs of main model that are also inputs of this step model:
+    //     (main model operand index, step model operand index)
     RemapVectorType mModelInputs;
-    // Outputs of main model that are also outputs of this submodel:
-    //     (main model operand index, submodel operand index)
+    // Outputs of main model that are also outputs of this step model:
+    //     (main model operand index, step model operand index)
     RemapVectorType mModelOutputs;
-    // Temporaries of source model that are inputs of this submodel:
-    //     (source model operand index, submodel operand index)
-    RemapVectorType mTempsAsSubModelInputs;
-    // Temporaries of source model that are outputs of this submodel:
-    //     (source model operand index, submodel operand index)
-    SubModelOutputSetType mTempsAsSubModelOutputs;
-    // Outputs of main model that are inputs of this submodel:
-    //     (main model operand index, submodel operand index)
-    RemapVectorType mOutputsAsSubModelInputs;
-    // Converts operand indexes from the source model to the submodel.
+    // Temporaries of source model that are inputs of this step model:
+    //     (source model operand index, step model operand index)
+    RemapVectorType mTempsAsStepModelInputs;
+    // Temporaries of source model that are outputs of this step model:
+    //     (source model operand index, step model operand index)
+    StepModelOutputSetType mTempsAsStepModelOutputs;
+    // Outputs of main model that are inputs of this step model:
+    //     (main model operand index, step model operand index)
+    RemapVectorType mOutputsAsStepModelInputs;
+    // Converts operand indexes from the source model to the step model.
     std::unordered_map<uint32_t, uint32_t> mOperandMap;
-    // Converts output indexes from the submodel to the main model
+    // Converts output indexes from the step model to the main model
     // (these are output indexes, not operand indexes).  This vector
-    // only describes outputs of the submodel that are also outputs of
+    // only describes outputs of the step model that are also outputs of
     // the main model -- that is, mModelOutputs but not
-    // mTempsAsSubModelOutputs.
-    std::vector<uint32_t> mOutputIndexSubModelToMainModel;
+    // mTempsAsStepModelOutputs.
+    std::vector<uint32_t> mOutputIndexStepModelToMainModel;
 
     // The compilation caching token.
     TokenHasher mToken;
@@ -270,17 +270,17 @@ class ExecutionPlan {
     Kind forTest_getKind() const;
     std::shared_ptr<const Device> forTest_simpleGetDevice() const;
     const std::vector<std::shared_ptr<ExecutionStep>>& forTest_compoundGetSteps() const;
-    bool forTest_hasSubModelOutputsOfUnknownSize() const;
+    bool forTest_hasStepModelOutputsOfUnknownSize() const;
     const uint8_t* forTest_simpleGetCacheToken() const;
 
    private:
-    void findTempsAsSubModelOutputs();
+    void findTempsAsStepModelOutputs();
 
     struct Body {
         virtual ~Body() {}
         virtual void dump() const = 0;
         virtual int finish(const ModelBuilder* mainModel, int32_t executionPreference) = 0;
-        virtual bool hasSubModelOutputsOfUnknownSize() const = 0;
+        virtual bool hasStepModelOutputsOfUnknownSize() const = 0;
         bool mSuccessfulFinish = false;
     };
 
@@ -291,7 +291,7 @@ class ExecutionPlan {
 
         void dump() const override;
         int finish(const ModelBuilder* mainModel, int32_t executionPreference) override;
-        virtual bool hasSubModelOutputsOfUnknownSize() const override { return false; }
+        virtual bool hasStepModelOutputsOfUnknownSize() const override { return false; }
 
         std::shared_ptr<Device> mDevice;
         const ModelBuilder* mModel;
@@ -304,8 +304,8 @@ class ExecutionPlan {
     struct CompoundBody : Body {
         void dump() const override;
         int finish(const ModelBuilder* mainModel, int32_t executionPreference) override;
-        virtual bool hasSubModelOutputsOfUnknownSize() const override {
-            return mHasSubModelOutputOfUnknownSize;
+        virtual bool hasStepModelOutputsOfUnknownSize() const override {
+            return mHasStepModelOutputOfUnknownSize;
         }
 
         // TODO: Some of the data is working state information that
@@ -326,10 +326,10 @@ class ExecutionPlan {
         // Used for all (and only) MODEL_OUTPUTs of the main model.
         std::map<uint32_t, uint32_t> mSourceOperandToOutputIndex;
 
-        bool mHasSubModelOutputOfUnknownSize = false;
+        bool mHasStepModelOutputOfUnknownSize = false;
 
        private:
-        void findTempsAsSubModelOutputs();
+        void findTempsAsStepModelOutputs();
     };
 
     enum { EMPTY, SIMPLE, COMPOUND } mState = EMPTY;
