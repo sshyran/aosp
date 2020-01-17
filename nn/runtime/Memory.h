@@ -147,10 +147,10 @@ class MemoryValidatorBase {
         // Set to std::nullopt if undefined.
         std::optional<hal::Operand> operand;
     };
-    virtual Metadata getMetadata() const;
+    virtual Metadata getMetadata() const = 0;
 
     // Try update the memory metadata with the provided metadata. Return false if incompatible.
-    virtual bool updateMetadata(const Metadata& metadata);
+    virtual bool updateMetadata(const Metadata& metadata) = 0;
 
     virtual void setInitialized(bool) {}
     virtual bool isInitialized() const { return true; }
