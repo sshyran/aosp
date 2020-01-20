@@ -65,7 +65,8 @@ def Quantize(v, ty):
     v += ty.zeroPoint
     if not ty.IsFloat():
         v = np.round(v)
-        v = int(v) if np.isscalar(v) else v.astype(int)
+        v = v.astype(int)
+
     if ty.type == "TENSOR_QUANT8_ASYMM":
         v = np.minimum(np.maximum(v, 0), 255)
     elif ty.type == "TENSOR_QUANT16_ASYMM":
