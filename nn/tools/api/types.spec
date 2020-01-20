@@ -6061,10 +6061,62 @@
 %insert-lines AVAIL30
      */
     %{DeclareOperation_1.3 HARD_SWISH 99},
+
+    /**
+     * Creates a tensor filled with a scalar value.
+     *
+     * Supported output tensor {@link %{OperandType}}:
+     * * {@link %{OperandTypeLinkPfx}TENSOR_FLOAT16}
+     * * {@link %{OperandTypeLinkPfx}TENSOR_FLOAT32}
+     * * {@link %{OperandTypeLinkPfx}TENSOR_INT32}
+     *
+     * Inputs:
+     * * 0: A 1-D tensor, specifying the desired output tensor shape.
+     * * 1: A scalar, specifying the value to fill the output tensors with.
+     *      For output tensor of {@link %{OperandTypeLinkPfx}TENSOR_FLOAT16},
+     *      the scalar must be of {@link %{OperandTypeLinkPfx}FLOAT16}.
+     *      For output tensor of {@link %{OperandTypeLinkPfx}TENSOR_FLOAT32},
+     *      the scalar must be of {@link %{OperandTypeLinkPfx}FLOAT32}.
+     *      For output tensor of {@link %{OperandTypeLinkPfx}TENSOR_INT32},
+     *      the scalar must be of {@link %{OperandTypeLinkPfx}INT32}.
+     *
+     * Outputs:
+     * * 0: The output tensor.
+%insert-lines AVAIL30
+     */
+    %{DeclareOperation_1.3 FILL 100},
+
+    /**
+     * Returns the rank of a tensor.
+     *
+     * The rank of a tensor is the number of dimensions in it. Also known as
+     * "order", "degree", "ndims".
+     *
+     * Supported tensor {@link %{OperandType}}:
+     * * {@link %{OperandTypeLinkPfx}TENSOR_FLOAT16}
+     * * {@link %{OperandTypeLinkPfx}TENSOR_FLOAT32}
+     * * {@link %{OperandTypeLinkPfx}TENSOR_INT32}
+     * * {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM}
+     * * {@link %{OperandTypeLinkPfx}TENSOR_QUANT16_SYMM}
+     * * {@link %{OperandTypeLinkPfx}TENSOR_BOOL8}
+     * * {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_SYMM_PER_CHANNEL}
+     * * {@link %{OperandTypeLinkPfx}TENSOR_QUANT16_ASYMM}
+     * * {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_SYMM}
+     * * {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM_SIGNED}
+     *
+     * Inputs:
+     * * 0: The input tensor.
+     *
+     * Outputs:
+     * * 0: A scalar of {@link %{OperandTypeLinkPfx}INT32}, specifying the rank
+     *      of the input tensor.
+%insert-lines AVAIL30
+     */
+    %{DeclareOperation_1.3 RANK 101},
 %/section
 
 %section Operation_1.3_MAX
-    FUNDAMENTAL_MAX = 99,
+    FUNDAMENTAL_MAX = 101,
 %/section
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
