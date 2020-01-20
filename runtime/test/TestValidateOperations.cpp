@@ -155,6 +155,10 @@ class OperationTestBase {
             if (mOpCode == ANEURALNETWORKS_LSH_PROJECTION && i == 1) {
                 continue;
             }
+            // RANK can have input of any type.
+            if (mOpCode == ANEURALNETWORKS_RANK) {
+                continue;
+            }
             OperandTypeWithExtraParams newType = mValidInputs[i];
             int32_t originalOperandCode = mValidInputs[i].operandType.type;
             std::set<int32_t> operandTypesToSkip;
@@ -3715,6 +3719,56 @@ TEST(OperationValidationTest, QUANTIZED_LSTM) {
                             hidden_state_scale},
                            {output_state_out, cell_state_out, output});
     test.testOpsValidations();
+}
+
+void fillTest(int32_t valueOperandType, int32_t outputOperandType) {
+    uint32_t inputDimensions[1] = {3};
+    ANeuralNetworksOperandType input0 = getOpType(ANEURALNETWORKS_TENSOR_INT32, 1, inputDimensions);
+    ANeuralNetworksOperandType input1 = getOpType(valueOperandType);
+    uint32_t outputDimensions[3] = {3, 4, 5};
+    ANeuralNetworksOperandType output = getOpType(outputOperandType, 3, outputDimensions);
+    OperationTestBase test(ANEURALNETWORKS_FILL, {input0, input1}, {output});
+    test.testOpsValidations();
+}
+
+TEST(OperationValidationTest, FILL_float16) {
+    fillTest(ANEURALNETWORKS_FLOAT16, ANEURALNETWORKS_TENSOR_FLOAT16);
+}
+
+TEST(OperationValidationTest, FILL_float32) {
+    fillTest(ANEURALNETWORKS_FLOAT32, ANEURALNETWORKS_TENSOR_FLOAT32);
+}
+
+TEST(OperationValidationTest, FILL_int32) {
+    fillTest(ANEURALNETWORKS_INT32, ANEURALNETWORKS_TENSOR_INT32);
+}
+
+void rankTest(int32_t inputOperandType) {
+    uint32_t inputDimensions[3] = {3, 4, 5};
+    ANeuralNetworksOperandType input = getOpType(inputOperandType, 3, inputDimensions);
+    ANeuralNetworksOperandType output = getOpType(ANEURALNETWORKS_INT32);
+    OperationTestBase test(ANEURALNETWORKS_RANK, {input}, {output});
+    test.testOpsValidations();
+}
+
+TEST(OperationValidationTest, RANK_float16) {
+    rankTest(ANEURALNETWORKS_TENSOR_FLOAT16);
+}
+
+TEST(OperationValidationTest, RANK_float32) {
+    rankTest(ANEURALNETWORKS_TENSOR_FLOAT32);
+}
+
+TEST(OperationValidationTest, RANK_int32) {
+    rankTest(ANEURALNETWORKS_TENSOR_INT32);
+}
+
+TEST(OperationValidationTest, RANK_quant8) {
+    rankTest(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM);
+}
+
+TEST(OperationValidationTest, RANK_quant8_signed) {
+    rankTest(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED);
 }
 
 }  // end namespace
