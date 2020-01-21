@@ -139,7 +139,10 @@ class SamplePreparedModel : public hal::IPreparedModel {
             configureExecutionBurst_cb cb) override;
     hal::Return<void> executeFenced(const hal::Request& request,
                                     const hal::hidl_vec<hal::hidl_handle>& wait_for,
-                                    hal::MeasureTiming measure, executeFenced_cb callback) override;
+                                    hal::MeasureTiming measure,
+                                    const hal::OptionalTimePoint& deadline,
+                                    const hal::OptionalTimeoutDuration& duration,
+                                    executeFenced_cb callback) override;
 
    private:
     hal::Model mModel;
