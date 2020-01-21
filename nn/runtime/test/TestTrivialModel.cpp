@@ -168,7 +168,7 @@ TEST_F(TrivialTest, FencedAddThree) {
     ANeuralNetworksEvent* event1;
     ANeuralNetworksExecution* execution1_handle = execution1.getHandle();
     ASSERT_EQ(ANeuralNetworksExecution_startComputeWithDependencies(execution1_handle, nullptr, 0,
-                                                                    &event1),
+                                                                    0, &event1),
               ANEURALNETWORKS_NO_ERROR);
 
     // Start the second execution which will wait for the first one.
@@ -179,7 +179,7 @@ TEST_F(TrivialTest, FencedAddThree) {
     ANeuralNetworksEvent* event2;
     ANeuralNetworksExecution* execution2_handle = execution2.getHandle();
     ASSERT_EQ(ANeuralNetworksExecution_startComputeWithDependencies(execution2_handle, &event1, 1,
-                                                                    &event2),
+                                                                    0, &event2),
               ANEURALNETWORKS_NO_ERROR);
     // Wait for the second event.
     ASSERT_EQ(ANeuralNetworksEvent_wait(event2), ANEURALNETWORKS_NO_ERROR);

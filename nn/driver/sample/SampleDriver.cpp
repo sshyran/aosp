@@ -408,7 +408,9 @@ Return<void> SamplePreparedModel::executeSynchronously_1_3(const V1_3::Request& 
 }
 
 Return<void> SamplePreparedModel::executeFenced(const hal::Request&, const hidl_vec<hidl_handle>&,
-                                                MeasureTiming, executeFenced_cb cb) {
+                                                MeasureTiming, const OptionalTimePoint&,
+                                                const OptionalTimeoutDuration&,
+                                                executeFenced_cb cb) {
     // TODO(miaowang): implement me.
     cb(ErrorStatus::DEVICE_UNAVAILABLE, hidl_handle(nullptr), nullptr);
     return Void();
