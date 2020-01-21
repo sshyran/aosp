@@ -86,6 +86,9 @@ class DynamicOutputShapeTest : public GeneratedTests {
     DynamicOutputShapeTest() { mTestDynamicOutputShape = true; }
 };
 
+// Tag for the fenced execute tests
+class FencedComputeTest : public GeneratedTests {};
+
 // Tag for the generated validation tests
 class GeneratedValidationTests : public GeneratedTests {
    protected:
@@ -488,12 +491,6 @@ TEST_P(GeneratedTests, Burst) {
     execute(testModel);
     Execution::setComputeMode(oldComputeMode);
 }
-
-TEST_P(GeneratedTests, Fenced) {
-    const auto oldComputeMode = Execution::setComputeMode(Execution::ComputeMode::FENCED);
-    execute(testModel);
-    Execution::setComputeMode(oldComputeMode);
-}
 #else
 TEST_P(GeneratedTests, Test) {
     execute(testModel);
@@ -517,6 +514,12 @@ TEST_P(DeviceMemoryTest, Test) {
     execute(testModel);
 }
 
+TEST_P(FencedComputeTest, Test) {
+    const auto oldComputeMode = Execution::setComputeMode(Execution::ComputeMode::FENCED);
+    execute(testModel);
+    Execution::setComputeMode(oldComputeMode);
+}
+
 INSTANTIATE_GENERATED_TEST(GeneratedTests,
                            [](const TestModel& testModel) { return !testModel.expectFailure; });
 
@@ -538,4 +541,11 @@ INSTANTIATE_GENERATED_TEST(DeviceMemoryTest, [](const TestModel& testModel) {
                        });
 });
 
+INSTANTIATE_GENERATED_TEST(FencedComputeTest, [](const TestModel& testModel) {
+    return !testModel.expectFailure &&
+           std::all_of(testModel.outputIndexes.begin(), testModel.outputIndexes.end(),
+                       [&testModel](uint32_t index) {
+                           return testModel.operands[index].data.size() > 0;
+                       });
+});
 }  // namespace android::nn::generated_tests
