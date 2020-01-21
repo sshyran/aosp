@@ -403,62 +403,63 @@ static std::pair<ErrorStatus, Capabilities> getCapabilitiesFunction(V1_3::IDevic
 }
 
 std::tuple<int, hal::hidl_handle, sp<hal::IFencedExecutionCallback>, hal::Timing>
-VersionedIPreparedModel::executeFenced(const hal::Request& request,
-                                       const hal::hidl_vec<hal::hidl_handle>& wait_for,
-                                       MeasureTiming measure) {
+VersionedIPreparedModel::executeFenced(
+        const hal::Request& request, const hal::hidl_vec<hal::hidl_handle>& waitFor,
+        MeasureTiming measure, const hal::OptionalTimePoint& deadline,
+        const hal::OptionalTimeoutDuration& timeoutDurationAfterFence) {
     // version 1.3+ HAL
     // TODO(miaowang): figure out the right coding style for the sync_fence related API.
-    hal::hidl_handle sync_fence;
-    sp<hal::IFencedExecutionCallback> dispatch_callback;
+    hal::hidl_handle syncFence;
+    sp<hal::IFencedExecutionCallback> dispatchCallback;
     hal::Timing timing = {UINT64_MAX, UINT64_MAX};
     if (mPreparedModelV1_3 != nullptr) {
-        ErrorStatus error_status;
+        ErrorStatus errorStatus;
         Return<void> ret = mPreparedModelV1_3->executeFenced(
-                request, wait_for, measure,
-                [&sync_fence, &error_status, &dispatch_callback](
-                        ErrorStatus error, const hidl_handle& sync_handle,
+                request, waitFor, measure, deadline, timeoutDurationAfterFence,
+                [&syncFence, &errorStatus, &dispatchCallback](
+                        ErrorStatus error, const hidl_handle& handle,
                         const sp<hal::IFencedExecutionCallback>& callback) {
-                    sync_fence = sync_handle;
-                    error_status = error;
-                    dispatch_callback = callback;
+                    syncFence = handle;
+                    errorStatus = error;
+                    dispatchCallback = callback;
                 });
         if (!ret.isOk()) {
             LOG(ERROR) << "executeFenced failure: " << ret.description();
             return std::make_tuple(ANEURALNETWORKS_OP_FAILED, hal::hidl_handle(nullptr), nullptr,
                                    timing);
         }
-        if (error_status != ErrorStatus::NONE) {
+        if (errorStatus != ErrorStatus::NONE) {
             LOG(ERROR) << "executeFenced returned "
-                       << toString(static_cast<ErrorStatus>(error_status));
-            return std::make_tuple(convertErrorStatusToResultCode(error_status),
+                       << toString(static_cast<ErrorStatus>(errorStatus));
+            return std::make_tuple(convertErrorStatusToResultCode(errorStatus),
                                    hal::hidl_handle(nullptr), nullptr, timing);
         }
-        return std::make_tuple(ANEURALNETWORKS_NO_ERROR, sync_fence, dispatch_callback, timing);
+        return std::make_tuple(ANEURALNETWORKS_NO_ERROR, syncFence, dispatchCallback, timing);
     }
 
     // fallback to synchronous execution if sync_fence is not supported
     // first wait for all sync fences to be ready.
     LOG(INFO) << "No drivers able to handle sync fences, falling back to regular execution";
-    for (const auto& fence_handle : wait_for) {
-        if (!fence_handle.getNativeHandle()) {
+    for (const auto& fenceHandle : waitFor) {
+        if (!fenceHandle.getNativeHandle()) {
             return std::make_tuple(ANEURALNETWORKS_BAD_DATA, hal::hidl_handle(nullptr), nullptr,
                                    timing);
         }
-        int sync_fd = fence_handle.getNativeHandle()->data[0];
-        if (sync_fd <= 0) {
+        int syncFd = fenceHandle.getNativeHandle()->data[0];
+        if (syncFd <= 0) {
             return std::make_tuple(ANEURALNETWORKS_BAD_DATA, hal::hidl_handle(nullptr), nullptr,
                                    timing);
         }
-        int r = sync_wait(sync_fd, -1);
+        int r = sync_wait(syncFd, -1);
         if (r < 0) {
-            LOG(ERROR) << "sync_wait failed, fd: " << sync_fd;
+            LOG(ERROR) << "sync_wait failed, fd: " << syncFd;
             return std::make_tuple(ANEURALNETWORKS_OP_FAILED, hal::hidl_handle(nullptr), nullptr,
                                    timing);
         }
     }
-    int error_code;
-    std::tie(error_code, std::ignore, timing) = executeSynchronously(request, measure, {});
-    return std::make_tuple(error_code, hal::hidl_handle(nullptr), nullptr, timing);
+    int errorCode;
+    std::tie(errorCode, std::ignore, timing) = executeSynchronously(request, measure, deadline);
+    return std::make_tuple(errorCode, hal::hidl_handle(nullptr), nullptr, timing);
 }
 
 static std::pair<ErrorStatus, Capabilities> getCapabilitiesFunction(V1_2::IDevice* device) {

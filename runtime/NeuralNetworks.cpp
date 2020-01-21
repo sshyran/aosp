@@ -250,6 +250,10 @@ static_assert(ANEURALNETWORKS_DURATION_ON_HARDWARE == 0,
               "ANEURALNETWORKS_DURATION_ON_HARDWARE has changed");
 static_assert(ANEURALNETWORKS_DURATION_IN_DRIVER == 1,
               "ANEURALNETWORKS_DURATION_IN_DRIVER has changed");
+static_assert(ANEURALNETWORKS_FENCED_DURATION_ON_HARDWARE == 2,
+              "ANEURALNETWORKS_FENCED_DURATION_ON_HARDWARE has changed");
+static_assert(ANEURALNETWORKS_FENCED_DURATION_IN_DRIVER == 3,
+              "ANEURALNETWORKS_FENCED_DURATION_IN_DRIVER has changed");
 
 // Make sure that the constants are compatible with the values defined in
 // hardware/interfaces/neuralnetworks/1.0/types.hal.
@@ -1460,38 +1464,38 @@ int ANeuralNetworksModel_setOperandExtensionData(ANeuralNetworksModel* model, in
     return m->setOperandExtensionData(index, data, length);
 }
 
-int ANeuralNetworksEvent_createFromSyncFenceFd(int sync_fence_fd, ANeuralNetworksEvent** event) {
+int ANeuralNetworksEvent_createFromSyncFenceFd(int syncFenceFd, ANeuralNetworksEvent** event) {
     if (event == nullptr) {
         LOG(ERROR) << "ANeuralNetworksEvent_createFromSyncFenceFd passed a nullptr";
         return ANEURALNETWORKS_UNEXPECTED_NULL;
     }
-    if (sync_fence_fd <= 0) {
+    if (syncFenceFd <= 0) {
         LOG(ERROR) << "ANeuralNetworksEvent_createFromSyncFenceFd passed an invalid fd: "
-                   << sync_fence_fd;
+                   << syncFenceFd;
         *event = nullptr;
         return ANEURALNETWORKS_BAD_DATA;
     }
-    std::unique_ptr<SyncFenceEvent> e = std::make_unique<SyncFenceEvent>(sync_fence_fd, nullptr);
+    std::unique_ptr<SyncFenceEvent> e = std::make_unique<SyncFenceEvent>(syncFenceFd, nullptr);
     *event = reinterpret_cast<ANeuralNetworksEvent*>(e.release());
     return ANEURALNETWORKS_NO_ERROR;
 }
 
-int ANeuralNetworksEvent_getSyncFenceFd(const ANeuralNetworksEvent* event, int* sync_fence_fd) {
-    if (sync_fence_fd == nullptr) {
+int ANeuralNetworksEvent_getSyncFenceFd(const ANeuralNetworksEvent* event, int* syncFenceFd) {
+    if (syncFenceFd == nullptr) {
         LOG(ERROR) << "ANeuralNetworksEvent_getSyncFenceFd passed a nullptr";
         return ANEURALNETWORKS_UNEXPECTED_NULL;
     }
-    *sync_fence_fd = -1;
+    *syncFenceFd = -1;
     if (event == nullptr) {
         LOG(ERROR) << "ANeuralNetworksEvent_getSyncFenceFd passed a nullptr";
         return ANEURALNETWORKS_UNEXPECTED_NULL;
     }
     const IEvent* e = reinterpret_cast<const IEvent*>(event);
     // The client owns the dupped fd, and is responsible for closing it.
-    *sync_fence_fd = e->getSyncFenceFd(/*shouldDup*/ true);
-    if (*sync_fence_fd <= 0) {
+    *syncFenceFd = e->getSyncFenceFd(/*shouldDup*/ true);
+    if (*syncFenceFd <= 0) {
         LOG(ERROR) << "ANeuralNetworksEvent_getSyncFenceFd unable to get valid sync_fence fd";
-        *sync_fence_fd = -1;
+        *syncFenceFd = -1;
         return ANEURALNETWORKS_OP_FAILED;
     }
     return ANEURALNETWORKS_NO_ERROR;
@@ -1499,38 +1503,38 @@ int ANeuralNetworksEvent_getSyncFenceFd(const ANeuralNetworksEvent* event, int* 
 
 int ANeuralNetworksExecution_startComputeWithDependencies(
         ANeuralNetworksExecution* execution, const ANeuralNetworksEvent* const* dependencies,
-        uint32_t num_events, ANeuralNetworksEvent** event) {
+        uint32_t numOfDependencies, uint64_t duration, ANeuralNetworksEvent** event) {
     NNTRACE_RT(NNTRACE_PHASE_EXECUTION, "ANeuralNetworksExecution_startComputeWithDependencies");
     if (!event) {
         LOG(ERROR) << "ANeuralNetworksExecution_startComputeWithDependencies passed a nullptr";
         return ANEURALNETWORKS_UNEXPECTED_NULL;
     }
-    if ((!dependencies && num_events != 0) || !execution) {
+    if ((!dependencies && numOfDependencies != 0) || !execution) {
         LOG(ERROR) << "ANeuralNetworksExecution_startComputeWithDependencies passed a nullptr";
         *event = nullptr;
         return ANEURALNETWORKS_UNEXPECTED_NULL;
     }
     ExecutionBuilder* r = reinterpret_cast<ExecutionBuilder*>(execution);
 
-    std::vector<int> wait_for_list;
-    for (uint32_t i = 0; i < num_events; i++) {
+    std::vector<int> waitForList;
+    for (uint32_t i = 0; i < numOfDependencies; i++) {
         if (!dependencies[i]) {
             LOG(ERROR) << "ANeuralNetworksExecution_startComputeWithDependencies passed a nullptr";
             *event = nullptr;
             return ANEURALNETWORKS_UNEXPECTED_NULL;
         }
         const IEvent* e = reinterpret_cast<const IEvent*>(dependencies[i]);
-        int sync_fence_fd = e->getSyncFenceFd(/*should_dup*/ false);
-        if (sync_fence_fd < 0) {
+        int syncFenceFd = e->getSyncFenceFd(/*should_dup*/ false);
+        if (syncFenceFd < 0) {
             e->wait();
         } else {
-            wait_for_list.push_back(sync_fence_fd);
+            waitForList.push_back(syncFenceFd);
         }
     }
-    int sync_fence_to_signal = -1;
-    int n = r->computeFenced(wait_for_list, &sync_fence_to_signal);
+    int syncFenceToSignal = -1;
+    int n = r->computeFenced(waitForList, duration, &syncFenceToSignal);
     std::unique_ptr<SyncFenceEvent> e =
-            std::make_unique<SyncFenceEvent>(sync_fence_to_signal, r->getFencedExecutionCallback());
+            std::make_unique<SyncFenceEvent>(syncFenceToSignal, r->getFencedExecutionCallback());
     if (n != ANEURALNETWORKS_NO_ERROR) {
         *event = nullptr;
     } else {
