@@ -184,6 +184,10 @@ enum class TestOperationType {
     UNIDIRECTIONAL_SEQUENCE_RNN = 93,
     RESIZE_NEAREST_NEIGHBOR = 94,
     QUANTIZED_LSTM = 95,
+    IF = 96,
+    WHILE = 97,
+    ELU = 98,
+    HARD_SWISH = 99,
 };
 
 enum class TestHalVersion { UNKNOWN, V1_0, V1_1, V1_2, V1_3 };
