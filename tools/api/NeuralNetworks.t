@@ -657,8 +657,8 @@ typedef struct ANeuralNetworksDevice ANeuralNetworksDevice;
  *
  * To use:
  *   - Create a new memory descriptor by calling {@link ANeuralNetworksMemoryDesc_create}.
- *   - Specify all of the intended input or output roles by calling
- *     {@link ANeuralNetworksMemoryDesc_addInputRole} or
+ *   - Specify all of the intended input and output roles by calling
+ *     {@link ANeuralNetworksMemoryDesc_addInputRole} and
  *     {@link ANeuralNetworksMemoryDesc_addOutputRole}.
  *   - Optionally, specify the memory dimensions by calling
  *     {@link ANeuralNetworksMemoryDesc_setDimensions}.
@@ -670,7 +670,7 @@ typedef struct ANeuralNetworksDevice ANeuralNetworksDevice;
  * A memory descriptor is completed by calling {@link ANeuralNetworksMemoryDesc_finish}.
  * A memory descriptor is destroyed by calling {@link ANeuralNetworksMemoryDesc_free}.
  *
- * A memory descriptor cannot be modified once {@link ANeuralNetworksMemoryDesc_finish}
+ * A memory descriptor must not be modified once {@link ANeuralNetworksMemoryDesc_finish}
  * has been called on it.
  *
  * It is the application's responsibility to make sure that only
@@ -695,9 +695,9 @@ typedef struct ANeuralNetworksMemoryDesc ANeuralNetworksMemoryDesc;
  * {@link ANeuralNetworksMemoryDesc_addOutputRole}, and
  * {@link ANeuralNetworksMemoryDesc_setDimensions}.
  *
- * {@link ANeuralNetworksMemoryDesc_finish} should be called once all properties have been set.
+ * {@link ANeuralNetworksMemoryDesc_finish} must be called once all properties have been set.
  *
- * {@link ANeuralNetworksMemoryDesc_free} should be called once the memory descriptor
+ * {@link ANeuralNetworksMemoryDesc_free} must be called once the memory descriptor
  * is no longer needed.
  *
  * Available since API level 30.
@@ -755,7 +755,7 @@ void ANeuralNetworksMemoryDesc_free(ANeuralNetworksMemoryDesc* desc) __INTRODUCE
  * @param compilation The compilation object. It must already have been finished by calling
  *                    {@link ANeuralNetworksCompilation_finish}, and must outlive the memory
  *                    descriptor.
- * @param index The index of the input argument we are referencing. It is
+ * @param index The index of the input argument we are referencing from the compilation. It is
  *              an index into the inputs list passed to
  *              {@link ANeuralNetworksModel_identifyInputsAndOutputs}. It is not
  *              the index associated with {@link ANeuralNetworksModel_addOperand}.
@@ -801,7 +801,7 @@ int ANeuralNetworksMemoryDesc_addInputRole(ANeuralNetworksMemoryDesc* desc,
  * @param compilation The compilation object. It must already have been finished by calling
  *                    {@link ANeuralNetworksCompilation_finish}, and must outlive the memory
  *                    descriptor.
- * @param index The index of the output argument we are referencing. It is
+ * @param index The index of the output argument we are referencing from the compilation. It is
  *              an index into the outputs list passed to
  *              {@link ANeuralNetworksModel_identifyInputsAndOutputs}. It is not
  *              the index associated with {@link ANeuralNetworksModel_addOperand}.
@@ -861,12 +861,15 @@ int ANeuralNetworksMemoryDesc_finish(ANeuralNetworksMemoryDesc* desc) __INTRODUC
 /**
  * Creates a memory object from a memory descriptor.
  *
- * The memory object is created uninitialized. An uninitialized memory object may only be used
- * according to the roles specified by {@link ANeuralNetworksMemoryDesc_addOutputRole}. A memory
- * object is initialized after it is used as an output in a successful execution, or used as the
- * destination memory in a successful {@link ANeuralNetworksMemory_copy}. An initialized memory
- * object may be used according to all roles specified in {@link ANeuralNetworksMemoryDesc}. A
- * memory object will return to the uninitialized state if it is used as an output in a failed
+ * The memory object is created with an uninitialized buffer. A memory object with an uninitialized
+ * buffer may only be used according to the roles specified by {@link
+ * ANeuralNetworksMemoryDesc_addOutputRole}, or as the destination memory in {@link
+ * ANeuralNetworksMemory_copy}. The buffer of a memory object is initialized after the memory object
+ * is used as an output in a successful execution, or used as the destination memory in a successful
+ * {@link ANeuralNetworksMemory_copy}. A memory object with an initialized buffer may be used
+ * according to all roles specified in {@link ANeuralNetworksMemoryDesc}, or as the source or
+ * destination memory in {@link ANeuralNetworksMemory_copy}. The buffer of a memory object will
+ * return to the uninitialized state if the memory object is used as an output in a failed
  * execution, or used as the destination memory in a failed {@link ANeuralNetworksMemory_copy}.
  *
  * The dimensions of the memory descriptor are deduced from the dimensions of the corresponding
@@ -876,7 +879,8 @@ int ANeuralNetworksMemoryDesc_finish(ANeuralNetworksMemoryDesc* desc) __INTRODUC
  * unspecified dimensions or rank. In such a case, the same memory object may be used with different
  * shapes of outputs in different executions. When the memory is used as an input, the input shape
  * must be the same as the output shape from the last execution using this memory object as an
- * output. Creating a memory object with unspecified dimensions or rank may fail for certain sets of
+ * output, or the last {@link ANeuralNetworkMemory_copy} using this memory object as the destination
+ * memory. Creating a memory object with unspecified dimensions or rank may fail for certain sets of
  * roles.
  *
  * Using the memory in roles or shapes that are not compatible with the rules specified above will
@@ -890,7 +894,7 @@ int ANeuralNetworksMemoryDesc_finish(ANeuralNetworksMemoryDesc* desc) __INTRODUC
  * Calling {@link ANeuralNetworksModel_setOperandValueFromMemory} with the memory created from this
  * function will return an error.
  *
- * {@link ANeuralNetworksMemory_free} should be called once the memory is no longer needed.
+ * {@link ANeuralNetworksMemory_free} must be called once the memory is no longer needed.
  *
  * Attempting to create memory from an unfinished memory descriptor will return an error.
  *
