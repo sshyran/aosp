@@ -7730,6 +7730,51 @@ int ANeuralNetworksExecution_startCompute(ANeuralNetworksExecution* execution,
 int ANeuralNetworksExecution_setTimeout(ANeuralNetworksExecution* execution, uint64_t duration)
         __INTRODUCED_IN(30);
 
+/**
+ * Set the maximum duration of WHILE loops in the specified execution.
+ *
+ * This is a fuzzy per-loop timeout intended to prevent infinite loops.
+ *
+ * If a WHILE loop termination condition is not reached within the specified
+ * duration, the execution will be aborted.
+ *
+ * See {@link ANeuralNetworks_getDefaultLoopTimeout} and
+ * {@link ANeuralNetworks_getMaximumLoopTimeout} for the default
+ * and maximum timeout values.
+ *
+ * See {@link ANeuralNetworksExecution} for information on multithreaded usage.
+ *
+ * @param execution The execution to be modified.
+ * @param duration The maximum amount of time in nanoseconds that can be spent
+ *     executing a WHILE loop. If the specified duration value exceeds the value
+ *     produced by {@link ANeuralNetworks_getMaximumLoopTimeout}, it will be
+ *     overridden by that value.
+ *
+ * @return ANEURALNETWORKS_NO_ERROR if successful.
+ *
+ * Available since API level 30.
+ */
+int ANeuralNetworksExecution_setLoopTimeout(ANeuralNetworksExecution* execution, uint64_t duration)
+        __INTRODUCED_IN(30);
+
+/**
+ * Get the default timeout value for WHILE loops.
+ *
+ * @return The default timeout value in nanoseconds.
+ *
+ * Available since API level 30.
+ */
+uint64_t ANeuralNetworks_getDefaultLoopTimeout() __INTRODUCED_IN(30);
+
+/**
+ * Get the maximum timeout value for WHILE loops.
+ *
+ * @return The maximum timeout value in nanoseconds.
+ *
+ * Available since API level 30.
+ */
+uint64_t ANeuralNetworks_getMaximumLoopTimeout() __INTRODUCED_IN(30);
+
 #endif  // __ANDROID_API__ >= 30
 
 /**
