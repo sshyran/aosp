@@ -937,6 +937,42 @@ TEST(OperationValidationTest, LOGISTIC_quant8_signed) {
     activationOpTest(ANEURALNETWORKS_LOGISTIC, ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED);
 }
 
+TEST(OperationValidationTest, HARD_SWISH_float16) {
+    activationOpTest(ANEURALNETWORKS_HARD_SWISH, ANEURALNETWORKS_TENSOR_FLOAT16);
+}
+
+TEST(OperationValidationTest, HARD_SWISH_float32) {
+    activationOpTest(ANEURALNETWORKS_HARD_SWISH, ANEURALNETWORKS_TENSOR_FLOAT32);
+}
+
+TEST(OperationValidationTest, HARD_SWISH_quant8) {
+    activationOpTest(ANEURALNETWORKS_HARD_SWISH, ANEURALNETWORKS_TENSOR_QUANT8_ASYMM);
+}
+
+TEST(OperationValidationTest, HARD_SWISH_quant8_signed) {
+    activationOpTest(ANEURALNETWORKS_HARD_SWISH, ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED);
+}
+
+void eluOpTest(int32_t operandCode) {
+    uint32_t inputDimensions[4] = {2, 2, 2, 2};
+    ANeuralNetworksOperandType input = getOpType(operandCode, 4, inputDimensions);
+    ANeuralNetworksOperandType alpha = (operandCode == ANEURALNETWORKS_TENSOR_FLOAT32)
+                                               ? getOpType(ANEURALNETWORKS_FLOAT32)
+                                               : getOpType(ANEURALNETWORKS_FLOAT16);
+
+    ANeuralNetworksOperandType output = input;
+    OperationTestBase test(ANEURALNETWORKS_ELU, {input, alpha}, {output});
+    test.testOpsValidations();
+}
+
+TEST(OperationValidationTest, ELU_float16) {
+    eluOpTest(ANEURALNETWORKS_TENSOR_FLOAT16);
+}
+
+TEST(OperationValidationTest, ELU_float32) {
+    eluOpTest(ANEURALNETWORKS_TENSOR_FLOAT32);
+}
+
 void reshapeOpTest(int32_t inputOperandCode) {
     SCOPED_TRACE(inputOperandCode);
     uint32_t inputDimensions[3] = {2, 3, 4};
