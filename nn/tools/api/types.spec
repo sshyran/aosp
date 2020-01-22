@@ -2403,8 +2403,8 @@
      * "floor division" ("//" in Python). For example,
      *     5 // 2 = 2
      *    -5 // 2 = -3
-%/kind
      *
+%/kind
      * Two dimensions are compatible when:
      *     1. they are equal, or
      *     2. one of them is 1
