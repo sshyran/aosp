@@ -32,6 +32,7 @@
 #include "BurstBuilder.h"
 #include "Callbacks.h"
 #include "CompilationBuilder.h"
+#include "ControlFlow.h"
 #include "Event.h"
 #include "ExecutionBuilder.h"
 #include "HalInterfaces.h"
@@ -1409,6 +1410,19 @@ void ANeuralNetworksEvent_free(ANeuralNetworksEvent* event) {
         e->wait();
         delete e;
     }
+}
+
+int ANeuralNetworksExecution_setLoopTimeout(ANeuralNetworksExecution*, uint64_t) {
+    // To be implemented...
+    return ANEURALNETWORKS_OP_FAILED;
+}
+
+uint64_t ANeuralNetworks_getDefaultLoopTimeout() {
+    return operation_while::kTimeoutNsDefault;
+}
+
+uint64_t ANeuralNetworks_getMaximumLoopTimeout() {
+    return operation_while::kTimeoutNsMaximum;
 }
 
 int ANeuralNetworksDevice_getExtensionSupport(const ANeuralNetworksDevice* device,
