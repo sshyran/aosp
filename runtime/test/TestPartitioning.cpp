@@ -2267,6 +2267,10 @@ TEST_F(PerfTest, Lookup) {
     for (uint32_t type = static_cast<uint32_t>(OperandTypeRange::FUNDAMENTAL_MIN);
          type <= static_cast<uint32_t>(OperandTypeRange::FUNDAMENTAL_MAX); ++type) {
         OperandType operandType = static_cast<OperandType>(type);
+        if (operandType == OperandType::SUBGRAPH) {
+            // SUBGRAPH capabilities are handled differently.
+            continue;
+        }
         SCOPED_TRACE(toString(operandType));
         EXPECT_EQ(lookupExecTime(capabilities, operandType), typePerf(operandType));
     }
