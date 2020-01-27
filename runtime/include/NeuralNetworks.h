@@ -2577,7 +2577,54 @@ typedef enum {
     ANEURALNETWORKS_AXIS_ALIGNED_BBOX_TRANSFORM = 41,
 
     /**
-     * Performs a forward LSTM on the input followed by a backward LSTM.
+     * A recurrent neural network layer that applies an LSTM cell to a
+     * sequence of inputs in forward and backward directions.
+     *
+     * The op supports cross-linking via an auxiliary input. Regular cell feeds
+     * one input into the two RNN cells in the following way:
+     *
+     *       INPUT  (INPUT_REVERSED)
+     *         |         |
+     *    ---------------------
+     *    | FW_LSTM   BW_LSTM |
+     *    ---------------------
+     *         |         |
+     *      FW_OUT     BW_OUT
+     *
+     * An op with cross-linking takes two inputs and feeds them into the RNN
+     * cells in the following way:
+     *
+     *       AUX_INPUT   (AUX_INPUT_REVERSED)
+     *           |             |
+     *     INPUT | (INPUT_R'D.)|
+     *       |   |       |     |
+     *    -----------------------
+     *    |  \  /        \    / |
+     *    | FW_LSTM     BW_LSTM |
+     *    -----------------------
+     *         |           |
+     *      FW_OUT      BW_OUT
+     *
+     * The cross-linking mode is enabled iff auxiliary input and auxiliary
+     * weights are present. While stacking this op on top of itself, this
+     * allows to connect both forward and backward outputs from previous cell
+     * to the next cell's input.
+     *
+     * Since API level 30 parallel linking mode is supported. The mode is
+     * enabled if auxiliary input is present but auxiliary weights are omitted.
+     * In this case, the cell feeds inputs into the RNN in the following way:
+     *
+     *       INPUT (AUX_INPUT_REVERSED)
+     *         |         |
+     *    ---------------------
+     *    | FW_LSTM   BW_LSTM |
+     *    ---------------------
+     *         |         |
+     *      FW_OUT     BW_OUT
+     *
+     * While stacking this op on top of itself, this allows to connect both
+     * forward and backward outputs from previous cell to the next cell's
+     * corresponding inputs.
      *
      * Supported tensor {@link OperandCode}:
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT16}
@@ -2586,7 +2633,6 @@ typedef enum {
      * Supported tensor rank: 3, either time-major or batch-major.
      *
      * All input and output tensors must be of the same type.
-     *
      *
      * Inputs:
      * * 0: The input.
@@ -2679,25 +2725,34 @@ typedef enum {
      * * 38: The backward input cell state.
      *       A 2-D tensor of shape [batch_size, bw_num_units].
      * * 39: The auxiliary input. Optional.
-     *       A 3-D tensor of shape [max_time, batch_size, input_size], where “batch_size”
-     *       corresponds to the batching dimension, and “input_size” is the size
-     *       of the input.
-     * * 40: The forward auxiliary input-to-input weights. Optional.
-     *       A 2-D tensor of shape [fw_num_units, input_size].
-     * * 41: The forward auxiliary input-to-forget weights. Optional.
-     *       A 2-D tensor of shape [fw_num_units, input_size].
-     * * 42: The forward auxiliary input-to-cell weights. Optional.
-     *       A 2-D tensor of shape [fw_num_units, input_size].
-     * * 43: The forward auxiliary input-to-output weights. Optional.
-     *       A 2-D tensor of shape [fw_num_units, input_size].
-     * * 44: The backward auxiliary input-to-input weights. Optional.
-     *       A 2-D tensor of shape [bw_num_units, input_size].
-     * * 45: The backward auxiliary input-to-forget weights. Optional.
-     *       A 2-D tensor of shape [bw_num_units, input_size].
-     * * 46: The backward auxiliary input-to-cell weights. Optional.
-     *       A 2-D tensor of shape [bw_num_units, input_size].
-     * * 47: The backward auxiliary input-to-output weights. Optional.
-     *       A 2-D tensor of shape [bw_num_units, input_size].
+     *       A 3-D tensor of shape [max_time, batch_size, aux_input_size],
+     *       where “batch_size” corresponds to the batching dimension, and
+     *       “aux_input_size” is the size of the auxiliary input. Optional. See
+     *       the docs above for the usage modes explanation.
+     * * 40: The forward auxiliary input-to-input weights.
+     *       Optional. See the docs above for the usage modes explanation.
+     *       A 2-D tensor of shape [fw_num_units, aux_input_size].
+     * * 41: The forward auxiliary input-to-forget weights.
+     *       Optional. See the docs above for the usage modes explanation.
+     *       A 2-D tensor of shape [fw_num_units, aux_input_size].
+     * * 42: The forward auxiliary input-to-cell weights.
+     *       Optional. See the docs above for the usage modes explanation.
+     *       A 2-D tensor of shape [fw_num_units, aux_input_size].
+     * * 43: The forward auxiliary input-to-output weights.
+     *       Optional. See the docs above for the usage modes explanation.
+     *       A 2-D tensor of shape [fw_num_units, aux_input_size].
+     * * 44: The backward auxiliary input-to-input weights.
+     *       Optional. See the docs above for the usage modes explanation.
+     *       A 2-D tensor of shape [bw_num_units, aux_input_size].
+     * * 45: The backward auxiliary input-to-forget weights.
+     *       Optional. See the docs above for the usage modes explanation.
+     *       A 2-D tensor of shape [bw_num_units, aux_input_size].
+     * * 46: The backward auxiliary input-to-cell weights.
+     *       Optional. See the docs above for the usage modes explanation.
+     *       A 2-D tensor of shape [bw_num_units, aux_input_size].
+     * * 47: The backward auxiliary input-to-output weights.
+     *       Optional. See the docs above for the usage modes explanation.
+     *       A 2-D tensor of shape [bw_num_units, aux_input_size].
      * * 48: The activation function.
      *       A value indicating the activation function:
      *       <ul>
