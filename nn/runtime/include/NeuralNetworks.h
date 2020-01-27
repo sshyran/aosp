@@ -2826,8 +2826,8 @@ typedef enum {
      * * “activation” is the function passed as the “fused_activation_function”
      *   argument (if not “NONE”).
      *
-     * The op also supports an auxiliary input. Regular cell feeds one input
-     * into the two RNN cells in the following way:
+     * The op supports cross-linking via an auxiliary input. Regular cell feeds
+     * one input into the two RNN cells in the following way:
      *
      *       INPUT  (INPUT_REVERSED)
      *         |         |
@@ -2837,8 +2837,8 @@ typedef enum {
      *         |         |
      *      FW_OUT     BW_OUT
      *
-     * An op with an auxiliary input takes two inputs and feeds them into the
-     * RNN cells in the following way:
+     * An op with cross-linking takes two inputs and feeds them into the RNN
+     * cells in the following way:
      *
      *       AUX_INPUT   (AUX_INPUT_REVERSED)
      *           |             |
@@ -2851,9 +2851,26 @@ typedef enum {
      *         |           |
      *      FW_OUT      BW_OUT
      *
+     * The cross-linking mode is enabled iff auxiliary input and auxiliary
+     * weights are present. While stacking this op on top of itself, this
+     * allows to connect both forward and backward outputs from previous cell
+     * to the next cell's input.
+     *
+     * Since API level 30 parallel linking mode is supported. The mode is
+     * enabled if auxiliary input is present but auxiliary weights are omitted.
+     * In this case, the cell feeds inputs into the RNN in the following way:
+     *
+     *       INPUT (AUX_INPUT_REVERSED)
+     *         |         |
+     *    ---------------------
+     *    | FW_RNN     BW_RNN |
+     *    ---------------------
+     *         |         |
+     *      FW_OUT     BW_OUT
+     *
      * While stacking this op on top of itself, this allows to connect both
      * forward and backward outputs from previous cell to the next cell's
-     * inputs.
+     * corresponding inputs.
      *
      * Supported tensor {@link OperandCode}:
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT16}
@@ -2886,11 +2903,17 @@ typedef enum {
      *      A 2-D tensor of shape [batchSize, bwNumUnits]. Specifies a hidden
      *      state input for the first time step of the computation.
      * * 9: auxInput.
-     *      A 3-D tensor. The shape is the same as of the input 0.
+     *      A 3-D tensor. The shape is defined by the input 6 (timeMajor). If
+     *      it is set to true, then the input has a shape [maxTime, batchSize,
+     *      auxInputSize], otherwise the input has a shape [batchSize, maxTime,
+     *      auxInputSize]. Can be omitted. See the docs above for the usage
+     *      modes explanation.
      * * 10:fwAuxWeights.
-     *      A 2-D tensor of shape [fwNumUnits, inputSize].
+     *      A 2-D tensor of shape [fwNumUnits, auxInputSize]. Can be omitted.
+     *      See the docs above for the usage modes explanation.
      * * 11:bwAuxWeights.
-     *      A 2-D tensor of shape [bwNumUnits, inputSize].
+     *      A 2-D tensor of shape [bwNumUnits, auxInputSize]. Can be omitted.
+     *      See the docs above for the usage modes explanation.
      * * 12:fusedActivationFunction.
      *      A {@link FuseCode} value indicating the activation function. If
      *      “NONE” is specified then it results in a linear activation.
