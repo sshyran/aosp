@@ -42,7 +42,7 @@ model {
       }
       scale: 0
       zero_point: 100
-      lifetime: MODEL_INPUT
+      lifetime: SUBGRAPH_INPUT
       channel_quant {
         scales {
         }
@@ -66,7 +66,7 @@ model {
       }
       scale: 20
       zero_point: 0
-      lifetime: MODEL_OUTPUT
+      lifetime: SUBGRAPH_OUTPUT
       channel_quant {
         scales {
         }
@@ -166,7 +166,7 @@ model {
       }
       scale: 20
       zero_point: 50
-      lifetime: MODEL_OUTPUT
+      lifetime: SUBGRAPH_OUTPUT
       channel_quant {
         scales {
         }
@@ -249,7 +249,7 @@ model {
       }
       scale: 0.1
       zero_point: 128
-      lifetime: MODEL_OUTPUT
+      lifetime: SUBGRAPH_OUTPUT
       channel_quant {
         scales {
         }
@@ -331,7 +331,7 @@ model {
       }
       scale: 0
       zero_point: 0
-      lifetime: MODEL_OUTPUT
+      lifetime: SUBGRAPH_OUTPUT
       channel_quant {
         scales {
         }
@@ -400,7 +400,7 @@ model {
       }
       scale: 0.1
       zero_point: 0
-      lifetime: MODEL_INPUT
+      lifetime: SUBGRAPH_INPUT
       channel_quant {
         scales {
         }
@@ -550,7 +550,7 @@ model {
       }
       scale: 0
       zero_point: 0
-      lifetime: MODEL_INPUT
+      lifetime: SUBGRAPH_INPUT
       channel_quant {
         scales {
           scale: nan
@@ -583,7 +583,7 @@ model {
       }
       scale: 0
       zero_point: 50
-      lifetime: MODEL_INPUT
+      lifetime: SUBGRAPH_INPUT
       channel_quant {
         scales {
         }
@@ -625,7 +625,7 @@ model {
       }
       scale: 0
       zero_point: 0
-      lifetime: MODEL_INPUT
+      lifetime: SUBGRAPH_INPUT
       channel_quant {
         scales {
         }
@@ -645,7 +645,7 @@ model {
       }
       scale: 10
       zero_point: 100
-      lifetime: MODEL_OUTPUT
+      lifetime: SUBGRAPH_OUTPUT
       channel_quant {
         scales {
         }
@@ -713,7 +713,7 @@ model {
       }
       scale: 0
       zero_point: 0
-      lifetime: MODEL_INPUT
+      lifetime: SUBGRAPH_INPUT
       channel_quant {
         scales {
           scale: nan
@@ -896,7 +896,7 @@ model {
       }
       scale: 2
       zero_point: 0
-      lifetime: MODEL_INPUT
+      lifetime: SUBGRAPH_INPUT
       channel_quant {
         scales {
         }
@@ -1065,7 +1065,7 @@ model {
       }
       scale: 20
       zero_point: 50
-      lifetime: MODEL_OUTPUT
+      lifetime: SUBGRAPH_OUTPUT
       channel_quant {
         scales {
         }
@@ -1081,7 +1081,7 @@ model {
       }
       scale: 0
       zero_point: 0
-      lifetime: MODEL_INPUT
+      lifetime: SUBGRAPH_INPUT
       channel_quant {
         scales {
         }

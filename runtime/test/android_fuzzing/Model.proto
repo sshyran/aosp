@@ -136,8 +136,8 @@ enum OperationType {
 
 enum OperandLifeTime {
     TEMPORARY_VARIABLE = 0;
-    MODEL_INPUT = 1;
-    MODEL_OUTPUT = 2;
+    SUBGRAPH_INPUT = 1;
+    SUBGRAPH_OUTPUT = 2;
     CONSTANT_COPY = 3;
     CONSTANT_REFERENCE = 4;
     NO_VALUE = 5;

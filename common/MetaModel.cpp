@@ -234,7 +234,7 @@ class MetaModel::OrigOperandToSlicedInputOperandIndex {
 
         // Create
         operand.numberOfConsumers = 0;
-        operand.lifetime = OperandLifeTime::MODEL_INPUT;
+        operand.lifetime = OperandLifeTime::SUBGRAPH_INPUT;
         operand.location = {};
         uint32_t slicedOperandIndex =
                 extend(&mSlicedOperands, convertTo<T_SlicedOperand>(operand)).first;
@@ -385,14 +385,14 @@ void MetaModel::processOperations(
                     origOperand.numberOfConsumers) {
                     // Was consumed only by noncompliant operations; convert to
                     // an output of the sliced model.
-                    slicedOperand.lifetime = OperandLifeTime::MODEL_OUTPUT;
+                    slicedOperand.lifetime = OperandLifeTime::SUBGRAPH_OUTPUT;
                 }
 
                 VLOG(COMPILATION) << "origOperandIndexToSlicedIndex compliant output created "
                                   << origOperandIndex << " -> " << slicedOperandIndex << ": "
                                   << toString(slicedOperand);
 
-                if (slicedOperand.lifetime == OperandLifeTime::MODEL_OUTPUT) {
+                if (slicedOperand.lifetime == OperandLifeTime::SUBGRAPH_OUTPUT) {
                     extend(&slice->mHidlModel.outputIndexes, slicedOperandIndex);
                 }
             }
