@@ -142,10 +142,6 @@ bool SameShape(const Shape& in1, const Shape& in2);
 // Sets out to the same shape as in.
 bool SetShape(const Shape& in, Shape* out);
 
-// Combine two tensor dimensions, both can have unspecified dimensions.
-bool combineDimensions(const std::vector<uint32_t>& lhs, const std::vector<uint32_t>& rhs,
-                       std::vector<uint32_t>* combined);
-
 // Return the total number of elements, i.e. all the dimensions multiplied
 // together. For a scalar, returns one.
 uint32_t getNumberOfElements(const Shape& shape);

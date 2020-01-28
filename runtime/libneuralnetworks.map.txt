@@ -27,8 +27,16 @@ LIBNEURALNETWORKS {
     ANeuralNetworksDevice_getVersion; # introduced=Q
     ANeuralNetworksDevice_getFeatureLevel; # introduced=Q
     ANeuralNetworksMemory_createFromAHardwareBuffer; # introduced=Q
+    ANeuralNetworksMemory_createFromDesc; # introduced=30
     ANeuralNetworksMemory_createFromFd;
+    ANeuralNetworksMemory_copy; # introduced=30
     ANeuralNetworksMemory_free;
+    ANeuralNetworksMemoryDesc_addInputRole; # introduced=30
+    ANeuralNetworksMemoryDesc_addOutputRole; # introduced=30
+    ANeuralNetworksMemoryDesc_create; # introduced=30
+    ANeuralNetworksMemoryDesc_finish; # introduced=30
+    ANeuralNetworksMemoryDesc_free; # introduced=30
+    ANeuralNetworksMemoryDesc_setDimensions; # introduced=30
     ANeuralNetworksModel_create;
     ANeuralNetworksModel_free;
     ANeuralNetworksModel_finish;

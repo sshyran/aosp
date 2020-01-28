@@ -19,6 +19,7 @@
 
 #include <atomic>
 #include <memory>
+#include <tuple>
 #include <vector>
 
 #include "Callbacks.h"
@@ -101,6 +102,8 @@ class ExecutionBuilder {
 
     // Update output dimensional information from OutputShape to ModelArgumentInfo.
     bool updateOutputShapes(const std::vector<hal::OutputShape>& outputShapes);
+
+    bool updateMemories();
 
     const ModelBuilder* mModel;
     const ExecutionPlan* mPlan;

@@ -24,6 +24,7 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 
+#include <algorithm>
 #include <functional>
 #include <map>
 #include <memory>
@@ -455,15 +456,40 @@ int ExecutionStep::finishStepModel(const ModelBuilder* mainModel, bool* hasOutpu
     mStepModelOutputs.insert(mStepModelOutputs.end(), mTempsAsStepModelOutputs.begin(),
                              mTempsAsStepModelOutputs.end());
 
+    std::map<uint32_t, uint32_t> mainModelOperandToInputIndex;
+    for (uint32_t i = 0, n = mainModel->inputCount(); i < n; ++i) {
+        mainModelOperandToInputIndex[mainModel->getInputOperandIndex(i)] = i;
+    }
     std::map<uint32_t, uint32_t> mainModelOperandToOutputIndex;
     for (uint32_t i = 0, n = mainModel->outputCount(); i < n; ++i) {
         mainModelOperandToOutputIndex[mainModel->getOutputOperandIndex(i)] = i;
     }
+
+    // mInputIndexStepModelToMainModel is ordered by step model input index and relies on
+    // mModelInputs being the first inputs, as specified by mStepModelInputs.
+    mInputIndexStepModelToMainModel.resize(mModelInputs.size());
+    std::transform(mModelInputs.begin(), mModelInputs.end(),
+                   mInputIndexStepModelToMainModel.begin(),
+                   [&mainModelOperandToInputIndex](auto& e) {
+                       uint32_t sourceOperandIndex = e.first;
+                       return mainModelOperandToInputIndex[sourceOperandIndex];
+                   });
+
     // mOutputIndexStepModelToMainModel is ordered by step model output index and relies on
     // mModelOutputs being the first outputs, as specified by mStepModelOutputs.
     mOutputIndexStepModelToMainModel.resize(mModelOutputs.size());
     std::transform(mModelOutputs.begin(), mModelOutputs.end(),
                    mOutputIndexStepModelToMainModel.begin(),
+                   [&mainModelOperandToOutputIndex](auto& e) {
+                       uint32_t sourceOperandIndex = e.first;
+                       return mainModelOperandToOutputIndex[sourceOperandIndex];
+                   });
+
+    // mOutputsAsStepModelInputsIndexToMainModel is ordered by step model input index and relies on
+    // mOutputsAsStepModelInputs being the first outputs.
+    mOutputsAsStepModelInputsIndexToMainModel.resize(mOutputsAsStepModelInputs.size());
+    std::transform(mOutputsAsStepModelInputs.begin(), mOutputsAsStepModelInputs.end(),
+                   mOutputsAsStepModelInputsIndexToMainModel.begin(),
                    [&mainModelOperandToOutputIndex](auto& e) {
                        uint32_t sourceOperandIndex = e.first;
                        return mainModelOperandToOutputIndex[sourceOperandIndex];
@@ -824,6 +850,60 @@ void ExecutionPlan::SimpleBody::dump() const {
 void ExecutionPlan::CompoundBody::dump() const {
     for (const auto& step : mSteps) {
         step->dump();
+    }
+}
+
+void ExecutionPlan::SimpleBody::forEachStepRoleOfInput(uint32_t index,
+                                                       const StepRoleCallback& callback) const {
+    callback(mPreparedModel.get(), IOType::INPUT, index);
+}
+
+void ExecutionPlan::SimpleBody::forEachStepRoleOfOutput(uint32_t index,
+                                                        const StepRoleCallback& callback) const {
+    callback(mPreparedModel.get(), IOType::OUTPUT, index);
+}
+
+// Map an input role of the parent model to the input/output roles in the step models:
+// - An input role of the parent model may be used as an input of multiple step-models.
+// - An input role of the parent model should not be used as an output of any step-model.
+void ExecutionPlan::CompoundBody::forEachStepRoleOfInput(uint32_t index,
+                                                         const StepRoleCallback& callback) const {
+    for (const auto& step : mSteps) {
+        // Model input as step-model input.
+        const auto& inputMapping = step->getInputIndexStepModelToMainModel();
+        for (uint32_t i = 0; i < inputMapping.size(); i++) {
+            if (inputMapping[i] == index) {
+                callback(step->getPreparedStepModel().get(), IOType::INPUT, i);
+            }
+        }
+    }
+}
+
+// Map an output role of the parent model to the input/output roles in the step models:
+// - An output role of the parent model may only be used as one output of one single step-model.
+// - An output role of the parent model may be used as an input of multiple step-models.
+void ExecutionPlan::CompoundBody::forEachStepRoleOfOutput(uint32_t index,
+                                                          const StepRoleCallback& callback) const {
+    bool found = false;
+    for (const auto& step : mSteps) {
+        // Model output as step-model output.
+        if (!found) {
+            const auto& outputMapping = step->getOutputIndexStepModelToMainModel();
+            for (uint32_t i = 0; i < outputMapping.size(); i++) {
+                if (outputMapping[i] == index) {
+                    callback(step->getPreparedStepModel().get(), IOType::OUTPUT, i);
+                    found = true;
+                    break;
+                }
+            }
+        }
+        // Model output as step-model input.
+        const auto& inputToOutputMapping = step->getOutputsAsStepModelInputsIndexToMainModel();
+        for (uint32_t i = 0; i < inputToOutputMapping.size(); i++) {
+            if (inputToOutputMapping[i] == index) {
+                callback(step->getPreparedStepModel().get(), IOType::INPUT, i);
+            }
+        }
     }
 }
 
