@@ -23,6 +23,7 @@
 #include <android-base/scopeguard.h>
 #include <android-base/thread_annotations.h>
 
+#include <algorithm>
 #include <chrono>
 #include <functional>
 #include <memory>
@@ -221,9 +222,16 @@ std::tuple<int, std::vector<OutputShape>, Timing> VersionedIPreparedModel::execu
         return getResults(*callback);
     }
 
+    const bool compliant = compliantWithV1_0(request);
+    if (!compliant) {
+        LOG(ERROR) << "Could not handle execute or execute_1_2!";
+        return failWithStatus(ErrorStatus::GENERAL_FAILURE);
+    }
+    const V1_0::Request request10 = convertToV1_0(request);
+
     // version 1.2 HAL
     if (mPreparedModelV1_2 != nullptr) {
-        Return<ErrorStatus> ret = mPreparedModelV1_2->execute_1_2(request, measure, callback);
+        Return<ErrorStatus> ret = mPreparedModelV1_2->execute_1_2(request10, measure, callback);
         if (!ret.isOk()) {
             LOG(ERROR) << "execute_1_2 failure: " << ret.description();
             return failWithStatus(ErrorStatus::GENERAL_FAILURE);
@@ -238,7 +246,7 @@ std::tuple<int, std::vector<OutputShape>, Timing> VersionedIPreparedModel::execu
 
     // version 1.0 HAL
     if (mPreparedModelV1_0 != nullptr) {
-        Return<ErrorStatus> ret = mPreparedModelV1_0->execute(request, callback);
+        Return<ErrorStatus> ret = mPreparedModelV1_0->execute(request10, callback);
         if (!ret.isOk()) {
             LOG(ERROR) << "execute failure: " << ret.description();
             return failWithStatus(ErrorStatus::GENERAL_FAILURE);
@@ -278,9 +286,16 @@ std::tuple<int, std::vector<OutputShape>, Timing> VersionedIPreparedModel::execu
 
     // version 1.2 HAL
     if (mPreparedModelV1_2 != nullptr) {
+        const bool compliant = compliantWithV1_0(request);
+        if (!compliant) {
+            LOG(ERROR) << "Could not handle executeSynchronously!";
+            return kFailure;
+        }
+        const V1_0::Request request10 = convertToV1_0(request);
+
         std::tuple<int, std::vector<OutputShape>, Timing> result;
         Return<void> ret = mPreparedModelV1_2->executeSynchronously(
-                request, measure,
+                request10, measure,
                 [&result](ErrorStatus error, const hidl_vec<OutputShape>& outputShapes,
                           const Timing& timing) {
                     result = getExecutionResult(error, outputShapes, timing);
@@ -1318,6 +1333,41 @@ std::pair<uint32_t, uint32_t> VersionedIDevice::getNumberOfCacheFilesNeeded() co
 
 const std::string& VersionedIDevice::getName() const {
     return kServiceName;
+}
+
+std::tuple<ErrorStatus, sp<IBuffer>, int32_t> VersionedIDevice::allocate(
+        const BufferDesc& desc,
+        const std::vector<std::shared_ptr<VersionedIPreparedModel>>& versionedPreparedModels,
+        const hidl_vec<BufferRole>& inputRoles, const hidl_vec<BufferRole>& outputRoles) const {
+    const auto kFailure = std::make_tuple<ErrorStatus, sp<IBuffer>, int32_t>(
+            ErrorStatus::GENERAL_FAILURE, nullptr, 0);
+
+    // version 1.3+ HAL
+    if (getDevice<V1_3::IDevice>() != nullptr) {
+        hidl_vec<sp<V1_3::IPreparedModel>> preparedModels(versionedPreparedModels.size());
+        std::transform(versionedPreparedModels.begin(), versionedPreparedModels.end(),
+                       preparedModels.begin(),
+                       [](const auto& preparedModel) { return preparedModel->getV1_3(); });
+
+        std::tuple<ErrorStatus, sp<IBuffer>, int32_t> result;
+        const Return<void> ret = recoverable<void, V1_3::IDevice>(
+                __FUNCTION__, [&](const sp<V1_3::IDevice>& device) {
+                    return device->allocate(
+                            desc, preparedModels, inputRoles, outputRoles,
+                            [&result](ErrorStatus error, const sp<IBuffer>& buffer, int32_t token) {
+                                result = {error, buffer, token};
+                            });
+                });
+        if (!ret.isOk()) {
+            LOG(ERROR) << "allocate failure: " << ret.description();
+            return kFailure;
+        }
+        return result;
+    }
+
+    // version too low or no device available
+    LOG(ERROR) << "Could not handle allocate";
+    return kFailure;
 }
 
 }  // namespace nn

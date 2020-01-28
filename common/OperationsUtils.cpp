@@ -133,33 +133,6 @@ bool SetShape(const Shape& in, Shape* out) {
     return true;
 }
 
-bool combineDimensions(const std::vector<uint32_t>& lhs, const std::vector<uint32_t>& rhs,
-                       std::vector<uint32_t>* combined) {
-    if (rhs.empty()) {
-        *combined = lhs;
-        return true;
-    }
-    if (lhs.empty()) {
-        *combined = rhs;
-        return true;
-    }
-    NN_RET_CHECK_EQ(lhs.size(), rhs.size()) << "incompatible ranks";
-    combined->resize(lhs.size());
-    for (uint32_t i = 0; i < lhs.size(); i++) {
-        if (lhs[i] == 0) {
-            (*combined)[i] = rhs[i];
-            continue;
-        }
-        if (rhs[i] == 0) {
-            (*combined)[i] = lhs[i];
-            continue;
-        }
-        NN_RET_CHECK_EQ(lhs[i], rhs[i]) << "incompatible dimension: " << i;
-        (*combined)[i] = lhs[i];
-    }
-    return true;
-}
-
 uint32_t getNumberOfElements(const Shape& shape) {
     uint32_t count = 1;
     for (size_t i = 0; i < shape.dimensions.size(); i++) {

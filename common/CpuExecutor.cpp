@@ -24,6 +24,7 @@
 
 #include <Eigen/Core>
 #include <memory>
+#include <utility>
 #include <vector>
 
 // b/109953668, disable OpenMP
@@ -172,13 +173,13 @@ bool setInfoAndAllocateIfNeeded(RunTimeOperandInfo* info, const Shape& shape, in
         }
     }
 
-    std::vector<uint32_t> combined;
-    if (!combineDimensions(shape.dimensions, info->dimensions, &combined)) {
+    auto combined = combineDimensions(shape.dimensions, info->dimensions);
+    if (!combined.has_value()) {
         LOG(ERROR) << "Invalid dimensions for model operand";
         *result = ANEURALNETWORKS_OP_FAILED;
         return false;
     }
-    info->dimensions = combined;
+    info->dimensions = std::move(combined.value());
     info->type = shape.type;
     info->scale = shape.scale;
     info->zeroPoint = shape.offset;
@@ -259,7 +260,7 @@ bool OperationExecutionContext::checkNoZeroSizedInput() const {
 class RunTimePoolInfo::RunTimePoolInfoImpl {
    public:
     RunTimePoolInfoImpl(const hidl_memory& hidlMemory, uint8_t* buffer, const sp<IMemory>& memory,
-                        AHardwareBuffer* hardwareBuffer);
+                        AHardwareBuffer* hardwareBuffer, uint32_t size);
 
     // rule of five...
     ~RunTimePoolInfoImpl();
@@ -269,10 +270,11 @@ class RunTimePoolInfo::RunTimePoolInfoImpl {
     RunTimePoolInfoImpl& operator=(RunTimePoolInfoImpl&&) noexcept = delete;
 
     uint8_t* getBuffer() const { return mBuffer; }
+    uint32_t getSize() const { return mSize; }
 
     bool flush() const;
 
-    hidl_memory getHidlMemory() const { return mHidlMemory; }
+    const hidl_memory& getHidlMemory() const { return mHidlMemory; }
 
    private:
     const hidl_memory mHidlMemory;     // always used
@@ -280,13 +282,19 @@ class RunTimePoolInfo::RunTimePoolInfoImpl {
     const sp<IMemory> mMemory;         // only used when hidlMemory.name() == "ashmem"
     AHardwareBuffer*
             mAHardwareBuffer;  // only used when hidlMemory.name() == "hardware_buffer_blob"
+    const uint32_t mSize;
 };
 
 RunTimePoolInfo::RunTimePoolInfoImpl::RunTimePoolInfoImpl(const hidl_memory& hidlMemory,
                                                           uint8_t* buffer,
                                                           const sp<IMemory>& memory,
-                                                          AHardwareBuffer* hardwareBuffer)
-    : mHidlMemory(hidlMemory), mBuffer(buffer), mMemory(memory), mAHardwareBuffer(hardwareBuffer) {}
+                                                          AHardwareBuffer* hardwareBuffer,
+                                                          uint32_t size)
+    : mHidlMemory(hidlMemory),
+      mBuffer(buffer),
+      mMemory(memory),
+      mAHardwareBuffer(hardwareBuffer),
+      mSize(size) {}
 
 RunTimePoolInfo::RunTimePoolInfoImpl::~RunTimePoolInfoImpl() {
     if (mBuffer == nullptr) {
@@ -394,14 +402,14 @@ std::optional<RunTimePoolInfo> RunTimePoolInfo::createFromHidlMemory(
         return std::nullopt;
     }
 
-    const auto impl =
-            std::make_shared<const RunTimePoolInfoImpl>(hidlMemory, buffer, memory, hardwareBuffer);
+    const auto impl = std::make_shared<const RunTimePoolInfoImpl>(
+            hidlMemory, buffer, memory, hardwareBuffer, hidlMemory.size());
     return {RunTimePoolInfo(impl)};
 }
 
-RunTimePoolInfo RunTimePoolInfo::createFromExistingBuffer(uint8_t* buffer) {
-    const auto impl =
-            std::make_shared<const RunTimePoolInfoImpl>(hidl_memory{}, buffer, nullptr, nullptr);
+RunTimePoolInfo RunTimePoolInfo::createFromExistingBuffer(uint8_t* buffer, uint32_t size) {
+    const auto impl = std::make_shared<const RunTimePoolInfoImpl>(hidl_memory{}, buffer, nullptr,
+                                                                  nullptr, size);
     return {impl};
 }
 
@@ -412,11 +420,15 @@ uint8_t* RunTimePoolInfo::getBuffer() const {
     return mImpl->getBuffer();
 }
 
+uint32_t RunTimePoolInfo::getSize() const {
+    return mImpl->getSize();
+}
+
 bool RunTimePoolInfo::flush() const {
     return mImpl->flush();
 }
 
-hidl_memory RunTimePoolInfo::getHidlMemory() const {
+const hidl_memory& RunTimePoolInfo::getHidlMemory() const {
     return mImpl->getHidlMemory();
 }
 
@@ -427,6 +439,29 @@ bool setRunTimePoolInfosFromHidlMemories(std::vector<RunTimePoolInfo>* poolInfos
     poolInfos->reserve(pools.size());
     for (const auto& pool : pools) {
         if (std::optional<RunTimePoolInfo> poolInfo = RunTimePoolInfo::createFromHidlMemory(pool)) {
+            poolInfos->push_back(*poolInfo);
+        } else {
+            LOG(ERROR) << "Could not map pools";
+            poolInfos->clear();
+            return false;
+        }
+    }
+    return true;
+}
+
+bool setRunTimePoolInfosFromMemoryPools(std::vector<RunTimePoolInfo>* poolInfos,
+                                        const hidl_vec<Request::MemoryPool>& pools) {
+    CHECK(poolInfos != nullptr);
+    poolInfos->clear();
+    poolInfos->reserve(pools.size());
+    for (const auto& pool : pools) {
+        if (pool.getDiscriminator() != Request::MemoryPool::hidl_discriminator::hidlMemory) {
+            LOG(ERROR) << "Unknown memory token";
+            poolInfos->clear();
+            return false;
+        }
+        if (std::optional<RunTimePoolInfo> poolInfo =
+                    RunTimePoolInfo::createFromHidlMemory(pool.hidlMemory())) {
             poolInfos->push_back(*poolInfo);
         } else {
             LOG(ERROR) << "Could not map pools";
@@ -662,7 +697,12 @@ bool CpuExecutor::initializeRunTimeInfo(const Request& request,
                 nnAssert(poolIndex < requestPoolInfos.size());
                 auto& r = requestPoolInfos[poolIndex];
                 to.buffer = r.getBuffer() + from.location.offset;
-                to.length = from.location.length;
+                if (from.location.offset == 0 && from.location.length == 0) {
+                    // Use the entire memory region.
+                    to.length = r.getSize();
+                } else {
+                    to.length = from.location.length;
+                }
             }
         }
     };

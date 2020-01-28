@@ -139,13 +139,17 @@ int ExecutionBuilder::setInputFromMemory(uint32_t index, const ANeuralNetworksOp
                             "ANeuralNetworksExecution_setInputFromMemory", false)) {
         return ANEURALNETWORKS_BAD_DATA;
     }
-    // Both offset & length must be zero for Non-BLOB format AHardwareBuffer.
-    if (memory->getHidlMemory().name() == "hardware_buffer" && (offset != 0 || length != 0)) {
-        LOG(ERROR) << "ANeuralNetworksExecution_setInputFromMemory has non-zero offset and length"
-                   << " for Non-BLOB format AHardwareBuffer.";
+    if (!memory->getValidator().validate(mCompilation, IOType::INPUT, index, type, offset,
+                                         length)) {
         return ANEURALNETWORKS_BAD_DATA;
-    } else if (!memory->validateSize(offset, length)) {
-        return ANEURALNETWORKS_BAD_DATA;
+    }
+    // For some types of memory, e.g. MemoryAshmem allocated from ANNMemory_createFromDesc, we
+    // allow the client to specify offset == 0 && length == 0 indicating that the entire memory
+    // region is used. We update the length here because the drivers are still expecting a real
+    // length. For other memories that do not allow this semantic, it is checked in
+    // MemoryValidatorBase::validate before reaching here.
+    if (memory->getHidlMemory().valid() && offset == 0 && length == 0) {
+        length = memory->getHidlMemory().size();
     }
     // TODO validate the rest
     uint32_t poolIndex = mMemories.add(memory);
@@ -196,13 +200,17 @@ int ExecutionBuilder::setOutputFromMemory(uint32_t index, const ANeuralNetworksO
                             "ANeuralNetworksExecution_setOutputFromMemory", true)) {
         return ANEURALNETWORKS_BAD_DATA;
     }
-    // Both offset & length must be zero for Non-BLOB format AHardwareBuffer.
-    if (memory->getHidlMemory().name() == "hardware_buffer" && (offset != 0 || length != 0)) {
-        LOG(ERROR) << "ANeuralNetworksExecution_setOutputFromMemory has non-zero offset and length"
-                   << " for Non-BLOB format AHardwareBuffer.";
+    if (!memory->getValidator().validate(mCompilation, IOType::OUTPUT, index, type, offset,
+                                         length)) {
         return ANEURALNETWORKS_BAD_DATA;
-    } else if (!memory->validateSize(offset, length)) {
-        return ANEURALNETWORKS_BAD_DATA;
+    }
+    // For some types of memory, e.g. MemoryAshmem allocated from ANNMemory_createFromDesc, we
+    // allow the client to specify offset == 0 && length == 0 indicating that the entire memory
+    // region is used. We update the length here because the drivers are still expecting a real
+    // length. For other memories that do not allow this semantic, it is checked in
+    // MemoryValidatorBase::validate before reaching here.
+    if (memory->getHidlMemory().valid() && offset == 0 && length == 0) {
+        length = memory->getHidlMemory().size();
     }
     // TODO validate the rest
     uint32_t poolIndex = mMemories.add(memory);
@@ -490,6 +498,11 @@ int ExecutionBuilder::compute(sp<ExecutionCallback>* synchronizationCallback,
         if (p.state == ModelArgumentInfo::UNSPECIFIED) {
             LOG(ERROR) << "ANeuralNetworksExecution_" << name() << " not all inputs specified";
             return ANEURALNETWORKS_BAD_DATA;
+        } else if (p.state == ModelArgumentInfo::MEMORY) {
+            const Memory* memory = mMemories[p.locationAndLength.poolIndex];
+            if (!memory->getValidator().validateInputDimensions(p.dimensions)) {
+                return ANEURALNETWORKS_OP_FAILED;
+            }
         }
     }
     for (auto& p : mOutputs) {
@@ -586,13 +599,29 @@ bool ExecutionBuilder::updateOutputShapes(const std::vector<OutputShape>& output
     return true;
 }
 
-ErrorStatus ExecutionBuilder::finish(ErrorStatus, const std::vector<OutputShape>& outputShapes) {
+bool ExecutionBuilder::updateMemories() {
+    for (const auto& output : mOutputs) {
+        if (output.state != ModelArgumentInfo::MEMORY) continue;
+        const Memory* memory = mMemories[output.locationAndLength.poolIndex];
+        NN_RET_CHECK(memory->getValidator().updateMetadata({.dimensions = output.dimensions}));
+    }
+    return true;
+}
+
+ErrorStatus ExecutionBuilder::finish(ErrorStatus status,
+                                     const std::vector<OutputShape>& outputShapes) {
     CHECK(!mFinished) << "ExecutionBuilder::finish is called twice";
     mFinished = true;
-    if (!updateOutputShapes(outputShapes)) {
-        return ErrorStatus::GENERAL_FAILURE;
+    if (!updateOutputShapes(outputShapes) || !updateMemories()) {
+        status = ErrorStatus::GENERAL_FAILURE;
     }
-    return ErrorStatus::NONE;
+    bool success = status == ErrorStatus::NONE;
+    for (const auto& output : mOutputs) {
+        if (output.state != ModelArgumentInfo::MEMORY) continue;
+        const Memory* memory = mMemories[output.locationAndLength.poolIndex];
+        memory->getValidator().setInitialized(success);
+    }
+    return status;
 }
 
 bool StepExecutor::updateOutputShapes(const std::vector<OutputShape>& from,
