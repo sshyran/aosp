@@ -1702,6 +1702,26 @@ std::tuple<int, std::vector<OutputShape>, Timing> getExecutionResult(
     return {n, std::move(outputShapes), timing};
 }
 
+std::optional<std::vector<uint32_t>> combineDimensions(const std::vector<uint32_t>& lhs,
+                                                       const std::vector<uint32_t>& rhs) {
+    if (rhs.empty()) return lhs;
+    if (lhs.empty()) return rhs;
+    if (lhs.size() != rhs.size()) {
+        LOG(ERROR) << "Incompatible ranks: " << toString(lhs) << " and " << toString(rhs);
+        return std::nullopt;
+    }
+    std::vector<uint32_t> combined = lhs;
+    for (uint32_t i = 0; i < lhs.size(); i++) {
+        if (lhs[i] == 0) {
+            combined[i] = rhs[i];
+        } else if (rhs[i] != 0 && lhs[i] != rhs[i]) {
+            LOG(ERROR) << "Incompatible dimensions: " << toString(lhs) << " and " << toString(rhs);
+            return std::nullopt;
+        }
+    }
+    return combined;
+}
+
 // Capabilities::operandPerformance utilities.
 // The field Capabilities::operandPerformance is a vector sorted by the field
 // Capabilities::OperandPerformance::type.
@@ -2814,6 +2834,57 @@ V1_3::Model convertToV1_3(const V1_2::Model& model) {
 
 V1_3::Model convertToV1_3(const V1_3::Model& model) {
     return model;
+}
+
+bool compliantWithV1_0(const V1_0::Request& request) {
+    return true;
+}
+
+bool compliantWithV1_0(const V1_3::Request& request) {
+    return std::all_of(request.pools.begin(), request.pools.end(), [](const auto& pool) {
+        return pool.getDiscriminator() == V1_3::Request::MemoryPool::hidl_discriminator::hidlMemory;
+    });
+}
+
+static hidl_memory convertToV1_0(const V1_3::Request::MemoryPool& pool) {
+    switch (pool.getDiscriminator()) {
+        case V1_3::Request::MemoryPool::hidl_discriminator::hidlMemory:
+            return pool.hidlMemory();
+        case V1_3::Request::MemoryPool::hidl_discriminator::token:
+            return hidl_memory{};
+    }
+}
+
+static V1_3::Request::MemoryPool convertToV1_3(const hidl_memory& pool) {
+    V1_3::Request::MemoryPool ret;
+    ret.hidlMemory(pool);
+    return ret;
+}
+
+V1_0::Request convertToV1_0(const V1_0::Request& request) {
+    return request;
+}
+
+V1_0::Request convertToV1_0(const V1_3::Request& request) {
+    if (!compliantWithV1_0(request)) {
+        LOG(ERROR) << "Upcasting non-compliant request " << SHOW_IF_DEBUG(toString(request))
+                   << " from V1_3::Request to V1_0::Request";
+    }
+    hidl_vec<hidl_memory> pools(request.pools.size());
+    std::transform(request.pools.begin(), request.pools.end(), pools.begin(),
+                   [](const auto& pool) { return convertToV1_0(pool); });
+    return {.inputs = request.inputs, .outputs = request.outputs, .pools = std::move(pools)};
+}
+
+V1_3::Request convertToV1_3(const V1_0::Request& request) {
+    hidl_vec<V1_3::Request::MemoryPool> pools(request.pools.size());
+    std::transform(request.pools.begin(), request.pools.end(), pools.begin(),
+                   [](const auto& pool) { return convertToV1_3(pool); });
+    return {.inputs = request.inputs, .outputs = request.outputs, .pools = std::move(pools)};
+}
+
+V1_3::Request convertToV1_3(const V1_3::Request& request) {
+    return request;
 }
 
 #ifdef NN_DEBUGGABLE

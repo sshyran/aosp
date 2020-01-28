@@ -64,7 +64,6 @@ using V1_0::ErrorStatus;
 using V1_0::FusedActivationFunc;
 using V1_0::OperandLifeTime;
 using V1_0::PerformanceInfo;
-using V1_0::Request;
 using V1_0::RequestArgument;
 using V1_1::ExecutionPreference;
 using V1_2::Constant;
@@ -80,7 +79,10 @@ using V1_2::OperationTypeRange;
 using V1_2::OutputShape;
 using V1_2::SymmPerChannelQuantParams;
 using V1_2::Timing;
+using V1_3::BufferDesc;
+using V1_3::BufferRole;
 using V1_3::Capabilities;
+using V1_3::IBuffer;
 using V1_3::IDevice;
 using V1_3::IPreparedModel;
 using V1_3::IPreparedModelCallback;
@@ -90,6 +92,7 @@ using V1_3::OperandType;
 using V1_3::OperandTypeRange;
 using V1_3::Operation;
 using V1_3::OperationType;
+using V1_3::Request;
 
 using CacheToken =
         hardware::hidl_array<uint8_t, static_cast<uint32_t>(Constant::BYTE_SIZE_OF_CACHE_TOKEN)>;
