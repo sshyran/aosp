@@ -72,7 +72,7 @@ class TestPreparedModelLatest : public IPreparedModel {
           mPreparedModelV1_3(V1_3::IPreparedModel::castFrom(preparedModel).withDefault(nullptr)),
           mErrorStatus(errorStatus) {}
 
-    Return<ErrorStatus> execute(const Request& request,
+    Return<ErrorStatus> execute(const V1_0::Request& request,
                                 const sp<V1_0::IExecutionCallback>& callback) override {
         CHECK(mPreparedModelV1_0 != nullptr) << "V1_0 prepared model is nullptr.";
         if (mErrorStatus == ErrorStatus::NONE) {
@@ -83,7 +83,7 @@ class TestPreparedModelLatest : public IPreparedModel {
         }
     }
 
-    Return<ErrorStatus> execute_1_2(const Request& request, MeasureTiming measure,
+    Return<ErrorStatus> execute_1_2(const V1_0::Request& request, MeasureTiming measure,
                                     const sp<V1_2::IExecutionCallback>& callback) override {
         CHECK(mPreparedModelV1_2 != nullptr) << "V1_2 prepared model is nullptr.";
         if (mErrorStatus == ErrorStatus::NONE) {
@@ -98,7 +98,7 @@ class TestPreparedModelLatest : public IPreparedModel {
         }
     }
 
-    Return<ErrorStatus> execute_1_3(const Request& request, MeasureTiming measure,
+    Return<ErrorStatus> execute_1_3(const V1_3::Request& request, MeasureTiming measure,
                                     const sp<V1_2::IExecutionCallback>& callback) override {
         CHECK(mPreparedModelV1_3 != nullptr) << "V1_3 prepared model is nullptr.";
         if (mErrorStatus == ErrorStatus::NONE) {
@@ -113,7 +113,7 @@ class TestPreparedModelLatest : public IPreparedModel {
         }
     }
 
-    Return<void> executeSynchronously(const Request& request, MeasureTiming measure,
+    Return<void> executeSynchronously(const V1_0::Request& request, MeasureTiming measure,
                                       executeSynchronously_cb cb) override {
         CHECK(mPreparedModelV1_2 != nullptr) << "V1_2 prepared model is nullptr.";
         if (mErrorStatus == ErrorStatus::NONE) {
@@ -131,7 +131,7 @@ class TestPreparedModelLatest : public IPreparedModel {
         }
     }
 
-    Return<void> executeSynchronously_1_3(const Request& request, MeasureTiming measure,
+    Return<void> executeSynchronously_1_3(const V1_3::Request& request, MeasureTiming measure,
                                           executeSynchronously_1_3_cb cb) override {
         CHECK(mPreparedModelV1_3 != nullptr) << "V1_3 prepared model is nullptr.";
         if (mErrorStatus == ErrorStatus::NONE) {
@@ -179,17 +179,17 @@ class TestPreparedModel12 : public V1_2::IPreparedModel {
     TestPreparedModel12(sp<V1_0::IPreparedModel> preparedModel, ErrorStatus errorStatus)
         : mLatestPreparedModel(new TestPreparedModelLatest(preparedModel, errorStatus)) {}
 
-    Return<ErrorStatus> execute(const Request& request,
+    Return<ErrorStatus> execute(const V1_0::Request& request,
                                 const sp<V1_0::IExecutionCallback>& callback) override {
         return mLatestPreparedModel->execute(request, callback);
     }
 
-    Return<ErrorStatus> execute_1_2(const Request& request, MeasureTiming measure,
+    Return<ErrorStatus> execute_1_2(const V1_0::Request& request, MeasureTiming measure,
                                     const sp<V1_2::IExecutionCallback>& callback) override {
         return mLatestPreparedModel->execute_1_2(request, measure, callback);
     }
 
-    Return<void> executeSynchronously(const Request& request, MeasureTiming measure,
+    Return<void> executeSynchronously(const V1_0::Request& request, MeasureTiming measure,
                                       executeSynchronously_cb cb) override {
         return mLatestPreparedModel->executeSynchronously(request, measure, cb);
     }
@@ -213,7 +213,7 @@ class TestPreparedModel10 : public V1_0::IPreparedModel {
     TestPreparedModel10(sp<V1_0::IPreparedModel> preparedModel, ErrorStatus errorStatus)
         : mLatestPreparedModel(new TestPreparedModelLatest(preparedModel, errorStatus)) {}
 
-    Return<ErrorStatus> execute(const Request& request,
+    Return<ErrorStatus> execute(const V1_0::Request& request,
                                 const sp<V1_0::IExecutionCallback>& callback) override {
         return mLatestPreparedModel->execute(request, callback);
     }

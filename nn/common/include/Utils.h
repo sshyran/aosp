@@ -337,6 +337,10 @@ int convertErrorStatusToResultCode(hal::ErrorStatus status);
 std::tuple<int, std::vector<hal::OutputShape>, hal::Timing> getExecutionResult(
         hal::ErrorStatus status, std::vector<hal::OutputShape> outputShapes, hal::Timing timing);
 
+// Combine two tensor dimensions, both may have unspecified dimensions or rank.
+std::optional<std::vector<uint32_t>> combineDimensions(const std::vector<uint32_t>& lhs,
+                                                       const std::vector<uint32_t>& rhs);
+
 // Versioning
 
 bool compliantWithV1_0(const hal::V1_0::Capabilities& capabilities);
@@ -436,6 +440,14 @@ hal::hidl_vec<hal::V1_2::Operand> convertToV1_2(const hal::hidl_vec<hal::V1_3::O
 hal::hidl_vec<hal::V1_3::Operand> convertToV1_3(const hal::hidl_vec<hal::V1_0::Operand>& operands);
 hal::hidl_vec<hal::V1_3::Operand> convertToV1_3(const hal::hidl_vec<hal::V1_2::Operand>& operands);
 hal::hidl_vec<hal::V1_3::Operand> convertToV1_3(const hal::hidl_vec<hal::V1_3::Operand>& operands);
+
+bool compliantWithV1_0(const hal::V1_0::Request& request);
+bool compliantWithV1_0(const hal::V1_3::Request& request);
+
+hal::V1_0::Request convertToV1_0(const hal::V1_0::Request& request);
+hal::V1_0::Request convertToV1_0(const hal::V1_3::Request& request);
+hal::V1_3::Request convertToV1_3(const hal::V1_0::Request& request);
+hal::V1_3::Request convertToV1_3(const hal::V1_3::Request& request);
 
 #ifdef NN_DEBUGGABLE
 uint32_t getProp(const char* str, uint32_t defaultValue = 0);

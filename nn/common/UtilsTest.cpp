@@ -13,10 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#include "OperationsUtils.cpp"
-
 #include <gmock/gmock-matchers.h>
 #include <gtest/gtest.h>
+
+#include <vector>
+
+#include "OperationsUtils.cpp"
 
 namespace android {
 namespace nn {
@@ -87,6 +89,39 @@ TEST(ValidateOperandTypeTest, ExtensionTensorWithUnspecifiedRank) {
               ANEURALNETWORKS_NO_ERROR);
     EXPECT_EQ(validateOperandType(type, &info, /*tag=*/"test", /*allowPartial=*/false),
               ANEURALNETWORKS_BAD_DATA);
+}
+
+class CombineDimensionsTest : public ::testing::Test {
+   protected:
+    void testCompatible(const std::vector<uint32_t>& lhs, const std::vector<uint32_t>& rhs,
+                        const std::vector<uint32_t>& expected) {
+        SCOPED_TRACE("lhs = " + toString(lhs) + ", rhs = " + toString(rhs));
+        const auto res = combineDimensions(lhs, rhs);
+        ASSERT_TRUE(res.has_value());
+        EXPECT_EQ(res.value(), expected);
+    }
+
+    void testIncompatible(const std::vector<uint32_t>& lhs, const std::vector<uint32_t>& rhs) {
+        SCOPED_TRACE("lhs = " + toString(lhs) + ", rhs = " + toString(rhs));
+        const auto res = combineDimensions(lhs, rhs);
+        EXPECT_FALSE(res.has_value());
+    }
+};
+
+TEST_F(CombineDimensionsTest, Rank) {
+    testCompatible({}, {1, 2, 3, 4}, {1, 2, 3, 4});
+    testCompatible({1, 2, 3, 4}, {}, {1, 2, 3, 4});
+    testCompatible({}, {}, {});
+    testIncompatible({1, 2, 3}, {1, 2, 3, 4});
+    testIncompatible({1, 2, 3, 4}, {1, 2, 3});
+}
+
+TEST_F(CombineDimensionsTest, Dimensions) {
+    testCompatible({0, 0, 0, 0}, {1, 2, 3, 4}, {1, 2, 3, 4});
+    testCompatible({1, 2, 3, 4}, {0, 0, 0, 0}, {1, 2, 3, 4});
+    testCompatible({0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0});
+    testIncompatible({1, 2, 3, 4}, {2, 2, 3, 4});
+    testIncompatible({1, 2, 3, 4}, {1, 2, 3, 3});
 }
 
 }  // namespace wrapper
