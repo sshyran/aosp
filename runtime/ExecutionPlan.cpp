@@ -147,7 +147,7 @@ OperandTracker::OperandTracker(const ModelBuilder* model, OperationReadyCallback
         for (uint32_t operandIndex : operation.inputs) {
             auto lifetime = mModel->getOperand(operandIndex).lifetime;
             if (lifetime == OperandLifeTime::TEMPORARY_VARIABLE ||
-                lifetime == OperandLifeTime::MODEL_OUTPUT) {
+                lifetime == OperandLifeTime::SUBGRAPH_OUTPUT) {
                 count++;
                 mOperandToOperations.emplace(operandIndex, operationIndex);
             }
@@ -247,7 +247,7 @@ int ExecutionStep::addOperand(uint32_t sourceOperandIndex, uint32_t* toOperandIn
                 return n;
             }
         } break;
-        case OperandLifeTime::TEMPORARY_VARIABLE:  // handled similarly to MODEL_OUTPUT
+        case OperandLifeTime::TEMPORARY_VARIABLE:  // handled similarly to SUBGRAPH_OUTPUT
             if (kind == INPUT) {
                 // The first time we've seen this operand is as an
                 // input.  That means it must be defined by a
@@ -260,10 +260,10 @@ int ExecutionStep::addOperand(uint32_t sourceOperandIndex, uint32_t* toOperandIn
                 mPlan->recordTemporaryDef(sourceOperandIndex, mIndex);
             }
             break;
-        case OperandLifeTime::MODEL_INPUT:
+        case OperandLifeTime::SUBGRAPH_INPUT:
             mModelInputs.emplace_back(sourceOperandIndex, *toOperandIndex);
             break;
-        case OperandLifeTime::MODEL_OUTPUT:  // handled similarly to TEMPORARY_VARIABLE
+        case OperandLifeTime::SUBGRAPH_OUTPUT:  // handled similarly to TEMPORARY_VARIABLE
             if (kind == INPUT) {
                 // The first time we've seen this operand is as an
                 // input.  That means it must be defined by a

@@ -104,7 +104,7 @@ class DeviceMemoryTest : public GeneratedTests {
 
 static OperandType getOperandType(const TestOperand& op, bool testDynamicOutputShape) {
     auto dims = op.dimensions;
-    if (testDynamicOutputShape && op.lifetime == TestOperandLifeTime::MODEL_OUTPUT) {
+    if (testDynamicOutputShape && op.lifetime == TestOperandLifeTime::SUBGRAPH_OUTPUT) {
         dims.assign(dims.size(), 0);
     }
     if (op.type == TestOperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL) {
@@ -132,8 +132,8 @@ void createModel(const TestModel& testModel, bool testDynamicOutputShape, Model*
             case TestOperandLifeTime::NO_VALUE:
                 model->setOperandValue(index, nullptr, 0);
                 break;
-            case TestOperandLifeTime::MODEL_INPUT:
-            case TestOperandLifeTime::MODEL_OUTPUT:
+            case TestOperandLifeTime::SUBGRAPH_INPUT:
+            case TestOperandLifeTime::SUBGRAPH_OUTPUT:
             case TestOperandLifeTime::TEMPORARY_VARIABLE:
                 // Nothing to do here.
                 break;

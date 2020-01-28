@@ -38,7 +38,7 @@ model {
       }
       scale: 0.562797427
       zero_point: 0
-      lifetime: MODEL_INPUT
+      lifetime: SUBGRAPH_INPUT
       channel_quant {
         scales {
         }

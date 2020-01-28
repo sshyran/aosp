@@ -169,8 +169,10 @@ static_assert(static_cast<TestOperationType>(RESIZE_NEAREST_NEIGHBOR) ==
 
 static_assert(static_cast<TestOperandLifeTime>(TEMPORARY_VARIABLE) ==
               TestOperandLifeTime::TEMPORARY_VARIABLE);
-static_assert(static_cast<TestOperandLifeTime>(MODEL_INPUT) == TestOperandLifeTime::MODEL_INPUT);
-static_assert(static_cast<TestOperandLifeTime>(MODEL_OUTPUT) == TestOperandLifeTime::MODEL_OUTPUT);
+static_assert(static_cast<TestOperandLifeTime>(SUBGRAPH_INPUT) ==
+              TestOperandLifeTime::SUBGRAPH_INPUT);
+static_assert(static_cast<TestOperandLifeTime>(SUBGRAPH_OUTPUT) ==
+              TestOperandLifeTime::SUBGRAPH_OUTPUT);
 static_assert(static_cast<TestOperandLifeTime>(CONSTANT_COPY) ==
               TestOperandLifeTime::CONSTANT_COPY);
 static_assert(static_cast<TestOperandLifeTime>(CONSTANT_REFERENCE) ==
