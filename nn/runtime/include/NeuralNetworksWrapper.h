@@ -24,6 +24,7 @@
 #include <math.h>
 #include <optional>
 #include <string>
+#include <utility>
 #include <vector>
 
 namespace android {
@@ -45,6 +46,7 @@ enum class Type {
     TENSOR_QUANT8_SYMM_PER_CHANNEL = ANEURALNETWORKS_TENSOR_QUANT8_SYMM_PER_CHANNEL,
     TENSOR_QUANT16_ASYMM = ANEURALNETWORKS_TENSOR_QUANT16_ASYMM,
     TENSOR_QUANT8_SYMM = ANEURALNETWORKS_TENSOR_QUANT8_SYMM,
+    MODEL = ANEURALNETWORKS_MODEL,
 };
 
 enum class ExecutePreference {

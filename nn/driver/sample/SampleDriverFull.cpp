@@ -44,7 +44,7 @@ Return<void> SampleDriverFull::getSupportedOperations_1_3(const V1_3::Model& mod
                                                           getSupportedOperations_1_3_cb cb) {
     VLOG(DRIVER) << "getSupportedOperations_1_3()";
     if (validateModel(model)) {
-        const size_t count = model.operations.size();
+        const size_t count = model.main.operations.size();
         std::vector<bool> supported(count, true);
         cb(ErrorStatus::NONE, supported);
     } else {

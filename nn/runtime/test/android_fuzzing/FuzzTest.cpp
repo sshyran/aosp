@@ -59,8 +59,8 @@ std::optional<Model> CreateModel(const TestModel& testModel) {
             case TestOperandLifeTime::NO_VALUE:
                 model.setOperandValue(index, nullptr, 0);
                 break;
-            case TestOperandLifeTime::MODEL_INPUT:
-            case TestOperandLifeTime::MODEL_OUTPUT:
+            case TestOperandLifeTime::SUBGRAPH_INPUT:
+            case TestOperandLifeTime::SUBGRAPH_OUTPUT:
             case TestOperandLifeTime::TEMPORARY_VARIABLE:
                 // Nothing to do here.
                 break;

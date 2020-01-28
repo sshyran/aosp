@@ -80,10 +80,10 @@ class TestDriver : public SampleDriver {
             cb(ErrorStatus::INVALID_ARGUMENT, std::vector<bool>());
             return Void();
         }
-        const size_t count = model.operations.size();
+        const size_t count = model.main.operations.size();
         std::vector<bool> supported(count);
         std::transform(
-                model.operations.begin(), model.operations.end(), supported.begin(),
+                model.main.operations.begin(), model.main.operations.end(), supported.begin(),
                 [this](Operation op) { return mSupportedOps[static_cast<int32_t>(op.type)]; });
         cb(ErrorStatus::NONE, supported);
         return Void();
@@ -481,11 +481,10 @@ class TestDriver13 : public SampleDriver {
     Return<void> getSupportedOperations_1_3(const HidlModel& model,
                                             getSupportedOperations_1_3_cb cb) override {
         if (nn::validateModel(model)) {
-            std::vector<bool> supported(model.operations.size(), true);
+            std::vector<bool> supported(model.main.operations.size(), true);
             cb(ErrorStatus::NONE, supported);
         } else {
-            std::vector<bool> supported;
-            cb(ErrorStatus::INVALID_ARGUMENT, supported);
+            cb(ErrorStatus::INVALID_ARGUMENT, {});
         }
         return Void();
     }

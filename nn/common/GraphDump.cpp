@@ -21,9 +21,12 @@
 #include "HalInterfaces.h"
 
 #include <android-base/logging.h>
+#include <algorithm>
 #include <iostream>
 #include <map>
 #include <sstream>
+#include <string>
+#include <utility>
 
 namespace android {
 namespace nn {
@@ -145,21 +148,27 @@ void graphDump(const char* name, const Model& model, std::ostream* outStream) {
 
     // model inputs and outputs (map from operand index to input or output index)
     std::map<uint32_t, uint32_t> modelIO;
-    for (unsigned i = 0, e = model.inputIndexes.size(); i < e; i++) {
-        modelIO.emplace(model.inputIndexes[i], i);
+    for (unsigned i = 0, e = model.main.inputIndexes.size(); i < e; i++) {
+        modelIO.emplace(model.main.inputIndexes[i], i);
     }
-    for (unsigned i = 0, e = model.outputIndexes.size(); i < e; i++) {
-        modelIO.emplace(model.outputIndexes[i], i);
+    for (unsigned i = 0, e = model.main.outputIndexes.size(); i < e; i++) {
+        modelIO.emplace(model.main.outputIndexes[i], i);
+    }
+
+    // TODO(b/147661714): Add subgraph support to GraphDump.
+    if (model.referenced.size() != 0) {
+        dump << "// NOTE: " << model.referenced.size() << " subgraphs omitted" << Dumper::endl;
+        dump << "// TODO(b/147661714): Add subgraph support to GraphDump" << Dumper::endl;
     }
 
     // model operands
-    for (unsigned i = 0, e = model.operands.size(); i < e; i++) {
+    for (unsigned i = 0, e = model.main.operands.size(); i < e; i++) {
         dump << "    d" << i << " [";
         if (modelIO.count(i)) {
             dump << "style=filled fillcolor=black fontcolor=white ";
         }
         dump << "label=\"";
-        const Operand& opnd = model.operands[i];
+        const Operand& opnd = model.main.operands[i];
         const char* kind = nullptr;
         const char* io = nullptr;
         switch (opnd.lifetime) {
@@ -169,14 +178,17 @@ void graphDump(const char* name, const Model& model, std::ostream* outStream) {
             case OperandLifeTime::CONSTANT_REFERENCE:
                 kind = "REF";
                 break;
-            case OperandLifeTime::MODEL_INPUT:
+            case OperandLifeTime::SUBGRAPH_INPUT:
                 io = "input";
                 break;
-            case OperandLifeTime::MODEL_OUTPUT:
+            case OperandLifeTime::SUBGRAPH_OUTPUT:
                 io = "output";
                 break;
             case OperandLifeTime::NO_VALUE:
                 kind = "NO";
+                break;
+            case OperandLifeTime::SUBGRAPH:
+                kind = "SUBGRAPH";
                 break;
             default:
                 // nothing interesting
@@ -207,8 +219,8 @@ void graphDump(const char* name, const Model& model, std::ostream* outStream) {
     }
 
     // model operations
-    for (unsigned i = 0, e = model.operations.size(); i < e; i++) {
-        const Operation& operation = model.operations[i];
+    for (unsigned i = 0, e = model.main.operations.size(); i < e; i++) {
+        const Operation& operation = model.main.operations[i];
         dump << "    n" << i << " [shape=box";
         const uint32_t maxArity = std::max(operation.inputs.size(), operation.outputs.size());
         if (maxArity > 1) {

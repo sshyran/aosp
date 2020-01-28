@@ -127,12 +127,6 @@ class ModelBuilder {
     // Copies the large values to a shared memory, if we have any.
     int copyLargeValuesToSharedMemory();
 
-    // Returns the list of extension names and corresponding numeric "prefixes"
-    // of operand and operation type values used in the model.
-    //
-    // Devices rely on this mapping to interpret extension types.
-    std::vector<hal::Model::ExtensionNameAndPrefix> getExtensionNameToPrefixMap() const;
-
     // The operations of the graph.
     std::vector<hal::Operation> mOperations;
     // The mapping from sorted index to the original index of operations in mOperations.
@@ -180,6 +174,11 @@ class ModelBuilder {
     // 'false' indicates TENSOR_FLOAT32 must be calculated using at least the
     // range and precision of the IEEE 754 32-bit floating-point format.
     bool mRelaxComputationFloat32toFloat16 = false;
+
+    // Models referenced by operands in this model.
+    std::vector<const ModelBuilder*> mReferencedModels;
+
+    class HidlModelMaker;
 };
 
 }  // namespace nn

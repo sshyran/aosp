@@ -244,6 +244,7 @@ const uint32_t kSizeOfDataType[]{
         2,  // ANEURALNETWORKS_TENSOR_QUANT16_ASYMM
         1,  // ANEURALNETWORKS_TENSOR_QUANT8_SYMM
         1,  // ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED
+        0,  // ANEURALNETWORKS_MODEL
 };
 
 static_assert(COUNT(kSizeOfDataType) == kNumberOfDataTypes, "kSizeOfDataType is incorrect");
@@ -264,6 +265,7 @@ const bool kScalarDataType[]{
         false,  // ANEURALNETWORKS_TENSOR_QUANT16_ASYMM
         false,  // ANEURALNETWORKS_TENSOR_QUANT8_SYMM
         false,  // ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED
+        true,   // ANEURALNETWORKS_MODEL
 };
 
 static_assert(COUNT(kScalarDataType) == kNumberOfDataTypes, "kScalarDataType is incorrect");
@@ -355,7 +357,7 @@ void logModelToInfo(const V1_1::Model& model) {
     LOG(INFO) << "operations" << toString(model.operations);
     LOG(INFO) << "inputIndexes" << toString(model.inputIndexes);
     LOG(INFO) << "outputIndexes" << toString(model.outputIndexes);
-    LOG(INFO) << "operandValues size" << model.operandValues.size();
+    LOG(INFO) << "operandValues size " << model.operandValues.size();
     LOG(INFO) << "pools" << SHOW_IF_DEBUG(toString(model.pools));
 }
 
@@ -371,15 +373,22 @@ void logModelToInfo(const V1_2::Model& model) {
     LOG(INFO) << "extensionNameToPrefix" << toString(model.extensionNameToPrefix);
 }
 
+static void logSubgraphToInfo(std::string label, const V1_3::Subgraph& subgraph) {
+    LOG(INFO) << label << ".operands" << toString(subgraph.operands);
+    LOG(INFO) << label << ".operations" << toString(subgraph.operations);
+    LOG(INFO) << label << ".inputIndexes" << toString(subgraph.inputIndexes);
+    LOG(INFO) << label << ".outputIndexes" << toString(subgraph.outputIndexes);
+}
+
 void logModelToInfo(const V1_3::Model& model) {
     LOG(INFO) << "V1_3::Model start";
-    LOG(INFO) << "operands" << toString(model.operands);
-    LOG(INFO) << "operations" << toString(model.operations);
-    LOG(INFO) << "inputIndexes" << toString(model.inputIndexes);
-    LOG(INFO) << "outputIndexes" << toString(model.outputIndexes);
-    LOG(INFO) << "operandValues size" << model.operandValues.size();
+    logSubgraphToInfo("main", model.main);
+    for (uint32_t i = 0, n = model.referenced.size(); i < n; ++i) {
+        logSubgraphToInfo("referenced[" + std::to_string(i) + "]", model.referenced[i]);
+    }
+    LOG(INFO) << "operandValues size " << model.operandValues.size();
     LOG(INFO) << "pools" << SHOW_IF_DEBUG(toString(model.pools));
-    LOG(INFO) << "relaxComputationFloat32toFloat16" << model.relaxComputationFloat32toFloat16;
+    LOG(INFO) << "relaxComputationFloat32toFloat16 " << model.relaxComputationFloat32toFloat16;
     LOG(INFO) << "extensionNameToPrefix" << toString(model.extensionNameToPrefix);
 }
 
@@ -2190,11 +2199,13 @@ static hidl_vec<V1_1::Operation> convertToV1_1(const hidl_vec<V1_0::Operation>& 
 bool compliantWithV1_0(const V1_3::Operand& operand) {
     return validOperandType(static_cast<V1_0::OperandType>(operand.type)) &&
            (nonExtensionOperandTypeIsScalar(static_cast<int>(operand.type)) ||
-            operand.dimensions.size() != 0);
+            operand.dimensions.size() != 0) &&
+           compliantWithV1_0(operand.lifetime);
 }
 
 bool compliantWithV1_2(const V1_3::Operand& operand) {
-    return validOperandType(static_cast<V1_2::OperandType>(operand.type));
+    return validOperandType(static_cast<V1_2::OperandType>(operand.type)) &&
+           compliantWithV1_0(operand.lifetime);
 }
 
 bool compliantWithV1_3(const V1_3::Operand& operand) {
@@ -2209,9 +2220,9 @@ static bool compliantWith(HalVersion version, const V1_3::Model& model,
                    [version](const hidl_memory& pool) { return validatePool(pool, version); });
 
     // A boolean vector indicating whether each operand is compliant with the target HAL version.
-    std::vector<bool> isOperandCompliant(model.operands.size(), false);
-    std::transform(model.operands.begin(), model.operands.end(), isOperandCompliant.begin(),
-                   [&isPoolCompliant, version](const Operand& op) {
+    std::vector<bool> isOperandCompliant(model.main.operands.size(), false);
+    std::transform(model.main.operands.begin(), model.main.operands.end(),
+                   isOperandCompliant.begin(), [&isPoolCompliant, version](const Operand& op) {
                        bool is_operand_compliant = false;
                        switch (version) {
                            case HalVersion::UNKNOWN:
@@ -2248,20 +2259,20 @@ static bool compliantWith(HalVersion version, const V1_3::Model& model,
         int error = validateOperation(
                 static_cast<int32_t>(op.type), op.inputs.size(),
                 op.inputs.size() > 0 ? op.inputs.data() : nullptr, op.outputs.size(),
-                op.outputs.size() > 0 ? op.outputs.data() : nullptr, model.operands, version);
+                op.outputs.size() > 0 ? op.outputs.data() : nullptr, model.main.operands, version);
         return error == ANEURALNETWORKS_NO_ERROR;
     };
 
     if (noncompliantOperations) {
         CHECK(noncompliantOperations->empty());
-        for (uint32_t idx = 0; idx < model.operations.size(); ++idx) {
-            if (!localValidateOperation(model.operations[idx])) {
+        for (uint32_t idx = 0; idx < model.main.operations.size(); ++idx) {
+            if (!localValidateOperation(model.main.operations[idx])) {
                 noncompliantOperations->insert(idx);
             }
         }
         return noncompliantOperations->empty();
     } else {
-        return std::all_of(model.operations.begin(), model.operations.end(),
+        return std::all_of(model.main.operations.begin(), model.main.operations.end(),
                            localValidateOperation);
     }
 }
@@ -2509,10 +2520,6 @@ V1_0::OperandType convertToV1_0(const V1_3::OperandType& operandType) {
     return static_cast<V1_0::OperandType>(operandType);
 }
 
-V1_0::OperandLifeTime convertToV1_0(const V1_0::OperandLifeTime& operandLifeTime) {
-    return operandLifeTime;
-}
-
 template <typename InExtraParams, typename OutExtraParams>
 OutExtraParams copyExtraParams(const InExtraParams& extraParams) {
     OutExtraParams out;
@@ -2531,6 +2538,42 @@ OutExtraParams copyExtraParams(const InExtraParams& extraParams) {
         } break;
     }
     return out;
+}
+
+bool compliantWithV1_0(hal::V1_0::OperandLifeTime lifetime) {
+    return true;
+}
+
+bool compliantWithV1_0(hal::V1_3::OperandLifeTime lifetime) {
+    return lifetime != V1_3::OperandLifeTime::SUBGRAPH;
+}
+
+bool compliantWithV1_3(hal::V1_0::OperandLifeTime lifetime) {
+    return true;
+}
+
+bool compliantWithV1_3(hal::V1_3::OperandLifeTime lifetime) {
+    return true;
+}
+
+V1_0::OperandLifeTime convertToV1_0(V1_0::OperandLifeTime lifetime) {
+    return lifetime;
+}
+
+V1_0::OperandLifeTime convertToV1_0(V1_3::OperandLifeTime lifetime) {
+    if (!compliantWithV1_0(lifetime)) {
+        LOG(ERROR) << "Upcasting non-compliant lifetime " << toString(lifetime)
+                   << " from V1_3 to V1_0";
+    }
+    return static_cast<V1_0::OperandLifeTime>(lifetime);
+}
+
+V1_3::OperandLifeTime convertToV1_3(V1_0::OperandLifeTime lifetime) {
+    return static_cast<V1_3::OperandLifeTime>(lifetime);
+}
+
+V1_3::OperandLifeTime convertToV1_3(V1_3::OperandLifeTime lifetime) {
+    return lifetime;
 }
 
 V1_0::Operand convertToV1_0(const V1_2::Operand& operand) {
@@ -2581,7 +2624,7 @@ V1_3::Operand convertToV1_3(const V1_0::Operand& operand) {
             .numberOfConsumers = operand.numberOfConsumers,
             .scale = operand.scale,
             .zeroPoint = operand.zeroPoint,
-            .lifetime = operand.lifetime,
+            .lifetime = convertToV1_3(operand.lifetime),
             .location = operand.location};
 }
 
@@ -2591,7 +2634,7 @@ V1_3::Operand convertToV1_3(const V1_2::Operand& operand) {
             .numberOfConsumers = operand.numberOfConsumers,
             .scale = operand.scale,
             .zeroPoint = operand.zeroPoint,
-            .lifetime = operand.lifetime,
+            .lifetime = convertToV1_3(operand.lifetime),
             .location = operand.location,
             .extraParams = copyExtraParams<V1_2::Operand::ExtraParams, V1_3::Operand::ExtraParams>(
                     operand.extraParams)};
@@ -2690,10 +2733,10 @@ V1_0::Model convertToV1_0(const V1_3::Model& model) {
         LOG(ERROR) << "Upcasting non-compliant model " << SHOW_IF_DEBUG(toString(model))
                    << " from V1_3::Model to V1_0::Model";
     }
-    return {.operands = convertToV1_0(model.operands),
-            .operations = uncheckedConvertToV1_0(model.operations),
-            .inputIndexes = model.inputIndexes,
-            .outputIndexes = model.outputIndexes,
+    return {.operands = convertToV1_0(model.main.operands),
+            .operations = uncheckedConvertToV1_0(model.main.operations),
+            .inputIndexes = model.main.inputIndexes,
+            .outputIndexes = model.main.outputIndexes,
             .operandValues = model.operandValues,
             .pools = model.pools};
 }
@@ -2731,35 +2774,14 @@ V1_1::Model convertToV1_1(const V1_3::Model& model) {
         LOG(ERROR) << "Upcasting non-compliant model " << SHOW_IF_DEBUG(toString(model))
                    << " from V1_3::Model to V1_1::Model";
     }
-    return {.operands = convertToV1_0(model.operands),  // Operands in 1.1 and 1.0 are identical.
-            .operations = uncheckedConvertToV1_1(model.operations),
-            .inputIndexes = model.inputIndexes,
-            .outputIndexes = model.outputIndexes,
+    return {// Operands in 1.1 and 1.0 are identical.
+            .operands = convertToV1_0(model.main.operands),
+            .operations = uncheckedConvertToV1_1(model.main.operations),
+            .inputIndexes = model.main.inputIndexes,
+            .outputIndexes = model.main.outputIndexes,
             .operandValues = model.operandValues,
             .pools = model.pools,
             .relaxComputationFloat32toFloat16 = model.relaxComputationFloat32toFloat16};
-}
-
-static hidl_vec<V1_2::Model::ExtensionNameAndPrefix> convertToV1_2(
-        const hidl_vec<V1_3::Model::ExtensionNameAndPrefix>& extensionNameAndPrefix) {
-    hidl_vec<V1_2::Model::ExtensionNameAndPrefix> result(extensionNameAndPrefix.size());
-    std::transform(extensionNameAndPrefix.begin(), extensionNameAndPrefix.end(), result.begin(),
-                   [](const V1_3::Model::ExtensionNameAndPrefix& nameAndPrefix)
-                           -> V1_2::Model::ExtensionNameAndPrefix {
-                       return {.name = nameAndPrefix.name, .prefix = nameAndPrefix.prefix};
-                   });
-    return result;
-}
-
-static hidl_vec<V1_3::Model::ExtensionNameAndPrefix> convertToV1_3(
-        const hidl_vec<V1_2::Model::ExtensionNameAndPrefix>& extensionNameAndPrefix) {
-    hidl_vec<V1_3::Model::ExtensionNameAndPrefix> result(extensionNameAndPrefix.size());
-    std::transform(extensionNameAndPrefix.begin(), extensionNameAndPrefix.end(), result.begin(),
-                   [](const V1_2::Model::ExtensionNameAndPrefix& nameAndPrefix)
-                           -> V1_3::Model::ExtensionNameAndPrefix {
-                       return {.name = nameAndPrefix.name, .prefix = nameAndPrefix.prefix};
-                   });
-    return result;
 }
 
 V1_2::Model convertToV1_2(const V1_0::Model& model) {
@@ -2791,45 +2813,45 @@ V1_2::Model convertToV1_2(const V1_3::Model& model) {
         LOG(ERROR) << "Upcasting non-compliant model " << SHOW_IF_DEBUG(toString(model))
                    << " from V1_3::Model to V1_2::Model";
     }
-    return {.operands = convertToV1_2(model.operands),
-            .operations = uncheckedConvertToV1_2(model.operations),
-            .inputIndexes = model.inputIndexes,
-            .outputIndexes = model.outputIndexes,
+    return {.operands = convertToV1_2(model.main.operands),
+            .operations = uncheckedConvertToV1_2(model.main.operations),
+            .inputIndexes = model.main.inputIndexes,
+            .outputIndexes = model.main.outputIndexes,
             .operandValues = model.operandValues,
             .pools = model.pools,
             .relaxComputationFloat32toFloat16 = model.relaxComputationFloat32toFloat16,
-            .extensionNameToPrefix = convertToV1_2(model.extensionNameToPrefix)};
+            .extensionNameToPrefix = model.extensionNameToPrefix};
 }
 
 V1_3::Model convertToV1_3(const V1_0::Model& model) {
-    return {.operands = convertToV1_3(model.operands),
-            .operations = convertToV1_3(model.operations),
-            .inputIndexes = model.inputIndexes,
-            .outputIndexes = model.outputIndexes,
+    return {.main = {.operands = convertToV1_3(model.operands),
+                     .operations = convertToV1_3(model.operations),
+                     .inputIndexes = model.inputIndexes,
+                     .outputIndexes = model.outputIndexes},
             .operandValues = model.operandValues,
             .pools = model.pools,
             .relaxComputationFloat32toFloat16 = false};
 }
 
 V1_3::Model convertToV1_3(const V1_1::Model& model) {
-    return {.operands = convertToV1_3(model.operands),
-            .operations = convertToV1_3(model.operations),
-            .inputIndexes = model.inputIndexes,
-            .outputIndexes = model.outputIndexes,
+    return {.main = {.operands = convertToV1_3(model.operands),
+                     .operations = convertToV1_3(model.operations),
+                     .inputIndexes = model.inputIndexes,
+                     .outputIndexes = model.outputIndexes},
             .operandValues = model.operandValues,
             .pools = model.pools,
             .relaxComputationFloat32toFloat16 = model.relaxComputationFloat32toFloat16};
 }
 
 V1_3::Model convertToV1_3(const V1_2::Model& model) {
-    return {.operands = convertToV1_3(model.operands),
-            .operations = convertToV1_3(model.operations),
-            .inputIndexes = model.inputIndexes,
-            .outputIndexes = model.outputIndexes,
+    return {.main = {.operands = convertToV1_3(model.operands),
+                     .operations = convertToV1_3(model.operations),
+                     .inputIndexes = model.inputIndexes,
+                     .outputIndexes = model.outputIndexes},
             .operandValues = model.operandValues,
             .pools = model.pools,
             .relaxComputationFloat32toFloat16 = model.relaxComputationFloat32toFloat16,
-            .extensionNameToPrefix = convertToV1_3(model.extensionNameToPrefix)};
+            .extensionNameToPrefix = model.extensionNameToPrefix};
 }
 
 V1_3::Model convertToV1_3(const V1_3::Model& model) {
