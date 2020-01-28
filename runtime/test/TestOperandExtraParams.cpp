@@ -49,6 +49,7 @@ class OperandExtraParamsTest : public ::testing::Test {
             case ANEURALNETWORKS_INT32:
             case ANEURALNETWORKS_UINT32:
             case ANEURALNETWORKS_BOOL:
+            case ANEURALNETWORKS_MODEL:
             case ANEURALNETWORKS_OEM_SCALAR:
                 return {.type = dataType,
                         .dimensionCount = 0,
@@ -143,6 +144,7 @@ const uint32_t kOperandCodeNoExtraParams[]{
         ANEURALNETWORKS_TENSOR_BOOL8,
         ANEURALNETWORKS_TENSOR_QUANT8_SYMM,
         ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED,
+        ANEURALNETWORKS_MODEL,
 };
 
 #ifndef NNTEST_ONLY_PUBLIC_API

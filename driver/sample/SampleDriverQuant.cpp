@@ -61,15 +61,15 @@ static bool isQuantized(OperandType opType) {
 }
 
 std::vector<bool> SampleDriverQuant::getSupportedOperationsImpl(const V1_3::Model& model) const {
-    const size_t count = model.operations.size();
+    const size_t count = model.main.operations.size();
     std::vector<bool> supported(count);
     for (size_t i = 0; i < count; i++) {
-        const Operation& operation = model.operations[i];
+        const Operation& operation = model.main.operations[i];
         if (operation.inputs.size() > 0) {
-            const Operand& firstOperand = model.operands[operation.inputs[0]];
+            const Operand& firstOperand = model.main.operands[operation.inputs[0]];
             supported[i] = isQuantized(firstOperand.type);
             if (operation.type == OperationType::SELECT) {
-                const Operand& secondOperand = model.operands[operation.inputs[1]];
+                const Operand& secondOperand = model.main.operands[operation.inputs[1]];
                 supported[i] = isQuantized(secondOperand.type);
             }
         }

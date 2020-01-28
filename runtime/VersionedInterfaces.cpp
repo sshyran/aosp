@@ -809,7 +809,7 @@ std::pair<ErrorStatus, hidl_vec<bool>> VersionedIDevice::getSupportedOperations(
     const Model& model = metaModel.getModel();
 
     auto noneSupported = [&model] {
-        hidl_vec<bool> supported(model.operations.size());
+        hidl_vec<bool> supported(model.main.operations.size());
         std::fill(supported.begin(), supported.end(), false);
         return std::make_pair(ErrorStatus::NONE, std::move(supported));
     };
@@ -819,7 +819,7 @@ std::pair<ErrorStatus, hidl_vec<bool>> VersionedIDevice::getSupportedOperations(
                                            slicedModelOperationIndexToModelOperationIndex) {
         const ErrorStatus status = result.first;
         const hidl_vec<bool>& supported = result.second;
-        hidl_vec<bool> remappedSupported(model.operations.size());
+        hidl_vec<bool> remappedSupported(model.main.operations.size());
         std::fill(remappedSupported.begin(), remappedSupported.end(), false);
         for (size_t i = 0; i < supported.size(); ++i) {
             if (supported[i]) {
