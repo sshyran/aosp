@@ -61,17 +61,17 @@ Return<void> SampleDriverMinimal::getCapabilities_1_3(getCapabilities_1_3_cb cb)
 }
 
 std::vector<bool> SampleDriverMinimal::getSupportedOperationsImpl(const V1_3::Model& model) const {
-    const size_t count = model.operations.size();
+    const size_t count = model.main.operations.size();
     std::vector<bool> supported(count);
     // Simulate supporting just a few ops
     for (size_t i = 0; i < count; i++) {
         supported[i] = false;
-        const Operation& operation = model.operations[i];
+        const Operation& operation = model.main.operations[i];
         switch (operation.type) {
             case OperationType::ADD:
             case OperationType::CONCATENATION:
             case OperationType::CONV_2D: {
-                const Operand& firstOperand = model.operands[operation.inputs[0]];
+                const Operand& firstOperand = model.main.operands[operation.inputs[0]];
                 if (firstOperand.type == OperandType::TENSOR_FLOAT32) {
                     supported[i] = true;
                 }

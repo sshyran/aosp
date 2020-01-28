@@ -249,11 +249,10 @@ class TestDriver13 : public SampleDriver {
     Return<void> getSupportedOperations_1_3(const HidlModel& model,
                                             getSupportedOperations_1_3_cb cb) override {
         if (nn::validateModel(model)) {
-            std::vector<bool> supported(model.operations.size(), true);
+            std::vector<bool> supported(model.main.operations.size(), true);
             cb(ErrorStatus::NONE, supported);
         } else {
-            std::vector<bool> supported;
-            cb(ErrorStatus::INVALID_ARGUMENT, supported);
+            cb(ErrorStatus::INVALID_ARGUMENT, {});
         }
         return Void();
     }
