@@ -131,7 +131,7 @@ class ModelBuilder {
     // of operand and operation type values used in the model.
     //
     // Devices rely on this mapping to interpret extension types.
-    std::vector<hal::Model::ExtensionNameAndPrefix> getExtensionNameToPrefixMap() const;
+    std::vector<hal::ExtensionNameAndPrefix> getExtensionNameToPrefixMap() const;
 
     // The operations of the graph.
     std::vector<hal::Operation> mOperations;
