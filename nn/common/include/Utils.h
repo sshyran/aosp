@@ -449,6 +449,16 @@ hal::V1_0::Request convertToV1_0(const hal::V1_3::Request& request);
 hal::V1_3::Request convertToV1_3(const hal::V1_0::Request& request);
 hal::V1_3::Request convertToV1_3(const hal::V1_3::Request& request);
 
+bool compliantWithV1_0(hal::V1_0::OperandLifeTime lifetime);
+bool compliantWithV1_0(hal::V1_3::OperandLifeTime lifetime);
+bool compliantWithV1_3(hal::V1_0::OperandLifeTime lifetime);
+bool compliantWithV1_3(hal::V1_3::OperandLifeTime lifetime);
+
+hal::V1_0::OperandLifeTime convertToV1_0(hal::V1_0::OperandLifeTime lifetime);
+hal::V1_0::OperandLifeTime convertToV1_0(hal::V1_3::OperandLifeTime lifetime);
+hal::V1_3::OperandLifeTime convertToV1_3(hal::V1_0::OperandLifeTime lifetime);
+hal::V1_3::OperandLifeTime convertToV1_3(hal::V1_3::OperandLifeTime lifetime);
+
 #ifdef NN_DEBUGGABLE
 uint32_t getProp(const char* str, uint32_t defaultValue = 0);
 #endif  // NN_DEBUGGABLE
