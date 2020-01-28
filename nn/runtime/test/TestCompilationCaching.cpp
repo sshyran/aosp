@@ -160,7 +160,7 @@ class CachingDriver : public sample_driver::SampleDriver {
     // Reports supporting all operations.
     Return<void> getSupportedOperations_1_3(const Model& model,
                                             getSupportedOperations_cb cb) override {
-        std::vector<bool> supported(model.operations.size(), true);
+        std::vector<bool> supported(model.main.operations.size(), true);
         cb(ErrorStatus::NONE, supported);
         return Void();
     }

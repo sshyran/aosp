@@ -494,7 +494,7 @@ Signature RandomPartitioningTest::getSignature(const HidlModel& model, const Ope
         return Signature(operationType, -1);
     }
 
-    const Operand& operand = model.operands[operation.inputs[activationFunctionInputIndex]];
+    const Operand& operand = model.main.operands[operation.inputs[activationFunctionInputIndex]];
     CHECK(operand.lifetime == OperandLifeTime::CONSTANT_COPY);
     CHECK(operand.type == OperandType::INT32);
     int32_t value;
@@ -538,16 +538,15 @@ class TestDriver : public SampleDriver {
     Return<void> getSupportedOperations_1_3(const HidlModel& model,
                                             getSupportedOperations_cb cb) override {
         if (nn::validateModel(model)) {
-            const size_t count = model.operations.size();
+            const size_t count = model.main.operations.size();
             std::vector<bool> supported(count);
             for (size_t i = 0; i < count; i++) {
                 supported[i] = (mSignatures.count(RandomPartitioningTest::getSignature(
-                                        model, model.operations[i])) != 0);
+                                        model, model.main.operations[i])) != 0);
             }
             cb(ErrorStatus::NONE, supported);
         } else {
-            std::vector<bool> supported;
-            cb(ErrorStatus::INVALID_ARGUMENT, supported);
+            cb(ErrorStatus::INVALID_ARGUMENT, {});
         }
         return Void();
     }

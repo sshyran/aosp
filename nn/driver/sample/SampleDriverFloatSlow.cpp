@@ -61,12 +61,12 @@ Return<void> SampleDriverFloatSlow::getCapabilities_1_3(getCapabilities_1_3_cb c
 
 std::vector<bool> SampleDriverFloatSlow::getSupportedOperationsImpl(
         const V1_3::Model& model) const {
-    const size_t count = model.operations.size();
+    const size_t count = model.main.operations.size();
     std::vector<bool> supported(count);
     for (size_t i = 0; i < count; i++) {
-        const Operation& operation = model.operations[i];
+        const Operation& operation = model.main.operations[i];
         if (operation.inputs.size() > 0) {
-            const Operand& firstOperand = model.operands[operation.inputs[0]];
+            const Operand& firstOperand = model.main.operands[operation.inputs[0]];
             supported[i] = firstOperand.type == OperandType::TENSOR_FLOAT32;
         }
     }
