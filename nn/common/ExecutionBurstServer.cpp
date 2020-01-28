@@ -63,7 +63,7 @@ class DefaultBurstExecutorWithCache : public ExecutionBurstServer::IBurstExecuto
     void removeCacheEntry(int32_t slot) override { mMemoryCache.erase(slot); }
 
     std::tuple<ErrorStatus, hidl_vec<OutputShape>, Timing> execute(
-            const Request& request, const std::vector<int32_t>& slots,
+            const V1_0::Request& request, const std::vector<int32_t>& slots,
             MeasureTiming measure) override {
         // convert slots to pools
         hidl_vec<hidl_memory> pools(slots.size());
@@ -71,7 +71,7 @@ class DefaultBurstExecutorWithCache : public ExecutionBurstServer::IBurstExecuto
                        [this](int32_t slot) { return mMemoryCache[slot]; });
 
         // create full request
-        Request fullRequest = request;
+        V1_0::Request fullRequest = request;
         fullRequest.pools = std::move(pools);
 
         // setup execution
@@ -156,7 +156,7 @@ std::vector<FmqResultDatum> serialize(ErrorStatus errorStatus,
 }
 
 // deserialize request
-std::optional<std::tuple<Request, std::vector<int32_t>, MeasureTiming>> deserialize(
+std::optional<std::tuple<V1_0::Request, std::vector<int32_t>, MeasureTiming>> deserialize(
         const std::vector<FmqRequestDatum>& data) {
     using discriminator = FmqRequestDatum::hidl_discriminator;
 
@@ -299,7 +299,7 @@ std::optional<std::tuple<Request, std::vector<int32_t>, MeasureTiming>> deserial
     }
 
     // return request
-    Request request = {/*.inputs=*/inputs, /*.outputs=*/outputs, /*.pools=*/{}};
+    V1_0::Request request = {/*.inputs=*/inputs, /*.outputs=*/outputs, /*.pools=*/{}};
     return std::make_tuple(std::move(request), std::move(slots), measure);
 }
 
@@ -328,7 +328,7 @@ RequestChannelReceiver::RequestChannelReceiver(std::unique_ptr<FmqRequestChannel
                                                std::chrono::microseconds pollingTimeWindow)
     : mFmqRequestChannel(std::move(fmqRequestChannel)), kPollingTimeWindow(pollingTimeWindow) {}
 
-std::optional<std::tuple<Request, std::vector<int32_t>, MeasureTiming>>
+std::optional<std::tuple<V1_0::Request, std::vector<int32_t>, MeasureTiming>>
 RequestChannelReceiver::getBlocking() {
     const auto packet = getPacketBlocking();
     if (!packet) {

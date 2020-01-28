@@ -44,8 +44,11 @@ bool validateModel(const T_Model& model);
 // IMPORTANT: This function cannot validate that OEM operation and operands
 // are correctly defined, as these are specific to each implementation.
 // Each driver should do their own validation of OEM types.
-template <class T_Model>
-bool validateRequest(const hal::Request& request, const T_Model& model);
+// For HAL version 1.3 or higher, this function cannot validate that the
+// buffer tokens are valid. Each driver should do their own validation of
+// buffer tokens.
+template <class T_Request, class T_Model>
+bool validateRequest(const T_Request& request, const T_Model& model);
 
 // Verfies that the execution preference is valid.
 bool validateExecutionPreference(hal::ExecutionPreference preference);
@@ -60,6 +63,7 @@ bool validOperandType(hal::V1_3::OperandType operand);
 
 // Verfies that the memory pool is valid in the specified HAL version.
 bool validatePool(const hal::hidl_memory& pool, HalVersion ver = HalVersion::LATEST);
+bool validatePool(const hal::V1_3::Request::MemoryPool& pool, HalVersion ver = HalVersion::LATEST);
 
 }  // namespace nn
 }  // namespace android

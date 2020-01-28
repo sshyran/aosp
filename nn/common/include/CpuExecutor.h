@@ -105,11 +105,12 @@ struct RunTimeOperandInfo {
 class RunTimePoolInfo {
    public:
     static std::optional<RunTimePoolInfo> createFromHidlMemory(const hal::hidl_memory& hidlMemory);
-    static RunTimePoolInfo createFromExistingBuffer(uint8_t* buffer);
+    static RunTimePoolInfo createFromExistingBuffer(uint8_t* buffer, uint32_t size = 0);
 
     uint8_t* getBuffer() const;
     bool flush() const;
-    hal::hidl_memory getHidlMemory() const;
+    const hal::hidl_memory& getHidlMemory() const;
+    uint32_t getSize() const;
 
    private:
     class RunTimePoolInfoImpl;
@@ -120,6 +121,9 @@ class RunTimePoolInfo {
 
 bool setRunTimePoolInfosFromHidlMemories(std::vector<RunTimePoolInfo>* poolInfos,
                                          const hal::hidl_vec<hal::hidl_memory>& pools);
+
+bool setRunTimePoolInfosFromMemoryPools(std::vector<RunTimePoolInfo>* poolInfos,
+                                        const hal::hidl_vec<hal::Request::MemoryPool>& pools);
 
 // This class is used to execute a model on the CPU.
 class CpuExecutor {
