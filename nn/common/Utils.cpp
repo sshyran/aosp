@@ -2199,11 +2199,13 @@ static hidl_vec<V1_1::Operation> convertToV1_1(const hidl_vec<V1_0::Operation>& 
 bool compliantWithV1_0(const V1_3::Operand& operand) {
     return validOperandType(static_cast<V1_0::OperandType>(operand.type)) &&
            (nonExtensionOperandTypeIsScalar(static_cast<int>(operand.type)) ||
-            operand.dimensions.size() != 0);
+            operand.dimensions.size() != 0) &&
+           compliantWithV1_0(operand.lifetime);
 }
 
 bool compliantWithV1_2(const V1_3::Operand& operand) {
-    return validOperandType(static_cast<V1_2::OperandType>(operand.type));
+    return validOperandType(static_cast<V1_2::OperandType>(operand.type)) &&
+           compliantWithV1_0(operand.lifetime);
 }
 
 bool compliantWithV1_3(const V1_3::Operand& operand) {
@@ -2518,10 +2520,6 @@ V1_0::OperandType convertToV1_0(const V1_3::OperandType& operandType) {
     return static_cast<V1_0::OperandType>(operandType);
 }
 
-V1_0::OperandLifeTime convertToV1_0(const V1_0::OperandLifeTime& operandLifeTime) {
-    return operandLifeTime;
-}
-
 template <typename InExtraParams, typename OutExtraParams>
 OutExtraParams copyExtraParams(const InExtraParams& extraParams) {
     OutExtraParams out;
@@ -2540,6 +2538,42 @@ OutExtraParams copyExtraParams(const InExtraParams& extraParams) {
         } break;
     }
     return out;
+}
+
+bool compliantWithV1_0(hal::V1_0::OperandLifeTime lifetime) {
+    return true;
+}
+
+bool compliantWithV1_0(hal::V1_3::OperandLifeTime lifetime) {
+    return lifetime != V1_3::OperandLifeTime::SUBGRAPH;
+}
+
+bool compliantWithV1_3(hal::V1_0::OperandLifeTime lifetime) {
+    return true;
+}
+
+bool compliantWithV1_3(hal::V1_3::OperandLifeTime lifetime) {
+    return true;
+}
+
+V1_0::OperandLifeTime convertToV1_0(V1_0::OperandLifeTime lifetime) {
+    return lifetime;
+}
+
+V1_0::OperandLifeTime convertToV1_0(V1_3::OperandLifeTime lifetime) {
+    if (!compliantWithV1_0(lifetime)) {
+        LOG(ERROR) << "Upcasting non-compliant lifetime " << toString(lifetime)
+                   << " from V1_3 to V1_0";
+    }
+    return static_cast<V1_0::OperandLifeTime>(lifetime);
+}
+
+V1_3::OperandLifeTime convertToV1_3(V1_0::OperandLifeTime lifetime) {
+    return static_cast<V1_3::OperandLifeTime>(lifetime);
+}
+
+V1_3::OperandLifeTime convertToV1_3(V1_3::OperandLifeTime lifetime) {
+    return lifetime;
 }
 
 V1_0::Operand convertToV1_0(const V1_2::Operand& operand) {
@@ -2590,7 +2624,7 @@ V1_3::Operand convertToV1_3(const V1_0::Operand& operand) {
             .numberOfConsumers = operand.numberOfConsumers,
             .scale = operand.scale,
             .zeroPoint = operand.zeroPoint,
-            .lifetime = operand.lifetime,
+            .lifetime = convertToV1_3(operand.lifetime),
             .location = operand.location};
 }
 
@@ -2600,7 +2634,7 @@ V1_3::Operand convertToV1_3(const V1_2::Operand& operand) {
             .numberOfConsumers = operand.numberOfConsumers,
             .scale = operand.scale,
             .zeroPoint = operand.zeroPoint,
-            .lifetime = operand.lifetime,
+            .lifetime = convertToV1_3(operand.lifetime),
             .location = operand.location,
             .extraParams = copyExtraParams<V1_2::Operand::ExtraParams, V1_3::Operand::ExtraParams>(
                     operand.extraParams)};

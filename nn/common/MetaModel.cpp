@@ -109,6 +109,19 @@ hal::V1_2::Operand convertTo<hal::V1_2::Operand>(Operand operand) {
     return convertToV1_2(operand);
 }
 
+// Dispatcher mechanism for calling an appropriate convertToV1_* given the
+// desired return type.  Note that there are no V1_[12]::OperandLifeTime types.
+template <typename T_ReturnType>
+T_ReturnType convertTo(OperandLifeTime lifetime);
+template <>
+hal::V1_0::OperandLifeTime convertTo<hal::V1_0::OperandLifeTime>(OperandLifeTime lifetime) {
+    return convertToV1_0(lifetime);
+}
+template <>
+hal::V1_3::OperandLifeTime convertTo<hal::V1_3::OperandLifeTime>(OperandLifeTime lifetime) {
+    return lifetime;
+}
+
 // Dispatcher mechanism for calling an appropriate compliantWithV1_* given the
 // desired target model type.
 template <typename T_SlicedModel>
@@ -240,7 +253,7 @@ class MetaModel::OrigOperandToSlicedInputOperandIndex {
 
         // Create
         operand.numberOfConsumers = 0;
-        operand.lifetime = OperandLifeTime::SUBGRAPH_INPUT;
+        operand.lifetime = convertTo<decltype(operand.lifetime)>(OperandLifeTime::SUBGRAPH_INPUT);
         operand.location = {};
         uint32_t slicedOperandIndex =
                 extend(&mSlicedOperands, convertTo<T_SlicedOperand>(operand)).first;
@@ -387,18 +400,20 @@ void MetaModel::processOperations(
                 (*origOperandIndexToSlicedIndex)[origOperandIndex] = slicedOperandIndex;
                 slicedOperation.outputs[outputNum] = slicedOperandIndex;
 
+                const auto subgraphOutputLifetime = convertTo<decltype(slicedOperand.lifetime)>(
+                        OperandLifeTime::SUBGRAPH_OUTPUT);
                 if (!inputOperandIndexesOfCompliantOperations.count(origOperandIndex) &&
                     origOperand.numberOfConsumers) {
                     // Was consumed only by noncompliant operations; convert to
                     // an output of the sliced model.
-                    slicedOperand.lifetime = OperandLifeTime::SUBGRAPH_OUTPUT;
+                    slicedOperand.lifetime = subgraphOutputLifetime;
                 }
 
                 VLOG(COMPILATION) << "origOperandIndexToSlicedIndex compliant output created "
                                   << origOperandIndex << " -> " << slicedOperandIndex << ": "
                                   << toString(slicedOperand);
 
-                if (slicedOperand.lifetime == OperandLifeTime::SUBGRAPH_OUTPUT) {
+                if (slicedOperand.lifetime == subgraphOutputLifetime) {
                     extend(&slice->mHidlModel.outputIndexes, slicedOperandIndex);
                 }
             }
