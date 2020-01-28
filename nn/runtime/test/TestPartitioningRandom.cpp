@@ -845,7 +845,7 @@ TEST_P(RandomPartitioningTest, Test) {
         // We begin by deciding what kind of input each (normal) operation will be; we don't
         // actually pick input operand indexes at this time, because we might override this
         // decision later.
-        enum InputKind { IK_MODEL_INPUT, IK_OPERATION_OUTPUT, IK_VALUE };
+        enum InputKind { IK_SUBGRAPH_INPUT, IK_OPERATION_OUTPUT, IK_VALUE };
         std::vector<InputKind> normalOperationInputKinds(normalOperationInputCount);
         std::generate(
                 normalOperationInputKinds.begin(), normalOperationInputKinds.end(),
@@ -874,7 +874,7 @@ TEST_P(RandomPartitioningTest, Test) {
                                               std::min(0.3, (1 - double(model.operationCount()) /
                                                                          numOperations)))) {
                         normalOperationInputModelInputCount++;
-                        return IK_MODEL_INPUT;
+                        return IK_SUBGRAPH_INPUT;
                     }
 
                     // Else output of an existing operation.
@@ -895,7 +895,7 @@ TEST_P(RandomPartitioningTest, Test) {
         }
         if (modelInputs.empty()) {
             CHECK(model.operationCount() == 0);
-            force(IK_MODEL_INPUT);
+            force(IK_SUBGRAPH_INPUT);
         }
 
         // Finally create the normal inputs.
@@ -903,7 +903,7 @@ TEST_P(RandomPartitioningTest, Test) {
         for (unsigned i = 0; i < normalOperationInputCount; i++) {
             uint32_t operandIndex = ~0U;
             switch (normalOperationInputKinds[i]) {
-                case IK_MODEL_INPUT: {
+                case IK_SUBGRAPH_INPUT: {
                     if (!modelInputs.empty() && (randFrac() < 0.5)) {
                         operandIndex = modelInputs[randUInt(modelInputs.size())];
                     } else {
