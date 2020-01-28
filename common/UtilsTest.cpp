@@ -57,8 +57,7 @@ TEST(CalculateBroadcastedShapeTest, FailsOnIncompatible) {
 }
 
 static int32_t getExtensionType(uint16_t extensionPrefix, uint16_t typeWithinExtension) {
-    constexpr uint8_t kLowBitsType =
-            static_cast<uint8_t>(Model::ExtensionTypeEncoding::LOW_BITS_TYPE);
+    constexpr uint8_t kLowBitsType = static_cast<uint8_t>(ExtensionTypeEncoding::LOW_BITS_TYPE);
     int32_t type = (extensionPrefix << kLowBitsType) | typeWithinExtension;
     EXPECT_TRUE(isExtensionOperandType(static_cast<OperandType>(type)));
     return type;
