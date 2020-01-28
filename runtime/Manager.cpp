@@ -91,6 +91,8 @@ class DriverDevice : public Device {
             const std::string& cacheDir,
             const std::optional<CacheToken>& maybeToken) const override;
 
+    std::pair<int, std::unique_ptr<Memory>> allocate(const MemoryDescriptor& desc) const override;
+
    private:
     const std::shared_ptr<VersionedIDevice> kInterface;
 
@@ -105,11 +107,17 @@ class DriverDevice : public Device {
 // A PreparedModel with underlying IPreparedModel instance return by actual driver.
 class DriverPreparedModel : public PreparedModel {
    public:
-    DriverPreparedModel(const std::shared_ptr<VersionedIPreparedModel>& preparedModel)
-        : mPreparedModel(preparedModel) {
+    DriverPreparedModel(const Device* device,
+                        const std::shared_ptr<VersionedIPreparedModel>& preparedModel)
+        : mDevice(device), mPreparedModel(preparedModel) {
+        CHECK(mDevice != nullptr);
         CHECK(mPreparedModel != nullptr);
     }
 
+    const Device* getDevice() const override { return mDevice; }
+    std::shared_ptr<VersionedIPreparedModel> getInterface() const override {
+        return mPreparedModel;
+    }
     std::tuple<int, std::vector<OutputShape>, Timing> execute(
             const std::vector<ModelArgumentInfo>& inputs,
             const std::vector<ModelArgumentInfo>& outputs, const MemoryTracker& memories,
@@ -122,6 +130,7 @@ class DriverPreparedModel : public PreparedModel {
     }
 
    private:
+    const Device* mDevice;
     const std::shared_ptr<VersionedIPreparedModel> mPreparedModel;
 };
 
@@ -216,7 +225,27 @@ std::pair<int, std::shared_ptr<PreparedModel>> DriverDevice::prepareModel(
         return {n, nullptr};
     }
     CHECK(preparedModel != nullptr) << "prepareModel returned nullptr without error code";
-    return {ANEURALNETWORKS_NO_ERROR, std::make_shared<DriverPreparedModel>(preparedModel)};
+    return {ANEURALNETWORKS_NO_ERROR, std::make_shared<DriverPreparedModel>(this, preparedModel)};
+}
+
+std::pair<int, std::unique_ptr<Memory>> DriverDevice::allocate(const MemoryDescriptor& desc) const {
+    const BufferDesc hidlDesc = {.dimensions = desc.dimensions};
+    std::vector<std::shared_ptr<VersionedIPreparedModel>> preparedModels(
+            desc.preparedModels.size());
+    std::transform(desc.preparedModels.begin(), desc.preparedModels.end(), preparedModels.begin(),
+                   [](const auto* preparedModel) {
+                       const auto versionedPreparedModel = preparedModel->getInterface();
+                       CHECK(versionedPreparedModel != nullptr);
+                       return versionedPreparedModel;
+                   });
+    auto [status, buffer, token] =
+            kInterface->allocate(hidlDesc, preparedModels, desc.inputRoles, desc.outputRoles);
+    if (status != ErrorStatus::NONE) {
+        LOG(ERROR) << "DriverDevice::allocate -- memory allocation on device " << getName()
+                   << " failed!";
+        return {convertErrorStatusToResultCode(status), nullptr};
+    }
+    return MemoryFromDevice::create(std::move(buffer), token);
 }
 
 // Figures out how to place each of the input or outputs in a buffer. This just
@@ -309,7 +338,7 @@ std::tuple<int, std::vector<OutputShape>, Timing> DriverPreparedModel::execute(
     uint32_t count = localMemories.size();
     request.pools.resize(count);
     for (uint32_t i = 0; i < count; i++) {
-        request.pools[i] = localMemories[i]->getHidlMemory();
+        request.pools[i] = localMemories[i]->getMemoryPool();
     }
 
     NNTRACE_FULL_SWITCH(NNTRACE_LAYER_IPC, NNTRACE_PHASE_EXECUTION,
@@ -321,19 +350,23 @@ std::tuple<int, std::vector<OutputShape>, Timing> DriverPreparedModel::execute(
 
     // compute using burst if present
     const bool burstCompute = (burstController != nullptr);
-    bool burstFallback = false;
+    bool burstFallback = true;
     if (burstCompute) {
-        std::vector<intptr_t> memoryIds;
-        memoryIds.reserve(localMemories.size());
-        for (const Memory* memory : localMemories) {
-            memory->usedBy(burstController);
-            memoryIds.push_back(memory->getKey());
-        }
+        const bool compliant = compliantWithV1_0(request);
+        if (compliant) {
+            V1_0::Request request10 = convertToV1_0(request);
+            std::vector<intptr_t> memoryIds;
+            memoryIds.reserve(localMemories.size());
+            for (const Memory* memory : localMemories) {
+                memory->usedBy(burstController);
+                memoryIds.push_back(memory->getKey());
+            }
 
-        VLOG(EXECUTION) << "Before ExecutionBurstController->compute() "
-                        << SHOW_IF_DEBUG(toString(request));
-        std::tie(n, outputShapes, timing, burstFallback) =
-                burstController->compute(request, measure, memoryIds);
+            VLOG(EXECUTION) << "Before ExecutionBurstController->compute() "
+                            << SHOW_IF_DEBUG(toString(request10));
+            std::tie(n, outputShapes, timing, burstFallback) =
+                    burstController->compute(request10, measure, memoryIds);
+        }
     }
 
     // compute from IPreparedModel if either:
@@ -399,6 +432,12 @@ class CpuDevice : public Device {
             const std::string& cacheDir,
             const std::optional<CacheToken>& maybeToken) const override;
 
+    std::pair<int, std::unique_ptr<Memory>> allocate(const MemoryDescriptor&) const override {
+        // CpuDevice does not have a preferred memory domain or data layout, return failure to
+        // fallback to ashmem.
+        return {ANEURALNETWORKS_OP_FAILED, nullptr};
+    }
+
    private:
     CpuDevice() = default;
     const int64_t kFeatureLevel = __ANDROID_API__;
@@ -417,6 +456,9 @@ class CpuPreparedModel : public PreparedModel {
     // a prepared model object if successfully created. Returns an error code
     // and nullptr otherwise.
     static std::pair<int, std::shared_ptr<PreparedModel>> create(Model hidlModel);
+
+    const Device* getDevice() const override { return CpuDevice::get().get(); }
+    std::shared_ptr<VersionedIPreparedModel> getInterface() const override { return nullptr; }
 
     std::tuple<int, std::vector<OutputShape>, Timing> execute(
             const std::vector<ModelArgumentInfo>& inputs,

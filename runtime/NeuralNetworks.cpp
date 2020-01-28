@@ -22,6 +22,13 @@
 
 #include "NeuralNetworks.h"
 
+#include <vndk/hardware_buffer.h>
+
+#include <algorithm>
+#include <cstddef>
+#include <memory>
+#include <vector>
+
 #include "BurstBuilder.h"
 #include "Callbacks.h"
 #include "CompilationBuilder.h"
@@ -35,12 +42,6 @@
 #include "NeuralNetworksOEM.h"
 #include "Tracing.h"
 #include "Utils.h"
-
-#include <vndk/hardware_buffer.h>
-
-#include <cstddef>
-#include <memory>
-#include <vector>
 
 using namespace android::nn::hal;
 
@@ -818,6 +819,105 @@ int ANeuralNetworksExecution_burstCompute(ANeuralNetworksExecution* execution,
     b->unlock();
 
     return n;
+}
+
+int ANeuralNetworksMemoryDesc_create(ANeuralNetworksMemoryDesc** desc) {
+    NNTRACE_RT(NNTRACE_PHASE_COMPILATION, "ANeuralNetworksMemoryDesc_create");
+    if (desc != nullptr) {
+        *desc = nullptr;
+    }
+    if (!desc) {
+        LOG(ERROR) << "ANeuralNetworksMemoryDesc_create passed a nullptr";
+        return ANEURALNETWORKS_UNEXPECTED_NULL;
+    }
+    auto mb = std::make_unique<MemoryBuilder>();
+    *desc = reinterpret_cast<ANeuralNetworksMemoryDesc*>(mb.release());
+    return ANEURALNETWORKS_NO_ERROR;
+}
+
+void ANeuralNetworksMemoryDesc_free(ANeuralNetworksMemoryDesc* desc) {
+    NNTRACE_RT(NNTRACE_PHASE_TERMINATION, "ANeuralNetworksMemoryDesc_free");
+    // No validation.  Free of nullptr is valid.
+    MemoryBuilder* mb = reinterpret_cast<MemoryBuilder*>(desc);
+    delete mb;
+}
+
+int ANeuralNetworksMemoryDesc_addInputRole(ANeuralNetworksMemoryDesc* desc,
+                                           const ANeuralNetworksCompilation* compilation,
+                                           uint32_t index, float frequency) {
+    NNTRACE_RT(NNTRACE_PHASE_COMPILATION, "ANeuralNetworksMemoryDesc_addInputRole");
+    if (!desc || !compilation) {
+        LOG(ERROR) << "ANeuralNetworksMemoryDesc_addInputRole passed a nullptr";
+        return ANEURALNETWORKS_UNEXPECTED_NULL;
+    }
+    MemoryBuilder* mb = reinterpret_cast<MemoryBuilder*>(desc);
+    const CompilationBuilder* c = reinterpret_cast<const CompilationBuilder*>(compilation);
+    return mb->addRole(*c, IOType::INPUT, index, frequency);
+}
+
+int ANeuralNetworksMemoryDesc_addOutputRole(ANeuralNetworksMemoryDesc* desc,
+                                            const ANeuralNetworksCompilation* compilation,
+                                            uint32_t index, float frequency) {
+    NNTRACE_RT(NNTRACE_PHASE_COMPILATION, "ANeuralNetworksMemoryDesc_addOutputRole");
+    if (!desc || !compilation) {
+        LOG(ERROR) << "ANeuralNetworksMemoryDesc_addOutputRole passed a nullptr";
+        return ANEURALNETWORKS_UNEXPECTED_NULL;
+    }
+    MemoryBuilder* mb = reinterpret_cast<MemoryBuilder*>(desc);
+    const CompilationBuilder* c = reinterpret_cast<const CompilationBuilder*>(compilation);
+    return mb->addRole(*c, IOType::OUTPUT, index, frequency);
+}
+
+int ANeuralNetworksMemoryDesc_setDimensions(ANeuralNetworksMemoryDesc* desc, uint32_t rank,
+                                            const uint32_t* dimensions) {
+    NNTRACE_RT(NNTRACE_PHASE_COMPILATION, "ANeuralNetworksMemoryDesc_setDimensions");
+    if (!desc || (!dimensions && rank > 0)) {
+        LOG(ERROR) << "ANeuralNetworksMemoryDesc_setDimensions passed a nullptr";
+        return ANEURALNETWORKS_UNEXPECTED_NULL;
+    }
+    const std::vector<uint32_t> dims(dimensions, dimensions + rank);
+    MemoryBuilder* mb = reinterpret_cast<MemoryBuilder*>(desc);
+    return mb->setDimensions(dims);
+}
+
+int ANeuralNetworksMemoryDesc_finish(ANeuralNetworksMemoryDesc* desc) {
+    NNTRACE_RT(NNTRACE_PHASE_COMPILATION, "ANeuralNetworksMemoryDesc_finish");
+    if (!desc) {
+        LOG(ERROR) << "ANeuralNetworksMemoryDesc_finish passed a nullptr";
+        return ANEURALNETWORKS_UNEXPECTED_NULL;
+    }
+    MemoryBuilder* mb = reinterpret_cast<MemoryBuilder*>(desc);
+    return mb->finish();
+}
+
+int ANeuralNetworksMemory_createFromDesc(const ANeuralNetworksMemoryDesc* desc,
+                                         ANeuralNetworksMemory** memory) {
+    NNTRACE_RT(NNTRACE_PHASE_COMPILATION, "ANeuralNetworksMemory_createFromDesc");
+    if (memory != nullptr) {
+        *memory = nullptr;
+    }
+    if (!desc || !memory) {
+        LOG(ERROR) << "ANeuralNetworksMemory_createFromDesc passed a nullptr";
+        return ANEURALNETWORKS_UNEXPECTED_NULL;
+    }
+    const MemoryBuilder* mb = reinterpret_cast<const MemoryBuilder*>(desc);
+    auto [n, m] = mb->allocate();
+    if (n != ANEURALNETWORKS_NO_ERROR) {
+        return n;
+    }
+    *memory = reinterpret_cast<ANeuralNetworksMemory*>(m.release());
+    return ANEURALNETWORKS_NO_ERROR;
+}
+
+int ANeuralNetworksMemory_copy(const ANeuralNetworksMemory* src, const ANeuralNetworksMemory* dst) {
+    NNTRACE_RT(NNTRACE_PHASE_EXECUTION, "ANeuralNetworksMemory_copy");
+    if (!src || !dst) {
+        LOG(ERROR) << "ANeuralNetworksMemory_copy passed a nullptr";
+        return ANEURALNETWORKS_UNEXPECTED_NULL;
+    }
+    const Memory* s = reinterpret_cast<const Memory*>(src);
+    const Memory* d = reinterpret_cast<const Memory*>(dst);
+    return Memory::copy(*s, *d);
 }
 
 int ANeuralNetworksMemory_createFromFd(size_t size, int prot, int fd, size_t offset,

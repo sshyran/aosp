@@ -36,8 +36,10 @@ namespace android {
 namespace nn {
 
 // Forward declaration
-class MetaModel;
+class Device;
 class ExecutionBurstController;
+class MetaModel;
+class VersionedIPreparedModel;
 struct ModelArgumentInfo;
 
 // A unified interface for actual driver prepared model as well as the CPU.
@@ -47,6 +49,9 @@ class PreparedModel {
    public:
     PreparedModel() = default;
     virtual ~PreparedModel() = default;
+
+    virtual const Device* getDevice() const = 0;
+    virtual std::shared_ptr<VersionedIPreparedModel> getInterface() const = 0;
 
     // Perform computation with given input/output argument info and memory pools.
     virtual std::tuple<int, std::vector<hal::OutputShape>, hal::Timing> execute(
@@ -86,6 +91,11 @@ class Device {
             const hal::ModelFactory& makeModel, hal::ExecutionPreference preference,
             const std::string& cacheDir,
             const std::optional<hal::CacheToken>& maybeToken) const = 0;
+
+    // The caller is responsible for making sure the MemoryDescriptor only contains PreparedModels
+    // from the same Device.
+    virtual std::pair<int, std::unique_ptr<Memory>> allocate(
+            const MemoryDescriptor& desc) const = 0;
 };
 
 // Manages the NN HAL devices.  Only one instance of this class will exist.
