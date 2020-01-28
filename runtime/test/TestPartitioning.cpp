@@ -260,8 +260,8 @@ uint32_t lookupOperation(std::function<const Operation&(uint32_t)> getOperation,
 
 uint32_t lookupOperation(const HidlModel& model, uint32_t operationIndex) {
     return lookupOperation(
-            [&model](uint32_t index) -> const Operation& { return model.operations[index]; },
-            [&model](uint32_t index) -> const Operand& { return model.operands[index]; },
+            [&model](uint32_t index) -> const Operation& { return model.main.operations[index]; },
+            [&model](uint32_t index) -> const Operand& { return model.main.operands[index]; },
             [&model](uint32_t offset) { return &model.operandValues[offset]; }, operationIndex);
 }
 
@@ -270,10 +270,11 @@ uint32_t lookupOperation(const HidlModel& model, uint32_t operationIndex) {
 void dump(const char* name, const ModelBuilder* model) {
     const HidlModel hidlModel = model->makeHidlModel();
     std::cout << name << ": " << toString(hidlModel) << std::endl;
-    std::cout << "inputs: " << toString(hidlModel.inputIndexes) << std::endl;
-    std::cout << "outputs: " << toString(hidlModel.outputIndexes) << std::endl;
-    for (size_t i = 0, e = hidlModel.operations.size(); i < e; i++) {
-        std::cout << "operation[" << i << "]: " << toString(hidlModel.operations[i]) << std::endl;
+    std::cout << "inputs: " << toString(hidlModel.main.inputIndexes) << std::endl;
+    std::cout << "outputs: " << toString(hidlModel.main.outputIndexes) << std::endl;
+    for (size_t i = 0, e = hidlModel.main.operations.size(); i < e; i++) {
+        std::cout << "operation[" << i << "]: " << toString(hidlModel.main.operations[i])
+                  << std::endl;
     }
 }
 #endif
@@ -348,7 +349,7 @@ class PartitioningDriver : public SampleDriver {
                                          const sp<IPreparedModelCallback>& cb) override {
         ErrorStatus status = ErrorStatus::NONE;
         if (mOEM != OEMYes) {
-            for (const auto& operation : model.operations) {
+            for (const auto& operation : model.main.operations) {
                 if (operation.type == OperationType::OEM_OPERATION) {
                     status = ErrorStatus::INVALID_ARGUMENT;
                     break;
@@ -373,10 +374,10 @@ class PartitioningDriver : public SampleDriver {
             return Void();
         }
 
-        const size_t count = model.operations.size();
+        const size_t count = model.main.operations.size();
         std::vector<bool> supported(count);
         for (size_t i = 0; i < count; i++) {
-            if (model.operations[i].type == OperationType::OEM_OPERATION) {
+            if (model.main.operations[i].type == OperationType::OEM_OPERATION) {
                 supported[i] = (mOEM != OEMNo);
                 continue;
             }
@@ -566,6 +567,7 @@ class PartitioningModel : private WrapperModel {
             case ANEURALNETWORKS_FLOAT32:
             case ANEURALNETWORKS_INT32:
             case ANEURALNETWORKS_UINT32:
+            case ANEURALNETWORKS_MODEL:
             case ANEURALNETWORKS_OEM_SCALAR: {
                 WrapperOperandType wrapperOperandType(wrapperType, {});
                 mWrapperOperandType.push_back(wrapperOperandType);
@@ -901,7 +903,7 @@ class PartitioningTest : public ::testing::Test {
     // comparison algorithm, we encode the "defining operation" index of
     // such an operand as follows:
     // - NO_VALUE       kPseudoDefiningOperationNoValue
-    // - MODEL_INPUT    kPseudoDefiningOperationModelInput0 + (position in list of inputs)
+    // - SUBGRAPH_INPUT kPseudoDefiningOperationModelInput0 + (position in list of inputs)
     // - CONSTANT_COPY  kPseudoDefiningOperationConstantCopy0 + (constant value)
     //                    Note: For the graphs we build in this test, we
     //                          only expect to see 4-byte constants within
@@ -960,8 +962,8 @@ class PartitioningTest : public ::testing::Test {
                     break;
                 }
                 case OperandLifeTime::TEMPORARY_VARIABLE:
-                case OperandLifeTime::MODEL_INPUT:
-                case OperandLifeTime::MODEL_OUTPUT:
+                case OperandLifeTime::SUBGRAPH_INPUT:
+                case OperandLifeTime::SUBGRAPH_OUTPUT:
                     // already handled
                     break;
                 default:
@@ -1754,6 +1756,10 @@ TEST_F(PartitioningTest, Perf) {
     // full operand type (WrapperType plus dimensions plus other attributes).
 
     auto TestType = [](OperandType operandType) {
+        if (operandType == OperandType::SUBGRAPH) {
+            // SUBGRAPH capabilities are handled differently.
+            return;
+        }
         SCOPED_TRACE(toString(operandType));
         // Trivial model consisting solely of OEM operation.  We
         // pick OEM operation because this allows us to use

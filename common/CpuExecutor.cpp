@@ -148,7 +148,7 @@ int OperationExecutionContext::getResultCode() const {
 bool setInfoAndAllocateIfNeeded(RunTimeOperandInfo* info, const Shape& shape, int* result) {
     // For user-provided model output operands, the parameters must match the Shape
     // calculated from the preparation step.
-    if (info->lifetime == OperandLifeTime::MODEL_OUTPUT) {
+    if (info->lifetime == OperandLifeTime::SUBGRAPH_OUTPUT) {
         if (info->type != shape.type) {
             LOG(ERROR) << "Invalid type for model output";
             *result = ANEURALNETWORKS_OP_FAILED;
@@ -607,7 +607,7 @@ int CpuExecutor::run(const Model& model, const Request& request,
     std::vector<RunTimeOperandInfo> operands;
     initializeRunTimeInfo(request, modelPoolInfos, requestPoolInfos, &operands);
     // The model has serialized the operation in execution order.
-    for (const auto& operation : model.operations) {
+    for (const auto& operation : model.main.operations) {
         int n = executeOperation(operation, operands.data());
         if (n != ANEURALNETWORKS_NO_ERROR) {
             finish(n, &operands);
@@ -627,12 +627,12 @@ bool CpuExecutor::initializeRunTimeInfo(const Request& request,
                                         const std::vector<RunTimePoolInfo>& requestPoolInfos,
                                         std::vector<RunTimeOperandInfo>* operands) {
     VLOG(CPUEXE) << "CpuExecutor::initializeRunTimeInfo";
-    const size_t count = mModel->operands.size();
+    const size_t count = mModel->main.operands.size();
     operands->resize(count);
 
     // Start by setting the runtime info to what's in the model.
     for (size_t i = 0; i < count; i++) {
-        const Operand& from = mModel->operands[i];
+        const Operand& from = mModel->main.operands[i];
         RunTimeOperandInfo& to = (*operands)[i];
         to.type = from.type;
         to.dimensions = from.dimensions;
@@ -658,8 +658,8 @@ bool CpuExecutor::initializeRunTimeInfo(const Request& request,
                 to.numberOfUsesLeft = 0;
                 break;
             }
-            case OperandLifeTime::MODEL_INPUT:
-            case OperandLifeTime::MODEL_OUTPUT:
+            case OperandLifeTime::SUBGRAPH_INPUT:
+            case OperandLifeTime::SUBGRAPH_OUTPUT:
             case OperandLifeTime::NO_VALUE:
                 to.buffer = nullptr;
                 to.numberOfUsesLeft = 0;
@@ -706,8 +706,8 @@ bool CpuExecutor::initializeRunTimeInfo(const Request& request,
             }
         }
     };
-    updateForArguments(mModel->inputIndexes, request.inputs);
-    updateForArguments(mModel->outputIndexes, request.outputs);
+    updateForArguments(mModel->main.inputIndexes, request.inputs);
+    updateForArguments(mModel->main.outputIndexes, request.outputs);
 
     return true;
 }
@@ -1719,7 +1719,7 @@ void CpuExecutor::finish(int result, std::vector<RunTimeOperandInfo>* operands) 
     // Only report the output shapes when the result code is NO_ERROR or
     // OUTPUT_INSUFFICIENT_SIZE.
     if (result == ANEURALNETWORKS_NO_ERROR || result == ANEURALNETWORKS_OUTPUT_INSUFFICIENT_SIZE) {
-        const auto& outputs = mModel->outputIndexes;
+        const auto& outputs = mModel->main.outputIndexes;
         mOutputShapes.resize(outputs.size());
         for (uint32_t i = 0; i < outputs.size(); i++) {
             const uint32_t operandIndex = outputs[i];

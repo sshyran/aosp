@@ -109,6 +109,19 @@ hal::V1_2::Operand convertTo<hal::V1_2::Operand>(Operand operand) {
     return convertToV1_2(operand);
 }
 
+// Dispatcher mechanism for calling an appropriate convertToV1_* given the
+// desired return type.  Note that there are no V1_[12]::OperandLifeTime types.
+template <typename T_ReturnType>
+T_ReturnType convertTo(OperandLifeTime lifetime);
+template <>
+hal::V1_0::OperandLifeTime convertTo<hal::V1_0::OperandLifeTime>(OperandLifeTime lifetime) {
+    return convertToV1_0(lifetime);
+}
+template <>
+hal::V1_3::OperandLifeTime convertTo<hal::V1_3::OperandLifeTime>(OperandLifeTime lifetime) {
+    return lifetime;
+}
+
 // Dispatcher mechanism for calling an appropriate compliantWithV1_* given the
 // desired target model type.
 template <typename T_SlicedModel>
@@ -184,6 +197,12 @@ template MetaModel::ReturnedSlice<hal::V1_1::Model> MetaModel::getSlice(
         Slice<hal::V1_1::Model>* slice) const;
 template MetaModel::ReturnedSlice<hal::V1_2::Model> MetaModel::getSlice(
         Slice<hal::V1_2::Model>* slice) const;
+// When adding HAL version 1.4, make sure to handle control flow and referenced
+// subgraphs here properly. A V1_3 sliced model should contain an IF/WHILE and
+// its referenced subgraphs only if there are no V1_4+ operations in those
+// subgraphs.
+// template MetaModel::ReturnedSlice<hal::V1_3::Model> MetaModel::getSlice(
+//         Slice<hal::V1_3::Model>* slice) const;
 
 // Utility class for makeSlice().
 //
@@ -234,7 +253,7 @@ class MetaModel::OrigOperandToSlicedInputOperandIndex {
 
         // Create
         operand.numberOfConsumers = 0;
-        operand.lifetime = OperandLifeTime::MODEL_INPUT;
+        operand.lifetime = convertTo<decltype(operand.lifetime)>(OperandLifeTime::SUBGRAPH_INPUT);
         operand.location = {};
         uint32_t slicedOperandIndex =
                 extend(&mSlicedOperands, convertTo<T_SlicedOperand>(operand)).first;
@@ -310,8 +329,8 @@ void MetaModel::processOperations(
     using SlicedOperation = typename Slice<T_SlicedModel>::Operation;
     using SlicedOperationType = typename Slice<T_SlicedModel>::OperationType;
 
-    const auto& origOperands = mHidlModel.operands;
-    const auto& origOperations = mHidlModel.operations;
+    const auto& origOperands = mHidlModel.main.operands;
+    const auto& origOperations = mHidlModel.main.operations;
     auto& slicedOperands = slice->mHidlModel.operands;
     auto& slicedOperations = slice->mHidlModel.operations;
 
@@ -381,18 +400,20 @@ void MetaModel::processOperations(
                 (*origOperandIndexToSlicedIndex)[origOperandIndex] = slicedOperandIndex;
                 slicedOperation.outputs[outputNum] = slicedOperandIndex;
 
+                const auto subgraphOutputLifetime = convertTo<decltype(slicedOperand.lifetime)>(
+                        OperandLifeTime::SUBGRAPH_OUTPUT);
                 if (!inputOperandIndexesOfCompliantOperations.count(origOperandIndex) &&
                     origOperand.numberOfConsumers) {
                     // Was consumed only by noncompliant operations; convert to
                     // an output of the sliced model.
-                    slicedOperand.lifetime = OperandLifeTime::MODEL_OUTPUT;
+                    slicedOperand.lifetime = subgraphOutputLifetime;
                 }
 
                 VLOG(COMPILATION) << "origOperandIndexToSlicedIndex compliant output created "
                                   << origOperandIndex << " -> " << slicedOperandIndex << ": "
                                   << toString(slicedOperand);
 
-                if (slicedOperand.lifetime == OperandLifeTime::MODEL_OUTPUT) {
+                if (slicedOperand.lifetime == subgraphOutputLifetime) {
                     extend(&slice->mHidlModel.outputIndexes, slicedOperandIndex);
                 }
             }
@@ -406,8 +427,8 @@ MetaModel::Slice<T_SlicedModel> MetaModel::makeSlice() const {
 
     Slice<T_SlicedModel> slice;
 
-    const auto& origOperands = mHidlModel.operands;
-    const auto& origOperations = mHidlModel.operations;
+    const auto& origOperands = mHidlModel.main.operands;
+    const auto& origOperations = mHidlModel.main.operations;
     auto& slicedOperands = slice.mHidlModel.operands;
 
     // Indexes of elements of noncompliant origOperations
@@ -461,7 +482,7 @@ MetaModel::Slice<T_SlicedModel> MetaModel::makeSlice() const {
     // only if it is consumed by at least one compliant operation.  Note that in
     // the sliced model we share all model inputs of the same "type"; and that
     // we may later add model inputs to the sliced model.
-    for (uint32_t origInputIndex : mHidlModel.inputIndexes) {
+    for (uint32_t origInputIndex : mHidlModel.main.inputIndexes) {
         if (inputOperandIndexesOfCompliantOperations.count(origInputIndex)) {
             const uint32_t slicedIndex =
                     origOperandToSlicedInputOperandIndex.getIndex(origOperands[origInputIndex]);

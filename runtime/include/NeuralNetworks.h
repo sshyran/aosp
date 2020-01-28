@@ -196,6 +196,16 @@ typedef enum {
      * Available since API level 30.
      */
     ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED = 14,
+
+    /**
+     * A reference to a model.
+     *
+     * {@link ANeuralNetworksModel_setOperandValueFromModel} must be used to set
+     * the value for an Operand of this type.
+     *
+     * Available since API level 30.
+     */
+    ANEURALNETWORKS_MODEL = 15,
 #endif  // __ANDROID_API__ >= __ANDROID_API_R__
 } OperandCode;
 
@@ -5232,6 +5242,96 @@ typedef enum {
      * Available since API level 30.
      */
     ANEURALNETWORKS_QUANTIZED_LSTM = 95,
+
+    /**
+     * Executes one of the two referenced models as determined by a boolean
+     * value.
+     *
+     * The inputs and outputs of the two referenced models must agree with the
+     * signature of this operation. That is, if the operation has (3 + n) inputs
+     * and m outputs, both models must have n inputs and m outputs with the same
+     * types as the corresponding operation inputs and outputs.
+     *
+     * Inputs:
+     * * 0: A value of type {@link ANEURALNETWORKS_TENSOR_BOOL8} and shape [1]
+     *      that determines which of the two referenced models to execute.
+     * * 1: A {@link ANEURALNETWORKS_MODEL} reference to the model to be
+     *      executed if the condition is true.
+     * * 2: A {@link ANEURALNETWORKS_MODEL} reference to the model to be
+     *      executed if the condition is false.
+     * * 3 ~ (n + 2): Inputs to be passed to the model selected for execution.
+     *
+     * Outputs:
+     * * 0 ~ (m - 1): Outputs produced by the selected model.
+     *
+     * Available since API level 30.
+     */
+    ANEURALNETWORKS_IF = 96,
+
+    /**
+     * Executes the body model until the condition model outputs false.
+     *
+     * The inputs to this operation are the condition model, the body model,
+     * and operand values for the first iteration of the loop. The values are
+     * implicitly split into three groups of input-output, state-only, and
+     * input-only values, as described below.
+     *
+     * The outputs of this operation are the final values of input-output
+     * operands.
+     *
+     * Both the condition and body model receive (m + k + n) inputs.
+     * * The first m (m >= 1) inputs are input-output operands. For the first
+     *   iteration, these are initialized from the corresponding inputs of the
+     *   WHILE operation. In subsequent iterations, their values come from the
+     *   corresponding outputs of the body model produced during the previous
+     *   iteration.
+     * * The next k (k >= 0) inputs are state-only operands. They are similar to
+     *   the input-output operands, except that their values are no longer
+     *   available after the loop terminates.
+     * * The last n (n >= 0) inputs are input-only operands. Their values come
+     *   from the corresponding inputs of the WHILE operation.
+     *
+     * The body model produces (m + k) outputs.
+     * * The first m outputs are input-output operands. They become the outputs
+     *   of the WHILE operation when a termination condition is reached.
+     * * The last k outputs are state-only operands. Their values are no longer
+     *   available after the loop terminates.
+     *
+     * The numbers m, k, and n are inferred by the runtime as follows:
+     *     m = (WHILE operation output count)
+     *     k = (body model output count) - m
+     *     n = (body model input count) - m - k
+     *
+     * The pseudo-code below illustrates the flow of a WHILE operation with
+     * inputs condition, body, initial_input_output, initial_state, input_only
+     * (m = 1, k = 1, n = 1):
+     *
+     *     input_output = initial_input_output
+     *     state = initial_state
+     *     while condition(input_output, state, input_only):
+     *         input_output, state = body(input_output, state, input_only)
+     *     return input_output
+     *
+     * Inputs:
+     * * 0: A {@link ANEURALNETWORKS_MODEL} reference to the condition
+     *      model. The model must have (m + k + n) inputs with
+     *      the same types as the corresponding inputs of the WHILE operation
+     *      and exactly one output of {@link ANEURALNETWORKS_TENSOR_BOOL8}
+     *      and shape [1].
+     * * 1: A {@link ANEURALNETWORKS_MODEL} reference to the body model.
+     *      The model must have (m + k + n) inputs and (m + k) outputs with
+     *      the same types as the corresponding inputs and outputs of the WHILE
+     *      operation.
+     * * (m inputs): Initial values for input-output operands.
+     * * (k inputs): Initial values for state-only operands.
+     * * (n inputs): Values for input-only operands.
+     *
+     * Outputs:
+     * * 0 ~ (m - 1): Outputs produced by the loop.
+     *
+     * Available since API level 30.
+     */
+    ANEURALNETWORKS_WHILE = 97,
 } OperationCode;
 
 /**
@@ -6202,6 +6302,10 @@ int ANeuralNetworksModel_getSupportedOperationsForDevices(
  * ANeuralNetworksCompilation_create}, where the runtime will attempt to recover
  * from such failures.
  *
+ * The model passed to this function is termed the "main model" of the
+ * compilation, to distinguish it from other models referred to by an Operand
+ * of type {@link ANEURALNETWORKS_MODEL} within this compilation.
+ *
  * @param model The {@link ANeuralNetworksModel} to be compiled.
  * @param devices The set of devices. Must not contain duplicates.
  * @param numDevices The number of devices in the set.
@@ -6733,6 +6837,39 @@ int ANeuralNetworksModel_setOperandValueFromMemory(ANeuralNetworksModel* model, 
                                                    size_t offset, size_t length)
         __INTRODUCED_IN(27);
 
+#if __ANDROID_API__ >= 30
+
+/**
+ * Sets an operand to a value that is a reference to another NNAPI model.
+ *
+ * The referenced model must already have been finished by a call to
+ * {@link ANeuralNetworksModel_finish}.
+ *
+ * The {@link ANeuralNetworksModel_relaxComputationFloat32toFloat16} setting of
+ * referenced models is overridden by that setting of the main model of a
+ * compilation.
+ *
+ * The referenced model must outlive the model referring to it.
+ *
+ * Attempting to modify a model once {@link ANeuralNetworksModel_finish} has
+ * been called will return an error.
+ *
+ * See {@link ANeuralNetworksModel} for information on multithreaded usage.
+ *
+ * Available since API level 30.
+ *
+ * @param model The model to be modified.
+ * @param index The index of the model operand we're setting.
+ * @param value The model to be referenced.
+ *
+ * @return ANEURALNETWORKS_NO_ERROR if successful.
+ */
+int ANeuralNetworksModel_setOperandValueFromModel(ANeuralNetworksModel* model, int32_t index,
+                                                  const ANeuralNetworksModel* value)
+        __INTRODUCED_IN(30);
+
+#endif  // __ANDROID_API__ >= 30
+
 /**
  * Add an operation to a model.
  *
@@ -6797,6 +6934,9 @@ int ANeuralNetworksModel_identifyInputsAndOutputs(ANeuralNetworksModel* model, u
  * must be calculated using at least the range and precision of the IEEE 754
  * 32-bit floating-point format.
  *
+ * The relaxComputationFloat32toFloat16 setting of the main model of
+ * a compilation overrides the values of the referenced models.
+ *
  * @param model The model to be modified.
  * @param allow 'true' indicates {@link ANEURALNETWORKS_TENSOR_FLOAT32} may be
  *              calculated with range and/or precision as low as that of the
@@ -6820,7 +6960,11 @@ int ANeuralNetworksModel_relaxComputationFloat32toFloat16(ANeuralNetworksModel* 
 /**
  * Create a {@link ANeuralNetworksCompilation} to compile the given model.
  *
- * <p>This only creates the object. Compilation is only performed once
+ * The model passed to this function is termed the "main model" of the
+ * compilation, to distinguish it from other models referred to by an Operand
+ * of type {@link ANEURALNETWORKS_MODEL} within this compilation.
+ *
+ * <p>This function only creates the object. Compilation is only performed once
  * {@link ANeuralNetworksCompilation_finish} is invoked.</p>
  *
  * <p>{@link ANeuralNetworksCompilation_finish} should be called once

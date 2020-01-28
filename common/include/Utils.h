@@ -32,10 +32,10 @@ namespace android {
 namespace nn {
 
 // The number of data types (OperandCode) defined in NeuralNetworks.h.
-const int kNumberOfDataTypes = 15;
+const int kNumberOfDataTypes = 16;
 
 // The number of operation types (OperationCode) defined in NeuralNetworks.h.
-const int kNumberOfOperationTypes = 96;
+const int kNumberOfOperationTypes = 98;
 
 // The number of execution preferences defined in NeuralNetworks.h.
 const int kNumberOfPreferences = 3;
@@ -448,6 +448,16 @@ hal::V1_0::Request convertToV1_0(const hal::V1_0::Request& request);
 hal::V1_0::Request convertToV1_0(const hal::V1_3::Request& request);
 hal::V1_3::Request convertToV1_3(const hal::V1_0::Request& request);
 hal::V1_3::Request convertToV1_3(const hal::V1_3::Request& request);
+
+bool compliantWithV1_0(hal::V1_0::OperandLifeTime lifetime);
+bool compliantWithV1_0(hal::V1_3::OperandLifeTime lifetime);
+bool compliantWithV1_3(hal::V1_0::OperandLifeTime lifetime);
+bool compliantWithV1_3(hal::V1_3::OperandLifeTime lifetime);
+
+hal::V1_0::OperandLifeTime convertToV1_0(hal::V1_0::OperandLifeTime lifetime);
+hal::V1_0::OperandLifeTime convertToV1_0(hal::V1_3::OperandLifeTime lifetime);
+hal::V1_3::OperandLifeTime convertToV1_3(hal::V1_0::OperandLifeTime lifetime);
+hal::V1_3::OperandLifeTime convertToV1_3(hal::V1_3::OperandLifeTime lifetime);
 
 #ifdef NN_DEBUGGABLE
 uint32_t getProp(const char* str, uint32_t defaultValue = 0);

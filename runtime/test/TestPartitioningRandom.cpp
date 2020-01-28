@@ -494,7 +494,7 @@ Signature RandomPartitioningTest::getSignature(const HidlModel& model, const Ope
         return Signature(operationType, -1);
     }
 
-    const Operand& operand = model.operands[operation.inputs[activationFunctionInputIndex]];
+    const Operand& operand = model.main.operands[operation.inputs[activationFunctionInputIndex]];
     CHECK(operand.lifetime == OperandLifeTime::CONSTANT_COPY);
     CHECK(operand.type == OperandType::INT32);
     int32_t value;
@@ -538,16 +538,15 @@ class TestDriver : public SampleDriver {
     Return<void> getSupportedOperations_1_3(const HidlModel& model,
                                             getSupportedOperations_cb cb) override {
         if (nn::validateModel(model)) {
-            const size_t count = model.operations.size();
+            const size_t count = model.main.operations.size();
             std::vector<bool> supported(count);
             for (size_t i = 0; i < count; i++) {
                 supported[i] = (mSignatures.count(RandomPartitioningTest::getSignature(
-                                        model, model.operations[i])) != 0);
+                                        model, model.main.operations[i])) != 0);
             }
             cb(ErrorStatus::NONE, supported);
         } else {
-            std::vector<bool> supported;
-            cb(ErrorStatus::INVALID_ARGUMENT, supported);
+            cb(ErrorStatus::INVALID_ARGUMENT, {});
         }
         return Void();
     }
@@ -845,7 +844,7 @@ TEST_P(RandomPartitioningTest, Test) {
         // We begin by deciding what kind of input each (normal) operation will be; we don't
         // actually pick input operand indexes at this time, because we might override this
         // decision later.
-        enum InputKind { IK_MODEL_INPUT, IK_OPERATION_OUTPUT, IK_VALUE };
+        enum InputKind { IK_SUBGRAPH_INPUT, IK_OPERATION_OUTPUT, IK_VALUE };
         std::vector<InputKind> normalOperationInputKinds(normalOperationInputCount);
         std::generate(
                 normalOperationInputKinds.begin(), normalOperationInputKinds.end(),
@@ -874,7 +873,7 @@ TEST_P(RandomPartitioningTest, Test) {
                                               std::min(0.3, (1 - double(model.operationCount()) /
                                                                          numOperations)))) {
                         normalOperationInputModelInputCount++;
-                        return IK_MODEL_INPUT;
+                        return IK_SUBGRAPH_INPUT;
                     }
 
                     // Else output of an existing operation.
@@ -895,7 +894,7 @@ TEST_P(RandomPartitioningTest, Test) {
         }
         if (modelInputs.empty()) {
             CHECK(model.operationCount() == 0);
-            force(IK_MODEL_INPUT);
+            force(IK_SUBGRAPH_INPUT);
         }
 
         // Finally create the normal inputs.
@@ -903,7 +902,7 @@ TEST_P(RandomPartitioningTest, Test) {
         for (unsigned i = 0; i < normalOperationInputCount; i++) {
             uint32_t operandIndex = ~0U;
             switch (normalOperationInputKinds[i]) {
-                case IK_MODEL_INPUT: {
+                case IK_SUBGRAPH_INPUT: {
                     if (!modelInputs.empty() && (randFrac() < 0.5)) {
                         operandIndex = modelInputs[randUInt(modelInputs.size())];
                     } else {

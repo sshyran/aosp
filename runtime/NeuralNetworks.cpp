@@ -1023,6 +1023,12 @@ int ANeuralNetworksModel_setOperandValueFromMemory(ANeuralNetworksModel* model, 
     return m->setOperandValueFromMemory(index, mem, offset, length);
 }
 
+int ANeuralNetworksModel_setOperandValueFromModel(ANeuralNetworksModel*, int32_t,
+                                                  const ANeuralNetworksModel*) {
+    // To be implemented...
+    return ANEURALNETWORKS_OP_FAILED;
+}
+
 int ANeuralNetworksModel_addOperation(ANeuralNetworksModel* model,
                                       ANeuralNetworksOperationType type, uint32_t inputCount,
                                       const uint32_t* inputs, uint32_t outputCount,

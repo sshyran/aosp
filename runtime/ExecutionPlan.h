@@ -365,11 +365,11 @@ class ExecutionPlan {
         std::unordered_map<uint32_t, uint32_t> mTemporaryToDefiningStep;
 
         // Map from source operand index to input index of the main model.
-        // Used for all (and only) MODEL_INPUTs of the main model.
+        // Used for all (and only) SUBGRAPH_INPUTs of the main model.
         std::map<uint32_t, uint32_t> mSourceOperandToInputIndex;
 
         // Map from source operand index to output index of the main model.
-        // Used for all (and only) MODEL_OUTPUTs of the main model.
+        // Used for all (and only) SUBGRAPH_OUTPUTs of the main model.
         std::map<uint32_t, uint32_t> mSourceOperandToOutputIndex;
 
         bool mHasStepModelOutputOfUnknownSize = false;

@@ -74,11 +74,17 @@ enum class TestOperandType {
 
 enum class TestOperandLifeTime {
     TEMPORARY_VARIABLE = 0,
-    MODEL_INPUT = 1,
-    MODEL_OUTPUT = 2,
+    SUBGRAPH_INPUT = 1,
+    SUBGRAPH_OUTPUT = 2,
     CONSTANT_COPY = 3,
     CONSTANT_REFERENCE = 4,
     NO_VALUE = 5,
+    // DEPRECATED. Use SUBGRAPH_INPUT.
+    // This value is used in pre-1.3 VTS tests.
+    MODEL_INPUT = SUBGRAPH_INPUT,
+    // DEPRECATED. Use SUBGRAPH_OUTPUT.
+    // This value is used in pre-1.3 VTS tests.
+    MODEL_OUTPUT = SUBGRAPH_OUTPUT,
 };
 
 enum class TestOperationType {
@@ -258,11 +264,11 @@ struct TestOperand {
     TestOperandLifeTime lifetime;
     TestSymmPerChannelQuantParams channelQuant;
 
-    // For MODEL_OUTPUT only. Set to true to skip the accuracy check on this operand.
+    // For SUBGRAPH_OUTPUT only. Set to true to skip the accuracy check on this operand.
     bool isIgnored = false;
 
-    // For CONSTANT_COPY/REFERENCE and MODEL_INPUT, this is the data set in model and request.
-    // For MODEL_OUTPUT, this is the expected results.
+    // For CONSTANT_COPY/REFERENCE and SUBGRAPH_INPUT, this is the data set in model and request.
+    // For SUBGRAPH_OUTPUT, this is the expected results.
     // For TEMPORARY_VARIABLE and NO_VALUE, this is nullptr.
     TestBuffer data;
 };
