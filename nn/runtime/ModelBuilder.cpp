@@ -408,8 +408,8 @@ int ModelBuilder::identifyInputsAndOutputs(uint32_t inputCount, const uint32_t* 
         return true;
     };
 
-    if (!setArguments(&mInputIndexes, inputCount, inputs, OperandLifeTime::MODEL_INPUT) ||
-        !setArguments(&mOutputIndexes, outputCount, outputs, OperandLifeTime::MODEL_OUTPUT)) {
+    if (!setArguments(&mInputIndexes, inputCount, inputs, OperandLifeTime::SUBGRAPH_INPUT) ||
+        !setArguments(&mOutputIndexes, outputCount, outputs, OperandLifeTime::SUBGRAPH_OUTPUT)) {
         return ANEURALNETWORKS_BAD_DATA;
     }
 
@@ -493,7 +493,7 @@ void ModelBuilder::sortIntoRunOrder() {
         for (uint32_t operandIndex : mOperations[operationIndex].inputs) {
             auto lifetime = mOperands[operandIndex].lifetime;
             if (lifetime == OperandLifeTime::TEMPORARY_VARIABLE ||
-                lifetime == OperandLifeTime::MODEL_OUTPUT) {
+                lifetime == OperandLifeTime::SUBGRAPH_OUTPUT) {
                 count++;
                 operandToOperations.insert(
                         std::pair<uint32_t, uint32_t>(operandIndex, operationIndex));

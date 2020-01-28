@@ -364,8 +364,8 @@ static bool validateOperands(const hidl_vec<VersionedOperand>& operands,
                 }
                 break;
             case OperandLifeTime::TEMPORARY_VARIABLE:
-            case OperandLifeTime::MODEL_INPUT:
-            case OperandLifeTime::MODEL_OUTPUT:
+            case OperandLifeTime::SUBGRAPH_INPUT:
+            case OperandLifeTime::SUBGRAPH_OUTPUT:
             case OperandLifeTime::NO_VALUE:
                 if (location.poolIndex != 0 || location.offset != 0 || location.length != 0) {
                     LOG(ERROR) << "Operand " << index << ": Unexpected poolIndex "
@@ -441,7 +441,7 @@ static bool validateOperations(const hidl_vec<VersionedOperation>& operations,
         for (uint32_t i : op.outputs) {
             const Operand& operand = operands[i];
             if (operand.lifetime != OperandLifeTime::TEMPORARY_VARIABLE &&
-                operand.lifetime != OperandLifeTime::MODEL_OUTPUT) {
+                operand.lifetime != OperandLifeTime::SUBGRAPH_OUTPUT) {
                 LOG(ERROR) << "Writing to an operand with incompatible lifetime "
                            << toString(operand.lifetime);
                 return false;
@@ -459,7 +459,7 @@ static bool validateOperations(const hidl_vec<VersionedOperation>& operations,
         if (!writtenTo[i]) {
             const Operand& operand = operands[i];
             if (operand.lifetime == OperandLifeTime::TEMPORARY_VARIABLE ||
-                operand.lifetime == OperandLifeTime::MODEL_OUTPUT) {
+                operand.lifetime == OperandLifeTime::SUBGRAPH_OUTPUT) {
                 LOG(ERROR) << "Operand " << i << " with lifetime " << toString(operand.lifetime)
                            << " is not being written to.";
                 return false;
@@ -545,9 +545,9 @@ bool validateModel(const T_Model& model) {
                              /*allowUnspecifiedRank=*/version >= HalVersion::V1_2) &&
             validateOperations(model.operations, latestVersionOperands) &&
             validateModelInputOutputs(model.inputIndexes, latestVersionOperands,
-                                      OperandLifeTime::MODEL_INPUT) &&
+                                      OperandLifeTime::SUBGRAPH_INPUT) &&
             validateModelInputOutputs(model.outputIndexes, latestVersionOperands,
-                                      OperandLifeTime::MODEL_OUTPUT) &&
+                                      OperandLifeTime::SUBGRAPH_OUTPUT) &&
             validatePools(model.pools, version));
 }
 
