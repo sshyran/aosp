@@ -54,6 +54,8 @@ using SamplePreparedModel = nn::sample_driver::SamplePreparedModel;
 using WrapperModel = nn::test_wrapper::Model;
 using WrapperOperandType = nn::test_wrapper::OperandType;
 using WrapperType = nn::test_wrapper::Type;
+using nn::convertToV1_0;
+using nn::convertToV1_3;
 
 template <typename T>
 using MQDescriptorSync = hardware::MQDescriptorSync<T>;
@@ -70,14 +72,14 @@ class TestDriver : public SampleDriver {
     ~TestDriver() override {}
 
     Return<void> getCapabilities_1_3(getCapabilities_1_3_cb cb) override {
-        cb(ErrorStatus::NONE, mCapabilities);
+        cb(V1_3::ErrorStatus::NONE, mCapabilities);
         return Void();
     }
 
     Return<void> getSupportedOperations_1_3(const Model& model,
-                                            getSupportedOperations_cb cb) override {
+                                            getSupportedOperations_1_3_cb cb) override {
         if (!android::nn::validateModel(model)) {
-            cb(ErrorStatus::INVALID_ARGUMENT, std::vector<bool>());
+            cb(V1_3::ErrorStatus::INVALID_ARGUMENT, std::vector<bool>());
             return Void();
         }
         const size_t count = model.main.operations.size();
@@ -85,7 +87,7 @@ class TestDriver : public SampleDriver {
         std::transform(
                 model.main.operations.begin(), model.main.operations.end(), supported.begin(),
                 [this](Operation op) { return mSupportedOps[static_cast<int32_t>(op.type)]; });
-        cb(ErrorStatus::NONE, supported);
+        cb(V1_3::ErrorStatus::NONE, supported);
         return Void();
     }
 
@@ -310,53 +312,56 @@ std::set<Success> expectedPassSet = {Success::PASS_NEITHER, Success::PASS_DEVICE
 class TestPreparedModelLatest : public SamplePreparedModel {
    public:
     TestPreparedModelLatest(const HidlModel& model, const SampleDriver* driver, Success success)
-        : SamplePreparedModel(model, driver, ExecutionPreference::FAST_SINGLE_ANSWER),
+        : SamplePreparedModel(model, driver, ExecutionPreference::FAST_SINGLE_ANSWER, uid_t{},
+                              kDefaultPriority),
           mSuccess(success) {}
 
-    Return<ErrorStatus> execute(const V1_0::Request&,
-                                const sp<V1_0::IExecutionCallback>& callback) override {
+    Return<V1_0::ErrorStatus> execute(const V1_0::Request&,
+                                      const sp<V1_0::IExecutionCallback>& callback) override {
         switch (mSuccess) {
             case Success::PASS_NEITHER:
-                callback->notify(ErrorStatus::NONE);
-                return ErrorStatus::NONE;
+                callback->notify(V1_0::ErrorStatus::NONE);
+                return V1_0::ErrorStatus::NONE;
             case Success::FAIL_LAUNCH:
-                callback->notify(ErrorStatus::GENERAL_FAILURE);
-                return ErrorStatus::GENERAL_FAILURE;
+                callback->notify(V1_0::ErrorStatus::GENERAL_FAILURE);
+                return V1_0::ErrorStatus::GENERAL_FAILURE;
             case Success::FAIL_WAIT:
-                callback->notify(ErrorStatus::GENERAL_FAILURE);
-                return ErrorStatus::NONE;
+                callback->notify(V1_0::ErrorStatus::GENERAL_FAILURE);
+                return V1_0::ErrorStatus::NONE;
             default:
                 ADD_FAILURE() << "Unexpected Success kind";
-                return ErrorStatus::GENERAL_FAILURE;
+                return V1_0::ErrorStatus::GENERAL_FAILURE;
         }
     }
 
-    Return<ErrorStatus> execute_1_2(const V1_0::Request&, MeasureTiming measure,
-                                    const sp<V1_2::IExecutionCallback>& callback) override {
+    Return<V1_0::ErrorStatus> execute_1_2(const V1_0::Request&, MeasureTiming measure,
+                                          const sp<V1_2::IExecutionCallback>& callback) override {
         EXPECT_EQ(measure, MeasureTiming::YES);
         switch (mSuccess) {
             case Success::PASS_NEITHER:
             case Success::PASS_DEVICE:
             case Success::PASS_DRIVER:
             case Success::PASS_BOTH:
-                callback->notify_1_2(ErrorStatus::NONE, {}, expectedTimingMap.at(mSuccess));
-                return ErrorStatus::NONE;
+                callback->notify_1_2(V1_0::ErrorStatus::NONE, {}, expectedTimingMap.at(mSuccess));
+                return V1_0::ErrorStatus::NONE;
             case Success::FAIL_LAUNCH:
-                callback->notify(ErrorStatus::GENERAL_FAILURE);
-                return ErrorStatus::GENERAL_FAILURE;
+                callback->notify(V1_0::ErrorStatus::GENERAL_FAILURE);
+                return V1_0::ErrorStatus::GENERAL_FAILURE;
             case Success::FAIL_WAIT:
-                callback->notify(ErrorStatus::GENERAL_FAILURE);
-                return ErrorStatus::NONE;
+                callback->notify(V1_0::ErrorStatus::GENERAL_FAILURE);
+                return V1_0::ErrorStatus::NONE;
             default:
                 ADD_FAILURE() << "Unexpected Success kind";
-                return ErrorStatus::GENERAL_FAILURE;
+                return V1_0::ErrorStatus::GENERAL_FAILURE;
         }
     }
 
-    Return<ErrorStatus> execute_1_3(const V1_3::Request&, MeasureTiming measure,
-                                    const sp<V1_2::IExecutionCallback>& callback) override {
+    Return<V1_3::ErrorStatus> execute_1_3(const V1_3::Request&, MeasureTiming measure,
+                                          const OptionalTimePoint&,
+                                          const sp<V1_3::IExecutionCallback>& callback) override {
         // Use a dummy V1_0::Request because execute_1_2 ignores request entirely.
-        return execute_1_2(V1_0::Request{}, measure, callback);
+        const V1_0::ErrorStatus status = execute_1_2(V1_0::Request{}, measure, callback);
+        return convertToV1_3(status);
     }
 
     Return<void> executeSynchronously(const V1_0::Request&, MeasureTiming measure,
@@ -367,7 +372,7 @@ class TestPreparedModelLatest : public SamplePreparedModel {
             case Success::PASS_DEVICE:
             case Success::PASS_DRIVER:
             case Success::PASS_BOTH:
-                cb(ErrorStatus::NONE, {}, expectedTimingMap.at(mSuccess));
+                cb(V1_0::ErrorStatus::NONE, {}, expectedTimingMap.at(mSuccess));
                 return Void();
             case Success::FAIL_LAUNCH:
             case Success::FAIL_WAIT:
@@ -375,19 +380,24 @@ class TestPreparedModelLatest : public SamplePreparedModel {
                 // runtime may call it even for asynchronous execution, so we
                 // need to tolerate Success::FAIL_WAIT here, not just
                 // Success::FAIL_LAUNCH.
-                cb(ErrorStatus::GENERAL_FAILURE, {}, kBadTiming);
+                cb(V1_0::ErrorStatus::GENERAL_FAILURE, {}, kBadTiming);
                 return Void();
             default:
                 ADD_FAILURE() << "Unexpected Success kind";
-                cb(ErrorStatus::GENERAL_FAILURE, {}, kBadTiming);
+                cb(V1_0::ErrorStatus::GENERAL_FAILURE, {}, kBadTiming);
                 return Void();
         }
     }
 
     Return<void> executeSynchronously_1_3(const V1_3::Request&, MeasureTiming measure,
+                                          const OptionalTimePoint&,
                                           executeSynchronously_1_3_cb cb) override {
+        const auto wrappedCb = [&cb](V1_0::ErrorStatus status,
+                                     const hidl_vec<OutputShape>& outputShapes, Timing timing) {
+            cb(convertToV1_3(status), outputShapes, timing);
+        };
         // Use a dummy V1_0::Request because executeSynchronously ignores request entirely.
-        return executeSynchronously(V1_0::Request{}, measure, cb);
+        return executeSynchronously(V1_0::Request{}, measure, wrappedCb);
     }
 
     // ExecutionBurstServer::create has an overload that will use
@@ -401,7 +411,7 @@ class TestPreparedModelLatest : public SamplePreparedModel {
         const sp<V1_2::IBurstContext> burst = ExecutionBurstServer::create(
                 callback, requestChannel, resultChannel, this, std::chrono::microseconds{0});
 
-        cb(burst == nullptr ? ErrorStatus::GENERAL_FAILURE : ErrorStatus::NONE, burst);
+        cb(burst == nullptr ? V1_0::ErrorStatus::GENERAL_FAILURE : V1_0::ErrorStatus::NONE, burst);
         return Void();
     }
 
@@ -417,13 +427,13 @@ class TestPreparedModel12 : public V1_2::IPreparedModel {
     TestPreparedModel12(const HidlModel& model, const SampleDriver* driver, Success success)
         : mLatestPreparedModel(new TestPreparedModelLatest(model, driver, success)) {}
 
-    Return<ErrorStatus> execute(const V1_0::Request& request,
-                                const sp<V1_0::IExecutionCallback>& callback) override {
+    Return<V1_0::ErrorStatus> execute(const V1_0::Request& request,
+                                      const sp<V1_0::IExecutionCallback>& callback) override {
         return mLatestPreparedModel->execute(request, callback);
     }
 
-    Return<ErrorStatus> execute_1_2(const V1_0::Request& request, MeasureTiming measure,
-                                    const sp<V1_2::IExecutionCallback>& callback) override {
+    Return<V1_0::ErrorStatus> execute_1_2(const V1_0::Request& request, MeasureTiming measure,
+                                          const sp<V1_2::IExecutionCallback>& callback) override {
         return mLatestPreparedModel->execute_1_2(request, measure, callback);
     }
 
@@ -451,8 +461,8 @@ class TestPreparedModel10 : public V1_0::IPreparedModel {
     TestPreparedModel10(const HidlModel& model, const SampleDriver* driver, Success success)
         : mLatestPreparedModel(new TestPreparedModelLatest(model, driver, success)) {}
 
-    Return<ErrorStatus> execute(const V1_0::Request& request,
-                                const sp<V1_0::IExecutionCallback>& callback) override {
+    Return<V1_0::ErrorStatus> execute(const V1_0::Request& request,
+                                      const sp<V1_0::IExecutionCallback>& callback) override {
         return mLatestPreparedModel->execute(request, callback);
     }
 
@@ -474,7 +484,7 @@ class TestDriver13 : public SampleDriver {
                 .relaxedFloat32toFloat16PerformanceTensor = kPerf,
                 .operandPerformance =
                         nn::nonExtensionOperandPerformance<nn::HalVersion::V1_3>(kPerf)};
-        _hidl_cb(ErrorStatus::NONE, capabilities);
+        _hidl_cb(V1_3::ErrorStatus::NONE, capabilities);
         return Void();
     }
 
@@ -482,9 +492,9 @@ class TestDriver13 : public SampleDriver {
                                             getSupportedOperations_1_3_cb cb) override {
         if (nn::validateModel(model)) {
             std::vector<bool> supported(model.main.operations.size(), true);
-            cb(ErrorStatus::NONE, supported);
+            cb(V1_3::ErrorStatus::NONE, supported);
         } else {
-            cb(ErrorStatus::INVALID_ARGUMENT, {});
+            cb(V1_3::ErrorStatus::INVALID_ARGUMENT, {});
         }
         return Void();
     }
@@ -493,41 +503,42 @@ class TestDriver13 : public SampleDriver {
                                             getSupportedOperations_1_2_cb cb) override {
         if (nn::validateModel(model)) {
             std::vector<bool> supported(model.operations.size(), true);
-            cb(ErrorStatus::NONE, supported);
+            cb(V1_0::ErrorStatus::NONE, supported);
         } else {
             std::vector<bool> supported;
-            cb(ErrorStatus::INVALID_ARGUMENT, supported);
+            cb(V1_0::ErrorStatus::INVALID_ARGUMENT, supported);
         }
         return Void();
     }
 
-    Return<ErrorStatus> prepareModel_1_3(const HidlModel& model, ExecutionPreference,
-                                         const hidl_vec<hidl_handle>&, const hidl_vec<hidl_handle>&,
-                                         const CacheToken&,
-                                         const sp<IPreparedModelCallback>& callback) override {
-        callback->notify_1_3(ErrorStatus::NONE, new TestPreparedModel13(model, this, mSuccess));
-        return ErrorStatus::NONE;
+    Return<V1_3::ErrorStatus> prepareModel_1_3(
+            const HidlModel& model, ExecutionPreference, Priority, const OptionalTimePoint&,
+            const hidl_vec<hidl_handle>&, const hidl_vec<hidl_handle>&, const CacheToken&,
+            const sp<V1_3::IPreparedModelCallback>& callback) override {
+        callback->notify_1_3(V1_3::ErrorStatus::NONE,
+                             new TestPreparedModel13(model, this, mSuccess));
+        return V1_3::ErrorStatus::NONE;
     }
 
-    Return<ErrorStatus> prepareModel_1_2(
+    Return<V1_0::ErrorStatus> prepareModel_1_2(
             const V1_2::Model& model, ExecutionPreference, const hidl_vec<hidl_handle>&,
             const hidl_vec<hidl_handle>&, const CacheToken&,
             const sp<V1_2::IPreparedModelCallback>& callback) override {
-        callback->notify_1_2(ErrorStatus::NONE,
+        callback->notify_1_2(V1_0::ErrorStatus::NONE,
                              new TestPreparedModel12(nn::convertToV1_3(model), this, mSuccess));
-        return ErrorStatus::NONE;
+        return V1_0::ErrorStatus::NONE;
     }
 
-    Return<ErrorStatus> prepareModel_1_1(
+    Return<V1_0::ErrorStatus> prepareModel_1_1(
             const V1_1::Model& model, ExecutionPreference,
             const sp<V1_0::IPreparedModelCallback>& callback) override {
-        callback->notify(ErrorStatus::NONE,
+        callback->notify(V1_0::ErrorStatus::NONE,
                          new TestPreparedModel10(nn::convertToV1_3(model), this, mSuccess));
-        return ErrorStatus::NONE;
+        return V1_0::ErrorStatus::NONE;
     }
 
-    Return<ErrorStatus> prepareModel(const V1_0::Model& model,
-                                     const sp<V1_0::IPreparedModelCallback>& callback) override {
+    Return<V1_0::ErrorStatus> prepareModel(
+            const V1_0::Model& model, const sp<V1_0::IPreparedModelCallback>& callback) override {
         return prepareModel_1_1(nn::convertToV1_1(model), ExecutionPreference::FAST_SINGLE_ANSWER,
                                 callback);
     }
@@ -562,19 +573,19 @@ class TestDriver12 : public V1_2::IDevice {
                                         getSupportedOperations_cb _hidl_cb) override {
         return mLatestDriver->getSupportedOperations(model, _hidl_cb);
     }
-    Return<ErrorStatus> prepareModel_1_2(
+    Return<V1_0::ErrorStatus> prepareModel_1_2(
             const V1_2::Model& model, ExecutionPreference preference,
             const hidl_vec<hidl_handle>& modelCache, const hidl_vec<hidl_handle>& dataCache,
             const CacheToken& token, const sp<V1_2::IPreparedModelCallback>& callback) override {
         return mLatestDriver->prepareModel_1_2(model, preference, modelCache, dataCache, token,
                                                callback);
     }
-    Return<ErrorStatus> prepareModel_1_1(
+    Return<V1_0::ErrorStatus> prepareModel_1_1(
             const V1_1::Model& model, ExecutionPreference preference,
             const sp<V1_0::IPreparedModelCallback>& actualCallback) override {
         return mLatestDriver->prepareModel_1_1(model, preference, actualCallback);
     }
-    Return<ErrorStatus> prepareModel(
+    Return<V1_0::ErrorStatus> prepareModel(
             const V1_0::Model& model,
             const sp<V1_0::IPreparedModelCallback>& actualCallback) override {
         return mLatestDriver->prepareModel(model, actualCallback);
@@ -590,10 +601,9 @@ class TestDriver12 : public V1_2::IDevice {
     Return<void> getNumberOfCacheFilesNeeded(getNumberOfCacheFilesNeeded_cb _hidl_cb) {
         return mLatestDriver->getNumberOfCacheFilesNeeded(_hidl_cb);
     }
-    Return<ErrorStatus> prepareModelFromCache(const hidl_vec<hidl_handle>& modelCache,
-                                              const hidl_vec<hidl_handle>& dataCache,
-                                              const CacheToken& token,
-                                              const sp<V1_2::IPreparedModelCallback>& callback) {
+    Return<V1_0::ErrorStatus> prepareModelFromCache(
+            const hidl_vec<hidl_handle>& modelCache, const hidl_vec<hidl_handle>& dataCache,
+            const CacheToken& token, const sp<V1_2::IPreparedModelCallback>& callback) {
         return mLatestDriver->prepareModelFromCache(modelCache, dataCache, token, callback);
     }
 
@@ -613,7 +623,7 @@ class TestDriver11 : public V1_1::IDevice {
                                             getSupportedOperations_1_1_cb _hidl_cb) override {
         return mLatestDriver->getSupportedOperations_1_1(model, _hidl_cb);
     }
-    Return<ErrorStatus> prepareModel_1_1(
+    Return<V1_0::ErrorStatus> prepareModel_1_1(
             const V1_1::Model& model, ExecutionPreference preference,
             const sp<V1_0::IPreparedModelCallback>& actualCallback) override {
         return mLatestDriver->prepareModel_1_1(model, preference, actualCallback);
@@ -626,7 +636,7 @@ class TestDriver11 : public V1_1::IDevice {
                                         getSupportedOperations_cb _hidl_cb) override {
         return mLatestDriver->getSupportedOperations(model, _hidl_cb);
     }
-    Return<ErrorStatus> prepareModel(
+    Return<V1_0::ErrorStatus> prepareModel(
             const V1_0::Model& model,
             const sp<V1_0::IPreparedModelCallback>& actualCallback) override {
         return mLatestDriver->prepareModel(model, actualCallback);

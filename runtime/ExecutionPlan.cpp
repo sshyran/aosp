@@ -65,8 +65,8 @@ using namespace hal;
 // operation indices to be executed (COMPOUND body). The token will be re-hashed further by the
 // device name, device version string, and the execution preference in this function.
 int compile(const Device& device, const ModelBuilder& model, int executionPreference,
-            const std::string& cacheDir, TokenHasher* token,
-            std::shared_ptr<PreparedModel>* preparedModel) {
+            int compilationPriority, const OptionalTimePoint& deadline, const std::string& cacheDir,
+            TokenHasher* token, std::shared_ptr<PreparedModel>* preparedModel) {
     CHECK(token != nullptr);
     CHECK(preparedModel != nullptr);
     *preparedModel = nullptr;
@@ -81,8 +81,9 @@ int compile(const Device& device, const ModelBuilder& model, int executionPrefer
 
     const ModelFactory makeModel = [&model] { return model.makeHidlModel(); };
     const ExecutionPreference preference = static_cast<ExecutionPreference>(executionPreference);
+    const Priority priority = convertToHalPriority(compilationPriority);
     const auto [n, returnedPreparedModel] =
-            device.prepareModel(makeModel, preference, cacheDir, cacheToken);
+            device.prepareModel(makeModel, preference, priority, deadline, cacheDir, cacheToken);
     *preparedModel = returnedPreparedModel;
     return n;
 }
@@ -423,7 +424,7 @@ void ExecutionStep::logStepModel() const {
 }
 
 int ExecutionStep::finishStepModel(const ModelBuilder* mainModel, bool* hasOutputOfUnknownSize,
-                                   int32_t executionPreference) {
+                                   int32_t executionPreference, int32_t priority) {
     CHECK(mDevice != nullptr);
 
     for (const auto& stepModelOutput : mTempsAsStepModelOutputs) {
@@ -511,8 +512,8 @@ int ExecutionStep::finishStepModel(const ModelBuilder* mainModel, bool* hasOutpu
 
     // TODO: Move compilation elsewhere?
     VLOG(COMPILATION) << "ExecutionStep::finishStepModel, compilation on " << mDevice->getName();
-    return compile(*mDevice, mStepModel, executionPreference, *mPlan->getCacheDir(), &mToken,
-                   &mPreparedStepModel);
+    return compile(*mDevice, mStepModel, executionPreference, priority, {}, *mPlan->getCacheDir(),
+                   &mToken, &mPreparedStepModel);
 }
 
 void ExecutionStep::dump() const {
@@ -522,12 +523,13 @@ void ExecutionStep::dump() const {
     }
 }
 
-int ExecutionPlan::CompoundBody::finish(const ModelBuilder* mainModel,
-                                        int32_t executionPreference) {
+int ExecutionPlan::CompoundBody::finish(const ModelBuilder* mainModel, int32_t executionPreference,
+                                        int32_t priority, const OptionalTimePoint& deadline) {
+    CHECK(deadline.getDiscriminator() == OptionalTimePoint::hidl_discriminator::none);
     findTempsAsStepModelOutputs();
     for (const auto& step : mSteps) {
         int n = step->finishStepModel(mainModel, &mHasStepModelOutputOfUnknownSize,
-                                      executionPreference);
+                                      executionPreference, priority);
         if (n != ANEURALNETWORKS_NO_ERROR) {
             VLOG(COMPILATION) << "ExecutionPlan::CompoundBody::finish -- finishStepModel failed";
             return n;
@@ -550,18 +552,20 @@ int ExecutionPlan::CompoundBody::finish(const ModelBuilder* mainModel,
     return ANEURALNETWORKS_NO_ERROR;
 }
 
-int ExecutionPlan::SimpleBody::finish(const ModelBuilder*, int32_t executionPreference) {
+int ExecutionPlan::SimpleBody::finish(const ModelBuilder*, int32_t executionPreference,
+                                      int32_t priority, const OptionalTimePoint& deadline) {
     CHECK(mDevice != nullptr);
     VLOG(COMPILATION) << "ExecutionPlan::SimpleBody::finish, compilation";
-    const int n =
-            compile(*mDevice, *mModel, executionPreference, *mCacheDir, &mToken, &mPreparedModel);
+    const int n = compile(*mDevice, *mModel, executionPreference, priority, deadline, *mCacheDir,
+                          &mToken, &mPreparedModel);
     mSuccessfulFinish = (n == ANEURALNETWORKS_NO_ERROR);
     return n;
 }
 
-int ExecutionPlan::finish(const ModelBuilder* mainModel, int32_t executionPreference) {
+int ExecutionPlan::finish(const ModelBuilder* mainModel, int32_t executionPreference,
+                          int32_t priority, const OptionalTimePoint& deadline) {
     CHECK(mBody != nullptr);
-    return mBody->finish(mainModel, executionPreference);
+    return mBody->finish(mainModel, executionPreference, priority, deadline);
 }
 
 ExecutionPlan::Controller::Controller(const ExecutionPlan* plan, ExecutionBuilder* executionBuilder,
@@ -908,7 +912,8 @@ void ExecutionPlan::CompoundBody::forEachStepRoleOfOutput(uint32_t index,
 }
 
 int ModelBuilder::partitionTheWork(const std::vector<std::shared_ptr<Device>>& devices,
-                                   uint32_t preference, ExecutionPlan* plan) const {
+                                   uint32_t preference, uint32_t priority,
+                                   const OptionalTimePoint& deadline, ExecutionPlan* plan) const {
     // This function uses a heuristic approach to partitioning the graph.
     // It should be good enough for the first release.
 
@@ -931,7 +936,7 @@ int ModelBuilder::partitionTheWork(const std::vector<std::shared_ptr<Device>>& d
         VLOG(COMPILATION) << "ModelBuilder::partitionTheWork: only one best device: "
                           << bestDeviceIndex << " = " << devices[bestDeviceIndex]->getName();
         plan->becomeSingleStep(devices[bestDeviceIndex], this);
-        return plan->finish(this, preference);
+        return plan->finish(this, preference, priority, deadline);
     }
 
     // No easy solution, we need to split the work.
@@ -986,7 +991,7 @@ int ModelBuilder::partitionTheWork(const std::vector<std::shared_ptr<Device>>& d
         }
     }
 
-    int n = plan->finish(this, preference);
+    int n = plan->finish(this, preference, priority, deadline);
     if (VLOG_IS_ON(COMPILATION)) {
         VLOG(COMPILATION) << "ModelBuilder::partitionTheWork: source model: ";
         logModelToInfo(makeHidlModel());

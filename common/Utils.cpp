@@ -90,6 +90,29 @@ void initVLogMask() {
     }
 }
 
+static std::pair<int, OptionalTimePoint> makeTimePoint(uint64_t duration) {
+    const auto currentTime = std::chrono::steady_clock::now();
+    const auto currentTimeInNanoseconds =
+            std::chrono::time_point_cast<std::chrono::nanoseconds>(currentTime);
+    const uint64_t nanosecondsSinceEpoch = currentTimeInNanoseconds.time_since_epoch().count();
+
+    // check for overflow
+    if (std::numeric_limits<uint64_t>::max() - nanosecondsSinceEpoch < duration) {
+        LOG(ERROR) << "Launching execution failed due to time point overflow";
+        return {ANEURALNETWORKS_BAD_DATA, {}};
+    }
+    const uint64_t nanosecondsAtTimeout = nanosecondsSinceEpoch + duration;
+
+    OptionalTimePoint otp;
+    otp.nanoseconds(nanosecondsAtTimeout);
+    return {ANEURALNETWORKS_NO_ERROR, otp};
+}
+
+std::pair<int, OptionalTimePoint> makeTimePoint(std::optional<uint64_t> duration) {
+    const std::pair<int, OptionalTimePoint> empty = {ANEURALNETWORKS_NO_ERROR, {}};
+    return duration.has_value() ? makeTimePoint(*duration) : empty;
+}
+
 static bool isExtensionOperandType(int32_t type) {
     return static_cast<uint32_t>(type) > static_cast<uint32_t>(OperandTypeRange::BASE_MAX);
 }
@@ -1658,40 +1681,51 @@ ErrorStatus convertResultCodeToErrorStatus(int resultCode) {
         case ANEURALNETWORKS_UNAVAILABLE_DEVICE:
             return ErrorStatus::DEVICE_UNAVAILABLE;
 
-        default:
-            LOG(ERROR) << "Unknown result code " << resultCode
-                       << " mapped to ErrorStatus::GENERAL_FAILURE";
-            return ErrorStatus::GENERAL_FAILURE;
         case ANEURALNETWORKS_BAD_STATE:
         case ANEURALNETWORKS_INCOMPLETE:
         case ANEURALNETWORKS_OP_FAILED:
         case ANEURALNETWORKS_OUT_OF_MEMORY:
         case ANEURALNETWORKS_UNMAPPABLE:
+        case ANEURALNETWORKS_DEAD_OBJECT:
             return ErrorStatus::GENERAL_FAILURE;
+
+        case ANEURALNETWORKS_MISSED_DEADLINE_TRANSIENT:
+            return ErrorStatus::MISSED_DEADLINE_TRANSIENT;
+        case ANEURALNETWORKS_MISSED_DEADLINE_PERSISTENT:
+            return ErrorStatus::MISSED_DEADLINE_PERSISTENT;
+        case ANEURALNETWORKS_RESOURCE_EXHAUSTED_TRANSIENT:
+            return ErrorStatus::RESOURCE_EXHAUSTED_TRANSIENT;
+        case ANEURALNETWORKS_RESOURCE_EXHAUSTED_PERSISTENT:
+            return ErrorStatus::RESOURCE_EXHAUSTED_PERSISTENT;
     }
+    LOG(ERROR) << "Unknown result code " << resultCode << " mapped to ErrorStatus::GENERAL_FAILURE";
+    return ErrorStatus::GENERAL_FAILURE;
 }
 
 int convertErrorStatusToResultCode(ErrorStatus status) {
     switch (status) {
         case ErrorStatus::NONE:
             return ANEURALNETWORKS_NO_ERROR;
-
-        case ErrorStatus::INVALID_ARGUMENT:
-            return ANEURALNETWORKS_BAD_DATA;
-
-        case ErrorStatus::OUTPUT_INSUFFICIENT_SIZE:
-            return ANEURALNETWORKS_OUTPUT_INSUFFICIENT_SIZE;
-
         case ErrorStatus::DEVICE_UNAVAILABLE:
             return ANEURALNETWORKS_UNAVAILABLE_DEVICE;
-
-        default:
-            LOG(ERROR) << "Unknown ErrorStatus " << toString(status)
-                       << " mapped to ANEURALNETWORKS_OP_FAILED";
-            return ANEURALNETWORKS_OP_FAILED;
         case ErrorStatus::GENERAL_FAILURE:
             return ANEURALNETWORKS_OP_FAILED;
+        case ErrorStatus::OUTPUT_INSUFFICIENT_SIZE:
+            return ANEURALNETWORKS_OUTPUT_INSUFFICIENT_SIZE;
+        case ErrorStatus::INVALID_ARGUMENT:
+            return ANEURALNETWORKS_BAD_DATA;
+        case ErrorStatus::MISSED_DEADLINE_TRANSIENT:
+            return ANEURALNETWORKS_MISSED_DEADLINE_TRANSIENT;
+        case ErrorStatus::MISSED_DEADLINE_PERSISTENT:
+            return ANEURALNETWORKS_MISSED_DEADLINE_PERSISTENT;
+        case ErrorStatus::RESOURCE_EXHAUSTED_TRANSIENT:
+            return ANEURALNETWORKS_RESOURCE_EXHAUSTED_TRANSIENT;
+        case ErrorStatus::RESOURCE_EXHAUSTED_PERSISTENT:
+            return ANEURALNETWORKS_RESOURCE_EXHAUSTED_PERSISTENT;
     }
+    LOG(ERROR) << "Unknown ErrorStatus " << toString(status)
+               << " mapped to ANEURALNETWORKS_OP_FAILED";
+    return ANEURALNETWORKS_OP_FAILED;
 }
 
 std::tuple<int, std::vector<OutputShape>, Timing> getExecutionResult(
@@ -1948,6 +1982,43 @@ bool compliantWithV1_3(const V1_2::Capabilities&) {
 
 bool compliantWithV1_3(const V1_3::Capabilities&) {
     return true;
+}
+
+V1_0::ErrorStatus convertToV1_0(V1_0::ErrorStatus status) {
+    return status;
+}
+
+V1_0::ErrorStatus convertToV1_0(V1_3::ErrorStatus status) {
+    switch (status) {
+        case V1_3::ErrorStatus::NONE:
+            return V1_0::ErrorStatus::NONE;
+        case V1_3::ErrorStatus::DEVICE_UNAVAILABLE:
+            return V1_0::ErrorStatus::DEVICE_UNAVAILABLE;
+        case V1_3::ErrorStatus::GENERAL_FAILURE:
+            return V1_0::ErrorStatus::GENERAL_FAILURE;
+        case V1_3::ErrorStatus::OUTPUT_INSUFFICIENT_SIZE:
+            return V1_0::ErrorStatus::OUTPUT_INSUFFICIENT_SIZE;
+        case V1_3::ErrorStatus::INVALID_ARGUMENT:
+            return V1_0::ErrorStatus::INVALID_ARGUMENT;
+        case V1_3::ErrorStatus::MISSED_DEADLINE_TRANSIENT:
+            return V1_0::ErrorStatus::GENERAL_FAILURE;
+        case V1_3::ErrorStatus::MISSED_DEADLINE_PERSISTENT:
+            return V1_0::ErrorStatus::GENERAL_FAILURE;
+        case V1_3::ErrorStatus::RESOURCE_EXHAUSTED_TRANSIENT:
+            return V1_0::ErrorStatus::GENERAL_FAILURE;
+        case V1_3::ErrorStatus::RESOURCE_EXHAUSTED_PERSISTENT:
+            return V1_0::ErrorStatus::GENERAL_FAILURE;
+    }
+    LOG(ERROR) << "Unknown ErrorStatus: " << toString(status) << " mapped to GENERAL_FAILURE";
+    return V1_0::ErrorStatus::GENERAL_FAILURE;
+}
+
+V1_3::ErrorStatus convertToV1_3(V1_0::ErrorStatus status) {
+    return static_cast<V1_3::ErrorStatus>(status);
+}
+
+V1_3::ErrorStatus convertToV1_3(V1_3::ErrorStatus status) {
+    return status;
 }
 
 static V1_0::OperationType uncheckedConvertToV1_0(V1_1::OperationType type) {

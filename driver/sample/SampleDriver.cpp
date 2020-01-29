@@ -66,7 +66,7 @@ Return<void> SampleDriver::getCapabilities(getCapabilities_cb cb) {
                  "SampleDriver::getCapabilities");
     return getCapabilities_1_3([&](ErrorStatus error, const V1_3::Capabilities& capabilities) {
         // TODO(dgross): Do we need to check compliantWithV1_0(capabilities)?
-        cb(error, convertToV1_0(capabilities));
+        cb(convertToV1_0(error), convertToV1_0(capabilities));
     });
 }
 
@@ -75,7 +75,7 @@ Return<void> SampleDriver::getCapabilities_1_1(getCapabilities_1_1_cb cb) {
                  "SampleDriver::getCapabilities_1_1");
     return getCapabilities_1_3([&](ErrorStatus error, const V1_3::Capabilities& capabilities) {
         // TODO(dgross): Do we need to check compliantWithV1_1(capabilities)?
-        cb(error, convertToV1_1(capabilities));
+        cb(convertToV1_0(error), convertToV1_1(capabilities));
     });
 }
 
@@ -84,27 +84,27 @@ Return<void> SampleDriver::getCapabilities_1_2(getCapabilities_1_2_cb cb) {
                  "SampleDriver::getCapabilities_1_2");
     return getCapabilities_1_3([&](ErrorStatus error, const V1_3::Capabilities& capabilities) {
         // TODO(dgross): Do we need to check compliantWithV1_2(capabilities)?
-        cb(error, convertToV1_2(capabilities));
+        cb(convertToV1_0(error), convertToV1_2(capabilities));
     });
 }
 
 Return<void> SampleDriver::getVersionString(getVersionString_cb cb) {
     NNTRACE_FULL(NNTRACE_LAYER_DRIVER, NNTRACE_PHASE_INITIALIZATION,
                  "SampleDriver::getVersionString");
-    cb(ErrorStatus::NONE, "JUST_AN_EXAMPLE");
+    cb(V1_0::ErrorStatus::NONE, "JUST_AN_EXAMPLE");
     return Void();
 }
 
 Return<void> SampleDriver::getType(getType_cb cb) {
     NNTRACE_FULL(NNTRACE_LAYER_DRIVER, NNTRACE_PHASE_INITIALIZATION, "SampleDriver::getType");
-    cb(ErrorStatus::NONE, V1_2::DeviceType::CPU);
+    cb(V1_0::ErrorStatus::NONE, V1_2::DeviceType::CPU);
     return Void();
 }
 
 Return<void> SampleDriver::getSupportedExtensions(getSupportedExtensions_cb cb) {
     NNTRACE_FULL(NNTRACE_LAYER_DRIVER, NNTRACE_PHASE_INITIALIZATION,
                  "SampleDriver::getSupportedExtensions");
-    cb(ErrorStatus::NONE, {/* No extensions. */});
+    cb(V1_0::ErrorStatus::NONE, {/* No extensions. */});
     return Void();
 }
 
@@ -114,10 +114,13 @@ Return<void> SampleDriver::getSupportedOperations(const V1_0::Model& model,
                  "SampleDriver::getSupportedOperations");
     if (!validateModel(model)) {
         VLOG(DRIVER) << "getSupportedOperations";
-        cb(ErrorStatus::INVALID_ARGUMENT, {});
+        cb(V1_0::ErrorStatus::INVALID_ARGUMENT, {});
         return Void();
     }
-    return getSupportedOperations_1_3(convertToV1_3(model), cb);
+    return getSupportedOperations_1_3(convertToV1_3(model),
+                                      [&](ErrorStatus status, const hidl_vec<bool>& supported) {
+                                          cb(convertToV1_0(status), supported);
+                                      });
 }
 
 Return<void> SampleDriver::getSupportedOperations_1_1(const V1_1::Model& model,
@@ -126,10 +129,13 @@ Return<void> SampleDriver::getSupportedOperations_1_1(const V1_1::Model& model,
                  "SampleDriver::getSupportedOperations_1_1");
     if (!validateModel(model)) {
         VLOG(DRIVER) << "getSupportedOperations_1_1";
-        cb(ErrorStatus::INVALID_ARGUMENT, {});
+        cb(V1_0::ErrorStatus::INVALID_ARGUMENT, {});
         return Void();
     }
-    return getSupportedOperations_1_3(convertToV1_3(model), cb);
+    return getSupportedOperations_1_3(convertToV1_3(model),
+                                      [&](ErrorStatus status, const hidl_vec<bool>& supported) {
+                                          cb(convertToV1_0(status), supported);
+                                      });
 }
 
 Return<void> SampleDriver::getSupportedOperations_1_2(const V1_2::Model& model,
@@ -138,60 +144,79 @@ Return<void> SampleDriver::getSupportedOperations_1_2(const V1_2::Model& model,
                  "SampleDriver::getSupportedOperations_1_2");
     if (!validateModel(model)) {
         VLOG(DRIVER) << "getSupportedOperations_1_2";
-        cb(ErrorStatus::INVALID_ARGUMENT, {});
+        cb(V1_0::ErrorStatus::INVALID_ARGUMENT, {});
         return Void();
     }
-    return getSupportedOperations_1_3(convertToV1_3(model), cb);
+    return getSupportedOperations_1_3(convertToV1_3(model),
+                                      [&](ErrorStatus status, const hidl_vec<bool>& supported) {
+                                          cb(convertToV1_0(status), supported);
+                                      });
 }
 
 Return<void> SampleDriver::getNumberOfCacheFilesNeeded(getNumberOfCacheFilesNeeded_cb cb) {
     NNTRACE_FULL(NNTRACE_LAYER_DRIVER, NNTRACE_PHASE_INITIALIZATION,
                  "SampleDriver::getNumberOfCacheFilesNeeded");
     // Set both numbers to be 0 for cache not supported.
-    cb(ErrorStatus::NONE, /*numModelCache=*/0, /*numDataCache=*/0);
+    cb(V1_0::ErrorStatus::NONE, /*numModelCache=*/0, /*numDataCache=*/0);
     return Void();
 }
 
-Return<ErrorStatus> SampleDriver::prepareModel(const V1_0::Model& model,
-                                               const sp<V1_0::IPreparedModelCallback>& callback) {
-    NNTRACE_FULL(NNTRACE_LAYER_DRIVER, NNTRACE_PHASE_COMPILATION, "SampleDriver::prepareModel");
-    return prepareModelBase(model, this, ExecutionPreference::FAST_SINGLE_ANSWER, callback);
+Return<void> SampleDriver::supportsDeadlines(supportsDeadlines_cb cb) {
+    NNTRACE_FULL(NNTRACE_LAYER_DRIVER, NNTRACE_PHASE_INITIALIZATION,
+                 "SampleDriver::supportsDeadlines");
+    // Set both numbers to be false for deadlines not supported.
+    cb(/*prepareModelDeadline=*/false, /*executionDeadline=*/false);
+    return Void();
 }
 
-Return<ErrorStatus> SampleDriver::prepareModel_1_1(
+Return<V1_0::ErrorStatus> SampleDriver::prepareModel(
+        const V1_0::Model& model, const sp<V1_0::IPreparedModelCallback>& callback) {
+    NNTRACE_FULL(NNTRACE_LAYER_DRIVER, NNTRACE_PHASE_COMPILATION, "SampleDriver::prepareModel");
+    const ErrorStatus status = prepareModelBase(
+            model, this, ExecutionPreference::FAST_SINGLE_ANSWER, kDefaultPriority, {}, callback);
+    return convertToV1_0(status);
+}
+
+Return<V1_0::ErrorStatus> SampleDriver::prepareModel_1_1(
         const V1_1::Model& model, ExecutionPreference preference,
         const sp<V1_0::IPreparedModelCallback>& callback) {
     NNTRACE_FULL(NNTRACE_LAYER_DRIVER, NNTRACE_PHASE_COMPILATION, "SampleDriver::prepareModel_1_1");
-    return prepareModelBase(model, this, preference, callback);
+    const ErrorStatus status =
+            prepareModelBase(model, this, preference, kDefaultPriority, {}, callback);
+    return convertToV1_0(status);
 }
 
-Return<ErrorStatus> SampleDriver::prepareModel_1_2(
+Return<V1_0::ErrorStatus> SampleDriver::prepareModel_1_2(
         const V1_2::Model& model, ExecutionPreference preference, const hidl_vec<hidl_handle>&,
         const hidl_vec<hidl_handle>&, const CacheToken&,
         const sp<V1_2::IPreparedModelCallback>& callback) {
     NNTRACE_FULL(NNTRACE_LAYER_DRIVER, NNTRACE_PHASE_COMPILATION, "SampleDriver::prepareModel_1_2");
-    return prepareModelBase(model, this, preference, callback);
+    const ErrorStatus status =
+            prepareModelBase(model, this, preference, kDefaultPriority, {}, callback);
+    return convertToV1_0(status);
 }
 
-Return<ErrorStatus> SampleDriver::prepareModel_1_3(
-        const V1_3::Model& model, ExecutionPreference preference, const hidl_vec<hidl_handle>&,
+Return<V1_3::ErrorStatus> SampleDriver::prepareModel_1_3(
+        const V1_3::Model& model, ExecutionPreference preference, Priority priority,
+        const OptionalTimePoint& deadline, const hidl_vec<hidl_handle>&,
         const hidl_vec<hidl_handle>&, const CacheToken&,
         const sp<V1_3::IPreparedModelCallback>& callback) {
     NNTRACE_FULL(NNTRACE_LAYER_DRIVER, NNTRACE_PHASE_COMPILATION, "SampleDriver::prepareModel_1_3");
-    return prepareModelBase(model, this, preference, callback);
+    return prepareModelBase(model, this, preference, priority, deadline, callback);
 }
 
-Return<ErrorStatus> SampleDriver::prepareModelFromCache(
+Return<V1_0::ErrorStatus> SampleDriver::prepareModelFromCache(
         const hidl_vec<hidl_handle>&, const hidl_vec<hidl_handle>&, const CacheToken&,
         const sp<V1_2::IPreparedModelCallback>& callback) {
     NNTRACE_FULL(NNTRACE_LAYER_DRIVER, NNTRACE_PHASE_COMPILATION,
                  "SampleDriver::prepareModelFromCache");
     notify(callback, ErrorStatus::GENERAL_FAILURE, nullptr);
-    return ErrorStatus::GENERAL_FAILURE;
+    return V1_0::ErrorStatus::GENERAL_FAILURE;
 }
 
 Return<ErrorStatus> SampleDriver::prepareModelFromCache_1_3(
-        const hidl_vec<hidl_handle>&, const hidl_vec<hidl_handle>&, const CacheToken&,
+        Priority /*priority*/, const OptionalTimePoint& /*deadline*/, const hidl_vec<hidl_handle>&,
+        const hidl_vec<hidl_handle>&, const CacheToken&,
         const sp<V1_3::IPreparedModelCallback>& callback) {
     NNTRACE_FULL(NNTRACE_LAYER_DRIVER, NNTRACE_PHASE_COMPILATION,
                  "SampleDriver::prepareModelFromCache_1_3");
@@ -266,10 +291,10 @@ void asyncExecute(const Request& request, MeasureTiming measure, time_point driv
 }
 
 template <typename T_IExecutionCallback>
-Return<ErrorStatus> executeBase(const Request& request, MeasureTiming measure, const Model& model,
-                                const SampleDriver& driver,
-                                const std::vector<RunTimePoolInfo>& poolInfos,
-                                const sp<T_IExecutionCallback>& callback) {
+ErrorStatus executeBase(const Request& request, MeasureTiming measure, const Model& model,
+                        const SampleDriver& driver, const std::vector<RunTimePoolInfo>& poolInfos,
+                        const OptionalTimePoint& deadline,
+                        const sp<T_IExecutionCallback>& callback) {
     NNTRACE_FULL(NNTRACE_LAYER_DRIVER, NNTRACE_PHASE_EXECUTION, "SampleDriver::executeBase");
     VLOG(DRIVER) << "executeBase(" << SHOW_IF_DEBUG(toString(request)) << ")";
 
@@ -284,6 +309,10 @@ Return<ErrorStatus> executeBase(const Request& request, MeasureTiming measure, c
         notify(callback, ErrorStatus::INVALID_ARGUMENT, {}, kNoTiming);
         return ErrorStatus::INVALID_ARGUMENT;
     }
+    if (deadline.getDiscriminator() != OptionalTimePoint::hidl_discriminator::none) {
+        notify(callback, ErrorStatus::INVALID_ARGUMENT, {}, kNoTiming);
+        return ErrorStatus::INVALID_ARGUMENT;
+    }
 
     // This thread is intentionally detached because the sample driver service
     // is expected to live forever.
@@ -294,27 +323,31 @@ Return<ErrorStatus> executeBase(const Request& request, MeasureTiming measure, c
     return ErrorStatus::NONE;
 }
 
-Return<ErrorStatus> SamplePreparedModel::execute(const V1_0::Request& request,
-                                                 const sp<V1_0::IExecutionCallback>& callback) {
-    return executeBase(convertToV1_3(request), MeasureTiming::NO, mModel, *mDriver, mPoolInfos,
-                       callback);
+Return<V1_0::ErrorStatus> SamplePreparedModel::execute(
+        const V1_0::Request& request, const sp<V1_0::IExecutionCallback>& callback) {
+    const ErrorStatus status = executeBase(convertToV1_3(request), MeasureTiming::NO, mModel,
+                                           *mDriver, mPoolInfos, {}, callback);
+    return convertToV1_0(status);
 }
 
-Return<ErrorStatus> SamplePreparedModel::execute_1_2(const V1_0::Request& request,
-                                                     MeasureTiming measure,
-                                                     const sp<V1_2::IExecutionCallback>& callback) {
-    return executeBase(convertToV1_3(request), measure, mModel, *mDriver, mPoolInfos, callback);
+Return<V1_0::ErrorStatus> SamplePreparedModel::execute_1_2(
+        const V1_0::Request& request, MeasureTiming measure,
+        const sp<V1_2::IExecutionCallback>& callback) {
+    const ErrorStatus status = executeBase(convertToV1_3(request), measure, mModel, *mDriver,
+                                           mPoolInfos, {}, callback);
+    return convertToV1_0(status);
 }
 
-Return<ErrorStatus> SamplePreparedModel::execute_1_3(const V1_3::Request& request,
-                                                     MeasureTiming measure,
-                                                     const sp<V1_2::IExecutionCallback>& callback) {
-    return executeBase(request, measure, mModel, *mDriver, mPoolInfos, callback);
+Return<V1_3::ErrorStatus> SamplePreparedModel::execute_1_3(
+        const V1_3::Request& request, MeasureTiming measure, const OptionalTimePoint& deadline,
+        const sp<V1_3::IExecutionCallback>& callback) {
+    return executeBase(request, measure, mModel, *mDriver, mPoolInfos, deadline, callback);
 }
 
 static std::tuple<ErrorStatus, hidl_vec<OutputShape>, Timing> executeSynchronouslyBase(
         const Request& request, MeasureTiming measure, const Model& model,
-        const SampleDriver& driver, const std::vector<RunTimePoolInfo>& poolInfos) {
+        const SampleDriver& driver, const std::vector<RunTimePoolInfo>& poolInfos,
+        const OptionalTimePoint& deadline) {
     NNTRACE_FULL(NNTRACE_LAYER_DRIVER, NNTRACE_PHASE_EXECUTION,
                  "SampleDriver::executeSynchronouslyBase");
     VLOG(DRIVER) << "executeSynchronouslyBase(" << SHOW_IF_DEBUG(toString(request)) << ")";
@@ -323,6 +356,9 @@ static std::tuple<ErrorStatus, hidl_vec<OutputShape>, Timing> executeSynchronous
     if (measure == MeasureTiming::YES) driverStart = now();
 
     if (!validateRequest(request, model)) {
+        return {ErrorStatus::INVALID_ARGUMENT, {}, kNoTiming};
+    }
+    if (deadline.getDiscriminator() != OptionalTimePoint::hidl_discriminator::none) {
         return {ErrorStatus::INVALID_ARGUMENT, {}, kNoTiming};
     }
 
@@ -355,17 +391,18 @@ static std::tuple<ErrorStatus, hidl_vec<OutputShape>, Timing> executeSynchronous
 Return<void> SamplePreparedModel::executeSynchronously(const V1_0::Request& request,
                                                        MeasureTiming measure,
                                                        executeSynchronously_cb cb) {
-    auto [status, outputShapes, timing] =
-            executeSynchronouslyBase(convertToV1_3(request), measure, mModel, *mDriver, mPoolInfos);
-    cb(status, std::move(outputShapes), timing);
+    auto [status, outputShapes, timing] = executeSynchronouslyBase(
+            convertToV1_3(request), measure, mModel, *mDriver, mPoolInfos, {});
+    cb(convertToV1_0(status), std::move(outputShapes), timing);
     return Void();
 }
 
 Return<void> SamplePreparedModel::executeSynchronously_1_3(const V1_3::Request& request,
                                                            MeasureTiming measure,
+                                                           const OptionalTimePoint& deadline,
                                                            executeSynchronously_1_3_cb cb) {
     auto [status, outputShapes, timing] =
-            executeSynchronouslyBase(request, measure, mModel, *mDriver, mPoolInfos);
+            executeSynchronouslyBase(request, measure, mModel, *mDriver, mPoolInfos, deadline);
     cb(status, std::move(outputShapes), timing);
     return Void();
 }
@@ -392,7 +429,7 @@ class BurstExecutorWithCache : public ExecutionBurstServer::IBurstExecutorWithCa
 
     void removeCacheEntry(int32_t slot) override { mMemoryCache.erase(slot); }
 
-    std::tuple<ErrorStatus, hidl_vec<OutputShape>, Timing> execute(
+    std::tuple<V1_0::ErrorStatus, hidl_vec<OutputShape>, Timing> execute(
             const V1_0::Request& request, const std::vector<int32_t>& slots,
             MeasureTiming measure) override {
         NNTRACE_FULL(NNTRACE_LAYER_DRIVER, NNTRACE_PHASE_EXECUTION,
@@ -404,7 +441,7 @@ class BurstExecutorWithCache : public ExecutionBurstServer::IBurstExecutorWithCa
         // ensure all relevant pools are valid
         if (!std::all_of(slots.begin(), slots.end(),
                          [this](int32_t slot) { return isCacheEntryPresent(slot); })) {
-            return {ErrorStatus::INVALID_ARGUMENT, {}, kNoTiming};
+            return {V1_0::ErrorStatus::INVALID_ARGUMENT, {}, kNoTiming};
         }
 
         // finish the request object (for validation)
@@ -419,7 +456,7 @@ class BurstExecutorWithCache : public ExecutionBurstServer::IBurstExecutorWithCa
 
         // validate request object against the model
         if (!validateRequest(fullRequest, mModel)) {
-            return {ErrorStatus::INVALID_ARGUMENT, {}, kNoTiming};
+            return {V1_0::ErrorStatus::INVALID_ARGUMENT, {}, kNoTiming};
         }
 
         // select relevant entries from cache
@@ -434,9 +471,9 @@ class BurstExecutorWithCache : public ExecutionBurstServer::IBurstExecutorWithCa
         int n = executor.run(mModel, fullRequest, mModelPoolInfos, requestPoolInfos);
         if (measure == MeasureTiming::YES) deviceEnd = now();
         VLOG(DRIVER) << "executor.run returned " << n;
-        ErrorStatus executionStatus = convertResultCodeToErrorStatus(n);
+        V1_0::ErrorStatus executionStatus = convertToV1_0(convertResultCodeToErrorStatus(n));
         hidl_vec<OutputShape> outputShapes = executor.getOutputShapes();
-        if (measure == MeasureTiming::YES && executionStatus == ErrorStatus::NONE) {
+        if (measure == MeasureTiming::YES && executionStatus == V1_0::ErrorStatus::NONE) {
             driverEnd = now();
             Timing timing = {
                     .timeOnDevice = uint64_t(microsecondsDuration(deviceEnd, deviceStart)),
@@ -479,7 +516,7 @@ Return<void> SamplePreparedModel::configureExecutionBurst(
     NNTRACE_FULL(NNTRACE_LAYER_DRIVER, NNTRACE_PHASE_EXECUTION,
                  "SampleDriver::configureExecutionBurst");
 
-    const bool preferPowerOverLatency = (kPreference == hal::ExecutionPreference::LOW_POWER);
+    const bool preferPowerOverLatency = (kPreference == ExecutionPreference::LOW_POWER);
     const auto pollingTimeWindow =
             (preferPowerOverLatency ? std::chrono::microseconds{0} : getPollingTimeWindow());
 
@@ -497,9 +534,9 @@ Return<void> SamplePreparedModel::configureExecutionBurst(
             callback, requestChannel, resultChannel, executorWithCache, pollingTimeWindow);
 
     if (burst == nullptr) {
-        cb(ErrorStatus::GENERAL_FAILURE, {});
+        cb(V1_0::ErrorStatus::GENERAL_FAILURE, {});
     } else {
-        cb(ErrorStatus::NONE, burst);
+        cb(V1_0::ErrorStatus::NONE, burst);
     }
 
     return Void();
