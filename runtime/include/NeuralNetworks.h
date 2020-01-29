@@ -5949,7 +5949,16 @@ typedef struct ANeuralNetworksBurst ANeuralNetworksBurst;
  *         EXCEPTION: If the input is optional and omitted
  *         (by passing nullptr for buffer to
  *         {@link ANeuralNetworksExecution_setInput}) then it need
- *         not have a fully specified tensor operand type.</li></ul>
+ *         not have a fully specified tensor operand type.</li>
+ *     <li>The operand is a model output (see
+ *         {@link ANeuralNetworksModel_identifyInputsAndOutputs})
+ *         and is to be used with
+ *         {@link ANeuralNetworksExecution_startComputeWithDependencies}.
+ *         A fully specified tensor operand type must either be provided
+ *         to {@link ANeuralNetworksModel_addOperand}; or it must be
+ *         provided to the corresponding
+ *         {@link ANeuralNetworksExecution_setOutput}, or
+ *         {@link ANeuralNetworksExecution_setOutputFromMemory}.</li></ul>
  *
  * A tensor operand type of specified rank but some number of
  * unspecified dimensions is represented by setting dimensionCount to
@@ -6781,6 +6790,20 @@ typedef enum {
     // such as that of the runtime itself and the IPC needed for the runtime to
     // communicate with the driver.
     ANEURALNETWORKS_DURATION_IN_DRIVER = 1,
+    // Execution time on hardware, after all dependencies have been signaled.
+    // If no dependencies specified (for example, if the execution was scheduled other
+    // than with {@link ANeuralNetworksExecution_startComputeWithDependencies}), the
+    // reported time will be the same as ANEURALNETWORKS_DURATION_ON_HARDWARE.
+    // Available since API level 30.
+    ANEURALNETWORKS_FENCED_DURATION_ON_HARDWARE = 2,
+    // Execution time in driver, after all dependencies have been signaled. Excludes
+    // overhead such as that of the runtime itself and the IPC needed for the runtime
+    // to communicate with the driver.
+    // If no dependencies specified (for example, if the execution was scheduled other
+    // than with {@link ANeuralNetworksExecution_startComputeWithDependencies}), the
+    // reported time will be the same as ANEURALNETWORKS_DURATION_IN_DRIVER.
+    // Available since API level 30.
+    ANEURALNETWORKS_FENCED_DURATION_IN_DRIVER = 3,
 } DurationCode;
 
 /**
@@ -7633,9 +7656,10 @@ int ANeuralNetworksExecution_startCompute(ANeuralNetworksExecution* execution,
  * If the device is not able to complete the execution within the specified
  * duration, the execution must be aborted. The timeout duration begins at a
  * call to one of:
- * - {@link ANeuralNetworksExecution_startCompute}
- * - {@link ANeuralNetworksExecution_compute}
  * - {@link ANeuralNetworksExecution_burstCompute}
+ * - {@link ANeuralNetworksExecution_compute}
+ * - {@link ANeuralNetworksExecution_startCompute}
+ * - {@link ANeuralNetworksExecution_startComputeWithDependencies}
  *
  * By default (i.e., unless ANeuralNetworksExecution_setTimeout is called),
  * the timeout duration for execution is considered infinite.
@@ -7756,6 +7780,21 @@ int ANeuralNetworksEvent_getSyncFenceFd(const ANeuralNetworksEvent* event, int* 
  * normally, the execution will fail, and {@link ANeuralNetworksEvent_wait} on the returned
  * event will return an error.
  *
+ * The function will return an error if any of the execution outputs has a tensor operand type
+ * that is not fully specified.
+ *
+ * The function can be passed a timeout duration in nanoseconds.
+ * The duration begins when all waitFor sync fences have been signaled, and can be used
+ * together with {@link ANeuralNetworksExecution_setTimeout} which specifies the
+ * maximum timeout duration beginning at the call to
+ * {@link ANeuralNetworksExecution_startComputeWithDependencies}.
+ * If the duration is non-zero, the {@link ANeuralNetworksExecution} must have been created
+ * from an {@link ANeuralNetworksCompilation} which in turn was created from
+ * {@link ANeuralNetworksCompilation_createForDevices} with numDevices = 1, and
+ * the device must support execution timeout as indicated by
+ * {@link ANeuralNetworksDevice_supportsExecutionTimeout}, otherwise this
+ * function will fail with ANEURALNETWORKS_BAD_DATA.
+ *
  * See {@link ANeuralNetworksExecution} for information on multithreaded usage.
  *
  * See {@link ANeuralNetworksExecution_compute} for synchronous execution.
@@ -7766,6 +7805,9 @@ int ANeuralNetworksEvent_getSyncFenceFd(const ANeuralNetworksEvent* event, int* 
  * @param dependencies A set of depending events. The actual evaluation will not start
  *                     until all the events are signaled.
  * @param num_dependencies The number of events in the dependencies set.
+ * @param duration The maximum length of time in nanoseconds within which execution must
+ *                 complete after all dependencies are signaled. If set to 0, the timeout
+ *                 duration is considered infinite.
  * @param event The event that will be signaled on completion. event is set to
  *              NULL if there's an error.
  *
@@ -7775,7 +7817,8 @@ int ANeuralNetworksEvent_getSyncFenceFd(const ANeuralNetworksEvent* event, int* 
  */
 int ANeuralNetworksExecution_startComputeWithDependencies(
         ANeuralNetworksExecution* execution, const ANeuralNetworksEvent* const* dependencies,
-        uint32_t num_dependencies, ANeuralNetworksEvent** event) __INTRODUCED_IN(30);
+        uint32_t num_dependencies, uint64_t duration, ANeuralNetworksEvent** event)
+        __INTRODUCED_IN(30);
 
 #endif  // __ANDROID_API__ >= __ANDROID_API_R__
 
