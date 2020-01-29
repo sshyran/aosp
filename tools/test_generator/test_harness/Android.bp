@@ -19,13 +19,34 @@ cc_library_static {
     srcs: [
         "TestHarness.cpp",
     ],
-    host_supported: false,
     defaults: ["neuralnetworks_defaults"],
+    host_supported: true,
+    vendor_available: true,
     export_include_dirs: ["include"],
     static_libs: [
         "libbase",
         "libgmock",
         "libgtest",
+    ],
+}
+
+cc_library_static {
+    name: "neuralnetworks_test_utils",
+    defaults: ["neuralnetworks_utils_defaults"],
+    srcs: [
+        "Assertions.cpp",
+        "TestUtils.cpp",
+    ],
+    local_include_dirs: ["include/nnapi"],
+    export_include_dirs: ["include"],
+    static_libs: [
+        "libneuralnetworks_generated_test_harness",
+        "neuralnetworks_types",
+    ],
+    header_libs: [
+        "libbase_headers",
+        "libcutils_headers",
+        "libutils_headers",
     ],
 }
 
