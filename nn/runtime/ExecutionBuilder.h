@@ -62,6 +62,10 @@ class ExecutionBuilder {
 
     int getDuration(int32_t durationCode, uint64_t* duration) const;
 
+    int setTimeoutDuration(uint64_t duration);
+
+    std::optional<uint64_t> getTimeoutDuration() const;
+
     int computeAsynchronously(sp<ExecutionCallback>* synchronizationCallback) {
         CHECK(synchronizationCallback != nullptr);
         return compute(synchronizationCallback);
@@ -131,6 +135,9 @@ class ExecutionBuilder {
 
     // Timing reported from the driver
     hal::Timing mTiming = {};
+
+    // Amount of time to complete or abort the execution.
+    std::optional<uint64_t> mTimeoutDuration;
 
     // Properties cannot be set once the execution has started.
     std::atomic_bool mStarted = false;

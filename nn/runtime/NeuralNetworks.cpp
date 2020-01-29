@@ -217,6 +217,15 @@ static_assert(ANEURALNETWORKS_OUTPUT_INSUFFICIENT_SIZE == 8,
               "ANEURALNETWORKS_OUTPUT_INSUFFICIENT_SIZE has changed");
 static_assert(ANEURALNETWORKS_UNAVAILABLE_DEVICE == 9,
               "ANEURALNETWORKS_UNAVAILABLE_DEVICE has changed");
+static_assert(ANEURALNETWORKS_MISSED_DEADLINE_TRANSIENT == 10,
+              "ANEURALNETWORKS_MISSED_DEADLINE_TRANSIENT has changed");
+static_assert(ANEURALNETWORKS_MISSED_DEADLINE_PERSISTENT == 11,
+              "ANEURALNETWORKS_MISSED_DEADLINE_PERSISTENT has changed");
+static_assert(ANEURALNETWORKS_RESOURCE_EXHAUSTED_TRANSIENT == 12,
+              "ANEURALNETWORKS_RESOURCE_EXHAUSTED_TRANSIENT has changed");
+static_assert(ANEURALNETWORKS_RESOURCE_EXHAUSTED_PERSISTENT == 13,
+              "ANEURALNETWORKS_RESOURCE_EXHAUSTED_PERSISTENT has changed");
+static_assert(ANEURALNETWORKS_DEAD_OBJECT == 14, "ANEURALNETWORKS_DEAD_OBJECT has changed");
 
 static_assert(ANEURALNETWORKS_MAX_SIZE_OF_IMMEDIATELY_COPIED_VALUES == 128,
               "ANEURALNETWORKS_MAX_SIZE_OF_IMMEDIATELY_COPIED_VALUES has changed");
@@ -518,6 +527,16 @@ static_assert(static_cast<int32_t>(DeviceType::GPU) == ANEURALNETWORKS_DEVICE_GP
 static_assert(static_cast<int32_t>(DeviceType::ACCELERATOR) == ANEURALNETWORKS_DEVICE_ACCELERATOR,
               "DeviceType::ACCELERATOR != ANEURALNETWORKS_DEVICE_ACCELERATOR");
 
+// Make sure that the constants are compatible with the values defined in
+// hardware/interfaces/neuralnetworks/1.3/types.hal.
+static_assert(android::nn::convertToHalPriority(ANEURALNETWORKS_PRIORITY_LOW) == Priority::LOW,
+              "ANEURALNETWORKS_PRIORITY_LOW does not map to Priority::LOW");
+static_assert(android::nn::convertToHalPriority(ANEURALNETWORKS_PRIORITY_MEDIUM) ==
+                      Priority::MEDIUM,
+              "ANEURALNETWORKS_PRIORITY_MEDIUM does not map to Priority::MEDIUM");
+static_assert(android::nn::convertToHalPriority(ANEURALNETWORKS_PRIORITY_HIGH) == Priority::HIGH,
+              "ANEURALNETWORKS_PRIORITY_HIGH does not map to Priority::HIGH");
+
 // Asserts for ANeuralNetworksOperandType memory layout
 static_assert(offsetof(ANeuralNetworksOperandType, type) == 0,
               "ANeuralNetworksOperandType.type offset != 0");
@@ -552,6 +571,14 @@ static_assert(ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN == 32,
 static_assert(static_cast<uint32_t>(Constant::BYTE_SIZE_OF_CACHE_TOKEN) ==
                       ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN,
               "Constant::BYTE_SIZE_OF_CACHE_TOKEN != ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN");
+
+// Asserts for compilation priority
+static_assert(ANEURALNETWORKS_PRIORITY_LOW == 90, "ANEURALNETWORKS_PRIORITY_LOW has changed");
+static_assert(ANEURALNETWORKS_PRIORITY_MEDIUM == 100,
+              "ANEURALNETWORKS_PRIORITY_MEDIUM has changed");
+static_assert(ANEURALNETWORKS_PRIORITY_HIGH == 110, "ANEURALNETWORKS_PRIORITY_HIGH has changed");
+static_assert(ANEURALNETWORKS_PRIORITY_DEFAULT == ANEURALNETWORKS_PRIORITY_MEDIUM,
+              "ANEURALNETWORKS_PRIORITY_DEFAULT has changed");
 
 using namespace android::nn;
 
@@ -625,6 +652,33 @@ int ANeuralNetworksDevice_getFeatureLevel(const ANeuralNetworksDevice* device,
     }
     *featureLevel = dFeatureLevel;
     return ANEURALNETWORKS_NO_ERROR;
+}
+
+bool ANeuralNetworksDevice_supportsCompilationTimeout(const ANeuralNetworksDevice* device) {
+    if (device == nullptr) {
+        LOG(ERROR) << "ANeuralNetworksDevice_supportsCompilationTimeout passed a nullptr";
+        return false;
+    }
+    const Device* d = reinterpret_cast<const Device*>(device);
+    return d->supportsDeadlines().first;
+}
+
+bool ANeuralNetworksDevice_supportsExecutionTimeout(const ANeuralNetworksDevice* device) {
+    if (device == nullptr) {
+        LOG(ERROR) << "ANeuralNetworksDevice_supportsExecutionTimeout passed a nullptr";
+        return false;
+    }
+    const Device* d = reinterpret_cast<const Device*>(device);
+    return d->supportsDeadlines().second;
+}
+
+int ANeuralNetworksDevice_wait(const ANeuralNetworksDevice* device) {
+    if (device == nullptr) {
+        LOG(ERROR) << "ANeuralNetworksDevice_wait passed a nullptr";
+        return ANEURALNETWORKS_UNEXPECTED_NULL;
+    }
+    const Device* d = reinterpret_cast<const Device*>(device);
+    return d->wait();
 }
 
 int ANeuralNetworksModel_getSupportedOperationsForDevices(
@@ -1131,6 +1185,27 @@ int ANeuralNetworksCompilation_finish(ANeuralNetworksCompilation* compilation) {
     return c->finish();
 }
 
+int ANeuralNetworksCompilation_setPriority(ANeuralNetworksCompilation* compilation, int priority) {
+    NNTRACE_RT(NNTRACE_PHASE_COMPILATION, "ANeuralNetworksCompilation_setPriority");
+    if (!compilation) {
+        LOG(ERROR) << "ANeuralNetworksCompilation_setPriority passed a nullptr";
+        return ANEURALNETWORKS_UNEXPECTED_NULL;
+    }
+    CompilationBuilder* c = reinterpret_cast<CompilationBuilder*>(compilation);
+    return c->setPriority(priority);
+}
+
+int ANeuralNetworksCompilation_setTimeout(ANeuralNetworksCompilation* compilation,
+                                          uint64_t duration) {
+    NNTRACE_RT(NNTRACE_PHASE_COMPILATION, "ANeuralNetworksCompilation_setTimeout");
+    if (!compilation) {
+        LOG(ERROR) << "ANeuralNetworksCompilation_setTimeout passed a nullptr";
+        return ANEURALNETWORKS_UNEXPECTED_NULL;
+    }
+    CompilationBuilder* c = reinterpret_cast<CompilationBuilder*>(compilation);
+    return c->setTimeoutDuration(duration);
+}
+
 int ANeuralNetworksExecution_create(ANeuralNetworksCompilation* compilation,
                                     ANeuralNetworksExecution** execution) {
     NNTRACE_RT(NNTRACE_PHASE_EXECUTION, "ANeuralNetworksExecution_create");
@@ -1260,6 +1335,17 @@ int ANeuralNetworksExecution_startCompute(ANeuralNetworksExecution* execution,
     }
     *event = reinterpret_cast<ANeuralNetworksEvent*>(e.release());
     return ANEURALNETWORKS_NO_ERROR;
+}
+
+int ANeuralNetworksExecution_setTimeout(ANeuralNetworksExecution* execution, uint64_t duration) {
+    NNTRACE_RT(NNTRACE_PHASE_EXECUTION, "ANeuralNetworksExecution_setTimeout");
+    if (!execution) {
+        LOG(ERROR) << "ANeuralNetworksExecution_setTimeout passed a nullptr";
+        return ANEURALNETWORKS_UNEXPECTED_NULL;
+    }
+
+    ExecutionBuilder* r = reinterpret_cast<ExecutionBuilder*>(execution);
+    return r->setTimeoutDuration(duration);
 }
 
 int ANeuralNetworksEvent_wait(ANeuralNetworksEvent* event) {

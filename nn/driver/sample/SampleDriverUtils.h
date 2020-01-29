@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+#include <hwbinder/IPCThreadState.h>
+
 #include <thread>
 
 #include "HalInterfaces.h"
@@ -38,11 +40,16 @@ void notify(const sp<hal::V1_0::IExecutionCallback>& callback, const hal::ErrorS
 void notify(const sp<hal::V1_2::IExecutionCallback>& callback, const hal::ErrorStatus& status,
             const hal::hidl_vec<hal::OutputShape>& outputShapes, hal::Timing timing);
 
+void notify(const sp<hal::V1_3::IExecutionCallback>& callback, const hal::ErrorStatus& status,
+            const hal::hidl_vec<hal::OutputShape>& outputShapes, hal::Timing timing);
+
 template <typename T_Model, typename T_IPreparedModelCallback>
-hal::Return<hal::ErrorStatus> prepareModelBase(const T_Model& model, const SampleDriver* driver,
-                                               hal::ExecutionPreference preference,
-                                               const sp<T_IPreparedModelCallback>& callback,
-                                               bool isFullModelSupported = true) {
+hal::ErrorStatus prepareModelBase(const T_Model& model, const SampleDriver* driver,
+                                  hal::ExecutionPreference preference, hal::Priority priority,
+                                  const hal::OptionalTimePoint& deadline,
+                                  const sp<T_IPreparedModelCallback>& callback,
+                                  bool isFullModelSupported = true) {
+    const uid_t userId = hardware::IPCThreadState::self()->getCallingUid();
     if (callback.get() == nullptr) {
         LOG(ERROR) << "invalid callback passed to prepareModelBase";
         return hal::ErrorStatus::INVALID_ARGUMENT;
@@ -51,7 +58,8 @@ hal::Return<hal::ErrorStatus> prepareModelBase(const T_Model& model, const Sampl
         VLOG(DRIVER) << "prepareModelBase";
         logModelToInfo(model);
     }
-    if (!validateModel(model) || !validateExecutionPreference(preference)) {
+    if (!validateModel(model) || !validateExecutionPreference(preference) ||
+        !validatePriority(priority)) {
         notify(callback, hal::ErrorStatus::INVALID_ARGUMENT, nullptr);
         return hal::ErrorStatus::INVALID_ARGUMENT;
     }
@@ -59,10 +67,14 @@ hal::Return<hal::ErrorStatus> prepareModelBase(const T_Model& model, const Sampl
         notify(callback, hal::ErrorStatus::INVALID_ARGUMENT, nullptr);
         return hal::ErrorStatus::NONE;
     }
+    if (deadline.getDiscriminator() != hal::OptionalTimePoint::hidl_discriminator::none) {
+        notify(callback, hal::ErrorStatus::INVALID_ARGUMENT, nullptr);
+        return hal::ErrorStatus::INVALID_ARGUMENT;
+    }
     // asynchronously prepare the model from a new, detached thread
-    std::thread([model, driver, preference, callback] {
+    std::thread([model, driver, preference, userId, priority, callback] {
         sp<SamplePreparedModel> preparedModel =
-                new SamplePreparedModel(convertToV1_3(model), driver, preference);
+                new SamplePreparedModel(convertToV1_3(model), driver, preference, userId, priority);
         if (!preparedModel->initialize()) {
             notify(callback, hal::ErrorStatus::INVALID_ARGUMENT, nullptr);
             return;

@@ -22,6 +22,7 @@
 #include <set>
 #include <string>
 #include <tuple>
+#include <utility>
 #include <vector>
 
 #include "HalInterfaces.h"
@@ -129,6 +130,12 @@ void initVLogMask();
 #define NN_RET_CHECK_LT(x, y) NN_RET_CHECK_OP(x, y, <)
 #define NN_RET_CHECK_GE(x, y) NN_RET_CHECK_OP(x, y, >=)
 #define NN_RET_CHECK_GT(x, y) NN_RET_CHECK_OP(x, y, >)
+
+// Make an optional time point from an optional duration. If the operation
+// succeeds, a pair of {ANEURALNETWORKS_NO_ERROR, timepoint} is returned. If an
+// overflow occurs in this function, {ANEURALNETWORKS_BAD_DATA, empty} is
+// returned.
+std::pair<int, hal::OptionalTimePoint> makeTimePoint(std::optional<uint64_t> duration);
 
 // Ensure that every user of FalseyErrorStream is linked to the
 // correct instance, using the correct LOG_TAG
@@ -385,6 +392,11 @@ bool compliantWithV1_2(const hal::V1_2::Model& model,
 bool compliantWithV1_2(const hal::V1_3::Model& model,
                        std::set<uint32_t>* noncompliantOperations = nullptr);
 
+hal::V1_0::ErrorStatus convertToV1_0(hal::V1_0::ErrorStatus status);
+hal::V1_0::ErrorStatus convertToV1_0(hal::V1_3::ErrorStatus status);
+hal::V1_3::ErrorStatus convertToV1_3(hal::V1_0::ErrorStatus status);
+hal::V1_3::ErrorStatus convertToV1_3(hal::V1_3::ErrorStatus status);
+
 hal::V1_0::Capabilities convertToV1_0(const hal::V1_0::Capabilities& capabilities);
 hal::V1_0::Capabilities convertToV1_0(const hal::V1_1::Capabilities& capabilities);
 hal::V1_0::Capabilities convertToV1_0(const hal::V1_2::Capabilities& capabilities);
@@ -458,6 +470,19 @@ hal::V1_0::OperandLifeTime convertToV1_0(hal::V1_0::OperandLifeTime lifetime);
 hal::V1_0::OperandLifeTime convertToV1_0(hal::V1_3::OperandLifeTime lifetime);
 hal::V1_3::OperandLifeTime convertToV1_3(hal::V1_0::OperandLifeTime lifetime);
 hal::V1_3::OperandLifeTime convertToV1_3(hal::V1_3::OperandLifeTime lifetime);
+
+constexpr hal::Priority convertToHalPriority(int32_t priority) {
+    switch (priority) {
+        case ANEURALNETWORKS_PRIORITY_LOW:
+            return hal::Priority::LOW;
+        case ANEURALNETWORKS_PRIORITY_MEDIUM:
+            return hal::Priority::MEDIUM;
+        case ANEURALNETWORKS_PRIORITY_HIGH:
+            return hal::Priority::HIGH;
+    }
+    LOG(FATAL) << "unrecognized priority: " << priority;
+    return {};
+}
 
 #ifdef NN_DEBUGGABLE
 uint32_t getProp(const char* str, uint32_t defaultValue = 0);
