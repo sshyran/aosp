@@ -243,8 +243,27 @@ cc_library_static {
     name: "neuralnetworks_types",
     defaults: ["neuralnetworks_utils_defaults"],
     srcs: [
+        "SharedMemory.cpp",
+        "TypeUtils.cpp",
         "Types.cpp",
+        "Validation.cpp",
     ],
+    target: {
+        android: {
+            srcs: ["SharedMemoryAndroid.cpp"],
+            shared_libs: [
+                "android.hidl.allocator@1.0",
+                "android.hidl.memory@1.0",
+                "libhidlbase",
+                "libhidlmemory",
+                "libnativewindow",
+            ],
+            static_libs: ["libarect"],
+        },
+        host: {
+            srcs: ["SharedMemoryHost.cpp"],
+        },
+    },
     local_include_dirs: ["include/nnapi"],
     export_include_dirs: ["include"],
     shared_libs: [
