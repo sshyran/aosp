@@ -16,6 +16,7 @@
 
 #include "TestHarness.h"
 
+#include <android-base/logging.h>
 #include <gmock/gmock-matchers.h>
 #include <gtest/gtest.h>
 
@@ -101,14 +102,15 @@ void expectBooleanEqual(const TestOperand& op, const TestBuffer& result) {
 void expectMultinomialDistributionWithinTolerance(const TestModel& model,
                                                   const std::vector<TestBuffer>& buffers) {
     // This function is only for RANDOM_MULTINOMIAL single-operation test.
-    ASSERT_EQ(model.operations.size(), 1u);
-    ASSERT_EQ(model.operations[0].type, TestOperationType::RANDOM_MULTINOMIAL);
-    ASSERT_EQ(model.inputIndexes.size(), 1u);
-    ASSERT_EQ(model.outputIndexes.size(), 1u);
+    CHECK_EQ(model.referenced.size(), 0u) << "Subgraphs not supported";
+    ASSERT_EQ(model.main.operations.size(), 1u);
+    ASSERT_EQ(model.main.operations[0].type, TestOperationType::RANDOM_MULTINOMIAL);
+    ASSERT_EQ(model.main.inputIndexes.size(), 1u);
+    ASSERT_EQ(model.main.outputIndexes.size(), 1u);
     ASSERT_EQ(buffers.size(), 1u);
 
-    const auto& inputOperand = model.operands[model.inputIndexes[0]];
-    const auto& outputOperand = model.operands[model.outputIndexes[0]];
+    const auto& inputOperand = model.main.operands[model.main.inputIndexes[0]];
+    const auto& outputOperand = model.main.operands[model.main.outputIndexes[0]];
     ASSERT_EQ(inputOperand.dimensions.size(), 2u);
     ASSERT_EQ(outputOperand.dimensions.size(), 2u);
 
@@ -169,9 +171,15 @@ void checkResults(const TestModel& model, const std::vector<TestBuffer>& buffers
     // - the model has at least one TENSOR_FLOAT16 operand
     double fpAtol = 1e-5;
     double fpRtol = 5.0f * 1.1920928955078125e-7;
-    const bool hasFloat16Inputs = std::any_of(
-            model.operands.begin(), model.operands.end(),
-            [](const TestOperand& op) { return op.type == TestOperandType::TENSOR_FLOAT16; });
+    bool hasFloat16Inputs = false;
+    model.forEachSubgraph([&hasFloat16Inputs](const TestSubgraph& subgraph) {
+        if (!hasFloat16Inputs) {
+            hasFloat16Inputs = std::any_of(subgraph.operands.begin(), subgraph.operands.end(),
+                                           [](const TestOperand& op) {
+                                               return op.type == TestOperandType::TENSOR_FLOAT16;
+                                           });
+        }
+    });
     if (model.isRelaxed || hasFloat16Inputs) {
         // TODO: Adjust the error limit based on testing.
         // If in relaxed mode, set the absolute tolerance to be 5ULP of FP16.
@@ -181,10 +189,10 @@ void checkResults(const TestModel& model, const std::vector<TestBuffer>& buffers
     }
     const double quant8AllowedError = getQuant8AllowedError();
 
-    ASSERT_EQ(model.outputIndexes.size(), buffers.size());
-    for (uint32_t i = 0; i < model.outputIndexes.size(); i++) {
+    ASSERT_EQ(model.main.outputIndexes.size(), buffers.size());
+    for (uint32_t i = 0; i < model.main.outputIndexes.size(); i++) {
         SCOPED_TRACE(testing::Message() << "When comparing output " << i);
-        const auto& operand = model.operands[model.outputIndexes[i]];
+        const auto& operand = model.main.operands[model.main.outputIndexes[i]];
         const auto& result = buffers[i];
         if (operand.isIgnored) continue;
 
@@ -226,8 +234,9 @@ void checkResults(const TestModel& model, const std::vector<TestBuffer>& buffers
 }
 
 TestModel convertQuant8AsymmOperandsToSigned(const TestModel& testModel) {
+    CHECK_EQ(testModel.referenced.size(), 0u) << "Subgraphs not supported";
     TestModel converted(testModel.copy());
-    for (TestOperand& operand : converted.operands) {
+    for (TestOperand& operand : converted.main.operands) {
         if (operand.type == test_helper::TestOperandType::TENSOR_QUANT8_ASYMM) {
             operand.type = test_helper::TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED;
             operand.zeroPoint -= 128;
