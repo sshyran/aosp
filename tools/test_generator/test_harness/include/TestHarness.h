@@ -400,6 +400,13 @@ struct TestModel {
                     result = true;
                     return;
                 }
+                // Control flow operations do not support referenced model
+                // outputs with dynamic shapes.
+                if (operation.type == TestOperationType::IF ||
+                    operation.type == TestOperationType::WHILE) {
+                    result = true;
+                    return;
+                }
             }
         });
         return result;
