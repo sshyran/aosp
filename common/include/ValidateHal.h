@@ -53,6 +53,9 @@ bool validateRequest(const T_Request& request, const T_Model& model);
 // Verfies that the execution preference is valid.
 bool validateExecutionPreference(hal::ExecutionPreference preference);
 
+// Verfies that the priority is valid.
+bool validatePriority(hal::Priority priority);
+
 bool validOperationType(hal::V1_0::OperationType operation);
 bool validOperationType(hal::V1_1::OperationType operation);
 bool validOperationType(hal::V1_2::OperationType operation);

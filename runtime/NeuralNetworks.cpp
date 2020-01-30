@@ -655,18 +655,30 @@ int ANeuralNetworksDevice_getFeatureLevel(const ANeuralNetworksDevice* device,
 }
 
 bool ANeuralNetworksDevice_supportsCompilationTimeout(const ANeuralNetworksDevice* device) {
-    (void)device;
-    return false;
+    if (device == nullptr) {
+        LOG(ERROR) << "ANeuralNetworksDevice_supportsCompilationTimeout passed a nullptr";
+        return false;
+    }
+    const Device* d = reinterpret_cast<const Device*>(device);
+    return d->supportsDeadlines().first;
 }
 
 bool ANeuralNetworksDevice_supportsExecutionTimeout(const ANeuralNetworksDevice* device) {
-    (void)device;
-    return false;
+    if (device == nullptr) {
+        LOG(ERROR) << "ANeuralNetworksDevice_supportsExecutionTimeout passed a nullptr";
+        return false;
+    }
+    const Device* d = reinterpret_cast<const Device*>(device);
+    return d->supportsDeadlines().second;
 }
 
 int ANeuralNetworksDevice_wait(const ANeuralNetworksDevice* device) {
-    (void)device;
-    return ANEURALNETWORKS_OP_FAILED;
+    if (device == nullptr) {
+        LOG(ERROR) << "ANeuralNetworksDevice_wait passed a nullptr";
+        return ANEURALNETWORKS_UNEXPECTED_NULL;
+    }
+    const Device* d = reinterpret_cast<const Device*>(device);
+    return d->wait();
 }
 
 int ANeuralNetworksModel_getSupportedOperationsForDevices(
@@ -1175,17 +1187,23 @@ int ANeuralNetworksCompilation_finish(ANeuralNetworksCompilation* compilation) {
 
 int ANeuralNetworksCompilation_setPriority(ANeuralNetworksCompilation* compilation, int priority) {
     NNTRACE_RT(NNTRACE_PHASE_COMPILATION, "ANeuralNetworksCompilation_setPriority");
-    (void)compilation;
-    (void)priority;
-    return ANEURALNETWORKS_OP_FAILED;
+    if (!compilation) {
+        LOG(ERROR) << "ANeuralNetworksCompilation_setPriority passed a nullptr";
+        return ANEURALNETWORKS_UNEXPECTED_NULL;
+    }
+    CompilationBuilder* c = reinterpret_cast<CompilationBuilder*>(compilation);
+    return c->setPriority(priority);
 }
 
 int ANeuralNetworksCompilation_setTimeout(ANeuralNetworksCompilation* compilation,
                                           uint64_t duration) {
     NNTRACE_RT(NNTRACE_PHASE_COMPILATION, "ANeuralNetworksCompilation_setTimeout");
-    (void)compilation;
-    (void)duration;
-    return ANEURALNETWORKS_OP_FAILED;
+    if (!compilation) {
+        LOG(ERROR) << "ANeuralNetworksCompilation_setTimeout passed a nullptr";
+        return ANEURALNETWORKS_UNEXPECTED_NULL;
+    }
+    CompilationBuilder* c = reinterpret_cast<CompilationBuilder*>(compilation);
+    return c->setTimeoutDuration(duration);
 }
 
 int ANeuralNetworksExecution_create(ANeuralNetworksCompilation* compilation,
@@ -1321,9 +1339,13 @@ int ANeuralNetworksExecution_startCompute(ANeuralNetworksExecution* execution,
 
 int ANeuralNetworksExecution_setTimeout(ANeuralNetworksExecution* execution, uint64_t duration) {
     NNTRACE_RT(NNTRACE_PHASE_EXECUTION, "ANeuralNetworksExecution_setTimeout");
-    (void)execution;
-    (void)duration;
-    return ANEURALNETWORKS_OP_FAILED;
+    if (!execution) {
+        LOG(ERROR) << "ANeuralNetworksExecution_setTimeout passed a nullptr";
+        return ANEURALNETWORKS_UNEXPECTED_NULL;
+    }
+
+    ExecutionBuilder* r = reinterpret_cast<ExecutionBuilder*>(execution);
+    return r->setTimeoutDuration(duration);
 }
 
 int ANeuralNetworksEvent_wait(ANeuralNetworksEvent* event) {

@@ -312,7 +312,8 @@ std::set<Success> expectedPassSet = {Success::PASS_NEITHER, Success::PASS_DEVICE
 class TestPreparedModelLatest : public SamplePreparedModel {
    public:
     TestPreparedModelLatest(const HidlModel& model, const SampleDriver* driver, Success success)
-        : SamplePreparedModel(model, driver, ExecutionPreference::FAST_SINGLE_ANSWER),
+        : SamplePreparedModel(model, driver, ExecutionPreference::FAST_SINGLE_ANSWER, uid_t{},
+                              kDefaultPriority),
           mSuccess(success) {}
 
     Return<V1_0::ErrorStatus> execute(const V1_0::Request&,
