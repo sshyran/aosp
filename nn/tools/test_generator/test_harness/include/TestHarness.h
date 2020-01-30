@@ -184,6 +184,12 @@ enum class TestOperationType {
     UNIDIRECTIONAL_SEQUENCE_RNN = 93,
     RESIZE_NEAREST_NEIGHBOR = 94,
     QUANTIZED_LSTM = 95,
+    IF = 96,
+    WHILE = 97,
+    ELU = 98,
+    HARD_SWISH = 99,
+    FILL = 100,
+    RANK = 101,
 };
 
 enum class TestHalVersion { UNKNOWN, V1_0, V1_1, V1_2, V1_3 };
@@ -343,6 +349,17 @@ struct TestModel {
                 if (operands[operandIndex].type == TestOperandType::TENSOR_QUANT8_ASYMM) {
                     return true;
                 }
+            }
+        }
+        return false;
+    }
+
+    // RANK op returns a scalar and therefore shouldn't be tested for dynamic
+    // output shape support.
+    bool hasScalarOutputs() const {
+        for (const TestOperation& operation : operations) {
+            if (operation.type == TestOperationType::RANK) {
+                return true;
             }
         }
         return false;

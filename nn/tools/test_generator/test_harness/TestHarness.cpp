@@ -216,6 +216,9 @@ void checkResults(const TestModel& model, const std::vector<TestBuffer>& buffers
             case TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED:
                 expectNear<int8_t>(operand, result, quant8AllowedError, 0);
                 break;
+            case TestOperandType::INT32:
+                expectNear<int32_t>(operand, result, 0, 0);
+                break;
             default:
                 FAIL() << "Data type not supported.";
         }

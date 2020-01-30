@@ -32,6 +32,7 @@
 #include "BurstBuilder.h"
 #include "Callbacks.h"
 #include "CompilationBuilder.h"
+#include "Event.h"
 #include "ExecutionBuilder.h"
 #include "HalInterfaces.h"
 #include "Manager.h"
@@ -189,7 +190,15 @@ static_assert(ANEURALNETWORKS_UNIDIRECTIONAL_SEQUENCE_LSTM == 92,
               "ANEURALNETWORKS_UNIDIRECTIONAL_SEQUENCE_LSTM has changed");
 static_assert(ANEURALNETWORKS_UNIDIRECTIONAL_SEQUENCE_RNN == 93,
               "ANEURALNETWORKS_UNIDIRECTIONAL_SEQUENCE_RNN has changed");
+static_assert(ANEURALNETWORKS_RESIZE_NEAREST_NEIGHBOR == 94,
+              "ANEURALNETWORKS_RESIZE_NEAREST_NEIGHBOR has changed");
 static_assert(ANEURALNETWORKS_QUANTIZED_LSTM == 95, "ANEURALNETWORKS_QUANTIZED_LSTM has changed");
+static_assert(ANEURALNETWORKS_IF == 96, "ANEURALNETWORKS_IF has changed");
+static_assert(ANEURALNETWORKS_WHILE == 97, "ANEURALNETWORKS_WHILE has changed");
+static_assert(ANEURALNETWORKS_ELU == 98, "ANEURALNETWORKS_ELU has changed");
+static_assert(ANEURALNETWORKS_HARD_SWISH == 99, "ANEURALNETWORKS_HARD_SWISH has changed");
+static_assert(ANEURALNETWORKS_FILL == 100, "ANEURALNETWORKS_FILL has changed");
+static_assert(ANEURALNETWORKS_RANK == 101, "ANEURALNETWORKS_RANK has changed");
 
 static_assert(ANEURALNETWORKS_OEM_OPERATION == 10000, "ANEURALNETWORKS_OEM_OPERATION has changed");
 
@@ -517,6 +526,20 @@ static_assert(static_cast<int32_t>(OperationType::UNIDIRECTIONAL_SEQUENCE_RNN) =
 static_assert(static_cast<int32_t>(OperationType::RESIZE_NEAREST_NEIGHBOR) ==
                       ANEURALNETWORKS_RESIZE_NEAREST_NEIGHBOR,
               "OperationType::RESIZE_NEAREST_NEIGHBOR != ANEURALNETWORKS_RESIZE_NEAREST_NEIGHBOR");
+static_assert(static_cast<int32_t>(OperationType::QUANTIZED_LSTM) == ANEURALNETWORKS_QUANTIZED_LSTM,
+              "OperationType::QUANTIZED_LSTM != ANEURALNETWORKS_QUANTIZED_LSTM");
+static_assert(static_cast<int32_t>(OperationType::IF) == ANEURALNETWORKS_IF,
+              "OperationType::IF != ANEURALNETWORKS_IF");
+static_assert(static_cast<int32_t>(OperationType::WHILE) == ANEURALNETWORKS_WHILE,
+              "OperationType::WHILE != ANEURALNETWORKS_WHILE");
+static_assert(static_cast<int32_t>(OperationType::ELU) == ANEURALNETWORKS_ELU,
+              "OperationType::ELU != ANEURALNETWORKS_ELU");
+static_assert(static_cast<int32_t>(OperationType::HARD_SWISH) == ANEURALNETWORKS_HARD_SWISH,
+              "OperationType::HARD_SWISH != ANEURALNETWORKS_HARD_SWISH");
+static_assert(static_cast<int32_t>(OperationType::FILL) == ANEURALNETWORKS_FILL,
+              "OperationType::FILL != ANEURALNETWORKS_FILL");
+static_assert(static_cast<int32_t>(OperationType::RANK) == ANEURALNETWORKS_RANK,
+              "OperationType::RANK != ANEURALNETWORKS_RANK");
 
 static_assert(static_cast<int32_t>(DeviceType::OTHER) == ANEURALNETWORKS_DEVICE_OTHER,
               "DeviceType::OTHER != ANEURALNETWORKS_DEVICE_OTHER");
@@ -1312,8 +1335,13 @@ int ANeuralNetworksExecution_setOutputFromMemory(ANeuralNetworksExecution* execu
 int ANeuralNetworksExecution_startCompute(ANeuralNetworksExecution* execution,
                                           ANeuralNetworksEvent** event) {
     NNTRACE_RT(NNTRACE_PHASE_EXECUTION, "ANeuralNetworksExecution_startCompute");
-    if (!execution || !event) {
+    if (!event) {
         LOG(ERROR) << "ANeuralNetworksExecution_startCompute passed a nullptr";
+        return ANEURALNETWORKS_UNEXPECTED_NULL;
+    }
+    if (!execution) {
+        LOG(ERROR) << "ANeuralNetworksExecution_startCompute passed a nullptr";
+        *event = nullptr;
         return ANEURALNETWORKS_UNEXPECTED_NULL;
     }
     // TODO validate the rest
@@ -1326,13 +1354,14 @@ int ANeuralNetworksExecution_startCompute(ANeuralNetworksExecution* execution,
     // nullptr is returned. The sp is used for ref-counting purposes. Without
     // it, the HIDL service could attempt to communicate with a dead callback
     // object.
-    std::unique_ptr<sp<ExecutionCallback>> e = std::make_unique<sp<ExecutionCallback>>();
+    std::unique_ptr<sp<ExecutionCallback>> callback = std::make_unique<sp<ExecutionCallback>>();
     *event = nullptr;
 
-    int n = r->computeAsynchronously(e.get());
+    int n = r->computeAsynchronously(callback.get());
     if (n != ANEURALNETWORKS_NO_ERROR) {
         return n;
     }
+    std::unique_ptr<CallbackEvent> e = std::make_unique<CallbackEvent>(*callback);
     *event = reinterpret_cast<ANeuralNetworksEvent*>(e.release());
     return ANEURALNETWORKS_NO_ERROR;
 }
@@ -1355,17 +1384,17 @@ int ANeuralNetworksEvent_wait(ANeuralNetworksEvent* event) {
         return ANEURALNETWORKS_UNEXPECTED_NULL;
     }
 
-    sp<ExecutionCallback>* e = reinterpret_cast<sp<ExecutionCallback>*>(event);
-    (*e)->wait();
-    return convertErrorStatusToResultCode((*e)->getStatus());
+    IEvent* e = reinterpret_cast<IEvent*>(event);
+    e->wait();
+    return convertErrorStatusToResultCode(e->getStatus());
 }
 
 void ANeuralNetworksEvent_free(ANeuralNetworksEvent* event) {
     NNTRACE_RT(NNTRACE_PHASE_EXECUTION, "ANeuralNetworksEvent_free");
     // No validation.  Free of nullptr is valid.
     if (event) {
-        sp<ExecutionCallback>* e = reinterpret_cast<sp<ExecutionCallback>*>(event);
-        (*e)->wait();
+        IEvent* e = reinterpret_cast<IEvent*>(event);
+        e->wait();
         delete e;
     }
 }
@@ -1423,4 +1452,83 @@ int ANeuralNetworksModel_setOperandExtensionData(ANeuralNetworksModel* model, in
     }
     ModelBuilder* m = reinterpret_cast<ModelBuilder*>(model);
     return m->setOperandExtensionData(index, data, length);
+}
+
+int ANeuralNetworksEvent_createFromSyncFenceFd(int sync_fence_fd, ANeuralNetworksEvent** event) {
+    if (event == nullptr) {
+        LOG(ERROR) << "ANeuralNetworksEvent_createFromSyncFenceFd passed a nullptr";
+        return ANEURALNETWORKS_UNEXPECTED_NULL;
+    }
+    if (sync_fence_fd <= 0) {
+        LOG(ERROR) << "ANeuralNetworksEvent_createFromSyncFenceFd passed an invalid fd: "
+                   << sync_fence_fd;
+        *event = nullptr;
+        return ANEURALNETWORKS_BAD_DATA;
+    }
+    std::unique_ptr<SyncFenceEvent> e = std::make_unique<SyncFenceEvent>(sync_fence_fd, nullptr);
+    *event = reinterpret_cast<ANeuralNetworksEvent*>(e.release());
+    return ANEURALNETWORKS_NO_ERROR;
+}
+
+int ANeuralNetworksEvent_getSyncFenceFd(const ANeuralNetworksEvent* event, int* sync_fence_fd) {
+    if (sync_fence_fd == nullptr) {
+        LOG(ERROR) << "ANeuralNetworksEvent_getSyncFenceFd passed a nullptr";
+        return ANEURALNETWORKS_UNEXPECTED_NULL;
+    }
+    *sync_fence_fd = -1;
+    if (event == nullptr) {
+        LOG(ERROR) << "ANeuralNetworksEvent_getSyncFenceFd passed a nullptr";
+        return ANEURALNETWORKS_UNEXPECTED_NULL;
+    }
+    const IEvent* e = reinterpret_cast<const IEvent*>(event);
+    // The client owns the dupped fd, and is responsible for closing it.
+    *sync_fence_fd = e->getSyncFenceFd(/*shouldDup*/ true);
+    if (*sync_fence_fd <= 0) {
+        LOG(ERROR) << "ANeuralNetworksEvent_getSyncFenceFd unable to get valid sync_fence fd";
+        *sync_fence_fd = -1;
+        return ANEURALNETWORKS_OP_FAILED;
+    }
+    return ANEURALNETWORKS_NO_ERROR;
+}
+
+int ANeuralNetworksExecution_startComputeWithDependencies(
+        ANeuralNetworksExecution* execution, const ANeuralNetworksEvent* const* dependencies,
+        uint32_t num_events, ANeuralNetworksEvent** event) {
+    NNTRACE_RT(NNTRACE_PHASE_EXECUTION, "ANeuralNetworksExecution_startComputeWithDependencies");
+    if (!event) {
+        LOG(ERROR) << "ANeuralNetworksExecution_startComputeWithDependencies passed a nullptr";
+        return ANEURALNETWORKS_UNEXPECTED_NULL;
+    }
+    if ((!dependencies && num_events != 0) || !execution) {
+        LOG(ERROR) << "ANeuralNetworksExecution_startComputeWithDependencies passed a nullptr";
+        *event = nullptr;
+        return ANEURALNETWORKS_UNEXPECTED_NULL;
+    }
+    ExecutionBuilder* r = reinterpret_cast<ExecutionBuilder*>(execution);
+
+    std::vector<int> wait_for_list;
+    for (uint32_t i = 0; i < num_events; i++) {
+        if (!dependencies[i]) {
+            LOG(ERROR) << "ANeuralNetworksExecution_startComputeWithDependencies passed a nullptr";
+            *event = nullptr;
+            return ANEURALNETWORKS_UNEXPECTED_NULL;
+        }
+        const IEvent* e = reinterpret_cast<const IEvent*>(dependencies[i]);
+        int sync_fence_fd = e->getSyncFenceFd(/*should_dup*/ false);
+        if (sync_fence_fd < 0) {
+            e->wait();
+        } else {
+            wait_for_list.push_back(sync_fence_fd);
+        }
+    }
+    int sync_fence_to_signal = -1;
+    int n = r->computeFenced(wait_for_list, &sync_fence_to_signal);
+    std::unique_ptr<SyncFenceEvent> e =
+            std::make_unique<SyncFenceEvent>(sync_fence_to_signal, r->getFencedExecutionCallback());
+    if (n != ANEURALNETWORKS_NO_ERROR) {
+        *event = nullptr;
+    } else {
+        *event = reinterpret_cast<ANeuralNetworksEvent*>(e.release());
+    }
+    return n;
 }

@@ -2403,8 +2403,8 @@
      * "floor division" ("//" in Python). For example,
      *     5 // 2 = 2
      *    -5 // 2 = -3
-%/kind
      *
+%/kind
      * Two dimensions are compatible when:
      *     1. they are equal, or
      *     2. one of them is 1
@@ -6009,10 +6009,114 @@
 %insert-lines AVAIL30
      */
     %{DeclareOperation_1.3 WHILE 97},
+
+    /**
+     * Computes exponential linear activation on the input tensor element-wise.
+     *
+     * The output is calculated using the following formula:
+     *
+     *     ELU(x) = max(0, x) + min(0, alpha * (exp(x) - 1))
+     *
+     * Supported tensor {@link %{OperandType}}:
+     * * {@link %{OperandTypeLinkPfx}TENSOR_FLOAT16}
+     * * {@link %{OperandTypeLinkPfx}TENSOR_FLOAT32}
+     *
+     * Inputs:
+     * * 0: A tensor, specifying the input. May be zero-sized.
+     * * 1: A scalar, specifying the alpha parameter.
+     *      For input tensor of {@link %{OperandTypeLinkPfx}TENSOR_FLOAT16},
+     *      the alpha value must be of {@link %{OperandTypeLinkPfx}FLOAT16}.
+     *      For input tensor of {@link %{OperandTypeLinkPfx}TENSOR_FLOAT32},
+     *      the alpha value must be of {@link %{OperandTypeLinkPfx}FLOAT32}.
+     *
+     * Outputs:
+     * * 0: The output tensor of same shape and type as input0.
+%insert-lines AVAIL30
+     */
+    %{DeclareOperation_1.3 ELU 98},
+
+    /**
+     * Computes hard-swish activation on the input tensor element-wise.
+     *
+     * Hard swish activation is introduced in
+     * https://arxiv.org/pdf/1905.02244.pdf
+     *
+     * The output is calculated using the following formula:
+     *
+     *     h-swish(x) = x * max(0, min(6, (x + 3))) / 6
+
+     * Supported tensor {@link %{OperandType}}:
+     * * {@link %{OperandTypeLinkPfx}TENSOR_FLOAT16}
+     * * {@link %{OperandTypeLinkPfx}TENSOR_FLOAT32}
+     * * {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM}
+     * * {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM_SIGNED}
+     *
+     * Inputs:
+     * * 0: A tensor, specifying the input. May be zero-sized.
+     *
+     * Outputs:
+     * * 0: The output tensor of same shape and type as input0.
+     *      Scale and zero point of this tensor may be different from the input
+     *      tensor's parameters.
+%insert-lines AVAIL30
+     */
+    %{DeclareOperation_1.3 HARD_SWISH 99},
+
+    /**
+     * Creates a tensor filled with a scalar value.
+     *
+     * Supported output tensor {@link %{OperandType}}:
+     * * {@link %{OperandTypeLinkPfx}TENSOR_FLOAT16}
+     * * {@link %{OperandTypeLinkPfx}TENSOR_FLOAT32}
+     * * {@link %{OperandTypeLinkPfx}TENSOR_INT32}
+     *
+     * Inputs:
+     * * 0: A 1-D tensor, specifying the desired output tensor shape.
+     * * 1: A scalar, specifying the value to fill the output tensors with.
+     *      For output tensor of {@link %{OperandTypeLinkPfx}TENSOR_FLOAT16},
+     *      the scalar must be of {@link %{OperandTypeLinkPfx}FLOAT16}.
+     *      For output tensor of {@link %{OperandTypeLinkPfx}TENSOR_FLOAT32},
+     *      the scalar must be of {@link %{OperandTypeLinkPfx}FLOAT32}.
+     *      For output tensor of {@link %{OperandTypeLinkPfx}TENSOR_INT32},
+     *      the scalar must be of {@link %{OperandTypeLinkPfx}INT32}.
+     *
+     * Outputs:
+     * * 0: The output tensor.
+%insert-lines AVAIL30
+     */
+    %{DeclareOperation_1.3 FILL 100},
+
+    /**
+     * Returns the rank of a tensor.
+     *
+     * The rank of a tensor is the number of dimensions in it. Also known as
+     * "order", "degree", "ndims".
+     *
+     * Supported tensor {@link %{OperandType}}:
+     * * {@link %{OperandTypeLinkPfx}TENSOR_FLOAT16}
+     * * {@link %{OperandTypeLinkPfx}TENSOR_FLOAT32}
+     * * {@link %{OperandTypeLinkPfx}TENSOR_INT32}
+     * * {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM}
+     * * {@link %{OperandTypeLinkPfx}TENSOR_QUANT16_SYMM}
+     * * {@link %{OperandTypeLinkPfx}TENSOR_BOOL8}
+     * * {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_SYMM_PER_CHANNEL}
+     * * {@link %{OperandTypeLinkPfx}TENSOR_QUANT16_ASYMM}
+     * * {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_SYMM}
+     * * {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM_SIGNED}
+     *
+     * Inputs:
+     * * 0: The input tensor.
+     *
+     * Outputs:
+     * * 0: A scalar of {@link %{OperandTypeLinkPfx}INT32}, specifying the rank
+     *      of the input tensor.
+%insert-lines AVAIL30
+     */
+    %{DeclareOperation_1.3 RANK 101},
 %/section
 
 %section Operation_1.3_MAX
-    FUNDAMENTAL_MAX = 97,
+    FUNDAMENTAL_MAX = 101,
 %/section
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

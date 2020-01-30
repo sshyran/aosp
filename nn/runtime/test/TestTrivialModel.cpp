@@ -150,6 +150,49 @@ TEST_F(TrivialTest, AddThree) {
     ASSERT_EQ(CompareMatrices(expected3b, actual), 0);
 }
 
+TEST_F(TrivialTest, FencedAddThree) {
+    Model modelAdd3;
+    CreateAddThreeTensorModel(&modelAdd3, matrix3);
+    Compilation compilation(&modelAdd3);
+    compilation.finish();
+
+    Matrix3x4 output1, output2;
+    memset(&output1, 0, sizeof(output1));
+    memset(&output2, 0, sizeof(output2));
+
+    // Start the first execution
+    Execution execution1(&compilation);
+    ASSERT_EQ(execution1.setInput(0, matrix1, sizeof(Matrix3x4)), Result::NO_ERROR);
+    ASSERT_EQ(execution1.setInput(1, matrix2, sizeof(Matrix3x4)), Result::NO_ERROR);
+    ASSERT_EQ(execution1.setOutput(0, output1, sizeof(Matrix3x4)), Result::NO_ERROR);
+    ANeuralNetworksEvent* event1;
+    ANeuralNetworksExecution* execution1_handle = execution1.getHandle();
+    ASSERT_EQ(ANeuralNetworksExecution_startComputeWithDependencies(execution1_handle, nullptr, 0,
+                                                                    &event1),
+              ANEURALNETWORKS_NO_ERROR);
+
+    // Start the second execution which will wait for the first one.
+    Execution execution2(&compilation);
+    ASSERT_EQ(execution2.setInput(0, matrix1, sizeof(Matrix3x4)), Result::NO_ERROR);
+    ASSERT_EQ(execution2.setInput(1, matrix1, sizeof(Matrix3x4)), Result::NO_ERROR);
+    ASSERT_EQ(execution2.setOutput(0, output2, sizeof(Matrix3x4)), Result::NO_ERROR);
+    ANeuralNetworksEvent* event2;
+    ANeuralNetworksExecution* execution2_handle = execution2.getHandle();
+    ASSERT_EQ(ANeuralNetworksExecution_startComputeWithDependencies(execution2_handle, &event1, 1,
+                                                                    &event2),
+              ANEURALNETWORKS_NO_ERROR);
+    // Wait for the second event.
+    ASSERT_EQ(ANeuralNetworksEvent_wait(event2), ANEURALNETWORKS_NO_ERROR);
+
+    // Check the results for both executions.
+    ASSERT_EQ(CompareMatrices(expected3, output1), 0);
+    ASSERT_EQ(CompareMatrices(expected3b, output2), 0);
+
+    // Free the event objects
+    ANeuralNetworksEvent_free(event1);
+    ANeuralNetworksEvent_free(event2);
+}
+
 TEST_F(TrivialTest, BroadcastAddTwo) {
     Model modelBroadcastAdd2;
     OperandType scalarType(Type::INT32, {});
