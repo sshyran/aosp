@@ -150,7 +150,7 @@ const OperationRegistration* FibonacciOperationResolver::findOperation(
 }
 
 Return<void> FibonacciDriver::getSupportedExtensions(getSupportedExtensions_cb cb) {
-    cb(ErrorStatus::NONE,
+    cb(V1_0::ErrorStatus::NONE,
        {
                {
                        .name = EXAMPLE_FIBONACCI_EXTENSION_NAME,
@@ -180,7 +180,7 @@ Return<void> FibonacciDriver::getCapabilities_1_3(getCapabilities_1_3_cb cb) {
             .relaxedFloat32toFloat16PerformanceScalar = kPerf,
             .relaxedFloat32toFloat16PerformanceTensor = kPerf,
             .operandPerformance = nonExtensionOperandPerformance<HalVersion::V1_3>(kPerf)};
-    cb(ErrorStatus::NONE, capabilities);
+    cb(V1_3::ErrorStatus::NONE, capabilities);
     return Void();
 }
 
@@ -188,7 +188,7 @@ Return<void> FibonacciDriver::getSupportedOperations_1_3(const V1_3::Model& mode
                                                          getSupportedOperations_1_3_cb cb) {
     VLOG(DRIVER) << "getSupportedOperations()";
     if (!validateModel(model)) {
-        cb(ErrorStatus::INVALID_ARGUMENT, {});
+        cb(V1_3::ErrorStatus::INVALID_ARGUMENT, {});
         return Void();
     }
     const size_t count = model.main.operations.size();
@@ -197,13 +197,13 @@ Return<void> FibonacciDriver::getSupportedOperations_1_3(const V1_3::Model& mode
         const Operation& operation = model.main.operations[i];
         if (fibonacci_op::isFibonacciOperation(operation, model)) {
             if (!fibonacci_op::validate(operation, model)) {
-                cb(ErrorStatus::INVALID_ARGUMENT, {});
+                cb(V1_3::ErrorStatus::INVALID_ARGUMENT, {});
                 return Void();
             }
             supported[i] = true;
         }
     }
-    cb(ErrorStatus::NONE, supported);
+    cb(V1_3::ErrorStatus::NONE, supported);
     return Void();
 }
 

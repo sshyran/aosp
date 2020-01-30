@@ -40,6 +40,7 @@ class SampleDriverPartial : public SampleDriver {
                                                  getSupportedOperations_1_3_cb cb) override;
     hal::Return<hal::ErrorStatus> prepareModel_1_3(
             const hal::V1_3::Model& model, hal::ExecutionPreference preference,
+            hal::Priority priority, const hal::OptionalTimePoint& deadline,
             const hal::hidl_vec<hal::hidl_handle>& modelCache,
             const hal::hidl_vec<hal::hidl_handle>& dataCache, const hal::CacheToken& token,
             const sp<hal::V1_3::IPreparedModelCallback>& callback) override;
