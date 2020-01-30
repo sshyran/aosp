@@ -127,10 +127,10 @@ TestModel convert(const Model& model) {
     std::vector<uint32_t> inputIndexes = convert(model.input_indexes());
     std::vector<uint32_t> outputIndexes = convert(model.output_indexes());
     const bool isRelaxed = model.is_relaxed();
-    return {.operands = std::move(operands),
-            .operations = std::move(operations),
-            .inputIndexes = std::move(inputIndexes),
-            .outputIndexes = std::move(outputIndexes),
+    return {.main = {.operands = std::move(operands),
+                     .operations = std::move(operations),
+                     .inputIndexes = std::move(inputIndexes),
+                     .outputIndexes = std::move(outputIndexes)},
             .isRelaxed = isRelaxed};
 }
 
