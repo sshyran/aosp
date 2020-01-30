@@ -66,7 +66,7 @@ class TestDriverV1_1 : public V1_1::IDevice {
                                             getSupportedOperations_1_1_cb _hidl_cb) override {
         return mDriverV1_2->getSupportedOperations_1_1(model, _hidl_cb);
     }
-    Return<ErrorStatus> prepareModel_1_1(
+    Return<V1_0::ErrorStatus> prepareModel_1_1(
             const V1_1::Model& model, ExecutionPreference preference,
             const sp<V1_0::IPreparedModelCallback>& actualCallback) override {
         return mDriverV1_2->prepareModel_1_1(model, preference, actualCallback);
@@ -79,7 +79,7 @@ class TestDriverV1_1 : public V1_1::IDevice {
                                         getSupportedOperations_cb _hidl_cb) override {
         return mDriverV1_2->getSupportedOperations(model, _hidl_cb);
     }
-    Return<ErrorStatus> prepareModel(
+    Return<V1_0::ErrorStatus> prepareModel(
             const V1_0::Model& model,
             const sp<V1_0::IPreparedModelCallback>& actualCallback) override {
         return mDriverV1_2->prepareModel(model, actualCallback);
@@ -102,7 +102,7 @@ class TestDriverV1_0 : public V1_0::IDevice {
                                         getSupportedOperations_cb _hidl_cb) override {
         return mDriverV1_2->getSupportedOperations(model, _hidl_cb);
     }
-    Return<ErrorStatus> prepareModel(
+    Return<V1_0::ErrorStatus> prepareModel(
             const V1_0::Model& model,
             const sp<V1_0::IPreparedModelCallback>& actualCallback) override {
         return mDriverV1_2->prepareModel(model, actualCallback);

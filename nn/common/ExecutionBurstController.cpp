@@ -144,7 +144,7 @@ std::vector<FmqRequestDatum> serialize(const V1_0::Request& request, MeasureTimi
 }
 
 // deserialize a packet into the result
-std::optional<std::tuple<ErrorStatus, std::vector<OutputShape>, Timing>> deserialize(
+std::optional<std::tuple<V1_0::ErrorStatus, std::vector<OutputShape>, Timing>> deserialize(
         const std::vector<FmqResultDatum>& data) {
     using discriminator = FmqResultDatum::hidl_discriminator;
 
@@ -161,7 +161,7 @@ std::optional<std::tuple<ErrorStatus, std::vector<OutputShape>, Timing>> deseria
     const FmqResultDatum::PacketInformation& packetInfo = data[index].packetInformation();
     index++;
     const uint32_t packetSize = packetInfo.packetSize;
-    const ErrorStatus errorStatus = packetInfo.errorStatus;
+    const V1_0::ErrorStatus errorStatus = packetInfo.errorStatus;
     const uint32_t numberOfOperands = packetInfo.numberOfOperands;
 
     // verify packet size
@@ -245,7 +245,7 @@ ResultChannelReceiver::ResultChannelReceiver(std::unique_ptr<FmqResultChannel> f
                                              std::chrono::microseconds pollingTimeWindow)
     : mFmqResultChannel(std::move(fmqResultChannel)), kPollingTimeWindow(pollingTimeWindow) {}
 
-std::optional<std::tuple<ErrorStatus, std::vector<OutputShape>, Timing>>
+std::optional<std::tuple<V1_0::ErrorStatus, std::vector<OutputShape>, Timing>>
 ResultChannelReceiver::getBlocking() {
     const auto packet = getPacketBlocking();
     if (!packet) {
@@ -266,7 +266,7 @@ void ResultChannelReceiver::invalidate() {
     // TODO: look for a different/better way to signal/notify the futex to
     // wake up any thread waiting on it
     FmqResultDatum datum;
-    datum.packetInformation({/*.packetSize=*/0, /*.errorStatus=*/ErrorStatus::GENERAL_FAILURE,
+    datum.packetInformation({/*.packetSize=*/0, /*.errorStatus=*/V1_0::ErrorStatus::GENERAL_FAILURE,
                              /*.numberOfOperands=*/0});
     mFmqResultChannel->writeBlocking(&datum, 1);
 }
@@ -395,12 +395,12 @@ Return<void> ExecutionBurstController::ExecutionBurstCallback::getMemories(
     // ensure all memories are valid
     if (!std::all_of(memories.begin(), memories.end(),
                      [](const hidl_memory& memory) { return memory.valid(); })) {
-        cb(ErrorStatus::INVALID_ARGUMENT, {});
+        cb(V1_0::ErrorStatus::INVALID_ARGUMENT, {});
         return Void();
     }
 
     // return successful
-    cb(ErrorStatus::NONE, std::move(memories));
+    cb(V1_0::ErrorStatus::NONE, std::move(memories));
     return Void();
 }
 
@@ -494,11 +494,12 @@ std::unique_ptr<ExecutionBurstController> ExecutionBurstController::create(
     }
 
     // configure burst
-    ErrorStatus errorStatus;
+    V1_0::ErrorStatus errorStatus;
     sp<IBurstContext> burstContext;
     const Return<void> ret = preparedModel->configureExecutionBurst(
             callback, *requestChannelDescriptor, *resultChannelDescriptor,
-            [&errorStatus, &burstContext](ErrorStatus status, const sp<IBurstContext>& context) {
+            [&errorStatus, &burstContext](V1_0::ErrorStatus status,
+                                          const sp<IBurstContext>& context) {
                 errorStatus = status;
                 burstContext = context;
             });
@@ -509,7 +510,7 @@ std::unique_ptr<ExecutionBurstController> ExecutionBurstController::create(
                    << ret.description();
         return nullptr;
     }
-    if (errorStatus != ErrorStatus::NONE) {
+    if (errorStatus != V1_0::ErrorStatus::NONE) {
         LOG(ERROR) << "IPreparedModel::configureExecutionBurst failed with status "
                    << toString(errorStatus);
         return nullptr;
@@ -565,9 +566,10 @@ ExecutionBurstController::~ExecutionBurstController() {
 }
 
 static std::tuple<int, std::vector<OutputShape>, Timing, bool> getExecutionResult(
-        ErrorStatus status, std::vector<OutputShape> outputShapes, Timing timing, bool fallback) {
+        V1_0::ErrorStatus status, std::vector<OutputShape> outputShapes, Timing timing,
+        bool fallback) {
     auto [n, checkedOutputShapes, checkedTiming] =
-            getExecutionResult(status, std::move(outputShapes), timing);
+            getExecutionResult(convertToV1_3(status), std::move(outputShapes), timing);
     return {n, std::move(checkedOutputShapes), checkedTiming, fallback};
 }
 
@@ -589,7 +591,8 @@ std::tuple<int, std::vector<OutputShape>, Timing, bool> ExecutionBurstController
     if (!success) {
         LOG(ERROR) << "Error sending FMQ packet";
         // only use fallback execution path if the packet could not be sent
-        return getExecutionResult(ErrorStatus::GENERAL_FAILURE, {}, kNoTiming, /*fallback=*/true);
+        return getExecutionResult(V1_0::ErrorStatus::GENERAL_FAILURE, {}, kNoTiming,
+                                  /*fallback=*/true);
     }
 
     // get result packet
@@ -597,7 +600,8 @@ std::tuple<int, std::vector<OutputShape>, Timing, bool> ExecutionBurstController
     if (!result) {
         LOG(ERROR) << "Error retrieving FMQ packet";
         // only use fallback execution path if the packet could not be sent
-        return getExecutionResult(ErrorStatus::GENERAL_FAILURE, {}, kNoTiming, /*fallback=*/false);
+        return getExecutionResult(V1_0::ErrorStatus::GENERAL_FAILURE, {}, kNoTiming,
+                                  /*fallback=*/false);
     }
 
     // unpack results and return (only use fallback execution path if the
