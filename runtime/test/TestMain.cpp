@@ -78,6 +78,8 @@ static int test(bool useCpuOnly, Execution::ComputeMode computeMode, bool allowS
                 return "ComputeMode::ASYNC";
             case Execution::ComputeMode::BURST:
                 return "ComputeMode::BURST";
+            case Execution::ComputeMode::FENCED:
+                return "ComputeMode::FENCED";
         }
         return "<unknown ComputeMode>";
     };

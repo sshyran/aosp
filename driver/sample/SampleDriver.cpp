@@ -407,6 +407,12 @@ Return<void> SamplePreparedModel::executeSynchronously_1_3(const V1_3::Request& 
     return Void();
 }
 
+Return<void> SamplePreparedModel::executeFenced(const hal::Request&, const hidl_vec<hidl_handle>&,
+                                                MeasureTiming, executeFenced_cb cb) {
+    // TODO(miaowang): implement me.
+    cb(ErrorStatus::DEVICE_UNAVAILABLE, hidl_handle(nullptr), nullptr);
+    return Void();
+}
 // BurstExecutorWithCache maps hidl_memory when it is first seen, and preserves
 // the mapping until either (1) the memory is freed in the runtime, or (2) the
 // burst object is destroyed. This allows for subsequent executions operating on
