@@ -691,6 +691,10 @@ bool validateExecutionPreference(ExecutionPreference preference) {
            preference == ExecutionPreference::SUSTAINED_SPEED;
 }
 
+bool validatePriority(Priority priority) {
+    return priority == Priority::LOW || priority == Priority::MEDIUM || priority == Priority::HIGH;
+}
+
 bool validOperandType(V1_0::OperandType operandType) {
     switch (operandType) {
         case V1_0::OperandType::FLOAT32:
