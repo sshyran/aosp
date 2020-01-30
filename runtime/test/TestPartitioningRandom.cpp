@@ -531,12 +531,12 @@ class TestDriver : public SampleDriver {
                 .relaxedFloat32toFloat16PerformanceScalar = kPerf,
                 .relaxedFloat32toFloat16PerformanceTensor = kPerf,
                 .operandPerformance = nn::nonExtensionOperandPerformance<HalVersion::V1_3>(kPerf)};
-        _hidl_cb(ErrorStatus::NONE, capabilities);
+        _hidl_cb(V1_3::ErrorStatus::NONE, capabilities);
         return Void();
     }
 
     Return<void> getSupportedOperations_1_3(const HidlModel& model,
-                                            getSupportedOperations_cb cb) override {
+                                            getSupportedOperations_1_3_cb cb) override {
         if (nn::validateModel(model)) {
             const size_t count = model.main.operations.size();
             std::vector<bool> supported(count);
@@ -544,35 +544,36 @@ class TestDriver : public SampleDriver {
                 supported[i] = (mSignatures.count(RandomPartitioningTest::getSignature(
                                         model, model.main.operations[i])) != 0);
             }
-            cb(ErrorStatus::NONE, supported);
+            cb(V1_3::ErrorStatus::NONE, supported);
         } else {
-            cb(ErrorStatus::INVALID_ARGUMENT, {});
+            cb(V1_3::ErrorStatus::INVALID_ARGUMENT, {});
         }
         return Void();
     }
 
-    Return<ErrorStatus> prepareModel_1_3(
-            const HidlModel& model, ExecutionPreference preference,
-            const hidl_vec<hidl_handle>& modelCache, const hidl_vec<hidl_handle>& dataCache,
-            const CacheToken& token, const sp<V1_3::IPreparedModelCallback>& callback) override {
+    Return<V1_3::ErrorStatus> prepareModel_1_3(
+            const HidlModel& model, ExecutionPreference preference, Priority priority,
+            const OptionalTimePoint& deadline, const hidl_vec<hidl_handle>& modelCache,
+            const hidl_vec<hidl_handle>& dataCache, const CacheToken& token,
+            const sp<V1_3::IPreparedModelCallback>& callback) override {
         // NOTE: We verify that all operations in the model are supported.
-        ErrorStatus outStatus = ErrorStatus::INVALID_ARGUMENT;
+        V1_3::ErrorStatus outStatus = V1_3::ErrorStatus::INVALID_ARGUMENT;
         auto ret = getSupportedOperations_1_3(
-                model,
-                [&outStatus](ErrorStatus inStatus, const hidl_vec<bool>& supportedOperations) {
-                    if (inStatus == ErrorStatus::NONE) {
+                model, [&outStatus](V1_3::ErrorStatus inStatus,
+                                    const hidl_vec<bool>& supportedOperations) {
+                    if (inStatus == V1_3::ErrorStatus::NONE) {
                         if (std::all_of(supportedOperations.begin(), supportedOperations.end(),
                                         [](bool v) { return v; })) {
-                            outStatus = ErrorStatus::NONE;
+                            outStatus = V1_3::ErrorStatus::NONE;
                         }
                     }
                 });
-        if (ret.isOk() && (outStatus == ErrorStatus::NONE)) {
-            return SampleDriver::prepareModel_1_3(model, preference, modelCache, dataCache, token,
-                                                  callback);
+        if (ret.isOk() && (outStatus == V1_3::ErrorStatus::NONE)) {
+            return SampleDriver::prepareModel_1_3(model, preference, priority, deadline, modelCache,
+                                                  dataCache, token, callback);
         } else {
-            callback->notify_1_3(ErrorStatus::INVALID_ARGUMENT, nullptr);
-            return ErrorStatus::INVALID_ARGUMENT;
+            callback->notify_1_3(V1_3::ErrorStatus::INVALID_ARGUMENT, nullptr);
+            return V1_3::ErrorStatus::INVALID_ARGUMENT;
         }
     }
 
@@ -592,7 +593,7 @@ class TestDriverV1_2 : public V1_2::IDevice {
                                             getSupportedOperations_1_2_cb _hidl_cb) override {
         return mLatestDriver->getSupportedOperations_1_2(model, _hidl_cb);
     }
-    Return<ErrorStatus> prepareModel_1_2(
+    Return<V1_0::ErrorStatus> prepareModel_1_2(
             const V1_2::Model& model, ExecutionPreference preference,
             const hidl_vec<hidl_handle>& modelCache, const hidl_vec<hidl_handle>& dataCache,
             const CacheToken& token,
@@ -610,10 +611,9 @@ class TestDriverV1_2 : public V1_2::IDevice {
     Return<void> getNumberOfCacheFilesNeeded(getNumberOfCacheFilesNeeded_cb _hidl_cb) {
         return mLatestDriver->getNumberOfCacheFilesNeeded(_hidl_cb);
     }
-    Return<ErrorStatus> prepareModelFromCache(const hidl_vec<hidl_handle>& modelCache,
-                                              const hidl_vec<hidl_handle>& dataCache,
-                                              const CacheToken& token,
-                                              const sp<V1_2::IPreparedModelCallback>& callback) {
+    Return<V1_0::ErrorStatus> prepareModelFromCache(
+            const hidl_vec<hidl_handle>& modelCache, const hidl_vec<hidl_handle>& dataCache,
+            const CacheToken& token, const sp<V1_2::IPreparedModelCallback>& callback) {
         return mLatestDriver->prepareModelFromCache(modelCache, dataCache, token, callback);
     }
     Return<void> getCapabilities_1_1(getCapabilities_1_1_cb _hidl_cb) override {
@@ -623,7 +623,7 @@ class TestDriverV1_2 : public V1_2::IDevice {
                                             getSupportedOperations_1_1_cb _hidl_cb) override {
         return mLatestDriver->getSupportedOperations_1_1(model, _hidl_cb);
     }
-    Return<ErrorStatus> prepareModel_1_1(
+    Return<V1_0::ErrorStatus> prepareModel_1_1(
             const V1_1::Model& model, ExecutionPreference preference,
             const sp<V1_0::IPreparedModelCallback>& actualCallback) override {
         return mLatestDriver->prepareModel_1_1(model, preference, actualCallback);
@@ -636,7 +636,7 @@ class TestDriverV1_2 : public V1_2::IDevice {
                                         getSupportedOperations_cb _hidl_cb) override {
         return mLatestDriver->getSupportedOperations(model, _hidl_cb);
     }
-    Return<ErrorStatus> prepareModel(
+    Return<V1_0::ErrorStatus> prepareModel(
             const V1_0::Model& model,
             const sp<V1_0::IPreparedModelCallback>& actualCallback) override {
         return mLatestDriver->prepareModel(model, actualCallback);
@@ -658,7 +658,7 @@ class TestDriverV1_1 : public V1_1::IDevice {
                                             getSupportedOperations_1_1_cb _hidl_cb) override {
         return mLatestDriver->getSupportedOperations_1_1(model, _hidl_cb);
     }
-    Return<ErrorStatus> prepareModel_1_1(
+    Return<V1_0::ErrorStatus> prepareModel_1_1(
             const V1_1::Model& model, ExecutionPreference preference,
             const sp<V1_0::IPreparedModelCallback>& actualCallback) override {
         return mLatestDriver->prepareModel_1_1(model, preference, actualCallback);
@@ -671,7 +671,7 @@ class TestDriverV1_1 : public V1_1::IDevice {
                                         getSupportedOperations_cb _hidl_cb) override {
         return mLatestDriver->getSupportedOperations(model, _hidl_cb);
     }
-    Return<ErrorStatus> prepareModel(
+    Return<V1_0::ErrorStatus> prepareModel(
             const V1_0::Model& model,
             const sp<V1_0::IPreparedModelCallback>& actualCallback) override {
         return mLatestDriver->prepareModel(model, actualCallback);
@@ -693,7 +693,7 @@ class TestDriverV1_0 : public V1_0::IDevice {
                                         getSupportedOperations_cb _hidl_cb) override {
         return mLatestDriver->getSupportedOperations(model, _hidl_cb);
     }
-    Return<ErrorStatus> prepareModel(
+    Return<V1_0::ErrorStatus> prepareModel(
             const V1_0::Model& model,
             const sp<V1_0::IPreparedModelCallback>& actualCallback) override {
         return mLatestDriver->prepareModel(model, actualCallback);

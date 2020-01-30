@@ -527,6 +527,16 @@ static_assert(static_cast<int32_t>(DeviceType::GPU) == ANEURALNETWORKS_DEVICE_GP
 static_assert(static_cast<int32_t>(DeviceType::ACCELERATOR) == ANEURALNETWORKS_DEVICE_ACCELERATOR,
               "DeviceType::ACCELERATOR != ANEURALNETWORKS_DEVICE_ACCELERATOR");
 
+// Make sure that the constants are compatible with the values defined in
+// hardware/interfaces/neuralnetworks/1.3/types.hal.
+static_assert(android::nn::convertToHalPriority(ANEURALNETWORKS_PRIORITY_LOW) == Priority::LOW,
+              "ANEURALNETWORKS_PRIORITY_LOW does not map to Priority::LOW");
+static_assert(android::nn::convertToHalPriority(ANEURALNETWORKS_PRIORITY_MEDIUM) ==
+                      Priority::MEDIUM,
+              "ANEURALNETWORKS_PRIORITY_MEDIUM does not map to Priority::MEDIUM");
+static_assert(android::nn::convertToHalPriority(ANEURALNETWORKS_PRIORITY_HIGH) == Priority::HIGH,
+              "ANEURALNETWORKS_PRIORITY_HIGH does not map to Priority::HIGH");
+
 // Asserts for ANeuralNetworksOperandType memory layout
 static_assert(offsetof(ANeuralNetworksOperandType, type) == 0,
               "ANeuralNetworksOperandType.type offset != 0");
@@ -563,9 +573,10 @@ static_assert(static_cast<uint32_t>(Constant::BYTE_SIZE_OF_CACHE_TOKEN) ==
               "Constant::BYTE_SIZE_OF_CACHE_TOKEN != ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN");
 
 // Asserts for compilation priority
-static_assert(ANEURALNETWORKS_PRIORITY_LOW == 0, "ANEURALNETWORKS_PRIORITY_LOW has changed");
-static_assert(ANEURALNETWORKS_PRIORITY_MEDIUM == 1, "ANEURALNETWORKS_PRIORITY_MEDIUM has changed");
-static_assert(ANEURALNETWORKS_PRIORITY_HIGH == 2, "ANEURALNETWORKS_PRIORITY_HIGH has changed");
+static_assert(ANEURALNETWORKS_PRIORITY_LOW == 90, "ANEURALNETWORKS_PRIORITY_LOW has changed");
+static_assert(ANEURALNETWORKS_PRIORITY_MEDIUM == 100,
+              "ANEURALNETWORKS_PRIORITY_MEDIUM has changed");
+static_assert(ANEURALNETWORKS_PRIORITY_HIGH == 110, "ANEURALNETWORKS_PRIORITY_HIGH has changed");
 static_assert(ANEURALNETWORKS_PRIORITY_DEFAULT == ANEURALNETWORKS_PRIORITY_MEDIUM,
               "ANEURALNETWORKS_PRIORITY_DEFAULT has changed");
 

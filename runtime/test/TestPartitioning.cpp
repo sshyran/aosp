@@ -290,26 +290,28 @@ class PartitioningDriver : public SampleDriver {
     // Dummy class -- a prepared model must not be nullptr.
     class PartitioningPreparedModel : public IPreparedModel {
        public:
-        Return<ErrorStatus> execute(const V1_0::Request&,
-                                    const sp<V1_0::IExecutionCallback>&) override {
-            return ErrorStatus::DEVICE_UNAVAILABLE;
+        Return<V1_0::ErrorStatus> execute(const V1_0::Request&,
+                                          const sp<V1_0::IExecutionCallback>&) override {
+            return V1_0::ErrorStatus::DEVICE_UNAVAILABLE;
         }
-        Return<ErrorStatus> execute_1_2(const V1_0::Request&, MeasureTiming,
-                                        const sp<V1_2::IExecutionCallback>&) override {
-            return ErrorStatus::DEVICE_UNAVAILABLE;
+        Return<V1_0::ErrorStatus> execute_1_2(const V1_0::Request&, MeasureTiming,
+                                              const sp<V1_2::IExecutionCallback>&) override {
+            return V1_0::ErrorStatus::DEVICE_UNAVAILABLE;
         }
-        Return<ErrorStatus> execute_1_3(const V1_3::Request&, MeasureTiming,
-                                        const sp<V1_2::IExecutionCallback>&) override {
-            return ErrorStatus::DEVICE_UNAVAILABLE;
+        Return<V1_3::ErrorStatus> execute_1_3(const V1_3::Request&, MeasureTiming,
+                                              const OptionalTimePoint&,
+                                              const sp<V1_3::IExecutionCallback>&) override {
+            return V1_3::ErrorStatus::DEVICE_UNAVAILABLE;
         }
         Return<void> executeSynchronously(const V1_0::Request&, MeasureTiming,
                                           executeSynchronously_cb cb) override {
-            cb(ErrorStatus::DEVICE_UNAVAILABLE, {}, kBadTiming);
+            cb(V1_0::ErrorStatus::DEVICE_UNAVAILABLE, {}, kBadTiming);
             return Void();
         }
         Return<void> executeSynchronously_1_3(const V1_3::Request&, MeasureTiming,
+                                              const OptionalTimePoint&,
                                               executeSynchronously_1_3_cb cb) override {
-            cb(ErrorStatus::DEVICE_UNAVAILABLE, {}, kBadTiming);
+            cb(V1_3::ErrorStatus::DEVICE_UNAVAILABLE, {}, kBadTiming);
             return Void();
         }
         Return<void> configureExecutionBurst(
@@ -317,7 +319,7 @@ class PartitioningDriver : public SampleDriver {
                 const MQDescriptorSync<V1_2::FmqRequestDatum>& /*requestChannel*/,
                 const MQDescriptorSync<V1_2::FmqResultDatum>& /*resultChannel*/,
                 configureExecutionBurst_cb cb) override {
-            cb(ErrorStatus::DEVICE_UNAVAILABLE, nullptr);
+            cb(V1_0::ErrorStatus::DEVICE_UNAVAILABLE, nullptr);
             return Void();
         }
     };
@@ -339,19 +341,19 @@ class PartitioningDriver : public SampleDriver {
     ~PartitioningDriver() override {}
 
     Return<void> getVersionString(getVersionString_cb cb) override {
-        cb(ErrorStatus::NONE, mVersionString);
+        cb(V1_0::ErrorStatus::NONE, mVersionString);
         return Void();
     }
 
-    Return<ErrorStatus> prepareModel_1_3(const Model& model, ExecutionPreference,
-                                         const hidl_vec<hidl_handle>&, const hidl_vec<hidl_handle>&,
-                                         const CacheToken&,
-                                         const sp<IPreparedModelCallback>& cb) override {
-        ErrorStatus status = ErrorStatus::NONE;
+    Return<V1_3::ErrorStatus> prepareModel_1_3(
+            const Model& model, ExecutionPreference, Priority, const OptionalTimePoint&,
+            const hidl_vec<hidl_handle>&, const hidl_vec<hidl_handle>&, const CacheToken&,
+            const sp<V1_3::IPreparedModelCallback>& cb) override {
+        V1_3::ErrorStatus status = V1_3::ErrorStatus::NONE;
         if (mOEM != OEMYes) {
             for (const auto& operation : model.main.operations) {
                 if (operation.type == OperationType::OEM_OPERATION) {
-                    status = ErrorStatus::INVALID_ARGUMENT;
+                    status = V1_3::ErrorStatus::INVALID_ARGUMENT;
                     break;
                 }
             }
@@ -363,14 +365,14 @@ class PartitioningDriver : public SampleDriver {
     Return<DeviceStatus> getStatus() override { return DeviceStatus::AVAILABLE; }
 
     Return<void> getCapabilities_1_3(getCapabilities_1_3_cb cb) override {
-        cb(ErrorStatus::NONE, mCapabilities);
+        cb(V1_3::ErrorStatus::NONE, mCapabilities);
         return Void();
     }
 
     Return<void> getSupportedOperations_1_3(const Model& model,
-                                            getSupportedOperations_cb cb) override {
+                                            getSupportedOperations_1_3_cb cb) override {
         if (!android::nn::validateModel(model)) {
-            cb(ErrorStatus::INVALID_ARGUMENT, std::vector<bool>());
+            cb(V1_3::ErrorStatus::INVALID_ARGUMENT, std::vector<bool>());
             return Void();
         }
 
@@ -387,20 +389,20 @@ class PartitioningDriver : public SampleDriver {
                 supported[i] = true;
             }
         }
-        cb(ErrorStatus::NONE, supported);
+        cb(V1_3::ErrorStatus::NONE, supported);
         return Void();
     }
 
     Return<void> getNumberOfCacheFilesNeeded(getNumberOfCacheFilesNeeded_cb cb) override {
-        cb(ErrorStatus::NONE, /*numModelCache=*/1, /*numDataCache=*/1);
+        cb(V1_0::ErrorStatus::NONE, /*numModelCache=*/1, /*numDataCache=*/1);
         return Void();
     }
 
-    Return<ErrorStatus> prepareModelFromCache(
+    Return<V1_0::ErrorStatus> prepareModelFromCache(
             const hidl_vec<hidl_handle>&, const hidl_vec<hidl_handle>&, const CacheToken&,
             const sp<V1_2::IPreparedModelCallback>& callback) override {
-        callback->notify_1_2(ErrorStatus::NONE, new PartitioningPreparedModel);
-        return ErrorStatus::NONE;
+        callback->notify_1_2(V1_0::ErrorStatus::NONE, new PartitioningPreparedModel);
+        return V1_0::ErrorStatus::NONE;
     }
 
    private:
@@ -424,7 +426,7 @@ class PartitioningDriverV1_2 : public V1_2::IDevice {
                                             getSupportedOperations_1_2_cb _hidl_cb) override {
         return mLatestDriver->getSupportedOperations_1_2(model, _hidl_cb);
     }
-    Return<ErrorStatus> prepareModel_1_2(
+    Return<V1_0::ErrorStatus> prepareModel_1_2(
             const V1_2::Model& model, ExecutionPreference preference,
             const hidl_vec<hidl_handle>& modelCache, const hidl_vec<hidl_handle>& dataCache,
             const CacheToken& token,
@@ -442,10 +444,9 @@ class PartitioningDriverV1_2 : public V1_2::IDevice {
     Return<void> getNumberOfCacheFilesNeeded(getNumberOfCacheFilesNeeded_cb _hidl_cb) {
         return mLatestDriver->getNumberOfCacheFilesNeeded(_hidl_cb);
     }
-    Return<ErrorStatus> prepareModelFromCache(const hidl_vec<hidl_handle>& modelCache,
-                                              const hidl_vec<hidl_handle>& dataCache,
-                                              const CacheToken& token,
-                                              const sp<V1_2::IPreparedModelCallback>& callback) {
+    Return<V1_0::ErrorStatus> prepareModelFromCache(
+            const hidl_vec<hidl_handle>& modelCache, const hidl_vec<hidl_handle>& dataCache,
+            const CacheToken& token, const sp<V1_2::IPreparedModelCallback>& callback) {
         return mLatestDriver->prepareModelFromCache(modelCache, dataCache, token, callback);
     }
     Return<void> getCapabilities_1_1(getCapabilities_1_1_cb _hidl_cb) override {
@@ -455,7 +456,7 @@ class PartitioningDriverV1_2 : public V1_2::IDevice {
                                             getSupportedOperations_1_1_cb _hidl_cb) override {
         return mLatestDriver->getSupportedOperations_1_1(model, _hidl_cb);
     }
-    Return<ErrorStatus> prepareModel_1_1(
+    Return<V1_0::ErrorStatus> prepareModel_1_1(
             const V1_1::Model& model, ExecutionPreference preference,
             const sp<V1_0::IPreparedModelCallback>& actualCallback) override {
         return mLatestDriver->prepareModel_1_1(model, preference, actualCallback);
@@ -468,7 +469,7 @@ class PartitioningDriverV1_2 : public V1_2::IDevice {
                                         getSupportedOperations_cb _hidl_cb) override {
         return mLatestDriver->getSupportedOperations(model, _hidl_cb);
     }
-    Return<ErrorStatus> prepareModel(
+    Return<V1_0::ErrorStatus> prepareModel(
             const V1_0::Model& model,
             const sp<V1_0::IPreparedModelCallback>& actualCallback) override {
         return mLatestDriver->prepareModel(model, actualCallback);
@@ -492,7 +493,7 @@ class PartitioningDriverV1_1 : public V1_1::IDevice {
                                             getSupportedOperations_1_1_cb _hidl_cb) override {
         return mLatestDriver->getSupportedOperations_1_1(model, _hidl_cb);
     }
-    Return<ErrorStatus> prepareModel_1_1(
+    Return<V1_0::ErrorStatus> prepareModel_1_1(
             const V1_1::Model& model, ExecutionPreference preference,
             const sp<V1_0::IPreparedModelCallback>& actualCallback) override {
         return mLatestDriver->prepareModel_1_1(model, preference, actualCallback);
@@ -505,7 +506,7 @@ class PartitioningDriverV1_1 : public V1_1::IDevice {
                                         getSupportedOperations_cb _hidl_cb) override {
         return mLatestDriver->getSupportedOperations(model, _hidl_cb);
     }
-    Return<ErrorStatus> prepareModel(
+    Return<V1_0::ErrorStatus> prepareModel(
             const V1_0::Model& model,
             const sp<V1_0::IPreparedModelCallback>& actualCallback) override {
         return mLatestDriver->prepareModel(model, actualCallback);
@@ -529,7 +530,7 @@ class PartitioningDriverV1_0 : public V1_0::IDevice {
                                         getSupportedOperations_cb _hidl_cb) override {
         return mLatestDriver->getSupportedOperations(model, _hidl_cb);
     }
-    Return<ErrorStatus> prepareModel(
+    Return<V1_0::ErrorStatus> prepareModel(
             const V1_0::Model& model,
             const sp<V1_0::IPreparedModelCallback>& actualCallback) override {
         return mLatestDriver->prepareModel(model, actualCallback);
