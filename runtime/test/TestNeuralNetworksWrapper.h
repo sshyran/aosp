@@ -116,9 +116,13 @@ class Model {
             mModel = other.mModel;
             mNextOperandId = other.mNextOperandId;
             mValid = other.mValid;
+            mRelaxed = other.mRelaxed;
+            mFinished = other.mFinished;
             other.mModel = nullptr;
             other.mNextOperandId = 0;
             other.mValid = false;
+            other.mRelaxed = false;
+            other.mFinished = false;
         }
         return *this;
     }
@@ -129,6 +133,7 @@ class Model {
             if (result != Result::NO_ERROR) {
                 mValid = false;
             }
+            mFinished = true;
             return result;
         } else {
             return Result::BAD_STATE;
@@ -223,6 +228,7 @@ class Model {
     ANeuralNetworksModel* getHandle() const { return mModel; }
     bool isValid() const { return mValid; }
     bool isRelaxed() const { return mRelaxed; }
+    bool isFinished() const { return mFinished; }
 
    protected:
     ANeuralNetworksModel* mModel = nullptr;
@@ -230,6 +236,7 @@ class Model {
     uint32_t mNextOperandId = 0;
     bool mValid = true;
     bool mRelaxed = false;
+    bool mFinished = false;
 };
 
 class Compilation {
