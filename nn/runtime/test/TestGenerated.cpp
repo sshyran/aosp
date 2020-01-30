@@ -546,8 +546,9 @@ TEST_P(FencedComputeTest, Test) {
 INSTANTIATE_GENERATED_TEST(GeneratedTests,
                            [](const TestModel& testModel) { return !testModel.expectFailure; });
 
-INSTANTIATE_GENERATED_TEST(DynamicOutputShapeTest,
-                           [](const TestModel& testModel) { return !testModel.expectFailure; });
+INSTANTIATE_GENERATED_TEST(DynamicOutputShapeTest, [](const TestModel& testModel) {
+    return !testModel.expectFailure && !testModel.hasScalarOutputs();
+});
 
 INSTANTIATE_GENERATED_TEST(GeneratedValidationTests,
                            [](const TestModel& testModel) { return testModel.expectFailure; });
@@ -558,6 +559,10 @@ INSTANTIATE_GENERATED_TEST(QuantizationCouplingTest, [](const TestModel& testMod
 });
 
 INSTANTIATE_GENERATED_TEST(DeviceMemoryTest, [](const TestModel& testModel) {
+    if (!testModel.referenced.empty()) {
+        // TODO(b/149693818): Add control flow support to DeviceMemoryTest.
+        return false;
+    }
     return !testModel.expectFailure &&
            std::all_of(testModel.main.outputIndexes.begin(), testModel.main.outputIndexes.end(),
                        [&testModel](uint32_t index) {
