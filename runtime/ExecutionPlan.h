@@ -105,7 +105,7 @@ class ExecutionStep {
     // *hasOutputOfUnknownSize to true; otherwise, leaves it
     // unchanged.
     int finishStepModel(const ModelBuilder* mainModel, bool* hasOutputOfUnknownSize,
-                        int32_t executionPreference);
+                        int32_t executionPreference, int32_t priority);
 
     const ModelBuilder* getStepModel() const { return &mStepModel; }
     std::shared_ptr<Device> getDevice() const { return mDevice; }
@@ -264,7 +264,8 @@ class ExecutionPlan {
 
     void becomeSingleStep(const std::shared_ptr<Device> device, const ModelBuilder* model);
 
-    int finish(const ModelBuilder* mainModel, int32_t executionPreference);
+    int finish(const ModelBuilder* mainModel, int32_t executionPreference, int32_t priority,
+               const hal::OptionalTimePoint& deadline);
 
     void recordTemporaryDef(uint32_t sourceOperandIndex, uint32_t stepIndex);
 
@@ -313,7 +314,8 @@ class ExecutionPlan {
     struct Body {
         virtual ~Body() {}
         virtual void dump() const = 0;
-        virtual int finish(const ModelBuilder* mainModel, int32_t executionPreference) = 0;
+        virtual int finish(const ModelBuilder* mainModel, int32_t executionPreference,
+                           int32_t priority, const hal::OptionalTimePoint& deadline) = 0;
         virtual bool hasStepModelOutputsOfUnknownSize() const = 0;
         virtual void forEachStepRoleOfInput(uint32_t index,
                                             const StepRoleCallback& callback) const = 0;
@@ -328,7 +330,8 @@ class ExecutionPlan {
             : mDevice(device), mModel(model), mCacheDir(cacheDir), mToken(token) {}
 
         void dump() const override;
-        int finish(const ModelBuilder* mainModel, int32_t executionPreference) override;
+        int finish(const ModelBuilder* mainModel, int32_t executionPreference, int32_t priority,
+                   const hal::OptionalTimePoint& deadline) override;
         bool hasStepModelOutputsOfUnknownSize() const override { return false; }
         void forEachStepRoleOfInput(uint32_t index,
                                     const StepRoleCallback& callback) const override;
@@ -345,7 +348,8 @@ class ExecutionPlan {
 
     struct CompoundBody : Body {
         void dump() const override;
-        int finish(const ModelBuilder* mainModel, int32_t executionPreference) override;
+        int finish(const ModelBuilder* mainModel, int32_t executionPreference, int32_t priority,
+                   const hal::OptionalTimePoint& deadline) override;
         bool hasStepModelOutputsOfUnknownSize() const override {
             return mHasStepModelOutputOfUnknownSize;
         }

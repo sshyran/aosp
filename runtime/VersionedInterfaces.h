@@ -99,7 +99,7 @@ class VersionedIDevice {
                      std::vector<hal::Extension> supportedExtensions, int32_t type,
                      std::string versionString,
                      std::pair<uint32_t, uint32_t> numberOfCacheFilesNeeded,
-                     std::string serviceName, Core core);
+                     std::pair<bool, bool> supportsDeadlines, std::string serviceName, Core core);
 
     /**
      * Gets the capabilities of a driver.
@@ -191,6 +191,10 @@ class VersionedIDevice {
      *     execution.
      * @param preference Indicates the intended execution behavior of a prepared
      *     model.
+     * @param priority Priority of the prepared model relative to other prepared
+     *     models owned by an application.
+     * @param deadline Optional time point. If provided, prepareModel must
+     *     complete or be aborted by this time point.
      * @param cacheDir String specifying the cache directory.
      * @param maybeToken An optional caching token of length
      *     Constant::BYTE_SIZE_OF_CACHE_TOKEN identifying the prepared model.
@@ -212,8 +216,9 @@ class VersionedIDevice {
      *         that has been prepared for execution, else nullptr.
      */
     std::pair<int, std::shared_ptr<VersionedIPreparedModel>> prepareModel(
-            const hal::ModelFactory& makeModel, hal::ExecutionPreference preference,
-            const std::string& cacheDir, const std::optional<hal::CacheToken>& maybeToken) const;
+            const hal::ModelFactory& makeModel, hal::ExecutionPreference preference, hal::Priority,
+            const hal::OptionalTimePoint& deadline, const std::string& cacheDir,
+            const std::optional<hal::CacheToken>& maybeToken) const;
 
     /**
      * Returns the current status of a driver.
@@ -310,6 +315,15 @@ class VersionedIDevice {
     std::pair<uint32_t, uint32_t> getNumberOfCacheFilesNeeded() const;
 
     /**
+     * Returns which task deadlines are supported.
+     *
+     * @return A pair of:
+     *     - prepareModelDeadline is supported
+     *     - executionDeadline is supported
+     */
+    std::pair<bool, bool> supportsDeadlines() const;
+
+    /**
      * Returns the name of the service.
      *
      * @return Name of the service.
@@ -374,6 +388,14 @@ class VersionedIDevice {
             const hal::hidl_vec<hal::BufferRole>& inputRoles,
             const hal::hidl_vec<hal::BufferRole>& outputRoles) const;
 
+    /**
+     * Blocks until the device is not in a bad state.
+     *
+     * @return Error code after waiting. ANEURALNETWORKS_NO_ERROR if device is
+     *     not in a bad state.
+     */
+    int wait() const;
+
    private:
     // Cached initialization results.
     const hal::Capabilities kCapabilities;
@@ -381,12 +403,15 @@ class VersionedIDevice {
     const int32_t kType;
     const std::string kVersionString;
     const std::pair<uint32_t, uint32_t> kNumberOfCacheFilesNeeded;
+    const std::pair<bool, bool> kSupportsDeadlines;
 
     // internal methods to prepare a model
     std::pair<int, std::shared_ptr<VersionedIPreparedModel>> prepareModelInternal(
-            const hal::Model& model, hal::ExecutionPreference preference,
-            const std::string& cacheDir, const std::optional<hal::CacheToken>& maybeToken) const;
+            const hal::Model& model, hal::ExecutionPreference preference, hal::Priority priority,
+            const hal::OptionalTimePoint& deadline, const std::string& cacheDir,
+            const std::optional<hal::CacheToken>& maybeToken) const;
     std::pair<int, std::shared_ptr<VersionedIPreparedModel>> prepareModelFromCacheInternal(
+            hal::Priority priority, const hal::OptionalTimePoint& deadline,
             const std::string& cacheDir, const hal::CacheToken& token) const;
 
     /**
@@ -618,6 +643,8 @@ class VersionedIPreparedModel {
      *     model is to be executed.
      * @param measure Specifies whether or not to measure duration of the
      *     execution.
+     * @param deadline Optional time point. If provided, prepareModel must
+     *     complete or be aborted by this time point.
      * @param preferSynchronous 'true' to perform synchronous HAL execution when
      *     possible, 'false' to force asynchronous HAL execution.
      * @return A tuple consisting of:
@@ -649,7 +676,8 @@ class VersionedIPreparedModel {
      *         indicating that measurement is not available.
      */
     std::tuple<int, std::vector<hal::OutputShape>, hal::Timing> execute(
-            const hal::Request& request, hal::MeasureTiming measure, bool preferSynchronous) const;
+            const hal::Request& request, hal::MeasureTiming measure,
+            const hal::OptionalTimePoint& deadline, bool preferSynchronous) const;
 
     /**
      * Creates a burst controller on a prepared model.
@@ -669,9 +697,11 @@ class VersionedIPreparedModel {
     friend class VersionedIDevice;
 
     std::tuple<int, std::vector<hal::OutputShape>, hal::Timing> executeAsynchronously(
-            const hal::Request& request, hal::MeasureTiming timing) const;
+            const hal::Request& request, hal::MeasureTiming timing,
+            const hal::OptionalTimePoint& deadline) const;
     std::tuple<int, std::vector<hal::OutputShape>, hal::Timing> executeSynchronously(
-            const hal::Request& request, hal::MeasureTiming measure) const;
+            const hal::Request& request, hal::MeasureTiming measure,
+            const hal::OptionalTimePoint& deadline) const;
 
     /**
      * Returns sp<V1_3::IPreparedModel> that is a downcast of the sp<V1_0::IPreparedModel>

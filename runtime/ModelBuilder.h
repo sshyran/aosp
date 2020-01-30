@@ -105,6 +105,7 @@ class ModelBuilder {
     }
 
     int partitionTheWork(const std::vector<std::shared_ptr<Device>>& devices, uint32_t preference,
+                         uint32_t priority, const hal::OptionalTimePoint& deadline,
                          ExecutionPlan* plan) const;
 
    private:

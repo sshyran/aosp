@@ -85,10 +85,14 @@ class DriverDevice : public Device {
                 kInterface->getNumberOfCacheFilesNeeded();
         return numModelCacheFiles > 0 || numDataCacheFiles > 0;
     }
+    std::pair<bool, bool> supportsDeadlines() const override {
+        return kInterface->supportsDeadlines();
+    }
+    int wait() const override { return kInterface->wait(); }
 
     std::pair<int, std::shared_ptr<PreparedModel>> prepareModel(
-            const ModelFactory& makeModel, ExecutionPreference preference,
-            const std::string& cacheDir,
+            const ModelFactory& makeModel, ExecutionPreference preference, Priority priority,
+            const OptionalTimePoint& deadline, const std::string& cacheDir,
             const std::optional<CacheToken>& maybeToken) const override;
 
     std::pair<int, std::unique_ptr<Memory>> allocate(const MemoryDescriptor& desc) const override;
@@ -121,8 +125,8 @@ class DriverPreparedModel : public PreparedModel {
     std::tuple<int, std::vector<OutputShape>, Timing> execute(
             const std::vector<ModelArgumentInfo>& inputs,
             const std::vector<ModelArgumentInfo>& outputs, const MemoryTracker& memories,
-            const std::shared_ptr<ExecutionBurstController>& burstController,
-            MeasureTiming measure) const override;
+            const std::shared_ptr<ExecutionBurstController>& burstController, MeasureTiming measure,
+            const OptionalTimePoint& deadline) const override;
 
     std::shared_ptr<ExecutionBurstController> configureExecutionBurst(
             bool preferPowerOverLatency) const override {
@@ -217,10 +221,11 @@ std::vector<bool> DriverDevice::getSupportedOperations(const MetaModel& metaMode
 }
 
 std::pair<int, std::shared_ptr<PreparedModel>> DriverDevice::prepareModel(
-        const ModelFactory& makeModel, ExecutionPreference preference, const std::string& cacheDir,
+        const ModelFactory& makeModel, ExecutionPreference preference, Priority priority,
+        const OptionalTimePoint& deadline, const std::string& cacheDir,
         const std::optional<CacheToken>& maybeToken) const {
-    const auto [n, preparedModel] =
-            kInterface->prepareModel(makeModel, preference, cacheDir, maybeToken);
+    const auto [n, preparedModel] = kInterface->prepareModel(makeModel, preference, priority,
+                                                             deadline, cacheDir, maybeToken);
     if (n != ANEURALNETWORKS_NO_ERROR) {
         return {n, nullptr};
     }
@@ -297,8 +302,8 @@ allocatePointerArgumentsToPool(const std::vector<ModelArgumentInfo>& args,
 std::tuple<int, std::vector<OutputShape>, Timing> DriverPreparedModel::execute(
         const std::vector<ModelArgumentInfo>& inputs, const std::vector<ModelArgumentInfo>& outputs,
         const MemoryTracker& memories,
-        const std::shared_ptr<ExecutionBurstController>& burstController,
-        MeasureTiming measure) const {
+        const std::shared_ptr<ExecutionBurstController>& burstController, MeasureTiming measure,
+        const OptionalTimePoint& deadline) const {
     NNTRACE_RT(NNTRACE_PHASE_INPUTS_AND_OUTPUTS, "DriverPreparedModel::execute");
 
     // Make a copy of the memory tracker as we will append memory pools for pointer arguments.
@@ -375,7 +380,7 @@ std::tuple<int, std::vector<OutputShape>, Timing> DriverPreparedModel::execute(
     if (!burstCompute || burstFallback) {
         const bool preferSynchronous = DeviceManager::get()->syncExecHal();
         std::tie(n, outputShapes, timing) =
-                mPreparedModel->execute(request, measure, preferSynchronous);
+                mPreparedModel->execute(request, measure, deadline, preferSynchronous);
     }
 
     if (n != ANEURALNETWORKS_NO_ERROR) {
@@ -426,10 +431,14 @@ class CpuDevice : public Device {
         return kPerformance;
     }
     bool isCachingSupported() const override { return false; }
+    std::pair<bool, bool> supportsDeadlines() const override {
+        return {/*prepareModelDeadline=*/false, /*executionDeadline=*/false};
+    }
+    int wait() const override { return ANEURALNETWORKS_NO_ERROR; }
 
     std::pair<int, std::shared_ptr<PreparedModel>> prepareModel(
-            const ModelFactory& makeModel, ExecutionPreference preference,
-            const std::string& cacheDir,
+            const ModelFactory& makeModel, ExecutionPreference preference, Priority priority,
+            const OptionalTimePoint& deadline, const std::string& cacheDir,
             const std::optional<CacheToken>& maybeToken) const override;
 
     std::pair<int, std::unique_ptr<Memory>> allocate(const MemoryDescriptor&) const override {
@@ -463,8 +472,8 @@ class CpuPreparedModel : public PreparedModel {
     std::tuple<int, std::vector<OutputShape>, Timing> execute(
             const std::vector<ModelArgumentInfo>& inputs,
             const std::vector<ModelArgumentInfo>& outputs, const MemoryTracker& memories,
-            const std::shared_ptr<ExecutionBurstController>& burstController,
-            MeasureTiming measure) const override;
+            const std::shared_ptr<ExecutionBurstController>& burstController, MeasureTiming measure,
+            const OptionalTimePoint& deadline) const override;
 
     std::shared_ptr<ExecutionBurstController> configureExecutionBurst(
             bool /*preferPowerOverLatency*/) const override {
@@ -496,14 +505,19 @@ std::vector<bool> CpuDevice::getSupportedOperations(const MetaModel& metaModel) 
 }
 
 std::pair<int, std::shared_ptr<PreparedModel>> CpuDevice::prepareModel(
-        const ModelFactory& makeModel, ExecutionPreference preference,
-        const std::string& /*cacheDir*/, const std::optional<CacheToken>& maybeToken) const {
+        const ModelFactory& makeModel, ExecutionPreference preference, Priority priority,
+        const OptionalTimePoint& deadline, const std::string& /*cacheDir*/,
+        const std::optional<CacheToken>& maybeToken) const {
     CHECK(!maybeToken.has_value())
             << "Should never call prepareModel with cache information on CpuDevice";
 
     const Model model = makeModel();
-    if (!validateModel(model) || !validateExecutionPreference(preference)) {
+    if (!validateModel(model) || !validateExecutionPreference(preference) ||
+        !validatePriority(priority)) {
         return {ANEURALNETWORKS_OP_FAILED, nullptr};
+    }
+    if (deadline.getDiscriminator() != OptionalTimePoint::hidl_discriminator::none) {
+        return {ANEURALNETWORKS_BAD_DATA, nullptr};
     }
 
     return CpuPreparedModel::create(model);
@@ -542,7 +556,11 @@ std::tuple<int, std::vector<OutputShape>, Timing> CpuPreparedModel::execute(
         const std::vector<ModelArgumentInfo>& inputs, const std::vector<ModelArgumentInfo>& outputs,
         const MemoryTracker& memories,
         const std::shared_ptr<ExecutionBurstController>& /*burstController*/,
-        MeasureTiming /*measure*/) const {
+        MeasureTiming /*measure*/, const OptionalTimePoint& deadline) const {
+    if (deadline.getDiscriminator() != OptionalTimePoint::hidl_discriminator::none) {
+        return {ANEURALNETWORKS_BAD_DATA, {}, kNoTiming};
+    }
+
     std::vector<RunTimePoolInfo> requestPoolInfos;
     requestPoolInfos.reserve(memories.size());
     for (const Memory* mem : memories) {

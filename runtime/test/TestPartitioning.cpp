@@ -156,7 +156,8 @@ using WrapperType = ::android::nn::test_wrapper::Type;
 template <typename T>
 using MQDescriptorSync = ::android::hardware::MQDescriptorSync<T>;
 
-const Timing kBadTiming = {.timeOnDevice = UINT64_MAX, .timeInDriver = UINT64_MAX};
+constexpr Timing kBadTiming = {.timeOnDevice = UINT64_MAX, .timeInDriver = UINT64_MAX};
+constexpr int32_t kDefaultRuntimePriority = ANEURALNETWORKS_PRIORITY_DEFAULT;
 
 Capabilities makeCapabilities(float perf) {
     PerformanceInfo perfInfo = {.execTime = perf, .powerUsage = perf};
@@ -652,9 +653,11 @@ class PartitioningModel : private WrapperModel {
 
     // Run the partitioning algorithm to create an ExecutionPlan.
     int partitionTheWork(const std::vector<std::shared_ptr<Device>>& devices,
-                         ExecutePreference preference, ExecutionPlan* plan) {
+                         ExecutePreference preference, int32_t priority,
+                         const OptionalTimePoint& deadline, ExecutionPlan* plan) {
         return reinterpret_cast<ModelBuilder*>(getHandle())
-                ->partitionTheWork(devices, static_cast<uint32_t>(preference), plan);
+                ->partitionTheWork(devices, static_cast<uint32_t>(preference), priority, deadline,
+                                   plan);
     }
 
 #ifdef VERBOSE
@@ -1264,7 +1267,8 @@ TEST_F(PartitioningTest, SimpleModel) {
     // didn't actually do any partitioning.
     const auto devicesA = makeDevices({{"bad", 0.9, ~0U}, {"good", 0.5, ~0U}});
     ExecutionPlan planA;
-    ASSERT_EQ(model.partitionTheWork(devicesA, ExecutePreference::PREFER_LOW_POWER, &planA),
+    ASSERT_EQ(model.partitionTheWork(devicesA, ExecutePreference::PREFER_LOW_POWER,
+                                     kDefaultRuntimePriority, {}, &planA),
               ANEURALNETWORKS_NO_ERROR);
     ASSERT_EQ(planA.forTest_getKind(), ExecutionPlan::Kind::SIMPLE);
     ASSERT_NE(planA.forTest_simpleGetDevice().get(), nullptr);
@@ -1275,7 +1279,8 @@ TEST_F(PartitioningTest, SimpleModel) {
     // didn't actually do any partitioning.
     const auto devicesC = makeDevices({{"bad", 1.1, ~0U}, {"bad2", 1.0, ~0U}});
     ExecutionPlan planC;
-    ASSERT_EQ(model.partitionTheWork(devicesC, ExecutePreference::PREFER_LOW_POWER, &planC),
+    ASSERT_EQ(model.partitionTheWork(devicesC, ExecutePreference::PREFER_LOW_POWER,
+                                     kDefaultRuntimePriority, {}, &planC),
               ANEURALNETWORKS_NO_ERROR);
     ASSERT_EQ(planC.forTest_getKind(), ExecutionPlan::Kind::SIMPLE);
     ASSERT_EQ(planC.forTest_simpleGetDevice(), DeviceManager::getCpuDevice());
@@ -1286,7 +1291,8 @@ TEST_F(PartitioningTest, SimpleModel) {
     // correct (model and step model)x(inputs and outputs).
     const auto devicesB = makeDevices({{"0", 0.9, 1 << 0}, {"1", 0.5, 1 << 1}});
     ExecutionPlan planB;
-    ASSERT_EQ(model.partitionTheWork(devicesB, ExecutePreference::PREFER_LOW_POWER, &planB),
+    ASSERT_EQ(model.partitionTheWork(devicesB, ExecutePreference::PREFER_LOW_POWER,
+                                     kDefaultRuntimePriority, {}, &planB),
               ANEURALNETWORKS_NO_ERROR);
     ASSERT_EQ(planB.forTest_getKind(), ExecutionPlan::Kind::COMPOUND);
     const auto& stepsB = planB.forTest_compoundGetSteps();
@@ -1352,7 +1358,8 @@ TEST_F(PartitioningTest, SliceModel) {
                                        {"V1_1", 0.7, HalVersion::V1_1, ~0U, ~0U},
                                        {"V1_2", 0.6, HalVersion::V1_2, ~0U, ~0U, ~0U}});
     ExecutionPlan planA;
-    ASSERT_EQ(model.partitionTheWork(devicesA, ExecutePreference::PREFER_LOW_POWER, &planA),
+    ASSERT_EQ(model.partitionTheWork(devicesA, ExecutePreference::PREFER_LOW_POWER,
+                                     kDefaultRuntimePriority, {}, &planA),
               ANEURALNETWORKS_NO_ERROR);
     ASSERT_EQ(planA.forTest_getKind(), ExecutionPlan::Kind::SIMPLE);
     ASSERT_NE(planA.forTest_simpleGetDevice().get(), nullptr);
@@ -1364,7 +1371,8 @@ TEST_F(PartitioningTest, SliceModel) {
                                        {"V1_1", 0.7, HalVersion::V1_1, ~0U, ~0U},
                                        {"V1_2", 0.8, HalVersion::V1_2, ~0U, ~0U, ~0U}});
     ExecutionPlan planB;
-    ASSERT_EQ(model.partitionTheWork(devicesB, ExecutePreference::PREFER_LOW_POWER, &planB),
+    ASSERT_EQ(model.partitionTheWork(devicesB, ExecutePreference::PREFER_LOW_POWER,
+                                     kDefaultRuntimePriority, {}, &planB),
               ANEURALNETWORKS_NO_ERROR);
     ASSERT_EQ(planB.forTest_getKind(), ExecutionPlan::Kind::COMPOUND);
     const auto& stepsB = planB.forTest_compoundGetSteps();
@@ -1452,7 +1460,8 @@ TEST_F(PartitioningTest, SliceModelToEmpty) {
                                       {"V1_1", 0.7, HalVersion::V1_1, ~0U, ~0U},
                                       {"V1_2", 0.8, HalVersion::V1_2, ~0U, ~0U, ~0U}});
     ExecutionPlan plan;
-    ASSERT_EQ(model.partitionTheWork(devices, ExecutePreference::PREFER_LOW_POWER, &plan),
+    ASSERT_EQ(model.partitionTheWork(devices, ExecutePreference::PREFER_LOW_POWER,
+                                     kDefaultRuntimePriority, {}, &plan),
               ANEURALNETWORKS_NO_ERROR);
     ASSERT_EQ(plan.forTest_getKind(), ExecutionPlan::Kind::SIMPLE);
     ASSERT_NE(plan.forTest_simpleGetDevice().get(), nullptr);
@@ -1490,7 +1499,8 @@ TEST_F(PartitioningTest, Cpu) {
     ASSERT_TRUE(model.isValid());
 
     ExecutionPlan plan;
-    ASSERT_EQ(model.partitionTheWork(devices, ExecutePreference::PREFER_LOW_POWER, &plan),
+    ASSERT_EQ(model.partitionTheWork(devices, ExecutePreference::PREFER_LOW_POWER,
+                                     kDefaultRuntimePriority, {}, &plan),
               ANEURALNETWORKS_NO_ERROR);
     ASSERT_EQ(plan.forTest_getKind(), ExecutionPlan::Kind::COMPOUND);
     const auto& steps = plan.forTest_compoundGetSteps();
@@ -1635,7 +1645,8 @@ TEST_F(PartitioningTest, ModelOutputAsStepModelInput) {
     // correct (model and step model)x(inputs and outputs).
     const auto devices = makeDevices({{"0", 0.5, 1 << 0}, {"1", 0.5, 1 << 1}});
     ExecutionPlan plan;
-    ASSERT_EQ(model.partitionTheWork(devices, ExecutePreference::PREFER_LOW_POWER, &plan),
+    ASSERT_EQ(model.partitionTheWork(devices, ExecutePreference::PREFER_LOW_POWER,
+                                     kDefaultRuntimePriority, {}, &plan),
               ANEURALNETWORKS_NO_ERROR);
     ASSERT_EQ(plan.forTest_getKind(), ExecutionPlan::Kind::COMPOUND);
     const auto& steps = plan.forTest_compoundGetSteps();
@@ -1735,7 +1746,8 @@ TEST_F(PartitioningTest, RelaxedFP) {
         // No need to compare the original model to the model from the plan -- we
         // didn't actually do any partitioning.
         ExecutionPlan plan;
-        ASSERT_EQ(model.partitionTheWork(devices, ExecutePreference::PREFER_LOW_POWER, &plan),
+        ASSERT_EQ(model.partitionTheWork(devices, ExecutePreference::PREFER_LOW_POWER,
+                                         kDefaultRuntimePriority, {}, &plan),
                   ANEURALNETWORKS_NO_ERROR);
         ASSERT_EQ(plan.forTest_getKind(), ExecutionPlan::Kind::SIMPLE);
         ASSERT_EQ(plan.forTest_simpleGetDevice()->getName(), expectDevice);
@@ -1787,7 +1799,8 @@ TEST_F(PartitioningTest, Perf) {
             // No need to compare the original model to the model from the plan -- we
             // didn't actually do any partitioning.
             ExecutionPlan plan;
-            ASSERT_EQ(model.partitionTheWork(devices, ExecutePreference::PREFER_LOW_POWER, &plan),
+            ASSERT_EQ(model.partitionTheWork(devices, ExecutePreference::PREFER_LOW_POWER,
+                                             kDefaultRuntimePriority, {}, &plan),
                       ANEURALNETWORKS_NO_ERROR);
             ASSERT_EQ(plan.forTest_getKind(), ExecutionPlan::Kind::SIMPLE);
             ASSERT_EQ(plan.forTest_simpleGetDevice()->getName(), "good");
@@ -1805,7 +1818,8 @@ TEST_F(PartitioningTest, Perf) {
             // No need to compare the original model to the model from the plan -- we
             // didn't actually do any partitioning.
             ExecutionPlan plan;
-            ASSERT_EQ(model.partitionTheWork(devices, ExecutePreference::PREFER_LOW_POWER, &plan),
+            ASSERT_EQ(model.partitionTheWork(devices, ExecutePreference::PREFER_LOW_POWER,
+                                             kDefaultRuntimePriority, {}, &plan),
                       ANEURALNETWORKS_NO_ERROR);
             ASSERT_EQ(plan.forTest_getKind(), ExecutionPlan::Kind::SIMPLE);
             ASSERT_EQ(plan.forTest_simpleGetDevice()->getName(), "base");
