@@ -46,7 +46,7 @@ using FmqResultDescriptor = hardware::MQDescriptorSync<hal::FmqResultDatum>;
  * @param timing Timing information of the execution.
  * @return Serialized FMQ result data.
  */
-std::vector<hal::FmqResultDatum> serialize(hal::ErrorStatus errorStatus,
+std::vector<hal::FmqResultDatum> serialize(hal::V1_0::ErrorStatus errorStatus,
                                            const std::vector<hal::OutputShape>& outputShapes,
                                            hal::Timing timing);
 
@@ -151,7 +151,7 @@ class ResultChannelSender {
      * @param timing Timing information of the execution.
      * @return 'true' on successful send, 'false' otherwise.
      */
-    bool send(hal::ErrorStatus errorStatus, const std::vector<hal::OutputShape>& outputShapes,
+    bool send(hal::V1_0::ErrorStatus errorStatus, const std::vector<hal::OutputShape>& outputShapes,
               hal::Timing timing);
 
     // prefer calling ResultChannelSender::send
@@ -233,8 +233,8 @@ class ExecutionBurstServer : public hal::IBurstContext {
          * @return Result of the execution, including the status of the
          *     execution, dynamic output shapes, and any timing information.
          */
-        virtual std::tuple<hal::ErrorStatus, hal::hidl_vec<hal::OutputShape>, hal::Timing> execute(
-                const hal::V1_0::Request& request, const std::vector<int32_t>& slots,
+        virtual std::tuple<hal::V1_0::ErrorStatus, hal::hidl_vec<hal::OutputShape>, hal::Timing>
+        execute(const hal::V1_0::Request& request, const std::vector<int32_t>& slots,
                 hal::MeasureTiming measure) = 0;
     };
 

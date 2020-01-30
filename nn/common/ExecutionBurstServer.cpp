@@ -62,7 +62,7 @@ class DefaultBurstExecutorWithCache : public ExecutionBurstServer::IBurstExecuto
 
     void removeCacheEntry(int32_t slot) override { mMemoryCache.erase(slot); }
 
-    std::tuple<ErrorStatus, hidl_vec<OutputShape>, Timing> execute(
+    std::tuple<V1_0::ErrorStatus, hidl_vec<OutputShape>, Timing> execute(
             const V1_0::Request& request, const std::vector<int32_t>& slots,
             MeasureTiming measure) override {
         // convert slots to pools
@@ -75,11 +75,11 @@ class DefaultBurstExecutorWithCache : public ExecutionBurstServer::IBurstExecuto
         fullRequest.pools = std::move(pools);
 
         // setup execution
-        ErrorStatus returnedStatus = ErrorStatus::GENERAL_FAILURE;
+        V1_0::ErrorStatus returnedStatus = V1_0::ErrorStatus::GENERAL_FAILURE;
         hidl_vec<OutputShape> returnedOutputShapes;
         Timing returnedTiming;
         auto cb = [&returnedStatus, &returnedOutputShapes, &returnedTiming](
-                          ErrorStatus status, const hidl_vec<OutputShape>& outputShapes,
+                          V1_0::ErrorStatus status, const hidl_vec<OutputShape>& outputShapes,
                           const Timing& timing) {
             returnedStatus = status;
             returnedOutputShapes = outputShapes;
@@ -88,7 +88,7 @@ class DefaultBurstExecutorWithCache : public ExecutionBurstServer::IBurstExecuto
 
         // execute
         const Return<void> ret = mpPreparedModel->executeSynchronously(fullRequest, measure, cb);
-        if (!ret.isOk() || returnedStatus != ErrorStatus::NONE) {
+        if (!ret.isOk() || returnedStatus != V1_0::ErrorStatus::NONE) {
             LOG(ERROR) << "IPreparedModelAdapter::execute -- Error executing";
             return {returnedStatus, {}, kNoTiming};
         }
@@ -104,7 +104,7 @@ class DefaultBurstExecutorWithCache : public ExecutionBurstServer::IBurstExecuto
 }  // anonymous namespace
 
 // serialize result
-std::vector<FmqResultDatum> serialize(ErrorStatus errorStatus,
+std::vector<FmqResultDatum> serialize(V1_0::ErrorStatus errorStatus,
                                       const std::vector<OutputShape>& outputShapes, Timing timing) {
     // count how many elements need to be sent for a request
     size_t count = 2 + outputShapes.size();
@@ -458,7 +458,7 @@ std::unique_ptr<ResultChannelSender> ResultChannelSender::create(
 ResultChannelSender::ResultChannelSender(std::unique_ptr<FmqResultChannel> fmqResultChannel)
     : mFmqResultChannel(std::move(fmqResultChannel)) {}
 
-bool ResultChannelSender::send(ErrorStatus errorStatus,
+bool ResultChannelSender::send(V1_0::ErrorStatus errorStatus,
                                const std::vector<OutputShape>& outputShapes, Timing timing) {
     const std::vector<FmqResultDatum> serialized = serialize(errorStatus, outputShapes, timing);
     return sendPacket(serialized);
@@ -469,7 +469,7 @@ bool ResultChannelSender::sendPacket(const std::vector<FmqResultDatum>& packet) 
         LOG(ERROR)
                 << "ResultChannelSender::sendPacket -- packet size exceeds size available in FMQ";
         const std::vector<FmqResultDatum> errorPacket =
-                serialize(ErrorStatus::GENERAL_FAILURE, {}, kNoTiming);
+                serialize(V1_0::ErrorStatus::GENERAL_FAILURE, {}, kNoTiming);
 
         // Always send the packet with "blocking" because this signals the futex
         // and unblocks the consumer if it is waiting on the futex.
@@ -575,9 +575,9 @@ void ExecutionBurstServer::ensureCacheEntriesArePresentLocked(const std::vector<
         return;
     }
 
-    ErrorStatus errorStatus = ErrorStatus::GENERAL_FAILURE;
+    V1_0::ErrorStatus errorStatus = V1_0::ErrorStatus::GENERAL_FAILURE;
     std::vector<hidl_memory> returnedMemories;
-    auto cb = [&errorStatus, &returnedMemories](ErrorStatus status,
+    auto cb = [&errorStatus, &returnedMemories](V1_0::ErrorStatus status,
                                                 const hidl_vec<hidl_memory>& memories) {
         errorStatus = status;
         returnedMemories = memories;
@@ -585,7 +585,7 @@ void ExecutionBurstServer::ensureCacheEntriesArePresentLocked(const std::vector<
 
     const Return<void> ret = mCallback->getMemories(unknownSlots, cb);
 
-    if (!ret.isOk() || errorStatus != ErrorStatus::NONE ||
+    if (!ret.isOk() || errorStatus != V1_0::ErrorStatus::NONE ||
         returnedMemories.size() != unknownSlots.size()) {
         LOG(ERROR) << "Error retrieving memories";
         return;
@@ -610,7 +610,7 @@ void ExecutionBurstServer::task() {
         // "task" function can end
         if (!arguments) {
             if (!mTeardown) {
-                mResultChannelSender->send(ErrorStatus::GENERAL_FAILURE, {}, kNoTiming);
+                mResultChannelSender->send(V1_0::ErrorStatus::GENERAL_FAILURE, {}, kNoTiming);
             }
             continue;
         }

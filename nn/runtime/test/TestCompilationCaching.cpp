@@ -98,33 +98,35 @@ class CachingDriver : public sample_driver::SampleDriver {
        public:
         CachingPreparedModel() = default;
 
-        Return<ErrorStatus> execute(const V1_0::Request&,
-                                    const sp<V1_0::IExecutionCallback>&) override {
-            return ErrorStatus::DEVICE_UNAVAILABLE;
+        Return<V1_0::ErrorStatus> execute(const V1_0::Request&,
+                                          const sp<V1_0::IExecutionCallback>&) override {
+            return V1_0::ErrorStatus::DEVICE_UNAVAILABLE;
         }
-        Return<ErrorStatus> execute_1_2(const V1_0::Request&, MeasureTiming,
-                                        const sp<V1_2::IExecutionCallback>&) override {
-            return ErrorStatus::DEVICE_UNAVAILABLE;
+        Return<V1_0::ErrorStatus> execute_1_2(const V1_0::Request&, MeasureTiming,
+                                              const sp<V1_2::IExecutionCallback>&) override {
+            return V1_0::ErrorStatus::DEVICE_UNAVAILABLE;
         }
-        Return<ErrorStatus> execute_1_3(const V1_3::Request&, MeasureTiming,
-                                        const sp<V1_2::IExecutionCallback>&) override {
-            return ErrorStatus::DEVICE_UNAVAILABLE;
+        Return<V1_3::ErrorStatus> execute_1_3(const V1_3::Request&, MeasureTiming,
+                                              const OptionalTimePoint&,
+                                              const sp<V1_3::IExecutionCallback>&) override {
+            return V1_3::ErrorStatus::DEVICE_UNAVAILABLE;
         }
         Return<void> executeSynchronously(const V1_0::Request&, MeasureTiming,
                                           executeSynchronously_cb cb) override {
-            cb(ErrorStatus::DEVICE_UNAVAILABLE, {}, kBadTiming);
+            cb(V1_0::ErrorStatus::DEVICE_UNAVAILABLE, {}, kBadTiming);
             return Void();
         }
         Return<void> executeSynchronously_1_3(const V1_3::Request&, MeasureTiming,
+                                              const OptionalTimePoint&,
                                               executeSynchronously_1_3_cb cb) override {
-            cb(ErrorStatus::DEVICE_UNAVAILABLE, {}, kBadTiming);
+            cb(V1_3::ErrorStatus::DEVICE_UNAVAILABLE, {}, kBadTiming);
             return Void();
         }
         Return<void> configureExecutionBurst(const sp<V1_2::IBurstCallback>&,
                                              const MQDescriptorSync<V1_2::FmqRequestDatum>&,
                                              const MQDescriptorSync<V1_2::FmqResultDatum>&,
                                              configureExecutionBurst_cb cb) override {
-            cb(ErrorStatus::DEVICE_UNAVAILABLE, nullptr);
+            cb(V1_0::ErrorStatus::DEVICE_UNAVAILABLE, nullptr);
             return Void();
         }
     };
@@ -153,31 +155,31 @@ class CachingDriver : public sample_driver::SampleDriver {
                 .relaxedFloat32toFloat16PerformanceScalar = kPerf,
                 .relaxedFloat32toFloat16PerformanceTensor = kPerf,
                 .operandPerformance = nonExtensionOperandPerformance<HalVersion::V1_3>(kPerf)};
-        cb(ErrorStatus::NONE, capabilities);
+        cb(V1_3::ErrorStatus::NONE, capabilities);
         return Void();
     }
 
     // Reports supporting all operations.
     Return<void> getSupportedOperations_1_3(const Model& model,
-                                            getSupportedOperations_cb cb) override {
+                                            getSupportedOperations_1_3_cb cb) override {
         std::vector<bool> supported(model.main.operations.size(), true);
-        cb(ErrorStatus::NONE, supported);
+        cb(V1_3::ErrorStatus::NONE, supported);
         return Void();
     }
 
     // Reports according to mGetNumCacheFiles.
     Return<void> getNumberOfCacheFilesNeeded(getNumberOfCacheFilesNeeded_cb cb) override {
-        cb(mErrorStatusGetNumCacheFiles, mNumModelCache, mNumDataCache);
+        cb(convertToV1_0(mErrorStatusGetNumCacheFiles), mNumModelCache, mNumDataCache);
         return Void();
     }
 
     // Generates CachingPreparedModel.
     // Writes the cache entry per mCacheXData and sets mHasCalledPrepareModel.
-    Return<ErrorStatus> prepareModel_1_3(const Model&, ExecutionPreference,
-                                         const hidl_vec<hidl_handle>& modelCacheHandle,
-                                         const hidl_vec<hidl_handle>& dataCacheHandle,
-                                         const CacheToken&,
-                                         const sp<V1_3::IPreparedModelCallback>& cb) override {
+    Return<V1_3::ErrorStatus> prepareModel_1_3(
+            const Model&, ExecutionPreference, Priority, const OptionalTimePoint&,
+            const hidl_vec<hidl_handle>& modelCacheHandle,
+            const hidl_vec<hidl_handle>& dataCacheHandle, const CacheToken&,
+            const sp<V1_3::IPreparedModelCallback>& cb) override {
         checkNumberOfCacheHandles(modelCacheHandle.size(), dataCacheHandle.size());
         if (modelCacheHandle.size() != 0 || dataCacheHandle.size() != 0) {
             writeToCache(modelCacheHandle, mModelCacheData);
@@ -186,25 +188,25 @@ class CachingDriver : public sample_driver::SampleDriver {
         } else {
             mHasCalledPrepareModel = HasCalledPrepareModel::WITHOUT_CACHING;
         }
-        cb->notify_1_3(ErrorStatus::NONE, new CachingPreparedModel());
-        return ErrorStatus::NONE;
+        cb->notify_1_3(V1_3::ErrorStatus::NONE, new CachingPreparedModel());
+        return V1_3::ErrorStatus::NONE;
     }
 
     // Checks if the cache entry is correct, notifies error status according to
     // mErrorStatusPrepareFromCache, sets mHasCalledPrepareModelFromCache.
-    Return<ErrorStatus> prepareModelFromCache_1_3(
-            const hidl_vec<hidl_handle>& modelCacheHandle,
+    Return<V1_3::ErrorStatus> prepareModelFromCache_1_3(
+            Priority, const OptionalTimePoint&, const hidl_vec<hidl_handle>& modelCacheHandle,
             const hidl_vec<hidl_handle>& dataCacheHandle, const CacheToken&,
             const sp<V1_3::IPreparedModelCallback>& callback) override {
         readFromCache(modelCacheHandle, mModelCacheData);
         readFromCache(dataCacheHandle, mDataCacheData);
         mHasCalledPrepareModelFromCache = true;
-        if (mErrorStatusPrepareFromCache == ErrorStatus::NONE) {
+        if (mErrorStatusPrepareFromCache == V1_3::ErrorStatus::NONE) {
             callback->notify_1_3(mErrorStatusPrepareFromCache, new CachingPreparedModel());
         } else {
             callback->notify_1_3(mErrorStatusPrepareFromCache, nullptr);
         }
-        return ErrorStatus::NONE;
+        return V1_3::ErrorStatus::NONE;
     };
 
     bool hasCalledPrepareModelFromCache() const { return mHasCalledPrepareModelFromCache; }
