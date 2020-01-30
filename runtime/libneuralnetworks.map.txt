@@ -26,6 +26,9 @@ LIBNEURALNETWORKS {
     ANeuralNetworksDevice_getType; # introduced=Q
     ANeuralNetworksDevice_getVersion; # introduced=Q
     ANeuralNetworksDevice_getFeatureLevel; # introduced=Q
+    ANeuralNetworksDevice_supportsCompilationTimeout; # introduced=30
+    ANeuralNetworksDevice_supportsExecutionTimeout; # introduced=30
+    ANeuralNetworksDevice_wait; # introduced=30
     ANeuralNetworksMemory_createFromAHardwareBuffer; # introduced=Q
     ANeuralNetworksMemory_createFromDesc; # introduced=30
     ANeuralNetworksMemory_createFromFd;
@@ -55,6 +58,8 @@ LIBNEURALNETWORKS {
     ANeuralNetworksCompilation_setCaching; # introduced=Q
     ANeuralNetworksCompilation_setPreference;
     ANeuralNetworksCompilation_finish;
+    ANeuralNetworksCompilation_setPriority; # introduced=30
+    ANeuralNetworksCompilation_setTimeout; # introduced=30
     ANeuralNetworksBurst_create; # introduced=Q
     ANeuralNetworksBurst_free; # introduced=Q
     ANeuralNetworksExecution_burstCompute; # introduced=Q
@@ -70,6 +75,7 @@ LIBNEURALNETWORKS {
     ANeuralNetworksExecution_startCompute;
     ANeuralNetworksExecution_getOutputOperandDimensions; # introduced=Q
     ANeuralNetworksExecution_getOutputOperandRank; # introduced=Q
+    ANeuralNetworksExecution_setTimeout; # introduced=30
     ANeuralNetworksEvent_wait;
     ANeuralNetworksEvent_free;
   local:
