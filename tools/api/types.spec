@@ -6009,10 +6009,35 @@
 %insert-lines AVAIL30
      */
     %{DeclareOperation_1.3 WHILE 97},
+
+    /**
+     * Computes exponential linear activation on the input tensor element-wise.
+     *
+     * The output is calculated using the following formula:
+     *
+     *     ELU(x) = max(0, x) + min(0, alpha * (exp(x) - 1))
+     *
+     * Supported tensor {@link %{OperandType}}:
+     * * {@link %{OperandTypeLinkPfx}TENSOR_FLOAT16}
+     * * {@link %{OperandTypeLinkPfx}TENSOR_FLOAT32}
+     *
+     * Inputs:
+     * * 0: A tensor, specifying the input. May be zero-sized.
+     * * 1: A scalar, specifying the alpha parameter.
+     *      For input tensor of {@link %{OperandTypeLinkPfx}TENSOR_FLOAT16},
+     *      the alpha value must be of {@link %{OperandTypeLinkPfx}FLOAT16}.
+     *      For input tensor of {@link %{OperandTypeLinkPfx}TENSOR_FLOAT32},
+     *      the alpha value must be of {@link %{OperandTypeLinkPfx}FLOAT32}.
+     *
+     * Outputs:
+     * * 0: The output tensor of same shape and type as input0.
+%insert-lines AVAIL30
+     */
+    %{DeclareOperation_1.3 ELU 98},
 %/section
 
 %section Operation_1.3_MAX
-    FUNDAMENTAL_MAX = 97,
+    FUNDAMENTAL_MAX = 98,
 %/section
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
