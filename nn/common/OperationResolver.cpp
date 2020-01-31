@@ -47,6 +47,7 @@ const OperationRegistration* register_GATHER();
 const OperationRegistration* register_GENERATE_PROPOSALS();
 const OperationRegistration* register_GREATER();
 const OperationRegistration* register_GREATER_EQUAL();
+const OperationRegistration* register_HARD_SWISH();
 const OperationRegistration* register_HEATMAP_MAX_KEYPOINT();
 const OperationRegistration* register_INSTANCE_NORMALIZATION();
 const OperationRegistration* register_L2_NORMALIZATION();
@@ -116,6 +117,7 @@ BuiltinOperationResolver::BuiltinOperationResolver() {
     registerOperation(register_GENERATE_PROPOSALS());
     registerOperation(register_GREATER());
     registerOperation(register_GREATER_EQUAL());
+    registerOperation(register_HARD_SWISH());
     registerOperation(register_HEATMAP_MAX_KEYPOINT());
     registerOperation(register_INSTANCE_NORMALIZATION());
     registerOperation(register_L2_NORMALIZATION());

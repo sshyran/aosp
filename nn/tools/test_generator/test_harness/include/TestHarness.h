@@ -187,6 +187,7 @@ enum class TestOperationType {
     IF = 96,
     WHILE = 97,
     ELU = 98,
+    HARD_SWISH = 99,
 };
 
 enum class TestHalVersion { UNKNOWN, V1_0, V1_1, V1_2, V1_3 };
