@@ -195,6 +195,7 @@ static_assert(ANEURALNETWORKS_QUANTIZED_LSTM == 95, "ANEURALNETWORKS_QUANTIZED_L
 static_assert(ANEURALNETWORKS_IF == 96, "ANEURALNETWORKS_IF has changed");
 static_assert(ANEURALNETWORKS_WHILE == 97, "ANEURALNETWORKS_WHILE has changed");
 static_assert(ANEURALNETWORKS_ELU == 98, "ANEURALNETWORKS_ELU has changed");
+static_assert(ANEURALNETWORKS_HARD_SWISH == 99, "ANEURALNETWORKS_HARD_SWISH has changed");
 
 static_assert(ANEURALNETWORKS_OEM_OPERATION == 10000, "ANEURALNETWORKS_OEM_OPERATION has changed");
 
@@ -530,6 +531,8 @@ static_assert(static_cast<int32_t>(OperationType::WHILE) == ANEURALNETWORKS_WHIL
               "OperationType::WHILE != ANEURALNETWORKS_WHILE");
 static_assert(static_cast<int32_t>(OperationType::ELU) == ANEURALNETWORKS_ELU,
               "OperationType::ELU != ANEURALNETWORKS_ELU");
+static_assert(static_cast<int32_t>(OperationType::HARD_SWISH) == ANEURALNETWORKS_HARD_SWISH,
+              "OperationType::HARD_SWISH != ANEURALNETWORKS_HARD_SWISH");
 
 static_assert(static_cast<int32_t>(DeviceType::OTHER) == ANEURALNETWORKS_DEVICE_OTHER,
               "DeviceType::OTHER != ANEURALNETWORKS_DEVICE_OTHER");
