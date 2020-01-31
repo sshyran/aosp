@@ -5386,6 +5386,60 @@ typedef enum {
      * Available since API level 30.
      */
     ANEURALNETWORKS_HARD_SWISH = 99,
+
+    /**
+     * Creates a tensor filled with a scalar value.
+     *
+     * Supported output tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT16}
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
+     * * {@link ANEURALNETWORKS_TENSOR_INT32}
+     *
+     * Inputs:
+     * * 0: A 1-D tensor, specifying the desired output tensor shape.
+     * * 1: A scalar, specifying the value to fill the output tensors with.
+     *      For output tensor of {@link ANEURALNETWORKS_TENSOR_FLOAT16},
+     *      the scalar must be of {@link ANEURALNETWORKS_FLOAT16}.
+     *      For output tensor of {@link ANEURALNETWORKS_TENSOR_FLOAT32},
+     *      the scalar must be of {@link ANEURALNETWORKS_FLOAT32}.
+     *      For output tensor of {@link ANEURALNETWORKS_TENSOR_INT32},
+     *      the scalar must be of {@link ANEURALNETWORKS_INT32}.
+     *
+     * Outputs:
+     * * 0: The output tensor.
+     *
+     * Available since API level 30.
+     */
+    ANEURALNETWORKS_FILL = 100,
+
+    /**
+     * Returns the rank of a tensor.
+     *
+     * The rank of a tensor is the number of dimensions in it. Also known as
+     * "order", "degree", "ndims".
+     *
+     * Supported tensor {@link OperandCode}:
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT16}
+     * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
+     * * {@link ANEURALNETWORKS_TENSOR_INT32}
+     * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
+     * * {@link ANEURALNETWORKS_TENSOR_QUANT16_SYMM}
+     * * {@link ANEURALNETWORKS_TENSOR_BOOL8}
+     * * {@link ANEURALNETWORKS_TENSOR_QUANT8_SYMM_PER_CHANNEL}
+     * * {@link ANEURALNETWORKS_TENSOR_QUANT16_ASYMM}
+     * * {@link ANEURALNETWORKS_TENSOR_QUANT8_SYMM}
+     * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED}
+     *
+     * Inputs:
+     * * 0: The input tensor.
+     *
+     * Outputs:
+     * * 0: A scalar of {@link ANEURALNETWORKS_INT32}, specifying the rank
+     *      of the input tensor.
+     *
+     * Available since API level 30.
+     */
+    ANEURALNETWORKS_RANK = 101,
 } OperationCode;
 
 /**
