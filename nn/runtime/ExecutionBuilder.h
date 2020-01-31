@@ -66,6 +66,8 @@ class ExecutionBuilder {
 
     std::optional<uint64_t> getTimeoutDuration() const;
 
+    int computeFenced(const std::vector<int>& wait_for, int* sync_fence);
+
     int computeAsynchronously(sp<ExecutionCallback>* synchronizationCallback) {
         CHECK(synchronizationCallback != nullptr);
         return compute(synchronizationCallback);
@@ -89,6 +91,11 @@ class ExecutionBuilder {
     hal::ErrorStatus finish(hal::ErrorStatus error,
                             const std::vector<hal::OutputShape>& outputShapes);
 
+    // Retrieve a reference to the IFencedExecutionCallback callback.
+    const sp<hal::IFencedExecutionCallback>& getFencedExecutionCallback() {
+        return mFencedExecutionCallback;
+    }
+
     bool inFlight() const { return mStarted && !mFinished; }
 
    private:
@@ -108,6 +115,8 @@ class ExecutionBuilder {
     bool updateOutputShapes(const std::vector<hal::OutputShape>& outputShapes);
 
     bool updateMemories();
+
+    bool hasSyncFence() const { return mSyncFenceFd > 0; }
 
     const ModelBuilder* mModel;
     const ExecutionPlan* mPlan;
@@ -145,6 +154,12 @@ class ExecutionBuilder {
     // Timing and output shapes can only be queried after the execution is
     // finished.
     std::atomic_bool mFinished = false;
+
+    // The sync fence fd that is created in the computeFenced call.
+    int mSyncFenceFd = -1;
+
+    // The callback used to query execution related info
+    sp<hal::IFencedExecutionCallback> mFencedExecutionCallback;
 };
 
 // class StepExecutor is used to execute a single "step" in a
@@ -212,6 +227,11 @@ class StepExecutor {
     void setExecutionStep(const std::shared_ptr<const ExecutionStep>& step) {
         mExecutionStep = step;
     }
+
+    // Perform fenced execution and return error_code, sync_fence_fd and a
+    // callback.
+    std::tuple<int, int, sp<hal::IFencedExecutionCallback>> computeFenced(
+            const std::vector<int>& wait_for);
 
    private:
     void mapInputOrOutput(const ModelArgumentInfo& builderInputOrOutput,
