@@ -161,6 +161,11 @@ class TestPreparedModelLatest : public IPreparedModel {
             return Void();
         }
     }
+    Return<void> executeFenced(const V1_3::Request&, const hidl_vec<hidl_handle>&, MeasureTiming,
+                               executeFenced_cb cb) override {
+        cb(ErrorStatus::DEVICE_UNAVAILABLE, hidl_handle(nullptr), nullptr);
+        return Void();
+    }
 
    private:
     const sp<V1_0::IPreparedModel> mPreparedModelV1_0;
