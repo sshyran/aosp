@@ -46,6 +46,7 @@ class ModelBuilder {
     int setOperandValue(uint32_t index, const void* buffer, size_t length);
     int setOperandValueFromMemory(uint32_t index, const Memory* memory, uint32_t offset,
                                   size_t length);
+    int setOperandValueFromModel(uint32_t index, const ModelBuilder* value);
     int setOperandSymmPerChannelQuantParams(
             uint32_t index, const ANeuralNetworksSymmPerChannelQuantParams& extraParams);
     int setOperandExtensionData(uint32_t index, const void* data, size_t length);
@@ -102,6 +103,14 @@ class ModelBuilder {
     }
     const uint8_t* getPointerToOperandValue(uint32_t offset) const {
         return mSmallOperandValues.data() + offset;
+    }
+    uint32_t referencedModelCount() const {
+        return static_cast<uint32_t>(mReferencedModels.size());
+    }
+    const ModelBuilder* getReferencedModel(uint32_t i) const { return mReferencedModels[i]; }
+    const ModelBuilder* getReferencedModel(const hal::Operand& operand) const {
+        CHECK(operand.lifetime == hal::OperandLifeTime::SUBGRAPH);
+        return mReferencedModels[operand.location.offset];
     }
 
     int partitionTheWork(const std::vector<std::shared_ptr<Device>>& devices, uint32_t preference,
