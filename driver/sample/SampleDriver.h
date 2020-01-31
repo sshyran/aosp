@@ -137,6 +137,9 @@ class SamplePreparedModel : public hal::IPreparedModel {
             const MQDescriptorSync<hal::V1_2::FmqRequestDatum>& requestChannel,
             const MQDescriptorSync<hal::V1_2::FmqResultDatum>& resultChannel,
             configureExecutionBurst_cb cb) override;
+    hal::Return<void> executeFenced(const hal::Request& request,
+                                    const hal::hidl_vec<hal::hidl_handle>& wait_for,
+                                    hal::MeasureTiming measure, executeFenced_cb callback) override;
 
    private:
     hal::Model mModel;

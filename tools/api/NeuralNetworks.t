@@ -447,7 +447,8 @@ typedef struct ANeuralNetworksCompilation ANeuralNetworksCompilation;
  *        {@link ANeuralNetworksExecution_setOutput} or
  *        {@link ANeuralNetworksExecution_setOutputFromMemory}.</li>
  *    <li>Apply the model with one of the following:</li><ul>
- *        <li>Asynchronously with {@link ANeuralNetworksExecution_startCompute},
+ *        <li>Asynchronously with {@link ANeuralNetworksExecution_startCompute}
+ *            or with {@link ANeuralNetworksExecution_startComputeWithDependencies},
  *            waiting for the execution to complete with
  *            {@link ANeuralNetworksEvent_wait}.</li>
  *        <li>Synchronously with {@link ANeuralNetworksExecution_compute}.</li>
@@ -463,13 +464,15 @@ typedef struct ANeuralNetworksCompilation ANeuralNetworksCompilation;
  *
  * <p>An execution cannot be modified once
  * {@link ANeuralNetworksExecution_burstCompute},
- * {@link ANeuralNetworksExecution_compute} or
- * {@link ANeuralNetworksExecution_startCompute} has been called on it.</p>
+ * {@link ANeuralNetworksExecution_compute},
+ * {@link ANeuralNetworksExecution_startCompute} or
+ * {@link ANeuralNetworksExecution_startComputeWithDependencies} has been called on it.</p>
  *
  * <p>An execution can be applied to a model with
  * {@link ANeuralNetworksExecution_burstCompute},
- * {@link ANeuralNetworksExecution_compute} or
- * {@link ANeuralNetworksExecution_startCompute} only once. Create new
+ * {@link ANeuralNetworksExecution_compute},
+ * {@link ANeuralNetworksExecution_startCompute} or
+ * {@link ANeuralNetworksExecution_startComputeWithDependencies} only once. Create new
  * executions to do new evaluations of the model.</p>
  *
  * <p>It is the application's responsibility to make sure that only one thread
@@ -490,7 +493,8 @@ typedef struct ANeuralNetworksCompilation ANeuralNetworksCompilation;
  * means of {@link ANeuralNetworksExecution_compute} or
  * {@link ANeuralNetworksExecution_burstCompute} (which are synchronous) in
  * different threads, or by means of
- * {@link ANeuralNetworksExecution_startCompute} (which is asynchronous).
+ * {@link ANeuralNetworksExecution_startCompute} or
+ * {@link ANeuralNetworksExecution_startComputeWithDependencies} (which are asynchronous).
  * (Concurrent uses of {@link ANeuralNetworksExecution_burstCompute} must be on
  * different burst objects.) The runtime makes no guarantee on the ordering of
  * completion of executions. If it's important to the application, the
@@ -498,7 +502,9 @@ typedef struct ANeuralNetworksCompilation ANeuralNetworksCompilation;
  * completes before the next is scheduled (for example, by scheduling all
  * executions synchronously within a single thread, or by scheduling all
  * executions asynchronously and using {@link ANeuralNetworksEvent_wait} between
- * calls to {@link ANeuralNetworksExecution_startCompute}).</p>
+ * calls to {@link ANeuralNetworksExecution_startCompute}); or by using
+ * {@link ANeuralNetworksExecution_startComputeWithDependencies} to make the execution wait for a
+ * list of events to be signaled before starting the actual evaluation.</p>
  *
  * Available since API level 27.
  */
@@ -1213,8 +1219,10 @@ int ANeuralNetworksCompilation_setCaching(ANeuralNetworksCompilation* compilatio
  *
  * See {@link ANeuralNetworksExecution} for information on multithreaded usage.
  *
- * See {@link ANeuralNetworksExecution_startCompute} for asynchronous execution.
- * Synchronous execution incurs lower overhead than asynchronous execution.
+ * See {@link ANeuralNetworksExecution_burstCompute} for burst synchronous execution.
+ * See {@link ANeuralNetworksExecution_startCompute} for regular asynchronous execution.
+ * See {@link ANeuralNetworksExecution_startComputeWithDependencies} for
+ * asynchronous execution with dependencies.
  *
  * Available since API level 29.
  *
@@ -1230,9 +1238,9 @@ int ANeuralNetworksExecution_compute(ANeuralNetworksExecution* execution) __INTR
  * Get the dimensional information of the specified output operand of the model of the
  * {@link ANeuralNetworksExecution}.
  *
- * On asynchronous execution initiated by {@link ANeuralNetworksExecution_startCompute},
- * {@link ANeuralNetworksEvent_wait} must be called prior to this function to recuperate
- * the resources used by the execution.
+ * On asynchronous execution initiated by {@link ANeuralNetworksExecution_startCompute}
+ * or {@link ANeuralNetworksExecution_startComputeWithDependencies},
+ * {@link ANeuralNetworksEvent_wait} must be called prior to this function.
  *
  * @param execution The execution to be queried.
  * @param index The index of the output argument we are querying. It is
@@ -1255,9 +1263,9 @@ int ANeuralNetworksExecution_getOutputOperandRank(ANeuralNetworksExecution* exec
  * Get the dimensional information of the specified output operand of the model of the
  * {@link ANeuralNetworksExecution}. The target output operand cannot be a scalar.
  *
- * On asynchronous execution initiated by {@link ANeuralNetworksExecution_startCompute},
- * {@link ANeuralNetworksEvent_wait} must be called prior to this function to recuperate
- * the resources used by the execution.
+ * On asynchronous execution initiated by {@link ANeuralNetworksExecution_startCompute}
+ * or {@link ANeuralNetworksExecution_startComputeWithDependencies},
+ * {@link ANeuralNetworksEvent_wait} must be called prior to this function.
  *
  * @param execution The execution to be queried.
  * @param index The index of the output argument we are querying. It is an index into the lists
@@ -1320,6 +1328,11 @@ void ANeuralNetworksBurst_free(ANeuralNetworksBurst* burst) __INTRODUCED_IN(29);
  * any given time for any given burst object. Any
  * {@link ANeuralNetworksExecution} launched before the previous has finished
  * will result in ANEURALNETWORKS_BAD_STATE.</p>
+ *
+ * See {@link ANeuralNetworksExecution_compute} for synchronous execution.
+ * See {@link ANeuralNetworksExecution_startCompute} for regular asynchronous execution.
+ * See {@link ANeuralNetworksExecution_startComputeWithDependencies} for
+ * asynchronous execution with dependencies.
  *
  * Available since API level 29.
  *
@@ -1477,8 +1490,10 @@ void ANeuralNetworksMemory_free(ANeuralNetworksMemory* memory) __INTRODUCED_IN(2
  * Create an empty {@link ANeuralNetworksModel}.
  *
  * <p>This only creates the object. Computation is performed once
- * {@link ANeuralNetworksExecution_compute} or
- * {@link ANeuralNetworksExecution_startCompute} is invoked.
+ * {@link ANeuralNetworksExecution_burstCompute},
+ * {@link ANeuralNetworksExecution_compute},
+ * {@link ANeuralNetworksExecution_startCompute} or
+ * {@link ANeuralNetworksExecution_startComputeWithDependencies} is invoked.
  *
  * The model should be constructed with calls to
  * {@link ANeuralNetworksModel_addOperation} and
@@ -1973,8 +1988,10 @@ int ANeuralNetworksCompilation_setTimeout(ANeuralNetworksCompilation* compilatio
 /**
  * Create a {@link ANeuralNetworksExecution} to apply the given compilation.
  * This only creates the object. Computation is only performed once
- * {@link ANeuralNetworksExecution_compute} or
- * {@link ANeuralNetworksExecution_startCompute} is invoked.
+ * {@link ANeuralNetworksExecution_burstCompute},
+ * {@link ANeuralNetworksExecution_compute},
+ * {@link ANeuralNetworksExecution_startCompute} or
+ * {@link ANeuralNetworksExecution_startComputeWithDependencies} is invoked.
  *
  * <p>The provided compilation must outlive the execution.</p>
  *
@@ -1996,8 +2013,9 @@ int ANeuralNetworksExecution_create(ANeuralNetworksCompilation* compilation,
  *
  * <p>The execution need not have been scheduled by a call to
  * {@link ANeuralNetworksExecution_burstCompute},
- * {@link ANeuralNetworksExecution_compute}, or
- * {@link ANeuralNetworksExecution_startCompute}; but if it has been scheduled,
+ * {@link ANeuralNetworksExecution_compute},
+ * {@link ANeuralNetworksExecution_startCompute} or
+ * {@link ANeuralNetworksExecution_startComputeWithDependencies}; but if it has been scheduled,
  * then the application must not call {@link ANeuralNetworksExecution_free}
  * until the execution has completed (i.e.,
  * {@link ANeuralNetworksExecution_burstCompute},
@@ -2209,8 +2227,8 @@ int ANeuralNetworksExecution_setOutputFromMemory(ANeuralNetworksExecution* execu
 /**
  * Schedule asynchronous evaluation of the execution.
  *
- * <p>Schedules asynchronous evaluation of the execution. Once the model has
- * been applied and the outputs are ready to be consumed, the returned event
+ * <p>Schedules asynchronous evaluation of the execution. Once the execution
+ * has completed and the outputs are ready to be consumed, the returned event
  * will be signaled. Use {@link ANeuralNetworksEvent_wait} to wait for that
  * event.
  * </p>
@@ -2231,7 +2249,9 @@ int ANeuralNetworksExecution_setOutputFromMemory(ANeuralNetworksExecution* execu
  * See {@link ANeuralNetworksExecution} for information on multithreaded usage.
  *
  * See {@link ANeuralNetworksExecution_compute} for synchronous execution.
- * Synchronous execution incurs lower overhead than asynchronous execution.
+ * See {@link ANeuralNetworksExecution_burstCompute} for burst synchronous execution.
+ * See {@link ANeuralNetworksExecution_startComputeWithDependencies} for
+ * asynchronous execution with dependencies.
  *
  * Available since API level 27.
  *
@@ -2239,7 +2259,7 @@ int ANeuralNetworksExecution_setOutputFromMemory(ANeuralNetworksExecution* execu
  * @param event The event that will be signaled on completion. event is set to
  *              NULL if there's an error.
  *
- * @return ANEURALNETWORKS_NO_ERROR if successful.
+ * @return ANEURALNETWORKS_NO_ERROR if the evaluation is successfully scheduled.
  */
 int ANeuralNetworksExecution_startCompute(ANeuralNetworksExecution* execution,
                                           ANeuralNetworksEvent** event) __INTRODUCED_IN(27);
@@ -2297,6 +2317,7 @@ int ANeuralNetworksExecution_setTimeout(ANeuralNetworksExecution* execution, uin
  *
  * Available since API level 27.
  *
+ * @param event The event that will be signaled on completion.
  * @return ANEURALNETWORKS_NO_ERROR if the execution completed normally.
  *         ANEURALNETWORKS_UNMAPPABLE if the execution input or output memory cannot
  *         be properly mapped.
@@ -2316,6 +2337,86 @@ int ANeuralNetworksEvent_wait(ANeuralNetworksEvent* event) __INTRODUCED_IN(27);
 void ANeuralNetworksEvent_free(ANeuralNetworksEvent* event) __INTRODUCED_IN(27);
 
 #endif  // __ANDROID_API__ >= 27
+
+#if __ANDROID_API__ >= __ANDROID_API_R__
+/**
+ * Create a {@link ANeuralNetworksEvent} from a sync_fence file descriptor.
+ *
+ * The newly created ANeuralNetworksEvent does not take ownership of the provided sync_fence_fd,
+ * it will instead dup the provided sync_fence_fd and own the duplicate.
+ *
+ * @param sync_fence_fd The sync_fence file descriptor.
+ * @param event The newly created object or NULL if unsuccessful.
+ *
+ * @return ANEURALNETWORKS_NO_ERROR if successful.
+ *
+ * Available since API level 30.
+ */
+int ANeuralNetworksEvent_createFromSyncFenceFd(int sync_fence_fd, ANeuralNetworksEvent** event)
+        __INTRODUCED_IN(30);
+
+/**
+ * Get sync_fence file descriptor from the event.
+ *
+ * If the ANeuralNetworksEvent is not backed by a sync fence, the sync_fence_fd
+ * will be set to -1, and ANEURALNETWORKS_BAD_DATA will be returned.
+ *
+ * See {@link ANeuralNetworksEvent_createFromSyncFenceFd} and
+ * {@link ANeuralNetworksExecution_startComputeWithDependencies} to see how to create
+ * an event backed by a sync fence.
+ *
+ * The user takes ownership of the returned fd, and must close the returned file descriptor when
+ * it is no longer needed.
+ *
+ * @param event An event that is backed by a sync fence.
+ * @param sync_fence_fd The sync_fence file descriptor. The file descriptor will
+ *                      be set to -1 if there is an error.
+ *
+ * @return ANEURALNETWORKS_NO_ERROR if successful.
+ *
+ * Available since API level 30.
+ */
+int ANeuralNetworksEvent_getSyncFenceFd(const ANeuralNetworksEvent* event, int* sync_fence_fd)
+        __INTRODUCED_IN(30);
+
+/**
+ * Schedule asynchronous evaluation of the execution with dependencies.
+ *
+ * The execution will wait for all the depending events to be signaled before
+ * starting the evaluation. Once the execution has completed and the outputs
+ * are ready to be consumed, the returned event will be signaled. Depending on which
+ * devices are handling the execution, the event could be backed by a sync fence.
+ *
+ * If parts of the execution are scheduled on devices that do not support fenced execution,
+ * the function call may wait for such parts to finish before returning.
+ *
+ * The function will return an error if any of the events in wait_for is already in a bad
+ * state. After the execution is scheduled, if any of the events in wait_for does not complete
+ * normally, the execution will fail, and {@link ANeuralNetworksEvent_wait} on the returned
+ * event will return an error.
+ *
+ * See {@link ANeuralNetworksExecution} for information on multithreaded usage.
+ *
+ * See {@link ANeuralNetworksExecution_compute} for synchronous execution.
+ * See {@link ANeuralNetworksExecution_burstCompute} for burst synchronous execution.
+ * See {@link ANeuralNetworksExecution_startCompute} for regular asynchronous execution.
+ *
+ * @param execution The execution to be scheduled and executed.
+ * @param dependencies A set of depending events. The actual evaluation will not start
+ *                     until all the events are signaled.
+ * @param num_events The number of events in the wait_for set.
+ * @param event The event that will be signaled on completion. event is set to
+ *              NULL if there's an error.
+ *
+ * @return ANEURALNETWORKS_NO_ERROR if the evaluation is successfully scheduled.
+ *
+ * Available since API level 30.
+ */
+int ANeuralNetworksExecution_startComputeWithDependencies(
+        ANeuralNetworksExecution* execution, const ANeuralNetworksEvent* const* dependencies,
+        uint32_t num_dependencies, ANeuralNetworksEvent** event) __INTRODUCED_IN(30);
+
+#endif  // __ANDROID_API__ >= __ANDROID_API_R__
 
 __END_DECLS
 
