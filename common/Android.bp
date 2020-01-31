@@ -174,14 +174,12 @@ cc_library_static {
         "android.hidl.allocator@1.0",
         "android.hidl.memory@1.0",
         "libbase",
-        "libcrypto",
         "libcutils",
         "libfmq",
         "libhidlbase",
         "libhidlmemory",
         "liblog",
         "libnativewindow",
-        "libtextclassifier_hash",
         "libutils",
     ],
     header_libs: [
@@ -197,7 +195,10 @@ cc_library_static {
         "libtflite_kernel_utils",
         "philox_random",
     ],
-
+    static_libs: [
+        "libcrypto_static",
+        "libtextclassifier_hash_static",
+    ],
     cflags: [
         "-DNAMESPACE_FOR_HASH_FUNCTIONS=farmhash",
         "-DNN_INCLUDE_CPU_IMPLEMENTATION",
