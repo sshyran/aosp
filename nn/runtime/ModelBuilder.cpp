@@ -172,6 +172,35 @@ int ModelBuilder::setOperandValue(uint32_t index, const void* buffer, size_t len
     return ANEURALNETWORKS_NO_ERROR;
 }
 
+int ModelBuilder::setOperandValueFromModel(uint32_t index, const ModelBuilder* value) {
+    VLOG(MODEL) << __func__ << " for operand " << index << " model " << value;
+    if (badState("setOperandValueFromModel")) {
+        return ANEURALNETWORKS_BAD_STATE;
+    }
+    if (!value->mCompletedModel) {
+        LOG(ERROR) << "ANeuralNetworksModel_setOperandValueFromModel value model must be finished";
+        return ANEURALNETWORKS_BAD_STATE;
+    }
+    if (value->mInvalidModel) {
+        LOG(ERROR) << "ANeuralNetworksModel_setOperandValueFromModel value model is invalid";
+        return ANEURALNETWORKS_BAD_STATE;
+    }
+    if (index >= operandCount()) {
+        LOG(ERROR) << "ANeuralNetworksModel_setOperandValueFromModel setting operand " << index
+                   << " of " << operandCount();
+        return ANEURALNETWORKS_BAD_DATA;
+    }
+    Operand& operand = mOperands[index];
+    operand.lifetime = OperandLifeTime::SUBGRAPH;
+    operand.location = {
+            .poolIndex = 0,
+            .offset = static_cast<uint32_t>(mReferencedModels.size()),
+            .length = 0,
+    };
+    mReferencedModels.push_back(value);
+    return ANEURALNETWORKS_NO_ERROR;
+}
+
 int ModelBuilder::setOperandSymmPerChannelQuantParams(
         uint32_t index, const ANeuralNetworksSymmPerChannelQuantParams& channelQuant) {
     if (badState("setOperandSymmPerChannelQuantParams")) {
