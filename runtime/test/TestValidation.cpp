@@ -694,6 +694,58 @@ TEST_F(ValidationTestModel, SetOperandValueFromAHardwareBufferBlob) {
     AHardwareBuffer_release(buffer);
 }
 
+TEST_F(ValidationTestModel, SetOperandValueFromModel) {
+    uint32_t dimensions[] = {2};
+    ANeuralNetworksOperandType tensorType = {
+            .type = ANEURALNETWORKS_TENSOR_FLOAT32,
+            .dimensionCount = 2,
+            .dimensions = dimensions,
+    };
+    ANeuralNetworksOperandType scalarType = {.type = ANEURALNETWORKS_INT32};
+    ANeuralNetworksOperandType modelType = {.type = ANEURALNETWORKS_MODEL};
+
+    ANeuralNetworksModel* valueModel = nullptr;
+    ASSERT_EQ(ANeuralNetworksModel_create(&valueModel), ANEURALNETWORKS_NO_ERROR);
+    ASSERT_EQ(ANeuralNetworksModel_addOperand(valueModel, &tensorType), ANEURALNETWORKS_NO_ERROR);
+    ASSERT_EQ(ANeuralNetworksModel_addOperand(valueModel, &tensorType), ANEURALNETWORKS_NO_ERROR);
+    ASSERT_EQ(ANeuralNetworksModel_addOperand(valueModel, &scalarType), ANEURALNETWORKS_NO_ERROR);
+    ASSERT_EQ(ANeuralNetworksModel_addOperand(valueModel, &tensorType), ANEURALNETWORKS_NO_ERROR);
+    uint32_t inList[3] = {0, 1, 2};
+    uint32_t outList[1] = {3};
+    ASSERT_EQ(ANeuralNetworksModel_addOperation(valueModel, ANEURALNETWORKS_ADD, 3, inList, 1,
+                                                outList),
+              ANEURALNETWORKS_NO_ERROR);
+    ASSERT_EQ(ANeuralNetworksModel_identifyInputsAndOutputs(valueModel, 3, inList, 1, outList),
+              ANEURALNETWORKS_NO_ERROR);
+
+    EXPECT_EQ(ANeuralNetworksModel_addOperand(mModel, &modelType), ANEURALNETWORKS_NO_ERROR);
+
+    // This should fail, as the value model is not finished.
+    EXPECT_EQ(ANeuralNetworksModel_setOperandValueFromModel(mModel, 0, valueModel),
+              ANEURALNETWORKS_BAD_STATE);
+    ANeuralNetworksModel_finish(valueModel);
+
+    EXPECT_EQ(ANeuralNetworksModel_setOperandValueFromModel(nullptr, 0, valueModel),
+              ANEURALNETWORKS_UNEXPECTED_NULL);
+    EXPECT_EQ(ANeuralNetworksModel_setOperandValueFromModel(mModel, 0, nullptr),
+              ANEURALNETWORKS_UNEXPECTED_NULL);
+
+    // This should fail, since the operand does not exist.
+    EXPECT_EQ(ANeuralNetworksModel_setOperandValueFromModel(mModel, -1, valueModel),
+              ANEURALNETWORKS_BAD_DATA);
+
+    // This should fail, as this operand does not exist.
+    EXPECT_EQ(ANeuralNetworksModel_setOperandValueFromModel(mModel, 1, valueModel),
+              ANEURALNETWORKS_BAD_DATA);
+
+    ANeuralNetworksModel_finish(mModel);
+    // This should fail, as the model is already finished.
+    EXPECT_EQ(ANeuralNetworksModel_setOperandValueFromModel(mModel, 0, valueModel),
+              ANEURALNETWORKS_BAD_STATE);
+
+    ANeuralNetworksModel_free(valueModel);
+}
+
 TEST_F(ValidationTestModel, AddOEMOperand) {
     ANeuralNetworksOperandType OEMScalarType{
             .type = ANEURALNETWORKS_OEM_SCALAR, .dimensionCount = 0, .dimensions = nullptr};
