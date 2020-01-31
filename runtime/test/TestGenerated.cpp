@@ -488,6 +488,12 @@ TEST_P(GeneratedTests, Burst) {
     execute(testModel);
     Execution::setComputeMode(oldComputeMode);
 }
+
+TEST_P(GeneratedTests, Fenced) {
+    const auto oldComputeMode = Execution::setComputeMode(Execution::ComputeMode::FENCED);
+    execute(testModel);
+    Execution::setComputeMode(oldComputeMode);
+}
 #else
 TEST_P(GeneratedTests, Test) {
     execute(testModel);

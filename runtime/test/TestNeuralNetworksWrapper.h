@@ -376,6 +376,18 @@ class Execution {
                 ANeuralNetworksBurst_free(burst);
                 return result;
             }
+            case ComputeMode::FENCED: {
+                ANeuralNetworksEvent* event = nullptr;
+                Result result =
+                        static_cast<Result>(ANeuralNetworksExecution_startComputeWithDependencies(
+                                mExecution, nullptr, 0, &event));
+                if (result != Result::NO_ERROR) {
+                    return result;
+                }
+                result = static_cast<Result>(ANeuralNetworksEvent_wait(event));
+                ANeuralNetworksEvent_free(event);
+                return result;
+            }
         }
         return Result::BAD_DATA;
     }
@@ -386,7 +398,7 @@ class Execution {
     // or
     // - use the burst API
     // Returns the previous ComputeMode.
-    enum class ComputeMode { SYNC, ASYNC, BURST };
+    enum class ComputeMode { SYNC, ASYNC, BURST, FENCED };
     static ComputeMode setComputeMode(ComputeMode mode) {
         ComputeMode oldComputeMode = mComputeMode;
         mComputeMode = mode;
@@ -406,6 +418,8 @@ class Execution {
                 mExecution, index, dimensions->data()));
         return result;
     }
+
+    ANeuralNetworksExecution* getHandle() { return mExecution; };
 
    private:
     ANeuralNetworksCompilation* mCompilation = nullptr;
