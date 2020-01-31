@@ -1696,7 +1696,7 @@ int ANeuralNetworksModel_setOperandValueFromMemory(ANeuralNetworksModel* model, 
                                                    size_t offset, size_t length)
         __INTRODUCED_IN(27);
 
-#if __ANDROID_API__ >= __ANDROID_API_R__
+#if __ANDROID_API__ >= 30
 
 /**
  * Sets an operand to a value that is a reference to another NNAPI model.
@@ -1727,7 +1727,7 @@ int ANeuralNetworksModel_setOperandValueFromModel(ANeuralNetworksModel* model, i
                                                   const ANeuralNetworksModel* value)
         __INTRODUCED_IN(30);
 
-#endif  // __ANDROID_API__ >= __ANDROID_API_R__
+#endif  // __ANDROID_API__ >= 30
 
 /**
  * Add an operation to a model.
