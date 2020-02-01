@@ -37,6 +37,7 @@ namespace test_wrapper {
 
 using wrapper::Event;
 using wrapper::ExecutePreference;
+using wrapper::ExecutePriority;
 using wrapper::ExtensionModel;
 using wrapper::ExtensionOperandParams;
 using wrapper::ExtensionOperandType;
@@ -252,6 +253,11 @@ class Compilation {
     Result setPreference(ExecutePreference preference) {
         return static_cast<Result>(ANeuralNetworksCompilation_setPreference(
                 mCompilation, static_cast<int32_t>(preference)));
+    }
+
+    Result setPriority(ExecutePriority priority) {
+        return static_cast<Result>(ANeuralNetworksCompilation_setPriority(
+                mCompilation, static_cast<int32_t>(priority)));
     }
 
     Result setCaching(const std::string& cacheDir, const std::vector<uint8_t>& token) {
