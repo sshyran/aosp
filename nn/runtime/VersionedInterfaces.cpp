@@ -1396,8 +1396,7 @@ std::pair<int, std::shared_ptr<VersionedIPreparedModel>> VersionedIDevice::prepa
 }
 
 std::pair<int, std::shared_ptr<VersionedIPreparedModel>>
-VersionedIDevice::prepareModelFromCacheInternal(Priority priority,
-                                                const OptionalTimePoint& deadline,
+VersionedIDevice::prepareModelFromCacheInternal(const OptionalTimePoint& deadline,
                                                 const std::string& cacheDir,
                                                 const CacheToken& token) const {
     // Note that some work within VersionedIDevice will be subtracted from the IPC layer
@@ -1418,10 +1417,10 @@ VersionedIDevice::prepareModelFromCacheInternal(Priority priority,
         const sp<PreparedModelCallback> callback = new PreparedModelCallback();
         const Return<ErrorStatus> ret = recoverable<ErrorStatus, V1_3::IDevice>(
                 __FUNCTION__,
-                [priority, &deadline, &modelCache, &dataCache, &token,
+                [&deadline, &modelCache, &dataCache, &token,
                  &callback](const sp<V1_3::IDevice>& device) {
-                    return device->prepareModelFromCache_1_3(priority, deadline, modelCache,
-                                                             dataCache, token, callback);
+                    return device->prepareModelFromCache_1_3(deadline, modelCache, dataCache, token,
+                                                             callback);
                 },
                 callback);
         if (ret.isDeadObject()) {
@@ -1483,7 +1482,7 @@ std::pair<int, std::shared_ptr<VersionedIPreparedModel>> VersionedIDevice::prepa
     // Attempt to compile from cache if token is present.
     if (maybeToken.has_value()) {
         const auto [n, preparedModel] =
-                prepareModelFromCacheInternal(priority, deadline, cacheDir, *maybeToken);
+                prepareModelFromCacheInternal(deadline, cacheDir, *maybeToken);
         if (n == ANEURALNETWORKS_NO_ERROR) {
             return {n, preparedModel};
         }

@@ -55,6 +55,13 @@ enum class ExecutePreference {
     PREFER_SUSTAINED_SPEED = ANEURALNETWORKS_PREFER_SUSTAINED_SPEED
 };
 
+enum class ExecutePriority {
+    LOW = ANEURALNETWORKS_PRIORITY_LOW,
+    MEDIUM = ANEURALNETWORKS_PRIORITY_MEDIUM,
+    HIGH = ANEURALNETWORKS_PRIORITY_HIGH,
+    DEFAULT = ANEURALNETWORKS_PRIORITY_DEFAULT,
+};
+
 enum class Result {
     NO_ERROR = ANEURALNETWORKS_NO_ERROR,
     OUT_OF_MEMORY = ANEURALNETWORKS_OUT_OF_MEMORY,
@@ -368,6 +375,11 @@ class Compilation {
     Result setPreference(ExecutePreference preference) {
         return static_cast<Result>(ANeuralNetworksCompilation_setPreference(
                 mCompilation, static_cast<int32_t>(preference)));
+    }
+
+    Result setPriority(ExecutePriority priority) {
+        return static_cast<Result>(ANeuralNetworksCompilation_setPriority(
+                mCompilation, static_cast<int32_t>(priority)));
     }
 
     Result setCaching(const std::string& cacheDir, const std::vector<uint8_t>& token) {
