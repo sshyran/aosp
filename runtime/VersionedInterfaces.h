@@ -411,8 +411,8 @@ class VersionedIDevice {
             const hal::OptionalTimePoint& deadline, const std::string& cacheDir,
             const std::optional<hal::CacheToken>& maybeToken) const;
     std::pair<int, std::shared_ptr<VersionedIPreparedModel>> prepareModelFromCacheInternal(
-            hal::Priority priority, const hal::OptionalTimePoint& deadline,
-            const std::string& cacheDir, const hal::CacheToken& token) const;
+            const hal::OptionalTimePoint& deadline, const std::string& cacheDir,
+            const hal::CacheToken& token) const;
 
     /**
      * This is a utility class for VersionedIDevice that encapsulates a
