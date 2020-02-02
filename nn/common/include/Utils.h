@@ -319,12 +319,27 @@ int validateOperandType(
 int validateOperandList(uint32_t count, const uint32_t* list, uint32_t operandCount,
                         const char* tag);
 
+// A set of functions to help validate models containing IF or WHILE operations.
+struct SubgraphValidationHelper {
+    // Checks if a given operand is a SUBGRAPH operand with a valid offset.
+    std::function<bool(const hal::Operand&)> isValidSubgraphReference;
+    // Gets the input count of a subgraph referenced by a given operand.
+    std::function<uint32_t(const hal::Operand&)> getSubgraphInputCount;
+    // Gets the output count of a subgraph referenced by a given operand.
+    std::function<uint32_t(const hal::Operand&)> getSubgraphOutputCount;
+    // Gets the specified input operand of a subgraph referenced by a given operand.
+    std::function<const hal::Operand&(const hal::Operand&, uint32_t)> getSubgraphInputOperand;
+    // Gets the specified output operand of a subgraph referenced by a given operand.
+    std::function<const hal::Operand&(const hal::Operand&, uint32_t)> getSubgraphOutputOperand;
+};
+
 // Returns ANEURALNETWORKS_NO_ERROR if the corresponding operation is defined and can handle the
 // provided operand types in the given HAL version, otherwise returns ANEURALNETWORKS_BAD_DATA.
+// The last argument is only used for validating IF and WHILE operations.
 int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
                       const uint32_t* inputIndexes, uint32_t outputCount,
                       const uint32_t* outputIndexes, const std::vector<hal::Operand>& operands,
-                      HalVersion halVersion);
+                      HalVersion halVersion, const SubgraphValidationHelper& helper);
 
 inline size_t getSizeFromInts(int lower, int higher) {
     return (uint32_t)(lower) + ((uint64_t)(uint32_t)(higher) << 32);
