@@ -77,7 +77,9 @@ class SyncFenceEvent : public IEvent {
             // If there is a callback available, use the callback to get the error code.
             if (kFencedExecutionCallback != nullptr) {
                 const hal::Return<void> ret = kFencedExecutionCallback->getExecutionInfo(
-                        [&error](hal::ErrorStatus status, hal::Timing) { error = status; });
+                        [&error](hal::ErrorStatus status, hal::Timing, hal::Timing) {
+                            error = status;
+                        });
                 if (!ret.isOk()) {
                     error = hal::ErrorStatus::GENERAL_FAILURE;
                 }

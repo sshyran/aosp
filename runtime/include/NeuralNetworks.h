@@ -5949,7 +5949,16 @@ typedef struct ANeuralNetworksBurst ANeuralNetworksBurst;
  *         EXCEPTION: If the input is optional and omitted
  *         (by passing nullptr for buffer to
  *         {@link ANeuralNetworksExecution_setInput}) then it need
- *         not have a fully specified tensor operand type.</li></ul>
+ *         not have a fully specified tensor operand type.</li>
+ *     <li>The operand is a model output (see
+ *         {@link ANeuralNetworksModel_identifyInputsAndOutputs})
+ *         and is to be used with
+ *         {@link ANeuralNetworksExecution_startComputeWithDependencies}.
+ *         A fully specified tensor operand type must either be provided
+ *         to {@link ANeuralNetworksModel_addOperand}; or it must be
+ *         provided to the corresponding
+ *         {@link ANeuralNetworksExecution_setOutput}, or
+ *         {@link ANeuralNetworksExecution_setOutputFromMemory}.</li></ul>
  *
  * A tensor operand type of specified rank but some number of
  * unspecified dimensions is represented by setting dimensionCount to
@@ -6024,8 +6033,8 @@ typedef struct ANeuralNetworksDevice ANeuralNetworksDevice;
  *
  * To use:
  *   - Create a new memory descriptor by calling {@link ANeuralNetworksMemoryDesc_create}.
- *   - Specify all of the intended input or output roles by calling
- *     {@link ANeuralNetworksMemoryDesc_addInputRole} or
+ *   - Specify all of the intended input and output roles by calling
+ *     {@link ANeuralNetworksMemoryDesc_addInputRole} and
  *     {@link ANeuralNetworksMemoryDesc_addOutputRole}.
  *   - Optionally, specify the memory dimensions by calling
  *     {@link ANeuralNetworksMemoryDesc_setDimensions}.
@@ -6037,7 +6046,7 @@ typedef struct ANeuralNetworksDevice ANeuralNetworksDevice;
  * A memory descriptor is completed by calling {@link ANeuralNetworksMemoryDesc_finish}.
  * A memory descriptor is destroyed by calling {@link ANeuralNetworksMemoryDesc_free}.
  *
- * A memory descriptor cannot be modified once {@link ANeuralNetworksMemoryDesc_finish}
+ * A memory descriptor must not be modified once {@link ANeuralNetworksMemoryDesc_finish}
  * has been called on it.
  *
  * It is the application's responsibility to make sure that only
@@ -6062,9 +6071,9 @@ typedef struct ANeuralNetworksMemoryDesc ANeuralNetworksMemoryDesc;
  * {@link ANeuralNetworksMemoryDesc_addOutputRole}, and
  * {@link ANeuralNetworksMemoryDesc_setDimensions}.
  *
- * {@link ANeuralNetworksMemoryDesc_finish} should be called once all properties have been set.
+ * {@link ANeuralNetworksMemoryDesc_finish} must be called once all properties have been set.
  *
- * {@link ANeuralNetworksMemoryDesc_free} should be called once the memory descriptor
+ * {@link ANeuralNetworksMemoryDesc_free} must be called once the memory descriptor
  * is no longer needed.
  *
  * Available since API level 30.
@@ -6122,7 +6131,7 @@ void ANeuralNetworksMemoryDesc_free(ANeuralNetworksMemoryDesc* desc) __INTRODUCE
  * @param compilation The compilation object. It must already have been finished by calling
  *                    {@link ANeuralNetworksCompilation_finish}, and must outlive the memory
  *                    descriptor.
- * @param index The index of the input argument we are referencing. It is
+ * @param index The index of the input argument we are referencing from the compilation. It is
  *              an index into the inputs list passed to
  *              {@link ANeuralNetworksModel_identifyInputsAndOutputs}. It is not
  *              the index associated with {@link ANeuralNetworksModel_addOperand}.
@@ -6168,7 +6177,7 @@ int ANeuralNetworksMemoryDesc_addInputRole(ANeuralNetworksMemoryDesc* desc,
  * @param compilation The compilation object. It must already have been finished by calling
  *                    {@link ANeuralNetworksCompilation_finish}, and must outlive the memory
  *                    descriptor.
- * @param index The index of the output argument we are referencing. It is
+ * @param index The index of the output argument we are referencing from the compilation. It is
  *              an index into the outputs list passed to
  *              {@link ANeuralNetworksModel_identifyInputsAndOutputs}. It is not
  *              the index associated with {@link ANeuralNetworksModel_addOperand}.
@@ -6228,12 +6237,15 @@ int ANeuralNetworksMemoryDesc_finish(ANeuralNetworksMemoryDesc* desc) __INTRODUC
 /**
  * Creates a memory object from a memory descriptor.
  *
- * The memory object is created uninitialized. An uninitialized memory object may only be used
- * according to the roles specified by {@link ANeuralNetworksMemoryDesc_addOutputRole}. A memory
- * object is initialized after it is used as an output in a successful execution, or used as the
- * destination memory in a successful {@link ANeuralNetworksMemory_copy}. An initialized memory
- * object may be used according to all roles specified in {@link ANeuralNetworksMemoryDesc}. A
- * memory object will return to the uninitialized state if it is used as an output in a failed
+ * The memory object is created with an uninitialized buffer. A memory object with an uninitialized
+ * buffer may only be used according to the roles specified by {@link
+ * ANeuralNetworksMemoryDesc_addOutputRole}, or as the destination memory in {@link
+ * ANeuralNetworksMemory_copy}. The buffer of a memory object is initialized after the memory object
+ * is used as an output in a successful execution, or used as the destination memory in a successful
+ * {@link ANeuralNetworksMemory_copy}. A memory object with an initialized buffer may be used
+ * according to all roles specified in {@link ANeuralNetworksMemoryDesc}, or as the source or
+ * destination memory in {@link ANeuralNetworksMemory_copy}. The buffer of a memory object will
+ * return to the uninitialized state if the memory object is used as an output in a failed
  * execution, or used as the destination memory in a failed {@link ANeuralNetworksMemory_copy}.
  *
  * The dimensions of the memory descriptor are deduced from the dimensions of the corresponding
@@ -6243,7 +6255,8 @@ int ANeuralNetworksMemoryDesc_finish(ANeuralNetworksMemoryDesc* desc) __INTRODUC
  * unspecified dimensions or rank. In such a case, the same memory object may be used with different
  * shapes of outputs in different executions. When the memory is used as an input, the input shape
  * must be the same as the output shape from the last execution using this memory object as an
- * output. Creating a memory object with unspecified dimensions or rank may fail for certain sets of
+ * output, or the last {@link ANeuralNetworkMemory_copy} using this memory object as the destination
+ * memory. Creating a memory object with unspecified dimensions or rank may fail for certain sets of
  * roles.
  *
  * Using the memory in roles or shapes that are not compatible with the rules specified above will
@@ -6257,7 +6270,7 @@ int ANeuralNetworksMemoryDesc_finish(ANeuralNetworksMemoryDesc* desc) __INTRODUC
  * Calling {@link ANeuralNetworksModel_setOperandValueFromMemory} with the memory created from this
  * function will return an error.
  *
- * {@link ANeuralNetworksMemory_free} should be called once the memory is no longer needed.
+ * {@link ANeuralNetworksMemory_free} must be called once the memory is no longer needed.
  *
  * Attempting to create memory from an unfinished memory descriptor will return an error.
  *
@@ -6596,8 +6609,8 @@ int ANeuralNetworksExecution_compute(ANeuralNetworksExecution* execution) __INTR
  * {@link ANeuralNetworksExecution}.
  *
  * On asynchronous execution initiated by {@link ANeuralNetworksExecution_startCompute}
- * or {@link ANeuralNetworksExecution_startComputeWithDependencies}, {@link
- * ANeuralNetworksEvent_wait} must be called prior to this function.
+ * or {@link ANeuralNetworksExecution_startComputeWithDependencies},
+ * {@link ANeuralNetworksEvent_wait} must be called prior to this function.
  *
  * @param execution The execution to be queried.
  * @param index The index of the output argument we are querying. It is
@@ -6621,8 +6634,8 @@ int ANeuralNetworksExecution_getOutputOperandRank(ANeuralNetworksExecution* exec
  * {@link ANeuralNetworksExecution}. The target output operand cannot be a scalar.
  *
  * On asynchronous execution initiated by {@link ANeuralNetworksExecution_startCompute}
- * or {@link ANeuralNetworksExecution_startComputeWithDependencies}, {@link
- * ANeuralNetworksEvent_wait} must be called prior to this function.
+ * or {@link ANeuralNetworksExecution_startComputeWithDependencies},
+ * {@link ANeuralNetworksEvent_wait} must be called prior to this function.
  *
  * @param execution The execution to be queried.
  * @param index The index of the output argument we are querying. It is an index into the lists
@@ -6777,6 +6790,20 @@ typedef enum {
     // such as that of the runtime itself and the IPC needed for the runtime to
     // communicate with the driver.
     ANEURALNETWORKS_DURATION_IN_DRIVER = 1,
+    // Execution time on hardware, after all dependencies have been signaled.
+    // If no dependencies specified (for example, if the execution was scheduled other
+    // than with {@link ANeuralNetworksExecution_startComputeWithDependencies}), the
+    // reported time will be the same as ANEURALNETWORKS_DURATION_ON_HARDWARE.
+    // Available since API level 30.
+    ANEURALNETWORKS_FENCED_DURATION_ON_HARDWARE = 2,
+    // Execution time in driver, after all dependencies have been signaled. Excludes
+    // overhead such as that of the runtime itself and the IPC needed for the runtime
+    // to communicate with the driver.
+    // If no dependencies specified (for example, if the execution was scheduled other
+    // than with {@link ANeuralNetworksExecution_startComputeWithDependencies}), the
+    // reported time will be the same as ANEURALNETWORKS_DURATION_IN_DRIVER.
+    // Available since API level 30.
+    ANEURALNETWORKS_FENCED_DURATION_IN_DRIVER = 3,
 } DurationCode;
 
 /**
@@ -7629,9 +7656,10 @@ int ANeuralNetworksExecution_startCompute(ANeuralNetworksExecution* execution,
  * If the device is not able to complete the execution within the specified
  * duration, the execution must be aborted. The timeout duration begins at a
  * call to one of:
- * - {@link ANeuralNetworksExecution_startCompute}
- * - {@link ANeuralNetworksExecution_compute}
  * - {@link ANeuralNetworksExecution_burstCompute}
+ * - {@link ANeuralNetworksExecution_compute}
+ * - {@link ANeuralNetworksExecution_startCompute}
+ * - {@link ANeuralNetworksExecution_startComputeWithDependencies}
  *
  * By default (i.e., unless ANeuralNetworksExecution_setTimeout is called),
  * the timeout duration for execution is considered infinite.
@@ -7752,6 +7780,21 @@ int ANeuralNetworksEvent_getSyncFenceFd(const ANeuralNetworksEvent* event, int* 
  * normally, the execution will fail, and {@link ANeuralNetworksEvent_wait} on the returned
  * event will return an error.
  *
+ * The function will return an error if any of the execution outputs has a tensor operand type
+ * that is not fully specified.
+ *
+ * The function can be passed a timeout duration in nanoseconds.
+ * The duration begins when all waitFor sync fences have been signaled, and can be used
+ * together with {@link ANeuralNetworksExecution_setTimeout} which specifies the
+ * maximum timeout duration beginning at the call to
+ * {@link ANeuralNetworksExecution_startComputeWithDependencies}.
+ * If the duration is non-zero, the {@link ANeuralNetworksExecution} must have been created
+ * from an {@link ANeuralNetworksCompilation} which in turn was created from
+ * {@link ANeuralNetworksCompilation_createForDevices} with numDevices = 1, and
+ * the device must support execution timeout as indicated by
+ * {@link ANeuralNetworksDevice_supportsExecutionTimeout}, otherwise this
+ * function will fail with ANEURALNETWORKS_BAD_DATA.
+ *
  * See {@link ANeuralNetworksExecution} for information on multithreaded usage.
  *
  * See {@link ANeuralNetworksExecution_compute} for synchronous execution.
@@ -7762,6 +7805,9 @@ int ANeuralNetworksEvent_getSyncFenceFd(const ANeuralNetworksEvent* event, int* 
  * @param dependencies A set of depending events. The actual evaluation will not start
  *                     until all the events are signaled.
  * @param num_dependencies The number of events in the dependencies set.
+ * @param duration The maximum length of time in nanoseconds within which execution must
+ *                 complete after all dependencies are signaled. If set to 0, the timeout
+ *                 duration is considered infinite.
  * @param event The event that will be signaled on completion. event is set to
  *              NULL if there's an error.
  *
@@ -7771,7 +7817,8 @@ int ANeuralNetworksEvent_getSyncFenceFd(const ANeuralNetworksEvent* event, int* 
  */
 int ANeuralNetworksExecution_startComputeWithDependencies(
         ANeuralNetworksExecution* execution, const ANeuralNetworksEvent* const* dependencies,
-        uint32_t num_dependencies, ANeuralNetworksEvent** event) __INTRODUCED_IN(30);
+        uint32_t num_dependencies, uint64_t duration, ANeuralNetworksEvent** event)
+        __INTRODUCED_IN(30);
 
 #endif  // __ANDROID_API__ >= __ANDROID_API_R__
 

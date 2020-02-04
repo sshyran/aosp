@@ -66,7 +66,8 @@ class ExecutionBuilder {
 
     std::optional<uint64_t> getTimeoutDuration() const;
 
-    int computeFenced(const std::vector<int>& wait_for, int* sync_fence);
+    int computeFenced(const std::vector<int>& wait_for, uint64_t timeoutDurationAfterFence,
+                      int* sync_fence);
 
     int computeAsynchronously(sp<ExecutionCallback>* synchronizationCallback) {
         CHECK(synchronizationCallback != nullptr);
@@ -231,7 +232,7 @@ class StepExecutor {
     // Perform fenced execution and return error_code, sync_fence_fd and a
     // callback.
     std::tuple<int, int, sp<hal::IFencedExecutionCallback>> computeFenced(
-            const std::vector<int>& wait_for);
+            const std::vector<int>& wait_for, uint64_t timeoutDurationAfterFence);
 
    private:
     void mapInputOrOutput(const ModelArgumentInfo& builderInputOrOutput,
