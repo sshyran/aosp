@@ -697,25 +697,39 @@ class VersionedIPreparedModel {
      * Launch a fenced asynchronous execution on a prepared model.
      *
      * The execution is performed asynchronously with respect to the caller.
-     * executeFenced must fully validate the request, and only accept one that is
-     * guaranteed to be completed, unless a hardware failure or kernel panic happens on the device.
-     * If there is an error during validation, executeFenced must immediately return with
-     * the corresponding ErrorStatus. If the request is valid and there is no error launching,
+     * executeFenced must fully validate the request. If there is an error during validation,
+     * executeFenced must immediately return with the corresponding ErrorStatus. If the inputs
+     * to the function are valid and there is no error and there is no error launching,
      * executeFenced must dispatch an asynchronous task to perform the execution in the
-     * background, and immediately return with ErrorStatus::NONE, a sync_fence that will be
+     * background, and immediately return with ErrorStatus::NONE, a sync fence that will be
      * signaled once the execution is completed, and a callback that can be used by the client
-     * to query the duration and runtime error status. If the asynchronous task fails to launch,
-     * executeFenced must immediately return with ErrorStatus::GENERAL_FAILURE.
-     * The execution must wait for all the sync fences (if any) in wait_for to be signaled
-     * before starting the actual execution.
+     * to query the duration and runtime error status. If the task has finished
+     * before the call returns, empty handle may be returned for the syncFence. If the
+     * asynchronous task fails to launch, executeFenced must immediately return with
+     * ErrorStatus::GENERAL_FAILURE, an empty handle for the syncFence, and nullptr
+     * for callback. The execution must wait for all the sync fences (if any) in waitFor to be
+     * signaled before starting the actual execution.
      *
-     * If any of sync fences in wait_for changes to error status after the executeFenced
-     * call succeeds, the driver must immediately set the returned sync_fence to error status.
+     * If any of sync fences in waitFor changes to error status after the executeFenced
+     * call succeeds, the driver must immediately set the returned syncFence to error status.
      *
      * When the asynchronous task has finished its execution, it must
-     * immediately signal the sync_fence created when dispatching. And after
-     * the sync_fence is signaled, the task must not modify the content of
-     * any data object referenced by 'request'.
+     * immediately signal the syncFence returned from executeFenced call. After
+     * the syncFence is signaled, the task must not modify the content of
+     * any data object referenced by 'request' (described by the
+     * {@link @1.0::DataLocation} of a {@link @1.0::RequestArgument}).
+     *
+     * executeFenced can be called with an optional deadline and an optional duration.
+     * If the execution is not able to completed before the provided deadline or within
+     * the timeout duration, whichever comes earlier, the
+     * execution must be aborted, and either {@link
+     * ErrorStatus::MISSED_DEADLINE_TRANSIENT} or {@link
+     * ErrorStatus::MISSED_DEADLINE_PERSISTENT} must be returned. The error due
+     * to an abort must be sent the same way as other errors, described above.
+     * If the service reports that it does not support execution deadlines via
+     * IDevice::supportsDeadlines, and executeFenced is called with a
+     * deadline, then the argument is invalid, and
+     * {@link ErrorStatus::INVALID_ARGUMENT} must be returned.
      *
      * Any number of calls to the executeFenced, execute* and executeSynchronously*
      * functions, in any combination, may be made concurrently, even on the same
@@ -723,10 +737,15 @@ class VersionedIPreparedModel {
      *
      * @param request The input and output information on which the prepared
      *                model is to be executed.
-     * @param wait_for A vector of sync fence file descriptors. The execution must
-     *                 wait for all sync fence to be signaled before starting the
-     *                 task.
+     * @param waitFor A vector of sync fence file descriptors. The execution must
+     *                wait for all sync fence to be signaled before starting the
+     *                task.
      * @param measure Specifies whether or not to measure duration of the execution.
+     * @param deadline The time by which execution must complete. If the
+     *                 execution cannot be finished by the deadline, the
+     *                 execution must be aborted.
+     * @param timeoutDurationAfterFence The maximum timeout duration within which execution must
+     *                                  complete after all sync fences in waitFor are signaled.
      * @return A tuple consisting of:
      *         - Error code of the dispatch call.
      *         - A sync_fence that will be triggered when the task is completed.
@@ -739,8 +758,9 @@ class VersionedIPreparedModel {
      *           returned or optional timing information is returned
      */
     std::tuple<int, hal::hidl_handle, sp<hal::IFencedExecutionCallback>, hal::Timing> executeFenced(
-            const hal::Request& request, const hal::hidl_vec<hal::hidl_handle>& wait_for,
-            hal::MeasureTiming measure);
+            const hal::Request& request, const hal::hidl_vec<hal::hidl_handle>& waitFor,
+            hal::MeasureTiming measure, const hal::OptionalTimePoint& deadline,
+            const hal::OptionalTimeoutDuration& timeoutDurationAfterFence);
 
    private:
     friend class VersionedIDevice;

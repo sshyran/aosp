@@ -1126,7 +1126,7 @@ TEST_F(ValidationTestCompilation, ExecutionUsability) {
             {
                 ANeuralNetworksEvent* event;
                 ASSERT_EQ(ANeuralNetworksExecution_startComputeWithDependencies(execution, nullptr,
-                                                                                0, &event),
+                                                                                0, 0, &event),
                           ANEURALNETWORKS_BAD_STATE);
             }
         };
@@ -1161,7 +1161,7 @@ TEST_F(ValidationTestCompilation, ExecutionUsability) {
             case ExecutionType::FENCED: {
                 ANeuralNetworksEvent* event;
                 ASSERT_EQ(ANeuralNetworksExecution_startComputeWithDependencies(execution, nullptr,
-                                                                                0, &event),
+                                                                                0, 0, &event),
                           ANEURALNETWORKS_NO_ERROR);
                 testTooLate();
                 ASSERT_EQ(ANeuralNetworksEvent_wait(event), ANEURALNETWORKS_NO_ERROR);
@@ -1611,9 +1611,9 @@ TEST_F(ValidationTestExecution, FencedExecution) {
     EXPECT_EQ(ANeuralNetworksExecution_setOutput(execution1, 0, nullptr, output0, sizeof(output0)),
               ANEURALNETWORKS_NO_ERROR);
     ANeuralNetworksEvent* event1 = nullptr;
-    EXPECT_EQ(
-            ANeuralNetworksExecution_startComputeWithDependencies(execution1, nullptr, 0, &event1),
-            ANEURALNETWORKS_NO_ERROR);
+    EXPECT_EQ(ANeuralNetworksExecution_startComputeWithDependencies(execution1, nullptr, 0, 0,
+                                                                    &event1),
+              ANEURALNETWORKS_NO_ERROR);
 
     EXPECT_EQ(ANeuralNetworksEvent_getSyncFenceFd(event1, nullptr),
               ANEURALNETWORKS_UNEXPECTED_NULL);
@@ -1622,16 +1622,17 @@ TEST_F(ValidationTestExecution, FencedExecution) {
     ANeuralNetworksExecution* execution2;
     ANeuralNetworksEvent* event2 = nullptr;
     EXPECT_EQ(ANeuralNetworksExecution_create(mCompilation, &execution2), ANEURALNETWORKS_NO_ERROR);
-    EXPECT_EQ(ANeuralNetworksExecution_startComputeWithDependencies(nullptr, &event1, 1, &event2),
+    EXPECT_EQ(
+            ANeuralNetworksExecution_startComputeWithDependencies(nullptr, &event1, 1, 0, &event2),
+            ANEURALNETWORKS_UNEXPECTED_NULL);
+    EXPECT_EQ(ANeuralNetworksExecution_startComputeWithDependencies(execution2, nullptr, 1, 0,
+                                                                    &event2),
               ANEURALNETWORKS_UNEXPECTED_NULL);
-    EXPECT_EQ(
-            ANeuralNetworksExecution_startComputeWithDependencies(execution2, nullptr, 1, &event2),
-            ANEURALNETWORKS_UNEXPECTED_NULL);
-    EXPECT_EQ(
-            ANeuralNetworksExecution_startComputeWithDependencies(execution2, &event1, 1, nullptr),
-            ANEURALNETWORKS_UNEXPECTED_NULL);
+    EXPECT_EQ(ANeuralNetworksExecution_startComputeWithDependencies(execution2, &event1, 1, 0,
+                                                                    nullptr),
+              ANEURALNETWORKS_UNEXPECTED_NULL);
     ANeuralNetworksEvent* wait_for_list[] = {event1, nullptr};
-    EXPECT_EQ(ANeuralNetworksExecution_startComputeWithDependencies(execution2, wait_for_list, 2,
+    EXPECT_EQ(ANeuralNetworksExecution_startComputeWithDependencies(execution2, wait_for_list, 2, 0,
                                                                     &event2),
               ANEURALNETWORKS_UNEXPECTED_NULL);
 
