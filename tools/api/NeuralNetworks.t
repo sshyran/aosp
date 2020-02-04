@@ -2390,8 +2390,8 @@ int ANeuralNetworksEvent_getSyncFenceFd(const ANeuralNetworksEvent* event, int* 
  * If parts of the execution are scheduled on devices that do not support fenced execution,
  * the function call may wait for such parts to finish before returning.
  *
- * The function will return an error if any of the events in wait_for is already in a bad
- * state. After the execution is scheduled, if any of the events in wait_for does not complete
+ * The function will return an error if any of the events in dependencies is already in a bad
+ * state. After the execution is scheduled, if any of the events in dependencies does not complete
  * normally, the execution will fail, and {@link ANeuralNetworksEvent_wait} on the returned
  * event will return an error.
  *
@@ -2404,7 +2404,7 @@ int ANeuralNetworksEvent_getSyncFenceFd(const ANeuralNetworksEvent* event, int* 
  * @param execution The execution to be scheduled and executed.
  * @param dependencies A set of depending events. The actual evaluation will not start
  *                     until all the events are signaled.
- * @param num_events The number of events in the wait_for set.
+ * @param num_dependencies The number of events in the dependencies set.
  * @param event The event that will be signaled on completion. event is set to
  *              NULL if there's an error.
  *
