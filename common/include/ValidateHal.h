@@ -17,6 +17,9 @@
 #ifndef ANDROID_FRAMEWORKS_ML_NN_COMMON_VALIDATE_HAL_H
 #define ANDROID_FRAMEWORKS_ML_NN_COMMON_VALIDATE_HAL_H
 
+#include <set>
+#include <tuple>
+
 #include "HalInterfaces.h"
 
 namespace android {
@@ -31,6 +34,9 @@ enum class HalVersion : int32_t {
     LATEST = V1_3,
 };
 
+enum class IOType { INPUT, OUTPUT };
+using PreparedModelRole = std::tuple<const hal::IPreparedModel*, IOType, uint32_t>;
+
 // Verifies that the model is valid, i.e. it is consistent, takes
 // only acceptable values, the constants don't extend outside the memory
 // regions they are part of, etc.
@@ -40,7 +46,7 @@ enum class HalVersion : int32_t {
 template <class T_Model>
 bool validateModel(const T_Model& model);
 
-// Verfies that the request for the given model is valid.
+// Verifies that the request for the given model is valid.
 // IMPORTANT: This function cannot validate that OEM operation and operands
 // are correctly defined, as these are specific to each implementation.
 // Each driver should do their own validation of OEM types.
@@ -51,10 +57,10 @@ template <class T_Request, class T_Model>
 bool validateRequest(const T_Request& request, const T_Model& model,
                      bool allowUnspecifiedOutput = true);
 
-// Verfies that the execution preference is valid.
+// Verifies that the execution preference is valid.
 bool validateExecutionPreference(hal::ExecutionPreference preference);
 
-// Verfies that the priority is valid.
+// Verifies that the priority is valid.
 bool validatePriority(hal::Priority priority);
 
 bool validOperationType(hal::V1_0::OperationType operation);
@@ -65,9 +71,22 @@ bool validOperandType(hal::V1_0::OperandType operand);
 bool validOperandType(hal::V1_2::OperandType operand);
 bool validOperandType(hal::V1_3::OperandType operand);
 
-// Verfies that the memory pool is valid in the specified HAL version.
+// Verifies that the memory pool is valid in the specified HAL version.
 bool validatePool(const hal::hidl_memory& pool, HalVersion ver = HalVersion::LATEST);
 bool validatePool(const hal::V1_3::Request::MemoryPool& pool, HalVersion ver = HalVersion::LATEST);
+
+// Verifies that the input arguments to IDevice::allocate are valid.
+// Optionally, this function can return a flattened prepared model roles and a combined operand.
+// Pass nullptr if either value is not needed.
+// IMPORTANT: This function cannot validate dimensions and extraParams with extension operand type.
+// Each driver should do their own validation of extension type dimensions and extraParams.
+bool validateMemoryDesc(
+        const hal::V1_3::BufferDesc& desc,
+        const hal::hidl_vec<sp<hal::V1_3::IPreparedModel>>& preparedModels,
+        const hal::hidl_vec<hal::V1_3::BufferRole>& inputRoles,
+        const hal::hidl_vec<hal::V1_3::BufferRole>& outputRoles,
+        std::function<const hal::V1_3::Model*(const sp<hal::V1_3::IPreparedModel>&)> getModel,
+        std::set<PreparedModelRole>* preparedModelRoles, hal::V1_3::Operand* combinedOperand);
 
 }  // namespace nn
 }  // namespace android

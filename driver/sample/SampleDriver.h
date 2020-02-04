@@ -19,9 +19,12 @@
 
 #include <hwbinder/IPCThreadState.h>
 
+#include <memory>
 #include <string>
+#include <utility>
 #include <vector>
 
+#include "BufferTracker.h"
 #include "CpuExecutor.h"
 #include "HalInterfaces.h"
 #include "NeuralNetworks.h"
@@ -32,6 +35,23 @@ namespace sample_driver {
 
 using hardware::MQDescriptorSync;
 
+// Manages the data buffer for an operand.
+class SampleBuffer : public hal::IBuffer {
+   public:
+    SampleBuffer(std::shared_ptr<ManagedBuffer> buffer, std::unique_ptr<BufferTracker::Token> token)
+        : kBuffer(std::move(buffer)), kToken(std::move(token)) {
+        CHECK(kBuffer != nullptr);
+        CHECK(kToken != nullptr);
+    }
+    hal::Return<hal::ErrorStatus> copyTo(const hal::hidl_memory& dst) override;
+    hal::Return<hal::ErrorStatus> copyFrom(const hal::hidl_memory& src,
+                                           const hal::hidl_vec<uint32_t>& dimensions) override;
+
+   private:
+    const std::shared_ptr<ManagedBuffer> kBuffer;
+    const std::unique_ptr<BufferTracker::Token> kToken;
+};
+
 // Base class used to create sample drivers for the NN HAL.  This class
 // provides some implementation of the more common functions.
 //
@@ -41,7 +61,9 @@ class SampleDriver : public hal::IDevice {
    public:
     SampleDriver(const char* name,
                  const IOperationResolver* operationResolver = BuiltinOperationResolver::get())
-        : mName(name), mOperationResolver(operationResolver) {
+        : mName(name),
+          mOperationResolver(operationResolver),
+          mBufferTracker(BufferTracker::create()) {
         android::nn::initVLogMask();
     }
     hal::Return<void> getCapabilities(getCapabilities_cb cb) override;
@@ -95,10 +117,12 @@ class SampleDriver : public hal::IDevice {
     int run();
 
     CpuExecutor getExecutor() const { return CpuExecutor(mOperationResolver); }
+    const std::shared_ptr<BufferTracker>& getBufferTracker() const { return mBufferTracker; }
 
    protected:
     std::string mName;
     const IOperationResolver* mOperationResolver;
+    const std::shared_ptr<BufferTracker> mBufferTracker;
 };
 
 class SamplePreparedModel : public hal::IPreparedModel {
@@ -145,6 +169,7 @@ class SamplePreparedModel : public hal::IPreparedModel {
                                     const hal::OptionalTimeoutDuration& loopTimeoutDuration,
                                     const hal::OptionalTimeoutDuration& duration,
                                     executeFenced_cb callback) override;
+    const hal::Model* getModel() const { return &mModel; }
 
    private:
     hal::Model mModel;
