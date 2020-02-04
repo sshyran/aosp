@@ -215,7 +215,7 @@ Return<V1_0::ErrorStatus> SampleDriver::prepareModelFromCache(
 }
 
 Return<ErrorStatus> SampleDriver::prepareModelFromCache_1_3(
-        Priority /*priority*/, const OptionalTimePoint& /*deadline*/, const hidl_vec<hidl_handle>&,
+        const OptionalTimePoint& /*deadline*/, const hidl_vec<hidl_handle>&,
         const hidl_vec<hidl_handle>&, const CacheToken&,
         const sp<V1_3::IPreparedModelCallback>& callback) {
     NNTRACE_FULL(NNTRACE_LAYER_DRIVER, NNTRACE_PHASE_COMPILATION,

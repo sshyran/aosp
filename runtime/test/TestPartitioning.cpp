@@ -140,6 +140,7 @@ using CompilationBuilder = ::android::nn::CompilationBuilder;
 using Device = ::android::nn::Device;
 using DeviceManager = ::android::nn::DeviceManager;
 using ExecutePreference = ::android::nn::test_wrapper::ExecutePreference;
+using ExecutePriority = ::android::nn::test_wrapper::ExecutePriority;
 using ExecutionPlan = ::android::nn::ExecutionPlan;
 using ExecutionStep = ::android::nn::ExecutionStep;
 using HalVersion = ::android::nn::HalVersion;
@@ -157,7 +158,6 @@ template <typename T>
 using MQDescriptorSync = ::android::hardware::MQDescriptorSync<T>;
 
 constexpr Timing kBadTiming = {.timeOnDevice = UINT64_MAX, .timeInDriver = UINT64_MAX};
-constexpr int32_t kDefaultRuntimePriority = ANEURALNETWORKS_PRIORITY_DEFAULT;
 
 Capabilities makeCapabilities(float perf) {
     PerformanceInfo perfInfo = {.execTime = perf, .powerUsage = perf};
@@ -659,11 +659,11 @@ class PartitioningModel : private WrapperModel {
 
     // Run the partitioning algorithm to create an ExecutionPlan.
     int partitionTheWork(const std::vector<std::shared_ptr<Device>>& devices,
-                         ExecutePreference preference, int32_t priority,
+                         ExecutePreference preference, ExecutePriority priority,
                          const OptionalTimePoint& deadline, ExecutionPlan* plan) {
         return reinterpret_cast<ModelBuilder*>(getHandle())
-                ->partitionTheWork(devices, static_cast<uint32_t>(preference), priority, deadline,
-                                   plan);
+                ->partitionTheWork(devices, static_cast<uint32_t>(preference),
+                                   static_cast<int32_t>(priority), deadline, plan);
     }
 
 #ifdef VERBOSE
@@ -1274,7 +1274,7 @@ TEST_F(PartitioningTest, SimpleModel) {
     const auto devicesA = makeDevices({{"bad", 0.9, ~0U}, {"good", 0.5, ~0U}});
     ExecutionPlan planA;
     ASSERT_EQ(model.partitionTheWork(devicesA, ExecutePreference::PREFER_LOW_POWER,
-                                     kDefaultRuntimePriority, {}, &planA),
+                                     ExecutePriority::DEFAULT, {}, &planA),
               ANEURALNETWORKS_NO_ERROR);
     ASSERT_EQ(planA.forTest_getKind(), ExecutionPlan::Kind::SIMPLE);
     ASSERT_NE(planA.forTest_simpleGetDevice().get(), nullptr);
@@ -1286,7 +1286,7 @@ TEST_F(PartitioningTest, SimpleModel) {
     const auto devicesC = makeDevices({{"bad", 1.1, ~0U}, {"bad2", 1.0, ~0U}});
     ExecutionPlan planC;
     ASSERT_EQ(model.partitionTheWork(devicesC, ExecutePreference::PREFER_LOW_POWER,
-                                     kDefaultRuntimePriority, {}, &planC),
+                                     ExecutePriority::DEFAULT, {}, &planC),
               ANEURALNETWORKS_NO_ERROR);
     ASSERT_EQ(planC.forTest_getKind(), ExecutionPlan::Kind::SIMPLE);
     ASSERT_EQ(planC.forTest_simpleGetDevice(), DeviceManager::getCpuDevice());
@@ -1298,7 +1298,7 @@ TEST_F(PartitioningTest, SimpleModel) {
     const auto devicesB = makeDevices({{"0", 0.9, 1 << 0}, {"1", 0.5, 1 << 1}});
     ExecutionPlan planB;
     ASSERT_EQ(model.partitionTheWork(devicesB, ExecutePreference::PREFER_LOW_POWER,
-                                     kDefaultRuntimePriority, {}, &planB),
+                                     ExecutePriority::DEFAULT, {}, &planB),
               ANEURALNETWORKS_NO_ERROR);
     ASSERT_EQ(planB.forTest_getKind(), ExecutionPlan::Kind::COMPOUND);
     const auto& stepsB = planB.forTest_compoundGetSteps();
@@ -1365,7 +1365,7 @@ TEST_F(PartitioningTest, SliceModel) {
                                        {"V1_2", 0.6, HalVersion::V1_2, ~0U, ~0U, ~0U}});
     ExecutionPlan planA;
     ASSERT_EQ(model.partitionTheWork(devicesA, ExecutePreference::PREFER_LOW_POWER,
-                                     kDefaultRuntimePriority, {}, &planA),
+                                     ExecutePriority::DEFAULT, {}, &planA),
               ANEURALNETWORKS_NO_ERROR);
     ASSERT_EQ(planA.forTest_getKind(), ExecutionPlan::Kind::SIMPLE);
     ASSERT_NE(planA.forTest_simpleGetDevice().get(), nullptr);
@@ -1378,7 +1378,7 @@ TEST_F(PartitioningTest, SliceModel) {
                                        {"V1_2", 0.8, HalVersion::V1_2, ~0U, ~0U, ~0U}});
     ExecutionPlan planB;
     ASSERT_EQ(model.partitionTheWork(devicesB, ExecutePreference::PREFER_LOW_POWER,
-                                     kDefaultRuntimePriority, {}, &planB),
+                                     ExecutePriority::DEFAULT, {}, &planB),
               ANEURALNETWORKS_NO_ERROR);
     ASSERT_EQ(planB.forTest_getKind(), ExecutionPlan::Kind::COMPOUND);
     const auto& stepsB = planB.forTest_compoundGetSteps();
@@ -1467,7 +1467,7 @@ TEST_F(PartitioningTest, SliceModelToEmpty) {
                                       {"V1_2", 0.8, HalVersion::V1_2, ~0U, ~0U, ~0U}});
     ExecutionPlan plan;
     ASSERT_EQ(model.partitionTheWork(devices, ExecutePreference::PREFER_LOW_POWER,
-                                     kDefaultRuntimePriority, {}, &plan),
+                                     ExecutePriority::DEFAULT, {}, &plan),
               ANEURALNETWORKS_NO_ERROR);
     ASSERT_EQ(plan.forTest_getKind(), ExecutionPlan::Kind::SIMPLE);
     ASSERT_NE(plan.forTest_simpleGetDevice().get(), nullptr);
@@ -1506,7 +1506,7 @@ TEST_F(PartitioningTest, Cpu) {
 
     ExecutionPlan plan;
     ASSERT_EQ(model.partitionTheWork(devices, ExecutePreference::PREFER_LOW_POWER,
-                                     kDefaultRuntimePriority, {}, &plan),
+                                     ExecutePriority::DEFAULT, {}, &plan),
               ANEURALNETWORKS_NO_ERROR);
     ASSERT_EQ(plan.forTest_getKind(), ExecutionPlan::Kind::COMPOUND);
     const auto& steps = plan.forTest_compoundGetSteps();
@@ -1652,7 +1652,7 @@ TEST_F(PartitioningTest, ModelOutputAsStepModelInput) {
     const auto devices = makeDevices({{"0", 0.5, 1 << 0}, {"1", 0.5, 1 << 1}});
     ExecutionPlan plan;
     ASSERT_EQ(model.partitionTheWork(devices, ExecutePreference::PREFER_LOW_POWER,
-                                     kDefaultRuntimePriority, {}, &plan),
+                                     ExecutePriority::DEFAULT, {}, &plan),
               ANEURALNETWORKS_NO_ERROR);
     ASSERT_EQ(plan.forTest_getKind(), ExecutionPlan::Kind::COMPOUND);
     const auto& steps = plan.forTest_compoundGetSteps();
@@ -1753,7 +1753,7 @@ TEST_F(PartitioningTest, RelaxedFP) {
         // didn't actually do any partitioning.
         ExecutionPlan plan;
         ASSERT_EQ(model.partitionTheWork(devices, ExecutePreference::PREFER_LOW_POWER,
-                                         kDefaultRuntimePriority, {}, &plan),
+                                         ExecutePriority::DEFAULT, {}, &plan),
                   ANEURALNETWORKS_NO_ERROR);
         ASSERT_EQ(plan.forTest_getKind(), ExecutionPlan::Kind::SIMPLE);
         ASSERT_EQ(plan.forTest_simpleGetDevice()->getName(), expectDevice);
@@ -1806,7 +1806,7 @@ TEST_F(PartitioningTest, Perf) {
             // didn't actually do any partitioning.
             ExecutionPlan plan;
             ASSERT_EQ(model.partitionTheWork(devices, ExecutePreference::PREFER_LOW_POWER,
-                                             kDefaultRuntimePriority, {}, &plan),
+                                             ExecutePriority::DEFAULT, {}, &plan),
                       ANEURALNETWORKS_NO_ERROR);
             ASSERT_EQ(plan.forTest_getKind(), ExecutionPlan::Kind::SIMPLE);
             ASSERT_EQ(plan.forTest_simpleGetDevice()->getName(), "good");
@@ -1825,7 +1825,7 @@ TEST_F(PartitioningTest, Perf) {
             // didn't actually do any partitioning.
             ExecutionPlan plan;
             ASSERT_EQ(model.partitionTheWork(devices, ExecutePreference::PREFER_LOW_POWER,
-                                             kDefaultRuntimePriority, {}, &plan),
+                                             ExecutePriority::DEFAULT, {}, &plan),
                       ANEURALNETWORKS_NO_ERROR);
             ASSERT_EQ(plan.forTest_getKind(), ExecutionPlan::Kind::SIMPLE);
             ASSERT_EQ(plan.forTest_simpleGetDevice()->getName(), "base");
@@ -1877,7 +1877,7 @@ class CacheTest : public PartitioningTest {
     void getTransformedCacheTokenSingle(const PartitioningModel& model,
                                         const std::vector<std::shared_ptr<Device>>& devices,
                                         const char* deviceName, const std::vector<uint8_t>& tokenIn,
-                                        ExecutePreference preference,
+                                        ExecutePreference preference, ExecutePriority priority,
                                         std::vector<uint8_t>* tokenOut) {
         // Compile the model and get the execution plan.
         PartitioningCompilation compilation(&model, devices);
@@ -1885,6 +1885,7 @@ class CacheTest : public PartitioningTest {
             compilation.setCaching(mCacheDir.c_str(), tokenIn);
         }
         compilation.setPreference(preference);
+        compilation.setPriority(priority);
         ASSERT_EQ(compilation.finish(), Result::NO_ERROR);
         const ExecutionPlan& plan = compilation.getExecutionPlan();
 
@@ -1924,15 +1925,18 @@ class CacheTest : public PartitioningTest {
     void getTransformedCacheToken(const PartitioningModel& model,
                                   const std::vector<std::shared_ptr<Device>>& devices,
                                   const char* deviceName, const std::vector<uint8_t>& tokenIn,
-                                  ExecutePreference preference, std::vector<uint8_t>* tokenOut) {
-        getTransformedCacheTokenSingle(model, devices, deviceName, tokenIn, preference, tokenOut);
+                                  ExecutePreference preference, ExecutePriority priority,
+                                  std::vector<uint8_t>* tokenOut) {
+        getTransformedCacheTokenSingle(model, devices, deviceName, tokenIn, preference, priority,
+                                       tokenOut);
 
         // Test if the runtime maps to the same cache token every time for the same compilation
         // setup.
         for (uint32_t i = 0; i < 10; i++) {
             std::vector<uint8_t> token;
             SCOPED_TRACE(i);
-            getTransformedCacheTokenSingle(model, devices, deviceName, tokenIn, preference, &token);
+            getTransformedCacheTokenSingle(model, devices, deviceName, tokenIn, preference,
+                                           priority, &token);
             EXPECT_EQ(*tokenOut, token);
         }
     }
@@ -1964,7 +1968,8 @@ TEST_F(CacheTest, CacheTokenNoneSimpleBody) {
 
     std::vector<uint8_t> tokenIn, tokenOut;
     getTransformedCacheToken(model, deviceA, "deviceA", tokenIn,
-                             ExecutePreference::PREFER_FAST_SINGLE_ANSWER, &tokenOut);
+                             ExecutePreference::PREFER_FAST_SINGLE_ANSWER, ExecutePriority::DEFAULT,
+                             &tokenOut);
     EXPECT_TRUE(tokenOut.empty());
 }
 
@@ -1981,9 +1986,11 @@ TEST_F(CacheTest, CacheTokenDifferentDeviceNamesSimpleBody) {
     std::vector<uint8_t> tokenIn(ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN, 0);
     std::vector<uint8_t> deviceAToken, deviceBToken;
     getTransformedCacheToken(model, deviceA, "deviceA", tokenIn,
-                             ExecutePreference::PREFER_FAST_SINGLE_ANSWER, &deviceAToken);
+                             ExecutePreference::PREFER_FAST_SINGLE_ANSWER, ExecutePriority::DEFAULT,
+                             &deviceAToken);
     getTransformedCacheToken(model, deviceB, "deviceB", tokenIn,
-                             ExecutePreference::PREFER_FAST_SINGLE_ANSWER, &deviceBToken);
+                             ExecutePreference::PREFER_FAST_SINGLE_ANSWER, ExecutePriority::DEFAULT,
+                             &deviceBToken);
     expectUniqueTokens({deviceAToken, deviceBToken});
 }
 
@@ -2000,9 +2007,11 @@ TEST_F(CacheTest, CacheTokenDifferentDeviceVersionStringsSimpleBody) {
     std::vector<uint8_t> tokenIn(ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN, 0);
     std::vector<uint8_t> deviceA_1_0_Token, deviceA_1_1_Token;
     getTransformedCacheToken(model, deviceA_1_0, "deviceA", tokenIn,
-                             ExecutePreference::PREFER_FAST_SINGLE_ANSWER, &deviceA_1_0_Token);
+                             ExecutePreference::PREFER_FAST_SINGLE_ANSWER, ExecutePriority::DEFAULT,
+                             &deviceA_1_0_Token);
     getTransformedCacheToken(model, deviceA_1_1, "deviceA", tokenIn,
-                             ExecutePreference::PREFER_FAST_SINGLE_ANSWER, &deviceA_1_1_Token);
+                             ExecutePreference::PREFER_FAST_SINGLE_ANSWER, ExecutePriority::DEFAULT,
+                             &deviceA_1_1_Token);
     expectUniqueTokens({deviceA_1_0_Token, deviceA_1_1_Token});
 }
 
@@ -2018,12 +2027,38 @@ TEST_F(CacheTest, CacheTokenDifferentPreferencesSimpleBody) {
     std::vector<uint8_t> fastToken, powerToken, sustainedToken;
     std::vector<uint8_t> tokenIn(ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN, 0);
     getTransformedCacheToken(model, deviceA, "deviceA", tokenIn,
-                             ExecutePreference::PREFER_FAST_SINGLE_ANSWER, &fastToken);
+                             ExecutePreference::PREFER_FAST_SINGLE_ANSWER, ExecutePriority::DEFAULT,
+                             &fastToken);
     getTransformedCacheToken(model, deviceA, "deviceA", tokenIn,
-                             ExecutePreference::PREFER_LOW_POWER, &powerToken);
+                             ExecutePreference::PREFER_LOW_POWER, ExecutePriority::DEFAULT,
+                             &powerToken);
     getTransformedCacheToken(model, deviceA, "deviceA", tokenIn,
-                             ExecutePreference::PREFER_SUSTAINED_SPEED, &sustainedToken);
+                             ExecutePreference::PREFER_SUSTAINED_SPEED, ExecutePriority::DEFAULT,
+                             &sustainedToken);
     expectUniqueTokens({fastToken, powerToken, sustainedToken});
+}
+
+// Test if the runtime maps to different cache tokens for compilations with different priorities
+// in execution plan with a simple body.
+TEST_F(CacheTest, CacheTokenDifferentPrioritiesSimpleBody) {
+    PartitioningModel model;
+    CreateModelForCachingTests(&model);
+
+    // One device that can execute the whole model.
+    const auto deviceA = makeDevices({{"deviceA", 0.5, ~0U}});
+
+    std::vector<uint8_t> lowToken, mediumToken, highToken;
+    std::vector<uint8_t> tokenIn(ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN, 0);
+    getTransformedCacheToken(model, deviceA, "deviceA", tokenIn,
+                             ExecutePreference::PREFER_FAST_SINGLE_ANSWER, ExecutePriority::LOW,
+                             &lowToken);
+    getTransformedCacheToken(model, deviceA, "deviceA", tokenIn,
+                             ExecutePreference::PREFER_FAST_SINGLE_ANSWER, ExecutePriority::MEDIUM,
+                             &mediumToken);
+    getTransformedCacheToken(model, deviceA, "deviceA", tokenIn,
+                             ExecutePreference::PREFER_FAST_SINGLE_ANSWER, ExecutePriority::HIGH,
+                             &highToken);
+    expectUniqueTokens({lowToken, mediumToken, highToken});
 }
 
 // Test if the runtime maps to different cache tokens for compilations with different tokens
@@ -2039,9 +2074,11 @@ TEST_F(CacheTest, CacheTokenDifferentTokensSimpleBody) {
     std::vector<uint8_t> tokenIn1(ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN, 0);
     std::vector<uint8_t> tokenIn2(ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN, 1);
     getTransformedCacheToken(model, deviceA, "deviceA", tokenIn1,
-                             ExecutePreference::PREFER_FAST_SINGLE_ANSWER, &tokenOut1);
+                             ExecutePreference::PREFER_FAST_SINGLE_ANSWER, ExecutePriority::DEFAULT,
+                             &tokenOut1);
     getTransformedCacheToken(model, deviceA, "deviceA", tokenIn2,
-                             ExecutePreference::PREFER_FAST_SINGLE_ANSWER, &tokenOut2);
+                             ExecutePreference::PREFER_FAST_SINGLE_ANSWER, ExecutePriority::DEFAULT,
+                             &tokenOut2);
     expectUniqueTokens({tokenOut1, tokenOut2});
 }
 
@@ -2056,10 +2093,12 @@ TEST_F(CacheTest, CacheTokenNoneCompoundBody) {
 
     std::vector<uint8_t> tokenIn, tokenOut;
     getTransformedCacheToken(model, devices, "deviceA", tokenIn,
-                             ExecutePreference::PREFER_FAST_SINGLE_ANSWER, &tokenOut);
+                             ExecutePreference::PREFER_FAST_SINGLE_ANSWER, ExecutePriority::DEFAULT,
+                             &tokenOut);
     EXPECT_TRUE(tokenOut.empty());
     getTransformedCacheToken(model, devices, "deviceB", tokenIn,
-                             ExecutePreference::PREFER_FAST_SINGLE_ANSWER, &tokenOut);
+                             ExecutePreference::PREFER_FAST_SINGLE_ANSWER, ExecutePriority::DEFAULT,
+                             &tokenOut);
     EXPECT_TRUE(tokenOut.empty());
 }
 
@@ -2077,9 +2116,11 @@ TEST_F(CacheTest, CacheTokenDifferentDeviceNamesCompoundBody) {
     std::vector<uint8_t> tokenIn(ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN, 0);
     std::vector<uint8_t> deviceAToken, deviceBToken;
     getTransformedCacheToken(model, devices1, "deviceA", tokenIn,
-                             ExecutePreference::PREFER_FAST_SINGLE_ANSWER, &deviceAToken);
+                             ExecutePreference::PREFER_FAST_SINGLE_ANSWER, ExecutePriority::DEFAULT,
+                             &deviceAToken);
     getTransformedCacheToken(model, devices2, "deviceB", tokenIn,
-                             ExecutePreference::PREFER_FAST_SINGLE_ANSWER, &deviceBToken);
+                             ExecutePreference::PREFER_FAST_SINGLE_ANSWER, ExecutePriority::DEFAULT,
+                             &deviceBToken);
     expectUniqueTokens({deviceAToken, deviceBToken});
 }
 
@@ -2097,9 +2138,11 @@ TEST_F(CacheTest, CacheTokenDifferentDeviceVersionStringsCompoundBody) {
     std::vector<uint8_t> tokenIn(ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN, 0);
     std::vector<uint8_t> deviceA_1_0_Token, deviceA_1_1_Token;
     getTransformedCacheToken(model, devices1, "deviceA", tokenIn,
-                             ExecutePreference::PREFER_FAST_SINGLE_ANSWER, &deviceA_1_0_Token);
+                             ExecutePreference::PREFER_FAST_SINGLE_ANSWER, ExecutePriority::DEFAULT,
+                             &deviceA_1_0_Token);
     getTransformedCacheToken(model, devices2, "deviceA", tokenIn,
-                             ExecutePreference::PREFER_FAST_SINGLE_ANSWER, &deviceA_1_1_Token);
+                             ExecutePreference::PREFER_FAST_SINGLE_ANSWER, ExecutePriority::DEFAULT,
+                             &deviceA_1_1_Token);
     expectUniqueTokens({deviceA_1_0_Token, deviceA_1_1_Token});
 }
 
@@ -2115,12 +2158,38 @@ TEST_F(CacheTest, CacheTokenDifferentPreferencesCompoundBody) {
     std::vector<uint8_t> fastToken, powerToken, sustainedToken;
     std::vector<uint8_t> tokenIn(ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN, 0);
     getTransformedCacheToken(model, devices, "deviceA", tokenIn,
-                             ExecutePreference::PREFER_FAST_SINGLE_ANSWER, &fastToken);
+                             ExecutePreference::PREFER_FAST_SINGLE_ANSWER, ExecutePriority::DEFAULT,
+                             &fastToken);
     getTransformedCacheToken(model, devices, "deviceA", tokenIn,
-                             ExecutePreference::PREFER_LOW_POWER, &powerToken);
+                             ExecutePreference::PREFER_LOW_POWER, ExecutePriority::DEFAULT,
+                             &powerToken);
     getTransformedCacheToken(model, devices, "deviceA", tokenIn,
-                             ExecutePreference::PREFER_SUSTAINED_SPEED, &sustainedToken);
+                             ExecutePreference::PREFER_SUSTAINED_SPEED, ExecutePriority::DEFAULT,
+                             &sustainedToken);
     expectUniqueTokens({fastToken, powerToken, sustainedToken});
+}
+
+// Test if the runtime maps to different cache tokens for compilations with different priorities
+// in execution plan with a compound body.
+TEST_F(CacheTest, CacheTokenDifferentPrioritiesCompoundBody) {
+    PartitioningModel model;
+    CreateModelForCachingTests(&model);
+
+    // DeviceA executes the first operation only.
+    const auto devices = makeDevices({{"deviceA", 0.8, ~0U}, {"deviceB", 0.5, 1 << 1}});
+
+    std::vector<uint8_t> lowToken, mediumToken, highToken;
+    std::vector<uint8_t> tokenIn(ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN, 0);
+    getTransformedCacheToken(model, devices, "deviceA", tokenIn,
+                             ExecutePreference::PREFER_FAST_SINGLE_ANSWER, ExecutePriority::LOW,
+                             &lowToken);
+    getTransformedCacheToken(model, devices, "deviceA", tokenIn,
+                             ExecutePreference::PREFER_FAST_SINGLE_ANSWER, ExecutePriority::MEDIUM,
+                             &mediumToken);
+    getTransformedCacheToken(model, devices, "deviceA", tokenIn,
+                             ExecutePreference::PREFER_FAST_SINGLE_ANSWER, ExecutePriority::HIGH,
+                             &highToken);
+    expectUniqueTokens({lowToken, mediumToken, highToken});
 }
 
 // Test if the runtime maps to different cache tokens for compilations with different tokens
@@ -2136,9 +2205,11 @@ TEST_F(CacheTest, CacheTokenDifferentTokensCompoundBody) {
     std::vector<uint8_t> tokenIn1(ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN, 0);
     std::vector<uint8_t> tokenIn2(ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN, 1);
     getTransformedCacheToken(model, devices, "deviceA", tokenIn1,
-                             ExecutePreference::PREFER_FAST_SINGLE_ANSWER, &tokenOut1);
+                             ExecutePreference::PREFER_FAST_SINGLE_ANSWER, ExecutePriority::DEFAULT,
+                             &tokenOut1);
     getTransformedCacheToken(model, devices, "deviceA", tokenIn2,
-                             ExecutePreference::PREFER_FAST_SINGLE_ANSWER, &tokenOut2);
+                             ExecutePreference::PREFER_FAST_SINGLE_ANSWER, ExecutePriority::DEFAULT,
+                             &tokenOut2);
     expectUniqueTokens({tokenOut1, tokenOut2});
 }
 
@@ -2158,11 +2229,14 @@ TEST_F(CacheTest, CacheTokenDifferentPartitionsCompoundBody) {
     std::vector<uint8_t> tokenIn(ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN, 0);
     std::vector<uint8_t> tokenOut1, tokenOut2, tokenOut3;
     getTransformedCacheToken(model, devices1, "deviceA", tokenIn,
-                             ExecutePreference::PREFER_FAST_SINGLE_ANSWER, &tokenOut1);
+                             ExecutePreference::PREFER_FAST_SINGLE_ANSWER, ExecutePriority::DEFAULT,
+                             &tokenOut1);
     getTransformedCacheToken(model, devices2, "deviceA", tokenIn,
-                             ExecutePreference::PREFER_FAST_SINGLE_ANSWER, &tokenOut2);
+                             ExecutePreference::PREFER_FAST_SINGLE_ANSWER, ExecutePriority::DEFAULT,
+                             &tokenOut2);
     getTransformedCacheToken(model, devices3, "deviceA", tokenIn,
-                             ExecutePreference::PREFER_FAST_SINGLE_ANSWER, &tokenOut3);
+                             ExecutePreference::PREFER_FAST_SINGLE_ANSWER, ExecutePriority::DEFAULT,
+                             &tokenOut3);
     expectUniqueTokens({tokenOut1, tokenOut2, tokenOut3});
 }
 
