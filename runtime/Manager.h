@@ -66,7 +66,9 @@ class PreparedModel {
     virtual std::tuple<int, int, sp<hal::IFencedExecutionCallback>, hal::Timing> executeFenced(
             const std::vector<ModelArgumentInfo>& inputs,
             const std::vector<ModelArgumentInfo>& outputs, const MemoryTracker& memories,
-            const std::vector<int>& wait_for, hal::MeasureTiming measure) const = 0;
+            const std::vector<int>& waitFor, hal::MeasureTiming measure,
+            const hal::OptionalTimePoint& deadline,
+            const hal::OptionalTimeoutDuration& timeoutDurationAfterFence) const = 0;
 
     virtual std::shared_ptr<ExecutionBurstController> configureExecutionBurst(
             bool preferPowerOverLatency) const = 0;

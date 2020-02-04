@@ -95,6 +95,7 @@ using V1_3::OperandTypeRange;
 using V1_3::Operation;
 using V1_3::OperationType;
 using V1_3::OperationTypeRange;
+using V1_3::OptionalTimeoutDuration;
 using V1_3::OptionalTimePoint;
 using V1_3::Priority;
 using V1_3::Request;
