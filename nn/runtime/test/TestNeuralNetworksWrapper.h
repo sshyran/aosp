@@ -380,7 +380,7 @@ class Execution {
                 ANeuralNetworksEvent* event = nullptr;
                 Result result =
                         static_cast<Result>(ANeuralNetworksExecution_startComputeWithDependencies(
-                                mExecution, nullptr, 0, &event));
+                                mExecution, nullptr, 0, 0, &event));
                 if (result != Result::NO_ERROR) {
                     return result;
                 }
