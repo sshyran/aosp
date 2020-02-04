@@ -36,7 +36,7 @@
  *   - DO NOT CHANGE THE LAYOUT OR SIZE OF STRUCTURES
  */
 
-#if __ANDROID_API__ >= __ANDROID_API_O_MR1__
+#if __ANDROID_API__ >= 27
 
 enum {
     /**
