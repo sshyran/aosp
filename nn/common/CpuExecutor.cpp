@@ -56,7 +56,7 @@ class OperationExecutionContext : public IOperationExecutionContext {
     OperandType getInputType(uint32_t index) const override;
     Shape getInputShape(uint32_t index) const override;
     const void* getInputBuffer(uint32_t index) const override;
-    const Operand::ExtraParams getInputExtraParams(uint32_t index) const override;
+    const OperandExtraParams getInputExtraParams(uint32_t index) const override;
 
     uint32_t getNumOutputs() const override;
     OperandType getOutputType(uint32_t index) const override;
@@ -114,7 +114,7 @@ const void* OperationExecutionContext::getInputBuffer(uint32_t index) const {
     return getInputInfo(index)->buffer;
 }
 
-const Operand::ExtraParams OperationExecutionContext::getInputExtraParams(uint32_t index) const {
+const OperandExtraParams OperationExecutionContext::getInputExtraParams(uint32_t index) const {
     return getInputInfo(index)->extraParams;
 }
 

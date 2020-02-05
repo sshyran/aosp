@@ -182,7 +182,7 @@ Memory::Memory(hal::hidl_memory memory)
 Memory::Memory(hal::hidl_memory memory, std::unique_ptr<MemoryValidatorBase> validator)
     : kHidlMemory(std::move(memory)), mValidator(std::move(validator)) {}
 
-Memory::Memory(sp<hal::IBuffer> buffer, int32_t token)
+Memory::Memory(sp<hal::IBuffer> buffer, uint32_t token)
     : kBuffer(std::move(buffer)), kToken(token) {}
 
 Memory::~Memory() {
@@ -577,7 +577,7 @@ std::pair<int, std::unique_ptr<MemoryAHWB>> MemoryAHWB::create(const AHardwareBu
 };
 
 std::pair<int, std::unique_ptr<MemoryFromDevice>> MemoryFromDevice::create(sp<hal::IBuffer> buffer,
-                                                                           int32_t token) {
+                                                                           uint32_t token) {
     if (buffer == nullptr) {
         LOG(ERROR) << "nullptr IBuffer for device memory.";
         return {ANEURALNETWORKS_BAD_DATA, nullptr};
@@ -589,7 +589,7 @@ std::pair<int, std::unique_ptr<MemoryFromDevice>> MemoryFromDevice::create(sp<ha
     return {ANEURALNETWORKS_NO_ERROR, std::make_unique<MemoryFromDevice>(std::move(buffer), token)};
 };
 
-MemoryFromDevice::MemoryFromDevice(sp<hal::IBuffer> buffer, int32_t token)
+MemoryFromDevice::MemoryFromDevice(sp<hal::IBuffer> buffer, uint32_t token)
     : Memory(std::move(buffer), token) {}
 
 }  // namespace nn

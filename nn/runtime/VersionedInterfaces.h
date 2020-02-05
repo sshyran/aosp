@@ -382,7 +382,7 @@ class VersionedIDevice {
      *       execution. If the buffer was unable to be allocated due to an error, the token must be
      *       0.
      */
-    std::tuple<hal::ErrorStatus, sp<hal::IBuffer>, int32_t> allocate(
+    std::tuple<hal::ErrorStatus, sp<hal::IBuffer>, uint32_t> allocate(
             const hal::BufferDesc& desc,
             const std::vector<std::shared_ptr<VersionedIPreparedModel>>& preparedModels,
             const hal::hidl_vec<hal::BufferRole>& inputRoles,
