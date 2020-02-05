@@ -4026,7 +4026,7 @@
      * * 8: An {@link %{OperandTypeLinkPfx}INT32} scalar, specifying the stride when
      *      walking through input in the ‘height’ dimension.
      * * 9: An {@link %{OperandTypeLinkPfx}INT32} scalar, specifying the number of
-            groups.
+     *      groups.
      * * 10: An {@link %{OperandTypeLinkPfx}INT32} scalar, and has to be one of the
      *       {@link %{FusedActivationFunc}} values. Specifies the activation to
      *       invoke on the result.
