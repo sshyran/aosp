@@ -129,7 +129,7 @@ def GetModelStruct(example):
     """Get the dictionary that corresponds to test_helper::TestModel."""
     return {
         "main": GetSubgraphStruct(example.model),
-        "referenced": [],
+        "referenced": [GetSubgraphStruct(model) for model in example.model.GetReferencedModels()],
         "isRelaxed": example.model.isRelaxed,
         "expectedMultinomialDistributionTolerance":
                 example.expectedMultinomialDistributionTolerance,
