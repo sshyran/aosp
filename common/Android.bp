@@ -219,6 +219,7 @@ cc_library_static {
 
 cc_defaults {
     name: "NeuralNetworksTest_common",
+    defaults: ["neuralnetworks_float16"],
     shared_libs: [
         "android.hidl.allocator@1.0",
         "android.hidl.memory@1.0",
