@@ -42,6 +42,7 @@ There are currently 10 operand types supported by the test generator.
     * Float32Scalar, shorthand for parameter with type FLOAT32
     * Int32Vector, shorthand for 1-D TENSOR_INT32 parameter
     * Float32Vector, shorthand for 1-D TENSOR_FLOAT32 parameter
+    * SubgraphReference, shortcut for a SUBGRAPH parameter
 - Internal, for model with multiple operations
 
 ### Specifying Models
