@@ -484,14 +484,35 @@ class Model:
         self.isIgnoredFunctionName = GlobalVariable("is_ignored", self.name, *args)
         return self
 
+    def AddOperand(self, operand):
+        if operand not in self.operands:
+            self.operands.append(operand)
+        return self
+
+    # Makes sure the model contains all (and only) the given inputs in the
+    # specified order.
+    def IdentifyInputs(self, *args):
+        for arg in args:
+            self.AddOperand(arg)
+        inputs = tuple(self.GetInputs())
+        assert inputs == args, '{} vs {}'.format(inputs, args)
+        return self
+
+    # Makes sure the model contains all (and only) the given outputs in the
+    # specified order.
+    def IdentifyOutputs(self, *args):
+        for arg in args:
+            self.AddOperand(arg)
+        outputs = tuple(self.GetOutputs())
+        assert outputs == args, '{} vs {}'.format(outputs, args)
+        return self
+
     def AddOperation(self, operation):
         self.operations.append(operation)
         for i in operation.ins:
-            if i not in self.operands:
-                self.operands.append(i)
+            self.AddOperand(i)
         for o in operation.outs:
-            if o not in self.operands:
-                self.operands.append(o)
+            self.AddOperand(o)
         return self
 
     def Operation(self, op_name, *args):
@@ -505,8 +526,7 @@ class Model:
             outs = args
         self.operations[-1].SetOutputs(outs)
         for o in outs:
-            if o not in self.operands:
-                self.operands.append(o)
+            self.AddOperand(o)
         return self
 
     def RelaxedExecution(self, isRelaxed):
