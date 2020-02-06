@@ -35,7 +35,7 @@ using namespace hal;
 
 class SampleDriverFloatFast : public SampleDriverPartial {
    public:
-    SampleDriverFloatFast() : SampleDriverPartial("sample-float-fast") {}
+    SampleDriverFloatFast() : SampleDriverPartial("nnapi-sample_float_fast") {}
     Return<void> getCapabilities_1_3(getCapabilities_1_3_cb cb) override;
 
    private:
