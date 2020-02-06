@@ -16,8 +16,8 @@
 
 #define LOG_TAG "Operations"
 
-#include <tensorflow/lite/kernels/internal/optimized/depthwiseconv_float.h>
 #include <tensorflow/lite/kernels/internal/optimized/depthwiseconv_uint8.h>
+#include <tensorflow/lite/kernels/internal/reference/depthwiseconv_float.h>
 
 #include <algorithm>
 #include <vector>
@@ -154,10 +154,10 @@ bool depthwiseConvNhwc(const float* inputData, const Shape& inputShape, const fl
             .float_activation_max = output_activation_max,
     };
     NNTRACE_COMP_SWITCH("optimized_ops::DepthwiseConv");
-    tflite::optimized_ops::DepthwiseConv(
-            params, convertShapeToTflshape(inputShape), inputData,
-            convertShapeToTflshape(filterShape), filterData, convertShapeToTflshape(biasShape),
-            biasData, convertShapeToTflshape(outputShape), outputData, {false /*neon_dotprod*/});
+    tflite::reference_ops::DepthwiseConv(params, convertShapeToTflshape(inputShape), inputData,
+                                         convertShapeToTflshape(filterShape), filterData,
+                                         convertShapeToTflshape(biasShape), biasData,
+                                         convertShapeToTflshape(outputShape), outputData);
 
     return true;
 }
