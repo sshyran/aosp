@@ -129,6 +129,7 @@ cc_library_static {
         "neuralnetworks_operations",
     ],
     apex_available: [
+        "//apex_available:platform",
         "com.android.neuralnetworks",
         "test_com.android.neuralnetworks",
     ],
@@ -260,6 +261,7 @@ cc_test {
         "operations/*Test.cpp",
     ],
     header_libs: [
+        "gemmlowp_headers",
         "libeigen",
         "philox_random_headers",
         "tensorflow_headers",
@@ -277,9 +279,12 @@ cc_test {
         "UtilsTest.cpp",
     ],
     header_libs: [
+        "gemmlowp_headers",
+        "libeigen",
         "tensorflow_headers",
     ],
     cflags: [
+        "-Wno-unused-parameter",
         "-Wno-unused-variable",
     ],
 }

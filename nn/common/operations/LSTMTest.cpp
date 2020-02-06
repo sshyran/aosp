@@ -18,6 +18,8 @@
 
 #include "NeuralNetworksWrapper.h"
 
+#include <vector>
+
 #include <gmock/gmock-matchers.h>
 #include <gtest/gtest.h>
 
@@ -32,7 +34,7 @@ using ::testing::Matcher;
 namespace {
 
 std::vector<Matcher<float>> ArrayFloatNear(const std::vector<float>& values,
-                                           float max_abs_error = 1.e-6) {
+                                           float max_abs_error = 1.e-5) {
     std::vector<Matcher<float>> matchers;
     matchers.reserve(values.size());
     for (const float& v : values) {
