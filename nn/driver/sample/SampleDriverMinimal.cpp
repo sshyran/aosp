@@ -36,7 +36,7 @@ using namespace hal;
 
 class SampleDriverMinimal : public SampleDriverPartial {
    public:
-    SampleDriverMinimal() : SampleDriverPartial("sample-minimal") {}
+    SampleDriverMinimal() : SampleDriverPartial("nnapi-sample_minimal") {}
     Return<void> getCapabilities_1_3(getCapabilities_1_3_cb cb) override;
 
    private:
