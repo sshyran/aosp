@@ -153,6 +153,24 @@ class SamplePreparedModel : public hal::IPreparedModel {
     const hal::Priority kPriority;
 };
 
+class SampleFencedExecutionCallback : public hal::IFencedExecutionCallback {
+   public:
+    SampleFencedExecutionCallback(hal::Timing timingSinceLaunch, hal::Timing timingAfterFence,
+                                  hal::ErrorStatus error)
+        : kTimingSinceLaunch(timingSinceLaunch),
+          kTimingAfterFence(timingAfterFence),
+          kErrorStatus(error) {}
+    hal::Return<void> getExecutionInfo(getExecutionInfo_cb callback) override {
+        callback(kErrorStatus, kTimingSinceLaunch, kTimingAfterFence);
+        return hal::Void();
+    }
+
+   private:
+    const hal::Timing kTimingSinceLaunch;
+    const hal::Timing kTimingAfterFence;
+    const hal::ErrorStatus kErrorStatus;
+};
+
 }  // namespace sample_driver
 }  // namespace nn
 }  // namespace android
