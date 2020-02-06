@@ -32,6 +32,7 @@
 #include <utility>
 #include <vector>
 
+#include "ControlFlow.h"
 #include "NeuralNetworks.h"
 #include "NeuralNetworksOEM.h"
 #include "OperationResolver.h"
@@ -604,10 +605,155 @@ static int validateHalVersion(ANeuralNetworksOperationType opType, HalVersion ha
     return ANEURALNETWORKS_NO_ERROR;
 }
 
+// Checks if two operands have the same types, shapes, and parameters.
+// Omits lifetime, numberOfConsumers, and location.
+static bool compatible(const Operand& a, const Operand& b) {
+    NN_RET_CHECK(a.type == b.type) << toString(a.type) << " != " << toString(b.type);
+    NN_RET_CHECK(a.dimensions == b.dimensions)
+            << toString(a.dimensions) << " != " << toString(b.dimensions);
+    NN_RET_CHECK_EQ(a.scale, b.scale);
+    NN_RET_CHECK_EQ(a.zeroPoint, b.zeroPoint);
+    NN_RET_CHECK(a.extraParams == b.extraParams)
+            << toString(a.extraParams) << " != " << toString(b.extraParams);
+    return true;
+}
+
+static bool validateConditionOperand(const Operand& operand) {
+    NN_RET_CHECK(operand.type == OperandType::TENSOR_BOOL8)
+            << "Unexpected condition operand type: " << toString(operand.type);
+    NN_RET_CHECK_EQ(operand.dimensions.size(), 1u) << "Condition operand must be a singleton";
+    NN_RET_CHECK_EQ(operand.dimensions[0], 1u) << "Condition operand must be a singleton";
+    return true;
+}
+
+static void checkSubgraphValidationHelper(const SubgraphValidationHelper& helper) {
+    CHECK(helper.isValidSubgraphReference != nullptr);
+    CHECK(helper.getSubgraphInputCount != nullptr);
+    CHECK(helper.getSubgraphOutputCount != nullptr);
+    CHECK(helper.getSubgraphInputOperand != nullptr);
+    CHECK(helper.getSubgraphOutputOperand != nullptr);
+}
+
+static bool validateIfOperation(uint32_t inputCount, const uint32_t* inputs, uint32_t outputCount,
+                                const uint32_t* outputs, const std::vector<Operand>& operands,
+                                const SubgraphValidationHelper& helper) {
+    namespace op = operation_if;
+    checkSubgraphValidationHelper(helper);
+    NN_RET_CHECK_GE(inputCount, 3u) << "ANEURALNETWORKS_IF must have at least 3 inputs";
+    NN_RET_CHECK_GE(outputCount, 1u) << "ANEURALNETWORKS_IF must have at least 1 output";
+    auto validateBranchOperand = [&](const Operand& branchModelOperand) -> bool {
+        NN_RET_CHECK(helper.isValidSubgraphReference(branchModelOperand))
+                << "Operand is not a valid subgraph reference";
+        const uint32_t branchModelInputCount = helper.getSubgraphInputCount(branchModelOperand);
+        const uint32_t branchModelOutputCount = helper.getSubgraphOutputCount(branchModelOperand);
+        NN_RET_CHECK_EQ(inputCount, op::kFirstInput + branchModelInputCount);
+        NN_RET_CHECK_EQ(outputCount, branchModelOutputCount);
+        for (uint32_t i = 0; i < branchModelInputCount; ++i) {
+            const Operand& innerOperand = helper.getSubgraphInputOperand(branchModelOperand, i);
+            const Operand& outerOperand = operands[inputs[op::kFirstInput + i]];
+            NN_RET_CHECK(compatible(innerOperand, outerOperand));
+        }
+        for (uint32_t i = 0; i < branchModelOutputCount; ++i) {
+            const Operand& innerOperand = helper.getSubgraphOutputOperand(branchModelOperand, i);
+            const Operand& outerOperand = operands[outputs[i]];
+            NN_RET_CHECK(compatible(innerOperand, outerOperand));
+        }
+        return true;
+    };
+    NN_RET_CHECK(validateConditionOperand(operands[inputs[op::kCondBoolOperand]]))
+            << "Validation failed for IF condition operand";
+    NN_RET_CHECK(validateBranchOperand(operands[inputs[op::kThenModelOperand]]))
+            << "Validation failed for IF then model";
+    NN_RET_CHECK(validateBranchOperand(operands[inputs[op::kElseModelOperand]]))
+            << "Validation failed for IF else model";
+    return true;
+}
+
+static bool validateWhileOperation(uint32_t inputCount, const uint32_t* inputs,
+                                   uint32_t outputCount, const uint32_t* outputs,
+                                   const std::vector<Operand>& operands,
+                                   const SubgraphValidationHelper& helper) {
+    // Let the loop have
+    // - m >= 1 input-output operands,
+    // - k >= 0 state-only operands, and
+    // - n >= 0 input-only operands.
+    // Then
+    // - the WHILE loop operation has (2 + m + k + n) inputs and m outputs.
+    // - the condition model has (m + k + n) inputs and 1 output.
+    // - the body model has (m + k + n) inputs and (m + k) outputs.
+    namespace op = operation_while;
+    checkSubgraphValidationHelper(helper);
+    NN_RET_CHECK_GE(inputCount, 3u) << "ANEURALNETWORKS_WHILE must have at least 3 inputs";
+    NN_RET_CHECK_GE(outputCount, 1u) << "ANEURALNETWORKS_WHILE must have at least 1 output";
+    auto validateCondOperand = [&](const Operand& condModelOperand) -> bool {
+        NN_RET_CHECK(helper.isValidSubgraphReference(condModelOperand))
+                << "Operand is not a valid subgraph reference";
+        const uint32_t condModelInputCount = helper.getSubgraphInputCount(condModelOperand);
+        const uint32_t condModelOutputCount = helper.getSubgraphOutputCount(condModelOperand);
+        NN_RET_CHECK_EQ(inputCount, op::kFirstInput + condModelInputCount);
+        NN_RET_CHECK_EQ(condModelOutputCount, 1u);
+        for (uint32_t i = 0; i < condModelInputCount; ++i) {
+            const Operand& innerOperand = helper.getSubgraphInputOperand(condModelOperand, i);
+            const Operand& outerOperand = operands[inputs[op::kFirstInput + i]];
+            NN_RET_CHECK(compatible(innerOperand, outerOperand));
+        }
+        NN_RET_CHECK(
+                validateConditionOperand(helper.getSubgraphOutputOperand(condModelOperand, 0)));
+        return true;
+    };
+    auto validateBodyOperand = [&](const Operand& bodyModelOperand) -> bool {
+        NN_RET_CHECK(helper.isValidSubgraphReference(bodyModelOperand))
+                << "Operand is not a valid subgraph reference";
+        const uint32_t bodyModelInputCount = helper.getSubgraphInputCount(bodyModelOperand);
+        const uint32_t bodyModelOutputCount = helper.getSubgraphOutputCount(bodyModelOperand);
+        NN_RET_CHECK_EQ(inputCount, op::kFirstInput + bodyModelInputCount);
+        NN_RET_CHECK_GE(bodyModelOutputCount, outputCount);
+        NN_RET_CHECK_GE(bodyModelInputCount, bodyModelOutputCount);
+        const uint32_t inputOutputCount = outputCount;
+        const uint32_t stateOnlyCount = bodyModelOutputCount - inputOutputCount;
+        const uint32_t inputOnlyCount = bodyModelInputCount - bodyModelOutputCount;
+        for (uint32_t i = 0, n = inputOutputCount + stateOnlyCount + inputOnlyCount; i < n; ++i) {
+            const Operand& innerOperand = helper.getSubgraphInputOperand(bodyModelOperand, i);
+            const Operand& outerOperand = operands[inputs[op::kFirstInput + i]];
+            NN_RET_CHECK(compatible(innerOperand, outerOperand));
+        }
+        for (uint32_t i = 0; i < inputOutputCount; ++i) {
+            const Operand& innerOperand = helper.getSubgraphOutputOperand(bodyModelOperand, i);
+            const Operand& outerOperand = operands[outputs[i]];
+            NN_RET_CHECK(compatible(innerOperand, outerOperand));
+        }
+        for (uint32_t i = 0, n = inputOutputCount + stateOnlyCount; i < n; ++i) {
+            const Operand& inputOperand = helper.getSubgraphInputOperand(bodyModelOperand, i);
+            const Operand& outputOperand = helper.getSubgraphOutputOperand(bodyModelOperand, i);
+            NN_RET_CHECK(compatible(inputOperand, outputOperand));
+        }
+        return true;
+    };
+    NN_RET_CHECK(validateCondOperand(operands[inputs[op::kCondModelOperand]]))
+            << "Validation failed for WHILE condition model";
+    NN_RET_CHECK(validateBodyOperand(operands[inputs[op::kBodyModelOperand]]))
+            << "Validation failed for WHILE body model";
+    return true;
+}
+
+static inline int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
+                                    const uint32_t* inputIndexes, uint32_t outputCount,
+                                    const uint32_t* outputIndexes,
+                                    const std::vector<hal::Operand>& operands,
+                                    HalVersion halVersion) {
+    if (opType == ANEURALNETWORKS_IF || opType == ANEURALNETWORKS_WHILE) {
+        NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_3));
+        LOG(ERROR) << "This validateOperation() overload does not support control flow";
+        return ANEURALNETWORKS_BAD_DATA;
+    }
+    return validateOperation(opType, inputCount, inputIndexes, outputCount, outputIndexes, operands,
+                             halVersion, {});
+}
+
 int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
                       const uint32_t* inputIndexes, uint32_t outputCount,
                       const uint32_t* outputIndexes, const std::vector<Operand>& operands,
-                      HalVersion halVersion) {
+                      HalVersion halVersion, const SubgraphValidationHelper& helper) {
     NN_RETURN_IF_ERROR(validateOperandList(inputCount, inputIndexes,
                                            static_cast<uint32_t>(operands.size()),
                                            "ANeuralNetworksModel_addOperation inputs"));
@@ -1636,6 +1782,20 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
             return validateOperationOperandTypes(operands, inputCount, inputIndexes,
                                                  inExpectedTypes, outputCount, outputIndexes,
                                                  outExpectedTypes);
+        }
+        case ANEURALNETWORKS_IF: {
+            NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_3));
+            return validateIfOperation(inputCount, inputIndexes, outputCount, outputIndexes,
+                                       operands, helper)
+                           ? ANEURALNETWORKS_NO_ERROR
+                           : ANEURALNETWORKS_BAD_DATA;
+        }
+        case ANEURALNETWORKS_WHILE: {
+            NN_RETURN_IF_ERROR(validateHalVersion(opType, halVersion, HalVersion::V1_3));
+            return validateWhileOperation(inputCount, inputIndexes, outputCount, outputIndexes,
+                                          operands, helper)
+                           ? ANEURALNETWORKS_NO_ERROR
+                           : ANEURALNETWORKS_BAD_DATA;
         }
         default: {
             const OperationRegistration* operationRegistration =
