@@ -44,6 +44,7 @@ cc_defaults {
         "libhidlmemory",
         "liblog",
         "libnativewindow",
+        "libsync",
         "libtextclassifier_hash",
         "libutils",
     ],
