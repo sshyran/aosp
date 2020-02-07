@@ -214,6 +214,9 @@ class Memory {
     mutable std::unordered_map<const ExecutionBurstController*,
                                std::weak_ptr<ExecutionBurstController>>
             mUsedBy;
+
+    mutable std::optional<RunTimePoolInfo> mCachedRunTimePoolInfo;
+    mutable bool mHasCachedRunTimePoolInfo = false;
 };
 
 class MemoryBuilder {
@@ -330,6 +333,10 @@ class MemoryRuntimeAHWB : public Memory {
     // valid for the lifetime of the MemoryRuntimeAHWB object. This call always
     // returns non-null because it was validated during MemoryRuntimeAHWB::create.
     uint8_t* getPointer() const { return mBuffer; }
+
+    std::optional<RunTimePoolInfo> getRunTimePoolInfo() const override {
+        return RunTimePoolInfo::createFromExistingBuffer(getPointer(), kHidlMemory.size());
+    }
 
     // prefer using MemoryRuntimeAHWB::create
     MemoryRuntimeAHWB(hal::hidl_memory memory, AHardwareBuffer* ahwb, uint8_t* buffer);
