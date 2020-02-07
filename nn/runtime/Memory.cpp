@@ -197,8 +197,8 @@ Memory::~Memory() {
     }
 }
 
-hal::Request::MemoryPool Memory::getMemoryPool() const {
-    hal::Request::MemoryPool pool;
+Request::MemoryPool Memory::getMemoryPool() const {
+    Request::MemoryPool pool;
     if (kToken > 0) {
         pool.token(kToken);
     } else {
@@ -208,8 +208,12 @@ hal::Request::MemoryPool Memory::getMemoryPool() const {
 }
 
 std::optional<RunTimePoolInfo> Memory::getRunTimePoolInfo() const {
-    // TODO(b/147777318): Cache memory mapping within the memory object.
-    return RunTimePoolInfo::createFromHidlMemory(kHidlMemory);
+    std::lock_guard<std::mutex> guard(mMutex);
+    if (!mHasCachedRunTimePoolInfo) {
+        mCachedRunTimePoolInfo = RunTimePoolInfo::createFromHidlMemory(kHidlMemory);
+        mHasCachedRunTimePoolInfo = true;
+    }
+    return mCachedRunTimePoolInfo;
 }
 
 intptr_t Memory::getKey() const {
@@ -221,21 +225,20 @@ void Memory::usedBy(const std::shared_ptr<ExecutionBurstController>& burst) cons
     mUsedBy.emplace(burst.get(), burst);
 }
 
-static int copyHidlMemories(const hidl_memory& src, const hidl_memory& dst) {
-    if (src.size() != dst.size()) {
-        LOG(ERROR) << "ANeuralNetworksMemory_copy -- incompatible memory size";
-        return ANEURALNETWORKS_BAD_DATA;
-    }
-    auto srcPool = RunTimePoolInfo::createFromHidlMemory(src);
-    auto dstPool = RunTimePoolInfo::createFromHidlMemory(dst);
-    if (!srcPool.has_value() || !dstPool.has_value()) {
+static int copyHidlMemories(const std::optional<RunTimePoolInfo>& src,
+                            const std::optional<RunTimePoolInfo>& dst) {
+    if (!src.has_value() || !dst.has_value()) {
         LOG(ERROR) << "ANeuralNetworksMemory_copy -- unable to map memory";
         return ANEURALNETWORKS_UNMAPPABLE;
     }
-    CHECK(srcPool->getBuffer() != nullptr);
-    CHECK(dstPool->getBuffer() != nullptr);
-    std::copy(srcPool->getBuffer(), srcPool->getBuffer() + src.size(), dstPool->getBuffer());
-    dstPool->flush();
+    if (src->getSize() != dst->getSize()) {
+        LOG(ERROR) << "ANeuralNetworksMemory_copy -- incompatible memory size";
+        return ANEURALNETWORKS_BAD_DATA;
+    }
+    CHECK(src->getBuffer() != nullptr);
+    CHECK(dst->getBuffer() != nullptr);
+    std::copy(src->getBuffer(), src->getBuffer() + src->getSize(), dst->getBuffer());
+    dst->flush();
     return ANEURALNETWORKS_NO_ERROR;
 }
 
@@ -290,7 +293,7 @@ static int copyInternal(const Memory& src, const Memory& dst) {
     if (srcHasIBuffer && dstHasIBuffer) {
         return copyIBuffers(src.getIBuffer(), dst.getIBuffer(), srcMetadata);
     } else if (srcHasHidlMemory && dstHasHidlMemory) {
-        return copyHidlMemories(src.getHidlMemory(), dst.getHidlMemory());
+        return copyHidlMemories(src.getRunTimePoolInfo(), dst.getRunTimePoolInfo());
     } else if (srcHasHidlMemory && dstHasIBuffer) {
         return copyHidlMemoryToIBuffer(src.getHidlMemory(), dst.getIBuffer(),
                                        srcMetadata.dimensions);
