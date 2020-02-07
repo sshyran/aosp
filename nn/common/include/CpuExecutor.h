@@ -70,7 +70,7 @@ struct RunTimeOperandInfo {
     // always 0.
     uint32_t numberOfUsesLeft;
 
-    hal::Operand::ExtraParams extraParams;
+    hal::OperandExtraParams extraParams;
 
     Shape shape() const {
         return {
