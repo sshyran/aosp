@@ -73,7 +73,6 @@ cc_defaults {
         "android.hidl.allocator@1.0",
         "android.hidl.memory@1.0",
         "libbase",
-        "libbinderthreadstate",
         "libcrypto_static",
         "libcutils",
         "libfmq",
