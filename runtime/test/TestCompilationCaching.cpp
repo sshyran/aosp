@@ -201,7 +201,7 @@ class CachingDriver : public sample_driver::SampleDriver {
     // Checks if the cache entry is correct, notifies error status according to
     // mErrorStatusPrepareFromCache, sets mHasCalledPrepareModelFromCache.
     Return<V1_3::ErrorStatus> prepareModelFromCache_1_3(
-            Priority, const OptionalTimePoint&, const hidl_vec<hidl_handle>& modelCacheHandle,
+            const OptionalTimePoint&, const hidl_vec<hidl_handle>& modelCacheHandle,
             const hidl_vec<hidl_handle>& dataCacheHandle, const CacheToken&,
             const sp<V1_3::IPreparedModelCallback>& callback) override {
         readFromCache(modelCacheHandle, mModelCacheData);
