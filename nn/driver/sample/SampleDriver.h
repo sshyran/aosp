@@ -80,7 +80,7 @@ class SampleDriver : public hal::IDevice {
             const hal::hidl_vec<hal::hidl_handle>& dataCache, const hal::CacheToken& token,
             const sp<hal::V1_2::IPreparedModelCallback>& callback) override;
     hal::Return<hal::V1_3::ErrorStatus> prepareModelFromCache_1_3(
-            hal::Priority priority, const hal::OptionalTimePoint& deadline,
+            const hal::OptionalTimePoint& deadline,
             const hal::hidl_vec<hal::hidl_handle>& modelCache,
             const hal::hidl_vec<hal::hidl_handle>& dataCache, const hal::CacheToken& token,
             const sp<hal::V1_3::IPreparedModelCallback>& callback) override;
