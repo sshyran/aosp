@@ -75,7 +75,8 @@ int compile(const Device& device, const ModelBuilder& model, int executionPrefer
     if (device.isCachingSupported() && token->ok() &&
         token->updateFromString(device.getName().c_str()) &&
         token->updateFromString(device.getVersionString().c_str()) &&
-        token->update(&executionPreference, sizeof(executionPreference)) && token->finish()) {
+        token->update(&executionPreference, sizeof(executionPreference)) &&
+        token->update(&compilationPriority, sizeof(compilationPriority)) && token->finish()) {
         cacheToken.emplace(token->getCacheToken());
     }
 
