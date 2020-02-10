@@ -167,7 +167,11 @@ int CompilationBuilder::setTimeoutDuration(uint64_t duration) {
                    "compilation timeouts.";
         return ANEURALNETWORKS_BAD_DATA;
     }
-    mTimeoutDuration = duration;
+    if (duration > 0) {
+        mTimeoutDuration = duration;
+    } else {
+        mTimeoutDuration.reset();
+    }
     return ANEURALNETWORKS_NO_ERROR;
 }
 
