@@ -325,7 +325,11 @@ int ExecutionBuilder::setTimeoutDuration(uint64_t duration) {
         LOG(ERROR) << "ANeuralNetworksExecution_setTimeout called after the execution has started.";
         return ANEURALNETWORKS_BAD_STATE;
     }
-    mTimeoutDuration = duration;
+    if (duration > 0) {
+        mTimeoutDuration = duration;
+    } else {
+        mTimeoutDuration.reset();
+    }
     return ANEURALNETWORKS_NO_ERROR;
 }
 
