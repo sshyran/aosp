@@ -674,6 +674,7 @@ class SkipVariation(Exception):
 
 # The base class for model variations
 class ModelVariation:
+    supportsSubgraphs = False
 
     def __init__(self, name=None):
         self.targetOperands = {}
@@ -683,6 +684,11 @@ class ModelVariation:
     def ApplyTo(self, model):
         assert not model.compiled
         assert not model.dumped
+
+        if not self.supportsSubgraphs:
+          containsSubgraphs = any(operand.lifetime == "SUBGRAPH" for operand in model.operands)
+          assert not containsSubgraphs, "Variation {} does not support subgraphs".format(
+              self.__class__.__name__)
 
         if not self.targetOperands:
             self.AutoIdentify(model)
@@ -723,6 +729,7 @@ class ModelVariation:
 
 # Default variation that does nothing
 class DefaultVariation(ModelVariation):
+    supportsSubgraphs = True
 
     def __init__(self, name=None):
         ModelVariation.__init__(self, name=name)
@@ -787,6 +794,7 @@ class DataTypeConverter(ModelVariation, ImplicitVariation):
 
 # Convert model to turn on/off relaxed computation
 class RelaxedModeConverter(ModelVariation, ImplicitVariation):
+    supportsSubgraphs = True
 
     def __init__(self, isRelaxed=True, name=None):
         ModelVariation.__init__(self, name=name)
@@ -941,6 +949,7 @@ class ActivationConverter(ModelVariation, ImplicitVariation):
 
 # Convert all constant tensors as model inputs.
 class AllTensorsAsInputsConverter(ModelVariation):
+    supportsSubgraphs = True
 
     def __init__(self, name=None):
         ModelVariation.__init__(self, name=name)
@@ -969,6 +978,7 @@ class AllTensorsAsInputsConverter(ModelVariation):
 
 # Add a dummy ADD operation before each model input to make it as an internal operand.
 class AllInputsAsInternalCoverter(ModelVariation):
+    supportsSubgraphs = True
 
     def __init__(self, name=None):
         ModelVariation.__init__(self, name=name)
