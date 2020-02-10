@@ -5357,6 +5357,10 @@ typedef enum {
      *         input_output, state = body(input_output, state, input_only)
      *     return input_output
      *
+     * To prevent infinite loops, there is an implicit execution timeout
+     * associated with each loop ("loop timeout duration"). See {@link
+     * ANeuralNetworksExecution_setLoopTimeout}.
+     *
      * Inputs:
      * * 0: A {@link ANEURALNETWORKS_MODEL} reference to the condition
      *      model. The model must have (m + k + n) inputs with
@@ -6660,6 +6664,11 @@ int ANeuralNetworksCompilation_setCaching(ANeuralNetworksCompilation* compilatio
  * exceeded, then execution will be aborted and
  * {@link ANEURALNETWORKS_MISSED_DEADLINE_*} will be returned.
  *
+ * If this execution contains a {@link ANEURALNETWORKS_WHILE} operation, and
+ * the condition model does not output false within the loop timeout duration,
+ * then execution will be aborted and {@link ANEURALNETWORKS_MISSED_DEADLINE_*}
+ * will be returned.
+ *
  * See {@link ANeuralNetworksExecution} for information on multithreaded usage.
  *
  * See {@link ANeuralNetworksExecution_burstCompute} for burst synchronous execution.
@@ -6766,6 +6775,11 @@ void ANeuralNetworksBurst_free(ANeuralNetworksBurst* burst) __INTRODUCED_IN(29);
  * and the execution is not able to complete before the timeout duration is
  * exceeded, then execution will be aborted and
  * {@link ANEURALNETWORKS_MISSED_DEADLINE_*} will be returned.
+ *
+ * If the execution contains a {@link ANEURALNETWORKS_WHILE} operation, and
+ * the condition model does not output false within the loop timeout duration,
+ * then execution will be aborted and {@link ANEURALNETWORKS_MISSED_DEADLINE_*}
+ * will be returned.
  *
  * <p>There must be at most one {@link ANeuralNetworksExecution} processing at
  * any given time for any given burst object. Any
@@ -7670,6 +7684,12 @@ int ANeuralNetworksExecution_setOutputFromMemory(ANeuralNetworksExecution* execu
  * {@link ANEURALNETWORKS_MISSED_DEADLINE_*} will be returned through
  * {@link ANeuralNetworksEvent_wait} on the event object.
  *
+ * If this execution contains a {@link ANEURALNETWORKS_WHILE} operation, and
+ * the condition model does not output false within the loop timeout duration,
+ * then execution will be aborted and {@link ANEURALNETWORKS_MISSED_DEADLINE_*}
+ * will be returned through {@link ANeuralNetworksEvent_wait} on the event
+ * object.
+ *
  * If the device can detect before the execution has started that the execution
  * will not complete within the timeout duration, the device may choose to skip
  * the execution and instead return {@link ANEURALNETWORKS_MISSED_DEADLINE_*}.
@@ -7787,6 +7807,11 @@ uint64_t ANeuralNetworks_getMaximumLoopTimeout() __INTRODUCED_IN(30);
  * corresponding to this event, and the execution is not able to complete
  * before the duration is exceeded, the execution will be aborted, and
  * {@link ANEURALNETWORKS_MISSED_DEADLINE_*} will be returned here.
+ *
+ * If the execution contains a {@link ANEURALNETWORKS_WHILE} operation, and
+ * the condition model does not output false within the loop timeout duration,
+ * the execution will be aborted, and {@link ANEURALNETWORKS_MISSED_DEADLINE_*}
+ * will be returned here.
  *
  * See {@link ANeuralNetworksExecution} for information on multithreaded usage.
  *
