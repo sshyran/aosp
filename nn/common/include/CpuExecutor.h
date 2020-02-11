@@ -17,17 +17,18 @@
 #ifndef ANDROID_FRAMEWORKS_ML_NN_COMMON_CPU_EXECUTOR_H
 #define ANDROID_FRAMEWORKS_ML_NN_COMMON_CPU_EXECUTOR_H
 
-#include "HalInterfaces.h"
-#include "OperationResolver.h"
-#include "OperationsUtils.h"
-#include "Utils.h"
-
 #include <android-base/macros.h>
 
 #include <algorithm>
 #include <memory>
 #include <optional>
 #include <vector>
+
+#include "ControlFlow.h"
+#include "HalInterfaces.h"
+#include "OperationResolver.h"
+#include "OperationsUtils.h"
+#include "Utils.h"
 
 namespace android {
 namespace nn {
@@ -154,6 +155,8 @@ class CpuExecutor {
         return mOutputShapes;
     }
 
+    void setLoopTimeout(uint64_t duration) { mLoopTimeoutDuration = duration; }
+
    private:
     // Creates runtime info from what's in the model.
     std::vector<RunTimeOperandInfo> initializeRunTimeInfo(const hal::Subgraph& subgraph);
@@ -184,6 +187,10 @@ class CpuExecutor {
 
     // Whether execution is finished and mOutputShapes is ready
     bool mFinished = false;
+
+    // The maximum amount of time in nanoseconds that can be spent executing a
+    // WHILE loop.
+    uint64_t mLoopTimeoutDuration = operation_while::kTimeoutNsDefault;
 
     const IOperationResolver* mOperationResolver;
 };

@@ -68,7 +68,7 @@ class ExecutionBuilder {
 
     std::optional<uint64_t> getTimeoutDuration() const;
 
-    int setLoopTimeoutDuration(uint64_t duration);
+    int setLoopTimeout(uint64_t duration);
 
     uint64_t getLoopTimeoutDuration() const { return mLoopTimeoutDuration; }
 

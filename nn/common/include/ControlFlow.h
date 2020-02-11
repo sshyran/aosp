@@ -35,8 +35,8 @@ constexpr uint32_t kBodyModelOperand = 1;
 constexpr uint32_t kFirstInput = 2;
 
 // See ANeuralNetworksExecution_setLoopTimeout.
-constexpr uint64_t kTimeoutNsDefault = 2000000000;
-constexpr uint64_t kTimeoutNsMaximum = 15000000000;
+constexpr uint64_t kTimeoutNsDefault = 2'000'000'000;
+constexpr uint64_t kTimeoutNsMaximum = 15'000'000'000;
 
 }  // namespace operation_while
 }  // namespace nn
