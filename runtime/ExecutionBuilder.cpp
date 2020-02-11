@@ -349,7 +349,7 @@ int ExecutionBuilder::setLoopTimeout(uint64_t duration) {
                      << "duration: " << duration << " > " << operation_while::kTimeoutNsMaximum;
         duration = operation_while::kTimeoutNsMaximum;
     }
-    mLoopTimeout = duration;
+    mLoopTimeoutDuration = duration;
     return ANEURALNETWORKS_NO_ERROR;
 }
 
@@ -1000,6 +1000,12 @@ bool StepExecutor::isCpu() const {
     return mDevice == DeviceManager::getCpuDevice();
 }
 
+static OptionalTimeoutDuration makeTimeoutDuration(uint64_t nanoseconds) {
+    OptionalTimeoutDuration otd;
+    otd.nanoseconds(nanoseconds);
+    return otd;
+}
+
 std::tuple<int, std::vector<OutputShape>, Timing> StepExecutor::compute(
         const std::shared_ptr<ExecutionBurstController>& burstController) {
     CHECK(mPreparedModel != nullptr);
@@ -1014,8 +1020,10 @@ std::tuple<int, std::vector<OutputShape>, Timing> StepExecutor::compute(
     if (timePointN != ANEURALNETWORKS_NO_ERROR) {
         return {timePointN, {}, kNoTiming};
     }
+    const OptionalTimeoutDuration loopTimeoutDuration =
+            makeTimeoutDuration(mExecutionBuilder->getLoopTimeoutDuration());
     const auto [n, outputShapes, timing] = mPreparedModel->execute(
-            mInputs, mOutputs, mMemories, burstController, measure, deadline, {});
+            mInputs, mOutputs, mMemories, burstController, measure, deadline, loopTimeoutDuration);
     mExecutionBuilder->reportTiming(timing);
 
     return {n, std::move(outputShapes), timing};
@@ -1035,12 +1043,15 @@ std::tuple<int, int, sp<hal::IFencedExecutionCallback>> StepExecutor::computeFen
     if (timePointN != ANEURALNETWORKS_NO_ERROR) {
         return {timePointN, -1, nullptr};
     }
-    OptionalTimeoutDuration otd;
+    const OptionalTimeoutDuration loopTimeoutDuration =
+            makeTimeoutDuration(mExecutionBuilder->getLoopTimeoutDuration());
+    OptionalTimeoutDuration optionalTimeoutDurationAfterFence;
     if (timeoutDurationAfterFence > 0) {
-        otd.nanoseconds(timeoutDurationAfterFence);
+        optionalTimeoutDurationAfterFence.nanoseconds(timeoutDurationAfterFence);
     }
-    const auto [n, syncFence, computeFencedCallback, timing] = mPreparedModel->executeFenced(
-            mInputs, mOutputs, mMemories, waitFor, measure, deadline, {}, otd);
+    const auto [n, syncFence, computeFencedCallback, timing] =
+            mPreparedModel->executeFenced(mInputs, mOutputs, mMemories, waitFor, measure, deadline,
+                                          loopTimeoutDuration, optionalTimeoutDurationAfterFence);
     if (syncFence < 0 && computeFencedCallback == nullptr) {
         mExecutionBuilder->reportTiming(timing);
     }
