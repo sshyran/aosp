@@ -20,6 +20,7 @@
 
 #include <android-base/logging.h>
 #include <android-base/properties.h>
+#include <android/sync.h>
 #include <hidl/LegacySupport.h>
 
 #include <algorithm>
@@ -407,14 +408,83 @@ Return<void> SamplePreparedModel::executeSynchronously_1_3(const V1_3::Request& 
     return Void();
 }
 
-Return<void> SamplePreparedModel::executeFenced(const hal::Request&, const hidl_vec<hidl_handle>&,
-                                                MeasureTiming, const OptionalTimePoint&,
-                                                const OptionalTimeoutDuration&,
+// The sample driver will finish the execution and then return.
+Return<void> SamplePreparedModel::executeFenced(const hal::Request& request,
+                                                const hidl_vec<hidl_handle>& waitFor,
+                                                MeasureTiming measure,
+                                                const OptionalTimePoint& deadline,
+                                                const OptionalTimeoutDuration& duration,
                                                 executeFenced_cb cb) {
-    // TODO(miaowang): implement me.
-    cb(ErrorStatus::DEVICE_UNAVAILABLE, hidl_handle(nullptr), nullptr);
+    NNTRACE_FULL(NNTRACE_LAYER_DRIVER, NNTRACE_PHASE_EXECUTION,
+                 "SamplePreparedModel::executeFenced");
+    VLOG(DRIVER) << "executeFenced(" << SHOW_IF_DEBUG(toString(request)) << ")";
+
+    time_point driverStart, driverEnd, deviceStart, deviceEnd;
+    if (measure == MeasureTiming::YES) driverStart = now();
+
+    if (duration.getDiscriminator() != OptionalTimeoutDuration::hidl_discriminator::none ||
+        deadline.getDiscriminator() != OptionalTimePoint::hidl_discriminator::none ||
+        !validateRequest(request, mModel)) {
+        cb(ErrorStatus::INVALID_ARGUMENT, hidl_handle(nullptr), nullptr);
+        return Void();
+    }
+
+    // Wait for the dependent events to signal
+    for (const auto& fenceHandle : waitFor) {
+        if (!fenceHandle.getNativeHandle()) {
+            cb(ErrorStatus::INVALID_ARGUMENT, hidl_handle(nullptr), nullptr);
+            return Void();
+        }
+        int syncFenceFd = fenceHandle.getNativeHandle()->data[0];
+        if (sync_wait(syncFenceFd, -1) < 0) {
+            LOG(ERROR) << "sync_wait failed";
+            cb(ErrorStatus::GENERAL_FAILURE, hidl_handle(nullptr), nullptr);
+            return Void();
+        }
+    }
+
+    time_point driverStartAfterFence;
+    if (measure == MeasureTiming::YES) driverStartAfterFence = now();
+
+    NNTRACE_FULL_SWITCH(NNTRACE_LAYER_DRIVER, NNTRACE_PHASE_INPUTS_AND_OUTPUTS,
+                        "SamplePreparedModel::executeFenced");
+    std::vector<RunTimePoolInfo> requestPoolInfos;
+    if (!setRunTimePoolInfosFromMemoryPools(&requestPoolInfos, request.pools)) {
+        cb(ErrorStatus::INVALID_ARGUMENT, hidl_handle(nullptr), nullptr);
+        return Void();
+    }
+
+    NNTRACE_FULL_SWITCH(NNTRACE_LAYER_DRIVER, NNTRACE_PHASE_EXECUTION,
+                        "SamplePreparedModel::executeFenced");
+    CpuExecutor executor = mDriver->getExecutor();
+    if (measure == MeasureTiming::YES) deviceStart = now();
+    int n = executor.run(mModel, request, mPoolInfos, requestPoolInfos);
+    if (measure == MeasureTiming::YES) deviceEnd = now();
+    VLOG(DRIVER) << "executor.run returned " << n;
+    ErrorStatus executionStatus = convertResultCodeToErrorStatus(n);
+    if (executionStatus != ErrorStatus::NONE) {
+        cb(executionStatus, hidl_handle(nullptr), nullptr);
+        return Void();
+    }
+    Timing timingSinceLaunch = {.timeOnDevice = UINT64_MAX, .timeInDriver = UINT64_MAX};
+    Timing timingAfterFence = {.timeOnDevice = UINT64_MAX, .timeInDriver = UINT64_MAX};
+    if (measure == MeasureTiming::YES) {
+        driverEnd = now();
+        timingSinceLaunch = {
+                .timeOnDevice = uint64_t(microsecondsDuration(deviceEnd, deviceStart)),
+                .timeInDriver = uint64_t(microsecondsDuration(driverEnd, driverStart))};
+        timingAfterFence = {
+                .timeOnDevice = uint64_t(microsecondsDuration(deviceEnd, deviceStart)),
+                .timeInDriver = uint64_t(microsecondsDuration(driverEnd, driverStartAfterFence))};
+        VLOG(DRIVER) << "executeFenced timingSinceLaunch = " << toString(timingSinceLaunch);
+        VLOG(DRIVER) << "executeFenced timingAfterFence = " << toString(timingAfterFence);
+    }
+    sp<SampleFencedExecutionCallback> fencedExecutionCallback =
+            new SampleFencedExecutionCallback(timingSinceLaunch, timingAfterFence, executionStatus);
+    cb(executionStatus, hidl_handle(nullptr), fencedExecutionCallback);
     return Void();
 }
+
 // BurstExecutorWithCache maps hidl_memory when it is first seen, and preserves
 // the mapping until either (1) the memory is freed in the runtime, or (2) the
 // burst object is destroyed. This allows for subsequent executions operating on
