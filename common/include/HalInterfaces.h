@@ -87,6 +87,7 @@ using V1_3::IExecutionCallback;
 using V1_3::IFencedExecutionCallback;
 using V1_3::IPreparedModel;
 using V1_3::IPreparedModelCallback;
+using V1_3::LoopTimeoutDurationNs;
 using V1_3::Model;
 using V1_3::Operand;
 using V1_3::OperandLifeTime;

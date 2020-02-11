@@ -201,7 +201,8 @@ VersionedIPreparedModel::~VersionedIPreparedModel() {
 }
 
 std::tuple<int, std::vector<OutputShape>, Timing> VersionedIPreparedModel::executeAsynchronously(
-        const Request& request, MeasureTiming measure, const OptionalTimePoint& deadline) const {
+        const Request& request, MeasureTiming measure, const OptionalTimePoint& deadline,
+        const OptionalTimeoutDuration& loopTimeoutDuration) const {
     const auto failDeadObject = []() -> std::tuple<int, std::vector<OutputShape>, Timing> {
         return {ANEURALNETWORKS_DEAD_OBJECT, {}, kNoTiming};
     };
@@ -220,8 +221,8 @@ std::tuple<int, std::vector<OutputShape>, Timing> VersionedIPreparedModel::execu
 
     // version 1.3+ HAL
     if (mPreparedModelV1_3 != nullptr) {
-        Return<ErrorStatus> ret =
-                mPreparedModelV1_3->execute_1_3(request, measure, deadline, callback);
+        Return<ErrorStatus> ret = mPreparedModelV1_3->execute_1_3(request, measure, deadline,
+                                                                  loopTimeoutDuration, callback);
         if (ret.isDeadObject()) {
             LOG(ERROR) << "execute_1_3 failure: " << ret.description();
             return failDeadObject();
@@ -292,7 +293,8 @@ std::tuple<int, std::vector<OutputShape>, Timing> VersionedIPreparedModel::execu
 }
 
 std::tuple<int, std::vector<OutputShape>, Timing> VersionedIPreparedModel::executeSynchronously(
-        const Request& request, MeasureTiming measure, const OptionalTimePoint& deadline) const {
+        const Request& request, MeasureTiming measure, const OptionalTimePoint& deadline,
+        const OptionalTimeoutDuration& loopTimeoutDuration) const {
     const std::tuple<int, std::vector<OutputShape>, Timing> kDeadObject = {
             ANEURALNETWORKS_DEAD_OBJECT, {}, kNoTiming};
     const auto kFailure = getExecutionResult(ErrorStatus::GENERAL_FAILURE, {}, kNoTiming);
@@ -301,7 +303,7 @@ std::tuple<int, std::vector<OutputShape>, Timing> VersionedIPreparedModel::execu
     if (mPreparedModelV1_3 != nullptr) {
         std::tuple<int, std::vector<OutputShape>, Timing> result;
         Return<void> ret = mPreparedModelV1_3->executeSynchronously_1_3(
-                request, measure, deadline,
+                request, measure, deadline, loopTimeoutDuration,
                 [&result](ErrorStatus error, const hidl_vec<OutputShape>& outputShapes,
                           const Timing& timing) {
                     result = getExecutionResult(error, outputShapes, timing);
@@ -345,19 +347,19 @@ std::tuple<int, std::vector<OutputShape>, Timing> VersionedIPreparedModel::execu
     }
 
     // Fallback to asynchronous execution.
-    return executeAsynchronously(request, measure, deadline);
+    return executeAsynchronously(request, measure, deadline, loopTimeoutDuration);
 }
 
 std::tuple<int, std::vector<OutputShape>, Timing> VersionedIPreparedModel::execute(
         const Request& request, MeasureTiming measure, const OptionalTimePoint& deadline,
-        bool preferSynchronous) const {
+        const OptionalTimeoutDuration& loopTimeoutDuration, bool preferSynchronous) const {
     if (preferSynchronous) {
         VLOG(EXECUTION) << "Before executeSynchronously() " << SHOW_IF_DEBUG(toString(request));
-        return executeSynchronously(request, measure, deadline);
+        return executeSynchronously(request, measure, deadline, loopTimeoutDuration);
     }
 
     VLOG(EXECUTION) << "Before executeAsynchronously() " << SHOW_IF_DEBUG(toString(request));
-    return executeAsynchronously(request, measure, deadline);
+    return executeAsynchronously(request, measure, deadline, loopTimeoutDuration);
 }
 
 // This is the amount of time the ExecutionBurstController should spend polling
@@ -406,6 +408,7 @@ std::tuple<int, hal::hidl_handle, sp<hal::IFencedExecutionCallback>, hal::Timing
 VersionedIPreparedModel::executeFenced(
         const hal::Request& request, const hal::hidl_vec<hal::hidl_handle>& waitFor,
         MeasureTiming measure, const hal::OptionalTimePoint& deadline,
+        const OptionalTimeoutDuration& loopTimeoutDuration,
         const hal::OptionalTimeoutDuration& timeoutDurationAfterFence) {
     // version 1.3+ HAL
     // TODO(miaowang): figure out the right coding style for the sync_fence related API.
@@ -415,7 +418,7 @@ VersionedIPreparedModel::executeFenced(
     if (mPreparedModelV1_3 != nullptr) {
         ErrorStatus errorStatus;
         Return<void> ret = mPreparedModelV1_3->executeFenced(
-                request, waitFor, measure, deadline, timeoutDurationAfterFence,
+                request, waitFor, measure, deadline, loopTimeoutDuration, timeoutDurationAfterFence,
                 [&syncFence, &errorStatus, &dispatchCallback](
                         ErrorStatus error, const hidl_handle& handle,
                         const sp<hal::IFencedExecutionCallback>& callback) {
@@ -458,7 +461,8 @@ VersionedIPreparedModel::executeFenced(
         }
     }
     int errorCode;
-    std::tie(errorCode, std::ignore, timing) = executeSynchronously(request, measure, deadline);
+    std::tie(errorCode, std::ignore, timing) =
+            executeSynchronously(request, measure, deadline, loopTimeoutDuration);
     return std::make_tuple(errorCode, hal::hidl_handle(nullptr), nullptr, timing);
 }
 
