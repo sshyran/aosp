@@ -687,6 +687,10 @@ static std::tuple<int, std::vector<OutputShape>, Timing> computeOnCpu(
         const OptionalTimeoutDuration& loopTimeoutDuration) {
     NNTRACE_RT(NNTRACE_PHASE_EXECUTION, "computeOnCpu");
     CpuExecutor executor;
+    if (loopTimeoutDuration.getDiscriminator() !=
+        OptionalTimeoutDuration::hidl_discriminator::none) {
+        executor.setLoopTimeout(loopTimeoutDuration.nanoseconds());
+    }
     int err = executor.run(model, request, modelPoolInfos, requestPoolInfos);
     const auto& outputShapes = executor.getOutputShapes();
     return {err, outputShapes, kNoTiming};
