@@ -1419,9 +1419,16 @@ void ANeuralNetworksEvent_free(ANeuralNetworksEvent* event) {
     }
 }
 
-int ANeuralNetworksExecution_setLoopTimeout(ANeuralNetworksExecution*, uint64_t) {
-    // To be implemented...
-    return ANEURALNETWORKS_OP_FAILED;
+int ANeuralNetworksExecution_setLoopTimeout(ANeuralNetworksExecution* execution,
+                                            uint64_t duration) {
+    NNTRACE_RT(NNTRACE_PHASE_EXECUTION, "ANeuralNetworksExecution_setLoopTimeout");
+    if (!execution) {
+        LOG(ERROR) << "ANeuralNetworksExecution_setLoopTimeout passed a nullptr";
+        return ANEURALNETWORKS_UNEXPECTED_NULL;
+    }
+
+    ExecutionBuilder* r = reinterpret_cast<ExecutionBuilder*>(execution);
+    return r->setLoopTimeout(duration);
 }
 
 uint64_t ANeuralNetworks_getDefaultLoopTimeout() {
