@@ -124,14 +124,16 @@ class SamplePreparedModel : public hal::IPreparedModel {
     hal::Return<hal::V1_3::ErrorStatus> execute_1_3(
             const hal::V1_3::Request& request, hal::MeasureTiming measure,
             const hal::OptionalTimePoint& deadline,
+            const hal::OptionalTimeoutDuration& loopTimeoutDuration,
             const sp<hal::V1_3::IExecutionCallback>& callback) override;
     hal::Return<void> executeSynchronously(const hal::V1_0::Request& request,
                                            hal::MeasureTiming measure,
                                            executeSynchronously_cb cb) override;
-    hal::Return<void> executeSynchronously_1_3(const hal::V1_3::Request& request,
-                                               hal::MeasureTiming measure,
-                                               const hal::OptionalTimePoint& deadline,
-                                               executeSynchronously_1_3_cb cb) override;
+    hal::Return<void> executeSynchronously_1_3(
+            const hal::V1_3::Request& request, hal::MeasureTiming measure,
+            const hal::OptionalTimePoint& deadline,
+            const hal::OptionalTimeoutDuration& loopTimeoutDuration,
+            executeSynchronously_1_3_cb cb) override;
     hal::Return<void> configureExecutionBurst(
             const sp<hal::V1_2::IBurstCallback>& callback,
             const MQDescriptorSync<hal::V1_2::FmqRequestDatum>& requestChannel,
@@ -141,6 +143,7 @@ class SamplePreparedModel : public hal::IPreparedModel {
                                     const hal::hidl_vec<hal::hidl_handle>& wait_for,
                                     hal::MeasureTiming measure,
                                     const hal::OptionalTimePoint& deadline,
+                                    const hal::OptionalTimeoutDuration& loopTimeoutDuration,
                                     const hal::OptionalTimeoutDuration& duration,
                                     executeFenced_cb callback) override;
 

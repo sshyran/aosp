@@ -261,6 +261,7 @@ template <typename T_IExecutionCallback>
 void asyncExecute(const Request& request, MeasureTiming measure, time_point driverStart,
                   const Model& model, const SampleDriver& driver,
                   const std::vector<RunTimePoolInfo>& poolInfos,
+                  const OptionalTimeoutDuration& loopTimeoutDuration,
                   const sp<T_IExecutionCallback>& callback) {
     NNTRACE_FULL(NNTRACE_LAYER_DRIVER, NNTRACE_PHASE_INPUTS_AND_OUTPUTS,
                  "SampleDriver::asyncExecute");
@@ -295,6 +296,7 @@ template <typename T_IExecutionCallback>
 ErrorStatus executeBase(const Request& request, MeasureTiming measure, const Model& model,
                         const SampleDriver& driver, const std::vector<RunTimePoolInfo>& poolInfos,
                         const OptionalTimePoint& deadline,
+                        const OptionalTimeoutDuration& loopTimeoutDuration,
                         const sp<T_IExecutionCallback>& callback) {
     NNTRACE_FULL(NNTRACE_LAYER_DRIVER, NNTRACE_PHASE_EXECUTION, "SampleDriver::executeBase");
     VLOG(DRIVER) << "executeBase(" << SHOW_IF_DEBUG(toString(request)) << ")";
@@ -317,8 +319,10 @@ ErrorStatus executeBase(const Request& request, MeasureTiming measure, const Mod
 
     // This thread is intentionally detached because the sample driver service
     // is expected to live forever.
-    std::thread([&model, &driver, &poolInfos, request, measure, driverStart, callback] {
-        asyncExecute(request, measure, driverStart, model, driver, poolInfos, callback);
+    std::thread([&model, &driver, &poolInfos, request, measure, driverStart, loopTimeoutDuration,
+                 callback] {
+        asyncExecute(request, measure, driverStart, model, driver, poolInfos, loopTimeoutDuration,
+                     callback);
     }).detach();
 
     return ErrorStatus::NONE;
@@ -327,7 +331,7 @@ ErrorStatus executeBase(const Request& request, MeasureTiming measure, const Mod
 Return<V1_0::ErrorStatus> SamplePreparedModel::execute(
         const V1_0::Request& request, const sp<V1_0::IExecutionCallback>& callback) {
     const ErrorStatus status = executeBase(convertToV1_3(request), MeasureTiming::NO, mModel,
-                                           *mDriver, mPoolInfos, {}, callback);
+                                           *mDriver, mPoolInfos, {}, {}, callback);
     return convertToV1_0(status);
 }
 
@@ -335,20 +339,22 @@ Return<V1_0::ErrorStatus> SamplePreparedModel::execute_1_2(
         const V1_0::Request& request, MeasureTiming measure,
         const sp<V1_2::IExecutionCallback>& callback) {
     const ErrorStatus status = executeBase(convertToV1_3(request), measure, mModel, *mDriver,
-                                           mPoolInfos, {}, callback);
+                                           mPoolInfos, {}, {}, callback);
     return convertToV1_0(status);
 }
 
 Return<V1_3::ErrorStatus> SamplePreparedModel::execute_1_3(
         const V1_3::Request& request, MeasureTiming measure, const OptionalTimePoint& deadline,
+        const OptionalTimeoutDuration& loopTimeoutDuration,
         const sp<V1_3::IExecutionCallback>& callback) {
-    return executeBase(request, measure, mModel, *mDriver, mPoolInfos, deadline, callback);
+    return executeBase(request, measure, mModel, *mDriver, mPoolInfos, deadline,
+                       loopTimeoutDuration, callback);
 }
 
 static std::tuple<ErrorStatus, hidl_vec<OutputShape>, Timing> executeSynchronouslyBase(
         const Request& request, MeasureTiming measure, const Model& model,
         const SampleDriver& driver, const std::vector<RunTimePoolInfo>& poolInfos,
-        const OptionalTimePoint& deadline) {
+        const OptionalTimePoint& deadline, const OptionalTimeoutDuration& loopTimeoutDuration) {
     NNTRACE_FULL(NNTRACE_LAYER_DRIVER, NNTRACE_PHASE_EXECUTION,
                  "SampleDriver::executeSynchronouslyBase");
     VLOG(DRIVER) << "executeSynchronouslyBase(" << SHOW_IF_DEBUG(toString(request)) << ")";
@@ -393,28 +399,25 @@ Return<void> SamplePreparedModel::executeSynchronously(const V1_0::Request& requ
                                                        MeasureTiming measure,
                                                        executeSynchronously_cb cb) {
     auto [status, outputShapes, timing] = executeSynchronouslyBase(
-            convertToV1_3(request), measure, mModel, *mDriver, mPoolInfos, {});
+            convertToV1_3(request), measure, mModel, *mDriver, mPoolInfos, {}, {});
     cb(convertToV1_0(status), std::move(outputShapes), timing);
     return Void();
 }
 
-Return<void> SamplePreparedModel::executeSynchronously_1_3(const V1_3::Request& request,
-                                                           MeasureTiming measure,
-                                                           const OptionalTimePoint& deadline,
-                                                           executeSynchronously_1_3_cb cb) {
-    auto [status, outputShapes, timing] =
-            executeSynchronouslyBase(request, measure, mModel, *mDriver, mPoolInfos, deadline);
+Return<void> SamplePreparedModel::executeSynchronously_1_3(
+        const V1_3::Request& request, MeasureTiming measure, const OptionalTimePoint& deadline,
+        const OptionalTimeoutDuration& loopTimeoutDuration, executeSynchronously_1_3_cb cb) {
+    auto [status, outputShapes, timing] = executeSynchronouslyBase(
+            request, measure, mModel, *mDriver, mPoolInfos, deadline, loopTimeoutDuration);
     cb(status, std::move(outputShapes), timing);
     return Void();
 }
 
 // The sample driver will finish the execution and then return.
-Return<void> SamplePreparedModel::executeFenced(const hal::Request& request,
-                                                const hidl_vec<hidl_handle>& waitFor,
-                                                MeasureTiming measure,
-                                                const OptionalTimePoint& deadline,
-                                                const OptionalTimeoutDuration& duration,
-                                                executeFenced_cb cb) {
+Return<void> SamplePreparedModel::executeFenced(
+        const hal::Request& request, const hidl_vec<hidl_handle>& waitFor, MeasureTiming measure,
+        const OptionalTimePoint& deadline, const OptionalTimeoutDuration& loopTimeoutDuration,
+        const OptionalTimeoutDuration& duration, executeFenced_cb cb) {
     NNTRACE_FULL(NNTRACE_LAYER_DRIVER, NNTRACE_PHASE_EXECUTION,
                  "SamplePreparedModel::executeFenced");
     VLOG(DRIVER) << "executeFenced(" << SHOW_IF_DEBUG(toString(request)) << ")";
