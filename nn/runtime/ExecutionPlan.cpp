@@ -1188,6 +1188,10 @@ int ExecutionPlan::nextCompound(const WhileStep* step, std::shared_ptr<Controlle
                         << ": evaluating condition";
         controller->mNextStepIndex = step->condStepIndex;
 
+        if (state.iteration == 0) {
+            state.startTime = std::chrono::steady_clock::now();
+        }
+
         // iteration = 0   cond inputs = outer inputs
         // iteration = 1   cond inputs = body outputs
         // iteration = 2   cond inputs = body outputs
@@ -1209,6 +1213,17 @@ int ExecutionPlan::nextCompound(const WhileStep* step, std::shared_ptr<Controlle
 
     CHECK(state.stage == WhileState::EVALUATE_BODY);
     bool condValue = readConditionValue(controller, step->condOutputOperand);
+
+    std::chrono::nanoseconds timeoutDuration(
+            controller->mExecutionBuilder->getLoopTimeoutDuration());
+    auto duration = std::chrono::steady_clock::now() - state.startTime;
+    if (duration > timeoutDuration) {
+        LOG(ERROR) << "WHILE loop timed out after "
+                   << std::chrono::duration_cast<std::chrono::milliseconds>(duration).count()
+                   << " ms";
+        return ANEURALNETWORKS_MISSED_DEADLINE_TRANSIENT;
+    }
+
     if (condValue) {
         VLOG(EXECUTION) << "next: " << toString(*step) << ": iteration " << state.iteration
                         << ": evaluating body";
