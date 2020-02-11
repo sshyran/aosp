@@ -45,6 +45,7 @@
 #include "Tracing.h"
 #include "Utils.h"
 
+using namespace android::nn;
 using namespace android::nn::hal;
 
 // Make sure the constants defined in the header files have not changed values.
@@ -608,7 +609,13 @@ static_assert(ANEURALNETWORKS_PRIORITY_HIGH == 110, "ANEURALNETWORKS_PRIORITY_HI
 static_assert(ANEURALNETWORKS_PRIORITY_DEFAULT == ANEURALNETWORKS_PRIORITY_MEDIUM,
               "ANEURALNETWORKS_PRIORITY_DEFAULT has changed");
 
-using namespace android::nn;
+// Asserts for loop timeout duration
+static_assert(static_cast<uint64_t>(LoopTimeoutDurationNs::DEFAULT) ==
+                      operation_while::kTimeoutNsDefault,
+              "LoopTimeoutDurationNs::DEFAULT != operation_while::kTimeoutNsDefault");
+static_assert(static_cast<uint64_t>(LoopTimeoutDurationNs::MAXIMUM) ==
+                      operation_while::kTimeoutNsMaximum,
+              "LoopTimeoutDurationNs::MAXIMUM != operation_while::kTimeoutNsMaximum");
 
 int ANeuralNetworks_getDeviceCount(uint32_t* numDevices) {
     if (numDevices == nullptr) {

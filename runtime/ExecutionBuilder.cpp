@@ -1000,7 +1000,7 @@ std::tuple<int, std::vector<OutputShape>, Timing> StepExecutor::compute(
         return {timePointN, {}, kNoTiming};
     }
     const auto [n, outputShapes, timing] = mPreparedModel->execute(
-            mInputs, mOutputs, mMemories, burstController, measure, deadline);
+            mInputs, mOutputs, mMemories, burstController, measure, deadline, {});
     mExecutionBuilder->reportTiming(timing);
 
     return {n, std::move(outputShapes), timing};
@@ -1025,7 +1025,7 @@ std::tuple<int, int, sp<hal::IFencedExecutionCallback>> StepExecutor::computeFen
         otd.nanoseconds(timeoutDurationAfterFence);
     }
     const auto [n, syncFence, computeFencedCallback, timing] = mPreparedModel->executeFenced(
-            mInputs, mOutputs, mMemories, waitFor, measure, deadline, otd);
+            mInputs, mOutputs, mMemories, waitFor, measure, deadline, {}, otd);
     if (syncFence < 0 && computeFencedCallback == nullptr) {
         mExecutionBuilder->reportTiming(timing);
     }
