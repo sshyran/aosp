@@ -22,6 +22,7 @@
 #include <android-base/logging.h>
 #include <openssl/sha.h>
 
+#include <chrono>
 #include <map>
 #include <memory>
 #include <ostream>
@@ -392,6 +393,8 @@ struct WhileState {
     // Current iteration number. Must be set to kOutsideLoop when exiting the
     // loop.
     uint64_t iteration = kOutsideLoop;
+    // Time point when the loop started executing.
+    std::chrono::time_point<std::chrono::steady_clock> startTime;
 };
 
 struct ConstantCopyLocation {
