@@ -274,6 +274,10 @@ void asyncExecute(const Request& request, MeasureTiming measure, time_point driv
     NNTRACE_FULL_SWITCH(NNTRACE_LAYER_DRIVER, NNTRACE_PHASE_EXECUTION,
                         "SampleDriver::asyncExecute");
     CpuExecutor executor = driver.getExecutor();
+    if (loopTimeoutDuration.getDiscriminator() !=
+        OptionalTimeoutDuration::hidl_discriminator::none) {
+        executor.setLoopTimeout(loopTimeoutDuration.nanoseconds());
+    }
     time_point driverEnd, deviceStart, deviceEnd;
     if (measure == MeasureTiming::YES) deviceStart = now();
     int n = executor.run(model, request, poolInfos, requestPoolInfos);
@@ -379,6 +383,10 @@ static std::tuple<ErrorStatus, hidl_vec<OutputShape>, Timing> executeSynchronous
     NNTRACE_FULL_SWITCH(NNTRACE_LAYER_DRIVER, NNTRACE_PHASE_EXECUTION,
                         "SampleDriver::executeSynchronouslyBase");
     CpuExecutor executor = driver.getExecutor();
+    if (loopTimeoutDuration.getDiscriminator() !=
+        OptionalTimeoutDuration::hidl_discriminator::none) {
+        executor.setLoopTimeout(loopTimeoutDuration.nanoseconds());
+    }
     if (measure == MeasureTiming::YES) deviceStart = now();
     int n = executor.run(model, request, poolInfos, requestPoolInfos);
     if (measure == MeasureTiming::YES) deviceEnd = now();
@@ -460,6 +468,10 @@ Return<void> SamplePreparedModel::executeFenced(
     NNTRACE_FULL_SWITCH(NNTRACE_LAYER_DRIVER, NNTRACE_PHASE_EXECUTION,
                         "SamplePreparedModel::executeFenced");
     CpuExecutor executor = mDriver->getExecutor();
+    if (loopTimeoutDuration.getDiscriminator() !=
+        OptionalTimeoutDuration::hidl_discriminator::none) {
+        executor.setLoopTimeout(loopTimeoutDuration.nanoseconds());
+    }
     if (measure == MeasureTiming::YES) deviceStart = now();
     int n = executor.run(mModel, request, mPoolInfos, requestPoolInfos);
     if (measure == MeasureTiming::YES) deviceEnd = now();
@@ -547,6 +559,9 @@ class BurstExecutorWithCache : public ExecutionBurstServer::IBurstExecutorWithCa
                        [this](int32_t slot) { return *mMemoryCache[slot]; });
 
         // execution
+        // Configuring the loop timeout duration is not supported. This is OK
+        // because burst does not support HAL 1.3 and hence does not support
+        // WHILE loops.
         CpuExecutor executor = mDriver->getExecutor();
         if (measure == MeasureTiming::YES) deviceStart = now();
         int n = executor.run(mModel, fullRequest, mModelPoolInfos, requestPoolInfos);
