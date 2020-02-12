@@ -19,6 +19,10 @@ cc_library_headers {
     host_supported: false,
     vendor_available: true,
     export_include_dirs: ["include"],
+    apex_available: [
+        "com.android.neuralnetworks",
+        "test_com.android.neuralnetworks",
+    ],
 }
 
 cc_library_headers {
@@ -110,8 +114,8 @@ cc_defaults {
 cc_library_shared {
     name: "libneuralnetworks",
     defaults: [
-        "neuralnetworks_defaults",
         "libneuralnetworks_defaults",
+        "neuralnetworks_defaults",
     ],
     apex_available: [
         "com.android.neuralnetworks",
@@ -130,8 +134,8 @@ cc_library_shared {
 cc_library_static {
     name: "libneuralnetworks_static",
     defaults: [
-        "neuralnetworks_defaults",
         "libneuralnetworks_defaults",
+        "neuralnetworks_defaults",
     ],
     apex_available: ["//apex_available:platform"],
 }
