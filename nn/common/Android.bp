@@ -75,6 +75,10 @@ cc_library_static {
     ],
     host_supported: false,
     vendor_available: true,
+    apex_available: [
+        "com.android.neuralnetworks",
+        "test_com.android.neuralnetworks",
+    ],
     export_include_dirs: ["include"],
     srcs: [
         "ExecutionBurstController.cpp",
@@ -123,6 +127,10 @@ cc_library_static {
     defaults: [
         "neuralnetworks_defaults",
         "neuralnetworks_operations",
+    ],
+    apex_available: [
+        "com.android.neuralnetworks",
+        "test_com.android.neuralnetworks",
     ],
     host_supported: false,
     vendor_available: true,
