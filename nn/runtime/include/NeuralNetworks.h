@@ -2773,6 +2773,30 @@ typedef enum {
      *      A 3-D tensor of shape:
      *        If time-major: [max_time, batch_size, bw_output_size]
      *        If batch-major: [batch_size, max_time, bw_output_size]
+     * * 2: The forward activation state output.
+     *      A 2-D tensor of shape [batch_size, fw_output_size] containing an
+     *      activation state from the last time step in the sequence. This
+     *      output is optional and can be omitted. If this output is present
+     *      then outputs 3-5 must be present as well.
+     *      Available since API level 30.
+     * * 3: The forward cell state output.
+     *      A tensor of shape [batch_size, fw_cell_size] containing a cell state
+     *      from the last time step in the sequence. This output is optional
+     *      and can be omitted. If this output is present
+     *      then outputs 2, 4, 5 must be present as well.
+     *      Available since API level 30.
+     * * 4: The backward activation state output.
+     *      A 2-D tensor of shape [batch_size, bw_output_size] containing an
+     *      activation state from the last time step in the sequence. This
+     *      output is optional and can be omitted. If this output is present
+     *      then outputs 2, 3, 5 must be present as well.
+     *      Available since API level 30.
+     * * 5: The backward cell state output.
+     *      A tensor of shape [batch_size, bw_cell_size] containing a cell state
+     *      from the last time step in the sequence. This output is optional
+     *      and can be omitted. If this output is present
+     *      then outputs 2-4 must be present as well.
+     *      Available since API level 30.
      *
      * Available since API level 29.
      *
@@ -2896,6 +2920,18 @@ typedef enum {
      *      (timeMajor). If it is set to true, then the shape is set to
      *      [maxTime, batchSize, bwNumUnits], otherwise the shape is set to
      *      [batchSize, maxTime, bwNumUnits].
+     * * 2: The forward hidden state output.
+     *      A 2-D tensor of shape [batchSize, fwNumUnits] containing a hidden
+     *      state from the last time step in the sequence. This output is
+     *      optional and can be omitted. If this output is present then output
+     *      3 must be present as well.
+     *      Available since API level 30.
+     * * 3: The backward hidden state output.
+     *      A 2-D tensor of shape [batchSize, bwNumUnits] containing a hidden
+     *      state from the last time step in the sequence. This output is
+     *      optional and can be omitted. If this output is present then output
+     *      2 must be present as well.
+     *      Available since API level 30.
      *
      * Available since API level 29.
      *
@@ -4981,6 +5017,15 @@ typedef enum {
      *      A 3-D tensor of shape:
      *        If time-major: [max_time, batch_size, output_size]
      *        If batch-major: [batch_size, max_time, output_size]
+     * * 1: A tensor of shape [batch_size, output_size] containing a hidden
+     *      state from the last time step in the sequence. This output is
+     *      optional and can be omitted. If this output is present then
+     *      output #2 must be present as well.
+     *      Available since API level 30.
+     * * 2: A tensor of shape [batch_size, cell_size] containing a cell state
+     *      from the last time step in the sequence. This output is optional
+     *      and can be omitted.
+     *      Available since API level 30.
      *
      * Available since API level 29.
      *
@@ -5042,6 +5087,10 @@ typedef enum {
      *      it is set to 1, then the output has a shape [maxTime, batchSize,
      *      numUnits], otherwise the output has a shape [batchSize, maxTime,
      *      numUnits].
+     * * 1: A tensor of shape [batchSize, numUnits] containing hidden state
+     *      from the last time step in the sequence. This output is optional
+     *      and can be omitted.
+     *      Available since API level 30.
      *
      * Available since API level 29.
      *
