@@ -40,6 +40,7 @@ struct LSTMParams {
     bool use_projection_bias;
     bool merge_outputs;
     bool time_major;
+    bool output_state;
 };
 
 struct RunTimeOperandInfo;
