@@ -88,7 +88,6 @@ typedef enum {
      *   real_value = (integer_value - zeroPoint) * scale.
      */
     ANEURALNETWORKS_TENSOR_QUANT8_ASYMM = 5,
-#if __ANDROID_API__ >= 29
     /**
      * An 8 bit boolean scalar value.
      *
@@ -180,8 +179,6 @@ typedef enum {
      * Available since API level 29.
      */
     ANEURALNETWORKS_TENSOR_QUANT8_SYMM = 13,
-#endif  // __ANDROID_API__ >= 29
-#if __ANDROID_API__ >= 30
     /**
      * A tensor of 8 bit signed integers that represent real numbers.
      *
@@ -206,7 +203,6 @@ typedef enum {
      * Available since API level 30.
      */
     ANEURALNETWORKS_MODEL = 15,
-#endif  // __ANDROID_API__ >= 30
 } OperandCode;
 
 /**
@@ -5709,7 +5705,36 @@ enum { ANEURALNETWORKS_MAX_SIZE_OF_IMMEDIATELY_COPIED_VALUES = 128 };
  */
 enum { ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN = 32 };
 
-#if __ANDROID_API__ >= 30
+/**
+ * Different duration measurements.
+ *
+ * Durations are measured in nanoseconds.
+ *
+ * Available since API level 29.
+ */
+typedef enum {
+    // Execution time on hardware (not driver, which runs on host processor).
+    ANEURALNETWORKS_DURATION_ON_HARDWARE = 0,
+    // Execution time in driver (including time on hardware).  Excludes overhead
+    // such as that of the runtime itself and the IPC needed for the runtime to
+    // communicate with the driver.
+    ANEURALNETWORKS_DURATION_IN_DRIVER = 1,
+    // Execution time on hardware, after all dependencies have been signaled.
+    // If no dependencies specified (for example, if the execution was scheduled other
+    // than with {@link ANeuralNetworksExecution_startComputeWithDependencies}), the
+    // reported time will be the same as ANEURALNETWORKS_DURATION_ON_HARDWARE.
+    // Available since API level 30.
+    ANEURALNETWORKS_FENCED_DURATION_ON_HARDWARE = 2,
+    // Execution time in driver, after all dependencies have been signaled. Excludes
+    // overhead such as that of the runtime itself and the IPC needed for the runtime
+    // to communicate with the driver.
+    // If no dependencies specified (for example, if the execution was scheduled other
+    // than with {@link ANeuralNetworksExecution_startComputeWithDependencies}), the
+    // reported time will be the same as ANEURALNETWORKS_DURATION_IN_DRIVER.
+    // Available since API level 30.
+    ANEURALNETWORKS_FENCED_DURATION_IN_DRIVER = 3,
+} DurationCode;
+
 /**
  * Relative execution priority.
  *
@@ -5721,7 +5746,6 @@ typedef enum {
     ANEURALNETWORKS_PRIORITY_HIGH = 110,
     ANEURALNETWORKS_PRIORITY_DEFAULT = ANEURALNETWORKS_PRIORITY_MEDIUM,
 } PriorityCode;
-#endif  // __ANDROID_API__ >= 30
 
 /**
  * ANeuralNetworksMemory is an opaque type that represents memory.
@@ -6826,36 +6850,6 @@ int ANeuralNetworksExecution_setMeasureTiming(ANeuralNetworksExecution* executio
         __INTRODUCED_IN(29);
 
 /**
- * Different duration measurements.
- *
- * Durations are measured in nanoseconds.
- *
- * Available since API level 29.
- */
-typedef enum {
-    // Execution time on hardware (not driver, which runs on host processor).
-    ANEURALNETWORKS_DURATION_ON_HARDWARE = 0,
-    // Execution time in driver (including time on hardware).  Excludes overhead
-    // such as that of the runtime itself and the IPC needed for the runtime to
-    // communicate with the driver.
-    ANEURALNETWORKS_DURATION_IN_DRIVER = 1,
-    // Execution time on hardware, after all dependencies have been signaled.
-    // If no dependencies specified (for example, if the execution was scheduled other
-    // than with {@link ANeuralNetworksExecution_startComputeWithDependencies}), the
-    // reported time will be the same as ANEURALNETWORKS_DURATION_ON_HARDWARE.
-    // Available since API level 30.
-    ANEURALNETWORKS_FENCED_DURATION_ON_HARDWARE = 2,
-    // Execution time in driver, after all dependencies have been signaled. Excludes
-    // overhead such as that of the runtime itself and the IPC needed for the runtime
-    // to communicate with the driver.
-    // If no dependencies specified (for example, if the execution was scheduled other
-    // than with {@link ANeuralNetworksExecution_startComputeWithDependencies}), the
-    // reported time will be the same as ANEURALNETWORKS_DURATION_IN_DRIVER.
-    // Available since API level 30.
-    ANEURALNETWORKS_FENCED_DURATION_IN_DRIVER = 3,
-} DurationCode;
-
-/**
  * Get the time spent in the specified {@link ANeuralNetworksExecution}, in nanoseconds.
  * The execution must have completed.
  *
@@ -7406,8 +7400,9 @@ int ANeuralNetworksCompilation_setPriority(ANeuralNetworksCompilation* compilati
  *
  * @param compilation The compilation to be modified.
  * @param duration The maximum amount of time in nanoseconds that can be spent
- *     finishing a compilation. If this duration is exceeded, the compilation
- *     must be aborted.
+ *     finishing a compilation. The compilation must be completed or aborted
+ *     within this timeout duration. If set to 0, the timeout duration is
+ *     considered infinite.
  *
  * @return ANEURALNETWORKS_NO_ERROR if successful.
  *
@@ -7724,8 +7719,9 @@ int ANeuralNetworksExecution_startCompute(ANeuralNetworksExecution* execution,
  *
  * @param execution The execution to be modified.
  * @param duration The maximum amount of time in nanoseconds that can be spent
- *     executing a model. If this time duration is exceeded, the execution
- *     must be aborted.
+ *     executing a model. The execution must be completed or aborted within this
+ *     timeout duration. If set to 0, the timeout duration is considered
+ *     infinite.
  *
  * @return ANEURALNETWORKS_NO_ERROR if successful.
  *
