@@ -366,6 +366,10 @@ class Execution {
                 mExecution, index, type, memory->get(), offset, length));
     }
 
+    Result setLoopTimeout(uint64_t duration) {
+        return static_cast<Result>(ANeuralNetworksExecution_setLoopTimeout(mExecution, duration));
+    }
+
     Result startCompute(Event* event) {
         ANeuralNetworksEvent* ev = nullptr;
         Result result = static_cast<Result>(ANeuralNetworksExecution_startCompute(mExecution, &ev));
