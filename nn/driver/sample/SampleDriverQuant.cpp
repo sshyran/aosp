@@ -35,7 +35,7 @@ using namespace hal;
 
 class SampleDriverQuant : public SampleDriverPartial {
    public:
-    SampleDriverQuant() : SampleDriverPartial("sample-quant") {}
+    SampleDriverQuant() : SampleDriverPartial("nnapi-sample_quant") {}
     Return<void> getCapabilities_1_3(getCapabilities_1_3_cb cb) override;
 
    private:
