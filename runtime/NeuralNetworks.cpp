@@ -839,6 +839,8 @@ int ANeuralNetworksExecution_getDuration(const ANeuralNetworksExecution* executi
     switch (durationCode) {
         case ANEURALNETWORKS_DURATION_ON_HARDWARE:
         case ANEURALNETWORKS_DURATION_IN_DRIVER:
+        case ANEURALNETWORKS_FENCED_DURATION_ON_HARDWARE:
+        case ANEURALNETWORKS_FENCED_DURATION_IN_DRIVER:
             break;
         default:
             LOG(ERROR) << "ANeuralNetworksExecution_getDuration passed a bad durationCode "
