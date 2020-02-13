@@ -76,6 +76,7 @@ cc_library_static {
     host_supported: false,
     vendor_available: true,
     apex_available: [
+        "//apex_available:platform",
         "com.android.neuralnetworks",
         "test_com.android.neuralnetworks",
     ],
@@ -129,6 +130,7 @@ cc_library_static {
         "neuralnetworks_operations",
     ],
     apex_available: [
+        "//apex_available:platform",
         "com.android.neuralnetworks",
         "test_com.android.neuralnetworks",
     ],
