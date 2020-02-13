@@ -92,20 +92,26 @@ void initVLogMask() {
 }
 
 static std::pair<int, OptionalTimePoint> makeTimePoint(uint64_t duration) {
-    const auto currentTime = std::chrono::steady_clock::now();
-    const auto currentTimeInNanoseconds =
-            std::chrono::time_point_cast<std::chrono::nanoseconds>(currentTime);
-    const uint64_t nanosecondsSinceEpoch = currentTimeInNanoseconds.time_since_epoch().count();
+    const auto getNanosecondsSinceEpoch = [](const auto& time) -> uint64_t {
+        const auto timeSinceEpoch = time.time_since_epoch();
+        return std::chrono::duration_cast<std::chrono::nanoseconds>(timeSinceEpoch).count();
+    };
 
-    // check for overflow
-    if (std::numeric_limits<uint64_t>::max() - nanosecondsSinceEpoch < duration) {
+    // Relevant time points.
+    const uint64_t maxNanosecondsSinceEpoch =
+            getNanosecondsSinceEpoch(std::chrono::steady_clock::time_point::max());
+    const uint64_t currentNanosecondsSinceEpoch =
+            getNanosecondsSinceEpoch(std::chrono::steady_clock::now());
+
+    // Check for overflow.
+    if (duration > maxNanosecondsSinceEpoch - currentNanosecondsSinceEpoch) {
         LOG(ERROR) << "Launching execution failed due to time point overflow";
         return {ANEURALNETWORKS_BAD_DATA, {}};
     }
-    const uint64_t nanosecondsAtTimeout = nanosecondsSinceEpoch + duration;
 
+    // Load and return OptionalTimePoint.
     OptionalTimePoint otp;
-    otp.nanosecondsSinceEpoch(nanosecondsAtTimeout);
+    otp.nanosecondsSinceEpoch(currentNanosecondsSinceEpoch + duration);
     return {ANEURALNETWORKS_NO_ERROR, otp};
 }
 
