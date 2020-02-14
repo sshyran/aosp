@@ -1549,11 +1549,11 @@ const std::string& VersionedIDevice::getName() const {
     return kServiceName;
 }
 
-std::tuple<ErrorStatus, sp<IBuffer>, int32_t> VersionedIDevice::allocate(
+std::tuple<ErrorStatus, sp<IBuffer>, uint32_t> VersionedIDevice::allocate(
         const BufferDesc& desc,
         const std::vector<std::shared_ptr<VersionedIPreparedModel>>& versionedPreparedModels,
         const hidl_vec<BufferRole>& inputRoles, const hidl_vec<BufferRole>& outputRoles) const {
-    const auto kFailure = std::make_tuple<ErrorStatus, sp<IBuffer>, int32_t>(
+    const auto kFailure = std::make_tuple<ErrorStatus, sp<IBuffer>, uint32_t>(
             ErrorStatus::GENERAL_FAILURE, nullptr, 0);
 
     // version 1.3+ HAL
@@ -1566,11 +1566,11 @@ std::tuple<ErrorStatus, sp<IBuffer>, int32_t> VersionedIDevice::allocate(
         std::tuple<ErrorStatus, sp<IBuffer>, int32_t> result;
         const Return<void> ret = recoverable<void, V1_3::IDevice>(
                 __FUNCTION__, [&](const sp<V1_3::IDevice>& device) {
-                    return device->allocate(
-                            desc, preparedModels, inputRoles, outputRoles,
-                            [&result](ErrorStatus error, const sp<IBuffer>& buffer, int32_t token) {
-                                result = {error, buffer, token};
-                            });
+                    return device->allocate(desc, preparedModels, inputRoles, outputRoles,
+                                            [&result](ErrorStatus error, const sp<IBuffer>& buffer,
+                                                      uint32_t token) {
+                                                result = {error, buffer, token};
+                                            });
                 });
         if (!ret.isOk()) {
             LOG(ERROR) << "allocate failure: " << ret.description();
