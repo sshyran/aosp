@@ -2128,7 +2128,7 @@ TEST_F(ValidationTestCompilationForDevices_1, SetTimeoutOverflow) {
         constexpr uint64_t duration = std::numeric_limits<uint64_t>::max();
         EXPECT_EQ(ANeuralNetworksCompilation_setTimeout(mCompilation, duration),
                   ANEURALNETWORKS_NO_ERROR);
-        EXPECT_NE(ANeuralNetworksCompilation_finish(mCompilation), ANEURALNETWORKS_OP_FAILED);
+        EXPECT_EQ(ANeuralNetworksCompilation_finish(mCompilation), ANEURALNETWORKS_BAD_DATA);
     }
 }
 
@@ -2511,7 +2511,7 @@ void runExecutionSetTimeoutTest(const ANeuralNetworksDevice* device,
                                 n == ANEURALNETWORKS_MISSED_DEADLINE_PERSISTENT);
                     return;
                 case TimeoutDurationType::OVERFLOW:
-                    EXPECT_EQ(n, ANEURALNETWORKS_OP_FAILED);
+                    EXPECT_EQ(n, ANEURALNETWORKS_BAD_DATA);
                     return;
             }
             LOG(FATAL) << "Invalid TimeoutDurationType: " << static_cast<int>(timeoutDurationType);
