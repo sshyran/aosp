@@ -49,7 +49,7 @@ struct Shape {
     std::vector<uint32_t> dimensions;
     float scale = 0.0f;
     int32_t offset = 0;
-    hal::Operand::ExtraParams extraParams;
+    hal::OperandExtraParams extraParams;
 };
 
 // Provides information available during graph creation to validate an operation.
@@ -78,7 +78,7 @@ class IOperationValidationContext {
     virtual uint32_t getNumInputs() const = 0;
     virtual hal::OperandType getInputType(uint32_t index) const = 0;
     virtual Shape getInputShape(uint32_t index) const = 0;
-    virtual const hal::Operand::ExtraParams getInputExtraParams(uint32_t index) const = 0;
+    virtual const hal::OperandExtraParams getInputExtraParams(uint32_t index) const = 0;
 
     virtual uint32_t getNumOutputs() const = 0;
     virtual hal::OperandType getOutputType(uint32_t index) const = 0;
@@ -94,7 +94,7 @@ class IOperationExecutionContext {
     virtual hal::OperandType getInputType(uint32_t index) const = 0;
     virtual Shape getInputShape(uint32_t index) const = 0;
     virtual const void* getInputBuffer(uint32_t index) const = 0;
-    virtual const hal::Operand::ExtraParams getInputExtraParams(uint32_t index) const = 0;
+    virtual const hal::OperandExtraParams getInputExtraParams(uint32_t index) const = 0;
 
     virtual uint32_t getNumOutputs() const = 0;
     virtual hal::OperandType getOutputType(uint32_t index) const = 0;

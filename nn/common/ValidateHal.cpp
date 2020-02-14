@@ -113,14 +113,14 @@ static bool validateOperandExtraParams(const V1_3::Operand& operand, uint32_t in
         case OperandType::TENSOR_QUANT16_SYMM:
         case OperandType::TENSOR_BOOL8: {
             NN_RET_CHECK(operand.extraParams.getDiscriminator() ==
-                         V1_3::Operand::ExtraParams::hidl_discriminator::none)
+                         OperandExtraParams::hidl_discriminator::none)
                     << "Operand " << index << ": Operand of type "
                     << getOperandTypeName(operand.type)
                     << " has incorrect extraParams: " << toString(operand.extraParams);
         } break;
         case OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL: {
             NN_RET_CHECK(operand.extraParams.getDiscriminator() ==
-                         V1_3::Operand::ExtraParams::hidl_discriminator::channelQuant)
+                         OperandExtraParams::hidl_discriminator::channelQuant)
                     << "Operand " << index << ": Operand of type "
                     << getOperandTypeName(operand.type) << " without a Channel Quantization params";
             auto& channelQuant = operand.extraParams.channelQuant();
@@ -150,9 +150,9 @@ static bool validateOperandExtraParams(const V1_3::Operand& operand, uint32_t in
         default: {
             if (isExtensionOperandType(operand.type)) {
                 NN_RET_CHECK(operand.extraParams.getDiscriminator() ==
-                                     V1_3::Operand::ExtraParams::hidl_discriminator::extension ||
+                                     OperandExtraParams::hidl_discriminator::extension ||
                              operand.extraParams.getDiscriminator() ==
-                                     V1_3::Operand::ExtraParams::hidl_discriminator::none)
+                                     OperandExtraParams::hidl_discriminator::none)
                         << "Operand " << index << ": Extension operand of type "
                         << getOperandTypeName(operand.type)
                         << " has incorrect extraParams: " << toString(operand.extraParams);

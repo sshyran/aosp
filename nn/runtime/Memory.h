@@ -193,13 +193,13 @@ class Memory {
    protected:
     Memory(hal::hidl_memory memory);
     Memory(hal::hidl_memory memory, std::unique_ptr<MemoryValidatorBase> validator);
-    Memory(sp<hal::IBuffer> buffer, int32_t token);
+    Memory(sp<hal::IBuffer> buffer, uint32_t token);
 
     // The HIDL representation for this memory.  We will use one of the following values
     // when communicating with the drivers.
     const hal::hidl_memory kHidlMemory;
     const sp<hal::IBuffer> kBuffer;
-    const int32_t kToken = 0;
+    const uint32_t kToken = 0;
 
     std::unique_ptr<MemoryValidatorBase> mValidator;
 
@@ -311,10 +311,10 @@ class MemoryFromDevice : public Memory {
     // On success, returns ANEURALNETWORKS_NO_ERROR and a memory object.
     // On error, returns the appropriate NNAPI error code and nullptr.
     static std::pair<int, std::unique_ptr<MemoryFromDevice>> create(sp<hal::IBuffer> buffer,
-                                                                    int32_t token);
+                                                                    uint32_t token);
 
     // prefer using MemoryFromDevice::create
-    MemoryFromDevice(sp<hal::IBuffer> buffer, int32_t token);
+    MemoryFromDevice(sp<hal::IBuffer> buffer, uint32_t token);
 };
 
 using MemoryTracker = ObjectTracker<Memory>;
