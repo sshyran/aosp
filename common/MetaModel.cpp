@@ -292,19 +292,19 @@ class MetaModel::OrigOperandToSlicedInputOperandIndex {
             return a.channelDim < b.channelDim;
         }
 
-        static bool compare(const Operand::ExtraParams& a, const Operand::ExtraParams& b) {
+        static bool compare(const OperandExtraParams& a, const OperandExtraParams& b) {
             if (a.getDiscriminator() != b.getDiscriminator()) {
                 return a.getDiscriminator() < b.getDiscriminator();
             }
 
             switch (a.getDiscriminator()) {
-                case Operand::ExtraParams::hidl_discriminator::channelQuant:
+                case OperandExtraParams::hidl_discriminator::channelQuant:
                     return compare(a.channelQuant(), b.channelQuant());
 
-                case Operand::ExtraParams::hidl_discriminator::extension:
+                case OperandExtraParams::hidl_discriminator::extension:
                     return a.extension() < b.extension();
 
-                case Operand::ExtraParams::hidl_discriminator::none:
+                case OperandExtraParams::hidl_discriminator::none:
                     return false;
 
                 default:
