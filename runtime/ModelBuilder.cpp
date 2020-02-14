@@ -98,7 +98,7 @@ int ModelBuilder::addOperand(const ANeuralNetworksOperandType& type) {
             .zeroPoint = type.zeroPoint,
             .lifetime = OperandLifeTime::TEMPORARY_VARIABLE,
             .location = {.poolIndex = 0, .offset = 0, .length = 0},
-            .extraParams = Operand::ExtraParams(),
+            .extraParams = OperandExtraParams(),
     });
     mHasOEMOperand |= isOemOperand;
     return ANEURALNETWORKS_NO_ERROR;
