@@ -95,7 +95,7 @@ int copyOperandExtraParams(ModelBuilder& model, uint32_t toOperandIndex,
                            const Operand& fromOperand) {
     if (fromOperand.type == OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL &&
         fromOperand.extraParams.getDiscriminator() ==
-                Operand::ExtraParams::hidl_discriminator::channelQuant) {
+                OperandExtraParams::hidl_discriminator::channelQuant) {
         auto& fromChannelQuant = fromOperand.extraParams.channelQuant();
         ANeuralNetworksSymmPerChannelQuantParams toChannelQuant = {
                 .channelDim = fromChannelQuant.channelDim,
@@ -105,12 +105,12 @@ int copyOperandExtraParams(ModelBuilder& model, uint32_t toOperandIndex,
         return model.setOperandSymmPerChannelQuantParams(toOperandIndex, toChannelQuant);
     } else if (isExtensionOperandType(fromOperand.type) &&
                fromOperand.extraParams.getDiscriminator() ==
-                       Operand::ExtraParams::hidl_discriminator::extension) {
+                       OperandExtraParams::hidl_discriminator::extension) {
         hidl_vec<uint8_t> extensionData = fromOperand.extraParams.extension();
         return model.setOperandExtensionData(toOperandIndex, extensionData.data(),
                                              extensionData.size());
     } else if (fromOperand.extraParams.getDiscriminator() !=
-                       Operand::ExtraParams::hidl_discriminator::none ||
+                       OperandExtraParams::hidl_discriminator::none ||
                fromOperand.type == OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL) {
         LOG(ERROR) << "Type " << toString(fromOperand.type)
                    << " has an unexpected extraParams discriminator: "
