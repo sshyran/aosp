@@ -43,6 +43,8 @@ namespace nn {
 
 using namespace hal;
 
+constexpr PerformanceInfo kNoPerformanceInfo = {.execTime = FLT_MAX, .powerUsage = FLT_MAX};
+
 const char kVLogPropKey[] = "debug.nn.vlog";
 int vLogMask = ~0;
 
@@ -1999,7 +2001,7 @@ PerformanceInfo lookup(const hidl_vec<VersionedOperandPerformance<version>>& ope
                                      });
     if (it == operandPerformance.end()) {
         LOG(WARNING) << "No PerformanceInfo for " << toString(type);
-        return {.execTime = FLT_MAX, .powerUsage = FLT_MAX};
+        return kNoPerformanceInfo;
     } else {
         return it->info;
     }
@@ -2011,6 +2013,8 @@ PerformanceInfo lookup(const hidl_vec<V1_2::Capabilities::OperandPerformance>& o
 }
 PerformanceInfo lookup(const hidl_vec<V1_3::Capabilities::OperandPerformance>& operandPerformance,
                        V1_3::OperandType type) {
+    CHECK(type != V1_3::OperandType::SUBGRAPH)
+            << "Use Capabilities::ifPerformance or Capabilities::whilePerformance";
     return lookup<HalVersion::V1_3>(operandPerformance, type);
 }
 
@@ -2396,6 +2400,8 @@ V1_3::Capabilities convertToV1_3(const V1_2::Capabilities& capabilities) {
                     capabilities.relaxedFloat32toFloat16PerformanceScalar,
             .relaxedFloat32toFloat16PerformanceTensor =
                     capabilities.relaxedFloat32toFloat16PerformanceTensor,
+            .ifPerformance = kNoPerformanceInfo,
+            .whilePerformance = kNoPerformanceInfo,
     };
     auto& opPerf = ret.operandPerformance;
     opPerf.resize(capabilities.operandPerformance.size());

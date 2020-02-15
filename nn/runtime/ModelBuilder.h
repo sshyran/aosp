@@ -137,8 +137,9 @@ class ModelBuilder {
     int findBestDeviceForEachOperation(uint32_t preference,
                                        const std::vector<std::shared_ptr<Device>>& devices,
                                        std::vector<int>* bestDeviceForOperation) const;
-    hal::PerformanceInfo getPerformanceInfo(const std::shared_ptr<Device> device,
-                                            uint32_t operationIndex) const;
+    float getPerformance(uint32_t preference, const std::shared_ptr<Device> device) const;
+    float getPerformance(uint32_t preference, const std::shared_ptr<Device> device,
+                         uint32_t operationIndex) const;
 
     // Return true if either mCompleteModel or mInvalidModel is true.
     bool badState(const char* name);

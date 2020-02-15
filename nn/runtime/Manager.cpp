@@ -80,6 +80,14 @@ class DriverDevice : public Device {
         const auto& capabilities = kInterface->getCapabilities();
         return capabilities.relaxedFloat32toFloat16PerformanceTensor;
     }
+    PerformanceInfo getIfPerformance() const override {
+        const auto& capabilities = kInterface->getCapabilities();
+        return capabilities.ifPerformance;
+    }
+    PerformanceInfo getWhilePerformance() const override {
+        const auto& capabilities = kInterface->getCapabilities();
+        return capabilities.whilePerformance;
+    }
     bool isCachingSupported() const override {
         // Caching is supported if either of numModelCache or numDataCache is greater than 0.
         const auto [numModelCacheFiles, numDataCacheFiles] =
@@ -553,6 +561,8 @@ class CpuDevice : public Device {
     PerformanceInfo getRelaxedFloat32toFloat16PerformanceTensor() const override {
         return kPerformance;
     }
+    PerformanceInfo getIfPerformance() const override { return kPerformance; }
+    PerformanceInfo getWhilePerformance() const override { return kPerformance; }
     bool isCachingSupported() const override { return false; }
     std::pair<bool, bool> supportsDeadlines() const override {
         return {/*prepareModelDeadline=*/false, /*executionDeadline=*/false};
