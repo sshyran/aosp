@@ -40,6 +40,7 @@
 #include "BurstBuilder.h"
 #include "Callbacks.h"
 #include "CompilationBuilder.h"
+#include "ControlFlow.h"
 #include "ExecutionBuilder.h"
 #include "ExecutionBurstController.h"
 #include "GraphDump.h"
@@ -1001,9 +1002,53 @@ int ModelBuilder::partitionTheWork(const std::vector<std::shared_ptr<Device>>& d
     return n;
 }
 
-PerformanceInfo ModelBuilder::getPerformanceInfo(const std::shared_ptr<Device> device,
-                                                 uint32_t operationIndex) const {
+float ModelBuilder::getPerformance(uint32_t preference,
+                                   const std::shared_ptr<Device> device) const {
+    // Note that we will call this method multiple times per compilation with
+    // the same arguments if there are nested control flow operations and we
+    // decide to execute the outer operation on the ExecutionPlan::next()
+    // interpreter.
+    //
+    // This is a potential compilation performance problem. To work around it,
+    // the performance value could be cached for the duration of a compilation.
+    float perf = 0;
+    const size_t operationCount = mOperations.size();
+    for (size_t operationIndex = 0; operationIndex < operationCount; operationIndex++) {
+        perf += getPerformance(preference, device, operationIndex);
+    }
+    return perf;
+}
+
+float ModelBuilder::getPerformance(uint32_t preference, const std::shared_ptr<Device> device,
+                                   uint32_t operationIndex) const {
+    auto applyPreference = [preference](const PerformanceInfo& perf) {
+        return preference == ANEURALNETWORKS_PREFER_LOW_POWER ? perf.powerUsage : perf.execTime;
+    };
+
     const Operation& operation = getOperation(operationIndex);
+
+    if (operation.type == OperationType::IF) {
+        namespace op = operation_if;
+        const Operand& thenOperand = getOperand(operation.inputs[op::kThenModelOperand]);
+        const Operand& elseOperand = getOperand(operation.inputs[op::kElseModelOperand]);
+        const ModelBuilder* thenModel = getReferencedModel(thenOperand);
+        const ModelBuilder* elseModel = getReferencedModel(elseOperand);
+        return applyPreference(device->getIfPerformance()) +
+               0.5 * (thenModel->getPerformance(preference, device) +
+                      elseModel->getPerformance(preference, device));
+    }
+
+    if (operation.type == OperationType::WHILE) {
+        namespace op = operation_while;
+        const Operand& condOperand = getOperand(operation.inputs[op::kCondModelOperand]);
+        const Operand& bodyOperand = getOperand(operation.inputs[op::kBodyModelOperand]);
+        const ModelBuilder* condModel = getReferencedModel(condOperand);
+        const ModelBuilder* bodyModel = getReferencedModel(bodyOperand);
+        return applyPreference(device->getWhilePerformance()) +
+               condModel->getPerformance(preference, device) +
+               bodyModel->getPerformance(preference, device);
+    }
+
     // TODO This assumes that the type is dictated by the first operand. This is
     // currently the case but is not a safe assumption to make in the long term.
     const uint32_t operandIndex = operation.inputs[0];
@@ -1011,19 +1056,19 @@ PerformanceInfo ModelBuilder::getPerformanceInfo(const std::shared_ptr<Device> d
     switch (operandType) {
         case OperandType::FLOAT32:
             if (mRelaxComputationFloat32toFloat16) {
-                return device->getRelaxedFloat32toFloat16PerformanceScalar();
+                return applyPreference(device->getRelaxedFloat32toFloat16PerformanceScalar());
             }
             break;
         case OperandType::TENSOR_FLOAT32:
             if (mRelaxComputationFloat32toFloat16) {
-                return device->getRelaxedFloat32toFloat16PerformanceTensor();
+                return applyPreference(device->getRelaxedFloat32toFloat16PerformanceTensor());
             }
             break;
         default:
             break;
     }
 
-    return device->getPerformance(operandType);
+    return applyPreference(device->getPerformance(operandType));
 }
 
 namespace {
@@ -1065,10 +1110,7 @@ int ModelBuilder::findBestDeviceForEachOperation(
         for (size_t deviceIndex = 0; deviceIndex < deviceCount; deviceIndex++) {
             const auto& device = devices[deviceIndex];
             if (canDo[deviceIndex].check(operationIndex)) {
-                const PerformanceInfo perf = getPerformanceInfo(device, operationIndex);
-                const float perfVal =
-                        (preference == ANEURALNETWORKS_PREFER_LOW_POWER ? perf.powerUsage
-                                                                        : perf.execTime);
+                const float perfVal = getPerformance(preference, device, operationIndex);
                 if (bestChoice < 0 || perfVal < bestPerfVal ||
                     (perfVal == bestPerfVal && device == DeviceManager::getCpuDevice())) {
                     bestChoice = deviceIndex;

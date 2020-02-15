@@ -95,6 +95,8 @@ class Device {
     virtual hal::PerformanceInfo getPerformance(hal::OperandType type) const = 0;
     virtual hal::PerformanceInfo getRelaxedFloat32toFloat16PerformanceScalar() const = 0;
     virtual hal::PerformanceInfo getRelaxedFloat32toFloat16PerformanceTensor() const = 0;
+    virtual hal::PerformanceInfo getIfPerformance() const = 0;
+    virtual hal::PerformanceInfo getWhilePerformance() const = 0;
     virtual bool isCachingSupported() const = 0;
     virtual std::pair<bool, bool> supportsDeadlines() const = 0;
     virtual int wait() const = 0;
