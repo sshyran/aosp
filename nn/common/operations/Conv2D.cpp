@@ -454,6 +454,10 @@ bool convQuant8PerChannelNhwc(const int8_t* inputData, const Shape& inputShape,
         NN_RET_CHECK(QuantizeMultiplier(realMultiplier[i], &outputMultiplier[i], &outputShift[i]));
     }
 
+    int32_t output_activation_min = 0, output_activation_max = 0;
+    CalculateActivationRangeInt8(activation, outputShape, &output_activation_min,
+                                 &output_activation_max);
+
     tflite::ConvParams convParams;
     convParams.input_offset = -inputShape.offset;
     convParams.output_offset = outputShape.offset;
@@ -463,6 +467,8 @@ bool convQuant8PerChannelNhwc(const int8_t* inputData, const Shape& inputShape,
     convParams.dilation_width_factor = dilationWidthFactor;
     convParams.padding_values.height = paddingTop;
     convParams.padding_values.width = paddingLeft;
+    convParams.quantized_activation_min = output_activation_min;
+    convParams.quantized_activation_max = output_activation_max;
 
     NNTRACE_COMP_SWITCH("reference_integer_ops::ConvPerChannel");
     tflite::reference_integer_ops::ConvPerChannel(
@@ -470,15 +476,6 @@ bool convQuant8PerChannelNhwc(const int8_t* inputData, const Shape& inputShape,
             convertShapeToTflshape(inputShape), inputData, convertShapeToTflshape(filterShape),
             filterData, convertShapeToTflshape(biasShape), biasData,
             convertShapeToTflshape(outputShape), outputData);
-    int32_t output_activation_min = 0, output_activation_max = 0;
-    CalculateActivationRangeInt8(activation, outputShape, &output_activation_min,
-                                 &output_activation_max);
-    int32_t outputSize = getNumberOfElements(outputShape);
-    std::transform(outputData, outputData + outputSize, outputData, [&](int8_t value) {
-        return static_cast<int8_t>(
-                std::max(output_activation_min,
-                         std::min(output_activation_max, static_cast<int32_t>(value))));
-    });
     return true;
 }
 
