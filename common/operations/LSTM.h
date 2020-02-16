@@ -104,8 +104,6 @@ class LSTMCell {
     static constexpr int kCellStateOutTensor = 2;
     static constexpr int kOutputTensor = 3;
 
-    static constexpr float kLayerNormEpsilon = 1e-8;
-
     static bool LSTMEvalFloat32(
             const LSTMParams& params, const float* input_buffer, const Shape& input_shape,
             const float* input_to_input_weights_buffer, const float* input_to_forget_weights_buffer,
