@@ -190,7 +190,7 @@ void SVDF::EvalFloat32(const float* inputData, const float* inputStateData, cons
     if (!IsNullInput(bias_)) {
         tflite::tensor_utils::VectorBatchVectorAssign(biasData, num_units, batch_size, outputData);
     } else {
-        tflite::tensor_utils::ZeroVector(outputData, batch_size * num_units);
+        std::fill_n(outputData, batch_size * num_units, 0.0f);
     }
 
     // Reduction sum
