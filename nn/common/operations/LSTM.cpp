@@ -18,12 +18,12 @@
 
 #include "LSTM.h"
 
+#include <vector>
+
 #include "CpuExecutor.h"
 #include "CpuOperationUtils.h"
 #include "HalInterfaces.h"
 #include "OperationsUtils.h"
-
-#include <vector>
 #include "Tracing.h"
 #include "Utils.h"
 
@@ -785,11 +785,11 @@ bool LSTMCell::LSTMStep(
     } else {
         // Initialize scratch buffers with zeroes.
         if (!params.use_cifg) {
-            tflite::tensor_utils::ZeroVector(input_gate_scratch, n_cell * n_batch);
+            std::fill_n(input_gate_scratch, n_cell * n_batch, 0.0f);
         }
-        tflite::tensor_utils::ZeroVector(forget_gate_scratch, n_cell * n_batch);
-        tflite::tensor_utils::ZeroVector(cell_scratch, n_cell * n_batch);
-        tflite::tensor_utils::ZeroVector(output_gate_scratch, n_cell * n_batch);
+        std::fill_n(forget_gate_scratch, n_cell * n_batch, 0.0f);
+        std::fill_n(cell_scratch, n_cell * n_batch, 0.0f);
+        std::fill_n(output_gate_scratch, n_cell * n_batch, 0.0f);
     }
 
     // For each batch and cell: compute input_weight * input.
@@ -854,7 +854,7 @@ bool LSTMCell::LSTMStep(
         }
         if (params.use_layer_norm) {
             tflite::tensor_utils::MeanStddevNormalization(input_gate_scratch, input_gate_scratch,
-                                                          n_cell, n_batch, kLayerNormEpsilon);
+                                                          n_cell, n_batch);
             tflite::tensor_utils::VectorBatchVectorCwiseProduct(input_layer_norm_weights_buffer,
                                                                 n_cell, input_gate_scratch, n_batch,
                                                                 input_gate_scratch);
@@ -873,7 +873,7 @@ bool LSTMCell::LSTMStep(
     }
     if (params.use_layer_norm) {
         tflite::tensor_utils::MeanStddevNormalization(forget_gate_scratch, forget_gate_scratch,
-                                                      n_cell, n_batch, kLayerNormEpsilon);
+                                                      n_cell, n_batch);
         tflite::tensor_utils::VectorBatchVectorCwiseProduct(forget_layer_norm_weights_buffer,
                                                             n_cell, forget_gate_scratch, n_batch,
                                                             forget_gate_scratch);
@@ -885,8 +885,7 @@ bool LSTMCell::LSTMStep(
 
     // For each batch and cell: update the cell.
     if (params.use_layer_norm) {
-        tflite::tensor_utils::MeanStddevNormalization(cell_scratch, cell_scratch, n_cell, n_batch,
-                                                      kLayerNormEpsilon);
+        tflite::tensor_utils::MeanStddevNormalization(cell_scratch, cell_scratch, n_cell, n_batch);
         tflite::tensor_utils::VectorBatchVectorCwiseProduct(cell_layer_norm_weights_buffer, n_cell,
                                                             cell_scratch, n_batch, cell_scratch);
         tflite::tensor_utils::VectorBatchVectorAdd(cell_bias_buffer, n_cell, n_batch, cell_scratch);
@@ -917,7 +916,7 @@ bool LSTMCell::LSTMStep(
     }
     if (params.use_layer_norm) {
         tflite::tensor_utils::MeanStddevNormalization(output_gate_scratch, output_gate_scratch,
-                                                      n_cell, n_batch, kLayerNormEpsilon);
+                                                      n_cell, n_batch);
         tflite::tensor_utils::VectorBatchVectorCwiseProduct(output_layer_norm_weights_buffer,
                                                             n_cell, output_gate_scratch, n_batch,
                                                             output_gate_scratch);
@@ -937,7 +936,7 @@ bool LSTMCell::LSTMStep(
             tflite::tensor_utils::VectorBatchVectorAssign(projection_bias_buffer, n_output, n_batch,
                                                           output_buffer);
         } else {
-            tflite::tensor_utils::ZeroVector(output_buffer, n_batch * n_output);
+            std::fill_n(output_buffer, n_batch * n_output, 0.0f);
         }
         tflite::tensor_utils::MatrixBatchVectorMultiplyAccumulate(
                 projection_weights_buffer, n_output, n_cell, output_gate_scratch, n_batch,
@@ -948,9 +947,9 @@ bool LSTMCell::LSTMStep(
                                              output_buffer);
         }
     } else {
-        tflite::tensor_utils::CopyVector(output_gate_scratch, n_batch * n_output, output_buffer);
+        std::copy_n(output_gate_scratch, n_batch * n_output, output_buffer);
     }
-    tflite::tensor_utils::CopyVector(output_buffer, n_batch * n_output, output_state_out_buffer);
+    std::copy_n(output_buffer, n_batch * n_output, output_state_out_buffer);
     return true;
 }
 
