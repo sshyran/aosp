@@ -19,6 +19,11 @@ cc_library_headers {
     host_supported: false,
     vendor_available: true,
     export_include_dirs: ["."],
+    apex_available: [
+        "//apex_available:platform",
+        "com.android.neuralnetworks",
+        "test_com.android.neuralnetworks",
+    ],
 }
 
 cc_library_static {
