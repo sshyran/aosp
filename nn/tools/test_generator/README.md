@@ -42,6 +42,7 @@ There are currently 10 operand types supported by the test generator.
     * Float32Scalar, shorthand for parameter with type FLOAT32
     * Int32Vector, shorthand for 1-D TENSOR_INT32 parameter
     * Float32Vector, shorthand for 1-D TENSOR_FLOAT32 parameter
+    * SubgraphReference, shortcut for a SUBGRAPH parameter
 - Internal, for model with multiple operations
 
 ### Specifying Models
@@ -339,6 +340,46 @@ Example.SetVersion(<version>, testName0, testName1, ...)
 ```
 
 This is useful when only a subset of variations has a different version.
+
+### Specifying model inputs and outputs
+
+Use `Model.IdentifyInputs` and `Model.IdentifyOutputs` to explicitly specify
+model inputs and outputs. This is particularly useful for models referenced by
+IF and WHILE operations.
+
+```Python
+DataType = ["TENSOR_INT32", "{1}"]
+BoolType = ["TENSOR_BOOL8", "{1}"]
+
+def MakeConditionModel():
+  a = Input("a", DataType)
+  b = Input("b", DataType)
+  out = Output("out", BoolType)
+  model = Model()
+  model.IdentifyInputs(a, b)  # "a" is unused by the model.
+  model.IdentifyOutputs(out)
+  model.Operation("LESS", b, [10]).To(out)
+  return model
+
+def MakeBodyModel():
+  a = Input("a", DataType)
+  b = Input("b", DataType)
+  a_out = Output("a_out", DataType)
+  b_out = Output("b_out", DataType)
+  model = Model()
+  model.IdentifyInputs(a, b)  # The order is the same as in the WHILE operation.
+  model.IdentifyOutputs(a_out, b_out)
+  model.Operation("SUB", b, a, 0).To(a_out)
+  model.Operation("ADD", b, [1], 0).To(b_out)
+  return model
+
+a = Input("a", DataType)
+a_out = Output("a_out", DataType)
+cond = MakeConditionModel()
+body = MakeBodyModel()
+b_init = [1]
+Model().Operation("WHILE", cond, body, a, b_init).To(a_out)
+```
 
 ### Creating negative tests
 

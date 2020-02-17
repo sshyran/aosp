@@ -59,7 +59,7 @@ struct RunTimeOperandInfo {
     // Where the operand's data is stored.  Check the corresponding
     // location information in the model to figure out if this points
     // to memory we have allocated for an temporary operand.
-    uint8_t* buffer;
+    uint8_t* buffer;  // TODO(b/148273353): Change the type to void*.
     // The length of the buffer.
     uint32_t length;
     // Whether this is a temporary variable, a model input, a constant, etc.
@@ -155,25 +155,29 @@ class CpuExecutor {
     }
 
    private:
-    bool initializeRunTimeInfo(const hal::Request& request,
-                               const std::vector<RunTimePoolInfo>& modelPoolInfos,
-                               const std::vector<RunTimePoolInfo>& requestPoolInfos,
-                               std::vector<RunTimeOperandInfo>* operands);
-
+    // Creates runtime info from what's in the model.
+    std::vector<RunTimeOperandInfo> initializeRunTimeInfo(const hal::Subgraph& subgraph);
+    // Adjusts the runtime info for the arguments passed to the model,
+    // modifying the buffer location, and possibly the dimensions.
+    void updateForArguments(const std::vector<uint32_t>& indexes,
+                            const hal::hidl_vec<hal::RequestArgument>& arguments,
+                            const std::vector<RunTimePoolInfo>& requestPoolInfos,
+                            RunTimeOperandInfo* operands);
+    // Runs one subgraph.
+    int executeSubgraph(const hal::Subgraph& subgraph, RunTimeOperandInfo* operands);
     // Runs one operation of the graph.
-    int executeOperation(const hal::Operation& entry, RunTimeOperandInfo* operands);
-    // Decrement the usage count for the operands listed.  Frees the memory
-    // allocated for any temporary variable with a count of zero.
-    void freeNoLongerUsedOperands(const std::vector<uint32_t>& inputs,
-                                  RunTimeOperandInfo* operands);
+    int executeOperation(const hal::Operation& operation, RunTimeOperandInfo* operands);
+    int executeIfOperation(const hal::Operation& operation, RunTimeOperandInfo* operands);
+    int executeWhileOperation(const hal::Operation& operation, RunTimeOperandInfo* operands);
 
-    // Frees the memory allocated for any temporary variable, and sets the
-    // output operand shapes returning to the runtime.
-    void finish(int result, std::vector<RunTimeOperandInfo>* operands);
+    void setOutputShapes(const std::vector<uint32_t>& outputIndexes,
+                         const std::vector<RunTimeOperandInfo>& operands);
 
-    // The model and the request that we'll execute. Only valid while run()
-    // is being executed.
-    const hal::Model* mModel = nullptr;
+    // Compile-time operand value information used by initializeRunTimeInfo.
+    // The fields are only valid while run() is being executed.
+    const hal::hidl_vec<uint8_t>* mModelOperandValues = nullptr;
+    const std::vector<RunTimePoolInfo>* mModelPoolInfos = nullptr;
+    const hal::hidl_vec<hal::Subgraph>* mReferencedSubgraphs = nullptr;
 
     // The output operand shapes returning to the runtime.
     std::vector<hal::OutputShape> mOutputShapes;
