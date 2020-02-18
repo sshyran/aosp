@@ -185,8 +185,13 @@ using VersionedOperandType = typename VersionedType<version>::OperandType;
 
 }  // namespace
 
-// Return a vector with one entry for each non extension OperandType, set to the
-// specified PerformanceInfo value.  The vector will be sorted by OperandType.
+// Return a vector with one entry for each non-extension OperandType except
+// SUBGRAPH, set to the specified PerformanceInfo value.  The vector will be
+// sorted by OperandType.
+//
+// Control flow (OperandType::SUBGRAPH) operation performance is specified
+// separately using Capabilities::ifPerformance and
+// Capabilities::whilePerformance.
 template <HalVersion version>
 hal::hidl_vec<VersionedOperandPerformance<version>> nonExtensionOperandPerformance(
         hal::PerformanceInfo perf);

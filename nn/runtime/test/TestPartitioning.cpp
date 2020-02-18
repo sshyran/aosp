@@ -164,7 +164,9 @@ Capabilities makeCapabilities(float perf) {
     return {.relaxedFloat32toFloat16PerformanceScalar = perfInfo,
             .relaxedFloat32toFloat16PerformanceTensor = perfInfo,
             .operandPerformance =
-                    ::android::nn::nonExtensionOperandPerformance<HalVersion::V1_3>(perfInfo)};
+                    ::android::nn::nonExtensionOperandPerformance<HalVersion::V1_3>(perfInfo),
+            .ifPerformance = perfInfo,
+            .whilePerformance = perfInfo};
 };
 
 void update(Capabilities* capabilities, OperandType type, float perf) {
@@ -801,13 +803,16 @@ class PartitioningTest : public ::testing::Test {
                             float perfRelaxed, uint32_t operationMask,
                             PartitioningDriver::OEM oem = PartitioningDriver::OEMNo)
             : mName(name), mVersionString(version), mOperationMask(operationMask), mOEM(oem) {
+            PerformanceInfo perfInfo = {.execTime = perf, .powerUsage = perf};
             PerformanceInfo perfRelaxedInfo = {.execTime = perfRelaxed, .powerUsage = perfRelaxed};
             mCapabilities = {
                     .relaxedFloat32toFloat16PerformanceScalar = perfRelaxedInfo,
                     .relaxedFloat32toFloat16PerformanceTensor = perfRelaxedInfo,
                     .operandPerformance =
                             ::android::nn::nonExtensionOperandPerformance<HalVersion::V1_3>(
-                                    {.execTime = perf, .powerUsage = perf})};
+                                    perfInfo),
+                    .ifPerformance = perfInfo,
+                    .whilePerformance = perfInfo};
         }
         DeviceSpecification(const std::string& name, float perf, HalVersion halVersion,
                             uint32_t operationMaskV1_0, uint32_t operationMaskV1_1 = 0,

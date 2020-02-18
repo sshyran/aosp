@@ -1951,12 +1951,13 @@ hidl_vec<VersionedOperandPerformance<version>> nonExtensionOperandPerformance(
     // Note: range presents enumerators in declaration order, not in numerical order.
     static constexpr hidl_enum_range<VersionedOperandType<version>> kOperandTypeRange;
 
-    hidl_vec<OpPerf> ret(kOperandTypeRange.end() - kOperandTypeRange.begin());
-
-    std::transform(kOperandTypeRange.begin(), kOperandTypeRange.end(), ret.begin(),
-                   [perf](VersionedOperandType<version> type) {
-                       return OpPerf{type, perf};
-                   });
+    std::vector<OpPerf> ret;
+    ret.reserve(kOperandTypeRange.end() - kOperandTypeRange.begin());
+    for (VersionedOperandType<version> type : kOperandTypeRange) {
+        if (static_cast<OperandType>(type) != OperandType::SUBGRAPH) {
+            ret.push_back(OpPerf{type, perf});
+        }
+    }
     std::sort(ret.begin(), ret.end(),
               [](const OpPerf& a, const OpPerf& b) { return a.type < b.type; });
 

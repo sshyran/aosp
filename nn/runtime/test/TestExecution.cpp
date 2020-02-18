@@ -245,7 +245,9 @@ class TestDriver13 : public SampleDriver {
                 .relaxedFloat32toFloat16PerformanceScalar = kPerf,
                 .relaxedFloat32toFloat16PerformanceTensor = kPerf,
                 .operandPerformance =
-                        nn::nonExtensionOperandPerformance<nn::HalVersion::V1_3>(kPerf)};
+                        nn::nonExtensionOperandPerformance<nn::HalVersion::V1_3>(kPerf),
+                .ifPerformance = kPerf,
+                .whilePerformance = kPerf};
         _hidl_cb(V1_3::ErrorStatus::NONE, capabilities);
         return Void();
     }
