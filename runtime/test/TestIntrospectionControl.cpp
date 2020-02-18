@@ -120,7 +120,9 @@ class IntrospectionControlTest : public ::testing::Test {
                     .relaxedFloat32toFloat16PerformanceScalar = perfInfo,
                     .relaxedFloat32toFloat16PerformanceTensor = perfInfo,
                     .operandPerformance =
-                            nn::nonExtensionOperandPerformance<nn::HalVersion::V1_3>(perfInfo)};
+                            nn::nonExtensionOperandPerformance<nn::HalVersion::V1_3>(perfInfo),
+                    .ifPerformance = perfInfo,
+                    .whilePerformance = perfInfo};
         }
         std::string mName;
         Capabilities mCapabilities;
