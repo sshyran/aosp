@@ -131,15 +131,29 @@ class ModelBuilder {
                          ExecutionPlan* plan) const;
 
    private:
-    // TODO: move partitionTheWork, findBestDeviceForEachOperation,
-    // sortIntoRunOrder to CompilationBuilder?
+    // TODO(b/132322449): move partitionTheWork, partitionTheWorkInternal,
+    // findBestDeviceForEachOperation, sortIntoRunOrder to CompilationBuilder?
 
+    // Populates bestDeviceForOperation
+    //
+    // For 0 <= i < operationCount(), produces
+    //
+    //     0 <= (*bestDeviceForOperation)[i] <= devices.size()
+    //
+    // (*bestDeviceForOperation)[i] == devices.size() is a special value meaning
+    // that this is a control flow operation scheduled for interpreted execution
+    // (see LogicalStep).
     int findBestDeviceForEachOperation(uint32_t preference,
                                        const std::vector<std::shared_ptr<Device>>& devices,
                                        std::vector<int>* bestDeviceForOperation) const;
     float getPerformance(uint32_t preference, const std::shared_ptr<Device> device) const;
     float getPerformance(uint32_t preference, const std::shared_ptr<Device> device,
                          uint32_t operationIndex) const;
+
+    int partitionTheWorkInternal(uint32_t sourceModelIndex,
+                                 const std::vector<std::shared_ptr<Device>>& devices,
+                                 uint32_t preference, uint32_t priority,
+                                 const hal::OptionalTimePoint& deadline, ExecutionPlan* plan) const;
 
     // Return true if either mCompleteModel or mInvalidModel is true.
     bool badState(const char* name);
