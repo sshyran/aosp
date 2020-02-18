@@ -135,13 +135,15 @@ class DriverPreparedModel : public PreparedModel {
             const std::vector<ModelArgumentInfo>& inputs,
             const std::vector<ModelArgumentInfo>& outputs, const MemoryTracker& memories,
             const std::shared_ptr<ExecutionBurstController>& burstController, MeasureTiming measure,
-            const OptionalTimePoint& deadline) const override;
+            const OptionalTimePoint& deadline,
+            const OptionalTimeoutDuration& loopTimeoutDuration) const override;
 
     std::tuple<int, int, sp<hal::IFencedExecutionCallback>, hal::Timing> executeFenced(
             const std::vector<ModelArgumentInfo>& inputs,
             const std::vector<ModelArgumentInfo>& outputs, const MemoryTracker& memories,
             const std::vector<int>& waitFor, MeasureTiming measure,
             const hal::OptionalTimePoint& deadline,
+            const OptionalTimeoutDuration& loopTimeoutDuration,
             const hal::OptionalTimeoutDuration& timeoutDurationAfterFence) const override;
 
     std::shared_ptr<ExecutionBurstController> configureExecutionBurst(
@@ -319,7 +321,8 @@ std::tuple<int, std::vector<OutputShape>, Timing> DriverPreparedModel::execute(
         const std::vector<ModelArgumentInfo>& inputs, const std::vector<ModelArgumentInfo>& outputs,
         const MemoryTracker& memories,
         const std::shared_ptr<ExecutionBurstController>& burstController, MeasureTiming measure,
-        const OptionalTimePoint& deadline) const {
+        const OptionalTimePoint& deadline,
+        const OptionalTimeoutDuration& loopTimeoutDuration) const {
     NNTRACE_RT(NNTRACE_PHASE_INPUTS_AND_OUTPUTS, "DriverPreparedModel::execute");
 
     // Make a copy of the memory tracker as we will append memory pools for pointer arguments.
@@ -395,8 +398,8 @@ std::tuple<int, std::vector<OutputShape>, Timing> DriverPreparedModel::execute(
     // (2) the burst execution failed and requested a fallback execution
     if (!burstCompute || burstFallback) {
         const bool preferSynchronous = DeviceManager::get()->syncExecHal();
-        std::tie(n, outputShapes, timing) =
-                mPreparedModel->execute(request, measure, deadline, preferSynchronous);
+        std::tie(n, outputShapes, timing) = mPreparedModel->execute(
+                request, measure, deadline, loopTimeoutDuration, preferSynchronous);
     }
 
     if (n != ANEURALNETWORKS_NO_ERROR) {
@@ -425,7 +428,7 @@ std::tuple<int, int, sp<hal::IFencedExecutionCallback>, hal::Timing>
 DriverPreparedModel::executeFenced(
         const std::vector<ModelArgumentInfo>& inputs, const std::vector<ModelArgumentInfo>& outputs,
         const MemoryTracker& memories, const std::vector<int>& waitFor, hal::MeasureTiming measure,
-        const hal::OptionalTimePoint& deadline,
+        const hal::OptionalTimePoint& deadline, const OptionalTimeoutDuration& loopTimeoutDuration,
         const hal::OptionalTimeoutDuration& timeoutDurationAfterFence) const {
     NNTRACE_RT(NNTRACE_PHASE_INPUTS_AND_OUTPUTS, "DriverPreparedModel::executeFenced");
     CHECK(std::all_of(waitFor.begin(), waitFor.end(), [](int fd) { return fd > 0; }));
@@ -495,8 +498,9 @@ DriverPreparedModel::executeFenced(
     }
 
     hidl_handle syncFence;
-    std::tie(n, syncFence, executeFencedCallback, timing) = mPreparedModel->executeFenced(
-            request, waitForHandles, measure, deadline, timeoutDurationAfterFence);
+    std::tie(n, syncFence, executeFencedCallback, timing) =
+            mPreparedModel->executeFenced(request, waitForHandles, measure, deadline,
+                                          loopTimeoutDuration, timeoutDurationAfterFence);
 
     if (n != ANEURALNETWORKS_NO_ERROR) {
         VLOG(EXECUTION) << "**executeFenced failed**";
@@ -606,7 +610,8 @@ class CpuPreparedModel : public PreparedModel {
             const std::vector<ModelArgumentInfo>& inputs,
             const std::vector<ModelArgumentInfo>& outputs, const MemoryTracker& memories,
             const std::shared_ptr<ExecutionBurstController>& burstController, MeasureTiming measure,
-            const OptionalTimePoint& deadline) const override;
+            const OptionalTimePoint& deadline,
+            const OptionalTimeoutDuration& loopTimeoutDuration) const override;
 
     std::shared_ptr<ExecutionBurstController> configureExecutionBurst(
             bool /*preferPowerOverLatency*/) const override {
@@ -618,6 +623,7 @@ class CpuPreparedModel : public PreparedModel {
             const std::vector<ModelArgumentInfo>& outputs, const MemoryTracker& memories,
             const std::vector<int>& wait_for, MeasureTiming measure,
             const hal::OptionalTimePoint& deadline,
+            const OptionalTimeoutDuration& loopTimeoutDuration,
             const hal::OptionalTimeoutDuration& timeoutDurationAfterFence) const override;
 
     // Prefer to use CpuPreparedModel::create.
@@ -677,9 +683,14 @@ std::pair<int, std::shared_ptr<PreparedModel>> CpuPreparedModel::create(Model hi
 static std::tuple<int, std::vector<OutputShape>, Timing> computeOnCpu(
         const Model& model, const Request& request,
         const std::vector<RunTimePoolInfo>& modelPoolInfos,
-        const std::vector<RunTimePoolInfo>& requestPoolInfos) {
+        const std::vector<RunTimePoolInfo>& requestPoolInfos,
+        const OptionalTimeoutDuration& loopTimeoutDuration) {
     NNTRACE_RT(NNTRACE_PHASE_EXECUTION, "computeOnCpu");
     CpuExecutor executor;
+    if (loopTimeoutDuration.getDiscriminator() !=
+        OptionalTimeoutDuration::hidl_discriminator::none) {
+        executor.setLoopTimeout(loopTimeoutDuration.nanoseconds());
+    }
     int err = executor.run(model, request, modelPoolInfos, requestPoolInfos);
     const auto& outputShapes = executor.getOutputShapes();
     return {err, outputShapes, kNoTiming};
@@ -690,6 +701,7 @@ CpuPreparedModel::executeFenced(const std::vector<ModelArgumentInfo>& inputs,
                                 const std::vector<ModelArgumentInfo>& outputs,
                                 const MemoryTracker& memories, const std::vector<int>& waitFor,
                                 hal::MeasureTiming measure, const hal::OptionalTimePoint&,
+                                const OptionalTimeoutDuration& loopTimeoutDuration,
                                 const hal::OptionalTimeoutDuration&) const {
     VLOG(EXECUTION)
             << "CpuPreparedModel::executeFenced wait for sync fences to signal before execution";
@@ -703,7 +715,7 @@ CpuPreparedModel::executeFenced(const std::vector<ModelArgumentInfo>& inputs,
         }
     }
     const auto [result, outputShapes, timing] =
-            execute(inputs, outputs, memories, nullptr, measure, {});
+            execute(inputs, outputs, memories, nullptr, measure, {}, loopTimeoutDuration);
     return {result, -1, nullptr, timing};
 }
 
@@ -718,7 +730,8 @@ std::tuple<int, std::vector<OutputShape>, Timing> CpuPreparedModel::execute(
         const std::vector<ModelArgumentInfo>& inputs, const std::vector<ModelArgumentInfo>& outputs,
         const MemoryTracker& memories,
         const std::shared_ptr<ExecutionBurstController>& /*burstController*/,
-        MeasureTiming /*measure*/, const OptionalTimePoint& deadline) const {
+        MeasureTiming /*measure*/, const OptionalTimePoint& deadline,
+        const OptionalTimeoutDuration& loopTimeoutDuration) const {
     if (deadline.getDiscriminator() != OptionalTimePoint::hidl_discriminator::none) {
         return {ANEURALNETWORKS_BAD_DATA, {}, kNoTiming};
     }
@@ -761,13 +774,14 @@ std::tuple<int, std::vector<OutputShape>, Timing> CpuPreparedModel::execute(
         // TODO(mikie): this could have NNTRACE so we could measure the overhead
         //              of spinning up a new thread.
         std::tuple<int, std::vector<OutputShape>, Timing> result = {};
-        std::thread([this, &request, &requestPoolInfos, &result] {
-            result = computeOnCpu(mModel, request, mModelPoolInfos, requestPoolInfos);
+        std::thread([this, &request, &requestPoolInfos, &loopTimeoutDuration, &result] {
+            result = computeOnCpu(mModel, request, mModelPoolInfos, requestPoolInfos,
+                                  loopTimeoutDuration);
         }).join();
         return result;
     }
 
-    return computeOnCpu(mModel, request, mModelPoolInfos, requestPoolInfos);
+    return computeOnCpu(mModel, request, mModelPoolInfos, requestPoolInfos, loopTimeoutDuration);
 }
 
 DeviceManager* DeviceManager::get() {

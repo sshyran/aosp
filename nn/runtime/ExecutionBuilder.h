@@ -24,6 +24,7 @@
 #include <vector>
 
 #include "Callbacks.h"
+#include "ControlFlow.h"
 #include "HalInterfaces.h"
 #include "Memory.h"
 #include "ModelArgumentInfo.h"
@@ -66,6 +67,10 @@ class ExecutionBuilder {
     int setTimeoutDuration(uint64_t duration);
 
     std::optional<uint64_t> getTimeoutDuration() const;
+
+    int setLoopTimeout(uint64_t duration);
+
+    uint64_t getLoopTimeoutDuration() const { return mLoopTimeoutDuration; }
 
     int computeFenced(const std::vector<int>& wait_for, uint64_t timeoutDurationAfterFence,
                       int* sync_fence);
@@ -157,6 +162,9 @@ class ExecutionBuilder {
 
     // Amount of time to complete or abort the execution.
     std::optional<uint64_t> mTimeoutDuration;
+
+    // Amount of time to complete or abort a loop.
+    uint64_t mLoopTimeoutDuration = operation_while::kTimeoutNsDefault;
 
     // Properties cannot be set once the execution has started.
     std::atomic_bool mStarted = false;

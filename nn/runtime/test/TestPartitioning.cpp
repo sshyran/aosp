@@ -304,6 +304,7 @@ class PartitioningDriver : public SampleDriver {
         }
         Return<V1_3::ErrorStatus> execute_1_3(const V1_3::Request&, MeasureTiming,
                                               const OptionalTimePoint&,
+                                              const OptionalTimeoutDuration&,
                                               const sp<V1_3::IExecutionCallback>&) override {
             return V1_3::ErrorStatus::DEVICE_UNAVAILABLE;
         }
@@ -314,6 +315,7 @@ class PartitioningDriver : public SampleDriver {
         }
         Return<void> executeSynchronously_1_3(const V1_3::Request&, MeasureTiming,
                                               const OptionalTimePoint&,
+                                              const OptionalTimeoutDuration&,
                                               executeSynchronously_1_3_cb cb) override {
             cb(V1_3::ErrorStatus::DEVICE_UNAVAILABLE, {}, kBadTiming);
             return Void();
@@ -328,7 +330,7 @@ class PartitioningDriver : public SampleDriver {
         }
         Return<void> executeFenced(const Request&, const hidl_vec<hidl_handle>&, MeasureTiming,
                                    const OptionalTimePoint&, const OptionalTimeoutDuration&,
-                                   executeFenced_cb cb) {
+                                   const OptionalTimeoutDuration&, executeFenced_cb cb) {
             cb(ErrorStatus::DEVICE_UNAVAILABLE, hidl_handle(nullptr), nullptr);
             return Void();
         }
