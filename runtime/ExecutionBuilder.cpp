@@ -32,6 +32,7 @@
 #include <vector>
 
 #include "CompilationBuilder.h"
+#include "ControlFlow.h"
 #include "CpuExecutor.h"
 #include "ExecutionBurstController.h"
 #include "HalInterfaces.h"
@@ -342,6 +343,16 @@ std::optional<uint64_t> ExecutionBuilder::getTimeoutDuration() const {
     return mTimeoutDuration;
 }
 
+int ExecutionBuilder::setLoopTimeout(uint64_t duration) {
+    if (duration > operation_while::kTimeoutNsMaximum) {
+        LOG(WARNING) << "ANeuralNetworksExecution_setLoopTimeout input exceeds the maximum allowed "
+                     << "duration: " << duration << " > " << operation_while::kTimeoutNsMaximum;
+        duration = operation_while::kTimeoutNsMaximum;
+    }
+    mLoopTimeoutDuration = duration;
+    return ANEURALNETWORKS_NO_ERROR;
+}
+
 int ExecutionBuilder::getOutputOperandDimensions(uint32_t index, uint32_t* dimensions) {
     if (!mFinished && !hasSyncFence()) {
         LOG(ERROR) << "ANeuralNetworksExecution_getOutputOperandDimensions called before the "
@@ -464,7 +475,11 @@ static void asyncStartComputePartitioned(ExecutionBuilder* executionBuilder,
         std::shared_ptr<ExecutionBurstController> burstController;
         int n = plan.next(controller, &executor, &burstController);
         if (n != ANEURALNETWORKS_NO_ERROR) {
-            if (allowFallback) break;
+            // During the interpreted execution of control flow, a loop timeout
+            // might occur in ExecutionPlan::next().
+            bool missedDeadline = n == ANEURALNETWORKS_MISSED_DEADLINE_TRANSIENT ||
+                                  n == ANEURALNETWORKS_MISSED_DEADLINE_PERSISTENT;
+            if (allowFallback && !missedDeadline) break;
             executionCallback->notify(convertResultCodeToErrorStatus(n), {}, kNoTiming);
             return;
         }
@@ -985,6 +1000,12 @@ bool StepExecutor::isCpu() const {
     return mDevice == DeviceManager::getCpuDevice();
 }
 
+static OptionalTimeoutDuration makeTimeoutDuration(uint64_t nanoseconds) {
+    OptionalTimeoutDuration otd;
+    otd.nanoseconds(nanoseconds);
+    return otd;
+}
+
 std::tuple<int, std::vector<OutputShape>, Timing> StepExecutor::compute(
         const std::shared_ptr<ExecutionBurstController>& burstController) {
     CHECK(mPreparedModel != nullptr);
@@ -999,8 +1020,10 @@ std::tuple<int, std::vector<OutputShape>, Timing> StepExecutor::compute(
     if (timePointN != ANEURALNETWORKS_NO_ERROR) {
         return {timePointN, {}, kNoTiming};
     }
+    const OptionalTimeoutDuration loopTimeoutDuration =
+            makeTimeoutDuration(mExecutionBuilder->getLoopTimeoutDuration());
     const auto [n, outputShapes, timing] = mPreparedModel->execute(
-            mInputs, mOutputs, mMemories, burstController, measure, deadline);
+            mInputs, mOutputs, mMemories, burstController, measure, deadline, loopTimeoutDuration);
     mExecutionBuilder->reportTiming(timing);
 
     return {n, std::move(outputShapes), timing};
@@ -1020,12 +1043,15 @@ std::tuple<int, int, sp<hal::IFencedExecutionCallback>> StepExecutor::computeFen
     if (timePointN != ANEURALNETWORKS_NO_ERROR) {
         return {timePointN, -1, nullptr};
     }
-    OptionalTimeoutDuration otd;
+    const OptionalTimeoutDuration loopTimeoutDuration =
+            makeTimeoutDuration(mExecutionBuilder->getLoopTimeoutDuration());
+    OptionalTimeoutDuration optionalTimeoutDurationAfterFence;
     if (timeoutDurationAfterFence > 0) {
-        otd.nanoseconds(timeoutDurationAfterFence);
+        optionalTimeoutDurationAfterFence.nanoseconds(timeoutDurationAfterFence);
     }
-    const auto [n, syncFence, computeFencedCallback, timing] = mPreparedModel->executeFenced(
-            mInputs, mOutputs, mMemories, waitFor, measure, deadline, otd);
+    const auto [n, syncFence, computeFencedCallback, timing] =
+            mPreparedModel->executeFenced(mInputs, mOutputs, mMemories, waitFor, measure, deadline,
+                                          loopTimeoutDuration, optionalTimeoutDurationAfterFence);
     if (syncFence < 0 && computeFencedCallback == nullptr) {
         mExecutionBuilder->reportTiming(timing);
     }

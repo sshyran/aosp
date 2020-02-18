@@ -359,7 +359,7 @@ class TestPreparedModelLatest : public SamplePreparedModel {
     }
 
     Return<V1_3::ErrorStatus> execute_1_3(const V1_3::Request&, MeasureTiming measure,
-                                          const OptionalTimePoint&,
+                                          const OptionalTimePoint&, const OptionalTimeoutDuration&,
                                           const sp<V1_3::IExecutionCallback>& callback) override {
         // Use a dummy V1_0::Request because execute_1_2 ignores request entirely.
         const V1_0::ErrorStatus status = execute_1_2(V1_0::Request{}, measure, callback);
@@ -392,7 +392,7 @@ class TestPreparedModelLatest : public SamplePreparedModel {
     }
 
     Return<void> executeSynchronously_1_3(const V1_3::Request&, MeasureTiming measure,
-                                          const OptionalTimePoint&,
+                                          const OptionalTimePoint&, const OptionalTimeoutDuration&,
                                           executeSynchronously_1_3_cb cb) override {
         const auto wrappedCb = [&cb](V1_0::ErrorStatus status,
                                      const hidl_vec<OutputShape>& outputShapes, Timing timing) {

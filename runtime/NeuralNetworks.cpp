@@ -32,6 +32,7 @@
 #include "BurstBuilder.h"
 #include "Callbacks.h"
 #include "CompilationBuilder.h"
+#include "ControlFlow.h"
 #include "Event.h"
 #include "ExecutionBuilder.h"
 #include "HalInterfaces.h"
@@ -44,6 +45,7 @@
 #include "Tracing.h"
 #include "Utils.h"
 
+using namespace android::nn;
 using namespace android::nn::hal;
 
 // Make sure the constants defined in the header files have not changed values.
@@ -607,7 +609,13 @@ static_assert(ANEURALNETWORKS_PRIORITY_HIGH == 110, "ANEURALNETWORKS_PRIORITY_HI
 static_assert(ANEURALNETWORKS_PRIORITY_DEFAULT == ANEURALNETWORKS_PRIORITY_MEDIUM,
               "ANEURALNETWORKS_PRIORITY_DEFAULT has changed");
 
-using namespace android::nn;
+// Asserts for loop timeout duration
+static_assert(static_cast<uint64_t>(LoopTimeoutDurationNs::DEFAULT) ==
+                      operation_while::kTimeoutNsDefault,
+              "LoopTimeoutDurationNs::DEFAULT != operation_while::kTimeoutNsDefault");
+static_assert(static_cast<uint64_t>(LoopTimeoutDurationNs::MAXIMUM) ==
+                      operation_while::kTimeoutNsMaximum,
+              "LoopTimeoutDurationNs::MAXIMUM != operation_while::kTimeoutNsMaximum");
 
 int ANeuralNetworks_getDeviceCount(uint32_t* numDevices) {
     if (numDevices == nullptr) {
@@ -1409,6 +1417,26 @@ void ANeuralNetworksEvent_free(ANeuralNetworksEvent* event) {
         e->wait();
         delete e;
     }
+}
+
+int ANeuralNetworksExecution_setLoopTimeout(ANeuralNetworksExecution* execution,
+                                            uint64_t duration) {
+    NNTRACE_RT(NNTRACE_PHASE_EXECUTION, "ANeuralNetworksExecution_setLoopTimeout");
+    if (!execution) {
+        LOG(ERROR) << "ANeuralNetworksExecution_setLoopTimeout passed a nullptr";
+        return ANEURALNETWORKS_UNEXPECTED_NULL;
+    }
+
+    ExecutionBuilder* r = reinterpret_cast<ExecutionBuilder*>(execution);
+    return r->setLoopTimeout(duration);
+}
+
+uint64_t ANeuralNetworks_getDefaultLoopTimeout() {
+    return operation_while::kTimeoutNsDefault;
+}
+
+uint64_t ANeuralNetworks_getMaximumLoopTimeout() {
+    return operation_while::kTimeoutNsMaximum;
 }
 
 int ANeuralNetworksDevice_getExtensionSupport(const ANeuralNetworksDevice* device,

@@ -1857,6 +1857,8 @@ int CpuExecutor::executeWhileOperation(const Operation& operation, RunTimeOperan
     condOutput.buffer = &condValue;
     condOutput.length = sizeof(condValue);
 
+    std::chrono::nanoseconds timeoutDuration(mLoopTimeoutDuration);
+    const auto startTime = std::chrono::steady_clock::now();
     for (uint32_t iteration = 0;; ++iteration) {
         VLOG(CPUEXE) << "CpuExecutor::executeWhileOperation: iteration " << iteration;
         if (iteration != 0) {
@@ -1867,9 +1869,18 @@ int CpuExecutor::executeWhileOperation(const Operation& operation, RunTimeOperan
             }
         }
         NN_RETURN_IF_ERROR(executeSubgraph(condSubgraph, condOperands.data()));
-        VLOG(CPUEXE) << "CpuExecutor::executeWhileOperation: condition value: " << iteration;
+        VLOG(CPUEXE) << "CpuExecutor::executeWhileOperation: condition value: "
+                     << static_cast<int>(condValue);
         if (!condValue) {
             break;
+        }
+
+        const auto duration = std::chrono::steady_clock::now() - startTime;
+        if (duration > timeoutDuration) {
+            LOG(ERROR) << "CpuExecutor::executeWhileOperation: timed out after "
+                       << std::chrono::duration_cast<std::chrono::milliseconds>(duration).count()
+                       << " ms";
+            return ANEURALNETWORKS_MISSED_DEADLINE_TRANSIENT;
         }
 
         // Set body inputs from condition inputs.
