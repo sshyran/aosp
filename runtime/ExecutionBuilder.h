@@ -238,6 +238,7 @@ class StepExecutor {
 
     // Executes using the (driver, preparedModel) specified at construction time.
     std::tuple<int, std::vector<hal::OutputShape>, hal::Timing> compute(
+            const hal::OptionalTimePoint& deadline,
             const std::shared_ptr<ExecutionBurstController>& burstController = nullptr);
 
     // Re-compiles and executes using the CPU, regardless of the (driver,
