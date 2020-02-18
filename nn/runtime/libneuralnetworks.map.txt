@@ -28,8 +28,6 @@ LIBNEURALNETWORKS {
     ANeuralNetworksDevice_getType; # introduced=Q
     ANeuralNetworksDevice_getVersion; # introduced=Q
     ANeuralNetworksDevice_getFeatureLevel; # introduced=Q
-    ANeuralNetworksDevice_supportsCompilationTimeout; # introduced=30
-    ANeuralNetworksDevice_supportsExecutionTimeout; # introduced=30
     ANeuralNetworksDevice_wait; # introduced=30
     ANeuralNetworksMemory_createFromAHardwareBuffer; # introduced=Q
     ANeuralNetworksMemory_createFromDesc; # introduced=30
