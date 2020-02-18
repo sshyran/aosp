@@ -179,7 +179,9 @@ Return<void> FibonacciDriver::getCapabilities_1_3(getCapabilities_1_3_cb cb) {
     Capabilities capabilities = {
             .relaxedFloat32toFloat16PerformanceScalar = kPerf,
             .relaxedFloat32toFloat16PerformanceTensor = kPerf,
-            .operandPerformance = nonExtensionOperandPerformance<HalVersion::V1_3>(kPerf)};
+            .operandPerformance = nonExtensionOperandPerformance<HalVersion::V1_3>(kPerf),
+            .ifPerformance = kPerf,
+            .whilePerformance = kPerf};
     cb(V1_3::ErrorStatus::NONE, capabilities);
     return Void();
 }
