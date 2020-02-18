@@ -94,9 +94,6 @@ class DriverDevice : public Device {
                 kInterface->getNumberOfCacheFilesNeeded();
         return numModelCacheFiles > 0 || numDataCacheFiles > 0;
     }
-    std::pair<bool, bool> supportsDeadlines() const override {
-        return kInterface->supportsDeadlines();
-    }
     int wait() const override { return kInterface->wait(); }
 
     std::pair<int, std::shared_ptr<PreparedModel>> prepareModel(
@@ -568,9 +565,6 @@ class CpuDevice : public Device {
     PerformanceInfo getIfPerformance() const override { return kPerformance; }
     PerformanceInfo getWhilePerformance() const override { return kPerformance; }
     bool isCachingSupported() const override { return false; }
-    std::pair<bool, bool> supportsDeadlines() const override {
-        return {/*prepareModelDeadline=*/false, /*executionDeadline=*/false};
-    }
     int wait() const override { return ANEURALNETWORKS_NO_ERROR; }
 
     std::pair<int, std::shared_ptr<PreparedModel>> prepareModel(
