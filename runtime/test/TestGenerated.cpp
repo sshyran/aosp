@@ -550,8 +550,9 @@ INSTANTIATE_GENERATED_TEST(DynamicOutputShapeTest, [](const TestModel& testModel
     return !testModel.expectFailure && !testModel.hasScalarOutputs();
 });
 
-INSTANTIATE_GENERATED_TEST(GeneratedValidationTests,
-                           [](const TestModel& testModel) { return testModel.expectFailure; });
+INSTANTIATE_GENERATED_TEST(GeneratedValidationTests, [](const TestModel& testModel) {
+    return testModel.expectFailure && !testModel.isInfiniteLoopTimeoutTest();
+});
 
 INSTANTIATE_GENERATED_TEST(QuantizationCouplingTest, [](const TestModel& testModel) {
     return testModel.main.operations.size() == 1 && testModel.referenced.size() == 0 &&
