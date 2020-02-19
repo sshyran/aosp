@@ -2357,6 +2357,8 @@ int ANeuralNetworksExecution_setTimeout(ANeuralNetworksExecution* execution, uin
  *     overridden by that value.
  *
  * @return ANEURALNETWORKS_NO_ERROR if successful.
+ *         ANEURALNETWORKS_BAD_STATE if execution has started.
+ *         ANEURALNETWORKS_UNEXPECTED_NULL if execution is NULL.
  *
  * Available since API level 30.
  */
