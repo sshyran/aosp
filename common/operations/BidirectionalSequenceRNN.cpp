@@ -88,6 +88,37 @@ Shape removeFirstDim(const Shape& input) {
     return output;
 }
 
+enum class LinkingMode {
+    NO_LINKING,
+    PARALLEL_LINKING,
+    CROSS_LINKING,
+};
+
+bool getLinkingMode(IOperationExecutionContext* context, LinkingMode* linkingMode) {
+    const bool hasAuxInput = !context->isOmittedInput(kAuxInputTensor);
+    const bool hasFwAuxWeights = !context->isOmittedInput(kFwAuxWeightsTensor);
+    const bool hasBwAuxWeights = !context->isOmittedInput(kBwAuxWeightsTensor);
+
+    // Three possible configurations for three possible linking modes:
+    // 1) NO_LINKING -- no auxiliary tensors at all
+    // 2) PARALLEL_LINKING -- auxiliary input is provided and used as a regular
+    //    input to the backward network, so the auxiliary weights are omitted.
+    // 3) CROSS_LINKING -- auxiliary input is provided and multiplied by
+    //    auxiliary weights.
+    if (!hasAuxInput && !hasFwAuxWeights && !hasBwAuxWeights) {
+        *linkingMode = LinkingMode::NO_LINKING;
+    } else if (hasAuxInput && !hasFwAuxWeights && !hasBwAuxWeights) {
+        *linkingMode = LinkingMode::PARALLEL_LINKING;
+    } else if (hasAuxInput && hasFwAuxWeights && hasBwAuxWeights) {
+        *linkingMode = LinkingMode::CROSS_LINKING;
+    } else {
+        NN_RET_CHECK_FAIL()
+                << "Unsupported auxiliary tensors configuration for BIDIRECTIONAL_SEQUENCE_RNN.";
+    }
+
+    return true;
+}
+
 template <typename T>
 bool executeTyped(IOperationExecutionContext* context) {
     const T* input = context->getInputBuffer<T>(kInputTensor);
@@ -110,19 +141,25 @@ bool executeTyped(IOperationExecutionContext* context) {
     const T* auxInput = nullptr;
     const T* fwAuxWeights = nullptr;
     const T* bwAuxWeights = nullptr;
-    const bool hasAuxInputs = !context->isOmittedInput(kAuxInputTensor);
-    if (hasAuxInputs) {
+    LinkingMode linkingMode;
+    NN_RET_CHECK(getLinkingMode(context, &linkingMode));
+    if (linkingMode == LinkingMode::CROSS_LINKING) {
         auxInput = context->getInputBuffer<T>(kAuxInputTensor);
         fwAuxWeights = context->getInputBuffer<T>(kFwAuxWeightsTensor);
         bwAuxWeights = context->getInputBuffer<T>(kBwAuxWeightsTensor);
+    } else if (linkingMode == LinkingMode::PARALLEL_LINKING) {
+        auxInput = context->getInputBuffer<T>(kAuxInputTensor);
     }
+    const bool hasAuxInput = (linkingMode == LinkingMode::CROSS_LINKING ||
+                              linkingMode == LinkingMode::PARALLEL_LINKING);
+    const bool hasAuxWeights = (linkingMode == LinkingMode::CROSS_LINKING);
     Shape auxInputShape = context->getInputShape(kAuxInputTensor);
     Shape fwAuxWeightsShape = context->getInputShape(kFwAuxWeightsTensor);
     Shape bwAuxWeightsShape = context->getInputShape(kBwAuxWeightsTensor);
 
-    int32_t activation = context->getInputValue<int32_t>(kActivationParam);
-    bool timeMajor = context->getInputValue<bool>(kTimeMajorParam);
-    bool mergeOutputs = context->getInputValue<bool>(kMergeOutputsParam);
+    const int32_t activation = context->getInputValue<int32_t>(kActivationParam);
+    const bool timeMajor = context->getInputValue<bool>(kTimeMajorParam);
+    const bool mergeOutputs = context->getInputValue<bool>(kMergeOutputsParam);
 
     T* fwOutput = context->getOutputBuffer<T>(kFwOutputTensor);
     Shape fwOutputShape = context->getOutputShape(kFwOutputTensor);
@@ -143,7 +180,7 @@ bool executeTyped(IOperationExecutionContext* context) {
     if (!timeMajor) {
         // First, resize temporary buffers to accommodate for transposed tensors.
         inputTransposed.resize(getNumberOfElements(inputShape));
-        if (hasAuxInputs) {
+        if (hasAuxInput) {
             auxInputTransposed.resize(getNumberOfElements(auxInputShape));
         }
         fwOutputTransposed.resize(getNumberOfElements(fwOutputShape));
@@ -153,13 +190,13 @@ bool executeTyped(IOperationExecutionContext* context) {
 
         // Transpose the input tensors.
         transposeFirstTwoDims(input, inputShape, inputTransposed.data());
-        if (hasAuxInputs) {
+        if (hasAuxInput) {
             transposeFirstTwoDims(auxInput, auxInputShape, auxInputTransposed.data());
         }
 
         // Change input and output pointers to the temporary buffers.
         input = inputTransposed.data();
-        if (hasAuxInputs) {
+        if (hasAuxInput) {
             auxInput = auxInputTransposed.data();
         }
         fwOutput = fwOutputTransposed.data();
@@ -170,7 +207,7 @@ bool executeTyped(IOperationExecutionContext* context) {
         // Swap the first two dimensions in the Shapes to reflect the
         // transposition.
         std::swap(inputShape.dimensions[0], inputShape.dimensions[1]);
-        if (hasAuxInputs) {
+        if (hasAuxInput) {
             std::swap(auxInputShape.dimensions[0], auxInputShape.dimensions[1]);
         }
         std::swap(fwOutputShape.dimensions[0], fwOutputShape.dimensions[1]);
@@ -183,7 +220,7 @@ bool executeTyped(IOperationExecutionContext* context) {
     const uint32_t batchSize = getSizeOfDimension(inputShape, 1);
     const uint32_t inputSize = getSizeOfDimension(inputShape, 2);
     uint32_t auxInputSize = 0;
-    if (hasAuxInputs) {
+    if (hasAuxInput) {
         auxInputSize = getSizeOfDimension(auxInputShape, 2);
     }
     const uint32_t fwNumUnits = getSizeOfDimension(fwWeightsShape, 0);
@@ -191,8 +228,14 @@ bool executeTyped(IOperationExecutionContext* context) {
 
     Shape fixedTimeInputShape = removeFirstDim(inputShape);
     Shape fixedTimeAuxInputShape = auxInputShape;
-    if (hasAuxInputs) {
+    if (hasAuxInput) {
         fixedTimeAuxInputShape = removeFirstDim(auxInputShape);
+    }
+
+    const T* bwInput = input;
+    if (linkingMode == LinkingMode::PARALLEL_LINKING) {
+        bwInput = auxInput;
+        auxInput = nullptr;
     }
 
     const bool outputState = (context->getNumOutputs() == kNumOutputsWithState ||
@@ -215,7 +258,7 @@ bool executeTyped(IOperationExecutionContext* context) {
     for (int i = 0; i < maxTime; ++i) {
         const T* inputBatchPtr = input + i * batchSize * inputSize;
         const T* auxInputBatchPtr = nullptr;
-        if (hasAuxInputs) {
+        if (hasAuxWeights) {
             auxInputBatchPtr = auxInput + i * batchSize * auxInputSize;
         }
         const uint32_t fwOutputBatchStride = mergeOutputs ? (fwNumUnits + bwNumUnits) : fwNumUnits;
@@ -232,9 +275,9 @@ bool executeTyped(IOperationExecutionContext* context) {
 
     // Backward pass
     for (int i = maxTime - 1; i >= 0; --i) {
-        const T* inputBatchPtr = input + i * batchSize * inputSize;
+        const T* inputBatchPtr = bwInput + i * batchSize * inputSize;
         const T* auxInputBatchPtr = nullptr;
-        if (hasAuxInputs) {
+        if (hasAuxWeights) {
             auxInputBatchPtr = auxInput + i * batchSize * auxInputSize;
         }
         T* bwOutputBatchPtr;
@@ -336,16 +379,10 @@ bool prepare(IOperationExecutionContext* context) {
     Shape fwAuxWeights = context->getInputShape(kFwAuxWeightsTensor);
     Shape bwAuxWeights = context->getInputShape(kBwAuxWeightsTensor);
 
-    const bool auxInputsAllOrNone = (context->isOmittedInput(kAuxInputTensor) &&
-                                     context->isOmittedInput(kFwAuxWeightsTensor) &&
-                                     context->isOmittedInput(kBwAuxWeightsTensor)) ||
-                                    (!context->isOmittedInput(kAuxInputTensor) &&
-                                     !context->isOmittedInput(kFwAuxWeightsTensor) &&
-                                     !context->isOmittedInput(kBwAuxWeightsTensor));
-    NN_RET_CHECK(auxInputsAllOrNone);
-    const bool hasAuxInputs = !context->isOmittedInput(kAuxInputTensor);
+    LinkingMode linkingMode;
+    NN_RET_CHECK(getLinkingMode(context, &linkingMode));
 
-    int32_t timeMajor = context->getInputValue<bool>(kTimeMajorParam);
+    bool timeMajor = context->getInputValue<bool>(kTimeMajorParam);
     const uint32_t batchSize =
             timeMajor ? getSizeOfDimension(input, 1) : getSizeOfDimension(input, 0);
     const uint32_t maxTime =
@@ -371,14 +408,16 @@ bool prepare(IOperationExecutionContext* context) {
     NN_RET_CHECK_EQ(batchSize, getSizeOfDimension(fwHiddenState, 0));
     NN_RET_CHECK_EQ(fwNumUnits, getSizeOfDimension(fwHiddenState, 1));
 
-    NN_RET_CHECK_EQ(inputSize, getSizeOfDimension(bwWeights, 1));
+    if (linkingMode != LinkingMode::PARALLEL_LINKING) {
+        NN_RET_CHECK_EQ(inputSize, getSizeOfDimension(bwWeights, 1));
+    }
     NN_RET_CHECK_EQ(bwNumUnits, getSizeOfDimension(bwBias, 0));
     NN_RET_CHECK_EQ(bwNumUnits, getSizeOfDimension(bwRecurrentWeights, 0));
     NN_RET_CHECK_EQ(bwNumUnits, getSizeOfDimension(bwRecurrentWeights, 1));
     NN_RET_CHECK_EQ(batchSize, getSizeOfDimension(bwHiddenState, 0));
     NN_RET_CHECK_EQ(bwNumUnits, getSizeOfDimension(bwHiddenState, 1));
 
-    if (hasAuxInputs) {
+    if (linkingMode == LinkingMode::CROSS_LINKING) {
         NN_RET_CHECK_EQ(getNumberOfDimensions(auxInput), 3);
         NN_RET_CHECK_EQ(getNumberOfDimensions(fwAuxWeights), 2);
         NN_RET_CHECK_EQ(getNumberOfDimensions(bwAuxWeights), 2);
@@ -389,6 +428,12 @@ bool prepare(IOperationExecutionContext* context) {
         NN_RET_CHECK_EQ(getSizeOfDimension(fwAuxWeights, 1), getSizeOfDimension(auxInput, 2));
         NN_RET_CHECK_EQ(getSizeOfDimension(bwAuxWeights, 0), bwNumUnits);
         NN_RET_CHECK_EQ(getSizeOfDimension(bwAuxWeights, 1), getSizeOfDimension(auxInput, 2));
+    } else if (linkingMode == LinkingMode::PARALLEL_LINKING) {
+        NN_RET_CHECK_EQ(getNumberOfDimensions(auxInput), 3);
+
+        NN_RET_CHECK_EQ(getSizeOfDimension(auxInput, 0), getSizeOfDimension(input, 0));
+        NN_RET_CHECK_EQ(getSizeOfDimension(auxInput, 1), getSizeOfDimension(input, 1));
+        NN_RET_CHECK_EQ(getSizeOfDimension(auxInput, 2), getSizeOfDimension(bwWeights, 1));
     }
 
     Shape fwOutput = context->getOutputShape(kFwOutputTensor);
