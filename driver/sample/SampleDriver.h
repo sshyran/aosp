@@ -57,7 +57,6 @@ class SampleDriver : public hal::IDevice {
     hal::Return<void> getSupportedOperations_1_2(const hal::V1_2::Model& model,
                                                  getSupportedOperations_1_2_cb cb) override;
     hal::Return<void> getNumberOfCacheFilesNeeded(getNumberOfCacheFilesNeeded_cb cb) override;
-    hal::Return<void> supportsDeadlines(supportsDeadlines_cb cb) override;
     hal::Return<hal::V1_0::ErrorStatus> prepareModel(
             const hal::V1_0::Model& model,
             const sp<hal::V1_0::IPreparedModelCallback>& callback) override;

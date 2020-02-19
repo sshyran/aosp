@@ -1112,32 +1112,6 @@ int ANeuralNetworksDevice_getFeatureLevel(const ANeuralNetworksDevice* device,
 #if __ANDROID_API__ >= 30
 
 /**
- * Returns whether a device is able to complete or abort finishing a compilation
- * within a specified duration.
- *
- * @param device The representation of the specified device.
- * @return 'true' if {@link ANeuralNetworksCompilation_setTimeout} is supported,
- *     'false' otherwise.
- *
- * Available since API level 30.
- */
-bool ANeuralNetworksDevice_supportsCompilationTimeout(const ANeuralNetworksDevice* device)
-        __INTRODUCED_IN(30);
-
-/**
- * Returns whether a device is able to complete or abort an execution within a
- * specified duration.
- *
- * @param device The representation of the specified device.
- * @return 'true' if {@link ANeuralNetworksExecution_setTimeout} is supported,
- *     'false' otherwise.
- *
- * Available since API level 30.
- */
-bool ANeuralNetworksDevice_supportsExecutionTimeout(const ANeuralNetworksDevice* device)
-        __INTRODUCED_IN(30);
-
-/**
  * Wait until the device is in a live state.
  *
  * A device may encounter internal errors and temporarily enter a dead state. A
@@ -1247,7 +1221,7 @@ int ANeuralNetworksCompilation_setCaching(ANeuralNetworksCompilation* compilatio
  *
  * If {@link ANeuralNetworksExecution_setTimeout} was called on this execution,
  * and the execution is not able to complete before the timeout duration is
- * exceeded, then execution will be aborted and
+ * exceeded, then execution may be aborted, in which case
  * {@link ANEURALNETWORKS_MISSED_DEADLINE_*} will be returned.
  *
  * If this execution contains a {@link ANEURALNETWORKS_WHILE} operation, and
@@ -1359,7 +1333,7 @@ void ANeuralNetworksBurst_free(ANeuralNetworksBurst* burst) __INTRODUCED_IN(29);
  *
  * If {@link ANeuralNetworksExecution_setTimeout} was called on the execution,
  * and the execution is not able to complete before the timeout duration is
- * exceeded, then execution will be aborted and
+ * exceeded, then execution may be aborted, in which case
  * {@link ANEURALNETWORKS_MISSED_DEADLINE_*} will be returned.
  *
  * If the execution contains a {@link ANEURALNETWORKS_WHILE} operation, and
@@ -1939,7 +1913,7 @@ int ANeuralNetworksCompilation_setPreference(ANeuralNetworksCompilation* compila
  *
  * If {@link ANeuralNetworksCompilation_setTimeout} was called on this
  * compilation, and the compilation is not able to be finished before the
- * timeout duration is exceeded, then compilation will be aborted and
+ * timeout duration is exceeded, then compilation may be aborted, in which case
  * {@link ANEURALNETWORKS_MISSED_DEADLINE_*} will be returned.
  *
  * See {@link ANeuralNetworksCompilation} for information on multithreaded usage.
@@ -1981,27 +1955,25 @@ int ANeuralNetworksCompilation_setPriority(ANeuralNetworksCompilation* compilati
         __INTRODUCED_IN(30);
 
 /**
- * Set the maximum duration for compiling the model.
+ * Set the maximum expected duration for compiling the model.
  *
  * If the device is not able to complete the compilation within the specified
- * duration, the compilation must be aborted. The timeout duration begins at the
+ * duration, the compilation may be aborted. The timeout duration begins at the
  * call to {@link ANeuralNetworksCompilation_finish}.
  *
  * By default (i.e., unless ANeuralNetworksCompilation_setTimeout is called),
  * the timeout duration for compiling the model is considered infinite.
  *
  * The {@link ANeuralNetworksCompilation} must have been created with
- * {@link ANeuralNetworksCompilation_createForDevices} with numDevices = 1, and
- * the device must support compilation timeout as indicated by
- * {@link ANeuralNetworksDevice_supportsCompilationTimeout}, otherwise this
- * function will fail with ANEURALNETWORKS_BAD_DATA.
+ * {@link ANeuralNetworksCompilation_createForDevices} with numDevices = 1,
+ * otherwise this function will fail with ANEURALNETWORKS_BAD_DATA.
  *
  * See {@link ANeuralNetworksCompilation} for information on multithreaded usage.
  *
  * @param compilation The compilation to be modified.
- * @param duration The maximum amount of time in nanoseconds that can be spent
- *     finishing a compilation. The compilation must be completed or aborted
- *     within this timeout duration. If set to 0, the timeout duration is
+ * @param duration The maximum amount of time in nanoseconds that is expected to
+ *     be spent finishing a compilation. If this duration is exceeded, the
+ *     compilation may be aborted. If set to 0, the timeout duration is
  *     considered infinite.
  *
  * @return ANEURALNETWORKS_NO_ERROR if successful.
@@ -2266,7 +2238,7 @@ int ANeuralNetworksExecution_setOutputFromMemory(ANeuralNetworksExecution* execu
  *
  * If {@link ANeuralNetworksExecution_setTimeout} was called on this execution,
  * and the execution is not able to complete before the timeout duration is
- * exceeded, then execution will be aborted and
+ * exceeded, then execution may be aborted, in which case
  * {@link ANEURALNETWORKS_MISSED_DEADLINE_*} will be returned through
  * {@link ANeuralNetworksEvent_wait} on the event object.
  *
@@ -2301,10 +2273,10 @@ int ANeuralNetworksExecution_startCompute(ANeuralNetworksExecution* execution,
 #if __ANDROID_API__ >= 30
 
 /**
- * Set the maximum duration of the specified execution.
+ * Set the maximum expected duration of the specified execution.
  *
  * If the device is not able to complete the execution within the specified
- * duration, the execution must be aborted. The timeout duration begins at a
+ * duration, the execution may be aborted. The timeout duration begins at a
  * call to one of:
  * - {@link ANeuralNetworksExecution_burstCompute}
  * - {@link ANeuralNetworksExecution_compute}
@@ -2316,18 +2288,15 @@ int ANeuralNetworksExecution_startCompute(ANeuralNetworksExecution* execution,
  *
  * The {@link ANeuralNetworksExecution} must have been created from an
  * {@link ANeuralNetworksCompilation} which in turn was created from
- * {@link ANeuralNetworksCompilation_createForDevices} with numDevices = 1, and
- * the device must support execution timeout as indicated by
- * {@link ANeuralNetworksDevice_supportsExecutionTimeout}, otherwise this
- * function will fail with ANEURALNETWORKS_BAD_DATA.
+ * {@link ANeuralNetworksCompilation_createForDevices} with numDevices = 1,
+ * otherwise this function will fail with ANEURALNETWORKS_BAD_DATA.
  *
  * See {@link ANeuralNetworksExecution} for information on multithreaded usage.
  *
  * @param execution The execution to be modified.
- * @param duration The maximum amount of time in nanoseconds that can be spent
- *     executing a model. The execution must be completed or aborted within this
- *     timeout duration. If set to 0, the timeout duration is considered
- *     infinite.
+ * @param duration The maximum amount of time in nanoseconds that is expected to
+ *     be spent executing a model. If this duration is exceeded, the execution
+ *     may be aborted. If set to 0, the timeout duration is considered infinite.
  *
  * @return ANEURALNETWORKS_NO_ERROR if successful.
  *
@@ -2393,7 +2362,7 @@ uint64_t ANeuralNetworks_getMaximumLoopTimeout() __INTRODUCED_IN(30);
  *
  * If {@link ANeuralNetworksExecution_setTimeout} was called on the execution
  * corresponding to this event, and the execution is not able to complete
- * before the duration is exceeded, the execution will be aborted, and
+ * before the duration is exceeded, the execution may be aborted, in which case
  * {@link ANEURALNETWORKS_MISSED_DEADLINE_*} will be returned here.
  *
  * If the execution contains a {@link ANEURALNETWORKS_WHILE} operation, and
@@ -2493,10 +2462,8 @@ int ANeuralNetworksEvent_getSyncFenceFd(const ANeuralNetworksEvent* event, int* 
  * {@link ANeuralNetworksExecution_startComputeWithDependencies}.
  * If the duration is non-zero, the {@link ANeuralNetworksExecution} must have been created
  * from an {@link ANeuralNetworksCompilation} which in turn was created from
- * {@link ANeuralNetworksCompilation_createForDevices} with numDevices = 1, and
- * the device must support execution timeout as indicated by
- * {@link ANeuralNetworksDevice_supportsExecutionTimeout}, otherwise this
- * function will fail with ANEURALNETWORKS_BAD_DATA.
+ * {@link ANeuralNetworksCompilation_createForDevices} with numDevices = 1,
+ * otherwise this function will fail with ANEURALNETWORKS_BAD_DATA.
  *
  * See {@link ANeuralNetworksExecution} for information on multithreaded usage.
  *
