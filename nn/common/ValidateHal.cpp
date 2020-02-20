@@ -460,25 +460,27 @@ static bool validateOperations(const hidl_vec<VersionedOperation>& operations,
                 << "Invalid subgraph reference";
         return true;
     };
-    auto getSubgraph = [&subgraphs](const Operand& modelOperand) {
+    auto getSubgraph = [&subgraphs](const Operand& modelOperand) -> const Subgraph* {
         CHECK_LT(modelOperand.location.offset, subgraphs.size());
-        return subgraphs[modelOperand.location.offset];
+        return &subgraphs[modelOperand.location.offset];
     };
-    auto getInputCount = [&getSubgraph](const Operand& modelOperand) {
-        return getSubgraph(modelOperand).inputIndexes.size();
+    auto getInputCount = [&getSubgraph](const Operand& modelOperand) -> uint32_t {
+        return getSubgraph(modelOperand)->inputIndexes.size();
     };
-    auto getOutputCount = [&getSubgraph](const Operand& modelOperand) {
-        return getSubgraph(modelOperand).outputIndexes.size();
+    auto getOutputCount = [&getSubgraph](const Operand& modelOperand) -> uint32_t {
+        return getSubgraph(modelOperand)->outputIndexes.size();
     };
-    auto getInputOperand = [&getSubgraph](const Operand& modelOperand, uint32_t index) {
-        const Subgraph& subgraph = getSubgraph(modelOperand);
+    auto getInputOperand = [&getSubgraph](const Operand& modelOperand,
+                                          uint32_t index) -> const Operand* {
+        const Subgraph& subgraph = *getSubgraph(modelOperand);
         CHECK_LT(subgraph.inputIndexes[index], subgraph.operands.size());
-        return subgraph.operands[subgraph.inputIndexes[index]];
+        return &subgraph.operands[subgraph.inputIndexes[index]];
     };
-    auto getOutputOperand = [&getSubgraph](const Operand& modelOperand, uint32_t index) {
-        const Subgraph& subgraph = getSubgraph(modelOperand);
+    auto getOutputOperand = [&getSubgraph](const Operand& modelOperand,
+                                           uint32_t index) -> const Operand* {
+        const Subgraph& subgraph = *getSubgraph(modelOperand);
         CHECK_LT(subgraph.outputIndexes[index], subgraph.operands.size());
-        return subgraph.operands[subgraph.outputIndexes[index]];
+        return &subgraph.operands[subgraph.outputIndexes[index]];
     };
     const size_t operandCount = operands.size();
     // This vector keeps track of whether there's an operation that writes to
