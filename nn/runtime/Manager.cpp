@@ -132,16 +132,17 @@ class DriverPreparedModel : public PreparedModel {
     }
     std::tuple<int, std::vector<OutputShape>, Timing> execute(
             const std::vector<ModelArgumentInfo>& inputs,
-            const std::vector<ModelArgumentInfo>& outputs, const MemoryTracker& memories,
+            const std::vector<ModelArgumentInfo>& outputs,
+            const std::vector<const Memory*>& memories,
             const std::shared_ptr<ExecutionBurstController>& burstController, MeasureTiming measure,
             const std::optional<Deadline>& deadline,
             const OptionalTimeoutDuration& loopTimeoutDuration) const override;
 
     std::tuple<int, int, sp<hal::IFencedExecutionCallback>, hal::Timing> executeFenced(
             const std::vector<ModelArgumentInfo>& inputs,
-            const std::vector<ModelArgumentInfo>& outputs, const MemoryTracker& memories,
-            const std::vector<int>& waitFor, MeasureTiming measure,
-            const std::optional<Deadline>& deadline,
+            const std::vector<ModelArgumentInfo>& outputs,
+            const std::vector<const Memory*>& memories, const std::vector<int>& waitFor,
+            MeasureTiming measure, const std::optional<Deadline>& deadline,
             const OptionalTimeoutDuration& loopTimeoutDuration,
             const hal::OptionalTimeoutDuration& timeoutDurationAfterFence) const override;
 
@@ -276,7 +277,7 @@ std::pair<int, std::unique_ptr<Memory>> DriverDevice::allocate(const MemoryDescr
 // input a bit.
 static std::tuple<int, std::unique_ptr<MemoryAshmem>, std::vector<DataLocation>>
 allocatePointerArgumentsToPool(const std::vector<ModelArgumentInfo>& args,
-                               MemoryTracker* memories) {
+                               std::vector<const Memory*>* memories) {
     CHECK(memories != nullptr);
     std::vector<DataLocation> ptrArgsLocations;
     const uint32_t nextPoolIndex = memories->size();
@@ -303,7 +304,7 @@ allocatePointerArgumentsToPool(const std::vector<ModelArgumentInfo>& args,
     if (n != ANEURALNETWORKS_NO_ERROR) {
         return {n, nullptr, std::vector<DataLocation>{}};
     }
-    memories->add(memory.get());
+    memories->push_back(memory.get());
     return {ANEURALNETWORKS_NO_ERROR, std::move(memory), std::move(ptrArgsLocations)};
 }
 
@@ -318,14 +319,14 @@ allocatePointerArgumentsToPool(const std::vector<ModelArgumentInfo>& args,
 // DeviceManager::mSyncExecHal.
 std::tuple<int, std::vector<OutputShape>, Timing> DriverPreparedModel::execute(
         const std::vector<ModelArgumentInfo>& inputs, const std::vector<ModelArgumentInfo>& outputs,
-        const MemoryTracker& memories,
+        const std::vector<const Memory*>& memories,
         const std::shared_ptr<ExecutionBurstController>& burstController, MeasureTiming measure,
         const std::optional<Deadline>& deadline,
         const OptionalTimeoutDuration& loopTimeoutDuration) const {
     NNTRACE_RT(NNTRACE_PHASE_INPUTS_AND_OUTPUTS, "DriverPreparedModel::execute");
 
     // Make a copy of the memory tracker as we will append memory pools for pointer arguments.
-    MemoryTracker localMemories = memories;
+    std::vector<const Memory*> localMemories = memories;
 
     // We separate the input & output pools so accelerators only need to copy
     // the contents of the input pools. We could also use it to set protection
@@ -426,13 +427,14 @@ std::tuple<int, std::vector<OutputShape>, Timing> DriverPreparedModel::execute(
 std::tuple<int, int, sp<hal::IFencedExecutionCallback>, hal::Timing>
 DriverPreparedModel::executeFenced(
         const std::vector<ModelArgumentInfo>& inputs, const std::vector<ModelArgumentInfo>& outputs,
-        const MemoryTracker& memories, const std::vector<int>& waitFor, hal::MeasureTiming measure,
-        const std::optional<Deadline>& deadline, const OptionalTimeoutDuration& loopTimeoutDuration,
+        const std::vector<const Memory*>& memories, const std::vector<int>& waitFor,
+        hal::MeasureTiming measure, const std::optional<Deadline>& deadline,
+        const OptionalTimeoutDuration& loopTimeoutDuration,
         const hal::OptionalTimeoutDuration& timeoutDurationAfterFence) const {
     NNTRACE_RT(NNTRACE_PHASE_INPUTS_AND_OUTPUTS, "DriverPreparedModel::executeFenced");
     CHECK(std::all_of(waitFor.begin(), waitFor.end(), [](int fd) { return fd > 0; }));
     // Make a copy of the memory tracker as we will append memory pools for pointer arguments.
-    MemoryTracker localMemories = memories;
+    std::vector<const Memory*> localMemories = memories;
     sp<hal::IFencedExecutionCallback> executeFencedCallback;
     hal::Timing timing = kNoTiming;
 
@@ -601,7 +603,8 @@ class CpuPreparedModel : public PreparedModel {
 
     std::tuple<int, std::vector<OutputShape>, Timing> execute(
             const std::vector<ModelArgumentInfo>& inputs,
-            const std::vector<ModelArgumentInfo>& outputs, const MemoryTracker& memories,
+            const std::vector<ModelArgumentInfo>& outputs,
+            const std::vector<const Memory*>& memories,
             const std::shared_ptr<ExecutionBurstController>& burstController, MeasureTiming measure,
             const std::optional<Deadline>& deadline,
             const OptionalTimeoutDuration& loopTimeoutDuration) const override;
@@ -613,9 +616,9 @@ class CpuPreparedModel : public PreparedModel {
 
     std::tuple<int, int, sp<hal::IFencedExecutionCallback>, hal::Timing> executeFenced(
             const std::vector<ModelArgumentInfo>& inputs,
-            const std::vector<ModelArgumentInfo>& outputs, const MemoryTracker& memories,
-            const std::vector<int>& wait_for, MeasureTiming measure,
-            const std::optional<Deadline>& deadline,
+            const std::vector<ModelArgumentInfo>& outputs,
+            const std::vector<const Memory*>& memories, const std::vector<int>& wait_for,
+            MeasureTiming measure, const std::optional<Deadline>& deadline,
             const OptionalTimeoutDuration& loopTimeoutDuration,
             const hal::OptionalTimeoutDuration& timeoutDurationAfterFence) const override;
 
@@ -706,8 +709,9 @@ static std::tuple<int, std::vector<OutputShape>, Timing> computeOnCpu(
 std::tuple<int, int, sp<hal::IFencedExecutionCallback>, hal::Timing>
 CpuPreparedModel::executeFenced(const std::vector<ModelArgumentInfo>& inputs,
                                 const std::vector<ModelArgumentInfo>& outputs,
-                                const MemoryTracker& memories, const std::vector<int>& waitFor,
-                                hal::MeasureTiming measure, const std::optional<Deadline>& deadline,
+                                const std::vector<const Memory*>& memories,
+                                const std::vector<int>& waitFor, hal::MeasureTiming measure,
+                                const std::optional<Deadline>& deadline,
                                 const OptionalTimeoutDuration& loopTimeoutDuration,
                                 const hal::OptionalTimeoutDuration& duration) const {
     VLOG(EXECUTION)
@@ -745,7 +749,7 @@ CpuPreparedModel::executeFenced(const std::vector<ModelArgumentInfo>& inputs,
 // Will choose between sync/async execution according to DeviceManager::mSyncExecCpu.
 std::tuple<int, std::vector<OutputShape>, Timing> CpuPreparedModel::execute(
         const std::vector<ModelArgumentInfo>& inputs, const std::vector<ModelArgumentInfo>& outputs,
-        const MemoryTracker& memories,
+        const std::vector<const Memory*>& memories,
         const std::shared_ptr<ExecutionBurstController>& /*burstController*/,
         MeasureTiming /*measure*/, const std::optional<Deadline>& deadline,
         const OptionalTimeoutDuration& loopTimeoutDuration) const {
