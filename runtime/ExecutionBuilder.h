@@ -287,6 +287,10 @@ class StepExecutor {
     int setInputOrOutputFromMemory(const hal::Operand& inputOrOutputOperand, const Memory* memory,
                                    uint32_t offset, ModelArgumentInfo* inputOrOutputInfo);
 
+    std::tuple<int, std::vector<hal::OutputShape>, hal::Timing> computeWithMemories(
+            const std::optional<Deadline>& deadline, const std::vector<const Memory*>& memories,
+            const std::shared_ptr<ExecutionBurstController>& burstController = nullptr);
+
     // describes the full (possibly multiple-"step") execution
     ExecutionBuilder* mExecutionBuilder;
 
