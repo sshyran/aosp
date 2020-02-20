@@ -660,12 +660,12 @@ static bool validateIfOperation(uint32_t inputCount, const uint32_t* inputs, uin
         NN_RET_CHECK_EQ(inputCount, op::kFirstInput + branchModelInputCount);
         NN_RET_CHECK_EQ(outputCount, branchModelOutputCount);
         for (uint32_t i = 0; i < branchModelInputCount; ++i) {
-            const Operand& innerOperand = helper.getSubgraphInputOperand(branchModelOperand, i);
+            const Operand& innerOperand = *helper.getSubgraphInputOperand(branchModelOperand, i);
             const Operand& outerOperand = operands[inputs[op::kFirstInput + i]];
             NN_RET_CHECK(compatible(innerOperand, outerOperand));
         }
         for (uint32_t i = 0; i < branchModelOutputCount; ++i) {
-            const Operand& innerOperand = helper.getSubgraphOutputOperand(branchModelOperand, i);
+            const Operand& innerOperand = *helper.getSubgraphOutputOperand(branchModelOperand, i);
             const Operand& outerOperand = operands[outputs[i]];
             NN_RET_CHECK(compatible(innerOperand, outerOperand));
         }
@@ -704,12 +704,12 @@ static bool validateWhileOperation(uint32_t inputCount, const uint32_t* inputs,
         NN_RET_CHECK_EQ(inputCount, op::kFirstInput + condModelInputCount);
         NN_RET_CHECK_EQ(condModelOutputCount, 1u);
         for (uint32_t i = 0; i < condModelInputCount; ++i) {
-            const Operand& innerOperand = helper.getSubgraphInputOperand(condModelOperand, i);
+            const Operand& innerOperand = *helper.getSubgraphInputOperand(condModelOperand, i);
             const Operand& outerOperand = operands[inputs[op::kFirstInput + i]];
             NN_RET_CHECK(compatible(innerOperand, outerOperand));
         }
         NN_RET_CHECK(
-                validateConditionOperand(helper.getSubgraphOutputOperand(condModelOperand, 0)));
+                validateConditionOperand(*helper.getSubgraphOutputOperand(condModelOperand, 0)));
         return true;
     };
     auto validateBodyOperand = [&](const Operand& bodyModelOperand) -> bool {
@@ -724,18 +724,18 @@ static bool validateWhileOperation(uint32_t inputCount, const uint32_t* inputs,
         const uint32_t stateOnlyCount = bodyModelOutputCount - inputOutputCount;
         const uint32_t inputOnlyCount = bodyModelInputCount - bodyModelOutputCount;
         for (uint32_t i = 0, n = inputOutputCount + stateOnlyCount + inputOnlyCount; i < n; ++i) {
-            const Operand& innerOperand = helper.getSubgraphInputOperand(bodyModelOperand, i);
+            const Operand& innerOperand = *helper.getSubgraphInputOperand(bodyModelOperand, i);
             const Operand& outerOperand = operands[inputs[op::kFirstInput + i]];
             NN_RET_CHECK(compatible(innerOperand, outerOperand));
         }
         for (uint32_t i = 0; i < inputOutputCount; ++i) {
-            const Operand& innerOperand = helper.getSubgraphOutputOperand(bodyModelOperand, i);
+            const Operand& innerOperand = *helper.getSubgraphOutputOperand(bodyModelOperand, i);
             const Operand& outerOperand = operands[outputs[i]];
             NN_RET_CHECK(compatible(innerOperand, outerOperand));
         }
         for (uint32_t i = 0, n = inputOutputCount + stateOnlyCount; i < n; ++i) {
-            const Operand& inputOperand = helper.getSubgraphInputOperand(bodyModelOperand, i);
-            const Operand& outputOperand = helper.getSubgraphOutputOperand(bodyModelOperand, i);
+            const Operand& inputOperand = *helper.getSubgraphInputOperand(bodyModelOperand, i);
+            const Operand& outputOperand = *helper.getSubgraphOutputOperand(bodyModelOperand, i);
             NN_RET_CHECK(compatible(inputOperand, outputOperand));
         }
         return true;
