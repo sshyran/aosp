@@ -22,7 +22,7 @@ model = Model()
 batch_size = 2
 input_size = 5
 num_units = 4
-output_size = 3
+output_size = 4
 
 input = Input("input",
               ("TENSOR_QUANT8_ASYMM_SIGNED", "{%d, %d}" % (batch_size, input_size), 0.0078125, 0))
@@ -116,68 +116,7 @@ model = model.Operation(
     output_intermediate_scale, hidden_state_zero_point, hidden_state_scale).To([output_state_out,
     cell_state_out, output])
 
-# Example 1. Layer Norm, Projection.
-input0 = {
-    input_to_input_weights: [
-        64, 77, 89, -102, -115, 13, 25, 38, -51, 64, -102, 89, -77, 64, -51, -64, -51, -38, -25, -13
-    ],
-    input_to_forget_weights: [
-        -77, -13, 38, 25, 115, -64, -25, -51, 38, -102, -51, 38, -64, -51, -77, 38, -51, -77, -64, -64
-    ],
-    input_to_cell_weights: [
-        -51, -38, -25, -13, -64, 64, -25, -38, -25, -77, 77, -13, -51, -38, -89, 89, -115, -64, 102, 77
-    ],
-    input_to_output_weights: [
-        -102, -51, -25, -115, -13, -89, 38, -38, -102, -25, 77, -25, 51, -89, -38, -64, 13, 64, -77, -51
-    ],
-    input_gate_bias: [644245, 3221226, 4724464, 8160438],
-    forget_gate_bias: [2147484, -6442451, -4294968, 2147484],
-    cell_gate_bias: [-1073742, 15461883, 5368709, 1717987],
-    output_gate_bias: [1073742, -214748, 4294968, 2147484],
-    recurrent_to_input_weights: [
-        -25, -38, 51, 13, -64, 115, -25, -38, -89, 6, -25, -77
-    ],
-    recurrent_to_forget_weights: [
-        -64, -38, -64, -25, 77, 51, 115, 38, -13, 25, 64, 25
-    ],
-    recurrent_to_cell_weights: [
-        -38, 25, 13, -38, 102, -10, -25, 38, 102, -77, -13, 25
-    ],
-    recurrent_to_output_weights: [
-        38, -13, 13, -25, -64, -89, -25, -77, -13, -51, -89, -25
-    ],
-    projection_weights: [
-        -25, 51, 3, -51, 25, 127, 77, 20, 18, 51, -102, 51
-    ],
-    projection_bias: [ 0 for _ in range(output_size) ],
-    input_layer_norm_weights: [3277, 6553, 9830, 16384],
-    forget_layer_norm_weights: [6553, 6553, 13107, 9830],
-    cell_layer_norm_weights: [22937, 6553, 9830, 26214],
-    output_layer_norm_weights: [19660, 6553, 6553, 16384],
-    output_state_in: [ 0 for _ in range(batch_size * output_size) ],
-    cell_state_in: [ 0 for _ in range(batch_size * num_units) ],
-    cell_to_input_weights: [],
-    cell_to_forget_weights: [],
-    cell_to_output_weights: [],
-}
-
-test_input = [90, 102, 13, 26, 38, 102, 13, 26, 51, 64]
-
-golden_output = [
-    127, 127, -108, -67, 127, 127
-]
-
-output0 = {
-    output_state_out: golden_output,
-    cell_state_out: [-14650, 8939, 5771, 6715, -11843, 7847, 1508, 12939],
-    output: golden_output,
-}
-
-input0[input] = test_input
-
-Example((input0, output0))
-
-# Example 2. CIFG, Layer Norm, Projection.
+# Example 1. CIFG, Layer Norm.
 input0 = {
     input_to_input_weights: [],
     input_to_forget_weights: [
@@ -195,18 +134,16 @@ input0 = {
     output_gate_bias: [1073742, -214748, 4294968, 2147484],
     recurrent_to_input_weights: [],
     recurrent_to_forget_weights: [
-        -64, -38, -64, -25, 77, 51, 115, 38, -13, 25, 64, 25
+        -64, -38, -64, -25, 77, 51, 115, 38, -13, 25, 64, 25, 25, 38, -13, 51
     ],
     recurrent_to_cell_weights: [
-        -38, 25, 13, -38, 102, -10, -25, 38, 102, -77, -13, 25
+        -38, 25, 13, -38, 102, -10, -25, 38, 102, -77, -13, 25, 38, -13, 25, 64
     ],
     recurrent_to_output_weights: [
-        38, -13, 13, -25, -64, -89, -25, -77, -13, -51, -89, -25
+        38, -13, 13, -25, -64, -89, -25, -77, -13, -51, -89, -25, 13, 64, 25, -38
     ],
-    projection_weights: [
-        -25, 51, 3, -51, 25, 127, 77, 20, 18, 51, -102, 51
-    ],
-    projection_bias: [ 0 for _ in range(output_size) ],
+    projection_weights: [],
+    projection_bias: [],
     input_layer_norm_weights: [],
     forget_layer_norm_weights: [6553, 6553, 13107, 9830],
     cell_layer_norm_weights: [22937, 6553, 9830, 26214],
@@ -221,7 +158,7 @@ input0 = {
 test_input = [90, 102, 13, 26, 38, 102, 13, 26, 51, 64]
 
 golden_output = [
-    127, 127, 127, -128, 127, 127
+    -15, 21, 14, 20, -15, 15, 5, 27
 ]
 
 output0 = {
