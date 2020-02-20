@@ -56,7 +56,8 @@ class PreparedModel {
     // Perform computation with given input/output argument info and memory pools.
     virtual std::tuple<int, std::vector<hal::OutputShape>, hal::Timing> execute(
             const std::vector<ModelArgumentInfo>& inputs,
-            const std::vector<ModelArgumentInfo>& outputs, const MemoryTracker& memories,
+            const std::vector<ModelArgumentInfo>& outputs,
+            const std::vector<const Memory*>& memories,
             const std::shared_ptr<ExecutionBurstController>& burstController,
             hal::MeasureTiming measure, const std::optional<Deadline>& deadline,
             const hal::OptionalTimeoutDuration& loopTimeoutDuration) const = 0;
@@ -66,9 +67,9 @@ class PreparedModel {
     // Returns error_code, sync_fence, callback and timing.
     virtual std::tuple<int, int, sp<hal::IFencedExecutionCallback>, hal::Timing> executeFenced(
             const std::vector<ModelArgumentInfo>& inputs,
-            const std::vector<ModelArgumentInfo>& outputs, const MemoryTracker& memories,
-            const std::vector<int>& waitFor, hal::MeasureTiming measure,
-            const std::optional<Deadline>& deadline,
+            const std::vector<ModelArgumentInfo>& outputs,
+            const std::vector<const Memory*>& memories, const std::vector<int>& waitFor,
+            hal::MeasureTiming measure, const std::optional<Deadline>& deadline,
             const hal::OptionalTimeoutDuration& loopTimeoutDuration,
             const hal::OptionalTimeoutDuration& timeoutDurationAfterFence) const = 0;
 
