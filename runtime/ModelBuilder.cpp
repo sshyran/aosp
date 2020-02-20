@@ -376,17 +376,17 @@ int ModelBuilder::addOperation(ANeuralNetworksOperationType type, uint32_t input
                 << "Invalid subgraph model reference";
         return true;
     };
-    auto getInputCount = [this](const Operand& modelOperand) {
+    auto getInputCount = [this](const Operand& modelOperand) -> uint32_t {
         return getReferencedModel(modelOperand)->inputCount();
     };
-    auto getOutputCount = [this](const Operand& modelOperand) {
+    auto getOutputCount = [this](const Operand& modelOperand) -> uint32_t {
         return getReferencedModel(modelOperand)->outputCount();
     };
-    auto getInputOperand = [this](const Operand& modelOperand, uint32_t index) {
-        return getReferencedModel(modelOperand)->getInputOperand(index);
+    auto getInputOperand = [this](const Operand& modelOperand, uint32_t index) -> const Operand* {
+        return &getReferencedModel(modelOperand)->getInputOperand(index);
     };
-    auto getOutputOperand = [this](const Operand& modelOperand, uint32_t index) {
-        return getReferencedModel(modelOperand)->getOutputOperand(index);
+    auto getOutputOperand = [this](const Operand& modelOperand, uint32_t index) -> const Operand* {
+        return &getReferencedModel(modelOperand)->getOutputOperand(index);
     };
     NN_RETURN_IF_ERROR(validateOperation(type, inputCount, inputs, outputCount, outputs, mOperands,
                                          HalVersion::LATEST,
