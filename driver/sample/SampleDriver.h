@@ -171,7 +171,7 @@ class SamplePreparedModel : public hal::IPreparedModel {
                                     executeFenced_cb callback) override;
     const hal::Model* getModel() const { return &mModel; }
 
-   private:
+   protected:
     hal::Model mModel;
     const SampleDriver* mDriver;
     std::vector<RunTimePoolInfo> mPoolInfos;
