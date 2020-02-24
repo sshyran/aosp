@@ -37,7 +37,9 @@ class BidirectionalSequenceLSTM {
     BidirectionalSequenceLSTM(const hal::Operation& operation, RunTimeOperandInfo* operands);
 
     bool Prepare(const hal::Operation& operation, RunTimeOperandInfo* operands,
-                 Shape* fwOutputShape, Shape* bwOutputShape);
+                 Shape* fwOutputShape, Shape* bwOutputShape, Shape* fwOutputActivationState,
+                 Shape* fwOutputCellState, Shape* bwOutputActivationState,
+                 Shape* bwOutputCellState);
     bool Eval();
 
     // Input Tensors of size {max_time, n_batch, n_input}
@@ -148,6 +150,11 @@ class BidirectionalSequenceLSTM {
     static constexpr int kFwOutputTensor = 0;
     static constexpr int kBwOutputTensor = 1;  // Ignored if merge_outputs is set.
 
+    static constexpr int kFwOutputActivationStateTensor = 2;
+    static constexpr int kFwOutputCellStateTensor = 3;
+    static constexpr int kBwOutputActivationStateTensor = 4;
+    static constexpr int kBwOutputCellStateTensor = 5;
+
    private:
     LSTMParams params_;
     Shape fw_scratch_shape_;
@@ -226,6 +233,11 @@ class BidirectionalSequenceLSTM {
     const RunTimeOperandInfo* bw_activation_state_;
     const RunTimeOperandInfo* bw_cell_state_;
     RunTimeOperandInfo* bw_output_;
+
+    RunTimeOperandInfo* fw_output_activation_state_;
+    RunTimeOperandInfo* fw_output_cell_state_;
+    RunTimeOperandInfo* bw_output_activation_state_;
+    RunTimeOperandInfo* bw_output_cell_state_;
 };
 
 }  // namespace nn
