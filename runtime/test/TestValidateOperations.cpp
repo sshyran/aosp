@@ -344,6 +344,9 @@ class OperationTestBase {
         for (int i = 0; i < 5; i++) {
             outputs.push_back(outputs[0]);
             if (ANEURALNETWORKS_NO_ERROR == addOperation(mValidInputs, outputs)) {
+                if (mOpCode == ANEURALNETWORKS_UNIDIRECTIONAL_SEQUENCE_RNN && i < 1) {
+                    continue;
+                }
                 return false;
             }
         }
