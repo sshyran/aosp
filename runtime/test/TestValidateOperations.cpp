@@ -341,9 +341,21 @@ class OperationTestBase {
             return true;
         }
         std::vector<OperandTypeWithExtraParams> outputs = mValidOutputs;
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 6; i++) {
             outputs.push_back(outputs[0]);
             if (ANEURALNETWORKS_NO_ERROR == addOperation(mValidInputs, outputs)) {
+                if (mOpCode == ANEURALNETWORKS_UNIDIRECTIONAL_SEQUENCE_RNN && i < 1) {
+                    continue;
+                }
+                if (mOpCode == ANEURALNETWORKS_UNIDIRECTIONAL_SEQUENCE_LSTM && i < 3) {
+                    continue;
+                }
+                if (mOpCode == ANEURALNETWORKS_BIDIRECTIONAL_SEQUENCE_RNN && i < 3) {
+                    continue;
+                }
+                if (mOpCode == ANEURALNETWORKS_BIDIRECTIONAL_SEQUENCE_LSTM && i < 5) {
+                    continue;
+                }
                 return false;
             }
         }
