@@ -350,6 +350,9 @@ class OperationTestBase {
                 if (mOpCode == ANEURALNETWORKS_UNIDIRECTIONAL_SEQUENCE_LSTM && i < 3) {
                     continue;
                 }
+                if (mOpCode == ANEURALNETWORKS_BIDIRECTIONAL_SEQUENCE_RNN && i < 3) {
+                    continue;
+                }
                 if (mOpCode == ANEURALNETWORKS_BIDIRECTIONAL_SEQUENCE_LSTM && i < 5) {
                     continue;
                 }
