@@ -684,6 +684,7 @@ void ExecutionPlan::CompoundBody::findControlFlowBoundaryConstants(
     };
     for (const auto& logicalStep : mSteps) {
         if (const IfStep* step = logicalStep->tryIfStep()) {
+            handleBoundaryConstants(step->conditionOperandIndex);
             for (const auto& sourceOperandIndex : step->outerInputOperands) {
                 handleBoundaryConstants(sourceOperandIndex);
             }
@@ -966,7 +967,6 @@ void* ExecutionPlan::getBuffer(std::shared_ptr<Controller> controller,
     const auto& sourceOperandToOffsetOfTemporary = controller->mSourceOperandToOffsetOfTemporary;
     const auto& sourceOperandToInputIndex = controller->mSourceOperandToInputIndex;
     const auto& sourceOperandToOutputIndex = controller->mSourceOperandToOutputIndex;
-    // TODO: Handle CONSTANT_* operands that are not on a partition boundary.
     if (auto it = sourceOperandToOffsetOfTemporary.find(operandIndex);
         it != sourceOperandToOffsetOfTemporary.end()) {
         const uint32_t offset = it->second;
