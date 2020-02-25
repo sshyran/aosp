@@ -35,41 +35,40 @@ using WrapperType = test_wrapper::Type;
 // Tag for the compilance tests
 class ComplianceTest : public ::testing::Test {};
 
-// Creates a HIDL model from a creator of the wrapper model.
-static HidlModel createHidlModel(std::function<void(WrapperModel*)> createModel) {
-    WrapperModel wrapperModel;
-    createModel(&wrapperModel);
-    EXPECT_EQ(wrapperModel.finish(), test_wrapper::Result::NO_ERROR);
-    ModelBuilder* modelBuilder = reinterpret_cast<ModelBuilder*>(wrapperModel.getHandle());
+// Creates a HIDL model from a wrapper model.
+static HidlModel createHidlModel(const WrapperModel& wrapperModel) {
+    auto modelBuilder = reinterpret_cast<const ModelBuilder*>(wrapperModel.getHandle());
+    EXPECT_TRUE(modelBuilder->isFinished());
+    EXPECT_TRUE(modelBuilder->isValid());
     return modelBuilder->makeHidlModel();
 }
 
-static void testAvailableSinceV1_3(std::function<void(WrapperModel*)> createModel) {
-    HidlModel model = createHidlModel(createModel);
-    ASSERT_FALSE(compliantWithV1_2(model));
-    ASSERT_FALSE(compliantWithV1_1(model));
-    ASSERT_FALSE(compliantWithV1_0(model));
+static void testAvailableSinceV1_3(const WrapperModel& wrapperModel) {
+    HidlModel hidlModel = createHidlModel(wrapperModel);
+    ASSERT_FALSE(compliantWithV1_2(hidlModel));
+    ASSERT_FALSE(compliantWithV1_1(hidlModel));
+    ASSERT_FALSE(compliantWithV1_0(hidlModel));
 }
 
-static void testAvailableSinceV1_2(std::function<void(WrapperModel*)> createModel) {
-    HidlModel model = createHidlModel(createModel);
-    ASSERT_TRUE(compliantWithV1_2(model));
-    ASSERT_FALSE(compliantWithV1_1(model));
-    ASSERT_FALSE(compliantWithV1_0(model));
+static void testAvailableSinceV1_2(const WrapperModel& wrapperModel) {
+    HidlModel hidlModel = createHidlModel(wrapperModel);
+    ASSERT_TRUE(compliantWithV1_2(hidlModel));
+    ASSERT_FALSE(compliantWithV1_1(hidlModel));
+    ASSERT_FALSE(compliantWithV1_0(hidlModel));
 }
 
-static void testAvailableSinceV1_1(std::function<void(WrapperModel*)> createModel) {
-    HidlModel model = createHidlModel(createModel);
-    ASSERT_TRUE(compliantWithV1_2(model));
-    ASSERT_TRUE(compliantWithV1_1(model));
-    ASSERT_FALSE(compliantWithV1_0(model));
+static void testAvailableSinceV1_1(const WrapperModel& wrapperModel) {
+    HidlModel hidlModel = createHidlModel(wrapperModel);
+    ASSERT_TRUE(compliantWithV1_2(hidlModel));
+    ASSERT_TRUE(compliantWithV1_1(hidlModel));
+    ASSERT_FALSE(compliantWithV1_0(hidlModel));
 }
 
-static void testAvailableSinceV1_0(std::function<void(WrapperModel*)> createModel) {
-    HidlModel model = createHidlModel(createModel);
-    ASSERT_TRUE(compliantWithV1_2(model));
-    ASSERT_TRUE(compliantWithV1_1(model));
-    ASSERT_TRUE(compliantWithV1_0(model));
+static void testAvailableSinceV1_0(const WrapperModel& wrapperModel) {
+    HidlModel hidlModel = createHidlModel(wrapperModel);
+    ASSERT_TRUE(compliantWithV1_2(hidlModel));
+    ASSERT_TRUE(compliantWithV1_1(hidlModel));
+    ASSERT_TRUE(compliantWithV1_0(hidlModel));
 }
 
 static void testAvailableSinceV1_3(const Request& request) {
@@ -80,52 +79,51 @@ static const WrapperOperandType kTypeTensorFloat(WrapperType::TENSOR_FLOAT32, {1
 static const WrapperOperandType kTypeTensorFloatRank0(WrapperType::TENSOR_FLOAT32, {});
 static const WrapperOperandType kTypeInt32(WrapperType::INT32, {});
 
+const int32_t kNoActivation = ANEURALNETWORKS_FUSED_NONE;
+
 TEST_F(ComplianceTest, Rank0TensorModelInput) {
-    int32_t act_init = 0;
     // A simple ADD operation: op1 ADD op2 = op3, with op1 and op2 of rank 0.
-    testAvailableSinceV1_2([&act_init](WrapperModel* model) {
-        auto op1 = model->addOperand(&kTypeTensorFloatRank0);
-        auto op2 = model->addOperand(&kTypeTensorFloatRank0);
-        auto act = model->addOperand(&kTypeInt32);
-        auto op3 = model->addOperand(&kTypeTensorFloat);
-        model->setOperandValue(act, &act_init, sizeof(act_init));
-        model->addOperation(ANEURALNETWORKS_ADD, {op1, op2, act}, {op3});
-        model->identifyInputsAndOutputs({op1, op2}, {op3});
-        assert(model->isValid());
-    });
+    WrapperModel model;
+    auto op1 = model.addOperand(&kTypeTensorFloatRank0);
+    auto op2 = model.addOperand(&kTypeTensorFloatRank0);
+    auto op3 = model.addOperand(&kTypeTensorFloat);
+    auto act = model.addConstantOperand(&kTypeInt32, kNoActivation);
+    model.addOperation(ANEURALNETWORKS_ADD, {op1, op2, act}, {op3});
+    model.identifyInputsAndOutputs({op1, op2}, {op3});
+    ASSERT_TRUE(model.isValid());
+    model.finish();
+    testAvailableSinceV1_2(model);
 }
 
 TEST_F(ComplianceTest, Rank0TensorModelOutput) {
-    int32_t act_init = 0;
     // A simple ADD operation: op1 ADD op2 = op3, with op3 of rank 0.
-    testAvailableSinceV1_2([&act_init](WrapperModel* model) {
-        auto op1 = model->addOperand(&kTypeTensorFloat);
-        auto op2 = model->addOperand(&kTypeTensorFloat);
-        auto act = model->addOperand(&kTypeInt32);
-        auto op3 = model->addOperand(&kTypeTensorFloatRank0);
-        model->setOperandValue(act, &act_init, sizeof(act_init));
-        model->addOperation(ANEURALNETWORKS_ADD, {op1, op2, act}, {op3});
-        model->identifyInputsAndOutputs({op1, op2}, {op3});
-        assert(model->isValid());
-    });
+    WrapperModel model;
+    auto op1 = model.addOperand(&kTypeTensorFloat);
+    auto op2 = model.addOperand(&kTypeTensorFloat);
+    auto op3 = model.addOperand(&kTypeTensorFloatRank0);
+    auto act = model.addConstantOperand(&kTypeInt32, kNoActivation);
+    model.addOperation(ANEURALNETWORKS_ADD, {op1, op2, act}, {op3});
+    model.identifyInputsAndOutputs({op1, op2}, {op3});
+    ASSERT_TRUE(model.isValid());
+    model.finish();
+    testAvailableSinceV1_2(model);
 }
 
 TEST_F(ComplianceTest, Rank0TensorTemporaryVariable) {
-    int32_t act_init = 0;
     // Two ADD operations: op1 ADD op2 = op3, op3 ADD op4 = op5, with op3 of rank 0.
-    testAvailableSinceV1_2([&act_init](WrapperModel* model) {
-        auto op1 = model->addOperand(&kTypeTensorFloat);
-        auto op2 = model->addOperand(&kTypeTensorFloat);
-        auto op3 = model->addOperand(&kTypeTensorFloatRank0);
-        auto op4 = model->addOperand(&kTypeTensorFloat);
-        auto op5 = model->addOperand(&kTypeTensorFloat);
-        auto act = model->addOperand(&kTypeInt32);
-        model->setOperandValue(act, &act_init, sizeof(act_init));
-        model->addOperation(ANEURALNETWORKS_ADD, {op1, op2, act}, {op3});
-        model->addOperation(ANEURALNETWORKS_ADD, {op3, op4, act}, {op5});
-        model->identifyInputsAndOutputs({op1, op2, op4}, {op5});
-        assert(model->isValid());
-    });
+    WrapperModel model;
+    auto op1 = model.addOperand(&kTypeTensorFloat);
+    auto op2 = model.addOperand(&kTypeTensorFloat);
+    auto op3 = model.addOperand(&kTypeTensorFloatRank0);
+    auto op4 = model.addOperand(&kTypeTensorFloat);
+    auto op5 = model.addOperand(&kTypeTensorFloat);
+    auto act = model.addConstantOperand(&kTypeInt32, kNoActivation);
+    model.addOperation(ANEURALNETWORKS_ADD, {op1, op2, act}, {op3});
+    model.addOperation(ANEURALNETWORKS_ADD, {op3, op4, act}, {op5});
+    model.identifyInputsAndOutputs({op1, op2, op4}, {op5});
+    ASSERT_TRUE(model.isValid());
+    model.finish();
+    testAvailableSinceV1_2(model);
 }
 
 TEST_F(ComplianceTest, HardwareBuffer) {
@@ -143,20 +141,18 @@ TEST_F(ComplianceTest, HardwareBuffer) {
     test_wrapper::Memory memory(buffer);
     ASSERT_TRUE(memory.isValid());
 
-    int32_t act_init = 0;
-
     // A simple ADD operation: op1 ADD op2 = op3, with op2 using a const hardware buffer.
-    testAvailableSinceV1_2([&memory, &act_init](WrapperModel* model) {
-        auto op1 = model->addOperand(&kTypeTensorFloat);
-        auto op2 = model->addOperand(&kTypeTensorFloat);
-        auto act = model->addOperand(&kTypeInt32);
-        auto op3 = model->addOperand(&kTypeTensorFloat);
-        model->setOperandValueFromMemory(op2, &memory, 0, sizeof(float));
-        model->setOperandValue(act, &act_init, sizeof(act_init));
-        model->addOperation(ANEURALNETWORKS_ADD, {op1, op2, act}, {op3});
-        model->identifyInputsAndOutputs({op1}, {op3});
-        assert(model->isValid());
-    });
+    WrapperModel model;
+    auto op1 = model.addOperand(&kTypeTensorFloat);
+    auto op2 = model.addOperand(&kTypeTensorFloat);
+    auto op3 = model.addOperand(&kTypeTensorFloat);
+    auto act = model.addConstantOperand(&kTypeInt32, kNoActivation);
+    model.setOperandValueFromMemory(op2, &memory, 0, sizeof(float));
+    model.addOperation(ANEURALNETWORKS_ADD, {op1, op2, act}, {op3});
+    model.identifyInputsAndOutputs({op1}, {op3});
+    ASSERT_TRUE(model.isValid());
+    model.finish();
+    testAvailableSinceV1_2(model);
 
     AHardwareBuffer_release(buffer);
 }
@@ -185,21 +181,22 @@ TEST_F(ComplianceTest, DeviceMemory) {
 class GeneratedComplianceTest : public generated_tests::GeneratedTestBase {};
 
 TEST_P(GeneratedComplianceTest, Test) {
-    const auto createModel = [this](WrapperModel* model) {
-        generated_tests::createModel(testModel, model);
-    };
+    WrapperModel model;
+    generated_tests::createModel(testModel, &model);
+    ASSERT_TRUE(model.isValid());
+    model.finish();
     switch (testModel.minSupportedVersion) {
         case TestHalVersion::V1_0:
-            testAvailableSinceV1_0(createModel);
+            testAvailableSinceV1_0(model);
             break;
         case TestHalVersion::V1_1:
-            testAvailableSinceV1_1(createModel);
+            testAvailableSinceV1_1(model);
             break;
         case TestHalVersion::V1_2:
-            testAvailableSinceV1_2(createModel);
+            testAvailableSinceV1_2(model);
             break;
         case TestHalVersion::V1_3:
-            testAvailableSinceV1_3(createModel);
+            testAvailableSinceV1_3(model);
             break;
         case TestHalVersion::UNKNOWN:
             FAIL();
