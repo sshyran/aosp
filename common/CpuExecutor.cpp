@@ -762,6 +762,9 @@ void CpuExecutor::updateForArguments(const std::vector<uint32_t>& indexes,
 }
 
 int CpuExecutor::executeOperation(const Operation& operation, RunTimeOperandInfo* operands) {
+    if (hasDeadlinePassed(mDeadline)) {
+        return ANEURALNETWORKS_MISSED_DEADLINE_TRANSIENT;
+    }
     if (operation.type == OperationType::IF) {
         int result = executeIfOperation(operation, operands);
         if (result != ANEURALNETWORKS_NO_ERROR) {

@@ -98,7 +98,7 @@ class DriverDevice : public Device {
 
     std::pair<int, std::shared_ptr<PreparedModel>> prepareModel(
             const ModelFactory& makeModel, ExecutionPreference preference, Priority priority,
-            const OptionalTimePoint& deadline, const std::string& cacheDir,
+            const std::optional<Deadline>& deadline, const std::string& cacheDir,
             const std::optional<CacheToken>& maybeToken) const override;
 
     std::pair<int, std::unique_ptr<Memory>> allocate(const MemoryDescriptor& desc) const override;
@@ -132,14 +132,14 @@ class DriverPreparedModel : public PreparedModel {
             const std::vector<ModelArgumentInfo>& inputs,
             const std::vector<ModelArgumentInfo>& outputs, const MemoryTracker& memories,
             const std::shared_ptr<ExecutionBurstController>& burstController, MeasureTiming measure,
-            const OptionalTimePoint& deadline,
+            const std::optional<Deadline>& deadline,
             const OptionalTimeoutDuration& loopTimeoutDuration) const override;
 
     std::tuple<int, int, sp<hal::IFencedExecutionCallback>, hal::Timing> executeFenced(
             const std::vector<ModelArgumentInfo>& inputs,
             const std::vector<ModelArgumentInfo>& outputs, const MemoryTracker& memories,
             const std::vector<int>& waitFor, MeasureTiming measure,
-            const hal::OptionalTimePoint& deadline,
+            const std::optional<Deadline>& deadline,
             const OptionalTimeoutDuration& loopTimeoutDuration,
             const hal::OptionalTimeoutDuration& timeoutDurationAfterFence) const override;
 
@@ -237,7 +237,7 @@ std::vector<bool> DriverDevice::getSupportedOperations(const MetaModel& metaMode
 
 std::pair<int, std::shared_ptr<PreparedModel>> DriverDevice::prepareModel(
         const ModelFactory& makeModel, ExecutionPreference preference, Priority priority,
-        const OptionalTimePoint& deadline, const std::string& cacheDir,
+        const std::optional<Deadline>& deadline, const std::string& cacheDir,
         const std::optional<CacheToken>& maybeToken) const {
     const auto [n, preparedModel] = kInterface->prepareModel(makeModel, preference, priority,
                                                              deadline, cacheDir, maybeToken);
@@ -318,7 +318,7 @@ std::tuple<int, std::vector<OutputShape>, Timing> DriverPreparedModel::execute(
         const std::vector<ModelArgumentInfo>& inputs, const std::vector<ModelArgumentInfo>& outputs,
         const MemoryTracker& memories,
         const std::shared_ptr<ExecutionBurstController>& burstController, MeasureTiming measure,
-        const OptionalTimePoint& deadline,
+        const std::optional<Deadline>& deadline,
         const OptionalTimeoutDuration& loopTimeoutDuration) const {
     NNTRACE_RT(NNTRACE_PHASE_INPUTS_AND_OUTPUTS, "DriverPreparedModel::execute");
 
@@ -425,7 +425,7 @@ std::tuple<int, int, sp<hal::IFencedExecutionCallback>, hal::Timing>
 DriverPreparedModel::executeFenced(
         const std::vector<ModelArgumentInfo>& inputs, const std::vector<ModelArgumentInfo>& outputs,
         const MemoryTracker& memories, const std::vector<int>& waitFor, hal::MeasureTiming measure,
-        const hal::OptionalTimePoint& deadline, const OptionalTimeoutDuration& loopTimeoutDuration,
+        const std::optional<Deadline>& deadline, const OptionalTimeoutDuration& loopTimeoutDuration,
         const hal::OptionalTimeoutDuration& timeoutDurationAfterFence) const {
     NNTRACE_RT(NNTRACE_PHASE_INPUTS_AND_OUTPUTS, "DriverPreparedModel::executeFenced");
     CHECK(std::all_of(waitFor.begin(), waitFor.end(), [](int fd) { return fd > 0; }));
@@ -569,7 +569,7 @@ class CpuDevice : public Device {
 
     std::pair<int, std::shared_ptr<PreparedModel>> prepareModel(
             const ModelFactory& makeModel, ExecutionPreference preference, Priority priority,
-            const OptionalTimePoint& deadline, const std::string& cacheDir,
+            const std::optional<Deadline>& deadline, const std::string& cacheDir,
             const std::optional<CacheToken>& maybeToken) const override;
 
     std::pair<int, std::unique_ptr<Memory>> allocate(const MemoryDescriptor&) const override {
@@ -604,7 +604,7 @@ class CpuPreparedModel : public PreparedModel {
             const std::vector<ModelArgumentInfo>& inputs,
             const std::vector<ModelArgumentInfo>& outputs, const MemoryTracker& memories,
             const std::shared_ptr<ExecutionBurstController>& burstController, MeasureTiming measure,
-            const OptionalTimePoint& deadline,
+            const std::optional<Deadline>& deadline,
             const OptionalTimeoutDuration& loopTimeoutDuration) const override;
 
     std::shared_ptr<ExecutionBurstController> configureExecutionBurst(
@@ -616,7 +616,7 @@ class CpuPreparedModel : public PreparedModel {
             const std::vector<ModelArgumentInfo>& inputs,
             const std::vector<ModelArgumentInfo>& outputs, const MemoryTracker& memories,
             const std::vector<int>& wait_for, MeasureTiming measure,
-            const hal::OptionalTimePoint& deadline,
+            const std::optional<Deadline>& deadline,
             const OptionalTimeoutDuration& loopTimeoutDuration,
             const hal::OptionalTimeoutDuration& timeoutDurationAfterFence) const override;
 
@@ -646,7 +646,7 @@ std::vector<bool> CpuDevice::getSupportedOperations(const MetaModel& metaModel) 
 
 std::pair<int, std::shared_ptr<PreparedModel>> CpuDevice::prepareModel(
         const ModelFactory& makeModel, ExecutionPreference preference, Priority priority,
-        const OptionalTimePoint& deadline, const std::string& /*cacheDir*/,
+        const std::optional<Deadline>& deadline, const std::string& /*cacheDir*/,
         const std::optional<CacheToken>& maybeToken) const {
     CHECK(!maybeToken.has_value())
             << "Should never call prepareModel with cache information on CpuDevice";
@@ -656,8 +656,8 @@ std::pair<int, std::shared_ptr<PreparedModel>> CpuDevice::prepareModel(
         !validatePriority(priority)) {
         return {ANEURALNETWORKS_OP_FAILED, nullptr};
     }
-    if (deadline.getDiscriminator() != OptionalTimePoint::hidl_discriminator::none) {
-        return {ANEURALNETWORKS_BAD_DATA, nullptr};
+    if (hasDeadlinePassed(deadline)) {
+        return {ANEURALNETWORKS_MISSED_DEADLINE_PERSISTENT, nullptr};
     }
 
     return CpuPreparedModel::create(model);
@@ -678,12 +678,16 @@ static std::tuple<int, std::vector<OutputShape>, Timing> computeOnCpu(
         const Model& model, const Request& request,
         const std::vector<RunTimePoolInfo>& modelPoolInfos,
         const std::vector<RunTimePoolInfo>& requestPoolInfos,
+        const std::optional<Deadline>& deadline,
         const OptionalTimeoutDuration& loopTimeoutDuration) {
     NNTRACE_RT(NNTRACE_PHASE_EXECUTION, "computeOnCpu");
     CpuExecutor executor;
     if (loopTimeoutDuration.getDiscriminator() !=
         OptionalTimeoutDuration::hidl_discriminator::none) {
         executor.setLoopTimeout(loopTimeoutDuration.nanoseconds());
+    }
+    if (deadline.has_value()) {
+        executor.setDeadline(*deadline);
     }
     int err = executor.run(model, request, modelPoolInfos, requestPoolInfos);
     const auto& outputShapes = executor.getOutputShapes();
@@ -694,9 +698,9 @@ std::tuple<int, int, sp<hal::IFencedExecutionCallback>, hal::Timing>
 CpuPreparedModel::executeFenced(const std::vector<ModelArgumentInfo>& inputs,
                                 const std::vector<ModelArgumentInfo>& outputs,
                                 const MemoryTracker& memories, const std::vector<int>& waitFor,
-                                hal::MeasureTiming measure, const hal::OptionalTimePoint&,
+                                hal::MeasureTiming measure, const std::optional<Deadline>& deadline,
                                 const OptionalTimeoutDuration& loopTimeoutDuration,
-                                const hal::OptionalTimeoutDuration&) const {
+                                const hal::OptionalTimeoutDuration& duration) const {
     VLOG(EXECUTION)
             << "CpuPreparedModel::executeFenced wait for sync fences to signal before execution";
     for (int syncFd : waitFor) {
@@ -708,8 +712,18 @@ CpuPreparedModel::executeFenced(const std::vector<ModelArgumentInfo>& inputs,
             }
         }
     }
-    const auto [result, outputShapes, timing] =
-            execute(inputs, outputs, memories, nullptr, measure, {}, loopTimeoutDuration);
+
+    // Update deadline if the timeout duration is closer than the deadline.
+    auto closestDeadline = deadline;
+    if (duration.getDiscriminator() != OptionalTimeoutDuration::hidl_discriminator::none) {
+        const auto timeoutDurationDeadline = makeDeadline(duration.nanoseconds());
+        if (!closestDeadline.has_value() || *closestDeadline > timeoutDurationDeadline) {
+            closestDeadline = timeoutDurationDeadline;
+        }
+    }
+
+    const auto [result, outputShapes, timing] = execute(inputs, outputs, memories, nullptr, measure,
+                                                        closestDeadline, loopTimeoutDuration);
     return {result, -1, nullptr, timing};
 }
 
@@ -724,10 +738,10 @@ std::tuple<int, std::vector<OutputShape>, Timing> CpuPreparedModel::execute(
         const std::vector<ModelArgumentInfo>& inputs, const std::vector<ModelArgumentInfo>& outputs,
         const MemoryTracker& memories,
         const std::shared_ptr<ExecutionBurstController>& /*burstController*/,
-        MeasureTiming /*measure*/, const OptionalTimePoint& deadline,
+        MeasureTiming /*measure*/, const std::optional<Deadline>& deadline,
         const OptionalTimeoutDuration& loopTimeoutDuration) const {
-    if (deadline.getDiscriminator() != OptionalTimePoint::hidl_discriminator::none) {
-        return {ANEURALNETWORKS_BAD_DATA, {}, kNoTiming};
+    if (hasDeadlinePassed(deadline)) {
+        return {ANEURALNETWORKS_MISSED_DEADLINE_PERSISTENT, {}, kNoTiming};
     }
 
     std::vector<RunTimePoolInfo> requestPoolInfos;
@@ -768,14 +782,15 @@ std::tuple<int, std::vector<OutputShape>, Timing> CpuPreparedModel::execute(
         // TODO(mikie): this could have NNTRACE so we could measure the overhead
         //              of spinning up a new thread.
         std::tuple<int, std::vector<OutputShape>, Timing> result = {};
-        std::thread([this, &request, &requestPoolInfos, &loopTimeoutDuration, &result] {
-            result = computeOnCpu(mModel, request, mModelPoolInfos, requestPoolInfos,
+        std::thread([this, &request, &requestPoolInfos, &deadline, &loopTimeoutDuration, &result] {
+            result = computeOnCpu(mModel, request, mModelPoolInfos, requestPoolInfos, deadline,
                                   loopTimeoutDuration);
         }).join();
         return result;
     }
 
-    return computeOnCpu(mModel, request, mModelPoolInfos, requestPoolInfos, loopTimeoutDuration);
+    return computeOnCpu(mModel, request, mModelPoolInfos, requestPoolInfos, deadline,
+                        loopTimeoutDuration);
 }
 
 DeviceManager* DeviceManager::get() {
