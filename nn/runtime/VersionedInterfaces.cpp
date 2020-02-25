@@ -201,7 +201,7 @@ VersionedIPreparedModel::~VersionedIPreparedModel() {
 }
 
 std::tuple<int, std::vector<OutputShape>, Timing> VersionedIPreparedModel::executeAsynchronously(
-        const Request& request, MeasureTiming measure, const OptionalTimePoint& deadline,
+        const Request& request, MeasureTiming measure, const std::optional<Deadline>& deadline,
         const OptionalTimeoutDuration& loopTimeoutDuration) const {
     const auto failDeadObject = []() -> std::tuple<int, std::vector<OutputShape>, Timing> {
         return {ANEURALNETWORKS_DEAD_OBJECT, {}, kNoTiming};
@@ -221,7 +221,8 @@ std::tuple<int, std::vector<OutputShape>, Timing> VersionedIPreparedModel::execu
 
     // version 1.3+ HAL
     if (mPreparedModelV1_3 != nullptr) {
-        Return<ErrorStatus> ret = mPreparedModelV1_3->execute_1_3(request, measure, deadline,
+        const auto otp = makeTimePoint(deadline);
+        Return<ErrorStatus> ret = mPreparedModelV1_3->execute_1_3(request, measure, otp,
                                                                   loopTimeoutDuration, callback);
         if (ret.isDeadObject()) {
             LOG(ERROR) << "execute_1_3 failure: " << ret.description();
@@ -293,7 +294,7 @@ std::tuple<int, std::vector<OutputShape>, Timing> VersionedIPreparedModel::execu
 }
 
 std::tuple<int, std::vector<OutputShape>, Timing> VersionedIPreparedModel::executeSynchronously(
-        const Request& request, MeasureTiming measure, const OptionalTimePoint& deadline,
+        const Request& request, MeasureTiming measure, const std::optional<Deadline>& deadline,
         const OptionalTimeoutDuration& loopTimeoutDuration) const {
     const std::tuple<int, std::vector<OutputShape>, Timing> kDeadObject = {
             ANEURALNETWORKS_DEAD_OBJECT, {}, kNoTiming};
@@ -302,8 +303,9 @@ std::tuple<int, std::vector<OutputShape>, Timing> VersionedIPreparedModel::execu
     // version 1.3+ HAL
     if (mPreparedModelV1_3 != nullptr) {
         std::tuple<int, std::vector<OutputShape>, Timing> result;
+        const auto otp = makeTimePoint(deadline);
         Return<void> ret = mPreparedModelV1_3->executeSynchronously_1_3(
-                request, measure, deadline, loopTimeoutDuration,
+                request, measure, otp, loopTimeoutDuration,
                 [&result](ErrorStatus error, const hidl_vec<OutputShape>& outputShapes,
                           const Timing& timing) {
                     result = getExecutionResult(error, outputShapes, timing);
@@ -351,7 +353,7 @@ std::tuple<int, std::vector<OutputShape>, Timing> VersionedIPreparedModel::execu
 }
 
 std::tuple<int, std::vector<OutputShape>, Timing> VersionedIPreparedModel::execute(
-        const Request& request, MeasureTiming measure, const OptionalTimePoint& deadline,
+        const Request& request, MeasureTiming measure, const std::optional<Deadline>& deadline,
         const OptionalTimeoutDuration& loopTimeoutDuration, bool preferSynchronous) const {
     if (preferSynchronous) {
         VLOG(EXECUTION) << "Before executeSynchronously() " << SHOW_IF_DEBUG(toString(request));
@@ -407,7 +409,7 @@ static std::pair<ErrorStatus, Capabilities> getCapabilitiesFunction(V1_3::IDevic
 std::tuple<int, hal::hidl_handle, sp<hal::IFencedExecutionCallback>, hal::Timing>
 VersionedIPreparedModel::executeFenced(
         const hal::Request& request, const hal::hidl_vec<hal::hidl_handle>& waitFor,
-        MeasureTiming measure, const hal::OptionalTimePoint& deadline,
+        MeasureTiming measure, const std::optional<Deadline>& deadline,
         const OptionalTimeoutDuration& loopTimeoutDuration,
         const hal::OptionalTimeoutDuration& timeoutDurationAfterFence) {
     // version 1.3+ HAL
@@ -417,8 +419,9 @@ VersionedIPreparedModel::executeFenced(
     hal::Timing timing = {UINT64_MAX, UINT64_MAX};
     if (mPreparedModelV1_3 != nullptr) {
         ErrorStatus errorStatus;
+        const auto otp = makeTimePoint(deadline);
         Return<void> ret = mPreparedModelV1_3->executeFenced(
-                request, waitFor, measure, deadline, loopTimeoutDuration, timeoutDurationAfterFence,
+                request, waitFor, measure, otp, loopTimeoutDuration, timeoutDurationAfterFence,
                 [&syncFence, &errorStatus, &dispatchCallback](
                         ErrorStatus error, const hidl_handle& handle,
                         const sp<hal::IFencedExecutionCallback>& callback) {
@@ -1185,7 +1188,7 @@ static std::pair<int, std::shared_ptr<VersionedIPreparedModel>> prepareModelResu
 
 std::pair<int, std::shared_ptr<VersionedIPreparedModel>> VersionedIDevice::prepareModelInternal(
         const Model& model, ExecutionPreference preference, Priority priority,
-        const OptionalTimePoint& deadline, const std::string& cacheDir,
+        const std::optional<Deadline>& deadline, const std::string& cacheDir,
         const std::optional<CacheToken>& maybeToken) const {
     // Note that some work within VersionedIDevice will be subtracted from the IPC layer
     NNTRACE_FULL(NNTRACE_LAYER_IPC, NNTRACE_PHASE_COMPILATION, "prepareModel");
@@ -1209,12 +1212,13 @@ std::pair<int, std::shared_ptr<VersionedIPreparedModel>> VersionedIDevice::prepa
 
     // If 1.3 device, try preparing model
     if (getDevice<V1_3::IDevice>() != nullptr) {
+        const auto otp = makeTimePoint(deadline);
         const Return<ErrorStatus> ret = recoverable<ErrorStatus, V1_3::IDevice>(
                 __FUNCTION__,
-                [&model, preference, priority, &deadline, &modelCache, &dataCache, &token,
+                [&model, preference, priority, &otp, &modelCache, &dataCache, &token,
                  &callback](const sp<V1_3::IDevice>& device) {
-                    return device->prepareModel_1_3(model, preference, priority, deadline,
-                                                    modelCache, dataCache, token, callback);
+                    return device->prepareModel_1_3(model, preference, priority, otp, modelCache,
+                                                    dataCache, token, callback);
                 },
                 callback);
         if (ret.isDeadObject()) {
@@ -1366,7 +1370,7 @@ std::pair<int, std::shared_ptr<VersionedIPreparedModel>> VersionedIDevice::prepa
 }
 
 std::pair<int, std::shared_ptr<VersionedIPreparedModel>>
-VersionedIDevice::prepareModelFromCacheInternal(const OptionalTimePoint& deadline,
+VersionedIDevice::prepareModelFromCacheInternal(const std::optional<Deadline>& deadline,
                                                 const std::string& cacheDir,
                                                 const CacheToken& token) const {
     // Note that some work within VersionedIDevice will be subtracted from the IPC layer
@@ -1384,12 +1388,13 @@ VersionedIDevice::prepareModelFromCacheInternal(const OptionalTimePoint& deadlin
 
     // version 1.3+ HAL
     if (getDevice<V1_3::IDevice>() != nullptr) {
+        const auto otp = makeTimePoint(deadline);
         const sp<PreparedModelCallback> callback = new PreparedModelCallback();
         const Return<ErrorStatus> ret = recoverable<ErrorStatus, V1_3::IDevice>(
                 __FUNCTION__,
-                [&deadline, &modelCache, &dataCache, &token,
+                [&otp, &modelCache, &dataCache, &token,
                  &callback](const sp<V1_3::IDevice>& device) {
-                    return device->prepareModelFromCache_1_3(deadline, modelCache, dataCache, token,
+                    return device->prepareModelFromCache_1_3(otp, modelCache, dataCache, token,
                                                              callback);
                 },
                 callback);
@@ -1447,7 +1452,7 @@ VersionedIDevice::prepareModelFromCacheInternal(const OptionalTimePoint& deadlin
 
 std::pair<int, std::shared_ptr<VersionedIPreparedModel>> VersionedIDevice::prepareModel(
         const ModelFactory& makeModel, ExecutionPreference preference, Priority priority,
-        const OptionalTimePoint& deadline, const std::string& cacheDir,
+        const std::optional<Deadline>& deadline, const std::string& cacheDir,
         const std::optional<CacheToken>& maybeToken) const {
     // Attempt to compile from cache if token is present.
     if (maybeToken.has_value()) {
