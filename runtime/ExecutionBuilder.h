@@ -238,7 +238,7 @@ class StepExecutor {
 
     // Executes using the (driver, preparedModel) specified at construction time.
     std::tuple<int, std::vector<hal::OutputShape>, hal::Timing> compute(
-            const hal::OptionalTimePoint& deadline,
+            const std::optional<Deadline>& deadline,
             const std::shared_ptr<ExecutionBurstController>& burstController = nullptr);
 
     // Re-compiles and executes using the CPU, regardless of the (driver,
@@ -250,7 +250,8 @@ class StepExecutor {
     // Perform fenced execution and return error_code, sync_fence_fd and a
     // callback.
     std::tuple<int, int, sp<hal::IFencedExecutionCallback>> computeFenced(
-            const std::vector<int>& wait_for, uint64_t timeoutDurationAfterFence);
+            const std::vector<int>& wait_for, uint64_t timeoutDurationAfterFence,
+            const std::optional<Deadline>& deadline);
 
    private:
     void mapInputOrOutput(const ModelArgumentInfo& builderInputOrOutput,
