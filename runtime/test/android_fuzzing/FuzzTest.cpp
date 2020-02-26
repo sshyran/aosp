@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+#include <android-base/logging.h>
+
 #include <cstdlib>
 #include <optional>
 #include <utility>
@@ -47,7 +49,9 @@ std::optional<Model> CreateModel(const TestModel& testModel) {
     Model model;
 
     // Operands.
-    for (const auto& operand : testModel.operands) {
+    // TODO(b/148605565): Add control flow support
+    CHECK_EQ(testModel.referenced.size(), 0u) << "Subgraphs not supported";
+    for (const auto& operand : testModel.main.operands) {
         auto type = getOperandType(operand);
         auto index = model.addOperand(&type);
 
@@ -59,6 +63,9 @@ std::optional<Model> CreateModel(const TestModel& testModel) {
             case TestOperandLifeTime::NO_VALUE:
                 model.setOperandValue(index, nullptr, 0);
                 break;
+            case TestOperandLifeTime::SUBGRAPH: {
+                CHECK(false);
+            } break;
             case TestOperandLifeTime::SUBGRAPH_INPUT:
             case TestOperandLifeTime::SUBGRAPH_OUTPUT:
             case TestOperandLifeTime::TEMPORARY_VARIABLE:
@@ -69,13 +76,14 @@ std::optional<Model> CreateModel(const TestModel& testModel) {
     }
 
     // Operations.
-    for (const auto& operation : testModel.operations) {
+    CHECK_EQ(testModel.referenced.size(), 0u) << "Subgraphs not supported";
+    for (const auto& operation : testModel.main.operations) {
         model.addOperation(static_cast<int>(operation.type), operation.inputs, operation.outputs);
         if (!model.isValid()) return std::nullopt;
     }
 
     // Inputs and outputs.
-    model.identifyInputsAndOutputs(testModel.inputIndexes, testModel.outputIndexes);
+    model.identifyInputsAndOutputs(testModel.main.inputIndexes, testModel.main.outputIndexes);
     if (!model.isValid()) return std::nullopt;
 
     // Relaxed computation.
@@ -102,8 +110,8 @@ std::optional<Execution> CreateExecution(const Compilation& compilation,
     Execution execution(&compilation);
 
     // Model inputs.
-    for (uint32_t i = 0; i < testModel.inputIndexes.size(); i++) {
-        const auto& operand = testModel.operands[testModel.inputIndexes[i]];
+    for (uint32_t i = 0; i < testModel.main.inputIndexes.size(); i++) {
+        const auto& operand = testModel.main.operands[testModel.main.inputIndexes[i]];
         if (execution.setInput(i, operand.data.get<void>(), operand.data.size()) !=
             Result::NO_ERROR) {
             return std::nullopt;
@@ -111,8 +119,8 @@ std::optional<Execution> CreateExecution(const Compilation& compilation,
     }
 
     // Model outputs.
-    for (uint32_t i = 0; i < testModel.outputIndexes.size(); i++) {
-        const auto& operand = testModel.operands[testModel.outputIndexes[i]];
+    for (uint32_t i = 0; i < testModel.main.outputIndexes.size(); i++) {
+        const auto& operand = testModel.main.operands[testModel.main.outputIndexes[i]];
         if (execution.setOutput(i, const_cast<void*>(operand.data.get<void>()),
                                 operand.data.size()) != Result::NO_ERROR) {
             return std::nullopt;

@@ -23,6 +23,7 @@ cc_library_static {
     defaults: ["neuralnetworks_defaults"],
     export_include_dirs: ["include"],
     static_libs: [
+        "libbase",
         "libgmock",
         "libgtest",
     ],

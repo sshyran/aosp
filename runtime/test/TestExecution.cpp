@@ -102,10 +102,12 @@ class TestPreparedModelLatest : public IPreparedModel {
 
     Return<V1_3::ErrorStatus> execute_1_3(const V1_3::Request& request, MeasureTiming measure,
                                           const OptionalTimePoint& deadline,
+                                          const OptionalTimeoutDuration& loopTimeoutDuration,
                                           const sp<V1_3::IExecutionCallback>& callback) override {
         CHECK(mPreparedModelV1_3 != nullptr) << "V1_3 prepared model is nullptr.";
         if (mErrorStatus == ErrorStatus::NONE) {
-            return mPreparedModelV1_3->execute_1_3(request, measure, deadline, callback);
+            return mPreparedModelV1_3->execute_1_3(request, measure, deadline, loopTimeoutDuration,
+                                                   callback);
         } else if (mErrorStatus == ErrorStatus::OUTPUT_INSUFFICIENT_SIZE) {
             OutputShape shape = {.dimensions = {1}, .isSufficient = false};
             callback->notify_1_3(mErrorStatus, {shape}, kBadTiming);
@@ -133,10 +135,12 @@ class TestPreparedModelLatest : public IPreparedModel {
 
     Return<void> executeSynchronously_1_3(const V1_3::Request& request, MeasureTiming measure,
                                           const OptionalTimePoint& deadline,
+                                          const OptionalTimeoutDuration& loopTimeoutDuration,
                                           executeSynchronously_1_3_cb cb) override {
         CHECK(mPreparedModelV1_3 != nullptr) << "V1_3 prepared model is nullptr.";
         if (mErrorStatus == ErrorStatus::NONE) {
-            return mPreparedModelV1_3->executeSynchronously_1_3(request, measure, deadline, cb);
+            return mPreparedModelV1_3->executeSynchronously_1_3(request, measure, deadline,
+                                                                loopTimeoutDuration, cb);
         } else if (mErrorStatus == ErrorStatus::OUTPUT_INSUFFICIENT_SIZE) {
             OutputShape shape = {.dimensions = {1}, .isSufficient = false};
             cb(mErrorStatus, {shape}, kBadTiming);
@@ -163,7 +167,7 @@ class TestPreparedModelLatest : public IPreparedModel {
     }
     Return<void> executeFenced(const V1_3::Request&, const hidl_vec<hidl_handle>&, MeasureTiming,
                                const OptionalTimePoint&, const OptionalTimeoutDuration&,
-                               executeFenced_cb cb) override {
+                               const OptionalTimeoutDuration&, executeFenced_cb cb) override {
         cb(ErrorStatus::DEVICE_UNAVAILABLE, hidl_handle(nullptr), nullptr);
         return Void();
     }
@@ -245,7 +249,9 @@ class TestDriver13 : public SampleDriver {
                 .relaxedFloat32toFloat16PerformanceScalar = kPerf,
                 .relaxedFloat32toFloat16PerformanceTensor = kPerf,
                 .operandPerformance =
-                        nn::nonExtensionOperandPerformance<nn::HalVersion::V1_3>(kPerf)};
+                        nn::nonExtensionOperandPerformance<nn::HalVersion::V1_3>(kPerf),
+                .ifPerformance = kPerf,
+                .whilePerformance = kPerf};
         _hidl_cb(V1_3::ErrorStatus::NONE, capabilities);
         return Void();
     }

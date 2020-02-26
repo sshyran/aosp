@@ -70,6 +70,7 @@ enum class TestOperandType {
     TENSOR_QUANT16_ASYMM = 12,
     TENSOR_QUANT8_SYMM = 13,
     TENSOR_QUANT8_ASYMM_SIGNED = 14,
+    SUBGRAPH = 15,
 };
 
 enum class TestOperandLifeTime {
@@ -79,6 +80,7 @@ enum class TestOperandLifeTime {
     CONSTANT_COPY = 3,
     CONSTANT_REFERENCE = 4,
     NO_VALUE = 5,
+    SUBGRAPH = 6,
     // DEPRECATED. Use SUBGRAPH_INPUT.
     // This value is used in pre-1.3 VTS tests.
     MODEL_INPUT = SUBGRAPH_INPUT,
@@ -285,11 +287,16 @@ struct TestOperation {
     std::vector<uint32_t> outputs;
 };
 
-struct TestModel {
+struct TestSubgraph {
     std::vector<TestOperand> operands;
     std::vector<TestOperation> operations;
     std::vector<uint32_t> inputIndexes;
     std::vector<uint32_t> outputIndexes;
+};
+
+struct TestModel {
+    TestSubgraph main;
+    std::vector<TestSubgraph> referenced;
     bool isRelaxed = false;
 
     // Additional testing information and flags associated with the TestModel.
@@ -306,63 +313,103 @@ struct TestModel {
     // The minimum supported HAL version.
     TestHalVersion minSupportedVersion = TestHalVersion::UNKNOWN;
 
+    void forEachSubgraph(std::function<void(const TestSubgraph&)> handler) const {
+        handler(main);
+        for (const TestSubgraph& subgraph : referenced) {
+            handler(subgraph);
+        }
+    }
+
+    void forEachSubgraph(std::function<void(TestSubgraph&)> handler) {
+        handler(main);
+        for (TestSubgraph& subgraph : referenced) {
+            handler(subgraph);
+        }
+    }
+
     // Explicitly create a deep copy.
     TestModel copy() const {
         TestModel newTestModel(*this);
-        for (TestOperand& operand : newTestModel.operands) {
-            operand.data = operand.data.copy();
-        }
+        newTestModel.forEachSubgraph([](TestSubgraph& subgraph) {
+            for (TestOperand& operand : subgraph.operands) {
+                operand.data = operand.data.copy();
+            }
+        });
         return newTestModel;
     }
 
     bool hasQuant8CoupledOperands() const {
-        for (const TestOperation& operation : operations) {
-            /*
-             *  There are several ops that are exceptions to the general quant8
-             *  types coupling:
-             *  HASHTABLE_LOOKUP -- due to legacy reasons uses
-             *    TENSOR_QUANT8_ASYMM tensor as if it was TENSOR_BOOL. It
-             *    doesn't make sense to have coupling in this case.
-             *  LSH_PROJECTION -- hashes an input tensor treating it as raw
-             *    bytes. We can't expect same results for coupled inputs.
-             *  PAD_V2 -- pad_value is set using int32 scalar, so coupling
-             *    produces a wrong result.
-             *  CAST -- converts tensors without taking into account input's
-             *    scale and zero point. Coupled models shouldn't produce same
-             *    results.
-             *  QUANTIZED_16BIT_LSTM -- the op is made for a specific use case,
-             *    supporting signed quantization is not worth the compications.
-             */
-            if (operation.type == TestOperationType::HASHTABLE_LOOKUP ||
-                operation.type == TestOperationType::LSH_PROJECTION ||
-                operation.type == TestOperationType::PAD_V2 ||
-                operation.type == TestOperationType::CAST ||
-                operation.type == TestOperationType::QUANTIZED_16BIT_LSTM) {
-                continue;
+        bool result = false;
+        forEachSubgraph([&result](const TestSubgraph& subgraph) {
+            if (result) {
+                return;
             }
-            for (const auto operandIndex : operation.inputs) {
-                if (operands[operandIndex].type == TestOperandType::TENSOR_QUANT8_ASYMM) {
-                    return true;
+            for (const TestOperation& operation : subgraph.operations) {
+                /*
+                 *  There are several ops that are exceptions to the general quant8
+                 *  types coupling:
+                 *  HASHTABLE_LOOKUP -- due to legacy reasons uses
+                 *    TENSOR_QUANT8_ASYMM tensor as if it was TENSOR_BOOL. It
+                 *    doesn't make sense to have coupling in this case.
+                 *  LSH_PROJECTION -- hashes an input tensor treating it as raw
+                 *    bytes. We can't expect same results for coupled inputs.
+                 *  PAD_V2 -- pad_value is set using int32 scalar, so coupling
+                 *    produces a wrong result.
+                 *  CAST -- converts tensors without taking into account input's
+                 *    scale and zero point. Coupled models shouldn't produce same
+                 *    results.
+                 *  QUANTIZED_16BIT_LSTM -- the op is made for a specific use case,
+                 *    supporting signed quantization is not worth the compications.
+                 */
+                if (operation.type == TestOperationType::HASHTABLE_LOOKUP ||
+                    operation.type == TestOperationType::LSH_PROJECTION ||
+                    operation.type == TestOperationType::PAD_V2 ||
+                    operation.type == TestOperationType::CAST ||
+                    operation.type == TestOperationType::QUANTIZED_16BIT_LSTM) {
+                    continue;
+                }
+                for (const auto operandIndex : operation.inputs) {
+                    if (subgraph.operands[operandIndex].type ==
+                        TestOperandType::TENSOR_QUANT8_ASYMM) {
+                        result = true;
+                        return;
+                    }
+                }
+                for (const auto operandIndex : operation.outputs) {
+                    if (subgraph.operands[operandIndex].type ==
+                        TestOperandType::TENSOR_QUANT8_ASYMM) {
+                        result = true;
+                        return;
+                    }
                 }
             }
-            for (const auto operandIndex : operation.outputs) {
-                if (operands[operandIndex].type == TestOperandType::TENSOR_QUANT8_ASYMM) {
-                    return true;
-                }
-            }
-        }
-        return false;
+        });
+        return result;
     }
 
-    // RANK op returns a scalar and therefore shouldn't be tested for dynamic
-    // output shape support.
     bool hasScalarOutputs() const {
-        for (const TestOperation& operation : operations) {
-            if (operation.type == TestOperationType::RANK) {
-                return true;
+        bool result = false;
+        forEachSubgraph([&result](const TestSubgraph& subgraph) {
+            if (result) {
+                return;
             }
-        }
-        return false;
+            for (const TestOperation& operation : subgraph.operations) {
+                // RANK op returns a scalar and therefore shouldn't be tested
+                // for dynamic output shape support.
+                if (operation.type == TestOperationType::RANK) {
+                    result = true;
+                    return;
+                }
+                // Control flow operations do not support referenced model
+                // outputs with dynamic shapes.
+                if (operation.type == TestOperationType::IF ||
+                    operation.type == TestOperationType::WHILE) {
+                    result = true;
+                    return;
+                }
+            }
+        });
+        return result;
     }
 };
 
@@ -403,8 +450,8 @@ class TestModelManager {
 };
 
 // Check the output results against the expected values in test model by calling
-// GTEST_ASSERT/EXPECT. The index of the results corresponds to the index in model.outputIndexes.
-// E.g., results[i] corresponds to model.outputIndexes[i].
+// GTEST_ASSERT/EXPECT. The index of the results corresponds to the index in
+// model.main.outputIndexes. E.g., results[i] corresponds to model.main.outputIndexes[i].
 void checkResults(const TestModel& model, const std::vector<TestBuffer>& results);
 
 TestModel convertQuant8AsymmOperandsToSigned(const TestModel& testModel);

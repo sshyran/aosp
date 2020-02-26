@@ -49,7 +49,9 @@ Return<void> SampleDriverFloatSlow::getCapabilities_1_3(getCapabilities_1_3_cb c
     Capabilities capabilities = {
             .relaxedFloat32toFloat16PerformanceScalar = {.execTime = 1.2f, .powerUsage = 0.6f},
             .relaxedFloat32toFloat16PerformanceTensor = {.execTime = 1.2f, .powerUsage = 0.6f},
-            .operandPerformance = nonExtensionOperandPerformance<HalVersion::V1_3>({1.0f, 1.0f})};
+            .operandPerformance = nonExtensionOperandPerformance<HalVersion::V1_3>({1.0f, 1.0f}),
+            .ifPerformance = {.execTime = 1.0f, .powerUsage = 1.0f},
+            .whilePerformance = {.execTime = 1.0f, .powerUsage = 1.0f}};
     update(&capabilities.operandPerformance, OperandType::TENSOR_FLOAT32,
            {.execTime = 1.3f, .powerUsage = 0.7f});
     update(&capabilities.operandPerformance, OperandType::FLOAT32,
