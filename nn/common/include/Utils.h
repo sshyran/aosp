@@ -342,9 +342,9 @@ struct SubgraphValidationHelper {
     // Gets the output count of a subgraph referenced by a given operand.
     std::function<uint32_t(const hal::Operand&)> getSubgraphOutputCount;
     // Gets the specified input operand of a subgraph referenced by a given operand.
-    std::function<const hal::Operand&(const hal::Operand&, uint32_t)> getSubgraphInputOperand;
+    std::function<const hal::Operand*(const hal::Operand&, uint32_t)> getSubgraphInputOperand;
     // Gets the specified output operand of a subgraph referenced by a given operand.
-    std::function<const hal::Operand&(const hal::Operand&, uint32_t)> getSubgraphOutputOperand;
+    std::function<const hal::Operand*(const hal::Operand&, uint32_t)> getSubgraphOutputOperand;
 };
 
 // Returns ANEURALNETWORKS_NO_ERROR if the corresponding operation is defined and can handle the
