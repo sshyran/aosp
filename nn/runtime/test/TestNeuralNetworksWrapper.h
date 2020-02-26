@@ -116,9 +116,13 @@ class Model {
             mModel = other.mModel;
             mNextOperandId = other.mNextOperandId;
             mValid = other.mValid;
+            mRelaxed = other.mRelaxed;
+            mFinished = other.mFinished;
             other.mModel = nullptr;
             other.mNextOperandId = 0;
             other.mValid = false;
+            other.mRelaxed = false;
+            other.mFinished = false;
         }
         return *this;
     }
@@ -129,6 +133,7 @@ class Model {
             if (result != Result::NO_ERROR) {
                 mValid = false;
             }
+            mFinished = true;
             return result;
         } else {
             return Result::BAD_STATE;
@@ -160,6 +165,13 @@ class Model {
         return index;
     }
 
+    uint32_t addModelOperand(const Model* value) {
+        OperandType operandType(Type::MODEL, {});
+        uint32_t operand = addOperand(&operandType);
+        setOperandValueFromModel(operand, value);
+        return operand;
+    }
+
     void setOperandValue(uint32_t index, const void* buffer, size_t length) {
         if (ANeuralNetworksModel_setOperandValue(mModel, index, buffer, length) !=
             ANEURALNETWORKS_NO_ERROR) {
@@ -177,6 +189,13 @@ class Model {
                                    size_t length) {
         if (ANeuralNetworksModel_setOperandValueFromMemory(mModel, index, memory->get(), offset,
                                                            length) != ANEURALNETWORKS_NO_ERROR) {
+            mValid = false;
+        }
+    }
+
+    void setOperandValueFromModel(uint32_t index, const Model* value) {
+        if (ANeuralNetworksModel_setOperandValueFromModel(mModel, index, value->mModel) !=
+            ANEURALNETWORKS_NO_ERROR) {
             mValid = false;
         }
     }
@@ -209,6 +228,7 @@ class Model {
     ANeuralNetworksModel* getHandle() const { return mModel; }
     bool isValid() const { return mValid; }
     bool isRelaxed() const { return mRelaxed; }
+    bool isFinished() const { return mFinished; }
 
    protected:
     ANeuralNetworksModel* mModel = nullptr;
@@ -216,6 +236,7 @@ class Model {
     uint32_t mNextOperandId = 0;
     bool mValid = true;
     bool mRelaxed = false;
+    bool mFinished = false;
 };
 
 class Compilation {
@@ -343,6 +364,10 @@ class Execution {
                                uint32_t length, const ANeuralNetworksOperandType* type = nullptr) {
         return static_cast<Result>(ANeuralNetworksExecution_setOutputFromMemory(
                 mExecution, index, type, memory->get(), offset, length));
+    }
+
+    Result setLoopTimeout(uint64_t duration) {
+        return static_cast<Result>(ANeuralNetworksExecution_setLoopTimeout(mExecution, duration));
     }
 
     Result startCompute(Event* event) {

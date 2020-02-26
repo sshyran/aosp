@@ -185,8 +185,13 @@ using VersionedOperandType = typename VersionedType<version>::OperandType;
 
 }  // namespace
 
-// Return a vector with one entry for each non extension OperandType, set to the
-// specified PerformanceInfo value.  The vector will be sorted by OperandType.
+// Return a vector with one entry for each non-extension OperandType except
+// SUBGRAPH, set to the specified PerformanceInfo value.  The vector will be
+// sorted by OperandType.
+//
+// Control flow (OperandType::SUBGRAPH) operation performance is specified
+// separately using Capabilities::ifPerformance and
+// Capabilities::whilePerformance.
 template <HalVersion version>
 hal::hidl_vec<VersionedOperandPerformance<version>> nonExtensionOperandPerformance(
         hal::PerformanceInfo perf);
@@ -282,6 +287,13 @@ std::string toString(const std::vector<Type>& range) {
         os += (i == 0 ? "" : ", ") + toString(range[i]);
     }
     return os += "]";
+}
+
+template <typename A, typename B>
+std::string toString(const std::pair<A, B>& pair) {
+    std::ostringstream oss;
+    oss << "(" << toString(pair.first) << ", " << toString(pair.second) << ")";
+    return oss.str();
 }
 
 inline std::string toString(HalVersion halVersion) {

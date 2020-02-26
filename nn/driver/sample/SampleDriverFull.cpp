@@ -35,7 +35,9 @@ Return<void> SampleDriverFull::getCapabilities_1_3(getCapabilities_1_3_cb cb) {
     Capabilities capabilities = {
             .relaxedFloat32toFloat16PerformanceScalar = mPerf,
             .relaxedFloat32toFloat16PerformanceTensor = mPerf,
-            .operandPerformance = nonExtensionOperandPerformance<HalVersion::V1_3>(mPerf)};
+            .operandPerformance = nonExtensionOperandPerformance<HalVersion::V1_3>(mPerf),
+            .ifPerformance = mPerf,
+            .whilePerformance = mPerf};
     cb(ErrorStatus::NONE, capabilities);
     return Void();
 }
