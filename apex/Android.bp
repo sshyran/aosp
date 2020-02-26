@@ -32,6 +32,7 @@ filegroup {
 
 apex_defaults {
     name: "com.android.neuralnetworks-defaults",
+    updatable: true,
     androidManifest: ":com.android.neuralnetworks-androidManifest",
     native_shared_libs: ["libneuralnetworks"],
     compile_multilib: "both",
