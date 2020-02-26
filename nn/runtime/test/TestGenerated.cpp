@@ -119,37 +119,59 @@ static OperandType getOperandType(const TestOperand& op, bool testDynamicOutputS
     }
 }
 
-void createModel(const TestModel& testModel, bool testDynamicOutputShape, Model* model) {
-    ASSERT_NE(nullptr, model);
-
+static void createModelFromSubgraph(const TestSubgraph& subgraph, bool testDynamicOutputShape,
+                                    const std::vector<TestSubgraph>& refSubgraphs, Model* model,
+                                    Model* refModels) {
     // Operands.
-    for (const auto& operand : testModel.operands) {
+    for (const auto& operand : subgraph.operands) {
         auto type = getOperandType(operand, testDynamicOutputShape);
         auto index = model->addOperand(&type);
 
         switch (operand.lifetime) {
             case TestOperandLifeTime::CONSTANT_COPY:
-            case TestOperandLifeTime::CONSTANT_REFERENCE:
+            case TestOperandLifeTime::CONSTANT_REFERENCE: {
                 model->setOperandValue(index, operand.data.get<void>(), operand.data.size());
-                break;
-            case TestOperandLifeTime::NO_VALUE:
+            } break;
+            case TestOperandLifeTime::NO_VALUE: {
                 model->setOperandValue(index, nullptr, 0);
-                break;
+            } break;
+            case TestOperandLifeTime::SUBGRAPH: {
+                uint32_t refIndex = *operand.data.get<uint32_t>();
+                CHECK_LT(refIndex, refSubgraphs.size());
+                const TestSubgraph& refSubgraph = refSubgraphs[refIndex];
+                Model* refModel = &refModels[refIndex];
+                if (!refModel->isFinished()) {
+                    createModelFromSubgraph(refSubgraph, testDynamicOutputShape, refSubgraphs,
+                                            refModel, refModels);
+                    ASSERT_EQ(refModel->finish(), Result::NO_ERROR);
+                    ASSERT_TRUE(refModel->isValid());
+                }
+                model->setOperandValueFromModel(index, refModel);
+            } break;
             case TestOperandLifeTime::SUBGRAPH_INPUT:
             case TestOperandLifeTime::SUBGRAPH_OUTPUT:
-            case TestOperandLifeTime::TEMPORARY_VARIABLE:
+            case TestOperandLifeTime::TEMPORARY_VARIABLE: {
                 // Nothing to do here.
-                break;
+            } break;
         }
     }
 
     // Operations.
-    for (const auto& operation : testModel.operations) {
+    for (const auto& operation : subgraph.operations) {
         model->addOperation(static_cast<int>(operation.type), operation.inputs, operation.outputs);
     }
 
     // Inputs and outputs.
-    model->identifyInputsAndOutputs(testModel.inputIndexes, testModel.outputIndexes);
+    model->identifyInputsAndOutputs(subgraph.inputIndexes, subgraph.outputIndexes);
+}
+
+void createModel(const TestModel& testModel, bool testDynamicOutputShape, GeneratedModel* model) {
+    ASSERT_NE(nullptr, model);
+
+    std::vector<Model> refModels(testModel.referenced.size());
+    createModelFromSubgraph(testModel.main, testDynamicOutputShape, testModel.referenced, model,
+                            refModels.data());
+    model->setRefModels(std::move(refModels));
 
     // Relaxed computation.
     model->relaxComputationFloat32toFloat16(testModel.isRelaxed);
@@ -163,15 +185,15 @@ static void createRequest(const TestModel& testModel, Execution* execution,
     ASSERT_NE(nullptr, outputs);
 
     // Model inputs.
-    for (uint32_t i = 0; i < testModel.inputIndexes.size(); i++) {
-        const auto& operand = testModel.operands[testModel.inputIndexes[i]];
+    for (uint32_t i = 0; i < testModel.main.inputIndexes.size(); i++) {
+        const auto& operand = testModel.main.operands[testModel.main.inputIndexes[i]];
         ASSERT_EQ(Result::NO_ERROR,
                   execution->setInput(i, operand.data.get<void>(), operand.data.size()));
     }
 
     // Model outputs.
-    for (uint32_t i = 0; i < testModel.outputIndexes.size(); i++) {
-        const auto& operand = testModel.operands[testModel.outputIndexes[i]];
+    for (uint32_t i = 0; i < testModel.main.outputIndexes.size(); i++) {
+        const auto& operand = testModel.main.operands[testModel.main.outputIndexes[i]];
 
         // In the case of zero-sized output, we should at least provide a one-byte buffer.
         // This is because zero-sized tensors are only supported internally to the runtime, or
@@ -305,9 +327,9 @@ static void computeWithDeviceMemories(const Compilation& compilation, const Test
     {
         NNTRACE_APP(NNTRACE_PHASE_INPUTS_AND_OUTPUTS, "computeWithDeviceMemories example");
         // Model inputs.
-        for (uint32_t i = 0; i < testModel.inputIndexes.size(); i++) {
+        for (uint32_t i = 0; i < testModel.main.inputIndexes.size(); i++) {
             SCOPED_TRACE("Input index: " + std::to_string(i));
-            const auto& operand = testModel.operands[testModel.inputIndexes[i]];
+            const auto& operand = testModel.main.operands[testModel.main.inputIndexes[i]];
             // Omitted input.
             if (operand.data.size() == 0) {
                 ASSERT_EQ(Result::NO_ERROR, execution->setInput(i, nullptr, 0));
@@ -328,7 +350,7 @@ static void computeWithDeviceMemories(const Compilation& compilation, const Test
         }
 
         // Model outputs.
-        for (uint32_t i = 0; i < testModel.outputIndexes.size(); i++) {
+        for (uint32_t i = 0; i < testModel.main.outputIndexes.size(); i++) {
             SCOPED_TRACE("Output index: " + std::to_string(i));
             ANeuralNetworksMemory* memory = createDeviceMemoryForOutput(compilation, i);
             ASSERT_NE(memory, nullptr);
@@ -340,9 +362,9 @@ static void computeWithDeviceMemories(const Compilation& compilation, const Test
     *result = execution->compute();
 
     // Copy out output results.
-    for (uint32_t i = 0; i < testModel.outputIndexes.size(); i++) {
+    for (uint32_t i = 0; i < testModel.main.outputIndexes.size(); i++) {
         SCOPED_TRACE("Output index: " + std::to_string(i));
-        const auto& operand = testModel.operands[testModel.outputIndexes[i]];
+        const auto& operand = testModel.main.operands[testModel.main.outputIndexes[i]];
         const size_t bufferSize = operand.data.size();
         auto& output = outputs->emplace_back(bufferSize);
 
@@ -383,8 +405,8 @@ void GeneratedTests::executeWithCompilation(const Compilation& compilation,
         }
 
         // Check output dimensions.
-        for (uint32_t i = 0; i < testModel.outputIndexes.size(); i++) {
-            const auto& output = testModel.operands[testModel.outputIndexes[i]];
+        for (uint32_t i = 0; i < testModel.main.outputIndexes.size(); i++) {
+            const auto& output = testModel.main.operands[testModel.main.outputIndexes[i]];
             if (output.isIgnored) continue;
             std::vector<uint32_t> actualDimensions;
             ASSERT_EQ(Result::NO_ERROR, execution.getOutputOperandDimensions(i, &actualDimensions));
@@ -432,9 +454,10 @@ void GeneratedTests::executeMultithreadedSharedCompilation(const Model& model,
 // Test driver for those generated from ml/nn/runtime/test/spec
 void GeneratedTests::execute(const TestModel& testModel) {
     NNTRACE_APP(NNTRACE_PHASE_OVERALL, "execute");
-    Model model;
+    GeneratedModel model;
     createModel(testModel, mTestDynamicOutputShape, &model);
-    model.finish();
+    ASSERT_EQ(model.finish(), Result::NO_ERROR);
+    ASSERT_TRUE(model.isValid());
     auto executeInternal = [&testModel, &model, this]() {
         SCOPED_TRACE("TestCompilationCaching = " + std::to_string(mTestCompilationCaching));
 #ifndef NNTEST_MULTITHREADED
@@ -523,29 +546,36 @@ TEST_P(FencedComputeTest, Test) {
 INSTANTIATE_GENERATED_TEST(GeneratedTests,
                            [](const TestModel& testModel) { return !testModel.expectFailure; });
 
-INSTANTIATE_GENERATED_TEST(DynamicOutputShapeTest,
-                           [](const TestModel& testModel) { return !testModel.expectFailure; });
+INSTANTIATE_GENERATED_TEST(DynamicOutputShapeTest, [](const TestModel& testModel) {
+    return !testModel.expectFailure && !testModel.hasScalarOutputs();
+});
 
 INSTANTIATE_GENERATED_TEST(GeneratedValidationTests,
                            [](const TestModel& testModel) { return testModel.expectFailure; });
 
 INSTANTIATE_GENERATED_TEST(QuantizationCouplingTest, [](const TestModel& testModel) {
-    return testModel.operations.size() == 1 && testModel.hasQuant8CoupledOperands();
+    return testModel.main.operations.size() == 1 && testModel.referenced.size() == 0 &&
+           testModel.hasQuant8CoupledOperands();
 });
 
 INSTANTIATE_GENERATED_TEST(DeviceMemoryTest, [](const TestModel& testModel) {
+    if (!testModel.referenced.empty()) {
+        // TODO(b/149693818): Add control flow support to DeviceMemoryTest.
+        return false;
+    }
     return !testModel.expectFailure &&
-           std::all_of(testModel.outputIndexes.begin(), testModel.outputIndexes.end(),
+           std::all_of(testModel.main.outputIndexes.begin(), testModel.main.outputIndexes.end(),
                        [&testModel](uint32_t index) {
-                           return testModel.operands[index].data.size() > 0;
+                           return testModel.main.operands[index].data.size() > 0;
                        });
 });
 
 INSTANTIATE_GENERATED_TEST(FencedComputeTest, [](const TestModel& testModel) {
     return !testModel.expectFailure &&
-           std::all_of(testModel.outputIndexes.begin(), testModel.outputIndexes.end(),
+           std::all_of(testModel.main.outputIndexes.begin(), testModel.main.outputIndexes.end(),
                        [&testModel](uint32_t index) {
-                           return testModel.operands[index].data.size() > 0;
+                           return testModel.main.operands[index].data.size() > 0;
                        });
 });
+
 }  // namespace android::nn::generated_tests

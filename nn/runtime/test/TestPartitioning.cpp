@@ -145,6 +145,7 @@ using ExecutionPlan = ::android::nn::ExecutionPlan;
 using ExecutionStep = ::android::nn::ExecutionStep;
 using HalVersion = ::android::nn::HalVersion;
 using HidlModel = V1_3::Model;
+using LogicalStep = ::android::nn::LogicalStep;
 using ModelBuilder = ::android::nn::ModelBuilder;
 using Result = ::android::nn::test_wrapper::Result;
 using SampleDriver = ::android::nn::sample_driver::SampleDriver;
@@ -164,7 +165,9 @@ Capabilities makeCapabilities(float perf) {
     return {.relaxedFloat32toFloat16PerformanceScalar = perfInfo,
             .relaxedFloat32toFloat16PerformanceTensor = perfInfo,
             .operandPerformance =
-                    ::android::nn::nonExtensionOperandPerformance<HalVersion::V1_3>(perfInfo)};
+                    ::android::nn::nonExtensionOperandPerformance<HalVersion::V1_3>(perfInfo),
+            .ifPerformance = perfInfo,
+            .whilePerformance = perfInfo};
 };
 
 void update(Capabilities* capabilities, OperandType type, float perf) {
@@ -301,6 +304,7 @@ class PartitioningDriver : public SampleDriver {
         }
         Return<V1_3::ErrorStatus> execute_1_3(const V1_3::Request&, MeasureTiming,
                                               const OptionalTimePoint&,
+                                              const OptionalTimeoutDuration&,
                                               const sp<V1_3::IExecutionCallback>&) override {
             return V1_3::ErrorStatus::DEVICE_UNAVAILABLE;
         }
@@ -311,6 +315,7 @@ class PartitioningDriver : public SampleDriver {
         }
         Return<void> executeSynchronously_1_3(const V1_3::Request&, MeasureTiming,
                                               const OptionalTimePoint&,
+                                              const OptionalTimeoutDuration&,
                                               executeSynchronously_1_3_cb cb) override {
             cb(V1_3::ErrorStatus::DEVICE_UNAVAILABLE, {}, kBadTiming);
             return Void();
@@ -325,7 +330,7 @@ class PartitioningDriver : public SampleDriver {
         }
         Return<void> executeFenced(const Request&, const hidl_vec<hidl_handle>&, MeasureTiming,
                                    const OptionalTimePoint&, const OptionalTimeoutDuration&,
-                                   executeFenced_cb cb) {
+                                   const OptionalTimeoutDuration&, executeFenced_cb cb) {
             cb(ErrorStatus::DEVICE_UNAVAILABLE, hidl_handle(nullptr), nullptr);
             return Void();
         }
@@ -801,13 +806,16 @@ class PartitioningTest : public ::testing::Test {
                             float perfRelaxed, uint32_t operationMask,
                             PartitioningDriver::OEM oem = PartitioningDriver::OEMNo)
             : mName(name), mVersionString(version), mOperationMask(operationMask), mOEM(oem) {
+            PerformanceInfo perfInfo = {.execTime = perf, .powerUsage = perf};
             PerformanceInfo perfRelaxedInfo = {.execTime = perfRelaxed, .powerUsage = perfRelaxed};
             mCapabilities = {
                     .relaxedFloat32toFloat16PerformanceScalar = perfRelaxedInfo,
                     .relaxedFloat32toFloat16PerformanceTensor = perfRelaxedInfo,
                     .operandPerformance =
                             ::android::nn::nonExtensionOperandPerformance<HalVersion::V1_3>(
-                                    {.execTime = perf, .powerUsage = perf})};
+                                    perfInfo),
+                    .ifPerformance = perfInfo,
+                    .whilePerformance = perfInfo};
         }
         DeviceSpecification(const std::string& name, float perf, HalVersion halVersion,
                             uint32_t operationMaskV1_0, uint32_t operationMaskV1_1 = 0,
@@ -1202,7 +1210,7 @@ class PartitioningTest : public ::testing::Test {
     // output operand numbers of "model" to the corresponding operand numbers of
     // the step model from "step".  If the comparison returns false, the contents
     // of the map are undefined.
-    bool compare(std::shared_ptr<const ExecutionStep> step, const PartitioningModel* model,
+    bool compare(const ExecutionStep* step, const PartitioningModel* model,
                  std::shared_ptr<Device> device,
                  std::map<uint32_t, uint32_t>* inputsAndOutputsModelToStep) {
         return (step->getDevice() == device) &&
@@ -1211,11 +1219,13 @@ class PartitioningTest : public ::testing::Test {
                        inputsAndOutputsModelToStep);
     }
 
-    void compare(std::shared_ptr<const ExecutionStep> step, const PartitioningModel* model,
+    void compare(const std::shared_ptr<LogicalStep> logicalStep, const PartitioningModel* model,
                  std::shared_ptr<Device> device, const RemapVectorType& modelInputs,
                  const RemapVectorType& modelOutputs, const RemapVectorType& tempsAsStepModelInputs,
                  const StepModelOutputSetType& tempsAsStepModelOutputs,
                  const RemapVectorType& outputsAsStepModelInputs) {
+        ASSERT_TRUE(logicalStep->isExecution());
+        const ExecutionStep* step = logicalStep->executionStep();
         std::map<uint32_t, uint32_t> inputsAndOutputsModelToStep;
         ASSERT_NO_FATAL_FAILURE(
                 ASSERT_TRUE(compare(step, model, device, &inputsAndOutputsModelToStep)));
@@ -1900,9 +1910,9 @@ class CacheTest : public PartitioningTest {
             for (const auto& step : steps) {
                 // In general, two or more partitions can be on the same device. However, this will
                 // not happen on the test models with only 2 operations.
-                if (step->getDevice()->getName() == deviceName) {
+                if (step->executionStep()->getDevice()->getName() == deviceName) {
                     ASSERT_FALSE(found);
-                    token = step->forTest_getCacheToken();
+                    token = step->executionStep()->forTest_getCacheToken();
                     found = true;
                 }
             }
@@ -2267,6 +2277,10 @@ TEST_F(PerfTest, Lookup) {
     for (uint32_t type = static_cast<uint32_t>(OperandTypeRange::FUNDAMENTAL_MIN);
          type <= static_cast<uint32_t>(OperandTypeRange::FUNDAMENTAL_MAX); ++type) {
         OperandType operandType = static_cast<OperandType>(type);
+        if (operandType == OperandType::SUBGRAPH) {
+            // SUBGRAPH capabilities are handled differently.
+            continue;
+        }
         SCOPED_TRACE(toString(operandType));
         EXPECT_EQ(lookupExecTime(capabilities, operandType), typePerf(operandType));
     }

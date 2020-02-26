@@ -181,7 +181,7 @@ TEST_F(ComplianceTest, DeviceMemory) {
 class GeneratedComplianceTest : public generated_tests::GeneratedTestBase {};
 
 TEST_P(GeneratedComplianceTest, Test) {
-    WrapperModel model;
+    generated_tests::GeneratedModel model;
     generated_tests::createModel(testModel, &model);
     ASSERT_TRUE(model.isValid());
     model.finish();

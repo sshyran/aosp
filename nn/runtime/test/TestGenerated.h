@@ -18,6 +18,10 @@
 #define ANDROID_FRAMEWORKS_ML_NN_RUNTIME_TEST_TEST_GENERATED_H
 
 #include <gtest/gtest.h>
+
+#include <utility>
+#include <vector>
+
 #include "TestHarness.h"
 #include "TestNeuralNetworksWrapper.h"
 
@@ -35,10 +39,31 @@ class GeneratedTestBase
             ::testing::ValuesIn(::test_helper::TestModelManager::get().getTestModels(filter)), \
             [](const auto& info) { return info.param.first; })
 
+// A generated NDK model.
+class GeneratedModel : public test_wrapper::Model {
+   public:
+    // A helper method to simplify referenced model lifetime management.
+    //
+    // Usage:
+    //     GeneratedModel model;
+    //     std::vector<Model> refModels;
+    //     createModel(&model, &refModels);
+    //     model.setRefModels(std::move(refModels));
+    //
+    // This makes sure referenced models live as long as the main model.
+    //
+    void setRefModels(std::vector<test_wrapper::Model> refModels) {
+        mRefModels = std::move(refModels);
+    }
+
+   private:
+    std::vector<test_wrapper::Model> mRefModels;
+};
+
 // Convert TestModel to NDK model.
 void createModel(const test_helper::TestModel& testModel, bool testDynamicOutputShape,
-                 test_wrapper::Model* model);
-inline void createModel(const test_helper::TestModel& testModel, test_wrapper::Model* model) {
+                 GeneratedModel* model);
+inline void createModel(const test_helper::TestModel& testModel, GeneratedModel* model) {
     createModel(testModel, /*testDynamicOutputShape=*/false, model);
 }
 
