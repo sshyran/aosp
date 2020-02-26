@@ -73,6 +73,9 @@ cc_defaults {
         "TestValidation.cpp",
         "TestWrapper.cpp",
     ],
+    header_libs: [
+        "libneuralnetworks_common_headers",
+    ],
     static_libs: [
         "libgmock",
     ],

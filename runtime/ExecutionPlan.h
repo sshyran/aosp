@@ -22,6 +22,7 @@
 #include <android-base/logging.h>
 #include <openssl/sha.h>
 
+#include <chrono>
 #include <map>
 #include <memory>
 #include <ostream>
@@ -29,6 +30,7 @@
 #include <string>
 #include <unordered_map>
 #include <utility>
+#include <variant>
 #include <vector>
 
 #include "HalInterfaces.h"
@@ -45,27 +47,64 @@ class BurstBuilder;
 class CompilationBuilder;
 class Device;
 class ExecutionBuilder;
-class ExecutionPlan;
 class ExecutionBurstController;
+class ExecutionPlan;
 class Memory;
 class PreparedModel;
 class StepExecutor;
 
-// NNAPI Control Flow will introduce the ability to refer to an NNAPI model
-// inside another NNAPI model using OperandType::MODEL. For example, a model
-// with an IF condition will refer to two other models corresponding to then
-// and else branches.
+struct ConstantReferenceLocation;
+
+// NNAPI Control Flow allows referring to an NNAPI model inside another NNAPI
+// model using OperandType::SUBGRAPH. For example, an IF operation within a
+// model mey refer to two other models corresponding to then and else branches.
+//
+// The partitioning process transforms this nested representation into a list
+// of LogicalSteps.
 //
 // The following terms are used:
 // - The main model is the top-level model being compiled (not referenced by any
-//   OperandType::MODEL operand within the compilation).
+//   OperandType::SUBGRAPH operand within the compilation).
 // - A referenced model is a non-top-level model being compiled (referenced by
-//   at least one OperandType::MODEL operand within the set of models being
+//   at least one OperandType::SUBGRAPH operand within the set of models being
 //   compiled).
 // - A source model is either the main model or a referenced model.
 // - A step model is a model excerpted from a source model during the
 //   partitioning process.
+// - A partition is a LogicalStep representing at least one operation of a
+//   source model. In particular, ExecutionStep represents a step model, IfStep
+//   represents an IF operation, WhileStep represents a WHILE operation.
+//   A GotoStep is not a partition.
+// - A partition boundary operand is a source model operand that is an input or
+//   output of a partition. For ExecutionStep, the inputs and outputs of the
+//   step model are boundary operands; for IfStep and WhileStep, the inputs and
+//   outputs of the corresponding operation are boundary operands.
+//
+// Referenced models can be sources of parition boundary operands. For example,
+// this happens when a referenced model is paritioned into one or more
+// LogicalSteps.
+//
+// (model index, operand index within model)
+typedef std::pair<uint32_t, uint32_t> SourceOperandIndex;
 
+// A collection of source models.
+class SourceModels {
+   public:
+    uint32_t addModel(const ModelBuilder* model) {
+        uint32_t modelIndex = mModels.size();
+        mModels.push_back(model);
+        return modelIndex;
+    }
+
+    const ModelBuilder* getModel(uint32_t index) const { return mModels[index]; }
+
+    uint32_t size() const { return mModels.size(); }
+
+   private:
+    std::vector<const ModelBuilder*> mModels;
+};
+
+// An excerpt of a source model to be run by a specific device.
 class ExecutionStep {
    public:
     typedef std::vector<std::pair<uint32_t, uint32_t>> RemapVectorType;
@@ -73,13 +112,11 @@ class ExecutionStep {
 
     enum OperandKind { INPUT, OUTPUT };
 
-    ExecutionStep(ExecutionPlan* plan, uint32_t stepIndex, std::shared_ptr<Device> device);
+    ExecutionStep(ExecutionPlan* plan, uint32_t stepIndex, uint32_t sourceModelIndex,
+                  std::shared_ptr<Device> device);
 
-    // For a given ExecutionStep, the sourceModel passed to every method must be
-    // the same.
-    int addOperation(int operationIndex, const ModelBuilder& sourceModel);
-    int addOperand(uint32_t sourceOperandIndex, uint32_t* toOperandIndex,
-                   const ModelBuilder& sourceModel, OperandKind kind);
+    int addOperation(int operationIndex);
+    int addOperand(uint32_t sourceOperandIndex, uint32_t* stepOperandIndex, OperandKind kind);
 
     // Each container entry is of the form (source model operand index, step model operand index)
     const RemapVectorType& getModelInputs() const { return mModelInputs; }
@@ -99,7 +136,9 @@ class ExecutionStep {
         return mOutputsAsStepModelInputsIndexToMainModel;
     }
 
-    void recordTempAsStepModelOutput(uint32_t sourceOperandIndex);
+    uint32_t getSourceModelIndex() const { return mSourceModelIndex; }
+
+    void recordTempAsStepModelOutput(uint32_t stepOperandIndex);
 
     // If this step has a step model output of unknown size, sets
     // *hasOutputOfUnknownSize to true; otherwise, leaves it
@@ -114,11 +153,16 @@ class ExecutionStep {
     std::shared_ptr<PreparedModel> getPreparedStepModel() const { return mPreparedStepModel; }
 
     // Map inputs and outputs from ExecutionBuilder to StepExecutor.
-    void mapInputsAndOutputs(std::shared_ptr<StepExecutor> stepExecutor,
-                             const Memory* temporaryMemory,
-                             const std::map<uint32_t, uint32_t>& sourceOperandToOffsetOfTemporary,
-                             const std::map<uint32_t, uint32_t>& sourceOperandToInputIndex,
-                             const std::map<uint32_t, uint32_t>& sourceOperandToOutputIndex) const;
+    //
+    // This method only reads map entries for which the first element of
+    // SourceOperandIndex is mSourceModelIndex.
+    void mapInputsAndOutputs(
+            std::shared_ptr<StepExecutor> stepExecutor, const Memory* temporaryMemory,
+            const std::map<SourceOperandIndex, uint32_t>& sourceOperandToOffsetOfTemporary,
+            const std::map<SourceOperandIndex, uint32_t>& sourceOperandToInputIndex,
+            const std::map<SourceOperandIndex, uint32_t>& sourceOperandToOutputIndex,
+            const std::map<SourceOperandIndex, ConstantReferenceLocation>&
+                    sourceOperandToConstantReference) const;
 
     void dump() const;
 
@@ -127,6 +171,7 @@ class ExecutionStep {
 
    private:
     void logStepModel() const;
+    const ModelBuilder* getSourceModel() const;
 
     // TODO: Some of the data is working state information that
     // shouldn't be needed after we've constructed but not executed
@@ -134,7 +179,8 @@ class ExecutionStep {
 
     ExecutionPlan* mPlan;
     uint32_t mIndex;  // index of step within plan
-    ModelBuilder mStepModel;
+    uint32_t mSourceModelIndex;
+    ModelBuilder mStepModel;  // An excerpt of a source model to be run by one device.
     std::shared_ptr<Device> mDevice;
     std::shared_ptr<PreparedModel> mPreparedStepModel;
 
@@ -204,6 +250,164 @@ class ExecutionStep {
     TokenHasher mToken;
 };
 
+// An IF operation to be run on the ExecutionPlan::next() interpreter. The
+// branch models might run on devices. See LogicalStep.
+//
+// Execution plan structure:
+// Index  Step
+//   i    if then=(i + 1) else=(j + 1)
+//  ...   (then model steps)
+//   j    goto k
+//  ...   (else model steps)
+//   k    (steps after the IF)
+struct IfStep {
+    // The index of this step.
+    size_t index = ~size_t(0);
+    // The index of the first step of the "then" branch.
+    size_t thenStepIndex = ~size_t(0);
+    // The index of the first step of the "else" branch.
+    size_t elseStepIndex = ~size_t(0);
+    // The boolean condition input of the IF operation. The value of this
+    // operand determines the branch of the IF operation to be executed.
+    SourceOperandIndex conditionOperandIndex = {~uint32_t(0), ~uint32_t(0)};
+    // Input operands of the IF operation to be passed to a branch model.
+    std::vector<SourceOperandIndex> outerInputOperands;
+    // Output operands of the IF operation.
+    std::vector<SourceOperandIndex> outerOutputOperands;
+    // Input operands of the "then" branch model.
+    std::vector<SourceOperandIndex> thenBranchInputOperands;
+    // Output operands of the "then" branch model.
+    std::vector<SourceOperandIndex> thenBranchOutputOperands;
+    // Input operands of the "else" branch model.
+    std::vector<SourceOperandIndex> elseBranchInputOperands;
+    // Output operands of the "else" branch model.
+    std::vector<SourceOperandIndex> elseBranchOutputOperands;
+};
+
+// A WHILE operation to be run on the ExecutionPlan::next() interpreter. The
+// condition and body models might run other devices. See LogicalStep.
+//
+// Execution plan structure:
+// Index  Step
+//   i    while cond=(i + 1) body=(j + 1) exit=(k + 1)
+//  ...   (cond model steps)
+//   j    goto i
+//  ...   (body model steps)
+//   k    goto i
+//  ...   (steps after the WHILE)
+//
+//  Note that WhileStep has WhileState associated with it.
+struct WhileStep {
+    // The index of this step.
+    size_t index = ~size_t(0);
+    // The index of the first step of the condition model.
+    size_t condStepIndex = ~size_t(0);
+    // The index of the first step of the body model.
+    size_t bodyStepIndex = ~size_t(0);
+    // The index of the first step after the loop.
+    size_t exitStepIndex = ~size_t(0);
+    // Input operands of the WHILE operation to be passed to the condition and
+    // body models.
+    std::vector<SourceOperandIndex> outerInputOperands;
+    // Output operands of the WHILE operation.
+    std::vector<SourceOperandIndex> outerOutputOperands;
+    // Input operands of the condition model.
+    std::vector<SourceOperandIndex> condInputOperands;
+    // Output operand of the condition model. The value of this operand
+    // determines whether to continue execution or exit the loop.
+    SourceOperandIndex condOutputOperand = {~uint32_t(0), ~uint32_t(0)};
+    // Input operands of the body model.
+    std::vector<SourceOperandIndex> bodyInputOperands;
+    // Output operands of the body model.
+    std::vector<SourceOperandIndex> bodyOutputOperands;
+};
+
+// A helper step. See LogicalStep.
+struct GotoStep {
+    // The index of this step.
+    size_t index = ~size_t(0);
+    // The index of the step to go to.
+    size_t gotoStepIndex = ~size_t(0);
+};
+
+// One of ExecutionStep, IfStep, WhileStep, or GotoStep.
+//
+// When ExecutionPlan::next() is called, it interprets logical steps until it
+// encounters an ExecutionStep ("interpreted execution").
+// - For an IfStep, it decides which branch to take and proceeds to the
+//   corresponding step.
+// - For a WhileStep, it decides whether to execute the condition or body (based
+//   on WhileState), or exit the loop (based on the condition model output), and
+//   proceeds to the corresponding step.
+// - For a GotoStep, it proceeds to the indicated step unconditionally.
+class LogicalStep {
+   public:
+    template <typename... Args>
+    explicit LogicalStep(Args&&... args) : mStep(std::forward<Args>(args)...) {}
+
+    bool isExecution() const { return std::holds_alternative<ExecutionStep>(mStep); }
+    bool isIf() const { return std::holds_alternative<IfStep>(mStep); }
+    bool isWhile() const { return std::holds_alternative<WhileStep>(mStep); }
+    bool isGoto() const { return std::holds_alternative<GotoStep>(mStep); }
+
+    // Returns a non-null pointer or crashes.
+    ExecutionStep* executionStep() { return &std::get<ExecutionStep>(mStep); }
+    IfStep* ifStep() { return &std::get<IfStep>(mStep); }
+    WhileStep* whileStep() { return &std::get<WhileStep>(mStep); }
+    GotoStep* gotoStep() { return &std::get<GotoStep>(mStep); }
+
+    // Returns a non-null pointer or crashes.
+    const ExecutionStep* executionStep() const { return &std::get<ExecutionStep>(mStep); }
+    const IfStep* ifStep() const { return &std::get<IfStep>(mStep); }
+    const WhileStep* whileStep() const { return &std::get<WhileStep>(mStep); }
+    const GotoStep* gotoStep() const { return &std::get<GotoStep>(mStep); }
+
+    // May return nullptr.
+    ExecutionStep* tryExecutionStep() { return std::get_if<ExecutionStep>(&mStep); }
+    IfStep* tryIfStep() { return std::get_if<IfStep>(&mStep); }
+    WhileStep* tryWhileStep() { return std::get_if<WhileStep>(&mStep); }
+    GotoStep* tryGotoStep() { return std::get_if<GotoStep>(&mStep); }
+
+    // May return nullptr.
+    const ExecutionStep* tryExecutionStep() const { return std::get_if<ExecutionStep>(&mStep); }
+    const IfStep* tryIfStep() const { return std::get_if<IfStep>(&mStep); }
+    const WhileStep* tryWhileStep() const { return std::get_if<WhileStep>(&mStep); }
+    const GotoStep* tryGotoStep() const { return std::get_if<GotoStep>(&mStep); }
+
+    void dump() const;
+
+   private:
+    std::variant<ExecutionStep, IfStep, WhileStep, GotoStep> mStep;
+};
+
+std::string toString(const IfStep& step);
+std::string toString(const WhileStep& step);
+std::string toString(const GotoStep& step);
+
+// Describes the state of WhileStep.
+struct WhileState {
+    // A pseudo iteration number indicating the loop is not being executed.
+    static constexpr uint64_t kOutsideLoop = ~uint64_t(0);
+    // Whether we need to evaluate the condition or body next.
+    enum Stage { EVALUATE_CONDITION, EVALUATE_BODY } stage = EVALUATE_CONDITION;
+    // Current iteration number. Must be set to kOutsideLoop when exiting the
+    // loop.
+    uint64_t iteration = kOutsideLoop;
+    // Time point when the loop started executing.
+    std::chrono::time_point<std::chrono::steady_clock> startTime;
+};
+
+struct ConstantCopyLocation {
+    const uint8_t* buffer;
+    uint32_t length;
+};
+
+struct ConstantReferenceLocation {
+    const Memory* memory;
+    uint32_t offset;
+    uint32_t length;
+};
+
 class ExecutionPlan {
    public:
     ExecutionPlan(const ExecutionPlan&) = delete;
@@ -212,8 +416,11 @@ class ExecutionPlan {
     ExecutionPlan() {}
     ~ExecutionPlan() { delete mBody; }
 
-    // Controller is part of the interface to a mechanism for
-    // performing an execution in N steps.
+    // Controller is part of the interface to a mechanism for performing an
+    // execution in N steps.
+    //
+    // The value of N may not be known beforehand if the model contains WHILE
+    // loops. See LogicalStep.
     //
     // Usage pattern:
     // - Instantiate Controller with ExecutionPlan::makeController().
@@ -232,20 +439,59 @@ class ExecutionPlan {
 
         static const size_t kBadStepIndex = ~size_t(0);
 
+        // A constructor for mState == SIMPLE.
         Controller(const ExecutionPlan* plan, ExecutionBuilder* executionBuilder,
-                   const BurstBuilder* burstBuilder,
-                   std::map<uint32_t, uint32_t> sourceOperandToOffsetOfTemporary,
-                   uint32_t totalSizeOfTemporaries);
+                   const BurstBuilder* burstBuilder);
+        // A constructor for mState == COMPOUND.
+        Controller(const ExecutionPlan* plan, ExecutionBuilder* executionBuilder,
+                   const BurstBuilder* burstBuilder, uint32_t totalSizeOfTemporaries,
+                   std::map<SourceOperandIndex, uint32_t> sourceOperandToOffsetOfTemporary,
+                   std::map<SourceOperandIndex, uint32_t> sourceOperandToOffsetOfTemporary2,
+                   std::map<SourceOperandIndex, uint32_t> sourceOperandToInputIndex,
+                   std::map<SourceOperandIndex, uint32_t> sourceOperandToOutputIndex,
+                   const std::map<SourceOperandIndex, ConstantCopyLocation>&
+                           sourceOperandToConstantCopy,
+                   std::map<SourceOperandIndex, ConstantReferenceLocation>
+                           sourceOperandToConstantReference);
+
+        // Sets the location of innerOperand to be the same as the location of outerOperand.
+        void setInput(const SourceOperandIndex& outerOperand, const SourceOperandIndex& innerOperand);
+        void setOutput(const SourceOperandIndex& outerOperand, const SourceOperandIndex& innerOperand);
 
         const ExecutionPlan* mPlan;
         ExecutionBuilder* mExecutionBuilder;
         const BurstBuilder* mBurstBuilder;
         // Map from source operand index to an offset into mTemporaries used
         // to represent that operand as an inter-partition input or output.
-        const std::map<uint32_t, uint32_t> mSourceOperandToOffsetOfTemporary;
+        //
+        // The four maps
+        // - mSourceOperandToOffsetOfTemporary
+        // - mSourceOperandToInputIndex
+        // - mSourceOperandToOutputIndex
+        // - mSourceOperandToConstantReference
+        // are initialized from similarly named fields of ExecutionPlan::CompoundBody.
+        //
+        // A particular key appears in at most one map at any given time. This
+        // restriction does not apply to mSourceOperandToOffsetOfTemporary2.
+        //
+        // The maps are modified during the execution of IfStep and WhileStep.
+        // See ExecutionPlan::nextCompound().
+        std::map<SourceOperandIndex, uint32_t> mSourceOperandToOffsetOfTemporary;
+        // Map from source operand index to an additional offset into
+        // mTemporaries used for double buffering of WHILE loop output operands.
+        std::map<SourceOperandIndex, uint32_t> mSourceOperandToOffsetOfTemporary2;
+        // Map from source operand index to an input index of the main model.
+        std::map<SourceOperandIndex, uint32_t> mSourceOperandToInputIndex;
+        // Map from source operand index to an output index of the main model.
+        std::map<SourceOperandIndex, uint32_t> mSourceOperandToOutputIndex;
+        // Map from source operand index to a constant reference location.
+        // Used for WHILE loop operand initializers that are constant references.
+        std::map<SourceOperandIndex, ConstantReferenceLocation> mSourceOperandToConstantReference;
         std::unique_ptr<MemoryAshmem> mTemporaries;
         size_t mNextStepIndex;
         size_t mLastStepIndex;  // For fallback.
+        // Map from WhileStep index to the associated WhileState.
+        std::unordered_map<size_t, WhileState> mWhileState;
     };
 
     std::vector<std::shared_ptr<ExecutionBurstController>> makeBursts(int preference) const;
@@ -253,6 +499,9 @@ class ExecutionPlan {
     std::shared_ptr<Controller> makeController(ExecutionBuilder* executionBuilder,
                                                const BurstBuilder* burstBuilder) const;
 
+    // Sets up a new StepExecutor and burstController (if applicable) if there
+    // is a step to execute. See ExecutionPlan::Controller.
+    // Handles control flow. See LogicalStep.
     int next(std::shared_ptr<Controller> controller, std::shared_ptr<StepExecutor>* executor,
              std::shared_ptr<ExecutionBurstController>* burstController = nullptr) const;
 
@@ -260,14 +509,21 @@ class ExecutionPlan {
     int fallback(std::shared_ptr<Controller> controller,
                  std::shared_ptr<StepExecutor>* executor) const;
 
-    std::shared_ptr<ExecutionStep> createNewStep(const std::shared_ptr<Device> device);
+    ExecutionStep* createNewExecutionStep(uint32_t sourceModelIndex,
+                                          const std::shared_ptr<Device> device);
+    IfStep* createNewIfStep();
+    WhileStep* createNewWhileStep();
+    GotoStep* createNewGotoStep();
+
+    // Only legal to call when mState == COMPOUND.
+    size_t getNextStepIndex() const { return compound()->mSteps.size(); }
 
     void becomeSingleStep(const std::shared_ptr<Device> device, const ModelBuilder* model);
 
-    int finish(const ModelBuilder* mainModel, int32_t executionPreference, int32_t priority,
+    int finish(int32_t executionPreference, int32_t priority,
                const hal::OptionalTimePoint& deadline);
 
-    void recordTemporaryDef(uint32_t sourceOperandIndex, uint32_t stepIndex);
+    void recordTemporaryDef(SourceOperandIndex sourceOperandIndex, uint32_t stepIndex);
 
     void dump() const;
 
@@ -294,6 +550,9 @@ class ExecutionPlan {
         mBody->forEachStepRoleOfOutput(index, callback);
     }
 
+    SourceModels& getSourceModels() { return mSourceModels; }
+    const SourceModels& getSourceModels() const { return mSourceModels; }
+
     // These functions are solely intended for use by unit tests of
     // the partitioning algorithm.
     enum class Kind {
@@ -304,17 +563,43 @@ class ExecutionPlan {
     };  // See operator<< defined outside this class
     Kind forTest_getKind() const;
     std::shared_ptr<const Device> forTest_simpleGetDevice() const;
-    const std::vector<std::shared_ptr<ExecutionStep>>& forTest_compoundGetSteps() const;
+    const std::vector<std::shared_ptr<LogicalStep>>& forTest_compoundGetSteps() const;
     bool forTest_hasStepModelOutputsOfUnknownSize() const;
     const uint8_t* forTest_simpleGetCacheToken() const;
 
    private:
+    // Becomes a new COMPOUND step if mState == EMPTY, otherwise does nothing.
+    // Illegal to call for when mState == SIMPLE.
+    void becomeCompoundIfEmpty();
     void findTempsAsStepModelOutputs();
+
+    // Returns the buffer associated with a partition boundary operand. Returns nullptr on failure.
+    void* getBuffer(std::shared_ptr<Controller> controller, SourceOperandIndex operandIndex) const;
+    // Reads the value of a partition boundary boolean condition operand.
+    bool readConditionValue(std::shared_ptr<Controller> controller,
+                            SourceOperandIndex operandIndex) const;
+
+    // Handles control flow. See LogicalStep.
+    int nextCompound(std::shared_ptr<Controller> controller,
+                     std::shared_ptr<StepExecutor>* executor,
+                     std::shared_ptr<ExecutionBurstController>* burstController) const;
+    int nextCompound(const ExecutionStep* step, std::shared_ptr<Controller> controller,
+                     std::shared_ptr<StepExecutor>* executor,
+                     std::shared_ptr<ExecutionBurstController>* burstController) const;
+    int nextCompound(const IfStep* step, std::shared_ptr<Controller> controller,
+                     std::shared_ptr<StepExecutor>* executor,
+                     std::shared_ptr<ExecutionBurstController>* burstController) const;
+    int nextCompound(const WhileStep* step, std::shared_ptr<Controller> controller,
+                     std::shared_ptr<StepExecutor>* executor,
+                     std::shared_ptr<ExecutionBurstController>* burstController) const;
+    int nextCompound(const GotoStep* step, std::shared_ptr<Controller> controller,
+                     std::shared_ptr<StepExecutor>* executor,
+                     std::shared_ptr<ExecutionBurstController>* burstController) const;
 
     struct Body {
         virtual ~Body() {}
         virtual void dump() const = 0;
-        virtual int finish(const ModelBuilder* mainModel, int32_t executionPreference,
+        virtual int finish(const SourceModels* sourceModels, int32_t executionPreference,
                            int32_t priority, const hal::OptionalTimePoint& deadline) = 0;
         virtual bool hasStepModelOutputsOfUnknownSize() const = 0;
         virtual void forEachStepRoleOfInput(uint32_t index,
@@ -330,7 +615,7 @@ class ExecutionPlan {
             : mDevice(device), mModel(model), mCacheDir(cacheDir), mToken(token) {}
 
         void dump() const override;
-        int finish(const ModelBuilder* mainModel, int32_t executionPreference, int32_t priority,
+        int finish(const SourceModels* sourceModels, int32_t executionPreference, int32_t priority,
                    const hal::OptionalTimePoint& deadline) override;
         bool hasStepModelOutputsOfUnknownSize() const override { return false; }
         void forEachStepRoleOfInput(uint32_t index,
@@ -348,7 +633,7 @@ class ExecutionPlan {
 
     struct CompoundBody : Body {
         void dump() const override;
-        int finish(const ModelBuilder* mainModel, int32_t executionPreference, int32_t priority,
+        int finish(const SourceModels* sourceModels, int32_t executionPreference, int32_t priority,
                    const hal::OptionalTimePoint& deadline) override;
         bool hasStepModelOutputsOfUnknownSize() const override {
             return mHasStepModelOutputOfUnknownSize;
@@ -362,24 +647,58 @@ class ExecutionPlan {
         // shouldn't be needed after we've constructed but not
         // executed the plan.
 
-        std::vector<std::shared_ptr<ExecutionStep>> mSteps;
+        std::vector<std::shared_ptr<LogicalStep>> mSteps;
 
-        // Map from source operand index to defining step index.
-        // Used for all (and only) TEMPORARY_VARIABLEs.
-        std::unordered_map<uint32_t, uint32_t> mTemporaryToDefiningStep;
+        // Map from source operand index to defining ExecutionStep index.
+        // Used for all (and only) TEMPORARY_VARIABLEs that are defined by
+        // ExecutionSteps. Those defined by IfSteps and WhileSteps are not in
+        // the map.
+        std::map<SourceOperandIndex, uint32_t> mTemporaryToDefiningExecutionStep;
 
         // Map from source operand index to input index of the main model.
-        // Used for all (and only) SUBGRAPH_INPUTs of the main model.
-        std::map<uint32_t, uint32_t> mSourceOperandToInputIndex;
+        // This map only contains SUBGRAPH_INPUTs of the main model and is used
+        // to initialize ExecutionPlan::Controller::mSourceOperandToInputIndex;
+        std::map<SourceOperandIndex, uint32_t> mSourceOperandToInputIndex;
 
         // Map from source operand index to output index of the main model.
-        // Used for all (and only) SUBGRAPH_OUTPUTs of the main model.
-        std::map<uint32_t, uint32_t> mSourceOperandToOutputIndex;
+        // This map only contains SUBGRAPH_OUTPUTs of the main model and is used
+        // to initialize ExecutionPlan::Controller::mSourceOperandToOutputIndex;
+        std::map<SourceOperandIndex, uint32_t> mSourceOperandToOutputIndex;
+
+        // Map from source operand index to location of a CONSTANT_COPY operand.
+        // This map only contains constant partition boundary IF and WHILE
+        // operands and is used to create a ExecutionPlan::Controller.
+        std::map<SourceOperandIndex, ConstantCopyLocation> mSourceOperandToBoundaryConstantCopy;
+
+        // Map from source operand index to location of a CONSTANT_REFERENCE
+        // operand.  This map only contains constant partition boundary IF and
+        // WHILE operands and is used to initialize
+        // ExecutionPlan::Controller::mSourceOperandToConstantReference.
+        std::map<SourceOperandIndex, ConstantReferenceLocation>
+                mSourceOperandToBoundaryConstantReference;
 
         bool mHasStepModelOutputOfUnknownSize = false;
 
        private:
         void findTempsAsStepModelOutputs();
+
+        // Constant values that are inputs to IF and WHILE operations and lie on
+        // a partition boundary ("control flow boundary constants") require
+        // special treatment. We need to be able to dynamically associate those
+        // values with the corresponding SUBGRAPH_INPUT operands in a referenced
+        // model.
+        //
+        // For CONSTANT_COPY boundary operands, we copy those to temporary
+        // memory and treat them similarly to TEMPORARY_VARIABLE operands in
+        // Controller.
+        //
+        // For CONSTANT_REFERENCE boundary operands, we keep track of them in
+        // ExecutionPlan::Controller::mSourceOperandToConstantReference.
+        //
+        // Note that for IF inputs and input-only WHILE inputs that are boundary
+        // constants, we could embed those inside the referenced model, but we
+        // currently don't do so. See b/148216514.
+        void findControlFlowBoundaryConstants(const SourceModels* sourceModels);
     };
 
     enum { EMPTY, SIMPLE, COMPOUND } mState = EMPTY;
@@ -408,6 +727,7 @@ class ExecutionPlan {
     // Pointers to compilation caching information in CompilationBuilder.
     const std::string* mCacheDir = nullptr;
     const uint8_t* mToken = nullptr;
+    SourceModels mSourceModels;
 };
 
 inline std::ostream& operator<<(std::ostream& out, ExecutionPlan::Kind kind) {

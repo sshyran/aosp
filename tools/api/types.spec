@@ -6047,6 +6047,12 @@
      *         input_output, state = body(input_output, state, input_only)
      *     return input_output
      *
+%kind ndk
+     * To prevent infinite loops, there is an implicit execution timeout
+     * associated with each loop ("loop timeout duration"). See {@link
+     * ANeuralNetworksExecution_setLoopTimeout}.
+     *
+%/kind
      * Inputs:
      * * 0: A {@link %{OperandTypeLinkPfx}%{MODEL_or_SUBGRAPH}} reference to the condition
      *      %{model_or_subgraph}. The %{model_or_subgraph} must have (m + k + n) inputs with

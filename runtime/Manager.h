@@ -58,7 +58,8 @@ class PreparedModel {
             const std::vector<ModelArgumentInfo>& inputs,
             const std::vector<ModelArgumentInfo>& outputs, const MemoryTracker& memories,
             const std::shared_ptr<ExecutionBurstController>& burstController,
-            hal::MeasureTiming measure, const hal::OptionalTimePoint& deadline) const = 0;
+            hal::MeasureTiming measure, const hal::OptionalTimePoint& deadline,
+            const hal::OptionalTimeoutDuration& loopTimeoutDuration) const = 0;
 
     // Perform fenced computation with given input/output argument info and memory pools.
     // The returned timing information is only valid if the callback is nullptr.
@@ -68,6 +69,7 @@ class PreparedModel {
             const std::vector<ModelArgumentInfo>& outputs, const MemoryTracker& memories,
             const std::vector<int>& waitFor, hal::MeasureTiming measure,
             const hal::OptionalTimePoint& deadline,
+            const hal::OptionalTimeoutDuration& loopTimeoutDuration,
             const hal::OptionalTimeoutDuration& timeoutDurationAfterFence) const = 0;
 
     virtual std::shared_ptr<ExecutionBurstController> configureExecutionBurst(
@@ -95,6 +97,8 @@ class Device {
     virtual hal::PerformanceInfo getPerformance(hal::OperandType type) const = 0;
     virtual hal::PerformanceInfo getRelaxedFloat32toFloat16PerformanceScalar() const = 0;
     virtual hal::PerformanceInfo getRelaxedFloat32toFloat16PerformanceTensor() const = 0;
+    virtual hal::PerformanceInfo getIfPerformance() const = 0;
+    virtual hal::PerformanceInfo getWhilePerformance() const = 0;
     virtual bool isCachingSupported() const = 0;
     virtual std::pair<bool, bool> supportsDeadlines() const = 0;
     virtual int wait() const = 0;

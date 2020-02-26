@@ -50,7 +50,9 @@ Return<void> SampleDriverMinimal::getCapabilities_1_3(getCapabilities_1_3_cb cb)
     Capabilities capabilities = {
             .relaxedFloat32toFloat16PerformanceScalar = {.execTime = 0.4f, .powerUsage = 0.5f},
             .relaxedFloat32toFloat16PerformanceTensor = {.execTime = 0.4f, .powerUsage = 0.5f},
-            .operandPerformance = nonExtensionOperandPerformance<HalVersion::V1_3>({1.0f, 1.0f})};
+            .operandPerformance = nonExtensionOperandPerformance<HalVersion::V1_3>({1.0f, 1.0f}),
+            .ifPerformance = {.execTime = 1.0f, .powerUsage = 1.0f},
+            .whilePerformance = {.execTime = 1.0f, .powerUsage = 1.0f}};
     update(&capabilities.operandPerformance, OperandType::TENSOR_FLOAT32,
            {.execTime = 0.4f, .powerUsage = 0.5f});
     update(&capabilities.operandPerformance, OperandType::FLOAT32,
