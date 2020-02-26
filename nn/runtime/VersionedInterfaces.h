@@ -645,6 +645,14 @@ class VersionedIPreparedModel {
      *     execution.
      * @param deadline Optional time point. If provided, prepareModel must
      *     complete or be aborted by this time point.
+     * @param loopTimeoutDuration The maximum amount of time that should be spent
+     *     executing a {@link OperationType::WHILE} operation. If a loop
+     *     condition model does not output false within this duration, the
+     *     execution must be aborted. If the model contains a {@link
+     *     OperationType::WHILE} operation and no loop timeout duration is
+     *     provided, the maximum amount of time is {@link
+     *     LoopTimeoutDurationNs::DEFAULT}. When provided, the duration must not
+     *     exceed {@link LoopTimeoutDurationNs::MAXIMUM}.
      * @param preferSynchronous 'true' to perform synchronous HAL execution when
      *     possible, 'false' to force asynchronous HAL execution.
      * @return A tuple consisting of:
@@ -677,7 +685,8 @@ class VersionedIPreparedModel {
      */
     std::tuple<int, std::vector<hal::OutputShape>, hal::Timing> execute(
             const hal::Request& request, hal::MeasureTiming measure,
-            const hal::OptionalTimePoint& deadline, bool preferSynchronous) const;
+            const hal::OptionalTimePoint& deadline,
+            const hal::OptionalTimeoutDuration& loopTimeoutDuration, bool preferSynchronous) const;
 
     /**
      * Creates a burst controller on a prepared model.
@@ -744,6 +753,10 @@ class VersionedIPreparedModel {
      * @param deadline The time by which execution must complete. If the
      *                 execution cannot be finished by the deadline, the
      *                 execution must be aborted.
+     * @param loopTimeoutDuration The maximum amount of time that should be spent
+     *     executing a WHILE operation. If a loop does not terminate within this
+     *     duration, the execution must be aborted. This must be set if an only
+     *     if the model contains a {@link OperationType::WHILE} operation.
      * @param timeoutDurationAfterFence The maximum timeout duration within which execution must
      *                                  complete after all sync fences in waitFor are signaled.
      * @return A tuple consisting of:
@@ -760,6 +773,7 @@ class VersionedIPreparedModel {
     std::tuple<int, hal::hidl_handle, sp<hal::IFencedExecutionCallback>, hal::Timing> executeFenced(
             const hal::Request& request, const hal::hidl_vec<hal::hidl_handle>& waitFor,
             hal::MeasureTiming measure, const hal::OptionalTimePoint& deadline,
+            const hal::OptionalTimeoutDuration& loopTimeoutDuration,
             const hal::OptionalTimeoutDuration& timeoutDurationAfterFence);
 
    private:
@@ -767,10 +781,12 @@ class VersionedIPreparedModel {
 
     std::tuple<int, std::vector<hal::OutputShape>, hal::Timing> executeAsynchronously(
             const hal::Request& request, hal::MeasureTiming timing,
-            const hal::OptionalTimePoint& deadline) const;
+            const hal::OptionalTimePoint& deadline,
+            const hal::OptionalTimeoutDuration& loopTimeoutDuration) const;
     std::tuple<int, std::vector<hal::OutputShape>, hal::Timing> executeSynchronously(
             const hal::Request& request, hal::MeasureTiming measure,
-            const hal::OptionalTimePoint& deadline) const;
+            const hal::OptionalTimePoint& deadline,
+            const hal::OptionalTimeoutDuration& loopTimeoutDuration) const;
 
     /**
      * Returns sp<V1_3::IPreparedModel> that is a downcast of the sp<V1_0::IPreparedModel>

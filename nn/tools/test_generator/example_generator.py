@@ -116,13 +116,20 @@ def GetOperationStruct(operation):
         "outputs": [op.model_index for op in operation.outs],
     }
 
+def GetSubgraphStruct(subgraph):
+    """Get the dictionary that corresponds to test_helper::TestSubgraph."""
+    return {
+         "operands": [GetOperandStruct(op) for op in subgraph.operands],
+         "operations": [GetOperationStruct(op) for op in subgraph.operations],
+         "inputIndexes": [op.model_index for op in subgraph.GetInputs()],
+         "outputIndexes": [op.model_index for op in subgraph.GetOutputs()],
+    }
+
 def GetModelStruct(example):
     """Get the dictionary that corresponds to test_helper::TestModel."""
     return {
-        "operands": [GetOperandStruct(op) for op in example.model.operands],
-        "operations": [GetOperationStruct(op) for op in example.model.operations],
-        "inputIndexes": [op.model_index for op in example.model.GetInputs()],
-        "outputIndexes": [op.model_index for op in example.model.GetOutputs()],
+        "main": GetSubgraphStruct(example.model),
+        "referenced": [GetSubgraphStruct(model) for model in example.model.GetReferencedModels()],
         "isRelaxed": example.model.isRelaxed,
         "expectedMultinomialDistributionTolerance":
                 example.expectedMultinomialDistributionTolerance,

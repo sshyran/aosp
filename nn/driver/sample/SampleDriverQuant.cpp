@@ -49,7 +49,9 @@ Return<void> SampleDriverQuant::getCapabilities_1_3(getCapabilities_1_3_cb cb) {
     Capabilities capabilities = {
             .relaxedFloat32toFloat16PerformanceScalar = {.execTime = 50.0f, .powerUsage = 1.0f},
             .relaxedFloat32toFloat16PerformanceTensor = {.execTime = 50.0f, .powerUsage = 1.0f},
-            .operandPerformance = nonExtensionOperandPerformance<HalVersion::V1_3>({50.0f, 1.0f})};
+            .operandPerformance = nonExtensionOperandPerformance<HalVersion::V1_3>({50.0f, 1.0f}),
+            .ifPerformance = {.execTime = 50.0f, .powerUsage = 1.0f},
+            .whilePerformance = {.execTime = 50.0f, .powerUsage = 1.0f}};
 
     cb(ErrorStatus::NONE, capabilities);
     return Void();
