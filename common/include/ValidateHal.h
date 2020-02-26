@@ -48,7 +48,8 @@ bool validateModel(const T_Model& model);
 // buffer tokens are valid. Each driver should do their own validation of
 // buffer tokens.
 template <class T_Request, class T_Model>
-bool validateRequest(const T_Request& request, const T_Model& model);
+bool validateRequest(const T_Request& request, const T_Model& model,
+                     bool allowUnspecifiedOutput = true);
 
 // Verfies that the execution preference is valid.
 bool validateExecutionPreference(hal::ExecutionPreference preference);
