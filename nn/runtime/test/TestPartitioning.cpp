@@ -137,6 +137,7 @@ namespace {
 
 using namespace android::nn::hal;
 using CompilationBuilder = ::android::nn::CompilationBuilder;
+using Deadline = ::android::nn::Deadline;
 using Device = ::android::nn::Device;
 using DeviceManager = ::android::nn::DeviceManager;
 using ExecutePreference = ::android::nn::test_wrapper::ExecutePreference;
@@ -665,7 +666,7 @@ class PartitioningModel : private WrapperModel {
     // Run the partitioning algorithm to create an ExecutionPlan.
     int partitionTheWork(const std::vector<std::shared_ptr<Device>>& devices,
                          ExecutePreference preference, ExecutePriority priority,
-                         const OptionalTimePoint& deadline, ExecutionPlan* plan) {
+                         const std::optional<Deadline>& deadline, ExecutionPlan* plan) {
         return reinterpret_cast<ModelBuilder*>(getHandle())
                 ->partitionTheWork(devices, static_cast<uint32_t>(preference),
                                    static_cast<int32_t>(priority), deadline, plan);
