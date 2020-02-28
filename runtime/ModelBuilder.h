@@ -127,7 +127,7 @@ class ModelBuilder {
     }
 
     int partitionTheWork(const std::vector<std::shared_ptr<Device>>& devices, uint32_t preference,
-                         uint32_t priority, const hal::OptionalTimePoint& deadline,
+                         uint32_t priority, const std::optional<Deadline>& deadline,
                          ExecutionPlan* plan) const;
 
    private:
@@ -153,7 +153,8 @@ class ModelBuilder {
     int partitionTheWorkInternal(uint32_t sourceModelIndex,
                                  const std::vector<std::shared_ptr<Device>>& devices,
                                  uint32_t preference, uint32_t priority,
-                                 const hal::OptionalTimePoint& deadline, ExecutionPlan* plan) const;
+                                 const std::optional<Deadline>& deadline,
+                                 ExecutionPlan* plan) const;
 
     // Return true if either mCompleteModel or mInvalidModel is true.
     bool badState(const char* name);
