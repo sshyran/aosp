@@ -131,13 +131,32 @@ void initVLogMask();
 #define NN_RET_CHECK_GE(x, y) NN_RET_CHECK_OP(x, y, >=)
 #define NN_RET_CHECK_GT(x, y) NN_RET_CHECK_OP(x, y, >)
 
-// Make an optional time point from an optional duration. If the operation
-// succeeds, a pair of {ANEURALNETWORKS_NO_ERROR, timepoint} is returned. If an
-// overflow occurs in this function, {ANEURALNETWORKS_BAD_DATA, empty} is
-// returned.
-std::pair<int, hal::OptionalTimePoint> makeTimePoint(std::optional<uint64_t> duration);
+// Type to represent a deadline time point across processes.
+using Deadline = std::chrono::steady_clock::time_point;
 
-uint64_t getCurrentNanosecondsSinceEpoch();
+// Make an Deadline from a duration. If the sum of the current time and the
+// duration exceeds the max time, return a time point holding the maximum
+// expressible time.
+Deadline makeDeadline(uint64_t duration);
+
+// Convenience function. If the duration is provided, this function creates a
+// Deadline using makeDeadline. If the duration is not provided, this function
+// returns std::nullopt.
+std::optional<Deadline> makeDeadline(std::optional<uint64_t> duration);
+
+// Make an optional Deadline from an OptionalTimePoint. If
+// timePoint.nanosecondsSinceEpoch cannot be represented in Deadline, return a
+// time point holding the maximum Deadline. If the OptionalTimePoint is none,
+// this function returns std::nullopt.
+std::optional<Deadline> makeDeadline(const hal::OptionalTimePoint& timePoint);
+
+// Returns true if the deadline has passed. Returns false if either the deadline
+// has not been exceeded or if the deadline is not present.
+bool hasDeadlinePassed(const std::optional<Deadline>& deadline);
+
+// Make an OptionalTimePoint from an optional Deadline. If the Deadline is not
+// provided, this function returns none for OptionalTimePoint.
+hal::OptionalTimePoint makeTimePoint(const std::optional<Deadline>& deadline);
 
 // Ensure that every user of FalseyErrorStream is linked to the
 // correct instance, using the correct LOG_TAG
