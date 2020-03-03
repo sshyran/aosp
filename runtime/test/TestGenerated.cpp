@@ -455,10 +455,6 @@ INSTANTIATE_GENERATED_TEST(QuantizationCouplingTest, [](const TestModel& testMod
 });
 
 INSTANTIATE_GENERATED_TEST(DeviceMemoryTest, [](const TestModel& testModel) {
-    if (!testModel.referenced.empty()) {
-        // TODO(b/149693818): Add control flow support to DeviceMemoryTest.
-        return false;
-    }
     return !testModel.expectFailure &&
            std::all_of(testModel.main.outputIndexes.begin(), testModel.main.outputIndexes.end(),
                        [&testModel](uint32_t index) {
