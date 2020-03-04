@@ -128,6 +128,7 @@ cc_defaults {
         "TestMemoryInternal.cpp",
         "TestPartitioning.cpp",
         "TestPartitioningRandom.cpp",
+        "TestRemoveDefaultArguments.cpp",
         "fibonacci_extension/FibonacciDriver.cpp",
         "fibonacci_extension/FibonacciExtensionTest.cpp",
 
