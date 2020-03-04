@@ -51,7 +51,8 @@ bool validate(const IOperationValidationContext* context) {
 }
 
 bool prepare(IOperationExecutionContext* context) {
-    return true;
+    Shape output = context->getOutputShape(kOutputScalar);
+    return context->setOutputShape(kOutputScalar, output);
 }
 
 bool execute(IOperationExecutionContext* context) {
