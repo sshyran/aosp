@@ -156,6 +156,7 @@ cc_test {
     name: "NeuralNetworksTest_static_fuzzing",
     defaults: ["NeuralNetworksTest_default_libs"],
     srcs: [
+        "GeneratedTestUtils.cpp",
         "TestNeuralNetworksWrapper.cpp",
         "fuzzing/OperationManager.cpp",
         "fuzzing/RandomGraphGenerator.cpp",
@@ -169,6 +170,7 @@ cc_test {
         "libgmock",
         "libneuralnetworks_static",
         "libneuralnetworks_common",
+        "libneuralnetworks_generated_test_harness",
     ],
     shared_libs: ["libmemunreachable"],
     header_libs: [

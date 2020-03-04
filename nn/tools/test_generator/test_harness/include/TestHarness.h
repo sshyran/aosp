@@ -27,6 +27,7 @@
 #include <cstdlib>
 #include <cstring>
 #include <functional>
+#include <limits>
 #include <map>
 #include <memory>
 #include <random>
@@ -454,10 +455,44 @@ class TestModelManager {
     std::map<std::string, const TestModel*> mTestModels;
 };
 
+struct AccuracyCriterion {
+    // We expect the driver results to be unbiased.
+    // Formula: abs(sum_{i}(diff) / sum(1)) <= bias, where
+    // * fixed point: diff = actual - expected
+    // * floating point: diff = (actual - expected) / max(1, abs(expected))
+    float bias = std::numeric_limits<float>::max();
+
+    // Set the threshold on Mean Square Error (MSE).
+    // Formula: sum_{i}(diff ^ 2) / sum(1) <= mse
+    float mse = std::numeric_limits<float>::max();
+
+    // We also set accuracy thresholds on each element to detect any particular edge cases that may
+    // be shadowed in bias or MSE. We use the similar approach as our CTS unit tests, but with much
+    // relaxed criterion.
+    // Formula: abs(actual - expected) <= atol + rtol * abs(expected)
+    //   where atol stands for Absolute TOLerance and rtol for Relative TOLerance.
+    float atol = 0.0f;
+    float rtol = 0.0f;
+};
+
+struct AccuracyCriteria {
+    AccuracyCriterion float32;
+    AccuracyCriterion float16;
+    AccuracyCriterion int32;
+    AccuracyCriterion quant8Asymm;
+    AccuracyCriterion quant8AsymmSigned;
+    AccuracyCriterion quant8Symm;
+    AccuracyCriterion quant16Asymm;
+    AccuracyCriterion quant16Symm;
+    float bool8AllowedErrorRatio = 0.1f;
+};
+
 // Check the output results against the expected values in test model by calling
 // GTEST_ASSERT/EXPECT. The index of the results corresponds to the index in
 // model.main.outputIndexes. E.g., results[i] corresponds to model.main.outputIndexes[i].
 void checkResults(const TestModel& model, const std::vector<TestBuffer>& results);
+void checkResults(const TestModel& model, const std::vector<TestBuffer>& results,
+                  const AccuracyCriteria& criteria);
 
 TestModel convertQuant8AsymmOperandsToSigned(const TestModel& testModel);
 

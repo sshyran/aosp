@@ -23,6 +23,8 @@
 #include <algorithm>
 #include <cmath>
 #include <functional>
+#include <limits>
+#include <map>
 #include <numeric>
 #include <string>
 #include <vector>
@@ -30,6 +32,9 @@
 namespace test_helper {
 
 namespace {
+
+template <typename T>
+constexpr bool nnIsFloat = std::is_floating_point_v<T> || std::is_same_v<T, _Float16>;
 
 constexpr uint32_t kMaxNumberOfPrintedErrors = 10;
 
@@ -59,15 +64,32 @@ uint32_t getNumberOfElements(const TestOperand& op) {
 
 // Check if the actual results meet the accuracy criterion.
 template <typename T>
-void expectNear(const TestOperand& op, const TestBuffer& result, double atol, double rtol) {
+void expectNear(const TestOperand& op, const TestBuffer& result,
+                const AccuracyCriterion& criterion) {
+    constexpr uint32_t kMinNumberOfElementsToTestBiasMSE = 10;
     const T* actualBuffer = result.get<T>();
     const T* expectedBuffer = op.data.get<T>();
-    uint32_t len = getNumberOfElements(op), numErrors = 0;
+    uint32_t len = getNumberOfElements(op), numErrors = 0, numSkip = 0;
+    double bias = 0.0f, mse = 0.0f;
     for (uint32_t i = 0; i < len; i++) {
         // Compare all data types in double for precision and signed arithmetic.
         double actual = static_cast<double>(actualBuffer[i]);
         double expected = static_cast<double>(expectedBuffer[i]);
-        double tolerableRange = atol + rtol * std::fabs(expected);
+        double tolerableRange = criterion.atol + criterion.rtol * std::fabs(expected);
+
+        // Skip invalid floating point values.
+        if (std::isnan(expected) || std::isinf(expected) || std::fabs(expected) > 1e3) {
+            numSkip++;
+            continue;
+        }
+
+        // Accumulate bias and MSE. Use relative bias and MSE for floating point values.
+        double diff = actual - expected;
+        if constexpr (nnIsFloat<T>) {
+            diff /= std::max(1.0, std::abs(expected));
+        }
+        bias += diff;
+        mse += diff * diff;
 
         // Print at most kMaxNumberOfPrintedErrors errors by EXPECT_NEAR.
         if (numErrors < kMaxNumberOfPrintedErrors) {
@@ -76,24 +98,34 @@ void expectNear(const TestOperand& op, const TestBuffer& result, double atol, do
         if (std::fabs(actual - expected) > tolerableRange) numErrors++;
     }
     EXPECT_EQ(numErrors, 0u);
+
+    // Test bias and MSE.
+    if (len < numSkip + kMinNumberOfElementsToTestBiasMSE) return;
+    bias /= static_cast<double>(len - numSkip);
+    mse /= static_cast<double>(len - numSkip);
+    EXPECT_LE(std::fabs(bias), criterion.bias);
+    EXPECT_LE(mse, criterion.mse);
 }
 
-// For boolean values, we expect exact match.
-void expectBooleanEqual(const TestOperand& op, const TestBuffer& result) {
+// For boolean values, we expect the number of mismatches does not exceed a certain ratio.
+void expectBooleanNearlyEqual(const TestOperand& op, const TestBuffer& result,
+                              float allowedErrorRatio) {
     const bool8* actualBuffer = result.get<bool8>();
     const bool8* expectedBuffer = op.data.get<bool8>();
     uint32_t len = getNumberOfElements(op), numErrors = 0;
+    std::stringstream errorMsg;
     for (uint32_t i = 0; i < len; i++) {
-        bool actual = static_cast<bool>(actualBuffer[i]);
-        bool expected = static_cast<bool>(expectedBuffer[i]);
-
-        // Print at most kMaxNumberOfPrintedErrors errors by EXPECT_NEAR.
-        if (numErrors < kMaxNumberOfPrintedErrors) {
-            EXPECT_EQ(expected, actual) << "When comparing element " << i;
+        if (expectedBuffer[i] != actualBuffer[i]) {
+            if (numErrors < kMaxNumberOfPrintedErrors)
+                errorMsg << "    Expected: " << expectedBuffer[i] << ", actual: " << actualBuffer[i]
+                         << ", when comparing element " << i << "\n";
+            numErrors++;
         }
-        if (expected != actual) numErrors++;
     }
-    EXPECT_EQ(numErrors, 0u);
+    // When |len| is small, the allowedErrorCount will intentionally ceil at 1, which allows for
+    // greater tolerance.
+    uint32_t allowedErrorCount = static_cast<uint32_t>(std::ceil(allowedErrorRatio * len));
+    EXPECT_LE(numErrors, allowedErrorCount) << errorMsg.str();
 }
 
 // Calculates the expected probability from the unnormalized log-probability of
@@ -157,6 +189,50 @@ void expectMultinomialDistributionWithinTolerance(const TestModel& model,
 
 }  // namespace
 
+void checkResults(const TestModel& model, const std::vector<TestBuffer>& buffers,
+                  const AccuracyCriteria& criteria) {
+    ASSERT_EQ(model.main.outputIndexes.size(), buffers.size());
+    for (uint32_t i = 0; i < model.main.outputIndexes.size(); i++) {
+        SCOPED_TRACE(testing::Message() << "When comparing output " << i);
+        const auto& operand = model.main.operands[model.main.outputIndexes[i]];
+        const auto& result = buffers[i];
+        if (operand.isIgnored) continue;
+
+        switch (operand.type) {
+            case TestOperandType::TENSOR_FLOAT32:
+                expectNear<float>(operand, result, criteria.float32);
+                break;
+            case TestOperandType::TENSOR_FLOAT16:
+                expectNear<_Float16>(operand, result, criteria.float16);
+                break;
+            case TestOperandType::TENSOR_INT32:
+            case TestOperandType::INT32:
+                expectNear<int32_t>(operand, result, criteria.int32);
+                break;
+            case TestOperandType::TENSOR_QUANT8_ASYMM:
+                expectNear<uint8_t>(operand, result, criteria.quant8Asymm);
+                break;
+            case TestOperandType::TENSOR_QUANT8_SYMM:
+                expectNear<int8_t>(operand, result, criteria.quant8Symm);
+                break;
+            case TestOperandType::TENSOR_QUANT16_ASYMM:
+                expectNear<uint16_t>(operand, result, criteria.quant16Asymm);
+                break;
+            case TestOperandType::TENSOR_QUANT16_SYMM:
+                expectNear<int16_t>(operand, result, criteria.quant16Symm);
+                break;
+            case TestOperandType::TENSOR_BOOL8:
+                expectBooleanNearlyEqual(operand, result, criteria.bool8AllowedErrorRatio);
+                break;
+            case TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED:
+                expectNear<int8_t>(operand, result, criteria.quant8AsymmSigned);
+                break;
+            default:
+                FAIL() << "Data type not supported.";
+        }
+    }
+}
+
 void checkResults(const TestModel& model, const std::vector<TestBuffer>& buffers) {
     // For RANDOM_MULTINOMIAL test only.
     if (model.expectedMultinomialDistributionTolerance > 0.0f) {
@@ -164,13 +240,29 @@ void checkResults(const TestModel& model, const std::vector<TestBuffer>& buffers
         return;
     }
 
-    // Decide the tolerable range.
+    // Decide the default tolerable range.
     //
     // For floating-point models, we use the relaxed precision if either
     // - relaxed computation flag is set
     // - the model has at least one TENSOR_FLOAT16 operand
-    double fpAtol = 1e-5;
-    double fpRtol = 5.0f * 1.1920928955078125e-7;
+    //
+    // The bias and MSE criteria are implicitly set to the maximum -- we do not enforce these
+    // criteria in normal generated tests.
+    //
+    // TODO: Adjust the error limit based on testing.
+    //
+    AccuracyCriteria criteria = {
+            // The relative tolerance is 5ULP of FP32.
+            .float32 = {.atol = 1e-5, .rtol = 5.0f * 1.1920928955078125e-7},
+            // Both the absolute and relative tolerance are 5ULP of FP16.
+            .float16 = {.atol = 5.0f * 0.0009765625, .rtol = 5.0f * 0.0009765625},
+            .int32 = {.atol = 1},
+            .quant8Asymm = {.atol = 1},
+            .quant8Symm = {.atol = 1},
+            .quant16Asymm = {.atol = 1},
+            .quant16Symm = {.atol = 1},
+            .bool8AllowedErrorRatio = 0.0f,
+    };
     bool hasFloat16Inputs = false;
     model.forEachSubgraph([&hasFloat16Inputs](const TestSubgraph& subgraph) {
         if (!hasFloat16Inputs) {
@@ -181,56 +273,14 @@ void checkResults(const TestModel& model, const std::vector<TestBuffer>& buffers
         }
     });
     if (model.isRelaxed || hasFloat16Inputs) {
-        // TODO: Adjust the error limit based on testing.
-        // If in relaxed mode, set the absolute tolerance to be 5ULP of FP16.
-        fpAtol = 5.0f * 0.0009765625;
-        // Set the relative tolerance to be 5ULP of the corresponding FP precision.
-        fpRtol = 5.0f * 0.0009765625;
+        criteria.float32 = criteria.float16;
     }
     const double quant8AllowedError = getQuant8AllowedError();
+    criteria.quant8Asymm.atol = quant8AllowedError;
+    criteria.quant8AsymmSigned.atol = quant8AllowedError;
+    criteria.quant8Symm.atol = quant8AllowedError;
 
-    ASSERT_EQ(model.main.outputIndexes.size(), buffers.size());
-    for (uint32_t i = 0; i < model.main.outputIndexes.size(); i++) {
-        SCOPED_TRACE(testing::Message() << "When comparing output " << i);
-        const auto& operand = model.main.operands[model.main.outputIndexes[i]];
-        const auto& result = buffers[i];
-        if (operand.isIgnored) continue;
-
-        switch (operand.type) {
-            case TestOperandType::TENSOR_FLOAT32:
-                expectNear<float>(operand, result, fpAtol, fpRtol);
-                break;
-            case TestOperandType::TENSOR_FLOAT16:
-                expectNear<_Float16>(operand, result, fpAtol, fpRtol);
-                break;
-            case TestOperandType::TENSOR_INT32:
-                expectNear<int32_t>(operand, result, 0, 0);
-                break;
-            case TestOperandType::TENSOR_QUANT8_ASYMM:
-                expectNear<uint8_t>(operand, result, quant8AllowedError, 0);
-                break;
-            case TestOperandType::TENSOR_QUANT8_SYMM:
-                expectNear<int8_t>(operand, result, quant8AllowedError, 0);
-                break;
-            case TestOperandType::TENSOR_QUANT16_ASYMM:
-                expectNear<uint16_t>(operand, result, 1, 0);
-                break;
-            case TestOperandType::TENSOR_QUANT16_SYMM:
-                expectNear<int16_t>(operand, result, 1, 0);
-                break;
-            case TestOperandType::TENSOR_BOOL8:
-                expectBooleanEqual(operand, result);
-                break;
-            case TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED:
-                expectNear<int8_t>(operand, result, quant8AllowedError, 0);
-                break;
-            case TestOperandType::INT32:
-                expectNear<int32_t>(operand, result, 0, 0);
-                break;
-            default:
-                FAIL() << "Data type not supported.";
-        }
-    }
+    checkResults(model, buffers, criteria);
 }
 
 TestModel convertQuant8AsymmOperandsToSigned(const TestModel& testModel) {
