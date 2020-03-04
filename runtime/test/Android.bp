@@ -59,6 +59,7 @@ cc_defaults {
         // library to ensure CTS tests coverage.
         // TODO(xusongw): Re-enable once b/141294076 is fixed.
         // "TestUnspecifiedDimensions.cpp",
+        "GeneratedTestUtils.cpp",
         "TestAssertions.cpp",
         "TestFree.cpp",
         "TestGenerated.cpp",
@@ -249,6 +250,7 @@ cc_defaults {
     name: "NeuralNetworksTest_mt_defaults",
     defaults: ["NeuralNetworksTest_default_libs"],
     srcs: [
+        "GeneratedTestUtils.cpp",
         "TestGenerated.cpp",
         "TestMain.cpp",
         "TestNeuralNetworksWrapper.cpp",
@@ -297,6 +299,7 @@ cc_library_static {
     srcs: [
         ":libneuralnetworks_generated_test_harness_for_cts",
         "CtsMain.cpp",
+        "GeneratedTestUtils.cpp",
         "TestFree.cpp",
         "TestGenerated.cpp",
         "TestMemory.cpp",
