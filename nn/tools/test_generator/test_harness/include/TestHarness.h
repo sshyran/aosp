@@ -537,6 +537,14 @@ class SpecDumper {
     std::ostream& mOs;
 };
 
+// Convert the test model to an equivalent float32 model. It will return std::nullopt if the
+// conversion is not supported, or if there is no equivalent float32 model.
+std::optional<TestModel> convertToFloat32Model(const TestModel& testModel);
+
+// Used together with convertToFloat32Model. Convert the results computed from the float model to
+// the actual data type in the original model.
+void setExpectedOutputsFromFloat32Results(const std::vector<TestBuffer>& results, TestModel* model);
+
 }  // namespace test_helper
 
 #endif  // ANDROID_FRAMEWORKS_ML_NN_TOOLS_TEST_GENERATOR_TEST_HARNESS_TEST_HARNESS_H
