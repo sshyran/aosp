@@ -411,6 +411,11 @@ struct TestModel {
         });
         return result;
     }
+
+    bool isInfiniteLoopTimeoutTest() const {
+        // This should only match the TestModel generated from while_infinite_loop.mod.py.
+        return expectFailure && main.operations[0].type == TestOperationType::WHILE;
+    }
 };
 
 // Manages all generated test models.
