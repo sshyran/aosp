@@ -271,6 +271,11 @@ class Compilation {
         return *this;
     }
 
+    Result createForDevice(const Model* model, const ANeuralNetworksDevice* device) {
+        return static_cast<Result>(ANeuralNetworksCompilation_createForDevices(
+                model->getHandle(), &device, 1, &mCompilation));
+    }
+
     Result setPreference(ExecutePreference preference) {
         return static_cast<Result>(ANeuralNetworksCompilation_setPreference(
                 mCompilation, static_cast<int32_t>(preference)));
