@@ -20,7 +20,8 @@
 #include <memory>
 #include <set>
 #include <string>
-#include <unordered_set>
+#include <unordered_map>
+#include <utility>
 #include <vector>
 
 #include "RandomGraphGeneratorUtils.h"
@@ -1038,7 +1039,7 @@ void RandomVariableNetwork::addDimensionProd(const std::vector<RandomVariable>& 
 
 bool enforceDimProd(const std::vector<EvaluationOrder>& mDimProd,
                     const std::unordered_map<RandomVariableNode, int>& indexMap,
-                    EvalContext* context, std::unordered_set<int>* dirtySubnets) {
+                    EvalContext* context, std::set<int>* dirtySubnets) {
     for (auto& evalOrder : mDimProd) {
         NN_FUZZER_LOG << "  Dimension product network size = " << evalOrder.size();
         // Initialize EvalInfo of each RandomVariable.
@@ -1073,7 +1074,7 @@ bool RandomVariableNetwork::evalRange() {
     constexpr uint64_t kMaxNumCombinationsWithLocalNetwork = 1e5;
     NN_FUZZER_LOG << "Evaluate on " << mEvalOrderMap.size() << " sub-networks";
     EvalContext context;
-    std::unordered_set<int> dirtySubnets;  // Which subnets needs evaluation.
+    std::set<int> dirtySubnets;  // Which subnets needs evaluation.
     for (auto& pair : mEvalOrderMap) {
         const auto& evalOrder = pair.second;
         // Decide whether needs evaluation by timestamp -- if no range has changed after the last
@@ -1180,28 +1181,32 @@ bool RandomVariableNetwork::setEqualIfCompatible(const std::vector<RandomVariabl
 bool RandomVariableNetwork::freeze() {
     NN_FUZZER_LOG << "Freeze the random network";
     if (!evalRange()) return false;
+
+    std::vector<RandomVariableNode> nodes;
     for (const auto& pair : mEvalOrderMap) {
         // Find all FREE RandomVariables in the subnet.
-        std::vector<RandomVariableNode> nodes;
         for (const auto& var : pair.second) {
             if (var->type == RandomVariableType::FREE) nodes.push_back(var);
         }
-        // Randomly shuffle the order, this is for a more uniform randomness.
-        randomShuffle(&nodes);
-        // An inefficient algorithm that does freeze -> re-evaluate for every FREE RandomVariable.
-        // TODO: Might be able to optimize this.
-        for (const auto& var : nodes) {
-            size_t size = var->range.size();
-            NN_FUZZER_LOG << "Freeze " << toString(var);
-            var->freeze();
-            NN_FUZZER_LOG << "  " << toString(var);
-            // There is no need to re-evaluate if the FREE RandomVariable have only one choice.
-            if (size > 1) {
-                var->updateTimestamp();
-                if (!evalRange()) {
-                    NN_FUZZER_LOG << "Freeze failed at " << toString(var);
-                    return false;
-                }
+    }
+
+    // Randomly shuffle the order, this is for a more uniform randomness.
+    randomShuffle(&nodes);
+
+    // An inefficient algorithm that does freeze -> re-evaluate for every FREE RandomVariable.
+    // TODO: Might be able to optimize this.
+    for (const auto& var : nodes) {
+        if (var->type != RandomVariableType::FREE) continue;
+        size_t size = var->range.size();
+        NN_FUZZER_LOG << "Freeze " << toString(var);
+        var->freeze();
+        NN_FUZZER_LOG << "  " << toString(var);
+        // There is no need to re-evaluate if the FREE RandomVariable have only one choice.
+        if (size > 1) {
+            var->updateTimestamp();
+            if (!evalRange()) {
+                NN_FUZZER_LOG << "Freeze failed at " << toString(var);
+                return false;
             }
         }
     }
