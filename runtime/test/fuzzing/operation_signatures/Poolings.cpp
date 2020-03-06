@@ -103,7 +103,7 @@ static void poolingImplicitOpConstructor(TestOperandType, uint32_t rank, RandomO
             .opType = TestOperationType::op,                                      \
             .supportedDataTypes = {__VA_ARGS__},                                  \
             .supportedRanks = {4},                                                \
-            .version = HalVersion::ver,                                           \
+            .version = TestHalVersion::ver,                                       \
             .inputs =                                                             \
                     {                                                             \
                             INPUT_DEFAULT,                                        \
@@ -123,7 +123,7 @@ static void poolingImplicitOpConstructor(TestOperandType, uint32_t rank, RandomO
             .opType = TestOperationType::op,                                      \
             .supportedDataTypes = {__VA_ARGS__},                                  \
             .supportedRanks = {4},                                                \
-            .version = HalVersion::ver,                                           \
+            .version = TestHalVersion::ver,                                       \
             .inputs =                                                             \
                     {                                                             \
                             INPUT_DEFAULT,                                        \
@@ -152,7 +152,7 @@ DEFINE_POOLING_SIGNATURE(MAX_POOL_2D, V1_2, TestOperandType::TENSOR_FLOAT16);
             .opType = TestOperationType::op,                                      \
             .supportedDataTypes = {__VA_ARGS__},                                  \
             .supportedRanks = {4},                                                \
-            .version = HalVersion::ver,                                           \
+            .version = TestHalVersion::ver,                                       \
             .inputs =                                                             \
                     {                                                             \
                             INPUT_DEFAULT,                                        \
@@ -173,7 +173,7 @@ DEFINE_POOLING_SIGNATURE(MAX_POOL_2D, V1_2, TestOperandType::TENSOR_FLOAT16);
             .opType = TestOperationType::op,                                      \
             .supportedDataTypes = {__VA_ARGS__},                                  \
             .supportedRanks = {4},                                                \
-            .version = HalVersion::ver,                                           \
+            .version = TestHalVersion::ver,                                       \
             .inputs =                                                             \
                     {                                                             \
                             INPUT_DEFAULT,                                        \
