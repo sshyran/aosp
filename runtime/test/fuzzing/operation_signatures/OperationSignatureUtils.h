@@ -400,8 +400,8 @@ inline void defaultOperandConstructor(TestOperandType dataType, uint32_t, Random
 //       .opType = TestOperationType::RELU,
 //       .supportedDataTypes = {TestOperandType::TENSOR_FLOAT32,
 //       TestOperandType::TENSOR_QUANT8_ASYMM}, .supportedRanks = {1, 2, 3, 4}, .version =
-//       HalVersion::V1_0, .inputs = {INPUT_DEFAULT}, .outputs = {OUTPUT_DEFAULT}, .constructor =
-//       sameShapeOpConstructor};
+//       TestHalVersion::V1_0, .inputs = {INPUT_DEFAULT}, .outputs = {OUTPUT_DEFAULT}, .constructor
+//       = sameShapeOpConstructor};
 //
 #define DEFINE_OPERATION_SIGNATURE(name) \
     const int dummy_##name = OperationSignatureHelper(#name) + OperationSignature

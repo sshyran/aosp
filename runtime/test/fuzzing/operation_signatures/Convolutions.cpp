@@ -22,7 +22,7 @@ namespace android {
 namespace nn {
 namespace fuzzing_test {
 
-static void conv2DExplicitConstructor(TestOperandType, uint32_t rank, HalVersion ver,
+static void conv2DExplicitConstructor(TestOperandType, uint32_t rank, TestHalVersion ver,
                                       RandomOperation* op) {
     NN_FUZZER_CHECK(rank == 4);
 
@@ -74,10 +74,10 @@ static void conv2DExplicitConstructor(TestOperandType, uint32_t rank, HalVersion
                     strideWidth, dilationWidth, paddingLeft, paddingRight,
                     &op->outputs[0]->dimensions[widthIndex]);
 
-    setConvFCScale(/*applyOutputScaleBound=*/ver == HalVersion::V1_0, op);
+    setConvFCScale(/*applyOutputScaleBound=*/ver == TestHalVersion::V1_0, op);
 }
 
-static void conv2DImplicitConstructor(TestOperandType, uint32_t rank, HalVersion ver,
+static void conv2DImplicitConstructor(TestOperandType, uint32_t rank, TestHalVersion ver,
                                       RandomOperation* op) {
     NN_FUZZER_CHECK(rank == 4);
 
@@ -124,47 +124,47 @@ static void conv2DImplicitConstructor(TestOperandType, uint32_t rank, HalVersion
                     strideWidth, dilationWidth, paddingScheme,
                     &op->outputs[0]->dimensions[widthIndex]);
 
-    setConvFCScale(/*applyOutputScaleBound=*/ver == HalVersion::V1_0, op);
+    setConvFCScale(/*applyOutputScaleBound=*/ver == TestHalVersion::V1_0, op);
 }
 
-#define DEFINE_CONV_2D_SIGNATURE(ver, ...)                                                     \
-    DEFINE_OPERATION_SIGNATURE(CONV_2D_explicit_##ver){                                        \
-            .opType = TestOperationType::CONV_2D,                                              \
-            .supportedDataTypes = {__VA_ARGS__},                                               \
-            .supportedRanks = {4},                                                             \
-            .version = HalVersion::ver,                                                        \
-            .inputs =                                                                          \
-                    {                                                                          \
-                            INPUT_DEFAULT,                                                     \
-                            INPUT_DEFAULT,                                                     \
-                            INPUT_BIAS,                                                        \
-                            PARAMETER_RANGE(TestOperandType::INT32, 1, 3),                     \
-                            PARAMETER_RANGE(TestOperandType::INT32, 1, 3),                     \
-                            PARAMETER_RANGE(TestOperandType::INT32, 1, 3),                     \
-                            PARAMETER_RANGE(TestOperandType::INT32, 1, 3),                     \
-                            PARAMETER_RANGE(TestOperandType::INT32, 1, 3),                     \
-                            PARAMETER_RANGE(TestOperandType::INT32, 1, 3),                     \
-                            PARAMETER_CHOICE(TestOperandType::INT32, 0, 1, 2, 3),              \
-                    },                                                                         \
-            .outputs = {OUTPUT_DEFAULT},                                                       \
-            .constructor = std::bind(conv2DExplicitConstructor, _1, _2, HalVersion::ver, _3)}; \
-    DEFINE_OPERATION_SIGNATURE(CONV_2D_implicit_##ver){                                        \
-            .opType = TestOperationType::CONV_2D,                                              \
-            .supportedDataTypes = {__VA_ARGS__},                                               \
-            .supportedRanks = {4},                                                             \
-            .version = HalVersion::ver,                                                        \
-            .inputs =                                                                          \
-                    {                                                                          \
-                            INPUT_DEFAULT,                                                     \
-                            INPUT_DEFAULT,                                                     \
-                            INPUT_BIAS,                                                        \
-                            PARAMETER_CHOICE(TestOperandType::INT32, 1, 2),                    \
-                            PARAMETER_RANGE(TestOperandType::INT32, 1, 3),                     \
-                            PARAMETER_RANGE(TestOperandType::INT32, 1, 3),                     \
-                            PARAMETER_CHOICE(TestOperandType::INT32, 0, 1, 2, 3),              \
-                    },                                                                         \
-            .outputs = {OUTPUT_DEFAULT},                                                       \
-            .constructor = std::bind(conv2DImplicitConstructor, _1, _2, HalVersion::ver, _3)};
+#define DEFINE_CONV_2D_SIGNATURE(ver, ...)                                                         \
+    DEFINE_OPERATION_SIGNATURE(CONV_2D_explicit_##ver){                                            \
+            .opType = TestOperationType::CONV_2D,                                                  \
+            .supportedDataTypes = {__VA_ARGS__},                                                   \
+            .supportedRanks = {4},                                                                 \
+            .version = TestHalVersion::ver,                                                        \
+            .inputs =                                                                              \
+                    {                                                                              \
+                            INPUT_DEFAULT,                                                         \
+                            INPUT_DEFAULT,                                                         \
+                            INPUT_BIAS,                                                            \
+                            PARAMETER_RANGE(TestOperandType::INT32, 1, 3),                         \
+                            PARAMETER_RANGE(TestOperandType::INT32, 1, 3),                         \
+                            PARAMETER_RANGE(TestOperandType::INT32, 1, 3),                         \
+                            PARAMETER_RANGE(TestOperandType::INT32, 1, 3),                         \
+                            PARAMETER_RANGE(TestOperandType::INT32, 1, 3),                         \
+                            PARAMETER_RANGE(TestOperandType::INT32, 1, 3),                         \
+                            PARAMETER_CHOICE(TestOperandType::INT32, 0, 1, 2, 3),                  \
+                    },                                                                             \
+            .outputs = {OUTPUT_DEFAULT},                                                           \
+            .constructor = std::bind(conv2DExplicitConstructor, _1, _2, TestHalVersion::ver, _3)}; \
+    DEFINE_OPERATION_SIGNATURE(CONV_2D_implicit_##ver){                                            \
+            .opType = TestOperationType::CONV_2D,                                                  \
+            .supportedDataTypes = {__VA_ARGS__},                                                   \
+            .supportedRanks = {4},                                                                 \
+            .version = TestHalVersion::ver,                                                        \
+            .inputs =                                                                              \
+                    {                                                                              \
+                            INPUT_DEFAULT,                                                         \
+                            INPUT_DEFAULT,                                                         \
+                            INPUT_BIAS,                                                            \
+                            PARAMETER_CHOICE(TestOperandType::INT32, 1, 2),                        \
+                            PARAMETER_RANGE(TestOperandType::INT32, 1, 3),                         \
+                            PARAMETER_RANGE(TestOperandType::INT32, 1, 3),                         \
+                            PARAMETER_CHOICE(TestOperandType::INT32, 0, 1, 2, 3),                  \
+                    },                                                                             \
+            .outputs = {OUTPUT_DEFAULT},                                                           \
+            .constructor = std::bind(conv2DImplicitConstructor, _1, _2, TestHalVersion::ver, _3)};
 
 DEFINE_CONV_2D_SIGNATURE(V1_0, TestOperandType::TENSOR_FLOAT32,
                          TestOperandType::TENSOR_QUANT8_ASYMM);
@@ -177,7 +177,7 @@ DEFINE_OPERATION_SIGNATURE(CONV_2D_explicit_layout_V1_2){
                                TestOperandType::TENSOR_QUANT8_ASYMM,
                                TestOperandType::TENSOR_FLOAT16},
         .supportedRanks = {4},
-        .version = HalVersion::V1_2,
+        .version = TestHalVersion::V1_2,
         .inputs =
                 {
                         INPUT_DEFAULT,
@@ -193,7 +193,7 @@ DEFINE_OPERATION_SIGNATURE(CONV_2D_explicit_layout_V1_2){
                         PARAMETER_CHOICE(TestOperandType::BOOL, true, false),
                 },
         .outputs = {OUTPUT_DEFAULT},
-        .constructor = std::bind(conv2DExplicitConstructor, _1, _2, HalVersion::V1_2, _3)};
+        .constructor = std::bind(conv2DExplicitConstructor, _1, _2, TestHalVersion::V1_2, _3)};
 
 DEFINE_OPERATION_SIGNATURE(CONV_2D_implicit_layout_V1_2){
         .opType = TestOperationType::CONV_2D,
@@ -201,7 +201,7 @@ DEFINE_OPERATION_SIGNATURE(CONV_2D_implicit_layout_V1_2){
                                TestOperandType::TENSOR_QUANT8_ASYMM,
                                TestOperandType::TENSOR_FLOAT16},
         .supportedRanks = {4},
-        .version = HalVersion::V1_2,
+        .version = TestHalVersion::V1_2,
         .inputs =
                 {
                         INPUT_DEFAULT,
@@ -214,7 +214,7 @@ DEFINE_OPERATION_SIGNATURE(CONV_2D_implicit_layout_V1_2){
                         PARAMETER_CHOICE(TestOperandType::BOOL, true, false),
                 },
         .outputs = {OUTPUT_DEFAULT},
-        .constructor = std::bind(conv2DImplicitConstructor, _1, _2, HalVersion::V1_2, _3)};
+        .constructor = std::bind(conv2DImplicitConstructor, _1, _2, TestHalVersion::V1_2, _3)};
 
 DEFINE_OPERATION_SIGNATURE(CONV_2D_explicit_dilation_V1_2){
         .opType = TestOperationType::CONV_2D,
@@ -222,7 +222,7 @@ DEFINE_OPERATION_SIGNATURE(CONV_2D_explicit_dilation_V1_2){
                                TestOperandType::TENSOR_QUANT8_ASYMM,
                                TestOperandType::TENSOR_FLOAT16},
         .supportedRanks = {4},
-        .version = HalVersion::V1_2,
+        .version = TestHalVersion::V1_2,
         .inputs =
                 {
                         INPUT_DEFAULT,
@@ -240,7 +240,7 @@ DEFINE_OPERATION_SIGNATURE(CONV_2D_explicit_dilation_V1_2){
                         PARAMETER_RANGE(TestOperandType::INT32, 1, 3),
                 },
         .outputs = {OUTPUT_DEFAULT},
-        .constructor = std::bind(conv2DExplicitConstructor, _1, _2, HalVersion::V1_2, _3)};
+        .constructor = std::bind(conv2DExplicitConstructor, _1, _2, TestHalVersion::V1_2, _3)};
 
 DEFINE_OPERATION_SIGNATURE(CONV_2D_implicit_dilation_V1_2){
         .opType = TestOperationType::CONV_2D,
@@ -248,7 +248,7 @@ DEFINE_OPERATION_SIGNATURE(CONV_2D_implicit_dilation_V1_2){
                                TestOperandType::TENSOR_QUANT8_ASYMM,
                                TestOperandType::TENSOR_FLOAT16},
         .supportedRanks = {4},
-        .version = HalVersion::V1_2,
+        .version = TestHalVersion::V1_2,
         .inputs =
                 {
                         INPUT_DEFAULT,
@@ -263,9 +263,9 @@ DEFINE_OPERATION_SIGNATURE(CONV_2D_implicit_dilation_V1_2){
                         PARAMETER_RANGE(TestOperandType::INT32, 1, 3),
                 },
         .outputs = {OUTPUT_DEFAULT},
-        .constructor = std::bind(conv2DImplicitConstructor, _1, _2, HalVersion::V1_2, _3)};
+        .constructor = std::bind(conv2DImplicitConstructor, _1, _2, TestHalVersion::V1_2, _3)};
 
-static void depthwiseConv2DExplicitConstructor(TestOperandType, uint32_t rank, HalVersion ver,
+static void depthwiseConv2DExplicitConstructor(TestOperandType, uint32_t rank, TestHalVersion ver,
                                                RandomOperation* op) {
     NN_FUZZER_CHECK(rank == 4);
 
@@ -318,10 +318,10 @@ static void depthwiseConv2DExplicitConstructor(TestOperandType, uint32_t rank, H
                     strideWidth, dilationWidth, paddingLeft, paddingRight,
                     &op->outputs[0]->dimensions[widthIndex]);
 
-    setConvFCScale(/*applyOutputScaleBound=*/ver == HalVersion::V1_0, op);
+    setConvFCScale(/*applyOutputScaleBound=*/ver == TestHalVersion::V1_0, op);
 }
 
-static void depthwiseConv2DImplicitConstructor(TestOperandType, uint32_t rank, HalVersion ver,
+static void depthwiseConv2DImplicitConstructor(TestOperandType, uint32_t rank, TestHalVersion ver,
                                                RandomOperation* op) {
     NN_FUZZER_CHECK(rank == 4);
 
@@ -370,51 +370,51 @@ static void depthwiseConv2DImplicitConstructor(TestOperandType, uint32_t rank, H
                     strideWidth, dilationWidth, paddingScheme,
                     &op->outputs[0]->dimensions[widthIndex]);
 
-    setConvFCScale(/*applyOutputScaleBound=*/ver == HalVersion::V1_0, op);
+    setConvFCScale(/*applyOutputScaleBound=*/ver == TestHalVersion::V1_0, op);
 }
 
-#define DEFINE_DEPTHWISE_CONV_2D_SIGNATURE(ver, ...)                                             \
-    DEFINE_OPERATION_SIGNATURE(DEPTHWISE_CONV_2D_explicit_##ver){                                \
-            .opType = TestOperationType::DEPTHWISE_CONV_2D,                                      \
-            .supportedDataTypes = {__VA_ARGS__},                                                 \
-            .supportedRanks = {4},                                                               \
-            .version = HalVersion::ver,                                                          \
-            .inputs =                                                                            \
-                    {                                                                            \
-                            INPUT_DEFAULT,                                                       \
-                            INPUT_DEFAULT,                                                       \
-                            INPUT_BIAS,                                                          \
-                            PARAMETER_RANGE(TestOperandType::INT32, 1, 3),                       \
-                            PARAMETER_RANGE(TestOperandType::INT32, 1, 3),                       \
-                            PARAMETER_RANGE(TestOperandType::INT32, 1, 3),                       \
-                            PARAMETER_RANGE(TestOperandType::INT32, 1, 3),                       \
-                            PARAMETER_RANGE(TestOperandType::INT32, 1, 3),                       \
-                            PARAMETER_RANGE(TestOperandType::INT32, 1, 3),                       \
-                            RANDOM_INT_RANGE(1, 5),                                              \
-                            PARAMETER_CHOICE(TestOperandType::INT32, 0, 1, 2, 3),                \
-                    },                                                                           \
-            .outputs = {OUTPUT_DEFAULT},                                                         \
-            .constructor =                                                                       \
-                    std::bind(depthwiseConv2DExplicitConstructor, _1, _2, HalVersion::ver, _3)}; \
-    DEFINE_OPERATION_SIGNATURE(DEPTHWISE_CONV_2D_implicit_##ver){                                \
-            .opType = TestOperationType::DEPTHWISE_CONV_2D,                                      \
-            .supportedDataTypes = {__VA_ARGS__},                                                 \
-            .supportedRanks = {4},                                                               \
-            .version = HalVersion::ver,                                                          \
-            .inputs =                                                                            \
-                    {                                                                            \
-                            INPUT_DEFAULT,                                                       \
-                            INPUT_DEFAULT,                                                       \
-                            INPUT_BIAS,                                                          \
-                            PARAMETER_CHOICE(TestOperandType::INT32, 1, 2),                      \
-                            PARAMETER_RANGE(TestOperandType::INT32, 1, 3),                       \
-                            PARAMETER_RANGE(TestOperandType::INT32, 1, 3),                       \
-                            RANDOM_INT_RANGE(1, 5),                                              \
-                            PARAMETER_CHOICE(TestOperandType::INT32, 0, 1, 2, 3),                \
-                    },                                                                           \
-            .outputs = {OUTPUT_DEFAULT},                                                         \
-            .constructor =                                                                       \
-                    std::bind(depthwiseConv2DImplicitConstructor, _1, _2, HalVersion::ver, _3)};
+#define DEFINE_DEPTHWISE_CONV_2D_SIGNATURE(ver, ...)                              \
+    DEFINE_OPERATION_SIGNATURE(DEPTHWISE_CONV_2D_explicit_##ver){                 \
+            .opType = TestOperationType::DEPTHWISE_CONV_2D,                       \
+            .supportedDataTypes = {__VA_ARGS__},                                  \
+            .supportedRanks = {4},                                                \
+            .version = TestHalVersion::ver,                                       \
+            .inputs =                                                             \
+                    {                                                             \
+                            INPUT_DEFAULT,                                        \
+                            INPUT_DEFAULT,                                        \
+                            INPUT_BIAS,                                           \
+                            PARAMETER_RANGE(TestOperandType::INT32, 1, 3),        \
+                            PARAMETER_RANGE(TestOperandType::INT32, 1, 3),        \
+                            PARAMETER_RANGE(TestOperandType::INT32, 1, 3),        \
+                            PARAMETER_RANGE(TestOperandType::INT32, 1, 3),        \
+                            PARAMETER_RANGE(TestOperandType::INT32, 1, 3),        \
+                            PARAMETER_RANGE(TestOperandType::INT32, 1, 3),        \
+                            RANDOM_INT_RANGE(1, 5),                               \
+                            PARAMETER_CHOICE(TestOperandType::INT32, 0, 1, 2, 3), \
+                    },                                                            \
+            .outputs = {OUTPUT_DEFAULT},                                          \
+            .constructor = std::bind(depthwiseConv2DExplicitConstructor, _1, _2,  \
+                                     TestHalVersion::ver, _3)};                   \
+    DEFINE_OPERATION_SIGNATURE(DEPTHWISE_CONV_2D_implicit_##ver){                 \
+            .opType = TestOperationType::DEPTHWISE_CONV_2D,                       \
+            .supportedDataTypes = {__VA_ARGS__},                                  \
+            .supportedRanks = {4},                                                \
+            .version = TestHalVersion::ver,                                       \
+            .inputs =                                                             \
+                    {                                                             \
+                            INPUT_DEFAULT,                                        \
+                            INPUT_DEFAULT,                                        \
+                            INPUT_BIAS,                                           \
+                            PARAMETER_CHOICE(TestOperandType::INT32, 1, 2),       \
+                            PARAMETER_RANGE(TestOperandType::INT32, 1, 3),        \
+                            PARAMETER_RANGE(TestOperandType::INT32, 1, 3),        \
+                            RANDOM_INT_RANGE(1, 5),                               \
+                            PARAMETER_CHOICE(TestOperandType::INT32, 0, 1, 2, 3), \
+                    },                                                            \
+            .outputs = {OUTPUT_DEFAULT},                                          \
+            .constructor = std::bind(depthwiseConv2DImplicitConstructor, _1, _2,  \
+                                     TestHalVersion::ver, _3)};
 
 DEFINE_DEPTHWISE_CONV_2D_SIGNATURE(V1_0, TestOperandType::TENSOR_FLOAT32,
                                    TestOperandType::TENSOR_QUANT8_ASYMM);
@@ -427,7 +427,7 @@ DEFINE_OPERATION_SIGNATURE(DEPTHWISE_CONV_2D_explicit_layout_V1_2){
                                TestOperandType::TENSOR_QUANT8_ASYMM,
                                TestOperandType::TENSOR_FLOAT16},
         .supportedRanks = {4},
-        .version = HalVersion::V1_2,
+        .version = TestHalVersion::V1_2,
         .inputs =
                 {
                         INPUT_DEFAULT,
@@ -444,7 +444,8 @@ DEFINE_OPERATION_SIGNATURE(DEPTHWISE_CONV_2D_explicit_layout_V1_2){
                         PARAMETER_CHOICE(TestOperandType::BOOL, true, false),
                 },
         .outputs = {OUTPUT_DEFAULT},
-        .constructor = std::bind(depthwiseConv2DExplicitConstructor, _1, _2, HalVersion::V1_2, _3)};
+        .constructor = std::bind(depthwiseConv2DExplicitConstructor, _1, _2, TestHalVersion::V1_2,
+                                 _3)};
 
 DEFINE_OPERATION_SIGNATURE(DEPTHWISE_CONV_2D_implicit_layout_V1_2){
         .opType = TestOperationType::DEPTHWISE_CONV_2D,
@@ -452,7 +453,7 @@ DEFINE_OPERATION_SIGNATURE(DEPTHWISE_CONV_2D_implicit_layout_V1_2){
                                TestOperandType::TENSOR_QUANT8_ASYMM,
                                TestOperandType::TENSOR_FLOAT16},
         .supportedRanks = {4},
-        .version = HalVersion::V1_2,
+        .version = TestHalVersion::V1_2,
         .inputs =
                 {
                         INPUT_DEFAULT,
@@ -466,7 +467,8 @@ DEFINE_OPERATION_SIGNATURE(DEPTHWISE_CONV_2D_implicit_layout_V1_2){
                         PARAMETER_CHOICE(TestOperandType::BOOL, true, false),
                 },
         .outputs = {OUTPUT_DEFAULT},
-        .constructor = std::bind(depthwiseConv2DImplicitConstructor, _1, _2, HalVersion::V1_2, _3)};
+        .constructor = std::bind(depthwiseConv2DImplicitConstructor, _1, _2, TestHalVersion::V1_2,
+                                 _3)};
 
 DEFINE_OPERATION_SIGNATURE(DEPTHWISE_CONV_2D_explicit_dilation_V1_2){
         .opType = TestOperationType::DEPTHWISE_CONV_2D,
@@ -474,7 +476,7 @@ DEFINE_OPERATION_SIGNATURE(DEPTHWISE_CONV_2D_explicit_dilation_V1_2){
                                TestOperandType::TENSOR_QUANT8_ASYMM,
                                TestOperandType::TENSOR_FLOAT16},
         .supportedRanks = {4},
-        .version = HalVersion::V1_2,
+        .version = TestHalVersion::V1_2,
         .inputs =
                 {
                         INPUT_DEFAULT,
@@ -493,7 +495,8 @@ DEFINE_OPERATION_SIGNATURE(DEPTHWISE_CONV_2D_explicit_dilation_V1_2){
                         PARAMETER_RANGE(TestOperandType::INT32, 1, 3),
                 },
         .outputs = {OUTPUT_DEFAULT},
-        .constructor = std::bind(depthwiseConv2DExplicitConstructor, _1, _2, HalVersion::V1_2, _3)};
+        .constructor = std::bind(depthwiseConv2DExplicitConstructor, _1, _2, TestHalVersion::V1_2,
+                                 _3)};
 
 DEFINE_OPERATION_SIGNATURE(DEPTHWISE_CONV_2D_implicit_dilation_V1_2){
         .opType = TestOperationType::DEPTHWISE_CONV_2D,
@@ -501,7 +504,7 @@ DEFINE_OPERATION_SIGNATURE(DEPTHWISE_CONV_2D_implicit_dilation_V1_2){
                                TestOperandType::TENSOR_QUANT8_ASYMM,
                                TestOperandType::TENSOR_FLOAT16},
         .supportedRanks = {4},
-        .version = HalVersion::V1_2,
+        .version = TestHalVersion::V1_2,
         .inputs =
                 {
                         INPUT_DEFAULT,
@@ -517,7 +520,8 @@ DEFINE_OPERATION_SIGNATURE(DEPTHWISE_CONV_2D_implicit_dilation_V1_2){
                         PARAMETER_RANGE(TestOperandType::INT32, 1, 3),
                 },
         .outputs = {OUTPUT_DEFAULT},
-        .constructor = std::bind(depthwiseConv2DImplicitConstructor, _1, _2, HalVersion::V1_2, _3)};
+        .constructor = std::bind(depthwiseConv2DImplicitConstructor, _1, _2, TestHalVersion::V1_2,
+                                 _3)};
 
 static void groupedConv2DExplicitConstructor(TestOperandType, uint32_t rank, RandomOperation* op) {
     NN_FUZZER_CHECK(rank == 4);
@@ -630,7 +634,7 @@ DEFINE_OPERATION_SIGNATURE(GROUPED_CONV_2D_explicit_V1_2){
                                TestOperandType::TENSOR_QUANT8_ASYMM,
                                TestOperandType::TENSOR_FLOAT16},
         .supportedRanks = {4},
-        .version = HalVersion::V1_2,
+        .version = TestHalVersion::V1_2,
         .inputs =
                 {
                         INPUT_DEFAULT,
@@ -655,7 +659,7 @@ DEFINE_OPERATION_SIGNATURE(GROUPED_CONV_2D_implicit_V1_2){
                                TestOperandType::TENSOR_QUANT8_ASYMM,
                                TestOperandType::TENSOR_FLOAT16},
         .supportedRanks = {4},
-        .version = HalVersion::V1_2,
+        .version = TestHalVersion::V1_2,
         .inputs =
                 {
                         INPUT_DEFAULT,
@@ -766,7 +770,7 @@ DEFINE_OPERATION_SIGNATURE(TRANSPOSE_CONV_2D_explicit_V1_2){
                                TestOperandType::TENSOR_QUANT8_ASYMM,
                                TestOperandType::TENSOR_FLOAT16},
         .supportedRanks = {4},
-        .version = HalVersion::V1_2,
+        .version = TestHalVersion::V1_2,
         .inputs =
                 {
                         INPUT_DEFAULT,
@@ -790,7 +794,7 @@ DEFINE_OPERATION_SIGNATURE(TRANSPOSE_CONV_2D_implicit_V1_2){
                                TestOperandType::TENSOR_QUANT8_ASYMM,
                                TestOperandType::TENSOR_FLOAT16},
         .supportedRanks = {4},
-        .version = HalVersion::V1_2,
+        .version = TestHalVersion::V1_2,
         .inputs =
                 {
                         INPUT_DEFAULT,
