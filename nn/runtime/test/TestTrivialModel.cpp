@@ -122,6 +122,62 @@ TEST_F(TrivialTest, AddTwo) {
     ASSERT_EQ(CompareMatrices(expected2, actual), 0);
 }
 
+TEST_F(TrivialTest, AddTwoWithHardwareBufferInput) {
+    Model modelAdd2;
+    CreateAddTwoTensorModel(&modelAdd2);
+
+    AHardwareBuffer_Desc desc{
+            .width = sizeof(matrix1),
+            .height = 1,
+            .layers = 1,
+            .format = AHARDWAREBUFFER_FORMAT_BLOB,
+            .usage = AHARDWAREBUFFER_USAGE_CPU_READ_OFTEN | AHARDWAREBUFFER_USAGE_CPU_WRITE_OFTEN,
+    };
+    AHardwareBuffer* matrix1Buffer = nullptr;
+    ASSERT_EQ(AHardwareBuffer_allocate(&desc, &matrix1Buffer), 0);
+    Memory matrix1Memory(matrix1Buffer);
+    ASSERT_TRUE(matrix1Memory.isValid());
+
+    // Test the one node model.
+    Matrix3x4 actual;
+    memset(&actual, 0, sizeof(actual));
+    Compilation compilation(&modelAdd2);
+    compilation.finish();
+    Execution execution(&compilation);
+    ASSERT_EQ(execution.setInputFromMemory(0, &matrix1Memory, 0, sizeof(Matrix3x4)),
+              Result::NO_ERROR);
+    ASSERT_EQ(execution.setInput(1, matrix2, sizeof(Matrix3x4)), Result::NO_ERROR);
+    ASSERT_EQ(execution.setOutput(0, actual, sizeof(Matrix3x4)), Result::NO_ERROR);
+
+    // Set the value for matrix1Buffer.
+    void* bufferPtr = nullptr;
+    ASSERT_EQ(AHardwareBuffer_lock(matrix1Buffer, desc.usage, -1, NULL, &bufferPtr), 0);
+    memcpy((uint8_t*)bufferPtr, matrix1, sizeof(matrix1));
+    int synFenceFd = -1;
+    ASSERT_EQ(AHardwareBuffer_unlock(matrix1Buffer, &synFenceFd), 0);
+    if (synFenceFd > 0) {
+        // If valid sync fence is return by AHardwareBuffer_unlock, use
+        // ANeuralNetworksExecution_startComputeWithDependencies
+        ANeuralNetworksEvent* eventBufferUnlock;
+        ANeuralNetworksEvent* eventToSignal;
+        ASSERT_EQ(ANeuralNetworksEvent_createFromSyncFenceFd(synFenceFd, &eventBufferUnlock),
+                  ANEURALNETWORKS_NO_ERROR);
+        close(synFenceFd);
+        ANeuralNetworksExecution* executionHandle = execution.getHandle();
+        ASSERT_EQ(ANeuralNetworksExecution_startComputeWithDependencies(
+                          executionHandle, &eventBufferUnlock, 1, 0, &eventToSignal),
+                  ANEURALNETWORKS_NO_ERROR);
+        ASSERT_EQ(ANeuralNetworksEvent_wait(eventToSignal), ANEURALNETWORKS_NO_ERROR);
+        ANeuralNetworksEvent_free(eventBufferUnlock);
+        ANeuralNetworksEvent_free(eventToSignal);
+    } else {
+        ASSERT_EQ(execution.compute(), Result::NO_ERROR);
+    }
+
+    ASSERT_EQ(CompareMatrices(expected2, actual), 0);
+    AHardwareBuffer_release(matrix1Buffer);
+}
+
 TEST_F(TrivialTest, AddThree) {
     Model modelAdd3;
     CreateAddThreeTensorModel(&modelAdd3, matrix3);
