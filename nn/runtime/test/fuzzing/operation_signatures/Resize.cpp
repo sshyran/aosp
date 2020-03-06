@@ -63,7 +63,7 @@ static void resizeOpConstructor(TestOperandType, uint32_t rank, RandomOperation*
 
 #define DEFINE_RESIZE_WITHOUT_LAYOUT_SIGNATURE(op, ver, ...)             \
     DEFINE_OPERATION_SIGNATURE(op##_no_layout_##ver){                    \
-            .opType = ANEURALNETWORKS_##op,                              \
+            .opType = TestOperationType::op,                             \
             .supportedDataTypes = {__VA_ARGS__},                         \
             .supportedRanks = {4},                                       \
             .version = HalVersion::ver,                                  \
@@ -77,7 +77,7 @@ DEFINE_RESIZE_WITHOUT_LAYOUT_SIGNATURE(RESIZE_BILINEAR, V1_2, TestOperandType::T
 
 #define DEFINE_RESIZE_OP_SIGNATURE(op, ver, ...)                              \
     DEFINE_OPERATION_SIGNATURE(op##_shape_##ver){                             \
-            .opType = ANEURALNETWORKS_##op,                                   \
+            .opType = TestOperationType::op,                                  \
             .supportedDataTypes = {__VA_ARGS__},                              \
             .supportedRanks = {4},                                            \
             .version = HalVersion::ver,                                       \
@@ -86,7 +86,7 @@ DEFINE_RESIZE_WITHOUT_LAYOUT_SIGNATURE(RESIZE_BILINEAR, V1_2, TestOperandType::T
             .outputs = {OUTPUT_DEFAULT},                                      \
             .constructor = resizeOpConstructor};                              \
     DEFINE_OPERATION_SIGNATURE(op##_scale_##ver){                             \
-            .opType = ANEURALNETWORKS_##op,                                   \
+            .opType = TestOperationType::op,                                  \
             .supportedDataTypes = {__VA_ARGS__},                              \
             .supportedRanks = {4},                                            \
             .version = HalVersion::ver,                                       \

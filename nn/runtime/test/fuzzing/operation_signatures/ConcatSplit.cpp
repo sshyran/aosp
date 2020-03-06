@@ -46,7 +46,7 @@ static void concatConstructor(uint32_t numInputs, bool isV1_0, uint32_t rank, Ra
 }
 
 DEFINE_OPERATION_SIGNATURE(CONCAT_2_V1_0){
-        .opType = ANEURALNETWORKS_CONCATENATION,
+        .opType = TestOperationType::CONCATENATION,
         .supportedDataTypes = {TestOperandType::TENSOR_FLOAT32,
                                TestOperandType::TENSOR_QUANT8_ASYMM},
         .supportedRanks = {1, 2, 3, 4},
@@ -58,7 +58,7 @@ DEFINE_OPERATION_SIGNATURE(CONCAT_2_V1_0){
         }};
 
 DEFINE_OPERATION_SIGNATURE(CONCAT_3_V1_0){
-        .opType = ANEURALNETWORKS_CONCATENATION,
+        .opType = TestOperationType::CONCATENATION,
         .supportedDataTypes = {TestOperandType::TENSOR_FLOAT32,
                                TestOperandType::TENSOR_QUANT8_ASYMM},
         .supportedRanks = {1, 2, 3, 4},
@@ -71,7 +71,7 @@ DEFINE_OPERATION_SIGNATURE(CONCAT_3_V1_0){
         }};
 
 DEFINE_OPERATION_SIGNATURE(CONCAT_2_V1_2){
-        .opType = ANEURALNETWORKS_CONCATENATION,
+        .opType = TestOperationType::CONCATENATION,
         .supportedDataTypes = {TestOperandType::TENSOR_FLOAT16,
                                TestOperandType::TENSOR_QUANT8_ASYMM},
         .supportedRanks = {1, 2, 3, 4},
@@ -83,7 +83,7 @@ DEFINE_OPERATION_SIGNATURE(CONCAT_2_V1_2){
         }};
 
 DEFINE_OPERATION_SIGNATURE(CONCAT_3_V1_2){
-        .opType = ANEURALNETWORKS_CONCATENATION,
+        .opType = TestOperationType::CONCATENATION,
         .supportedDataTypes = {TestOperandType::TENSOR_FLOAT16,
                                TestOperandType::TENSOR_QUANT8_ASYMM},
         .supportedRanks = {1, 2, 3, 4},
@@ -120,7 +120,7 @@ static void splitConstructor(uint32_t numSplits, uint32_t rank, RandomOperation*
 }
 
 DEFINE_OPERATION_SIGNATURE(SPLIT_2_V1_2){
-        .opType = ANEURALNETWORKS_SPLIT,
+        .opType = TestOperationType::SPLIT,
         .supportedDataTypes = {TestOperandType::TENSOR_FLOAT32, TestOperandType::TENSOR_FLOAT16,
                                TestOperandType::TENSOR_INT32, TestOperandType::TENSOR_QUANT8_ASYMM},
         .supportedRanks = {1, 2, 3, 4},
@@ -133,7 +133,7 @@ DEFINE_OPERATION_SIGNATURE(SPLIT_2_V1_2){
         }};
 
 DEFINE_OPERATION_SIGNATURE(SPLIT_3_V1_2){
-        .opType = ANEURALNETWORKS_SPLIT,
+        .opType = TestOperationType::SPLIT,
         .supportedDataTypes = {TestOperandType::TENSOR_FLOAT32, TestOperandType::TENSOR_FLOAT16,
                                TestOperandType::TENSOR_INT32, TestOperandType::TENSOR_QUANT8_ASYMM},
         .supportedRanks = {1, 2, 3, 4},
