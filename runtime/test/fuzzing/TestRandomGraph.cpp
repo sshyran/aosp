@@ -776,18 +776,18 @@ const AccuracyCriteria kLargeGraphCriteria = {.float32 =
 // * 5-op graph with dimensions in range [1, 1000].
 // * 40-op graph with dimensions in range [1, 10].
 //
-#define TEST_RANDOM_GRAPH_WITH_DATA_TYPE_AND_RANK(dataType, rank)                  \
-    TEST_P(RandomGraphTest, SmallGraph_##dataType##_Rank##rank) {                  \
-        OperationFilter filter = {.dataTypes = {Type::dataType}, .ranks = {rank}}; \
-        OperationManager::get()->applyFilter(filter);                              \
-        mCriteria = kSmallGraphCriteria;                                           \
-        testRandomGraph(GraphSize::SMALL, DimensionRange::WIDE);                   \
-    }                                                                              \
-    TEST_P(RandomGraphTest, LargeGraph_##dataType##_Rank##rank) {                  \
-        OperationFilter filter = {.dataTypes = {Type::dataType}, .ranks = {rank}}; \
-        OperationManager::get()->applyFilter(filter);                              \
-        mCriteria = kLargeGraphCriteria;                                           \
-        testRandomGraph(GraphSize::LARGE, DimensionRange::NARROW);                 \
+#define TEST_RANDOM_GRAPH_WITH_DATA_TYPE_AND_RANK(dataType, rank)                             \
+    TEST_P(RandomGraphTest, SmallGraph_##dataType##_Rank##rank) {                             \
+        OperationFilter filter = {.dataTypes = {TestOperandType::dataType}, .ranks = {rank}}; \
+        OperationManager::get()->applyFilter(filter);                                         \
+        mCriteria = kSmallGraphCriteria;                                                      \
+        testRandomGraph(GraphSize::SMALL, DimensionRange::WIDE);                              \
+    }                                                                                         \
+    TEST_P(RandomGraphTest, LargeGraph_##dataType##_Rank##rank) {                             \
+        OperationFilter filter = {.dataTypes = {TestOperandType::dataType}, .ranks = {rank}}; \
+        OperationManager::get()->applyFilter(filter);                                         \
+        mCriteria = kLargeGraphCriteria;                                                      \
+        testRandomGraph(GraphSize::LARGE, DimensionRange::NARROW);                            \
     }
 
 // Random graph test with TENSOR_QUANT8_ASYMM as the primary data type is currently not defined.
