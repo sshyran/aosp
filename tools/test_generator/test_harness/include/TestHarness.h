@@ -27,6 +27,7 @@
 #include <cstdlib>
 #include <cstring>
 #include <functional>
+#include <iostream>
 #include <limits>
 #include <map>
 #include <memory>
@@ -495,6 +496,34 @@ void checkResults(const TestModel& model, const std::vector<TestBuffer>& results
                   const AccuracyCriteria& criteria);
 
 TestModel convertQuant8AsymmOperandsToSigned(const TestModel& testModel);
+
+const char* toString(TestOperandType type);
+const char* toString(TestOperationType type);
+
+// Dump a test model in the format of a spec file for debugging and visualization purpose.
+class SpecDumper {
+   public:
+    SpecDumper(const TestModel& testModel, std::ostream& os) : kTestModel(testModel), mOs(os) {}
+    void dumpTestModel();
+    void dumpResults(const std::string& name, const std::vector<TestBuffer>& results);
+
+   private:
+    // Dump a test model operand.
+    // e.g. op0 = Input("op0", "TENSOR_FLOAT32", "{1, 2, 6, 1}")
+    // e.g. op1 = Parameter("op1", "INT32", "{}", [2])
+    void dumpTestOperand(const TestOperand& operand, uint32_t index);
+
+    // Dump a test model operation.
+    // e.g. model = model.Operation("CONV_2D", op0, op1, op2, op3, op4, op5, op6).To(op7)
+    void dumpTestOperation(const TestOperation& operation);
+
+    // Dump a test buffer as a python 1D list.
+    // e.g. [1, 2, 3, 4, 5]
+    void dumpTestBuffer(TestOperandType type, const TestBuffer& buffer);
+
+    const TestModel& kTestModel;
+    std::ostream& mOs;
+};
 
 }  // namespace test_helper
 

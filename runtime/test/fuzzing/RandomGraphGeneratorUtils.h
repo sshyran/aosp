@@ -375,39 +375,6 @@ class bool8 {
 };
 static_assert(sizeof(bool8) == 1, "size of bool8 must be 8 bits");
 
-// Dump the random graph to a spec file.
-class SpecWriter {
-   public:
-    SpecWriter(std::string filename, std::string testname = "");
-    bool isOpen() { return os.is_open(); }
-    void dump(const std::vector<RandomOperation>& operations,
-              const std::vector<std::shared_ptr<RandomOperand>>& operands);
-
-   private:
-    void dump(test_wrapper::Type type, const uint8_t* buffer, uint32_t length);
-    void dump(const std::vector<RandomVariable>& dimensions);
-    void dump(const std::shared_ptr<RandomOperand>& op);
-    void dump(const RandomOperation& op);
-
-    template <typename T>
-    void dump(const T* buffer, uint32_t length) {
-        for (uint32_t i = 0; i < length; i++) {
-            if (i != 0) os << ", ";
-            if constexpr (std::is_integral<T>::value) {
-                os << static_cast<int>(buffer[i]);
-            } else if constexpr (std::is_same<T, _Float16>::value) {
-                os << static_cast<float>(buffer[i]);
-            } else if constexpr (std::is_same<T, bool8>::value) {
-                os << (buffer[i] ? "True" : "False");
-            } else {
-                os << buffer[i];
-            }
-        }
-    }
-
-    std::ofstream os;
-};
-
 struct RandomNumberGenerator {
     static std::mt19937 generator;
 };
