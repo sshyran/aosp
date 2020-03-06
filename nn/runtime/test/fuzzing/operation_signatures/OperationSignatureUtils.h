@@ -113,9 +113,11 @@ inline void uniform<bool8>(bool8, bool8, RandomOperand* op) {
 inline void uniformFinalizer(RandomOperand* op) {
     switch (op->dataType) {
         case TestOperandType::TENSOR_FLOAT32:
+        case TestOperandType::FLOAT32:
             uniform<float>(kMinFloat32, kMaxFloat32, op);
             break;
         case TestOperandType::TENSOR_INT32:
+        case TestOperandType::INT32:
             uniform<int32_t>(0, 255, op);
             break;
         case TestOperandType::TENSOR_QUANT8_ASYMM:
@@ -128,6 +130,7 @@ inline void uniformFinalizer(RandomOperand* op) {
             uniform<bool8>(true, false, op);
             break;
         case TestOperandType::TENSOR_FLOAT16:
+        case TestOperandType::FLOAT16:
             uniform<_Float16>(kMinFloat32, kMaxFloat32, op);
             break;
         default:
@@ -243,6 +246,29 @@ inline void defaultOperandConstructor(TestOperandType dataType, uint32_t, Random
     }
 }
 
+inline void defaultScalarOperandConstructor(TestOperandType dataType, uint32_t, RandomOperand* op) {
+    switch (dataType) {
+        case TestOperandType::TENSOR_FLOAT32:
+            op->dataType = TestOperandType::FLOAT32;
+            op->scale = 0.0f;
+            op->zeroPoint = 0;
+            break;
+        case TestOperandType::TENSOR_FLOAT16:
+            op->dataType = TestOperandType::FLOAT16;
+            op->scale = 0.0f;
+            op->zeroPoint = 0;
+            break;
+        case TestOperandType::TENSOR_INT32:
+            op->dataType = TestOperandType::INT32;
+            op->scale = 0.0f;
+            op->zeroPoint = 0;
+            break;
+        default:
+            NN_FUZZER_CHECK(false) << "Data type " << toString(dataType)
+                                   << " is not supported in defaultScalarOperandConstructor.";
+    }
+}
+
 // An INPUT operand with uniformly distributed buffer values. The operand's data type is set the
 // same as the operation's primary data type. In the case of quantized data type, the quantization
 // parameters are chosen randomly and uniformly.
@@ -250,6 +276,14 @@ inline void defaultOperandConstructor(TestOperandType dataType, uint32_t, Random
     {                                                                               \
         .type = RandomOperandType::INPUT, .constructor = defaultOperandConstructor, \
         .finalizer = uniformFinalizer                                               \
+    }
+
+// A scalar operand with an uniformly distributed value. The operand's data type is set to the
+// corresponding scalar type of the operation's primary data type (which is always a tensor type).
+#define INPUT_SCALAR                                                                      \
+    {                                                                                     \
+        .type = RandomOperandType::INPUT, .constructor = defaultScalarOperandConstructor, \
+        .finalizer = uniformFinalizer                                                     \
     }
 
 // An INPUT operand with a specified data type and uniformly distributed buffer values. In the case
