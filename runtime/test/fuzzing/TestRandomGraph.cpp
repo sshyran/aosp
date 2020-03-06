@@ -407,13 +407,13 @@ std::vector<std::shared_ptr<Device>> RandomGraphTest::mSyntheticDevices;
 
 // Single-op graph with dimensions in range [1, 1000].
 class SingleOperationTest : public RandomGraphTest {};
-#define TEST_SINGLE_OPERATION(operation, halVersion, criteria)              \
-    TEST_P(SingleOperationTest, operation##_##halVersion) {                 \
-        OperationFilter filter = {.opcodes = {ANEURALNETWORKS_##operation}, \
-                                  .versions = {HalVersion::halVersion}};    \
-        OperationManager::get()->applyFilter(filter);                       \
-        mCriteria = (criteria);                                             \
-        testRandomGraph(GraphSize::SINGLE, DimensionRange::WIDE);           \
+#define TEST_SINGLE_OPERATION(operation, halVersion, criteria)               \
+    TEST_P(SingleOperationTest, operation##_##halVersion) {                  \
+        OperationFilter filter = {.opcodes = {TestOperationType::operation}, \
+                                  .versions = {HalVersion::halVersion}};     \
+        OperationManager::get()->applyFilter(filter);                        \
+        mCriteria = (criteria);                                              \
+        testRandomGraph(GraphSize::SINGLE, DimensionRange::WIDE);            \
     }
 
 // TODO: Adjust the accuracy criteria based on testing.

@@ -41,7 +41,7 @@ static const OperandSignature kOutputRoiTensor = {.type = RandomOperandType::OUT
 static void roiConstructor(TestOperandType, uint32_t rank, RandomOperation* op) {
     NN_FUZZER_CHECK(rank == 4);
     bool useNchw;
-    if (op->opType == ANEURALNETWORKS_ROI_ALIGN) {
+    if (op->opType == TestOperationType::ROI_ALIGN) {
         useNchw = op->inputs[9]->value<bool8>();
     } else {
         useNchw = op->inputs[7]->value<bool8>();
@@ -61,7 +61,7 @@ static void roiConstructor(TestOperandType, uint32_t rank, RandomOperation* op) 
         op->outputs[0]->dimensions = {outBatch, outHeight, outWidth, outDepth};
     }
 
-    if (op->opType == ANEURALNETWORKS_ROI_POOLING) {
+    if (op->opType == TestOperationType::ROI_POOLING) {
         setSameQuantization(op->outputs[0], op->inputs[0]);
     }
 }
@@ -80,7 +80,7 @@ inline void fillRoiTensor(uint32_t numRois, T maxH, T maxW, RandomOperand* op) {
 
 static void roiFinalizer(RandomOperation* op) {
     bool useNchw;
-    if (op->opType == ANEURALNETWORKS_ROI_ALIGN) {
+    if (op->opType == TestOperationType::ROI_ALIGN) {
         useNchw = op->inputs[9]->value<bool8>();
     } else {
         useNchw = op->inputs[7]->value<bool8>();
@@ -121,7 +121,7 @@ static void roiFinalizer(RandomOperation* op) {
 // 2. There is no actual graph that uses this data type on bounding boxes.
 
 DEFINE_OPERATION_SIGNATURE(ROI_ALIGN_V1_2){
-        .opType = ANEURALNETWORKS_ROI_ALIGN,
+        .opType = TestOperationType::ROI_ALIGN,
         .supportedDataTypes = {TestOperandType::TENSOR_FLOAT32,
                                TestOperandType::TENSOR_QUANT8_ASYMM},
         .supportedRanks = {4},
@@ -144,7 +144,7 @@ DEFINE_OPERATION_SIGNATURE(ROI_ALIGN_V1_2){
         .finalizer = roiFinalizer};
 
 DEFINE_OPERATION_SIGNATURE(ROI_POOLING_V1_2){
-        .opType = ANEURALNETWORKS_ROI_POOLING,
+        .opType = TestOperationType::ROI_POOLING,
         .supportedDataTypes = {TestOperandType::TENSOR_FLOAT32,
                                TestOperandType::TENSOR_QUANT8_ASYMM},
         .supportedRanks = {4},
@@ -207,7 +207,7 @@ static void heatmapMaxKeypointFinalizer(RandomOperation* op) {
 }
 
 DEFINE_OPERATION_SIGNATURE(HEATMAP_MAX_KEYPOINT_V1_2){
-        .opType = ANEURALNETWORKS_HEATMAP_MAX_KEYPOINT,
+        .opType = TestOperationType::HEATMAP_MAX_KEYPOINT,
         .supportedDataTypes = {TestOperandType::TENSOR_FLOAT32,
                                TestOperandType::TENSOR_QUANT8_ASYMM},
         .supportedRanks = {4},
