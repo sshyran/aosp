@@ -20,7 +20,7 @@ namespace android {
 namespace nn {
 namespace fuzzing_test {
 
-static void resizeOpConstructor(Type, uint32_t rank, RandomOperation* op) {
+static void resizeOpConstructor(TestOperandType, uint32_t rank, RandomOperation* op) {
     NN_FUZZER_CHECK(rank == 4);
     setFreeDimensions(op->inputs[0], rank);
 
@@ -32,16 +32,16 @@ static void resizeOpConstructor(Type, uint32_t rank, RandomOperation* op) {
     RandomVariable outHeight, outWidth;
     switch (op->inputs[1]->dataType) {
         // Resize by shape.
-        case Type::INT32:
+        case TestOperandType::INT32:
             outWidth = op->inputs[1]->value<RandomVariable>();
             outHeight = op->inputs[2]->value<RandomVariable>();
             break;
         // Resize by scale.
-        case Type::FLOAT32:
+        case TestOperandType::FLOAT32:
             outWidth = op->inputs[0]->dimensions[widthIndex] * op->inputs[1]->value<float>();
             outHeight = op->inputs[0]->dimensions[heightIndex] * op->inputs[2]->value<float>();
             break;
-        case Type::FLOAT16:
+        case TestOperandType::FLOAT16:
             outWidth = op->inputs[0]->dimensions[widthIndex] *
                        static_cast<float>(op->inputs[1]->value<_Float16>());
             outHeight = op->inputs[0]->dimensions[heightIndex] *
@@ -71,35 +71,35 @@ static void resizeOpConstructor(Type, uint32_t rank, RandomOperation* op) {
             .outputs = {OUTPUT_DEFAULT},                                 \
             .constructor = resizeOpConstructor};
 
-DEFINE_RESIZE_WITHOUT_LAYOUT_SIGNATURE(RESIZE_BILINEAR, V1_0, Type::TENSOR_FLOAT32);
-DEFINE_RESIZE_WITHOUT_LAYOUT_SIGNATURE(RESIZE_BILINEAR, V1_2, Type::TENSOR_QUANT8_ASYMM,
-                                       Type::TENSOR_FLOAT16);
+DEFINE_RESIZE_WITHOUT_LAYOUT_SIGNATURE(RESIZE_BILINEAR, V1_0, TestOperandType::TENSOR_FLOAT32);
+DEFINE_RESIZE_WITHOUT_LAYOUT_SIGNATURE(RESIZE_BILINEAR, V1_2, TestOperandType::TENSOR_QUANT8_ASYMM,
+                                       TestOperandType::TENSOR_FLOAT16);
 
-#define DEFINE_RESIZE_OP_SIGNATURE(op, ver, ...)                        \
-    DEFINE_OPERATION_SIGNATURE(op##_shape_##ver){                       \
-            .opType = ANEURALNETWORKS_##op,                             \
-            .supportedDataTypes = {__VA_ARGS__},                        \
-            .supportedRanks = {4},                                      \
-            .version = HalVersion::ver,                                 \
-            .inputs = {INPUT_DEFAULT, RANDOM_INT_FREE, RANDOM_INT_FREE, \
-                       PARAMETER_CHOICE(Type::BOOL, false, true)},      \
-            .outputs = {OUTPUT_DEFAULT},                                \
-            .constructor = resizeOpConstructor};                        \
-    DEFINE_OPERATION_SIGNATURE(op##_scale_##ver){                       \
-            .opType = ANEURALNETWORKS_##op,                             \
-            .supportedDataTypes = {__VA_ARGS__},                        \
-            .supportedRanks = {4},                                      \
-            .version = HalVersion::ver,                                 \
-            .inputs = {INPUT_DEFAULT, PARAMETER_FLOAT_RANGE(0.2, 4.0),  \
-                       PARAMETER_FLOAT_RANGE(0.2, 4.0),                 \
-                       PARAMETER_CHOICE(Type::BOOL, false, true)},      \
-            .outputs = {OUTPUT_DEFAULT},                                \
+#define DEFINE_RESIZE_OP_SIGNATURE(op, ver, ...)                              \
+    DEFINE_OPERATION_SIGNATURE(op##_shape_##ver){                             \
+            .opType = ANEURALNETWORKS_##op,                                   \
+            .supportedDataTypes = {__VA_ARGS__},                              \
+            .supportedRanks = {4},                                            \
+            .version = HalVersion::ver,                                       \
+            .inputs = {INPUT_DEFAULT, RANDOM_INT_FREE, RANDOM_INT_FREE,       \
+                       PARAMETER_CHOICE(TestOperandType::BOOL, false, true)}, \
+            .outputs = {OUTPUT_DEFAULT},                                      \
+            .constructor = resizeOpConstructor};                              \
+    DEFINE_OPERATION_SIGNATURE(op##_scale_##ver){                             \
+            .opType = ANEURALNETWORKS_##op,                                   \
+            .supportedDataTypes = {__VA_ARGS__},                              \
+            .supportedRanks = {4},                                            \
+            .version = HalVersion::ver,                                       \
+            .inputs = {INPUT_DEFAULT, PARAMETER_FLOAT_RANGE(0.2, 4.0),        \
+                       PARAMETER_FLOAT_RANGE(0.2, 4.0),                       \
+                       PARAMETER_CHOICE(TestOperandType::BOOL, false, true)}, \
+            .outputs = {OUTPUT_DEFAULT},                                      \
             .constructor = resizeOpConstructor};
 
-DEFINE_RESIZE_OP_SIGNATURE(RESIZE_BILINEAR, V1_2, Type::TENSOR_FLOAT32, Type::TENSOR_QUANT8_ASYMM,
-                           Type::TENSOR_FLOAT16);
-DEFINE_RESIZE_OP_SIGNATURE(RESIZE_NEAREST_NEIGHBOR, V1_2, Type::TENSOR_FLOAT32,
-                           Type::TENSOR_QUANT8_ASYMM, Type::TENSOR_FLOAT16);
+DEFINE_RESIZE_OP_SIGNATURE(RESIZE_BILINEAR, V1_2, TestOperandType::TENSOR_FLOAT32,
+                           TestOperandType::TENSOR_QUANT8_ASYMM, TestOperandType::TENSOR_FLOAT16);
+DEFINE_RESIZE_OP_SIGNATURE(RESIZE_NEAREST_NEIGHBOR, V1_2, TestOperandType::TENSOR_FLOAT32,
+                           TestOperandType::TENSOR_QUANT8_ASYMM, TestOperandType::TENSOR_FLOAT16);
 
 }  // namespace fuzzing_test
 }  // namespace nn
