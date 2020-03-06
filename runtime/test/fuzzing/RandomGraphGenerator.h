@@ -102,7 +102,7 @@ struct RandomOperand {
 };
 
 struct RandomOperation {
-    ANeuralNetworksOperationType opType;
+    test_helper::TestOperationType opType;
     std::vector<std::shared_ptr<RandomOperand>> inputs;
     std::vector<std::shared_ptr<RandomOperand>> outputs;
     std::function<void(RandomOperation*)> finalizer = nullptr;

@@ -45,7 +45,7 @@ static void embeddingLookupFinalizer(RandomOperation* op) {
 }
 
 DEFINE_OPERATION_SIGNATURE(EMBEDDING_LOOKUP_V1_0){
-        .opType = ANEURALNETWORKS_EMBEDDING_LOOKUP,
+        .opType = TestOperationType::EMBEDDING_LOOKUP,
         .supportedDataTypes = {TestOperandType::TENSOR_FLOAT32, TestOperandType::TENSOR_INT32,
                                TestOperandType::TENSOR_QUANT8_ASYMM},
         .supportedRanks = {2, 3, 4},
@@ -95,7 +95,7 @@ static const OperandSignature hitsTensor_HASHTABLE_LOOKUP = {
         }};
 
 DEFINE_OPERATION_SIGNATURE(HASHTABLE_LOOKUP_V1_0){
-        .opType = ANEURALNETWORKS_HASHTABLE_LOOKUP,
+        .opType = TestOperationType::HASHTABLE_LOOKUP,
         .supportedDataTypes = {TestOperandType::TENSOR_FLOAT32, TestOperandType::TENSOR_INT32,
                                TestOperandType::TENSOR_QUANT8_ASYMM},
         .supportedRanks = {2, 3, 4},
@@ -141,7 +141,7 @@ static void gatherFinalizer(RandomOperation* op) {
 }
 
 DEFINE_OPERATION_SIGNATURE(GATHER_V1_2){
-        .opType = ANEURALNETWORKS_GATHER,
+        .opType = TestOperationType::GATHER,
         .supportedDataTypes = {TestOperandType::TENSOR_FLOAT32, TestOperandType::TENSOR_FLOAT16,
                                TestOperandType::TENSOR_INT32, TestOperandType::TENSOR_QUANT8_ASYMM},
         .supportedRanks = {1, 2, 3, 4, 5},
@@ -162,7 +162,7 @@ static void selectConstructor(TestOperandType, uint32_t rank, RandomOperation* o
 }
 
 DEFINE_OPERATION_SIGNATURE(SELECT_V1_2){
-        .opType = ANEURALNETWORKS_SELECT,
+        .opType = TestOperationType::SELECT,
         .supportedDataTypes = {TestOperandType::TENSOR_FLOAT32, TestOperandType::TENSOR_FLOAT16,
                                TestOperandType::TENSOR_INT32, TestOperandType::TENSOR_QUANT8_ASYMM},
         .supportedRanks = {1, 2, 3, 4},
@@ -195,7 +195,7 @@ static void topKConstructor(TestOperandType, uint32_t rank, RandomOperation* op)
 }
 
 DEFINE_OPERATION_SIGNATURE(TOPK_V2_V1_2){
-        .opType = ANEURALNETWORKS_TOPK_V2,
+        .opType = TestOperationType::TOPK_V2,
         .supportedDataTypes = {TestOperandType::TENSOR_FLOAT32, TestOperandType::TENSOR_FLOAT16,
                                TestOperandType::TENSOR_INT32, TestOperandType::TENSOR_QUANT8_ASYMM},
         .supportedRanks = {1, 2, 3, 4},
@@ -230,7 +230,7 @@ static void sliceFinalizer(RandomOperation* op) {
 }
 
 DEFINE_OPERATION_SIGNATURE(SLICE_V1_2){
-        .opType = ANEURALNETWORKS_SLICE,
+        .opType = TestOperationType::SLICE,
         .supportedDataTypes = {TestOperandType::TENSOR_FLOAT32, TestOperandType::TENSOR_FLOAT16,
                                TestOperandType::TENSOR_INT32, TestOperandType::TENSOR_QUANT8_ASYMM},
         .supportedRanks = {1, 2, 3, 4},
@@ -321,7 +321,7 @@ static void stridedSliceFinalizer(RandomOperation* op) {
 }
 
 DEFINE_OPERATION_SIGNATURE(STRIDED_SLICE_V1_1){
-        .opType = ANEURALNETWORKS_STRIDED_SLICE,
+        .opType = TestOperationType::STRIDED_SLICE,
         .supportedDataTypes = {TestOperandType::TENSOR_FLOAT32,
                                TestOperandType::TENSOR_QUANT8_ASYMM},
         .supportedRanks = {1, 2, 3, 4},
@@ -337,7 +337,7 @@ DEFINE_OPERATION_SIGNATURE(STRIDED_SLICE_V1_1){
         .finalizer = stridedSliceFinalizer};
 
 DEFINE_OPERATION_SIGNATURE(STRIDED_SLICE_V1_2){
-        .opType = ANEURALNETWORKS_STRIDED_SLICE,
+        .opType = TestOperationType::STRIDED_SLICE,
         .supportedDataTypes = {TestOperandType::TENSOR_FLOAT16},
         .supportedRanks = {1, 2, 3, 4},
         .version = HalVersion::V1_2,

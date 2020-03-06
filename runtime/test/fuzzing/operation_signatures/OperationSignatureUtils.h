@@ -397,7 +397,7 @@ inline void defaultOperandConstructor(TestOperandType dataType, uint32_t, Random
 //
 // Example:
 //   DEFINE_OPERATION_SIGNATURE(RELU_V1_0) {
-//       .opType = ANEURALNETWORKS_RELU,
+//       .opType = TestOperationType::RELU,
 //       .supportedDataTypes = {TestOperandType::TENSOR_FLOAT32,
 //       TestOperandType::TENSOR_QUANT8_ASYMM}, .supportedRanks = {1, 2, 3, 4}, .version =
 //       HalVersion::V1_0, .inputs = {INPUT_DEFAULT}, .outputs = {OUTPUT_DEFAULT}, .constructor =

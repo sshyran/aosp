@@ -100,7 +100,7 @@ static void poolingImplicitOpConstructor(TestOperandType, uint32_t rank, RandomO
 
 #define DEFINE_POOLING_SIGNATURE(op, ver, ...)                                    \
     DEFINE_OPERATION_SIGNATURE(op##_explicit_##ver){                              \
-            .opType = ANEURALNETWORKS_##op,                                       \
+            .opType = TestOperationType::op,                                      \
             .supportedDataTypes = {__VA_ARGS__},                                  \
             .supportedRanks = {4},                                                \
             .version = HalVersion::ver,                                           \
@@ -120,7 +120,7 @@ static void poolingImplicitOpConstructor(TestOperandType, uint32_t rank, RandomO
             .outputs = {OUTPUT_DEFAULT},                                          \
             .constructor = poolingExplicitOpConstructor};                         \
     DEFINE_OPERATION_SIGNATURE(op##_implicit_##ver){                              \
-            .opType = ANEURALNETWORKS_##op,                                       \
+            .opType = TestOperationType::op,                                      \
             .supportedDataTypes = {__VA_ARGS__},                                  \
             .supportedRanks = {4},                                                \
             .version = HalVersion::ver,                                           \
@@ -149,7 +149,7 @@ DEFINE_POOLING_SIGNATURE(MAX_POOL_2D, V1_2, TestOperandType::TENSOR_FLOAT16);
 
 #define DEFINE_POOLING_WITH_LAYOUT_SIGNATURE(op, ver, ...)                        \
     DEFINE_OPERATION_SIGNATURE(op##_explicit_layout_##ver){                       \
-            .opType = ANEURALNETWORKS_##op,                                       \
+            .opType = TestOperationType::op,                                      \
             .supportedDataTypes = {__VA_ARGS__},                                  \
             .supportedRanks = {4},                                                \
             .version = HalVersion::ver,                                           \
@@ -170,7 +170,7 @@ DEFINE_POOLING_SIGNATURE(MAX_POOL_2D, V1_2, TestOperandType::TENSOR_FLOAT16);
             .outputs = {OUTPUT_DEFAULT},                                          \
             .constructor = poolingExplicitOpConstructor};                         \
     DEFINE_OPERATION_SIGNATURE(op##_implicit_layout_##ver){                       \
-            .opType = ANEURALNETWORKS_##op,                                       \
+            .opType = TestOperationType::op,                                      \
             .supportedDataTypes = {__VA_ARGS__},                                  \
             .supportedRanks = {4},                                                \
             .version = HalVersion::ver,                                           \
