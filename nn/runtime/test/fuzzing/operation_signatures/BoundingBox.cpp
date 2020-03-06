@@ -125,7 +125,7 @@ DEFINE_OPERATION_SIGNATURE(ROI_ALIGN_V1_2){
         .supportedDataTypes = {TestOperandType::TENSOR_FLOAT32,
                                TestOperandType::TENSOR_QUANT8_ASYMM},
         .supportedRanks = {4},
-        .version = HalVersion::V1_2,
+        .version = TestHalVersion::V1_2,
         .inputs =
                 {
                         INPUT_DEFAULT,
@@ -148,7 +148,7 @@ DEFINE_OPERATION_SIGNATURE(ROI_POOLING_V1_2){
         .supportedDataTypes = {TestOperandType::TENSOR_FLOAT32,
                                TestOperandType::TENSOR_QUANT8_ASYMM},
         .supportedRanks = {4},
-        .version = HalVersion::V1_2,
+        .version = TestHalVersion::V1_2,
         .inputs =
                 {
                         INPUT_DEFAULT,
@@ -211,7 +211,7 @@ DEFINE_OPERATION_SIGNATURE(HEATMAP_MAX_KEYPOINT_V1_2){
         .supportedDataTypes = {TestOperandType::TENSOR_FLOAT32,
                                TestOperandType::TENSOR_QUANT8_ASYMM},
         .supportedRanks = {4},
-        .version = HalVersion::V1_2,
+        .version = TestHalVersion::V1_2,
         .inputs = {INPUT_DEFAULT, kInputRoiTensor,
                    PARAMETER_CHOICE(TestOperandType::BOOL, true, false)},
         .outputs = {OUTPUT_DEFAULT, kOutputRoiTensor},
