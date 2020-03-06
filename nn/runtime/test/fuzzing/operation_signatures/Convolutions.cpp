@@ -129,7 +129,7 @@ static void conv2DImplicitConstructor(TestOperandType, uint32_t rank, HalVersion
 
 #define DEFINE_CONV_2D_SIGNATURE(ver, ...)                                                     \
     DEFINE_OPERATION_SIGNATURE(CONV_2D_explicit_##ver){                                        \
-            .opType = ANEURALNETWORKS_CONV_2D,                                                 \
+            .opType = TestOperationType::CONV_2D,                                              \
             .supportedDataTypes = {__VA_ARGS__},                                               \
             .supportedRanks = {4},                                                             \
             .version = HalVersion::ver,                                                        \
@@ -149,7 +149,7 @@ static void conv2DImplicitConstructor(TestOperandType, uint32_t rank, HalVersion
             .outputs = {OUTPUT_DEFAULT},                                                       \
             .constructor = std::bind(conv2DExplicitConstructor, _1, _2, HalVersion::ver, _3)}; \
     DEFINE_OPERATION_SIGNATURE(CONV_2D_implicit_##ver){                                        \
-            .opType = ANEURALNETWORKS_CONV_2D,                                                 \
+            .opType = TestOperationType::CONV_2D,                                              \
             .supportedDataTypes = {__VA_ARGS__},                                               \
             .supportedRanks = {4},                                                             \
             .version = HalVersion::ver,                                                        \
@@ -172,7 +172,7 @@ DEFINE_CONV_2D_SIGNATURE(V1_2, TestOperandType::TENSOR_FLOAT16,
                          TestOperandType::TENSOR_QUANT8_ASYMM);
 
 DEFINE_OPERATION_SIGNATURE(CONV_2D_explicit_layout_V1_2){
-        .opType = ANEURALNETWORKS_CONV_2D,
+        .opType = TestOperationType::CONV_2D,
         .supportedDataTypes = {TestOperandType::TENSOR_FLOAT32,
                                TestOperandType::TENSOR_QUANT8_ASYMM,
                                TestOperandType::TENSOR_FLOAT16},
@@ -196,7 +196,7 @@ DEFINE_OPERATION_SIGNATURE(CONV_2D_explicit_layout_V1_2){
         .constructor = std::bind(conv2DExplicitConstructor, _1, _2, HalVersion::V1_2, _3)};
 
 DEFINE_OPERATION_SIGNATURE(CONV_2D_implicit_layout_V1_2){
-        .opType = ANEURALNETWORKS_CONV_2D,
+        .opType = TestOperationType::CONV_2D,
         .supportedDataTypes = {TestOperandType::TENSOR_FLOAT32,
                                TestOperandType::TENSOR_QUANT8_ASYMM,
                                TestOperandType::TENSOR_FLOAT16},
@@ -217,7 +217,7 @@ DEFINE_OPERATION_SIGNATURE(CONV_2D_implicit_layout_V1_2){
         .constructor = std::bind(conv2DImplicitConstructor, _1, _2, HalVersion::V1_2, _3)};
 
 DEFINE_OPERATION_SIGNATURE(CONV_2D_explicit_dilation_V1_2){
-        .opType = ANEURALNETWORKS_CONV_2D,
+        .opType = TestOperationType::CONV_2D,
         .supportedDataTypes = {TestOperandType::TENSOR_FLOAT32,
                                TestOperandType::TENSOR_QUANT8_ASYMM,
                                TestOperandType::TENSOR_FLOAT16},
@@ -243,7 +243,7 @@ DEFINE_OPERATION_SIGNATURE(CONV_2D_explicit_dilation_V1_2){
         .constructor = std::bind(conv2DExplicitConstructor, _1, _2, HalVersion::V1_2, _3)};
 
 DEFINE_OPERATION_SIGNATURE(CONV_2D_implicit_dilation_V1_2){
-        .opType = ANEURALNETWORKS_CONV_2D,
+        .opType = TestOperationType::CONV_2D,
         .supportedDataTypes = {TestOperandType::TENSOR_FLOAT32,
                                TestOperandType::TENSOR_QUANT8_ASYMM,
                                TestOperandType::TENSOR_FLOAT16},
@@ -375,7 +375,7 @@ static void depthwiseConv2DImplicitConstructor(TestOperandType, uint32_t rank, H
 
 #define DEFINE_DEPTHWISE_CONV_2D_SIGNATURE(ver, ...)                                             \
     DEFINE_OPERATION_SIGNATURE(DEPTHWISE_CONV_2D_explicit_##ver){                                \
-            .opType = ANEURALNETWORKS_DEPTHWISE_CONV_2D,                                         \
+            .opType = TestOperationType::DEPTHWISE_CONV_2D,                                      \
             .supportedDataTypes = {__VA_ARGS__},                                                 \
             .supportedRanks = {4},                                                               \
             .version = HalVersion::ver,                                                          \
@@ -397,7 +397,7 @@ static void depthwiseConv2DImplicitConstructor(TestOperandType, uint32_t rank, H
             .constructor =                                                                       \
                     std::bind(depthwiseConv2DExplicitConstructor, _1, _2, HalVersion::ver, _3)}; \
     DEFINE_OPERATION_SIGNATURE(DEPTHWISE_CONV_2D_implicit_##ver){                                \
-            .opType = ANEURALNETWORKS_DEPTHWISE_CONV_2D,                                         \
+            .opType = TestOperationType::DEPTHWISE_CONV_2D,                                      \
             .supportedDataTypes = {__VA_ARGS__},                                                 \
             .supportedRanks = {4},                                                               \
             .version = HalVersion::ver,                                                          \
@@ -422,7 +422,7 @@ DEFINE_DEPTHWISE_CONV_2D_SIGNATURE(V1_2, TestOperandType::TENSOR_FLOAT16,
                                    TestOperandType::TENSOR_QUANT8_ASYMM);
 
 DEFINE_OPERATION_SIGNATURE(DEPTHWISE_CONV_2D_explicit_layout_V1_2){
-        .opType = ANEURALNETWORKS_DEPTHWISE_CONV_2D,
+        .opType = TestOperationType::DEPTHWISE_CONV_2D,
         .supportedDataTypes = {TestOperandType::TENSOR_FLOAT32,
                                TestOperandType::TENSOR_QUANT8_ASYMM,
                                TestOperandType::TENSOR_FLOAT16},
@@ -447,7 +447,7 @@ DEFINE_OPERATION_SIGNATURE(DEPTHWISE_CONV_2D_explicit_layout_V1_2){
         .constructor = std::bind(depthwiseConv2DExplicitConstructor, _1, _2, HalVersion::V1_2, _3)};
 
 DEFINE_OPERATION_SIGNATURE(DEPTHWISE_CONV_2D_implicit_layout_V1_2){
-        .opType = ANEURALNETWORKS_DEPTHWISE_CONV_2D,
+        .opType = TestOperationType::DEPTHWISE_CONV_2D,
         .supportedDataTypes = {TestOperandType::TENSOR_FLOAT32,
                                TestOperandType::TENSOR_QUANT8_ASYMM,
                                TestOperandType::TENSOR_FLOAT16},
@@ -469,7 +469,7 @@ DEFINE_OPERATION_SIGNATURE(DEPTHWISE_CONV_2D_implicit_layout_V1_2){
         .constructor = std::bind(depthwiseConv2DImplicitConstructor, _1, _2, HalVersion::V1_2, _3)};
 
 DEFINE_OPERATION_SIGNATURE(DEPTHWISE_CONV_2D_explicit_dilation_V1_2){
-        .opType = ANEURALNETWORKS_DEPTHWISE_CONV_2D,
+        .opType = TestOperationType::DEPTHWISE_CONV_2D,
         .supportedDataTypes = {TestOperandType::TENSOR_FLOAT32,
                                TestOperandType::TENSOR_QUANT8_ASYMM,
                                TestOperandType::TENSOR_FLOAT16},
@@ -496,7 +496,7 @@ DEFINE_OPERATION_SIGNATURE(DEPTHWISE_CONV_2D_explicit_dilation_V1_2){
         .constructor = std::bind(depthwiseConv2DExplicitConstructor, _1, _2, HalVersion::V1_2, _3)};
 
 DEFINE_OPERATION_SIGNATURE(DEPTHWISE_CONV_2D_implicit_dilation_V1_2){
-        .opType = ANEURALNETWORKS_DEPTHWISE_CONV_2D,
+        .opType = TestOperationType::DEPTHWISE_CONV_2D,
         .supportedDataTypes = {TestOperandType::TENSOR_FLOAT32,
                                TestOperandType::TENSOR_QUANT8_ASYMM,
                                TestOperandType::TENSOR_FLOAT16},
@@ -625,7 +625,7 @@ static void groupedConv2DImplicitConstructor(TestOperandType, uint32_t rank, Ran
 }
 
 DEFINE_OPERATION_SIGNATURE(GROUPED_CONV_2D_explicit_V1_2){
-        .opType = ANEURALNETWORKS_GROUPED_CONV_2D,
+        .opType = TestOperationType::GROUPED_CONV_2D,
         .supportedDataTypes = {TestOperandType::TENSOR_FLOAT32,
                                TestOperandType::TENSOR_QUANT8_ASYMM,
                                TestOperandType::TENSOR_FLOAT16},
@@ -650,7 +650,7 @@ DEFINE_OPERATION_SIGNATURE(GROUPED_CONV_2D_explicit_V1_2){
         .constructor = groupedConv2DExplicitConstructor};
 
 DEFINE_OPERATION_SIGNATURE(GROUPED_CONV_2D_implicit_V1_2){
-        .opType = ANEURALNETWORKS_GROUPED_CONV_2D,
+        .opType = TestOperationType::GROUPED_CONV_2D,
         .supportedDataTypes = {TestOperandType::TENSOR_FLOAT32,
                                TestOperandType::TENSOR_QUANT8_ASYMM,
                                TestOperandType::TENSOR_FLOAT16},
@@ -761,7 +761,7 @@ static void transposeConv2DImplicitConstructor(TestOperandType, uint32_t rank,
 }
 
 DEFINE_OPERATION_SIGNATURE(TRANSPOSE_CONV_2D_explicit_V1_2){
-        .opType = ANEURALNETWORKS_TRANSPOSE_CONV_2D,
+        .opType = TestOperationType::TRANSPOSE_CONV_2D,
         .supportedDataTypes = {TestOperandType::TENSOR_FLOAT32,
                                TestOperandType::TENSOR_QUANT8_ASYMM,
                                TestOperandType::TENSOR_FLOAT16},
@@ -785,7 +785,7 @@ DEFINE_OPERATION_SIGNATURE(TRANSPOSE_CONV_2D_explicit_V1_2){
         .constructor = transposeConv2DExplicitConstructor};
 
 DEFINE_OPERATION_SIGNATURE(TRANSPOSE_CONV_2D_implicit_V1_2){
-        .opType = ANEURALNETWORKS_TRANSPOSE_CONV_2D,
+        .opType = TestOperationType::TRANSPOSE_CONV_2D,
         .supportedDataTypes = {TestOperandType::TENSOR_FLOAT32,
                                TestOperandType::TENSOR_QUANT8_ASYMM,
                                TestOperandType::TENSOR_FLOAT16},

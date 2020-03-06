@@ -46,7 +46,7 @@ static void fullyConnectedConstructor(TestOperandType, uint32_t rank, HalVersion
 }
 
 DEFINE_OPERATION_SIGNATURE(signature_FULLY_CONNECTED_V1_0){
-        .opType = ANEURALNETWORKS_FULLY_CONNECTED,
+        .opType = TestOperationType::FULLY_CONNECTED,
         .supportedDataTypes = {TestOperandType::TENSOR_FLOAT32,
                                TestOperandType::TENSOR_QUANT8_ASYMM},
         .supportedRanks = {2, 3, 4},
@@ -57,7 +57,7 @@ DEFINE_OPERATION_SIGNATURE(signature_FULLY_CONNECTED_V1_0){
         .constructor = std::bind(fullyConnectedConstructor, _1, _2, HalVersion::V1_0, _3)};
 
 DEFINE_OPERATION_SIGNATURE(signature_FULLY_CONNECTED_V1_2){
-        .opType = ANEURALNETWORKS_FULLY_CONNECTED,
+        .opType = TestOperationType::FULLY_CONNECTED,
         .supportedDataTypes = {TestOperandType::TENSOR_QUANT8_ASYMM,
                                TestOperandType::TENSOR_FLOAT16},
         .supportedRanks = {2, 3, 4},

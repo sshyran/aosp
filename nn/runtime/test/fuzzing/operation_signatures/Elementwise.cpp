@@ -21,7 +21,7 @@ namespace nn {
 namespace fuzzing_test {
 
 #define DEFINE_ELEMENTWISE_SIGNATURE(op, ver, ...)                              \
-    DEFINE_OPERATION_SIGNATURE(op##_##ver){.opType = ANEURALNETWORKS_##op,      \
+    DEFINE_OPERATION_SIGNATURE(op##_##ver){.opType = TestOperationType::op,     \
                                            .supportedDataTypes = {__VA_ARGS__}, \
                                            .supportedRanks = {1, 2, 3, 4},      \
                                            .version = HalVersion::ver,          \
@@ -44,7 +44,7 @@ DEFINE_ELEMENTWISE_SIGNATURE(RELU1, V1_2, TestOperandType::TENSOR_FLOAT16);
 DEFINE_ELEMENTWISE_SIGNATURE(RELU6, V1_2, TestOperandType::TENSOR_FLOAT16);
 
 #define DEFINE_ELEMENTWISE_SIGNATURE_WITH_RANK5(op, ver, ...)                   \
-    DEFINE_OPERATION_SIGNATURE(op##_##ver){.opType = ANEURALNETWORKS_##op,      \
+    DEFINE_OPERATION_SIGNATURE(op##_##ver){.opType = TestOperationType::op,     \
                                            .supportedDataTypes = {__VA_ARGS__}, \
                                            .supportedRanks = {1, 2, 3, 4, 5},   \
                                            .version = HalVersion::ver,          \
@@ -72,7 +72,7 @@ static void elementwiseOpWithDisconnectedOutput(TestOperandType type, uint32_t r
 }
 
 #define DEFINE_ELEMENTWISE_SIGNATURE_WITH_DISCONNECTED_OUTPUT(op, ver, ...)     \
-    DEFINE_OPERATION_SIGNATURE(op##_##ver){.opType = ANEURALNETWORKS_##op,      \
+    DEFINE_OPERATION_SIGNATURE(op##_##ver){.opType = TestOperationType::op,     \
                                            .supportedDataTypes = {__VA_ARGS__}, \
                                            .supportedRanks = {1, 2, 3, 4, 5},   \
                                            .version = HalVersion::ver,          \
@@ -89,7 +89,7 @@ DEFINE_ELEMENTWISE_SIGNATURE_WITH_DISCONNECTED_OUTPUT(SQRT, V1_2, TestOperandTyp
 
 // Quantized operations with special output quantization parameters.
 #define DEFINE_ELEMENTWISE_WITH_QUANT_OUTPUT_SIGNATURE(op, ver, s, z, ...)      \
-    DEFINE_OPERATION_SIGNATURE(op##_##ver){.opType = ANEURALNETWORKS_##op,      \
+    DEFINE_OPERATION_SIGNATURE(op##_##ver){.opType = TestOperationType::op,     \
                                            .supportedDataTypes = {__VA_ARGS__}, \
                                            .supportedRanks = {1, 2, 3, 4},      \
                                            .version = HalVersion::ver,          \
@@ -107,7 +107,7 @@ DEFINE_ELEMENTWISE_WITH_QUANT_OUTPUT_SIGNATURE(TANH, V1_2, /*scale=*/1.f / 128, 
 // Operations with output data type different from input.
 #define DEFINE_ELEMENTWISE_WITH_TYPED_OUTPUT_SIGNATURE(op, ver, outType, ...) \
     DEFINE_OPERATION_SIGNATURE(op##_##outType##_##ver){                       \
-            .opType = ANEURALNETWORKS_##op,                                   \
+            .opType = TestOperationType::op,                                  \
             .supportedDataTypes = {__VA_ARGS__},                              \
             .supportedRanks = {1, 2, 3, 4},                                   \
             .version = HalVersion::ver,                                       \
@@ -131,7 +131,7 @@ DEFINE_ELEMENTWISE_WITH_TYPED_OUTPUT_SIGNATURE(QUANTIZE, V1_2, /*outType=*/TENSO
 
 #define DEFINE_CAST_SIGNATURE(ver, outType, ...)                 \
     DEFINE_OPERATION_SIGNATURE(CAST_##outType##_##ver){          \
-            .opType = ANEURALNETWORKS_CAST,                      \
+            .opType = TestOperationType::CAST,                   \
             .supportedDataTypes = {__VA_ARGS__},                 \
             .supportedRanks = {1, 2, 3, 4, 5},                   \
             .version = HalVersion::ver,                          \
