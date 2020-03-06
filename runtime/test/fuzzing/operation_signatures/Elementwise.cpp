@@ -42,6 +42,8 @@ DEFINE_ELEMENTWISE_SIGNATURE(LOGISTIC, V1_2, TestOperandType::TENSOR_FLOAT16);
 DEFINE_ELEMENTWISE_SIGNATURE(RELU, V1_2, TestOperandType::TENSOR_FLOAT16);
 DEFINE_ELEMENTWISE_SIGNATURE(RELU1, V1_2, TestOperandType::TENSOR_FLOAT16);
 DEFINE_ELEMENTWISE_SIGNATURE(RELU6, V1_2, TestOperandType::TENSOR_FLOAT16);
+DEFINE_ELEMENTWISE_SIGNATURE(HARD_SWISH, V1_3, TestOperandType::TENSOR_FLOAT32,
+                             TestOperandType::TENSOR_FLOAT16, TestOperandType::TENSOR_QUANT8_ASYMM);
 
 #define DEFINE_ELEMENTWISE_SIGNATURE_WITH_RANK5(op, ver, ...)                   \
     DEFINE_OPERATION_SIGNATURE(op##_##ver){.opType = TestOperationType::op,     \
@@ -154,6 +156,15 @@ DEFINE_CAST_SIGNATURE(V1_2, /*outType=*/TENSOR_QUANT8_ASYMM, TestOperandType::TE
 DEFINE_CAST_SIGNATURE(V1_2, /*outType=*/TENSOR_INT32, TestOperandType::TENSOR_FLOAT32,
                       TestOperandType::TENSOR_FLOAT16, TestOperandType::TENSOR_QUANT8_ASYMM,
                       TestOperandType::TENSOR_INT32);
+
+DEFINE_OPERATION_SIGNATURE(ELU_V1_3){
+        .opType = TestOperationType::ELU,
+        .supportedDataTypes = {TestOperandType::TENSOR_FLOAT32, TestOperandType::TENSOR_FLOAT16},
+        .supportedRanks = {1, 2, 3, 4, 5},
+        .version = TestHalVersion::V1_3,
+        .inputs = {INPUT_DEFAULT, PARAMETER_FLOAT_RANGE(0.0f, 10.0f)},
+        .outputs = {OUTPUT_DEFAULT},
+        .constructor = sameDimensionOpConstructor};
 
 }  // namespace fuzzing_test
 }  // namespace nn
