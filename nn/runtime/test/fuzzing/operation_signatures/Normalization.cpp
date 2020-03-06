@@ -20,7 +20,7 @@ namespace android {
 namespace nn {
 namespace fuzzing_test {
 
-static void softmaxConstructor(Type dataType, uint32_t rank, RandomOperation* op) {
+static void softmaxConstructor(TestOperandType dataType, uint32_t rank, RandomOperation* op) {
     sameDimensionOpConstructor(dataType, rank, op);
     // Generate value for "axis" parameter.
     if (op->inputs.size() > 2) {
@@ -30,7 +30,8 @@ static void softmaxConstructor(Type dataType, uint32_t rank, RandomOperation* op
 
 DEFINE_OPERATION_SIGNATURE(SOFTMAX_V1_0){
         .opType = ANEURALNETWORKS_SOFTMAX,
-        .supportedDataTypes = {Type::TENSOR_FLOAT32, Type::TENSOR_QUANT8_ASYMM},
+        .supportedDataTypes = {TestOperandType::TENSOR_FLOAT32,
+                               TestOperandType::TENSOR_QUANT8_ASYMM},
         .supportedRanks = {2, 4},
         .version = HalVersion::V1_0,
         .inputs = {INPUT_DEFAULT, PARAMETER_FLOAT_RANGE(0.1, 10.0)},
@@ -39,7 +40,8 @@ DEFINE_OPERATION_SIGNATURE(SOFTMAX_V1_0){
 
 DEFINE_OPERATION_SIGNATURE(SOFTMAX_V1_2){
         .opType = ANEURALNETWORKS_SOFTMAX,
-        .supportedDataTypes = {Type::TENSOR_FLOAT32, Type::TENSOR_QUANT8_ASYMM},
+        .supportedDataTypes = {TestOperandType::TENSOR_FLOAT32,
+                               TestOperandType::TENSOR_QUANT8_ASYMM},
         .supportedRanks = {1, 3},
         .version = HalVersion::V1_2,
         .inputs = {INPUT_DEFAULT, PARAMETER_FLOAT_RANGE(0.1, 10.0)},
@@ -48,7 +50,7 @@ DEFINE_OPERATION_SIGNATURE(SOFTMAX_V1_2){
 
 DEFINE_OPERATION_SIGNATURE(SOFTMAX_float16_V1_2){
         .opType = ANEURALNETWORKS_SOFTMAX,
-        .supportedDataTypes = {Type::TENSOR_FLOAT16},
+        .supportedDataTypes = {TestOperandType::TENSOR_FLOAT16},
         .supportedRanks = {1, 2, 3, 4},
         .version = HalVersion::V1_2,
         .inputs = {INPUT_DEFAULT, PARAMETER_FLOAT_RANGE(0.1, 10.0)},
@@ -57,15 +59,17 @@ DEFINE_OPERATION_SIGNATURE(SOFTMAX_float16_V1_2){
 
 DEFINE_OPERATION_SIGNATURE(SOFTMAX_axis_V1_2){
         .opType = ANEURALNETWORKS_SOFTMAX,
-        .supportedDataTypes = {Type::TENSOR_FLOAT32, Type::TENSOR_QUANT8_ASYMM,
-                               Type::TENSOR_FLOAT16},
+        .supportedDataTypes = {TestOperandType::TENSOR_FLOAT32,
+                               TestOperandType::TENSOR_QUANT8_ASYMM,
+                               TestOperandType::TENSOR_FLOAT16},
         .supportedRanks = {1, 2, 3, 4},
         .version = HalVersion::V1_2,
-        .inputs = {INPUT_DEFAULT, PARAMETER_FLOAT_RANGE(0.1, 10.0), PARAMETER_NONE(Type::INT32)},
+        .inputs = {INPUT_DEFAULT, PARAMETER_FLOAT_RANGE(0.1, 10.0),
+                   PARAMETER_NONE(TestOperandType::INT32)},
         .outputs = {OUTPUT_QUANT(1.f / 256, 0)},
         .constructor = softmaxConstructor};
 
-static void l2normConstructor(Type dataType, uint32_t rank, RandomOperation* op) {
+static void l2normConstructor(TestOperandType dataType, uint32_t rank, RandomOperation* op) {
     sameDimensionOpConstructor(dataType, rank, op);
     // Generate value for "axis" parameter.
     if (op->inputs.size() > 1) {
@@ -76,25 +80,28 @@ static void l2normConstructor(Type dataType, uint32_t rank, RandomOperation* op)
     op->outputs[0]->doNotConnect = true;
 }
 
-DEFINE_OPERATION_SIGNATURE(L2_NORMALIZATION_V1_0){.opType = ANEURALNETWORKS_L2_NORMALIZATION,
-                                                  .supportedDataTypes = {Type::TENSOR_FLOAT32},
-                                                  .supportedRanks = {4},
-                                                  .version = HalVersion::V1_0,
-                                                  .inputs = {INPUT_DEFAULT},
-                                                  .outputs = {OUTPUT_DEFAULT},
-                                                  .constructor = l2normConstructor};
+DEFINE_OPERATION_SIGNATURE(L2_NORMALIZATION_V1_0){
+        .opType = ANEURALNETWORKS_L2_NORMALIZATION,
+        .supportedDataTypes = {TestOperandType::TENSOR_FLOAT32},
+        .supportedRanks = {4},
+        .version = HalVersion::V1_0,
+        .inputs = {INPUT_DEFAULT},
+        .outputs = {OUTPUT_DEFAULT},
+        .constructor = l2normConstructor};
 
-DEFINE_OPERATION_SIGNATURE(L2_NORMALIZATION_V1_2){.opType = ANEURALNETWORKS_L2_NORMALIZATION,
-                                                  .supportedDataTypes = {Type::TENSOR_FLOAT32},
-                                                  .supportedRanks = {1, 2, 3},
-                                                  .version = HalVersion::V1_2,
-                                                  .inputs = {INPUT_DEFAULT},
-                                                  .outputs = {OUTPUT_DEFAULT},
-                                                  .constructor = l2normConstructor};
+DEFINE_OPERATION_SIGNATURE(L2_NORMALIZATION_V1_2){
+        .opType = ANEURALNETWORKS_L2_NORMALIZATION,
+        .supportedDataTypes = {TestOperandType::TENSOR_FLOAT32},
+        .supportedRanks = {1, 2, 3},
+        .version = HalVersion::V1_2,
+        .inputs = {INPUT_DEFAULT},
+        .outputs = {OUTPUT_DEFAULT},
+        .constructor = l2normConstructor};
 
 DEFINE_OPERATION_SIGNATURE(L2_NORMALIZATION_type_V1_2){
         .opType = ANEURALNETWORKS_L2_NORMALIZATION,
-        .supportedDataTypes = {Type::TENSOR_FLOAT16, Type::TENSOR_QUANT8_ASYMM},
+        .supportedDataTypes = {TestOperandType::TENSOR_FLOAT16,
+                               TestOperandType::TENSOR_QUANT8_ASYMM},
         .supportedRanks = {1, 2, 3, 4},
         .version = HalVersion::V1_2,
         .inputs = {INPUT_DEFAULT},
@@ -103,15 +110,16 @@ DEFINE_OPERATION_SIGNATURE(L2_NORMALIZATION_type_V1_2){
 
 DEFINE_OPERATION_SIGNATURE(L2_NORMALIZATION_axis_V1_2){
         .opType = ANEURALNETWORKS_L2_NORMALIZATION,
-        .supportedDataTypes = {Type::TENSOR_FLOAT32, Type::TENSOR_FLOAT16,
-                               Type::TENSOR_QUANT8_ASYMM},
+        .supportedDataTypes = {TestOperandType::TENSOR_FLOAT32, TestOperandType::TENSOR_FLOAT16,
+                               TestOperandType::TENSOR_QUANT8_ASYMM},
         .supportedRanks = {1, 2, 3, 4},
         .version = HalVersion::V1_2,
-        .inputs = {INPUT_DEFAULT, PARAMETER_NONE(Type::INT32)},
+        .inputs = {INPUT_DEFAULT, PARAMETER_NONE(TestOperandType::INT32)},
         .outputs = {OUTPUT_QUANT(1.f / 128, 128)},
         .constructor = l2normConstructor};
 
-static void localResponseNormConstructor(Type dataType, uint32_t rank, RandomOperation* op) {
+static void localResponseNormConstructor(TestOperandType dataType, uint32_t rank,
+                                         RandomOperation* op) {
     sameDimensionOpConstructor(dataType, rank, op);
     // Generate value for "axis" parameter.
     if (op->inputs.size() > 5) {
@@ -121,13 +129,13 @@ static void localResponseNormConstructor(Type dataType, uint32_t rank, RandomOpe
 
 DEFINE_OPERATION_SIGNATURE(LOCAL_RESPONSE_NORMALIZATION_V1_0){
         .opType = ANEURALNETWORKS_LOCAL_RESPONSE_NORMALIZATION,
-        .supportedDataTypes = {Type::TENSOR_FLOAT32},
+        .supportedDataTypes = {TestOperandType::TENSOR_FLOAT32},
         .supportedRanks = {4},
         .version = HalVersion::V1_0,
         .inputs =
                 {
                         INPUT_DEFAULT,
-                        PARAMETER_RANGE(Type::INT32, 1, 10),
+                        PARAMETER_RANGE(TestOperandType::INT32, 1, 10),
                         PARAMETER_FLOAT_RANGE(0.0, 10.0),
                         PARAMETER_FLOAT_RANGE(0.1, 10.0),
                         PARAMETER_FLOAT_RANGE(0.1, 1.0),
@@ -137,13 +145,13 @@ DEFINE_OPERATION_SIGNATURE(LOCAL_RESPONSE_NORMALIZATION_V1_0){
 
 DEFINE_OPERATION_SIGNATURE(LOCAL_RESPONSE_NORMALIZATION_V1_2){
         .opType = ANEURALNETWORKS_LOCAL_RESPONSE_NORMALIZATION,
-        .supportedDataTypes = {Type::TENSOR_FLOAT32},
+        .supportedDataTypes = {TestOperandType::TENSOR_FLOAT32},
         .supportedRanks = {1, 2, 3},
         .version = HalVersion::V1_2,
         .inputs =
                 {
                         INPUT_DEFAULT,
-                        PARAMETER_RANGE(Type::INT32, 1, 10),
+                        PARAMETER_RANGE(TestOperandType::INT32, 1, 10),
                         PARAMETER_FLOAT_RANGE(0.0, 10.0),
                         PARAMETER_FLOAT_RANGE(0.1, 10.0),
                         PARAMETER_FLOAT_RANGE(0.1, 1.0),
@@ -153,13 +161,13 @@ DEFINE_OPERATION_SIGNATURE(LOCAL_RESPONSE_NORMALIZATION_V1_2){
 
 DEFINE_OPERATION_SIGNATURE(LOCAL_RESPONSE_NORMALIZATION_float16_V1_2){
         .opType = ANEURALNETWORKS_LOCAL_RESPONSE_NORMALIZATION,
-        .supportedDataTypes = {Type::TENSOR_FLOAT16},
+        .supportedDataTypes = {TestOperandType::TENSOR_FLOAT16},
         .supportedRanks = {1, 2, 3, 4},
         .version = HalVersion::V1_2,
         .inputs =
                 {
                         INPUT_DEFAULT,
-                        PARAMETER_RANGE(Type::INT32, 1, 10),
+                        PARAMETER_RANGE(TestOperandType::INT32, 1, 10),
                         PARAMETER_FLOAT_RANGE(0.0, 10.0),
                         PARAMETER_FLOAT_RANGE(0.1, 10.0),
                         PARAMETER_FLOAT_RANGE(0.1, 1.0),
@@ -169,24 +177,24 @@ DEFINE_OPERATION_SIGNATURE(LOCAL_RESPONSE_NORMALIZATION_float16_V1_2){
 
 DEFINE_OPERATION_SIGNATURE(LOCAL_RESPONSE_NORMALIZATION_axis_V1_2){
         .opType = ANEURALNETWORKS_LOCAL_RESPONSE_NORMALIZATION,
-        .supportedDataTypes = {Type::TENSOR_FLOAT32, Type::TENSOR_FLOAT16},
+        .supportedDataTypes = {TestOperandType::TENSOR_FLOAT32, TestOperandType::TENSOR_FLOAT16},
         .supportedRanks = {1, 2, 3, 4},
         .version = HalVersion::V1_2,
         .inputs =
                 {
                         INPUT_DEFAULT,
-                        PARAMETER_RANGE(Type::INT32, 1, 10),
+                        PARAMETER_RANGE(TestOperandType::INT32, 1, 10),
                         PARAMETER_FLOAT_RANGE(0.0, 10.0),
                         PARAMETER_FLOAT_RANGE(0.1, 10.0),
                         PARAMETER_FLOAT_RANGE(0.1, 1.0),
-                        PARAMETER_NONE(Type::INT32),
+                        PARAMETER_NONE(TestOperandType::INT32),
                 },
         .outputs = {OUTPUT_DEFAULT},
         .constructor = localResponseNormConstructor};
 
 DEFINE_OPERATION_SIGNATURE(INSTANCE_NORMALIZATION_V1_2){
         .opType = ANEURALNETWORKS_INSTANCE_NORMALIZATION,
-        .supportedDataTypes = {Type::TENSOR_FLOAT32, Type::TENSOR_FLOAT16},
+        .supportedDataTypes = {TestOperandType::TENSOR_FLOAT32, TestOperandType::TENSOR_FLOAT16},
         .supportedRanks = {4},
         .version = HalVersion::V1_2,
         .inputs =
@@ -195,17 +203,18 @@ DEFINE_OPERATION_SIGNATURE(INSTANCE_NORMALIZATION_V1_2){
                         PARAMETER_FLOAT_RANGE(0.1, 10.0),
                         PARAMETER_FLOAT_RANGE(-10.0, 10.0),
                         PARAMETER_FLOAT_RANGE(0.01, 1.0),
-                        PARAMETER_CHOICE(Type::BOOL, true, false),
+                        PARAMETER_CHOICE(TestOperandType::BOOL, true, false),
                 },
         .outputs = {OUTPUT_DEFAULT},
         .constructor = sameShapeOpConstructor};
 
 DEFINE_OPERATION_SIGNATURE(LOG_SOFTMAX_TENSOR_FLOAT32_V1_2){
         .opType = ANEURALNETWORKS_LOG_SOFTMAX,
-        .supportedDataTypes = {Type::TENSOR_FLOAT32, Type::TENSOR_FLOAT16},
+        .supportedDataTypes = {TestOperandType::TENSOR_FLOAT32, TestOperandType::TENSOR_FLOAT16},
         .supportedRanks = {1, 2, 3, 4},
         .version = HalVersion::V1_2,
-        .inputs = {INPUT_DEFAULT, PARAMETER_FLOAT_RANGE(0.1, 10.0), PARAMETER_NONE(Type::INT32)},
+        .inputs = {INPUT_DEFAULT, PARAMETER_FLOAT_RANGE(0.1, 10.0),
+                   PARAMETER_NONE(TestOperandType::INT32)},
         .outputs = {OUTPUT_DEFAULT},
         .constructor = softmaxConstructor};
 
