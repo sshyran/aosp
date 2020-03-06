@@ -600,7 +600,11 @@ static std::tuple<int, int, sp<hal::IFencedExecutionCallback>> startComputeFence
         std::shared_ptr<ExecutionBurstController> burstController;
         int n = plan.next(controller, &executor, &burstController);
         if (n != ANEURALNETWORKS_NO_ERROR) {
-            if (allowFallback) break;
+            // During the interpreted execution of control flow, a loop timeout
+            // might occur in ExecutionPlan::next().
+            bool missedDeadline = n == ANEURALNETWORKS_MISSED_DEADLINE_TRANSIENT ||
+                                  n == ANEURALNETWORKS_MISSED_DEADLINE_PERSISTENT;
+            if (allowFallback && !missedDeadline) break;
             // Return -1 for the sync fence fd, and nullptr for the callback.
             return std::make_tuple(n, -1, nullptr);
         }
