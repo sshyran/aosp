@@ -65,7 +65,7 @@ static void reduceOpConstructor(TestOperandType, uint32_t rank, RandomOperation*
             .opType = TestOperationType::MEAN,                                       \
             .supportedDataTypes = {__VA_ARGS__},                                     \
             .supportedRanks = {1, 2, 3, 4},                                          \
-            .version = HalVersion::ver,                                              \
+            .version = TestHalVersion::ver,                                          \
             .inputs = {INPUT_DEFAULT, PARAMETER_NONE(TestOperandType::TENSOR_INT32), \
                        PARAMETER_CHOICE(TestOperandType::INT32, -100, 100)},         \
             .outputs = {OUTPUT_DEFAULT},                                             \
@@ -79,7 +79,7 @@ DEFINE_MEAN_SIGNATURE(V1_2, TestOperandType::TENSOR_FLOAT16);
             .opType = TestOperationType::op,                                         \
             .supportedDataTypes = {__VA_ARGS__},                                     \
             .supportedRanks = {1, 2, 3, 4},                                          \
-            .version = HalVersion::ver,                                              \
+            .version = TestHalVersion::ver,                                          \
             .inputs = {INPUT_DEFAULT, PARAMETER_NONE(TestOperandType::TENSOR_INT32), \
                        PARAMETER_CHOICE(TestOperandType::BOOL, true, false)},        \
             .outputs = {OUTPUT_DEFAULT},                                             \
@@ -116,7 +116,7 @@ static void singleAxisReduceOpConstructor(TestOperandType, uint32_t rank, Random
                                    TestOperandType::TENSOR_FLOAT16, TestOperandType::TENSOR_INT32, \
                                    TestOperandType::TENSOR_QUANT8_ASYMM},                          \
             .supportedRanks = {1, 2, 3, 4, 5},                                                     \
-            .version = HalVersion::ver,                                                            \
+            .version = TestHalVersion::ver,                                                        \
             .inputs = {INPUT_DEFAULT, PARAMETER_NONE(TestOperandType::INT32)},                     \
             .outputs = {OUTPUT_TYPED(TestOperandType::TENSOR_INT32)},                              \
             .constructor = singleAxisReduceOpConstructor};

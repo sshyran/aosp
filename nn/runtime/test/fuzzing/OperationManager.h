@@ -46,24 +46,22 @@ struct OperandSignature {
     std::function<void(RandomOperand*)> finalizer = nullptr;
 };
 
-enum class HalVersion : int32_t { V1_0 = 0, V1_1 = 1, V1_2 = 2 };
-
 // A filter applied to OperationSignatures. An OperationSignature is filtered out if the opType, all
 // of supportedDataTypes, all of supportedRanks, or the version does not match with any entry in the
 // corresponding vector in the filter. Use empty vector in the filter for "no filter".
 //
 // E.g.
 // - To get all 1.0 ADD operation signatures
-//       {.opcodes = {TestOperationType::ADD}, .versions = {HalVersion::V1_0}}
+//       {.opcodes = {TestOperationType::ADD}, .versions = {TestHalVersion::V1_0}}
 //
 // - To get all 1.0 and 1.1 operations with rank 2 or 4
-//       {.ranks = {2, 4}, .versions = {HalVersion::V1_0, HalVersion::V1_1}}
+//       {.ranks = {2, 4}, .versions = {TestHalVersion::V1_0, TestHalVersion::V1_1}}
 //
 struct OperationFilter {
     std::vector<test_helper::TestOperationType> opcodes;
     std::vector<test_helper::TestOperandType> dataTypes;
     std::vector<uint32_t> ranks;
-    std::vector<HalVersion> versions;
+    std::vector<test_helper::TestHalVersion> versions;
 };
 
 struct OperationSignature {
@@ -73,7 +71,7 @@ struct OperationSignature {
     test_helper::TestOperationType opType;
     std::vector<test_helper::TestOperandType> supportedDataTypes;
     std::vector<uint32_t> supportedRanks;
-    HalVersion version;
+    test_helper::TestHalVersion version;
 
     // OperandSignatures for inputs and outputs.
     std::vector<OperandSignature> inputs;
