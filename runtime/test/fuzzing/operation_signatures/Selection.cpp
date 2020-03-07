@@ -44,16 +44,22 @@ static void embeddingLookupFinalizer(RandomOperation* op) {
     }
 }
 
-DEFINE_OPERATION_SIGNATURE(EMBEDDING_LOOKUP_V1_0){
-        .opType = TestOperationType::EMBEDDING_LOOKUP,
-        .supportedDataTypes = {TestOperandType::TENSOR_FLOAT32, TestOperandType::TENSOR_INT32,
-                               TestOperandType::TENSOR_QUANT8_ASYMM},
-        .supportedRanks = {2, 3, 4},
-        .version = TestHalVersion::V1_0,
-        .inputs = {PARAMETER_NONE(TestOperandType::TENSOR_INT32), INPUT_DEFAULT},
-        .outputs = {OUTPUT_DEFAULT},
-        .constructor = embeddingLookupConstructor,
-        .finalizer = embeddingLookupFinalizer};
+#define DEFINE_EMBEDDING_LOOKUP_SIGNATURE(ver, ...)                                   \
+    DEFINE_OPERATION_SIGNATURE(EMBEDDING_LOOKUP_##ver){                               \
+            .opType = TestOperationType::EMBEDDING_LOOKUP,                            \
+            .supportedDataTypes = {__VA_ARGS__},                                      \
+            .supportedRanks = {2, 3, 4},                                              \
+            .version = TestHalVersion::ver,                                           \
+            .inputs = {PARAMETER_NONE(TestOperandType::TENSOR_INT32), INPUT_DEFAULT}, \
+            .outputs = {OUTPUT_DEFAULT},                                              \
+            .constructor = embeddingLookupConstructor,                                \
+            .finalizer = embeddingLookupFinalizer};
+
+DEFINE_EMBEDDING_LOOKUP_SIGNATURE(V1_0, TestOperandType::TENSOR_FLOAT32);
+DEFINE_EMBEDDING_LOOKUP_SIGNATURE(V1_2, TestOperandType::TENSOR_INT32,
+                                  TestOperandType::TENSOR_QUANT8_ASYMM);
+DEFINE_EMBEDDING_LOOKUP_SIGNATURE(V1_3, TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
+                                  TestOperandType::TENSOR_FLOAT16);
 
 static void hashtableLookupConstructor(TestOperandType, uint32_t rank, RandomOperation* op) {
     op->inputs[0]->dimensions = {RandomVariableType::FREE};
@@ -140,17 +146,21 @@ static void gatherFinalizer(RandomOperation* op) {
     }
 }
 
-DEFINE_OPERATION_SIGNATURE(GATHER_V1_2){
-        .opType = TestOperationType::GATHER,
-        .supportedDataTypes = {TestOperandType::TENSOR_FLOAT32, TestOperandType::TENSOR_FLOAT16,
-                               TestOperandType::TENSOR_INT32, TestOperandType::TENSOR_QUANT8_ASYMM},
-        .supportedRanks = {1, 2, 3, 4, 5},
-        .version = TestHalVersion::V1_2,
-        .inputs = {INPUT_DEFAULT, PARAMETER_NONE(TestOperandType::INT32),
-                   PARAMETER_NONE(TestOperandType::TENSOR_INT32)},
-        .outputs = {OUTPUT_DEFAULT},
-        .constructor = gatherConstructor,
-        .finalizer = gatherFinalizer};
+#define DEFINE_GATHER_SIGNATURE(ver, ...)                                     \
+    DEFINE_OPERATION_SIGNATURE(GATHER_##ver){                                 \
+            .opType = TestOperationType::GATHER,                              \
+            .supportedDataTypes = {__VA_ARGS__},                              \
+            .supportedRanks = {1, 2, 3, 4, 5},                                \
+            .version = TestHalVersion::ver,                                   \
+            .inputs = {INPUT_DEFAULT, PARAMETER_NONE(TestOperandType::INT32), \
+                       PARAMETER_NONE(TestOperandType::TENSOR_INT32)},        \
+            .outputs = {OUTPUT_DEFAULT},                                      \
+            .constructor = gatherConstructor,                                 \
+            .finalizer = gatherFinalizer};
+
+DEFINE_GATHER_SIGNATURE(V1_2, TestOperandType::TENSOR_FLOAT32, TestOperandType::TENSOR_FLOAT16,
+                        TestOperandType::TENSOR_INT32, TestOperandType::TENSOR_QUANT8_ASYMM);
+DEFINE_GATHER_SIGNATURE(V1_3, TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED);
 
 static void selectConstructor(TestOperandType, uint32_t rank, RandomOperation* op) {
     setFreeDimensions(op->inputs[0], rank);
@@ -161,15 +171,19 @@ static void selectConstructor(TestOperandType, uint32_t rank, RandomOperation* o
     setSameQuantization(op->outputs[0], op->inputs[1]);
 }
 
-DEFINE_OPERATION_SIGNATURE(SELECT_V1_2){
-        .opType = TestOperationType::SELECT,
-        .supportedDataTypes = {TestOperandType::TENSOR_FLOAT32, TestOperandType::TENSOR_FLOAT16,
-                               TestOperandType::TENSOR_INT32, TestOperandType::TENSOR_QUANT8_ASYMM},
-        .supportedRanks = {1, 2, 3, 4},
-        .version = TestHalVersion::V1_2,
-        .inputs = {INPUT_TYPED(TestOperandType::TENSOR_BOOL8), INPUT_DEFAULT, INPUT_DEFAULT},
-        .outputs = {OUTPUT_DEFAULT},
-        .constructor = selectConstructor};
+#define DEFINE_SELECT_SIGNATURE(ver, ...)                                                         \
+    DEFINE_OPERATION_SIGNATURE(SELECT_##ver){                                                     \
+            .opType = TestOperationType::SELECT,                                                  \
+            .supportedDataTypes = {__VA_ARGS__},                                                  \
+            .supportedRanks = {1, 2, 3, 4},                                                       \
+            .version = TestHalVersion::ver,                                                       \
+            .inputs = {INPUT_TYPED(TestOperandType::TENSOR_BOOL8), INPUT_DEFAULT, INPUT_DEFAULT}, \
+            .outputs = {OUTPUT_DEFAULT},                                                          \
+            .constructor = selectConstructor};
+
+DEFINE_SELECT_SIGNATURE(V1_2, TestOperandType::TENSOR_FLOAT32, TestOperandType::TENSOR_FLOAT16,
+                        TestOperandType::TENSOR_INT32, TestOperandType::TENSOR_QUANT8_ASYMM);
+DEFINE_SELECT_SIGNATURE(V1_3, TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED);
 
 static void topKConstructor(TestOperandType, uint32_t rank, RandomOperation* op) {
     setFreeDimensions(op->inputs[0], rank);
@@ -194,15 +208,19 @@ static void topKConstructor(TestOperandType, uint32_t rank, RandomOperation* op)
     op->outputs[1]->doNotConnect = true;
 }
 
-DEFINE_OPERATION_SIGNATURE(TOPK_V2_V1_2){
-        .opType = TestOperationType::TOPK_V2,
-        .supportedDataTypes = {TestOperandType::TENSOR_FLOAT32, TestOperandType::TENSOR_FLOAT16,
-                               TestOperandType::TENSOR_INT32, TestOperandType::TENSOR_QUANT8_ASYMM},
-        .supportedRanks = {1, 2, 3, 4},
-        .version = TestHalVersion::V1_2,
-        .inputs = {INPUT_DEFAULT, RANDOM_INT_FREE},
-        .outputs = {OUTPUT_DEFAULT, OUTPUT_TYPED(TestOperandType::TENSOR_INT32)},
-        .constructor = topKConstructor};
+#define DEFINE_TOPK_SIGNATURE(ver, ...)                                               \
+    DEFINE_OPERATION_SIGNATURE(TOPK_V2_##ver){                                        \
+            .opType = TestOperationType::TOPK_V2,                                     \
+            .supportedDataTypes = {__VA_ARGS__},                                      \
+            .supportedRanks = {1, 2, 3, 4},                                           \
+            .version = TestHalVersion::ver,                                           \
+            .inputs = {INPUT_DEFAULT, RANDOM_INT_FREE},                               \
+            .outputs = {OUTPUT_DEFAULT, OUTPUT_TYPED(TestOperandType::TENSOR_INT32)}, \
+            .constructor = topKConstructor};
+
+DEFINE_TOPK_SIGNATURE(V1_2, TestOperandType::TENSOR_FLOAT32, TestOperandType::TENSOR_FLOAT16,
+                      TestOperandType::TENSOR_INT32, TestOperandType::TENSOR_QUANT8_ASYMM);
+DEFINE_TOPK_SIGNATURE(V1_3, TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED);
 
 static void sliceConstructor(TestOperandType, uint32_t rank, RandomOperation* op) {
     op->inputs[1]->dimensions = {rank};
@@ -229,17 +247,21 @@ static void sliceFinalizer(RandomOperation* op) {
     }
 }
 
-DEFINE_OPERATION_SIGNATURE(SLICE_V1_2){
-        .opType = TestOperationType::SLICE,
-        .supportedDataTypes = {TestOperandType::TENSOR_FLOAT32, TestOperandType::TENSOR_FLOAT16,
-                               TestOperandType::TENSOR_INT32, TestOperandType::TENSOR_QUANT8_ASYMM},
-        .supportedRanks = {1, 2, 3, 4},
-        .version = TestHalVersion::V1_2,
-        .inputs = {INPUT_DEFAULT, PARAMETER_NONE(TestOperandType::TENSOR_INT32),
-                   PARAMETER_NONE(TestOperandType::TENSOR_INT32)},
-        .outputs = {OUTPUT_DEFAULT},
-        .constructor = sliceConstructor,
-        .finalizer = sliceFinalizer};
+#define DEFINE_SLICE_SIGNATURE(ver, ...)                                             \
+    DEFINE_OPERATION_SIGNATURE(SLICE_##ver){                                         \
+            .opType = TestOperationType::SLICE,                                      \
+            .supportedDataTypes = {__VA_ARGS__},                                     \
+            .supportedRanks = {1, 2, 3, 4},                                          \
+            .version = TestHalVersion::ver,                                          \
+            .inputs = {INPUT_DEFAULT, PARAMETER_NONE(TestOperandType::TENSOR_INT32), \
+                       PARAMETER_NONE(TestOperandType::TENSOR_INT32)},               \
+            .outputs = {OUTPUT_DEFAULT},                                             \
+            .constructor = sliceConstructor,                                         \
+            .finalizer = sliceFinalizer};
+
+DEFINE_SLICE_SIGNATURE(V1_2, TestOperandType::TENSOR_FLOAT32, TestOperandType::TENSOR_FLOAT16,
+                       TestOperandType::TENSOR_INT32, TestOperandType::TENSOR_QUANT8_ASYMM);
+DEFINE_SLICE_SIGNATURE(V1_3, TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED);
 
 inline int32_t convertToBitMask(const std::vector<bool>& flags) {
     int32_t mask = 0, bit = 1;
@@ -341,6 +363,20 @@ DEFINE_OPERATION_SIGNATURE(STRIDED_SLICE_V1_2){
         .supportedDataTypes = {TestOperandType::TENSOR_FLOAT16},
         .supportedRanks = {1, 2, 3, 4},
         .version = TestHalVersion::V1_2,
+        .inputs = {INPUT_DEFAULT, PARAMETER_NONE(TestOperandType::TENSOR_INT32),
+                   PARAMETER_NONE(TestOperandType::TENSOR_INT32),
+                   PARAMETER_NONE(TestOperandType::TENSOR_INT32),
+                   PARAMETER_NONE(TestOperandType::INT32), PARAMETER_NONE(TestOperandType::INT32),
+                   PARAMETER_NONE(TestOperandType::INT32)},
+        .outputs = {OUTPUT_DEFAULT},
+        .constructor = stridedSliceConstructor,
+        .finalizer = stridedSliceFinalizer};
+
+DEFINE_OPERATION_SIGNATURE(STRIDED_SLICE_V1_3){
+        .opType = TestOperationType::STRIDED_SLICE,
+        .supportedDataTypes = {TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED},
+        .supportedRanks = {1, 2, 3, 4},
+        .version = TestHalVersion::V1_3,
         .inputs = {INPUT_DEFAULT, PARAMETER_NONE(TestOperandType::TENSOR_INT32),
                    PARAMETER_NONE(TestOperandType::TENSOR_INT32),
                    PARAMETER_NONE(TestOperandType::TENSOR_INT32),
