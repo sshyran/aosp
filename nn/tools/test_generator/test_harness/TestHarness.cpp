@@ -26,6 +26,7 @@
 #include <limits>
 #include <map>
 #include <numeric>
+#include <set>
 #include <string>
 #include <vector>
 
@@ -301,6 +302,18 @@ TestModel convertQuant8AsymmOperandsToSigned(const TestModel& testModel) {
     return converted;
 }
 
+bool isQuantizedType(TestOperandType type) {
+    static const std::set<TestOperandType> kQuantizedTypes = {
+            TestOperandType::TENSOR_QUANT8_ASYMM,
+            TestOperandType::TENSOR_QUANT8_SYMM,
+            TestOperandType::TENSOR_QUANT16_ASYMM,
+            TestOperandType::TENSOR_QUANT16_SYMM,
+            TestOperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL,
+            TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
+    };
+    return kQuantizedTypes.count(type) > 0;
+}
+
 namespace {
 
 const char* kOperationTypeNames[] = {
@@ -496,6 +509,7 @@ void SpecDumper::dumpTestBuffer(TestOperandType type, const TestBuffer& buffer) 
             dumpTestBufferToSpecFileHelper<uint8_t>(buffer, mOs);
             break;
         case TestOperandType::TENSOR_QUANT8_SYMM:
+        case TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED:
             dumpTestBufferToSpecFileHelper<int8_t>(buffer, mOs);
             break;
         case TestOperandType::TENSOR_QUANT16_ASYMM:
