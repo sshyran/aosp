@@ -64,6 +64,10 @@ struct CppType<TestOperandType::TENSOR_QUANT8_SYMM> {
     using type = int8_t;
 };
 template <>
+struct CppType<TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED> {
+    using type = int8_t;
+};
+template <>
 struct CppType<TestOperandType::TENSOR_QUANT16_ASYMM> {
     using type = uint16_t;
 };
@@ -123,8 +127,17 @@ inline void uniformFinalizer(RandomOperand* op) {
         case TestOperandType::TENSOR_QUANT8_ASYMM:
             uniform<uint8_t>(0, 255, op);
             break;
+        case TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED:
+            uniform<int8_t>(-128, 127, op);
+            break;
         case TestOperandType::TENSOR_QUANT8_SYMM:
-            uniform<uint8_t>(-128, 127, op);
+            uniform<int8_t>(-128, 127, op);
+            break;
+        case TestOperandType::TENSOR_QUANT16_ASYMM:
+            uniform<uint16_t>(0, 65535, op);
+            break;
+        case TestOperandType::TENSOR_QUANT16_SYMM:
+            uniform<int16_t>(-32768, 32767, op);
             break;
         case TestOperandType::TENSOR_BOOL8:
             uniform<bool8>(true, false, op);
@@ -211,7 +224,7 @@ inline void setFreeDimensions(const std::shared_ptr<RandomOperand>& op, uint32_t
 }
 
 inline void setConvFCScale(bool applyOutputScaleBound, RandomOperation* op) {
-    if (op->inputs[0]->dataType == TestOperandType::TENSOR_QUANT8_ASYMM) {
+    if (isQuantizedType(op->inputs[0]->dataType)) {
         float biasScale = op->inputs[0]->scale * op->inputs[1]->scale;
         op->inputs[2]->scale = biasScale;
         if (applyOutputScaleBound) {
@@ -237,7 +250,16 @@ inline void defaultOperandConstructor(TestOperandType dataType, uint32_t, Random
     if (dataType == TestOperandType::TENSOR_QUANT8_ASYMM) {
         op->scale = getUniform<float>(0.1, 2.0);
         op->zeroPoint = getUniform<int32_t>(0, 255);
+    } else if (dataType == TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
+        op->scale = getUniform<float>(0.1, 2.0);
+        op->zeroPoint = getUniform<int32_t>(-128, 127);
     } else if (dataType == TestOperandType::TENSOR_QUANT8_SYMM) {
+        op->scale = getUniform<float>(0.1, 2.0);
+        op->zeroPoint = 0;
+    } else if (dataType == TestOperandType::TENSOR_QUANT16_ASYMM) {
+        op->scale = getUniform<float>(0.1, 2.0);
+        op->zeroPoint = getUniform<int32_t>(0, 65535);
+    } else if (dataType == TestOperandType::TENSOR_QUANT16_SYMM) {
         op->scale = getUniform<float>(0.1, 2.0);
         op->zeroPoint = 0;
     } else {
@@ -300,17 +322,18 @@ inline void defaultScalarOperandConstructor(TestOperandType dataType, uint32_t, 
 // An INPUT operand with uniformly distributed buffer values. The operand's data type is set to
 // TENSOR_INT32 if the operation's primary data type is TENSOR_QUANT8_ASYMM. Otherwise, it is the
 // same as INPUT_DEFAULT.
-#define INPUT_BIAS                                                               \
-    {                                                                            \
-        .type = RandomOperandType::INPUT,                                        \
-        .constructor =                                                           \
-                [](TestOperandType dataType, uint32_t rank, RandomOperand* op) { \
-                    if (dataType == TestOperandType::TENSOR_QUANT8_ASYMM) {      \
-                        dataType = TestOperandType::TENSOR_INT32;                \
-                    }                                                            \
-                    defaultOperandConstructor(dataType, rank, op);               \
-                },                                                               \
-        .finalizer = uniformFinalizer                                            \
+#define INPUT_BIAS                                                                 \
+    {                                                                              \
+        .type = RandomOperandType::INPUT,                                          \
+        .constructor =                                                             \
+                [](TestOperandType dataType, uint32_t rank, RandomOperand* op) {   \
+                    if (dataType == TestOperandType::TENSOR_QUANT8_ASYMM ||        \
+                        dataType == TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED) { \
+                        dataType = TestOperandType::TENSOR_INT32;                  \
+                    }                                                              \
+                    defaultOperandConstructor(dataType, rank, op);                 \
+                },                                                                 \
+        .finalizer = uniformFinalizer                                              \
     }
 
 // A helper macro for common code block filling operand buffer with random method.
@@ -415,8 +438,7 @@ inline void defaultScalarOperandConstructor(TestOperandType dataType, uint32_t, 
         .type = RandomOperandType::OUTPUT,                                              \
         .constructor = [](TestOperandType dataType, uint32_t rank, RandomOperand* op) { \
             defaultOperandConstructor(dataType, rank, op);                              \
-            if (op->dataType == TestOperandType::TENSOR_QUANT8_ASYMM ||                 \
-                dataType == TestOperandType::TENSOR_QUANT8_SYMM) {                      \
+            if (isQuantizedType(op->dataType)) {                                        \
                 op->scale = (fixedScale);                                               \
                 op->zeroPoint = (fixedZeroPoint);                                       \
             }                                                                           \

@@ -196,6 +196,10 @@ DEFINE_POOLING_WITH_LAYOUT_SIGNATURE(L2_POOL_2D, V1_2, TestOperandType::TENSOR_F
 DEFINE_POOLING_WITH_LAYOUT_SIGNATURE(MAX_POOL_2D, V1_2, TestOperandType::TENSOR_FLOAT32,
                                      TestOperandType::TENSOR_FLOAT16,
                                      TestOperandType::TENSOR_QUANT8_ASYMM);
+DEFINE_POOLING_WITH_LAYOUT_SIGNATURE(AVERAGE_POOL_2D, V1_3,
+                                     TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED);
+DEFINE_POOLING_WITH_LAYOUT_SIGNATURE(MAX_POOL_2D, V1_3,
+                                     TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED);
 
 }  // namespace fuzzing_test
 }  // namespace nn

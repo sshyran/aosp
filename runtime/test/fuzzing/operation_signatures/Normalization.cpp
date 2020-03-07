@@ -69,6 +69,25 @@ DEFINE_OPERATION_SIGNATURE(SOFTMAX_axis_V1_2){
         .outputs = {OUTPUT_QUANT(1.f / 256, 0)},
         .constructor = softmaxConstructor};
 
+DEFINE_OPERATION_SIGNATURE(SOFTMAX_V1_3){
+        .opType = TestOperationType::SOFTMAX,
+        .supportedDataTypes = {TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED},
+        .supportedRanks = {1, 2, 3, 4},
+        .version = TestHalVersion::V1_3,
+        .inputs = {INPUT_DEFAULT, PARAMETER_FLOAT_RANGE(0.1, 10.0)},
+        .outputs = {OUTPUT_QUANT(1.f / 256, -128)},
+        .constructor = softmaxConstructor};
+
+DEFINE_OPERATION_SIGNATURE(SOFTMAX_axis_V1_3){
+        .opType = TestOperationType::SOFTMAX,
+        .supportedDataTypes = {TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED},
+        .supportedRanks = {1, 2, 3, 4},
+        .version = TestHalVersion::V1_3,
+        .inputs = {INPUT_DEFAULT, PARAMETER_FLOAT_RANGE(0.1, 10.0),
+                   PARAMETER_NONE(TestOperandType::INT32)},
+        .outputs = {OUTPUT_QUANT(1.f / 256, -128)},
+        .constructor = softmaxConstructor};
+
 static void l2normConstructor(TestOperandType dataType, uint32_t rank, RandomOperation* op) {
     sameDimensionOpConstructor(dataType, rank, op);
     // Generate value for "axis" parameter.
@@ -116,6 +135,24 @@ DEFINE_OPERATION_SIGNATURE(L2_NORMALIZATION_axis_V1_2){
         .version = TestHalVersion::V1_2,
         .inputs = {INPUT_DEFAULT, PARAMETER_NONE(TestOperandType::INT32)},
         .outputs = {OUTPUT_QUANT(1.f / 128, 128)},
+        .constructor = l2normConstructor};
+
+DEFINE_OPERATION_SIGNATURE(L2_NORMALIZATION_V1_3){
+        .opType = TestOperationType::L2_NORMALIZATION,
+        .supportedDataTypes = {TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED},
+        .supportedRanks = {1, 2, 3, 4},
+        .version = TestHalVersion::V1_3,
+        .inputs = {INPUT_DEFAULT},
+        .outputs = {OUTPUT_QUANT(1.f / 128, 0)},
+        .constructor = l2normConstructor};
+
+DEFINE_OPERATION_SIGNATURE(L2_NORMALIZATION_axis_V1_3){
+        .opType = TestOperationType::L2_NORMALIZATION,
+        .supportedDataTypes = {TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED},
+        .supportedRanks = {1, 2, 3, 4},
+        .version = TestHalVersion::V1_3,
+        .inputs = {INPUT_DEFAULT, PARAMETER_NONE(TestOperandType::INT32)},
+        .outputs = {OUTPUT_QUANT(1.f / 128, 0)},
         .constructor = l2normConstructor};
 
 static void localResponseNormConstructor(TestOperandType dataType, uint32_t rank,
