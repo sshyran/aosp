@@ -759,6 +759,7 @@ bool execute(IOperationExecutionContext* context) {
 
     // Projection.
     if (projectionWeightsBuffer != nullptr) {
+        memset(outputBuffer, 0, batchSize * outputSize * sizeof(int8_t));
         MatrixBatchVectorMultiplyAccumulate(buffer8.data(), projectionEffectiveBias.get(),
                                             projectionWeightsBuffer, projectionEffectiveScaleA,
                                             projectionEffectiveScaleB, batchSize, numUnits,
@@ -766,6 +767,8 @@ bool execute(IOperationExecutionContext* context) {
         if (quantizedProjectionClip > 0) {
             CwiseClipping(outputBuffer, quantizedProjectionClip, batchSize, outputSize);
         }
+    } else {
+        std::copy_n(buffer8.data(), batchSize * outputSize, outputBuffer);
     }
 
     // Copy output to output state out.
