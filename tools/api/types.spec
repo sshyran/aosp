@@ -1998,8 +1998,21 @@
      *      Set to true to specify NCHW data layout for input0 and output0.
      *      Available since %{APILevel29}.
 %/kind
-     *
+%kind ndk hal_1.3+
+     * * 4: Align corners. An optional {@link %{OperandTypeLinkPfx}BOOL}
+     *      scalar, default to false.  If True, the centers of the 4 corner
+     *      pixels of the input and output tensors are aligned, preserving the
+     *      values at the corner pixels.
+     *      Available since %{APILevel30}.
+     * * 5: Half pixel centers. An optional {@link %{OperandTypeLinkPfx}BOOL}
+     *      scalar, default to false. If True, the pixel centers are assumed to
+     *      be at (0.5, 0.5). This is the default behavior of image.resize in
+     *      TF 2.0. If this parameter is True, then align_corners parameter
+     *      must be False.
+     *      Available since %{APILevel30}.
+%/kind
 %kind ndk hal_1.2+
+     *
      * Inputs (resizing by scale, since %{APILevel29}):
      * * 0: A 4-D tensor, of shape [batches, height, width, depth], specifying
      *      the input. Zero batches is supported for this tensor.
@@ -2017,8 +2030,21 @@
      *      {@link %{OperandTypeLinkPfx}FLOAT32} otherwise.
      * * 3: An optional {@link %{OperandTypeLinkPfx}BOOL} scalar, default to false.
      *      Set to true to specify NCHW data layout for input0 and output0.
-     *
 %/kind
+%kind ndk hal_1.3+
+     * * 4: Align corners. An optional {@link %{OperandTypeLinkPfx}BOOL}
+     *      scalar, default to false.  If True, the centers of the 4 corner
+     *      pixels of the input and output tensors are aligned, preserving the
+     *      values at the corner pixels.
+     *      Available since %{APILevel30}.
+     * * 5: Half pixel centers. An optional {@link %{OperandTypeLinkPfx}BOOL}
+     *      scalar, default to false. If True, the pixel centers are assumed to
+     *      be at (0.5, 0.5). This is the default behavior of image.resize in
+     *      TF 2.0. If this parameter is True, then align_corners parameter
+     *      must be False.
+     *      Available since %{APILevel30}.
+%/kind
+     *
      * Outputs:
      * * 0: The output 4-D tensor, of shape
      *      [batches, new_height, new_width, depth].
@@ -5878,6 +5904,19 @@
      *      height of the output tensor.
      * * 3: An {@link %{OperandTypeLinkPfx}BOOL} scalar, default to false.
      *      Set to true to specify NCHW data layout for input0 and output0.
+%kind ndk hal_1.3+
+     * * 4: Align corners. An optional {@link %{OperandTypeLinkPfx}BOOL}
+     *      scalar, default to false.  If True, the centers of the 4 corner
+     *      pixels of the input and output tensors are aligned, preserving the
+     *      values at the corner pixels.
+     *      Available since %{APILevel30}.
+     * * 5: Half pixel centers. An optional {@link %{OperandTypeLinkPfx}BOOL}
+     *      scalar, default to false. If True, the pixel centers are assumed to
+     *      be at (0.5, 0.5). This is the default behavior of image.resize in
+     *      TF 2.0. If this parameter is True, then align_corners parameter
+     *      must be False.
+     *      Available since %{APILevel30}.
+%/kind
      *
      * Inputs (resizing by scale):
      * * 0: A 4-D tensor, of shape [batches, height, width, depth], specifying
@@ -5896,6 +5935,19 @@
      *      {@link %{OperandTypeLinkPfx}FLOAT32} otherwise.
      * * 3: An {@link %{OperandTypeLinkPfx}BOOL} scalar, default to false.
      *      Set to true to specify NCHW data layout for input0 and output0.
+%kind ndk hal_1.3+
+     * * 4: Align corners. An optional {@link %{OperandTypeLinkPfx}BOOL}
+     *      scalar, default to false.  If True, the centers of the 4 corner
+     *      pixels of the input and output tensors are aligned, preserving the
+     *      values at the corner pixels.
+     *      Available since %{APILevel30}.
+     * * 5: Half pixel centers. An optional {@link %{OperandTypeLinkPfx}BOOL}
+     *      scalar, default to false. If True, the pixel centers are assumed to
+     *      be at (0.5, 0.5). This is the default behavior of image.resize in
+     *      TF 2.0. If this parameter is True, then align_corners parameter
+     *      must be False.
+     *      Available since %{APILevel30}.
+%/kind
      *
      * Outputs:
      * * 0: The output 4-D tensor, of shape
