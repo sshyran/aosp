@@ -100,7 +100,6 @@ class Device {
     virtual hal::PerformanceInfo getIfPerformance() const = 0;
     virtual hal::PerformanceInfo getWhilePerformance() const = 0;
     virtual bool isCachingSupported() const = 0;
-    virtual std::pair<bool, bool> supportsDeadlines() const = 0;
     virtual int wait() const = 0;
 
     virtual std::pair<int, std::shared_ptr<PreparedModel>> prepareModel(
