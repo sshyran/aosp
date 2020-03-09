@@ -1979,11 +1979,6 @@ TEST(ValidationTestIntrospection, DeviceGetType) {
     EXPECT_EQ(ANeuralNetworksDevice_getType(nullptr, nullptr), ANEURALNETWORKS_UNEXPECTED_NULL);
 }
 
-TEST(ValidationTestIntrospection, DeviceSupportsTimeouts) {
-    EXPECT_FALSE(ANeuralNetworksDevice_supportsCompilationTimeout(nullptr));
-    EXPECT_FALSE(ANeuralNetworksDevice_supportsExecutionTimeout(nullptr));
-}
-
 TEST(ValidationTestIntrospection, DeviceWait) {
     uint32_t numDevices = 0;
     EXPECT_EQ(ANeuralNetworks_getDeviceCount(&numDevices), ANEURALNETWORKS_NO_ERROR);
@@ -2095,23 +2090,13 @@ TEST_F(ValidationTestCompilationForDevices_1, SetTimeout) {
         return;
     }
 
-    // Find whether device being tested supports compilation timeout
-    const bool compilationTimeout = ANeuralNetworksDevice_supportsCompilationTimeout(mDevice);
-
-    // Attempt to set the timeout, expect failure if not supported
-    const int compilationTimeoutExpectedResult =
-            compilationTimeout ? ANEURALNETWORKS_NO_ERROR : ANEURALNETWORKS_BAD_DATA;
     EXPECT_EQ(ANeuralNetworksCompilation_setTimeout(mCompilation, kShortWaitInNanoseconds),
-              compilationTimeoutExpectedResult);
+              ANEURALNETWORKS_NO_ERROR);
 
     // Attempt to finish
     const int n = ANeuralNetworksCompilation_finish(mCompilation);
-    if (compilationTimeout && n != ANEURALNETWORKS_NO_ERROR) {
-        EXPECT_TRUE(n == ANEURALNETWORKS_MISSED_DEADLINE_TRANSIENT ||
-                    n == ANEURALNETWORKS_MISSED_DEADLINE_PERSISTENT);
-    } else {
-        EXPECT_EQ(n, ANEURALNETWORKS_NO_ERROR);
-    }
+    EXPECT_TRUE(n == ANEURALNETWORKS_NO_ERROR || n == ANEURALNETWORKS_MISSED_DEADLINE_TRANSIENT ||
+                n == ANEURALNETWORKS_MISSED_DEADLINE_PERSISTENT);
 }
 
 TEST_F(ValidationTestCompilationForDevices_1, SetTimeoutOverflow) {
@@ -2119,17 +2104,10 @@ TEST_F(ValidationTestCompilationForDevices_1, SetTimeoutOverflow) {
         return;
     }
 
-    // Find whether device being tested supports compilation timeout
-    const bool compilationTimeout = ANeuralNetworksDevice_supportsCompilationTimeout(mDevice);
-
-    // Test that timeout overflow is caught only when the device supports
-    // compilation timeout
-    if (compilationTimeout) {
-        constexpr uint64_t duration = std::numeric_limits<uint64_t>::max();
-        EXPECT_EQ(ANeuralNetworksCompilation_setTimeout(mCompilation, duration),
-                  ANEURALNETWORKS_NO_ERROR);
-        EXPECT_EQ(ANeuralNetworksCompilation_finish(mCompilation), ANEURALNETWORKS_BAD_DATA);
-    }
+    constexpr uint64_t duration = std::numeric_limits<uint64_t>::max();
+    EXPECT_EQ(ANeuralNetworksCompilation_setTimeout(mCompilation, duration),
+              ANEURALNETWORKS_NO_ERROR);
+    EXPECT_EQ(ANeuralNetworksCompilation_finish(mCompilation), ANEURALNETWORKS_BAD_DATA);
 }
 
 class ValidationTestCompilationForDevices_2 : public ValidationTestModel {
@@ -2300,8 +2278,6 @@ TEST_F(ValidationTestCompilationForDevices_1, ExecutionTiming) {
     }
     ASSERT_EQ(ANeuralNetworksCompilation_finish(mCompilation), ANEURALNETWORKS_NO_ERROR);
 
-    const bool executionTimeout = ANeuralNetworksDevice_supportsExecutionTimeout(mDevice);
-
     enum class ExecutionType : uint32_t { ASYNC, SYNC, BURST, FENCED };
     for (auto executionType :
          {ExecutionType::ASYNC, ExecutionType::SYNC, ExecutionType::BURST, ExecutionType::FENCED}) {
@@ -2340,12 +2316,10 @@ TEST_F(ValidationTestCompilationForDevices_1, ExecutionTiming) {
                           execution, ANEURALNETWORKS_DURATION_IN_DRIVER, &duration),
                   ANEURALNETWORKS_BAD_STATE);
 
-        auto testSetTimeoutTooLate = [execution, executionTimeout] {
-            const int setTimeoutExpectedResult =
-                    executionTimeout ? ANEURALNETWORKS_BAD_STATE : ANEURALNETWORKS_BAD_DATA;
+        auto testSetTimeoutTooLate = [execution] {
             // Cannot setTimeout if the execution has started.
             EXPECT_EQ(ANeuralNetworksExecution_setTimeout(execution, kShortWaitInNanoseconds),
-                      setTimeoutExpectedResult);
+                      ANEURALNETWORKS_BAD_STATE);
         };
 
         auto testMeasureTooLate = [execution] {
@@ -2461,15 +2435,12 @@ uint64_t createTimeoutDuration(TimeoutDurationType type) {
     return 0;
 }
 
-void runExecutionSetTimeoutTest(const ANeuralNetworksDevice* device,
-                                ANeuralNetworksCompilation* compilation,
+void runExecutionSetTimeoutTest(ANeuralNetworksCompilation* compilation,
                                 TimeoutDurationType timeoutDurationType) {
     if (!compilation) {
         return;
     }
     ASSERT_EQ(ANeuralNetworksCompilation_finish(compilation), ANEURALNETWORKS_NO_ERROR);
-
-    const bool executionTimeout = ANeuralNetworksDevice_supportsExecutionTimeout(device);
 
     enum class ExecutionType : uint32_t { ASYNC, SYNC, BURST, FENCED };
     for (auto executionType :
@@ -2494,24 +2465,19 @@ void runExecutionSetTimeoutTest(const ANeuralNetworksDevice* device,
                   ANEURALNETWORKS_NO_ERROR);
 
         const uint64_t timeoutDuration = createTimeoutDuration(timeoutDurationType);
-        const int executionTimeoutExpectedResult =
-                executionTimeout ? ANEURALNETWORKS_NO_ERROR : ANEURALNETWORKS_BAD_DATA;
         EXPECT_EQ(ANeuralNetworksExecution_setTimeout(execution, timeoutDuration),
-                  executionTimeoutExpectedResult);
-        if (!executionTimeout) {
-            // Skip execution if execution with timeout is not supported.
-            continue;
-        }
+                  ANEURALNETWORKS_NO_ERROR);
 
-        const auto checkResult = [timeoutDurationType](int n) {
+        const auto checkResult = [timeoutDurationType](int launchCode, int resultCode) {
             switch (timeoutDurationType) {
                 case TimeoutDurationType::SHORT:
-                    EXPECT_TRUE(n == ANEURALNETWORKS_NO_ERROR ||
-                                n == ANEURALNETWORKS_MISSED_DEADLINE_TRANSIENT ||
-                                n == ANEURALNETWORKS_MISSED_DEADLINE_PERSISTENT);
+                    EXPECT_EQ(launchCode, ANEURALNETWORKS_NO_ERROR);
+                    EXPECT_TRUE(resultCode == ANEURALNETWORKS_NO_ERROR ||
+                                resultCode == ANEURALNETWORKS_MISSED_DEADLINE_TRANSIENT ||
+                                resultCode == ANEURALNETWORKS_MISSED_DEADLINE_PERSISTENT);
                     return;
                 case TimeoutDurationType::OVERFLOW:
-                    EXPECT_EQ(n, ANEURALNETWORKS_BAD_DATA);
+                    EXPECT_EQ(launchCode, ANEURALNETWORKS_BAD_DATA);
                     return;
             }
             LOG(FATAL) << "Invalid TimeoutDurationType: " << static_cast<int>(timeoutDurationType);
@@ -2521,30 +2487,34 @@ void runExecutionSetTimeoutTest(const ANeuralNetworksDevice* device,
         switch (executionType) {
             case ExecutionType::ASYNC: {
                 ANeuralNetworksEvent* event = nullptr;
-                ASSERT_EQ(ANeuralNetworksExecution_startCompute(execution, &event),
-                          ANEURALNETWORKS_NO_ERROR);
-                checkResult(ANeuralNetworksEvent_wait(event));
+                const int launchCode = ANeuralNetworksExecution_startCompute(execution, &event);
+                const int resultCode =
+                        event ? ANeuralNetworksEvent_wait(event) : ANEURALNETWORKS_BAD_DATA;
+                checkResult(launchCode, resultCode);
                 ANeuralNetworksEvent_free(event);
                 break;
             }
             case ExecutionType::SYNC: {
-                checkResult(ANeuralNetworksExecution_compute(execution));
+                const int n = ANeuralNetworksExecution_compute(execution);
+                checkResult(n, n);
                 break;
             }
             case ExecutionType::BURST: {
                 ANeuralNetworksBurst* burst;
                 ASSERT_EQ(ANeuralNetworksBurst_create(compilation, &burst),
                           ANEURALNETWORKS_NO_ERROR);
-                checkResult(ANeuralNetworksExecution_burstCompute(execution, burst));
+                const int n = ANeuralNetworksExecution_burstCompute(execution, burst);
+                checkResult(n, n);
                 ANeuralNetworksBurst_free(burst);
                 break;
             }
             case ExecutionType::FENCED: {
                 ANeuralNetworksEvent* event = nullptr;
-                ASSERT_EQ(ANeuralNetworksExecution_startComputeWithDependencies(execution, nullptr,
-                                                                                0, 0, &event),
-                          ANEURALNETWORKS_NO_ERROR);
-                checkResult(ANeuralNetworksEvent_wait(event));
+                const int launchCode = ANeuralNetworksExecution_startComputeWithDependencies(
+                        execution, nullptr, 0, 0, &event);
+                const int resultCode =
+                        event ? ANeuralNetworksEvent_wait(event) : ANEURALNETWORKS_BAD_DATA;
+                checkResult(launchCode, resultCode);
                 ANeuralNetworksEvent_free(event);
                 break;
             }
@@ -2557,11 +2527,11 @@ void runExecutionSetTimeoutTest(const ANeuralNetworksDevice* device,
 // Also see TEST_F(ValidationTestCompilation, ExecutionSetTimeout)
 // Also see TEST_F(ValidationTestCompilationForDevices_2, ExecutionSetTimeout)
 TEST_F(ValidationTestCompilationForDevices_1, ExecutionSetTimeout) {
-    runExecutionSetTimeoutTest(mDevice, mCompilation, TimeoutDurationType::SHORT);
+    runExecutionSetTimeoutTest(mCompilation, TimeoutDurationType::SHORT);
 }
 
 TEST_F(ValidationTestCompilationForDevices_1, ExecutionSetTimeoutOverflow) {
-    runExecutionSetTimeoutTest(mDevice, mCompilation, TimeoutDurationType::OVERFLOW);
+    runExecutionSetTimeoutTest(mCompilation, TimeoutDurationType::OVERFLOW);
 }
 
 TEST_F(ValidationTest, CreateMemoryDesc) {

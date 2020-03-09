@@ -689,24 +689,6 @@ int ANeuralNetworksDevice_getFeatureLevel(const ANeuralNetworksDevice* device,
     return ANEURALNETWORKS_NO_ERROR;
 }
 
-bool ANeuralNetworksDevice_supportsCompilationTimeout(const ANeuralNetworksDevice* device) {
-    if (device == nullptr) {
-        LOG(ERROR) << "ANeuralNetworksDevice_supportsCompilationTimeout passed a nullptr";
-        return false;
-    }
-    const Device* d = reinterpret_cast<const Device*>(device);
-    return d->supportsDeadlines().first;
-}
-
-bool ANeuralNetworksDevice_supportsExecutionTimeout(const ANeuralNetworksDevice* device) {
-    if (device == nullptr) {
-        LOG(ERROR) << "ANeuralNetworksDevice_supportsExecutionTimeout passed a nullptr";
-        return false;
-    }
-    const Device* d = reinterpret_cast<const Device*>(device);
-    return d->supportsDeadlines().second;
-}
-
 int ANeuralNetworksDevice_wait(const ANeuralNetworksDevice* device) {
     if (device == nullptr) {
         LOG(ERROR) << "ANeuralNetworksDevice_wait passed a nullptr";
