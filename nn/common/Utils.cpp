@@ -93,17 +93,20 @@ void initVLogMask() {
     }
 }
 
-static std::pair<int, OptionalTimePoint> makeTimePoint(uint64_t duration) {
-    const auto getNanosecondsSinceEpoch = [](const auto& time) -> uint64_t {
-        const auto timeSinceEpoch = time.time_since_epoch();
-        return std::chrono::duration_cast<std::chrono::nanoseconds>(timeSinceEpoch).count();
-    };
+static uint64_t getNanosecondsSinceEpoch(const std::chrono::steady_clock::time_point& time) {
+    const auto timeSinceEpoch = time.time_since_epoch();
+    return std::chrono::duration_cast<std::chrono::nanoseconds>(timeSinceEpoch).count();
+}
 
+uint64_t getCurrentNanosecondsSinceEpoch() {
+    return getNanosecondsSinceEpoch(std::chrono::steady_clock::now());
+}
+
+static std::pair<int, OptionalTimePoint> makeTimePoint(uint64_t duration) {
     // Relevant time points.
     const uint64_t maxNanosecondsSinceEpoch =
             getNanosecondsSinceEpoch(std::chrono::steady_clock::time_point::max());
-    const uint64_t currentNanosecondsSinceEpoch =
-            getNanosecondsSinceEpoch(std::chrono::steady_clock::now());
+    const uint64_t currentNanosecondsSinceEpoch = getCurrentNanosecondsSinceEpoch();
 
     // Check for overflow.
     if (duration > maxNanosecondsSinceEpoch - currentNanosecondsSinceEpoch) {

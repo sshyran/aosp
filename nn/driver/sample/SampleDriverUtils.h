@@ -67,9 +67,10 @@ hal::ErrorStatus prepareModelBase(const T_Model& model, const SampleDriver* driv
         notify(callback, hal::ErrorStatus::INVALID_ARGUMENT, nullptr);
         return hal::ErrorStatus::NONE;
     }
-    if (deadline.getDiscriminator() != hal::OptionalTimePoint::hidl_discriminator::none) {
-        notify(callback, hal::ErrorStatus::INVALID_ARGUMENT, nullptr);
-        return hal::ErrorStatus::INVALID_ARGUMENT;
+    if (deadline.getDiscriminator() != hal::OptionalTimePoint::hidl_discriminator::none &&
+        getCurrentNanosecondsSinceEpoch() > deadline.nanosecondsSinceEpoch()) {
+        notify(callback, hal::ErrorStatus::MISSED_DEADLINE_PERSISTENT, nullptr);
+        return hal::ErrorStatus::NONE;
     }
     // asynchronously prepare the model from a new, detached thread
     std::thread([model, driver, preference, userId, priority, callback] {
