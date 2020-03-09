@@ -120,20 +120,6 @@ std::shared_ptr<Device> makeTestDevice() {
 
 #endif
 
-// Manages compilation on one single device.
-class CompilationForDevice : public test_wrapper::Compilation {
-   public:
-    CompilationForDevice() = default;
-    CompilationForDevice(const CompilationForDevice&) = delete;
-    CompilationForDevice& operator=(const CompilationForDevice&) = delete;
-
-    bool initialize(const test_wrapper::Model* model, const ANeuralNetworksDevice* device) {
-        int ret = ANeuralNetworksCompilation_createForDevices(model->getHandle(), &device, 1,
-                                                              &mCompilation);
-        return ret == ANEURALNETWORKS_NO_ERROR;
-    }
-};
-
 // NN API fuzzer logging setting comes from system property debug.nn.fuzzer.log and
 // debug.nn.fuzzer.dumpspec.
 // * setprop debug.nn.fuzzer.log 1 : enable logging.
@@ -245,8 +231,8 @@ class RandomGraphTest : public ::testing::TestWithParam<uint32_t> {
         if (shouldSkipTest(featureLevel)) return;
 
         // Create compilation for device.
-        CompilationForDevice compilation;
-        ASSERT_TRUE(compilation.initialize(model, device));
+        test_wrapper::Compilation compilation;
+        ASSERT_EQ(compilation.createForDevice(model, device), Result::NO_ERROR);
         Result compileReturn = compilation.finish();
         // Even if the model is fully supported, the compilation may still fail, e.g. each operation
         // is supported, but model is too big (too many operations and/or too-large constants) for
