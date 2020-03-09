@@ -159,14 +159,6 @@ int CompilationBuilder::setTimeoutDuration(uint64_t duration) {
                       "ANeuralNetworksCompilation_createForDevices with numDevices = 1";
         return ANEURALNETWORKS_BAD_DATA;
     }
-    const auto& device = mDevices.front();
-    const bool supportsCompilationDeadline = device->supportsDeadlines().first;
-    if (!supportsCompilationDeadline) {
-        LOG(ERROR)
-                << "ANeuralNetworksCompilation_setTimeout called on device that does not support "
-                   "compilation timeouts.";
-        return ANEURALNETWORKS_BAD_DATA;
-    }
     if (duration > 0) {
         mTimeoutDuration = duration;
     } else {

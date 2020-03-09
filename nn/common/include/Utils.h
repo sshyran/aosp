@@ -137,6 +137,8 @@ void initVLogMask();
 // returned.
 std::pair<int, hal::OptionalTimePoint> makeTimePoint(std::optional<uint64_t> duration);
 
+uint64_t getCurrentNanosecondsSinceEpoch();
+
 // Ensure that every user of FalseyErrorStream is linked to the
 // correct instance, using the correct LOG_TAG
 namespace {

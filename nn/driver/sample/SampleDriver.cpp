@@ -162,14 +162,6 @@ Return<void> SampleDriver::getNumberOfCacheFilesNeeded(getNumberOfCacheFilesNeed
     return Void();
 }
 
-Return<void> SampleDriver::supportsDeadlines(supportsDeadlines_cb cb) {
-    NNTRACE_FULL(NNTRACE_LAYER_DRIVER, NNTRACE_PHASE_INITIALIZATION,
-                 "SampleDriver::supportsDeadlines");
-    // Set both numbers to be false for deadlines not supported.
-    cb(/*prepareModelDeadline=*/false, /*executionDeadline=*/false);
-    return Void();
-}
-
 Return<V1_0::ErrorStatus> SampleDriver::prepareModel(
         const V1_0::Model& model, const sp<V1_0::IPreparedModelCallback>& callback) {
     NNTRACE_FULL(NNTRACE_LAYER_DRIVER, NNTRACE_PHASE_COMPILATION, "SampleDriver::prepareModel");
@@ -316,9 +308,10 @@ ErrorStatus executeBase(const Request& request, MeasureTiming measure, const Mod
         notify(callback, ErrorStatus::INVALID_ARGUMENT, {}, kNoTiming);
         return ErrorStatus::INVALID_ARGUMENT;
     }
-    if (deadline.getDiscriminator() != OptionalTimePoint::hidl_discriminator::none) {
-        notify(callback, ErrorStatus::INVALID_ARGUMENT, {}, kNoTiming);
-        return ErrorStatus::INVALID_ARGUMENT;
+    if (deadline.getDiscriminator() != OptionalTimePoint::hidl_discriminator::none &&
+        getCurrentNanosecondsSinceEpoch() > deadline.nanosecondsSinceEpoch()) {
+        notify(callback, ErrorStatus::MISSED_DEADLINE_PERSISTENT, {}, kNoTiming);
+        return ErrorStatus::NONE;
     }
 
     // This thread is intentionally detached because the sample driver service
@@ -369,8 +362,9 @@ static std::tuple<ErrorStatus, hidl_vec<OutputShape>, Timing> executeSynchronous
     if (!validateRequest(request, model)) {
         return {ErrorStatus::INVALID_ARGUMENT, {}, kNoTiming};
     }
-    if (deadline.getDiscriminator() != OptionalTimePoint::hidl_discriminator::none) {
-        return {ErrorStatus::INVALID_ARGUMENT, {}, kNoTiming};
+    if (deadline.getDiscriminator() != OptionalTimePoint::hidl_discriminator::none &&
+        getCurrentNanosecondsSinceEpoch() > deadline.nanosecondsSinceEpoch()) {
+        return {ErrorStatus::MISSED_DEADLINE_PERSISTENT, {}, kNoTiming};
     }
 
     NNTRACE_FULL_SWITCH(NNTRACE_LAYER_DRIVER, NNTRACE_PHASE_INPUTS_AND_OUTPUTS,
@@ -433,10 +427,15 @@ Return<void> SamplePreparedModel::executeFenced(
     time_point driverStart, driverEnd, deviceStart, deviceEnd;
     if (measure == MeasureTiming::YES) driverStart = now();
 
-    if (duration.getDiscriminator() != OptionalTimeoutDuration::hidl_discriminator::none ||
-        deadline.getDiscriminator() != OptionalTimePoint::hidl_discriminator::none ||
-        !validateRequest(request, mModel)) {
+    if (!validateRequest(request, mModel)) {
         cb(ErrorStatus::INVALID_ARGUMENT, hidl_handle(nullptr), nullptr);
+        return Void();
+    }
+    if ((duration.getDiscriminator() != OptionalTimeoutDuration::hidl_discriminator::none &&
+         duration.nanoseconds() == 0) ||
+        (deadline.getDiscriminator() != OptionalTimePoint::hidl_discriminator::none &&
+         getCurrentNanosecondsSinceEpoch() > deadline.nanosecondsSinceEpoch())) {
+        cb(ErrorStatus::MISSED_DEADLINE_PERSISTENT, hidl_handle(nullptr), nullptr);
         return Void();
     }
 
