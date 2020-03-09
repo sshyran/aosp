@@ -604,34 +604,12 @@ static std::tuple<ErrorStatus, uint32_t, uint32_t> getNumberOfCacheFilesNeededFu
     return {ErrorStatus::NONE, 0, 0};
 }
 
-static std::tuple<ErrorStatus, bool, bool> supportsDeadlinesFunction(V1_3::IDevice* device) {
-    CHECK(device != nullptr);
-    constexpr std::tuple<ErrorStatus, bool, bool> kFailure = {ErrorStatus::GENERAL_FAILURE, false,
-                                                              false};
-    std::tuple<ErrorStatus, bool, bool> result = kFailure;
-    const Return<void> ret =
-            device->supportsDeadlines([&result](bool prepareModelDeadline, bool executionDeadline) {
-                result = {ErrorStatus::NONE, prepareModelDeadline, executionDeadline};
-            });
-    if (!ret.isOk()) {
-        LOG(ERROR) << "supportsDeadlines failure: " << ret.description();
-        return kFailure;
-    }
-    return result;
-}
-
-static std::tuple<ErrorStatus, bool, bool> supportsDeadlinesFunction(V1_0::IDevice* device) {
-    CHECK(device != nullptr);
-    return {ErrorStatus::NONE, /*prepareModelDeadline=*/false, /*executionDeadline=*/false};
-}
-
 struct InitialData {
     hal::Capabilities capabilities;
     hal::hidl_vec<hal::Extension> supportedExtensions;
     int32_t type;
     hal::hidl_string versionString;
     std::pair<uint32_t, uint32_t> numberOfCacheFilesNeeded;
-    std::pair<bool, bool> supportsDeadlines;
 };
 
 template <typename Device>
@@ -686,21 +664,12 @@ static std::optional<InitialData> initializeFunction(Device* device) {
         return std::nullopt;
     }
 
-    const auto [supportsDeadlinesStatus, prepareModelDeadline, executionDeadline] =
-            supportsDeadlinesFunction(device);
-    if (supportsDeadlinesStatus != ErrorStatus::NONE) {
-        LOG(ERROR) << "IDevice::supportsDeadlines returned the error "
-                   << toString(supportsDeadlinesStatus);
-        return std::nullopt;
-    }
-
     return InitialData{
             /*.capabilities=*/std::move(capabilities),
             /*.supportedExtensions=*/std::move(supportedExtensions),
             /*.type=*/type,
             /*.versionString=*/std::move(versionString),
             /*.numberOfCacheFilesNeeded=*/{numModelCacheFiles, numDataCacheFiles},
-            /*.supportsDeadlines=*/{prepareModelDeadline, executionDeadline},
     };
 }
 
@@ -747,26 +716,23 @@ std::shared_ptr<VersionedIDevice> VersionedIDevice::create(std::string serviceNa
         return nullptr;
     }
 
-    auto [capabilities, supportedExtensions, type, versionString, numberOfCacheFilesNeeded,
-          supportsDeadlines] = std::move(*initialData);
+    auto [capabilities, supportedExtensions, type, versionString, numberOfCacheFilesNeeded] =
+            std::move(*initialData);
     return std::make_shared<VersionedIDevice>(
             std::move(capabilities), std::move(supportedExtensions), type, std::move(versionString),
-            numberOfCacheFilesNeeded, supportsDeadlines, std::move(serviceName),
-            std::move(core.value()));
+            numberOfCacheFilesNeeded, std::move(serviceName), std::move(core.value()));
 }
 
 VersionedIDevice::VersionedIDevice(hal::Capabilities capabilities,
                                    std::vector<hal::Extension> supportedExtensions, int32_t type,
                                    std::string versionString,
                                    std::pair<uint32_t, uint32_t> numberOfCacheFilesNeeded,
-                                   std::pair<bool, bool> supportsDeadlines, std::string serviceName,
-                                   Core core)
+                                   std::string serviceName, Core core)
     : kCapabilities(std::move(capabilities)),
       kSupportedExtensions(std::move(supportedExtensions)),
       kType(type),
       kVersionString(std::move(versionString)),
       kNumberOfCacheFilesNeeded(numberOfCacheFilesNeeded),
-      kSupportsDeadlines(supportsDeadlines),
       kServiceName(std::move(serviceName)),
       mCore(std::move(core)) {}
 
@@ -1543,10 +1509,6 @@ const std::string& VersionedIDevice::getVersionString() const {
 
 std::pair<uint32_t, uint32_t> VersionedIDevice::getNumberOfCacheFilesNeeded() const {
     return kNumberOfCacheFilesNeeded;
-}
-
-std::pair<bool, bool> VersionedIDevice::supportsDeadlines() const {
-    return kSupportsDeadlines;
 }
 
 const std::string& VersionedIDevice::getName() const {
