@@ -521,7 +521,7 @@ class ExecutionPlan {
     void becomeSingleStep(const std::shared_ptr<Device> device, const ModelBuilder* model);
 
     int finish(int32_t executionPreference, int32_t priority,
-               const hal::OptionalTimePoint& deadline);
+               const std::optional<Deadline>& deadline);
 
     void recordTemporaryDef(SourceOperandIndex sourceOperandIndex, uint32_t stepIndex);
 
@@ -600,7 +600,7 @@ class ExecutionPlan {
         virtual ~Body() {}
         virtual void dump() const = 0;
         virtual int finish(const SourceModels* sourceModels, int32_t executionPreference,
-                           int32_t priority, const hal::OptionalTimePoint& deadline) = 0;
+                           int32_t priority, const std::optional<Deadline>& deadline) = 0;
         virtual bool hasStepModelOutputsOfUnknownSize() const = 0;
         virtual void forEachStepRoleOfInput(uint32_t index,
                                             const StepRoleCallback& callback) const = 0;
@@ -616,7 +616,7 @@ class ExecutionPlan {
 
         void dump() const override;
         int finish(const SourceModels* sourceModels, int32_t executionPreference, int32_t priority,
-                   const hal::OptionalTimePoint& deadline) override;
+                   const std::optional<Deadline>& deadline) override;
         bool hasStepModelOutputsOfUnknownSize() const override { return false; }
         void forEachStepRoleOfInput(uint32_t index,
                                     const StepRoleCallback& callback) const override;
@@ -634,7 +634,7 @@ class ExecutionPlan {
     struct CompoundBody : Body {
         void dump() const override;
         int finish(const SourceModels* sourceModels, int32_t executionPreference, int32_t priority,
-                   const hal::OptionalTimePoint& deadline) override;
+                   const std::optional<Deadline>& deadline) override;
         bool hasStepModelOutputsOfUnknownSize() const override {
             return mHasStepModelOutputOfUnknownSize;
         }

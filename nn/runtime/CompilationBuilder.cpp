@@ -56,15 +56,14 @@ int CompilationBuilder::finish() {
     }
     // TODO validate the rest
 
-    const auto [n, timeout] = makeTimePoint(mTimeoutDuration);
-    NN_RETURN_IF_ERROR(n);
+    const auto deadline = makeDeadline(mTimeoutDuration);
 
     mFinished = true;
     if (mIsCacheInfoProvided) {
         mPlan.setCaching(&mCacheDir, mToken);
     }
     if (mPartitioning) {
-        int n = mModel->partitionTheWork(mDevices, mPreference, mPriority, timeout, &mPlan);
+        int n = mModel->partitionTheWork(mDevices, mPreference, mPriority, deadline, &mPlan);
         switch (n) {
             case ANEURALNETWORKS_NO_ERROR:
                 return n;
@@ -97,7 +96,7 @@ int CompilationBuilder::finish() {
     VLOG(COMPILATION) << "CompilationBuilder::finish with CPU fallback";
     mPlan.reset();
     mPlan.becomeSingleStep(DeviceManager::getCpuDevice(), mModel);
-    return mPlan.finish(mPreference, mPriority, timeout);
+    return mPlan.finish(mPreference, mPriority, deadline);
 }
 
 int CompilationBuilder::setPreference(int32_t preference) {
