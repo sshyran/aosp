@@ -46,7 +46,7 @@ void notify(const sp<hal::V1_3::IExecutionCallback>& callback, const hal::ErrorS
 template <typename T_Model, typename T_IPreparedModelCallback>
 hal::ErrorStatus prepareModelBase(const T_Model& model, const SampleDriver* driver,
                                   hal::ExecutionPreference preference, hal::Priority priority,
-                                  const hal::OptionalTimePoint& deadline,
+                                  const hal::OptionalTimePoint& halDeadline,
                                   const sp<T_IPreparedModelCallback>& callback,
                                   bool isFullModelSupported = true) {
     const uid_t userId = hardware::IPCThreadState::self()->getCallingUid();
@@ -67,11 +67,12 @@ hal::ErrorStatus prepareModelBase(const T_Model& model, const SampleDriver* driv
         notify(callback, hal::ErrorStatus::INVALID_ARGUMENT, nullptr);
         return hal::ErrorStatus::NONE;
     }
-    if (deadline.getDiscriminator() != hal::OptionalTimePoint::hidl_discriminator::none &&
-        getCurrentNanosecondsSinceEpoch() > deadline.nanosecondsSinceEpoch()) {
+    const auto deadline = makeDeadline(halDeadline);
+    if (hasDeadlinePassed(deadline)) {
         notify(callback, hal::ErrorStatus::MISSED_DEADLINE_PERSISTENT, nullptr);
         return hal::ErrorStatus::NONE;
     }
+
     // asynchronously prepare the model from a new, detached thread
     std::thread([model, driver, preference, userId, priority, callback] {
         sp<SamplePreparedModel> preparedModel =
