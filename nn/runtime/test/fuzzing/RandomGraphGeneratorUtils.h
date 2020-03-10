@@ -283,6 +283,13 @@ inline std::enable_if_t<std::is_integral_v<T>, T> getUniform(T lower, T upper) {
     std::uniform_int_distribution<T> dis(lower, upper);
     return dis(RandomNumberGenerator::generator);
 }
+template <typename T>
+inline std::enable_if_t<std::is_integral_v<T>, T> getUniformNonZero(T lower, T upper, T zeroPoint) {
+    if (upper >= zeroPoint) upper--;
+    std::uniform_int_distribution<T> dis(lower, upper);
+    const T value = dis(RandomNumberGenerator::generator);
+    return value >= zeroPoint ? value + 1 : value;
+}
 
 template <typename T>
 inline const T& getRandomChoice(const std::vector<T>& choices) {
