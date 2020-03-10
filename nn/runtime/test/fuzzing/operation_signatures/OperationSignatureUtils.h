@@ -111,6 +111,14 @@ inline void uniform<bool8>(bool8, bool8, RandomOperand* op) {
     uint32_t len = op->getNumberOfElements();
     for (uint32_t i = 0; i < len; i++) data[i] = getBernoulli(0.5f);
 }
+template <typename T>
+inline void uniformNonZero(T low, T up, T zeroPoint, RandomOperand* op) {
+    T* data = reinterpret_cast<T*>(op->buffer.data());
+    uint32_t len = op->getNumberOfElements();
+    for (uint32_t i = 0; i < len; i++) {
+        data[i] = getUniformNonZero(low, up, zeroPoint);
+    }
+}
 
 // Generate random buffer values with uniform distribution.
 // Dispatch to different generators by operand dataType.
@@ -145,6 +153,17 @@ inline void uniformFinalizer(RandomOperand* op) {
         case TestOperandType::TENSOR_FLOAT16:
         case TestOperandType::FLOAT16:
             uniform<_Float16>(kMinFloat32, kMaxFloat32, op);
+            break;
+        default:
+            NN_FUZZER_CHECK(false) << "Unsupported data type.";
+    }
+}
+
+// Generate non-zero random buffer values with uniform distribution.
+inline void nonZeroUniformFinalizer(RandomOperand* op) {
+    switch (op->dataType) {
+        case TestOperandType::TENSOR_INT32:
+            uniformNonZero<int32_t>(0, 255, op->zeroPoint, op);
             break;
         default:
             NN_FUZZER_CHECK(false) << "Unsupported data type.";
