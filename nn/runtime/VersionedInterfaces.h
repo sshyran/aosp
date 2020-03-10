@@ -31,6 +31,7 @@
 
 #include "Callbacks.h"
 #include "HalInterfaces.h"
+#include "Utils.h"
 
 namespace android {
 namespace nn {
@@ -218,7 +219,7 @@ class VersionedIDevice {
      */
     std::pair<int, std::shared_ptr<VersionedIPreparedModel>> prepareModel(
             const hal::ModelFactory& makeModel, hal::ExecutionPreference preference, hal::Priority,
-            const hal::OptionalTimePoint& deadline, const std::string& cacheDir,
+            const std::optional<Deadline>& deadline, const std::string& cacheDir,
             const std::optional<hal::CacheToken>& maybeToken) const;
 
     /**
@@ -399,10 +400,10 @@ class VersionedIDevice {
     // internal methods to prepare a model
     std::pair<int, std::shared_ptr<VersionedIPreparedModel>> prepareModelInternal(
             const hal::Model& model, hal::ExecutionPreference preference, hal::Priority priority,
-            const hal::OptionalTimePoint& deadline, const std::string& cacheDir,
+            const std::optional<Deadline>& deadline, const std::string& cacheDir,
             const std::optional<hal::CacheToken>& maybeToken) const;
     std::pair<int, std::shared_ptr<VersionedIPreparedModel>> prepareModelFromCacheInternal(
-            const hal::OptionalTimePoint& deadline, const std::string& cacheDir,
+            const std::optional<Deadline>& deadline, const std::string& cacheDir,
             const hal::CacheToken& token) const;
 
     /**
@@ -677,7 +678,7 @@ class VersionedIPreparedModel {
      */
     std::tuple<int, std::vector<hal::OutputShape>, hal::Timing> execute(
             const hal::Request& request, hal::MeasureTiming measure,
-            const hal::OptionalTimePoint& deadline,
+            const std::optional<Deadline>& deadline,
             const hal::OptionalTimeoutDuration& loopTimeoutDuration, bool preferSynchronous) const;
 
     /**
@@ -720,12 +721,12 @@ class VersionedIPreparedModel {
      * any data object referenced by 'request' (described by the
      * {@link @1.0::DataLocation} of a {@link @1.0::RequestArgument}).
      *
-     * executeFenced can be called with an optional deadline and an optional duration.
+     * executeFenced may be called with an optional deadline and an optional duration.
      * If the execution is not able to completed before the provided deadline or within
      * the timeout duration, whichever comes earlier, the
      * execution may be aborted, and either {@link
      * ErrorStatus::MISSED_DEADLINE_TRANSIENT} or {@link
-     * ErrorStatus::MISSED_DEADLINE_PERSISTENT} must be returned. The error due
+     * ErrorStatus::MISSED_DEADLINE_PERSISTENT} may be returned. The error due
      * to an abort must be sent the same way as other errors, described above.
      *
      * Any number of calls to the executeFenced, execute* and executeSynchronously*
@@ -761,7 +762,7 @@ class VersionedIPreparedModel {
      */
     std::tuple<int, hal::hidl_handle, sp<hal::IFencedExecutionCallback>, hal::Timing> executeFenced(
             const hal::Request& request, const hal::hidl_vec<hal::hidl_handle>& waitFor,
-            hal::MeasureTiming measure, const hal::OptionalTimePoint& deadline,
+            hal::MeasureTiming measure, const std::optional<Deadline>& deadline,
             const hal::OptionalTimeoutDuration& loopTimeoutDuration,
             const hal::OptionalTimeoutDuration& timeoutDurationAfterFence);
 
@@ -770,11 +771,11 @@ class VersionedIPreparedModel {
 
     std::tuple<int, std::vector<hal::OutputShape>, hal::Timing> executeAsynchronously(
             const hal::Request& request, hal::MeasureTiming timing,
-            const hal::OptionalTimePoint& deadline,
+            const std::optional<Deadline>& deadline,
             const hal::OptionalTimeoutDuration& loopTimeoutDuration) const;
     std::tuple<int, std::vector<hal::OutputShape>, hal::Timing> executeSynchronously(
             const hal::Request& request, hal::MeasureTiming measure,
-            const hal::OptionalTimePoint& deadline,
+            const std::optional<Deadline>& deadline,
             const hal::OptionalTimeoutDuration& loopTimeoutDuration) const;
 
     /**
