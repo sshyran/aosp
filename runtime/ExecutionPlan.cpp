@@ -69,8 +69,9 @@ constexpr uint32_t kMainModelInSourceModels = 0;
 // operation indices to be executed (COMPOUND body). The token will be re-hashed further by the
 // device name, device version string, and the execution preference in this function.
 int compile(const Device& device, const ModelBuilder& model, int executionPreference,
-            int compilationPriority, const OptionalTimePoint& deadline, const std::string& cacheDir,
-            TokenHasher* token, std::shared_ptr<PreparedModel>* preparedModel) {
+            int compilationPriority, const std::optional<Deadline>& deadline,
+            const std::string& cacheDir, TokenHasher* token,
+            std::shared_ptr<PreparedModel>* preparedModel) {
     CHECK(token != nullptr);
     CHECK(preparedModel != nullptr);
     *preparedModel = nullptr;
@@ -603,8 +604,8 @@ void LogicalStep::dump() const {
 
 int ExecutionPlan::CompoundBody::finish(const SourceModels* sourceModels,
                                         int32_t executionPreference, int32_t priority,
-                                        const OptionalTimePoint& deadline) {
-    CHECK(deadline.getDiscriminator() == OptionalTimePoint::hidl_discriminator::none);
+                                        const std::optional<Deadline>& deadline) {
+    CHECK(!deadline.has_value());
     const ModelBuilder* mainModel = sourceModels->getModel(kMainModelInSourceModels);
 
     auto containsUnknownSize = [sourceModels](const std::vector<SourceOperandIndex>& operands) {
@@ -695,7 +696,7 @@ void ExecutionPlan::CompoundBody::findControlFlowBoundaryConstants(
 }
 
 int ExecutionPlan::SimpleBody::finish(const SourceModels*, int32_t executionPreference,
-                                      int32_t priority, const OptionalTimePoint& deadline) {
+                                      int32_t priority, const std::optional<Deadline>& deadline) {
     CHECK(mDevice != nullptr);
     VLOG(COMPILATION) << "ExecutionPlan::SimpleBody::finish, compilation";
     const int n = compile(*mDevice, *mModel, executionPreference, priority, deadline, *mCacheDir,
@@ -705,7 +706,7 @@ int ExecutionPlan::SimpleBody::finish(const SourceModels*, int32_t executionPref
 }
 
 int ExecutionPlan::finish(int32_t executionPreference, int32_t priority,
-                          const OptionalTimePoint& deadline) {
+                          const std::optional<Deadline>& deadline) {
     CHECK(mBody != nullptr);
     return mBody->finish(&getSourceModels(), executionPreference, priority, deadline);
 }
@@ -1470,7 +1471,8 @@ void ExecutionPlan::CompoundBody::forEachStepRoleOfOutput(uint32_t index,
 
 int ModelBuilder::partitionTheWork(const std::vector<std::shared_ptr<Device>>& devices,
                                    uint32_t preference, uint32_t priority,
-                                   const OptionalTimePoint& deadline, ExecutionPlan* plan) const {
+                                   const std::optional<Deadline>& deadline,
+                                   ExecutionPlan* plan) const {
     uint32_t sourceModelIndex = plan->getSourceModels().addModel(this);
     NN_RETURN_IF_ERROR(partitionTheWorkInternal(sourceModelIndex, devices, preference, priority,
                                                 deadline, plan));
@@ -1486,7 +1488,7 @@ int ModelBuilder::partitionTheWork(const std::vector<std::shared_ptr<Device>>& d
 int ModelBuilder::partitionTheWorkInternal(uint32_t sourceModelIndex,
                                            const std::vector<std::shared_ptr<Device>>& devices,
                                            uint32_t preference, uint32_t priority,
-                                           const OptionalTimePoint& deadline,
+                                           const std::optional<Deadline>& deadline,
                                            ExecutionPlan* plan) const {
     // This function uses a heuristic approach to partitioning the graph.
     // It should be good enough for the first release.
