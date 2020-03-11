@@ -14,8 +14,6 @@
  * limitations under the License.
  */
 
-#undef NDEBUG
-
 #include <gtest/gtest.h>
 
 #include <algorithm>
