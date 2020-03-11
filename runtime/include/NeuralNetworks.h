@@ -7886,7 +7886,7 @@ int ANeuralNetworksExecution_setTimeout(ANeuralNetworksExecution* execution, uin
  *
  * This is a fuzzy per-loop timeout intended to prevent infinite loops.
  *
- * If a WHILE loop termination condition is not reached within the specified
+ * If a WHILE loop condition model does not output false within the specified
  * duration, the execution will be aborted.
  *
  * See {@link ANeuralNetworks_getDefaultLoopTimeout} and
@@ -8054,6 +8054,12 @@ int ANeuralNetworksEvent_getSyncFenceFd(const ANeuralNetworksEvent* event, int* 
  * or {@link ANeuralNetworksEvent_wait} on the event object. If the device has a
  * feature level reported by {@link ANeuralNetworksDevice_getFeatureLevel} that
  * is lower than 30, then the timeout duration hints will be ignored.
+ *
+ * If this execution contains a {@link ANEURALNETWORKS_WHILE} operation, and
+ * the condition model does not output false within the loop timeout duration,
+ * then execution will be aborted and {@link ANEURALNETWORKS_MISSED_DEADLINE_*}
+ * will be returned through {@link ANeuralNetworksEvent_wait} on the event
+ * object.
  *
  * If this execution contains a {@link ANEURALNETWORKS_WHILE} operation, and
  * the condition model does not output false within the loop timeout duration,
