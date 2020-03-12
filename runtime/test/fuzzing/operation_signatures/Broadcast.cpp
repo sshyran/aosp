@@ -71,10 +71,12 @@ static void broadcastOpConstructor(TestOperandType dataType, uint32_t rank, Rand
         op->inputs[2]->setScalarValue(0);
     }
 
-    // TODO(b/151151830): TENSOR_INT32 DIV will crash with 0 as divisor.
-    if (op->opType == TestOperationType::DIV && dataType == TestOperandType::TENSOR_INT32) {
-        op->inputs[1]->doNotConnect = true;
-        op->inputs[1]->finalizer = nonZeroUniformFinalizer;
+    if (op->opType == TestOperationType::DIV) {
+        op->inputs[1]->valueProperties = RandomOperand::NON_ZERO;
+    }
+
+    if (op->opType == TestOperationType::POW) {
+        op->inputs[0]->valueProperties = RandomOperand::NON_NEGATIVE;
     }
 }
 
