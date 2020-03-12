@@ -6250,6 +6250,8 @@
      * * {@link %{OperandTypeLinkPfx}TENSOR_FLOAT16}
      * * {@link %{OperandTypeLinkPfx}TENSOR_FLOAT32}
      *
+     * Supported tensor rank: from 1.
+     *
      * Inputs:
      * * 0: A tensor, specifying the input. May be zero-sized.
      * * 1: A scalar, specifying the alpha parameter.
@@ -6280,6 +6282,8 @@
      * * {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM}
      * * {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM_SIGNED}
      *
+     * Supported tensor rank: from 1.
+     *
      * Inputs:
      * * 0: A tensor, specifying the input. May be zero-sized.
      *
@@ -6298,6 +6302,8 @@
      * * {@link %{OperandTypeLinkPfx}TENSOR_FLOAT16}
      * * {@link %{OperandTypeLinkPfx}TENSOR_FLOAT32}
      * * {@link %{OperandTypeLinkPfx}TENSOR_INT32}
+     *
+     * Supported tensor rank: from 1.
      *
      * Inputs:
      * * 0: A 1-D tensor, specifying the desired output tensor shape.
@@ -6332,6 +6338,8 @@
      * * {@link %{OperandTypeLinkPfx}TENSOR_QUANT16_ASYMM}
      * * {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_SYMM}
      * * {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM_SIGNED}
+     *
+     * Supported tensor rank: from 1.
      *
      * Inputs:
      * * 0: The input tensor.
