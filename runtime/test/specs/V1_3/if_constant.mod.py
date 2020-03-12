@@ -24,8 +24,8 @@ output_data = {
     False: [x - y for (x, y) in zip(x_data, y_data)],
 }
 
-ValueType = ["TENSOR_FLOAT32", "{3, 4}"]
-BoolType = ["TENSOR_BOOL8", "{1}"]
+ValueType = ["TENSOR_FLOAT32", [3, 4]]
+BoolType = ["TENSOR_BOOL8", [1]]
 
 def MakeBranchModel(operation_name):
   x = Input("x", ValueType)
