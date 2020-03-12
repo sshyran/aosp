@@ -413,7 +413,6 @@ VersionedIPreparedModel::executeFenced(
         const OptionalTimeoutDuration& loopTimeoutDuration,
         const hal::OptionalTimeoutDuration& timeoutDurationAfterFence) {
     // version 1.3+ HAL
-    // TODO(miaowang): figure out the right coding style for the sync_fence related API.
     hal::hidl_handle syncFence;
     sp<hal::IFencedExecutionCallback> dispatchCallback;
     hal::Timing timing = {UINT64_MAX, UINT64_MAX};
@@ -628,7 +627,6 @@ static std::optional<InitialData> initializeFunction(Device* device) {
     VLOG(MANAGER) << "Capab " << toString(capabilities);
 
     auto [versionStatus, versionString] = getVersionStringFunction(device);
-    // TODO(miaowang): add a validation test case for in case of error.
     if (versionStatus != ErrorStatus::NONE) {
         LOG(ERROR) << "IDevice::getVersionString returned the error " << toString(versionStatus);
         return std::nullopt;
