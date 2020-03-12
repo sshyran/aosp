@@ -132,8 +132,8 @@ cc_defaults {
     static_libs: [
         "libSampleDriver",
         "libgmock",
-        "libneuralnetworks_static",
         "libneuralnetworks_common",
+        "libneuralnetworks_static",
     ],
     shared_libs: [
         "libcutils",
@@ -168,9 +168,9 @@ cc_test {
     static_libs: [
         "libSampleDriver",
         "libgmock",
-        "libneuralnetworks_static",
         "libneuralnetworks_common",
         "libneuralnetworks_generated_test_harness",
+        "libneuralnetworks_static",
     ],
     shared_libs: ["libmemunreachable"],
     header_libs: [
@@ -193,10 +193,10 @@ cc_fuzz {
     corpus: ["android_fuzzing/corpus/*"],
     shared_libs: ["libprotobuf-cpp-full"],
     static_libs: [
-        "libneuralnetworks_static",
         "libneuralnetworks_common",
         "libneuralnetworks_fuzzer_proto",
         "libneuralnetworks_generated_test_harness",
+        "libneuralnetworks_static",
         "libprotobuf-mutator",
     ],
 }
@@ -263,13 +263,14 @@ cc_defaults {
     static_libs: [
         "libSampleDriver",
         "libgmock",
-        "libneuralnetworks_static",
         "libneuralnetworks_common",
+        "libneuralnetworks_static",
     ],
     whole_static_libs: [
         "neuralnetworks_generated_V1_0_example",
         "neuralnetworks_generated_V1_1_example",
         "neuralnetworks_generated_V1_2_example",
+        "neuralnetworks_generated_V1_3_example",
     ],
     shared_libs: [
         "libcutils",
