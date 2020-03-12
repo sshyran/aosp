@@ -68,7 +68,6 @@ class ExtensionsTest : public ::testing::Test {
    protected:
     virtual void SetUp() {
         // This is needed before we have the CPU fallback path being treated as a Device.
-        // TODO(miaowang): remove once b/72506261 is fixed.
         if (DeviceManager::get()->getUseCpuOnly()) {
             GTEST_SKIP();
         }
