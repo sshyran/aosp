@@ -893,7 +893,9 @@ class GraphPartitioner : public DisjointNetwork {
         if (var->parent1 != nullptr) adj.push_back(var->parent1);
         if (var->parent2 != nullptr) adj.push_back(var->parent2);
 
-        for (const auto& child : adj) {
+        for (const auto& weakChild : adj) {
+            auto child = weakChild.lock();
+            NN_FUZZER_CHECK(child != nullptr);
             if (mBridgeInfo.find(child) == mBridgeInfo.end()) continue;
             if (!mBridgeInfo[child].visited) {
                 mBridgeInfo[child].parent = var;
@@ -1121,13 +1123,17 @@ bool RandomVariableNetwork::evalRange() {
 static void unsetEqual(const RandomVariableNode& node) {
     if (node == nullptr) return;
     NN_FUZZER_LOG << "Unset equality of var" << node->index;
+    auto weakPtrEqual = [&node](const std::weak_ptr<RandomVariableBase>& ptr) {
+        return ptr.lock() == node;
+    };
     RandomVariableNode parent1 = node->parent1, parent2 = node->parent2;
-    parent1->children.erase(std::find(parent1->children.begin(), parent1->children.end(), node));
+    parent1->children.erase(
+            std::find_if(parent1->children.begin(), parent1->children.end(), weakPtrEqual));
     node->parent1 = nullptr;
     if (parent2 != nullptr) {
         // For Equal.
         parent2->children.erase(
-                std::find(parent2->children.begin(), parent2->children.end(), node));
+                std::find_if(parent2->children.begin(), parent2->children.end(), weakPtrEqual));
         node->parent2 = nullptr;
     } else {
         // For UnaryEqual.
