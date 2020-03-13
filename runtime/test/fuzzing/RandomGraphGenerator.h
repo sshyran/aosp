@@ -17,9 +17,11 @@
 #ifndef ANDROID_FRAMEWORKS_ML_NN_RUNTIME_TEST_FUZZING_RANDOM_GRAPH_GENERATOR_H
 #define ANDROID_FRAMEWORKS_ML_NN_RUNTIME_TEST_FUZZING_RANDOM_GRAPH_GENERATOR_H
 
+#include <memory>
 #include <string>
 #include <vector>
 
+#include "TestHarness.h"
 #include "TestNeuralNetworksWrapper.h"
 #include "fuzzing/RandomVariable.h"
 
@@ -108,36 +110,6 @@ struct RandomOperation {
     RandomOperation(const OperationSignature& operation);
 };
 
-struct AccuracyCriterion {
-    // We expect the driver results to be unbiased.
-    // Formula: abs(sum_{i}(diff) / sum(1)) <= bias, where
-    // * fixed point: diff = actual - expected
-    // * floating point: diff = (actual - expected) / max(1, abs(expected))
-    float bias = std::numeric_limits<float>::max();
-
-    // Set the threshold on Mean Square Error (MSE).
-    // Formula: sum_{i}(diff ^ 2) / sum(1) <= mse
-    float mse = std::numeric_limits<float>::max();
-
-    // We also set accuracy thresholds on each element to detect any particular edge cases that may
-    // be shadowed in bias or MSE. We use the similar approach as our CTS unit tests, but with much
-    // relaxed criterion.
-    // Formula: abs(actual - expected) <= atol + rtol * abs(expected)
-    //   where atol stands for Absolute TOLerance and rtol for Relative TOLerance.
-    float atol = 0.0f;
-    float rtol = 0.0f;
-};
-
-struct AccuracyCriteria {
-    AccuracyCriterion float32;
-    AccuracyCriterion float16;
-    AccuracyCriterion int32;
-    AccuracyCriterion quant8Asymm;
-    AccuracyCriterion quant8Symm;
-    AccuracyCriterion quant16Asymm;
-    AccuracyCriterion quant16Symm;
-};
-
 // The main interface of the random graph generator.
 class RandomGraph {
    public:
@@ -146,18 +118,9 @@ class RandomGraph {
     // Generate a random graph with numOperations and dimensionRange from a seed.
     bool generate(uint32_t seed, uint32_t numOperations, uint32_t dimensionRange);
 
-    // Create a NDK model from the random graph.
-    void createModel(test_wrapper::Model* model);
-
-    // Set the input/output buffers to an NDK execution object. The input buffer resides in
-    // RandomOperand.buffer, the output buffer is either provided by "buffers" argument, or set
-    // buffers to nullptr to use RandomOperand.buffer to record reference result.
-    void createRequest(test_wrapper::Execution* execution,
-                       std::vector<OperandBuffer>* buffers = nullptr);
-
-    // Check if the results in buffers meet the given accuracy criteria.
-    void checkResults(const std::vector<OperandBuffer>& buffers,
-                      const AccuracyCriteria& criteria) const;
+    // Create a test model of the generated graph. The operands will always have fully-specified
+    // dimensions. The output buffers are only allocated but not initialized.
+    test_helper::TestModel createTestModel();
 
     // Dump the generated random graph to a spec file for debugging and visualization purpose.
     void dumpSpecFile(std::string filename, std::string testname);
