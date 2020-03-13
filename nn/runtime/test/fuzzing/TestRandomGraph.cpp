@@ -180,9 +180,6 @@ class RandomGraphTest : public ::testing::TestWithParam<uint32_t> {
     }
 
     virtual void TearDown() override {
-        if (::testing::Test::HasFailure() || mDumpSpec) {
-            mGraph.dumpSpecFile("/data/local/tmp/" + mTestName + ".mod.py", mTestName);
-        }
         NN_FUZZER_LOG_CLOSE;
 #ifndef NNTEST_CTS
         if (mDetectMemoryLeak) {
@@ -283,6 +280,10 @@ class RandomGraphTest : public ::testing::TestWithParam<uint32_t> {
         if (featureLevel >= __ANDROID_API_Q__ && !isRef) {
             checkResults(mTestModel, outputs, mCriteria);
         }
+
+        if (::testing::Test::HasFailure() || mDumpSpec) {
+            dumpTestResults(name, outputs);
+        }
     }
 
     // Compile and execute the generated graph normally (i.e., allow runtime to
@@ -311,10 +312,11 @@ class RandomGraphTest : public ::testing::TestWithParam<uint32_t> {
     // Main test entrance.
     void testRandomGraph(uint32_t numOperations, uint32_t dimensionRange) {
         // Generate a random graph.
-        ASSERT_TRUE(mGraph.generate(kSeed, numOperations, dimensionRange));
+        RandomGraph graph;
+        ASSERT_TRUE(graph.generate(kSeed, numOperations, dimensionRange));
 
         // Create a model from the random graph.
-        mTestModel = mGraph.createTestModel();
+        mTestModel = graph.createTestModel();
 
         generated_tests::GeneratedModel model;
         generated_tests::createModel(mTestModel, &model);
@@ -356,6 +358,19 @@ class RandomGraphTest : public ::testing::TestWithParam<uint32_t> {
         }
     }
 
+    void dumpTestResults(const std::string& deviceName, const std::vector<TestBuffer>& results) {
+        // The dumper is constructed lazily -- only create the file and dump the test model at the
+        // first time this function is called.
+        if (mDumper == nullptr) {
+            mOutStream.open("/data/local/tmp/" + mTestName + ".mod.py");
+            ASSERT_TRUE(mOutStream.is_open());
+            mOutStream << "# Generated from " << mTestName << ". Do not edit.\n\n";
+            mDumper = std::make_unique<SpecDumper>(mTestModel, mOutStream);
+            mDumper->dumpTestModel();
+        }
+        mDumper->dumpResults(deviceName, results);
+    }
+
     enum GraphSize : uint32_t { SINGLE = 1, SMALL = 5, LARGE = 40 };
     enum DimensionRange : uint32_t { NARROW = 10, WIDE = 1000 };
 
@@ -366,9 +381,11 @@ class RandomGraphTest : public ::testing::TestWithParam<uint32_t> {
 
     const uint32_t kSeed = GetParam();
     std::string mTestName;
-    RandomGraph mGraph;
     TestModel mTestModel;
     AccuracyCriteria mCriteria;
+
+    std::ofstream mOutStream;
+    std::unique_ptr<SpecDumper> mDumper;
 
     static int64_t mStandardDevicesFeatureLevel;  // minimum across all devices
 #ifndef NNTEST_CTS

@@ -122,9 +122,6 @@ class RandomGraph {
     // dimensions. The output buffers are only allocated but not initialized.
     test_helper::TestModel createTestModel();
 
-    // Dump the generated random graph to a spec file for debugging and visualization purpose.
-    void dumpSpecFile(std::string filename, std::string testname);
-
     const std::vector<RandomOperation>& getOperations() const { return mOperations; }
 
    private:
