@@ -76,7 +76,7 @@ size_t RandomOperand::getBufferSize() const {
 // Construct a RandomOperation from OperationSignature.
 RandomOperation::RandomOperation(const OperationSignature& operation)
     : opType(operation.opType), finalizer(operation.finalizer) {
-    NN_FUZZER_LOG << "Operation: " << kOperationNames[static_cast<int32_t>(opType)];
+    NN_FUZZER_LOG << "Operation: " << toString(opType);
 
     // Determine the data type and rank of the operation and invoke the constructor.
     TestOperandType dataType = getRandomChoice(operation.supportedDataTypes);
@@ -258,7 +258,7 @@ TestModel RandomGraph::createTestModel() {
 
     // Set model operations.
     for (auto& operation : mOperations) {
-        NN_FUZZER_LOG << "Operation: " << kOperationNames[static_cast<int32_t>(operation.opType)];
+        NN_FUZZER_LOG << "Operation: " << toString(operation.opType);
         TestOperation testOperation = {.type = static_cast<TestOperationType>(operation.opType)};
         for (auto& op : operation.inputs) {
             NN_FUZZER_LOG << toString(*op);
