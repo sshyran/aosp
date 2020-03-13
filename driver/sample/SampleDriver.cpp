@@ -434,7 +434,7 @@ Return<void> SamplePreparedModel::executeFenced(
     time_point driverStart, driverEnd, deviceStart, deviceEnd;
     if (measure == MeasureTiming::YES) driverStart = now();
 
-    if (!validateRequest(request, mModel)) {
+    if (!validateRequest(request, mModel, /*allowUnspecifiedOutput=*/false)) {
         cb(ErrorStatus::INVALID_ARGUMENT, hidl_handle(nullptr), nullptr);
         return Void();
     }

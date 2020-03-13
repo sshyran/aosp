@@ -746,33 +746,38 @@ static bool validateRequestArguments(const hidl_vec<RequestArgument>& requestArg
 }
 
 template <class T_Request, class T_Model>
-bool validateRequest(const T_Request& request, const T_Model& model) {
+bool validateRequest(const T_Request& request, const T_Model& model, bool allowUnspecifiedOutput) {
     HalVersion version = ModelToHalVersion<T_Model>::version;
     MemoryAccessVerifier poolVerifier(request.pools);
     return (validateRequestArguments(request.inputs, model.inputIndexes,
                                      convertToV1_3(model.operands), poolVerifier,
                                      /*allowUnspecified=*/false, "input") &&
-            validateRequestArguments(request.outputs, model.outputIndexes,
-                                     convertToV1_3(model.operands), poolVerifier,
-                                     /*allowUnspecified=*/version >= HalVersion::V1_2, "output") &&
+            validateRequestArguments(
+                    request.outputs, model.outputIndexes, convertToV1_3(model.operands),
+                    poolVerifier,
+                    /*allowUnspecified=*/version >= HalVersion::V1_2 && allowUnspecifiedOutput,
+                    "output") &&
             validatePools(request.pools, version));
 }
 
 template bool validateRequest<V1_0::Request, V1_0::Model>(const V1_0::Request& request,
-                                                          const V1_0::Model& model);
+                                                          const V1_0::Model& model,
+                                                          bool allowUnspecifiedOutput);
 template bool validateRequest<V1_0::Request, V1_1::Model>(const V1_0::Request& request,
-                                                          const V1_1::Model& model);
+                                                          const V1_1::Model& model,
+                                                          bool allowUnspecifiedOutput);
 template bool validateRequest<V1_0::Request, V1_2::Model>(const V1_0::Request& request,
-                                                          const V1_2::Model& model);
+                                                          const V1_2::Model& model,
+                                                          bool allowUnspecifiedOutput);
 
 template <>
-bool validateRequest(const V1_3::Request& request, const V1_3::Model& model) {
+bool validateRequest(const V1_3::Request& request, const V1_3::Model& model,
+                     bool allowUnspecifiedOutput) {
     return (validateRequestArguments(request.inputs, model.main.inputIndexes, model.main.operands,
                                      request.pools,
                                      /*allowUnspecified=*/false, "input") &&
             validateRequestArguments(request.outputs, model.main.outputIndexes, model.main.operands,
-                                     request.pools,
-                                     /*allowUnspecified=*/true, "output") &&
+                                     request.pools, allowUnspecifiedOutput, "output") &&
             validatePools(request.pools, HalVersion::V1_3));
 }
 
