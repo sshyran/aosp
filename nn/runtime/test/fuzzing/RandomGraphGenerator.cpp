@@ -38,11 +38,11 @@ namespace nn {
 namespace fuzzing_test {
 
 using test_wrapper::Result;
-using test_wrapper::Type;
 using namespace test_helper;
 
 // Construct a RandomOperand from OperandSignature.
-RandomOperand::RandomOperand(const OperandSignature& operand, Type dataType, uint32_t rank)
+RandomOperand::RandomOperand(const OperandSignature& operand, TestOperandType dataType,
+                             uint32_t rank)
     : type(operand.type), finalizer(operand.finalizer) {
     NN_FUZZER_LOG << "Operand: " << toString(type);
     if (operand.constructor) operand.constructor(dataType, rank, this);
@@ -79,7 +79,7 @@ RandomOperation::RandomOperation(const OperationSignature& operation)
     NN_FUZZER_LOG << "Operation: " << kOperationNames[static_cast<int32_t>(opType)];
 
     // Determine the data type and rank of the operation and invoke the constructor.
-    Type dataType = getRandomChoice(operation.supportedDataTypes);
+    TestOperandType dataType = getRandomChoice(operation.supportedDataTypes);
     uint32_t rank = getRandomChoice(operation.supportedRanks);
 
     // Initialize operands and operation.
