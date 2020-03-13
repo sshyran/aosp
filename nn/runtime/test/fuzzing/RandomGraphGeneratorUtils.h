@@ -28,6 +28,7 @@
 
 #include "RandomGraphGenerator.h"
 #include "RandomVariable.h"
+#include "TestHarness.h"
 #include "TestNeuralNetworksWrapper.h"
 
 namespace android {
@@ -238,24 +239,6 @@ static const char* kOperationNames[] = {
         "RESIZE_NEAREST_NEIGHBOR",
 };
 
-static const char* kTypeNames[] = {
-        "FLOAT32",
-        "INT32",
-        "UINT32",
-        "TENSOR_FLOAT32",
-        "TENSOR_INT32",
-        "TENSOR_QUANT8_ASYMM",
-        "BOOL",
-        "TENSOR_QUANT16_SYMM",
-        "TENSOR_FLOAT16",
-        "TENSOR_BOOL8",
-        "FLOAT16",
-        "TENSOR_QUANT8_SYMM_PER_CHANNEL",
-        "TENSOR_QUANT16_ASYMM",
-        "TENSOR_QUANT8_SYMM",
-        "TENSOR_QUANT8_ASYMM_SIGNED",
-};
-
 static const char* kLifeTimeNames[6] = {
         "TEMPORARY_VARIABLE", "SUBGRAPH_INPUT",     "SUBGRAPH_OUTPUT",
         "CONSTANT_COPY",      "CONSTANT_REFERENCE", "NO_VALUE",
@@ -341,11 +324,6 @@ inline std::string toString<RandomVariableNode>(const RandomVariableNode& var) {
     }
     ss << ", timestamp = " << var->timestamp;
     return ss.str();
-}
-
-template <>
-inline std::string toString<Type>(const Type& type) {
-    return kTypeNames[static_cast<int32_t>(type)];
 }
 
 template <>

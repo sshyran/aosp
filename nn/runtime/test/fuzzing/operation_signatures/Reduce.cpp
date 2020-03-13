@@ -20,7 +20,7 @@ namespace android {
 namespace nn {
 namespace fuzzing_test {
 
-static void reduceOpConstructor(Type, uint32_t rank, RandomOperation* op) {
+static void reduceOpConstructor(TestOperandType, uint32_t rank, RandomOperation* op) {
     setFreeDimensions(op->inputs[0], rank);
 
     // A boolean array indicating whether each dimension is selected to be reduced.
@@ -38,7 +38,7 @@ static void reduceOpConstructor(Type, uint32_t rank, RandomOperation* op) {
 
     // This scalar may have two types: in MEAN it is INT32, in REDUCE_* it is BOOL
     bool keepDims;
-    if (op->inputs[2]->dataType == Type::BOOL) {
+    if (op->inputs[2]->dataType == TestOperandType::BOOL) {
         keepDims = op->inputs[2]->value<bool8>();
     } else {
         keepDims = op->inputs[2]->value<int32_t>() > 0;
@@ -60,41 +60,43 @@ static void reduceOpConstructor(Type, uint32_t rank, RandomOperation* op) {
     }
 }
 
-#define DEFINE_MEAN_SIGNATURE(ver, ...)                                   \
-    DEFINE_OPERATION_SIGNATURE(MEAN_##ver){                               \
-            .opType = ANEURALNETWORKS_MEAN,                               \
-            .supportedDataTypes = {__VA_ARGS__},                          \
-            .supportedRanks = {1, 2, 3, 4},                               \
-            .version = HalVersion::ver,                                   \
-            .inputs = {INPUT_DEFAULT, PARAMETER_NONE(Type::TENSOR_INT32), \
-                       PARAMETER_CHOICE(Type::INT32, -100, 100)},         \
-            .outputs = {OUTPUT_DEFAULT},                                  \
+#define DEFINE_MEAN_SIGNATURE(ver, ...)                                              \
+    DEFINE_OPERATION_SIGNATURE(MEAN_##ver){                                          \
+            .opType = ANEURALNETWORKS_MEAN,                                          \
+            .supportedDataTypes = {__VA_ARGS__},                                     \
+            .supportedRanks = {1, 2, 3, 4},                                          \
+            .version = HalVersion::ver,                                              \
+            .inputs = {INPUT_DEFAULT, PARAMETER_NONE(TestOperandType::TENSOR_INT32), \
+                       PARAMETER_CHOICE(TestOperandType::INT32, -100, 100)},         \
+            .outputs = {OUTPUT_DEFAULT},                                             \
             .constructor = reduceOpConstructor};
 
-DEFINE_MEAN_SIGNATURE(V1_1, Type::TENSOR_FLOAT32, Type::TENSOR_QUANT8_ASYMM);
-DEFINE_MEAN_SIGNATURE(V1_2, Type::TENSOR_FLOAT16);
+DEFINE_MEAN_SIGNATURE(V1_1, TestOperandType::TENSOR_FLOAT32, TestOperandType::TENSOR_QUANT8_ASYMM);
+DEFINE_MEAN_SIGNATURE(V1_2, TestOperandType::TENSOR_FLOAT16);
 
-#define DEFINE_REDUCE_SIGNATURE(op, ver, ...)                             \
-    DEFINE_OPERATION_SIGNATURE(op##_##ver){                               \
-            .opType = ANEURALNETWORKS_##op,                               \
-            .supportedDataTypes = {__VA_ARGS__},                          \
-            .supportedRanks = {1, 2, 3, 4},                               \
-            .version = HalVersion::ver,                                   \
-            .inputs = {INPUT_DEFAULT, PARAMETER_NONE(Type::TENSOR_INT32), \
-                       PARAMETER_CHOICE(Type::BOOL, true, false)},        \
-            .outputs = {OUTPUT_DEFAULT},                                  \
+#define DEFINE_REDUCE_SIGNATURE(op, ver, ...)                                        \
+    DEFINE_OPERATION_SIGNATURE(op##_##ver){                                          \
+            .opType = ANEURALNETWORKS_##op,                                          \
+            .supportedDataTypes = {__VA_ARGS__},                                     \
+            .supportedRanks = {1, 2, 3, 4},                                          \
+            .version = HalVersion::ver,                                              \
+            .inputs = {INPUT_DEFAULT, PARAMETER_NONE(TestOperandType::TENSOR_INT32), \
+                       PARAMETER_CHOICE(TestOperandType::BOOL, true, false)},        \
+            .outputs = {OUTPUT_DEFAULT},                                             \
             .constructor = reduceOpConstructor};
 
-DEFINE_REDUCE_SIGNATURE(REDUCE_ALL, V1_2, Type::TENSOR_BOOL8);
-DEFINE_REDUCE_SIGNATURE(REDUCE_ANY, V1_2, Type::TENSOR_BOOL8);
-DEFINE_REDUCE_SIGNATURE(REDUCE_PROD, V1_2, Type::TENSOR_FLOAT32, Type::TENSOR_FLOAT16);
-DEFINE_REDUCE_SIGNATURE(REDUCE_SUM, V1_2, Type::TENSOR_FLOAT32, Type::TENSOR_FLOAT16);
-DEFINE_REDUCE_SIGNATURE(REDUCE_MAX, V1_2, Type::TENSOR_FLOAT32, Type::TENSOR_FLOAT16,
-                        Type::TENSOR_QUANT8_ASYMM);
-DEFINE_REDUCE_SIGNATURE(REDUCE_MIN, V1_2, Type::TENSOR_FLOAT32, Type::TENSOR_FLOAT16,
-                        Type::TENSOR_QUANT8_ASYMM);
+DEFINE_REDUCE_SIGNATURE(REDUCE_ALL, V1_2, TestOperandType::TENSOR_BOOL8);
+DEFINE_REDUCE_SIGNATURE(REDUCE_ANY, V1_2, TestOperandType::TENSOR_BOOL8);
+DEFINE_REDUCE_SIGNATURE(REDUCE_PROD, V1_2, TestOperandType::TENSOR_FLOAT32,
+                        TestOperandType::TENSOR_FLOAT16);
+DEFINE_REDUCE_SIGNATURE(REDUCE_SUM, V1_2, TestOperandType::TENSOR_FLOAT32,
+                        TestOperandType::TENSOR_FLOAT16);
+DEFINE_REDUCE_SIGNATURE(REDUCE_MAX, V1_2, TestOperandType::TENSOR_FLOAT32,
+                        TestOperandType::TENSOR_FLOAT16, TestOperandType::TENSOR_QUANT8_ASYMM);
+DEFINE_REDUCE_SIGNATURE(REDUCE_MIN, V1_2, TestOperandType::TENSOR_FLOAT32,
+                        TestOperandType::TENSOR_FLOAT16, TestOperandType::TENSOR_QUANT8_ASYMM);
 
-static void singleAxisReduceOpConstructor(Type, uint32_t rank, RandomOperation* op) {
+static void singleAxisReduceOpConstructor(TestOperandType, uint32_t rank, RandomOperation* op) {
     setFreeDimensions(op->inputs[0], rank);
     // "axis" must be in the range [-rank, rank).
     // Negative "axis" is used to specify axis from the end.
@@ -110,12 +112,13 @@ static void singleAxisReduceOpConstructor(Type, uint32_t rank, RandomOperation* 
 #define DEFINE_ARGMIN_MAX_SIGNATURE(op, ver, ...)                                                  \
     DEFINE_OPERATION_SIGNATURE(op##_##ver){                                                        \
             .opType = ANEURALNETWORKS_##op,                                                        \
-            .supportedDataTypes = {Type::TENSOR_FLOAT32, Type::TENSOR_FLOAT16, Type::TENSOR_INT32, \
-                                   Type::TENSOR_QUANT8_ASYMM},                                     \
+            .supportedDataTypes = {TestOperandType::TENSOR_FLOAT32,                                \
+                                   TestOperandType::TENSOR_FLOAT16, TestOperandType::TENSOR_INT32, \
+                                   TestOperandType::TENSOR_QUANT8_ASYMM},                          \
             .supportedRanks = {1, 2, 3, 4, 5},                                                     \
             .version = HalVersion::ver,                                                            \
-            .inputs = {INPUT_DEFAULT, PARAMETER_NONE(Type::INT32)},                                \
-            .outputs = {OUTPUT_TYPED(Type::TENSOR_INT32)},                                         \
+            .inputs = {INPUT_DEFAULT, PARAMETER_NONE(TestOperandType::INT32)},                     \
+            .outputs = {OUTPUT_TYPED(TestOperandType::TENSOR_INT32)},                              \
             .constructor = singleAxisReduceOpConstructor};
 
 DEFINE_ARGMIN_MAX_SIGNATURE(ARGMAX, V1_2);

@@ -14,13 +14,16 @@
  * limitations under the License.
  */
 
+#include <algorithm>
+#include <vector>
+
 #include "fuzzing/operation_signatures/OperationSignatureUtils.h"
 
 namespace android {
 namespace nn {
 namespace fuzzing_test {
 
-static void spaceToDepthConstructor(Type, uint32_t rank, RandomOperation* op) {
+static void spaceToDepthConstructor(TestOperandType, uint32_t rank, RandomOperation* op) {
     NN_FUZZER_CHECK(rank == 4);
 
     bool useNchw = false;
@@ -46,34 +49,36 @@ static void spaceToDepthConstructor(Type, uint32_t rank, RandomOperation* op) {
 
 DEFINE_OPERATION_SIGNATURE(SPACE_TO_DEPTH_V1_0){
         .opType = ANEURALNETWORKS_SPACE_TO_DEPTH,
-        .supportedDataTypes = {Type::TENSOR_FLOAT32, Type::TENSOR_QUANT8_ASYMM},
+        .supportedDataTypes = {TestOperandType::TENSOR_FLOAT32,
+                               TestOperandType::TENSOR_QUANT8_ASYMM},
         .supportedRanks = {4},
         .version = HalVersion::V1_0,
-        .inputs = {INPUT_DEFAULT, PARAMETER_RANGE(Type::INT32, 1, 5)},
+        .inputs = {INPUT_DEFAULT, PARAMETER_RANGE(TestOperandType::INT32, 1, 5)},
         .outputs = {OUTPUT_DEFAULT},
         .constructor = spaceToDepthConstructor};
 
 DEFINE_OPERATION_SIGNATURE(SPACE_TO_DEPTH_V1_2){
         .opType = ANEURALNETWORKS_SPACE_TO_DEPTH,
-        .supportedDataTypes = {Type::TENSOR_FLOAT16},
+        .supportedDataTypes = {TestOperandType::TENSOR_FLOAT16},
         .supportedRanks = {4},
         .version = HalVersion::V1_2,
-        .inputs = {INPUT_DEFAULT, PARAMETER_RANGE(Type::INT32, 1, 5)},
+        .inputs = {INPUT_DEFAULT, PARAMETER_RANGE(TestOperandType::INT32, 1, 5)},
         .outputs = {OUTPUT_DEFAULT},
         .constructor = spaceToDepthConstructor};
 
 DEFINE_OPERATION_SIGNATURE(SPACE_TO_DEPTH_layout_V1_2){
         .opType = ANEURALNETWORKS_SPACE_TO_DEPTH,
-        .supportedDataTypes = {Type::TENSOR_FLOAT32, Type::TENSOR_QUANT8_ASYMM,
-                               Type::TENSOR_FLOAT16},
+        .supportedDataTypes = {TestOperandType::TENSOR_FLOAT32,
+                               TestOperandType::TENSOR_QUANT8_ASYMM,
+                               TestOperandType::TENSOR_FLOAT16},
         .supportedRanks = {4},
         .version = HalVersion::V1_2,
-        .inputs = {INPUT_DEFAULT, PARAMETER_RANGE(Type::INT32, 1, 5),
-                   PARAMETER_CHOICE(Type::BOOL, true, false)},
+        .inputs = {INPUT_DEFAULT, PARAMETER_RANGE(TestOperandType::INT32, 1, 5),
+                   PARAMETER_CHOICE(TestOperandType::BOOL, true, false)},
         .outputs = {OUTPUT_DEFAULT},
         .constructor = spaceToDepthConstructor};
 
-static void depthToSpaceConstructor(Type, uint32_t rank, RandomOperation* op) {
+static void depthToSpaceConstructor(TestOperandType, uint32_t rank, RandomOperation* op) {
     NN_FUZZER_CHECK(rank == 4);
 
     bool useNchw = false;
@@ -99,34 +104,36 @@ static void depthToSpaceConstructor(Type, uint32_t rank, RandomOperation* op) {
 
 DEFINE_OPERATION_SIGNATURE(DEPTH_TO_SPACE_V1_0){
         .opType = ANEURALNETWORKS_DEPTH_TO_SPACE,
-        .supportedDataTypes = {Type::TENSOR_FLOAT32, Type::TENSOR_QUANT8_ASYMM},
+        .supportedDataTypes = {TestOperandType::TENSOR_FLOAT32,
+                               TestOperandType::TENSOR_QUANT8_ASYMM},
         .supportedRanks = {4},
         .version = HalVersion::V1_0,
-        .inputs = {INPUT_DEFAULT, PARAMETER_RANGE(Type::INT32, 1, 3)},
+        .inputs = {INPUT_DEFAULT, PARAMETER_RANGE(TestOperandType::INT32, 1, 3)},
         .outputs = {OUTPUT_DEFAULT},
         .constructor = depthToSpaceConstructor};
 
 DEFINE_OPERATION_SIGNATURE(DEPTH_TO_SPACE_V1_2){
         .opType = ANEURALNETWORKS_DEPTH_TO_SPACE,
-        .supportedDataTypes = {Type::TENSOR_FLOAT16},
+        .supportedDataTypes = {TestOperandType::TENSOR_FLOAT16},
         .supportedRanks = {4},
         .version = HalVersion::V1_2,
-        .inputs = {INPUT_DEFAULT, PARAMETER_RANGE(Type::INT32, 1, 3)},
+        .inputs = {INPUT_DEFAULT, PARAMETER_RANGE(TestOperandType::INT32, 1, 3)},
         .outputs = {OUTPUT_DEFAULT},
         .constructor = depthToSpaceConstructor};
 
 DEFINE_OPERATION_SIGNATURE(DEPTH_TO_SPACE_layout_V1_2){
         .opType = ANEURALNETWORKS_DEPTH_TO_SPACE,
-        .supportedDataTypes = {Type::TENSOR_FLOAT32, Type::TENSOR_QUANT8_ASYMM,
-                               Type::TENSOR_FLOAT16},
+        .supportedDataTypes = {TestOperandType::TENSOR_FLOAT32,
+                               TestOperandType::TENSOR_QUANT8_ASYMM,
+                               TestOperandType::TENSOR_FLOAT16},
         .supportedRanks = {4},
         .version = HalVersion::V1_2,
-        .inputs = {INPUT_DEFAULT, PARAMETER_RANGE(Type::INT32, 1, 3),
-                   PARAMETER_CHOICE(Type::BOOL, true, false)},
+        .inputs = {INPUT_DEFAULT, PARAMETER_RANGE(TestOperandType::INT32, 1, 3),
+                   PARAMETER_CHOICE(TestOperandType::BOOL, true, false)},
         .outputs = {OUTPUT_DEFAULT},
         .constructor = depthToSpaceConstructor};
 
-static void reshapeConstructor(Type, uint32_t rank, RandomOperation* op) {
+static void reshapeConstructor(TestOperandType, uint32_t rank, RandomOperation* op) {
     setFreeDimensions(op->inputs[0], rank);
     op->inputs[1]->dimensions = {rank};
     op->inputs[1]->randomBuffer.resize(rank);
@@ -144,23 +151,24 @@ static void reshapeConstructor(Type, uint32_t rank, RandomOperation* op) {
 
 DEFINE_OPERATION_SIGNATURE(RESHAPE_V1_0){
         .opType = ANEURALNETWORKS_RESHAPE,
-        .supportedDataTypes = {Type::TENSOR_FLOAT32, Type::TENSOR_QUANT8_ASYMM},
+        .supportedDataTypes = {TestOperandType::TENSOR_FLOAT32,
+                               TestOperandType::TENSOR_QUANT8_ASYMM},
         .supportedRanks = {1, 2, 3, 4},
         .version = HalVersion::V1_0,
-        .inputs = {INPUT_DEFAULT, PARAMETER_NONE(Type::TENSOR_INT32)},
+        .inputs = {INPUT_DEFAULT, PARAMETER_NONE(TestOperandType::TENSOR_INT32)},
         .outputs = {OUTPUT_DEFAULT},
         .constructor = reshapeConstructor};
 
 DEFINE_OPERATION_SIGNATURE(RESHAPE_V1_2){
         .opType = ANEURALNETWORKS_RESHAPE,
-        .supportedDataTypes = {Type::TENSOR_FLOAT16},
+        .supportedDataTypes = {TestOperandType::TENSOR_FLOAT16},
         .supportedRanks = {1, 2, 3, 4},
         .version = HalVersion::V1_2,
-        .inputs = {INPUT_DEFAULT, PARAMETER_NONE(Type::TENSOR_INT32)},
+        .inputs = {INPUT_DEFAULT, PARAMETER_NONE(TestOperandType::TENSOR_INT32)},
         .outputs = {OUTPUT_DEFAULT},
         .constructor = reshapeConstructor};
 
-static void batchToSpaceConstructor(Type, uint32_t rank, RandomOperation* op) {
+static void batchToSpaceConstructor(TestOperandType, uint32_t rank, RandomOperation* op) {
     NN_FUZZER_CHECK(rank == 4);
 
     bool useNchw = false;
@@ -186,37 +194,39 @@ static void batchToSpaceConstructor(Type, uint32_t rank, RandomOperation* op) {
 
 DEFINE_OPERATION_SIGNATURE(BATCH_TO_SPACE_ND_V1_1){
         .opType = ANEURALNETWORKS_BATCH_TO_SPACE_ND,
-        .supportedDataTypes = {Type::TENSOR_FLOAT32, Type::TENSOR_QUANT8_ASYMM},
+        .supportedDataTypes = {TestOperandType::TENSOR_FLOAT32,
+                               TestOperandType::TENSOR_QUANT8_ASYMM},
         .supportedRanks = {4},
         .version = HalVersion::V1_1,
         .inputs = {INPUT_DEFAULT,
-                   PARAMETER_VEC_RANGE(Type::TENSOR_INT32, /*len=*/2, /*range=*/1, 3)},
+                   PARAMETER_VEC_RANGE(TestOperandType::TENSOR_INT32, /*len=*/2, /*range=*/1, 3)},
         .outputs = {OUTPUT_DEFAULT},
         .constructor = batchToSpaceConstructor};
 
 DEFINE_OPERATION_SIGNATURE(BATCH_TO_SPACE_ND_V1_2){
         .opType = ANEURALNETWORKS_BATCH_TO_SPACE_ND,
-        .supportedDataTypes = {Type::TENSOR_FLOAT16},
+        .supportedDataTypes = {TestOperandType::TENSOR_FLOAT16},
         .supportedRanks = {4},
         .version = HalVersion::V1_2,
         .inputs = {INPUT_DEFAULT,
-                   PARAMETER_VEC_RANGE(Type::TENSOR_INT32, /*len=*/2, /*range=*/1, 3)},
+                   PARAMETER_VEC_RANGE(TestOperandType::TENSOR_INT32, /*len=*/2, /*range=*/1, 3)},
         .outputs = {OUTPUT_DEFAULT},
         .constructor = batchToSpaceConstructor};
 
 DEFINE_OPERATION_SIGNATURE(BATCH_TO_SPACE_ND_layout_V1_2){
         .opType = ANEURALNETWORKS_BATCH_TO_SPACE_ND,
-        .supportedDataTypes = {Type::TENSOR_FLOAT32, Type::TENSOR_QUANT8_ASYMM,
-                               Type::TENSOR_FLOAT16},
+        .supportedDataTypes = {TestOperandType::TENSOR_FLOAT32,
+                               TestOperandType::TENSOR_QUANT8_ASYMM,
+                               TestOperandType::TENSOR_FLOAT16},
         .supportedRanks = {4},
         .version = HalVersion::V1_2,
         .inputs = {INPUT_DEFAULT,
-                   PARAMETER_VEC_RANGE(Type::TENSOR_INT32, /*len=*/2, /*range=*/1, 3),
-                   PARAMETER_CHOICE(Type::BOOL, true, false)},
+                   PARAMETER_VEC_RANGE(TestOperandType::TENSOR_INT32, /*len=*/2, /*range=*/1, 3),
+                   PARAMETER_CHOICE(TestOperandType::BOOL, true, false)},
         .outputs = {OUTPUT_DEFAULT},
         .constructor = batchToSpaceConstructor};
 
-static void spaceToBatchConstructor(Type, uint32_t rank, RandomOperation* op) {
+static void spaceToBatchConstructor(TestOperandType, uint32_t rank, RandomOperation* op) {
     NN_FUZZER_CHECK(rank == 4);
 
     bool useNchw = false;
@@ -250,8 +260,9 @@ static void spaceToBatchConstructor(Type, uint32_t rank, RandomOperation* op) {
 
 // The paddings tensor in SPACE_TOBATCH_ND, a [2, 2] tensor with value selected from [0, 10].
 static const OperandSignature paddingTensor_SPACE_TO_BATCH_ND = {
-        .type = RandomOperandType::CONST, .constructor = [](Type, uint32_t, RandomOperand* op) {
-            op->dataType = Type::TENSOR_INT32;
+        .type = RandomOperandType::CONST,
+        .constructor = [](TestOperandType, uint32_t, RandomOperand* op) {
+            op->dataType = TestOperandType::TENSOR_INT32;
             op->dimensions = {2, 2};
             op->resizeBuffer<int32_t>(4);
             for (int i = 0; i < 4; i++) op->value<int32_t>(i) = getUniform<int32_t>(0, 10);
@@ -259,39 +270,42 @@ static const OperandSignature paddingTensor_SPACE_TO_BATCH_ND = {
 
 DEFINE_OPERATION_SIGNATURE(SPACE_TO_BATCH_ND_V1_1){
         .opType = ANEURALNETWORKS_SPACE_TO_BATCH_ND,
-        .supportedDataTypes = {Type::TENSOR_FLOAT32, Type::TENSOR_QUANT8_ASYMM},
+        .supportedDataTypes = {TestOperandType::TENSOR_FLOAT32,
+                               TestOperandType::TENSOR_QUANT8_ASYMM},
         .supportedRanks = {4},
         .version = HalVersion::V1_1,
         .inputs = {INPUT_DEFAULT,
-                   PARAMETER_VEC_RANGE(Type::TENSOR_INT32, /*len=*/2, /*range=*/1, 5),
+                   PARAMETER_VEC_RANGE(TestOperandType::TENSOR_INT32, /*len=*/2, /*range=*/1, 5),
                    paddingTensor_SPACE_TO_BATCH_ND},
         .outputs = {OUTPUT_DEFAULT},
         .constructor = spaceToBatchConstructor};
 
 DEFINE_OPERATION_SIGNATURE(SPACE_TO_BATCH_ND_V1_2){
         .opType = ANEURALNETWORKS_SPACE_TO_BATCH_ND,
-        .supportedDataTypes = {Type::TENSOR_FLOAT16},
+        .supportedDataTypes = {TestOperandType::TENSOR_FLOAT16},
         .supportedRanks = {4},
         .version = HalVersion::V1_2,
         .inputs = {INPUT_DEFAULT,
-                   PARAMETER_VEC_RANGE(Type::TENSOR_INT32, /*len=*/2, /*range=*/1, 5),
+                   PARAMETER_VEC_RANGE(TestOperandType::TENSOR_INT32, /*len=*/2, /*range=*/1, 5),
                    paddingTensor_SPACE_TO_BATCH_ND},
         .outputs = {OUTPUT_DEFAULT},
         .constructor = spaceToBatchConstructor};
 
 DEFINE_OPERATION_SIGNATURE(SPACE_TO_BATCH_ND_layout_V1_2){
         .opType = ANEURALNETWORKS_SPACE_TO_BATCH_ND,
-        .supportedDataTypes = {Type::TENSOR_FLOAT32, Type::TENSOR_QUANT8_ASYMM,
-                               Type::TENSOR_FLOAT16},
+        .supportedDataTypes = {TestOperandType::TENSOR_FLOAT32,
+                               TestOperandType::TENSOR_QUANT8_ASYMM,
+                               TestOperandType::TENSOR_FLOAT16},
         .supportedRanks = {4},
         .version = HalVersion::V1_2,
         .inputs = {INPUT_DEFAULT,
-                   PARAMETER_VEC_RANGE(Type::TENSOR_INT32, /*len=*/2, /*range=*/1, 5),
-                   paddingTensor_SPACE_TO_BATCH_ND, PARAMETER_CHOICE(Type::BOOL, true, false)},
+                   PARAMETER_VEC_RANGE(TestOperandType::TENSOR_INT32, /*len=*/2, /*range=*/1, 5),
+                   paddingTensor_SPACE_TO_BATCH_ND,
+                   PARAMETER_CHOICE(TestOperandType::BOOL, true, false)},
         .outputs = {OUTPUT_DEFAULT},
         .constructor = spaceToBatchConstructor};
 
-static void padConstructor(Type, uint32_t rank, RandomOperation* op) {
+static void padConstructor(TestOperandType, uint32_t rank, RandomOperation* op) {
     setFreeDimensions(op->inputs[0], rank);
     op->inputs[1]->dimensions = {rank, 2};
     op->inputs[1]->resizeBuffer<int32_t>(rank * 2);
@@ -307,18 +321,18 @@ static void padConstructor(Type, uint32_t rank, RandomOperation* op) {
 
 static const OperandSignature paddingScalar_PAD_V2 = {
         .type = RandomOperandType::CONST,
-        .constructor = [](Type dataType, uint32_t, RandomOperand* op) {
+        .constructor = [](TestOperandType dataType, uint32_t, RandomOperand* op) {
             switch (dataType) {
-                case Type::TENSOR_FLOAT32:
-                    op->dataType = Type::FLOAT32;
+                case TestOperandType::TENSOR_FLOAT32:
+                    op->dataType = TestOperandType::FLOAT32;
                     op->setScalarValue<float>(getUniform<float>(-10.0f, 10.0f));
                     break;
-                case Type::TENSOR_FLOAT16:
-                    op->dataType = Type::FLOAT16;
+                case TestOperandType::TENSOR_FLOAT16:
+                    op->dataType = TestOperandType::FLOAT16;
                     op->setScalarValue<_Float16>(getUniform<_Float16>(-10.0f, 10.0f));
                     break;
-                case Type::TENSOR_QUANT8_ASYMM:
-                    op->dataType = Type::INT32;
+                case TestOperandType::TENSOR_QUANT8_ASYMM:
+                    op->dataType = TestOperandType::INT32;
                     op->setScalarValue<int32_t>(getUniform<int32_t>(0, 255));
                     break;
                 default:
@@ -328,32 +342,36 @@ static const OperandSignature paddingScalar_PAD_V2 = {
 
 DEFINE_OPERATION_SIGNATURE(PAD_V1_1){
         .opType = ANEURALNETWORKS_PAD,
-        .supportedDataTypes = {Type::TENSOR_FLOAT32, Type::TENSOR_QUANT8_ASYMM},
+        .supportedDataTypes = {TestOperandType::TENSOR_FLOAT32,
+                               TestOperandType::TENSOR_QUANT8_ASYMM},
         .supportedRanks = {1, 2, 3, 4},
         .version = HalVersion::V1_1,
-        .inputs = {INPUT_DEFAULT, PARAMETER_NONE(Type::TENSOR_INT32)},
+        .inputs = {INPUT_DEFAULT, PARAMETER_NONE(TestOperandType::TENSOR_INT32)},
         .outputs = {OUTPUT_DEFAULT},
         .constructor = padConstructor};
 
-DEFINE_OPERATION_SIGNATURE(PAD_V1_2){.opType = ANEURALNETWORKS_PAD,
-                                     .supportedDataTypes = {Type::TENSOR_FLOAT16},
-                                     .supportedRanks = {1, 2, 3, 4},
-                                     .version = HalVersion::V1_2,
-                                     .inputs = {INPUT_DEFAULT, PARAMETER_NONE(Type::TENSOR_INT32)},
-                                     .outputs = {OUTPUT_DEFAULT},
-                                     .constructor = padConstructor};
+DEFINE_OPERATION_SIGNATURE(PAD_V1_2){
+        .opType = ANEURALNETWORKS_PAD,
+        .supportedDataTypes = {TestOperandType::TENSOR_FLOAT16},
+        .supportedRanks = {1, 2, 3, 4},
+        .version = HalVersion::V1_2,
+        .inputs = {INPUT_DEFAULT, PARAMETER_NONE(TestOperandType::TENSOR_INT32)},
+        .outputs = {OUTPUT_DEFAULT},
+        .constructor = padConstructor};
 
 DEFINE_OPERATION_SIGNATURE(PAD_V2_V1_2){
         .opType = ANEURALNETWORKS_PAD_V2,
-        .supportedDataTypes = {Type::TENSOR_FLOAT32, Type::TENSOR_QUANT8_ASYMM,
-                               Type::TENSOR_FLOAT16},
+        .supportedDataTypes = {TestOperandType::TENSOR_FLOAT32,
+                               TestOperandType::TENSOR_QUANT8_ASYMM,
+                               TestOperandType::TENSOR_FLOAT16},
         .supportedRanks = {1, 2, 3, 4},
         .version = HalVersion::V1_2,
-        .inputs = {INPUT_DEFAULT, PARAMETER_NONE(Type::TENSOR_INT32), paddingScalar_PAD_V2},
+        .inputs = {INPUT_DEFAULT, PARAMETER_NONE(TestOperandType::TENSOR_INT32),
+                   paddingScalar_PAD_V2},
         .outputs = {OUTPUT_DEFAULT},
         .constructor = padConstructor};
 
-static void transposeConstructor(Type, uint32_t rank, RandomOperation* op) {
+static void transposeConstructor(TestOperandType, uint32_t rank, RandomOperation* op) {
     // Create the permutation value by randomly shuffling a sequential array.
     std::vector<int32_t> permutation(rank);
     std::iota(permutation.begin(), permutation.end(), 0);
@@ -374,23 +392,25 @@ static void transposeConstructor(Type, uint32_t rank, RandomOperation* op) {
 // TODO: Test the case when the second input is omitted.
 DEFINE_OPERATION_SIGNATURE(TRANSPOSE_V1_1){
         .opType = ANEURALNETWORKS_TRANSPOSE,
-        .supportedDataTypes = {Type::TENSOR_FLOAT32, Type::TENSOR_QUANT8_ASYMM},
+        .supportedDataTypes = {TestOperandType::TENSOR_FLOAT32,
+                               TestOperandType::TENSOR_QUANT8_ASYMM},
         .supportedRanks = {1, 2, 3, 4},
         .version = HalVersion::V1_1,
-        .inputs = {INPUT_DEFAULT, PARAMETER_NONE(Type::TENSOR_INT32)},
+        .inputs = {INPUT_DEFAULT, PARAMETER_NONE(TestOperandType::TENSOR_INT32)},
         .outputs = {OUTPUT_DEFAULT},
         .constructor = transposeConstructor};
 
 DEFINE_OPERATION_SIGNATURE(TRANSPOSE_V1_2){
         .opType = ANEURALNETWORKS_TRANSPOSE,
-        .supportedDataTypes = {Type::TENSOR_FLOAT16},
+        .supportedDataTypes = {TestOperandType::TENSOR_FLOAT16},
         .supportedRanks = {1, 2, 3, 4},
         .version = HalVersion::V1_2,
-        .inputs = {INPUT_DEFAULT, PARAMETER_NONE(Type::TENSOR_INT32)},
+        .inputs = {INPUT_DEFAULT, PARAMETER_NONE(TestOperandType::TENSOR_INT32)},
         .outputs = {OUTPUT_DEFAULT},
         .constructor = transposeConstructor};
 
-static void channelShuffleConstructor(Type dataType, uint32_t rank, RandomOperation* op) {
+static void channelShuffleConstructor(TestOperandType dataType, uint32_t rank,
+                                      RandomOperation* op) {
     sameShapeOpConstructor(dataType, rank, op);
     // The number of groups must be a divisor of the target axis size.
     int32_t axis = getUniform<int32_t>(-rank, rank - 1);
@@ -402,15 +422,17 @@ static void channelShuffleConstructor(Type dataType, uint32_t rank, RandomOperat
 
 DEFINE_OPERATION_SIGNATURE(CHANNEL_SHUFFLE_V1_2){
         .opType = ANEURALNETWORKS_CHANNEL_SHUFFLE,
-        .supportedDataTypes = {Type::TENSOR_FLOAT32, Type::TENSOR_QUANT8_ASYMM,
-                               Type::TENSOR_FLOAT16},
+        .supportedDataTypes = {TestOperandType::TENSOR_FLOAT32,
+                               TestOperandType::TENSOR_QUANT8_ASYMM,
+                               TestOperandType::TENSOR_FLOAT16},
         .supportedRanks = {1, 2, 3, 4},
         .version = HalVersion::V1_2,
-        .inputs = {INPUT_DEFAULT, PARAMETER_RANGE(Type::INT32, 1, 5), PARAMETER_NONE(Type::INT32)},
+        .inputs = {INPUT_DEFAULT, PARAMETER_RANGE(TestOperandType::INT32, 1, 5),
+                   PARAMETER_NONE(TestOperandType::INT32)},
         .outputs = {OUTPUT_DEFAULT},
         .constructor = channelShuffleConstructor};
 
-static void squeezeConstructor(Type, uint32_t rank, RandomOperation* op) {
+static void squeezeConstructor(TestOperandType, uint32_t rank, RandomOperation* op) {
     // A boolean array indicating whether each dimension is selected to be squeezed.
     bool squeeze[4] = {false, false, false, false};
     uint32_t numAxis = getUniform<int32_t>(1, 10);
@@ -438,23 +460,24 @@ static void squeezeConstructor(Type, uint32_t rank, RandomOperation* op) {
 // TODO: Test the case when the second input is omitted.
 DEFINE_OPERATION_SIGNATURE(SQUEEZE_V1_1){
         .opType = ANEURALNETWORKS_SQUEEZE,
-        .supportedDataTypes = {Type::TENSOR_FLOAT32, Type::TENSOR_QUANT8_ASYMM},
+        .supportedDataTypes = {TestOperandType::TENSOR_FLOAT32,
+                               TestOperandType::TENSOR_QUANT8_ASYMM},
         .supportedRanks = {1, 2, 3, 4},
         .version = HalVersion::V1_1,
-        .inputs = {INPUT_DEFAULT, PARAMETER_NONE(Type::TENSOR_INT32)},
+        .inputs = {INPUT_DEFAULT, PARAMETER_NONE(TestOperandType::TENSOR_INT32)},
         .outputs = {OUTPUT_DEFAULT},
         .constructor = squeezeConstructor};
 
 DEFINE_OPERATION_SIGNATURE(SQUEEZE_V1_2){
         .opType = ANEURALNETWORKS_SQUEEZE,
-        .supportedDataTypes = {Type::TENSOR_FLOAT16},
+        .supportedDataTypes = {TestOperandType::TENSOR_FLOAT16},
         .supportedRanks = {1, 2, 3, 4},
         .version = HalVersion::V1_2,
-        .inputs = {INPUT_DEFAULT, PARAMETER_NONE(Type::TENSOR_INT32)},
+        .inputs = {INPUT_DEFAULT, PARAMETER_NONE(TestOperandType::TENSOR_INT32)},
         .outputs = {OUTPUT_DEFAULT},
         .constructor = squeezeConstructor};
 
-static void expandDimsConstructor(Type, uint32_t rank, RandomOperation* op) {
+static void expandDimsConstructor(TestOperandType, uint32_t rank, RandomOperation* op) {
     // Generate values for the "axis" tensor.
     int32_t axis = getUniform<int32_t>(-rank - 1, rank);
     op->inputs[1]->setScalarValue<int32_t>(axis);
@@ -473,15 +496,15 @@ static void expandDimsConstructor(Type, uint32_t rank, RandomOperation* op) {
 
 DEFINE_OPERATION_SIGNATURE(EXPAND_DIMS_V1_2){
         .opType = ANEURALNETWORKS_EXPAND_DIMS,
-        .supportedDataTypes = {Type::TENSOR_FLOAT32, Type::TENSOR_FLOAT16, Type::TENSOR_INT32,
-                               Type::TENSOR_QUANT8_ASYMM},
+        .supportedDataTypes = {TestOperandType::TENSOR_FLOAT32, TestOperandType::TENSOR_FLOAT16,
+                               TestOperandType::TENSOR_INT32, TestOperandType::TENSOR_QUANT8_ASYMM},
         .supportedRanks = {1, 2, 3, 4, 5},
         .version = HalVersion::V1_2,
-        .inputs = {INPUT_DEFAULT, PARAMETER_NONE(Type::INT32)},
+        .inputs = {INPUT_DEFAULT, PARAMETER_NONE(TestOperandType::INT32)},
         .outputs = {OUTPUT_DEFAULT},
         .constructor = expandDimsConstructor};
 
-static void tileConstructor(Type, uint32_t rank, RandomOperation* op) {
+static void tileConstructor(TestOperandType, uint32_t rank, RandomOperation* op) {
     setFreeDimensions(op->inputs[0], rank);
     op->outputs[0]->dimensions.resize(rank);
     op->inputs[1]->dimensions = {rank};
@@ -496,11 +519,11 @@ static void tileConstructor(Type, uint32_t rank, RandomOperation* op) {
 
 DEFINE_OPERATION_SIGNATURE(TILE_V1_2){
         .opType = ANEURALNETWORKS_TILE,
-        .supportedDataTypes = {Type::TENSOR_FLOAT32, Type::TENSOR_FLOAT16, Type::TENSOR_INT32,
-                               Type::TENSOR_QUANT8_ASYMM},
+        .supportedDataTypes = {TestOperandType::TENSOR_FLOAT32, TestOperandType::TENSOR_FLOAT16,
+                               TestOperandType::TENSOR_INT32, TestOperandType::TENSOR_QUANT8_ASYMM},
         .supportedRanks = {1, 2, 3, 4, 5},
         .version = HalVersion::V1_2,
-        .inputs = {INPUT_DEFAULT, PARAMETER_NONE(Type::TENSOR_INT32)},
+        .inputs = {INPUT_DEFAULT, PARAMETER_NONE(TestOperandType::TENSOR_INT32)},
         .outputs = {OUTPUT_DEFAULT},
         .constructor = tileConstructor};
 

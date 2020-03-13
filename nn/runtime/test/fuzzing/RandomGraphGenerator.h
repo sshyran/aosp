@@ -29,7 +29,6 @@ namespace android {
 namespace nn {
 namespace fuzzing_test {
 
-using test_wrapper::Type;
 using OperandBuffer = std::vector<int32_t>;
 
 struct OperandSignature;
@@ -40,7 +39,7 @@ enum class RandomOperandType { INPUT = 0, OUTPUT = 1, INTERNAL = 2, CONST = 3 };
 
 struct RandomOperand {
     RandomOperandType type;
-    Type dataType;
+    test_helper::TestOperandType dataType;
     float scale = 0.0f;
     int32_t zeroPoint = 0;
     std::vector<RandomVariable> dimensions;
@@ -64,7 +63,7 @@ struct RandomOperand {
     // eventually end up being a model output.
     bool doNotConnect = false;
 
-    RandomOperand(const OperandSignature& op, Type dataType, uint32_t rank);
+    RandomOperand(const OperandSignature& op, test_helper::TestOperandType dataType, uint32_t rank);
 
     // Resize the underlying operand buffer.
     template <typename T>
