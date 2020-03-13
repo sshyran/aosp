@@ -5515,6 +5515,8 @@ typedef enum {
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT16}
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
      *
+     * Supported tensor rank: from 1.
+     *
      * Inputs:
      * * 0: A tensor, specifying the input. May be zero-sized.
      * * 1: A scalar, specifying the alpha parameter.
@@ -5546,6 +5548,8 @@ typedef enum {
      * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM}
      * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED}
      *
+     * Supported tensor rank: from 1.
+     *
      * Inputs:
      * * 0: A tensor, specifying the input. May be zero-sized.
      *
@@ -5565,6 +5569,8 @@ typedef enum {
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT16}
      * * {@link ANEURALNETWORKS_TENSOR_FLOAT32}
      * * {@link ANEURALNETWORKS_TENSOR_INT32}
+     *
+     * Supported tensor rank: from 1.
      *
      * Inputs:
      * * 0: A 1-D tensor, specifying the desired output tensor shape.
@@ -5600,6 +5606,8 @@ typedef enum {
      * * {@link ANEURALNETWORKS_TENSOR_QUANT16_ASYMM}
      * * {@link ANEURALNETWORKS_TENSOR_QUANT8_SYMM}
      * * {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED}
+     *
+     * Supported tensor rank: from 1.
      *
      * Inputs:
      * * 0: The input tensor.
