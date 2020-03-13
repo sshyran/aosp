@@ -218,7 +218,7 @@ class DisjointNetwork {
 
     // A map from the subnet index to the set of nodes within the subnet. The nodes are maintained
     // in a valid evaluation order, that is, a valid topological sort.
-    std::unordered_map<int, EvaluationOrder> mEvalOrderMap;
+    std::map<int, EvaluationOrder> mEvalOrderMap;
 
     // The next index for a new disjoint subnet component.
     int mNextIndex = 0;
