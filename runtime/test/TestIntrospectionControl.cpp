@@ -938,7 +938,6 @@ void createAddMaxModel(WrapperModel* model, bool reverseOrder) {
 
 TEST_F(IntrospectionControlTest, SlicingAddMax) {
     // This is needed before we have the CPU fallback path being treated as a Device.
-    // TODO(dgross): remove once b/72506261 is fixed.
     if (DeviceManager::get()->getUseCpuOnly()) {
         GTEST_SKIP();
     }
@@ -955,7 +954,6 @@ TEST_F(IntrospectionControlTest, SlicingAddMax) {
 
 TEST_F(IntrospectionControlTest, SlicingMaxAdd) {
     // This is needed before we have the CPU fallback path being treated as a Device.
-    // TODO(dgross): remove once b/72506261 is fixed.
     if (DeviceManager::get()->getUseCpuOnly()) {
         GTEST_SKIP();
     }
@@ -1007,7 +1005,6 @@ void createAddMulModel(WrapperModel* model, bool reverseOrder) {
 // ADD->MUL model could not be fully supported.
 TEST_F(IntrospectionControlTest, PartialModelNotSupported) {
     // This is needed before we have the CPU fallback path being treated as a Device.
-    // TODO(miaowang): remove once b/72506261 is fixed.
     if (DeviceManager::get()->getUseCpuOnly()) {
         GTEST_SKIP();
     }
@@ -1037,7 +1034,6 @@ TEST_F(IntrospectionControlTest, PartialModelNotSupported) {
 // supported op list correctly map to the order of operations being added by the user.
 TEST_F(IntrospectionControlTest, PartialModelNotSupportedOrder) {
     // This is needed before we have the CPU fallback path being treated as a Device.
-    // TODO(miaowang): remove once b/72506261 is fixed.
     if (DeviceManager::get()->getUseCpuOnly()) {
         GTEST_SKIP();
     }
@@ -1059,7 +1055,6 @@ TEST_F(IntrospectionControlTest, PartialModelNotSupportedOrder) {
 // can handle all operations.
 TEST_F(IntrospectionControlTest, ModelNeedTwoDevices) {
     // This is needed before we have the CPU fallback path being treated as a Device.
-    // TODO(miaowang): remove once b/72506261 is fixed.
     if (DeviceManager::get()->getUseCpuOnly()) {
         GTEST_SKIP();
     }
