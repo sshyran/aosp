@@ -59,6 +59,7 @@ cc_defaults {
         // library to ensure CTS tests coverage.
         // TODO(xusongw): Re-enable once b/141294076 is fixed.
         // "TestUnspecifiedDimensions.cpp",
+        "GeneratedTestUtils.cpp",
         "TestAssertions.cpp",
         "TestFree.cpp",
         "TestGenerated.cpp",
@@ -155,6 +156,7 @@ cc_test {
     name: "NeuralNetworksTest_static_fuzzing",
     defaults: ["NeuralNetworksTest_default_libs"],
     srcs: [
+        "GeneratedTestUtils.cpp",
         "TestNeuralNetworksWrapper.cpp",
         "fuzzing/OperationManager.cpp",
         "fuzzing/RandomGraphGenerator.cpp",
@@ -168,7 +170,9 @@ cc_test {
         "libgmock",
         "libneuralnetworks_static",
         "libneuralnetworks_common",
+        "libneuralnetworks_generated_test_harness",
     ],
+    shared_libs: ["libmemunreachable"],
     header_libs: [
         "libneuralnetworks_private_headers",
     ],
@@ -248,6 +252,7 @@ cc_defaults {
     name: "NeuralNetworksTest_mt_defaults",
     defaults: ["NeuralNetworksTest_default_libs"],
     srcs: [
+        "GeneratedTestUtils.cpp",
         "TestGenerated.cpp",
         "TestMain.cpp",
         "TestNeuralNetworksWrapper.cpp",
@@ -296,6 +301,7 @@ cc_library_static {
     srcs: [
         ":libneuralnetworks_generated_test_harness_for_cts",
         "CtsMain.cpp",
+        "GeneratedTestUtils.cpp",
         "TestFree.cpp",
         "TestGenerated.cpp",
         "TestMemory.cpp",
