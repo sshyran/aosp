@@ -67,6 +67,16 @@ DEFINE_OPERATION_SIGNATURE(signature_FULLY_CONNECTED_V1_2){
         .outputs = {OUTPUT_DEFAULT},
         .constructor = std::bind(fullyConnectedConstructor, _1, _2, TestHalVersion::V1_2, _3)};
 
+DEFINE_OPERATION_SIGNATURE(signature_FULLY_CONNECTED_V1_3){
+        .opType = TestOperationType::FULLY_CONNECTED,
+        .supportedDataTypes = {TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED},
+        .supportedRanks = {2, 3, 4},
+        .version = TestHalVersion::V1_3,
+        .inputs = {INPUT_DEFAULT, INPUT_DEFAULT, INPUT_BIAS,
+                   PARAMETER_CHOICE(TestOperandType::INT32, 0, 1, 2, 3)},
+        .outputs = {OUTPUT_DEFAULT},
+        .constructor = std::bind(fullyConnectedConstructor, _1, _2, TestHalVersion::V1_3, _3)};
+
 }  // namespace fuzzing_test
 }  // namespace nn
 }  // namespace android

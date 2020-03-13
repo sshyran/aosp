@@ -495,6 +495,8 @@ void checkResults(const TestModel& model, const std::vector<TestBuffer>& results
 void checkResults(const TestModel& model, const std::vector<TestBuffer>& results,
                   const AccuracyCriteria& criteria);
 
+bool isQuantizedType(TestOperandType type);
+
 TestModel convertQuant8AsymmOperandsToSigned(const TestModel& testModel);
 
 const char* toString(TestOperandType type);

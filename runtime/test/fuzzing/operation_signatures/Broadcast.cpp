@@ -43,7 +43,7 @@ static void broadcastOpConstructor(TestOperandType dataType, uint32_t rank, Rand
     }
 
     // MUL requires output.scale > input0.scale * input1.scale.
-    if (dataType == TestOperandType::TENSOR_QUANT8_ASYMM && op->opType == TestOperationType::MUL) {
+    if (isQuantizedType(dataType) && op->opType == TestOperationType::MUL) {
         float minScale = op->inputs[0]->scale * op->inputs[1]->scale;
         op->outputs[0]->scale = getUniform(minScale, minScale * 5);
     }
@@ -52,6 +52,13 @@ static void broadcastOpConstructor(TestOperandType dataType, uint32_t rank, Rand
     // input of another operation.
     if (op->opType == TestOperationType::DIV || op->opType == TestOperationType::POW) {
         op->outputs[0]->doNotConnect = true;
+    }
+
+    // For ADD/MUL/SUB/DIV with TENSOR_INT32 tensors, the activation must be "NONE".
+    if ((op->opType == TestOperationType::ADD || op->opType == TestOperationType::MUL ||
+         op->opType == TestOperationType::SUB || op->opType == TestOperationType::DIV) &&
+        dataType == TestOperandType::TENSOR_INT32) {
+        op->inputs[2]->setScalarValue(0);
     }
 }
 
@@ -79,6 +86,13 @@ DEFINE_BROADCAST_WITH_ACT_SIGNATURE(MUL, V1_2, TestOperandType::TENSOR_FLOAT16);
 DEFINE_BROADCAST_WITH_ACT_SIGNATURE(SUB, V1_2, TestOperandType::TENSOR_FLOAT16,
                                     TestOperandType::TENSOR_QUANT8_ASYMM);
 DEFINE_BROADCAST_WITH_ACT_SIGNATURE(DIV, V1_2, TestOperandType::TENSOR_FLOAT16);
+DEFINE_BROADCAST_WITH_ACT_SIGNATURE(ADD, V1_3, TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
+                                    TestOperandType::TENSOR_INT32);
+DEFINE_BROADCAST_WITH_ACT_SIGNATURE(MUL, V1_3, TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
+                                    TestOperandType::TENSOR_INT32);
+DEFINE_BROADCAST_WITH_ACT_SIGNATURE(SUB, V1_3, TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
+                                    TestOperandType::TENSOR_INT32);
+DEFINE_BROADCAST_WITH_ACT_SIGNATURE(DIV, V1_3, TestOperandType::TENSOR_INT32);
 
 // For broadcast ops with output of the same data type as inputs.
 #define DEFINE_BROADCAST_SIGNATURE(op, ver, ...)                                     \
@@ -101,6 +115,9 @@ DEFINE_BROADCAST_SIGNATURE(MAXIMUM, V1_2, TestOperandType::TENSOR_FLOAT32,
 DEFINE_BROADCAST_SIGNATURE(MINIMUM, V1_2, TestOperandType::TENSOR_FLOAT32,
                            TestOperandType::TENSOR_FLOAT16, TestOperandType::TENSOR_QUANT8_ASYMM,
                            TestOperandType::TENSOR_INT32);
+DEFINE_BROADCAST_SIGNATURE(PRELU, V1_3, TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED);
+DEFINE_BROADCAST_SIGNATURE(MAXIMUM, V1_3, TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED);
+DEFINE_BROADCAST_SIGNATURE(MINIMUM, V1_3, TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED);
 
 // Logical
 DEFINE_BROADCAST_SIGNATURE(LOGICAL_AND, V1_2, TestOperandType::TENSOR_BOOL8);
@@ -135,6 +152,12 @@ DEFINE_COMPARISON_SIGNATURE(LESS_EQUAL, V1_2, TestOperandType::TENSOR_FLOAT32,
 DEFINE_COMPARISON_SIGNATURE(NOT_EQUAL, V1_2, TestOperandType::TENSOR_FLOAT32,
                             TestOperandType::TENSOR_FLOAT16, TestOperandType::TENSOR_INT32,
                             TestOperandType::TENSOR_QUANT8_ASYMM, TestOperandType::TENSOR_BOOL8);
+DEFINE_COMPARISON_SIGNATURE(EQUAL, V1_3, TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED);
+DEFINE_COMPARISON_SIGNATURE(GREATER, V1_3, TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED);
+DEFINE_COMPARISON_SIGNATURE(GREATER_EQUAL, V1_3, TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED);
+DEFINE_COMPARISON_SIGNATURE(LESS, V1_3, TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED);
+DEFINE_COMPARISON_SIGNATURE(LESS_EQUAL, V1_3, TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED);
+DEFINE_COMPARISON_SIGNATURE(NOT_EQUAL, V1_3, TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED);
 
 }  // namespace fuzzing_test
 }  // namespace nn

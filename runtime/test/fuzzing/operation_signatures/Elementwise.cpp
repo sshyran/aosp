@@ -42,6 +42,9 @@ DEFINE_ELEMENTWISE_SIGNATURE(LOGISTIC, V1_2, TestOperandType::TENSOR_FLOAT16);
 DEFINE_ELEMENTWISE_SIGNATURE(RELU, V1_2, TestOperandType::TENSOR_FLOAT16);
 DEFINE_ELEMENTWISE_SIGNATURE(RELU1, V1_2, TestOperandType::TENSOR_FLOAT16);
 DEFINE_ELEMENTWISE_SIGNATURE(RELU6, V1_2, TestOperandType::TENSOR_FLOAT16);
+DEFINE_ELEMENTWISE_SIGNATURE(RELU, V1_3, TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED);
+DEFINE_ELEMENTWISE_SIGNATURE(RELU1, V1_3, TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED);
+DEFINE_ELEMENTWISE_SIGNATURE(RELU6, V1_3, TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED);
 DEFINE_ELEMENTWISE_SIGNATURE(HARD_SWISH, V1_3, TestOperandType::TENSOR_FLOAT32,
                              TestOperandType::TENSOR_FLOAT16, TestOperandType::TENSOR_QUANT8_ASYMM);
 
@@ -64,6 +67,7 @@ DEFINE_ELEMENTWISE_SIGNATURE_WITH_RANK5(NEG, V1_2, TestOperandType::TENSOR_FLOAT
 DEFINE_ELEMENTWISE_SIGNATURE_WITH_RANK5(SIN, V1_2, TestOperandType::TENSOR_FLOAT32,
                                         TestOperandType::TENSOR_FLOAT16);
 DEFINE_ELEMENTWISE_SIGNATURE_WITH_RANK5(LOGICAL_NOT, V1_2, TestOperandType::TENSOR_BOOL8);
+DEFINE_ELEMENTWISE_SIGNATURE_WITH_RANK5(ABS, V1_3, TestOperandType::TENSOR_INT32);
 
 // LOG, SQRT, and RSQRT may produce NaN output values. We should not connect the output tensor to
 // the input of another operation.
@@ -105,6 +109,11 @@ DEFINE_ELEMENTWISE_WITH_QUANT_OUTPUT_SIGNATURE(LOGISTIC, V1_0, /*scale=*/1.f / 2
 DEFINE_ELEMENTWISE_WITH_QUANT_OUTPUT_SIGNATURE(TANH, V1_2, /*scale=*/1.f / 128, /*zeroPoint=*/128,
                                                TestOperandType::TENSOR_FLOAT16,
                                                TestOperandType::TENSOR_QUANT8_ASYMM);
+DEFINE_ELEMENTWISE_WITH_QUANT_OUTPUT_SIGNATURE(LOGISTIC, V1_3, /*scale=*/1.f / 256,
+                                               /*zeroPoint=*/-128,
+                                               TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED);
+DEFINE_ELEMENTWISE_WITH_QUANT_OUTPUT_SIGNATURE(TANH, V1_3, /*scale=*/1.f / 128, /*zeroPoint=*/0,
+                                               TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED);
 
 // Operations with output data type different from input.
 #define DEFINE_ELEMENTWISE_WITH_TYPED_OUTPUT_SIGNATURE(op, ver, outType, ...) \
@@ -127,7 +136,18 @@ DEFINE_ELEMENTWISE_WITH_TYPED_OUTPUT_SIGNATURE(DEQUANTIZE, V1_2, /*outType=*/TEN
                                                TestOperandType::TENSOR_QUANT8_ASYMM,
                                                TestOperandType::TENSOR_QUANT8_SYMM);
 
+DEFINE_ELEMENTWISE_WITH_TYPED_OUTPUT_SIGNATURE(DEQUANTIZE, V1_3, /*outType=*/TENSOR_FLOAT32,
+                                               TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED);
+
+DEFINE_ELEMENTWISE_WITH_TYPED_OUTPUT_SIGNATURE(DEQUANTIZE, V1_3, /*outType=*/TENSOR_FLOAT16,
+                                               TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED);
+
 DEFINE_ELEMENTWISE_WITH_TYPED_OUTPUT_SIGNATURE(QUANTIZE, V1_2, /*outType=*/TENSOR_QUANT8_ASYMM,
+                                               TestOperandType::TENSOR_FLOAT32,
+                                               TestOperandType::TENSOR_FLOAT16);
+
+DEFINE_ELEMENTWISE_WITH_TYPED_OUTPUT_SIGNATURE(QUANTIZE, V1_3,
+                                               /*outType=*/TENSOR_QUANT8_ASYMM_SIGNED,
                                                TestOperandType::TENSOR_FLOAT32,
                                                TestOperandType::TENSOR_FLOAT16);
 
@@ -156,6 +176,15 @@ DEFINE_CAST_SIGNATURE(V1_2, /*outType=*/TENSOR_QUANT8_ASYMM, TestOperandType::TE
 DEFINE_CAST_SIGNATURE(V1_2, /*outType=*/TENSOR_INT32, TestOperandType::TENSOR_FLOAT32,
                       TestOperandType::TENSOR_FLOAT16, TestOperandType::TENSOR_QUANT8_ASYMM,
                       TestOperandType::TENSOR_INT32);
+
+DEFINE_CAST_SIGNATURE(V1_3, /*outType=*/TENSOR_BOOL8, TestOperandType::TENSOR_BOOL8);
+DEFINE_CAST_SIGNATURE(V1_3, /*outType=*/TENSOR_INT32, TestOperandType::TENSOR_INT32);
+DEFINE_CAST_SIGNATURE(V1_3, /*outType=*/TENSOR_QUANT16_ASYMM,
+                      TestOperandType::TENSOR_QUANT16_ASYMM);
+DEFINE_CAST_SIGNATURE(V1_3, /*outType=*/TENSOR_QUANT16_SYMM, TestOperandType::TENSOR_QUANT16_SYMM);
+DEFINE_CAST_SIGNATURE(V1_3, /*outType=*/TENSOR_QUANT8_ASYMM_SIGNED,
+                      TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED);
+DEFINE_CAST_SIGNATURE(V1_3, /*outType=*/TENSOR_QUANT8_SYMM, TestOperandType::TENSOR_QUANT8_SYMM);
 
 DEFINE_OPERATION_SIGNATURE(ELU_V1_3){
         .opType = TestOperationType::ELU,
