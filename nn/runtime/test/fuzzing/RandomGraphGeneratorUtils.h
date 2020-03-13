@@ -28,6 +28,7 @@
 
 #include "RandomGraphGenerator.h"
 #include "RandomVariable.h"
+#include "TestHarness.h"
 #include "TestNeuralNetworksWrapper.h"
 
 namespace android {
@@ -140,122 +141,6 @@ inline std::string joinStr(const std::string& joint, int limit, const std::vecto
     }
 }
 
-static const char* kOperationNames[] = {
-        "ADD",
-        "AVERAGE_POOL_2D",
-        "CONCATENATION",
-        "CONV_2D",
-        "DEPTHWISE_CONV_2D",
-        "DEPTH_TO_SPACE",
-        "DEQUANTIZE",
-        "EMBEDDING_LOOKUP",
-        "FLOOR",
-        "FULLY_CONNECTED",
-        "HASHTABLE_LOOKUP",
-        "L2_NORMALIZATION",
-        "L2_POOL",
-        "LOCAL_RESPONSE_NORMALIZATION",
-        "LOGISTIC",
-        "LSH_PROJECTION",
-        "LSTM",
-        "MAX_POOL_2D",
-        "MUL",
-        "RELU",
-        "RELU1",
-        "RELU6",
-        "RESHAPE",
-        "RESIZE_BILINEAR",
-        "RNN",
-        "SOFTMAX",
-        "SPACE_TO_DEPTH",
-        "SVDF",
-        "TANH",
-        "BATCH_TO_SPACE_ND",
-        "DIV",
-        "MEAN",
-        "PAD",
-        "SPACE_TO_BATCH_ND",
-        "SQUEEZE",
-        "STRIDED_SLICE",
-        "SUB",
-        "TRANSPOSE",
-        "ABS",
-        "ARGMAX",
-        "ARGMIN",
-        "AXIS_ALIGNED_BBOX_TRANSFORM",
-        "BIDIRECTIONAL_SEQUENCE_LSTM",
-        "BIDIRECTIONAL_SEQUENCE_RNN",
-        "BOX_WITH_NMS_LIMIT",
-        "CAST",
-        "CHANNEL_SHUFFLE",
-        "DETECTION_POSTPROCESSING",
-        "EQUAL",
-        "EXP",
-        "EXPAND_DIMS",
-        "GATHER",
-        "GENERATE_PROPOSALS",
-        "GREATER",
-        "GREATER_EQUAL",
-        "GROUPED_CONV_2D",
-        "HEATMAP_MAX_KEYPOINT",
-        "INSTANCE_NORMALIZATION",
-        "LESS",
-        "LESS_EQUAL",
-        "LOG",
-        "LOGICAL_AND",
-        "LOGICAL_NOT",
-        "LOGICAL_OR",
-        "LOG_SOFTMAX",
-        "MAXIMUM",
-        "MINIMUM",
-        "NEG",
-        "NOT_EQUAL",
-        "PAD_V2",
-        "POW",
-        "PRELU",
-        "QUANTIZE",
-        "QUANTIZED_16BIT_LSTM",
-        "RANDOM_MULTINOMIAL",
-        "REDUCE_ALL",
-        "REDUCE_ANY",
-        "REDUCE_MAX",
-        "REDUCE_MIN",
-        "REDUCE_PROD",
-        "REDUCE_SUM",
-        "ROI_ALIGN",
-        "ROI_POOLING",
-        "RSQRT",
-        "SELECT",
-        "SIN",
-        "SLICE",
-        "SPLIT",
-        "SQRT",
-        "TILE",
-        "TOPK_V2",
-        "TRANSPOSE_CONV_2D",
-        "UNIDIRECTIONAL_SEQUENCE_LSTM",
-        "UNIDIRECTIONAL_SEQUENCE_RNN",
-        "RESIZE_NEAREST_NEIGHBOR",
-};
-
-static const char* kTypeNames[] = {
-        "FLOAT32",
-        "INT32",
-        "UINT32",
-        "TENSOR_FLOAT32",
-        "TENSOR_INT32",
-        "TENSOR_QUANT8_ASYMM",
-        "BOOL",
-        "TENSOR_QUANT16_SYMM",
-        "TENSOR_FLOAT16",
-        "TENSOR_BOOL8",
-        "FLOAT16",
-        "TENSOR_QUANT8_SYMM_PER_CHANNEL",
-        "TENSOR_QUANT16_ASYMM",
-        "TENSOR_QUANT8_SYMM",
-        "TENSOR_QUANT8_ASYMM_SIGNED",
-};
-
 static const char* kLifeTimeNames[6] = {
         "TEMPORARY_VARIABLE", "SUBGRAPH_INPUT",     "SUBGRAPH_OUTPUT",
         "CONSTANT_COPY",      "CONSTANT_REFERENCE", "NO_VALUE",
@@ -344,11 +229,6 @@ inline std::string toString<RandomVariableNode>(const RandomVariableNode& var) {
 }
 
 template <>
-inline std::string toString<Type>(const Type& type) {
-    return kTypeNames[static_cast<int32_t>(type)];
-}
-
-template <>
 inline std::string toString<RandomVariable>(const RandomVariable& var) {
     return "var" + std::to_string(var.get()->index);
 }
@@ -374,39 +254,6 @@ class bool8 {
     uint8_t mValue;
 };
 static_assert(sizeof(bool8) == 1, "size of bool8 must be 8 bits");
-
-// Dump the random graph to a spec file.
-class SpecWriter {
-   public:
-    SpecWriter(std::string filename, std::string testname = "");
-    bool isOpen() { return os.is_open(); }
-    void dump(const std::vector<RandomOperation>& operations,
-              const std::vector<std::shared_ptr<RandomOperand>>& operands);
-
-   private:
-    void dump(test_wrapper::Type type, const uint8_t* buffer, uint32_t length);
-    void dump(const std::vector<RandomVariable>& dimensions);
-    void dump(const std::shared_ptr<RandomOperand>& op);
-    void dump(const RandomOperation& op);
-
-    template <typename T>
-    void dump(const T* buffer, uint32_t length) {
-        for (uint32_t i = 0; i < length; i++) {
-            if (i != 0) os << ", ";
-            if constexpr (std::is_integral<T>::value) {
-                os << static_cast<int>(buffer[i]);
-            } else if constexpr (std::is_same<T, _Float16>::value) {
-                os << static_cast<float>(buffer[i]);
-            } else if constexpr (std::is_same<T, bool8>::value) {
-                os << (buffer[i] ? "True" : "False");
-            } else {
-                os << buffer[i];
-            }
-        }
-    }
-
-    std::ofstream os;
-};
 
 struct RandomNumberGenerator {
     static std::mt19937 generator;
@@ -435,6 +282,13 @@ template <typename T>
 inline std::enable_if_t<std::is_integral_v<T>, T> getUniform(T lower, T upper) {
     std::uniform_int_distribution<T> dis(lower, upper);
     return dis(RandomNumberGenerator::generator);
+}
+template <typename T>
+inline std::enable_if_t<std::is_integral_v<T>, T> getUniformNonZero(T lower, T upper, T zeroPoint) {
+    if (upper >= zeroPoint) upper--;
+    std::uniform_int_distribution<T> dis(lower, upper);
+    const T value = dis(RandomNumberGenerator::generator);
+    return value >= zeroPoint ? value + 1 : value;
 }
 
 template <typename T>
