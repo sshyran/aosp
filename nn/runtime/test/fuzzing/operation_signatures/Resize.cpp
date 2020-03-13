@@ -74,6 +74,8 @@ static void resizeOpConstructor(TestOperandType, uint32_t rank, RandomOperation*
 DEFINE_RESIZE_WITHOUT_LAYOUT_SIGNATURE(RESIZE_BILINEAR, V1_0, TestOperandType::TENSOR_FLOAT32);
 DEFINE_RESIZE_WITHOUT_LAYOUT_SIGNATURE(RESIZE_BILINEAR, V1_2, TestOperandType::TENSOR_QUANT8_ASYMM,
                                        TestOperandType::TENSOR_FLOAT16);
+DEFINE_RESIZE_WITHOUT_LAYOUT_SIGNATURE(RESIZE_BILINEAR, V1_3,
+                                       TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED);
 
 #define DEFINE_RESIZE_OP_SIGNATURE(op, ver, ...)                              \
     DEFINE_OPERATION_SIGNATURE(op##_shape_##ver){                             \
@@ -100,6 +102,9 @@ DEFINE_RESIZE_OP_SIGNATURE(RESIZE_BILINEAR, V1_2, TestOperandType::TENSOR_FLOAT3
                            TestOperandType::TENSOR_QUANT8_ASYMM, TestOperandType::TENSOR_FLOAT16);
 DEFINE_RESIZE_OP_SIGNATURE(RESIZE_NEAREST_NEIGHBOR, V1_2, TestOperandType::TENSOR_FLOAT32,
                            TestOperandType::TENSOR_QUANT8_ASYMM, TestOperandType::TENSOR_FLOAT16);
+DEFINE_RESIZE_OP_SIGNATURE(RESIZE_BILINEAR, V1_3, TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED);
+DEFINE_RESIZE_OP_SIGNATURE(RESIZE_NEAREST_NEIGHBOR, V1_3,
+                           TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED);
 
 }  // namespace fuzzing_test
 }  // namespace nn

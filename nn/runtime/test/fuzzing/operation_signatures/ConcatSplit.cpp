@@ -95,6 +95,29 @@ DEFINE_OPERATION_SIGNATURE(CONCAT_3_V1_2){
             concatConstructor(/*numInputs=*/3, /*isV1_0=*/false, rank, op);
         }};
 
+DEFINE_OPERATION_SIGNATURE(CONCAT_2_V1_3){
+        .opType = TestOperationType::CONCATENATION,
+        .supportedDataTypes = {TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED},
+        .supportedRanks = {1, 2, 3, 4},
+        .version = TestHalVersion::V1_3,
+        .inputs = {INPUT_DEFAULT, INPUT_DEFAULT, PARAMETER_NONE(TestOperandType::INT32)},
+        .outputs = {OUTPUT_DEFAULT},
+        .constructor = [](TestOperandType, uint32_t rank, RandomOperation* op) {
+            concatConstructor(/*numInputs=*/2, /*isV1_0=*/false, rank, op);
+        }};
+
+DEFINE_OPERATION_SIGNATURE(CONCAT_3_V1_3){
+        .opType = TestOperationType::CONCATENATION,
+        .supportedDataTypes = {TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED},
+        .supportedRanks = {1, 2, 3, 4},
+        .version = TestHalVersion::V1_3,
+        .inputs = {INPUT_DEFAULT, INPUT_DEFAULT, INPUT_DEFAULT,
+                   PARAMETER_NONE(TestOperandType::INT32)},
+        .outputs = {OUTPUT_DEFAULT},
+        .constructor = [](TestOperandType, uint32_t rank, RandomOperation* op) {
+            concatConstructor(/*numInputs=*/3, /*isV1_0=*/false, rank, op);
+        }};
+
 // SPLIT with fixed number of splits.
 static void splitConstructor(uint32_t numSplits, uint32_t rank, RandomOperation* op) {
     int32_t axis = getUniform<int32_t>(-rank, rank - 1);
@@ -138,6 +161,30 @@ DEFINE_OPERATION_SIGNATURE(SPLIT_3_V1_2){
                                TestOperandType::TENSOR_INT32, TestOperandType::TENSOR_QUANT8_ASYMM},
         .supportedRanks = {1, 2, 3, 4},
         .version = TestHalVersion::V1_2,
+        .inputs = {INPUT_DEFAULT, PARAMETER_NONE(TestOperandType::INT32),
+                   PARAMETER_CHOICE(TestOperandType::INT32, 3)},
+        .outputs = {OUTPUT_DEFAULT, OUTPUT_DEFAULT, OUTPUT_DEFAULT},
+        .constructor = [](TestOperandType, uint32_t rank, RandomOperation* op) {
+            splitConstructor(/*numSplits=*/3, rank, op);
+        }};
+
+DEFINE_OPERATION_SIGNATURE(SPLIT_2_V1_3){
+        .opType = TestOperationType::SPLIT,
+        .supportedDataTypes = {TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED},
+        .supportedRanks = {1, 2, 3, 4},
+        .version = TestHalVersion::V1_3,
+        .inputs = {INPUT_DEFAULT, PARAMETER_NONE(TestOperandType::INT32),
+                   PARAMETER_CHOICE(TestOperandType::INT32, 2)},
+        .outputs = {OUTPUT_DEFAULT, OUTPUT_DEFAULT},
+        .constructor = [](TestOperandType, uint32_t rank, RandomOperation* op) {
+            splitConstructor(/*numSplits=*/2, rank, op);
+        }};
+
+DEFINE_OPERATION_SIGNATURE(SPLIT_3_V1_3){
+        .opType = TestOperationType::SPLIT,
+        .supportedDataTypes = {TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED},
+        .supportedRanks = {1, 2, 3, 4},
+        .version = TestHalVersion::V1_3,
         .inputs = {INPUT_DEFAULT, PARAMETER_NONE(TestOperandType::INT32),
                    PARAMETER_CHOICE(TestOperandType::INT32, 3)},
         .outputs = {OUTPUT_DEFAULT, OUTPUT_DEFAULT, OUTPUT_DEFAULT},
