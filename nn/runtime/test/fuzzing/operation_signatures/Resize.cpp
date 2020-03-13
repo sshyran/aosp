@@ -59,6 +59,15 @@ static void resizeOpConstructor(TestOperandType, uint32_t rank, RandomOperation*
                                       op->inputs[0]->dimensions[3]};
     }
     setSameQuantization(op->outputs[0], op->inputs[0]);
+
+    // If "half_pixel_center" is set to true, then "align_corners" must be false.
+    if (op->inputs.size() == 6) {
+        auto& alignCornerFlag = op->inputs[4];
+        const auto& halfPixelCenterFlag = op->inputs[5];
+        if (halfPixelCenterFlag->value<bool8>()) {
+            alignCornerFlag->setScalarValue<bool8>(false);
+        }
+    }
 }
 
 #define DEFINE_RESIZE_WITHOUT_LAYOUT_SIGNATURE(op, ver, ...)             \
@@ -105,6 +114,43 @@ DEFINE_RESIZE_OP_SIGNATURE(RESIZE_NEAREST_NEIGHBOR, V1_2, TestOperandType::TENSO
 DEFINE_RESIZE_OP_SIGNATURE(RESIZE_BILINEAR, V1_3, TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED);
 DEFINE_RESIZE_OP_SIGNATURE(RESIZE_NEAREST_NEIGHBOR, V1_3,
                            TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED);
+
+// Resize operations with optional flags of "align_corners" and "half_pixel_center".
+#define DEFINE_RESIZE_OP_WITH_OPTIONAL_FLAGS_SIGNATURE(op, ver, ...)          \
+    DEFINE_OPERATION_SIGNATURE(op##_shape_with_optional_flags_##ver){         \
+            .opType = TestOperationType::op,                                  \
+            .supportedDataTypes = {__VA_ARGS__},                              \
+            .supportedRanks = {4},                                            \
+            .version = TestHalVersion::ver,                                   \
+            .inputs = {INPUT_DEFAULT, RANDOM_INT_FREE, RANDOM_INT_FREE,       \
+                       PARAMETER_CHOICE(TestOperandType::BOOL, false, true),  \
+                       PARAMETER_CHOICE(TestOperandType::BOOL, false, true),  \
+                       PARAMETER_CHOICE(TestOperandType::BOOL, false, true)}, \
+            .outputs = {OUTPUT_DEFAULT},                                      \
+            .constructor = resizeOpConstructor};                              \
+    DEFINE_OPERATION_SIGNATURE(op##_scale_with_optional_flags){               \
+            .opType = TestOperationType::op,                                  \
+            .supportedDataTypes = {__VA_ARGS__},                              \
+            .supportedRanks = {4},                                            \
+            .version = TestHalVersion::ver,                                   \
+            .inputs = {INPUT_DEFAULT, PARAMETER_FLOAT_RANGE(0.2, 4.0),        \
+                       PARAMETER_FLOAT_RANGE(0.2, 4.0),                       \
+                       PARAMETER_CHOICE(TestOperandType::BOOL, false, true),  \
+                       PARAMETER_CHOICE(TestOperandType::BOOL, false, true),  \
+                       PARAMETER_CHOICE(TestOperandType::BOOL, false, true)}, \
+            .outputs = {OUTPUT_DEFAULT},                                      \
+            .constructor = resizeOpConstructor};
+
+DEFINE_RESIZE_OP_WITH_OPTIONAL_FLAGS_SIGNATURE(RESIZE_BILINEAR, V1_3,
+                                               TestOperandType::TENSOR_FLOAT32,
+                                               TestOperandType::TENSOR_QUANT8_ASYMM,
+                                               TestOperandType::TENSOR_FLOAT16,
+                                               TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED);
+DEFINE_RESIZE_OP_WITH_OPTIONAL_FLAGS_SIGNATURE(RESIZE_NEAREST_NEIGHBOR, V1_3,
+                                               TestOperandType::TENSOR_FLOAT32,
+                                               TestOperandType::TENSOR_QUANT8_ASYMM,
+                                               TestOperandType::TENSOR_FLOAT16,
+                                               TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED);
 
 }  // namespace fuzzing_test
 }  // namespace nn
