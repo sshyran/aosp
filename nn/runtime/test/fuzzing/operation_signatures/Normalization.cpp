@@ -33,7 +33,7 @@ DEFINE_OPERATION_SIGNATURE(SOFTMAX_V1_0){
         .supportedDataTypes = {TestOperandType::TENSOR_FLOAT32,
                                TestOperandType::TENSOR_QUANT8_ASYMM},
         .supportedRanks = {2, 4},
-        .version = HalVersion::V1_0,
+        .version = TestHalVersion::V1_0,
         .inputs = {INPUT_DEFAULT, PARAMETER_FLOAT_RANGE(0.1, 10.0)},
         .outputs = {OUTPUT_QUANT(1.f / 256, 0)},
         .constructor = softmaxConstructor};
@@ -43,7 +43,7 @@ DEFINE_OPERATION_SIGNATURE(SOFTMAX_V1_2){
         .supportedDataTypes = {TestOperandType::TENSOR_FLOAT32,
                                TestOperandType::TENSOR_QUANT8_ASYMM},
         .supportedRanks = {1, 3},
-        .version = HalVersion::V1_2,
+        .version = TestHalVersion::V1_2,
         .inputs = {INPUT_DEFAULT, PARAMETER_FLOAT_RANGE(0.1, 10.0)},
         .outputs = {OUTPUT_QUANT(1.f / 256, 0)},
         .constructor = softmaxConstructor};
@@ -52,7 +52,7 @@ DEFINE_OPERATION_SIGNATURE(SOFTMAX_float16_V1_2){
         .opType = TestOperationType::SOFTMAX,
         .supportedDataTypes = {TestOperandType::TENSOR_FLOAT16},
         .supportedRanks = {1, 2, 3, 4},
-        .version = HalVersion::V1_2,
+        .version = TestHalVersion::V1_2,
         .inputs = {INPUT_DEFAULT, PARAMETER_FLOAT_RANGE(0.1, 10.0)},
         .outputs = {OUTPUT_QUANT(1.f / 256, 0)},
         .constructor = softmaxConstructor};
@@ -63,7 +63,7 @@ DEFINE_OPERATION_SIGNATURE(SOFTMAX_axis_V1_2){
                                TestOperandType::TENSOR_QUANT8_ASYMM,
                                TestOperandType::TENSOR_FLOAT16},
         .supportedRanks = {1, 2, 3, 4},
-        .version = HalVersion::V1_2,
+        .version = TestHalVersion::V1_2,
         .inputs = {INPUT_DEFAULT, PARAMETER_FLOAT_RANGE(0.1, 10.0),
                    PARAMETER_NONE(TestOperandType::INT32)},
         .outputs = {OUTPUT_QUANT(1.f / 256, 0)},
@@ -84,7 +84,7 @@ DEFINE_OPERATION_SIGNATURE(L2_NORMALIZATION_V1_0){
         .opType = TestOperationType::L2_NORMALIZATION,
         .supportedDataTypes = {TestOperandType::TENSOR_FLOAT32},
         .supportedRanks = {4},
-        .version = HalVersion::V1_0,
+        .version = TestHalVersion::V1_0,
         .inputs = {INPUT_DEFAULT},
         .outputs = {OUTPUT_DEFAULT},
         .constructor = l2normConstructor};
@@ -93,7 +93,7 @@ DEFINE_OPERATION_SIGNATURE(L2_NORMALIZATION_V1_2){
         .opType = TestOperationType::L2_NORMALIZATION,
         .supportedDataTypes = {TestOperandType::TENSOR_FLOAT32},
         .supportedRanks = {1, 2, 3},
-        .version = HalVersion::V1_2,
+        .version = TestHalVersion::V1_2,
         .inputs = {INPUT_DEFAULT},
         .outputs = {OUTPUT_DEFAULT},
         .constructor = l2normConstructor};
@@ -103,7 +103,7 @@ DEFINE_OPERATION_SIGNATURE(L2_NORMALIZATION_type_V1_2){
         .supportedDataTypes = {TestOperandType::TENSOR_FLOAT16,
                                TestOperandType::TENSOR_QUANT8_ASYMM},
         .supportedRanks = {1, 2, 3, 4},
-        .version = HalVersion::V1_2,
+        .version = TestHalVersion::V1_2,
         .inputs = {INPUT_DEFAULT},
         .outputs = {OUTPUT_QUANT(1.f / 128, 128)},
         .constructor = l2normConstructor};
@@ -113,7 +113,7 @@ DEFINE_OPERATION_SIGNATURE(L2_NORMALIZATION_axis_V1_2){
         .supportedDataTypes = {TestOperandType::TENSOR_FLOAT32, TestOperandType::TENSOR_FLOAT16,
                                TestOperandType::TENSOR_QUANT8_ASYMM},
         .supportedRanks = {1, 2, 3, 4},
-        .version = HalVersion::V1_2,
+        .version = TestHalVersion::V1_2,
         .inputs = {INPUT_DEFAULT, PARAMETER_NONE(TestOperandType::INT32)},
         .outputs = {OUTPUT_QUANT(1.f / 128, 128)},
         .constructor = l2normConstructor};
@@ -131,7 +131,7 @@ DEFINE_OPERATION_SIGNATURE(LOCAL_RESPONSE_NORMALIZATION_V1_0){
         .opType = TestOperationType::LOCAL_RESPONSE_NORMALIZATION,
         .supportedDataTypes = {TestOperandType::TENSOR_FLOAT32},
         .supportedRanks = {4},
-        .version = HalVersion::V1_0,
+        .version = TestHalVersion::V1_0,
         .inputs =
                 {
                         INPUT_DEFAULT,
@@ -147,7 +147,7 @@ DEFINE_OPERATION_SIGNATURE(LOCAL_RESPONSE_NORMALIZATION_V1_2){
         .opType = TestOperationType::LOCAL_RESPONSE_NORMALIZATION,
         .supportedDataTypes = {TestOperandType::TENSOR_FLOAT32},
         .supportedRanks = {1, 2, 3},
-        .version = HalVersion::V1_2,
+        .version = TestHalVersion::V1_2,
         .inputs =
                 {
                         INPUT_DEFAULT,
@@ -163,7 +163,7 @@ DEFINE_OPERATION_SIGNATURE(LOCAL_RESPONSE_NORMALIZATION_float16_V1_2){
         .opType = TestOperationType::LOCAL_RESPONSE_NORMALIZATION,
         .supportedDataTypes = {TestOperandType::TENSOR_FLOAT16},
         .supportedRanks = {1, 2, 3, 4},
-        .version = HalVersion::V1_2,
+        .version = TestHalVersion::V1_2,
         .inputs =
                 {
                         INPUT_DEFAULT,
@@ -179,7 +179,7 @@ DEFINE_OPERATION_SIGNATURE(LOCAL_RESPONSE_NORMALIZATION_axis_V1_2){
         .opType = TestOperationType::LOCAL_RESPONSE_NORMALIZATION,
         .supportedDataTypes = {TestOperandType::TENSOR_FLOAT32, TestOperandType::TENSOR_FLOAT16},
         .supportedRanks = {1, 2, 3, 4},
-        .version = HalVersion::V1_2,
+        .version = TestHalVersion::V1_2,
         .inputs =
                 {
                         INPUT_DEFAULT,
@@ -196,7 +196,7 @@ DEFINE_OPERATION_SIGNATURE(INSTANCE_NORMALIZATION_V1_2){
         .opType = TestOperationType::INSTANCE_NORMALIZATION,
         .supportedDataTypes = {TestOperandType::TENSOR_FLOAT32, TestOperandType::TENSOR_FLOAT16},
         .supportedRanks = {4},
-        .version = HalVersion::V1_2,
+        .version = TestHalVersion::V1_2,
         .inputs =
                 {
                         INPUT_DEFAULT,
@@ -212,7 +212,7 @@ DEFINE_OPERATION_SIGNATURE(LOG_SOFTMAX_TENSOR_FLOAT32_V1_2){
         .opType = TestOperationType::LOG_SOFTMAX,
         .supportedDataTypes = {TestOperandType::TENSOR_FLOAT32, TestOperandType::TENSOR_FLOAT16},
         .supportedRanks = {1, 2, 3, 4},
-        .version = HalVersion::V1_2,
+        .version = TestHalVersion::V1_2,
         .inputs = {INPUT_DEFAULT, PARAMETER_FLOAT_RANGE(0.1, 10.0),
                    PARAMETER_NONE(TestOperandType::INT32)},
         .outputs = {OUTPUT_DEFAULT},

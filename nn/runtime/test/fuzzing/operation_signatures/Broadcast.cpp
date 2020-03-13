@@ -61,7 +61,7 @@ static void broadcastOpConstructor(TestOperandType dataType, uint32_t rank, Rand
             .opType = TestOperationType::op,                                  \
             .supportedDataTypes = {__VA_ARGS__},                              \
             .supportedRanks = {1, 2, 3, 4},                                   \
-            .version = HalVersion::ver,                                       \
+            .version = TestHalVersion::ver,                                   \
             .inputs = {INPUT_DEFAULT, INPUT_DEFAULT,                          \
                        PARAMETER_CHOICE(TestOperandType::INT32, 0, 1, 2, 3)}, \
             .outputs = {OUTPUT_DEFAULT},                                      \
@@ -85,7 +85,7 @@ DEFINE_BROADCAST_WITH_ACT_SIGNATURE(DIV, V1_2, TestOperandType::TENSOR_FLOAT16);
     DEFINE_OPERATION_SIGNATURE(op##_##ver){.opType = TestOperationType::op,          \
                                            .supportedDataTypes = {__VA_ARGS__},      \
                                            .supportedRanks = {1, 2, 3, 4, 5},        \
-                                           .version = HalVersion::ver,               \
+                                           .version = TestHalVersion::ver,           \
                                            .inputs = {INPUT_DEFAULT, INPUT_DEFAULT}, \
                                            .outputs = {OUTPUT_DEFAULT},              \
                                            .constructor = broadcastOpConstructor};
@@ -112,7 +112,7 @@ DEFINE_BROADCAST_SIGNATURE(LOGICAL_OR, V1_2, TestOperandType::TENSOR_BOOL8);
             .opType = TestOperationType::op,                          \
             .supportedDataTypes = {__VA_ARGS__},                      \
             .supportedRanks = {1, 2, 3, 4},                           \
-            .version = HalVersion::ver,                               \
+            .version = TestHalVersion::ver,                           \
             .inputs = {INPUT_DEFAULT, INPUT_DEFAULT},                 \
             .outputs = {OUTPUT_TYPED(TestOperandType::TENSOR_BOOL8)}, \
             .constructor = broadcastOpConstructor};

@@ -410,7 +410,7 @@ class SingleOperationTest : public RandomGraphTest {};
 #define TEST_SINGLE_OPERATION(operation, halVersion, criteria)               \
     TEST_P(SingleOperationTest, operation##_##halVersion) {                  \
         OperationFilter filter = {.opcodes = {TestOperationType::operation}, \
-                                  .versions = {HalVersion::halVersion}};     \
+                                  .versions = {TestHalVersion::halVersion}}; \
         OperationManager::get()->applyFilter(filter);                        \
         mCriteria = (criteria);                                              \
         testRandomGraph(GraphSize::SINGLE, DimensionRange::WIDE);            \
