@@ -29,7 +29,10 @@
 
 #ifndef NNTEST_CTS
 #include <android-base/properties.h>
+#include <memunreachable/memunreachable.h>
+
 #include <vector>
+
 #include "HalInterfaces.h"
 #include "Manager.h"
 #include "SampleDriverFull.h"
@@ -138,6 +141,7 @@ class RandomGraphTest : public ::testing::TestWithParam<uint32_t> {
 #ifndef NNTEST_CTS
         mEnableLog = ::android::base::GetProperty("debug.nn.fuzzer.log", "") == "1";
         mDumpSpec = ::android::base::GetProperty("debug.nn.fuzzer.dumpspec", "") == "1";
+        mDetectMemoryLeak = ::android::base::GetProperty("debug.nn.fuzzer.detectleak", "") == "1";
 
         mStandardDevices = DeviceManager::get()->forTest_getDevices();
         mSyntheticDevices.push_back(makeTestDevice<TestDriverV1_2>());
@@ -177,6 +181,11 @@ class RandomGraphTest : public ::testing::TestWithParam<uint32_t> {
             mGraph.dumpSpecFile("/data/local/tmp/" + mTestName + ".mod.py", mTestName);
         }
         NN_FUZZER_LOG_CLOSE;
+#ifndef NNTEST_CTS
+        if (mDetectMemoryLeak) {
+            ASSERT_TRUE(NoLeaks());
+        }
+#endif
     }
 
     bool shouldSkipTest(int64_t featureLevel) {
@@ -343,6 +352,7 @@ class RandomGraphTest : public ::testing::TestWithParam<uint32_t> {
 
     static bool mEnableLog;
     static bool mDumpSpec;
+    static bool mDetectMemoryLeak;
     static std::map<std::string, ANeuralNetworksDevice*> mDevices;
 
     const uint32_t kSeed = GetParam();
@@ -359,6 +369,7 @@ class RandomGraphTest : public ::testing::TestWithParam<uint32_t> {
 
 bool RandomGraphTest::mEnableLog = false;
 bool RandomGraphTest::mDumpSpec = false;
+bool RandomGraphTest::mDetectMemoryLeak = false;
 std::map<std::string, ANeuralNetworksDevice*> RandomGraphTest::mDevices;
 
 int64_t RandomGraphTest::mStandardDevicesFeatureLevel;
