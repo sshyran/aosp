@@ -527,6 +527,37 @@ DEFINE_OPERATION_SIGNATURE(TILE_V1_2){
         .outputs = {OUTPUT_DEFAULT},
         .constructor = tileConstructor};
 
+static void fillConstructor(TestOperandType, uint32_t rank, RandomOperation* op) {
+    op->inputs[0]->dimensions = {rank};
+    setFreeDimensions(op->outputs[0], rank);
+    op->inputs[0]->randomBuffer = op->outputs[0]->dimensions;
+}
+
+DEFINE_OPERATION_SIGNATURE(FILL_V1_3){
+        .opType = TestOperationType::FILL,
+        .supportedDataTypes = {TestOperandType::TENSOR_FLOAT32, TestOperandType::TENSOR_FLOAT16,
+                               TestOperandType::TENSOR_INT32},
+        .supportedRanks = {1, 2, 3, 4, 5},
+        .version = TestHalVersion::V1_3,
+        .inputs = {PARAMETER_NONE(TestOperandType::TENSOR_INT32), INPUT_SCALAR},
+        .outputs = {OUTPUT_DEFAULT},
+        .constructor = fillConstructor};
+
+static void rankConstructor(TestOperandType, uint32_t rank, RandomOperation* op) {
+    setFreeDimensions(op->inputs[0], rank);
+}
+
+DEFINE_OPERATION_SIGNATURE(RANK_V1_3){
+        .opType = TestOperationType::RANK,
+        .supportedDataTypes = {TestOperandType::TENSOR_FLOAT32, TestOperandType::TENSOR_FLOAT16,
+                               TestOperandType::TENSOR_INT32, TestOperandType::TENSOR_QUANT8_ASYMM,
+                               TestOperandType::TENSOR_BOOL8},
+        .supportedRanks = {1, 2, 3, 4, 5},
+        .version = TestHalVersion::V1_3,
+        .inputs = {INPUT_DEFAULT},
+        .outputs = {OUTPUT_TYPED(TestOperandType::INT32)},
+        .constructor = rankConstructor};
+
 }  // namespace fuzzing_test
 }  // namespace nn
 }  // namespace android
