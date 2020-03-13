@@ -613,6 +613,18 @@ TEST_SINGLE_OPERATION(ROI_ALIGN, V1_2, kRelaxedCriteria);
 TEST_SINGLE_OPERATION(ROI_POOLING, V1_2, kRelaxedCriteria);
 TEST_SINGLE_OPERATION(HEATMAP_MAX_KEYPOINT, V1_2, kRelaxedCriteria);
 
+/*-- NNAPI 1.3 Operations ---------------------------------------------------*/
+
+// TODO: The following 1.3 operation signatures are currently not defined:
+// - ANEURALNETWORKS_QUANTIZED_LSTM
+// - ANEURALNETWORKS_IF
+// - ANEURALNETWORKS_WHILE
+
+TEST_SINGLE_OPERATION(ELU, V1_3, kMediumCriteria);
+TEST_SINGLE_OPERATION(HARD_SWISH, V1_3, kMediumCriteria);
+TEST_SINGLE_OPERATION(FILL, V1_3, kStrictCriteria);
+TEST_SINGLE_OPERATION(RANK, V1_3, kStrictCriteria);
+
 const AccuracyCriteria kSmallGraphCriteria = {
         .float32 = {.bias = 4e-4f, .mse = 1e-5f, .atol = 1e-2f, .rtol = 1e-2f},
         .float16 = {.bias = 5e-2f, .mse = 1e-2f, .atol = 1.0f, .rtol = 1.0f},
