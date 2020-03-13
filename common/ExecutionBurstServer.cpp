@@ -29,6 +29,7 @@
 #include <utility>
 #include <vector>
 
+#include "HalInterfaces.h"
 #include "Tracing.h"
 
 namespace android::nn {
@@ -37,6 +38,10 @@ namespace {
 using namespace hal;
 
 using hardware::MQDescriptorSync;
+using V1_2::FmqRequestDatum;
+using V1_2::FmqResultDatum;
+using V1_2::IBurstCallback;
+using V1_2::IBurstContext;
 
 constexpr Timing kNoTiming = {std::numeric_limits<uint64_t>::max(),
                               std::numeric_limits<uint64_t>::max()};
