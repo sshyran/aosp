@@ -169,6 +169,7 @@ cc_test {
         "libneuralnetworks_static",
         "libneuralnetworks_common",
     ],
+    shared_libs: ["libmemunreachable"],
     header_libs: [
         "libneuralnetworks_private_headers",
     ],
