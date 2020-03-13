@@ -428,6 +428,7 @@ const AccuracyCriteria kStrictCriteria = {
         .float16 = {.bias = 1e-4f, .mse = 1e-8f, .atol = 1e-3f, .rtol = 1e-3f},
         .int32 = {.atol = 1},
         .quant8Asymm = {.bias = 0.1f, .mse = 0.1f, .atol = 1},
+        .quant8AsymmSigned = {.bias = 0.1f, .mse = 0.1f, .atol = 1},
         .quant8Symm = {.bias = 0.1f, .mse = 0.1f, .atol = 1},
         .quant16Asymm = {.bias = 0.1f, .mse = 0.1f, .atol = 1},
         .quant16Symm = {.bias = 0.1f, .mse = 0.1f, .atol = 1},
@@ -441,6 +442,7 @@ const AccuracyCriteria kMediumCriteria = {
         .float16 = {.bias = 1e-3f, .mse = 1e-6f, .atol = 1e-2f, .rtol = 1e-2f},
         .int32 = {.atol = 1},
         .quant8Asymm = {.bias = 1.2, .mse = 1.2, .atol = 2},
+        .quant8AsymmSigned = {.bias = 1.2, .mse = 1.2, .atol = 2},
         .quant8Symm = {.bias = 1.2, .mse = 1.2, .atol = 2},
         .quant16Asymm = {.bias = 1.2, .mse = 1.2, .atol = 2},
         .quant16Symm = {.bias = 1.2, .mse = 1.2, .atol = 2},
@@ -454,6 +456,7 @@ const AccuracyCriteria kRelaxedCriteria = {
         .float16 = {.bias = 5e-3f, .mse = 1e-3f, .atol = 1.0f, .rtol = 1.0f},
         .int32 = {.atol = 1},
         .quant8Asymm = {.bias = 1.5, .mse = 1.5, .atol = 10},
+        .quant8AsymmSigned = {.bias = 1.5, .mse = 1.5, .atol = 10},
         .quant8Symm = {.bias = 1.5, .mse = 1.5, .atol = 10},
         .quant16Asymm = {.bias = 1.5, .mse = 1.5, .atol = 10},
         .quant16Symm = {.bias = 1.5, .mse = 1.5, .atol = 10},
@@ -465,6 +468,7 @@ const AccuracyCriteria kConvCriteria = {
         .float16 = {.bias = 5e-2f, .mse = 1e-2f, .atol = 1.0f, .rtol = 1.0f},
         .int32 = {.atol = 1},
         .quant8Asymm = {.bias = 1.5, .mse = 1.5, .atol = 10},
+        .quant8AsymmSigned = {.bias = 1.5, .mse = 1.5, .atol = 10},
         .quant8Symm = {.bias = 1.5, .mse = 1.5, .atol = 10},
         .quant16Asymm = {.bias = 1.5, .mse = 1.5, .atol = 10},
         .quant16Symm = {.bias = 1.5, .mse = 1.5, .atol = 10},
@@ -550,6 +554,7 @@ TEST_SINGLE_OPERATION(LOCAL_RESPONSE_NORMALIZATION, V1_2, kRelaxedCriteria);
 TEST_SINGLE_OPERATION(DEQUANTIZE, V1_2, kMediumCriteria);
 TEST_SINGLE_OPERATION(SQUEEZE, V1_2, kStrictCriteria);
 TEST_SINGLE_OPERATION(STRIDED_SLICE, V1_2, kStrictCriteria);
+TEST_SINGLE_OPERATION(EMBEDDING_LOOKUP, V1_2, kStrictCriteria);
 
 /*-- NNAPI 1.2 Operations ---------------------------------------------------*/
 
@@ -613,6 +618,70 @@ TEST_SINGLE_OPERATION(ROI_ALIGN, V1_2, kRelaxedCriteria);
 TEST_SINGLE_OPERATION(ROI_POOLING, V1_2, kRelaxedCriteria);
 TEST_SINGLE_OPERATION(HEATMAP_MAX_KEYPOINT, V1_2, kRelaxedCriteria);
 
+/*-- NNAPI 1.0, 1.1, and 1.2 Operations with Extended Behavior in 1.3 -------------*/
+
+TEST_SINGLE_OPERATION(ADD, V1_3, kMediumCriteria);
+TEST_SINGLE_OPERATION(AVERAGE_POOL_2D, V1_3, kRelaxedCriteria);
+TEST_SINGLE_OPERATION(CONCATENATION, V1_3, kMediumCriteria);
+TEST_SINGLE_OPERATION(CONV_2D, V1_3, kConvCriteria);
+TEST_SINGLE_OPERATION(DEPTHWISE_CONV_2D, V1_3, kConvCriteria);
+TEST_SINGLE_OPERATION(DEPTH_TO_SPACE, V1_3, kStrictCriteria);
+TEST_SINGLE_OPERATION(DEQUANTIZE, V1_3, kMediumCriteria);
+TEST_SINGLE_OPERATION(EMBEDDING_LOOKUP, V1_3, kStrictCriteria);
+TEST_SINGLE_OPERATION(FULLY_CONNECTED, V1_3, kRelaxedCriteria);
+TEST_SINGLE_OPERATION(L2_NORMALIZATION, V1_3, kRelaxedCriteria);
+TEST_SINGLE_OPERATION(LOGISTIC, V1_3, kRelaxedCriteria);
+TEST_SINGLE_OPERATION(MAX_POOL_2D, V1_3, kRelaxedCriteria);
+TEST_SINGLE_OPERATION(MUL, V1_3, kMediumCriteria);
+TEST_SINGLE_OPERATION(RELU, V1_3, kMediumCriteria);
+TEST_SINGLE_OPERATION(RELU1, V1_3, kMediumCriteria);
+TEST_SINGLE_OPERATION(RELU6, V1_3, kMediumCriteria);
+TEST_SINGLE_OPERATION(RESHAPE, V1_3, kStrictCriteria);
+TEST_SINGLE_OPERATION(RESIZE_BILINEAR, V1_3, kRelaxedCriteria);
+TEST_SINGLE_OPERATION(SOFTMAX, V1_3, kRelaxedCriteria);
+TEST_SINGLE_OPERATION(SPACE_TO_DEPTH, V1_3, kStrictCriteria);
+TEST_SINGLE_OPERATION(TANH, V1_3, kRelaxedCriteria);
+TEST_SINGLE_OPERATION(BATCH_TO_SPACE_ND, V1_3, kStrictCriteria);
+TEST_SINGLE_OPERATION(DIV, V1_3, kMediumCriteria);
+TEST_SINGLE_OPERATION(MEAN, V1_3, kRelaxedCriteria);
+TEST_SINGLE_OPERATION(PAD, V1_3, kStrictCriteria);
+TEST_SINGLE_OPERATION(SPACE_TO_BATCH_ND, V1_3, kStrictCriteria);
+TEST_SINGLE_OPERATION(SQUEEZE, V1_3, kStrictCriteria);
+TEST_SINGLE_OPERATION(STRIDED_SLICE, V1_3, kStrictCriteria);
+TEST_SINGLE_OPERATION(SUB, V1_3, kMediumCriteria);
+TEST_SINGLE_OPERATION(TRANSPOSE, V1_3, kStrictCriteria);
+TEST_SINGLE_OPERATION(ABS, V1_3, kMediumCriteria);
+TEST_SINGLE_OPERATION(ARGMAX, V1_3, kStrictCriteria);
+TEST_SINGLE_OPERATION(ARGMIN, V1_3, kStrictCriteria);
+TEST_SINGLE_OPERATION(CAST, V1_3, kMediumCriteria);
+TEST_SINGLE_OPERATION(CHANNEL_SHUFFLE, V1_3, kStrictCriteria);
+TEST_SINGLE_OPERATION(EQUAL, V1_3, kStrictCriteria);
+TEST_SINGLE_OPERATION(EXPAND_DIMS, V1_3, kStrictCriteria);
+TEST_SINGLE_OPERATION(GATHER, V1_3, kStrictCriteria);
+TEST_SINGLE_OPERATION(GREATER, V1_3, kStrictCriteria);
+TEST_SINGLE_OPERATION(GREATER_EQUAL, V1_3, kStrictCriteria);
+TEST_SINGLE_OPERATION(GROUPED_CONV_2D, V1_3, kConvCriteria);
+TEST_SINGLE_OPERATION(HEATMAP_MAX_KEYPOINT, V1_3, kRelaxedCriteria);
+TEST_SINGLE_OPERATION(LESS, V1_3, kStrictCriteria);
+TEST_SINGLE_OPERATION(LESS_EQUAL, V1_3, kStrictCriteria);
+TEST_SINGLE_OPERATION(MAXIMUM, V1_3, kMediumCriteria);
+TEST_SINGLE_OPERATION(MINIMUM, V1_3, kMediumCriteria);
+TEST_SINGLE_OPERATION(NOT_EQUAL, V1_3, kStrictCriteria);
+TEST_SINGLE_OPERATION(PAD_V2, V1_3, kStrictCriteria);
+TEST_SINGLE_OPERATION(PRELU, V1_3, kMediumCriteria);
+TEST_SINGLE_OPERATION(QUANTIZE, V1_3, kMediumCriteria);
+TEST_SINGLE_OPERATION(REDUCE_MAX, V1_3, kRelaxedCriteria);
+TEST_SINGLE_OPERATION(REDUCE_MIN, V1_3, kRelaxedCriteria);
+TEST_SINGLE_OPERATION(ROI_ALIGN, V1_3, kRelaxedCriteria);
+TEST_SINGLE_OPERATION(ROI_POOLING, V1_3, kRelaxedCriteria);
+TEST_SINGLE_OPERATION(SELECT, V1_3, kStrictCriteria);
+TEST_SINGLE_OPERATION(SLICE, V1_3, kStrictCriteria);
+TEST_SINGLE_OPERATION(SPLIT, V1_3, kMediumCriteria);
+TEST_SINGLE_OPERATION(TILE, V1_3, kStrictCriteria);
+TEST_SINGLE_OPERATION(TOPK_V2, V1_3, kStrictCriteria);
+TEST_SINGLE_OPERATION(TRANSPOSE_CONV_2D, V1_3, kConvCriteria);
+TEST_SINGLE_OPERATION(RESIZE_NEAREST_NEIGHBOR, V1_3, kRelaxedCriteria);
+
 /*-- NNAPI 1.3 Operations ---------------------------------------------------*/
 
 // TODO: The following 1.3 operation signatures are currently not defined:
@@ -630,6 +699,7 @@ const AccuracyCriteria kSmallGraphCriteria = {
         .float16 = {.bias = 5e-2f, .mse = 1e-2f, .atol = 1.0f, .rtol = 1.0f},
         .int32 = {.atol = 1},
         .quant8Asymm = {.bias = 2, .mse = 2, .atol = 12},
+        .quant8AsymmSigned = {.bias = 2, .mse = 2, .atol = 12},
         .quant8Symm = {.bias = 2, .mse = 2, .atol = 12},
         .quant16Asymm = {.bias = 2, .mse = 2, .atol = 12},
         .quant16Symm = {.bias = 2, .mse = 2, .atol = 12},
@@ -640,6 +710,7 @@ const AccuracyCriteria kLargeGraphCriteria = {
         .float16 = {.bias = 1e-1f, .mse = 5e-2f, .atol = 1.0f, .rtol = 1.0f},
         .int32 = {.atol = 1},
         .quant8Asymm = {.bias = 2, .mse = 2, .atol = 12},
+        .quant8AsymmSigned = {.bias = 2, .mse = 2, .atol = 12},
         .quant8Symm = {.bias = 2, .mse = 2, .atol = 12},
         .quant16Asymm = {.bias = 2, .mse = 2, .atol = 12},
         .quant16Symm = {.bias = 2, .mse = 2, .atol = 12},
