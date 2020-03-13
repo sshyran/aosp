@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 The Android Open Source Project
+ * Copyright (C) 2020 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-#ifndef ANDROID_FRAMEWORKS_ML_NN_RUNTIME_TEST_TEST_GENERATED_H
-#define ANDROID_FRAMEWORKS_ML_NN_RUNTIME_TEST_TEST_GENERATED_H
+#ifndef ANDROID_FRAMEWORKS_ML_NN_RUNTIME_TEST_GENERATED_TEST_UTILS_H
+#define ANDROID_FRAMEWORKS_ML_NN_RUNTIME_TEST_GENERATED_TEST_UTILS_H
 
 #include <gtest/gtest.h>
 
@@ -67,6 +67,9 @@ inline void createModel(const test_helper::TestModel& testModel, GeneratedModel*
     createModel(testModel, /*testDynamicOutputShape=*/false, model);
 }
 
+void createRequest(const test_helper::TestModel& testModel, test_wrapper::Execution* execution,
+                   std::vector<test_helper::TestBuffer>* outputs);
+
 }  // namespace android::nn::generated_tests
 
-#endif  // ANDROID_FRAMEWORKS_ML_NN_RUNTIME_TEST_TEST_GENERATED_H
+#endif  // ANDROID_FRAMEWORKS_ML_NN_RUNTIME_TEST_GENERATED_TEST_UTILS_H
