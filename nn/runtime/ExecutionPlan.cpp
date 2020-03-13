@@ -832,29 +832,34 @@ std::shared_ptr<ExecutionPlan::Controller> ExecutionPlan::makeController(
         totalSizeOfTemporaries += size;
         return offset;
     };
+    // This function has two modes of operation:
+    // 1. When lifetime is TEMPORARY_VARIABLE, we allocate memory for
+    //    TEMPORARY_VARIABLE source operands, skip SUBGRAPH_OUTPUT source
+    //    operands, and panic if we see a source operand of another lifetime.
+    // 2. When lifetime is SUBGRAPH_OUTPUT, we allocate memory for
+    //    SUBGRAPH_OUTPUT source operands and panic if we see a source operand
+    //    of another lifetime.
     auto mapTemporary =
             [executionBuilder, addTemporaryOfSize](
                     const SourceOperandIndex& sourceOperandIndex,
                     std::map<SourceOperandIndex, uint32_t>* sourceOperandToOffsetOfTemporary,
                     OperandLifeTime lifetime = OperandLifeTime::TEMPORARY_VARIABLE) {
-#ifdef NN_DEBUGGABLE
                 CHECK(lifetime == OperandLifeTime::TEMPORARY_VARIABLE ||
                       lifetime == OperandLifeTime::SUBGRAPH_OUTPUT);
-                CHECK(sourceOperandToOffsetOfTemporary->find(sourceOperandIndex) ==
-                      sourceOperandToOffsetOfTemporary->end());
-#endif
                 const Operand& sourceOperand =
                         executionBuilder->getSourceOperand(sourceOperandIndex);
-                if (sourceOperand.lifetime != lifetime) {
-                    CHECK(lifetime == OperandLifeTime::TEMPORARY_VARIABLE);
-                    CHECK(sourceOperand.lifetime == OperandLifeTime::SUBGRAPH_OUTPUT);
-                    // This is expected to be handled elsewhere.
+                if (lifetime == OperandLifeTime::TEMPORARY_VARIABLE &&
+                    sourceOperand.lifetime == OperandLifeTime::SUBGRAPH_OUTPUT) {
+                    // See the caller for explanation.
                     return;
                 }
+                CHECK(sourceOperand.lifetime == lifetime);
                 const uint32_t size = TypeManager::get()->getSizeOfData(sourceOperand);
                 CHECK_NE(size, 0u);
                 const uint32_t offset = addTemporaryOfSize(size);
-                sourceOperandToOffsetOfTemporary->emplace(sourceOperandIndex, offset);
+                auto [_, isNew] =
+                        sourceOperandToOffsetOfTemporary->emplace(sourceOperandIndex, offset);
+                CHECK(isNew);
                 VLOG(EXECUTION) << "temp: operand " << toString(sourceOperandIndex)
                                 << " offset = " << offset;
             };
@@ -865,6 +870,17 @@ std::shared_ptr<ExecutionPlan::Controller> ExecutionPlan::makeController(
             // Allocate memory for ExecutionStep temporary outputs that are
             // inputs to other steps, as determined by
             // ExecutionPlan::CompoundBody::findTempsAsStepModelOutputs().
+            //
+            // We don't allocate memory for step model output operands with
+            // source operand lifetime SUBGRAPH_OUTPUT because they will be
+            // - managed by the client (main model outputs),
+            // - assigned a location of another operand (when this step model
+            //   output is a branch model output of an IF; see
+            //   ExecutionPlan::nextCompound(const IfStep*, ...)), or
+            // - allocated by a WHILE (when this step model output
+            //   is a condition or body model output of a WHILE; see the
+            //   step->bodyOutputOperands and step->condOutputOperand handling
+            //   below).
             for (const auto& output : step->getTempsAsStepModelOutputs()) {
                 mapTemporary(SourceOperandIndex(step->getSourceModelIndex(), output.first),
                              &sourceOperandToOffsetOfTemporary);
@@ -877,6 +893,17 @@ std::shared_ptr<ExecutionPlan::Controller> ExecutionPlan::makeController(
             // We don't allocate memory for branch output operands because they
             // use the same location as the corresponding outer output operands,
             // as established in ExecutionPlan::nextCompound(const IfStep*, ...)
+            //
+            // We don't allocate memory for outer output operands with source
+            // operand lifetime SUBGRAPH_OUTPUT because they will be
+            // - managed by the client (main model outputs),
+            // - assigned a location of another operand (when this IF outer
+            //   output is a branch model output of another IF; see
+            //   ExecutionPlan::nextCompound(const IfStep*, ...)), or
+            // - allocated by a WHILE (when this IF outer output
+            //   is a condition or body model output of a WHILE; see the
+            //   step->bodyOutputOperands and step->condOutputOperand handling
+            //   below).
             for (const auto& sourceOperandIndex : step->outerOutputOperands) {
                 mapTemporary(sourceOperandIndex, &sourceOperandToOffsetOfTemporary);
             }
@@ -884,14 +911,14 @@ std::shared_ptr<ExecutionPlan::Controller> ExecutionPlan::makeController(
             // Allocate memory for all temporary outputs of an WhileStep because
             // they are going to be written to by the WHILE loop.
             //
-            // We don't allocate memory for outer output operands with lifetime
-            // SUBGRAPH_OUTPUT because they will be
+            // We don't allocate memory for outer output operands with source
+            // operand lifetime SUBGRAPH_OUTPUT because they will be
             // - managed by the client (main model outputs),
-            // - assigned a location of another operand (when the WHILE
-            //   resides within an IF branch model; see
+            // - assigned a location of another operand (when this WHILE outer
+            //   output is a branch model output of an IF; see
             //   ExecutionPlan::nextCompound(const IfStep*, ...)), or
-            // - allocated by another WHILE (when this WHILE resides
-            //   within a condition or body model of another WHILE; see the
+            // - allocated by another WHILE (when this WHILE outer output
+            //   is a condition or body model output of another WHILE; see the
             //   step->bodyOutputOperands and step->condOutputOperand handling
             //   below).
             for (const auto& sourceOperandIndex : step->outerOutputOperands) {
