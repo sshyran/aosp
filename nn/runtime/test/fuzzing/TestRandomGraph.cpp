@@ -22,6 +22,8 @@
 #include <set>
 #include <string>
 
+#include "GeneratedTestUtils.h"
+#include "TestHarness.h"
 #include "TestNeuralNetworksWrapper.h"
 #include "fuzzing/OperationManager.h"
 #include "fuzzing/RandomGraphGenerator.h"
@@ -46,6 +48,7 @@ namespace android {
 namespace nn {
 namespace fuzzing_test {
 
+using namespace test_helper;
 using test_wrapper::Result;
 constexpr char kRefDeviceName[] = "nnapi-reference";
 
@@ -199,11 +202,10 @@ class RandomGraphTest : public ::testing::TestWithParam<uint32_t> {
         };
         if (kDisabledTests.find(mTestName) != kDisabledTests.end()) return true;
         if (featureLevel >= __ANDROID_API_Q__) return false;
-        const auto& operations = mGraph.getOperations();
-        for (const auto& op : operations) {
+        for (const auto& op : mTestModel.main.operations) {
             // Skip if testing BATCH_TO_SPACE_ND with batch dimension == 1.
-            if (op.opType == ANEURALNETWORKS_BATCH_TO_SPACE_ND &&
-                op.inputs[0]->dimensions[0].getValue() == 1)
+            if (op.type == TestOperationType::BATCH_TO_SPACE_ND &&
+                mTestModel.main.operands[op.inputs[0]].dimensions[0] == 1)
                 return true;
         }
         return false;
@@ -255,12 +257,8 @@ class RandomGraphTest : public ::testing::TestWithParam<uint32_t> {
 
         // Create request.
         test_wrapper::Execution execution(&compilation);
-        std::vector<OperandBuffer> outputs;
-        if (isRef) {
-            mGraph.createRequest(&execution);
-        } else {
-            mGraph.createRequest(&execution, &outputs);
-        }
+        std::vector<TestBuffer> outputs;
+        generated_tests::createRequest(mTestModel, &execution, &outputs);
 
         // Compute result.
         Result executeReturn = execution.compute();
@@ -273,14 +271,23 @@ class RandomGraphTest : public ::testing::TestWithParam<uint32_t> {
             return;
         }
         ASSERT_EQ(executeReturn, Result::NO_ERROR);
+
+        // Record the execution results as golden values.
+        if (isRef) {
+            for (uint32_t i = 0; i < outputs.size(); i++) {
+                auto outputIndex = mTestModel.main.outputIndexes[i];
+                mTestModel.main.operands[outputIndex].data = outputs[i];
+            }
+        }
+
         if (featureLevel >= __ANDROID_API_Q__ && !isRef) {
-            mGraph.checkResults(outputs, mCriteria);
+            checkResults(mTestModel, outputs, mCriteria);
         }
     }
 
     // Compile and execute the generated graph normally (i.e., allow runtime to
     // distribute across devices).
-    void computeAndVerifyResults(const test_wrapper::Model* model, bool checkResults) {
+    void computeAndVerifyResults(const test_wrapper::Model* model, bool shouldCheckResults) {
         // Because we're not using the introspection/control API, the CpuDevice
         // is available as a fallback, and hence we assume that compilation and
         // execution will succeed.
@@ -291,13 +298,13 @@ class RandomGraphTest : public ::testing::TestWithParam<uint32_t> {
 
         // Create request.
         test_wrapper::Execution execution(&compilation);
-        std::vector<OperandBuffer> outputs;
-        mGraph.createRequest(&execution, &outputs);
+        std::vector<TestBuffer> outputs;
+        generated_tests::createRequest(mTestModel, &execution, &outputs);
 
         // Compute and verify result.
         ASSERT_EQ(execution.compute(), Result::NO_ERROR);
-        if (checkResults) {
-            mGraph.checkResults(outputs, mCriteria);
+        if (shouldCheckResults) {
+            checkResults(mTestModel, outputs, mCriteria);
         }
     }
 
@@ -307,8 +314,10 @@ class RandomGraphTest : public ::testing::TestWithParam<uint32_t> {
         ASSERT_TRUE(mGraph.generate(kSeed, numOperations, dimensionRange));
 
         // Create a model from the random graph.
-        test_wrapper::Model model;
-        mGraph.createModel(&model);
+        mTestModel = mGraph.createTestModel();
+
+        generated_tests::GeneratedModel model;
+        generated_tests::createModel(mTestModel, &model);
         ASSERT_TRUE(model.isValid());
         ASSERT_EQ(model.finish(), Result::NO_ERROR);
 
@@ -358,6 +367,7 @@ class RandomGraphTest : public ::testing::TestWithParam<uint32_t> {
     const uint32_t kSeed = GetParam();
     std::string mTestName;
     RandomGraph mGraph;
+    TestModel mTestModel;
     AccuracyCriteria mCriteria;
 
     static int64_t mStandardDevicesFeatureLevel;  // minimum across all devices
