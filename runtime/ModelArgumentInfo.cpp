@@ -19,6 +19,7 @@
 #include "ModelArgumentInfo.h"
 
 #include <algorithm>
+#include <utility>
 #include <vector>
 
 #include "HalInterfaces.h"
@@ -31,61 +32,74 @@ namespace nn {
 
 using namespace hal;
 
-int ModelArgumentInfo::setFromPointer(const Operand& operand,
-                                      const ANeuralNetworksOperandType* type, void* data,
-                                      uint32_t length) {
+static const std::pair<int, ModelArgumentInfo> kBadDataModelArgumentInfo{ANEURALNETWORKS_BAD_DATA,
+                                                                         {}};
+
+std::pair<int, ModelArgumentInfo> ModelArgumentInfo::createFromPointer(
+        const Operand& operand, const ANeuralNetworksOperandType* type, void* data,
+        uint32_t length) {
     if ((data == nullptr) != (length == 0)) {
         const char* dataPtrMsg = data ? "NOT_NULLPTR" : "NULLPTR";
         LOG(ERROR) << "Data pointer must be nullptr if and only if length is zero (data = "
                    << dataPtrMsg << ", length = " << length << ")";
-        return ANEURALNETWORKS_BAD_DATA;
+        return kBadDataModelArgumentInfo;
     }
+
+    ModelArgumentInfo ret;
     if (data == nullptr) {
-        state = ModelArgumentInfo::HAS_NO_VALUE;
+        ret.mState = ModelArgumentInfo::HAS_NO_VALUE;
     } else {
-        NN_RETURN_IF_ERROR(updateDimensionInfo(operand, type));
+        if (int n = ret.updateDimensionInfo(operand, type)) {
+            return {n, ModelArgumentInfo()};
+        }
         if (operand.type != OperandType::OEM) {
-            uint32_t neededLength = TypeManager::get()->getSizeOfData(operand.type, dimensions);
+            uint32_t neededLength =
+                    TypeManager::get()->getSizeOfData(operand.type, ret.mDimensions);
             if (neededLength != length && neededLength != 0) {
                 LOG(ERROR) << "Setting argument with invalid length: " << length
                            << ", expected length: " << neededLength;
-                return ANEURALNETWORKS_BAD_DATA;
+                return kBadDataModelArgumentInfo;
             }
         }
-        state = ModelArgumentInfo::POINTER;
+        ret.mState = ModelArgumentInfo::POINTER;
     }
-    buffer = data;
-    locationAndLength = {.poolIndex = 0, .offset = 0, .length = length};
-    return ANEURALNETWORKS_NO_ERROR;
+    ret.mBuffer = data;
+    ret.mLocationAndLength = {.poolIndex = 0, .offset = 0, .length = length};
+    return {ANEURALNETWORKS_NO_ERROR, ret};
 }
 
-int ModelArgumentInfo::setFromMemory(const Operand& operand, const ANeuralNetworksOperandType* type,
-                                     uint32_t poolIndex, uint32_t offset, uint32_t length) {
-    NN_RETURN_IF_ERROR(updateDimensionInfo(operand, type));
+std::pair<int, ModelArgumentInfo> ModelArgumentInfo::createFromMemory(
+        const Operand& operand, const ANeuralNetworksOperandType* type, uint32_t poolIndex,
+        uint32_t offset, uint32_t length) {
+    ModelArgumentInfo ret;
+    if (int n = ret.updateDimensionInfo(operand, type)) {
+        return {n, ModelArgumentInfo()};
+    }
     const bool isMemorySizeKnown = offset != 0 || length != 0;
     if (isMemorySizeKnown && operand.type != OperandType::OEM) {
-        const uint32_t neededLength = TypeManager::get()->getSizeOfData(operand.type, dimensions);
+        const uint32_t neededLength =
+                TypeManager::get()->getSizeOfData(operand.type, ret.mDimensions);
         if (neededLength != length && neededLength != 0) {
             LOG(ERROR) << "Setting argument with invalid length: " << length
                        << " (offset: " << offset << "), expected length: " << neededLength;
-            return ANEURALNETWORKS_BAD_DATA;
+            return kBadDataModelArgumentInfo;
         }
     }
 
-    state = ModelArgumentInfo::MEMORY;
-    locationAndLength = {.poolIndex = poolIndex, .offset = offset, .length = length};
-    buffer = nullptr;
-    return ANEURALNETWORKS_NO_ERROR;
+    ret.mState = ModelArgumentInfo::MEMORY;
+    ret.mLocationAndLength = {.poolIndex = poolIndex, .offset = offset, .length = length};
+    ret.mBuffer = nullptr;
+    return {ANEURALNETWORKS_NO_ERROR, ret};
 }
 
 int ModelArgumentInfo::updateDimensionInfo(const Operand& operand,
                                            const ANeuralNetworksOperandType* newType) {
     if (newType == nullptr) {
-        dimensions = operand.dimensions;
+        mDimensions = operand.dimensions;
     } else {
         const uint32_t count = newType->dimensionCount;
-        dimensions = hidl_vec<uint32_t>(count);
-        std::copy(&newType->dimensions[0], &newType->dimensions[count], dimensions.begin());
+        mDimensions = hidl_vec<uint32_t>(count);
+        std::copy(&newType->dimensions[0], &newType->dimensions[count], mDimensions.begin());
     }
     return ANEURALNETWORKS_NO_ERROR;
 }
@@ -98,12 +112,22 @@ hidl_vec<RequestArgument> createRequestArguments(
     uint32_t ptrArgsIndex = 0;
     for (size_t i = 0; i < count; i++) {
         const auto& info = argumentInfos[i];
-        ioInfos[i] = {
-                .hasNoValue = info.state == ModelArgumentInfo::HAS_NO_VALUE,
-                .location = info.state == ModelArgumentInfo::POINTER
-                                    ? ptrArgsLocations[ptrArgsIndex++]
-                                    : info.locationAndLength,
-                .dimensions = info.dimensions,
+        switch (info.state()) {
+            case ModelArgumentInfo::POINTER:
+                ioInfos[i] = {.hasNoValue = false,
+                              .location = ptrArgsLocations[ptrArgsIndex++],
+                              .dimensions = info.dimensions()};
+                break;
+            case ModelArgumentInfo::MEMORY:
+                ioInfos[i] = {.hasNoValue = false,
+                              .location = info.locationAndLength(),
+                              .dimensions = info.dimensions()};
+                break;
+            case ModelArgumentInfo::HAS_NO_VALUE:
+                ioInfos[i] = {.hasNoValue = true};
+                break;
+            default:
+                CHECK(false);
         };
     }
     return ioInfos;
