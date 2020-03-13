@@ -252,7 +252,7 @@ int ExecutionBuilder::getDuration(int32_t durationCode, uint64_t* duration) cons
         return ANEURALNETWORKS_BAD_STATE;
     }
     // If the sync fence is valid, perform a non-blocking status check on the sync fence status.
-    // TODO(miaowang): consider using a utility method to wait on the sync fence
+    // TODO(b/148423931): consider using a utility method to wait on the sync fence
     // and distinguish the not-finished status and error state.
     if (hasSyncFence() && sync_wait(mSyncFenceFd, 0) < 0) {
         LOG(ERROR) << "ANeuralNetworksExecution_getDuration called before the "
@@ -360,7 +360,7 @@ int ExecutionBuilder::getOutputOperandDimensions(uint32_t index, uint32_t* dimen
         return ANEURALNETWORKS_BAD_STATE;
     }
     // If the sync fence is valid, perform a non-blocking status check on the sync fence status.
-    // TODO(miaowang): consider using a utility method to wait on the sync fence
+    // TODO(b/148423931): consider using a utility method to wait on the sync fence
     // and distinguish the not-finished status and error state.
     if (hasSyncFence() && sync_wait(mSyncFenceFd, 0) < 0) {
         LOG(ERROR) << "ANeuralNetworksExecution_getOutputOperandDimensions called before the "
@@ -392,7 +392,7 @@ int ExecutionBuilder::getOutputOperandRank(uint32_t index, uint32_t* rank) {
         return ANEURALNETWORKS_BAD_STATE;
     }
     // If the sync fence is valid, perform a non-blocking status check on the sync fence status.
-    // TODO(miaowang): consider using a utility method to wait on the sync fence
+    // TODO(b/148423931): consider using a utility method to wait on the sync fence
     // and distinguish the not-finished status and error state.
     if (hasSyncFence() && sync_wait(mSyncFenceFd, 0) < 0) {
         LOG(ERROR) << "ANeuralNetworksExecution_getOutputOperandRank called before the "
