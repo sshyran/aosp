@@ -29,7 +29,7 @@ static void softmaxConstructor(TestOperandType dataType, uint32_t rank, RandomOp
 }
 
 DEFINE_OPERATION_SIGNATURE(SOFTMAX_V1_0){
-        .opType = ANEURALNETWORKS_SOFTMAX,
+        .opType = TestOperationType::SOFTMAX,
         .supportedDataTypes = {TestOperandType::TENSOR_FLOAT32,
                                TestOperandType::TENSOR_QUANT8_ASYMM},
         .supportedRanks = {2, 4},
@@ -39,7 +39,7 @@ DEFINE_OPERATION_SIGNATURE(SOFTMAX_V1_0){
         .constructor = softmaxConstructor};
 
 DEFINE_OPERATION_SIGNATURE(SOFTMAX_V1_2){
-        .opType = ANEURALNETWORKS_SOFTMAX,
+        .opType = TestOperationType::SOFTMAX,
         .supportedDataTypes = {TestOperandType::TENSOR_FLOAT32,
                                TestOperandType::TENSOR_QUANT8_ASYMM},
         .supportedRanks = {1, 3},
@@ -49,7 +49,7 @@ DEFINE_OPERATION_SIGNATURE(SOFTMAX_V1_2){
         .constructor = softmaxConstructor};
 
 DEFINE_OPERATION_SIGNATURE(SOFTMAX_float16_V1_2){
-        .opType = ANEURALNETWORKS_SOFTMAX,
+        .opType = TestOperationType::SOFTMAX,
         .supportedDataTypes = {TestOperandType::TENSOR_FLOAT16},
         .supportedRanks = {1, 2, 3, 4},
         .version = HalVersion::V1_2,
@@ -58,7 +58,7 @@ DEFINE_OPERATION_SIGNATURE(SOFTMAX_float16_V1_2){
         .constructor = softmaxConstructor};
 
 DEFINE_OPERATION_SIGNATURE(SOFTMAX_axis_V1_2){
-        .opType = ANEURALNETWORKS_SOFTMAX,
+        .opType = TestOperationType::SOFTMAX,
         .supportedDataTypes = {TestOperandType::TENSOR_FLOAT32,
                                TestOperandType::TENSOR_QUANT8_ASYMM,
                                TestOperandType::TENSOR_FLOAT16},
@@ -81,7 +81,7 @@ static void l2normConstructor(TestOperandType dataType, uint32_t rank, RandomOpe
 }
 
 DEFINE_OPERATION_SIGNATURE(L2_NORMALIZATION_V1_0){
-        .opType = ANEURALNETWORKS_L2_NORMALIZATION,
+        .opType = TestOperationType::L2_NORMALIZATION,
         .supportedDataTypes = {TestOperandType::TENSOR_FLOAT32},
         .supportedRanks = {4},
         .version = HalVersion::V1_0,
@@ -90,7 +90,7 @@ DEFINE_OPERATION_SIGNATURE(L2_NORMALIZATION_V1_0){
         .constructor = l2normConstructor};
 
 DEFINE_OPERATION_SIGNATURE(L2_NORMALIZATION_V1_2){
-        .opType = ANEURALNETWORKS_L2_NORMALIZATION,
+        .opType = TestOperationType::L2_NORMALIZATION,
         .supportedDataTypes = {TestOperandType::TENSOR_FLOAT32},
         .supportedRanks = {1, 2, 3},
         .version = HalVersion::V1_2,
@@ -99,7 +99,7 @@ DEFINE_OPERATION_SIGNATURE(L2_NORMALIZATION_V1_2){
         .constructor = l2normConstructor};
 
 DEFINE_OPERATION_SIGNATURE(L2_NORMALIZATION_type_V1_2){
-        .opType = ANEURALNETWORKS_L2_NORMALIZATION,
+        .opType = TestOperationType::L2_NORMALIZATION,
         .supportedDataTypes = {TestOperandType::TENSOR_FLOAT16,
                                TestOperandType::TENSOR_QUANT8_ASYMM},
         .supportedRanks = {1, 2, 3, 4},
@@ -109,7 +109,7 @@ DEFINE_OPERATION_SIGNATURE(L2_NORMALIZATION_type_V1_2){
         .constructor = l2normConstructor};
 
 DEFINE_OPERATION_SIGNATURE(L2_NORMALIZATION_axis_V1_2){
-        .opType = ANEURALNETWORKS_L2_NORMALIZATION,
+        .opType = TestOperationType::L2_NORMALIZATION,
         .supportedDataTypes = {TestOperandType::TENSOR_FLOAT32, TestOperandType::TENSOR_FLOAT16,
                                TestOperandType::TENSOR_QUANT8_ASYMM},
         .supportedRanks = {1, 2, 3, 4},
@@ -128,7 +128,7 @@ static void localResponseNormConstructor(TestOperandType dataType, uint32_t rank
 }
 
 DEFINE_OPERATION_SIGNATURE(LOCAL_RESPONSE_NORMALIZATION_V1_0){
-        .opType = ANEURALNETWORKS_LOCAL_RESPONSE_NORMALIZATION,
+        .opType = TestOperationType::LOCAL_RESPONSE_NORMALIZATION,
         .supportedDataTypes = {TestOperandType::TENSOR_FLOAT32},
         .supportedRanks = {4},
         .version = HalVersion::V1_0,
@@ -144,7 +144,7 @@ DEFINE_OPERATION_SIGNATURE(LOCAL_RESPONSE_NORMALIZATION_V1_0){
         .constructor = localResponseNormConstructor};
 
 DEFINE_OPERATION_SIGNATURE(LOCAL_RESPONSE_NORMALIZATION_V1_2){
-        .opType = ANEURALNETWORKS_LOCAL_RESPONSE_NORMALIZATION,
+        .opType = TestOperationType::LOCAL_RESPONSE_NORMALIZATION,
         .supportedDataTypes = {TestOperandType::TENSOR_FLOAT32},
         .supportedRanks = {1, 2, 3},
         .version = HalVersion::V1_2,
@@ -160,7 +160,7 @@ DEFINE_OPERATION_SIGNATURE(LOCAL_RESPONSE_NORMALIZATION_V1_2){
         .constructor = localResponseNormConstructor};
 
 DEFINE_OPERATION_SIGNATURE(LOCAL_RESPONSE_NORMALIZATION_float16_V1_2){
-        .opType = ANEURALNETWORKS_LOCAL_RESPONSE_NORMALIZATION,
+        .opType = TestOperationType::LOCAL_RESPONSE_NORMALIZATION,
         .supportedDataTypes = {TestOperandType::TENSOR_FLOAT16},
         .supportedRanks = {1, 2, 3, 4},
         .version = HalVersion::V1_2,
@@ -176,7 +176,7 @@ DEFINE_OPERATION_SIGNATURE(LOCAL_RESPONSE_NORMALIZATION_float16_V1_2){
         .constructor = localResponseNormConstructor};
 
 DEFINE_OPERATION_SIGNATURE(LOCAL_RESPONSE_NORMALIZATION_axis_V1_2){
-        .opType = ANEURALNETWORKS_LOCAL_RESPONSE_NORMALIZATION,
+        .opType = TestOperationType::LOCAL_RESPONSE_NORMALIZATION,
         .supportedDataTypes = {TestOperandType::TENSOR_FLOAT32, TestOperandType::TENSOR_FLOAT16},
         .supportedRanks = {1, 2, 3, 4},
         .version = HalVersion::V1_2,
@@ -193,7 +193,7 @@ DEFINE_OPERATION_SIGNATURE(LOCAL_RESPONSE_NORMALIZATION_axis_V1_2){
         .constructor = localResponseNormConstructor};
 
 DEFINE_OPERATION_SIGNATURE(INSTANCE_NORMALIZATION_V1_2){
-        .opType = ANEURALNETWORKS_INSTANCE_NORMALIZATION,
+        .opType = TestOperationType::INSTANCE_NORMALIZATION,
         .supportedDataTypes = {TestOperandType::TENSOR_FLOAT32, TestOperandType::TENSOR_FLOAT16},
         .supportedRanks = {4},
         .version = HalVersion::V1_2,
@@ -209,7 +209,7 @@ DEFINE_OPERATION_SIGNATURE(INSTANCE_NORMALIZATION_V1_2){
         .constructor = sameShapeOpConstructor};
 
 DEFINE_OPERATION_SIGNATURE(LOG_SOFTMAX_TENSOR_FLOAT32_V1_2){
-        .opType = ANEURALNETWORKS_LOG_SOFTMAX,
+        .opType = TestOperationType::LOG_SOFTMAX,
         .supportedDataTypes = {TestOperandType::TENSOR_FLOAT32, TestOperandType::TENSOR_FLOAT16},
         .supportedRanks = {1, 2, 3, 4},
         .version = HalVersion::V1_2,

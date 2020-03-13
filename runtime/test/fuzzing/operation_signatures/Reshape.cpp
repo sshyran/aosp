@@ -48,7 +48,7 @@ static void spaceToDepthConstructor(TestOperandType, uint32_t rank, RandomOperat
 }
 
 DEFINE_OPERATION_SIGNATURE(SPACE_TO_DEPTH_V1_0){
-        .opType = ANEURALNETWORKS_SPACE_TO_DEPTH,
+        .opType = TestOperationType::SPACE_TO_DEPTH,
         .supportedDataTypes = {TestOperandType::TENSOR_FLOAT32,
                                TestOperandType::TENSOR_QUANT8_ASYMM},
         .supportedRanks = {4},
@@ -58,7 +58,7 @@ DEFINE_OPERATION_SIGNATURE(SPACE_TO_DEPTH_V1_0){
         .constructor = spaceToDepthConstructor};
 
 DEFINE_OPERATION_SIGNATURE(SPACE_TO_DEPTH_V1_2){
-        .opType = ANEURALNETWORKS_SPACE_TO_DEPTH,
+        .opType = TestOperationType::SPACE_TO_DEPTH,
         .supportedDataTypes = {TestOperandType::TENSOR_FLOAT16},
         .supportedRanks = {4},
         .version = HalVersion::V1_2,
@@ -67,7 +67,7 @@ DEFINE_OPERATION_SIGNATURE(SPACE_TO_DEPTH_V1_2){
         .constructor = spaceToDepthConstructor};
 
 DEFINE_OPERATION_SIGNATURE(SPACE_TO_DEPTH_layout_V1_2){
-        .opType = ANEURALNETWORKS_SPACE_TO_DEPTH,
+        .opType = TestOperationType::SPACE_TO_DEPTH,
         .supportedDataTypes = {TestOperandType::TENSOR_FLOAT32,
                                TestOperandType::TENSOR_QUANT8_ASYMM,
                                TestOperandType::TENSOR_FLOAT16},
@@ -103,7 +103,7 @@ static void depthToSpaceConstructor(TestOperandType, uint32_t rank, RandomOperat
 }
 
 DEFINE_OPERATION_SIGNATURE(DEPTH_TO_SPACE_V1_0){
-        .opType = ANEURALNETWORKS_DEPTH_TO_SPACE,
+        .opType = TestOperationType::DEPTH_TO_SPACE,
         .supportedDataTypes = {TestOperandType::TENSOR_FLOAT32,
                                TestOperandType::TENSOR_QUANT8_ASYMM},
         .supportedRanks = {4},
@@ -113,7 +113,7 @@ DEFINE_OPERATION_SIGNATURE(DEPTH_TO_SPACE_V1_0){
         .constructor = depthToSpaceConstructor};
 
 DEFINE_OPERATION_SIGNATURE(DEPTH_TO_SPACE_V1_2){
-        .opType = ANEURALNETWORKS_DEPTH_TO_SPACE,
+        .opType = TestOperationType::DEPTH_TO_SPACE,
         .supportedDataTypes = {TestOperandType::TENSOR_FLOAT16},
         .supportedRanks = {4},
         .version = HalVersion::V1_2,
@@ -122,7 +122,7 @@ DEFINE_OPERATION_SIGNATURE(DEPTH_TO_SPACE_V1_2){
         .constructor = depthToSpaceConstructor};
 
 DEFINE_OPERATION_SIGNATURE(DEPTH_TO_SPACE_layout_V1_2){
-        .opType = ANEURALNETWORKS_DEPTH_TO_SPACE,
+        .opType = TestOperationType::DEPTH_TO_SPACE,
         .supportedDataTypes = {TestOperandType::TENSOR_FLOAT32,
                                TestOperandType::TENSOR_QUANT8_ASYMM,
                                TestOperandType::TENSOR_FLOAT16},
@@ -150,7 +150,7 @@ static void reshapeConstructor(TestOperandType, uint32_t rank, RandomOperation* 
 }
 
 DEFINE_OPERATION_SIGNATURE(RESHAPE_V1_0){
-        .opType = ANEURALNETWORKS_RESHAPE,
+        .opType = TestOperationType::RESHAPE,
         .supportedDataTypes = {TestOperandType::TENSOR_FLOAT32,
                                TestOperandType::TENSOR_QUANT8_ASYMM},
         .supportedRanks = {1, 2, 3, 4},
@@ -160,7 +160,7 @@ DEFINE_OPERATION_SIGNATURE(RESHAPE_V1_0){
         .constructor = reshapeConstructor};
 
 DEFINE_OPERATION_SIGNATURE(RESHAPE_V1_2){
-        .opType = ANEURALNETWORKS_RESHAPE,
+        .opType = TestOperationType::RESHAPE,
         .supportedDataTypes = {TestOperandType::TENSOR_FLOAT16},
         .supportedRanks = {1, 2, 3, 4},
         .version = HalVersion::V1_2,
@@ -193,7 +193,7 @@ static void batchToSpaceConstructor(TestOperandType, uint32_t rank, RandomOperat
 }
 
 DEFINE_OPERATION_SIGNATURE(BATCH_TO_SPACE_ND_V1_1){
-        .opType = ANEURALNETWORKS_BATCH_TO_SPACE_ND,
+        .opType = TestOperationType::BATCH_TO_SPACE_ND,
         .supportedDataTypes = {TestOperandType::TENSOR_FLOAT32,
                                TestOperandType::TENSOR_QUANT8_ASYMM},
         .supportedRanks = {4},
@@ -204,7 +204,7 @@ DEFINE_OPERATION_SIGNATURE(BATCH_TO_SPACE_ND_V1_1){
         .constructor = batchToSpaceConstructor};
 
 DEFINE_OPERATION_SIGNATURE(BATCH_TO_SPACE_ND_V1_2){
-        .opType = ANEURALNETWORKS_BATCH_TO_SPACE_ND,
+        .opType = TestOperationType::BATCH_TO_SPACE_ND,
         .supportedDataTypes = {TestOperandType::TENSOR_FLOAT16},
         .supportedRanks = {4},
         .version = HalVersion::V1_2,
@@ -214,7 +214,7 @@ DEFINE_OPERATION_SIGNATURE(BATCH_TO_SPACE_ND_V1_2){
         .constructor = batchToSpaceConstructor};
 
 DEFINE_OPERATION_SIGNATURE(BATCH_TO_SPACE_ND_layout_V1_2){
-        .opType = ANEURALNETWORKS_BATCH_TO_SPACE_ND,
+        .opType = TestOperationType::BATCH_TO_SPACE_ND,
         .supportedDataTypes = {TestOperandType::TENSOR_FLOAT32,
                                TestOperandType::TENSOR_QUANT8_ASYMM,
                                TestOperandType::TENSOR_FLOAT16},
@@ -269,7 +269,7 @@ static const OperandSignature paddingTensor_SPACE_TO_BATCH_ND = {
         }};
 
 DEFINE_OPERATION_SIGNATURE(SPACE_TO_BATCH_ND_V1_1){
-        .opType = ANEURALNETWORKS_SPACE_TO_BATCH_ND,
+        .opType = TestOperationType::SPACE_TO_BATCH_ND,
         .supportedDataTypes = {TestOperandType::TENSOR_FLOAT32,
                                TestOperandType::TENSOR_QUANT8_ASYMM},
         .supportedRanks = {4},
@@ -281,7 +281,7 @@ DEFINE_OPERATION_SIGNATURE(SPACE_TO_BATCH_ND_V1_1){
         .constructor = spaceToBatchConstructor};
 
 DEFINE_OPERATION_SIGNATURE(SPACE_TO_BATCH_ND_V1_2){
-        .opType = ANEURALNETWORKS_SPACE_TO_BATCH_ND,
+        .opType = TestOperationType::SPACE_TO_BATCH_ND,
         .supportedDataTypes = {TestOperandType::TENSOR_FLOAT16},
         .supportedRanks = {4},
         .version = HalVersion::V1_2,
@@ -292,7 +292,7 @@ DEFINE_OPERATION_SIGNATURE(SPACE_TO_BATCH_ND_V1_2){
         .constructor = spaceToBatchConstructor};
 
 DEFINE_OPERATION_SIGNATURE(SPACE_TO_BATCH_ND_layout_V1_2){
-        .opType = ANEURALNETWORKS_SPACE_TO_BATCH_ND,
+        .opType = TestOperationType::SPACE_TO_BATCH_ND,
         .supportedDataTypes = {TestOperandType::TENSOR_FLOAT32,
                                TestOperandType::TENSOR_QUANT8_ASYMM,
                                TestOperandType::TENSOR_FLOAT16},
@@ -341,7 +341,7 @@ static const OperandSignature paddingScalar_PAD_V2 = {
         }};
 
 DEFINE_OPERATION_SIGNATURE(PAD_V1_1){
-        .opType = ANEURALNETWORKS_PAD,
+        .opType = TestOperationType::PAD,
         .supportedDataTypes = {TestOperandType::TENSOR_FLOAT32,
                                TestOperandType::TENSOR_QUANT8_ASYMM},
         .supportedRanks = {1, 2, 3, 4},
@@ -351,7 +351,7 @@ DEFINE_OPERATION_SIGNATURE(PAD_V1_1){
         .constructor = padConstructor};
 
 DEFINE_OPERATION_SIGNATURE(PAD_V1_2){
-        .opType = ANEURALNETWORKS_PAD,
+        .opType = TestOperationType::PAD,
         .supportedDataTypes = {TestOperandType::TENSOR_FLOAT16},
         .supportedRanks = {1, 2, 3, 4},
         .version = HalVersion::V1_2,
@@ -360,7 +360,7 @@ DEFINE_OPERATION_SIGNATURE(PAD_V1_2){
         .constructor = padConstructor};
 
 DEFINE_OPERATION_SIGNATURE(PAD_V2_V1_2){
-        .opType = ANEURALNETWORKS_PAD_V2,
+        .opType = TestOperationType::PAD_V2,
         .supportedDataTypes = {TestOperandType::TENSOR_FLOAT32,
                                TestOperandType::TENSOR_QUANT8_ASYMM,
                                TestOperandType::TENSOR_FLOAT16},
@@ -391,7 +391,7 @@ static void transposeConstructor(TestOperandType, uint32_t rank, RandomOperation
 
 // TODO: Test the case when the second input is omitted.
 DEFINE_OPERATION_SIGNATURE(TRANSPOSE_V1_1){
-        .opType = ANEURALNETWORKS_TRANSPOSE,
+        .opType = TestOperationType::TRANSPOSE,
         .supportedDataTypes = {TestOperandType::TENSOR_FLOAT32,
                                TestOperandType::TENSOR_QUANT8_ASYMM},
         .supportedRanks = {1, 2, 3, 4},
@@ -401,7 +401,7 @@ DEFINE_OPERATION_SIGNATURE(TRANSPOSE_V1_1){
         .constructor = transposeConstructor};
 
 DEFINE_OPERATION_SIGNATURE(TRANSPOSE_V1_2){
-        .opType = ANEURALNETWORKS_TRANSPOSE,
+        .opType = TestOperationType::TRANSPOSE,
         .supportedDataTypes = {TestOperandType::TENSOR_FLOAT16},
         .supportedRanks = {1, 2, 3, 4},
         .version = HalVersion::V1_2,
@@ -421,7 +421,7 @@ static void channelShuffleConstructor(TestOperandType dataType, uint32_t rank,
 }
 
 DEFINE_OPERATION_SIGNATURE(CHANNEL_SHUFFLE_V1_2){
-        .opType = ANEURALNETWORKS_CHANNEL_SHUFFLE,
+        .opType = TestOperationType::CHANNEL_SHUFFLE,
         .supportedDataTypes = {TestOperandType::TENSOR_FLOAT32,
                                TestOperandType::TENSOR_QUANT8_ASYMM,
                                TestOperandType::TENSOR_FLOAT16},
@@ -459,7 +459,7 @@ static void squeezeConstructor(TestOperandType, uint32_t rank, RandomOperation* 
 
 // TODO: Test the case when the second input is omitted.
 DEFINE_OPERATION_SIGNATURE(SQUEEZE_V1_1){
-        .opType = ANEURALNETWORKS_SQUEEZE,
+        .opType = TestOperationType::SQUEEZE,
         .supportedDataTypes = {TestOperandType::TENSOR_FLOAT32,
                                TestOperandType::TENSOR_QUANT8_ASYMM},
         .supportedRanks = {1, 2, 3, 4},
@@ -469,7 +469,7 @@ DEFINE_OPERATION_SIGNATURE(SQUEEZE_V1_1){
         .constructor = squeezeConstructor};
 
 DEFINE_OPERATION_SIGNATURE(SQUEEZE_V1_2){
-        .opType = ANEURALNETWORKS_SQUEEZE,
+        .opType = TestOperationType::SQUEEZE,
         .supportedDataTypes = {TestOperandType::TENSOR_FLOAT16},
         .supportedRanks = {1, 2, 3, 4},
         .version = HalVersion::V1_2,
@@ -495,7 +495,7 @@ static void expandDimsConstructor(TestOperandType, uint32_t rank, RandomOperatio
 }
 
 DEFINE_OPERATION_SIGNATURE(EXPAND_DIMS_V1_2){
-        .opType = ANEURALNETWORKS_EXPAND_DIMS,
+        .opType = TestOperationType::EXPAND_DIMS,
         .supportedDataTypes = {TestOperandType::TENSOR_FLOAT32, TestOperandType::TENSOR_FLOAT16,
                                TestOperandType::TENSOR_INT32, TestOperandType::TENSOR_QUANT8_ASYMM},
         .supportedRanks = {1, 2, 3, 4, 5},
@@ -518,7 +518,7 @@ static void tileConstructor(TestOperandType, uint32_t rank, RandomOperation* op)
 }
 
 DEFINE_OPERATION_SIGNATURE(TILE_V1_2){
-        .opType = ANEURALNETWORKS_TILE,
+        .opType = TestOperationType::TILE,
         .supportedDataTypes = {TestOperandType::TENSOR_FLOAT32, TestOperandType::TENSOR_FLOAT16,
                                TestOperandType::TENSOR_INT32, TestOperandType::TENSOR_QUANT8_ASYMM},
         .supportedRanks = {1, 2, 3, 4, 5},
