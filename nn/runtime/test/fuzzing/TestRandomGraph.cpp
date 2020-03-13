@@ -195,15 +195,24 @@ class RandomGraphTest : public ::testing::TestWithParam<uint32_t> {
                 // TODO: Currently quantized buffer values are uniformly distributed within
                 //       [0, 255]. We should investigate on a better buffer value generation
                 //       algorithm that represents the real-world cases.
-                "TestRandomGraph_SingleOperationTest_CONV_2D_V1_2_12",
+                "TestRandomGraph_SingleOperationTest_CONV_2D_V1_2_40",
+                // TODO(xusongw): Remove after b/151325288 is resolved.
+                "TestRandomGraph_RandomGraphTest_LargeGraph_TENSOR_FLOAT32_Rank4_9",
+                // TODO(xusongw): Remove after b/151327288 is resolved.
+                "TestRandomGraph_RandomGraphTest_LargeGraph_TENSOR_FLOAT32_Rank1_4",
         };
         if (kDisabledTests.find(mTestName) != kDisabledTests.end()) return true;
-        if (featureLevel >= __ANDROID_API_Q__) return false;
         for (const auto& op : mTestModel.main.operations) {
             // Skip if testing BATCH_TO_SPACE_ND with batch dimension == 1.
             if (op.type == TestOperationType::BATCH_TO_SPACE_ND &&
-                mTestModel.main.operands[op.inputs[0]].dimensions[0] == 1)
+                mTestModel.main.operands[op.inputs[0]].dimensions[0] == 1 &&
+                featureLevel <= __ANDROID_API_Q__) {
                 return true;
+            }
+            // TODO(xusongw): Remove after b/151328024 is resolved.
+            if (op.type == TestOperationType::ROI_ALIGN) {
+                return true;
+            }
         }
         return false;
     }
@@ -236,7 +245,7 @@ class RandomGraphTest : public ::testing::TestWithParam<uint32_t> {
         int64_t featureLevel;
         ASSERT_EQ(ANeuralNetworksDevice_getFeatureLevel(device, &featureLevel),
                   ANEURALNETWORKS_NO_ERROR);
-        if (shouldSkipTest(featureLevel)) return;
+        if (!isRef && shouldSkipTest(featureLevel)) return;
 
         // Create compilation for device.
         test_wrapper::Compilation compilation;
