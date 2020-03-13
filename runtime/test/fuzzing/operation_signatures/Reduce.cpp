@@ -73,6 +73,7 @@ static void reduceOpConstructor(TestOperandType, uint32_t rank, RandomOperation*
 
 DEFINE_MEAN_SIGNATURE(V1_1, TestOperandType::TENSOR_FLOAT32, TestOperandType::TENSOR_QUANT8_ASYMM);
 DEFINE_MEAN_SIGNATURE(V1_2, TestOperandType::TENSOR_FLOAT16);
+DEFINE_MEAN_SIGNATURE(V1_3, TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED);
 
 #define DEFINE_REDUCE_SIGNATURE(op, ver, ...)                                        \
     DEFINE_OPERATION_SIGNATURE(op##_##ver){                                          \
@@ -95,6 +96,8 @@ DEFINE_REDUCE_SIGNATURE(REDUCE_MAX, V1_2, TestOperandType::TENSOR_FLOAT32,
                         TestOperandType::TENSOR_FLOAT16, TestOperandType::TENSOR_QUANT8_ASYMM);
 DEFINE_REDUCE_SIGNATURE(REDUCE_MIN, V1_2, TestOperandType::TENSOR_FLOAT32,
                         TestOperandType::TENSOR_FLOAT16, TestOperandType::TENSOR_QUANT8_ASYMM);
+DEFINE_REDUCE_SIGNATURE(REDUCE_MAX, V1_3, TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED);
+DEFINE_REDUCE_SIGNATURE(REDUCE_MIN, V1_3, TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED);
 
 static void singleAxisReduceOpConstructor(TestOperandType, uint32_t rank, RandomOperation* op) {
     setFreeDimensions(op->inputs[0], rank);
@@ -109,20 +112,24 @@ static void singleAxisReduceOpConstructor(TestOperandType, uint32_t rank, Random
     }
 }
 
-#define DEFINE_ARGMIN_MAX_SIGNATURE(op, ver, ...)                                                  \
-    DEFINE_OPERATION_SIGNATURE(op##_##ver){                                                        \
-            .opType = TestOperationType::op,                                                       \
-            .supportedDataTypes = {TestOperandType::TENSOR_FLOAT32,                                \
-                                   TestOperandType::TENSOR_FLOAT16, TestOperandType::TENSOR_INT32, \
-                                   TestOperandType::TENSOR_QUANT8_ASYMM},                          \
-            .supportedRanks = {1, 2, 3, 4, 5},                                                     \
-            .version = TestHalVersion::ver,                                                        \
-            .inputs = {INPUT_DEFAULT, PARAMETER_NONE(TestOperandType::INT32)},                     \
-            .outputs = {OUTPUT_TYPED(TestOperandType::TENSOR_INT32)},                              \
+#define DEFINE_ARGMIN_MAX_SIGNATURE(op, ver, ...)                              \
+    DEFINE_OPERATION_SIGNATURE(op##_##ver){                                    \
+            .opType = TestOperationType::op,                                   \
+            .supportedDataTypes = {__VA_ARGS__},                               \
+            .supportedRanks = {1, 2, 3, 4, 5},                                 \
+            .version = TestHalVersion::ver,                                    \
+            .inputs = {INPUT_DEFAULT, PARAMETER_NONE(TestOperandType::INT32)}, \
+            .outputs = {OUTPUT_TYPED(TestOperandType::TENSOR_INT32)},          \
             .constructor = singleAxisReduceOpConstructor};
 
-DEFINE_ARGMIN_MAX_SIGNATURE(ARGMAX, V1_2);
-DEFINE_ARGMIN_MAX_SIGNATURE(ARGMIN, V1_2);
+DEFINE_ARGMIN_MAX_SIGNATURE(ARGMAX, V1_2, TestOperandType::TENSOR_FLOAT32,
+                            TestOperandType::TENSOR_FLOAT16, TestOperandType::TENSOR_INT32,
+                            TestOperandType::TENSOR_QUANT8_ASYMM);
+DEFINE_ARGMIN_MAX_SIGNATURE(ARGMIN, V1_2, TestOperandType::TENSOR_FLOAT32,
+                            TestOperandType::TENSOR_FLOAT16, TestOperandType::TENSOR_INT32,
+                            TestOperandType::TENSOR_QUANT8_ASYMM);
+DEFINE_ARGMIN_MAX_SIGNATURE(ARGMAX, V1_3, TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED);
+DEFINE_ARGMIN_MAX_SIGNATURE(ARGMIN, V1_3, TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED);
 
 }  // namespace fuzzing_test
 }  // namespace nn
