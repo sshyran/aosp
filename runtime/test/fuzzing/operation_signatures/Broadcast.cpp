@@ -43,14 +43,14 @@ static void broadcastOpConstructor(TestOperandType dataType, uint32_t rank, Rand
     }
 
     // MUL requires output.scale > input0.scale * input1.scale.
-    if (dataType == TestOperandType::TENSOR_QUANT8_ASYMM && op->opType == ANEURALNETWORKS_MUL) {
+    if (dataType == TestOperandType::TENSOR_QUANT8_ASYMM && op->opType == TestOperationType::MUL) {
         float minScale = op->inputs[0]->scale * op->inputs[1]->scale;
         op->outputs[0]->scale = getUniform(minScale, minScale * 5);
     }
 
     // DIV and POW may produce Inf output values. We should not connect this output tensor to the
     // input of another operation.
-    if (op->opType == ANEURALNETWORKS_DIV || op->opType == ANEURALNETWORKS_POW) {
+    if (op->opType == TestOperationType::DIV || op->opType == TestOperationType::POW) {
         op->outputs[0]->doNotConnect = true;
     }
 }
@@ -58,7 +58,7 @@ static void broadcastOpConstructor(TestOperandType dataType, uint32_t rank, Rand
 // For broadcast operations with fused activation.
 #define DEFINE_BROADCAST_WITH_ACT_SIGNATURE(op, ver, ...)                     \
     DEFINE_OPERATION_SIGNATURE(op##_##ver){                                   \
-            .opType = ANEURALNETWORKS_##op,                                   \
+            .opType = TestOperationType::op,                                  \
             .supportedDataTypes = {__VA_ARGS__},                              \
             .supportedRanks = {1, 2, 3, 4},                                   \
             .version = HalVersion::ver,                                       \
@@ -82,7 +82,7 @@ DEFINE_BROADCAST_WITH_ACT_SIGNATURE(DIV, V1_2, TestOperandType::TENSOR_FLOAT16);
 
 // For broadcast ops with output of the same data type as inputs.
 #define DEFINE_BROADCAST_SIGNATURE(op, ver, ...)                                     \
-    DEFINE_OPERATION_SIGNATURE(op##_##ver){.opType = ANEURALNETWORKS_##op,           \
+    DEFINE_OPERATION_SIGNATURE(op##_##ver){.opType = TestOperationType::op,          \
                                            .supportedDataTypes = {__VA_ARGS__},      \
                                            .supportedRanks = {1, 2, 3, 4, 5},        \
                                            .version = HalVersion::ver,               \
@@ -109,7 +109,7 @@ DEFINE_BROADCAST_SIGNATURE(LOGICAL_OR, V1_2, TestOperandType::TENSOR_BOOL8);
 // Comparisons
 #define DEFINE_COMPARISON_SIGNATURE(op, ver, ...)                     \
     DEFINE_OPERATION_SIGNATURE(op##_##ver){                           \
-            .opType = ANEURALNETWORKS_##op,                           \
+            .opType = TestOperationType::op,                          \
             .supportedDataTypes = {__VA_ARGS__},                      \
             .supportedRanks = {1, 2, 3, 4},                           \
             .version = HalVersion::ver,                               \

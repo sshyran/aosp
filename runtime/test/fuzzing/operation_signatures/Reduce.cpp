@@ -55,14 +55,14 @@ static void reduceOpConstructor(TestOperandType, uint32_t rank, RandomOperation*
 
     // REDUCE_PROD may produce Inf output values. We should not connect the output tensor to the
     // input of another operation.
-    if (op->opType == ANEURALNETWORKS_REDUCE_PROD) {
+    if (op->opType == TestOperationType::REDUCE_PROD) {
         op->outputs[0]->doNotConnect = true;
     }
 }
 
 #define DEFINE_MEAN_SIGNATURE(ver, ...)                                              \
     DEFINE_OPERATION_SIGNATURE(MEAN_##ver){                                          \
-            .opType = ANEURALNETWORKS_MEAN,                                          \
+            .opType = TestOperationType::MEAN,                                       \
             .supportedDataTypes = {__VA_ARGS__},                                     \
             .supportedRanks = {1, 2, 3, 4},                                          \
             .version = HalVersion::ver,                                              \
@@ -76,7 +76,7 @@ DEFINE_MEAN_SIGNATURE(V1_2, TestOperandType::TENSOR_FLOAT16);
 
 #define DEFINE_REDUCE_SIGNATURE(op, ver, ...)                                        \
     DEFINE_OPERATION_SIGNATURE(op##_##ver){                                          \
-            .opType = ANEURALNETWORKS_##op,                                          \
+            .opType = TestOperationType::op,                                         \
             .supportedDataTypes = {__VA_ARGS__},                                     \
             .supportedRanks = {1, 2, 3, 4},                                          \
             .version = HalVersion::ver,                                              \
@@ -111,7 +111,7 @@ static void singleAxisReduceOpConstructor(TestOperandType, uint32_t rank, Random
 
 #define DEFINE_ARGMIN_MAX_SIGNATURE(op, ver, ...)                                                  \
     DEFINE_OPERATION_SIGNATURE(op##_##ver){                                                        \
-            .opType = ANEURALNETWORKS_##op,                                                        \
+            .opType = TestOperationType::op,                                                       \
             .supportedDataTypes = {TestOperandType::TENSOR_FLOAT32,                                \
                                    TestOperandType::TENSOR_FLOAT16, TestOperandType::TENSOR_INT32, \
                                    TestOperandType::TENSOR_QUANT8_ASYMM},                          \
