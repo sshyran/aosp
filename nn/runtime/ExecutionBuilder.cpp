@@ -248,6 +248,7 @@ int ExecutionBuilder::getDuration(int32_t durationCode, uint64_t* duration) cons
     if (!mFinished && !hasSyncFence()) {
         LOG(ERROR) << "ANeuralNetworksExecution_getDuration called before the "
                       "execution has finished.";
+        *duration = UINT64_MAX;
         return ANEURALNETWORKS_BAD_STATE;
     }
     // If the sync fence is valid, perform a non-blocking status check on the sync fence status.
@@ -256,6 +257,7 @@ int ExecutionBuilder::getDuration(int32_t durationCode, uint64_t* duration) cons
     if (hasSyncFence() && sync_wait(mSyncFenceFd, 0) < 0) {
         LOG(ERROR) << "ANeuralNetworksExecution_getDuration called before the "
                       "execution has finished, or the execution has encountered an error.";
+        *duration = UINT64_MAX;
         return ANEURALNETWORKS_BAD_STATE;
     }
 
@@ -289,6 +291,11 @@ int ExecutionBuilder::getDuration(int32_t durationCode, uint64_t* duration) cons
             *duration = UINT64_MAX;
             return ANEURALNETWORKS_BAD_STATE;
         }
+    }
+    // timingFenced should be the same as timingLaunched for compute methods other than fenced
+    // compute.
+    if (timingFenced == kNoTiming) {
+        timingFenced = timingLaunched;
     }
     uint64_t microDuration = UINT64_MAX;
     switch (durationCode) {
