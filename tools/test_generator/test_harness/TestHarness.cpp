@@ -79,7 +79,9 @@ void expectNear(const TestOperand& op, const TestBuffer& result,
         double tolerableRange = criterion.atol + criterion.rtol * std::fabs(expected);
 
         // Skip invalid floating point values.
-        if (std::isnan(expected) || std::isinf(expected) || std::fabs(expected) > 1e3) {
+        if (std::isnan(expected) || std::isinf(expected) ||
+            (std::is_same_v<T, float> && std::fabs(expected) > 1e3) ||
+            (std::is_same_v<T, _Float16> || std::fabs(expected) > 1e2)) {
             numSkip++;
             continue;
         }
@@ -194,8 +196,10 @@ void checkResults(const TestModel& model, const std::vector<TestBuffer>& buffers
                   const AccuracyCriteria& criteria) {
     ASSERT_EQ(model.main.outputIndexes.size(), buffers.size());
     for (uint32_t i = 0; i < model.main.outputIndexes.size(); i++) {
-        SCOPED_TRACE(testing::Message() << "When comparing output " << i);
-        const auto& operand = model.main.operands[model.main.outputIndexes[i]];
+        const uint32_t outputIndex = model.main.outputIndexes[i];
+        SCOPED_TRACE(testing::Message()
+                     << "When comparing output " << i << " (op" << outputIndex << ")");
+        const auto& operand = model.main.operands[outputIndex];
         const auto& result = buffers[i];
         if (operand.isIgnored) continue;
 
