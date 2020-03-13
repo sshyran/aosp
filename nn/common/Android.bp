@@ -60,6 +60,7 @@ cc_defaults {
         "operations/Softmax.cpp",
         "operations/Squeeze.cpp",
         "operations/StridedSlice.cpp",
+        "operations/TopK_V2.cpp",
         "operations/Transpose.cpp",
         "operations/TransposeConv2D.cpp",
         "operations/UnidirectionalSequenceLSTM.cpp",
@@ -174,7 +175,6 @@ cc_library_static {
         "operations/SimpleMath.cpp",
         "operations/Split.cpp",
         "operations/Tile.cpp",
-        "operations/TopK_V2.cpp",
     ],
     shared_libs: [
         "android.hardware.neuralnetworks@1.0",

@@ -51,6 +51,7 @@ using PreparedModelCallback = nn::PreparedModelCallback;
 using Result = nn::test_wrapper::Result;
 using SampleDriver = nn::sample_driver::SampleDriver;
 using SamplePreparedModel = nn::sample_driver::SamplePreparedModel;
+using SampleFencedExecutionCallback = nn::sample_driver::SampleFencedExecutionCallback;
 using WrapperModel = nn::test_wrapper::Model;
 using WrapperOperandType = nn::test_wrapper::OperandType;
 using WrapperType = nn::test_wrapper::Type;
@@ -273,6 +274,7 @@ namespace test_drivers {
 enum class Success {
     // ASYNC: Return ErrorStatus::NONE; notify ErrorStatus::NONE and timing
     // SYNC, BURST: Return ErrorStatus::NONE and timing
+    // FENCED: Return ErrorStatus::NONE, empty hidl_handle, and a callback with timing.
     PASS_NEITHER,  // timing = kBadTiming
     PASS_DEVICE,   // timing = kGoodTiming.timeOnDevice, kBadTiming.timeInDriver
     PASS_DRIVER,   // timing = kBadTiming.timeOnDevice, kGoodTiming.timeInDriver
@@ -282,6 +284,7 @@ enum class Success {
     // ASYNC: Return ErrorStatus::GENERAL_FAILURE; notify ErrorStatus::GENERAL_FAILURE and
     // kBadTiming
     // SYNC, BURST: Return ErrorStatus::GENERAL_FAILURE and kBadTiming
+    // FENCED: Return ErrorStatus::GENERAL_FAILURE, empty hidl_handle, and a nullptr callback
     FAIL_LAUNCH,
 
     // ASYNC: Return ErrorStatus::NONE; notify ErrorStatus::GENERAL_FAILURE and kBadTiming
@@ -417,6 +420,34 @@ class TestPreparedModelLatest : public SamplePreparedModel {
         return Void();
     }
 
+    Return<void> executeFenced(const Request&, const hidl_vec<hidl_handle>&, MeasureTiming measure,
+                               const OptionalTimePoint&, const OptionalTimeoutDuration&,
+                               const OptionalTimeoutDuration&, executeFenced_cb callback) override {
+        EXPECT_EQ(measure, MeasureTiming::YES);
+        switch (mSuccess) {
+            case Success::PASS_NEITHER:
+            case Success::PASS_DEVICE:
+            case Success::PASS_DRIVER:
+            case Success::PASS_BOTH: {
+                sp<SampleFencedExecutionCallback> fencedExecutionCallback =
+                        new SampleFencedExecutionCallback(expectedTimingMap.at(mSuccess),
+                                                          expectedTimingMap.at(mSuccess),
+                                                          V1_3::ErrorStatus::NONE);
+                callback(V1_3::ErrorStatus::NONE, hidl_handle(nullptr), fencedExecutionCallback);
+                return Void();
+            }
+            case Success::FAIL_LAUNCH:
+            // Due to the limitation of the SampleDriver, FAIL_WAIT behaves the same as FAIL_LAUNCH.
+            // If the SampleDriver is updated to return real sync fences, this must be updated.
+            case Success::FAIL_WAIT:
+                callback(V1_3::ErrorStatus::GENERAL_FAILURE, hidl_handle(nullptr), nullptr);
+                return Void();
+            default:
+                ADD_FAILURE() << "Unexpected Success kind";
+                return Void();
+        }
+    }
+
    private:
     Success mSuccess;
 };
@@ -549,70 +580,6 @@ class TestDriver13 : public SampleDriver {
     Success mSuccess;
 };
 
-// Like TestDriver, but implementing 1.2
-class TestDriver12 : public V1_2::IDevice {
-   public:
-    TestDriver12(const std::string& name, Success success)
-        : mLatestDriver(new TestDriver13(name, success)) {}
-    Return<void> getCapabilities_1_2(getCapabilities_1_2_cb _hidl_cb) override {
-        return mLatestDriver->getCapabilities_1_2(_hidl_cb);
-    }
-    Return<void> getCapabilities_1_1(getCapabilities_1_1_cb _hidl_cb) override {
-        return mLatestDriver->getCapabilities_1_1(_hidl_cb);
-    }
-    Return<void> getCapabilities(getCapabilities_cb _hidl_cb) override {
-        return mLatestDriver->getCapabilities(_hidl_cb);
-    }
-    Return<void> getSupportedOperations_1_2(const V1_2::Model& model,
-                                            getSupportedOperations_1_2_cb _hidl_cb) override {
-        return mLatestDriver->getSupportedOperations_1_2(model, _hidl_cb);
-    }
-    Return<void> getSupportedOperations_1_1(const V1_1::Model& model,
-                                            getSupportedOperations_1_1_cb _hidl_cb) override {
-        return mLatestDriver->getSupportedOperations_1_1(model, _hidl_cb);
-    }
-    Return<void> getSupportedOperations(const V1_0::Model& model,
-                                        getSupportedOperations_cb _hidl_cb) override {
-        return mLatestDriver->getSupportedOperations(model, _hidl_cb);
-    }
-    Return<V1_0::ErrorStatus> prepareModel_1_2(
-            const V1_2::Model& model, ExecutionPreference preference,
-            const hidl_vec<hidl_handle>& modelCache, const hidl_vec<hidl_handle>& dataCache,
-            const CacheToken& token, const sp<V1_2::IPreparedModelCallback>& callback) override {
-        return mLatestDriver->prepareModel_1_2(model, preference, modelCache, dataCache, token,
-                                               callback);
-    }
-    Return<V1_0::ErrorStatus> prepareModel_1_1(
-            const V1_1::Model& model, ExecutionPreference preference,
-            const sp<V1_0::IPreparedModelCallback>& actualCallback) override {
-        return mLatestDriver->prepareModel_1_1(model, preference, actualCallback);
-    }
-    Return<V1_0::ErrorStatus> prepareModel(
-            const V1_0::Model& model,
-            const sp<V1_0::IPreparedModelCallback>& actualCallback) override {
-        return mLatestDriver->prepareModel(model, actualCallback);
-    }
-    Return<DeviceStatus> getStatus() override { return mLatestDriver->getStatus(); }
-    Return<void> getVersionString(getVersionString_cb _hidl_cb) override {
-        return mLatestDriver->getVersionString(_hidl_cb);
-    }
-    Return<void> getType(getType_cb _hidl_cb) override { return mLatestDriver->getType(_hidl_cb); }
-    Return<void> getSupportedExtensions(getSupportedExtensions_cb _hidl_cb) {
-        return mLatestDriver->getSupportedExtensions(_hidl_cb);
-    }
-    Return<void> getNumberOfCacheFilesNeeded(getNumberOfCacheFilesNeeded_cb _hidl_cb) {
-        return mLatestDriver->getNumberOfCacheFilesNeeded(_hidl_cb);
-    }
-    Return<V1_0::ErrorStatus> prepareModelFromCache(
-            const hidl_vec<hidl_handle>& modelCache, const hidl_vec<hidl_handle>& dataCache,
-            const CacheToken& token, const sp<V1_2::IPreparedModelCallback>& callback) {
-        return mLatestDriver->prepareModelFromCache(modelCache, dataCache, token, callback);
-    }
-
-   private:
-    const sp<V1_3::IDevice> mLatestDriver;
-};
-
 // Like TestDriver, but implementing 1.1
 class TestDriver11 : public V1_1::IDevice {
    public:
@@ -671,10 +638,10 @@ std::ostream& operator<<(std::ostream& os, DriverKind kind) {
     return os << names[index];
 }
 
-enum class Compute { ASYNC, SYNC, BURST };
+enum class Compute { ASYNC, SYNC, BURST, FENCED };
 
 std::ostream& operator<<(std::ostream& os, Compute compute) {
-    const char* names[] = {"ASYNC", "SYNC", "BURST"};
+    const char* names[] = {"ASYNC", "SYNC", "BURST", "FENCED"};
     const uint32_t index = static_cast<uint32_t>(compute);
     CHECK(index < std::size(names));
     return os << names[index];
@@ -698,8 +665,9 @@ TEST_P(TimingTest, Test) {
     // There's no straightforward way to force CPU execution to fail.
     ASSERT_EQ(kDriverKind == DriverKind::CPU, kSuccess == Success::PASS_CPU);
 
-    // FAIL_WAIT only makes sense for ASYNC.
-    ASSERT_TRUE(kCompute == Compute::ASYNC || kSuccess != Success::FAIL_WAIT);
+    // FAIL_WAIT only makes sense for ASYNC and FENCED.
+    ASSERT_TRUE(kCompute == Compute::ASYNC || kCompute == Compute::FENCED ||
+                kSuccess != Success::FAIL_WAIT);
 
     if (DeviceManager::get()->getUseCpuOnly() != (kDriverKind == DriverKind::CPU)) {
         // We don't have an elegant way to request the CPU driver.  Therefore,
@@ -725,7 +693,7 @@ TEST_P(TimingTest, Test) {
         }
         case DriverKind::NEW: {
             static const char name[] = "new";
-            DeviceManager::get()->forTest_registerDevice(name, new TestDriver12(name, kSuccess));
+            DeviceManager::get()->forTest_registerDevice(name, new TestDriver13(name, kSuccess));
             ASSERT_TRUE(selectDeviceByName(name));
             break;
         }
@@ -791,16 +759,56 @@ TEST_P(TimingTest, Test) {
             ANeuralNetworksBurst_free(burst);
             break;
         }
+        case Compute::FENCED: {
+            SCOPED_TRACE("FENCED");
+            // Note, due to the limitation of SampleDriver implementation, the call is synchronous.
+            // If the SampleDriver is updated to return real sync fence, this must be updated.
+            Check(isPass, ANeuralNetworksExecution_startComputeWithDependencies(mExecution, nullptr,
+                                                                                0, 0, &mEvent));
+            if (!isPass) {
+                // Failing fenced compute will make ANeuralNetworksExecution_getDuration return
+                // BAD_STATE.
+                uint64_t timing = 0;
+                EXPECT_EQ(ANeuralNetworksExecution_getDuration(
+                                  mExecution, ANEURALNETWORKS_DURATION_ON_HARDWARE, &timing),
+                          ANEURALNETWORKS_BAD_STATE);
+                EXPECT_EQ(timing, UINT64_MAX);
+                timing = 0;
+                EXPECT_EQ(ANeuralNetworksExecution_getDuration(
+                                  mExecution, ANEURALNETWORKS_DURATION_IN_DRIVER, &timing),
+                          ANEURALNETWORKS_BAD_STATE);
+                EXPECT_EQ(timing, UINT64_MAX);
+                timing = 0;
+                EXPECT_EQ(ANeuralNetworksExecution_getDuration(
+                                  mExecution, ANEURALNETWORKS_FENCED_DURATION_ON_HARDWARE, &timing),
+                          ANEURALNETWORKS_BAD_STATE);
+                EXPECT_EQ(timing, UINT64_MAX);
+                timing = 0;
+                EXPECT_EQ(ANeuralNetworksExecution_getDuration(
+                                  mExecution, ANEURALNETWORKS_FENCED_DURATION_IN_DRIVER, &timing),
+                          ANEURALNETWORKS_BAD_STATE);
+                EXPECT_EQ(timing, UINT64_MAX);
+                return;
+            }
+            break;
+        }
         default:
             FAIL() << "unreachable";
     }
 
-    uint64_t timeOnHardware, timeInDriver;
+    uint64_t timeOnHardware, timeInDriver, timeOnHardwareFenced, timeInDriverFenced;
     EXPECT_EQ(ANeuralNetworksExecution_getDuration(mExecution, ANEURALNETWORKS_DURATION_ON_HARDWARE,
                                                    &timeOnHardware),
               ANEURALNETWORKS_NO_ERROR);
     EXPECT_EQ(ANeuralNetworksExecution_getDuration(mExecution, ANEURALNETWORKS_DURATION_IN_DRIVER,
                                                    &timeInDriver),
+              ANEURALNETWORKS_NO_ERROR);
+    EXPECT_EQ(
+            ANeuralNetworksExecution_getDuration(
+                    mExecution, ANEURALNETWORKS_FENCED_DURATION_ON_HARDWARE, &timeOnHardwareFenced),
+            ANEURALNETWORKS_NO_ERROR);
+    EXPECT_EQ(ANeuralNetworksExecution_getDuration(
+                      mExecution, ANEURALNETWORKS_FENCED_DURATION_IN_DRIVER, &timeInDriverFenced),
               ANEURALNETWORKS_NO_ERROR);
     switch (kDriverKind) {
         case DriverKind::CPU: {
@@ -809,11 +817,17 @@ TEST_P(TimingTest, Test) {
                     << "timeOnHardware = " << timeOnHardware;
             EXPECT_TRUE(timeInDriver == 0 || timeInDriver == UINT64_MAX)
                     << "timeInDriver = " << timeOnHardware;
+            EXPECT_TRUE(timeOnHardwareFenced == 0 || timeOnHardwareFenced == UINT64_MAX)
+                    << "timeOnHardwareFenced = " << timeOnHardwareFenced;
+            EXPECT_TRUE(timeInDriverFenced == 0 || timeInDriverFenced == UINT64_MAX)
+                    << "timeInDriver = " << timeInDriverFenced;
             break;
         }
         case DriverKind::OLD: {
             EXPECT_EQ(timeOnHardware, UINT64_MAX);
             EXPECT_EQ(timeInDriver, UINT64_MAX);
+            EXPECT_EQ(timeOnHardwareFenced, UINT64_MAX);
+            EXPECT_EQ(timeInDriverFenced, UINT64_MAX);
             break;
         }
         case DriverKind::NEW: {
@@ -824,6 +838,8 @@ TEST_P(TimingTest, Test) {
             const Timing expectedTiming = expectedTimingMap.at(kSuccess);
             EXPECT_EQ(timeOnHardware, microsToNanos(expectedTiming.timeOnDevice));
             EXPECT_EQ(timeInDriver, microsToNanos(expectedTiming.timeInDriver));
+            EXPECT_EQ(timeOnHardwareFenced, microsToNanos(expectedTiming.timeOnDevice));
+            EXPECT_EQ(timeInDriverFenced, microsToNanos(expectedTiming.timeInDriver));
             break;
         }
         default:
@@ -839,15 +855,18 @@ auto kTimingTestValues = ::testing::Values(
         std::make_tuple(DriverKind::CPU, Success::PASS_CPU, Compute::ASYNC),
         std::make_tuple(DriverKind::CPU, Success::PASS_CPU, Compute::SYNC),
         std::make_tuple(DriverKind::CPU, Success::PASS_CPU, Compute::BURST),
+        std::make_tuple(DriverKind::CPU, Success::PASS_CPU, Compute::FENCED),
 
         // NOTE: OLD driver does not provide timing
         std::make_tuple(DriverKind::OLD, Success::PASS_NEITHER, Compute::ASYNC),
         std::make_tuple(DriverKind::OLD, Success::PASS_NEITHER, Compute::SYNC),
         std::make_tuple(DriverKind::OLD, Success::PASS_NEITHER, Compute::BURST),
+        std::make_tuple(DriverKind::OLD, Success::PASS_NEITHER, Compute::FENCED),
 
         std::make_tuple(DriverKind::OLD, Success::FAIL_LAUNCH, Compute::ASYNC),
         std::make_tuple(DriverKind::OLD, Success::FAIL_LAUNCH, Compute::SYNC),
         std::make_tuple(DriverKind::OLD, Success::FAIL_LAUNCH, Compute::BURST),
+        std::make_tuple(DriverKind::OLD, Success::FAIL_LAUNCH, Compute::FENCED),
 
         // NOTE: Only ASYNC is paired with a wait
         std::make_tuple(DriverKind::OLD, Success::FAIL_WAIT, Compute::ASYNC),
@@ -855,22 +874,27 @@ auto kTimingTestValues = ::testing::Values(
         std::make_tuple(DriverKind::NEW, Success::PASS_NEITHER, Compute::ASYNC),
         std::make_tuple(DriverKind::NEW, Success::PASS_NEITHER, Compute::SYNC),
         std::make_tuple(DriverKind::NEW, Success::PASS_NEITHER, Compute::BURST),
+        std::make_tuple(DriverKind::NEW, Success::PASS_NEITHER, Compute::FENCED),
 
         std::make_tuple(DriverKind::NEW, Success::PASS_DEVICE, Compute::ASYNC),
         std::make_tuple(DriverKind::NEW, Success::PASS_DEVICE, Compute::SYNC),
         std::make_tuple(DriverKind::NEW, Success::PASS_DEVICE, Compute::BURST),
+        std::make_tuple(DriverKind::NEW, Success::PASS_DEVICE, Compute::FENCED),
 
         std::make_tuple(DriverKind::NEW, Success::PASS_DRIVER, Compute::ASYNC),
         std::make_tuple(DriverKind::NEW, Success::PASS_DRIVER, Compute::SYNC),
         std::make_tuple(DriverKind::NEW, Success::PASS_DRIVER, Compute::BURST),
+        std::make_tuple(DriverKind::NEW, Success::PASS_DRIVER, Compute::FENCED),
 
         std::make_tuple(DriverKind::NEW, Success::PASS_BOTH, Compute::ASYNC),
         std::make_tuple(DriverKind::NEW, Success::PASS_BOTH, Compute::SYNC),
         std::make_tuple(DriverKind::NEW, Success::PASS_BOTH, Compute::BURST),
+        std::make_tuple(DriverKind::NEW, Success::PASS_BOTH, Compute::FENCED),
 
         std::make_tuple(DriverKind::NEW, Success::FAIL_LAUNCH, Compute::ASYNC),
         std::make_tuple(DriverKind::NEW, Success::FAIL_LAUNCH, Compute::SYNC),
         std::make_tuple(DriverKind::NEW, Success::FAIL_LAUNCH, Compute::BURST),
+        std::make_tuple(DriverKind::NEW, Success::FAIL_LAUNCH, Compute::FENCED),
 
         // NOTE: Only ASYNC is paired with a wait
         std::make_tuple(DriverKind::NEW, Success::FAIL_WAIT, Compute::ASYNC));
@@ -914,7 +938,6 @@ void createAddMaxModel(WrapperModel* model, bool reverseOrder) {
 
 TEST_F(IntrospectionControlTest, SlicingAddMax) {
     // This is needed before we have the CPU fallback path being treated as a Device.
-    // TODO(dgross): remove once b/72506261 is fixed.
     if (DeviceManager::get()->getUseCpuOnly()) {
         GTEST_SKIP();
     }
@@ -931,7 +954,6 @@ TEST_F(IntrospectionControlTest, SlicingAddMax) {
 
 TEST_F(IntrospectionControlTest, SlicingMaxAdd) {
     // This is needed before we have the CPU fallback path being treated as a Device.
-    // TODO(dgross): remove once b/72506261 is fixed.
     if (DeviceManager::get()->getUseCpuOnly()) {
         GTEST_SKIP();
     }
@@ -983,7 +1005,6 @@ void createAddMulModel(WrapperModel* model, bool reverseOrder) {
 // ADD->MUL model could not be fully supported.
 TEST_F(IntrospectionControlTest, PartialModelNotSupported) {
     // This is needed before we have the CPU fallback path being treated as a Device.
-    // TODO(miaowang): remove once b/72506261 is fixed.
     if (DeviceManager::get()->getUseCpuOnly()) {
         GTEST_SKIP();
     }
@@ -1013,7 +1034,6 @@ TEST_F(IntrospectionControlTest, PartialModelNotSupported) {
 // supported op list correctly map to the order of operations being added by the user.
 TEST_F(IntrospectionControlTest, PartialModelNotSupportedOrder) {
     // This is needed before we have the CPU fallback path being treated as a Device.
-    // TODO(miaowang): remove once b/72506261 is fixed.
     if (DeviceManager::get()->getUseCpuOnly()) {
         GTEST_SKIP();
     }
@@ -1035,7 +1055,6 @@ TEST_F(IntrospectionControlTest, PartialModelNotSupportedOrder) {
 // can handle all operations.
 TEST_F(IntrospectionControlTest, ModelNeedTwoDevices) {
     // This is needed before we have the CPU fallback path being treated as a Device.
-    // TODO(miaowang): remove once b/72506261 is fixed.
     if (DeviceManager::get()->getUseCpuOnly()) {
         GTEST_SKIP();
     }
