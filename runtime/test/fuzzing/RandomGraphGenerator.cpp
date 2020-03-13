@@ -273,13 +273,6 @@ TestModel RandomGraph::createTestModel() {
     return testModel;
 }
 
-void RandomGraph::dumpSpecFile(std::string filename, std::string testname = "") {
-    NN_FUZZER_LOG << "Dump Spec File to " << filename;
-    SpecWriter writer(filename, testname);
-    ASSERT_TRUE(writer.isOpen());
-    writer.dump(mOperations, mOperands);
-}
-
 }  // namespace fuzzing_test
 }  // namespace nn
 }  // namespace android
