@@ -66,7 +66,7 @@ static void resizeOpConstructor(TestOperandType, uint32_t rank, RandomOperation*
             .opType = TestOperationType::op,                             \
             .supportedDataTypes = {__VA_ARGS__},                         \
             .supportedRanks = {4},                                       \
-            .version = HalVersion::ver,                                  \
+            .version = TestHalVersion::ver,                              \
             .inputs = {INPUT_DEFAULT, RANDOM_INT_FREE, RANDOM_INT_FREE}, \
             .outputs = {OUTPUT_DEFAULT},                                 \
             .constructor = resizeOpConstructor};
@@ -80,7 +80,7 @@ DEFINE_RESIZE_WITHOUT_LAYOUT_SIGNATURE(RESIZE_BILINEAR, V1_2, TestOperandType::T
             .opType = TestOperationType::op,                                  \
             .supportedDataTypes = {__VA_ARGS__},                              \
             .supportedRanks = {4},                                            \
-            .version = HalVersion::ver,                                       \
+            .version = TestHalVersion::ver,                                   \
             .inputs = {INPUT_DEFAULT, RANDOM_INT_FREE, RANDOM_INT_FREE,       \
                        PARAMETER_CHOICE(TestOperandType::BOOL, false, true)}, \
             .outputs = {OUTPUT_DEFAULT},                                      \
@@ -89,7 +89,7 @@ DEFINE_RESIZE_WITHOUT_LAYOUT_SIGNATURE(RESIZE_BILINEAR, V1_2, TestOperandType::T
             .opType = TestOperationType::op,                                  \
             .supportedDataTypes = {__VA_ARGS__},                              \
             .supportedRanks = {4},                                            \
-            .version = HalVersion::ver,                                       \
+            .version = TestHalVersion::ver,                                   \
             .inputs = {INPUT_DEFAULT, PARAMETER_FLOAT_RANGE(0.2, 4.0),        \
                        PARAMETER_FLOAT_RANGE(0.2, 4.0),                       \
                        PARAMETER_CHOICE(TestOperandType::BOOL, false, true)}, \
