@@ -196,10 +196,6 @@ class RandomGraphTest : public ::testing::TestWithParam<uint32_t> {
                 //       [0, 255]. We should investigate on a better buffer value generation
                 //       algorithm that represents the real-world cases.
                 "TestRandomGraph_SingleOperationTest_CONV_2D_V1_2_40",
-                // TODO(xusongw): Remove after b/151325288 is resolved.
-                "TestRandomGraph_RandomGraphTest_LargeGraph_TENSOR_FLOAT32_Rank4_9",
-                // TODO(xusongw): Remove after b/151327288 is resolved.
-                "TestRandomGraph_RandomGraphTest_LargeGraph_TENSOR_FLOAT32_Rank1_4",
         };
         if (kDisabledTests.find(mTestName) != kDisabledTests.end()) return true;
         for (const auto& op : mTestModel.main.operations) {
