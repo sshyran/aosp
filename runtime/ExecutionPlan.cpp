@@ -1049,15 +1049,18 @@ std::optional<ExecutionPlan::Buffer> ExecutionPlan::getBuffer(
     return std::nullopt;
 }
 
-bool ExecutionPlan::readConditionValue(std::shared_ptr<Controller> controller,
-                                       SourceOperandIndex operandIndex) const {
+int ExecutionPlan::readConditionValue(std::shared_ptr<Controller> controller,
+                                      SourceOperandIndex operandIndex, bool* value) const {
     std::optional<ExecutionPlan::Buffer> buffer = getBuffer(controller, operandIndex);
-    CHECK(buffer != std::nullopt) << "Unable to read operand " << toString(operandIndex);
-    bool8 value;
-    CHECK_GE(buffer->getSize(), sizeof(value));
-    std::memcpy(&value, buffer->getPointer(), sizeof(value));
-    VLOG(EXECUTION) << "readConditionValue: " << static_cast<int>(value);
-    return value;
+    if (buffer == std::nullopt) {
+        LOG(ERROR) << "Unable to read operand " << toString(operandIndex);
+        return ANEURALNETWORKS_OP_FAILED;
+    }
+    CHECK_GE(buffer->getSize(), sizeof(bool8));
+    bool8 value8 = *static_cast<bool8*>(buffer->getPointer());
+    *value = static_cast<bool>(value8);
+    VLOG(EXECUTION) << "readConditionValue: " << *value;
+    return ANEURALNETWORKS_NO_ERROR;
 }
 
 int ExecutionPlan::next(std::shared_ptr<Controller> controller,
@@ -1215,7 +1218,8 @@ int ExecutionPlan::nextCompound(const IfStep* step, std::shared_ptr<Controller> 
                                 std::shared_ptr<StepExecutor>* executor,
                                 std::shared_ptr<ExecutionBurstController>* burstController) const {
     VLOG(EXECUTION) << "next: " << toString(*step);
-    bool condValue = readConditionValue(controller, step->conditionOperandIndex);
+    bool condValue;
+    NN_RETURN_IF_ERROR(readConditionValue(controller, step->conditionOperandIndex, &condValue));
     controller->mNextStepIndex = condValue ? step->thenStepIndex : step->elseStepIndex;
     const std::vector<SourceOperandIndex>& branchInputOperands =
             condValue ? step->thenBranchInputOperands : step->elseBranchInputOperands;
@@ -1280,7 +1284,6 @@ int ExecutionPlan::nextCompound(const WhileStep* step, std::shared_ptr<Controlle
     }
 
     CHECK(state.stage == WhileState::EVALUATE_BODY);
-    bool condValue = readConditionValue(controller, step->condOutputOperand);
 
     std::chrono::nanoseconds timeoutDuration(
             controller->mExecutionBuilder->getLoopTimeoutDuration());
@@ -1292,6 +1295,8 @@ int ExecutionPlan::nextCompound(const WhileStep* step, std::shared_ptr<Controlle
         return ANEURALNETWORKS_MISSED_DEADLINE_TRANSIENT;
     }
 
+    bool condValue;
+    NN_RETURN_IF_ERROR(readConditionValue(controller, step->condOutputOperand, &condValue));
     if (condValue) {
         VLOG(EXECUTION) << "next: " << toString(*step) << ": iteration " << state.iteration
                         << ": evaluating body";
