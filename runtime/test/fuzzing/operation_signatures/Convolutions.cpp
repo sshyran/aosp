@@ -22,7 +22,8 @@ namespace android {
 namespace nn {
 namespace fuzzing_test {
 
-static void conv2DExplicitConstructor(Type, uint32_t rank, HalVersion ver, RandomOperation* op) {
+static void conv2DExplicitConstructor(TestOperandType, uint32_t rank, HalVersion ver,
+                                      RandomOperation* op) {
     NN_FUZZER_CHECK(rank == 4);
 
     // Parameters
@@ -76,7 +77,8 @@ static void conv2DExplicitConstructor(Type, uint32_t rank, HalVersion ver, Rando
     setConvFCScale(/*applyOutputScaleBound=*/ver == HalVersion::V1_0, op);
 }
 
-static void conv2DImplicitConstructor(Type, uint32_t rank, HalVersion ver, RandomOperation* op) {
+static void conv2DImplicitConstructor(TestOperandType, uint32_t rank, HalVersion ver,
+                                      RandomOperation* op) {
     NN_FUZZER_CHECK(rank == 4);
 
     // Parameters
@@ -136,13 +138,13 @@ static void conv2DImplicitConstructor(Type, uint32_t rank, HalVersion ver, Rando
                             INPUT_DEFAULT,                                                     \
                             INPUT_DEFAULT,                                                     \
                             INPUT_BIAS,                                                        \
-                            PARAMETER_RANGE(Type::INT32, 1, 3),                                \
-                            PARAMETER_RANGE(Type::INT32, 1, 3),                                \
-                            PARAMETER_RANGE(Type::INT32, 1, 3),                                \
-                            PARAMETER_RANGE(Type::INT32, 1, 3),                                \
-                            PARAMETER_RANGE(Type::INT32, 1, 3),                                \
-                            PARAMETER_RANGE(Type::INT32, 1, 3),                                \
-                            PARAMETER_CHOICE(Type::INT32, 0, 1, 2, 3),                         \
+                            PARAMETER_RANGE(TestOperandType::INT32, 1, 3),                     \
+                            PARAMETER_RANGE(TestOperandType::INT32, 1, 3),                     \
+                            PARAMETER_RANGE(TestOperandType::INT32, 1, 3),                     \
+                            PARAMETER_RANGE(TestOperandType::INT32, 1, 3),                     \
+                            PARAMETER_RANGE(TestOperandType::INT32, 1, 3),                     \
+                            PARAMETER_RANGE(TestOperandType::INT32, 1, 3),                     \
+                            PARAMETER_CHOICE(TestOperandType::INT32, 0, 1, 2, 3),              \
                     },                                                                         \
             .outputs = {OUTPUT_DEFAULT},                                                       \
             .constructor = std::bind(conv2DExplicitConstructor, _1, _2, HalVersion::ver, _3)}; \
@@ -156,21 +158,24 @@ static void conv2DImplicitConstructor(Type, uint32_t rank, HalVersion ver, Rando
                             INPUT_DEFAULT,                                                     \
                             INPUT_DEFAULT,                                                     \
                             INPUT_BIAS,                                                        \
-                            PARAMETER_CHOICE(Type::INT32, 1, 2),                               \
-                            PARAMETER_RANGE(Type::INT32, 1, 3),                                \
-                            PARAMETER_RANGE(Type::INT32, 1, 3),                                \
-                            PARAMETER_CHOICE(Type::INT32, 0, 1, 2, 3),                         \
+                            PARAMETER_CHOICE(TestOperandType::INT32, 1, 2),                    \
+                            PARAMETER_RANGE(TestOperandType::INT32, 1, 3),                     \
+                            PARAMETER_RANGE(TestOperandType::INT32, 1, 3),                     \
+                            PARAMETER_CHOICE(TestOperandType::INT32, 0, 1, 2, 3),              \
                     },                                                                         \
             .outputs = {OUTPUT_DEFAULT},                                                       \
             .constructor = std::bind(conv2DImplicitConstructor, _1, _2, HalVersion::ver, _3)};
 
-DEFINE_CONV_2D_SIGNATURE(V1_0, Type::TENSOR_FLOAT32, Type::TENSOR_QUANT8_ASYMM);
-DEFINE_CONV_2D_SIGNATURE(V1_2, Type::TENSOR_FLOAT16, Type::TENSOR_QUANT8_ASYMM);
+DEFINE_CONV_2D_SIGNATURE(V1_0, TestOperandType::TENSOR_FLOAT32,
+                         TestOperandType::TENSOR_QUANT8_ASYMM);
+DEFINE_CONV_2D_SIGNATURE(V1_2, TestOperandType::TENSOR_FLOAT16,
+                         TestOperandType::TENSOR_QUANT8_ASYMM);
 
 DEFINE_OPERATION_SIGNATURE(CONV_2D_explicit_layout_V1_2){
         .opType = ANEURALNETWORKS_CONV_2D,
-        .supportedDataTypes = {Type::TENSOR_FLOAT32, Type::TENSOR_QUANT8_ASYMM,
-                               Type::TENSOR_FLOAT16},
+        .supportedDataTypes = {TestOperandType::TENSOR_FLOAT32,
+                               TestOperandType::TENSOR_QUANT8_ASYMM,
+                               TestOperandType::TENSOR_FLOAT16},
         .supportedRanks = {4},
         .version = HalVersion::V1_2,
         .inputs =
@@ -178,22 +183,23 @@ DEFINE_OPERATION_SIGNATURE(CONV_2D_explicit_layout_V1_2){
                         INPUT_DEFAULT,
                         INPUT_DEFAULT,
                         INPUT_BIAS,
-                        PARAMETER_RANGE(Type::INT32, 1, 3),
-                        PARAMETER_RANGE(Type::INT32, 1, 3),
-                        PARAMETER_RANGE(Type::INT32, 1, 3),
-                        PARAMETER_RANGE(Type::INT32, 1, 3),
-                        PARAMETER_RANGE(Type::INT32, 1, 3),
-                        PARAMETER_RANGE(Type::INT32, 1, 3),
-                        PARAMETER_CHOICE(Type::INT32, 0, 1, 2, 3),
-                        PARAMETER_CHOICE(Type::BOOL, true, false),
+                        PARAMETER_RANGE(TestOperandType::INT32, 1, 3),
+                        PARAMETER_RANGE(TestOperandType::INT32, 1, 3),
+                        PARAMETER_RANGE(TestOperandType::INT32, 1, 3),
+                        PARAMETER_RANGE(TestOperandType::INT32, 1, 3),
+                        PARAMETER_RANGE(TestOperandType::INT32, 1, 3),
+                        PARAMETER_RANGE(TestOperandType::INT32, 1, 3),
+                        PARAMETER_CHOICE(TestOperandType::INT32, 0, 1, 2, 3),
+                        PARAMETER_CHOICE(TestOperandType::BOOL, true, false),
                 },
         .outputs = {OUTPUT_DEFAULT},
         .constructor = std::bind(conv2DExplicitConstructor, _1, _2, HalVersion::V1_2, _3)};
 
 DEFINE_OPERATION_SIGNATURE(CONV_2D_implicit_layout_V1_2){
         .opType = ANEURALNETWORKS_CONV_2D,
-        .supportedDataTypes = {Type::TENSOR_FLOAT32, Type::TENSOR_QUANT8_ASYMM,
-                               Type::TENSOR_FLOAT16},
+        .supportedDataTypes = {TestOperandType::TENSOR_FLOAT32,
+                               TestOperandType::TENSOR_QUANT8_ASYMM,
+                               TestOperandType::TENSOR_FLOAT16},
         .supportedRanks = {4},
         .version = HalVersion::V1_2,
         .inputs =
@@ -201,19 +207,20 @@ DEFINE_OPERATION_SIGNATURE(CONV_2D_implicit_layout_V1_2){
                         INPUT_DEFAULT,
                         INPUT_DEFAULT,
                         INPUT_BIAS,
-                        PARAMETER_CHOICE(Type::INT32, 1, 2),
-                        PARAMETER_RANGE(Type::INT32, 1, 3),
-                        PARAMETER_RANGE(Type::INT32, 1, 3),
-                        PARAMETER_CHOICE(Type::INT32, 0, 1, 2, 3),
-                        PARAMETER_CHOICE(Type::BOOL, true, false),
+                        PARAMETER_CHOICE(TestOperandType::INT32, 1, 2),
+                        PARAMETER_RANGE(TestOperandType::INT32, 1, 3),
+                        PARAMETER_RANGE(TestOperandType::INT32, 1, 3),
+                        PARAMETER_CHOICE(TestOperandType::INT32, 0, 1, 2, 3),
+                        PARAMETER_CHOICE(TestOperandType::BOOL, true, false),
                 },
         .outputs = {OUTPUT_DEFAULT},
         .constructor = std::bind(conv2DImplicitConstructor, _1, _2, HalVersion::V1_2, _3)};
 
 DEFINE_OPERATION_SIGNATURE(CONV_2D_explicit_dilation_V1_2){
         .opType = ANEURALNETWORKS_CONV_2D,
-        .supportedDataTypes = {Type::TENSOR_FLOAT32, Type::TENSOR_QUANT8_ASYMM,
-                               Type::TENSOR_FLOAT16},
+        .supportedDataTypes = {TestOperandType::TENSOR_FLOAT32,
+                               TestOperandType::TENSOR_QUANT8_ASYMM,
+                               TestOperandType::TENSOR_FLOAT16},
         .supportedRanks = {4},
         .version = HalVersion::V1_2,
         .inputs =
@@ -221,24 +228,25 @@ DEFINE_OPERATION_SIGNATURE(CONV_2D_explicit_dilation_V1_2){
                         INPUT_DEFAULT,
                         INPUT_DEFAULT,
                         INPUT_BIAS,
-                        PARAMETER_RANGE(Type::INT32, 1, 3),
-                        PARAMETER_RANGE(Type::INT32, 1, 3),
-                        PARAMETER_RANGE(Type::INT32, 1, 3),
-                        PARAMETER_RANGE(Type::INT32, 1, 3),
-                        PARAMETER_RANGE(Type::INT32, 1, 3),
-                        PARAMETER_RANGE(Type::INT32, 1, 3),
-                        PARAMETER_CHOICE(Type::INT32, 0, 1, 2, 3),
-                        PARAMETER_CHOICE(Type::BOOL, true, false),
-                        PARAMETER_RANGE(Type::INT32, 1, 3),
-                        PARAMETER_RANGE(Type::INT32, 1, 3),
+                        PARAMETER_RANGE(TestOperandType::INT32, 1, 3),
+                        PARAMETER_RANGE(TestOperandType::INT32, 1, 3),
+                        PARAMETER_RANGE(TestOperandType::INT32, 1, 3),
+                        PARAMETER_RANGE(TestOperandType::INT32, 1, 3),
+                        PARAMETER_RANGE(TestOperandType::INT32, 1, 3),
+                        PARAMETER_RANGE(TestOperandType::INT32, 1, 3),
+                        PARAMETER_CHOICE(TestOperandType::INT32, 0, 1, 2, 3),
+                        PARAMETER_CHOICE(TestOperandType::BOOL, true, false),
+                        PARAMETER_RANGE(TestOperandType::INT32, 1, 3),
+                        PARAMETER_RANGE(TestOperandType::INT32, 1, 3),
                 },
         .outputs = {OUTPUT_DEFAULT},
         .constructor = std::bind(conv2DExplicitConstructor, _1, _2, HalVersion::V1_2, _3)};
 
 DEFINE_OPERATION_SIGNATURE(CONV_2D_implicit_dilation_V1_2){
         .opType = ANEURALNETWORKS_CONV_2D,
-        .supportedDataTypes = {Type::TENSOR_FLOAT32, Type::TENSOR_QUANT8_ASYMM,
-                               Type::TENSOR_FLOAT16},
+        .supportedDataTypes = {TestOperandType::TENSOR_FLOAT32,
+                               TestOperandType::TENSOR_QUANT8_ASYMM,
+                               TestOperandType::TENSOR_FLOAT16},
         .supportedRanks = {4},
         .version = HalVersion::V1_2,
         .inputs =
@@ -246,18 +254,18 @@ DEFINE_OPERATION_SIGNATURE(CONV_2D_implicit_dilation_V1_2){
                         INPUT_DEFAULT,
                         INPUT_DEFAULT,
                         INPUT_BIAS,
-                        PARAMETER_CHOICE(Type::INT32, 1, 2),
-                        PARAMETER_RANGE(Type::INT32, 1, 3),
-                        PARAMETER_RANGE(Type::INT32, 1, 3),
-                        PARAMETER_CHOICE(Type::INT32, 0, 1, 2, 3),
-                        PARAMETER_CHOICE(Type::BOOL, true, false),
-                        PARAMETER_RANGE(Type::INT32, 1, 3),
-                        PARAMETER_RANGE(Type::INT32, 1, 3),
+                        PARAMETER_CHOICE(TestOperandType::INT32, 1, 2),
+                        PARAMETER_RANGE(TestOperandType::INT32, 1, 3),
+                        PARAMETER_RANGE(TestOperandType::INT32, 1, 3),
+                        PARAMETER_CHOICE(TestOperandType::INT32, 0, 1, 2, 3),
+                        PARAMETER_CHOICE(TestOperandType::BOOL, true, false),
+                        PARAMETER_RANGE(TestOperandType::INT32, 1, 3),
+                        PARAMETER_RANGE(TestOperandType::INT32, 1, 3),
                 },
         .outputs = {OUTPUT_DEFAULT},
         .constructor = std::bind(conv2DImplicitConstructor, _1, _2, HalVersion::V1_2, _3)};
 
-static void depthwiseConv2DExplicitConstructor(Type, uint32_t rank, HalVersion ver,
+static void depthwiseConv2DExplicitConstructor(TestOperandType, uint32_t rank, HalVersion ver,
                                                RandomOperation* op) {
     NN_FUZZER_CHECK(rank == 4);
 
@@ -313,7 +321,7 @@ static void depthwiseConv2DExplicitConstructor(Type, uint32_t rank, HalVersion v
     setConvFCScale(/*applyOutputScaleBound=*/ver == HalVersion::V1_0, op);
 }
 
-static void depthwiseConv2DImplicitConstructor(Type, uint32_t rank, HalVersion ver,
+static void depthwiseConv2DImplicitConstructor(TestOperandType, uint32_t rank, HalVersion ver,
                                                RandomOperation* op) {
     NN_FUZZER_CHECK(rank == 4);
 
@@ -376,14 +384,14 @@ static void depthwiseConv2DImplicitConstructor(Type, uint32_t rank, HalVersion v
                             INPUT_DEFAULT,                                                       \
                             INPUT_DEFAULT,                                                       \
                             INPUT_BIAS,                                                          \
-                            PARAMETER_RANGE(Type::INT32, 1, 3),                                  \
-                            PARAMETER_RANGE(Type::INT32, 1, 3),                                  \
-                            PARAMETER_RANGE(Type::INT32, 1, 3),                                  \
-                            PARAMETER_RANGE(Type::INT32, 1, 3),                                  \
-                            PARAMETER_RANGE(Type::INT32, 1, 3),                                  \
-                            PARAMETER_RANGE(Type::INT32, 1, 3),                                  \
+                            PARAMETER_RANGE(TestOperandType::INT32, 1, 3),                       \
+                            PARAMETER_RANGE(TestOperandType::INT32, 1, 3),                       \
+                            PARAMETER_RANGE(TestOperandType::INT32, 1, 3),                       \
+                            PARAMETER_RANGE(TestOperandType::INT32, 1, 3),                       \
+                            PARAMETER_RANGE(TestOperandType::INT32, 1, 3),                       \
+                            PARAMETER_RANGE(TestOperandType::INT32, 1, 3),                       \
                             RANDOM_INT_RANGE(1, 5),                                              \
-                            PARAMETER_CHOICE(Type::INT32, 0, 1, 2, 3),                           \
+                            PARAMETER_CHOICE(TestOperandType::INT32, 0, 1, 2, 3),                \
                     },                                                                           \
             .outputs = {OUTPUT_DEFAULT},                                                         \
             .constructor =                                                                       \
@@ -398,23 +406,26 @@ static void depthwiseConv2DImplicitConstructor(Type, uint32_t rank, HalVersion v
                             INPUT_DEFAULT,                                                       \
                             INPUT_DEFAULT,                                                       \
                             INPUT_BIAS,                                                          \
-                            PARAMETER_CHOICE(Type::INT32, 1, 2),                                 \
-                            PARAMETER_RANGE(Type::INT32, 1, 3),                                  \
-                            PARAMETER_RANGE(Type::INT32, 1, 3),                                  \
+                            PARAMETER_CHOICE(TestOperandType::INT32, 1, 2),                      \
+                            PARAMETER_RANGE(TestOperandType::INT32, 1, 3),                       \
+                            PARAMETER_RANGE(TestOperandType::INT32, 1, 3),                       \
                             RANDOM_INT_RANGE(1, 5),                                              \
-                            PARAMETER_CHOICE(Type::INT32, 0, 1, 2, 3),                           \
+                            PARAMETER_CHOICE(TestOperandType::INT32, 0, 1, 2, 3),                \
                     },                                                                           \
             .outputs = {OUTPUT_DEFAULT},                                                         \
             .constructor =                                                                       \
                     std::bind(depthwiseConv2DImplicitConstructor, _1, _2, HalVersion::ver, _3)};
 
-DEFINE_DEPTHWISE_CONV_2D_SIGNATURE(V1_0, Type::TENSOR_FLOAT32, Type::TENSOR_QUANT8_ASYMM);
-DEFINE_DEPTHWISE_CONV_2D_SIGNATURE(V1_2, Type::TENSOR_FLOAT16, Type::TENSOR_QUANT8_ASYMM);
+DEFINE_DEPTHWISE_CONV_2D_SIGNATURE(V1_0, TestOperandType::TENSOR_FLOAT32,
+                                   TestOperandType::TENSOR_QUANT8_ASYMM);
+DEFINE_DEPTHWISE_CONV_2D_SIGNATURE(V1_2, TestOperandType::TENSOR_FLOAT16,
+                                   TestOperandType::TENSOR_QUANT8_ASYMM);
 
 DEFINE_OPERATION_SIGNATURE(DEPTHWISE_CONV_2D_explicit_layout_V1_2){
         .opType = ANEURALNETWORKS_DEPTHWISE_CONV_2D,
-        .supportedDataTypes = {Type::TENSOR_FLOAT32, Type::TENSOR_QUANT8_ASYMM,
-                               Type::TENSOR_FLOAT16},
+        .supportedDataTypes = {TestOperandType::TENSOR_FLOAT32,
+                               TestOperandType::TENSOR_QUANT8_ASYMM,
+                               TestOperandType::TENSOR_FLOAT16},
         .supportedRanks = {4},
         .version = HalVersion::V1_2,
         .inputs =
@@ -422,23 +433,24 @@ DEFINE_OPERATION_SIGNATURE(DEPTHWISE_CONV_2D_explicit_layout_V1_2){
                         INPUT_DEFAULT,
                         INPUT_DEFAULT,
                         INPUT_BIAS,
-                        PARAMETER_RANGE(Type::INT32, 1, 3),
-                        PARAMETER_RANGE(Type::INT32, 1, 3),
-                        PARAMETER_RANGE(Type::INT32, 1, 3),
-                        PARAMETER_RANGE(Type::INT32, 1, 3),
-                        PARAMETER_RANGE(Type::INT32, 1, 3),
-                        PARAMETER_RANGE(Type::INT32, 1, 3),
+                        PARAMETER_RANGE(TestOperandType::INT32, 1, 3),
+                        PARAMETER_RANGE(TestOperandType::INT32, 1, 3),
+                        PARAMETER_RANGE(TestOperandType::INT32, 1, 3),
+                        PARAMETER_RANGE(TestOperandType::INT32, 1, 3),
+                        PARAMETER_RANGE(TestOperandType::INT32, 1, 3),
+                        PARAMETER_RANGE(TestOperandType::INT32, 1, 3),
                         RANDOM_INT_RANGE(1, 5),
-                        PARAMETER_CHOICE(Type::INT32, 0, 1, 2, 3),
-                        PARAMETER_CHOICE(Type::BOOL, true, false),
+                        PARAMETER_CHOICE(TestOperandType::INT32, 0, 1, 2, 3),
+                        PARAMETER_CHOICE(TestOperandType::BOOL, true, false),
                 },
         .outputs = {OUTPUT_DEFAULT},
         .constructor = std::bind(depthwiseConv2DExplicitConstructor, _1, _2, HalVersion::V1_2, _3)};
 
 DEFINE_OPERATION_SIGNATURE(DEPTHWISE_CONV_2D_implicit_layout_V1_2){
         .opType = ANEURALNETWORKS_DEPTHWISE_CONV_2D,
-        .supportedDataTypes = {Type::TENSOR_FLOAT32, Type::TENSOR_QUANT8_ASYMM,
-                               Type::TENSOR_FLOAT16},
+        .supportedDataTypes = {TestOperandType::TENSOR_FLOAT32,
+                               TestOperandType::TENSOR_QUANT8_ASYMM,
+                               TestOperandType::TENSOR_FLOAT16},
         .supportedRanks = {4},
         .version = HalVersion::V1_2,
         .inputs =
@@ -446,20 +458,21 @@ DEFINE_OPERATION_SIGNATURE(DEPTHWISE_CONV_2D_implicit_layout_V1_2){
                         INPUT_DEFAULT,
                         INPUT_DEFAULT,
                         INPUT_BIAS,
-                        PARAMETER_CHOICE(Type::INT32, 1, 2),
-                        PARAMETER_RANGE(Type::INT32, 1, 3),
-                        PARAMETER_RANGE(Type::INT32, 1, 3),
+                        PARAMETER_CHOICE(TestOperandType::INT32, 1, 2),
+                        PARAMETER_RANGE(TestOperandType::INT32, 1, 3),
+                        PARAMETER_RANGE(TestOperandType::INT32, 1, 3),
                         RANDOM_INT_RANGE(1, 5),
-                        PARAMETER_CHOICE(Type::INT32, 0, 1, 2, 3),
-                        PARAMETER_CHOICE(Type::BOOL, true, false),
+                        PARAMETER_CHOICE(TestOperandType::INT32, 0, 1, 2, 3),
+                        PARAMETER_CHOICE(TestOperandType::BOOL, true, false),
                 },
         .outputs = {OUTPUT_DEFAULT},
         .constructor = std::bind(depthwiseConv2DImplicitConstructor, _1, _2, HalVersion::V1_2, _3)};
 
 DEFINE_OPERATION_SIGNATURE(DEPTHWISE_CONV_2D_explicit_dilation_V1_2){
         .opType = ANEURALNETWORKS_DEPTHWISE_CONV_2D,
-        .supportedDataTypes = {Type::TENSOR_FLOAT32, Type::TENSOR_QUANT8_ASYMM,
-                               Type::TENSOR_FLOAT16},
+        .supportedDataTypes = {TestOperandType::TENSOR_FLOAT32,
+                               TestOperandType::TENSOR_QUANT8_ASYMM,
+                               TestOperandType::TENSOR_FLOAT16},
         .supportedRanks = {4},
         .version = HalVersion::V1_2,
         .inputs =
@@ -467,25 +480,26 @@ DEFINE_OPERATION_SIGNATURE(DEPTHWISE_CONV_2D_explicit_dilation_V1_2){
                         INPUT_DEFAULT,
                         INPUT_DEFAULT,
                         INPUT_BIAS,
-                        PARAMETER_RANGE(Type::INT32, 1, 3),
-                        PARAMETER_RANGE(Type::INT32, 1, 3),
-                        PARAMETER_RANGE(Type::INT32, 1, 3),
-                        PARAMETER_RANGE(Type::INT32, 1, 3),
-                        PARAMETER_RANGE(Type::INT32, 1, 3),
-                        PARAMETER_RANGE(Type::INT32, 1, 3),
+                        PARAMETER_RANGE(TestOperandType::INT32, 1, 3),
+                        PARAMETER_RANGE(TestOperandType::INT32, 1, 3),
+                        PARAMETER_RANGE(TestOperandType::INT32, 1, 3),
+                        PARAMETER_RANGE(TestOperandType::INT32, 1, 3),
+                        PARAMETER_RANGE(TestOperandType::INT32, 1, 3),
+                        PARAMETER_RANGE(TestOperandType::INT32, 1, 3),
                         RANDOM_INT_RANGE(1, 5),
-                        PARAMETER_CHOICE(Type::INT32, 0, 1, 2, 3),
-                        PARAMETER_CHOICE(Type::BOOL, true, false),
-                        PARAMETER_RANGE(Type::INT32, 1, 3),
-                        PARAMETER_RANGE(Type::INT32, 1, 3),
+                        PARAMETER_CHOICE(TestOperandType::INT32, 0, 1, 2, 3),
+                        PARAMETER_CHOICE(TestOperandType::BOOL, true, false),
+                        PARAMETER_RANGE(TestOperandType::INT32, 1, 3),
+                        PARAMETER_RANGE(TestOperandType::INT32, 1, 3),
                 },
         .outputs = {OUTPUT_DEFAULT},
         .constructor = std::bind(depthwiseConv2DExplicitConstructor, _1, _2, HalVersion::V1_2, _3)};
 
 DEFINE_OPERATION_SIGNATURE(DEPTHWISE_CONV_2D_implicit_dilation_V1_2){
         .opType = ANEURALNETWORKS_DEPTHWISE_CONV_2D,
-        .supportedDataTypes = {Type::TENSOR_FLOAT32, Type::TENSOR_QUANT8_ASYMM,
-                               Type::TENSOR_FLOAT16},
+        .supportedDataTypes = {TestOperandType::TENSOR_FLOAT32,
+                               TestOperandType::TENSOR_QUANT8_ASYMM,
+                               TestOperandType::TENSOR_FLOAT16},
         .supportedRanks = {4},
         .version = HalVersion::V1_2,
         .inputs =
@@ -493,19 +507,19 @@ DEFINE_OPERATION_SIGNATURE(DEPTHWISE_CONV_2D_implicit_dilation_V1_2){
                         INPUT_DEFAULT,
                         INPUT_DEFAULT,
                         INPUT_BIAS,
-                        PARAMETER_CHOICE(Type::INT32, 1, 2),
-                        PARAMETER_RANGE(Type::INT32, 1, 3),
-                        PARAMETER_RANGE(Type::INT32, 1, 3),
+                        PARAMETER_CHOICE(TestOperandType::INT32, 1, 2),
+                        PARAMETER_RANGE(TestOperandType::INT32, 1, 3),
+                        PARAMETER_RANGE(TestOperandType::INT32, 1, 3),
                         RANDOM_INT_RANGE(1, 5),
-                        PARAMETER_CHOICE(Type::INT32, 0, 1, 2, 3),
-                        PARAMETER_CHOICE(Type::BOOL, true, false),
-                        PARAMETER_RANGE(Type::INT32, 1, 3),
-                        PARAMETER_RANGE(Type::INT32, 1, 3),
+                        PARAMETER_CHOICE(TestOperandType::INT32, 0, 1, 2, 3),
+                        PARAMETER_CHOICE(TestOperandType::BOOL, true, false),
+                        PARAMETER_RANGE(TestOperandType::INT32, 1, 3),
+                        PARAMETER_RANGE(TestOperandType::INT32, 1, 3),
                 },
         .outputs = {OUTPUT_DEFAULT},
         .constructor = std::bind(depthwiseConv2DImplicitConstructor, _1, _2, HalVersion::V1_2, _3)};
 
-static void groupedConv2DExplicitConstructor(Type, uint32_t rank, RandomOperation* op) {
+static void groupedConv2DExplicitConstructor(TestOperandType, uint32_t rank, RandomOperation* op) {
     NN_FUZZER_CHECK(rank == 4);
 
     // Parameters
@@ -560,7 +574,7 @@ static void groupedConv2DExplicitConstructor(Type, uint32_t rank, RandomOperatio
     setConvFCScale(/*applyOutputScaleBound=*/false, op);
 }
 
-static void groupedConv2DImplicitConstructor(Type, uint32_t rank, RandomOperation* op) {
+static void groupedConv2DImplicitConstructor(TestOperandType, uint32_t rank, RandomOperation* op) {
     NN_FUZZER_CHECK(rank == 4);
 
     // Parameters
@@ -612,8 +626,9 @@ static void groupedConv2DImplicitConstructor(Type, uint32_t rank, RandomOperatio
 
 DEFINE_OPERATION_SIGNATURE(GROUPED_CONV_2D_explicit_V1_2){
         .opType = ANEURALNETWORKS_GROUPED_CONV_2D,
-        .supportedDataTypes = {Type::TENSOR_FLOAT32, Type::TENSOR_QUANT8_ASYMM,
-                               Type::TENSOR_FLOAT16},
+        .supportedDataTypes = {TestOperandType::TENSOR_FLOAT32,
+                               TestOperandType::TENSOR_QUANT8_ASYMM,
+                               TestOperandType::TENSOR_FLOAT16},
         .supportedRanks = {4},
         .version = HalVersion::V1_2,
         .inputs =
@@ -621,23 +636,24 @@ DEFINE_OPERATION_SIGNATURE(GROUPED_CONV_2D_explicit_V1_2){
                         INPUT_DEFAULT,
                         INPUT_DEFAULT,
                         INPUT_BIAS,
-                        PARAMETER_RANGE(Type::INT32, 1, 3),
-                        PARAMETER_RANGE(Type::INT32, 1, 3),
-                        PARAMETER_RANGE(Type::INT32, 1, 3),
-                        PARAMETER_RANGE(Type::INT32, 1, 3),
-                        PARAMETER_RANGE(Type::INT32, 1, 3),
-                        PARAMETER_RANGE(Type::INT32, 1, 3),
+                        PARAMETER_RANGE(TestOperandType::INT32, 1, 3),
+                        PARAMETER_RANGE(TestOperandType::INT32, 1, 3),
+                        PARAMETER_RANGE(TestOperandType::INT32, 1, 3),
+                        PARAMETER_RANGE(TestOperandType::INT32, 1, 3),
+                        PARAMETER_RANGE(TestOperandType::INT32, 1, 3),
+                        PARAMETER_RANGE(TestOperandType::INT32, 1, 3),
                         RANDOM_INT_RANGE(1, 5),
-                        PARAMETER_CHOICE(Type::INT32, 0, 1, 2, 3),
-                        PARAMETER_CHOICE(Type::BOOL, true, false),
+                        PARAMETER_CHOICE(TestOperandType::INT32, 0, 1, 2, 3),
+                        PARAMETER_CHOICE(TestOperandType::BOOL, true, false),
                 },
         .outputs = {OUTPUT_DEFAULT},
         .constructor = groupedConv2DExplicitConstructor};
 
 DEFINE_OPERATION_SIGNATURE(GROUPED_CONV_2D_implicit_V1_2){
         .opType = ANEURALNETWORKS_GROUPED_CONV_2D,
-        .supportedDataTypes = {Type::TENSOR_FLOAT32, Type::TENSOR_QUANT8_ASYMM,
-                               Type::TENSOR_FLOAT16},
+        .supportedDataTypes = {TestOperandType::TENSOR_FLOAT32,
+                               TestOperandType::TENSOR_QUANT8_ASYMM,
+                               TestOperandType::TENSOR_FLOAT16},
         .supportedRanks = {4},
         .version = HalVersion::V1_2,
         .inputs =
@@ -645,17 +661,18 @@ DEFINE_OPERATION_SIGNATURE(GROUPED_CONV_2D_implicit_V1_2){
                         INPUT_DEFAULT,
                         INPUT_DEFAULT,
                         INPUT_BIAS,
-                        PARAMETER_CHOICE(Type::INT32, 1, 2),
-                        PARAMETER_RANGE(Type::INT32, 1, 3),
-                        PARAMETER_RANGE(Type::INT32, 1, 3),
+                        PARAMETER_CHOICE(TestOperandType::INT32, 1, 2),
+                        PARAMETER_RANGE(TestOperandType::INT32, 1, 3),
+                        PARAMETER_RANGE(TestOperandType::INT32, 1, 3),
                         RANDOM_INT_RANGE(1, 5),
-                        PARAMETER_CHOICE(Type::INT32, 0, 1, 2, 3),
-                        PARAMETER_CHOICE(Type::BOOL, true, false),
+                        PARAMETER_CHOICE(TestOperandType::INT32, 0, 1, 2, 3),
+                        PARAMETER_CHOICE(TestOperandType::BOOL, true, false),
                 },
         .outputs = {OUTPUT_DEFAULT},
         .constructor = groupedConv2DImplicitConstructor};
 
-static void transposeConv2DExplicitConstructor(Type, uint32_t rank, RandomOperation* op) {
+static void transposeConv2DExplicitConstructor(TestOperandType, uint32_t rank,
+                                               RandomOperation* op) {
     NN_FUZZER_CHECK(rank == 4);
 
     // Parameters
@@ -701,7 +718,8 @@ static void transposeConv2DExplicitConstructor(Type, uint32_t rank, RandomOperat
     setConvFCScale(/*applyOutputScaleBound=*/false, op);
 }
 
-static void transposeConv2DImplicitConstructor(Type, uint32_t rank, RandomOperation* op) {
+static void transposeConv2DImplicitConstructor(TestOperandType, uint32_t rank,
+                                               RandomOperation* op) {
     NN_FUZZER_CHECK(rank == 4);
 
     // Parameters
@@ -744,8 +762,9 @@ static void transposeConv2DImplicitConstructor(Type, uint32_t rank, RandomOperat
 
 DEFINE_OPERATION_SIGNATURE(TRANSPOSE_CONV_2D_explicit_V1_2){
         .opType = ANEURALNETWORKS_TRANSPOSE_CONV_2D,
-        .supportedDataTypes = {Type::TENSOR_FLOAT32, Type::TENSOR_QUANT8_ASYMM,
-                               Type::TENSOR_FLOAT16},
+        .supportedDataTypes = {TestOperandType::TENSOR_FLOAT32,
+                               TestOperandType::TENSOR_QUANT8_ASYMM,
+                               TestOperandType::TENSOR_FLOAT16},
         .supportedRanks = {4},
         .version = HalVersion::V1_2,
         .inputs =
@@ -753,22 +772,23 @@ DEFINE_OPERATION_SIGNATURE(TRANSPOSE_CONV_2D_explicit_V1_2){
                         INPUT_DEFAULT,
                         INPUT_DEFAULT,
                         INPUT_BIAS,
-                        PARAMETER_RANGE(Type::INT32, 1, 3),
-                        PARAMETER_RANGE(Type::INT32, 1, 3),
-                        PARAMETER_RANGE(Type::INT32, 1, 3),
-                        PARAMETER_RANGE(Type::INT32, 1, 3),
-                        PARAMETER_RANGE(Type::INT32, 1, 3),
-                        PARAMETER_RANGE(Type::INT32, 1, 3),
-                        PARAMETER_CHOICE(Type::INT32, 0, 1, 2, 3),
-                        PARAMETER_CHOICE(Type::BOOL, true, false),
+                        PARAMETER_RANGE(TestOperandType::INT32, 1, 3),
+                        PARAMETER_RANGE(TestOperandType::INT32, 1, 3),
+                        PARAMETER_RANGE(TestOperandType::INT32, 1, 3),
+                        PARAMETER_RANGE(TestOperandType::INT32, 1, 3),
+                        PARAMETER_RANGE(TestOperandType::INT32, 1, 3),
+                        PARAMETER_RANGE(TestOperandType::INT32, 1, 3),
+                        PARAMETER_CHOICE(TestOperandType::INT32, 0, 1, 2, 3),
+                        PARAMETER_CHOICE(TestOperandType::BOOL, true, false),
                 },
         .outputs = {OUTPUT_DEFAULT},
         .constructor = transposeConv2DExplicitConstructor};
 
 DEFINE_OPERATION_SIGNATURE(TRANSPOSE_CONV_2D_implicit_V1_2){
         .opType = ANEURALNETWORKS_TRANSPOSE_CONV_2D,
-        .supportedDataTypes = {Type::TENSOR_FLOAT32, Type::TENSOR_QUANT8_ASYMM,
-                               Type::TENSOR_FLOAT16},
+        .supportedDataTypes = {TestOperandType::TENSOR_FLOAT32,
+                               TestOperandType::TENSOR_QUANT8_ASYMM,
+                               TestOperandType::TENSOR_FLOAT16},
         .supportedRanks = {4},
         .version = HalVersion::V1_2,
         .inputs =
@@ -776,12 +796,12 @@ DEFINE_OPERATION_SIGNATURE(TRANSPOSE_CONV_2D_implicit_V1_2){
                         INPUT_DEFAULT,
                         INPUT_DEFAULT,
                         INPUT_BIAS,
-                        PARAMETER_NONE(Type::TENSOR_INT32),
-                        PARAMETER_CHOICE(Type::INT32, 1, 2),
-                        PARAMETER_RANGE(Type::INT32, 1, 3),
-                        PARAMETER_RANGE(Type::INT32, 1, 3),
-                        PARAMETER_CHOICE(Type::INT32, 0, 1, 2, 3),
-                        PARAMETER_CHOICE(Type::BOOL, true, false),
+                        PARAMETER_NONE(TestOperandType::TENSOR_INT32),
+                        PARAMETER_CHOICE(TestOperandType::INT32, 1, 2),
+                        PARAMETER_RANGE(TestOperandType::INT32, 1, 3),
+                        PARAMETER_RANGE(TestOperandType::INT32, 1, 3),
+                        PARAMETER_CHOICE(TestOperandType::INT32, 0, 1, 2, 3),
+                        PARAMETER_CHOICE(TestOperandType::BOOL, true, false),
                 },
         .outputs = {OUTPUT_DEFAULT},
         .constructor = transposeConv2DImplicitConstructor};

@@ -22,7 +22,8 @@ namespace android {
 namespace nn {
 namespace fuzzing_test {
 
-static void fullyConnectedConstructor(Type, uint32_t rank, HalVersion ver, RandomOperation* op) {
+static void fullyConnectedConstructor(TestOperandType, uint32_t rank, HalVersion ver,
+                                      RandomOperation* op) {
     // Inputs, flattened to [batch_size, input_size]
     op->inputs[0]->dimensions.resize(rank);
     RandomVariable numElements = 1;
@@ -46,21 +47,23 @@ static void fullyConnectedConstructor(Type, uint32_t rank, HalVersion ver, Rando
 
 DEFINE_OPERATION_SIGNATURE(signature_FULLY_CONNECTED_V1_0){
         .opType = ANEURALNETWORKS_FULLY_CONNECTED,
-        .supportedDataTypes = {Type::TENSOR_FLOAT32, Type::TENSOR_QUANT8_ASYMM},
+        .supportedDataTypes = {TestOperandType::TENSOR_FLOAT32,
+                               TestOperandType::TENSOR_QUANT8_ASYMM},
         .supportedRanks = {2, 3, 4},
         .version = HalVersion::V1_0,
         .inputs = {INPUT_DEFAULT, INPUT_DEFAULT, INPUT_BIAS,
-                   PARAMETER_CHOICE(Type::INT32, 0, 1, 2, 3)},
+                   PARAMETER_CHOICE(TestOperandType::INT32, 0, 1, 2, 3)},
         .outputs = {OUTPUT_DEFAULT},
         .constructor = std::bind(fullyConnectedConstructor, _1, _2, HalVersion::V1_0, _3)};
 
 DEFINE_OPERATION_SIGNATURE(signature_FULLY_CONNECTED_V1_2){
         .opType = ANEURALNETWORKS_FULLY_CONNECTED,
-        .supportedDataTypes = {Type::TENSOR_QUANT8_ASYMM, Type::TENSOR_FLOAT16},
+        .supportedDataTypes = {TestOperandType::TENSOR_QUANT8_ASYMM,
+                               TestOperandType::TENSOR_FLOAT16},
         .supportedRanks = {2, 3, 4},
         .version = HalVersion::V1_2,
         .inputs = {INPUT_DEFAULT, INPUT_DEFAULT, INPUT_BIAS,
-                   PARAMETER_CHOICE(Type::INT32, 0, 1, 2, 3)},
+                   PARAMETER_CHOICE(TestOperandType::INT32, 0, 1, 2, 3)},
         .outputs = {OUTPUT_DEFAULT},
         .constructor = std::bind(fullyConnectedConstructor, _1, _2, HalVersion::V1_2, _3)};
 

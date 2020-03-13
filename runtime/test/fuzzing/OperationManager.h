@@ -22,6 +22,7 @@
 #include <string>
 #include <vector>
 
+#include "TestHarness.h"
 #include "TestNeuralNetworksWrapper.h"
 #include "fuzzing/RandomGraphGenerator.h"
 #include "fuzzing/RandomVariable.h"
@@ -30,8 +31,6 @@ namespace android {
 namespace nn {
 namespace fuzzing_test {
 
-using test_wrapper::Type;
-
 struct OperandSignature {
     // Possible values are [INPUT | CONST | OUTPUT].
     // If CONST, the generator will avoid feeding the operand with another operation’s output.
@@ -39,7 +38,8 @@ struct OperandSignature {
 
     // The operand constructor is invoked before the operation constructor. This is for
     // setting the data type, quantization parameters, or optionally the scalar value.
-    std::function<void(Type, uint32_t, RandomOperand*)> constructor = nullptr;
+    std::function<void(test_helper::TestOperandType, uint32_t, RandomOperand*)> constructor =
+            nullptr;
 
     // The operand finalizer is invoked after the graph structure is frozen but before the operation
     // finalizer. This is for generating the buffer values for the operand.
@@ -61,7 +61,7 @@ enum class HalVersion : int32_t { V1_0 = 0, V1_1 = 1, V1_2 = 2 };
 //
 struct OperationFilter {
     std::vector<ANeuralNetworksOperationType> opcodes;
-    std::vector<Type> dataTypes;
+    std::vector<test_helper::TestOperandType> dataTypes;
     std::vector<uint32_t> ranks;
     std::vector<HalVersion> versions;
 };
@@ -71,7 +71,7 @@ struct OperationSignature {
     // Upon generation, the random graph generator will randomly choose a supported data type and
     // rank, and pass the information to the constructors.
     ANeuralNetworksOperationType opType;
-    std::vector<Type> supportedDataTypes;
+    std::vector<test_helper::TestOperandType> supportedDataTypes;
     std::vector<uint32_t> supportedRanks;
     HalVersion version;
 
@@ -83,7 +83,8 @@ struct OperationSignature {
     // setting the dimension relationship of random operands, and/or generating parameter values at
     // the operation level, e.g. a parameter depends on or affects another operand in the same
     // operation.
-    std::function<void(Type, uint32_t, RandomOperation*)> constructor = nullptr;
+    std::function<void(test_helper::TestOperandType, uint32_t, RandomOperation*)> constructor =
+            nullptr;
 
     // The operation finalizer is invoked after the graph structure is frozen and inputs and outputs
     // constructors are invoked. This is for generating operand buffers at the operation level, e.g.
