@@ -92,6 +92,7 @@ const OperationRegistration* register_SQUEEZE();
 const OperationRegistration* register_STRIDED_SLICE();
 const OperationRegistration* register_SUB();
 const OperationRegistration* register_TANH();
+const OperationRegistration* register_TOPK_V2();
 const OperationRegistration* register_TRANSPOSE();
 const OperationRegistration* register_TRANSPOSE_CONV_2D();
 const OperationRegistration* register_UNIDIRECTIONAL_SEQUENCE_LSTM();
@@ -164,6 +165,7 @@ BuiltinOperationResolver::BuiltinOperationResolver() {
     registerOperation(register_STRIDED_SLICE());
     registerOperation(register_SUB());
     registerOperation(register_TANH());
+    registerOperation(register_TOPK_V2());
     registerOperation(register_TRANSPOSE());
     registerOperation(register_TRANSPOSE_CONV_2D());
     registerOperation(register_UNIDIRECTIONAL_SEQUENCE_LSTM());
