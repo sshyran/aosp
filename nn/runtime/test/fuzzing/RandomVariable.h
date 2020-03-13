@@ -103,7 +103,7 @@ struct RandomVariableBase {
     // Network structural information.
     std::shared_ptr<RandomVariableBase> parent1 = nullptr;
     std::shared_ptr<RandomVariableBase> parent2 = nullptr;
-    std::vector<std::shared_ptr<RandomVariableBase>> children;
+    std::vector<std::weak_ptr<RandomVariableBase>> children;
 
     // The last time that this RandomVariableBase is modified.
     int timestamp;
