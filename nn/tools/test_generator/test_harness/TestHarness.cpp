@@ -399,6 +399,13 @@ const char* kOperationTypeNames[] = {
         "UNIDIRECTIONAL_SEQUENCE_LSTM",
         "UNIDIRECTIONAL_SEQUENCE_RNN",
         "RESIZE_NEAREST_NEIGHBOR",
+        "QUANTIZED_LSTM",
+        "IF",
+        "WHILE",
+        "ELU",
+        "HARD_SWISH",
+        "FILL",
+        "RANK",
 };
 
 const char* kOperandTypeNames[] = {
