@@ -16,10 +16,10 @@
 
 #include <gtest/gtest.h>
 
+#include "GeneratedTestUtils.h"
 #include "HalInterfaces.h"
 #include "MemoryUtils.h"
 #include "ModelBuilder.h"
-#include "TestGenerated.h"
 #include "TestNeuralNetworksWrapper.h"
 #include "Utils.h"
 
