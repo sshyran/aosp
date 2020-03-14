@@ -279,6 +279,7 @@ std::string getOperandTypeName(hal::OperandType type);
 //
 // Undefined behavior if the operand type is a scalar type.
 bool tensorHasUnspecifiedDimensions(int type, const uint32_t* dim, uint32_t dimCount);
+bool tensorHasUnspecifiedDimensions(hal::OperandType type, const std::vector<uint32_t>& dimensions);
 bool tensorHasUnspecifiedDimensions(const hal::Operand& operand);
 bool tensorHasUnspecifiedDimensions(const ANeuralNetworksOperandType* type);
 
