@@ -692,9 +692,10 @@ Return<void> SamplePreparedModel::executeFenced(
 
     NNTRACE_FULL_SWITCH(NNTRACE_LAYER_DRIVER, NNTRACE_PHASE_INPUTS_AND_OUTPUTS,
                         "SamplePreparedModel::executeFenced");
-    std::vector<RunTimePoolInfo> requestPoolInfos;
-    if (!setRunTimePoolInfosFromMemoryPools(&requestPoolInfos, request.pools)) {
-        cb(ErrorStatus::INVALID_ARGUMENT, hidl_handle(nullptr), nullptr);
+    const auto [poolStatus, requestPoolInfos, bufferWrappers] =
+            createRunTimePoolInfos(request, *mDriver, this);
+    if (poolStatus != ErrorStatus::NONE) {
+        cb(poolStatus, hidl_handle(nullptr), nullptr);
         return Void();
     }
 
@@ -717,6 +718,18 @@ Return<void> SamplePreparedModel::executeFenced(
         cb(executionStatus, hidl_handle(nullptr), nullptr);
         return Void();
     }
+
+    // Set output memories to the initialized state.
+    if (executionStatus == ErrorStatus::NONE) {
+        for (const auto& output : request.outputs) {
+            const uint32_t poolIndex = output.location.poolIndex;
+            const auto& pool = request.pools[poolIndex];
+            if (pool.getDiscriminator() == Request::MemoryPool::hidl_discriminator::token) {
+                bufferWrappers[poolIndex]->setInitialized(true);
+            }
+        }
+    }
+
     Timing timingSinceLaunch = {.timeOnDevice = UINT64_MAX, .timeInDriver = UINT64_MAX};
     Timing timingAfterFence = {.timeOnDevice = UINT64_MAX, .timeInDriver = UINT64_MAX};
     if (measure == MeasureTiming::YES) {
