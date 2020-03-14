@@ -143,6 +143,7 @@ cc_library_static {
         "include",
     ],
     srcs: [
+        "BufferTracker.cpp",
         "CpuExecutor.cpp",
         "ExecutionBurstController.cpp",
         "ExecutionBurstServer.cpp",
