@@ -91,8 +91,6 @@ class ObjectTracker {
     std::unordered_map<const ObjectType*, uint32_t> mKnown;
 };
 
-enum class IOType { INPUT = 0, OUTPUT = 1 };
-
 using CompilationRole = std::tuple<const CompilationBuilder*, IOType, uint32_t>;
 using StepRoleCallback = std::function<void(const PreparedModel*, IOType, uint32_t)>;
 
