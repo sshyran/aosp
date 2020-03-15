@@ -91,8 +91,6 @@ class ObjectTracker {
     std::unordered_map<const ObjectType*, uint32_t> mKnown;
 };
 
-enum class IOType { INPUT = 0, OUTPUT = 1 };
-
 using CompilationRole = std::tuple<const CompilationBuilder*, IOType, uint32_t>;
 using StepRoleCallback = std::function<void(const PreparedModel*, IOType, uint32_t)>;
 
@@ -297,7 +295,6 @@ class MemoryAHWB : public Memory {
     // On error, returns the appropriate NNAPI error code and nullptr.
     static std::pair<int, std::unique_ptr<MemoryAHWB>> create(const AHardwareBuffer& ahwb);
 
-    // TODO(miaowang): consider separate blob and non-blob into different classes.
     // prefer using MemoryAHWB::create
     MemoryAHWB(hal::hidl_memory memory, std::unique_ptr<MemoryValidatorBase> validator)
         : Memory(std::move(memory), std::move(validator)) {}

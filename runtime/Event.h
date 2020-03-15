@@ -101,7 +101,7 @@ class SyncFenceEvent : public IEvent {
     }
 
    private:
-    // TODO(miaowang): used android::base::unique_fd instead.
+    // TODO(b/148423931): used android::base::unique_fd instead.
     int mSyncFenceFd = -1;
     const sp<hal::IFencedExecutionCallback> kFencedExecutionCallback;
 };

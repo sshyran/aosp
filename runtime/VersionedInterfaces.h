@@ -627,6 +627,13 @@ class VersionedIPreparedModel {
      * (ANEURALNETWORKS_NO_ERROR): There must be no failure unless the device
      * itself is in a bad state.
      *
+     * execute may be called with an optional deadline. If the execution is not
+     * able to be completed before the provided deadline, the execution may be
+     * aborted, and either {@link ErrorStatus::MISSED_DEADLINE_TRANSIENT} or
+     * {@link ErrorStatus::MISSED_DEADLINE_PERSISTENT} must be returned. The
+     * error due to an abort must be sent the same way as other errors,
+     * described above.
+     *
      * Any number of calls to the VersionedIPreparedModel::execute function, in
      * any combination, may be made concurrently, even on the same
      * VersionedIPreparedModel object.
@@ -721,10 +728,10 @@ class VersionedIPreparedModel {
      * any data object referenced by 'request' (described by the
      * {@link @1.0::DataLocation} of a {@link @1.0::RequestArgument}).
      *
-     * executeFenced may be called with an optional deadline and an optional duration.
-     * If the execution is not able to completed before the provided deadline or within
-     * the timeout duration, whichever comes earlier, the
-     * execution may be aborted, and either {@link
+     * executeFenced may be called with an optional deadline and an optional
+     * timeoutDurationAfterFence. If the execution is not able to be completed
+     * before the provided deadline or within the timeoutDurationAfterFence,
+     * whichever comes earlier, the execution may be aborted, and either {@link
      * ErrorStatus::MISSED_DEADLINE_TRANSIENT} or {@link
      * ErrorStatus::MISSED_DEADLINE_PERSISTENT} may be returned. The error due
      * to an abort must be sent the same way as other errors, described above.
@@ -743,9 +750,13 @@ class VersionedIPreparedModel {
      *                 the execution cannot be finished by the deadline, the
      *                 execution may be aborted.
      * @param loopTimeoutDuration The maximum amount of time that should be spent
-     *     executing a WHILE operation. If a loop does not terminate within this
-     *     duration, the execution must be aborted. This must be set if an only
-     *     if the model contains a {@link OperationType::WHILE} operation.
+     *     executing a {@link OperationType::WHILE} operation. If a loop
+     *     condition model does not output false within this duration, the
+     *     execution must be aborted. If the model contains a {@link
+     *     OperationType::WHILE} operation and no loop timeout duration is
+     *     provided, the maximum amount of time is {@link
+     *     LoopTimeoutDurationNs::DEFAULT}. When provided, the duration must not
+     *     exceed {@link LoopTimeoutDurationNs::MAXIMUM}.
      * @param timeoutDurationAfterFence The timeout duration within which the
      *                                  execution is expected to complete after
      *                                  all sync fences in waitFor are signaled.

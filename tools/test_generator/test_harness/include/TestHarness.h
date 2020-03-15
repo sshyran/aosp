@@ -27,6 +27,8 @@
 #include <cstdlib>
 #include <cstring>
 #include <functional>
+#include <iostream>
+#include <limits>
 #include <map>
 #include <memory>
 #include <random>
@@ -454,12 +456,76 @@ class TestModelManager {
     std::map<std::string, const TestModel*> mTestModels;
 };
 
+struct AccuracyCriterion {
+    // We expect the driver results to be unbiased.
+    // Formula: abs(sum_{i}(diff) / sum(1)) <= bias, where
+    // * fixed point: diff = actual - expected
+    // * floating point: diff = (actual - expected) / max(1, abs(expected))
+    float bias = std::numeric_limits<float>::max();
+
+    // Set the threshold on Mean Square Error (MSE).
+    // Formula: sum_{i}(diff ^ 2) / sum(1) <= mse
+    float mse = std::numeric_limits<float>::max();
+
+    // We also set accuracy thresholds on each element to detect any particular edge cases that may
+    // be shadowed in bias or MSE. We use the similar approach as our CTS unit tests, but with much
+    // relaxed criterion.
+    // Formula: abs(actual - expected) <= atol + rtol * abs(expected)
+    //   where atol stands for Absolute TOLerance and rtol for Relative TOLerance.
+    float atol = 0.0f;
+    float rtol = 0.0f;
+};
+
+struct AccuracyCriteria {
+    AccuracyCriterion float32;
+    AccuracyCriterion float16;
+    AccuracyCriterion int32;
+    AccuracyCriterion quant8Asymm;
+    AccuracyCriterion quant8AsymmSigned;
+    AccuracyCriterion quant8Symm;
+    AccuracyCriterion quant16Asymm;
+    AccuracyCriterion quant16Symm;
+    float bool8AllowedErrorRatio = 0.1f;
+};
+
 // Check the output results against the expected values in test model by calling
 // GTEST_ASSERT/EXPECT. The index of the results corresponds to the index in
 // model.main.outputIndexes. E.g., results[i] corresponds to model.main.outputIndexes[i].
 void checkResults(const TestModel& model, const std::vector<TestBuffer>& results);
+void checkResults(const TestModel& model, const std::vector<TestBuffer>& results,
+                  const AccuracyCriteria& criteria);
+
+bool isQuantizedType(TestOperandType type);
 
 TestModel convertQuant8AsymmOperandsToSigned(const TestModel& testModel);
+
+const char* toString(TestOperandType type);
+const char* toString(TestOperationType type);
+
+// Dump a test model in the format of a spec file for debugging and visualization purpose.
+class SpecDumper {
+   public:
+    SpecDumper(const TestModel& testModel, std::ostream& os) : kTestModel(testModel), mOs(os) {}
+    void dumpTestModel();
+    void dumpResults(const std::string& name, const std::vector<TestBuffer>& results);
+
+   private:
+    // Dump a test model operand.
+    // e.g. op0 = Input("op0", "TENSOR_FLOAT32", "{1, 2, 6, 1}")
+    // e.g. op1 = Parameter("op1", "INT32", "{}", [2])
+    void dumpTestOperand(const TestOperand& operand, uint32_t index);
+
+    // Dump a test model operation.
+    // e.g. model = model.Operation("CONV_2D", op0, op1, op2, op3, op4, op5, op6).To(op7)
+    void dumpTestOperation(const TestOperation& operation);
+
+    // Dump a test buffer as a python 1D list.
+    // e.g. [1, 2, 3, 4, 5]
+    void dumpTestBuffer(TestOperandType type, const TestBuffer& buffer);
+
+    const TestModel& kTestModel;
+    std::ostream& mOs;
+};
 
 }  // namespace test_helper
 

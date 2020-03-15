@@ -382,6 +382,11 @@ bool tensorHasUnspecifiedDimensions(int type, const uint32_t* dim, uint32_t dimC
     return dimCount == 0 || std::find(dim, dim + dimCount, 0) != (dim + dimCount);
 }
 
+bool tensorHasUnspecifiedDimensions(OperandType type, const std::vector<uint32_t>& dimensions) {
+    return tensorHasUnspecifiedDimensions(static_cast<int>(type), dimensions.data(),
+                                          dimensions.size());
+}
+
 bool tensorHasUnspecifiedDimensions(const ANeuralNetworksOperandType* type) {
     return tensorHasUnspecifiedDimensions(type->type, type->dimensions, type->dimensionCount);
 }
