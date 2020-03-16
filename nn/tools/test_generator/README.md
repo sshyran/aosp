@@ -348,8 +348,8 @@ model inputs and outputs. This is particularly useful for models referenced by
 IF and WHILE operations.
 
 ```Python
-DataType = ["TENSOR_INT32", "{1}"]
-BoolType = ["TENSOR_BOOL8", "{1}"]
+DataType = ["TENSOR_INT32", [1]]
+BoolType = ["TENSOR_BOOL8", [1]]
 
 def MakeConditionModel():
   a = Input("a", DataType)
@@ -393,11 +393,11 @@ Example.ExpectFailure()
 
 ```Python
 # Declare input, output, and parameters
-i1 = Input("op1", "TENSOR_FLOAT32", "{1, 3, 4, 1}")
-f1 = Parameter("op2", "TENSOR_FLOAT32", "{1, 3, 3, 1}", [1, 4, 7, 2, 5, 8, 3, 6, 9])
-b1 = Parameter("op3", "TENSOR_FLOAT32", "{1}", [-200])
+i1 = Input("op1", ("TENSOR_FLOAT32", [1, 3, 4, 1]))
+f1 = Parameter("op2", ("TENSOR_FLOAT32", [1, 3, 3, 1]), [1, 4, 7, 2, 5, 8, 3, 6, 9])
+b1 = Parameter("op3", ("TENSOR_FLOAT32", [1]), [-200])
 act = Int32Scalar("act", 0)
-o1 = Output("op4", "TENSOR_FLOAT32", "{1, 3, 4, 1}")
+o1 = Output("op4", ("TENSOR_FLOAT32", [1, 3, 4, 1]))
 
 # Instantiate a model and add CONV_2D operation
 # Use implicit parameter for implicit padding and strides
