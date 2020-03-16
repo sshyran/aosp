@@ -509,6 +509,14 @@ bool validate(const IOperationValidationContext* context) {
     NN_RET_CHECK(
             std::binary_search(std::begin(kNumInputsArray), std::end(kNumInputsArray), numInputs));
     NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
+    const auto inputRank = getNumberOfDimensions(context->getInputShape(kInputTensor));
+    const auto filterRank = getNumberOfDimensions(context->getInputShape(kFilterTensor));
+    if (inputRank != 0) {
+        NN_RET_CHECK_EQ(inputRank, 4);
+    }
+    if (filterRank != 0) {
+        NN_RET_CHECK_EQ(filterRank, 4);
+    }
     auto inputCount = context->getNumInputs();
     auto inputType = context->getInputType(kInputTensor);
     auto filterType = context->getInputType(kFilterTensor);
