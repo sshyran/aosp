@@ -25,6 +25,7 @@
 
 #include "Callbacks.h"
 #include "ControlFlow.h"
+#include "CpuExecutor.h"
 #include "HalInterfaces.h"
 #include "Memory.h"
 #include "ModelArgumentInfo.h"
@@ -112,6 +113,10 @@ class ExecutionBuilder {
 
     const ModelArgumentInfo& getInputInfo(uint32_t index) const { return mInputs[index]; }
     const ModelArgumentInfo& getOutputInfo(uint32_t index) const { return mOutputs[index]; }
+
+    std::optional<RunTimePoolInfo> getRunTimePoolInfo(uint32_t poolIndex) const {
+        return mMemories[poolIndex]->getRunTimePoolInfo();
+    }
 
    private:
     // If a callback is provided, then this is asynchronous. If a callback is
