@@ -24,65 +24,46 @@ input_size = 5
 num_units = 4
 output_size = 4
 
-input = Input("input",
-              ("TENSOR_QUANT8_ASYMM_SIGNED", "{%d, %d}" % (batch_size, input_size), 0.0078125, 0))
+InputType = ("TENSOR_QUANT8_ASYMM_SIGNED", [batch_size, input_size], 0.0078125, 0)
+input = Input("input", InputType)
 
-input_to_input_weights = Input("input_to_input_weights",
-                               ("TENSOR_QUANT8_SYMM", "{%d, %d}" % (num_units, input_size), 0.00784314, 0))
-input_to_forget_weights = Input("input_to_forget_weights",
-                                ("TENSOR_QUANT8_SYMM", "{%d, %d}" % (num_units, input_size), 0.00784314, 0))
-input_to_cell_weights = Input("input_to_cell_weights",
-                              ("TENSOR_QUANT8_SYMM", "{%d, %d}" % (num_units, input_size), 0.00784314, 0))
-input_to_output_weights = Input("input_to_output_weights",
-                                ("TENSOR_QUANT8_SYMM", "{%d, %d}" % (num_units, input_size), 0.00784314, 0))
+InputWeightsType = ("TENSOR_QUANT8_SYMM", [num_units, input_size], 0.00784314, 0)
+input_to_input_weights = Input("input_to_input_weights", InputWeightsType)
+input_to_forget_weights = Input("input_to_forget_weights", InputWeightsType)
+input_to_cell_weights = Input("input_to_cell_weights", InputWeightsType)
+input_to_output_weights = Input("input_to_output_weights", InputWeightsType)
 
-recurrent_to_input_weights = Input("recurrent_to_input_weights",
-                                   ("TENSOR_QUANT8_SYMM", "{%d, %d}" % (num_units, output_size),
-                                    0.00784314, 0))
-recurrent_to_forget_weights = Input("recurrent_to_forget_weights",
-                                    ("TENSOR_QUANT8_SYMM", "{%d, %d}" % (num_units, output_size),
-                                     0.00784314, 0))
-recurrent_to_cell_weights = Input("recurrent_to_cell_weights",
-                                  ("TENSOR_QUANT8_SYMM", "{%d, %d}" % (num_units, output_size),
-                                   0.00784314, 0))
-recurrent_to_output_weights = Input("recurrent_to_output_weights",
-                                    ("TENSOR_QUANT8_SYMM", "{%d, %d}" % (num_units, output_size),
-                                     0.00784314, 0))
+RecurrentWeightsType = ("TENSOR_QUANT8_SYMM", [num_units, output_size], 0.00784314, 0)
+recurrent_to_input_weights = Input("recurrent_to_input_weights", RecurrentWeightsType)
+recurrent_to_forget_weights = Input("recurrent_to_forget_weights", RecurrentWeightsType)
+recurrent_to_cell_weights = Input("recurrent_to_cell_weights", RecurrentWeightsType)
+recurrent_to_output_weights = Input("recurrent_to_output_weights", RecurrentWeightsType)
 
-cell_to_input_weights = Input("cell_to_input_weights",
-                              ("TENSOR_QUANT16_SYMM", "{%d}" % (num_units), 1.0, 0))
-cell_to_forget_weights = Input("cell_to_forget_weights",
-                               ("TENSOR_QUANT16_SYMM", "{%d}" % (num_units), 1.0, 0))
-cell_to_output_weights = Input("cell_to_output_weights",
-                               ("TENSOR_QUANT16_SYMM", "{%d}" % (num_units), 1.0, 0))
+CellWeightsType = ("TENSOR_QUANT16_SYMM", [num_units], 1.0, 0)
+cell_to_input_weights = Input("cell_to_input_weights", CellWeightsType)
+cell_to_forget_weights = Input("cell_to_forget_weights", CellWeightsType)
+cell_to_output_weights = Input("cell_to_output_weights", CellWeightsType)
 
-input_gate_bias = Input("input_gate_bias",
-                        ("TENSOR_INT32", "{%d}" % (num_units), 4.65661e-08, 0))
-forget_gate_bias = Input("forget_gate_bias",
-                         ("TENSOR_INT32", "{%d}" % (num_units), 4.65661e-08, 0))
-cell_gate_bias = Input("cell_gate_bias",
-                       ("TENSOR_INT32", "{%d}" % (num_units), 4.65661e-08, 0))
-output_gate_bias = Input("output_gate_bias",
-                         ("TENSOR_INT32", "{%d}" % (num_units), 4.65661e-08, 0))
+BiasType = ("TENSOR_INT32", [num_units], 4.65661e-08, 0)
+input_gate_bias = Input("input_gate_bias", BiasType)
+forget_gate_bias = Input("forget_gate_bias", BiasType)
+cell_gate_bias = Input("cell_gate_bias", BiasType)
+output_gate_bias = Input("output_gate_bias", BiasType)
 
 projection_weights = Input("projection_weights",
-                           ("TENSOR_QUANT8_SYMM", "{%d,%d}" % (output_size, num_units), 0.00392157, 0))
-projection_bias = Input("projection_bias", "TENSOR_INT32", "{%d}" % (output_size))
+                           ("TENSOR_QUANT8_SYMM", [output_size, num_units], 0.00392157, 0))
+projection_bias = Input("projection_bias", ("TENSOR_INT32", [output_size]))
 
-output_state_in = Input("output_state_in",
-                        ("TENSOR_QUANT8_ASYMM_SIGNED", "{%d, %d}" % (batch_size, output_size),
-                         3.05176e-05, 0))
-cell_state_in = Input("cell_state_in",
-                      ("TENSOR_QUANT16_SYMM", "{%d, %d}" % (batch_size, num_units), 3.05176e-05, 0))
+OutputStateType = ("TENSOR_QUANT8_ASYMM_SIGNED", [batch_size, output_size], 3.05176e-05, 0)
+CellStateType = ("TENSOR_QUANT16_SYMM", [batch_size, num_units], 3.05176e-05, 0)
+output_state_in = Input("output_state_in", OutputStateType)
+cell_state_in = Input("cell_state_in", CellStateType)
 
-input_layer_norm_weights = Input("input_layer_norm_weights",
-                                 ("TENSOR_QUANT16_SYMM", "{%d}" % num_units, 3.05182e-05, 0))
-forget_layer_norm_weights = Input("forget_layer_norm_weights",
-                                  ("TENSOR_QUANT16_SYMM", "{%d}" % num_units, 3.05182e-05, 0))
-cell_layer_norm_weights = Input("cell_layer_norm_weights",
-                                ("TENSOR_QUANT16_SYMM", "{%d}" % num_units, 3.05182e-05, 0))
-output_layer_norm_weights = Input("output_layer_norm_weights",
-                                  ("TENSOR_QUANT16_SYMM", "{%d}" % num_units, 3.05182e-05, 0))
+LayerNormType = ("TENSOR_QUANT16_SYMM", [num_units], 3.05182e-05, 0)
+input_layer_norm_weights = Input("input_layer_norm_weights", LayerNormType)
+forget_layer_norm_weights = Input("forget_layer_norm_weights", LayerNormType)
+cell_layer_norm_weights = Input("cell_layer_norm_weights", LayerNormType)
+output_layer_norm_weights = Input("output_layer_norm_weights", LayerNormType)
 
 cell_clip = Float32Scalar("cell_clip", 0.)
 projection_clip = Float32Scalar("projection_clip", 0.)
@@ -94,14 +75,9 @@ output_intermediate_scale = Float32Scalar("output_intermediate_scale", 0.007812)
 hidden_state_zero_point = Int32Scalar("hidden_state_zero_point", 0)
 hidden_state_scale = Float32Scalar("hidden_state_scale", 0.007)
 
-output_state_out = Output("output_state_out",
-                          ("TENSOR_QUANT8_ASYMM_SIGNED", "{%d, %d}" % (batch_size, output_size),
-                           3.05176e-05, 0))
-cell_state_out = Output("cell_state_out",
-                        ("TENSOR_QUANT16_SYMM", "{%d, %d}" % (batch_size, num_units), 3.05176e-05, 0))
-output = Output("output",
-                ("TENSOR_QUANT8_ASYMM_SIGNED", "{%d, %d}" % (batch_size, output_size),
-                           3.05176e-05, 0))
+output_state_out = Output("output_state_out", OutputStateType)
+cell_state_out = Output("cell_state_out", CellStateType)
+output = Output("output", OutputStateType)
 
 model = model.Operation(
     "QUANTIZED_LSTM", input, input_to_input_weights, input_to_forget_weights,

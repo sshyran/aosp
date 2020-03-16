@@ -23,9 +23,9 @@
 #                        1 1])
 #     i = i + 1
 
-FibType = ["TENSOR_FLOAT32", "{1, 2}"]
-CounterType = ["TENSOR_INT32", "{1}"]
-BoolType = ["TENSOR_BOOL8", "{1}"]
+FibType = ["TENSOR_FLOAT32", [1, 2]]
+CounterType = ["TENSOR_INT32", [1]]
+BoolType = ["TENSOR_BOOL8", [1]]
 
 def MakeConditionModel():
   fib = Input("fib", FibType)
@@ -44,8 +44,8 @@ def MakeBodyModel():
   n = Input("n", CounterType)
   fib_out = Output("fib_out", FibType)
   i_out = Output("i_out", CounterType)
-  matrix = Parameter("matrix", ["TENSOR_FLOAT32", "{2, 2}"], [0, 1, 1, 1])
-  zero_bias = Parameter("zero_bias", ["TENSOR_FLOAT32", "{2, 1}"], [0, 0])
+  matrix = Parameter("matrix", ["TENSOR_FLOAT32", [2, 2]], [0, 1, 1, 1])
+  zero_bias = Parameter("zero_bias", ["TENSOR_FLOAT32", [2, 1]], [0, 0])
   model = Model()
   model.IdentifyInputs(fib, i, n)
   model.IdentifyOutputs(fib_out, i_out)
