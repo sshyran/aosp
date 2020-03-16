@@ -21,8 +21,8 @@
 # while i >= n:
 #     i = i + 1.0
 
-CounterType = ["TENSOR_FLOAT32", "{1}"]
-BoolType = ["TENSOR_BOOL8", "{1}"]
+CounterType = ["TENSOR_FLOAT32", [1]]
+BoolType = ["TENSOR_BOOL8", [1]]
 
 def MakeConditionModel():
   i = Input("i", CounterType)
