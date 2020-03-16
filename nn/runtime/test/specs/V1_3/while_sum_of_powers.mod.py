@@ -27,9 +27,9 @@
 #     sum = sum + xi
 #     i = i + 1
 
-DataType = ["TENSOR_FLOAT32", "{1, 2}"]
-CounterType = ["TENSOR_INT32", "{1}"]
-BoolType = ["TENSOR_BOOL8", "{1}"]
+DataType = ["TENSOR_FLOAT32", [1, 2]]
+CounterType = ["TENSOR_INT32", [1]]
+BoolType = ["TENSOR_BOOL8", [1]]
 
 def MakeInnerConditionModel():
   xi = Input("xi", DataType)
