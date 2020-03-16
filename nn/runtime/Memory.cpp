@@ -203,6 +203,11 @@ hal::Request::MemoryPool Memory::getMemoryPool() const {
     return pool;
 }
 
+std::optional<RunTimePoolInfo> Memory::getRunTimePoolInfo() const {
+    // TODO(b/147777318): Cache memory mapping within the memory object.
+    return RunTimePoolInfo::createFromHidlMemory(kHidlMemory);
+}
+
 intptr_t Memory::getKey() const {
     return reinterpret_cast<intptr_t>(this);
 }
