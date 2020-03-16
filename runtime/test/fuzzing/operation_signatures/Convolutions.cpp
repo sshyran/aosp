@@ -345,8 +345,7 @@ static void depthwiseConv2DImplicitConstructor(TestOperandType, uint32_t rank, T
     // Filter, [1, height_flt, width_flt, channel_out]
     RandomVariable channelOut =
             op->inputs[6]->value<RandomVariable>() * op->inputs[0]->dimensions[channelIndex];
-    op->inputs[1]->dimensions = {RandomVariableType::FREE, RandomVariableType::FREE,
-                                 RandomVariableType::FREE, channelOut};
+    op->inputs[1]->dimensions = {1, RandomVariableType::FREE, RandomVariableType::FREE, channelOut};
 
     // Bias, [channel_out]
     op->inputs[2]->dimensions = {channelOut};
