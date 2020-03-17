@@ -20,8 +20,8 @@ input_data = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
 output_add = [y + 100 for y in input_data]
 output_sub = [y - 100 for y in input_data]
 
-ValueType = ["TENSOR_FLOAT32", "{3, 4}"]
-BoolType = ["TENSOR_BOOL8", "{1}"]
+ValueType = ["TENSOR_FLOAT32", [3, 4]]
+BoolType = ["TENSOR_BOOL8", [1]]
 
 def MakeBranchModel(operation_name):
   y = Input("y", ValueType)
