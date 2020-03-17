@@ -35,6 +35,7 @@
 
 #include "HalInterfaces.h"
 #include "Memory.h"
+#include "ModelArgumentInfo.h"
 #include "ModelBuilder.h"
 #include "NeuralNetworks.h"
 #include "TokenHasher.h"
@@ -455,8 +456,10 @@ class ExecutionPlan {
                            sourceOperandToConstantReference);
 
         // Sets the location of innerOperand to be the same as the location of outerOperand.
-        void setInput(const SourceOperandIndex& outerOperand, const SourceOperandIndex& innerOperand);
-        void setOutput(const SourceOperandIndex& outerOperand, const SourceOperandIndex& innerOperand);
+        void setInput(const SourceOperandIndex& outerOperand,
+                      const SourceOperandIndex& innerOperand);
+        void setOutput(const SourceOperandIndex& outerOperand,
+                       const SourceOperandIndex& innerOperand);
 
         const ExecutionPlan* mPlan;
         ExecutionBuilder* mExecutionBuilder;
@@ -573,8 +576,24 @@ class ExecutionPlan {
     void becomeCompoundIfEmpty();
     void findTempsAsStepModelOutputs();
 
-    // Returns the buffer associated with a partition boundary operand. Returns nullptr on failure.
-    void* getBuffer(std::shared_ptr<Controller> controller, SourceOperandIndex operandIndex) const;
+    class Buffer {
+       public:
+        Buffer(void* pointer, uint32_t size);
+        Buffer(RunTimePoolInfo info, uint32_t offset);
+        void* getPointer() const;
+        uint32_t getSize() const;
+        void flush() const;
+
+       private:
+        RunTimePoolInfo mInfo;
+        uint32_t mOffset;
+    };
+
+    // Returns the buffer associated with a partition boundary operand.
+    std::optional<Buffer> getBuffer(std::shared_ptr<Controller> controller,
+                                    SourceOperandIndex operandIndex) const;
+    std::optional<Buffer> getBufferFromModelArgumentInfo(
+            const ModelArgumentInfo& info, const ExecutionBuilder* executionBuilder) const;
     // Reads the value of a partition boundary boolean condition operand.
     bool readConditionValue(std::shared_ptr<Controller> controller,
                             SourceOperandIndex operandIndex) const;
