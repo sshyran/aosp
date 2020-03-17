@@ -247,7 +247,14 @@ class MemoryBuilder {
     // Once the descriptor has been finished, we should not allow further modifications.
     bool mFinished = false;
 
+    // The following fields are only valid when finished.
+
+    // The chosen device to allocate the memory. Set to nullptr if there are multiple devices.
     const Device* mAllocator = nullptr;
+
+    // If set to true, allocate() will fallback to Ashmem or AHardwareBuffer if the memory
+    // allocation fails on the chosen device, or if there is no device chosen.
+    bool mShouldFallback = true;
 };
 
 class MemoryAshmem : public Memory {
