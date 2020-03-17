@@ -29,6 +29,7 @@
 #include <utility>
 #include <vector>
 
+#include "HalInterfaces.h"
 #include "Tracing.h"
 #include "Utils.h"
 
@@ -37,6 +38,10 @@ namespace {
 
 using namespace hal;
 
+using V1_2::FmqRequestDatum;
+using V1_2::FmqResultDatum;
+using V1_2::IBurstCallback;
+using V1_2::IBurstContext;
 using FmqRequestDescriptor = hardware::MQDescriptorSync<FmqRequestDatum>;
 using FmqResultDescriptor = hardware::MQDescriptorSync<FmqResultDatum>;
 
@@ -224,6 +229,10 @@ std::optional<std::tuple<V1_0::ErrorStatus, std::vector<OutputShape>, Timing>> d
 
     // return result
     return std::make_tuple(errorStatus, std::move(outputShapes), timing);
+}
+
+V1_0::ErrorStatus legacyConvertResultCodeToErrorStatus(int resultCode) {
+    return convertToV1_0(convertResultCodeToErrorStatus(resultCode));
 }
 
 std::pair<std::unique_ptr<ResultChannelReceiver>, const FmqResultDescriptor*>
