@@ -168,6 +168,8 @@ class Type(NamedVariable):
     # not have a match with all existing types
     @staticmethod
     def GetType(vt, dimensions, scale=0, zeroPoint=0, extraParams=None):
+        assert isinstance(dimensions, (list, tuple)), \
+            'dimensions must be a list or tuple, got {}'.format(type(dimensions))
         key = ",".join([vt, str(dimensions), str(scale), str(zeroPoint), str(extraParams)])
         if key not in Type.typesMap:
             Type.typesMap[key] = Type(vt, dimensions, scale, zeroPoint, extraParams=extraParams)
