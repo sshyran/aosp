@@ -193,28 +193,28 @@ cc_test {
     ],
 }
 
-cc_fuzz {
-    name: "libneuralnetworks_fuzzer",
-    defaults: ["NeuralNetworksTest_default_libs"],
-    owner: "google",
-    fuzz_config: {
-        cc: ["butlermichael@google.com"],
-    },
-    srcs: [
-        "android_fuzzing/Converter.cpp",
-        "android_fuzzing/FuzzTest.cpp",
-        "android_fuzzing/StaticAssert.cpp",
-    ],
-    corpus: ["android_fuzzing/corpus/*"],
-    shared_libs: ["libprotobuf-cpp-full"],
-    static_libs: [
-        "libneuralnetworks_common",
-        "libneuralnetworks_fuzzer_proto",
-        "libneuralnetworks_generated_test_harness",
-        "libneuralnetworks_static",
-        "libprotobuf-mutator",
-    ],
-}
+//cc_fuzz {
+//    name: "libneuralnetworks_fuzzer",
+//    defaults: [
+//        "NeuralNetworksTest_default_libs",
+//        "libneuralnetworks_fuzzer_defaults",
+//    ],
+//    owner: "google",
+//    fuzz_config: {
+//        cc: ["butlermichael@google.com"],
+//        // Temporarily disabled due to b/151102177.
+//        fuzz_on_haiku_host: false,
+//        fuzz_on_haiku_device: false,
+//    },
+//    srcs: [
+//        "android_fuzzing/FuzzTest.cpp",
+//    ],
+//    static_libs: [
+//        "libneuralnetworks_common",
+//        "libneuralnetworks_generated_test_harness",
+//        "libneuralnetworks_static",
+//    ],
+//}
 
 // Temporarily disabled due to b/139889855.
 cc_test {
