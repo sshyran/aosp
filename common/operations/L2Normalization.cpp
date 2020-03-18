@@ -221,6 +221,10 @@ bool validate(const IOperationValidationContext* context) {
     } else if (context->getInputShape(kInputTensor).dimensions.size() != 4) {
         NN_RET_CHECK(validateHalVersion(context, HalVersion::V1_2));
     }
+    const Shape& input = context->getInputShape(kInputTensor);
+    if (hasKnownRank(input)) {
+        NN_RET_CHECK_LE(getNumberOfDimensions(input), 4);
+    }
     return validateInputTypes(context, inExpectedTypes) &&
            validateOutputTypes(context, {inputType});
 }
@@ -231,6 +235,7 @@ bool prepare(IOperationExecutionContext* context) {
     int32_t axis = context->getNumInputs() == kNumInputs
                            ? context->getInputValue<int32_t>(kAxisScalar)
                            : -1;
+    NN_RET_CHECK_LE(numDimensions, 4);
     NN_RET_CHECK_GE(axis, -numDimensions);
     NN_RET_CHECK_LT(axis, numDimensions);
     Shape output = context->getOutputShape(kOutputTensor);
