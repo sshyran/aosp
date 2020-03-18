@@ -201,7 +201,7 @@ inline std::string toString<RandomVariableRange>(const RandomVariableRange& rang
 
 template <>
 inline std::string toString<RandomOperandType>(const RandomOperandType& type) {
-    static const std::string typeNames[] = {"Input", "Output", "Internal", "Parameter"};
+    static const std::string typeNames[] = {"Input", "Output", "Internal", "Parameter", "No Value"};
     return typeNames[static_cast<int>(type)];
 }
 
