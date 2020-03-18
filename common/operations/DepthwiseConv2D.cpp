@@ -514,21 +514,22 @@ bool prepare(IOperationExecutionContext* context) {
     Shape bias = context->getInputShape(kBiasTensor);
 
     if (filter.type == OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL) {
-        NN_OPS_CHECK(input.type == OperandType::TENSOR_QUANT8_ASYMM ||
+        NN_RET_CHECK(input.type == OperandType::TENSOR_QUANT8_ASYMM ||
                      input.type == OperandType::TENSOR_QUANT8_ASYMM_SIGNED);
     } else {
-        NN_OPS_CHECK(input.type == filter.type);
+        NN_RET_CHECK(input.type == filter.type);
     }
     if (input.type == OperandType::TENSOR_QUANT8_ASYMM ||
         input.type == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
-        NN_OPS_CHECK(bias.type == OperandType::TENSOR_INT32);
+        NN_RET_CHECK(bias.type == OperandType::TENSOR_INT32);
     } else {
-        NN_OPS_CHECK(input.type == bias.type);
+        NN_RET_CHECK(input.type == bias.type);
     }
-    NN_OPS_CHECK(getNumberOfDimensions(input) == 4);
-    NN_OPS_CHECK(getNumberOfDimensions(filter) == 4);
-    NN_OPS_CHECK(getNumberOfDimensions(bias) == 1);
-    NN_OPS_CHECK(getSizeOfDimension(filter, 3) == getSizeOfDimension(bias, 0));
+    NN_RET_CHECK_EQ(getNumberOfDimensions(input), 4);
+    NN_RET_CHECK_EQ(getNumberOfDimensions(filter), 4);
+    NN_RET_CHECK_EQ(getNumberOfDimensions(bias), 1);
+    NN_RET_CHECK_EQ(getSizeOfDimension(filter, 0), 1);
+    NN_RET_CHECK_EQ(getSizeOfDimension(filter, 3), getSizeOfDimension(bias, 0));
 
     DepthwiseConv2dParam param;
     NN_RET_CHECK(param.initialize(context));
