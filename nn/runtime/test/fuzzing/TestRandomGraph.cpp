@@ -205,6 +205,11 @@ class RandomGraphTest : public ::testing::TestWithParam<uint32_t> {
                 featureLevel <= __ANDROID_API_Q__) {
                 return true;
             }
+            // L2_NORMALIZATION on axis of all zeros is undefined before R.
+            if (op.type == TestOperationType::L2_NORMALIZATION &&
+                featureLevel <= __ANDROID_API_Q__) {
+                return true;
+            }
             // TODO(xusongw): Remove after b/151328024 is resolved.
             if (op.type == TestOperationType::ROI_ALIGN) {
                 return true;
