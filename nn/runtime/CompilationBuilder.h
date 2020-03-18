@@ -68,6 +68,8 @@ class CompilationBuilder {
 
     const ExecutionPlan& forTest_getExecutionPlan() const { return mPlan; }
 
+    bool createdWithExplicitDeviceList() const { return mExplicitDeviceList; }
+
    private:
     const ModelBuilder* mModel;
 
