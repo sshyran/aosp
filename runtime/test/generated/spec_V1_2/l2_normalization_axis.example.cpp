@@ -11855,8 +11855,8 @@ const TestModel& get_test_model_corner_case_dim2_axis0() {
                 .inputIndexes = {0},
                 .operands = {{
                             .channelQuant = {},
-                            .data = TestBuffer::createFromVector<uint8_t>({245, 247, 246}),
-                            .dimensions = {1, 3},
+                            .data = TestBuffer::createFromVector<uint8_t>({245, 247}),
+                            .dimensions = {1, 2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
                             .numberOfConsumers = 1,
@@ -11875,8 +11875,8 @@ const TestModel& get_test_model_corner_case_dim2_axis0() {
                             .zeroPoint = 0
                         }, {
                             .channelQuant = {},
-                            .data = TestBuffer::createFromVector<uint8_t>({0, 255, 128}),
-                            .dimensions = {1, 3},
+                            .data = TestBuffer::createFromVector<uint8_t>({0, 255}),
+                            .dimensions = {1, 2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
                             .numberOfConsumers = 0,
@@ -11913,7 +11913,7 @@ const TestModel& get_test_model_corner_case_dim2_axis0_all_inputs_as_internal() 
                 .operands = {{
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({}),
-                            .dimensions = {1, 3},
+                            .dimensions = {1, 2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::TEMPORARY_VARIABLE,
                             .numberOfConsumers = 1,
@@ -11932,8 +11932,8 @@ const TestModel& get_test_model_corner_case_dim2_axis0_all_inputs_as_internal() 
                             .zeroPoint = 0
                         }, {
                             .channelQuant = {},
-                            .data = TestBuffer::createFromVector<uint8_t>({0, 255, 128}),
-                            .dimensions = {1, 3},
+                            .data = TestBuffer::createFromVector<uint8_t>({0, 255}),
+                            .dimensions = {1, 2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
                             .numberOfConsumers = 0,
@@ -11942,8 +11942,8 @@ const TestModel& get_test_model_corner_case_dim2_axis0_all_inputs_as_internal() 
                             .zeroPoint = 128
                         }, {
                             .channelQuant = {},
-                            .data = TestBuffer::createFromVector<uint8_t>({245, 247, 246}),
-                            .dimensions = {1, 3},
+                            .data = TestBuffer::createFromVector<uint8_t>({245, 247}),
+                            .dimensions = {1, 2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
                             .numberOfConsumers = 1,
@@ -12003,8 +12003,8 @@ const TestModel& get_test_model_corner_case_dim2_axis0_neg() {
                 .inputIndexes = {0},
                 .operands = {{
                             .channelQuant = {},
-                            .data = TestBuffer::createFromVector<uint8_t>({245, 247, 246}),
-                            .dimensions = {1, 3},
+                            .data = TestBuffer::createFromVector<uint8_t>({245, 247}),
+                            .dimensions = {1, 2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
                             .numberOfConsumers = 1,
@@ -12023,8 +12023,8 @@ const TestModel& get_test_model_corner_case_dim2_axis0_neg() {
                             .zeroPoint = 0
                         }, {
                             .channelQuant = {},
-                            .data = TestBuffer::createFromVector<uint8_t>({0, 255, 128}),
-                            .dimensions = {1, 3},
+                            .data = TestBuffer::createFromVector<uint8_t>({0, 255}),
+                            .dimensions = {1, 2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
                             .numberOfConsumers = 0,
@@ -12061,7 +12061,7 @@ const TestModel& get_test_model_corner_case_dim2_axis0_neg_all_inputs_as_interna
                 .operands = {{
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({}),
-                            .dimensions = {1, 3},
+                            .dimensions = {1, 2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::TEMPORARY_VARIABLE,
                             .numberOfConsumers = 1,
@@ -12080,8 +12080,8 @@ const TestModel& get_test_model_corner_case_dim2_axis0_neg_all_inputs_as_interna
                             .zeroPoint = 0
                         }, {
                             .channelQuant = {},
-                            .data = TestBuffer::createFromVector<uint8_t>({0, 255, 128}),
-                            .dimensions = {1, 3},
+                            .data = TestBuffer::createFromVector<uint8_t>({0, 255}),
+                            .dimensions = {1, 2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
                             .numberOfConsumers = 0,
@@ -12090,8 +12090,8 @@ const TestModel& get_test_model_corner_case_dim2_axis0_neg_all_inputs_as_interna
                             .zeroPoint = 128
                         }, {
                             .channelQuant = {},
-                            .data = TestBuffer::createFromVector<uint8_t>({245, 247, 246}),
-                            .dimensions = {1, 3},
+                            .data = TestBuffer::createFromVector<uint8_t>({245, 247}),
+                            .dimensions = {1, 2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
                             .numberOfConsumers = 1,
@@ -12151,8 +12151,8 @@ const TestModel& get_test_model_corner_case_dim2_axis1() {
                 .inputIndexes = {0},
                 .operands = {{
                             .channelQuant = {},
-                            .data = TestBuffer::createFromVector<uint8_t>({245, 247, 246}),
-                            .dimensions = {3, 1},
+                            .data = TestBuffer::createFromVector<uint8_t>({245, 247}),
+                            .dimensions = {2, 1},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
                             .numberOfConsumers = 1,
@@ -12171,8 +12171,8 @@ const TestModel& get_test_model_corner_case_dim2_axis1() {
                             .zeroPoint = 0
                         }, {
                             .channelQuant = {},
-                            .data = TestBuffer::createFromVector<uint8_t>({0, 255, 128}),
-                            .dimensions = {3, 1},
+                            .data = TestBuffer::createFromVector<uint8_t>({0, 255}),
+                            .dimensions = {2, 1},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
                             .numberOfConsumers = 0,
@@ -12209,7 +12209,7 @@ const TestModel& get_test_model_corner_case_dim2_axis1_all_inputs_as_internal() 
                 .operands = {{
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({}),
-                            .dimensions = {3, 1},
+                            .dimensions = {2, 1},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::TEMPORARY_VARIABLE,
                             .numberOfConsumers = 1,
@@ -12228,8 +12228,8 @@ const TestModel& get_test_model_corner_case_dim2_axis1_all_inputs_as_internal() 
                             .zeroPoint = 0
                         }, {
                             .channelQuant = {},
-                            .data = TestBuffer::createFromVector<uint8_t>({0, 255, 128}),
-                            .dimensions = {3, 1},
+                            .data = TestBuffer::createFromVector<uint8_t>({0, 255}),
+                            .dimensions = {2, 1},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
                             .numberOfConsumers = 0,
@@ -12238,8 +12238,8 @@ const TestModel& get_test_model_corner_case_dim2_axis1_all_inputs_as_internal() 
                             .zeroPoint = 128
                         }, {
                             .channelQuant = {},
-                            .data = TestBuffer::createFromVector<uint8_t>({245, 247, 246}),
-                            .dimensions = {3, 1},
+                            .data = TestBuffer::createFromVector<uint8_t>({245, 247}),
+                            .dimensions = {2, 1},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
                             .numberOfConsumers = 1,
@@ -12299,8 +12299,8 @@ const TestModel& get_test_model_corner_case_dim2_axis1_neg() {
                 .inputIndexes = {0},
                 .operands = {{
                             .channelQuant = {},
-                            .data = TestBuffer::createFromVector<uint8_t>({245, 247, 246}),
-                            .dimensions = {3, 1},
+                            .data = TestBuffer::createFromVector<uint8_t>({245, 247}),
+                            .dimensions = {2, 1},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
                             .numberOfConsumers = 1,
@@ -12319,8 +12319,8 @@ const TestModel& get_test_model_corner_case_dim2_axis1_neg() {
                             .zeroPoint = 0
                         }, {
                             .channelQuant = {},
-                            .data = TestBuffer::createFromVector<uint8_t>({0, 255, 128}),
-                            .dimensions = {3, 1},
+                            .data = TestBuffer::createFromVector<uint8_t>({0, 255}),
+                            .dimensions = {2, 1},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
                             .numberOfConsumers = 0,
@@ -12357,7 +12357,7 @@ const TestModel& get_test_model_corner_case_dim2_axis1_neg_all_inputs_as_interna
                 .operands = {{
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({}),
-                            .dimensions = {3, 1},
+                            .dimensions = {2, 1},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::TEMPORARY_VARIABLE,
                             .numberOfConsumers = 1,
@@ -12376,8 +12376,8 @@ const TestModel& get_test_model_corner_case_dim2_axis1_neg_all_inputs_as_interna
                             .zeroPoint = 0
                         }, {
                             .channelQuant = {},
-                            .data = TestBuffer::createFromVector<uint8_t>({0, 255, 128}),
-                            .dimensions = {3, 1},
+                            .data = TestBuffer::createFromVector<uint8_t>({0, 255}),
+                            .dimensions = {2, 1},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
                             .numberOfConsumers = 0,
@@ -12386,8 +12386,8 @@ const TestModel& get_test_model_corner_case_dim2_axis1_neg_all_inputs_as_interna
                             .zeroPoint = 128
                         }, {
                             .channelQuant = {},
-                            .data = TestBuffer::createFromVector<uint8_t>({245, 247, 246}),
-                            .dimensions = {3, 1},
+                            .data = TestBuffer::createFromVector<uint8_t>({245, 247}),
+                            .dimensions = {2, 1},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
                             .numberOfConsumers = 1,
