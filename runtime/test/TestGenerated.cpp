@@ -450,8 +450,8 @@ INSTANTIATE_GENERATED_TEST(GeneratedValidationTests, [](const TestModel& testMod
 });
 
 INSTANTIATE_GENERATED_TEST(QuantizationCouplingTest, [](const TestModel& testModel) {
-    return testModel.main.operations.size() == 1 && testModel.referenced.size() == 0 &&
-           testModel.hasQuant8CoupledOperands();
+    return !testModel.expectFailure && testModel.main.operations.size() == 1 &&
+           testModel.referenced.size() == 0 && testModel.hasQuant8CoupledOperands();
 });
 
 INSTANTIATE_GENERATED_TEST(DeviceMemoryTest, [](const TestModel& testModel) {
