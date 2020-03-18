@@ -524,14 +524,26 @@ static bool validateNoQuantParams(const ANeuralNetworksOperandType& type, const 
     return true;
 }
 
-static bool validateTensorDimensions(const ANeuralNetworksOperandType& type, const char* tag,
-                                     bool allowPartial) {
-    if (allowPartial) {
-        return true;
+static bool validateTensorDimensions(
+        const ANeuralNetworksOperandType& type,
+        const Extension::OperandTypeInformation* const extensionOperandTypeInfo, const char* tag,
+        bool allowPartial) {
+    if (!allowPartial) {
+        NN_RET_CHECK_GT(type.dimensionCount, 0u) << tag << " invalid operand dimensions";
     }
-    NN_RET_CHECK_GT(type.dimensionCount, 0u) << tag << " invalid operand dimensions";
+    uint64_t size =
+            isExtensionOperandType(type.type)
+                    ? extensionOperandTypeInfo->byteSize
+                    : tableLookup(kSizeOfDataType, kSizeOfDataTypeOEM, static_cast<int>(type.type));
+    constexpr uint64_t kMaxSize = std::numeric_limits<uint32_t>::max();
     for (uint32_t i = 0; i < type.dimensionCount; i++) {
-        NN_RET_CHECK_NE(type.dimensions[i], 0u) << tag << " invalid operand dimensions";
+        if (!allowPartial) {
+            NN_RET_CHECK_NE(type.dimensions[i], 0u) << tag << " invalid operand dimensions";
+        }
+        if (type.dimensions[i] != 0) {
+            size *= type.dimensions[i];
+            NN_RET_CHECK_LE(size, kMaxSize) << tag << " operand byte size exceeds " << kMaxSize;
+        }
     }
     return true;
 }
@@ -544,7 +556,8 @@ static bool validateOperandTypeHelper(
     if (isExtensionOperandType(type.type)) {
         NN_RET_CHECK(extensionOperandTypeInfo != nullptr);
         if (extensionOperandTypeInfo->isTensor) {
-            NN_RET_CHECK(validateTensorDimensions(type, tag, allowPartial));
+            NN_RET_CHECK(
+                    validateTensorDimensions(type, extensionOperandTypeInfo, tag, allowPartial));
         } else {
             NN_RET_CHECK(validateScalarDimensions(type, tag));
         }
@@ -563,7 +576,7 @@ static bool validateOperandTypeHelper(
             NN_RET_CHECK(validateNoQuantParams(type, tag));
         }
     } else {
-        NN_RET_CHECK(validateTensorDimensions(type, tag, allowPartial));
+        NN_RET_CHECK(validateTensorDimensions(type, extensionOperandTypeInfo, tag, allowPartial));
         if (type.type == ANEURALNETWORKS_TENSOR_QUANT8_ASYMM) {
             NN_RET_CHECK(validateQuant8AsymmParams(type, tag));
         } else if (type.type == ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED) {
