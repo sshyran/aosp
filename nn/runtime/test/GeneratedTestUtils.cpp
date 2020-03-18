@@ -103,7 +103,9 @@ void createModel(const TestModel& testModel, bool testDynamicOutputShape, Genera
     // Relaxed computation.
     model->relaxComputationFloat32toFloat16(testModel.isRelaxed);
 
-    ASSERT_TRUE(model->isValid());
+    if (!testModel.expectFailure) {
+        ASSERT_TRUE(model->isValid());
+    }
 }
 
 void createRequest(const TestModel& testModel, Execution* execution,
