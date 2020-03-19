@@ -845,26 +845,6 @@ int CpuExecutor::executeOperation(const Operation& operation, RunTimeOperandInfo
             LOG(ERROR) << "OEM operation not supported for CPU execution";
             success = false;
         } break;
-        case OperationType::FLOOR: {
-            if (!allParametersPresent(1, 1)) {
-                return ANEURALNETWORKS_BAD_DATA;
-            }
-            const RunTimeOperandInfo& input = operands[ins[0]];
-            RunTimeOperandInfo& output = operands[outs[0]];
-            Shape outShape = output.shape();
-
-            if (!floorPrepare(input.shape(), &outShape) ||
-                !setInfoAndAllocateIfNeeded(&output, outShape, &result)) {
-                break;
-            }
-            if (input.type == OperandType::TENSOR_FLOAT32) {
-                success = floorFloat32(reinterpret_cast<const float*>(input.buffer),
-                                       reinterpret_cast<float*>(output.buffer), outShape);
-            } else if (input.type == OperandType::TENSOR_FLOAT16) {
-                success = floorFloat16(reinterpret_cast<const _Float16*>(input.buffer),
-                                       reinterpret_cast<_Float16*>(output.buffer), outShape);
-            }
-        } break;
         case OperationType::LOCAL_RESPONSE_NORMALIZATION: {
             const size_t inCount = ins.size();
             if ((inCount != 6 && inCount != 5) || !allParametersPresent(inCount, 1)) {
