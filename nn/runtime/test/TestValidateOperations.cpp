@@ -1393,9 +1393,9 @@ void activationOpTest(ANeuralNetworksOperationType operationCode, int32_t operan
 
     ANeuralNetworksOperandType output = input;
     std::vector<TensorRankMutator> inputRankMutators;
-    if (operationCode == ANEURALNETWORKS_LOGISTIC || operationCode == ANEURALNETWORKS_RELU ||
-        operationCode == ANEURALNETWORKS_RELU1 || operationCode == ANEURALNETWORKS_RELU6 ||
-        operationCode == ANEURALNETWORKS_TANH) {
+    if (operationCode == ANEURALNETWORKS_FLOOR || operationCode == ANEURALNETWORKS_LOGISTIC ||
+        operationCode == ANEURALNETWORKS_RELU || operationCode == ANEURALNETWORKS_RELU1 ||
+        operationCode == ANEURALNETWORKS_RELU6 || operationCode == ANEURALNETWORKS_TANH) {
         inputRankMutators.push_back({TensorRankConstraint::UpTo(4)});
     }
     OperationTestBase test(operationCode, {input}, {output}, inputRankMutators);
