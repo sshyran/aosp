@@ -15,8 +15,8 @@ const TestModel& get_test_model_nhwc() {
                 .inputIndexes = {0, 1},
                 .operands = {{
                             .channelQuant = {},
-                            .data = TestBuffer::createFromVector<float>({-10.0f, -1.0f, 4.0f, -5.0f, -8.0f, -2.0f, 9.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 2.0f, -3.0f, 5.0f, -10.0f, -1.0f, 4.0f, -5.0f, -8.0f, -2.0f, 9.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 10.0f, -3.0f, 5.0f, -10.0f, -1.0f, 4.0f, -5.0f, -8.0f, -2.0f, 4.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 2.0f, -3.0f, 5.0f, -10.0f, -1.0f, 4.0f, 10.0f, -8.0f, -2.0f, 4.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 2.0f, -3.0f, 5.0f, -10.0f, -56.0f, 4.0f, -5.0f, -8.0f, -2.0f, 9.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 2.0f, -3.0f, 5.0f, -10.0f, -57.827329175f, 4.0f, -5.0f, -8.0f, -2.0f, 9.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 2.0f, -3.0f, 5.0f}),
-                            .dimensions = {6, 4, 4, 1},
+                            .data = TestBuffer::createFromVector<float>({-10.0f, -1.0f, 4.0f, -5.0f, -8.0f, -2.0f, 9.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 2.0f, -3.0f, 5.0f, -10.0f, -1.0f, 4.0f, -5.0f, -8.0f, -2.0f, 9.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 10.0f, -3.0f, 5.0f, -10.0f, -1.0f, 4.0f, -5.0f, -8.0f, -2.0f, 4.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 2.0f, -3.0f, 5.0f, -10.0f, -1.0f, 4.0f, 10.0f, -8.0f, -2.0f, 4.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 2.0f, -3.0f, 5.0f, -10.0f, -56.0f, 4.0f, -5.0f, -8.0f, -2.0f, 9.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 2.0f, -3.0f, 5.0f}),
+                            .dimensions = {5, 4, 4, 1},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
                             .numberOfConsumers = 1,
@@ -25,8 +25,8 @@ const TestModel& get_test_model_nhwc() {
                             .zeroPoint = 0
                         }, {
                             .channelQuant = {},
-                            .data = TestBuffer::createFromVector<float>({5.0f, 2.0f, 10.0f, 20.0f, 1.0f, 7.0f, 30.0f, 10.0f, 8.0f, 3.0f, 15.0f, 13.0f, 6.0f, 5.0f, 19.0f, 12.0f, 5.0f, 2.0f, 10.0f, 20.0f, 5.0f, 2.0f, 10.0f, 20.0f}),
-                            .dimensions = {6, 4},
+                            .data = TestBuffer::createFromVector<float>({5.0f, 2.0f, 10.0f, 20.0f, 1.0f, 7.0f, 30.0f, 10.0f, 8.0f, 3.0f, 15.0f, 13.0f, 6.0f, 5.0f, 19.0f, 12.0f, 5.0f, 2.0f, 10.0f, 20.0f}),
+                            .dimensions = {5, 4},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
                             .numberOfConsumers = 1,
@@ -45,8 +45,8 @@ const TestModel& get_test_model_nhwc() {
                             .zeroPoint = 0
                         }, {
                             .channelQuant = {},
-                            .data = TestBuffer::createFromVector<float>({9.071493f, 10.005f, 7.1875f, 10.0f, 10.689667f, 9.0f}),
-                            .dimensions = {6, 1},
+                            .data = TestBuffer::createFromVector<float>({9.071493f, 10.005f, 7.1875f, 10.0f, 10.689667f}),
+                            .dimensions = {5, 1},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
                             .numberOfConsumers = 0,
@@ -55,8 +55,8 @@ const TestModel& get_test_model_nhwc() {
                             .zeroPoint = 0
                         }, {
                             .channelQuant = {},
-                            .data = TestBuffer::createFromVector<float>({8.224462f, 8.537316f, 11.73f, 9.625f, 8.875f, 9.5625f, 17.375f, 5.875f, 9.569672f, 2.0f, 8.125f, 8.75f}),
-                            .dimensions = {6, 1, 2},
+                            .data = TestBuffer::createFromVector<float>({8.224462f, 8.537316f, 11.73f, 9.625f, 8.875f, 9.5625f, 17.375f, 5.875f, 9.569672f, 2.0f}),
+                            .dimensions = {5, 1, 2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
                             .numberOfConsumers = 0,
@@ -93,7 +93,7 @@ const TestModel& get_test_model_nhwc_all_inputs_as_internal() {
                 .operands = {{
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
-                            .dimensions = {6, 4, 4, 1},
+                            .dimensions = {5, 4, 4, 1},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::TEMPORARY_VARIABLE,
                             .numberOfConsumers = 1,
@@ -103,7 +103,7 @@ const TestModel& get_test_model_nhwc_all_inputs_as_internal() {
                         }, {
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
-                            .dimensions = {6, 4},
+                            .dimensions = {5, 4},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::TEMPORARY_VARIABLE,
                             .numberOfConsumers = 1,
@@ -122,8 +122,8 @@ const TestModel& get_test_model_nhwc_all_inputs_as_internal() {
                             .zeroPoint = 0
                         }, {
                             .channelQuant = {},
-                            .data = TestBuffer::createFromVector<float>({9.071493f, 10.005f, 7.1875f, 10.0f, 10.689667f, 9.0f}),
-                            .dimensions = {6, 1},
+                            .data = TestBuffer::createFromVector<float>({9.071493f, 10.005f, 7.1875f, 10.0f, 10.689667f}),
+                            .dimensions = {5, 1},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
                             .numberOfConsumers = 0,
@@ -132,8 +132,8 @@ const TestModel& get_test_model_nhwc_all_inputs_as_internal() {
                             .zeroPoint = 0
                         }, {
                             .channelQuant = {},
-                            .data = TestBuffer::createFromVector<float>({8.224462f, 8.537316f, 11.73f, 9.625f, 8.875f, 9.5625f, 17.375f, 5.875f, 9.569672f, 2.0f, 8.125f, 8.75f}),
-                            .dimensions = {6, 1, 2},
+                            .data = TestBuffer::createFromVector<float>({8.224462f, 8.537316f, 11.73f, 9.625f, 8.875f, 9.5625f, 17.375f, 5.875f, 9.569672f, 2.0f}),
+                            .dimensions = {5, 1, 2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
                             .numberOfConsumers = 0,
@@ -142,8 +142,8 @@ const TestModel& get_test_model_nhwc_all_inputs_as_internal() {
                             .zeroPoint = 0
                         }, {
                             .channelQuant = {},
-                            .data = TestBuffer::createFromVector<float>({-10.0f, -1.0f, 4.0f, -5.0f, -8.0f, -2.0f, 9.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 2.0f, -3.0f, 5.0f, -10.0f, -1.0f, 4.0f, -5.0f, -8.0f, -2.0f, 9.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 10.0f, -3.0f, 5.0f, -10.0f, -1.0f, 4.0f, -5.0f, -8.0f, -2.0f, 4.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 2.0f, -3.0f, 5.0f, -10.0f, -1.0f, 4.0f, 10.0f, -8.0f, -2.0f, 4.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 2.0f, -3.0f, 5.0f, -10.0f, -56.0f, 4.0f, -5.0f, -8.0f, -2.0f, 9.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 2.0f, -3.0f, 5.0f, -10.0f, -57.827329175f, 4.0f, -5.0f, -8.0f, -2.0f, 9.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 2.0f, -3.0f, 5.0f}),
-                            .dimensions = {6, 4, 4, 1},
+                            .data = TestBuffer::createFromVector<float>({-10.0f, -1.0f, 4.0f, -5.0f, -8.0f, -2.0f, 9.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 2.0f, -3.0f, 5.0f, -10.0f, -1.0f, 4.0f, -5.0f, -8.0f, -2.0f, 9.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 10.0f, -3.0f, 5.0f, -10.0f, -1.0f, 4.0f, -5.0f, -8.0f, -2.0f, 4.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 2.0f, -3.0f, 5.0f, -10.0f, -1.0f, 4.0f, 10.0f, -8.0f, -2.0f, 4.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 2.0f, -3.0f, 5.0f, -10.0f, -56.0f, 4.0f, -5.0f, -8.0f, -2.0f, 9.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 2.0f, -3.0f, 5.0f}),
+                            .dimensions = {5, 4, 4, 1},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
                             .numberOfConsumers = 1,
@@ -172,8 +172,8 @@ const TestModel& get_test_model_nhwc_all_inputs_as_internal() {
                             .zeroPoint = 0
                         }, {
                             .channelQuant = {},
-                            .data = TestBuffer::createFromVector<float>({5.0f, 2.0f, 10.0f, 20.0f, 1.0f, 7.0f, 30.0f, 10.0f, 8.0f, 3.0f, 15.0f, 13.0f, 6.0f, 5.0f, 19.0f, 12.0f, 5.0f, 2.0f, 10.0f, 20.0f, 5.0f, 2.0f, 10.0f, 20.0f}),
-                            .dimensions = {6, 4},
+                            .data = TestBuffer::createFromVector<float>({5.0f, 2.0f, 10.0f, 20.0f, 1.0f, 7.0f, 30.0f, 10.0f, 8.0f, 3.0f, 15.0f, 13.0f, 6.0f, 5.0f, 19.0f, 12.0f, 5.0f, 2.0f, 10.0f, 20.0f}),
+                            .dimensions = {5, 4},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
                             .numberOfConsumers = 1,
@@ -237,8 +237,8 @@ const TestModel& get_test_model_nhwc_relaxed() {
                 .inputIndexes = {0, 1},
                 .operands = {{
                             .channelQuant = {},
-                            .data = TestBuffer::createFromVector<float>({-10.0f, -1.0f, 4.0f, -5.0f, -8.0f, -2.0f, 9.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 2.0f, -3.0f, 5.0f, -10.0f, -1.0f, 4.0f, -5.0f, -8.0f, -2.0f, 9.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 10.0f, -3.0f, 5.0f, -10.0f, -1.0f, 4.0f, -5.0f, -8.0f, -2.0f, 4.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 2.0f, -3.0f, 5.0f, -10.0f, -1.0f, 4.0f, 10.0f, -8.0f, -2.0f, 4.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 2.0f, -3.0f, 5.0f, -10.0f, -56.0f, 4.0f, -5.0f, -8.0f, -2.0f, 9.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 2.0f, -3.0f, 5.0f, -10.0f, -57.827329175f, 4.0f, -5.0f, -8.0f, -2.0f, 9.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 2.0f, -3.0f, 5.0f}),
-                            .dimensions = {6, 4, 4, 1},
+                            .data = TestBuffer::createFromVector<float>({-10.0f, -1.0f, 4.0f, -5.0f, -8.0f, -2.0f, 9.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 2.0f, -3.0f, 5.0f, -10.0f, -1.0f, 4.0f, -5.0f, -8.0f, -2.0f, 9.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 10.0f, -3.0f, 5.0f, -10.0f, -1.0f, 4.0f, -5.0f, -8.0f, -2.0f, 4.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 2.0f, -3.0f, 5.0f, -10.0f, -1.0f, 4.0f, 10.0f, -8.0f, -2.0f, 4.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 2.0f, -3.0f, 5.0f, -10.0f, -56.0f, 4.0f, -5.0f, -8.0f, -2.0f, 9.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 2.0f, -3.0f, 5.0f}),
+                            .dimensions = {5, 4, 4, 1},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
                             .numberOfConsumers = 1,
@@ -247,8 +247,8 @@ const TestModel& get_test_model_nhwc_relaxed() {
                             .zeroPoint = 0
                         }, {
                             .channelQuant = {},
-                            .data = TestBuffer::createFromVector<float>({5.0f, 2.0f, 10.0f, 20.0f, 1.0f, 7.0f, 30.0f, 10.0f, 8.0f, 3.0f, 15.0f, 13.0f, 6.0f, 5.0f, 19.0f, 12.0f, 5.0f, 2.0f, 10.0f, 20.0f, 5.0f, 2.0f, 10.0f, 20.0f}),
-                            .dimensions = {6, 4},
+                            .data = TestBuffer::createFromVector<float>({5.0f, 2.0f, 10.0f, 20.0f, 1.0f, 7.0f, 30.0f, 10.0f, 8.0f, 3.0f, 15.0f, 13.0f, 6.0f, 5.0f, 19.0f, 12.0f, 5.0f, 2.0f, 10.0f, 20.0f}),
+                            .dimensions = {5, 4},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
                             .numberOfConsumers = 1,
@@ -267,8 +267,8 @@ const TestModel& get_test_model_nhwc_relaxed() {
                             .zeroPoint = 0
                         }, {
                             .channelQuant = {},
-                            .data = TestBuffer::createFromVector<float>({9.071493f, 10.005f, 7.1875f, 10.0f, 10.689667f, 9.0f}),
-                            .dimensions = {6, 1},
+                            .data = TestBuffer::createFromVector<float>({9.071493f, 10.005f, 7.1875f, 10.0f, 10.689667f}),
+                            .dimensions = {5, 1},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
                             .numberOfConsumers = 0,
@@ -277,8 +277,8 @@ const TestModel& get_test_model_nhwc_relaxed() {
                             .zeroPoint = 0
                         }, {
                             .channelQuant = {},
-                            .data = TestBuffer::createFromVector<float>({8.224462f, 8.537316f, 11.73f, 9.625f, 8.875f, 9.5625f, 17.375f, 5.875f, 9.569672f, 2.0f, 8.125f, 8.75f}),
-                            .dimensions = {6, 1, 2},
+                            .data = TestBuffer::createFromVector<float>({8.224462f, 8.537316f, 11.73f, 9.625f, 8.875f, 9.5625f, 17.375f, 5.875f, 9.569672f, 2.0f}),
+                            .dimensions = {5, 1, 2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
                             .numberOfConsumers = 0,
@@ -315,7 +315,7 @@ const TestModel& get_test_model_nhwc_relaxed_all_inputs_as_internal() {
                 .operands = {{
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
-                            .dimensions = {6, 4, 4, 1},
+                            .dimensions = {5, 4, 4, 1},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::TEMPORARY_VARIABLE,
                             .numberOfConsumers = 1,
@@ -325,7 +325,7 @@ const TestModel& get_test_model_nhwc_relaxed_all_inputs_as_internal() {
                         }, {
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
-                            .dimensions = {6, 4},
+                            .dimensions = {5, 4},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::TEMPORARY_VARIABLE,
                             .numberOfConsumers = 1,
@@ -344,8 +344,8 @@ const TestModel& get_test_model_nhwc_relaxed_all_inputs_as_internal() {
                             .zeroPoint = 0
                         }, {
                             .channelQuant = {},
-                            .data = TestBuffer::createFromVector<float>({9.071493f, 10.005f, 7.1875f, 10.0f, 10.689667f, 9.0f}),
-                            .dimensions = {6, 1},
+                            .data = TestBuffer::createFromVector<float>({9.071493f, 10.005f, 7.1875f, 10.0f, 10.689667f}),
+                            .dimensions = {5, 1},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
                             .numberOfConsumers = 0,
@@ -354,8 +354,8 @@ const TestModel& get_test_model_nhwc_relaxed_all_inputs_as_internal() {
                             .zeroPoint = 0
                         }, {
                             .channelQuant = {},
-                            .data = TestBuffer::createFromVector<float>({8.224462f, 8.537316f, 11.73f, 9.625f, 8.875f, 9.5625f, 17.375f, 5.875f, 9.569672f, 2.0f, 8.125f, 8.75f}),
-                            .dimensions = {6, 1, 2},
+                            .data = TestBuffer::createFromVector<float>({8.224462f, 8.537316f, 11.73f, 9.625f, 8.875f, 9.5625f, 17.375f, 5.875f, 9.569672f, 2.0f}),
+                            .dimensions = {5, 1, 2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
                             .numberOfConsumers = 0,
@@ -364,8 +364,8 @@ const TestModel& get_test_model_nhwc_relaxed_all_inputs_as_internal() {
                             .zeroPoint = 0
                         }, {
                             .channelQuant = {},
-                            .data = TestBuffer::createFromVector<float>({-10.0f, -1.0f, 4.0f, -5.0f, -8.0f, -2.0f, 9.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 2.0f, -3.0f, 5.0f, -10.0f, -1.0f, 4.0f, -5.0f, -8.0f, -2.0f, 9.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 10.0f, -3.0f, 5.0f, -10.0f, -1.0f, 4.0f, -5.0f, -8.0f, -2.0f, 4.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 2.0f, -3.0f, 5.0f, -10.0f, -1.0f, 4.0f, 10.0f, -8.0f, -2.0f, 4.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 2.0f, -3.0f, 5.0f, -10.0f, -56.0f, 4.0f, -5.0f, -8.0f, -2.0f, 9.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 2.0f, -3.0f, 5.0f, -10.0f, -57.827329175f, 4.0f, -5.0f, -8.0f, -2.0f, 9.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 2.0f, -3.0f, 5.0f}),
-                            .dimensions = {6, 4, 4, 1},
+                            .data = TestBuffer::createFromVector<float>({-10.0f, -1.0f, 4.0f, -5.0f, -8.0f, -2.0f, 9.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 2.0f, -3.0f, 5.0f, -10.0f, -1.0f, 4.0f, -5.0f, -8.0f, -2.0f, 9.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 10.0f, -3.0f, 5.0f, -10.0f, -1.0f, 4.0f, -5.0f, -8.0f, -2.0f, 4.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 2.0f, -3.0f, 5.0f, -10.0f, -1.0f, 4.0f, 10.0f, -8.0f, -2.0f, 4.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 2.0f, -3.0f, 5.0f, -10.0f, -56.0f, 4.0f, -5.0f, -8.0f, -2.0f, 9.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 2.0f, -3.0f, 5.0f}),
+                            .dimensions = {5, 4, 4, 1},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
                             .numberOfConsumers = 1,
@@ -394,8 +394,8 @@ const TestModel& get_test_model_nhwc_relaxed_all_inputs_as_internal() {
                             .zeroPoint = 0
                         }, {
                             .channelQuant = {},
-                            .data = TestBuffer::createFromVector<float>({5.0f, 2.0f, 10.0f, 20.0f, 1.0f, 7.0f, 30.0f, 10.0f, 8.0f, 3.0f, 15.0f, 13.0f, 6.0f, 5.0f, 19.0f, 12.0f, 5.0f, 2.0f, 10.0f, 20.0f, 5.0f, 2.0f, 10.0f, 20.0f}),
-                            .dimensions = {6, 4},
+                            .data = TestBuffer::createFromVector<float>({5.0f, 2.0f, 10.0f, 20.0f, 1.0f, 7.0f, 30.0f, 10.0f, 8.0f, 3.0f, 15.0f, 13.0f, 6.0f, 5.0f, 19.0f, 12.0f, 5.0f, 2.0f, 10.0f, 20.0f}),
+                            .dimensions = {5, 4},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
                             .numberOfConsumers = 1,
@@ -459,8 +459,8 @@ const TestModel& get_test_model_nhwc_float16() {
                 .inputIndexes = {0, 1},
                 .operands = {{
                             .channelQuant = {},
-                            .data = TestBuffer::createFromVector<_Float16>({-10.0f, -1.0f, 4.0f, -5.0f, -8.0f, -2.0f, 9.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 2.0f, -3.0f, 5.0f, -10.0f, -1.0f, 4.0f, -5.0f, -8.0f, -2.0f, 9.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 10.0f, -3.0f, 5.0f, -10.0f, -1.0f, 4.0f, -5.0f, -8.0f, -2.0f, 4.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 2.0f, -3.0f, 5.0f, -10.0f, -1.0f, 4.0f, 10.0f, -8.0f, -2.0f, 4.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 2.0f, -3.0f, 5.0f, -10.0f, -56.0f, 4.0f, -5.0f, -8.0f, -2.0f, 9.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 2.0f, -3.0f, 5.0f, -10.0f, -57.827327728271484f, 4.0f, -5.0f, -8.0f, -2.0f, 9.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 2.0f, -3.0f, 5.0f}),
-                            .dimensions = {6, 4, 4, 1},
+                            .data = TestBuffer::createFromVector<_Float16>({-10.0f, -1.0f, 4.0f, -5.0f, -8.0f, -2.0f, 9.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 2.0f, -3.0f, 5.0f, -10.0f, -1.0f, 4.0f, -5.0f, -8.0f, -2.0f, 9.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 10.0f, -3.0f, 5.0f, -10.0f, -1.0f, 4.0f, -5.0f, -8.0f, -2.0f, 4.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 2.0f, -3.0f, 5.0f, -10.0f, -1.0f, 4.0f, 10.0f, -8.0f, -2.0f, 4.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 2.0f, -3.0f, 5.0f, -10.0f, -56.0f, 4.0f, -5.0f, -8.0f, -2.0f, 9.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 2.0f, -3.0f, 5.0f}),
+                            .dimensions = {5, 4, 4, 1},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
                             .numberOfConsumers = 1,
@@ -469,8 +469,8 @@ const TestModel& get_test_model_nhwc_float16() {
                             .zeroPoint = 0
                         }, {
                             .channelQuant = {},
-                            .data = TestBuffer::createFromVector<_Float16>({5.0f, 2.0f, 10.0f, 20.0f, 1.0f, 7.0f, 30.0f, 10.0f, 8.0f, 3.0f, 15.0f, 13.0f, 6.0f, 5.0f, 19.0f, 12.0f, 5.0f, 2.0f, 10.0f, 20.0f, 5.0f, 2.0f, 10.0f, 20.0f}),
-                            .dimensions = {6, 4},
+                            .data = TestBuffer::createFromVector<_Float16>({5.0f, 2.0f, 10.0f, 20.0f, 1.0f, 7.0f, 30.0f, 10.0f, 8.0f, 3.0f, 15.0f, 13.0f, 6.0f, 5.0f, 19.0f, 12.0f, 5.0f, 2.0f, 10.0f, 20.0f}),
+                            .dimensions = {5, 4},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
                             .numberOfConsumers = 1,
@@ -489,8 +489,8 @@ const TestModel& get_test_model_nhwc_float16() {
                             .zeroPoint = 0
                         }, {
                             .channelQuant = {},
-                            .data = TestBuffer::createFromVector<_Float16>({9.071493148803711f, 10.005000114440918f, 7.1875f, 10.0f, 10.689666748046875f, 9.0f}),
-                            .dimensions = {6, 1},
+                            .data = TestBuffer::createFromVector<_Float16>({9.071493148803711f, 10.005000114440918f, 7.1875f, 10.0f, 10.689666748046875f}),
+                            .dimensions = {5, 1},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
                             .numberOfConsumers = 0,
@@ -499,8 +499,8 @@ const TestModel& get_test_model_nhwc_float16() {
                             .zeroPoint = 0
                         }, {
                             .channelQuant = {},
-                            .data = TestBuffer::createFromVector<_Float16>({8.224461555480957f, 8.53731632232666f, 11.729999542236328f, 9.625f, 8.875f, 9.5625f, 17.375f, 5.875f, 9.569671630859375f, 2.0f, 8.125f, 8.75f}),
-                            .dimensions = {6, 1, 2},
+                            .data = TestBuffer::createFromVector<_Float16>({8.224461555480957f, 8.53731632232666f, 11.729999542236328f, 9.625f, 8.875f, 9.5625f, 17.375f, 5.875f, 9.569671630859375f, 2.0f}),
+                            .dimensions = {5, 1, 2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
                             .numberOfConsumers = 0,
@@ -537,7 +537,7 @@ const TestModel& get_test_model_nhwc_float16_all_inputs_as_internal() {
                 .operands = {{
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({}),
-                            .dimensions = {6, 4, 4, 1},
+                            .dimensions = {5, 4, 4, 1},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::TEMPORARY_VARIABLE,
                             .numberOfConsumers = 1,
@@ -547,7 +547,7 @@ const TestModel& get_test_model_nhwc_float16_all_inputs_as_internal() {
                         }, {
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({}),
-                            .dimensions = {6, 4},
+                            .dimensions = {5, 4},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::TEMPORARY_VARIABLE,
                             .numberOfConsumers = 1,
@@ -566,8 +566,8 @@ const TestModel& get_test_model_nhwc_float16_all_inputs_as_internal() {
                             .zeroPoint = 0
                         }, {
                             .channelQuant = {},
-                            .data = TestBuffer::createFromVector<_Float16>({9.071493148803711f, 10.005000114440918f, 7.1875f, 10.0f, 10.689666748046875f, 9.0f}),
-                            .dimensions = {6, 1},
+                            .data = TestBuffer::createFromVector<_Float16>({9.071493148803711f, 10.005000114440918f, 7.1875f, 10.0f, 10.689666748046875f}),
+                            .dimensions = {5, 1},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
                             .numberOfConsumers = 0,
@@ -576,8 +576,8 @@ const TestModel& get_test_model_nhwc_float16_all_inputs_as_internal() {
                             .zeroPoint = 0
                         }, {
                             .channelQuant = {},
-                            .data = TestBuffer::createFromVector<_Float16>({8.224461555480957f, 8.53731632232666f, 11.729999542236328f, 9.625f, 8.875f, 9.5625f, 17.375f, 5.875f, 9.569671630859375f, 2.0f, 8.125f, 8.75f}),
-                            .dimensions = {6, 1, 2},
+                            .data = TestBuffer::createFromVector<_Float16>({8.224461555480957f, 8.53731632232666f, 11.729999542236328f, 9.625f, 8.875f, 9.5625f, 17.375f, 5.875f, 9.569671630859375f, 2.0f}),
+                            .dimensions = {5, 1, 2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
                             .numberOfConsumers = 0,
@@ -586,8 +586,8 @@ const TestModel& get_test_model_nhwc_float16_all_inputs_as_internal() {
                             .zeroPoint = 0
                         }, {
                             .channelQuant = {},
-                            .data = TestBuffer::createFromVector<_Float16>({-10.0f, -1.0f, 4.0f, -5.0f, -8.0f, -2.0f, 9.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 2.0f, -3.0f, 5.0f, -10.0f, -1.0f, 4.0f, -5.0f, -8.0f, -2.0f, 9.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 10.0f, -3.0f, 5.0f, -10.0f, -1.0f, 4.0f, -5.0f, -8.0f, -2.0f, 4.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 2.0f, -3.0f, 5.0f, -10.0f, -1.0f, 4.0f, 10.0f, -8.0f, -2.0f, 4.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 2.0f, -3.0f, 5.0f, -10.0f, -56.0f, 4.0f, -5.0f, -8.0f, -2.0f, 9.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 2.0f, -3.0f, 5.0f, -10.0f, -57.827327728271484f, 4.0f, -5.0f, -8.0f, -2.0f, 9.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 2.0f, -3.0f, 5.0f}),
-                            .dimensions = {6, 4, 4, 1},
+                            .data = TestBuffer::createFromVector<_Float16>({-10.0f, -1.0f, 4.0f, -5.0f, -8.0f, -2.0f, 9.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 2.0f, -3.0f, 5.0f, -10.0f, -1.0f, 4.0f, -5.0f, -8.0f, -2.0f, 9.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 10.0f, -3.0f, 5.0f, -10.0f, -1.0f, 4.0f, -5.0f, -8.0f, -2.0f, 4.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 2.0f, -3.0f, 5.0f, -10.0f, -1.0f, 4.0f, 10.0f, -8.0f, -2.0f, 4.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 2.0f, -3.0f, 5.0f, -10.0f, -56.0f, 4.0f, -5.0f, -8.0f, -2.0f, 9.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 2.0f, -3.0f, 5.0f}),
+                            .dimensions = {5, 4, 4, 1},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
                             .numberOfConsumers = 1,
@@ -616,8 +616,8 @@ const TestModel& get_test_model_nhwc_float16_all_inputs_as_internal() {
                             .zeroPoint = 0
                         }, {
                             .channelQuant = {},
-                            .data = TestBuffer::createFromVector<_Float16>({5.0f, 2.0f, 10.0f, 20.0f, 1.0f, 7.0f, 30.0f, 10.0f, 8.0f, 3.0f, 15.0f, 13.0f, 6.0f, 5.0f, 19.0f, 12.0f, 5.0f, 2.0f, 10.0f, 20.0f, 5.0f, 2.0f, 10.0f, 20.0f}),
-                            .dimensions = {6, 4},
+                            .data = TestBuffer::createFromVector<_Float16>({5.0f, 2.0f, 10.0f, 20.0f, 1.0f, 7.0f, 30.0f, 10.0f, 8.0f, 3.0f, 15.0f, 13.0f, 6.0f, 5.0f, 19.0f, 12.0f, 5.0f, 2.0f, 10.0f, 20.0f}),
+                            .dimensions = {5, 4},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
                             .numberOfConsumers = 1,
@@ -672,6 +672,194 @@ const auto dummy_test_model_nhwc_float16_all_inputs_as_internal = TestModelManag
 
 namespace generated_tests::heatmap_max_keypoint {
 
+const TestModel& get_test_model_nhwc_quant8() {
+    static TestModel model = {
+        .expectFailure = false,
+        .expectedMultinomialDistributionTolerance = 0,
+        .isRelaxed = false,
+        .main = {
+                .inputIndexes = {0, 1},
+                .operands = {{
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<uint8_t>({108, 126, 136, 118, 112, 124, 146, 130, 142, 124, 134, 114, 124, 132, 122, 138, 108, 126, 136, 118, 112, 124, 146, 130, 142, 124, 134, 114, 124, 148, 122, 138, 108, 126, 136, 118, 112, 124, 136, 130, 142, 124, 134, 114, 124, 132, 122, 138, 108, 126, 136, 148, 112, 124, 136, 130, 142, 124, 134, 114, 124, 132, 122, 138, 108, 16, 136, 118, 112, 124, 146, 130, 142, 124, 134, 114, 124, 132, 122, 138}),
+                            .dimensions = {5, 4, 4, 1},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
+                            .numberOfConsumers = 1,
+                            .scale = 0.5f,
+                            .type = TestOperandType::TENSOR_QUANT8_ASYMM,
+                            .zeroPoint = 128
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<uint16_t>({40, 16, 80, 160, 8, 56, 240, 80, 64, 24, 120, 104, 48, 40, 152, 96, 40, 16, 80, 160}),
+                            .dimensions = {5, 4},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
+                            .numberOfConsumers = 1,
+                            .scale = 0.125f,
+                            .type = TestOperandType::TENSOR_QUANT16_ASYMM,
+                            .zeroPoint = 0
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<bool8>({false}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::BOOL,
+                            .zeroPoint = 0
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<uint8_t>({101, 110, 82, 110, 117}),
+                            .dimensions = {5, 1},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
+                            .numberOfConsumers = 0,
+                            .scale = 0.1f,
+                            .type = TestOperandType::TENSOR_QUANT8_ASYMM,
+                            .zeroPoint = 10
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<uint16_t>({66, 68, 94, 77, 71, 76, 139, 47, 77, 16}),
+                            .dimensions = {5, 1, 2},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
+                            .numberOfConsumers = 0,
+                            .scale = 0.125f,
+                            .type = TestOperandType::TENSOR_QUANT16_ASYMM,
+                            .zeroPoint = 0
+                        }},
+                .operations = {{
+                            .inputs = {0, 1, 2},
+                            .outputs = {3, 4},
+                            .type = TestOperationType::HEATMAP_MAX_KEYPOINT
+                        }},
+                .outputIndexes = {3, 4}
+            },
+        .minSupportedVersion = TestHalVersion::V1_2,
+        .referenced = {}
+    };
+    return model;
+}
+
+const auto dummy_test_model_nhwc_quant8 = TestModelManager::get().add("heatmap_max_keypoint_nhwc_quant8", get_test_model_nhwc_quant8());
+
+}  // namespace generated_tests::heatmap_max_keypoint
+
+namespace generated_tests::heatmap_max_keypoint {
+
+const TestModel& get_test_model_nhwc_quant8_all_inputs_as_internal() {
+    static TestModel model = {
+        .expectFailure = false,
+        .expectedMultinomialDistributionTolerance = 0,
+        .isRelaxed = false,
+        .main = {
+                .inputIndexes = {1, 5},
+                .operands = {{
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<uint8_t>({}),
+                            .dimensions = {5, 4, 4, 1},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::TEMPORARY_VARIABLE,
+                            .numberOfConsumers = 1,
+                            .scale = 0.5f,
+                            .type = TestOperandType::TENSOR_QUANT8_ASYMM,
+                            .zeroPoint = 128
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<uint16_t>({40, 16, 80, 160, 8, 56, 240, 80, 64, 24, 120, 104, 48, 40, 152, 96, 40, 16, 80, 160}),
+                            .dimensions = {5, 4},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
+                            .numberOfConsumers = 1,
+                            .scale = 0.125f,
+                            .type = TestOperandType::TENSOR_QUANT16_ASYMM,
+                            .zeroPoint = 0
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<bool8>({false}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::BOOL,
+                            .zeroPoint = 0
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<uint8_t>({101, 110, 82, 110, 117}),
+                            .dimensions = {5, 1},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
+                            .numberOfConsumers = 0,
+                            .scale = 0.1f,
+                            .type = TestOperandType::TENSOR_QUANT8_ASYMM,
+                            .zeroPoint = 10
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<uint16_t>({66, 68, 94, 77, 71, 76, 139, 47, 77, 16}),
+                            .dimensions = {5, 1, 2},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
+                            .numberOfConsumers = 0,
+                            .scale = 0.125f,
+                            .type = TestOperandType::TENSOR_QUANT16_ASYMM,
+                            .zeroPoint = 0
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<uint8_t>({108, 126, 136, 118, 112, 124, 146, 130, 142, 124, 134, 114, 124, 132, 122, 138, 108, 126, 136, 118, 112, 124, 146, 130, 142, 124, 134, 114, 124, 148, 122, 138, 108, 126, 136, 118, 112, 124, 136, 130, 142, 124, 134, 114, 124, 132, 122, 138, 108, 126, 136, 148, 112, 124, 136, 130, 142, 124, 134, 114, 124, 132, 122, 138, 108, 16, 136, 118, 112, 124, 146, 130, 142, 124, 134, 114, 124, 132, 122, 138}),
+                            .dimensions = {5, 4, 4, 1},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
+                            .numberOfConsumers = 1,
+                            .scale = 0.5f,
+                            .type = TestOperandType::TENSOR_QUANT8_ASYMM,
+                            .zeroPoint = 128
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<uint8_t>({128}),
+                            .dimensions = {1},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.5f,
+                            .type = TestOperandType::TENSOR_QUANT8_ASYMM,
+                            .zeroPoint = 128
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<int32_t>({0}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::INT32,
+                            .zeroPoint = 0
+                        }},
+                .operations = {{
+                            .inputs = {5, 6, 7},
+                            .outputs = {0},
+                            .type = TestOperationType::ADD
+                        }, {
+                            .inputs = {0, 1, 2},
+                            .outputs = {3, 4},
+                            .type = TestOperationType::HEATMAP_MAX_KEYPOINT
+                        }},
+                .outputIndexes = {3, 4}
+            },
+        .minSupportedVersion = TestHalVersion::V1_2,
+        .referenced = {}
+    };
+    return model;
+}
+
+const auto dummy_test_model_nhwc_quant8_all_inputs_as_internal = TestModelManager::get().add("heatmap_max_keypoint_nhwc_quant8_all_inputs_as_internal", get_test_model_nhwc_quant8_all_inputs_as_internal());
+
+}  // namespace generated_tests::heatmap_max_keypoint
+
+namespace generated_tests::heatmap_max_keypoint {
+
 const TestModel& get_test_model_nchw() {
     static TestModel model = {
         .expectFailure = false,
@@ -681,8 +869,8 @@ const TestModel& get_test_model_nchw() {
                 .inputIndexes = {0, 1},
                 .operands = {{
                             .channelQuant = {},
-                            .data = TestBuffer::createFromVector<float>({-10.0f, -1.0f, 4.0f, -5.0f, -8.0f, -2.0f, 9.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 2.0f, -3.0f, 5.0f, -10.0f, -1.0f, 4.0f, -5.0f, -8.0f, -2.0f, 9.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 10.0f, -3.0f, 5.0f, -10.0f, -1.0f, 4.0f, -5.0f, -8.0f, -2.0f, 4.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 2.0f, -3.0f, 5.0f, -10.0f, -1.0f, 4.0f, 10.0f, -8.0f, -2.0f, 4.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 2.0f, -3.0f, 5.0f, -10.0f, -56.0f, 4.0f, -5.0f, -8.0f, -2.0f, 9.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 2.0f, -3.0f, 5.0f, -10.0f, -57.827329175f, 4.0f, -5.0f, -8.0f, -2.0f, 9.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 2.0f, -3.0f, 5.0f}),
-                            .dimensions = {6, 1, 4, 4},
+                            .data = TestBuffer::createFromVector<float>({-10.0f, -1.0f, 4.0f, -5.0f, -8.0f, -2.0f, 9.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 2.0f, -3.0f, 5.0f, -10.0f, -1.0f, 4.0f, -5.0f, -8.0f, -2.0f, 9.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 10.0f, -3.0f, 5.0f, -10.0f, -1.0f, 4.0f, -5.0f, -8.0f, -2.0f, 4.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 2.0f, -3.0f, 5.0f, -10.0f, -1.0f, 4.0f, 10.0f, -8.0f, -2.0f, 4.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 2.0f, -3.0f, 5.0f, -10.0f, -56.0f, 4.0f, -5.0f, -8.0f, -2.0f, 9.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 2.0f, -3.0f, 5.0f}),
+                            .dimensions = {5, 1, 4, 4},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
                             .numberOfConsumers = 1,
@@ -691,8 +879,8 @@ const TestModel& get_test_model_nchw() {
                             .zeroPoint = 0
                         }, {
                             .channelQuant = {},
-                            .data = TestBuffer::createFromVector<float>({5.0f, 2.0f, 10.0f, 20.0f, 1.0f, 7.0f, 30.0f, 10.0f, 8.0f, 3.0f, 15.0f, 13.0f, 6.0f, 5.0f, 19.0f, 12.0f, 5.0f, 2.0f, 10.0f, 20.0f, 5.0f, 2.0f, 10.0f, 20.0f}),
-                            .dimensions = {6, 4},
+                            .data = TestBuffer::createFromVector<float>({5.0f, 2.0f, 10.0f, 20.0f, 1.0f, 7.0f, 30.0f, 10.0f, 8.0f, 3.0f, 15.0f, 13.0f, 6.0f, 5.0f, 19.0f, 12.0f, 5.0f, 2.0f, 10.0f, 20.0f}),
+                            .dimensions = {5, 4},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
                             .numberOfConsumers = 1,
@@ -711,8 +899,8 @@ const TestModel& get_test_model_nchw() {
                             .zeroPoint = 0
                         }, {
                             .channelQuant = {},
-                            .data = TestBuffer::createFromVector<float>({9.071493f, 10.005f, 7.1875f, 10.0f, 10.689667f, 9.0f}),
-                            .dimensions = {6, 1},
+                            .data = TestBuffer::createFromVector<float>({9.071493f, 10.005f, 7.1875f, 10.0f, 10.689667f}),
+                            .dimensions = {5, 1},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
                             .numberOfConsumers = 0,
@@ -721,8 +909,8 @@ const TestModel& get_test_model_nchw() {
                             .zeroPoint = 0
                         }, {
                             .channelQuant = {},
-                            .data = TestBuffer::createFromVector<float>({8.224462f, 8.537316f, 11.73f, 9.625f, 8.875f, 9.5625f, 17.375f, 5.875f, 9.569672f, 2.0f, 8.125f, 8.75f}),
-                            .dimensions = {6, 1, 2},
+                            .data = TestBuffer::createFromVector<float>({8.224462f, 8.537316f, 11.73f, 9.625f, 8.875f, 9.5625f, 17.375f, 5.875f, 9.569672f, 2.0f}),
+                            .dimensions = {5, 1, 2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
                             .numberOfConsumers = 0,
@@ -759,7 +947,7 @@ const TestModel& get_test_model_nchw_all_inputs_as_internal() {
                 .operands = {{
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
-                            .dimensions = {6, 1, 4, 4},
+                            .dimensions = {5, 1, 4, 4},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::TEMPORARY_VARIABLE,
                             .numberOfConsumers = 1,
@@ -769,7 +957,7 @@ const TestModel& get_test_model_nchw_all_inputs_as_internal() {
                         }, {
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
-                            .dimensions = {6, 4},
+                            .dimensions = {5, 4},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::TEMPORARY_VARIABLE,
                             .numberOfConsumers = 1,
@@ -788,8 +976,8 @@ const TestModel& get_test_model_nchw_all_inputs_as_internal() {
                             .zeroPoint = 0
                         }, {
                             .channelQuant = {},
-                            .data = TestBuffer::createFromVector<float>({9.071493f, 10.005f, 7.1875f, 10.0f, 10.689667f, 9.0f}),
-                            .dimensions = {6, 1},
+                            .data = TestBuffer::createFromVector<float>({9.071493f, 10.005f, 7.1875f, 10.0f, 10.689667f}),
+                            .dimensions = {5, 1},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
                             .numberOfConsumers = 0,
@@ -798,8 +986,8 @@ const TestModel& get_test_model_nchw_all_inputs_as_internal() {
                             .zeroPoint = 0
                         }, {
                             .channelQuant = {},
-                            .data = TestBuffer::createFromVector<float>({8.224462f, 8.537316f, 11.73f, 9.625f, 8.875f, 9.5625f, 17.375f, 5.875f, 9.569672f, 2.0f, 8.125f, 8.75f}),
-                            .dimensions = {6, 1, 2},
+                            .data = TestBuffer::createFromVector<float>({8.224462f, 8.537316f, 11.73f, 9.625f, 8.875f, 9.5625f, 17.375f, 5.875f, 9.569672f, 2.0f}),
+                            .dimensions = {5, 1, 2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
                             .numberOfConsumers = 0,
@@ -808,8 +996,8 @@ const TestModel& get_test_model_nchw_all_inputs_as_internal() {
                             .zeroPoint = 0
                         }, {
                             .channelQuant = {},
-                            .data = TestBuffer::createFromVector<float>({-10.0f, -1.0f, 4.0f, -5.0f, -8.0f, -2.0f, 9.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 2.0f, -3.0f, 5.0f, -10.0f, -1.0f, 4.0f, -5.0f, -8.0f, -2.0f, 9.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 10.0f, -3.0f, 5.0f, -10.0f, -1.0f, 4.0f, -5.0f, -8.0f, -2.0f, 4.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 2.0f, -3.0f, 5.0f, -10.0f, -1.0f, 4.0f, 10.0f, -8.0f, -2.0f, 4.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 2.0f, -3.0f, 5.0f, -10.0f, -56.0f, 4.0f, -5.0f, -8.0f, -2.0f, 9.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 2.0f, -3.0f, 5.0f, -10.0f, -57.827329175f, 4.0f, -5.0f, -8.0f, -2.0f, 9.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 2.0f, -3.0f, 5.0f}),
-                            .dimensions = {6, 1, 4, 4},
+                            .data = TestBuffer::createFromVector<float>({-10.0f, -1.0f, 4.0f, -5.0f, -8.0f, -2.0f, 9.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 2.0f, -3.0f, 5.0f, -10.0f, -1.0f, 4.0f, -5.0f, -8.0f, -2.0f, 9.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 10.0f, -3.0f, 5.0f, -10.0f, -1.0f, 4.0f, -5.0f, -8.0f, -2.0f, 4.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 2.0f, -3.0f, 5.0f, -10.0f, -1.0f, 4.0f, 10.0f, -8.0f, -2.0f, 4.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 2.0f, -3.0f, 5.0f, -10.0f, -56.0f, 4.0f, -5.0f, -8.0f, -2.0f, 9.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 2.0f, -3.0f, 5.0f}),
+                            .dimensions = {5, 1, 4, 4},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
                             .numberOfConsumers = 1,
@@ -838,8 +1026,8 @@ const TestModel& get_test_model_nchw_all_inputs_as_internal() {
                             .zeroPoint = 0
                         }, {
                             .channelQuant = {},
-                            .data = TestBuffer::createFromVector<float>({5.0f, 2.0f, 10.0f, 20.0f, 1.0f, 7.0f, 30.0f, 10.0f, 8.0f, 3.0f, 15.0f, 13.0f, 6.0f, 5.0f, 19.0f, 12.0f, 5.0f, 2.0f, 10.0f, 20.0f, 5.0f, 2.0f, 10.0f, 20.0f}),
-                            .dimensions = {6, 4},
+                            .data = TestBuffer::createFromVector<float>({5.0f, 2.0f, 10.0f, 20.0f, 1.0f, 7.0f, 30.0f, 10.0f, 8.0f, 3.0f, 15.0f, 13.0f, 6.0f, 5.0f, 19.0f, 12.0f, 5.0f, 2.0f, 10.0f, 20.0f}),
+                            .dimensions = {5, 4},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
                             .numberOfConsumers = 1,
@@ -903,8 +1091,8 @@ const TestModel& get_test_model_nchw_relaxed() {
                 .inputIndexes = {0, 1},
                 .operands = {{
                             .channelQuant = {},
-                            .data = TestBuffer::createFromVector<float>({-10.0f, -1.0f, 4.0f, -5.0f, -8.0f, -2.0f, 9.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 2.0f, -3.0f, 5.0f, -10.0f, -1.0f, 4.0f, -5.0f, -8.0f, -2.0f, 9.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 10.0f, -3.0f, 5.0f, -10.0f, -1.0f, 4.0f, -5.0f, -8.0f, -2.0f, 4.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 2.0f, -3.0f, 5.0f, -10.0f, -1.0f, 4.0f, 10.0f, -8.0f, -2.0f, 4.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 2.0f, -3.0f, 5.0f, -10.0f, -56.0f, 4.0f, -5.0f, -8.0f, -2.0f, 9.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 2.0f, -3.0f, 5.0f, -10.0f, -57.827329175f, 4.0f, -5.0f, -8.0f, -2.0f, 9.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 2.0f, -3.0f, 5.0f}),
-                            .dimensions = {6, 1, 4, 4},
+                            .data = TestBuffer::createFromVector<float>({-10.0f, -1.0f, 4.0f, -5.0f, -8.0f, -2.0f, 9.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 2.0f, -3.0f, 5.0f, -10.0f, -1.0f, 4.0f, -5.0f, -8.0f, -2.0f, 9.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 10.0f, -3.0f, 5.0f, -10.0f, -1.0f, 4.0f, -5.0f, -8.0f, -2.0f, 4.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 2.0f, -3.0f, 5.0f, -10.0f, -1.0f, 4.0f, 10.0f, -8.0f, -2.0f, 4.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 2.0f, -3.0f, 5.0f, -10.0f, -56.0f, 4.0f, -5.0f, -8.0f, -2.0f, 9.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 2.0f, -3.0f, 5.0f}),
+                            .dimensions = {5, 1, 4, 4},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
                             .numberOfConsumers = 1,
@@ -913,8 +1101,8 @@ const TestModel& get_test_model_nchw_relaxed() {
                             .zeroPoint = 0
                         }, {
                             .channelQuant = {},
-                            .data = TestBuffer::createFromVector<float>({5.0f, 2.0f, 10.0f, 20.0f, 1.0f, 7.0f, 30.0f, 10.0f, 8.0f, 3.0f, 15.0f, 13.0f, 6.0f, 5.0f, 19.0f, 12.0f, 5.0f, 2.0f, 10.0f, 20.0f, 5.0f, 2.0f, 10.0f, 20.0f}),
-                            .dimensions = {6, 4},
+                            .data = TestBuffer::createFromVector<float>({5.0f, 2.0f, 10.0f, 20.0f, 1.0f, 7.0f, 30.0f, 10.0f, 8.0f, 3.0f, 15.0f, 13.0f, 6.0f, 5.0f, 19.0f, 12.0f, 5.0f, 2.0f, 10.0f, 20.0f}),
+                            .dimensions = {5, 4},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
                             .numberOfConsumers = 1,
@@ -933,8 +1121,8 @@ const TestModel& get_test_model_nchw_relaxed() {
                             .zeroPoint = 0
                         }, {
                             .channelQuant = {},
-                            .data = TestBuffer::createFromVector<float>({9.071493f, 10.005f, 7.1875f, 10.0f, 10.689667f, 9.0f}),
-                            .dimensions = {6, 1},
+                            .data = TestBuffer::createFromVector<float>({9.071493f, 10.005f, 7.1875f, 10.0f, 10.689667f}),
+                            .dimensions = {5, 1},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
                             .numberOfConsumers = 0,
@@ -943,8 +1131,8 @@ const TestModel& get_test_model_nchw_relaxed() {
                             .zeroPoint = 0
                         }, {
                             .channelQuant = {},
-                            .data = TestBuffer::createFromVector<float>({8.224462f, 8.537316f, 11.73f, 9.625f, 8.875f, 9.5625f, 17.375f, 5.875f, 9.569672f, 2.0f, 8.125f, 8.75f}),
-                            .dimensions = {6, 1, 2},
+                            .data = TestBuffer::createFromVector<float>({8.224462f, 8.537316f, 11.73f, 9.625f, 8.875f, 9.5625f, 17.375f, 5.875f, 9.569672f, 2.0f}),
+                            .dimensions = {5, 1, 2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
                             .numberOfConsumers = 0,
@@ -981,7 +1169,7 @@ const TestModel& get_test_model_nchw_relaxed_all_inputs_as_internal() {
                 .operands = {{
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
-                            .dimensions = {6, 1, 4, 4},
+                            .dimensions = {5, 1, 4, 4},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::TEMPORARY_VARIABLE,
                             .numberOfConsumers = 1,
@@ -991,7 +1179,7 @@ const TestModel& get_test_model_nchw_relaxed_all_inputs_as_internal() {
                         }, {
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
-                            .dimensions = {6, 4},
+                            .dimensions = {5, 4},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::TEMPORARY_VARIABLE,
                             .numberOfConsumers = 1,
@@ -1010,8 +1198,8 @@ const TestModel& get_test_model_nchw_relaxed_all_inputs_as_internal() {
                             .zeroPoint = 0
                         }, {
                             .channelQuant = {},
-                            .data = TestBuffer::createFromVector<float>({9.071493f, 10.005f, 7.1875f, 10.0f, 10.689667f, 9.0f}),
-                            .dimensions = {6, 1},
+                            .data = TestBuffer::createFromVector<float>({9.071493f, 10.005f, 7.1875f, 10.0f, 10.689667f}),
+                            .dimensions = {5, 1},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
                             .numberOfConsumers = 0,
@@ -1020,8 +1208,8 @@ const TestModel& get_test_model_nchw_relaxed_all_inputs_as_internal() {
                             .zeroPoint = 0
                         }, {
                             .channelQuant = {},
-                            .data = TestBuffer::createFromVector<float>({8.224462f, 8.537316f, 11.73f, 9.625f, 8.875f, 9.5625f, 17.375f, 5.875f, 9.569672f, 2.0f, 8.125f, 8.75f}),
-                            .dimensions = {6, 1, 2},
+                            .data = TestBuffer::createFromVector<float>({8.224462f, 8.537316f, 11.73f, 9.625f, 8.875f, 9.5625f, 17.375f, 5.875f, 9.569672f, 2.0f}),
+                            .dimensions = {5, 1, 2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
                             .numberOfConsumers = 0,
@@ -1030,8 +1218,8 @@ const TestModel& get_test_model_nchw_relaxed_all_inputs_as_internal() {
                             .zeroPoint = 0
                         }, {
                             .channelQuant = {},
-                            .data = TestBuffer::createFromVector<float>({-10.0f, -1.0f, 4.0f, -5.0f, -8.0f, -2.0f, 9.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 2.0f, -3.0f, 5.0f, -10.0f, -1.0f, 4.0f, -5.0f, -8.0f, -2.0f, 9.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 10.0f, -3.0f, 5.0f, -10.0f, -1.0f, 4.0f, -5.0f, -8.0f, -2.0f, 4.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 2.0f, -3.0f, 5.0f, -10.0f, -1.0f, 4.0f, 10.0f, -8.0f, -2.0f, 4.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 2.0f, -3.0f, 5.0f, -10.0f, -56.0f, 4.0f, -5.0f, -8.0f, -2.0f, 9.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 2.0f, -3.0f, 5.0f, -10.0f, -57.827329175f, 4.0f, -5.0f, -8.0f, -2.0f, 9.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 2.0f, -3.0f, 5.0f}),
-                            .dimensions = {6, 1, 4, 4},
+                            .data = TestBuffer::createFromVector<float>({-10.0f, -1.0f, 4.0f, -5.0f, -8.0f, -2.0f, 9.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 2.0f, -3.0f, 5.0f, -10.0f, -1.0f, 4.0f, -5.0f, -8.0f, -2.0f, 9.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 10.0f, -3.0f, 5.0f, -10.0f, -1.0f, 4.0f, -5.0f, -8.0f, -2.0f, 4.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 2.0f, -3.0f, 5.0f, -10.0f, -1.0f, 4.0f, 10.0f, -8.0f, -2.0f, 4.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 2.0f, -3.0f, 5.0f, -10.0f, -56.0f, 4.0f, -5.0f, -8.0f, -2.0f, 9.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 2.0f, -3.0f, 5.0f}),
+                            .dimensions = {5, 1, 4, 4},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
                             .numberOfConsumers = 1,
@@ -1060,8 +1248,8 @@ const TestModel& get_test_model_nchw_relaxed_all_inputs_as_internal() {
                             .zeroPoint = 0
                         }, {
                             .channelQuant = {},
-                            .data = TestBuffer::createFromVector<float>({5.0f, 2.0f, 10.0f, 20.0f, 1.0f, 7.0f, 30.0f, 10.0f, 8.0f, 3.0f, 15.0f, 13.0f, 6.0f, 5.0f, 19.0f, 12.0f, 5.0f, 2.0f, 10.0f, 20.0f, 5.0f, 2.0f, 10.0f, 20.0f}),
-                            .dimensions = {6, 4},
+                            .data = TestBuffer::createFromVector<float>({5.0f, 2.0f, 10.0f, 20.0f, 1.0f, 7.0f, 30.0f, 10.0f, 8.0f, 3.0f, 15.0f, 13.0f, 6.0f, 5.0f, 19.0f, 12.0f, 5.0f, 2.0f, 10.0f, 20.0f}),
+                            .dimensions = {5, 4},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
                             .numberOfConsumers = 1,
@@ -1125,8 +1313,8 @@ const TestModel& get_test_model_nchw_float16() {
                 .inputIndexes = {0, 1},
                 .operands = {{
                             .channelQuant = {},
-                            .data = TestBuffer::createFromVector<_Float16>({-10.0f, -1.0f, 4.0f, -5.0f, -8.0f, -2.0f, 9.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 2.0f, -3.0f, 5.0f, -10.0f, -1.0f, 4.0f, -5.0f, -8.0f, -2.0f, 9.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 10.0f, -3.0f, 5.0f, -10.0f, -1.0f, 4.0f, -5.0f, -8.0f, -2.0f, 4.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 2.0f, -3.0f, 5.0f, -10.0f, -1.0f, 4.0f, 10.0f, -8.0f, -2.0f, 4.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 2.0f, -3.0f, 5.0f, -10.0f, -56.0f, 4.0f, -5.0f, -8.0f, -2.0f, 9.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 2.0f, -3.0f, 5.0f, -10.0f, -57.827327728271484f, 4.0f, -5.0f, -8.0f, -2.0f, 9.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 2.0f, -3.0f, 5.0f}),
-                            .dimensions = {6, 1, 4, 4},
+                            .data = TestBuffer::createFromVector<_Float16>({-10.0f, -1.0f, 4.0f, -5.0f, -8.0f, -2.0f, 9.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 2.0f, -3.0f, 5.0f, -10.0f, -1.0f, 4.0f, -5.0f, -8.0f, -2.0f, 9.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 10.0f, -3.0f, 5.0f, -10.0f, -1.0f, 4.0f, -5.0f, -8.0f, -2.0f, 4.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 2.0f, -3.0f, 5.0f, -10.0f, -1.0f, 4.0f, 10.0f, -8.0f, -2.0f, 4.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 2.0f, -3.0f, 5.0f, -10.0f, -56.0f, 4.0f, -5.0f, -8.0f, -2.0f, 9.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 2.0f, -3.0f, 5.0f}),
+                            .dimensions = {5, 1, 4, 4},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
                             .numberOfConsumers = 1,
@@ -1135,8 +1323,8 @@ const TestModel& get_test_model_nchw_float16() {
                             .zeroPoint = 0
                         }, {
                             .channelQuant = {},
-                            .data = TestBuffer::createFromVector<_Float16>({5.0f, 2.0f, 10.0f, 20.0f, 1.0f, 7.0f, 30.0f, 10.0f, 8.0f, 3.0f, 15.0f, 13.0f, 6.0f, 5.0f, 19.0f, 12.0f, 5.0f, 2.0f, 10.0f, 20.0f, 5.0f, 2.0f, 10.0f, 20.0f}),
-                            .dimensions = {6, 4},
+                            .data = TestBuffer::createFromVector<_Float16>({5.0f, 2.0f, 10.0f, 20.0f, 1.0f, 7.0f, 30.0f, 10.0f, 8.0f, 3.0f, 15.0f, 13.0f, 6.0f, 5.0f, 19.0f, 12.0f, 5.0f, 2.0f, 10.0f, 20.0f}),
+                            .dimensions = {5, 4},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
                             .numberOfConsumers = 1,
@@ -1155,8 +1343,8 @@ const TestModel& get_test_model_nchw_float16() {
                             .zeroPoint = 0
                         }, {
                             .channelQuant = {},
-                            .data = TestBuffer::createFromVector<_Float16>({9.071493148803711f, 10.005000114440918f, 7.1875f, 10.0f, 10.689666748046875f, 9.0f}),
-                            .dimensions = {6, 1},
+                            .data = TestBuffer::createFromVector<_Float16>({9.071493148803711f, 10.005000114440918f, 7.1875f, 10.0f, 10.689666748046875f}),
+                            .dimensions = {5, 1},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
                             .numberOfConsumers = 0,
@@ -1165,8 +1353,8 @@ const TestModel& get_test_model_nchw_float16() {
                             .zeroPoint = 0
                         }, {
                             .channelQuant = {},
-                            .data = TestBuffer::createFromVector<_Float16>({8.224461555480957f, 8.53731632232666f, 11.729999542236328f, 9.625f, 8.875f, 9.5625f, 17.375f, 5.875f, 9.569671630859375f, 2.0f, 8.125f, 8.75f}),
-                            .dimensions = {6, 1, 2},
+                            .data = TestBuffer::createFromVector<_Float16>({8.224461555480957f, 8.53731632232666f, 11.729999542236328f, 9.625f, 8.875f, 9.5625f, 17.375f, 5.875f, 9.569671630859375f, 2.0f}),
+                            .dimensions = {5, 1, 2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
                             .numberOfConsumers = 0,
@@ -1203,7 +1391,7 @@ const TestModel& get_test_model_nchw_float16_all_inputs_as_internal() {
                 .operands = {{
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({}),
-                            .dimensions = {6, 1, 4, 4},
+                            .dimensions = {5, 1, 4, 4},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::TEMPORARY_VARIABLE,
                             .numberOfConsumers = 1,
@@ -1213,7 +1401,7 @@ const TestModel& get_test_model_nchw_float16_all_inputs_as_internal() {
                         }, {
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({}),
-                            .dimensions = {6, 4},
+                            .dimensions = {5, 4},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::TEMPORARY_VARIABLE,
                             .numberOfConsumers = 1,
@@ -1232,8 +1420,8 @@ const TestModel& get_test_model_nchw_float16_all_inputs_as_internal() {
                             .zeroPoint = 0
                         }, {
                             .channelQuant = {},
-                            .data = TestBuffer::createFromVector<_Float16>({9.071493148803711f, 10.005000114440918f, 7.1875f, 10.0f, 10.689666748046875f, 9.0f}),
-                            .dimensions = {6, 1},
+                            .data = TestBuffer::createFromVector<_Float16>({9.071493148803711f, 10.005000114440918f, 7.1875f, 10.0f, 10.689666748046875f}),
+                            .dimensions = {5, 1},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
                             .numberOfConsumers = 0,
@@ -1242,8 +1430,8 @@ const TestModel& get_test_model_nchw_float16_all_inputs_as_internal() {
                             .zeroPoint = 0
                         }, {
                             .channelQuant = {},
-                            .data = TestBuffer::createFromVector<_Float16>({8.224461555480957f, 8.53731632232666f, 11.729999542236328f, 9.625f, 8.875f, 9.5625f, 17.375f, 5.875f, 9.569671630859375f, 2.0f, 8.125f, 8.75f}),
-                            .dimensions = {6, 1, 2},
+                            .data = TestBuffer::createFromVector<_Float16>({8.224461555480957f, 8.53731632232666f, 11.729999542236328f, 9.625f, 8.875f, 9.5625f, 17.375f, 5.875f, 9.569671630859375f, 2.0f}),
+                            .dimensions = {5, 1, 2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
                             .numberOfConsumers = 0,
@@ -1252,8 +1440,8 @@ const TestModel& get_test_model_nchw_float16_all_inputs_as_internal() {
                             .zeroPoint = 0
                         }, {
                             .channelQuant = {},
-                            .data = TestBuffer::createFromVector<_Float16>({-10.0f, -1.0f, 4.0f, -5.0f, -8.0f, -2.0f, 9.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 2.0f, -3.0f, 5.0f, -10.0f, -1.0f, 4.0f, -5.0f, -8.0f, -2.0f, 9.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 10.0f, -3.0f, 5.0f, -10.0f, -1.0f, 4.0f, -5.0f, -8.0f, -2.0f, 4.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 2.0f, -3.0f, 5.0f, -10.0f, -1.0f, 4.0f, 10.0f, -8.0f, -2.0f, 4.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 2.0f, -3.0f, 5.0f, -10.0f, -56.0f, 4.0f, -5.0f, -8.0f, -2.0f, 9.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 2.0f, -3.0f, 5.0f, -10.0f, -57.827327728271484f, 4.0f, -5.0f, -8.0f, -2.0f, 9.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 2.0f, -3.0f, 5.0f}),
-                            .dimensions = {6, 1, 4, 4},
+                            .data = TestBuffer::createFromVector<_Float16>({-10.0f, -1.0f, 4.0f, -5.0f, -8.0f, -2.0f, 9.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 2.0f, -3.0f, 5.0f, -10.0f, -1.0f, 4.0f, -5.0f, -8.0f, -2.0f, 9.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 10.0f, -3.0f, 5.0f, -10.0f, -1.0f, 4.0f, -5.0f, -8.0f, -2.0f, 4.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 2.0f, -3.0f, 5.0f, -10.0f, -1.0f, 4.0f, 10.0f, -8.0f, -2.0f, 4.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 2.0f, -3.0f, 5.0f, -10.0f, -56.0f, 4.0f, -5.0f, -8.0f, -2.0f, 9.0f, 1.0f, 7.0f, -2.0f, 3.0f, -7.0f, -2.0f, 2.0f, -3.0f, 5.0f}),
+                            .dimensions = {5, 1, 4, 4},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
                             .numberOfConsumers = 1,
@@ -1282,8 +1470,8 @@ const TestModel& get_test_model_nchw_float16_all_inputs_as_internal() {
                             .zeroPoint = 0
                         }, {
                             .channelQuant = {},
-                            .data = TestBuffer::createFromVector<_Float16>({5.0f, 2.0f, 10.0f, 20.0f, 1.0f, 7.0f, 30.0f, 10.0f, 8.0f, 3.0f, 15.0f, 13.0f, 6.0f, 5.0f, 19.0f, 12.0f, 5.0f, 2.0f, 10.0f, 20.0f, 5.0f, 2.0f, 10.0f, 20.0f}),
-                            .dimensions = {6, 4},
+                            .data = TestBuffer::createFromVector<_Float16>({5.0f, 2.0f, 10.0f, 20.0f, 1.0f, 7.0f, 30.0f, 10.0f, 8.0f, 3.0f, 15.0f, 13.0f, 6.0f, 5.0f, 19.0f, 12.0f, 5.0f, 2.0f, 10.0f, 20.0f}),
+                            .dimensions = {5, 4},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
                             .numberOfConsumers = 1,
@@ -1333,6 +1521,194 @@ const TestModel& get_test_model_nchw_float16_all_inputs_as_internal() {
 }
 
 const auto dummy_test_model_nchw_float16_all_inputs_as_internal = TestModelManager::get().add("heatmap_max_keypoint_nchw_float16_all_inputs_as_internal", get_test_model_nchw_float16_all_inputs_as_internal());
+
+}  // namespace generated_tests::heatmap_max_keypoint
+
+namespace generated_tests::heatmap_max_keypoint {
+
+const TestModel& get_test_model_nchw_quant8() {
+    static TestModel model = {
+        .expectFailure = false,
+        .expectedMultinomialDistributionTolerance = 0,
+        .isRelaxed = false,
+        .main = {
+                .inputIndexes = {0, 1},
+                .operands = {{
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<uint8_t>({108, 126, 136, 118, 112, 124, 146, 130, 142, 124, 134, 114, 124, 132, 122, 138, 108, 126, 136, 118, 112, 124, 146, 130, 142, 124, 134, 114, 124, 148, 122, 138, 108, 126, 136, 118, 112, 124, 136, 130, 142, 124, 134, 114, 124, 132, 122, 138, 108, 126, 136, 148, 112, 124, 136, 130, 142, 124, 134, 114, 124, 132, 122, 138, 108, 16, 136, 118, 112, 124, 146, 130, 142, 124, 134, 114, 124, 132, 122, 138}),
+                            .dimensions = {5, 1, 4, 4},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
+                            .numberOfConsumers = 1,
+                            .scale = 0.5f,
+                            .type = TestOperandType::TENSOR_QUANT8_ASYMM,
+                            .zeroPoint = 128
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<uint16_t>({40, 16, 80, 160, 8, 56, 240, 80, 64, 24, 120, 104, 48, 40, 152, 96, 40, 16, 80, 160}),
+                            .dimensions = {5, 4},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
+                            .numberOfConsumers = 1,
+                            .scale = 0.125f,
+                            .type = TestOperandType::TENSOR_QUANT16_ASYMM,
+                            .zeroPoint = 0
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<bool8>({true}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::BOOL,
+                            .zeroPoint = 0
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<uint8_t>({101, 110, 82, 110, 117}),
+                            .dimensions = {5, 1},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
+                            .numberOfConsumers = 0,
+                            .scale = 0.1f,
+                            .type = TestOperandType::TENSOR_QUANT8_ASYMM,
+                            .zeroPoint = 10
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<uint16_t>({66, 68, 94, 77, 71, 76, 139, 47, 77, 16}),
+                            .dimensions = {5, 1, 2},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
+                            .numberOfConsumers = 0,
+                            .scale = 0.125f,
+                            .type = TestOperandType::TENSOR_QUANT16_ASYMM,
+                            .zeroPoint = 0
+                        }},
+                .operations = {{
+                            .inputs = {0, 1, 2},
+                            .outputs = {3, 4},
+                            .type = TestOperationType::HEATMAP_MAX_KEYPOINT
+                        }},
+                .outputIndexes = {3, 4}
+            },
+        .minSupportedVersion = TestHalVersion::V1_2,
+        .referenced = {}
+    };
+    return model;
+}
+
+const auto dummy_test_model_nchw_quant8 = TestModelManager::get().add("heatmap_max_keypoint_nchw_quant8", get_test_model_nchw_quant8());
+
+}  // namespace generated_tests::heatmap_max_keypoint
+
+namespace generated_tests::heatmap_max_keypoint {
+
+const TestModel& get_test_model_nchw_quant8_all_inputs_as_internal() {
+    static TestModel model = {
+        .expectFailure = false,
+        .expectedMultinomialDistributionTolerance = 0,
+        .isRelaxed = false,
+        .main = {
+                .inputIndexes = {1, 5},
+                .operands = {{
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<uint8_t>({}),
+                            .dimensions = {5, 1, 4, 4},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::TEMPORARY_VARIABLE,
+                            .numberOfConsumers = 1,
+                            .scale = 0.5f,
+                            .type = TestOperandType::TENSOR_QUANT8_ASYMM,
+                            .zeroPoint = 128
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<uint16_t>({40, 16, 80, 160, 8, 56, 240, 80, 64, 24, 120, 104, 48, 40, 152, 96, 40, 16, 80, 160}),
+                            .dimensions = {5, 4},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
+                            .numberOfConsumers = 1,
+                            .scale = 0.125f,
+                            .type = TestOperandType::TENSOR_QUANT16_ASYMM,
+                            .zeroPoint = 0
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<bool8>({true}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::BOOL,
+                            .zeroPoint = 0
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<uint8_t>({101, 110, 82, 110, 117}),
+                            .dimensions = {5, 1},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
+                            .numberOfConsumers = 0,
+                            .scale = 0.1f,
+                            .type = TestOperandType::TENSOR_QUANT8_ASYMM,
+                            .zeroPoint = 10
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<uint16_t>({66, 68, 94, 77, 71, 76, 139, 47, 77, 16}),
+                            .dimensions = {5, 1, 2},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
+                            .numberOfConsumers = 0,
+                            .scale = 0.125f,
+                            .type = TestOperandType::TENSOR_QUANT16_ASYMM,
+                            .zeroPoint = 0
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<uint8_t>({108, 126, 136, 118, 112, 124, 146, 130, 142, 124, 134, 114, 124, 132, 122, 138, 108, 126, 136, 118, 112, 124, 146, 130, 142, 124, 134, 114, 124, 148, 122, 138, 108, 126, 136, 118, 112, 124, 136, 130, 142, 124, 134, 114, 124, 132, 122, 138, 108, 126, 136, 148, 112, 124, 136, 130, 142, 124, 134, 114, 124, 132, 122, 138, 108, 16, 136, 118, 112, 124, 146, 130, 142, 124, 134, 114, 124, 132, 122, 138}),
+                            .dimensions = {5, 1, 4, 4},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
+                            .numberOfConsumers = 1,
+                            .scale = 0.5f,
+                            .type = TestOperandType::TENSOR_QUANT8_ASYMM,
+                            .zeroPoint = 128
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<uint8_t>({128}),
+                            .dimensions = {1},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.5f,
+                            .type = TestOperandType::TENSOR_QUANT8_ASYMM,
+                            .zeroPoint = 128
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<int32_t>({0}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::INT32,
+                            .zeroPoint = 0
+                        }},
+                .operations = {{
+                            .inputs = {5, 6, 7},
+                            .outputs = {0},
+                            .type = TestOperationType::ADD
+                        }, {
+                            .inputs = {0, 1, 2},
+                            .outputs = {3, 4},
+                            .type = TestOperationType::HEATMAP_MAX_KEYPOINT
+                        }},
+                .outputIndexes = {3, 4}
+            },
+        .minSupportedVersion = TestHalVersion::V1_2,
+        .referenced = {}
+    };
+    return model;
+}
+
+const auto dummy_test_model_nchw_quant8_all_inputs_as_internal = TestModelManager::get().add("heatmap_max_keypoint_nchw_quant8_all_inputs_as_internal", get_test_model_nchw_quant8_all_inputs_as_internal());
 
 }  // namespace generated_tests::heatmap_max_keypoint
 
@@ -2004,7 +2380,7 @@ const auto dummy_test_model_nhwc_float16_all_inputs_as_internal_2 = TestModelMan
 
 namespace generated_tests::heatmap_max_keypoint {
 
-const TestModel& get_test_model_nhwc_quant8() {
+const TestModel& get_test_model_nhwc_quant8_2() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -2075,13 +2451,13 @@ const TestModel& get_test_model_nhwc_quant8() {
     return model;
 }
 
-const auto dummy_test_model_nhwc_quant8 = TestModelManager::get().add("heatmap_max_keypoint_nhwc_quant8", get_test_model_nhwc_quant8());
+const auto dummy_test_model_nhwc_quant8_2 = TestModelManager::get().add("heatmap_max_keypoint_nhwc_quant8_2", get_test_model_nhwc_quant8_2());
 
 }  // namespace generated_tests::heatmap_max_keypoint
 
 namespace generated_tests::heatmap_max_keypoint {
 
-const TestModel& get_test_model_nhwc_quant8_all_inputs_as_internal() {
+const TestModel& get_test_model_nhwc_quant8_all_inputs_as_internal_2() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -2186,7 +2562,7 @@ const TestModel& get_test_model_nhwc_quant8_all_inputs_as_internal() {
     return model;
 }
 
-const auto dummy_test_model_nhwc_quant8_all_inputs_as_internal = TestModelManager::get().add("heatmap_max_keypoint_nhwc_quant8_all_inputs_as_internal", get_test_model_nhwc_quant8_all_inputs_as_internal());
+const auto dummy_test_model_nhwc_quant8_all_inputs_as_internal_2 = TestModelManager::get().add("heatmap_max_keypoint_nhwc_quant8_all_inputs_as_internal_2", get_test_model_nhwc_quant8_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::heatmap_max_keypoint
 
@@ -2858,382 +3234,6 @@ const auto dummy_test_model_nchw_float16_all_inputs_as_internal_2 = TestModelMan
 
 namespace generated_tests::heatmap_max_keypoint {
 
-const TestModel& get_test_model_nchw_quant8() {
-    static TestModel model = {
-        .expectFailure = false,
-        .expectedMultinomialDistributionTolerance = 0,
-        .isRelaxed = false,
-        .main = {
-                .inputIndexes = {0, 1},
-                .operands = {{
-                            .channelQuant = {},
-                            .data = TestBuffer::createFromVector<uint8_t>({147, 226, 204, 174, 145, 224, 164, 186, 194, 224, 216, 182, 179, 180, 217, 198, 189, 193, 183, 131, 151, 193, 208, 157, 134, 166, 174, 192, 169, 149, 217, 141, 177, 192, 211, 195, 217, 180, 183, 155, 179, 169, 224, 212, 141, 178, 148, 157, 129, 198, 147, 199, 136, 168, 217, 197, 154, 217, 201, 202, 147, 203, 186, 167, 219, 208, 185, 204, 128, 162, 221, 195, 176, 226, 194, 168, 176, 184, 132, 166, 134, 215, 213, 162, 157, 185, 146, 175, 227, 134, 219, 165, 226, 146, 151, 135, 221, 187, 152, 165, 158, 176, 192, 184, 174, 138, 195, 145, 175, 203, 170, 199, 162, 195, 153, 139, 205, 204, 140, 178, 194, 194, 151, 163, 177, 157, 183, 208}),
-                            .dimensions = {2, 4, 4, 4},
-                            .isIgnored = false,
-                            .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
-                            .numberOfConsumers = 1,
-                            .scale = 0.01f,
-                            .type = TestOperandType::TENSOR_QUANT8_ASYMM,
-                            .zeroPoint = 128
-                        }, {
-                            .channelQuant = {},
-                            .data = TestBuffer::createFromVector<uint16_t>({40, 16, 80, 160, 8, 56, 240, 80}),
-                            .dimensions = {2, 4},
-                            .isIgnored = false,
-                            .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
-                            .numberOfConsumers = 1,
-                            .scale = 0.125f,
-                            .type = TestOperandType::TENSOR_QUANT16_ASYMM,
-                            .zeroPoint = 0
-                        }, {
-                            .channelQuant = {},
-                            .data = TestBuffer::createFromVector<bool8>({true}),
-                            .dimensions = {},
-                            .isIgnored = false,
-                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
-                            .numberOfConsumers = 1,
-                            .scale = 0.0f,
-                            .type = TestOperandType::BOOL,
-                            .zeroPoint = 0
-                        }, {
-                            .channelQuant = {},
-                            .data = TestBuffer::createFromVector<uint8_t>({102, 89, 101, 95, 99, 107, 93, 80}),
-                            .dimensions = {2, 4},
-                            .isIgnored = false,
-                            .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
-                            .numberOfConsumers = 0,
-                            .scale = 0.01f,
-                            .type = TestOperandType::TENSOR_QUANT8_ASYMM,
-                            .zeroPoint = 0
-                        }, {
-                            .channelQuant = {},
-                            .data = TestBuffer::createFromVector<uint16_t>({58, 34, 65, 142, 68, 101, 67, 81, 99, 71, 37, 74, 37, 59, 211, 77}),
-                            .dimensions = {2, 4, 2},
-                            .isIgnored = false,
-                            .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
-                            .numberOfConsumers = 0,
-                            .scale = 0.125f,
-                            .type = TestOperandType::TENSOR_QUANT16_ASYMM,
-                            .zeroPoint = 0
-                        }},
-                .operations = {{
-                            .inputs = {0, 1, 2},
-                            .outputs = {3, 4},
-                            .type = TestOperationType::HEATMAP_MAX_KEYPOINT
-                        }},
-                .outputIndexes = {3, 4}
-            },
-        .minSupportedVersion = TestHalVersion::V1_2,
-        .referenced = {}
-    };
-    return model;
-}
-
-const auto dummy_test_model_nchw_quant8 = TestModelManager::get().add("heatmap_max_keypoint_nchw_quant8", get_test_model_nchw_quant8());
-
-}  // namespace generated_tests::heatmap_max_keypoint
-
-namespace generated_tests::heatmap_max_keypoint {
-
-const TestModel& get_test_model_nchw_quant8_all_inputs_as_internal() {
-    static TestModel model = {
-        .expectFailure = false,
-        .expectedMultinomialDistributionTolerance = 0,
-        .isRelaxed = false,
-        .main = {
-                .inputIndexes = {1, 5},
-                .operands = {{
-                            .channelQuant = {},
-                            .data = TestBuffer::createFromVector<uint8_t>({}),
-                            .dimensions = {2, 4, 4, 4},
-                            .isIgnored = false,
-                            .lifetime = TestOperandLifeTime::TEMPORARY_VARIABLE,
-                            .numberOfConsumers = 1,
-                            .scale = 0.01f,
-                            .type = TestOperandType::TENSOR_QUANT8_ASYMM,
-                            .zeroPoint = 128
-                        }, {
-                            .channelQuant = {},
-                            .data = TestBuffer::createFromVector<uint16_t>({40, 16, 80, 160, 8, 56, 240, 80}),
-                            .dimensions = {2, 4},
-                            .isIgnored = false,
-                            .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
-                            .numberOfConsumers = 1,
-                            .scale = 0.125f,
-                            .type = TestOperandType::TENSOR_QUANT16_ASYMM,
-                            .zeroPoint = 0
-                        }, {
-                            .channelQuant = {},
-                            .data = TestBuffer::createFromVector<bool8>({true}),
-                            .dimensions = {},
-                            .isIgnored = false,
-                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
-                            .numberOfConsumers = 1,
-                            .scale = 0.0f,
-                            .type = TestOperandType::BOOL,
-                            .zeroPoint = 0
-                        }, {
-                            .channelQuant = {},
-                            .data = TestBuffer::createFromVector<uint8_t>({102, 89, 101, 95, 99, 107, 93, 80}),
-                            .dimensions = {2, 4},
-                            .isIgnored = false,
-                            .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
-                            .numberOfConsumers = 0,
-                            .scale = 0.01f,
-                            .type = TestOperandType::TENSOR_QUANT8_ASYMM,
-                            .zeroPoint = 0
-                        }, {
-                            .channelQuant = {},
-                            .data = TestBuffer::createFromVector<uint16_t>({58, 34, 65, 142, 68, 101, 67, 81, 99, 71, 37, 74, 37, 59, 211, 77}),
-                            .dimensions = {2, 4, 2},
-                            .isIgnored = false,
-                            .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
-                            .numberOfConsumers = 0,
-                            .scale = 0.125f,
-                            .type = TestOperandType::TENSOR_QUANT16_ASYMM,
-                            .zeroPoint = 0
-                        }, {
-                            .channelQuant = {},
-                            .data = TestBuffer::createFromVector<uint8_t>({147, 226, 204, 174, 145, 224, 164, 186, 194, 224, 216, 182, 179, 180, 217, 198, 189, 193, 183, 131, 151, 193, 208, 157, 134, 166, 174, 192, 169, 149, 217, 141, 177, 192, 211, 195, 217, 180, 183, 155, 179, 169, 224, 212, 141, 178, 148, 157, 129, 198, 147, 199, 136, 168, 217, 197, 154, 217, 201, 202, 147, 203, 186, 167, 219, 208, 185, 204, 128, 162, 221, 195, 176, 226, 194, 168, 176, 184, 132, 166, 134, 215, 213, 162, 157, 185, 146, 175, 227, 134, 219, 165, 226, 146, 151, 135, 221, 187, 152, 165, 158, 176, 192, 184, 174, 138, 195, 145, 175, 203, 170, 199, 162, 195, 153, 139, 205, 204, 140, 178, 194, 194, 151, 163, 177, 157, 183, 208}),
-                            .dimensions = {2, 4, 4, 4},
-                            .isIgnored = false,
-                            .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
-                            .numberOfConsumers = 1,
-                            .scale = 0.01f,
-                            .type = TestOperandType::TENSOR_QUANT8_ASYMM,
-                            .zeroPoint = 128
-                        }, {
-                            .channelQuant = {},
-                            .data = TestBuffer::createFromVector<uint8_t>({128}),
-                            .dimensions = {1},
-                            .isIgnored = false,
-                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
-                            .numberOfConsumers = 1,
-                            .scale = 0.01f,
-                            .type = TestOperandType::TENSOR_QUANT8_ASYMM,
-                            .zeroPoint = 128
-                        }, {
-                            .channelQuant = {},
-                            .data = TestBuffer::createFromVector<int32_t>({0}),
-                            .dimensions = {},
-                            .isIgnored = false,
-                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
-                            .numberOfConsumers = 1,
-                            .scale = 0.0f,
-                            .type = TestOperandType::INT32,
-                            .zeroPoint = 0
-                        }},
-                .operations = {{
-                            .inputs = {5, 6, 7},
-                            .outputs = {0},
-                            .type = TestOperationType::ADD
-                        }, {
-                            .inputs = {0, 1, 2},
-                            .outputs = {3, 4},
-                            .type = TestOperationType::HEATMAP_MAX_KEYPOINT
-                        }},
-                .outputIndexes = {3, 4}
-            },
-        .minSupportedVersion = TestHalVersion::V1_2,
-        .referenced = {}
-    };
-    return model;
-}
-
-const auto dummy_test_model_nchw_quant8_all_inputs_as_internal = TestModelManager::get().add("heatmap_max_keypoint_nchw_quant8_all_inputs_as_internal", get_test_model_nchw_quant8_all_inputs_as_internal());
-
-}  // namespace generated_tests::heatmap_max_keypoint
-
-namespace generated_tests::heatmap_max_keypoint {
-
-const TestModel& get_test_model_nhwc_quant8_2() {
-    static TestModel model = {
-        .expectFailure = false,
-        .expectedMultinomialDistributionTolerance = 0,
-        .isRelaxed = false,
-        .main = {
-                .inputIndexes = {0, 1},
-                .operands = {{
-                            .channelQuant = {},
-                            .data = TestBuffer::createFromVector<uint8_t>({108, 126, 136, 118, 112, 124, 146, 130, 142, 124, 134, 114, 124, 132, 122, 138, 108, 126, 136, 118, 112, 124, 146, 130, 142, 124, 134, 114, 124, 148, 122, 138, 108, 126, 136, 118, 112, 124, 136, 130, 142, 124, 134, 114, 124, 132, 122, 138, 108, 126, 136, 148, 112, 124, 136, 130, 142, 124, 134, 114, 124, 132, 122, 138, 108, 16, 136, 118, 112, 124, 146, 130, 142, 124, 134, 114, 124, 132, 122, 138}),
-                            .dimensions = {5, 4, 4, 1},
-                            .isIgnored = false,
-                            .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
-                            .numberOfConsumers = 1,
-                            .scale = 0.5f,
-                            .type = TestOperandType::TENSOR_QUANT8_ASYMM,
-                            .zeroPoint = 128
-                        }, {
-                            .channelQuant = {},
-                            .data = TestBuffer::createFromVector<uint16_t>({40, 16, 80, 160, 8, 56, 240, 80, 64, 24, 120, 104, 48, 40, 152, 96, 40, 16, 80, 160}),
-                            .dimensions = {5, 4},
-                            .isIgnored = false,
-                            .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
-                            .numberOfConsumers = 1,
-                            .scale = 0.125f,
-                            .type = TestOperandType::TENSOR_QUANT16_ASYMM,
-                            .zeroPoint = 0
-                        }, {
-                            .channelQuant = {},
-                            .data = TestBuffer::createFromVector<bool8>({false}),
-                            .dimensions = {},
-                            .isIgnored = false,
-                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
-                            .numberOfConsumers = 1,
-                            .scale = 0.0f,
-                            .type = TestOperandType::BOOL,
-                            .zeroPoint = 0
-                        }, {
-                            .channelQuant = {},
-                            .data = TestBuffer::createFromVector<uint8_t>({101, 110, 82, 110, 117}),
-                            .dimensions = {5, 1},
-                            .isIgnored = false,
-                            .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
-                            .numberOfConsumers = 0,
-                            .scale = 0.1f,
-                            .type = TestOperandType::TENSOR_QUANT8_ASYMM,
-                            .zeroPoint = 10
-                        }, {
-                            .channelQuant = {},
-                            .data = TestBuffer::createFromVector<uint16_t>({66, 68, 94, 77, 71, 76, 139, 47, 77, 16}),
-                            .dimensions = {5, 1, 2},
-                            .isIgnored = false,
-                            .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
-                            .numberOfConsumers = 0,
-                            .scale = 0.125f,
-                            .type = TestOperandType::TENSOR_QUANT16_ASYMM,
-                            .zeroPoint = 0
-                        }},
-                .operations = {{
-                            .inputs = {0, 1, 2},
-                            .outputs = {3, 4},
-                            .type = TestOperationType::HEATMAP_MAX_KEYPOINT
-                        }},
-                .outputIndexes = {3, 4}
-            },
-        .minSupportedVersion = TestHalVersion::V1_2,
-        .referenced = {}
-    };
-    return model;
-}
-
-const auto dummy_test_model_nhwc_quant8_2 = TestModelManager::get().add("heatmap_max_keypoint_nhwc_quant8_2", get_test_model_nhwc_quant8_2());
-
-}  // namespace generated_tests::heatmap_max_keypoint
-
-namespace generated_tests::heatmap_max_keypoint {
-
-const TestModel& get_test_model_nhwc_quant8_all_inputs_as_internal_2() {
-    static TestModel model = {
-        .expectFailure = false,
-        .expectedMultinomialDistributionTolerance = 0,
-        .isRelaxed = false,
-        .main = {
-                .inputIndexes = {1, 5},
-                .operands = {{
-                            .channelQuant = {},
-                            .data = TestBuffer::createFromVector<uint8_t>({}),
-                            .dimensions = {5, 4, 4, 1},
-                            .isIgnored = false,
-                            .lifetime = TestOperandLifeTime::TEMPORARY_VARIABLE,
-                            .numberOfConsumers = 1,
-                            .scale = 0.5f,
-                            .type = TestOperandType::TENSOR_QUANT8_ASYMM,
-                            .zeroPoint = 128
-                        }, {
-                            .channelQuant = {},
-                            .data = TestBuffer::createFromVector<uint16_t>({40, 16, 80, 160, 8, 56, 240, 80, 64, 24, 120, 104, 48, 40, 152, 96, 40, 16, 80, 160}),
-                            .dimensions = {5, 4},
-                            .isIgnored = false,
-                            .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
-                            .numberOfConsumers = 1,
-                            .scale = 0.125f,
-                            .type = TestOperandType::TENSOR_QUANT16_ASYMM,
-                            .zeroPoint = 0
-                        }, {
-                            .channelQuant = {},
-                            .data = TestBuffer::createFromVector<bool8>({false}),
-                            .dimensions = {},
-                            .isIgnored = false,
-                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
-                            .numberOfConsumers = 1,
-                            .scale = 0.0f,
-                            .type = TestOperandType::BOOL,
-                            .zeroPoint = 0
-                        }, {
-                            .channelQuant = {},
-                            .data = TestBuffer::createFromVector<uint8_t>({101, 110, 82, 110, 117}),
-                            .dimensions = {5, 1},
-                            .isIgnored = false,
-                            .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
-                            .numberOfConsumers = 0,
-                            .scale = 0.1f,
-                            .type = TestOperandType::TENSOR_QUANT8_ASYMM,
-                            .zeroPoint = 10
-                        }, {
-                            .channelQuant = {},
-                            .data = TestBuffer::createFromVector<uint16_t>({66, 68, 94, 77, 71, 76, 139, 47, 77, 16}),
-                            .dimensions = {5, 1, 2},
-                            .isIgnored = false,
-                            .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
-                            .numberOfConsumers = 0,
-                            .scale = 0.125f,
-                            .type = TestOperandType::TENSOR_QUANT16_ASYMM,
-                            .zeroPoint = 0
-                        }, {
-                            .channelQuant = {},
-                            .data = TestBuffer::createFromVector<uint8_t>({108, 126, 136, 118, 112, 124, 146, 130, 142, 124, 134, 114, 124, 132, 122, 138, 108, 126, 136, 118, 112, 124, 146, 130, 142, 124, 134, 114, 124, 148, 122, 138, 108, 126, 136, 118, 112, 124, 136, 130, 142, 124, 134, 114, 124, 132, 122, 138, 108, 126, 136, 148, 112, 124, 136, 130, 142, 124, 134, 114, 124, 132, 122, 138, 108, 16, 136, 118, 112, 124, 146, 130, 142, 124, 134, 114, 124, 132, 122, 138}),
-                            .dimensions = {5, 4, 4, 1},
-                            .isIgnored = false,
-                            .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
-                            .numberOfConsumers = 1,
-                            .scale = 0.5f,
-                            .type = TestOperandType::TENSOR_QUANT8_ASYMM,
-                            .zeroPoint = 128
-                        }, {
-                            .channelQuant = {},
-                            .data = TestBuffer::createFromVector<uint8_t>({128}),
-                            .dimensions = {1},
-                            .isIgnored = false,
-                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
-                            .numberOfConsumers = 1,
-                            .scale = 0.5f,
-                            .type = TestOperandType::TENSOR_QUANT8_ASYMM,
-                            .zeroPoint = 128
-                        }, {
-                            .channelQuant = {},
-                            .data = TestBuffer::createFromVector<int32_t>({0}),
-                            .dimensions = {},
-                            .isIgnored = false,
-                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
-                            .numberOfConsumers = 1,
-                            .scale = 0.0f,
-                            .type = TestOperandType::INT32,
-                            .zeroPoint = 0
-                        }},
-                .operations = {{
-                            .inputs = {5, 6, 7},
-                            .outputs = {0},
-                            .type = TestOperationType::ADD
-                        }, {
-                            .inputs = {0, 1, 2},
-                            .outputs = {3, 4},
-                            .type = TestOperationType::HEATMAP_MAX_KEYPOINT
-                        }},
-                .outputIndexes = {3, 4}
-            },
-        .minSupportedVersion = TestHalVersion::V1_2,
-        .referenced = {}
-    };
-    return model;
-}
-
-const auto dummy_test_model_nhwc_quant8_all_inputs_as_internal_2 = TestModelManager::get().add("heatmap_max_keypoint_nhwc_quant8_all_inputs_as_internal_2", get_test_model_nhwc_quant8_all_inputs_as_internal_2());
-
-}  // namespace generated_tests::heatmap_max_keypoint
-
-namespace generated_tests::heatmap_max_keypoint {
-
 const TestModel& get_test_model_nchw_quant8_2() {
     static TestModel model = {
         .expectFailure = false,
@@ -3243,18 +3243,18 @@ const TestModel& get_test_model_nchw_quant8_2() {
                 .inputIndexes = {0, 1},
                 .operands = {{
                             .channelQuant = {},
-                            .data = TestBuffer::createFromVector<uint8_t>({108, 126, 136, 118, 112, 124, 146, 130, 142, 124, 134, 114, 124, 132, 122, 138, 108, 126, 136, 118, 112, 124, 146, 130, 142, 124, 134, 114, 124, 148, 122, 138, 108, 126, 136, 118, 112, 124, 136, 130, 142, 124, 134, 114, 124, 132, 122, 138, 108, 126, 136, 148, 112, 124, 136, 130, 142, 124, 134, 114, 124, 132, 122, 138, 108, 16, 136, 118, 112, 124, 146, 130, 142, 124, 134, 114, 124, 132, 122, 138}),
-                            .dimensions = {5, 1, 4, 4},
+                            .data = TestBuffer::createFromVector<uint8_t>({147, 226, 204, 174, 145, 224, 164, 186, 194, 224, 216, 182, 179, 180, 217, 198, 189, 193, 183, 131, 151, 193, 208, 157, 134, 166, 174, 192, 169, 149, 217, 141, 177, 192, 211, 195, 217, 180, 183, 155, 179, 169, 224, 212, 141, 178, 148, 157, 129, 198, 147, 199, 136, 168, 217, 197, 154, 217, 201, 202, 147, 203, 186, 167, 219, 208, 185, 204, 128, 162, 221, 195, 176, 226, 194, 168, 176, 184, 132, 166, 134, 215, 213, 162, 157, 185, 146, 175, 227, 134, 219, 165, 226, 146, 151, 135, 221, 187, 152, 165, 158, 176, 192, 184, 174, 138, 195, 145, 175, 203, 170, 199, 162, 195, 153, 139, 205, 204, 140, 178, 194, 194, 151, 163, 177, 157, 183, 208}),
+                            .dimensions = {2, 4, 4, 4},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
                             .numberOfConsumers = 1,
-                            .scale = 0.5f,
+                            .scale = 0.01f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 128
                         }, {
                             .channelQuant = {},
-                            .data = TestBuffer::createFromVector<uint16_t>({40, 16, 80, 160, 8, 56, 240, 80, 64, 24, 120, 104, 48, 40, 152, 96, 40, 16, 80, 160}),
-                            .dimensions = {5, 4},
+                            .data = TestBuffer::createFromVector<uint16_t>({40, 16, 80, 160, 8, 56, 240, 80}),
+                            .dimensions = {2, 4},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
                             .numberOfConsumers = 1,
@@ -3273,18 +3273,18 @@ const TestModel& get_test_model_nchw_quant8_2() {
                             .zeroPoint = 0
                         }, {
                             .channelQuant = {},
-                            .data = TestBuffer::createFromVector<uint8_t>({101, 110, 82, 110, 117}),
-                            .dimensions = {5, 1},
+                            .data = TestBuffer::createFromVector<uint8_t>({102, 89, 101, 95, 99, 107, 93, 80}),
+                            .dimensions = {2, 4},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
                             .numberOfConsumers = 0,
-                            .scale = 0.1f,
+                            .scale = 0.01f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
-                            .zeroPoint = 10
+                            .zeroPoint = 0
                         }, {
                             .channelQuant = {},
-                            .data = TestBuffer::createFromVector<uint16_t>({66, 68, 94, 77, 71, 76, 139, 47, 77, 16}),
-                            .dimensions = {5, 1, 2},
+                            .data = TestBuffer::createFromVector<uint16_t>({58, 34, 65, 142, 68, 101, 67, 81, 99, 71, 37, 74, 37, 59, 211, 77}),
+                            .dimensions = {2, 4, 2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
                             .numberOfConsumers = 0,
@@ -3321,17 +3321,17 @@ const TestModel& get_test_model_nchw_quant8_all_inputs_as_internal_2() {
                 .operands = {{
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({}),
-                            .dimensions = {5, 1, 4, 4},
+                            .dimensions = {2, 4, 4, 4},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::TEMPORARY_VARIABLE,
                             .numberOfConsumers = 1,
-                            .scale = 0.5f,
+                            .scale = 0.01f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 128
                         }, {
                             .channelQuant = {},
-                            .data = TestBuffer::createFromVector<uint16_t>({40, 16, 80, 160, 8, 56, 240, 80, 64, 24, 120, 104, 48, 40, 152, 96, 40, 16, 80, 160}),
-                            .dimensions = {5, 4},
+                            .data = TestBuffer::createFromVector<uint16_t>({40, 16, 80, 160, 8, 56, 240, 80}),
+                            .dimensions = {2, 4},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
                             .numberOfConsumers = 1,
@@ -3350,18 +3350,18 @@ const TestModel& get_test_model_nchw_quant8_all_inputs_as_internal_2() {
                             .zeroPoint = 0
                         }, {
                             .channelQuant = {},
-                            .data = TestBuffer::createFromVector<uint8_t>({101, 110, 82, 110, 117}),
-                            .dimensions = {5, 1},
+                            .data = TestBuffer::createFromVector<uint8_t>({102, 89, 101, 95, 99, 107, 93, 80}),
+                            .dimensions = {2, 4},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
                             .numberOfConsumers = 0,
-                            .scale = 0.1f,
+                            .scale = 0.01f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
-                            .zeroPoint = 10
+                            .zeroPoint = 0
                         }, {
                             .channelQuant = {},
-                            .data = TestBuffer::createFromVector<uint16_t>({66, 68, 94, 77, 71, 76, 139, 47, 77, 16}),
-                            .dimensions = {5, 1, 2},
+                            .data = TestBuffer::createFromVector<uint16_t>({58, 34, 65, 142, 68, 101, 67, 81, 99, 71, 37, 74, 37, 59, 211, 77}),
+                            .dimensions = {2, 4, 2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
                             .numberOfConsumers = 0,
@@ -3370,8 +3370,862 @@ const TestModel& get_test_model_nchw_quant8_all_inputs_as_internal_2() {
                             .zeroPoint = 0
                         }, {
                             .channelQuant = {},
-                            .data = TestBuffer::createFromVector<uint8_t>({108, 126, 136, 118, 112, 124, 146, 130, 142, 124, 134, 114, 124, 132, 122, 138, 108, 126, 136, 118, 112, 124, 146, 130, 142, 124, 134, 114, 124, 148, 122, 138, 108, 126, 136, 118, 112, 124, 136, 130, 142, 124, 134, 114, 124, 132, 122, 138, 108, 126, 136, 148, 112, 124, 136, 130, 142, 124, 134, 114, 124, 132, 122, 138, 108, 16, 136, 118, 112, 124, 146, 130, 142, 124, 134, 114, 124, 132, 122, 138}),
-                            .dimensions = {5, 1, 4, 4},
+                            .data = TestBuffer::createFromVector<uint8_t>({147, 226, 204, 174, 145, 224, 164, 186, 194, 224, 216, 182, 179, 180, 217, 198, 189, 193, 183, 131, 151, 193, 208, 157, 134, 166, 174, 192, 169, 149, 217, 141, 177, 192, 211, 195, 217, 180, 183, 155, 179, 169, 224, 212, 141, 178, 148, 157, 129, 198, 147, 199, 136, 168, 217, 197, 154, 217, 201, 202, 147, 203, 186, 167, 219, 208, 185, 204, 128, 162, 221, 195, 176, 226, 194, 168, 176, 184, 132, 166, 134, 215, 213, 162, 157, 185, 146, 175, 227, 134, 219, 165, 226, 146, 151, 135, 221, 187, 152, 165, 158, 176, 192, 184, 174, 138, 195, 145, 175, 203, 170, 199, 162, 195, 153, 139, 205, 204, 140, 178, 194, 194, 151, 163, 177, 157, 183, 208}),
+                            .dimensions = {2, 4, 4, 4},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
+                            .numberOfConsumers = 1,
+                            .scale = 0.01f,
+                            .type = TestOperandType::TENSOR_QUANT8_ASYMM,
+                            .zeroPoint = 128
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<uint8_t>({128}),
+                            .dimensions = {1},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.01f,
+                            .type = TestOperandType::TENSOR_QUANT8_ASYMM,
+                            .zeroPoint = 128
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<int32_t>({0}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::INT32,
+                            .zeroPoint = 0
+                        }},
+                .operations = {{
+                            .inputs = {5, 6, 7},
+                            .outputs = {0},
+                            .type = TestOperationType::ADD
+                        }, {
+                            .inputs = {0, 1, 2},
+                            .outputs = {3, 4},
+                            .type = TestOperationType::HEATMAP_MAX_KEYPOINT
+                        }},
+                .outputIndexes = {3, 4}
+            },
+        .minSupportedVersion = TestHalVersion::V1_2,
+        .referenced = {}
+    };
+    return model;
+}
+
+const auto dummy_test_model_nchw_quant8_all_inputs_as_internal_2 = TestModelManager::get().add("heatmap_max_keypoint_nchw_quant8_all_inputs_as_internal_2", get_test_model_nchw_quant8_all_inputs_as_internal_2());
+
+}  // namespace generated_tests::heatmap_max_keypoint
+
+namespace generated_tests::heatmap_max_keypoint {
+
+const TestModel& get_test_model_nhwc_3() {
+    static TestModel model = {
+        .expectFailure = false,
+        .expectedMultinomialDistributionTolerance = 0,
+        .isRelaxed = false,
+        .main = {
+                .inputIndexes = {0, 1},
+                .operands = {{
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<float>({4.0f, 4.0f, 1.0f, 2.0f}),
+                            .dimensions = {1, 2, 2, 1},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT32,
+                            .zeroPoint = 0
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<float>({4.0f, 2.0f, 8.0f, 18.0f}),
+                            .dimensions = {1, 4},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT32,
+                            .zeroPoint = 0
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<bool8>({false}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::BOOL,
+                            .zeroPoint = 0
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<float>({4.0f}),
+                            .dimensions = {1, 1},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
+                            .numberOfConsumers = 0,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT32,
+                            .zeroPoint = 0
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<float>({5.0f, 6.0f}),
+                            .dimensions = {1, 1, 2},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
+                            .numberOfConsumers = 0,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT32,
+                            .zeroPoint = 0
+                        }},
+                .operations = {{
+                            .inputs = {0, 1, 2},
+                            .outputs = {3, 4},
+                            .type = TestOperationType::HEATMAP_MAX_KEYPOINT
+                        }},
+                .outputIndexes = {3, 4}
+            },
+        .minSupportedVersion = TestHalVersion::V1_2,
+        .referenced = {}
+    };
+    return model;
+}
+
+const auto dummy_test_model_nhwc_3 = TestModelManager::get().add("heatmap_max_keypoint_nhwc_3", get_test_model_nhwc_3());
+
+}  // namespace generated_tests::heatmap_max_keypoint
+
+namespace generated_tests::heatmap_max_keypoint {
+
+const TestModel& get_test_model_nhwc_all_inputs_as_internal_3() {
+    static TestModel model = {
+        .expectFailure = false,
+        .expectedMultinomialDistributionTolerance = 0,
+        .isRelaxed = false,
+        .main = {
+                .inputIndexes = {5, 8},
+                .operands = {{
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<float>({}),
+                            .dimensions = {1, 2, 2, 1},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::TEMPORARY_VARIABLE,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT32,
+                            .zeroPoint = 0
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<float>({}),
+                            .dimensions = {1, 4},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::TEMPORARY_VARIABLE,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT32,
+                            .zeroPoint = 0
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<bool8>({false}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::BOOL,
+                            .zeroPoint = 0
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<float>({4.0f}),
+                            .dimensions = {1, 1},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
+                            .numberOfConsumers = 0,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT32,
+                            .zeroPoint = 0
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<float>({5.0f, 6.0f}),
+                            .dimensions = {1, 1, 2},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
+                            .numberOfConsumers = 0,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT32,
+                            .zeroPoint = 0
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<float>({4.0f, 4.0f, 1.0f, 2.0f}),
+                            .dimensions = {1, 2, 2, 1},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT32,
+                            .zeroPoint = 0
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<float>({0.0f}),
+                            .dimensions = {1},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT32,
+                            .zeroPoint = 0
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<int32_t>({0}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::INT32,
+                            .zeroPoint = 0
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<float>({4.0f, 2.0f, 8.0f, 18.0f}),
+                            .dimensions = {1, 4},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT32,
+                            .zeroPoint = 0
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<float>({0.0f}),
+                            .dimensions = {1},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT32,
+                            .zeroPoint = 0
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<int32_t>({0}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::INT32,
+                            .zeroPoint = 0
+                        }},
+                .operations = {{
+                            .inputs = {5, 6, 7},
+                            .outputs = {0},
+                            .type = TestOperationType::ADD
+                        }, {
+                            .inputs = {8, 9, 10},
+                            .outputs = {1},
+                            .type = TestOperationType::ADD
+                        }, {
+                            .inputs = {0, 1, 2},
+                            .outputs = {3, 4},
+                            .type = TestOperationType::HEATMAP_MAX_KEYPOINT
+                        }},
+                .outputIndexes = {3, 4}
+            },
+        .minSupportedVersion = TestHalVersion::V1_2,
+        .referenced = {}
+    };
+    return model;
+}
+
+const auto dummy_test_model_nhwc_all_inputs_as_internal_3 = TestModelManager::get().add("heatmap_max_keypoint_nhwc_all_inputs_as_internal_3", get_test_model_nhwc_all_inputs_as_internal_3());
+
+}  // namespace generated_tests::heatmap_max_keypoint
+
+namespace generated_tests::heatmap_max_keypoint {
+
+const TestModel& get_test_model_nhwc_relaxed_3() {
+    static TestModel model = {
+        .expectFailure = false,
+        .expectedMultinomialDistributionTolerance = 0,
+        .isRelaxed = true,
+        .main = {
+                .inputIndexes = {0, 1},
+                .operands = {{
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<float>({4.0f, 4.0f, 1.0f, 2.0f}),
+                            .dimensions = {1, 2, 2, 1},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT32,
+                            .zeroPoint = 0
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<float>({4.0f, 2.0f, 8.0f, 18.0f}),
+                            .dimensions = {1, 4},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT32,
+                            .zeroPoint = 0
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<bool8>({false}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::BOOL,
+                            .zeroPoint = 0
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<float>({4.0f}),
+                            .dimensions = {1, 1},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
+                            .numberOfConsumers = 0,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT32,
+                            .zeroPoint = 0
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<float>({5.0f, 6.0f}),
+                            .dimensions = {1, 1, 2},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
+                            .numberOfConsumers = 0,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT32,
+                            .zeroPoint = 0
+                        }},
+                .operations = {{
+                            .inputs = {0, 1, 2},
+                            .outputs = {3, 4},
+                            .type = TestOperationType::HEATMAP_MAX_KEYPOINT
+                        }},
+                .outputIndexes = {3, 4}
+            },
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
+        .referenced = {}
+    };
+    return model;
+}
+
+const auto dummy_test_model_nhwc_relaxed_3 = TestModelManager::get().add("heatmap_max_keypoint_nhwc_relaxed_3", get_test_model_nhwc_relaxed_3());
+
+}  // namespace generated_tests::heatmap_max_keypoint
+
+namespace generated_tests::heatmap_max_keypoint {
+
+const TestModel& get_test_model_nhwc_relaxed_all_inputs_as_internal_3() {
+    static TestModel model = {
+        .expectFailure = false,
+        .expectedMultinomialDistributionTolerance = 0,
+        .isRelaxed = true,
+        .main = {
+                .inputIndexes = {5, 8},
+                .operands = {{
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<float>({}),
+                            .dimensions = {1, 2, 2, 1},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::TEMPORARY_VARIABLE,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT32,
+                            .zeroPoint = 0
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<float>({}),
+                            .dimensions = {1, 4},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::TEMPORARY_VARIABLE,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT32,
+                            .zeroPoint = 0
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<bool8>({false}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::BOOL,
+                            .zeroPoint = 0
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<float>({4.0f}),
+                            .dimensions = {1, 1},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
+                            .numberOfConsumers = 0,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT32,
+                            .zeroPoint = 0
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<float>({5.0f, 6.0f}),
+                            .dimensions = {1, 1, 2},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
+                            .numberOfConsumers = 0,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT32,
+                            .zeroPoint = 0
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<float>({4.0f, 4.0f, 1.0f, 2.0f}),
+                            .dimensions = {1, 2, 2, 1},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT32,
+                            .zeroPoint = 0
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<float>({0.0f}),
+                            .dimensions = {1},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT32,
+                            .zeroPoint = 0
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<int32_t>({0}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::INT32,
+                            .zeroPoint = 0
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<float>({4.0f, 2.0f, 8.0f, 18.0f}),
+                            .dimensions = {1, 4},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT32,
+                            .zeroPoint = 0
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<float>({0.0f}),
+                            .dimensions = {1},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT32,
+                            .zeroPoint = 0
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<int32_t>({0}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::INT32,
+                            .zeroPoint = 0
+                        }},
+                .operations = {{
+                            .inputs = {5, 6, 7},
+                            .outputs = {0},
+                            .type = TestOperationType::ADD
+                        }, {
+                            .inputs = {8, 9, 10},
+                            .outputs = {1},
+                            .type = TestOperationType::ADD
+                        }, {
+                            .inputs = {0, 1, 2},
+                            .outputs = {3, 4},
+                            .type = TestOperationType::HEATMAP_MAX_KEYPOINT
+                        }},
+                .outputIndexes = {3, 4}
+            },
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
+        .referenced = {}
+    };
+    return model;
+}
+
+const auto dummy_test_model_nhwc_relaxed_all_inputs_as_internal_3 = TestModelManager::get().add("heatmap_max_keypoint_nhwc_relaxed_all_inputs_as_internal_3", get_test_model_nhwc_relaxed_all_inputs_as_internal_3());
+
+}  // namespace generated_tests::heatmap_max_keypoint
+
+namespace generated_tests::heatmap_max_keypoint {
+
+const TestModel& get_test_model_nhwc_float16_3() {
+    static TestModel model = {
+        .expectFailure = false,
+        .expectedMultinomialDistributionTolerance = 0,
+        .isRelaxed = false,
+        .main = {
+                .inputIndexes = {0, 1},
+                .operands = {{
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<_Float16>({4.0f, 4.0f, 1.0f, 2.0f}),
+                            .dimensions = {1, 2, 2, 1},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT16,
+                            .zeroPoint = 0
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<_Float16>({4.0f, 2.0f, 8.0f, 18.0f}),
+                            .dimensions = {1, 4},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT16,
+                            .zeroPoint = 0
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<bool8>({false}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::BOOL,
+                            .zeroPoint = 0
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<_Float16>({4.0f}),
+                            .dimensions = {1, 1},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
+                            .numberOfConsumers = 0,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT16,
+                            .zeroPoint = 0
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<_Float16>({5.0f, 6.0f}),
+                            .dimensions = {1, 1, 2},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
+                            .numberOfConsumers = 0,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT16,
+                            .zeroPoint = 0
+                        }},
+                .operations = {{
+                            .inputs = {0, 1, 2},
+                            .outputs = {3, 4},
+                            .type = TestOperationType::HEATMAP_MAX_KEYPOINT
+                        }},
+                .outputIndexes = {3, 4}
+            },
+        .minSupportedVersion = TestHalVersion::V1_2,
+        .referenced = {}
+    };
+    return model;
+}
+
+const auto dummy_test_model_nhwc_float16_3 = TestModelManager::get().add("heatmap_max_keypoint_nhwc_float16_3", get_test_model_nhwc_float16_3());
+
+}  // namespace generated_tests::heatmap_max_keypoint
+
+namespace generated_tests::heatmap_max_keypoint {
+
+const TestModel& get_test_model_nhwc_float16_all_inputs_as_internal_3() {
+    static TestModel model = {
+        .expectFailure = false,
+        .expectedMultinomialDistributionTolerance = 0,
+        .isRelaxed = false,
+        .main = {
+                .inputIndexes = {5, 8},
+                .operands = {{
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<_Float16>({}),
+                            .dimensions = {1, 2, 2, 1},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::TEMPORARY_VARIABLE,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT16,
+                            .zeroPoint = 0
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<_Float16>({}),
+                            .dimensions = {1, 4},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::TEMPORARY_VARIABLE,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT16,
+                            .zeroPoint = 0
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<bool8>({false}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::BOOL,
+                            .zeroPoint = 0
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<_Float16>({4.0f}),
+                            .dimensions = {1, 1},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
+                            .numberOfConsumers = 0,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT16,
+                            .zeroPoint = 0
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<_Float16>({5.0f, 6.0f}),
+                            .dimensions = {1, 1, 2},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
+                            .numberOfConsumers = 0,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT16,
+                            .zeroPoint = 0
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<_Float16>({4.0f, 4.0f, 1.0f, 2.0f}),
+                            .dimensions = {1, 2, 2, 1},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT16,
+                            .zeroPoint = 0
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<_Float16>({0.0f}),
+                            .dimensions = {1},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT16,
+                            .zeroPoint = 0
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<int32_t>({0}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::INT32,
+                            .zeroPoint = 0
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<_Float16>({4.0f, 2.0f, 8.0f, 18.0f}),
+                            .dimensions = {1, 4},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT16,
+                            .zeroPoint = 0
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<_Float16>({0.0f}),
+                            .dimensions = {1},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT16,
+                            .zeroPoint = 0
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<int32_t>({0}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::INT32,
+                            .zeroPoint = 0
+                        }},
+                .operations = {{
+                            .inputs = {5, 6, 7},
+                            .outputs = {0},
+                            .type = TestOperationType::ADD
+                        }, {
+                            .inputs = {8, 9, 10},
+                            .outputs = {1},
+                            .type = TestOperationType::ADD
+                        }, {
+                            .inputs = {0, 1, 2},
+                            .outputs = {3, 4},
+                            .type = TestOperationType::HEATMAP_MAX_KEYPOINT
+                        }},
+                .outputIndexes = {3, 4}
+            },
+        .minSupportedVersion = TestHalVersion::V1_2,
+        .referenced = {}
+    };
+    return model;
+}
+
+const auto dummy_test_model_nhwc_float16_all_inputs_as_internal_3 = TestModelManager::get().add("heatmap_max_keypoint_nhwc_float16_all_inputs_as_internal_3", get_test_model_nhwc_float16_all_inputs_as_internal_3());
+
+}  // namespace generated_tests::heatmap_max_keypoint
+
+namespace generated_tests::heatmap_max_keypoint {
+
+const TestModel& get_test_model_nhwc_quant8_3() {
+    static TestModel model = {
+        .expectFailure = false,
+        .expectedMultinomialDistributionTolerance = 0,
+        .isRelaxed = false,
+        .main = {
+                .inputIndexes = {0, 1},
+                .operands = {{
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<uint8_t>({136, 136, 130, 132}),
+                            .dimensions = {1, 2, 2, 1},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
+                            .numberOfConsumers = 1,
+                            .scale = 0.5f,
+                            .type = TestOperandType::TENSOR_QUANT8_ASYMM,
+                            .zeroPoint = 128
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<uint16_t>({32, 16, 64, 144}),
+                            .dimensions = {1, 4},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
+                            .numberOfConsumers = 1,
+                            .scale = 0.125f,
+                            .type = TestOperandType::TENSOR_QUANT16_ASYMM,
+                            .zeroPoint = 0
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<bool8>({false}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::BOOL,
+                            .zeroPoint = 0
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<uint8_t>({50}),
+                            .dimensions = {1, 1},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
+                            .numberOfConsumers = 0,
+                            .scale = 0.1f,
+                            .type = TestOperandType::TENSOR_QUANT8_ASYMM,
+                            .zeroPoint = 10
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<uint16_t>({40, 48}),
+                            .dimensions = {1, 1, 2},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
+                            .numberOfConsumers = 0,
+                            .scale = 0.125f,
+                            .type = TestOperandType::TENSOR_QUANT16_ASYMM,
+                            .zeroPoint = 0
+                        }},
+                .operations = {{
+                            .inputs = {0, 1, 2},
+                            .outputs = {3, 4},
+                            .type = TestOperationType::HEATMAP_MAX_KEYPOINT
+                        }},
+                .outputIndexes = {3, 4}
+            },
+        .minSupportedVersion = TestHalVersion::V1_2,
+        .referenced = {}
+    };
+    return model;
+}
+
+const auto dummy_test_model_nhwc_quant8_3 = TestModelManager::get().add("heatmap_max_keypoint_nhwc_quant8_3", get_test_model_nhwc_quant8_3());
+
+}  // namespace generated_tests::heatmap_max_keypoint
+
+namespace generated_tests::heatmap_max_keypoint {
+
+const TestModel& get_test_model_nhwc_quant8_all_inputs_as_internal_3() {
+    static TestModel model = {
+        .expectFailure = false,
+        .expectedMultinomialDistributionTolerance = 0,
+        .isRelaxed = false,
+        .main = {
+                .inputIndexes = {1, 5},
+                .operands = {{
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<uint8_t>({}),
+                            .dimensions = {1, 2, 2, 1},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::TEMPORARY_VARIABLE,
+                            .numberOfConsumers = 1,
+                            .scale = 0.5f,
+                            .type = TestOperandType::TENSOR_QUANT8_ASYMM,
+                            .zeroPoint = 128
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<uint16_t>({32, 16, 64, 144}),
+                            .dimensions = {1, 4},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
+                            .numberOfConsumers = 1,
+                            .scale = 0.125f,
+                            .type = TestOperandType::TENSOR_QUANT16_ASYMM,
+                            .zeroPoint = 0
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<bool8>({false}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::BOOL,
+                            .zeroPoint = 0
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<uint8_t>({50}),
+                            .dimensions = {1, 1},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
+                            .numberOfConsumers = 0,
+                            .scale = 0.1f,
+                            .type = TestOperandType::TENSOR_QUANT8_ASYMM,
+                            .zeroPoint = 10
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<uint16_t>({40, 48}),
+                            .dimensions = {1, 1, 2},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
+                            .numberOfConsumers = 0,
+                            .scale = 0.125f,
+                            .type = TestOperandType::TENSOR_QUANT16_ASYMM,
+                            .zeroPoint = 0
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<uint8_t>({136, 136, 130, 132}),
+                            .dimensions = {1, 2, 2, 1},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
                             .numberOfConsumers = 1,
@@ -3416,7 +4270,861 @@ const TestModel& get_test_model_nchw_quant8_all_inputs_as_internal_2() {
     return model;
 }
 
-const auto dummy_test_model_nchw_quant8_all_inputs_as_internal_2 = TestModelManager::get().add("heatmap_max_keypoint_nchw_quant8_all_inputs_as_internal_2", get_test_model_nchw_quant8_all_inputs_as_internal_2());
+const auto dummy_test_model_nhwc_quant8_all_inputs_as_internal_3 = TestModelManager::get().add("heatmap_max_keypoint_nhwc_quant8_all_inputs_as_internal_3", get_test_model_nhwc_quant8_all_inputs_as_internal_3());
+
+}  // namespace generated_tests::heatmap_max_keypoint
+
+namespace generated_tests::heatmap_max_keypoint {
+
+const TestModel& get_test_model_nchw_3() {
+    static TestModel model = {
+        .expectFailure = false,
+        .expectedMultinomialDistributionTolerance = 0,
+        .isRelaxed = false,
+        .main = {
+                .inputIndexes = {0, 1},
+                .operands = {{
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<float>({4.0f, 4.0f, 1.0f, 2.0f}),
+                            .dimensions = {1, 1, 2, 2},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT32,
+                            .zeroPoint = 0
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<float>({4.0f, 2.0f, 8.0f, 18.0f}),
+                            .dimensions = {1, 4},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT32,
+                            .zeroPoint = 0
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<bool8>({true}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::BOOL,
+                            .zeroPoint = 0
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<float>({4.0f}),
+                            .dimensions = {1, 1},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
+                            .numberOfConsumers = 0,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT32,
+                            .zeroPoint = 0
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<float>({5.0f, 6.0f}),
+                            .dimensions = {1, 1, 2},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
+                            .numberOfConsumers = 0,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT32,
+                            .zeroPoint = 0
+                        }},
+                .operations = {{
+                            .inputs = {0, 1, 2},
+                            .outputs = {3, 4},
+                            .type = TestOperationType::HEATMAP_MAX_KEYPOINT
+                        }},
+                .outputIndexes = {3, 4}
+            },
+        .minSupportedVersion = TestHalVersion::V1_2,
+        .referenced = {}
+    };
+    return model;
+}
+
+const auto dummy_test_model_nchw_3 = TestModelManager::get().add("heatmap_max_keypoint_nchw_3", get_test_model_nchw_3());
+
+}  // namespace generated_tests::heatmap_max_keypoint
+
+namespace generated_tests::heatmap_max_keypoint {
+
+const TestModel& get_test_model_nchw_all_inputs_as_internal_3() {
+    static TestModel model = {
+        .expectFailure = false,
+        .expectedMultinomialDistributionTolerance = 0,
+        .isRelaxed = false,
+        .main = {
+                .inputIndexes = {5, 8},
+                .operands = {{
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<float>({}),
+                            .dimensions = {1, 1, 2, 2},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::TEMPORARY_VARIABLE,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT32,
+                            .zeroPoint = 0
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<float>({}),
+                            .dimensions = {1, 4},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::TEMPORARY_VARIABLE,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT32,
+                            .zeroPoint = 0
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<bool8>({true}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::BOOL,
+                            .zeroPoint = 0
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<float>({4.0f}),
+                            .dimensions = {1, 1},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
+                            .numberOfConsumers = 0,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT32,
+                            .zeroPoint = 0
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<float>({5.0f, 6.0f}),
+                            .dimensions = {1, 1, 2},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
+                            .numberOfConsumers = 0,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT32,
+                            .zeroPoint = 0
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<float>({4.0f, 4.0f, 1.0f, 2.0f}),
+                            .dimensions = {1, 1, 2, 2},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT32,
+                            .zeroPoint = 0
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<float>({0.0f}),
+                            .dimensions = {1},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT32,
+                            .zeroPoint = 0
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<int32_t>({0}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::INT32,
+                            .zeroPoint = 0
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<float>({4.0f, 2.0f, 8.0f, 18.0f}),
+                            .dimensions = {1, 4},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT32,
+                            .zeroPoint = 0
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<float>({0.0f}),
+                            .dimensions = {1},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT32,
+                            .zeroPoint = 0
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<int32_t>({0}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::INT32,
+                            .zeroPoint = 0
+                        }},
+                .operations = {{
+                            .inputs = {5, 6, 7},
+                            .outputs = {0},
+                            .type = TestOperationType::ADD
+                        }, {
+                            .inputs = {8, 9, 10},
+                            .outputs = {1},
+                            .type = TestOperationType::ADD
+                        }, {
+                            .inputs = {0, 1, 2},
+                            .outputs = {3, 4},
+                            .type = TestOperationType::HEATMAP_MAX_KEYPOINT
+                        }},
+                .outputIndexes = {3, 4}
+            },
+        .minSupportedVersion = TestHalVersion::V1_2,
+        .referenced = {}
+    };
+    return model;
+}
+
+const auto dummy_test_model_nchw_all_inputs_as_internal_3 = TestModelManager::get().add("heatmap_max_keypoint_nchw_all_inputs_as_internal_3", get_test_model_nchw_all_inputs_as_internal_3());
+
+}  // namespace generated_tests::heatmap_max_keypoint
+
+namespace generated_tests::heatmap_max_keypoint {
+
+const TestModel& get_test_model_nchw_relaxed_3() {
+    static TestModel model = {
+        .expectFailure = false,
+        .expectedMultinomialDistributionTolerance = 0,
+        .isRelaxed = true,
+        .main = {
+                .inputIndexes = {0, 1},
+                .operands = {{
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<float>({4.0f, 4.0f, 1.0f, 2.0f}),
+                            .dimensions = {1, 1, 2, 2},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT32,
+                            .zeroPoint = 0
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<float>({4.0f, 2.0f, 8.0f, 18.0f}),
+                            .dimensions = {1, 4},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT32,
+                            .zeroPoint = 0
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<bool8>({true}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::BOOL,
+                            .zeroPoint = 0
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<float>({4.0f}),
+                            .dimensions = {1, 1},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
+                            .numberOfConsumers = 0,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT32,
+                            .zeroPoint = 0
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<float>({5.0f, 6.0f}),
+                            .dimensions = {1, 1, 2},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
+                            .numberOfConsumers = 0,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT32,
+                            .zeroPoint = 0
+                        }},
+                .operations = {{
+                            .inputs = {0, 1, 2},
+                            .outputs = {3, 4},
+                            .type = TestOperationType::HEATMAP_MAX_KEYPOINT
+                        }},
+                .outputIndexes = {3, 4}
+            },
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
+        .referenced = {}
+    };
+    return model;
+}
+
+const auto dummy_test_model_nchw_relaxed_3 = TestModelManager::get().add("heatmap_max_keypoint_nchw_relaxed_3", get_test_model_nchw_relaxed_3());
+
+}  // namespace generated_tests::heatmap_max_keypoint
+
+namespace generated_tests::heatmap_max_keypoint {
+
+const TestModel& get_test_model_nchw_relaxed_all_inputs_as_internal_3() {
+    static TestModel model = {
+        .expectFailure = false,
+        .expectedMultinomialDistributionTolerance = 0,
+        .isRelaxed = true,
+        .main = {
+                .inputIndexes = {5, 8},
+                .operands = {{
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<float>({}),
+                            .dimensions = {1, 1, 2, 2},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::TEMPORARY_VARIABLE,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT32,
+                            .zeroPoint = 0
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<float>({}),
+                            .dimensions = {1, 4},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::TEMPORARY_VARIABLE,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT32,
+                            .zeroPoint = 0
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<bool8>({true}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::BOOL,
+                            .zeroPoint = 0
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<float>({4.0f}),
+                            .dimensions = {1, 1},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
+                            .numberOfConsumers = 0,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT32,
+                            .zeroPoint = 0
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<float>({5.0f, 6.0f}),
+                            .dimensions = {1, 1, 2},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
+                            .numberOfConsumers = 0,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT32,
+                            .zeroPoint = 0
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<float>({4.0f, 4.0f, 1.0f, 2.0f}),
+                            .dimensions = {1, 1, 2, 2},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT32,
+                            .zeroPoint = 0
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<float>({0.0f}),
+                            .dimensions = {1},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT32,
+                            .zeroPoint = 0
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<int32_t>({0}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::INT32,
+                            .zeroPoint = 0
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<float>({4.0f, 2.0f, 8.0f, 18.0f}),
+                            .dimensions = {1, 4},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT32,
+                            .zeroPoint = 0
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<float>({0.0f}),
+                            .dimensions = {1},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT32,
+                            .zeroPoint = 0
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<int32_t>({0}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::INT32,
+                            .zeroPoint = 0
+                        }},
+                .operations = {{
+                            .inputs = {5, 6, 7},
+                            .outputs = {0},
+                            .type = TestOperationType::ADD
+                        }, {
+                            .inputs = {8, 9, 10},
+                            .outputs = {1},
+                            .type = TestOperationType::ADD
+                        }, {
+                            .inputs = {0, 1, 2},
+                            .outputs = {3, 4},
+                            .type = TestOperationType::HEATMAP_MAX_KEYPOINT
+                        }},
+                .outputIndexes = {3, 4}
+            },
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
+        .referenced = {}
+    };
+    return model;
+}
+
+const auto dummy_test_model_nchw_relaxed_all_inputs_as_internal_3 = TestModelManager::get().add("heatmap_max_keypoint_nchw_relaxed_all_inputs_as_internal_3", get_test_model_nchw_relaxed_all_inputs_as_internal_3());
+
+}  // namespace generated_tests::heatmap_max_keypoint
+
+namespace generated_tests::heatmap_max_keypoint {
+
+const TestModel& get_test_model_nchw_float16_3() {
+    static TestModel model = {
+        .expectFailure = false,
+        .expectedMultinomialDistributionTolerance = 0,
+        .isRelaxed = false,
+        .main = {
+                .inputIndexes = {0, 1},
+                .operands = {{
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<_Float16>({4.0f, 4.0f, 1.0f, 2.0f}),
+                            .dimensions = {1, 1, 2, 2},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT16,
+                            .zeroPoint = 0
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<_Float16>({4.0f, 2.0f, 8.0f, 18.0f}),
+                            .dimensions = {1, 4},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT16,
+                            .zeroPoint = 0
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<bool8>({true}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::BOOL,
+                            .zeroPoint = 0
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<_Float16>({4.0f}),
+                            .dimensions = {1, 1},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
+                            .numberOfConsumers = 0,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT16,
+                            .zeroPoint = 0
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<_Float16>({5.0f, 6.0f}),
+                            .dimensions = {1, 1, 2},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
+                            .numberOfConsumers = 0,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT16,
+                            .zeroPoint = 0
+                        }},
+                .operations = {{
+                            .inputs = {0, 1, 2},
+                            .outputs = {3, 4},
+                            .type = TestOperationType::HEATMAP_MAX_KEYPOINT
+                        }},
+                .outputIndexes = {3, 4}
+            },
+        .minSupportedVersion = TestHalVersion::V1_2,
+        .referenced = {}
+    };
+    return model;
+}
+
+const auto dummy_test_model_nchw_float16_3 = TestModelManager::get().add("heatmap_max_keypoint_nchw_float16_3", get_test_model_nchw_float16_3());
+
+}  // namespace generated_tests::heatmap_max_keypoint
+
+namespace generated_tests::heatmap_max_keypoint {
+
+const TestModel& get_test_model_nchw_float16_all_inputs_as_internal_3() {
+    static TestModel model = {
+        .expectFailure = false,
+        .expectedMultinomialDistributionTolerance = 0,
+        .isRelaxed = false,
+        .main = {
+                .inputIndexes = {5, 8},
+                .operands = {{
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<_Float16>({}),
+                            .dimensions = {1, 1, 2, 2},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::TEMPORARY_VARIABLE,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT16,
+                            .zeroPoint = 0
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<_Float16>({}),
+                            .dimensions = {1, 4},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::TEMPORARY_VARIABLE,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT16,
+                            .zeroPoint = 0
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<bool8>({true}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::BOOL,
+                            .zeroPoint = 0
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<_Float16>({4.0f}),
+                            .dimensions = {1, 1},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
+                            .numberOfConsumers = 0,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT16,
+                            .zeroPoint = 0
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<_Float16>({5.0f, 6.0f}),
+                            .dimensions = {1, 1, 2},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
+                            .numberOfConsumers = 0,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT16,
+                            .zeroPoint = 0
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<_Float16>({4.0f, 4.0f, 1.0f, 2.0f}),
+                            .dimensions = {1, 1, 2, 2},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT16,
+                            .zeroPoint = 0
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<_Float16>({0.0f}),
+                            .dimensions = {1},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT16,
+                            .zeroPoint = 0
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<int32_t>({0}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::INT32,
+                            .zeroPoint = 0
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<_Float16>({4.0f, 2.0f, 8.0f, 18.0f}),
+                            .dimensions = {1, 4},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT16,
+                            .zeroPoint = 0
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<_Float16>({0.0f}),
+                            .dimensions = {1},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT16,
+                            .zeroPoint = 0
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<int32_t>({0}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::INT32,
+                            .zeroPoint = 0
+                        }},
+                .operations = {{
+                            .inputs = {5, 6, 7},
+                            .outputs = {0},
+                            .type = TestOperationType::ADD
+                        }, {
+                            .inputs = {8, 9, 10},
+                            .outputs = {1},
+                            .type = TestOperationType::ADD
+                        }, {
+                            .inputs = {0, 1, 2},
+                            .outputs = {3, 4},
+                            .type = TestOperationType::HEATMAP_MAX_KEYPOINT
+                        }},
+                .outputIndexes = {3, 4}
+            },
+        .minSupportedVersion = TestHalVersion::V1_2,
+        .referenced = {}
+    };
+    return model;
+}
+
+const auto dummy_test_model_nchw_float16_all_inputs_as_internal_3 = TestModelManager::get().add("heatmap_max_keypoint_nchw_float16_all_inputs_as_internal_3", get_test_model_nchw_float16_all_inputs_as_internal_3());
+
+}  // namespace generated_tests::heatmap_max_keypoint
+
+namespace generated_tests::heatmap_max_keypoint {
+
+const TestModel& get_test_model_nchw_quant8_3() {
+    static TestModel model = {
+        .expectFailure = false,
+        .expectedMultinomialDistributionTolerance = 0,
+        .isRelaxed = false,
+        .main = {
+                .inputIndexes = {0, 1},
+                .operands = {{
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<uint8_t>({136, 136, 130, 132}),
+                            .dimensions = {1, 1, 2, 2},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
+                            .numberOfConsumers = 1,
+                            .scale = 0.5f,
+                            .type = TestOperandType::TENSOR_QUANT8_ASYMM,
+                            .zeroPoint = 128
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<uint16_t>({32, 16, 64, 144}),
+                            .dimensions = {1, 4},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
+                            .numberOfConsumers = 1,
+                            .scale = 0.125f,
+                            .type = TestOperandType::TENSOR_QUANT16_ASYMM,
+                            .zeroPoint = 0
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<bool8>({true}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::BOOL,
+                            .zeroPoint = 0
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<uint8_t>({50}),
+                            .dimensions = {1, 1},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
+                            .numberOfConsumers = 0,
+                            .scale = 0.1f,
+                            .type = TestOperandType::TENSOR_QUANT8_ASYMM,
+                            .zeroPoint = 10
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<uint16_t>({40, 48}),
+                            .dimensions = {1, 1, 2},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
+                            .numberOfConsumers = 0,
+                            .scale = 0.125f,
+                            .type = TestOperandType::TENSOR_QUANT16_ASYMM,
+                            .zeroPoint = 0
+                        }},
+                .operations = {{
+                            .inputs = {0, 1, 2},
+                            .outputs = {3, 4},
+                            .type = TestOperationType::HEATMAP_MAX_KEYPOINT
+                        }},
+                .outputIndexes = {3, 4}
+            },
+        .minSupportedVersion = TestHalVersion::V1_2,
+        .referenced = {}
+    };
+    return model;
+}
+
+const auto dummy_test_model_nchw_quant8_3 = TestModelManager::get().add("heatmap_max_keypoint_nchw_quant8_3", get_test_model_nchw_quant8_3());
+
+}  // namespace generated_tests::heatmap_max_keypoint
+
+namespace generated_tests::heatmap_max_keypoint {
+
+const TestModel& get_test_model_nchw_quant8_all_inputs_as_internal_3() {
+    static TestModel model = {
+        .expectFailure = false,
+        .expectedMultinomialDistributionTolerance = 0,
+        .isRelaxed = false,
+        .main = {
+                .inputIndexes = {1, 5},
+                .operands = {{
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<uint8_t>({}),
+                            .dimensions = {1, 1, 2, 2},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::TEMPORARY_VARIABLE,
+                            .numberOfConsumers = 1,
+                            .scale = 0.5f,
+                            .type = TestOperandType::TENSOR_QUANT8_ASYMM,
+                            .zeroPoint = 128
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<uint16_t>({32, 16, 64, 144}),
+                            .dimensions = {1, 4},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
+                            .numberOfConsumers = 1,
+                            .scale = 0.125f,
+                            .type = TestOperandType::TENSOR_QUANT16_ASYMM,
+                            .zeroPoint = 0
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<bool8>({true}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::BOOL,
+                            .zeroPoint = 0
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<uint8_t>({50}),
+                            .dimensions = {1, 1},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
+                            .numberOfConsumers = 0,
+                            .scale = 0.1f,
+                            .type = TestOperandType::TENSOR_QUANT8_ASYMM,
+                            .zeroPoint = 10
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<uint16_t>({40, 48}),
+                            .dimensions = {1, 1, 2},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
+                            .numberOfConsumers = 0,
+                            .scale = 0.125f,
+                            .type = TestOperandType::TENSOR_QUANT16_ASYMM,
+                            .zeroPoint = 0
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<uint8_t>({136, 136, 130, 132}),
+                            .dimensions = {1, 1, 2, 2},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
+                            .numberOfConsumers = 1,
+                            .scale = 0.5f,
+                            .type = TestOperandType::TENSOR_QUANT8_ASYMM,
+                            .zeroPoint = 128
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<uint8_t>({128}),
+                            .dimensions = {1},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.5f,
+                            .type = TestOperandType::TENSOR_QUANT8_ASYMM,
+                            .zeroPoint = 128
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<int32_t>({0}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::INT32,
+                            .zeroPoint = 0
+                        }},
+                .operations = {{
+                            .inputs = {5, 6, 7},
+                            .outputs = {0},
+                            .type = TestOperationType::ADD
+                        }, {
+                            .inputs = {0, 1, 2},
+                            .outputs = {3, 4},
+                            .type = TestOperationType::HEATMAP_MAX_KEYPOINT
+                        }},
+                .outputIndexes = {3, 4}
+            },
+        .minSupportedVersion = TestHalVersion::V1_2,
+        .referenced = {}
+    };
+    return model;
+}
+
+const auto dummy_test_model_nchw_quant8_all_inputs_as_internal_3 = TestModelManager::get().add("heatmap_max_keypoint_nchw_quant8_all_inputs_as_internal_3", get_test_model_nchw_quant8_all_inputs_as_internal_3());
 
 }  // namespace generated_tests::heatmap_max_keypoint
 
