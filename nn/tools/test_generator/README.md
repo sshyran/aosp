@@ -110,7 +110,7 @@ Example((input1, output1), example2_values, model=model, name="example_name")
 
 ### Specifying Variations
 
-You can add variations to the example so that the test generator can automatically create multiple tests. Currently, 6 types of variation are supported:
+You can add variations to the example so that the test generator can automatically create multiple tests. The following variations are supported:
 
 - DefaultVariation, i.e. no variation
 - DataTypeConverter
@@ -118,6 +118,7 @@ You can add variations to the example so that the test generator can automatical
 - AxisConverter
 - RelaxedModeConverter
 - ActivationConverter
+- AllOutputsAsInternalCoverter
 
 #### DataTypeConverter
 
@@ -192,6 +193,10 @@ converter = ActivationConverter(name="variation_name").Identify(
     [op1, op2, ..., act_parameter]
 )
 ```
+
+#### AllOutputsAsInternalCoverter
+
+Add a dummy ADD operation after each model output to make it as an internal operand. Will skip if the model does not have any output tensor that is compatible with the ADD operation or if the model has more than one operation.
 
 #### Add variation to example
 
