@@ -391,10 +391,6 @@ bool genericActivationPrepare(const Shape& input, Shape* output) {
     return SetShape(input, output);
 }
 
-bool genericNormalizationPrepare(const Shape& input, Shape* output) {
-    return SetShape(input, output);
-}
-
 bool reshapePrepare(const Shape& input, const int32_t* targetDims, const int32_t targetDimsSize,
                     Shape* output) {
     // Reshape allows one of the targetDims components to have the
