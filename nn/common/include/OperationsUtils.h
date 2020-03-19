@@ -303,8 +303,6 @@ bool depthwiseConvPrepare(const Shape& input, const Shape& filter, const Shape& 
 
 bool genericActivationPrepare(const Shape& input, Shape* output);
 
-bool genericNormalizationPrepare(const Shape& input, Shape* output);
-
 bool reshapePrepare(const Shape& input, const int32_t* targetDims, const int32_t targetDimsSize,
                     Shape* output);
 
