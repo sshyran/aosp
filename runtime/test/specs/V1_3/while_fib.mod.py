@@ -53,17 +53,20 @@ def MakeBodyModel():
   model.Operation("FULLY_CONNECTED", fib, matrix, zero_bias, 0).To(fib_out)
   return model
 
-n = Input("n", CounterType)
-fib_out = Output("fib_out", FibType)
-cond = MakeConditionModel()
-body = MakeBodyModel()
-fib_init = Parameter("fib_init", FibType, [1, 1])
-i_init = [1]
-model = Model().Operation("WHILE", cond, body, fib_init, i_init, n).To(fib_out)
+def Test(n, fib):
+  n_ = Input("n", CounterType)
+  fib_out = Output("fib_out", FibType)
+  cond = MakeConditionModel()
+  body = MakeBodyModel()
+  fib_init = Parameter("fib_init", FibType, [1, 1])
+  i_init = [1]
+  model = Model().Operation("WHILE", cond, body, fib_init, i_init, n_).To(fib_out)
+  example = Example({n_: [n], fib_out: fib}, name=str(n), model=model)
+  example.AddVariations(AllOutputsAsInternalCoverter())
 
 # Fibonacci numbers: 1 1 2 3 5 8
-Example({n: [1], fib_out: [1, 1]}, name="1", model=model)
-Example({n: [2], fib_out: [1, 2]}, name="2", model=model)
-Example({n: [3], fib_out: [2, 3]}, name="3", model=model)
-Example({n: [4], fib_out: [3, 5]}, name="4", model=model)
-Example({n: [5], fib_out: [5, 8]}, name="5", model=model)
+Test(n=1, fib=[1, 1])
+Test(n=2, fib=[1, 2])
+Test(n=3, fib=[2, 3])
+Test(n=4, fib=[3, 5])
+Test(n=5, fib=[5, 8])
