@@ -14,11 +14,11 @@
 # limitations under the License.
 #
 
-# Model: z = if (x) then (y + 100) else (y - 100)
+# Test with multiple references to the same referenced model.
+# Model: z = if (x) then (y + 100) else (y + 100)
 
 input_data = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
 output_add = [y + 100 for y in input_data]
-output_sub = [y - 100 for y in input_data]
 
 ValueType = ["TENSOR_FLOAT32", [3, 4]]
 BoolType = ["TENSOR_BOOL8", [1]]
@@ -34,10 +34,10 @@ def Test(x, y, z, name):
   y = Input("y", ValueType)
   z = Output("z", ValueType)
   then_model = MakeBranchModel("ADD")
-  else_model = MakeBranchModel("SUB")
+  else_model = then_model
   model = Model().Operation("IF", x, then_model, else_model, y).To(z)
   example = Example({x: [x_data], y: y_data, z: z_data}, name=name)
   example.AddVariations(AllOutputsAsInternalCoverter())
 
 Test(x=True, y=input_data, z=output_add, name="true")
-Test(x=False, y=input_data, z=output_sub, name="false")
+Test(x=False, y=input_data, z=output_add, name="false")
