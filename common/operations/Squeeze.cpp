@@ -66,6 +66,10 @@ bool validate(const IOperationValidationContext* context) {
 }
 
 bool prepare(IOperationExecutionContext* context) {
+    // Only the squeeze dims tensor can be omitted.
+    NN_RET_CHECK(!context->isOmittedInput(kInputTensor));
+    NN_RET_CHECK(!context->isOmittedOutput(kOutputTensor));
+
     const int32_t* squeezeDims = context->getInputBuffer<int32_t>(kSqueezeDims);
     const Shape inputShape = context->getInputShape(kInputTensor);
     const Shape squeezeDimsShape = context->getInputShape(kSqueezeDims);
@@ -75,12 +79,11 @@ bool prepare(IOperationExecutionContext* context) {
     NN_OPS_CHECK(squeezeDimsShape.type == OperandType::TENSOR_INT32);
     NN_OPS_CHECK(getNumberOfDimensions(squeezeDimsShape) == 1);
 
-    int32_t squeezeDimsSize = static_cast<int32_t>(getSizeOfDimension(squeezeDimsShape, 0));
     std::vector<bool> shouldSqueeze(numInputDims, false);
     int32_t numDimsSqueezed = 0;
 
-    if (squeezeDimsSize == 0) {
-        // If squeezeDimsSize is 0, all dims with value 1 will be squeezed.
+    if (context->isOmittedInput(kSqueezeDims)) {
+        // If squeezeDims is omitted, all dims with value 1 will be squeezed.
         for (int32_t idx = 0; idx < numInputDims; ++idx) {
             if (getSizeOfDimension(inputShape, idx) == 1) {
                 shouldSqueeze[idx] = true;
@@ -88,6 +91,7 @@ bool prepare(IOperationExecutionContext* context) {
             }
         }
     } else {
+        int32_t squeezeDimsSize = static_cast<int32_t>(getSizeOfDimension(squeezeDimsShape, 0));
         for (int32_t idx = 0; idx < squeezeDimsSize; ++idx) {
             int32_t current =
                     squeezeDims[idx] < 0 ? squeezeDims[idx] + numInputDims : squeezeDims[idx];
@@ -127,7 +131,8 @@ bool execute(IOperationExecutionContext* context) {
 }
 }  // namespace squeeze
 
-NN_REGISTER_OPERATION(SQUEEZE, "SQUEEZE", squeeze::validate, squeeze::prepare, squeeze::execute);
+NN_REGISTER_OPERATION(SQUEEZE, "SQUEEZE", squeeze::validate, squeeze::prepare, squeeze::execute,
+                      .allowOmittedOperand = true);
 
 }  // namespace nn
 }  // namespace android
