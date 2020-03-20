@@ -18,7 +18,7 @@
 %define APILevel29 API level 29
 %define APILevel30 API level 30
 %define BeforeAPILevel29For Before API level 29, for
-%define or_1.2 or {@link ANEURALNETWORKS_%{1}} 
+%define or_1.2 or {@link ANEURALNETWORKS_%{1}}
 %define-lines AVAIL27
      *
      * Available since API level 27.
@@ -97,7 +97,7 @@
 
 %kind hal_1.2 hal_1.3
 %define BeforeAPILevel29For Before HAL version 1.2, for
-%define or_1.2 or {@link OperandType::%{1}} 
+%define or_1.2 or {@link OperandType::%{1}}
 %/kind
 
 %kind hal_1.2
@@ -132,7 +132,7 @@
 %/kind
 
 %kind ndk hal_1.3
-%define AndQuant8Signed 
+%define AndQuant8Signed
 %/kind
 %kind hal_1.0 hal_1.1 hal_1.2
 %define AndQuant8Signed
@@ -522,7 +522,7 @@
 %/kind
      * * 2: A 1-D tensor, of shape [depth_out], specifying the bias. For input
      *      tensor of type {@link %{OperandTypeLinkPfx}TENSOR_FLOAT32}
-     *      %{or_1.2 TENSOR_FLOAT16}the bias must be of the same type.
+     *      %{or_1.2 TENSOR_FLOAT16} the bias must be of the same type.
 %kind ndk hal_1.3+
      *      For filter tensor of {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM}
      *      and {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM_SIGNED},
@@ -582,7 +582,7 @@
 %/kind
      * * 2: A 1-D tensor, of shape [depth_out], specifying the bias. For input
      *      tensor of type {@link %{OperandTypeLinkPfx}TENSOR_FLOAT32}
-     *      %{or_1.2 TENSOR_FLOAT16}the bias must be of the same
+     *      %{or_1.2 TENSOR_FLOAT16} the bias must be of the same
      *      type.
 %kind ndk hal_1.3+
      *      For filter tensor of {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM}
@@ -706,7 +706,7 @@
 %/kind
      * * 2: A 1-D tensor, of shape [depth_out], specifying the bias. For input
      *      tensor of type {@link %{OperandTypeLinkPfx}TENSOR_FLOAT32}
-     *      %{or_1.2 TENSOR_FLOAT16}the bias must be of the same type.
+     *      %{or_1.2 TENSOR_FLOAT16} the bias must be of the same type.
 %kind ndk hal_1.3+
      *      For filter tensor of {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM}
      *      and {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM_SIGNED},
@@ -761,7 +761,7 @@
      *      specifying the filter.
      * * 2: A 1-D tensor, of shape [depth_out], specifying the bias. For input
      *      tensor of type {@link %{OperandTypeLinkPfx}TENSOR_FLOAT32}
-     *      %{or_1.2 TENSOR_FLOAT16}the bias must be of the same type.
+     *      %{or_1.2 TENSOR_FLOAT16} the bias must be of the same type.
 %kind ndk hal_1.3+
      *      For filter tensor of {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM}
      *      and {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM_SIGNED},
@@ -1154,6 +1154,10 @@
 %kind ndk hal_1.3+
      *      For {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM_SIGNED},
      *      the scale must be 1.f / 128 and the zeroPoint must be 0.
+     *
+     *      NOTE: Before %{APILevel30}, if the elements along an axis are all zeros,
+     *      the result is undefined. Since %{APILevel30}, if the elements along an axis
+     *      are all zeros, the result is logical zero.
 %/kind
 %insert-lines AVAIL27
      */

@@ -352,14 +352,14 @@ class Input(InOut):
 
 # A user-declared output operand
 class Output(InOut):
-    def __init__(self, name, opType, backward=None, skipRenaming=False):
-        InOut.__init__(self, name, opType, backward, skipRenaming=skipRenaming)
+    def __init__(self, name, opType, backward=None, skipRenaming=False, extraParams=None):
+        InOut.__init__(self, name, opType, backward, skipRenaming=skipRenaming, extraParams=extraParams)
         self.lifetime = "SUBGRAPH_OUTPUT"
 
 # An output that we don't want to compare the results
 class IgnoredOutput(Output):
-    def __init__(self, name, opType, backward=None, skipRenaming=False):
-        Output.__init__(self, name, opType, backward, skipRenaming=skipRenaming)
+    def __init__(self, name, opType, backward=None, skipRenaming=False, extraParams=None):
+        Output.__init__(self, name, opType, backward, skipRenaming=skipRenaming, extraParams=extraParams)
         self.lifetime = "SUBGRAPH_OUTPUT"
     def Feed(self, value):
         numElements = reduce(lambda x,y: x*y, self.type.dimensions, 1)
@@ -372,7 +372,12 @@ class Parameter(Operand):
         Operand.__init__(self, name, opType, value, backward, skipRenaming=skipRenaming,
                          extraParams=extraParams)
         self.initializer = NamedVariable(str(self) + "_init")
-        self.lifetime = "CONSTANT_REFERENCE" if Configuration.useSHM() else "CONSTANT_COPY"
+        if value is None:
+            self.lifetime = "NO_VALUE"
+        elif Configuration.useSHM():
+            self.lifetime = "CONSTANT_REFERENCE"
+        else:
+            self.lifetime = "CONSTANT_COPY"
 
 # A shortcut for parameters of INT32
 class Int32Scalar(Parameter, ImplicitParameter):
@@ -978,6 +983,12 @@ class AllTensorsAsInputsConverter(ModelVariation):
         model.UpdateEquivalentOperands([op.ConvertTo(Input) for op in tensorParams])
         return model
 
+def CompatibleWithADD(op):
+    return (len(op.type.dimensions) <= 4 and
+            len(op.value) > 0 and
+            op.type.type in ["TENSOR_FLOAT32", "TENSOR_QUANT8_ASYMM",
+                             "TENSOR_FLOAT16", "TENSOR_QUANT8_ASYMM_SIGNED"])
+
 # Add a dummy ADD operation before each model input to make it as an internal operand.
 class AllInputsAsInternalCoverter(ModelVariation):
     supportsSubgraphs = True
@@ -994,23 +1005,50 @@ class AllInputsAsInternalCoverter(ModelVariation):
             raise SkipVariation
 
         # Find all input tensors that can be an output of the ADD operation.
-        # Currently ADD only support FLOAT32/16 and QUANT8_ASYMM tensors with rank <= 4.
-        CompatibleWithADD = lambda op: len(op.type.dimensions) <= 4 and len(op.value) > 0 and \
-            op.type.type in ["TENSOR_FLOAT32", "TENSOR_QUANT8_ASYMM",
-                             "TENSOR_FLOAT16", "TENSOR_QUANT8_ASYMM_SIGNED"]
         modelInputs = [i for i in model.GetInputs() if CompatibleWithADD(i)]
         if not modelInputs:
             raise SkipVariation
 
-        # Make every input a sink of a dummy operation: input_tmp ADD dummy = input.
+        # Make every input an output of a dummy operation: input_new ADD dummy = input.
         for op in modelInputs:
-            newInput = op.ConvertTo(Input, name=op.name + "_tmp")
+            newInput = op.ConvertTo(Input, name=op.name + "_new")
             dummyParam = Parameter("dummy", (op.type.type, [1], op.type.scale, op.type.zeroPoint),
                                    [op.type.zeroPoint])
             model.Operation("ADD", newInput, dummyParam, 0).To(op)
 
         # Convert to internal operands.
         model.UpdateEquivalentOperands([op.ConvertTo(Internal) for op in modelInputs])
+        return model
+
+# Add a dummy ADD operation after each model output to make it as an internal operand.
+class AllOutputsAsInternalCoverter(ModelVariation):
+    supportsSubgraphs = True
+
+    def __init__(self, name=None):
+        ModelVariation.__init__(self, name=name)
+
+    def SetToDefaultName(self):
+        self.name = "all_outputs_as_internal"
+        return self
+
+    def TransformModel(self, model):
+        if len(model.operations) != 1:
+            raise SkipVariation
+
+        # Find all output tensors that can be an input to an ADD operation.
+        modelOutputs = [o for o in model.GetOutputs() if CompatibleWithADD(o)]
+        if not modelOutputs:
+            raise SkipVariation
+
+        # Make every output an input of a dummy operation: output ADD dummy = output_new.
+        for op in modelOutputs:
+            newOutput = op.ConvertTo(Output, name=op.name + "_new")
+            dummyParam = Parameter("dummy", (op.type.type, [1], op.type.scale, op.type.zeroPoint),
+                                   [op.type.zeroPoint])
+            model.Operation("ADD", op, dummyParam, 0).To(newOutput)
+
+        # Convert to internal operands.
+        model.UpdateEquivalentOperands([op.ConvertTo(Internal) for op in modelOutputs])
         return model
 
 # An example is always attached to a model, and could have multiple variations
@@ -1331,6 +1369,9 @@ def AtomicWrite(filename, data):
 def GetExecScope():
     return dict(
         ActivationConverter=ActivationConverter,
+        AllInputsAsInternalCoverter=AllInputsAsInternalCoverter,
+        AllOutputsAsInternalCoverter=AllOutputsAsInternalCoverter,
+        AllTensorsAsInputsConverter=AllTensorsAsInputsConverter,
         BoolScalar=BoolScalar,
         Configuration=Configuration,
         DataLayoutConverter=DataLayoutConverter,

@@ -19,12 +19,6 @@ o = Output("op2", "TENSOR_FLOAT32", "{2, 2, 2, 6}") # output
 axis = Int32Scalar("axis", -1) # last axis
 input0 = {i: [-1.1, .6, .7, 1.2, -.7, .1] * 8}
 
-# TEST 1: radius = 20, bias = 0.0, alpha = 1.0, beta = 0.5
-Model("axis").Operation("LOCAL_RESPONSE_NORMALIZATION", i, 20, 0.0, 1.0, 0.5, axis).To(o)
-Example((input0, {
-        o: [-.55, .3, .35, .6, -.35, .05] * 8
-    })).AddAllDimsAndAxis(i, o, axis).AddVariations("relaxed", "float16")
-
 # TEST 2: radius = 20, bias = 9.0, alpha = 4.0, beta = 0.5
 Model("axis").Operation("LOCAL_RESPONSE_NORMALIZATION", i, 20, 9.0, 4.0, 0.5, axis).To(o)
 Example((input0, {
