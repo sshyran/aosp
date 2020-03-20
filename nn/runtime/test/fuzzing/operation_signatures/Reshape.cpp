@@ -390,16 +390,31 @@ static void transposeConstructor(TestOperandType, uint32_t rank, RandomOperation
     setSameQuantization(op->outputs[0], op->inputs[0]);
 }
 
-// TODO: Test the case when the second input is omitted.
-#define DEFINE_TRANSPOSE_SIGNATURE(ver, ...)                                          \
-    DEFINE_OPERATION_SIGNATURE(TRANSPOSE_##ver){                                      \
-            .opType = TestOperationType::TRANSPOSE,                                   \
-            .supportedDataTypes = {__VA_ARGS__},                                      \
-            .supportedRanks = {1, 2, 3, 4},                                           \
-            .version = TestHalVersion::ver,                                           \
-            .inputs = {INPUT_DEFAULT, PARAMETER_NONE(TestOperandType::TENSOR_INT32)}, \
-            .outputs = {OUTPUT_DEFAULT},                                              \
-            .constructor = transposeConstructor};
+static void transposeOmittedConstructor(TestOperandType, uint32_t rank, RandomOperation* op) {
+    NN_FUZZER_CHECK(rank == 2);
+    op->inputs[0]->dimensions = {RandomVariableType::FREE, RandomVariableType::FREE};
+    op->inputs[1]->dimensions = {2};
+    op->outputs[0]->dimensions = {op->inputs[0]->dimensions[1], op->inputs[0]->dimensions[0]};
+    setSameQuantization(op->outputs[0], op->inputs[0]);
+}
+
+#define DEFINE_TRANSPOSE_SIGNATURE(ver, ...)                                              \
+    DEFINE_OPERATION_SIGNATURE(TRANSPOSE_##ver){                                          \
+            .opType = TestOperationType::TRANSPOSE,                                       \
+            .supportedDataTypes = {__VA_ARGS__},                                          \
+            .supportedRanks = {1, 2, 3, 4},                                               \
+            .version = TestHalVersion::ver,                                               \
+            .inputs = {INPUT_DEFAULT, PARAMETER_NONE(TestOperandType::TENSOR_INT32)},     \
+            .outputs = {OUTPUT_DEFAULT},                                                  \
+            .constructor = transposeConstructor};                                         \
+    DEFINE_OPERATION_SIGNATURE(TRANSPOSE_omitted_##ver){                                  \
+            .opType = TestOperationType::TRANSPOSE,                                       \
+            .supportedDataTypes = {__VA_ARGS__},                                          \
+            .supportedRanks = {2},                                                        \
+            .version = TestHalVersion::ver,                                               \
+            .inputs = {INPUT_DEFAULT, PARAMETER_NO_VALUE(TestOperandType::TENSOR_INT32)}, \
+            .outputs = {OUTPUT_DEFAULT},                                                  \
+            .constructor = transposeOmittedConstructor};
 
 DEFINE_TRANSPOSE_SIGNATURE(V1_1, TestOperandType::TENSOR_FLOAT32,
                            TestOperandType::TENSOR_QUANT8_ASYMM);
@@ -458,16 +473,44 @@ static void squeezeConstructor(TestOperandType, uint32_t rank, RandomOperation* 
     setSameQuantization(op->outputs[0], op->inputs[0]);
 }
 
-// TODO: Test the case when the second input is omitted.
-#define DEFINE_SQUEEZE_SIGNATURE(ver, ...)                                            \
-    DEFINE_OPERATION_SIGNATURE(SQUEEZE_##ver){                                        \
-            .opType = TestOperationType::SQUEEZE,                                     \
-            .supportedDataTypes = {__VA_ARGS__},                                      \
-            .supportedRanks = {1, 2, 3, 4},                                           \
-            .version = TestHalVersion::ver,                                           \
-            .inputs = {INPUT_DEFAULT, PARAMETER_NONE(TestOperandType::TENSOR_INT32)}, \
-            .outputs = {OUTPUT_DEFAULT},                                              \
-            .constructor = squeezeConstructor};
+static void squeezeOmittedConstructor(TestOperandType, uint32_t rank, RandomOperation* op) {
+    // A boolean array indicating whether each dimension is selected to be squeezed.
+    std::vector<bool> squeeze(rank, false);
+    for (uint32_t i = 0; i < rank; i++) {
+        squeeze[i] = getBernoulli(0.5f);
+    }
+    op->inputs[0]->dimensions.resize(rank);
+    op->inputs[1]->dimensions = {0};
+    for (uint32_t i = 0; i < rank; i++) {
+        if (squeeze[i]) {
+            op->inputs[0]->dimensions[i] = 1;
+        } else {
+            // Set the dimension to any value greater than 1 to prevent from getting sqeezed.
+            op->inputs[0]->dimensions[i] = RandomVariableType::FREE;
+            op->inputs[0]->dimensions[i].setGreaterThan(1);
+            op->outputs[0]->dimensions.emplace_back(op->inputs[0]->dimensions[i]);
+        }
+    }
+    setSameQuantization(op->outputs[0], op->inputs[0]);
+}
+
+#define DEFINE_SQUEEZE_SIGNATURE(ver, ...)                                                \
+    DEFINE_OPERATION_SIGNATURE(SQUEEZE_##ver){                                            \
+            .opType = TestOperationType::SQUEEZE,                                         \
+            .supportedDataTypes = {__VA_ARGS__},                                          \
+            .supportedRanks = {1, 2, 3, 4},                                               \
+            .version = TestHalVersion::ver,                                               \
+            .inputs = {INPUT_DEFAULT, PARAMETER_NONE(TestOperandType::TENSOR_INT32)},     \
+            .outputs = {OUTPUT_DEFAULT},                                                  \
+            .constructor = squeezeConstructor};                                           \
+    DEFINE_OPERATION_SIGNATURE(SQUEEZE_omitted_##ver){                                    \
+            .opType = TestOperationType::SQUEEZE,                                         \
+            .supportedDataTypes = {__VA_ARGS__},                                          \
+            .supportedRanks = {1, 2, 3, 4},                                               \
+            .version = TestHalVersion::ver,                                               \
+            .inputs = {INPUT_DEFAULT, PARAMETER_NO_VALUE(TestOperandType::TENSOR_INT32)}, \
+            .outputs = {OUTPUT_DEFAULT},                                                  \
+            .constructor = squeezeOmittedConstructor};
 
 DEFINE_SQUEEZE_SIGNATURE(V1_1, TestOperandType::TENSOR_FLOAT32,
                          TestOperandType::TENSOR_QUANT8_ASYMM);
