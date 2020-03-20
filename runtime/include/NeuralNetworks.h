@@ -1013,6 +1013,10 @@ typedef enum {
      *      For {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED},
      *      the scale must be 1.f / 128 and the zeroPoint must be 0.
      *
+     *      NOTE: Before API level 30, if the elements along an axis are all zeros,
+     *      the result is undefined. Since API level 30, if the elements along an axis
+     *      are all zeros, the result is logical zero.
+     *
      * Available since API level 27.
      */
     ANEURALNETWORKS_L2_NORMALIZATION = 11,
