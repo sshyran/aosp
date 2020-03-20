@@ -1013,6 +1013,10 @@ typedef enum {
      *      For {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED},
      *      the scale must be 1.f / 128 and the zeroPoint must be 0.
      *
+     *      NOTE: Before API level 30, if the elements along an axis are all zeros,
+     *      the result is undefined. Since API level 30, if the elements along an axis
+     *      are all zeros, the result is logical zero.
+     *
      * Available since API level 27.
      */
     ANEURALNETWORKS_L2_NORMALIZATION = 11,
@@ -8062,12 +8066,6 @@ int ANeuralNetworksEvent_getSyncFenceFd(const ANeuralNetworksEvent* event, int* 
  * or {@link ANeuralNetworksEvent_wait} on the event object. If the device has a
  * feature level reported by {@link ANeuralNetworksDevice_getFeatureLevel} that
  * is lower than 30, then the timeout duration hints will be ignored.
- *
- * If this execution contains a {@link ANEURALNETWORKS_WHILE} operation, and
- * the condition model does not output false within the loop timeout duration,
- * then execution will be aborted and {@link ANEURALNETWORKS_MISSED_DEADLINE_*}
- * will be returned through {@link ANeuralNetworksEvent_wait} on the event
- * object.
  *
  * If this execution contains a {@link ANEURALNETWORKS_WHILE} operation, and
  * the condition model does not output false within the loop timeout duration,

@@ -11844,3 +11844,891 @@ const auto dummy_test_model_dim1_axis0_neg_quant8_all_inputs_as_internal = TestM
 
 }  // namespace generated_tests::l2_normalization_axis
 
+namespace generated_tests::l2_normalization_axis {
+
+const TestModel& get_test_model_corner_case_dim2_axis0() {
+    static TestModel model = {
+        .expectFailure = false,
+        .expectedMultinomialDistributionTolerance = 0,
+        .isRelaxed = false,
+        .main = {
+                .inputIndexes = {0},
+                .operands = {{
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<uint8_t>({245, 247}),
+                            .dimensions = {1, 2},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
+                            .numberOfConsumers = 1,
+                            .scale = 0.904414f,
+                            .type = TestOperandType::TENSOR_QUANT8_ASYMM,
+                            .zeroPoint = 246
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<int32_t>({0}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::INT32,
+                            .zeroPoint = 0
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<uint8_t>({0, 255}),
+                            .dimensions = {1, 2},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
+                            .numberOfConsumers = 0,
+                            .scale = 0.0078125f,
+                            .type = TestOperandType::TENSOR_QUANT8_ASYMM,
+                            .zeroPoint = 128
+                        }},
+                .operations = {{
+                            .inputs = {0, 1},
+                            .outputs = {2},
+                            .type = TestOperationType::L2_NORMALIZATION
+                        }},
+                .outputIndexes = {2}
+            },
+        .minSupportedVersion = TestHalVersion::V1_2,
+        .referenced = {}
+    };
+    return model;
+}
+
+const auto dummy_test_model_corner_case_dim2_axis0 = TestModelManager::get().add("l2_normalization_axis_corner_case_dim2_axis0", get_test_model_corner_case_dim2_axis0());
+
+}  // namespace generated_tests::l2_normalization_axis
+
+namespace generated_tests::l2_normalization_axis {
+
+const TestModel& get_test_model_corner_case_dim2_axis0_all_inputs_as_internal() {
+    static TestModel model = {
+        .expectFailure = false,
+        .expectedMultinomialDistributionTolerance = 0,
+        .isRelaxed = false,
+        .main = {
+                .inputIndexes = {3},
+                .operands = {{
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<uint8_t>({}),
+                            .dimensions = {1, 2},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::TEMPORARY_VARIABLE,
+                            .numberOfConsumers = 1,
+                            .scale = 0.904414f,
+                            .type = TestOperandType::TENSOR_QUANT8_ASYMM,
+                            .zeroPoint = 246
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<int32_t>({0}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::INT32,
+                            .zeroPoint = 0
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<uint8_t>({0, 255}),
+                            .dimensions = {1, 2},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
+                            .numberOfConsumers = 0,
+                            .scale = 0.0078125f,
+                            .type = TestOperandType::TENSOR_QUANT8_ASYMM,
+                            .zeroPoint = 128
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<uint8_t>({245, 247}),
+                            .dimensions = {1, 2},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
+                            .numberOfConsumers = 1,
+                            .scale = 0.904414f,
+                            .type = TestOperandType::TENSOR_QUANT8_ASYMM,
+                            .zeroPoint = 246
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<uint8_t>({246}),
+                            .dimensions = {1},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.904414f,
+                            .type = TestOperandType::TENSOR_QUANT8_ASYMM,
+                            .zeroPoint = 246
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<int32_t>({0}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::INT32,
+                            .zeroPoint = 0
+                        }},
+                .operations = {{
+                            .inputs = {3, 4, 5},
+                            .outputs = {0},
+                            .type = TestOperationType::ADD
+                        }, {
+                            .inputs = {0, 1},
+                            .outputs = {2},
+                            .type = TestOperationType::L2_NORMALIZATION
+                        }},
+                .outputIndexes = {2}
+            },
+        .minSupportedVersion = TestHalVersion::V1_2,
+        .referenced = {}
+    };
+    return model;
+}
+
+const auto dummy_test_model_corner_case_dim2_axis0_all_inputs_as_internal = TestModelManager::get().add("l2_normalization_axis_corner_case_dim2_axis0_all_inputs_as_internal", get_test_model_corner_case_dim2_axis0_all_inputs_as_internal());
+
+}  // namespace generated_tests::l2_normalization_axis
+
+namespace generated_tests::l2_normalization_axis {
+
+const TestModel& get_test_model_corner_case_dim2_axis0_neg() {
+    static TestModel model = {
+        .expectFailure = false,
+        .expectedMultinomialDistributionTolerance = 0,
+        .isRelaxed = false,
+        .main = {
+                .inputIndexes = {0},
+                .operands = {{
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<uint8_t>({245, 247}),
+                            .dimensions = {1, 2},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
+                            .numberOfConsumers = 1,
+                            .scale = 0.904414f,
+                            .type = TestOperandType::TENSOR_QUANT8_ASYMM,
+                            .zeroPoint = 246
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<int32_t>({-2}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::INT32,
+                            .zeroPoint = 0
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<uint8_t>({0, 255}),
+                            .dimensions = {1, 2},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
+                            .numberOfConsumers = 0,
+                            .scale = 0.0078125f,
+                            .type = TestOperandType::TENSOR_QUANT8_ASYMM,
+                            .zeroPoint = 128
+                        }},
+                .operations = {{
+                            .inputs = {0, 1},
+                            .outputs = {2},
+                            .type = TestOperationType::L2_NORMALIZATION
+                        }},
+                .outputIndexes = {2}
+            },
+        .minSupportedVersion = TestHalVersion::V1_2,
+        .referenced = {}
+    };
+    return model;
+}
+
+const auto dummy_test_model_corner_case_dim2_axis0_neg = TestModelManager::get().add("l2_normalization_axis_corner_case_dim2_axis0_neg", get_test_model_corner_case_dim2_axis0_neg());
+
+}  // namespace generated_tests::l2_normalization_axis
+
+namespace generated_tests::l2_normalization_axis {
+
+const TestModel& get_test_model_corner_case_dim2_axis0_neg_all_inputs_as_internal() {
+    static TestModel model = {
+        .expectFailure = false,
+        .expectedMultinomialDistributionTolerance = 0,
+        .isRelaxed = false,
+        .main = {
+                .inputIndexes = {3},
+                .operands = {{
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<uint8_t>({}),
+                            .dimensions = {1, 2},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::TEMPORARY_VARIABLE,
+                            .numberOfConsumers = 1,
+                            .scale = 0.904414f,
+                            .type = TestOperandType::TENSOR_QUANT8_ASYMM,
+                            .zeroPoint = 246
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<int32_t>({-2}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::INT32,
+                            .zeroPoint = 0
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<uint8_t>({0, 255}),
+                            .dimensions = {1, 2},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
+                            .numberOfConsumers = 0,
+                            .scale = 0.0078125f,
+                            .type = TestOperandType::TENSOR_QUANT8_ASYMM,
+                            .zeroPoint = 128
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<uint8_t>({245, 247}),
+                            .dimensions = {1, 2},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
+                            .numberOfConsumers = 1,
+                            .scale = 0.904414f,
+                            .type = TestOperandType::TENSOR_QUANT8_ASYMM,
+                            .zeroPoint = 246
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<uint8_t>({246}),
+                            .dimensions = {1},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.904414f,
+                            .type = TestOperandType::TENSOR_QUANT8_ASYMM,
+                            .zeroPoint = 246
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<int32_t>({0}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::INT32,
+                            .zeroPoint = 0
+                        }},
+                .operations = {{
+                            .inputs = {3, 4, 5},
+                            .outputs = {0},
+                            .type = TestOperationType::ADD
+                        }, {
+                            .inputs = {0, 1},
+                            .outputs = {2},
+                            .type = TestOperationType::L2_NORMALIZATION
+                        }},
+                .outputIndexes = {2}
+            },
+        .minSupportedVersion = TestHalVersion::V1_2,
+        .referenced = {}
+    };
+    return model;
+}
+
+const auto dummy_test_model_corner_case_dim2_axis0_neg_all_inputs_as_internal = TestModelManager::get().add("l2_normalization_axis_corner_case_dim2_axis0_neg_all_inputs_as_internal", get_test_model_corner_case_dim2_axis0_neg_all_inputs_as_internal());
+
+}  // namespace generated_tests::l2_normalization_axis
+
+namespace generated_tests::l2_normalization_axis {
+
+const TestModel& get_test_model_corner_case_dim2_axis1() {
+    static TestModel model = {
+        .expectFailure = false,
+        .expectedMultinomialDistributionTolerance = 0,
+        .isRelaxed = false,
+        .main = {
+                .inputIndexes = {0},
+                .operands = {{
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<uint8_t>({245, 247}),
+                            .dimensions = {2, 1},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
+                            .numberOfConsumers = 1,
+                            .scale = 0.904414f,
+                            .type = TestOperandType::TENSOR_QUANT8_ASYMM,
+                            .zeroPoint = 246
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<int32_t>({1}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::INT32,
+                            .zeroPoint = 0
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<uint8_t>({0, 255}),
+                            .dimensions = {2, 1},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
+                            .numberOfConsumers = 0,
+                            .scale = 0.0078125f,
+                            .type = TestOperandType::TENSOR_QUANT8_ASYMM,
+                            .zeroPoint = 128
+                        }},
+                .operations = {{
+                            .inputs = {0, 1},
+                            .outputs = {2},
+                            .type = TestOperationType::L2_NORMALIZATION
+                        }},
+                .outputIndexes = {2}
+            },
+        .minSupportedVersion = TestHalVersion::V1_2,
+        .referenced = {}
+    };
+    return model;
+}
+
+const auto dummy_test_model_corner_case_dim2_axis1 = TestModelManager::get().add("l2_normalization_axis_corner_case_dim2_axis1", get_test_model_corner_case_dim2_axis1());
+
+}  // namespace generated_tests::l2_normalization_axis
+
+namespace generated_tests::l2_normalization_axis {
+
+const TestModel& get_test_model_corner_case_dim2_axis1_all_inputs_as_internal() {
+    static TestModel model = {
+        .expectFailure = false,
+        .expectedMultinomialDistributionTolerance = 0,
+        .isRelaxed = false,
+        .main = {
+                .inputIndexes = {3},
+                .operands = {{
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<uint8_t>({}),
+                            .dimensions = {2, 1},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::TEMPORARY_VARIABLE,
+                            .numberOfConsumers = 1,
+                            .scale = 0.904414f,
+                            .type = TestOperandType::TENSOR_QUANT8_ASYMM,
+                            .zeroPoint = 246
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<int32_t>({1}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::INT32,
+                            .zeroPoint = 0
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<uint8_t>({0, 255}),
+                            .dimensions = {2, 1},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
+                            .numberOfConsumers = 0,
+                            .scale = 0.0078125f,
+                            .type = TestOperandType::TENSOR_QUANT8_ASYMM,
+                            .zeroPoint = 128
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<uint8_t>({245, 247}),
+                            .dimensions = {2, 1},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
+                            .numberOfConsumers = 1,
+                            .scale = 0.904414f,
+                            .type = TestOperandType::TENSOR_QUANT8_ASYMM,
+                            .zeroPoint = 246
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<uint8_t>({246}),
+                            .dimensions = {1},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.904414f,
+                            .type = TestOperandType::TENSOR_QUANT8_ASYMM,
+                            .zeroPoint = 246
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<int32_t>({0}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::INT32,
+                            .zeroPoint = 0
+                        }},
+                .operations = {{
+                            .inputs = {3, 4, 5},
+                            .outputs = {0},
+                            .type = TestOperationType::ADD
+                        }, {
+                            .inputs = {0, 1},
+                            .outputs = {2},
+                            .type = TestOperationType::L2_NORMALIZATION
+                        }},
+                .outputIndexes = {2}
+            },
+        .minSupportedVersion = TestHalVersion::V1_2,
+        .referenced = {}
+    };
+    return model;
+}
+
+const auto dummy_test_model_corner_case_dim2_axis1_all_inputs_as_internal = TestModelManager::get().add("l2_normalization_axis_corner_case_dim2_axis1_all_inputs_as_internal", get_test_model_corner_case_dim2_axis1_all_inputs_as_internal());
+
+}  // namespace generated_tests::l2_normalization_axis
+
+namespace generated_tests::l2_normalization_axis {
+
+const TestModel& get_test_model_corner_case_dim2_axis1_neg() {
+    static TestModel model = {
+        .expectFailure = false,
+        .expectedMultinomialDistributionTolerance = 0,
+        .isRelaxed = false,
+        .main = {
+                .inputIndexes = {0},
+                .operands = {{
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<uint8_t>({245, 247}),
+                            .dimensions = {2, 1},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
+                            .numberOfConsumers = 1,
+                            .scale = 0.904414f,
+                            .type = TestOperandType::TENSOR_QUANT8_ASYMM,
+                            .zeroPoint = 246
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<int32_t>({-1}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::INT32,
+                            .zeroPoint = 0
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<uint8_t>({0, 255}),
+                            .dimensions = {2, 1},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
+                            .numberOfConsumers = 0,
+                            .scale = 0.0078125f,
+                            .type = TestOperandType::TENSOR_QUANT8_ASYMM,
+                            .zeroPoint = 128
+                        }},
+                .operations = {{
+                            .inputs = {0, 1},
+                            .outputs = {2},
+                            .type = TestOperationType::L2_NORMALIZATION
+                        }},
+                .outputIndexes = {2}
+            },
+        .minSupportedVersion = TestHalVersion::V1_2,
+        .referenced = {}
+    };
+    return model;
+}
+
+const auto dummy_test_model_corner_case_dim2_axis1_neg = TestModelManager::get().add("l2_normalization_axis_corner_case_dim2_axis1_neg", get_test_model_corner_case_dim2_axis1_neg());
+
+}  // namespace generated_tests::l2_normalization_axis
+
+namespace generated_tests::l2_normalization_axis {
+
+const TestModel& get_test_model_corner_case_dim2_axis1_neg_all_inputs_as_internal() {
+    static TestModel model = {
+        .expectFailure = false,
+        .expectedMultinomialDistributionTolerance = 0,
+        .isRelaxed = false,
+        .main = {
+                .inputIndexes = {3},
+                .operands = {{
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<uint8_t>({}),
+                            .dimensions = {2, 1},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::TEMPORARY_VARIABLE,
+                            .numberOfConsumers = 1,
+                            .scale = 0.904414f,
+                            .type = TestOperandType::TENSOR_QUANT8_ASYMM,
+                            .zeroPoint = 246
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<int32_t>({-1}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::INT32,
+                            .zeroPoint = 0
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<uint8_t>({0, 255}),
+                            .dimensions = {2, 1},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
+                            .numberOfConsumers = 0,
+                            .scale = 0.0078125f,
+                            .type = TestOperandType::TENSOR_QUANT8_ASYMM,
+                            .zeroPoint = 128
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<uint8_t>({245, 247}),
+                            .dimensions = {2, 1},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
+                            .numberOfConsumers = 1,
+                            .scale = 0.904414f,
+                            .type = TestOperandType::TENSOR_QUANT8_ASYMM,
+                            .zeroPoint = 246
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<uint8_t>({246}),
+                            .dimensions = {1},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.904414f,
+                            .type = TestOperandType::TENSOR_QUANT8_ASYMM,
+                            .zeroPoint = 246
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<int32_t>({0}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::INT32,
+                            .zeroPoint = 0
+                        }},
+                .operations = {{
+                            .inputs = {3, 4, 5},
+                            .outputs = {0},
+                            .type = TestOperationType::ADD
+                        }, {
+                            .inputs = {0, 1},
+                            .outputs = {2},
+                            .type = TestOperationType::L2_NORMALIZATION
+                        }},
+                .outputIndexes = {2}
+            },
+        .minSupportedVersion = TestHalVersion::V1_2,
+        .referenced = {}
+    };
+    return model;
+}
+
+const auto dummy_test_model_corner_case_dim2_axis1_neg_all_inputs_as_internal = TestModelManager::get().add("l2_normalization_axis_corner_case_dim2_axis1_neg_all_inputs_as_internal", get_test_model_corner_case_dim2_axis1_neg_all_inputs_as_internal());
+
+}  // namespace generated_tests::l2_normalization_axis
+
+namespace generated_tests::l2_normalization_axis {
+
+const TestModel& get_test_model_corner_case_dim1_axis0() {
+    static TestModel model = {
+        .expectFailure = false,
+        .expectedMultinomialDistributionTolerance = 0,
+        .isRelaxed = false,
+        .main = {
+                .inputIndexes = {0},
+                .operands = {{
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<uint8_t>({245}),
+                            .dimensions = {1},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
+                            .numberOfConsumers = 1,
+                            .scale = 0.904414f,
+                            .type = TestOperandType::TENSOR_QUANT8_ASYMM,
+                            .zeroPoint = 246
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<int32_t>({0}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::INT32,
+                            .zeroPoint = 0
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<uint8_t>({0}),
+                            .dimensions = {1},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
+                            .numberOfConsumers = 0,
+                            .scale = 0.0078125f,
+                            .type = TestOperandType::TENSOR_QUANT8_ASYMM,
+                            .zeroPoint = 128
+                        }},
+                .operations = {{
+                            .inputs = {0, 1},
+                            .outputs = {2},
+                            .type = TestOperationType::L2_NORMALIZATION
+                        }},
+                .outputIndexes = {2}
+            },
+        .minSupportedVersion = TestHalVersion::V1_2,
+        .referenced = {}
+    };
+    return model;
+}
+
+const auto dummy_test_model_corner_case_dim1_axis0 = TestModelManager::get().add("l2_normalization_axis_corner_case_dim1_axis0", get_test_model_corner_case_dim1_axis0());
+
+}  // namespace generated_tests::l2_normalization_axis
+
+namespace generated_tests::l2_normalization_axis {
+
+const TestModel& get_test_model_corner_case_dim1_axis0_all_inputs_as_internal() {
+    static TestModel model = {
+        .expectFailure = false,
+        .expectedMultinomialDistributionTolerance = 0,
+        .isRelaxed = false,
+        .main = {
+                .inputIndexes = {3},
+                .operands = {{
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<uint8_t>({}),
+                            .dimensions = {1},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::TEMPORARY_VARIABLE,
+                            .numberOfConsumers = 1,
+                            .scale = 0.904414f,
+                            .type = TestOperandType::TENSOR_QUANT8_ASYMM,
+                            .zeroPoint = 246
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<int32_t>({0}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::INT32,
+                            .zeroPoint = 0
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<uint8_t>({0}),
+                            .dimensions = {1},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
+                            .numberOfConsumers = 0,
+                            .scale = 0.0078125f,
+                            .type = TestOperandType::TENSOR_QUANT8_ASYMM,
+                            .zeroPoint = 128
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<uint8_t>({245}),
+                            .dimensions = {1},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
+                            .numberOfConsumers = 1,
+                            .scale = 0.904414f,
+                            .type = TestOperandType::TENSOR_QUANT8_ASYMM,
+                            .zeroPoint = 246
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<uint8_t>({246}),
+                            .dimensions = {1},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.904414f,
+                            .type = TestOperandType::TENSOR_QUANT8_ASYMM,
+                            .zeroPoint = 246
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<int32_t>({0}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::INT32,
+                            .zeroPoint = 0
+                        }},
+                .operations = {{
+                            .inputs = {3, 4, 5},
+                            .outputs = {0},
+                            .type = TestOperationType::ADD
+                        }, {
+                            .inputs = {0, 1},
+                            .outputs = {2},
+                            .type = TestOperationType::L2_NORMALIZATION
+                        }},
+                .outputIndexes = {2}
+            },
+        .minSupportedVersion = TestHalVersion::V1_2,
+        .referenced = {}
+    };
+    return model;
+}
+
+const auto dummy_test_model_corner_case_dim1_axis0_all_inputs_as_internal = TestModelManager::get().add("l2_normalization_axis_corner_case_dim1_axis0_all_inputs_as_internal", get_test_model_corner_case_dim1_axis0_all_inputs_as_internal());
+
+}  // namespace generated_tests::l2_normalization_axis
+
+namespace generated_tests::l2_normalization_axis {
+
+const TestModel& get_test_model_corner_case_dim1_axis0_neg() {
+    static TestModel model = {
+        .expectFailure = false,
+        .expectedMultinomialDistributionTolerance = 0,
+        .isRelaxed = false,
+        .main = {
+                .inputIndexes = {0},
+                .operands = {{
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<uint8_t>({245}),
+                            .dimensions = {1},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
+                            .numberOfConsumers = 1,
+                            .scale = 0.904414f,
+                            .type = TestOperandType::TENSOR_QUANT8_ASYMM,
+                            .zeroPoint = 246
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<int32_t>({-1}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::INT32,
+                            .zeroPoint = 0
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<uint8_t>({0}),
+                            .dimensions = {1},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
+                            .numberOfConsumers = 0,
+                            .scale = 0.0078125f,
+                            .type = TestOperandType::TENSOR_QUANT8_ASYMM,
+                            .zeroPoint = 128
+                        }},
+                .operations = {{
+                            .inputs = {0, 1},
+                            .outputs = {2},
+                            .type = TestOperationType::L2_NORMALIZATION
+                        }},
+                .outputIndexes = {2}
+            },
+        .minSupportedVersion = TestHalVersion::V1_2,
+        .referenced = {}
+    };
+    return model;
+}
+
+const auto dummy_test_model_corner_case_dim1_axis0_neg = TestModelManager::get().add("l2_normalization_axis_corner_case_dim1_axis0_neg", get_test_model_corner_case_dim1_axis0_neg());
+
+}  // namespace generated_tests::l2_normalization_axis
+
+namespace generated_tests::l2_normalization_axis {
+
+const TestModel& get_test_model_corner_case_dim1_axis0_neg_all_inputs_as_internal() {
+    static TestModel model = {
+        .expectFailure = false,
+        .expectedMultinomialDistributionTolerance = 0,
+        .isRelaxed = false,
+        .main = {
+                .inputIndexes = {3},
+                .operands = {{
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<uint8_t>({}),
+                            .dimensions = {1},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::TEMPORARY_VARIABLE,
+                            .numberOfConsumers = 1,
+                            .scale = 0.904414f,
+                            .type = TestOperandType::TENSOR_QUANT8_ASYMM,
+                            .zeroPoint = 246
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<int32_t>({-1}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::INT32,
+                            .zeroPoint = 0
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<uint8_t>({0}),
+                            .dimensions = {1},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
+                            .numberOfConsumers = 0,
+                            .scale = 0.0078125f,
+                            .type = TestOperandType::TENSOR_QUANT8_ASYMM,
+                            .zeroPoint = 128
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<uint8_t>({245}),
+                            .dimensions = {1},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
+                            .numberOfConsumers = 1,
+                            .scale = 0.904414f,
+                            .type = TestOperandType::TENSOR_QUANT8_ASYMM,
+                            .zeroPoint = 246
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<uint8_t>({246}),
+                            .dimensions = {1},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.904414f,
+                            .type = TestOperandType::TENSOR_QUANT8_ASYMM,
+                            .zeroPoint = 246
+                        }, {
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<int32_t>({0}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::INT32,
+                            .zeroPoint = 0
+                        }},
+                .operations = {{
+                            .inputs = {3, 4, 5},
+                            .outputs = {0},
+                            .type = TestOperationType::ADD
+                        }, {
+                            .inputs = {0, 1},
+                            .outputs = {2},
+                            .type = TestOperationType::L2_NORMALIZATION
+                        }},
+                .outputIndexes = {2}
+            },
+        .minSupportedVersion = TestHalVersion::V1_2,
+        .referenced = {}
+    };
+    return model;
+}
+
+const auto dummy_test_model_corner_case_dim1_axis0_neg_all_inputs_as_internal = TestModelManager::get().add("l2_normalization_axis_corner_case_dim1_axis0_neg_all_inputs_as_internal", get_test_model_corner_case_dim1_axis0_neg_all_inputs_as_internal());
+
+}  // namespace generated_tests::l2_normalization_axis
+
