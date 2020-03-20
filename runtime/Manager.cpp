@@ -282,14 +282,13 @@ allocatePointerArgumentsToPool(const std::vector<ModelArgumentInfo>& args,
     const uint32_t nextPoolIndex = memories->size();
     int64_t total = 0;
     for (const auto& info : args) {
-        if (info.state == ModelArgumentInfo::POINTER) {
-            const DataLocation& loc = info.locationAndLength;
+        if (info.state() == ModelArgumentInfo::POINTER) {
             // TODO Good enough alignment?
-            total += alignBytesNeeded(static_cast<uint32_t>(total), loc.length);
+            total += alignBytesNeeded(static_cast<uint32_t>(total), info.length());
             ptrArgsLocations.push_back({.poolIndex = nextPoolIndex,
                                         .offset = static_cast<uint32_t>(total),
-                                        .length = loc.length});
-            total += loc.length;
+                                        .length = info.length()});
+            total += info.length();
         }
     };
     if (total > 0xFFFFFFFF) {
@@ -348,10 +347,10 @@ std::tuple<int, std::vector<OutputShape>, Timing> DriverPreparedModel::execute(
     if (inputPtrArgsMemory != nullptr) {
         uint32_t ptrInputIndex = 0;
         for (const auto& info : inputs) {
-            if (info.state == ModelArgumentInfo::POINTER) {
+            if (info.state() == ModelArgumentInfo::POINTER) {
                 const DataLocation& loc = inputPtrArgsLocations[ptrInputIndex++];
                 uint8_t* const data = inputPtrArgsMemory->getPointer();
-                memcpy(data + loc.offset, info.buffer, loc.length);
+                memcpy(data + loc.offset, info.buffer(), loc.length);
             }
         }
     }
@@ -412,10 +411,10 @@ std::tuple<int, std::vector<OutputShape>, Timing> DriverPreparedModel::execute(
     if (outputPtrArgsMemory != nullptr) {
         uint32_t ptrOutputIndex = 0;
         for (const auto& info : outputs) {
-            if (info.state == ModelArgumentInfo::POINTER) {
+            if (info.state() == ModelArgumentInfo::POINTER) {
                 const DataLocation& loc = outputPtrArgsLocations[ptrOutputIndex++];
                 const uint8_t* const data = outputPtrArgsMemory->getPointer();
-                memcpy(info.buffer, data + loc.offset, loc.length);
+                memcpy(info.buffer(), data + loc.offset, loc.length);
             }
         }
     }
@@ -457,10 +456,10 @@ DriverPreparedModel::executeFenced(
     if (inputPtrArgsMemory != nullptr) {
         uint32_t ptrInputIndex = 0;
         for (const auto& info : inputs) {
-            if (info.state == ModelArgumentInfo::POINTER) {
+            if (info.state() == ModelArgumentInfo::POINTER) {
                 const DataLocation& loc = inputPtrArgsLocations[ptrInputIndex++];
                 uint8_t* const data = inputPtrArgsMemory->getPointer();
-                memcpy(data + loc.offset, info.buffer, loc.length);
+                memcpy(data + loc.offset, info.buffer(), loc.length);
             }
         }
     }
@@ -528,10 +527,10 @@ DriverPreparedModel::executeFenced(
         }
         uint32_t ptrOutputIndex = 0;
         for (const auto& info : outputs) {
-            if (info.state == ModelArgumentInfo::POINTER) {
+            if (info.state() == ModelArgumentInfo::POINTER) {
                 const DataLocation& loc = outputPtrArgsLocations[ptrOutputIndex++];
                 const uint8_t* const data = outputPtrArgsMemory->getPointer();
-                memcpy(info.buffer, data + loc.offset, loc.length);
+                memcpy(info.buffer(), data + loc.offset, loc.length);
             }
         }
     }
@@ -768,13 +767,13 @@ std::tuple<int, std::vector<OutputShape>, Timing> CpuPreparedModel::execute(
             [&requestPoolInfos](const std::vector<ModelArgumentInfo>& argumentInfos) {
                 std::vector<DataLocation> ptrArgsLocations;
                 for (const ModelArgumentInfo& argumentInfo : argumentInfos) {
-                    if (argumentInfo.state == ModelArgumentInfo::POINTER) {
+                    if (argumentInfo.state() == ModelArgumentInfo::POINTER) {
                         ptrArgsLocations.push_back(
                                 {.poolIndex = static_cast<uint32_t>(requestPoolInfos.size()),
                                  .offset = 0,
-                                 .length = argumentInfo.locationAndLength.length});
+                                 .length = argumentInfo.length()});
                         requestPoolInfos.emplace_back(RunTimePoolInfo::createFromExistingBuffer(
-                                static_cast<uint8_t*>(argumentInfo.buffer)));
+                                static_cast<uint8_t*>(argumentInfo.buffer())));
                     }
                 }
                 return ptrArgsLocations;
