@@ -2525,12 +2525,6 @@ int ANeuralNetworksEvent_getSyncFenceFd(const ANeuralNetworksEvent* event, int* 
  * will be returned through {@link ANeuralNetworksEvent_wait} on the event
  * object.
  *
- * If this execution contains a {@link ANEURALNETWORKS_WHILE} operation, and
- * the condition model does not output false within the loop timeout duration,
- * then execution will be aborted and {@link ANEURALNETWORKS_MISSED_DEADLINE_*}
- * will be returned through {@link ANeuralNetworksEvent_wait} on the event
- * object.
- *
  * See {@link ANeuralNetworksExecution} for information on multithreaded usage.
  *
  * See {@link ANeuralNetworksExecution_compute} for synchronous execution.
