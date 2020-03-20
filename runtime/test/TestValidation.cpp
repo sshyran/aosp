@@ -1201,6 +1201,12 @@ TEST_F(ValidationTestExecution, SetInput) {
     EXPECT_EQ(ANeuralNetworksExecution_setInput(mExecution, 0, &kInvalidTensorType2, buffer,
                                                 sizeof(float)),
               ANEURALNETWORKS_BAD_DATA);
+
+    // Cannot do this twice.
+    EXPECT_EQ(ANeuralNetworksExecution_setInput(mExecution, 0, nullptr, buffer, 8),
+              ANEURALNETWORKS_NO_ERROR);
+    EXPECT_EQ(ANeuralNetworksExecution_setInput(mExecution, 0, nullptr, buffer, 8),
+              ANEURALNETWORKS_BAD_STATE);
 }
 
 TEST_F(ValidationTestExecution, SetOutput) {
@@ -1229,6 +1235,12 @@ TEST_F(ValidationTestExecution, SetOutput) {
     EXPECT_EQ(ANeuralNetworksExecution_setOutput(mExecution, 0, &kInvalidTensorType2, buffer,
                                                  sizeof(float)),
               ANEURALNETWORKS_BAD_DATA);
+
+    // Cannot do this twice.
+    EXPECT_EQ(ANeuralNetworksExecution_setOutput(mExecution, 0, nullptr, buffer, 8),
+              ANEURALNETWORKS_NO_ERROR);
+    EXPECT_EQ(ANeuralNetworksExecution_setOutput(mExecution, 0, nullptr, buffer, 8),
+              ANEURALNETWORKS_BAD_STATE);
 }
 
 TEST_F(ValidationTestExecution, SetInputFromMemory) {
@@ -1280,6 +1292,15 @@ TEST_F(ValidationTestExecution, SetInputFromMemory) {
     EXPECT_EQ(ANeuralNetworksExecution_setInputFromMemory(mExecution, 0, &kInvalidTensorType2,
                                                           memory, 0, sizeof(float)),
               ANEURALNETWORKS_BAD_DATA);
+
+    // Cannot do this twice.
+    EXPECT_EQ(ANeuralNetworksExecution_setInputFromMemory(mExecution, 0, nullptr, memory, 0, 8),
+              ANEURALNETWORKS_NO_ERROR);
+    EXPECT_EQ(ANeuralNetworksExecution_setInputFromMemory(mExecution, 0, nullptr, memory, 0, 8),
+              ANEURALNETWORKS_BAD_STATE);
+    char buffer[memorySize];
+    EXPECT_EQ(ANeuralNetworksExecution_setInput(mExecution, 0, nullptr, buffer, 8),
+              ANEURALNETWORKS_BAD_STATE);
 
     // close memory
     close(memoryFd);
@@ -1380,6 +1401,15 @@ TEST_F(ValidationTestExecution, SetOutputFromMemory) {
     EXPECT_EQ(ANeuralNetworksExecution_setOutputFromMemory(execution, 0, &kInvalidTensorType2,
                                                            memory, 0, sizeof(float)),
               ANEURALNETWORKS_BAD_DATA);
+
+    // Cannot do this twice.
+    EXPECT_EQ(ANeuralNetworksExecution_setOutputFromMemory(execution, 0, nullptr, memory, 0, 8),
+              ANEURALNETWORKS_NO_ERROR);
+    EXPECT_EQ(ANeuralNetworksExecution_setOutputFromMemory(execution, 0, nullptr, memory, 0, 8),
+              ANEURALNETWORKS_BAD_STATE);
+    char buffer[memorySize];
+    EXPECT_EQ(ANeuralNetworksExecution_setOutput(execution, 0, nullptr, buffer, 8),
+              ANEURALNETWORKS_BAD_STATE);
 
     // close memory
     close(memoryFd);
