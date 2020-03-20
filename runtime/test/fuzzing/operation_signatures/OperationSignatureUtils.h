@@ -415,6 +415,13 @@ inline void defaultScalarOperandConstructor(TestOperandType dataType, uint32_t, 
         .constructor = [](TestOperandType, uint32_t, RandomOperand* op) { op->dataType = opType; } \
     }
 
+// A CONST omitted operand.
+#define PARAMETER_NO_VALUE(opType)                                                                 \
+    {                                                                                              \
+        .type = RandomOperandType::NO_VALUE,                                                       \
+        .constructor = [](TestOperandType, uint32_t, RandomOperand* op) { op->dataType = opType; } \
+    }
+
 // A CONST integer scalar with value set as a FREE RandomVariable within default range.
 #define RANDOM_INT_FREE                                                   \
     {                                                                     \
