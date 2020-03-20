@@ -21,24 +21,16 @@ output = Output("output", "TENSOR_QUANT8_ASYMM_SIGNED", "{1, 24}, 1.0, -128")
 
 model = model.Operation("SQUEEZE", i1, squeezeDims).To(output)
 
-# Example 1. Input in operand 0,
-input0 = {
-    i1:  # input 0
-        [
-            -127, -126, -125, -124, -123, -122, -121, -120, -119, -118, -117,
-            -116, -115, -114, -113, -112, -111, -110, -109, -108, -107, -106,
-            -105, -104
-        ]
-}
-
-output0 = {
-    output:  # output 0
-        [
-            -127, -126, -125, -124, -123, -122, -121, -120, -119, -118, -117,
-            -116, -115, -114, -113, -112, -111, -110, -109, -108, -107, -106,
-            -105, -104
-        ]
-}
+data = [
+    -127, -126, -125, -124, -123, -122, -121, -120, -119, -118, -117, -116, -115, -114, -113, -112,
+    -111, -110, -109, -108, -107, -106, -105, -104
+]
 
 # Instantiate an example
-Example((input0, output0))
+Example({i1: data, output: data})
+
+# Test with omitted squeeze dims
+squeezeDims = Parameter("squeezeDims", ["TENSOR_INT32", [0]], value=None)
+output = Output("output", "TENSOR_QUANT8_ASYMM_SIGNED", "{24}, 1.0, -128")
+Model("omitted").Operation("SQUEEZE", i1, squeezeDims).To(output)
+Example({i1: data, output: data})
