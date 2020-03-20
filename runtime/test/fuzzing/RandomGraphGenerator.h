@@ -35,7 +35,7 @@ struct OperandSignature;
 struct OperationSignature;
 class OperationManager;
 
-enum class RandomOperandType { INPUT = 0, OUTPUT = 1, INTERNAL = 2, CONST = 3 };
+enum class RandomOperandType { INPUT = 0, OUTPUT = 1, INTERNAL = 2, CONST = 3, NO_VALUE = 4 };
 
 struct RandomOperand {
     RandomOperandType type;
