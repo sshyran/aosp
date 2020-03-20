@@ -32,6 +32,7 @@
 #include <utility>
 #include <vector>
 
+#include "CpuExecutor.h"
 #include "HalInterfaces.h"
 #include "NeuralNetworks.h"
 #include "Utils.h"
@@ -168,6 +169,7 @@ class Memory {
     const hal::hidl_memory& getHidlMemory() const { return kHidlMemory; }
     const sp<hal::IBuffer>& getIBuffer() const { return kBuffer; }
     virtual uint32_t getSize() const { return getHidlMemory().size(); }
+    virtual std::optional<RunTimePoolInfo> getRunTimePoolInfo() const;
 
     MemoryValidatorBase& getValidator() const {
         CHECK(mValidator != nullptr);
@@ -263,6 +265,10 @@ class MemoryAshmem : public Memory {
     // valid for the lifetime of the MemoryAshmem object. This call always
     // returns non-null because it was validated during MemoryAshmem::create.
     uint8_t* getPointer() const;
+
+    std::optional<RunTimePoolInfo> getRunTimePoolInfo() const override {
+        return RunTimePoolInfo::createFromExistingBuffer(getPointer(), kHidlMemory.size());
+    }
 
     // prefer using MemoryAshmem::create
     MemoryAshmem(sp<hal::IMemory> mapped, hal::hidl_memory memory);
