@@ -47,6 +47,7 @@ using namespace hal;
 inline bool l2normFloat32Impl(const float* inputData, const Shape& inputShape, int32_t axis,
                               float* outputData, const Shape& outputShape) {
     NNTRACE_TRANS("l2normFloat32");
+    constexpr float kEpsilon = 1e-6f;
     const uint32_t outerSize = getNumberOfElements(inputShape, 0, axis);
     const uint32_t axisSize = getSizeOfDimension(inputShape, axis);
     const uint32_t innerSize =
@@ -61,7 +62,7 @@ inline bool l2normFloat32Impl(const float* inputData, const Shape& inputShape, i
                 float val = *p;
                 sum += val * val;
             }
-            float l2_norm = std::sqrt(sum);
+            float l2_norm = std::max(std::sqrt(sum), kEpsilon);
             float* pOut = outputBeg;
             for (const float* p = inputBeg; p < inputEnd; p += innerSize, pOut += innerSize) {
                 *pOut = *p / l2_norm;
