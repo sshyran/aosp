@@ -39,8 +39,8 @@ namespace nn {
 class Device;
 class ExecutionBurstController;
 class MetaModel;
+class ModelArgumentInfo;
 class VersionedIPreparedModel;
-struct ModelArgumentInfo;
 
 // A unified interface for actual driver prepared model as well as the CPU.
 class PreparedModel {
