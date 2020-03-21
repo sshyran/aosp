@@ -32,8 +32,7 @@ static void roiTensorConstructor(TestOperandType dataType, uint32_t, RandomOpera
     }
 }
 
-// TODO: Have a version that makes roi tensor an input.
-static const OperandSignature kInputRoiTensor = {.type = RandomOperandType::CONST,
+static const OperandSignature kInputRoiTensor = {.type = RandomOperandType::INPUT,
                                                  .constructor = roiTensorConstructor};
 static const OperandSignature kOutputRoiTensor = {.type = RandomOperandType::OUTPUT,
                                                   .constructor = roiTensorConstructor};
@@ -64,6 +63,10 @@ static void roiConstructor(TestOperandType, uint32_t rank, RandomOperation* op) 
     if (op->opType == TestOperationType::ROI_POOLING) {
         setSameQuantization(op->outputs[0], op->inputs[0]);
     }
+
+    // The values of the RoI tensor has a special format and cannot be generated from another
+    // operation.
+    op->inputs[1]->doNotConnect = true;
 }
 
 template <typename T>
