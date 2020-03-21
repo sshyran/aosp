@@ -18,6 +18,10 @@
 
 #include "Memory.h"
 
+#include <android-base/scopeguard.h>
+#include <android/hardware_buffer.h>
+#include <vndk/hardware_buffer.h>
+
 #include <algorithm>
 #include <memory>
 #include <set>
@@ -256,8 +260,9 @@ static int copyHidlMemoryToIBuffer(const hidl_memory& src, const sp<IBuffer>& ds
 
 static int copyIBuffers(const sp<IBuffer>& src, const sp<IBuffer>& dst,
                         const MemoryValidatorBase::Metadata& srcMetadata) {
-    // TODO(xusongw): Use BLOB mode AHardwareBuffer.
-    hidl_memory hidlMemory = allocateSharedMemory(srcMetadata.logicalSize);
+    const auto [n, memory] = MemoryRuntimeAHWB::create(srcMetadata.logicalSize);
+    NN_RETURN_IF_ERROR(n);
+    const hidl_memory& hidlMemory = memory->getHidlMemory();
     if (!hidlMemory.valid()) return ANEURALNETWORKS_OUT_OF_MEMORY;
     NN_RETURN_IF_ERROR(copyIBufferToHidlMemory(src, hidlMemory));
     NN_RETURN_IF_ERROR(copyHidlMemoryToIBuffer(hidlMemory, dst, srcMetadata.dimensions));
@@ -429,20 +434,13 @@ static void logMemoryDescriptorToInfo(const MemoryDescriptor& desc, const Operan
     LOG(INFO) << "MemoryDescriptor end";
 }
 
-static const Device* selectDeviceMemoryAllocator(const MemoryDescriptor& desc) {
-    const Device* allocator = nullptr;
+static std::set<const Device*> getDevices(const MemoryDescriptor& desc) {
+    std::set<const Device*> devices;
     for (const auto* preparedModel : desc.preparedModels) {
         const auto* device = preparedModel->getDevice();
-        if (allocator == nullptr) {
-            allocator = device;
-        } else if (allocator != device) {
-            LOG(INFO) << "selectDeviceMemoryAllocator -- cannot handle multiple devices.";
-            return nullptr;
-        }
+        devices.insert(device);
     }
-    CHECK(allocator != nullptr);
-    VLOG(MEMORY) << "Using " << allocator->getName() << " as allocator.";
-    return allocator;
+    return devices;
 }
 
 int MemoryBuilder::finish() {
@@ -455,7 +453,17 @@ int MemoryBuilder::finish() {
     if (VLOG_IS_ON(MEMORY)) {
         logMemoryDescriptorToInfo(mDesc, mOperand.value());
     }
-    mAllocator = selectDeviceMemoryAllocator(mDesc);
+    std::set<const Device*> devices = getDevices(mDesc);
+    if (devices.size() == 1) {
+        mAllocator = *devices.begin();
+        VLOG(MEMORY) << "Using " << mAllocator->getName() << " as allocator.";
+    } else {
+        LOG(INFO) << "MemoryBuilder::finish -- cannot handle multiple devices.";
+        mAllocator = nullptr;
+    }
+    mSupportsAhwb = std::all_of(devices.begin(), devices.end(), [](const auto* device) {
+        return device->getFeatureLevel() >= __ANDROID_API_Q__;
+    });
     mShouldFallback = std::none_of(mRoles.begin(), mRoles.end(), [](const auto& role) {
         const auto* cb = std::get<const CompilationBuilder*>(role);
         return cb->createdWithExplicitDeviceList();
@@ -487,11 +495,15 @@ std::pair<int, std::unique_ptr<Memory>> MemoryBuilder::allocate() const {
         std::tie(n, memory) = mAllocator->allocate(mDesc, mOperand->type);
     }
 
-    // If failed, fallback to ashmem.
-    // TODO(xusongw): Use BLOB mode hardware buffer when possible.
+    // If failed, fallback to ashmem or BLOB mode AHWB.
     if (n != ANEURALNETWORKS_NO_ERROR && mShouldFallback) {
-        VLOG(MEMORY) << "MemoryBuilder::allocate -- fallback to ashmem.";
-        std::tie(n, memory) = MemoryAshmem::create(size);
+        if (mSupportsAhwb) {
+            VLOG(MEMORY) << "MemoryBuilder::allocate -- fallback to BLOB mode AHWB.";
+            std::tie(n, memory) = MemoryRuntimeAHWB::create(size);
+        } else {
+            VLOG(MEMORY) << "MemoryBuilder::allocate -- fallback to ashmem.";
+            std::tie(n, memory) = MemoryAshmem::create(size);
+        }
     }
 
     if (n == ANEURALNETWORKS_NO_ERROR) {
@@ -570,7 +582,6 @@ std::pair<int, std::unique_ptr<MemoryAHWB>> MemoryAHWB::create(const AHardwareBu
     AHardwareBuffer_describe(&ahwb, &bufferDesc);
     const native_handle_t* handle = AHardwareBuffer_getNativeHandle(&ahwb);
     hidl_memory hidlMemory;
-    std::unique_ptr<MemoryAHWB> memory;
     std::unique_ptr<MemoryValidatorBase> validator;
     if (bufferDesc.format == AHARDWAREBUFFER_FORMAT_BLOB) {
         hidlMemory = hidl_memory("hardware_buffer_blob", handle, bufferDesc.width);
@@ -580,9 +591,61 @@ std::pair<int, std::unique_ptr<MemoryAHWB>> MemoryAHWB::create(const AHardwareBu
         hidlMemory = hidl_memory("hardware_buffer", handle, 0);
         validator = std::make_unique<AHardwareBufferNonBlobValidator>();
     }
-    memory = std::make_unique<MemoryAHWB>(std::move(hidlMemory), std::move(validator));
+    auto memory = std::make_unique<MemoryAHWB>(std::move(hidlMemory), std::move(validator));
     return {ANEURALNETWORKS_NO_ERROR, std::move(memory)};
 };
+
+std::pair<int, std::unique_ptr<MemoryRuntimeAHWB>> MemoryRuntimeAHWB::create(uint32_t size) {
+    AHardwareBuffer* ahwb = nullptr;
+    const auto usage = AHARDWAREBUFFER_USAGE_CPU_READ_OFTEN | AHARDWAREBUFFER_USAGE_CPU_WRITE_OFTEN;
+    const AHardwareBuffer_Desc desc = {
+            .width = size,
+            .height = 1,
+            .layers = 1,
+            .format = AHARDWAREBUFFER_FORMAT_BLOB,
+            .usage = usage,
+            .stride = size,
+    };
+    int err = AHardwareBuffer_allocate(&desc, &ahwb);
+    if (err != 0 || ahwb == nullptr) {
+        LOG(ERROR) << "Failed to allocate BLOB mode AHWB.";
+        return {ANEURALNETWORKS_OP_FAILED, nullptr};
+    }
+    auto allocateGuard = base::make_scope_guard([&ahwb]() { AHardwareBuffer_release(ahwb); });
+
+    void* buffer = nullptr;
+    err = AHardwareBuffer_lock(ahwb, usage, -1, nullptr, &buffer);
+    if (err != 0 || buffer == nullptr) {
+        LOG(ERROR) << "Failed to lock BLOB mode AHWB.";
+        return {ANEURALNETWORKS_OP_FAILED, nullptr};
+    }
+    auto lockGuard = base::make_scope_guard([&ahwb]() { AHardwareBuffer_unlock(ahwb, nullptr); });
+
+    const native_handle_t* handle = AHardwareBuffer_getNativeHandle(ahwb);
+    if (handle == nullptr) {
+        LOG(ERROR) << "Failed to retrieve the native handle from the AHWB.";
+        return {ANEURALNETWORKS_OP_FAILED, nullptr};
+    }
+
+    hidl_memory hidlMemory = hidl_memory("hardware_buffer_blob", handle, desc.width);
+    auto memory = std::make_unique<MemoryRuntimeAHWB>(std::move(hidlMemory), ahwb,
+                                                      static_cast<uint8_t*>(buffer));
+    allocateGuard.Disable();
+    lockGuard.Disable();
+    return {ANEURALNETWORKS_NO_ERROR, std::move(memory)};
+}
+
+MemoryRuntimeAHWB::MemoryRuntimeAHWB(hal::hidl_memory memory, AHardwareBuffer* ahwb,
+                                     uint8_t* buffer)
+    : Memory(std::move(memory)), mAhwb(ahwb), mBuffer(buffer) {
+    CHECK(mAhwb != nullptr);
+    CHECK(mBuffer != nullptr);
+}
+
+MemoryRuntimeAHWB::~MemoryRuntimeAHWB() {
+    AHardwareBuffer_unlock(mAhwb, nullptr);
+    AHardwareBuffer_release(mAhwb);
+}
 
 std::pair<int, std::unique_ptr<MemoryFromDevice>> MemoryFromDevice::create(sp<hal::IBuffer> buffer,
                                                                            uint32_t token) {

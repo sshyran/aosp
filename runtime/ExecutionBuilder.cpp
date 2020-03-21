@@ -152,7 +152,7 @@ int ExecutionBuilder::setInputFromMemory(uint32_t index, const ANeuralNetworksOp
                                          length)) {
         return ANEURALNETWORKS_BAD_DATA;
     }
-    // For some types of memory, e.g. MemoryAshmem allocated from ANNMemory_createFromDesc, we
+    // For some types of memory, e.g. MemoryRuntimeAHWB allocated from ANNMemory_createFromDesc, we
     // allow the client to specify offset == 0 && length == 0 indicating that the entire memory
     // region is used. We update the length here because the drivers are still expecting a real
     // length. For other memories that do not allow this semantic, it is checked in
@@ -213,7 +213,7 @@ int ExecutionBuilder::setOutputFromMemory(uint32_t index, const ANeuralNetworksO
                                          length)) {
         return ANEURALNETWORKS_BAD_DATA;
     }
-    // For some types of memory, e.g. MemoryAshmem allocated from ANNMemory_createFromDesc, we
+    // For some types of memory, e.g. MemoryRuntimeAHWB allocated from ANNMemory_createFromDesc, we
     // allow the client to specify offset == 0 && length == 0 indicating that the entire memory
     // region is used. We update the length here because the drivers are still expecting a real
     // length. For other memories that do not allow this semantic, it is checked in
