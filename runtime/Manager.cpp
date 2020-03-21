@@ -40,6 +40,7 @@
 #include "MetaModel.h"
 #include "ModelArgumentInfo.h"
 #include "Tracing.h"
+#include "TypeManager.h"
 #include "Utils.h"
 #include "VersionedInterfaces.h"
 
@@ -101,7 +102,8 @@ class DriverDevice : public Device {
             const std::optional<Deadline>& deadline, const std::string& cacheDir,
             const std::optional<CacheToken>& maybeToken) const override;
 
-    std::pair<int, std::unique_ptr<Memory>> allocate(const MemoryDescriptor& desc) const override;
+    std::pair<int, std::unique_ptr<Memory>> allocate(const MemoryDescriptor& desc,
+                                                     hal::OperandType) const override;
 
    private:
     const std::shared_ptr<VersionedIDevice> kInterface;
@@ -248,7 +250,8 @@ std::pair<int, std::shared_ptr<PreparedModel>> DriverDevice::prepareModel(
     return {ANEURALNETWORKS_NO_ERROR, std::make_shared<DriverPreparedModel>(this, preparedModel)};
 }
 
-std::pair<int, std::unique_ptr<Memory>> DriverDevice::allocate(const MemoryDescriptor& desc) const {
+std::pair<int, std::unique_ptr<Memory>> DriverDevice::allocate(const MemoryDescriptor& desc,
+                                                               hal::OperandType) const {
     const BufferDesc hidlDesc = {.dimensions = desc.dimensions};
     std::vector<std::shared_ptr<VersionedIPreparedModel>> preparedModels(
             desc.preparedModels.size());
@@ -572,11 +575,8 @@ class CpuDevice : public Device {
             const std::optional<Deadline>& deadline, const std::string& cacheDir,
             const std::optional<CacheToken>& maybeToken) const override;
 
-    std::pair<int, std::unique_ptr<Memory>> allocate(const MemoryDescriptor&) const override {
-        // CpuDevice does not have a preferred memory domain or data layout, return failure to
-        // fallback to ashmem.
-        return {ANEURALNETWORKS_OP_FAILED, nullptr};
-    }
+    std::pair<int, std::unique_ptr<Memory>> allocate(const MemoryDescriptor& desc,
+                                                     OperandType type) const override;
 
    private:
     CpuDevice() = default;
@@ -661,6 +661,16 @@ std::pair<int, std::shared_ptr<PreparedModel>> CpuDevice::prepareModel(
     }
 
     return CpuPreparedModel::create(model);
+}
+
+std::pair<int, std::unique_ptr<Memory>> CpuDevice::allocate(const MemoryDescriptor& desc,
+                                                            OperandType type) const {
+    uint32_t size = TypeManager::get()->getSizeOfData(type, desc.dimensions);
+    if (size == 0) {
+        LOG(ERROR) << "CpuDevice::allocate -- does not support unknown dimensions.";
+        return {ANEURALNETWORKS_OP_FAILED, nullptr};
+    }
+    return MemoryAshmem::create(size);
 }
 
 std::pair<int, std::shared_ptr<PreparedModel>> CpuPreparedModel::create(Model hidlModel) {
