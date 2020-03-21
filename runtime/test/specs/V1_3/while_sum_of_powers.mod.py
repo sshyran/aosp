@@ -89,16 +89,21 @@ def MakeOuterBodyModel():
   model.Operation("ADD", sum, xi, 0).To(sum_out)
   return model
 
-x = Input("x", DataType)
-n = Input("n", CounterType)
-sum = Output("sum", DataType)
-cond = MakeOuterConditionModel()
-body = MakeOuterBodyModel()
-sum_init = Parameter("sum_init", DataType, [1, 1])
-i_init = [1]
-model = Model().Operation("WHILE", cond, body, sum_init, i_init, n, x).To(sum)
+def Test(x, n, sum):
+  x_data, n_data, sum_data = x, n, sum
+  x = Input("x", DataType)
+  n = Input("n", CounterType)
+  sum = Output("sum", DataType)
+  cond = MakeOuterConditionModel()
+  body = MakeOuterBodyModel()
+  sum_init = Parameter("sum_init", DataType, [1, 1])
+  i_init = [1]
+  model = Model().Operation("WHILE", cond, body, sum_init, i_init, n, x).To(sum)
+  example = Example({x: x_data, n: [n_data], sum: sum_data}, name=str(n_data))
+  example.AddVariations(AllOutputsAsInternalCoverter())
 
-Example({x: [2, 3], n: [1], sum: [1 + 2, 1 + 3]}, name="1", model=model)
-Example({x: [2, 3], n: [2], sum: [1 + 2 + 4, 1 + 3 + 9]}, name="2", model=model)
-Example({x: [2, 3], n: [3], sum: [1 + 2 + 4 + 8, 1 + 3 + 9 + 27]}, name="3", model=model)
-Example({x: [2, 3], n: [4], sum: [1 + 2 + 4 + 8 + 16, 1 + 3 + 9 + 27 + 81]}, name="4", model=model)
+Test(x=[2, 3], n=1, sum=[1 + 2, 1 + 3])
+Test(x=[2, 3], n=1, sum=[1 + 2, 1 + 3])
+Test(x=[2, 3], n=2, sum=[1 + 2 + 4, 1 + 3 + 9])
+Test(x=[2, 3], n=3, sum=[1 + 2 + 4 + 8, 1 + 3 + 9 + 27])
+Test(x=[2, 3], n=4, sum=[1 + 2 + 4 + 8 + 16, 1 + 3 + 9 + 27 + 81])
