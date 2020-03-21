@@ -110,8 +110,8 @@ class Device {
 
     // The caller is responsible for making sure the MemoryDescriptor only contains PreparedModels
     // from the same Device.
-    virtual std::pair<int, std::unique_ptr<Memory>> allocate(
-            const MemoryDescriptor& desc) const = 0;
+    virtual std::pair<int, std::unique_ptr<Memory>> allocate(const MemoryDescriptor& desc,
+                                                             hal::OperandType type) const = 0;
 };
 
 // Manages the NN HAL devices.  Only one instance of this class will exist.
