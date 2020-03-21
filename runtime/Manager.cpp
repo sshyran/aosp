@@ -757,8 +757,7 @@ std::tuple<int, std::vector<OutputShape>, Timing> CpuPreparedModel::execute(
     std::vector<RunTimePoolInfo> requestPoolInfos;
     requestPoolInfos.reserve(memories.size());
     for (const Memory* mem : memories) {
-        if (std::optional<RunTimePoolInfo> poolInfo =
-                    RunTimePoolInfo::createFromHidlMemory(mem->getHidlMemory())) {
+        if (std::optional<RunTimePoolInfo> poolInfo = mem->getRunTimePoolInfo()) {
             requestPoolInfos.emplace_back(*poolInfo);
         } else {
             return {ANEURALNETWORKS_UNMAPPABLE, {}, kNoTiming};
