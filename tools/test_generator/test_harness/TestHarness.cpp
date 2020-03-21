@@ -451,6 +451,7 @@ std::string getOperandClassInSpecFile(TestOperandLifeTime lifetime) {
             return "Output";
         case TestOperandLifeTime::CONSTANT_COPY:
         case TestOperandLifeTime::CONSTANT_REFERENCE:
+        case TestOperandLifeTime::NO_VALUE:
             return "Parameter";
         case TestOperandLifeTime::TEMPORARY_VARIABLE:
             return "Internal";
@@ -537,16 +538,18 @@ void SpecDumper::dumpTestBuffer(TestOperandType type, const TestBuffer& buffer) 
 
 void SpecDumper::dumpTestOperand(const TestOperand& operand, uint32_t index) {
     mOs << "op" << index << " = " << getOperandClassInSpecFile(operand.lifetime) << "(\"op" << index
-        << "\", \"" << toString(operand.type) << "\", \"{"
-        << join(", ", operand.dimensions, defaultToStringFunc<uint32_t>) << "}";
+        << "\", [\"" << toString(operand.type) << "\", ["
+        << join(", ", operand.dimensions, defaultToStringFunc<uint32_t>) << "]";
     if (operand.scale != 0.0f || operand.zeroPoint != 0) {
-        mOs << ", " << operand.scale << "f, " << operand.zeroPoint;
+        mOs << ", " << operand.scale << ", " << operand.zeroPoint;
     }
-    mOs << "\"";
+    mOs << "]";
     if (operand.lifetime == TestOperandLifeTime::CONSTANT_COPY ||
         operand.lifetime == TestOperandLifeTime::CONSTANT_REFERENCE) {
         mOs << ", ";
         dumpTestBuffer(operand.type, operand.data);
+    } else if (operand.lifetime == TestOperandLifeTime::NO_VALUE) {
+        mOs << ", value=None";
     }
     mOs << ")\n";
 }
