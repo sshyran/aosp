@@ -372,7 +372,12 @@ class Parameter(Operand):
         Operand.__init__(self, name, opType, value, backward, skipRenaming=skipRenaming,
                          extraParams=extraParams)
         self.initializer = NamedVariable(str(self) + "_init")
-        self.lifetime = "CONSTANT_REFERENCE" if Configuration.useSHM() else "CONSTANT_COPY"
+        if value is None:
+            self.lifetime = "NO_VALUE"
+        elif Configuration.useSHM():
+            self.lifetime = "CONSTANT_REFERENCE"
+        else:
+            self.lifetime = "CONSTANT_COPY"
 
 # A shortcut for parameters of INT32
 class Int32Scalar(Parameter, ImplicitParameter):
