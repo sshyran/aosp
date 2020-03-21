@@ -49,12 +49,12 @@ Example(example0).AddAllDimsAndAxis(i1, o1, axis).AddVariations("relaxed", "floa
 
 
 # TEST 2: Corner cases for TENSOR_QUANT8_ASYMM data type.
-i2 = Input("op1", "TENSOR_QUANT8_ASYMM", "{3, 1}, 0.904414f, 246")
-o2 = Output("op2", "TENSOR_QUANT8_ASYMM", "{3, 1}, 0.0078125f, 128")
+i2 = Input("op1", "TENSOR_QUANT8_ASYMM", "{2, 1}, 0.904414f, 246")
+o2 = Output("op2", "TENSOR_QUANT8_ASYMM", "{2, 1}, 0.0078125f, 128")
 axis = Int32Scalar("axis", -1) # last axis
 
 Model("corner_case").Operation("L2_NORMALIZATION", i2, axis).To(o2)
 Example({
-    i2: [245, 247, 246],
-    o2: [0, 255, 128],
+    i2: [245, 247],
+    o2: [0, 255],
 }).AddAllDimsAndAxis(i2, o2, axis)
