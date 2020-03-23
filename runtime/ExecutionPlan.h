@@ -595,8 +595,8 @@ class ExecutionPlan {
     std::optional<Buffer> getBufferFromModelArgumentInfo(
             const ModelArgumentInfo& info, const ExecutionBuilder* executionBuilder) const;
     // Reads the value of a partition boundary boolean condition operand.
-    bool readConditionValue(std::shared_ptr<Controller> controller,
-                            SourceOperandIndex operandIndex) const;
+    int readConditionValue(std::shared_ptr<Controller> controller, SourceOperandIndex operandIndex,
+                           bool* value) const;
 
     // Handles control flow. See LogicalStep.
     int nextCompound(std::shared_ptr<Controller> controller,
