@@ -446,6 +446,15 @@ class TestModelManager {
         return testModels;
     }
 
+    // Returns a vector of selected TestModels for which the given "filter" returns true.
+    std::vector<TestParam> getTestModels(std::function<bool(const std::string&)> filter) {
+        std::vector<TestParam> testModels;
+        testModels.reserve(mTestModels.size());
+        std::copy_if(mTestModels.begin(), mTestModels.end(), std::back_inserter(testModels),
+                     [filter](const auto& nameTestPair) { return filter(nameTestPair.first); });
+        return testModels;
+    }
+
    private:
     TestModelManager() = default;
     TestModelManager(const TestModelManager&) = delete;
