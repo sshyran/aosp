@@ -1089,6 +1089,10 @@ TEST_F(ValidationTestCompilation, ExecutionUsability) {
         auto testTooLate = [this, execution, &in0, &out0, memory] {
             // Try a bunch of things that are impermissible if the execution has started.
 
+            // Set loop timeout.
+            ASSERT_EQ(ANeuralNetworksExecution_setLoopTimeout(execution, kShortWaitInNanoseconds),
+                      ANEURALNETWORKS_BAD_STATE);
+
             // Set inputs and outputs.
             ASSERT_EQ(ANeuralNetworksExecution_setInput(execution, 0, nullptr, &in0, sizeof(in0)),
                       ANEURALNETWORKS_BAD_STATE);
@@ -1173,6 +1177,11 @@ TEST_F(ValidationTestCompilation, ExecutionUsability) {
                 FAIL() << "Unreachable";
         }
     }
+}
+
+TEST_F(ValidationTestExecution, SetLoopTimeout) {
+    EXPECT_EQ(ANeuralNetworksExecution_setLoopTimeout(nullptr, kShortWaitInNanoseconds),
+              ANEURALNETWORKS_UNEXPECTED_NULL);
 }
 
 TEST_F(ValidationTestExecution, SetInput) {
