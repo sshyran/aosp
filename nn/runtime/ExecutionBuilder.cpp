@@ -374,6 +374,11 @@ std::optional<uint64_t> ExecutionBuilder::getTimeoutDuration() const {
 }
 
 int ExecutionBuilder::setLoopTimeout(uint64_t duration) {
+    if (mStarted) {
+        LOG(ERROR) << "ANeuralNetworksExecution_setLoopTimeout called after the "
+                      "execution has started.";
+        return ANEURALNETWORKS_BAD_STATE;
+    }
     if (duration > operation_while::kTimeoutNsMaximum) {
         LOG(WARNING) << "ANeuralNetworksExecution_setLoopTimeout input exceeds the maximum allowed "
                      << "duration: " << duration << " > " << operation_while::kTimeoutNsMaximum;
