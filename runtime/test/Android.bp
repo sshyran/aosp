@@ -47,6 +47,12 @@ cc_defaults {
     whole_static_libs: [
         "libcrypto_static",
     ],
+    srcs: [
+        "RequireDebug.cpp", // Abort compilation if NDEBUG is defined
+    ],
+    cflags: [
+        "-UNDEBUG",
+    ],
 }
 
 cc_defaults {
@@ -73,6 +79,7 @@ cc_defaults {
         "TestValidateOperations.cpp",
         "TestValidation.cpp",
         "TestWrapper.cpp",
+
     ],
     header_libs: [
         "libneuralnetworks_common_headers",
@@ -85,9 +92,6 @@ cc_defaults {
         "neuralnetworks_generated_V1_1_example",
         "neuralnetworks_generated_V1_2_example",
         "neuralnetworks_generated_V1_3_example",
-    ],
-    cflags: [
-        "-UNDEBUG",
     ],
 }
 
@@ -133,6 +137,7 @@ cc_defaults {
         "libSampleDriver",
         "libgmock",
         "libneuralnetworks_common",
+        "libneuralnetworks_generated_test_harness",
         "libneuralnetworks_static",
     ],
     shared_libs: [
@@ -169,7 +174,6 @@ cc_test {
         "libSampleDriver",
         "libgmock",
         "libneuralnetworks_common",
-        "libneuralnetworks_generated_test_harness",
         "libneuralnetworks_static",
     ],
     shared_libs: ["libmemunreachable"],
@@ -306,6 +310,7 @@ cc_library_static {
         ":libneuralnetworks_generated_test_harness_for_cts",
         "CtsMain.cpp",
         "GeneratedTestUtils.cpp",
+        "RequireDebug.cpp", // Abort compilation if NDEBUG is defined
         "TestFree.cpp",
         "TestGenerated.cpp",
         "TestMemory.cpp",
@@ -333,6 +338,7 @@ cc_library_static {
     cflags: [
         "-DNNTEST_CTS",
         "-DNNTEST_ONLY_PUBLIC_API",
+        "-UNDEBUG",
         "-Wall",
         "-Werror",
     ],
