@@ -14,8 +14,6 @@
  * limitations under the License.
  */
 
-#undef NDEBUG
-
 #include <android-base/logging.h>
 #include <gtest/gtest.h>
 #include <unistd.h>
