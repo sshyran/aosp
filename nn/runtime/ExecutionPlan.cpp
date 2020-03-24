@@ -18,6 +18,7 @@
 
 #include "ExecutionPlan.h"
 
+#include <android/sync.h>
 #include <cutils/native_handle.h>
 #include <fcntl.h>
 #include <openssl/sha.h>
@@ -735,7 +736,8 @@ ExecutionPlan::Controller::Controller(
       mSourceOperandToOutputIndex(std::move(sourceOperandToOutputIndex)),
       mSourceOperandToConstantReference(std::move(sourceOperandToConstantReference)),
       mNextStepIndex(0),
-      mLastStepIndex(kBadStepIndex) {
+      mLastStepIndex(kBadStepIndex),
+      mLastStepSyncFd(-1) {
     if (totalSizeOfTemporaries == 0) {
         return;
     }
@@ -1065,8 +1067,10 @@ int ExecutionPlan::readConditionValue(std::shared_ptr<Controller> controller,
 
 int ExecutionPlan::next(std::shared_ptr<Controller> controller,
                         std::shared_ptr<StepExecutor>* executor,
-                        std::shared_ptr<ExecutionBurstController>* burstController) const {
+                        std::shared_ptr<ExecutionBurstController>* burstController,
+                        int syncFdOfLastStep) const {
     controller->mLastStepIndex = controller->mNextStepIndex;
+    controller->mLastStepSyncFd = syncFdOfLastStep;
     *executor = nullptr;
     if (burstController != nullptr) {
         *burstController = nullptr;
@@ -1214,10 +1218,27 @@ void ExecutionPlan::Controller::setOutput(const SourceOperandIndex& outerOperand
     }
 }
 
+int ExecutionPlan::Controller::waitForLastStepSyncFence() const {
+    if (mLastStepSyncFd == -1) {
+        return ANEURALNETWORKS_NO_ERROR;
+    }
+    VLOG(EXECUTION) << "wait for mLastStepSyncFd " << mLastStepSyncFd;
+    int r = sync_wait(mLastStepSyncFd, -1);
+    int n = ANEURALNETWORKS_NO_ERROR;
+    if (r < 0) {
+        LOG(ERROR) << "sync_wait failed, fd: " << mLastStepSyncFd;
+        n = ANEURALNETWORKS_OP_FAILED;
+    }
+    return n;
+}
+
 int ExecutionPlan::nextCompound(const IfStep* step, std::shared_ptr<Controller> controller,
                                 std::shared_ptr<StepExecutor>* executor,
                                 std::shared_ptr<ExecutionBurstController>* burstController) const {
     VLOG(EXECUTION) << "next: " << toString(*step);
+    // If the last step has a sync fence, wait for it to signal before reading the condition value.
+    // This is safe because the steps are serialized when doing fenced compute.
+    NN_RETURN_IF_ERROR(controller->waitForLastStepSyncFence());
     bool condValue;
     NN_RETURN_IF_ERROR(readConditionValue(controller, step->conditionOperandIndex, &condValue));
     controller->mNextStepIndex = condValue ? step->thenStepIndex : step->elseStepIndex;
@@ -1284,7 +1305,6 @@ int ExecutionPlan::nextCompound(const WhileStep* step, std::shared_ptr<Controlle
     }
 
     CHECK(state.stage == WhileState::EVALUATE_BODY);
-
     std::chrono::nanoseconds timeoutDuration(
             controller->mExecutionBuilder->getLoopTimeoutDuration());
     auto duration = std::chrono::steady_clock::now() - state.startTime;
@@ -1295,6 +1315,9 @@ int ExecutionPlan::nextCompound(const WhileStep* step, std::shared_ptr<Controlle
         return ANEURALNETWORKS_MISSED_DEADLINE_TRANSIENT;
     }
 
+    // If the last step has a sync fence, wait for it to signal before reading the condition value.
+    // This is safe because the steps are serialized when doing fenced compute.
+    NN_RETURN_IF_ERROR(controller->waitForLastStepSyncFence());
     bool condValue;
     NN_RETURN_IF_ERROR(readConditionValue(controller, step->condOutputOperand, &condValue));
     if (condValue) {
