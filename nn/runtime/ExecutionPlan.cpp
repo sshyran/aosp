@@ -1003,14 +1003,14 @@ void ExecutionPlan::Buffer::flush() const {
 
 std::optional<ExecutionPlan::Buffer> ExecutionPlan::getBufferFromModelArgumentInfo(
         const ModelArgumentInfo& info, const ExecutionBuilder* executionBuilder) const {
-    switch (info.state) {
+    switch (info.state()) {
         case ModelArgumentInfo::POINTER: {
-            return Buffer(info.buffer, info.locationAndLength.length);
+            return Buffer(info.buffer(), info.length());
         } break;
         case ModelArgumentInfo::MEMORY: {
             if (std::optional<RunTimePoolInfo> poolInfo =
-                        executionBuilder->getRunTimePoolInfo(info.locationAndLength.poolIndex)) {
-                return Buffer(*poolInfo, info.locationAndLength.offset);
+                        executionBuilder->getRunTimePoolInfo(info.locationAndLength().poolIndex)) {
+                return Buffer(*poolInfo, info.locationAndLength().offset);
             } else {
                 LOG(ERROR) << "Unable to map operand memory pool";
                 return std::nullopt;
@@ -1021,7 +1021,7 @@ std::optional<ExecutionPlan::Buffer> ExecutionPlan::getBufferFromModelArgumentIn
             return std::nullopt;
         } break;
         default: {
-            LOG(ERROR) << "Unexpected operand memory state: " << static_cast<int>(info.state);
+            LOG(ERROR) << "Unexpected operand memory state: " << static_cast<int>(info.state());
             return std::nullopt;
         } break;
     }
