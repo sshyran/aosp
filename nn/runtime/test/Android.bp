@@ -67,6 +67,7 @@ cc_defaults {
         // "TestUnspecifiedDimensions.cpp",
         "GeneratedTestUtils.cpp",
         "TestAssertions.cpp",
+        "TestControlFlow.cpp",
         "TestFree.cpp",
         "TestGenerated.cpp",
         "TestMemory.cpp",
@@ -308,6 +309,7 @@ cc_library_static {
         "CtsMain.cpp",
         "GeneratedTestUtils.cpp",
         "RequireDebug.cpp", // Abort compilation if NDEBUG is defined
+        "TestControlFlow.cpp",
         "TestFree.cpp",
         "TestGenerated.cpp",
         "TestMemory.cpp",
