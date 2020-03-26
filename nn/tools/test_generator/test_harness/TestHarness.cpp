@@ -65,8 +65,8 @@ uint32_t getNumberOfElements(const TestOperand& op) {
 
 // Check if the actual results meet the accuracy criterion.
 template <typename T>
-void expectNear(const TestOperand& op, const TestBuffer& result,
-                const AccuracyCriterion& criterion) {
+void expectNear(const TestOperand& op, const TestBuffer& result, const AccuracyCriterion& criterion,
+                bool allowInvalid = false) {
     constexpr uint32_t kMinNumberOfElementsToTestBiasMSE = 10;
     const T* actualBuffer = result.get<T>();
     const T* expectedBuffer = op.data.get<T>();
@@ -79,9 +79,9 @@ void expectNear(const TestOperand& op, const TestBuffer& result,
         double tolerableRange = criterion.atol + criterion.rtol * std::fabs(expected);
 
         // Skip invalid floating point values.
-        if (std::isnan(expected) || std::isinf(expected) ||
-            (std::is_same_v<T, float> && std::fabs(expected) > 1e3) ||
-            (std::is_same_v<T, _Float16> || std::fabs(expected) > 1e2)) {
+        if (allowInvalid && (std::isnan(expected) || std::isinf(expected) ||
+                             (std::is_same_v<T, float> && std::fabs(expected) > 1e3) ||
+                             (std::is_same_v<T, _Float16> || std::fabs(expected) > 1e2))) {
             numSkip++;
             continue;
         }
@@ -205,10 +205,11 @@ void checkResults(const TestModel& model, const std::vector<TestBuffer>& buffers
 
         switch (operand.type) {
             case TestOperandType::TENSOR_FLOAT32:
-                expectNear<float>(operand, result, criteria.float32);
+                expectNear<float>(operand, result, criteria.float32, criteria.allowInvalidFpValues);
                 break;
             case TestOperandType::TENSOR_FLOAT16:
-                expectNear<_Float16>(operand, result, criteria.float16);
+                expectNear<_Float16>(operand, result, criteria.float16,
+                                     criteria.allowInvalidFpValues);
                 break;
             case TestOperandType::TENSOR_INT32:
             case TestOperandType::INT32:
@@ -267,6 +268,8 @@ void checkResults(const TestModel& model, const std::vector<TestBuffer>& buffers
             .quant16Asymm = {.atol = 1},
             .quant16Symm = {.atol = 1},
             .bool8AllowedErrorRatio = 0.0f,
+            // Since generated tests are hand-calculated, there should be no invalid FP values.
+            .allowInvalidFpValues = false,
     };
     bool hasFloat16Inputs = false;
     model.forEachSubgraph([&hasFloat16Inputs](const TestSubgraph& subgraph) {
