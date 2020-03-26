@@ -54,3 +54,15 @@ Example({
          8.0001,     7.693794,  11.9999,    12.725516
     ]
 }).AddNchw(i2, o2, layout).AddVariations("relaxed", "float16")
+
+
+# TEST 3: Regression test of b/151360275.
+i3 = Input("in", "TENSOR_FLOAT32", "{1, 2, 2, 1}")
+o3 = Output("out", "TENSOR_FLOAT32", "{1, 2, 2, 1}")
+Model("large").Operation("INSTANCE_NORMALIZATION", i3, 1.0, 0.0, 0.0001, layout).To(o3)
+
+# Instantiate an example
+Example({
+    i3: [198, 198, 202, 202],
+    o3: [-0.9999875, -0.9999875, 0.9999875, 0.9999875]
+}).AddNchw(i3, o3, layout).AddVariations("relaxed", "float16")
