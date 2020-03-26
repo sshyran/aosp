@@ -1,6 +1,5 @@
-#!/bin/bash
 #
-# Copyright (C) 2019 The Android Open Source Project
+# Copyright (C) 2020 The Android Open Source Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -13,17 +12,18 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+#
 
-set -Eeuox pipefail
-cd "$(dirname "$0")/.."  # runtime/test
+input0 = Input("input0", "TENSOR_FLOAT32", "{1, 1, 1, 1, 2}")
+input1 = Input("input1", "TENSOR_FLOAT32", "{1, 1, 1, 1, 2}")
+axis = 4
+output0 = Output("output0", "TENSOR_FLOAT32", "{1, 1, 1, 1, 4}")
 
-NNAPI_VERSIONS="V1_0 V1_1 V1_2 V1_3 V1_3_cts_only"
-EXAMPLE_GENERATOR="../../tools/test_generator/example_generator.py"
+model = Model().Operation("CONCATENATION", input0, input1,
+                          axis).To(output0).IntroducedIn("V1_0")
 
-for source_version in $NNAPI_VERSIONS; do
-  generated_dir="generated/spec_$source_version"
-  mkdir -p "$generated_dir"
-  "$EXAMPLE_GENERATOR" "specs/$source_version" \
-    --example="$generated_dir" \
-    "$@"
-done
+Example({
+    input0: [1, 2],
+    input1: [3, 4],
+    output0: [1, 2, 3, 4],
+}).ExpectFailure()

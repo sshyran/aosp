@@ -92,6 +92,7 @@ cc_defaults {
         "neuralnetworks_generated_V1_0_example",
         "neuralnetworks_generated_V1_1_example",
         "neuralnetworks_generated_V1_2_example",
+        "neuralnetworks_generated_V1_3_cts_only_example",
         "neuralnetworks_generated_V1_3_example",
     ],
 }
@@ -278,6 +279,7 @@ cc_defaults {
         "neuralnetworks_generated_V1_0_example",
         "neuralnetworks_generated_V1_1_example",
         "neuralnetworks_generated_V1_2_example",
+        "neuralnetworks_generated_V1_3_cts_only_example",
         "neuralnetworks_generated_V1_3_example",
     ],
     shared_libs: [
@@ -383,5 +385,12 @@ cc_library_static {
     name: "neuralnetworks_generated_V1_3_example",
     defaults: ["neuralnetworks_float16"],
     srcs: ["generated/spec_V1_3/*.example.cpp"],
+    static_libs: ["libneuralnetworks_generated_test_harness"],
+}
+
+cc_library_static {
+    name: "neuralnetworks_generated_V1_3_cts_only_example",
+    defaults: ["neuralnetworks_float16"],
+    srcs: ["generated/spec_V1_3_cts_only/*.example.cpp"],
     static_libs: ["libneuralnetworks_generated_test_harness"],
 }
