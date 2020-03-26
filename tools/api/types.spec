@@ -1098,7 +1098,7 @@
     %{DeclareOperation HASHTABLE_LOOKUP 10},
 
     /**
-     * Applies L2 normalization along the depth dimension.
+     * Applies L2 normalization along the axis dimension.
      *
      * The values in the output tensor are computed as:
      *
@@ -1107,8 +1107,7 @@
      *         sqrt(sum_{c} pow(input[batch, row, col, c], 2))
      *
 %kind ndk hal_1.2+
-     * For input tensor with rank less than 4, independently normalizes each
-     * 1-D slice along dimension dim.
+     * By default the axis dimension is the last dimension of the input tensor.
      *
 %/kind
      * Supported tensor {@link %{OperandType}}:
@@ -4966,7 +4965,8 @@
      * * 1: A scalar {@link %{OperandTypeLinkPfx}INT32}, specifying the number of
      *      independent samples to draw for each row slice.
      * * 2: A 1-D {@link %{OperandTypeLinkPfx}TENSOR_INT32} tensor with shape [2],
-     *      specifying seeds used to initialize the random distribution.
+     *      specifying seeds used to initialize the random distribution. If both
+     *      provided seeds are 0, both will be randomly generated.
      * Outputs:
      * * 0: A 2-D {@link %{OperandTypeLinkPfx}TENSOR_INT32} tensor with shape
      *      [batches, samples], containing the drawn samples.
