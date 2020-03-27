@@ -639,8 +639,7 @@ static std::tuple<int, int, sp<hal::IFencedExecutionCallback>> startComputeFence
 
         // Get the current step of the execution.
         std::shared_ptr<StepExecutor> executor;
-        std::shared_ptr<ExecutionBurstController> burstController;
-        int n = plan.next(controller, &executor, &burstController);
+        int n = plan.next(controller, &executor, nullptr, syncFence);
         if (n != ANEURALNETWORKS_NO_ERROR) {
             // During the interpreted execution of control flow, a loop timeout
             // might occur in ExecutionPlan::next().
