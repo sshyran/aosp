@@ -163,6 +163,12 @@ bool validate(const IOperationValidationContext* context) {
             NN_RET_CHECK_EQ(input.offset, output.offset);
         }
     }
+    for (uint32_t i = 0; i < inputCount - 1; ++i) {
+        const uint32_t inputRank = getNumberOfDimensions(context->getInputShape(i));
+        if (inputRank != 0) {
+            NN_RET_CHECK_LE(inputRank, 4);
+        }
+    }
     return validateInputTypes(context, inExpectedTypes) &&
            validateOutputTypes(context, {inputType});
 }
@@ -175,6 +181,7 @@ bool prepare(IOperationExecutionContext* context) {
     int32_t axis = context->getInputValue<int32_t>(numInputs - 1);
     NN_RET_CHECK_GE(axis, 0);
     NN_RET_CHECK_LT(axis, numDimensions);
+    NN_RET_CHECK_LE(numDimensions, 4);
 
     uint32_t sumAxis = getSizeOfDimension(input0, axis);
     for (uint32_t i = 1; i < numInputs - 1; ++i) {
