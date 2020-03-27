@@ -1779,6 +1779,10 @@ static void setInfoExceptLifetime(RunTimeOperandInfo* to, const RunTimeOperandIn
 int CpuExecutor::executeIfOperation(const Operation& operation, RunTimeOperandInfo* operands) {
     namespace op = operation_if;
     const RunTimeOperandInfo& condOperand = operands[operation.inputs[op::kCondBoolOperand]];
+    if (condOperand.buffer == nullptr) {
+        LOG(ERROR) << "Cannot read IF condition operand value";
+        return ANEURALNETWORKS_OP_FAILED;
+    }
     const bool condValue = *reinterpret_cast<const bool8*>(condOperand.buffer);
     VLOG(CPUEXE) << "CpuExecutor::executeIfOperation: condition value: " << condValue;
 
