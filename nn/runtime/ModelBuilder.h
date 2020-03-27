@@ -161,7 +161,7 @@ class ModelBuilder {
 
     // Sorts the operations to be in the correct order for single threaded
     // node-at-a-time execution.
-    void sortIntoRunOrder();
+    bool sortIntoRunOrder();
 
     // Copies the large values to a shared memory, if we have any.
     int copyLargeValuesToSharedMemory();
