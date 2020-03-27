@@ -321,6 +321,20 @@ example.AddVariations(
 example.AddAllActivations(*op_list)
 ```
 
+#### Specifying SUBGRAPH conversions
+
+Converters that support nested control flow models accept the following syntax:
+
+```
+converter = DataTypeConverter().Identify({
+    ...
+    subgraphOperand: DataTypeConverter().Identify({
+        ...
+    }),
+    ...
+})
+```
+
 ### Specifying the Model Version
 
 If not explicitly specified, the minimal required HAL version will be inferred from the path, e.g. the models defined in `nn/runtime/test/specs/V1_0/add.mod.py` will all have version `V1_0`. However there are several exceptions that a certain operation is under-tested in previous version and more tests are added in a later version. In this case, two methods are provided to set the version manually.
