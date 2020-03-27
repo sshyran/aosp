@@ -422,7 +422,7 @@ static void logMemoryDescriptorToInfo(const MemoryDescriptor& desc, const Operan
     LOG(INFO) << "    Zero point: " << toString(operand.zeroPoint);
     LOG(INFO) << "    Extra params: " << toString(operand.extraParams);
     LOG(INFO) << "    Dimensions: " << toString(desc.dimensions);
-    LOG(INFO) << "    Submodels [" << desc.preparedModels.size() << "]:";
+    LOG(INFO) << "    Prepared models [" << desc.preparedModels.size() << "]:";
     for (const auto* preparedModel : desc.preparedModels) {
         LOG(INFO) << "        service = " << preparedModel->getDevice()->getName();
     }
@@ -457,7 +457,10 @@ int MemoryBuilder::finish() {
         logMemoryDescriptorToInfo(mDesc, mOperand.value());
     }
     std::set<const Device*> devices = getDevices(mDesc);
-    if (devices.size() == 1) {
+    if (devices.empty()) {
+        // This can happen with interpreted control flow.
+        mAllocator = nullptr;
+    } else if (devices.size() == 1) {
         mAllocator = *devices.begin();
         VLOG(MEMORY) << "Using " << mAllocator->getName() << " as allocator.";
     } else {
