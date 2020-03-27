@@ -351,6 +351,9 @@ void GeneratedTests::execute(const TestModel& testModel) {
     NNTRACE_APP(NNTRACE_PHASE_OVERALL, "execute");
     GeneratedModel model;
     createModel(testModel, mTestDynamicOutputShape, &model);
+    if (testModel.expectFailure && !model.isValid()) {
+        return;
+    }
     ASSERT_EQ(model.finish(), Result::NO_ERROR);
     ASSERT_TRUE(model.isValid());
     auto executeInternal = [&testModel, &model, this]() {
@@ -455,10 +458,6 @@ INSTANTIATE_GENERATED_TEST(QuantizationCouplingTest, [](const TestModel& testMod
 });
 
 INSTANTIATE_GENERATED_TEST(DeviceMemoryTest, [](const TestModel& testModel) {
-    if (!testModel.referenced.empty()) {
-        // TODO(b/149693818): Add control flow support to DeviceMemoryTest.
-        return false;
-    }
     return !testModel.expectFailure &&
            std::all_of(testModel.main.outputIndexes.begin(), testModel.main.outputIndexes.end(),
                        [&testModel](uint32_t index) {
