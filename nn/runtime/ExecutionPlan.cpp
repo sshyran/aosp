@@ -1495,14 +1495,14 @@ void ExecutionPlan::SimpleBody::forEachStepRoleOfOutput(uint32_t index,
     callback(mPreparedModel.get(), IOType::OUTPUT, index);
 }
 
-// Map an input role of the parent model to the input/output roles in the step models:
-// - An input role of the parent model may be used as an input of multiple step-models.
-// - An input role of the parent model should not be used as an output of any step-model.
+// Map an input role of the main model to the input/output roles in the step models:
+// - An input role of the main model may be used as an input of multiple step models.
+// - An input role of the main model should not be used as an output of any step model.
 void ExecutionPlan::CompoundBody::forEachStepRoleOfInput(uint32_t index,
                                                          const StepRoleCallback& callback) const {
     for (const auto& logicalStep : mSteps) {
         if (const ExecutionStep* step = logicalStep->tryExecutionStep()) {
-            // Model input as step-model input.
+            // Model input as step model input.
             const auto& inputMapping = step->getInputIndexStepModelToMainModel();
             for (uint32_t i = 0; i < inputMapping.size(); i++) {
                 if (inputMapping[i] == index) {
@@ -1513,15 +1513,15 @@ void ExecutionPlan::CompoundBody::forEachStepRoleOfInput(uint32_t index,
     }
 }
 
-// Map an output role of the parent model to the input/output roles in the step models:
-// - An output role of the parent model may only be used as one output of one single step-model.
-// - An output role of the parent model may be used as an input of multiple step-models.
+// Map an output role of the main model to the input/output roles in the step models:
+// - An output role of the main model may only be used as one output of one single step model.
+// - An output role of the main model may be used as an input of multiple step models.
 void ExecutionPlan::CompoundBody::forEachStepRoleOfOutput(uint32_t index,
                                                           const StepRoleCallback& callback) const {
     bool found = false;
     for (const auto& logicalStep : mSteps) {
         if (const ExecutionStep* step = logicalStep->tryExecutionStep()) {
-            // Model output as step-model output.
+            // Model output as step model output.
             if (!found) {
                 const auto& outputMapping = step->getOutputIndexStepModelToMainModel();
                 for (uint32_t i = 0; i < outputMapping.size(); i++) {
@@ -1532,7 +1532,7 @@ void ExecutionPlan::CompoundBody::forEachStepRoleOfOutput(uint32_t index,
                     }
                 }
             }
-            // Model output as step-model input.
+            // Model output as step model input.
             const auto& inputToOutputMapping = step->getOutputsAsStepModelInputsIndexToMainModel();
             for (uint32_t i = 0; i < inputToOutputMapping.size(); i++) {
                 if (inputToOutputMapping[i] == index) {
