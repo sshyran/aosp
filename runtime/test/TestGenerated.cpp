@@ -351,6 +351,9 @@ void GeneratedTests::execute(const TestModel& testModel) {
     NNTRACE_APP(NNTRACE_PHASE_OVERALL, "execute");
     GeneratedModel model;
     createModel(testModel, mTestDynamicOutputShape, &model);
+    if (testModel.expectFailure && !model.isValid()) {
+        return;
+    }
     ASSERT_EQ(model.finish(), Result::NO_ERROR);
     ASSERT_TRUE(model.isValid());
     auto executeInternal = [&testModel, &model, this]() {
