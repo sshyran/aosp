@@ -287,7 +287,11 @@ bool prepare(IOperationExecutionContext* context) {
     outputKeypoint.type = boxesShape.type;
     outputKeypoint.dimensions = {numBoxes, numKeypoints, 2};
     outputKeypoint.offset = 0;
-    outputKeypoint.scale = 0.125f;
+    outputKeypoint.scale = 0.f;
+    if (heatmapShape.type == OperandType::TENSOR_QUANT8_ASYMM ||
+        heatmapShape.type == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
+        outputKeypoint.scale = 0.125f;
+    }
     NN_RET_CHECK(context->setOutputShape(kOutputKeypointTensor, outputKeypoint));
     return true;
 }
