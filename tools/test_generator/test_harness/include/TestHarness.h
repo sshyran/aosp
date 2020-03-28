@@ -495,6 +495,7 @@ struct AccuracyCriteria {
     AccuracyCriterion quant16Asymm;
     AccuracyCriterion quant16Symm;
     float bool8AllowedErrorRatio = 0.1f;
+    bool allowInvalidFpValues = true;
 };
 
 // Check the output results against the expected values in test model by calling
