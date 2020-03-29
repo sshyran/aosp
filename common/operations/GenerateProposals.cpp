@@ -260,8 +260,11 @@ bool prepare(IOperationExecutionContext* context) {
 
     outputShape.type = roiShape.type;
     outputShape.dimensions = {numRois, numClasses * kRoiDim};
-    outputShape.scale = 0.125f;
+    outputShape.scale = 0.f;
     outputShape.offset = 0;
+    if (roiShape.type == OperandType::TENSOR_QUANT16_ASYMM) {
+        outputShape.scale = 0.125f;
+    }
     NN_RET_CHECK(context->setOutputShape(kOutputTensor, outputShape));
     return true;
 }
@@ -784,8 +787,12 @@ bool prepare(IOperationExecutionContext* context) {
 
     outputRoiShape.type = roiShape.type;
     outputRoiShape.dimensions = {0, 4};
-    outputRoiShape.scale = 0.125f;
+    outputRoiShape.scale = 0.f;
     outputRoiShape.offset = 0;
+    if (scoreShape.type == OperandType::TENSOR_QUANT8_ASYMM ||
+        scoreShape.type == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
+        outputRoiShape.scale = 0.125f;
+    }
     NN_RET_CHECK(context->setOutputShape(kOutputRoiTensor, outputRoiShape));
 
     outputClassShape.type = OperandType::TENSOR_INT32;
