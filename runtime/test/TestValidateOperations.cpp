@@ -14,11 +14,19 @@
  * limitations under the License.
  */
 
+#include <gmock/gmock.h>
+#include <gtest/gtest-death-test.h>
 #include <gtest/gtest.h>
 
+#include <algorithm>
+#include <cstddef>
+#include <cstdint>
+#include <iterator>
+#include <memory>
 #include <optional>
 #include <set>
 #include <string>
+#include <utility>
 #include <vector>
 
 #include "NeuralNetworks.h"
@@ -67,14 +75,254 @@ struct OperandTypeWithExtraParams {
 
     ANeuralNetworksOperandType operandType;
     std::optional<ANeuralNetworksSymmPerChannelQuantParams> channelQuant;
+
+    bool operator==(const OperandTypeWithExtraParams& that) const {
+        if (operandType.type != that.operandType.type ||
+            operandType.scale != that.operandType.scale ||
+            operandType.zeroPoint != that.operandType.zeroPoint ||
+            operandType.dimensionCount != that.operandType.dimensionCount) {
+            return false;
+        }
+
+        if (channelQuant.has_value() != that.channelQuant.has_value() ||
+            (channelQuant.has_value() &&
+             (channelQuant->channelDim != that.channelQuant->channelDim ||
+              channelQuant->scaleCount != that.channelQuant->scaleCount))) {
+            return false;
+        }
+
+        if (operandType.dimensions) {
+            if (!that.operandType.dimensions) {
+                return false;
+            }
+            if (!std::equal(operandType.dimensions,
+                            operandType.dimensions + operandType.dimensionCount,
+                            that.operandType.dimensions)) {
+                return false;
+            }
+        } else {
+            if (that.operandType.dimensions) {
+                return false;
+            }
+        }
+
+        if (channelQuant.has_value() && channelQuant->scales) {
+            return that.channelQuant->scales &&
+                   std::equal(channelQuant->scales, channelQuant->scales + channelQuant->scaleCount,
+                              that.channelQuant->scales);
+        } else {
+            return that.channelQuant->scales != nullptr;
+        }
+    }
+
+    bool operator!=(const OperandTypeWithExtraParams& that) const { return !(*this == that); }
+
+    bool operator<(const OperandTypeWithExtraParams& that) const {
+        if (operandType.type < that.operandType.type) return true;
+        if (operandType.dimensionCount < that.operandType.dimensionCount) return true;
+        return false;
+    }
+};  // namespace
+
+// Generates valid and invalid mutations of given OperandTypeWithParams
+// instances.
+// It is also responsible of freeing the memory allocated when creating
+// mutations.
+// Mutations shouldn't outlive the generating TensorRankConstraint instance.
+class TensorRankConstraint {
+   public:
+    TensorRankConstraint(const TensorRankConstraint& copyFrom) {
+        // ignoring the array of allocated dimension
+        this->mRangeMax = copyFrom.mRangeMax;
+        this->mRangeMin = copyFrom.mRangeMin;
+    }
+
+    TensorRankConstraint& operator=(const TensorRankConstraint& copyFrom) {
+        // ignoring the array of allocated dimension
+        this->mRangeMax = copyFrom.mRangeMax;
+        this->mRangeMin = copyFrom.mRangeMin;
+        return *this;
+    }
+
+    static TensorRankConstraint Exactly(uint32_t rank) {
+        return TensorRankConstraint(std::optional(rank), std::optional(rank));
+    }
+
+    static TensorRankConstraint AtLeast(uint32_t min) {
+        return TensorRankConstraint(std::optional(min), std::nullopt);
+    }
+
+    static TensorRankConstraint UpTo(uint32_t max) {
+        return TensorRankConstraint(std::nullopt, std::optional(max));
+    }
+
+    static TensorRankConstraint Between(uint32_t min, uint32_t max) {
+        if (min == 0) {
+            return UpTo(max);
+        }
+        return TensorRankConstraint(std::optional(min), std::optional(max));
+    }
+
+    std::set<std::vector<OperandTypeWithExtraParams>> MutationsWithValidRank(
+            const std::vector<OperandTypeWithExtraParams>& operandsTypeWithParams) {
+        // can't be both nullopt
+        if (!mRangeMin) {
+            return {ModifyForRank(operandsTypeWithParams, 1),
+                    ModifyForRank(operandsTypeWithParams, *mRangeMax)};
+        } else if (!mRangeMax) {
+            return {ModifyForRank(operandsTypeWithParams, *mRangeMin),
+                    ModifyForRank(operandsTypeWithParams, *mRangeMin + 1)};
+        } else if (mRangeMax == mRangeMin) {
+            std::for_each(operandsTypeWithParams.begin(), operandsTypeWithParams.end(),
+                          [this](const OperandTypeWithExtraParams& op) {
+                              assert(op.operandType.dimensionCount == *mRangeMin);
+                          });
+            return {operandsTypeWithParams};
+        } else {
+            return {ModifyForRank(operandsTypeWithParams, *mRangeMin),
+                    ModifyForRank(operandsTypeWithParams, *mRangeMax)};
+        }
+    }
+
+    std::set<std::vector<OperandTypeWithExtraParams>> MutationsWithInvalidRank(
+            const std::vector<OperandTypeWithExtraParams>& operandsTypeWithParams) {
+        std::set<std::vector<OperandTypeWithExtraParams>> result;
+        if (mRangeMax) {
+            result.insert(ModifyForRank(operandsTypeWithParams, *mRangeMax + 1));
+        }
+        if (mRangeMin.value_or(0) > 1) {
+            result.insert(ModifyForRank(operandsTypeWithParams, *mRangeMin - 1));
+        }
+        return result;
+    }
+
+   private:
+    std::vector<OperandTypeWithExtraParams> ModifyForRank(
+            const std::vector<OperandTypeWithExtraParams>& operandsTypeWithParams, uint_t newRank) {
+        std::vector<OperandTypeWithExtraParams> result;
+        std::transform(operandsTypeWithParams.cbegin(), operandsTypeWithParams.cend(),
+                       std::back_inserter(result),
+                       [this, newRank](const OperandTypeWithExtraParams& operandTypeWithParams) {
+                           return ModifyForRank(operandTypeWithParams, newRank);
+                       });
+        return result;
+    }
+
+    OperandTypeWithExtraParams ModifyForRank(
+            const OperandTypeWithExtraParams& operandTypeWithParams, uint_t newRank) {
+        if (operandTypeWithParams.operandType.dimensionCount == newRank) {
+            return operandTypeWithParams;
+        }
+
+        uint32_t* resultDimensions = nullptr;
+        if (newRank != 0) {
+            std::unique_ptr<uint32_t[]> dimensions = std::make_unique<uint32_t[]>(newRank);
+            resultDimensions = dimensions.get();
+            mAllocatedDimensions.insert(std::move(dimensions));
+            std::fill(resultDimensions, resultDimensions + newRank, 1);
+            const auto originDims = operandTypeWithParams.operandType.dimensions;
+            if (originDims != nullptr) {
+                const int dimsToCopy =
+                        std::min(operandTypeWithParams.operandType.dimensionCount, newRank);
+                std::copy(originDims, originDims + dimsToCopy, resultDimensions);
+            }
+        }
+
+        OperandTypeWithExtraParams result = operandTypeWithParams;
+        result.operandType = {
+                .type = operandTypeWithParams.operandType.type,
+                .dimensionCount = newRank,
+                .dimensions = resultDimensions,
+                .scale = operandTypeWithParams.operandType.scale,
+                .zeroPoint = operandTypeWithParams.operandType.zeroPoint,
+        };
+
+        return result;
+    }
+
+    TensorRankConstraint(const std::optional<uint32_t>& min, const std::optional<uint32_t>& max)
+        : mRangeMin(min), mRangeMax(max) {
+        if (mRangeMax.has_value()) {
+            assert(*mRangeMax >= mRangeMin.value_or(0));
+        }
+
+        assert(mRangeMax.has_value() || mRangeMin.has_value());
+    }
+
+    std::optional<uint32_t> mRangeMin;
+    std::optional<uint32_t> mRangeMax;
+    std::set<std::unique_ptr<uint32_t[]>> mAllocatedDimensions;
+};
+
+// Mutates a set of inputs applying the same rank constraint.
+class TensorRankMutator {
+   public:
+    TensorRankMutator(const TensorRankConstraint& constraint,
+                      const std::set<uint32_t>& applyToIndexes = {0})
+        : mApplyToIndexes(applyToIndexes.begin(), applyToIndexes.end()), mConstraint(constraint) {}
+
+    std::set<std::vector<OperandTypeWithExtraParams>> ValidInputsMutations(
+            const std::vector<OperandTypeWithExtraParams>& validInputs) {
+        return InputsMutations(
+                validInputs, [this](const std::vector<OperandTypeWithExtraParams>& inputsToMutate) {
+                    return mConstraint.MutationsWithValidRank(inputsToMutate);
+                });
+    }
+
+    std::set<std::vector<OperandTypeWithExtraParams>> InvalidInputsMutations(
+            const std::vector<OperandTypeWithExtraParams>& validInputs) {
+        return InputsMutations(
+                validInputs, [this](const std::vector<OperandTypeWithExtraParams>& inputsToMutate) {
+                    return mConstraint.MutationsWithInvalidRank(inputsToMutate);
+                });
+    }
+
+   private:
+    std::set<std::vector<OperandTypeWithExtraParams>> InputsMutations(
+            const std::vector<OperandTypeWithExtraParams>& validInputs,
+            std::function<std::set<std::vector<OperandTypeWithExtraParams>>(
+                    const std::vector<OperandTypeWithExtraParams>&)>
+                    operandMutator) {
+        std::for_each(mApplyToIndexes.begin(), mApplyToIndexes.end(),
+                      [&validInputs](uint32_t index) { assert(index < validInputs.size()); });
+
+        std::vector<OperandTypeWithExtraParams> toMutate;
+        std::transform(mApplyToIndexes.begin(), mApplyToIndexes.end(), std::back_inserter(toMutate),
+                       [&validInputs](int input_index) { return validInputs[input_index]; });
+
+        // Get a series of mutation for the operands in toMutate
+        std::set<std::vector<OperandTypeWithExtraParams>> mutatedOps = operandMutator(toMutate);
+
+        // Generate a set of mutation by replacing the mutated ops in validInputs
+        // with all the mutations in mutatedOps
+        std::set<std::vector<OperandTypeWithExtraParams>> mutatedValidInputs;
+        std::transform(
+                mutatedOps.cbegin(), mutatedOps.cend(),
+                std::inserter(mutatedValidInputs, mutatedValidInputs.begin()),
+                [this, &validInputs](const std::vector<OperandTypeWithExtraParams>& opsMutation) {
+                    std::vector<OperandTypeWithExtraParams> currInputMutation(validInputs.begin(),
+                                                                              validInputs.end());
+                    for (size_t i = 0; i < mApplyToIndexes.size(); i++) {
+                        currInputMutation[mApplyToIndexes[i]] = opsMutation[i];
+                    }
+
+                    return currInputMutation;
+                });
+
+        return mutatedValidInputs;
+    }
+
+    std::vector<uint32_t> mApplyToIndexes;
+    TensorRankConstraint mConstraint;
 };
 
 class OperationTestBase {
    public:
     OperationTestBase(ANeuralNetworksOperationType opCode,
-                      std::vector<ANeuralNetworksOperandType> validInputs,
-                      std::vector<ANeuralNetworksOperandType> validOutputs)
-        : mOpCode(opCode) {
+                      const std::vector<ANeuralNetworksOperandType>& validInputs,
+                      const std::vector<ANeuralNetworksOperandType>& validOutputs,
+                      const std::vector<TensorRankMutator>& inputRankMutators = {})
+        : mOpCode(opCode), mValidInputs(), mValidOutputs(), mInputRankMutators(inputRankMutators) {
         for (ANeuralNetworksOperandType input : validInputs) {
             mValidInputs.push_back(input);
         }
@@ -133,6 +381,7 @@ class OperationTestBase {
         EXPECT_TRUE(testMutatingInputOperandCounts());
         EXPECT_TRUE(testMutatingOutputOperandCode());
         EXPECT_TRUE(testMutatingOutputOperandCounts());
+        EXPECT_TRUE(testMutatingInputRanks());
     }
 
     void testFailure(int32_t expectedResult) {
@@ -362,12 +611,359 @@ class OperationTestBase {
         return true;
     }
 
+    bool testMutatingInputRanks() {
+        for (auto& rankMutator : mInputRankMutators) {
+            for (const auto& validMutation : rankMutator.ValidInputsMutations(mValidInputs)) {
+                int32_t result = addOperation(validMutation, mValidOutputs);
+                if (ANEURALNETWORKS_NO_ERROR != result) {
+                    return false;
+                }
+            }
+
+            for (const auto& invalidMutation : rankMutator.InvalidInputsMutations(mValidInputs)) {
+                int32_t result = addOperation(invalidMutation, mValidOutputs);
+                if (ANEURALNETWORKS_NO_ERROR == result) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
    private:
     ANeuralNetworksOperationType mOpCode;
     // The dimensions in the ANeuralNetworksOperandType must outlive the test object.
     std::vector<OperandTypeWithExtraParams> mValidInputs;
     std::vector<OperandTypeWithExtraParams> mValidOutputs;
+
+    std::vector<TensorRankMutator> mInputRankMutators;
 };
+
+MATCHER_P2(IsMutationWithDimensions, origin, expectedDims, "") {
+    OperandTypeWithExtraParams expectedWithoutDims = origin;
+    expectedWithoutDims.operandType.dimensionCount = 0;
+    expectedWithoutDims.operandType.dimensions = nullptr;
+    OperandTypeWithExtraParams actualWithoutDims = arg;
+    actualWithoutDims.operandType.dimensionCount = 0;
+    actualWithoutDims.operandType.dimensions = nullptr;
+
+    if ((expectedWithoutDims != actualWithoutDims) ||
+        (arg.operandType.dimensionCount != expectedDims.size())) {
+        return false;
+    }
+
+    if (expectedDims.size() > 0) {
+        if (!arg.operandType.dimensions || arg.operandType.dimensionCount != expectedDims.size()) {
+            return false;
+        }
+        std::vector<uint32_t> actualDims(
+                arg.operandType.dimensions,
+                arg.operandType.dimensions + arg.operandType.dimensionCount);
+
+        bool result = std::equal(actualDims.begin(), actualDims.end(), expectedDims.begin());
+        return result;
+    } else {
+        return arg.operandType.dimensions == nullptr;
+    }
+}
+
+TEST(TensorRankConstraint, ExactlyWillReturnSameInputAsValidMutation) {
+    uint32_t opDimensions[3] = {2, 2, 2};
+    OperandTypeWithExtraParams operand{ANeuralNetworksOperandType{
+            .type = ANEURALNETWORKS_TENSOR_INT32,
+            .dimensionCount = 3,
+            .dimensions = opDimensions,
+    }};
+
+    auto validMutationSet = TensorRankConstraint::Exactly(3).MutationsWithValidRank({operand});
+    ASSERT_EQ(validMutationSet.size(), 1u);
+    auto validMutations = *validMutationSet.begin();
+    ASSERT_EQ(validMutations.size(), 1u);
+    EXPECT_THAT(validMutations[0], IsMutationWithDimensions(operand, std::vector({2, 2, 2})));
+};
+
+TEST(TensorRankConstraint, ExactlyWillFailIfValidInputHasInvalidSize) {
+    uint32_t opDimensions[2] = {2, 2};
+    OperandTypeWithExtraParams operand{ANeuralNetworksOperandType{
+            .type = ANEURALNETWORKS_TENSOR_INT32,
+            .dimensionCount = 2,
+            .dimensions = opDimensions,
+    }};
+    EXPECT_DEATH(TensorRankConstraint::Exactly(3).MutationsWithValidRank({operand}),
+                 ".*assertion.+failed.*");
+};
+
+TEST(TensorRankConstraint, ExactlyWillReturnTwoInvalidMutationsWithLowerAndHigherRank) {
+    uint32_t opDimensions[3] = {2, 2, 2};
+    OperandTypeWithExtraParams operand{ANeuralNetworksOperandType{
+            .type = ANEURALNETWORKS_TENSOR_INT32,
+            .dimensionCount = 3,
+            .dimensions = opDimensions,
+    }};
+
+    auto invalidMutations = TensorRankConstraint::Exactly(3).MutationsWithInvalidRank({operand});
+    ASSERT_EQ(invalidMutations.size(), 2u);
+    std::for_each(
+            invalidMutations.begin(), invalidMutations.end(),
+            [&operand](const std::vector<OperandTypeWithExtraParams>& mutations) {
+                EXPECT_EQ(mutations.size(), 1u);
+                if (mutations.size() == 1) {
+                    EXPECT_THAT(
+                            mutations[0],
+                            ::testing::AnyOf(
+                                    IsMutationWithDimensions(operand, std::vector({2, 2})),
+                                    IsMutationWithDimensions(operand, std::vector({2, 2, 2, 1}))));
+                }
+            });
+};
+
+TEST(TensorRankConstraint, AtLeastWillReturnTwoValidMutationsAboveThreshold) {
+    uint32_t opDimensions[3] = {2, 2, 2};
+    OperandTypeWithExtraParams operand{ANeuralNetworksOperandType{
+            .type = ANEURALNETWORKS_TENSOR_INT32,
+            .dimensionCount = 2,
+            .dimensions = opDimensions,
+    }};
+
+    auto invalidMutations = TensorRankConstraint::AtLeast(1).MutationsWithValidRank(
+            {(OperandTypeWithExtraParams)operand});
+    ASSERT_EQ(invalidMutations.size(), 2u);
+    std::for_each(invalidMutations.begin(), invalidMutations.end(),
+                  [&operand](const std::vector<OperandTypeWithExtraParams>& mutations) {
+                      EXPECT_EQ(mutations.size(), 1u);
+                      if (mutations.size() == 1) {
+                          EXPECT_THAT(
+                                  mutations[0],
+                                  ::testing::AnyOf(
+                                          IsMutationWithDimensions(operand, std::vector({2})),
+                                          IsMutationWithDimensions(operand, std::vector({2, 2}))));
+                      }
+                  });
+}
+
+TEST(TensorRankConstraint, AtLeastWillReturnOneInvalidMutationsBelowThreshold) {
+    uint32_t opDimensions[2] = {2, 2};
+    OperandTypeWithExtraParams operand{ANeuralNetworksOperandType{
+            .type = ANEURALNETWORKS_TENSOR_INT32,
+            .dimensionCount = 2,
+            .dimensions = opDimensions,
+    }};
+
+    auto invalidMutations = TensorRankConstraint::AtLeast(2).MutationsWithInvalidRank(
+            {(OperandTypeWithExtraParams)operand});
+    ASSERT_EQ(invalidMutations.size(), 1u);
+    auto invalidMutationVector = *invalidMutations.begin();
+    ASSERT_EQ(invalidMutationVector.size(), 1u);
+    ASSERT_THAT(invalidMutationVector[0], IsMutationWithDimensions(operand, std::vector({2})));
+}
+
+TEST(TensorRankConstraint, AtLeastWillReturnNoInvalidMutationsIfThresholdIs1) {
+    uint32_t opDimensions[1] = {2};
+    OperandTypeWithExtraParams operand{ANeuralNetworksOperandType{
+            .type = ANEURALNETWORKS_TENSOR_INT32,
+            .dimensionCount = 1,
+            .dimensions = opDimensions,
+    }};
+
+    auto invalidMutations = TensorRankConstraint::AtLeast(1).MutationsWithInvalidRank(
+            {(OperandTypeWithExtraParams)operand});
+    ASSERT_EQ(invalidMutations.size(), 0u);
+}
+
+TEST(TensorRankConstraint, UpToWillReturnUpToTwoValidMutationsBelowThreshold) {
+    uint32_t opDimensions[3] = {2, 2, 2};
+    OperandTypeWithExtraParams operand{ANeuralNetworksOperandType{
+            .type = ANEURALNETWORKS_TENSOR_INT32,
+            .dimensionCount = 2,
+            .dimensions = opDimensions,
+    }};
+
+    auto invalidMutations = TensorRankConstraint::UpTo(3).MutationsWithValidRank(
+            {(OperandTypeWithExtraParams)operand});
+    ASSERT_EQ(invalidMutations.size(), 2u);
+    std::for_each(
+            invalidMutations.begin(), invalidMutations.end(),
+            [&operand](const std::vector<OperandTypeWithExtraParams>& mutations) {
+                EXPECT_EQ(mutations.size(), 1u);
+                if (mutations.size() == 1) {
+                    EXPECT_THAT(
+                            mutations[0],
+                            ::testing::AnyOf(
+                                    IsMutationWithDimensions(operand, std::vector<uint32_t>({2})),
+                                    IsMutationWithDimensions(operand, std::vector({2, 2, 2}))));
+                }
+            });
+}
+
+TEST(TensorRankConstraint, UpToWillReturnOneInvalidMutationsAboveThreshold) {
+    uint32_t opDimensions[3] = {2, 2, 2};
+    OperandTypeWithExtraParams operand{ANeuralNetworksOperandType{
+            .type = ANEURALNETWORKS_TENSOR_INT32,
+            .dimensionCount = 3,
+            .dimensions = opDimensions,
+    }};
+
+    auto invalidMutations = TensorRankConstraint::UpTo(3).MutationsWithInvalidRank(
+            {(OperandTypeWithExtraParams)operand});
+    ASSERT_EQ(invalidMutations.size(), 1u);
+    auto invalidMutationVector = *invalidMutations.begin();
+    ASSERT_EQ(invalidMutationVector.size(), 1u);
+    ASSERT_THAT(invalidMutationVector[0],
+                IsMutationWithDimensions(operand, std::vector({2, 2, 2, 1})));
+}
+
+TEST(TensorRankConstraint, BetweenWillReturnTwoValidMutationsOnRangeBoundaries) {
+    uint32_t opDimensions[3] = {2, 2, 2};
+    OperandTypeWithExtraParams operand{ANeuralNetworksOperandType{
+            .type = ANEURALNETWORKS_TENSOR_INT32,
+            .dimensionCount = 3,
+            .dimensions = opDimensions,
+    }};
+
+    auto validMutations = TensorRankConstraint::Between(2, 4).MutationsWithValidRank(
+            {(OperandTypeWithExtraParams)operand});
+    ASSERT_EQ(validMutations.size(), 2u);
+    std::for_each(validMutations.begin(), validMutations.end(),
+                  [&operand](const std::vector<OperandTypeWithExtraParams>& mutations) {
+                      EXPECT_EQ(mutations.size(), 1u);
+                      if (mutations.size() == 1) {
+                          EXPECT_THAT(
+                                  mutations[0],
+                                  ::testing::AnyOf(IsMutationWithDimensions(
+                                                           operand, std::vector<uint32_t>({2, 2})),
+                                                   IsMutationWithDimensions(
+                                                           operand, std::vector({2, 2, 2, 1}))));
+                      }
+                  });
+}
+
+TEST(TensorRankConstraint, BetweenWillReturnTwoInvValidMutationsAdjacentToRangeBoundaries) {
+    uint32_t opDimensions[3] = {2, 2, 2};
+    OperandTypeWithExtraParams operand{ANeuralNetworksOperandType{
+            .type = ANEURALNETWORKS_TENSOR_INT32,
+            .dimensionCount = 3,
+            .dimensions = opDimensions,
+    }};
+
+    auto validMutations = TensorRankConstraint::Between(2, 4).MutationsWithInvalidRank(
+            {(OperandTypeWithExtraParams)operand});
+    ASSERT_EQ(validMutations.size(), 2u);
+    std::for_each(validMutations.begin(), validMutations.end(),
+                  [&operand](const std::vector<OperandTypeWithExtraParams>& mutations) {
+                      EXPECT_EQ(mutations.size(), 1u);
+                      if (mutations.size() == 1) {
+                          EXPECT_THAT(
+                                  mutations[0],
+                                  ::testing::AnyOf(IsMutationWithDimensions(
+                                                           operand, std::vector<uint32_t>({2})),
+                                                   IsMutationWithDimensions(
+                                                           operand, std::vector({2, 2, 2, 1, 1}))));
+                      }
+                  });
+}
+
+TEST(TensorRankConstraint, BetweenWillReturnOneInvalidMutationsOnlyIfLowerBoundIs1) {
+    uint32_t opDimensions[3] = {2, 2, 2};
+    OperandTypeWithExtraParams operand{ANeuralNetworksOperandType{
+            .type = ANEURALNETWORKS_TENSOR_INT32,
+            .dimensionCount = 3,
+            .dimensions = opDimensions,
+    }};
+
+    auto invalidMutations = TensorRankConstraint::Between(1, 4).MutationsWithInvalidRank(
+            {(OperandTypeWithExtraParams)operand});
+    ASSERT_EQ(invalidMutations.size(), 1u);
+    auto invalidMutationVector = *invalidMutations.begin();
+    ASSERT_EQ(invalidMutationVector.size(), 1u);
+    ASSERT_THAT(invalidMutationVector[0],
+                IsMutationWithDimensions(operand, std::vector({2, 2, 2, 1, 1})));
+}
+
+TEST(TensorRankMutator, AppliesConstraintToInputsAtGivenInputsToGenerateValidMutations) {
+    uint32_t opDimensions0[2] = {0, 0};
+    OperandTypeWithExtraParams operand0{ANeuralNetworksOperandType{
+            .type = ANEURALNETWORKS_TENSOR_INT32,
+            .dimensionCount = 2,
+            .dimensions = opDimensions0,
+    }};
+    uint32_t opDimensions1[1] = {1};
+    OperandTypeWithExtraParams operand1{ANeuralNetworksOperandType{
+            .type = ANEURALNETWORKS_TENSOR_INT32,
+            .dimensionCount = 1,
+            .dimensions = opDimensions1,
+    }};
+    uint32_t opDimensions2[2] = {2, 2};
+    OperandTypeWithExtraParams operand2{ANeuralNetworksOperandType{
+            .type = ANEURALNETWORKS_TENSOR_INT32,
+            .dimensionCount = 2,
+            .dimensions = opDimensions2,
+    }};
+    TensorRankMutator mutator{TensorRankConstraint::AtLeast(2), {0, 2}};
+
+    const auto mutationSet = mutator.ValidInputsMutations({operand0, operand1, operand2});
+    ASSERT_EQ(mutationSet.size(), 2u);
+    std::for_each(
+            mutationSet.begin(), mutationSet.end(),
+            [&](const std::vector<OperandTypeWithExtraParams>& mutatedInputs) {
+                EXPECT_EQ(mutatedInputs.size(), 3u);
+                if (mutatedInputs.size() == 3) {
+                    EXPECT_EQ(mutatedInputs[0].operandType.dimensionCount,
+                              mutatedInputs[2].operandType.dimensionCount);
+                    EXPECT_THAT(
+                            mutatedInputs[0],
+                            ::testing::AnyOf(
+                                    IsMutationWithDimensions(operand0, std::vector({0, 0})),
+                                    IsMutationWithDimensions(operand0, std::vector({0, 0, 1}))));
+
+                    EXPECT_EQ(mutatedInputs[1], operand1);
+
+                    EXPECT_THAT(
+                            mutatedInputs[2],
+                            ::testing::AnyOf(
+                                    IsMutationWithDimensions(operand2, std::vector({2, 2})),
+                                    IsMutationWithDimensions(operand2, std::vector({2, 2, 1}))));
+                }
+            });
+}
+
+TEST(TensorRankMutator, AppliesConstraintToInputsAtGivenInputsToGenerateInvalidMutations) {
+    uint32_t opDimensions0[2] = {0, 0};
+    OperandTypeWithExtraParams operand0{ANeuralNetworksOperandType{
+            .type = ANEURALNETWORKS_TENSOR_INT32,
+            .dimensionCount = 2,
+            .dimensions = opDimensions0,
+    }};
+    uint32_t opDimensions1[1] = {1};
+    OperandTypeWithExtraParams operand1{ANeuralNetworksOperandType{
+            .type = ANEURALNETWORKS_TENSOR_INT32,
+            .dimensionCount = 1,
+            .dimensions = opDimensions1,
+    }};
+    uint32_t opDimensions2[2] = {2, 2};
+    OperandTypeWithExtraParams operand2{ANeuralNetworksOperandType{
+            .type = ANEURALNETWORKS_TENSOR_INT32,
+            .dimensionCount = 2,
+            .dimensions = opDimensions2,
+    }};
+    TensorRankMutator mutator{TensorRankConstraint::AtLeast(2), {0, 2}};
+
+    const auto mutationSet = mutator.InvalidInputsMutations({operand0, operand1, operand2});
+    ASSERT_EQ(mutationSet.size(), 1u);
+    std::for_each(mutationSet.begin(), mutationSet.end(),
+                  [&](const std::vector<OperandTypeWithExtraParams>& mutatedInputs) {
+                      EXPECT_EQ(mutatedInputs.size(), 3u);
+                      if (mutatedInputs.size() == 3) {
+                          EXPECT_THAT(mutatedInputs[0],
+                                      IsMutationWithDimensions(operand0, std::vector({0})));
+
+                          EXPECT_EQ(mutatedInputs[1], operand1);
+
+                          EXPECT_THAT(mutatedInputs[2],
+                                      IsMutationWithDimensions(operand2, std::vector({2})));
+                      }
+                  });
+}
 
 void argMinMaxTest(ANeuralNetworksOperationType operationCode, int32_t inputOperandType) {
     SCOPED_TRACE(inputOperandType);
@@ -1476,7 +2072,8 @@ void convOpTest(int32_t inputOperandCode, int32_t filterOperandCode) {
     ANeuralNetworksOperandType padImplicit = scalar;
     OperationTestBase implicitConvTest(
             ANEURALNETWORKS_CONV_2D,
-            {input, filter, bias, padImplicit, strideWidth, strideHeight, activation}, {output});
+            {input, filter, bias, padImplicit, strideWidth, strideHeight, activation}, {output},
+            {{TensorRankConstraint::Exactly(4), {0, 1}}});
     if (filterOperandCode == ANEURALNETWORKS_TENSOR_QUANT8_SYMM_PER_CHANNEL) {
         implicitConvTest.setInputSymmPerChannelQuantParams(1, filterChannelQuantParams);
     }
