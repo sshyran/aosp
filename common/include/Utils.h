@@ -273,6 +273,21 @@ inline uint32_t nonExtensionOperandSizeOfData(const hal::Operand& operand) {
 // See also TypeManager::getSizeOfData(const Operand&).
 uint32_t sizeOfTensorData(uint32_t sizeOfElement, const std::vector<uint32_t>& dimensions);
 
+// Returns true if the amount of space needed to store a value of the specified
+// dimensions and element size overflows the uint32_t type.
+//
+// Aborts if the specified type is an extension type.
+//
+// See also TypeManager::sizeOfDataOverflowsUInt32(OperandType, const std::vector<uint32_t>&).
+bool nonExtensionOperandSizeOfDataOverflowsUInt32(hal::OperandType type,
+                                                  const std::vector<uint32_t>& dimensions);
+
+// Returns true if the amount of space needed to store a value of the specified
+// dimensions and element size overflows the uint32_t type.
+//
+// See also TypeManager::sizeOfDataOverflowsUInt32(OperandType, const std::vector<uint32_t>&).
+bool sizeOfTensorDataOverflowsUInt32(uint32_t elementSize, const std::vector<uint32_t>& dimensions);
+
 // Returns true if a non-extension operand type is a scalar type.
 //
 // Aborts if the specified type is an extension type.
