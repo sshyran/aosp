@@ -90,6 +90,38 @@ TEST(ValidateOperandTypeTest, ExtensionTensorWithUnspecifiedRank) {
               ANEURALNETWORKS_BAD_DATA);
 }
 
+TEST(ValidateOperandTypeTest, ExtensionTypeDimensionProductOverflow) {
+    // Regression test for b/146044137.
+    constexpr uint16_t kExtensionPrefix = 1;
+    constexpr uint16_t kTypeWithinExtension = 0;
+    int32_t extensionType = getExtensionType(kExtensionPrefix, kTypeWithinExtension);
+    uint32_t dimensions[] = {5, 4, 4, 786433, 5, 3, 16777216, 4, 5};
+    ANeuralNetworksOperandType type = {
+            .type = extensionType,
+            .dimensionCount = std::size(dimensions),
+            .dimensions = dimensions,
+    };
+    Extension::OperandTypeInformation info = {
+            .type = kTypeWithinExtension,
+            .isTensor = true,
+            .byteSize = 1,
+    };
+    EXPECT_EQ(validateOperandType(type, &info, /*tag=*/"test", /*allowPartial=*/true),
+              ANEURALNETWORKS_BAD_DATA);
+}
+
+TEST(ValidateOperandTypeTest, TensorSizeDimensionProductOverflow) {
+    // Regression test for b/146044137.
+    uint32_t dimensions[] = {256, 256, 256, 256};
+    ANeuralNetworksOperandType type = {
+            .type = ANEURALNETWORKS_TENSOR_FLOAT32,
+            .dimensionCount = std::size(dimensions),
+            .dimensions = dimensions,
+    };
+    EXPECT_EQ(validateOperandType(type, nullptr, /*tag=*/"test", /*allowPartial=*/true),
+              ANEURALNETWORKS_BAD_DATA);
+}
+
 class CombineDimensionsTest : public ::testing::Test {
    protected:
     void testCompatible(const std::vector<uint32_t>& lhs, const std::vector<uint32_t>& rhs,
