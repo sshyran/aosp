@@ -246,6 +246,7 @@ bool isExtensionOperationType(hal::OperationType type);
 // unspecified dimension, returns zero.
 //
 // Aborts if the specified type is an extension type.
+// Aborts if the size would overflow the return type.
 //
 // See also TypeManager::getSizeOfData(OperandType, const std::vector<uint32_t>&).
 uint32_t nonExtensionOperandSizeOfData(hal::OperandType type,
@@ -256,11 +257,21 @@ uint32_t nonExtensionOperandSizeOfData(hal::OperandType type,
 // unspecified dimension, returns zero.
 //
 // Aborts if the specified type is an extension type.
+// Aborts if the size would overflow the return type.
 //
 // See also TypeManager::getSizeOfData(const Operand&).
 inline uint32_t nonExtensionOperandSizeOfData(const hal::Operand& operand) {
     return nonExtensionOperandSizeOfData(operand.type, operand.dimensions);
 }
+
+// Returns the amount of space needed to store a value of the specified
+// dimensions and element size. For a tensor with unspecified rank or at least
+// one unspecified dimension, returns zero.
+//
+// Aborts if the size would overflow the return type.
+//
+// See also TypeManager::getSizeOfData(const Operand&).
+uint32_t sizeOfTensorData(uint32_t sizeOfElement, const std::vector<uint32_t>& dimensions);
 
 // Returns true if a non-extension operand type is a scalar type.
 //
