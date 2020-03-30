@@ -13,7 +13,7 @@ const TestModel& get_test_model_half_pixel_centers_5x2_to_2x2() {
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {0},
-                .operands = {{
+                .operands = {{ // input0
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 1.0f, 2.0f, 3.0f, 4.0f, 5.0f}),
                             .dimensions = {1, 2, 5, 1},
@@ -23,7 +23,7 @@ const TestModel& get_test_model_half_pixel_centers_5x2_to_2x2() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_width
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -33,7 +33,7 @@ const TestModel& get_test_model_half_pixel_centers_5x2_to_2x2() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_height
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -43,7 +43,7 @@ const TestModel& get_test_model_half_pixel_centers_5x2_to_2x2() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -53,7 +53,7 @@ const TestModel& get_test_model_half_pixel_centers_5x2_to_2x2() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // align_corners
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -63,7 +63,7 @@ const TestModel& get_test_model_half_pixel_centers_5x2_to_2x2() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // half_pixel_centers
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -73,7 +73,7 @@ const TestModel& get_test_model_half_pixel_centers_5x2_to_2x2() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output0
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({2.0f, 4.0f, 2.0f, 4.0f}),
                             .dimensions = {1, 2, 2, 1},
@@ -110,7 +110,7 @@ const TestModel& get_test_model_half_pixel_centers_5x2_to_2x2_all_inputs_as_inte
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {7},
-                .operands = {{
+                .operands = {{ // input0
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {1, 2, 5, 1},
@@ -120,7 +120,7 @@ const TestModel& get_test_model_half_pixel_centers_5x2_to_2x2_all_inputs_as_inte
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_width
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -130,7 +130,7 @@ const TestModel& get_test_model_half_pixel_centers_5x2_to_2x2_all_inputs_as_inte
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_height
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -140,7 +140,7 @@ const TestModel& get_test_model_half_pixel_centers_5x2_to_2x2_all_inputs_as_inte
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -150,7 +150,7 @@ const TestModel& get_test_model_half_pixel_centers_5x2_to_2x2_all_inputs_as_inte
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // align_corners
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -160,7 +160,7 @@ const TestModel& get_test_model_half_pixel_centers_5x2_to_2x2_all_inputs_as_inte
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // half_pixel_centers
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -170,7 +170,7 @@ const TestModel& get_test_model_half_pixel_centers_5x2_to_2x2_all_inputs_as_inte
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output0
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({2.0f, 4.0f, 2.0f, 4.0f}),
                             .dimensions = {1, 2, 2, 1},
@@ -180,7 +180,7 @@ const TestModel& get_test_model_half_pixel_centers_5x2_to_2x2_all_inputs_as_inte
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // input0_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 1.0f, 2.0f, 3.0f, 4.0f, 5.0f}),
                             .dimensions = {1, 2, 5, 1},
@@ -190,7 +190,7 @@ const TestModel& get_test_model_half_pixel_centers_5x2_to_2x2_all_inputs_as_inte
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -200,7 +200,7 @@ const TestModel& get_test_model_half_pixel_centers_5x2_to_2x2_all_inputs_as_inte
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -241,7 +241,7 @@ const TestModel& get_test_model_half_pixel_centers_5x2_to_2x2_float16() {
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {0},
-                .operands = {{
+                .operands = {{ // input0
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 1.0f, 2.0f, 3.0f, 4.0f, 5.0f}),
                             .dimensions = {1, 2, 5, 1},
@@ -251,7 +251,7 @@ const TestModel& get_test_model_half_pixel_centers_5x2_to_2x2_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_width
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -261,7 +261,7 @@ const TestModel& get_test_model_half_pixel_centers_5x2_to_2x2_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_height
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -271,7 +271,7 @@ const TestModel& get_test_model_half_pixel_centers_5x2_to_2x2_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -281,7 +281,7 @@ const TestModel& get_test_model_half_pixel_centers_5x2_to_2x2_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // align_corners
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -291,7 +291,7 @@ const TestModel& get_test_model_half_pixel_centers_5x2_to_2x2_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // half_pixel_centers
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -301,7 +301,7 @@ const TestModel& get_test_model_half_pixel_centers_5x2_to_2x2_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output0
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({2.0f, 4.0f, 2.0f, 4.0f}),
                             .dimensions = {1, 2, 2, 1},
@@ -338,7 +338,7 @@ const TestModel& get_test_model_half_pixel_centers_5x2_to_2x2_float16_all_inputs
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {7},
-                .operands = {{
+                .operands = {{ // input0
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({}),
                             .dimensions = {1, 2, 5, 1},
@@ -348,7 +348,7 @@ const TestModel& get_test_model_half_pixel_centers_5x2_to_2x2_float16_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_width
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -358,7 +358,7 @@ const TestModel& get_test_model_half_pixel_centers_5x2_to_2x2_float16_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_height
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -368,7 +368,7 @@ const TestModel& get_test_model_half_pixel_centers_5x2_to_2x2_float16_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -378,7 +378,7 @@ const TestModel& get_test_model_half_pixel_centers_5x2_to_2x2_float16_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // align_corners
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -388,7 +388,7 @@ const TestModel& get_test_model_half_pixel_centers_5x2_to_2x2_float16_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // half_pixel_centers
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -398,7 +398,7 @@ const TestModel& get_test_model_half_pixel_centers_5x2_to_2x2_float16_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output0
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({2.0f, 4.0f, 2.0f, 4.0f}),
                             .dimensions = {1, 2, 2, 1},
@@ -408,7 +408,7 @@ const TestModel& get_test_model_half_pixel_centers_5x2_to_2x2_float16_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // input0_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 1.0f, 2.0f, 3.0f, 4.0f, 5.0f}),
                             .dimensions = {1, 2, 5, 1},
@@ -418,7 +418,7 @@ const TestModel& get_test_model_half_pixel_centers_5x2_to_2x2_float16_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({0.0f}),
                             .dimensions = {1},
@@ -428,7 +428,7 @@ const TestModel& get_test_model_half_pixel_centers_5x2_to_2x2_float16_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -469,7 +469,7 @@ const TestModel& get_test_model_half_pixel_centers_5x2_to_2x2_relaxed() {
         .isRelaxed = true,
         .main = {
                 .inputIndexes = {0},
-                .operands = {{
+                .operands = {{ // input0
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 1.0f, 2.0f, 3.0f, 4.0f, 5.0f}),
                             .dimensions = {1, 2, 5, 1},
@@ -479,7 +479,7 @@ const TestModel& get_test_model_half_pixel_centers_5x2_to_2x2_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_width
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -489,7 +489,7 @@ const TestModel& get_test_model_half_pixel_centers_5x2_to_2x2_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_height
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -499,7 +499,7 @@ const TestModel& get_test_model_half_pixel_centers_5x2_to_2x2_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -509,7 +509,7 @@ const TestModel& get_test_model_half_pixel_centers_5x2_to_2x2_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // align_corners
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -519,7 +519,7 @@ const TestModel& get_test_model_half_pixel_centers_5x2_to_2x2_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // half_pixel_centers
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -529,7 +529,7 @@ const TestModel& get_test_model_half_pixel_centers_5x2_to_2x2_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output0
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({2.0f, 4.0f, 2.0f, 4.0f}),
                             .dimensions = {1, 2, 2, 1},
@@ -566,7 +566,7 @@ const TestModel& get_test_model_half_pixel_centers_5x2_to_2x2_relaxed_all_inputs
         .isRelaxed = true,
         .main = {
                 .inputIndexes = {7},
-                .operands = {{
+                .operands = {{ // input0
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {1, 2, 5, 1},
@@ -576,7 +576,7 @@ const TestModel& get_test_model_half_pixel_centers_5x2_to_2x2_relaxed_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_width
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -586,7 +586,7 @@ const TestModel& get_test_model_half_pixel_centers_5x2_to_2x2_relaxed_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_height
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -596,7 +596,7 @@ const TestModel& get_test_model_half_pixel_centers_5x2_to_2x2_relaxed_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -606,7 +606,7 @@ const TestModel& get_test_model_half_pixel_centers_5x2_to_2x2_relaxed_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // align_corners
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -616,7 +616,7 @@ const TestModel& get_test_model_half_pixel_centers_5x2_to_2x2_relaxed_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // half_pixel_centers
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -626,7 +626,7 @@ const TestModel& get_test_model_half_pixel_centers_5x2_to_2x2_relaxed_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output0
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({2.0f, 4.0f, 2.0f, 4.0f}),
                             .dimensions = {1, 2, 2, 1},
@@ -636,7 +636,7 @@ const TestModel& get_test_model_half_pixel_centers_5x2_to_2x2_relaxed_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // input0_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 1.0f, 2.0f, 3.0f, 4.0f, 5.0f}),
                             .dimensions = {1, 2, 5, 1},
@@ -646,7 +646,7 @@ const TestModel& get_test_model_half_pixel_centers_5x2_to_2x2_relaxed_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -656,7 +656,7 @@ const TestModel& get_test_model_half_pixel_centers_5x2_to_2x2_relaxed_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -697,7 +697,7 @@ const TestModel& get_test_model_half_pixel_centers_5x2_to_2x2_quant8() {
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {0},
-                .operands = {{
+                .operands = {{ // input0
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({130, 132, 134, 136, 138, 130, 132, 134, 136, 138}),
                             .dimensions = {1, 2, 5, 1},
@@ -707,7 +707,7 @@ const TestModel& get_test_model_half_pixel_centers_5x2_to_2x2_quant8() {
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 128
-                        }, {
+                        }, { // output_width
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -717,7 +717,7 @@ const TestModel& get_test_model_half_pixel_centers_5x2_to_2x2_quant8() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_height
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -727,7 +727,7 @@ const TestModel& get_test_model_half_pixel_centers_5x2_to_2x2_quant8() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -737,7 +737,7 @@ const TestModel& get_test_model_half_pixel_centers_5x2_to_2x2_quant8() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // align_corners
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -747,7 +747,7 @@ const TestModel& get_test_model_half_pixel_centers_5x2_to_2x2_quant8() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // half_pixel_centers
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -757,7 +757,7 @@ const TestModel& get_test_model_half_pixel_centers_5x2_to_2x2_quant8() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output0
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({132, 136, 132, 136}),
                             .dimensions = {1, 2, 2, 1},
@@ -794,7 +794,7 @@ const TestModel& get_test_model_half_pixel_centers_5x2_to_2x2_quant8_all_inputs_
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {7},
-                .operands = {{
+                .operands = {{ // input0
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({}),
                             .dimensions = {1, 2, 5, 1},
@@ -804,7 +804,7 @@ const TestModel& get_test_model_half_pixel_centers_5x2_to_2x2_quant8_all_inputs_
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 128
-                        }, {
+                        }, { // output_width
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -814,7 +814,7 @@ const TestModel& get_test_model_half_pixel_centers_5x2_to_2x2_quant8_all_inputs_
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_height
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -824,7 +824,7 @@ const TestModel& get_test_model_half_pixel_centers_5x2_to_2x2_quant8_all_inputs_
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -834,7 +834,7 @@ const TestModel& get_test_model_half_pixel_centers_5x2_to_2x2_quant8_all_inputs_
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // align_corners
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -844,7 +844,7 @@ const TestModel& get_test_model_half_pixel_centers_5x2_to_2x2_quant8_all_inputs_
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // half_pixel_centers
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -854,7 +854,7 @@ const TestModel& get_test_model_half_pixel_centers_5x2_to_2x2_quant8_all_inputs_
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output0
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({132, 136, 132, 136}),
                             .dimensions = {1, 2, 2, 1},
@@ -864,7 +864,7 @@ const TestModel& get_test_model_half_pixel_centers_5x2_to_2x2_quant8_all_inputs_
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 128
-                        }, {
+                        }, { // input0_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({130, 132, 134, 136, 138, 130, 132, 134, 136, 138}),
                             .dimensions = {1, 2, 5, 1},
@@ -874,7 +874,7 @@ const TestModel& get_test_model_half_pixel_centers_5x2_to_2x2_quant8_all_inputs_
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 128
-                        }, {
+                        }, { // dummy3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({128}),
                             .dimensions = {1},
@@ -884,7 +884,7 @@ const TestModel& get_test_model_half_pixel_centers_5x2_to_2x2_quant8_all_inputs_
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 128
-                        }, {
+                        }, { // param3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -925,7 +925,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_1x1() {
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {0},
-                .operands = {{
+                .operands = {{ // input01
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f}),
                             .dimensions = {1, 2, 2, 1},
@@ -935,7 +935,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_1x1() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_width1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -945,7 +945,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_1x1() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_height1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -955,7 +955,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_1x1() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -965,7 +965,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_1x1() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // align_corners1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -975,7 +975,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_1x1() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // half_pixel_centers1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -985,7 +985,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_1x1() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output01
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({4.0f}),
                             .dimensions = {1, 1, 1, 1},
@@ -1022,7 +1022,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_1x1_all_inputs_as_inte
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {7},
-                .operands = {{
+                .operands = {{ // input01
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {1, 2, 2, 1},
@@ -1032,7 +1032,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_1x1_all_inputs_as_inte
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_width1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -1042,7 +1042,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_1x1_all_inputs_as_inte
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_height1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -1052,7 +1052,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_1x1_all_inputs_as_inte
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -1062,7 +1062,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_1x1_all_inputs_as_inte
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // align_corners1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -1072,7 +1072,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_1x1_all_inputs_as_inte
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // half_pixel_centers1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -1082,7 +1082,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_1x1_all_inputs_as_inte
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output01
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({4.0f}),
                             .dimensions = {1, 1, 1, 1},
@@ -1092,7 +1092,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_1x1_all_inputs_as_inte
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // input01_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f}),
                             .dimensions = {1, 2, 2, 1},
@@ -1102,7 +1102,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_1x1_all_inputs_as_inte
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -1112,7 +1112,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_1x1_all_inputs_as_inte
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -1153,7 +1153,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_1x1_float16() {
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {0},
-                .operands = {{
+                .operands = {{ // input01
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({1.0f, 2.0f, 3.0f, 4.0f}),
                             .dimensions = {1, 2, 2, 1},
@@ -1163,7 +1163,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_1x1_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_width1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -1173,7 +1173,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_1x1_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_height1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -1183,7 +1183,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_1x1_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -1193,7 +1193,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_1x1_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // align_corners1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -1203,7 +1203,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_1x1_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // half_pixel_centers1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -1213,7 +1213,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_1x1_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output01
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({4.0f}),
                             .dimensions = {1, 1, 1, 1},
@@ -1250,7 +1250,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_1x1_float16_all_inputs
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {7},
-                .operands = {{
+                .operands = {{ // input01
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({}),
                             .dimensions = {1, 2, 2, 1},
@@ -1260,7 +1260,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_1x1_float16_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_width1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -1270,7 +1270,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_1x1_float16_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_height1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -1280,7 +1280,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_1x1_float16_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -1290,7 +1290,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_1x1_float16_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // align_corners1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -1300,7 +1300,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_1x1_float16_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // half_pixel_centers1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -1310,7 +1310,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_1x1_float16_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output01
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({4.0f}),
                             .dimensions = {1, 1, 1, 1},
@@ -1320,7 +1320,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_1x1_float16_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // input01_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({1.0f, 2.0f, 3.0f, 4.0f}),
                             .dimensions = {1, 2, 2, 1},
@@ -1330,7 +1330,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_1x1_float16_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy5
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({0.0f}),
                             .dimensions = {1},
@@ -1340,7 +1340,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_1x1_float16_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param5
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -1381,7 +1381,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_1x1_relaxed() {
         .isRelaxed = true,
         .main = {
                 .inputIndexes = {0},
-                .operands = {{
+                .operands = {{ // input01
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f}),
                             .dimensions = {1, 2, 2, 1},
@@ -1391,7 +1391,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_1x1_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_width1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -1401,7 +1401,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_1x1_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_height1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -1411,7 +1411,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_1x1_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -1421,7 +1421,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_1x1_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // align_corners1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -1431,7 +1431,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_1x1_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // half_pixel_centers1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -1441,7 +1441,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_1x1_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output01
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({4.0f}),
                             .dimensions = {1, 1, 1, 1},
@@ -1478,7 +1478,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_1x1_relaxed_all_inputs
         .isRelaxed = true,
         .main = {
                 .inputIndexes = {7},
-                .operands = {{
+                .operands = {{ // input01
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {1, 2, 2, 1},
@@ -1488,7 +1488,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_1x1_relaxed_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_width1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -1498,7 +1498,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_1x1_relaxed_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_height1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -1508,7 +1508,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_1x1_relaxed_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -1518,7 +1518,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_1x1_relaxed_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // align_corners1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -1528,7 +1528,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_1x1_relaxed_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // half_pixel_centers1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -1538,7 +1538,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_1x1_relaxed_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output01
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({4.0f}),
                             .dimensions = {1, 1, 1, 1},
@@ -1548,7 +1548,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_1x1_relaxed_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // input01_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f}),
                             .dimensions = {1, 2, 2, 1},
@@ -1558,7 +1558,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_1x1_relaxed_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy6
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -1568,7 +1568,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_1x1_relaxed_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param6
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -1609,7 +1609,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_1x1_quant8() {
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {0},
-                .operands = {{
+                .operands = {{ // input01
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({130, 132, 134, 136}),
                             .dimensions = {1, 2, 2, 1},
@@ -1619,7 +1619,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_1x1_quant8() {
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 128
-                        }, {
+                        }, { // output_width1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -1629,7 +1629,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_1x1_quant8() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_height1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -1639,7 +1639,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_1x1_quant8() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -1649,7 +1649,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_1x1_quant8() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // align_corners1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -1659,7 +1659,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_1x1_quant8() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // half_pixel_centers1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -1669,7 +1669,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_1x1_quant8() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output01
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({136}),
                             .dimensions = {1, 1, 1, 1},
@@ -1706,7 +1706,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_1x1_quant8_all_inputs_
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {7},
-                .operands = {{
+                .operands = {{ // input01
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({}),
                             .dimensions = {1, 2, 2, 1},
@@ -1716,7 +1716,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_1x1_quant8_all_inputs_
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 128
-                        }, {
+                        }, { // output_width1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -1726,7 +1726,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_1x1_quant8_all_inputs_
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_height1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -1736,7 +1736,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_1x1_quant8_all_inputs_
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -1746,7 +1746,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_1x1_quant8_all_inputs_
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // align_corners1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -1756,7 +1756,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_1x1_quant8_all_inputs_
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // half_pixel_centers1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -1766,7 +1766,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_1x1_quant8_all_inputs_
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output01
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({136}),
                             .dimensions = {1, 1, 1, 1},
@@ -1776,7 +1776,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_1x1_quant8_all_inputs_
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 128
-                        }, {
+                        }, { // input01_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({130, 132, 134, 136}),
                             .dimensions = {1, 2, 2, 1},
@@ -1786,7 +1786,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_1x1_quant8_all_inputs_
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 128
-                        }, {
+                        }, { // dummy7
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({128}),
                             .dimensions = {1},
@@ -1796,7 +1796,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_1x1_quant8_all_inputs_
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 128
-                        }, {
+                        }, { // param7
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -1837,7 +1837,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_3x3() {
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {0},
-                .operands = {{
+                .operands = {{ // input02
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f}),
                             .dimensions = {1, 2, 2, 1},
@@ -1847,7 +1847,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_3x3() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_width2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -1857,7 +1857,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_3x3() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_height2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -1867,7 +1867,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_3x3() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -1877,7 +1877,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_3x3() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // align_corners2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -1887,7 +1887,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_3x3() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // half_pixel_centers2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -1897,7 +1897,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_3x3() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output02
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 2.0f, 3.0f, 4.0f, 4.0f, 3.0f, 4.0f, 4.0f}),
                             .dimensions = {1, 3, 3, 1},
@@ -1934,7 +1934,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_3x3_all_inputs_as_inte
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {7},
-                .operands = {{
+                .operands = {{ // input02
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {1, 2, 2, 1},
@@ -1944,7 +1944,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_3x3_all_inputs_as_inte
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_width2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -1954,7 +1954,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_3x3_all_inputs_as_inte
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_height2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -1964,7 +1964,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_3x3_all_inputs_as_inte
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -1974,7 +1974,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_3x3_all_inputs_as_inte
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // align_corners2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -1984,7 +1984,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_3x3_all_inputs_as_inte
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // half_pixel_centers2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -1994,7 +1994,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_3x3_all_inputs_as_inte
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output02
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 2.0f, 3.0f, 4.0f, 4.0f, 3.0f, 4.0f, 4.0f}),
                             .dimensions = {1, 3, 3, 1},
@@ -2004,7 +2004,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_3x3_all_inputs_as_inte
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // input02_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f}),
                             .dimensions = {1, 2, 2, 1},
@@ -2014,7 +2014,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_3x3_all_inputs_as_inte
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy8
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -2024,7 +2024,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_3x3_all_inputs_as_inte
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param8
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -2065,7 +2065,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_3x3_float16() {
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {0},
-                .operands = {{
+                .operands = {{ // input02
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({1.0f, 2.0f, 3.0f, 4.0f}),
                             .dimensions = {1, 2, 2, 1},
@@ -2075,7 +2075,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_3x3_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_width2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -2085,7 +2085,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_3x3_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_height2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -2095,7 +2095,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_3x3_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -2105,7 +2105,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_3x3_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // align_corners2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -2115,7 +2115,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_3x3_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // half_pixel_centers2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -2125,7 +2125,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_3x3_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output02
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({1.0f, 2.0f, 2.0f, 3.0f, 4.0f, 4.0f, 3.0f, 4.0f, 4.0f}),
                             .dimensions = {1, 3, 3, 1},
@@ -2162,7 +2162,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_3x3_float16_all_inputs
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {7},
-                .operands = {{
+                .operands = {{ // input02
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({}),
                             .dimensions = {1, 2, 2, 1},
@@ -2172,7 +2172,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_3x3_float16_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_width2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -2182,7 +2182,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_3x3_float16_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_height2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -2192,7 +2192,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_3x3_float16_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -2202,7 +2202,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_3x3_float16_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // align_corners2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -2212,7 +2212,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_3x3_float16_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // half_pixel_centers2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -2222,7 +2222,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_3x3_float16_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output02
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({1.0f, 2.0f, 2.0f, 3.0f, 4.0f, 4.0f, 3.0f, 4.0f, 4.0f}),
                             .dimensions = {1, 3, 3, 1},
@@ -2232,7 +2232,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_3x3_float16_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // input02_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({1.0f, 2.0f, 3.0f, 4.0f}),
                             .dimensions = {1, 2, 2, 1},
@@ -2242,7 +2242,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_3x3_float16_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy9
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({0.0f}),
                             .dimensions = {1},
@@ -2252,7 +2252,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_3x3_float16_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param9
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -2293,7 +2293,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_3x3_relaxed() {
         .isRelaxed = true,
         .main = {
                 .inputIndexes = {0},
-                .operands = {{
+                .operands = {{ // input02
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f}),
                             .dimensions = {1, 2, 2, 1},
@@ -2303,7 +2303,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_3x3_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_width2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -2313,7 +2313,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_3x3_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_height2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -2323,7 +2323,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_3x3_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -2333,7 +2333,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_3x3_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // align_corners2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -2343,7 +2343,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_3x3_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // half_pixel_centers2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -2353,7 +2353,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_3x3_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output02
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 2.0f, 3.0f, 4.0f, 4.0f, 3.0f, 4.0f, 4.0f}),
                             .dimensions = {1, 3, 3, 1},
@@ -2390,7 +2390,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_3x3_relaxed_all_inputs
         .isRelaxed = true,
         .main = {
                 .inputIndexes = {7},
-                .operands = {{
+                .operands = {{ // input02
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {1, 2, 2, 1},
@@ -2400,7 +2400,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_3x3_relaxed_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_width2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -2410,7 +2410,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_3x3_relaxed_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_height2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -2420,7 +2420,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_3x3_relaxed_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -2430,7 +2430,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_3x3_relaxed_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // align_corners2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -2440,7 +2440,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_3x3_relaxed_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // half_pixel_centers2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -2450,7 +2450,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_3x3_relaxed_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output02
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 2.0f, 3.0f, 4.0f, 4.0f, 3.0f, 4.0f, 4.0f}),
                             .dimensions = {1, 3, 3, 1},
@@ -2460,7 +2460,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_3x3_relaxed_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // input02_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f}),
                             .dimensions = {1, 2, 2, 1},
@@ -2470,7 +2470,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_3x3_relaxed_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy10
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -2480,7 +2480,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_3x3_relaxed_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param10
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -2521,7 +2521,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_3x3_quant8() {
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {0},
-                .operands = {{
+                .operands = {{ // input02
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({130, 132, 134, 136}),
                             .dimensions = {1, 2, 2, 1},
@@ -2531,7 +2531,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_3x3_quant8() {
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 128
-                        }, {
+                        }, { // output_width2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -2541,7 +2541,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_3x3_quant8() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_height2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -2551,7 +2551,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_3x3_quant8() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -2561,7 +2561,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_3x3_quant8() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // align_corners2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -2571,7 +2571,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_3x3_quant8() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // half_pixel_centers2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -2581,7 +2581,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_3x3_quant8() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output02
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({130, 132, 132, 134, 136, 136, 134, 136, 136}),
                             .dimensions = {1, 3, 3, 1},
@@ -2618,7 +2618,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_3x3_quant8_all_inputs_
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {7},
-                .operands = {{
+                .operands = {{ // input02
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({}),
                             .dimensions = {1, 2, 2, 1},
@@ -2628,7 +2628,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_3x3_quant8_all_inputs_
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 128
-                        }, {
+                        }, { // output_width2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -2638,7 +2638,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_3x3_quant8_all_inputs_
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_height2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -2648,7 +2648,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_3x3_quant8_all_inputs_
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -2658,7 +2658,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_3x3_quant8_all_inputs_
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // align_corners2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -2668,7 +2668,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_3x3_quant8_all_inputs_
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // half_pixel_centers2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -2678,7 +2678,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_3x3_quant8_all_inputs_
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output02
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({130, 132, 132, 134, 136, 136, 134, 136, 136}),
                             .dimensions = {1, 3, 3, 1},
@@ -2688,7 +2688,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_3x3_quant8_all_inputs_
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 128
-                        }, {
+                        }, { // input02_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({130, 132, 134, 136}),
                             .dimensions = {1, 2, 2, 1},
@@ -2698,7 +2698,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_3x3_quant8_all_inputs_
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 128
-                        }, {
+                        }, { // dummy11
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({128}),
                             .dimensions = {1},
@@ -2708,7 +2708,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_3x3_quant8_all_inputs_
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 128
-                        }, {
+                        }, { // param11
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -2749,7 +2749,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_2x5() {
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {0},
-                .operands = {{
+                .operands = {{ // input03
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f}),
                             .dimensions = {1, 2, 2, 1},
@@ -2759,7 +2759,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_2x5() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_width3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({5}),
                             .dimensions = {},
@@ -2769,7 +2769,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_2x5() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_height3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -2779,7 +2779,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_2x5() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -2789,7 +2789,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_2x5() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // align_corners3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -2799,7 +2799,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_2x5() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // half_pixel_centers3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -2809,7 +2809,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_2x5() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output03
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 1.0f, 2.0f, 2.0f, 2.0f, 3.0f, 3.0f, 4.0f, 4.0f, 4.0f}),
                             .dimensions = {1, 2, 5, 1},
@@ -2846,7 +2846,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_2x5_all_inputs_as_inte
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {7},
-                .operands = {{
+                .operands = {{ // input03
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {1, 2, 2, 1},
@@ -2856,7 +2856,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_2x5_all_inputs_as_inte
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_width3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({5}),
                             .dimensions = {},
@@ -2866,7 +2866,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_2x5_all_inputs_as_inte
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_height3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -2876,7 +2876,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_2x5_all_inputs_as_inte
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -2886,7 +2886,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_2x5_all_inputs_as_inte
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // align_corners3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -2896,7 +2896,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_2x5_all_inputs_as_inte
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // half_pixel_centers3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -2906,7 +2906,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_2x5_all_inputs_as_inte
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output03
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 1.0f, 2.0f, 2.0f, 2.0f, 3.0f, 3.0f, 4.0f, 4.0f, 4.0f}),
                             .dimensions = {1, 2, 5, 1},
@@ -2916,7 +2916,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_2x5_all_inputs_as_inte
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // input03_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f}),
                             .dimensions = {1, 2, 2, 1},
@@ -2926,7 +2926,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_2x5_all_inputs_as_inte
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy12
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -2936,7 +2936,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_2x5_all_inputs_as_inte
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param12
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -2977,7 +2977,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_2x5_float16() {
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {0},
-                .operands = {{
+                .operands = {{ // input03
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({1.0f, 2.0f, 3.0f, 4.0f}),
                             .dimensions = {1, 2, 2, 1},
@@ -2987,7 +2987,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_2x5_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_width3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({5}),
                             .dimensions = {},
@@ -2997,7 +2997,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_2x5_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_height3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -3007,7 +3007,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_2x5_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -3017,7 +3017,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_2x5_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // align_corners3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -3027,7 +3027,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_2x5_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // half_pixel_centers3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -3037,7 +3037,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_2x5_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output03
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({1.0f, 1.0f, 2.0f, 2.0f, 2.0f, 3.0f, 3.0f, 4.0f, 4.0f, 4.0f}),
                             .dimensions = {1, 2, 5, 1},
@@ -3074,7 +3074,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_2x5_float16_all_inputs
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {7},
-                .operands = {{
+                .operands = {{ // input03
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({}),
                             .dimensions = {1, 2, 2, 1},
@@ -3084,7 +3084,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_2x5_float16_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_width3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({5}),
                             .dimensions = {},
@@ -3094,7 +3094,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_2x5_float16_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_height3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -3104,7 +3104,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_2x5_float16_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -3114,7 +3114,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_2x5_float16_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // align_corners3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -3124,7 +3124,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_2x5_float16_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // half_pixel_centers3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -3134,7 +3134,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_2x5_float16_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output03
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({1.0f, 1.0f, 2.0f, 2.0f, 2.0f, 3.0f, 3.0f, 4.0f, 4.0f, 4.0f}),
                             .dimensions = {1, 2, 5, 1},
@@ -3144,7 +3144,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_2x5_float16_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // input03_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({1.0f, 2.0f, 3.0f, 4.0f}),
                             .dimensions = {1, 2, 2, 1},
@@ -3154,7 +3154,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_2x5_float16_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy13
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({0.0f}),
                             .dimensions = {1},
@@ -3164,7 +3164,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_2x5_float16_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param13
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -3205,7 +3205,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_2x5_relaxed() {
         .isRelaxed = true,
         .main = {
                 .inputIndexes = {0},
-                .operands = {{
+                .operands = {{ // input03
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f}),
                             .dimensions = {1, 2, 2, 1},
@@ -3215,7 +3215,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_2x5_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_width3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({5}),
                             .dimensions = {},
@@ -3225,7 +3225,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_2x5_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_height3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -3235,7 +3235,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_2x5_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -3245,7 +3245,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_2x5_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // align_corners3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -3255,7 +3255,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_2x5_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // half_pixel_centers3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -3265,7 +3265,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_2x5_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output03
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 1.0f, 2.0f, 2.0f, 2.0f, 3.0f, 3.0f, 4.0f, 4.0f, 4.0f}),
                             .dimensions = {1, 2, 5, 1},
@@ -3302,7 +3302,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_2x5_relaxed_all_inputs
         .isRelaxed = true,
         .main = {
                 .inputIndexes = {7},
-                .operands = {{
+                .operands = {{ // input03
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {1, 2, 2, 1},
@@ -3312,7 +3312,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_2x5_relaxed_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_width3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({5}),
                             .dimensions = {},
@@ -3322,7 +3322,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_2x5_relaxed_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_height3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -3332,7 +3332,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_2x5_relaxed_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -3342,7 +3342,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_2x5_relaxed_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // align_corners3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -3352,7 +3352,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_2x5_relaxed_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // half_pixel_centers3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -3362,7 +3362,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_2x5_relaxed_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output03
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 1.0f, 2.0f, 2.0f, 2.0f, 3.0f, 3.0f, 4.0f, 4.0f, 4.0f}),
                             .dimensions = {1, 2, 5, 1},
@@ -3372,7 +3372,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_2x5_relaxed_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // input03_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f}),
                             .dimensions = {1, 2, 2, 1},
@@ -3382,7 +3382,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_2x5_relaxed_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy14
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -3392,7 +3392,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_2x5_relaxed_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param14
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -3433,7 +3433,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_2x5_quant8() {
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {0},
-                .operands = {{
+                .operands = {{ // input03
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({130, 132, 134, 136}),
                             .dimensions = {1, 2, 2, 1},
@@ -3443,7 +3443,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_2x5_quant8() {
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 128
-                        }, {
+                        }, { // output_width3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({5}),
                             .dimensions = {},
@@ -3453,7 +3453,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_2x5_quant8() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_height3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -3463,7 +3463,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_2x5_quant8() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -3473,7 +3473,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_2x5_quant8() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // align_corners3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -3483,7 +3483,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_2x5_quant8() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // half_pixel_centers3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -3493,7 +3493,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_2x5_quant8() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output03
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({130, 130, 132, 132, 132, 134, 134, 136, 136, 136}),
                             .dimensions = {1, 2, 5, 1},
@@ -3530,7 +3530,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_2x5_quant8_all_inputs_
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {7},
-                .operands = {{
+                .operands = {{ // input03
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({}),
                             .dimensions = {1, 2, 2, 1},
@@ -3540,7 +3540,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_2x5_quant8_all_inputs_
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 128
-                        }, {
+                        }, { // output_width3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({5}),
                             .dimensions = {},
@@ -3550,7 +3550,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_2x5_quant8_all_inputs_
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_height3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -3560,7 +3560,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_2x5_quant8_all_inputs_
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -3570,7 +3570,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_2x5_quant8_all_inputs_
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // align_corners3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -3580,7 +3580,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_2x5_quant8_all_inputs_
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // half_pixel_centers3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -3590,7 +3590,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_2x5_quant8_all_inputs_
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output03
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({130, 130, 132, 132, 132, 134, 134, 136, 136, 136}),
                             .dimensions = {1, 2, 5, 1},
@@ -3600,7 +3600,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_2x5_quant8_all_inputs_
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 128
-                        }, {
+                        }, { // input03_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({130, 132, 134, 136}),
                             .dimensions = {1, 2, 2, 1},
@@ -3610,7 +3610,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_2x5_quant8_all_inputs_
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 128
-                        }, {
+                        }, { // dummy15
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({128}),
                             .dimensions = {1},
@@ -3620,7 +3620,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_2x5_quant8_all_inputs_
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 128
-                        }, {
+                        }, { // param15
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -3661,7 +3661,7 @@ const TestModel& get_test_model_half_pixel_centers_4x4_to_3x3() {
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {0},
-                .operands = {{
+                .operands = {{ // input04
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f, 10.0f, 11.0f, 12.0f, 13.0f, 14.0f, 15.0f, 16.0f}),
                             .dimensions = {1, 4, 4, 1},
@@ -3671,7 +3671,7 @@ const TestModel& get_test_model_half_pixel_centers_4x4_to_3x3() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_width4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -3681,7 +3681,7 @@ const TestModel& get_test_model_half_pixel_centers_4x4_to_3x3() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_height4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -3691,7 +3691,7 @@ const TestModel& get_test_model_half_pixel_centers_4x4_to_3x3() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -3701,7 +3701,7 @@ const TestModel& get_test_model_half_pixel_centers_4x4_to_3x3() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // align_corners4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -3711,7 +3711,7 @@ const TestModel& get_test_model_half_pixel_centers_4x4_to_3x3() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // half_pixel_centers4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -3721,7 +3721,7 @@ const TestModel& get_test_model_half_pixel_centers_4x4_to_3x3() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output04
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 3.0f, 4.0f, 9.0f, 11.0f, 12.0f, 13.0f, 15.0f, 16.0f}),
                             .dimensions = {1, 3, 3, 1},
@@ -3758,7 +3758,7 @@ const TestModel& get_test_model_half_pixel_centers_4x4_to_3x3_all_inputs_as_inte
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {7},
-                .operands = {{
+                .operands = {{ // input04
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {1, 4, 4, 1},
@@ -3768,7 +3768,7 @@ const TestModel& get_test_model_half_pixel_centers_4x4_to_3x3_all_inputs_as_inte
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_width4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -3778,7 +3778,7 @@ const TestModel& get_test_model_half_pixel_centers_4x4_to_3x3_all_inputs_as_inte
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_height4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -3788,7 +3788,7 @@ const TestModel& get_test_model_half_pixel_centers_4x4_to_3x3_all_inputs_as_inte
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -3798,7 +3798,7 @@ const TestModel& get_test_model_half_pixel_centers_4x4_to_3x3_all_inputs_as_inte
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // align_corners4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -3808,7 +3808,7 @@ const TestModel& get_test_model_half_pixel_centers_4x4_to_3x3_all_inputs_as_inte
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // half_pixel_centers4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -3818,7 +3818,7 @@ const TestModel& get_test_model_half_pixel_centers_4x4_to_3x3_all_inputs_as_inte
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output04
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 3.0f, 4.0f, 9.0f, 11.0f, 12.0f, 13.0f, 15.0f, 16.0f}),
                             .dimensions = {1, 3, 3, 1},
@@ -3828,7 +3828,7 @@ const TestModel& get_test_model_half_pixel_centers_4x4_to_3x3_all_inputs_as_inte
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // input04_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f, 10.0f, 11.0f, 12.0f, 13.0f, 14.0f, 15.0f, 16.0f}),
                             .dimensions = {1, 4, 4, 1},
@@ -3838,7 +3838,7 @@ const TestModel& get_test_model_half_pixel_centers_4x4_to_3x3_all_inputs_as_inte
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy16
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -3848,7 +3848,7 @@ const TestModel& get_test_model_half_pixel_centers_4x4_to_3x3_all_inputs_as_inte
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param16
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -3889,7 +3889,7 @@ const TestModel& get_test_model_half_pixel_centers_4x4_to_3x3_float16() {
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {0},
-                .operands = {{
+                .operands = {{ // input04
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f, 10.0f, 11.0f, 12.0f, 13.0f, 14.0f, 15.0f, 16.0f}),
                             .dimensions = {1, 4, 4, 1},
@@ -3899,7 +3899,7 @@ const TestModel& get_test_model_half_pixel_centers_4x4_to_3x3_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_width4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -3909,7 +3909,7 @@ const TestModel& get_test_model_half_pixel_centers_4x4_to_3x3_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_height4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -3919,7 +3919,7 @@ const TestModel& get_test_model_half_pixel_centers_4x4_to_3x3_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -3929,7 +3929,7 @@ const TestModel& get_test_model_half_pixel_centers_4x4_to_3x3_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // align_corners4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -3939,7 +3939,7 @@ const TestModel& get_test_model_half_pixel_centers_4x4_to_3x3_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // half_pixel_centers4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -3949,7 +3949,7 @@ const TestModel& get_test_model_half_pixel_centers_4x4_to_3x3_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output04
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({1.0f, 3.0f, 4.0f, 9.0f, 11.0f, 12.0f, 13.0f, 15.0f, 16.0f}),
                             .dimensions = {1, 3, 3, 1},
@@ -3986,7 +3986,7 @@ const TestModel& get_test_model_half_pixel_centers_4x4_to_3x3_float16_all_inputs
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {7},
-                .operands = {{
+                .operands = {{ // input04
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({}),
                             .dimensions = {1, 4, 4, 1},
@@ -3996,7 +3996,7 @@ const TestModel& get_test_model_half_pixel_centers_4x4_to_3x3_float16_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_width4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -4006,7 +4006,7 @@ const TestModel& get_test_model_half_pixel_centers_4x4_to_3x3_float16_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_height4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -4016,7 +4016,7 @@ const TestModel& get_test_model_half_pixel_centers_4x4_to_3x3_float16_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -4026,7 +4026,7 @@ const TestModel& get_test_model_half_pixel_centers_4x4_to_3x3_float16_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // align_corners4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -4036,7 +4036,7 @@ const TestModel& get_test_model_half_pixel_centers_4x4_to_3x3_float16_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // half_pixel_centers4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -4046,7 +4046,7 @@ const TestModel& get_test_model_half_pixel_centers_4x4_to_3x3_float16_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output04
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({1.0f, 3.0f, 4.0f, 9.0f, 11.0f, 12.0f, 13.0f, 15.0f, 16.0f}),
                             .dimensions = {1, 3, 3, 1},
@@ -4056,7 +4056,7 @@ const TestModel& get_test_model_half_pixel_centers_4x4_to_3x3_float16_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // input04_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f, 10.0f, 11.0f, 12.0f, 13.0f, 14.0f, 15.0f, 16.0f}),
                             .dimensions = {1, 4, 4, 1},
@@ -4066,7 +4066,7 @@ const TestModel& get_test_model_half_pixel_centers_4x4_to_3x3_float16_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy17
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({0.0f}),
                             .dimensions = {1},
@@ -4076,7 +4076,7 @@ const TestModel& get_test_model_half_pixel_centers_4x4_to_3x3_float16_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param17
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -4117,7 +4117,7 @@ const TestModel& get_test_model_half_pixel_centers_4x4_to_3x3_relaxed() {
         .isRelaxed = true,
         .main = {
                 .inputIndexes = {0},
-                .operands = {{
+                .operands = {{ // input04
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f, 10.0f, 11.0f, 12.0f, 13.0f, 14.0f, 15.0f, 16.0f}),
                             .dimensions = {1, 4, 4, 1},
@@ -4127,7 +4127,7 @@ const TestModel& get_test_model_half_pixel_centers_4x4_to_3x3_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_width4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -4137,7 +4137,7 @@ const TestModel& get_test_model_half_pixel_centers_4x4_to_3x3_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_height4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -4147,7 +4147,7 @@ const TestModel& get_test_model_half_pixel_centers_4x4_to_3x3_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -4157,7 +4157,7 @@ const TestModel& get_test_model_half_pixel_centers_4x4_to_3x3_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // align_corners4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -4167,7 +4167,7 @@ const TestModel& get_test_model_half_pixel_centers_4x4_to_3x3_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // half_pixel_centers4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -4177,7 +4177,7 @@ const TestModel& get_test_model_half_pixel_centers_4x4_to_3x3_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output04
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 3.0f, 4.0f, 9.0f, 11.0f, 12.0f, 13.0f, 15.0f, 16.0f}),
                             .dimensions = {1, 3, 3, 1},
@@ -4214,7 +4214,7 @@ const TestModel& get_test_model_half_pixel_centers_4x4_to_3x3_relaxed_all_inputs
         .isRelaxed = true,
         .main = {
                 .inputIndexes = {7},
-                .operands = {{
+                .operands = {{ // input04
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {1, 4, 4, 1},
@@ -4224,7 +4224,7 @@ const TestModel& get_test_model_half_pixel_centers_4x4_to_3x3_relaxed_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_width4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -4234,7 +4234,7 @@ const TestModel& get_test_model_half_pixel_centers_4x4_to_3x3_relaxed_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_height4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -4244,7 +4244,7 @@ const TestModel& get_test_model_half_pixel_centers_4x4_to_3x3_relaxed_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -4254,7 +4254,7 @@ const TestModel& get_test_model_half_pixel_centers_4x4_to_3x3_relaxed_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // align_corners4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -4264,7 +4264,7 @@ const TestModel& get_test_model_half_pixel_centers_4x4_to_3x3_relaxed_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // half_pixel_centers4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -4274,7 +4274,7 @@ const TestModel& get_test_model_half_pixel_centers_4x4_to_3x3_relaxed_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output04
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 3.0f, 4.0f, 9.0f, 11.0f, 12.0f, 13.0f, 15.0f, 16.0f}),
                             .dimensions = {1, 3, 3, 1},
@@ -4284,7 +4284,7 @@ const TestModel& get_test_model_half_pixel_centers_4x4_to_3x3_relaxed_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // input04_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f, 10.0f, 11.0f, 12.0f, 13.0f, 14.0f, 15.0f, 16.0f}),
                             .dimensions = {1, 4, 4, 1},
@@ -4294,7 +4294,7 @@ const TestModel& get_test_model_half_pixel_centers_4x4_to_3x3_relaxed_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy18
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -4304,7 +4304,7 @@ const TestModel& get_test_model_half_pixel_centers_4x4_to_3x3_relaxed_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param18
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -4345,7 +4345,7 @@ const TestModel& get_test_model_half_pixel_centers_4x4_to_3x3_quant8() {
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {0},
-                .operands = {{
+                .operands = {{ // input04
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({130, 132, 134, 136, 138, 140, 142, 144, 146, 148, 150, 152, 154, 156, 158, 160}),
                             .dimensions = {1, 4, 4, 1},
@@ -4355,7 +4355,7 @@ const TestModel& get_test_model_half_pixel_centers_4x4_to_3x3_quant8() {
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 128
-                        }, {
+                        }, { // output_width4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -4365,7 +4365,7 @@ const TestModel& get_test_model_half_pixel_centers_4x4_to_3x3_quant8() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_height4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -4375,7 +4375,7 @@ const TestModel& get_test_model_half_pixel_centers_4x4_to_3x3_quant8() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -4385,7 +4385,7 @@ const TestModel& get_test_model_half_pixel_centers_4x4_to_3x3_quant8() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // align_corners4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -4395,7 +4395,7 @@ const TestModel& get_test_model_half_pixel_centers_4x4_to_3x3_quant8() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // half_pixel_centers4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -4405,7 +4405,7 @@ const TestModel& get_test_model_half_pixel_centers_4x4_to_3x3_quant8() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output04
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({130, 134, 136, 146, 150, 152, 154, 158, 160}),
                             .dimensions = {1, 3, 3, 1},
@@ -4442,7 +4442,7 @@ const TestModel& get_test_model_half_pixel_centers_4x4_to_3x3_quant8_all_inputs_
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {7},
-                .operands = {{
+                .operands = {{ // input04
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({}),
                             .dimensions = {1, 4, 4, 1},
@@ -4452,7 +4452,7 @@ const TestModel& get_test_model_half_pixel_centers_4x4_to_3x3_quant8_all_inputs_
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 128
-                        }, {
+                        }, { // output_width4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -4462,7 +4462,7 @@ const TestModel& get_test_model_half_pixel_centers_4x4_to_3x3_quant8_all_inputs_
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_height4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -4472,7 +4472,7 @@ const TestModel& get_test_model_half_pixel_centers_4x4_to_3x3_quant8_all_inputs_
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -4482,7 +4482,7 @@ const TestModel& get_test_model_half_pixel_centers_4x4_to_3x3_quant8_all_inputs_
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // align_corners4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -4492,7 +4492,7 @@ const TestModel& get_test_model_half_pixel_centers_4x4_to_3x3_quant8_all_inputs_
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // half_pixel_centers4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -4502,7 +4502,7 @@ const TestModel& get_test_model_half_pixel_centers_4x4_to_3x3_quant8_all_inputs_
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output04
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({130, 134, 136, 146, 150, 152, 154, 158, 160}),
                             .dimensions = {1, 3, 3, 1},
@@ -4512,7 +4512,7 @@ const TestModel& get_test_model_half_pixel_centers_4x4_to_3x3_quant8_all_inputs_
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 128
-                        }, {
+                        }, { // input04_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({130, 132, 134, 136, 138, 140, 142, 144, 146, 148, 150, 152, 154, 156, 158, 160}),
                             .dimensions = {1, 4, 4, 1},
@@ -4522,7 +4522,7 @@ const TestModel& get_test_model_half_pixel_centers_4x4_to_3x3_quant8_all_inputs_
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 128
-                        }, {
+                        }, { // dummy19
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({128}),
                             .dimensions = {1},
@@ -4532,7 +4532,7 @@ const TestModel& get_test_model_half_pixel_centers_4x4_to_3x3_quant8_all_inputs_
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 128
-                        }, {
+                        }, { // param19
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -4573,7 +4573,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_5x2() {
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {0},
-                .operands = {{
+                .operands = {{ // input05
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f}),
                             .dimensions = {1, 2, 2, 1},
@@ -4583,7 +4583,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_5x2() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_width5
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -4593,7 +4593,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_5x2() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_height5
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({5}),
                             .dimensions = {},
@@ -4603,7 +4603,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_5x2() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout5
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -4613,7 +4613,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_5x2() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // align_corners5
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -4623,7 +4623,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_5x2() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // half_pixel_centers5
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -4633,7 +4633,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_5x2() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output05
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 1.0f, 2.0f, 3.0f, 4.0f, 3.0f, 4.0f, 3.0f, 4.0f}),
                             .dimensions = {1, 5, 2, 1},
@@ -4670,7 +4670,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_5x2_all_inputs_as_inte
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {7},
-                .operands = {{
+                .operands = {{ // input05
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {1, 2, 2, 1},
@@ -4680,7 +4680,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_5x2_all_inputs_as_inte
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_width5
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -4690,7 +4690,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_5x2_all_inputs_as_inte
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_height5
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({5}),
                             .dimensions = {},
@@ -4700,7 +4700,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_5x2_all_inputs_as_inte
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout5
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -4710,7 +4710,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_5x2_all_inputs_as_inte
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // align_corners5
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -4720,7 +4720,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_5x2_all_inputs_as_inte
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // half_pixel_centers5
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -4730,7 +4730,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_5x2_all_inputs_as_inte
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output05
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 1.0f, 2.0f, 3.0f, 4.0f, 3.0f, 4.0f, 3.0f, 4.0f}),
                             .dimensions = {1, 5, 2, 1},
@@ -4740,7 +4740,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_5x2_all_inputs_as_inte
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // input05_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f}),
                             .dimensions = {1, 2, 2, 1},
@@ -4750,7 +4750,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_5x2_all_inputs_as_inte
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy20
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -4760,7 +4760,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_5x2_all_inputs_as_inte
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param20
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -4801,7 +4801,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_5x2_float16() {
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {0},
-                .operands = {{
+                .operands = {{ // input05
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({1.0f, 2.0f, 3.0f, 4.0f}),
                             .dimensions = {1, 2, 2, 1},
@@ -4811,7 +4811,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_5x2_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_width5
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -4821,7 +4821,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_5x2_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_height5
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({5}),
                             .dimensions = {},
@@ -4831,7 +4831,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_5x2_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout5
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -4841,7 +4841,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_5x2_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // align_corners5
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -4851,7 +4851,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_5x2_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // half_pixel_centers5
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -4861,7 +4861,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_5x2_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output05
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({1.0f, 2.0f, 1.0f, 2.0f, 3.0f, 4.0f, 3.0f, 4.0f, 3.0f, 4.0f}),
                             .dimensions = {1, 5, 2, 1},
@@ -4898,7 +4898,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_5x2_float16_all_inputs
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {7},
-                .operands = {{
+                .operands = {{ // input05
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({}),
                             .dimensions = {1, 2, 2, 1},
@@ -4908,7 +4908,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_5x2_float16_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_width5
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -4918,7 +4918,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_5x2_float16_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_height5
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({5}),
                             .dimensions = {},
@@ -4928,7 +4928,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_5x2_float16_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout5
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -4938,7 +4938,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_5x2_float16_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // align_corners5
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -4948,7 +4948,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_5x2_float16_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // half_pixel_centers5
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -4958,7 +4958,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_5x2_float16_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output05
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({1.0f, 2.0f, 1.0f, 2.0f, 3.0f, 4.0f, 3.0f, 4.0f, 3.0f, 4.0f}),
                             .dimensions = {1, 5, 2, 1},
@@ -4968,7 +4968,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_5x2_float16_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // input05_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({1.0f, 2.0f, 3.0f, 4.0f}),
                             .dimensions = {1, 2, 2, 1},
@@ -4978,7 +4978,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_5x2_float16_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy21
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({0.0f}),
                             .dimensions = {1},
@@ -4988,7 +4988,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_5x2_float16_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param21
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -5029,7 +5029,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_5x2_relaxed() {
         .isRelaxed = true,
         .main = {
                 .inputIndexes = {0},
-                .operands = {{
+                .operands = {{ // input05
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f}),
                             .dimensions = {1, 2, 2, 1},
@@ -5039,7 +5039,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_5x2_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_width5
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -5049,7 +5049,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_5x2_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_height5
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({5}),
                             .dimensions = {},
@@ -5059,7 +5059,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_5x2_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout5
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -5069,7 +5069,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_5x2_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // align_corners5
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -5079,7 +5079,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_5x2_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // half_pixel_centers5
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -5089,7 +5089,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_5x2_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output05
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 1.0f, 2.0f, 3.0f, 4.0f, 3.0f, 4.0f, 3.0f, 4.0f}),
                             .dimensions = {1, 5, 2, 1},
@@ -5126,7 +5126,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_5x2_relaxed_all_inputs
         .isRelaxed = true,
         .main = {
                 .inputIndexes = {7},
-                .operands = {{
+                .operands = {{ // input05
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {1, 2, 2, 1},
@@ -5136,7 +5136,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_5x2_relaxed_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_width5
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -5146,7 +5146,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_5x2_relaxed_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_height5
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({5}),
                             .dimensions = {},
@@ -5156,7 +5156,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_5x2_relaxed_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout5
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -5166,7 +5166,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_5x2_relaxed_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // align_corners5
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -5176,7 +5176,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_5x2_relaxed_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // half_pixel_centers5
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -5186,7 +5186,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_5x2_relaxed_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output05
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 1.0f, 2.0f, 3.0f, 4.0f, 3.0f, 4.0f, 3.0f, 4.0f}),
                             .dimensions = {1, 5, 2, 1},
@@ -5196,7 +5196,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_5x2_relaxed_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // input05_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f}),
                             .dimensions = {1, 2, 2, 1},
@@ -5206,7 +5206,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_5x2_relaxed_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy22
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -5216,7 +5216,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_5x2_relaxed_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param22
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -5257,7 +5257,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_5x2_quant8() {
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {0},
-                .operands = {{
+                .operands = {{ // input05
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({130, 132, 134, 136}),
                             .dimensions = {1, 2, 2, 1},
@@ -5267,7 +5267,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_5x2_quant8() {
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 128
-                        }, {
+                        }, { // output_width5
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -5277,7 +5277,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_5x2_quant8() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_height5
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({5}),
                             .dimensions = {},
@@ -5287,7 +5287,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_5x2_quant8() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout5
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -5297,7 +5297,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_5x2_quant8() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // align_corners5
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -5307,7 +5307,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_5x2_quant8() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // half_pixel_centers5
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -5317,7 +5317,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_5x2_quant8() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output05
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({130, 132, 130, 132, 134, 136, 134, 136, 134, 136}),
                             .dimensions = {1, 5, 2, 1},
@@ -5354,7 +5354,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_5x2_quant8_all_inputs_
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {7},
-                .operands = {{
+                .operands = {{ // input05
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({}),
                             .dimensions = {1, 2, 2, 1},
@@ -5364,7 +5364,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_5x2_quant8_all_inputs_
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 128
-                        }, {
+                        }, { // output_width5
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -5374,7 +5374,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_5x2_quant8_all_inputs_
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_height5
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({5}),
                             .dimensions = {},
@@ -5384,7 +5384,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_5x2_quant8_all_inputs_
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout5
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -5394,7 +5394,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_5x2_quant8_all_inputs_
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // align_corners5
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -5404,7 +5404,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_5x2_quant8_all_inputs_
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // half_pixel_centers5
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -5414,7 +5414,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_5x2_quant8_all_inputs_
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output05
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({130, 132, 130, 132, 134, 136, 134, 136, 134, 136}),
                             .dimensions = {1, 5, 2, 1},
@@ -5424,7 +5424,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_5x2_quant8_all_inputs_
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 128
-                        }, {
+                        }, { // input05_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({130, 132, 134, 136}),
                             .dimensions = {1, 2, 2, 1},
@@ -5434,7 +5434,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_5x2_quant8_all_inputs_
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 128
-                        }, {
+                        }, { // dummy23
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({128}),
                             .dimensions = {1},
@@ -5444,7 +5444,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_5x2_quant8_all_inputs_
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 128
-                        }, {
+                        }, { // param23
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -5485,7 +5485,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_4x4() {
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {0},
-                .operands = {{
+                .operands = {{ // input06
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f}),
                             .dimensions = {1, 2, 2, 1},
@@ -5495,7 +5495,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_4x4() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_width6
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({4}),
                             .dimensions = {},
@@ -5505,7 +5505,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_4x4() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_height6
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({4}),
                             .dimensions = {},
@@ -5515,7 +5515,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_4x4() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout6
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -5525,7 +5525,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_4x4() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // align_corners6
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -5535,7 +5535,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_4x4() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // half_pixel_centers6
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -5545,7 +5545,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_4x4() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output06
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 1.0f, 2.0f, 2.0f, 1.0f, 1.0f, 2.0f, 2.0f, 3.0f, 3.0f, 4.0f, 4.0f, 3.0f, 3.0f, 4.0f, 4.0f}),
                             .dimensions = {1, 4, 4, 1},
@@ -5582,7 +5582,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_4x4_all_inputs_as_inte
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {7},
-                .operands = {{
+                .operands = {{ // input06
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {1, 2, 2, 1},
@@ -5592,7 +5592,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_4x4_all_inputs_as_inte
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_width6
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({4}),
                             .dimensions = {},
@@ -5602,7 +5602,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_4x4_all_inputs_as_inte
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_height6
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({4}),
                             .dimensions = {},
@@ -5612,7 +5612,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_4x4_all_inputs_as_inte
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout6
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -5622,7 +5622,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_4x4_all_inputs_as_inte
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // align_corners6
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -5632,7 +5632,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_4x4_all_inputs_as_inte
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // half_pixel_centers6
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -5642,7 +5642,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_4x4_all_inputs_as_inte
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output06
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 1.0f, 2.0f, 2.0f, 1.0f, 1.0f, 2.0f, 2.0f, 3.0f, 3.0f, 4.0f, 4.0f, 3.0f, 3.0f, 4.0f, 4.0f}),
                             .dimensions = {1, 4, 4, 1},
@@ -5652,7 +5652,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_4x4_all_inputs_as_inte
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // input06_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f}),
                             .dimensions = {1, 2, 2, 1},
@@ -5662,7 +5662,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_4x4_all_inputs_as_inte
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy24
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -5672,7 +5672,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_4x4_all_inputs_as_inte
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param24
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -5713,7 +5713,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_4x4_float16() {
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {0},
-                .operands = {{
+                .operands = {{ // input06
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({1.0f, 2.0f, 3.0f, 4.0f}),
                             .dimensions = {1, 2, 2, 1},
@@ -5723,7 +5723,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_4x4_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_width6
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({4}),
                             .dimensions = {},
@@ -5733,7 +5733,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_4x4_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_height6
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({4}),
                             .dimensions = {},
@@ -5743,7 +5743,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_4x4_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout6
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -5753,7 +5753,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_4x4_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // align_corners6
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -5763,7 +5763,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_4x4_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // half_pixel_centers6
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -5773,7 +5773,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_4x4_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output06
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({1.0f, 1.0f, 2.0f, 2.0f, 1.0f, 1.0f, 2.0f, 2.0f, 3.0f, 3.0f, 4.0f, 4.0f, 3.0f, 3.0f, 4.0f, 4.0f}),
                             .dimensions = {1, 4, 4, 1},
@@ -5810,7 +5810,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_4x4_float16_all_inputs
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {7},
-                .operands = {{
+                .operands = {{ // input06
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({}),
                             .dimensions = {1, 2, 2, 1},
@@ -5820,7 +5820,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_4x4_float16_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_width6
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({4}),
                             .dimensions = {},
@@ -5830,7 +5830,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_4x4_float16_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_height6
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({4}),
                             .dimensions = {},
@@ -5840,7 +5840,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_4x4_float16_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout6
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -5850,7 +5850,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_4x4_float16_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // align_corners6
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -5860,7 +5860,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_4x4_float16_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // half_pixel_centers6
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -5870,7 +5870,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_4x4_float16_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output06
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({1.0f, 1.0f, 2.0f, 2.0f, 1.0f, 1.0f, 2.0f, 2.0f, 3.0f, 3.0f, 4.0f, 4.0f, 3.0f, 3.0f, 4.0f, 4.0f}),
                             .dimensions = {1, 4, 4, 1},
@@ -5880,7 +5880,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_4x4_float16_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // input06_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({1.0f, 2.0f, 3.0f, 4.0f}),
                             .dimensions = {1, 2, 2, 1},
@@ -5890,7 +5890,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_4x4_float16_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy25
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({0.0f}),
                             .dimensions = {1},
@@ -5900,7 +5900,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_4x4_float16_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param25
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -5941,7 +5941,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_4x4_relaxed() {
         .isRelaxed = true,
         .main = {
                 .inputIndexes = {0},
-                .operands = {{
+                .operands = {{ // input06
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f}),
                             .dimensions = {1, 2, 2, 1},
@@ -5951,7 +5951,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_4x4_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_width6
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({4}),
                             .dimensions = {},
@@ -5961,7 +5961,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_4x4_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_height6
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({4}),
                             .dimensions = {},
@@ -5971,7 +5971,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_4x4_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout6
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -5981,7 +5981,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_4x4_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // align_corners6
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -5991,7 +5991,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_4x4_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // half_pixel_centers6
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -6001,7 +6001,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_4x4_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output06
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 1.0f, 2.0f, 2.0f, 1.0f, 1.0f, 2.0f, 2.0f, 3.0f, 3.0f, 4.0f, 4.0f, 3.0f, 3.0f, 4.0f, 4.0f}),
                             .dimensions = {1, 4, 4, 1},
@@ -6038,7 +6038,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_4x4_relaxed_all_inputs
         .isRelaxed = true,
         .main = {
                 .inputIndexes = {7},
-                .operands = {{
+                .operands = {{ // input06
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {1, 2, 2, 1},
@@ -6048,7 +6048,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_4x4_relaxed_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_width6
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({4}),
                             .dimensions = {},
@@ -6058,7 +6058,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_4x4_relaxed_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_height6
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({4}),
                             .dimensions = {},
@@ -6068,7 +6068,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_4x4_relaxed_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout6
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -6078,7 +6078,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_4x4_relaxed_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // align_corners6
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -6088,7 +6088,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_4x4_relaxed_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // half_pixel_centers6
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -6098,7 +6098,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_4x4_relaxed_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output06
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 1.0f, 2.0f, 2.0f, 1.0f, 1.0f, 2.0f, 2.0f, 3.0f, 3.0f, 4.0f, 4.0f, 3.0f, 3.0f, 4.0f, 4.0f}),
                             .dimensions = {1, 4, 4, 1},
@@ -6108,7 +6108,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_4x4_relaxed_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // input06_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f}),
                             .dimensions = {1, 2, 2, 1},
@@ -6118,7 +6118,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_4x4_relaxed_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy26
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -6128,7 +6128,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_4x4_relaxed_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param26
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -6169,7 +6169,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_4x4_quant8() {
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {0},
-                .operands = {{
+                .operands = {{ // input06
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({130, 132, 134, 136}),
                             .dimensions = {1, 2, 2, 1},
@@ -6179,7 +6179,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_4x4_quant8() {
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 128
-                        }, {
+                        }, { // output_width6
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({4}),
                             .dimensions = {},
@@ -6189,7 +6189,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_4x4_quant8() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_height6
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({4}),
                             .dimensions = {},
@@ -6199,7 +6199,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_4x4_quant8() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout6
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -6209,7 +6209,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_4x4_quant8() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // align_corners6
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -6219,7 +6219,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_4x4_quant8() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // half_pixel_centers6
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -6229,7 +6229,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_4x4_quant8() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output06
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({130, 130, 132, 132, 130, 130, 132, 132, 134, 134, 136, 136, 134, 134, 136, 136}),
                             .dimensions = {1, 4, 4, 1},
@@ -6266,7 +6266,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_4x4_quant8_all_inputs_
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {7},
-                .operands = {{
+                .operands = {{ // input06
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({}),
                             .dimensions = {1, 2, 2, 1},
@@ -6276,7 +6276,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_4x4_quant8_all_inputs_
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 128
-                        }, {
+                        }, { // output_width6
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({4}),
                             .dimensions = {},
@@ -6286,7 +6286,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_4x4_quant8_all_inputs_
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_height6
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({4}),
                             .dimensions = {},
@@ -6296,7 +6296,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_4x4_quant8_all_inputs_
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout6
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -6306,7 +6306,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_4x4_quant8_all_inputs_
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // align_corners6
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -6316,7 +6316,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_4x4_quant8_all_inputs_
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // half_pixel_centers6
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -6326,7 +6326,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_4x4_quant8_all_inputs_
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output06
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({130, 130, 132, 132, 130, 130, 132, 132, 134, 134, 136, 136, 134, 134, 136, 136}),
                             .dimensions = {1, 4, 4, 1},
@@ -6336,7 +6336,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_4x4_quant8_all_inputs_
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 128
-                        }, {
+                        }, { // input06_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({130, 132, 134, 136}),
                             .dimensions = {1, 2, 2, 1},
@@ -6346,7 +6346,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_4x4_quant8_all_inputs_
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 128
-                        }, {
+                        }, { // dummy27
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({128}),
                             .dimensions = {1},
@@ -6356,7 +6356,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2_to_4x4_quant8_all_inputs_
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 128
-                        }, {
+                        }, { // param27
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -6397,7 +6397,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2x2x2_to_2x3x3x2() {
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {0},
-                .operands = {{
+                .operands = {{ // input07
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 1.0f, 2.0f, 2.0f, 3.0f, 3.0f, 4.0f, 4.0f, 5.0f, 5.0f, 6.0f, 6.0f, 7.0f, 7.0f, 8.0f, 8.0f}),
                             .dimensions = {2, 2, 2, 2},
@@ -6407,7 +6407,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2x2x2_to_2x3x3x2() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_width7
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -6417,7 +6417,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2x2x2_to_2x3x3x2() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_height7
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -6427,7 +6427,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2x2x2_to_2x3x3x2() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout7
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -6437,7 +6437,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2x2x2_to_2x3x3x2() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // align_corners7
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -6447,7 +6447,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2x2x2_to_2x3x3x2() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // half_pixel_centers7
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -6457,7 +6457,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2x2x2_to_2x3x3x2() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output07
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 1.0f, 2.0f, 2.0f, 2.0f, 2.0f, 3.0f, 3.0f, 4.0f, 4.0f, 4.0f, 4.0f, 3.0f, 3.0f, 4.0f, 4.0f, 4.0f, 4.0f, 5.0f, 5.0f, 6.0f, 6.0f, 6.0f, 6.0f, 7.0f, 7.0f, 8.0f, 8.0f, 8.0f, 8.0f, 7.0f, 7.0f, 8.0f, 8.0f, 8.0f, 8.0f}),
                             .dimensions = {2, 3, 3, 2},
@@ -6494,7 +6494,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2x2x2_to_2x3x3x2_all_inputs
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {7},
-                .operands = {{
+                .operands = {{ // input07
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {2, 2, 2, 2},
@@ -6504,7 +6504,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2x2x2_to_2x3x3x2_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_width7
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -6514,7 +6514,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2x2x2_to_2x3x3x2_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_height7
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -6524,7 +6524,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2x2x2_to_2x3x3x2_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout7
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -6534,7 +6534,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2x2x2_to_2x3x3x2_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // align_corners7
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -6544,7 +6544,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2x2x2_to_2x3x3x2_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // half_pixel_centers7
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -6554,7 +6554,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2x2x2_to_2x3x3x2_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output07
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 1.0f, 2.0f, 2.0f, 2.0f, 2.0f, 3.0f, 3.0f, 4.0f, 4.0f, 4.0f, 4.0f, 3.0f, 3.0f, 4.0f, 4.0f, 4.0f, 4.0f, 5.0f, 5.0f, 6.0f, 6.0f, 6.0f, 6.0f, 7.0f, 7.0f, 8.0f, 8.0f, 8.0f, 8.0f, 7.0f, 7.0f, 8.0f, 8.0f, 8.0f, 8.0f}),
                             .dimensions = {2, 3, 3, 2},
@@ -6564,7 +6564,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2x2x2_to_2x3x3x2_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // input07_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 1.0f, 2.0f, 2.0f, 3.0f, 3.0f, 4.0f, 4.0f, 5.0f, 5.0f, 6.0f, 6.0f, 7.0f, 7.0f, 8.0f, 8.0f}),
                             .dimensions = {2, 2, 2, 2},
@@ -6574,7 +6574,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2x2x2_to_2x3x3x2_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy28
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -6584,7 +6584,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2x2x2_to_2x3x3x2_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param28
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -6625,7 +6625,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2x2x2_to_2x3x3x2_float16() 
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {0},
-                .operands = {{
+                .operands = {{ // input07
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({1.0f, 1.0f, 2.0f, 2.0f, 3.0f, 3.0f, 4.0f, 4.0f, 5.0f, 5.0f, 6.0f, 6.0f, 7.0f, 7.0f, 8.0f, 8.0f}),
                             .dimensions = {2, 2, 2, 2},
@@ -6635,7 +6635,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2x2x2_to_2x3x3x2_float16() 
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_width7
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -6645,7 +6645,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2x2x2_to_2x3x3x2_float16() 
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_height7
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -6655,7 +6655,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2x2x2_to_2x3x3x2_float16() 
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout7
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -6665,7 +6665,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2x2x2_to_2x3x3x2_float16() 
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // align_corners7
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -6675,7 +6675,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2x2x2_to_2x3x3x2_float16() 
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // half_pixel_centers7
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -6685,7 +6685,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2x2x2_to_2x3x3x2_float16() 
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output07
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({1.0f, 1.0f, 2.0f, 2.0f, 2.0f, 2.0f, 3.0f, 3.0f, 4.0f, 4.0f, 4.0f, 4.0f, 3.0f, 3.0f, 4.0f, 4.0f, 4.0f, 4.0f, 5.0f, 5.0f, 6.0f, 6.0f, 6.0f, 6.0f, 7.0f, 7.0f, 8.0f, 8.0f, 8.0f, 8.0f, 7.0f, 7.0f, 8.0f, 8.0f, 8.0f, 8.0f}),
                             .dimensions = {2, 3, 3, 2},
@@ -6722,7 +6722,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2x2x2_to_2x3x3x2_float16_al
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {7},
-                .operands = {{
+                .operands = {{ // input07
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({}),
                             .dimensions = {2, 2, 2, 2},
@@ -6732,7 +6732,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2x2x2_to_2x3x3x2_float16_al
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_width7
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -6742,7 +6742,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2x2x2_to_2x3x3x2_float16_al
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_height7
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -6752,7 +6752,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2x2x2_to_2x3x3x2_float16_al
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout7
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -6762,7 +6762,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2x2x2_to_2x3x3x2_float16_al
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // align_corners7
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -6772,7 +6772,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2x2x2_to_2x3x3x2_float16_al
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // half_pixel_centers7
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -6782,7 +6782,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2x2x2_to_2x3x3x2_float16_al
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output07
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({1.0f, 1.0f, 2.0f, 2.0f, 2.0f, 2.0f, 3.0f, 3.0f, 4.0f, 4.0f, 4.0f, 4.0f, 3.0f, 3.0f, 4.0f, 4.0f, 4.0f, 4.0f, 5.0f, 5.0f, 6.0f, 6.0f, 6.0f, 6.0f, 7.0f, 7.0f, 8.0f, 8.0f, 8.0f, 8.0f, 7.0f, 7.0f, 8.0f, 8.0f, 8.0f, 8.0f}),
                             .dimensions = {2, 3, 3, 2},
@@ -6792,7 +6792,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2x2x2_to_2x3x3x2_float16_al
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // input07_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({1.0f, 1.0f, 2.0f, 2.0f, 3.0f, 3.0f, 4.0f, 4.0f, 5.0f, 5.0f, 6.0f, 6.0f, 7.0f, 7.0f, 8.0f, 8.0f}),
                             .dimensions = {2, 2, 2, 2},
@@ -6802,7 +6802,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2x2x2_to_2x3x3x2_float16_al
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy29
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({0.0f}),
                             .dimensions = {1},
@@ -6812,7 +6812,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2x2x2_to_2x3x3x2_float16_al
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param29
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -6853,7 +6853,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2x2x2_to_2x3x3x2_relaxed() 
         .isRelaxed = true,
         .main = {
                 .inputIndexes = {0},
-                .operands = {{
+                .operands = {{ // input07
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 1.0f, 2.0f, 2.0f, 3.0f, 3.0f, 4.0f, 4.0f, 5.0f, 5.0f, 6.0f, 6.0f, 7.0f, 7.0f, 8.0f, 8.0f}),
                             .dimensions = {2, 2, 2, 2},
@@ -6863,7 +6863,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2x2x2_to_2x3x3x2_relaxed() 
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_width7
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -6873,7 +6873,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2x2x2_to_2x3x3x2_relaxed() 
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_height7
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -6883,7 +6883,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2x2x2_to_2x3x3x2_relaxed() 
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout7
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -6893,7 +6893,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2x2x2_to_2x3x3x2_relaxed() 
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // align_corners7
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -6903,7 +6903,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2x2x2_to_2x3x3x2_relaxed() 
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // half_pixel_centers7
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -6913,7 +6913,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2x2x2_to_2x3x3x2_relaxed() 
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output07
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 1.0f, 2.0f, 2.0f, 2.0f, 2.0f, 3.0f, 3.0f, 4.0f, 4.0f, 4.0f, 4.0f, 3.0f, 3.0f, 4.0f, 4.0f, 4.0f, 4.0f, 5.0f, 5.0f, 6.0f, 6.0f, 6.0f, 6.0f, 7.0f, 7.0f, 8.0f, 8.0f, 8.0f, 8.0f, 7.0f, 7.0f, 8.0f, 8.0f, 8.0f, 8.0f}),
                             .dimensions = {2, 3, 3, 2},
@@ -6950,7 +6950,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2x2x2_to_2x3x3x2_relaxed_al
         .isRelaxed = true,
         .main = {
                 .inputIndexes = {7},
-                .operands = {{
+                .operands = {{ // input07
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {2, 2, 2, 2},
@@ -6960,7 +6960,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2x2x2_to_2x3x3x2_relaxed_al
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_width7
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -6970,7 +6970,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2x2x2_to_2x3x3x2_relaxed_al
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_height7
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -6980,7 +6980,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2x2x2_to_2x3x3x2_relaxed_al
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout7
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -6990,7 +6990,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2x2x2_to_2x3x3x2_relaxed_al
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // align_corners7
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -7000,7 +7000,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2x2x2_to_2x3x3x2_relaxed_al
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // half_pixel_centers7
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -7010,7 +7010,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2x2x2_to_2x3x3x2_relaxed_al
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output07
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 1.0f, 2.0f, 2.0f, 2.0f, 2.0f, 3.0f, 3.0f, 4.0f, 4.0f, 4.0f, 4.0f, 3.0f, 3.0f, 4.0f, 4.0f, 4.0f, 4.0f, 5.0f, 5.0f, 6.0f, 6.0f, 6.0f, 6.0f, 7.0f, 7.0f, 8.0f, 8.0f, 8.0f, 8.0f, 7.0f, 7.0f, 8.0f, 8.0f, 8.0f, 8.0f}),
                             .dimensions = {2, 3, 3, 2},
@@ -7020,7 +7020,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2x2x2_to_2x3x3x2_relaxed_al
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // input07_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 1.0f, 2.0f, 2.0f, 3.0f, 3.0f, 4.0f, 4.0f, 5.0f, 5.0f, 6.0f, 6.0f, 7.0f, 7.0f, 8.0f, 8.0f}),
                             .dimensions = {2, 2, 2, 2},
@@ -7030,7 +7030,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2x2x2_to_2x3x3x2_relaxed_al
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy30
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -7040,7 +7040,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2x2x2_to_2x3x3x2_relaxed_al
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param30
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -7081,7 +7081,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2x2x2_to_2x3x3x2_quant8() {
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {0},
-                .operands = {{
+                .operands = {{ // input07
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({130, 130, 132, 132, 134, 134, 136, 136, 138, 138, 140, 140, 142, 142, 144, 144}),
                             .dimensions = {2, 2, 2, 2},
@@ -7091,7 +7091,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2x2x2_to_2x3x3x2_quant8() {
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 128
-                        }, {
+                        }, { // output_width7
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -7101,7 +7101,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2x2x2_to_2x3x3x2_quant8() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_height7
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -7111,7 +7111,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2x2x2_to_2x3x3x2_quant8() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout7
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -7121,7 +7121,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2x2x2_to_2x3x3x2_quant8() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // align_corners7
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -7131,7 +7131,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2x2x2_to_2x3x3x2_quant8() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // half_pixel_centers7
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -7141,7 +7141,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2x2x2_to_2x3x3x2_quant8() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output07
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({130, 130, 132, 132, 132, 132, 134, 134, 136, 136, 136, 136, 134, 134, 136, 136, 136, 136, 138, 138, 140, 140, 140, 140, 142, 142, 144, 144, 144, 144, 142, 142, 144, 144, 144, 144}),
                             .dimensions = {2, 3, 3, 2},
@@ -7178,7 +7178,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2x2x2_to_2x3x3x2_quant8_all
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {7},
-                .operands = {{
+                .operands = {{ // input07
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({}),
                             .dimensions = {2, 2, 2, 2},
@@ -7188,7 +7188,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2x2x2_to_2x3x3x2_quant8_all
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 128
-                        }, {
+                        }, { // output_width7
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -7198,7 +7198,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2x2x2_to_2x3x3x2_quant8_all
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_height7
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -7208,7 +7208,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2x2x2_to_2x3x3x2_quant8_all
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout7
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -7218,7 +7218,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2x2x2_to_2x3x3x2_quant8_all
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // align_corners7
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -7228,7 +7228,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2x2x2_to_2x3x3x2_quant8_all
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // half_pixel_centers7
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -7238,7 +7238,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2x2x2_to_2x3x3x2_quant8_all
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output07
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({130, 130, 132, 132, 132, 132, 134, 134, 136, 136, 136, 136, 134, 134, 136, 136, 136, 136, 138, 138, 140, 140, 140, 140, 142, 142, 144, 144, 144, 144, 142, 142, 144, 144, 144, 144}),
                             .dimensions = {2, 3, 3, 2},
@@ -7248,7 +7248,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2x2x2_to_2x3x3x2_quant8_all
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 128
-                        }, {
+                        }, { // input07_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({130, 130, 132, 132, 134, 134, 136, 136, 138, 138, 140, 140, 142, 142, 144, 144}),
                             .dimensions = {2, 2, 2, 2},
@@ -7258,7 +7258,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2x2x2_to_2x3x3x2_quant8_all
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 128
-                        }, {
+                        }, { // dummy31
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({128}),
                             .dimensions = {1},
@@ -7268,7 +7268,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2x2x2_to_2x3x3x2_quant8_all
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 128
-                        }, {
+                        }, { // param31
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -7309,7 +7309,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1() {
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {0},
-                .operands = {{
+                .operands = {{ // input08
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f}),
                             .dimensions = {1, 2, 2, 1},
@@ -7319,7 +7319,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_width8
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -7329,7 +7329,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_height8
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -7339,7 +7339,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout8
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -7349,7 +7349,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // align_corners8
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -7359,7 +7359,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // half_pixel_centers8
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -7369,7 +7369,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output08
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f}),
                             .dimensions = {1, 1, 1, 1},
@@ -7406,7 +7406,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_all_inputs_as_internal(
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {7},
-                .operands = {{
+                .operands = {{ // input08
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {1, 2, 2, 1},
@@ -7416,7 +7416,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_all_inputs_as_internal(
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_width8
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -7426,7 +7426,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_all_inputs_as_internal(
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_height8
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -7436,7 +7436,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_all_inputs_as_internal(
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout8
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -7446,7 +7446,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_all_inputs_as_internal(
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // align_corners8
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -7456,7 +7456,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_all_inputs_as_internal(
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // half_pixel_centers8
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -7466,7 +7466,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_all_inputs_as_internal(
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output08
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f}),
                             .dimensions = {1, 1, 1, 1},
@@ -7476,7 +7476,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_all_inputs_as_internal(
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // input08_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f}),
                             .dimensions = {1, 2, 2, 1},
@@ -7486,7 +7486,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_all_inputs_as_internal(
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy32
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -7496,7 +7496,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_all_inputs_as_internal(
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param32
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -7537,7 +7537,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_float16() {
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {0},
-                .operands = {{
+                .operands = {{ // input08
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({1.0f, 2.0f, 3.0f, 4.0f}),
                             .dimensions = {1, 2, 2, 1},
@@ -7547,7 +7547,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_width8
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -7557,7 +7557,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_height8
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -7567,7 +7567,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout8
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -7577,7 +7577,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // align_corners8
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -7587,7 +7587,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // half_pixel_centers8
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -7597,7 +7597,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output08
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({1.0f}),
                             .dimensions = {1, 1, 1, 1},
@@ -7634,7 +7634,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_float16_all_inputs_as_i
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {7},
-                .operands = {{
+                .operands = {{ // input08
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({}),
                             .dimensions = {1, 2, 2, 1},
@@ -7644,7 +7644,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_float16_all_inputs_as_i
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_width8
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -7654,7 +7654,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_float16_all_inputs_as_i
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_height8
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -7664,7 +7664,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_float16_all_inputs_as_i
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout8
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -7674,7 +7674,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_float16_all_inputs_as_i
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // align_corners8
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -7684,7 +7684,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_float16_all_inputs_as_i
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // half_pixel_centers8
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -7694,7 +7694,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_float16_all_inputs_as_i
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output08
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({1.0f}),
                             .dimensions = {1, 1, 1, 1},
@@ -7704,7 +7704,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_float16_all_inputs_as_i
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // input08_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({1.0f, 2.0f, 3.0f, 4.0f}),
                             .dimensions = {1, 2, 2, 1},
@@ -7714,7 +7714,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_float16_all_inputs_as_i
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy33
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({0.0f}),
                             .dimensions = {1},
@@ -7724,7 +7724,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_float16_all_inputs_as_i
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param33
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -7765,7 +7765,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_relaxed() {
         .isRelaxed = true,
         .main = {
                 .inputIndexes = {0},
-                .operands = {{
+                .operands = {{ // input08
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f}),
                             .dimensions = {1, 2, 2, 1},
@@ -7775,7 +7775,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_width8
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -7785,7 +7785,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_height8
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -7795,7 +7795,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout8
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -7805,7 +7805,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // align_corners8
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -7815,7 +7815,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // half_pixel_centers8
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -7825,7 +7825,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output08
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f}),
                             .dimensions = {1, 1, 1, 1},
@@ -7862,7 +7862,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_relaxed_all_inputs_as_i
         .isRelaxed = true,
         .main = {
                 .inputIndexes = {7},
-                .operands = {{
+                .operands = {{ // input08
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {1, 2, 2, 1},
@@ -7872,7 +7872,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_relaxed_all_inputs_as_i
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_width8
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -7882,7 +7882,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_relaxed_all_inputs_as_i
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_height8
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -7892,7 +7892,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_relaxed_all_inputs_as_i
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout8
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -7902,7 +7902,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_relaxed_all_inputs_as_i
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // align_corners8
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -7912,7 +7912,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_relaxed_all_inputs_as_i
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // half_pixel_centers8
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -7922,7 +7922,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_relaxed_all_inputs_as_i
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output08
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f}),
                             .dimensions = {1, 1, 1, 1},
@@ -7932,7 +7932,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_relaxed_all_inputs_as_i
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // input08_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f}),
                             .dimensions = {1, 2, 2, 1},
@@ -7942,7 +7942,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_relaxed_all_inputs_as_i
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy34
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -7952,7 +7952,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_relaxed_all_inputs_as_i
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param34
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -7993,7 +7993,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_quant8() {
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {0},
-                .operands = {{
+                .operands = {{ // input08
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({130, 132, 134, 136}),
                             .dimensions = {1, 2, 2, 1},
@@ -8003,7 +8003,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_quant8() {
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 128
-                        }, {
+                        }, { // output_width8
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -8013,7 +8013,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_quant8() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_height8
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -8023,7 +8023,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_quant8() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout8
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -8033,7 +8033,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_quant8() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // align_corners8
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -8043,7 +8043,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_quant8() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // half_pixel_centers8
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -8053,7 +8053,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_quant8() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output08
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({130}),
                             .dimensions = {1, 1, 1, 1},
@@ -8090,7 +8090,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_quant8_all_inputs_as_in
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {7},
-                .operands = {{
+                .operands = {{ // input08
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({}),
                             .dimensions = {1, 2, 2, 1},
@@ -8100,7 +8100,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_quant8_all_inputs_as_in
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 128
-                        }, {
+                        }, { // output_width8
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -8110,7 +8110,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_quant8_all_inputs_as_in
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_height8
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -8120,7 +8120,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_quant8_all_inputs_as_in
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout8
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -8130,7 +8130,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_quant8_all_inputs_as_in
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // align_corners8
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -8140,7 +8140,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_quant8_all_inputs_as_in
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // half_pixel_centers8
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -8150,7 +8150,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_quant8_all_inputs_as_in
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output08
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({130}),
                             .dimensions = {1, 1, 1, 1},
@@ -8160,7 +8160,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_quant8_all_inputs_as_in
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 128
-                        }, {
+                        }, { // input08_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({130, 132, 134, 136}),
                             .dimensions = {1, 2, 2, 1},
@@ -8170,7 +8170,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_quant8_all_inputs_as_in
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 128
-                        }, {
+                        }, { // dummy35
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({128}),
                             .dimensions = {1},
@@ -8180,7 +8180,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_quant8_all_inputs_as_in
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 128
-                        }, {
+                        }, { // param35
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -8221,7 +8221,7 @@ const TestModel& get_test_model_align_corners_2x2_to_3x3() {
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {0},
-                .operands = {{
+                .operands = {{ // input09
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f}),
                             .dimensions = {1, 2, 2, 1},
@@ -8231,7 +8231,7 @@ const TestModel& get_test_model_align_corners_2x2_to_3x3() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_width9
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -8241,7 +8241,7 @@ const TestModel& get_test_model_align_corners_2x2_to_3x3() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_height9
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -8251,7 +8251,7 @@ const TestModel& get_test_model_align_corners_2x2_to_3x3() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout9
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -8261,7 +8261,7 @@ const TestModel& get_test_model_align_corners_2x2_to_3x3() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // align_corners9
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -8271,7 +8271,7 @@ const TestModel& get_test_model_align_corners_2x2_to_3x3() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // half_pixel_centers9
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -8281,7 +8281,7 @@ const TestModel& get_test_model_align_corners_2x2_to_3x3() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output09
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 2.0f, 3.0f, 4.0f, 4.0f, 3.0f, 4.0f, 4.0f}),
                             .dimensions = {1, 3, 3, 1},
@@ -8318,7 +8318,7 @@ const TestModel& get_test_model_align_corners_2x2_to_3x3_all_inputs_as_internal(
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {7},
-                .operands = {{
+                .operands = {{ // input09
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {1, 2, 2, 1},
@@ -8328,7 +8328,7 @@ const TestModel& get_test_model_align_corners_2x2_to_3x3_all_inputs_as_internal(
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_width9
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -8338,7 +8338,7 @@ const TestModel& get_test_model_align_corners_2x2_to_3x3_all_inputs_as_internal(
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_height9
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -8348,7 +8348,7 @@ const TestModel& get_test_model_align_corners_2x2_to_3x3_all_inputs_as_internal(
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout9
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -8358,7 +8358,7 @@ const TestModel& get_test_model_align_corners_2x2_to_3x3_all_inputs_as_internal(
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // align_corners9
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -8368,7 +8368,7 @@ const TestModel& get_test_model_align_corners_2x2_to_3x3_all_inputs_as_internal(
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // half_pixel_centers9
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -8378,7 +8378,7 @@ const TestModel& get_test_model_align_corners_2x2_to_3x3_all_inputs_as_internal(
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output09
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 2.0f, 3.0f, 4.0f, 4.0f, 3.0f, 4.0f, 4.0f}),
                             .dimensions = {1, 3, 3, 1},
@@ -8388,7 +8388,7 @@ const TestModel& get_test_model_align_corners_2x2_to_3x3_all_inputs_as_internal(
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // input09_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f}),
                             .dimensions = {1, 2, 2, 1},
@@ -8398,7 +8398,7 @@ const TestModel& get_test_model_align_corners_2x2_to_3x3_all_inputs_as_internal(
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy36
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -8408,7 +8408,7 @@ const TestModel& get_test_model_align_corners_2x2_to_3x3_all_inputs_as_internal(
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param36
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -8449,7 +8449,7 @@ const TestModel& get_test_model_align_corners_2x2_to_3x3_float16() {
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {0},
-                .operands = {{
+                .operands = {{ // input09
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({1.0f, 2.0f, 3.0f, 4.0f}),
                             .dimensions = {1, 2, 2, 1},
@@ -8459,7 +8459,7 @@ const TestModel& get_test_model_align_corners_2x2_to_3x3_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_width9
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -8469,7 +8469,7 @@ const TestModel& get_test_model_align_corners_2x2_to_3x3_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_height9
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -8479,7 +8479,7 @@ const TestModel& get_test_model_align_corners_2x2_to_3x3_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout9
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -8489,7 +8489,7 @@ const TestModel& get_test_model_align_corners_2x2_to_3x3_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // align_corners9
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -8499,7 +8499,7 @@ const TestModel& get_test_model_align_corners_2x2_to_3x3_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // half_pixel_centers9
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -8509,7 +8509,7 @@ const TestModel& get_test_model_align_corners_2x2_to_3x3_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output09
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({1.0f, 2.0f, 2.0f, 3.0f, 4.0f, 4.0f, 3.0f, 4.0f, 4.0f}),
                             .dimensions = {1, 3, 3, 1},
@@ -8546,7 +8546,7 @@ const TestModel& get_test_model_align_corners_2x2_to_3x3_float16_all_inputs_as_i
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {7},
-                .operands = {{
+                .operands = {{ // input09
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({}),
                             .dimensions = {1, 2, 2, 1},
@@ -8556,7 +8556,7 @@ const TestModel& get_test_model_align_corners_2x2_to_3x3_float16_all_inputs_as_i
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_width9
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -8566,7 +8566,7 @@ const TestModel& get_test_model_align_corners_2x2_to_3x3_float16_all_inputs_as_i
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_height9
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -8576,7 +8576,7 @@ const TestModel& get_test_model_align_corners_2x2_to_3x3_float16_all_inputs_as_i
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout9
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -8586,7 +8586,7 @@ const TestModel& get_test_model_align_corners_2x2_to_3x3_float16_all_inputs_as_i
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // align_corners9
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -8596,7 +8596,7 @@ const TestModel& get_test_model_align_corners_2x2_to_3x3_float16_all_inputs_as_i
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // half_pixel_centers9
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -8606,7 +8606,7 @@ const TestModel& get_test_model_align_corners_2x2_to_3x3_float16_all_inputs_as_i
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output09
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({1.0f, 2.0f, 2.0f, 3.0f, 4.0f, 4.0f, 3.0f, 4.0f, 4.0f}),
                             .dimensions = {1, 3, 3, 1},
@@ -8616,7 +8616,7 @@ const TestModel& get_test_model_align_corners_2x2_to_3x3_float16_all_inputs_as_i
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // input09_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({1.0f, 2.0f, 3.0f, 4.0f}),
                             .dimensions = {1, 2, 2, 1},
@@ -8626,7 +8626,7 @@ const TestModel& get_test_model_align_corners_2x2_to_3x3_float16_all_inputs_as_i
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy37
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({0.0f}),
                             .dimensions = {1},
@@ -8636,7 +8636,7 @@ const TestModel& get_test_model_align_corners_2x2_to_3x3_float16_all_inputs_as_i
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param37
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -8677,7 +8677,7 @@ const TestModel& get_test_model_align_corners_2x2_to_3x3_relaxed() {
         .isRelaxed = true,
         .main = {
                 .inputIndexes = {0},
-                .operands = {{
+                .operands = {{ // input09
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f}),
                             .dimensions = {1, 2, 2, 1},
@@ -8687,7 +8687,7 @@ const TestModel& get_test_model_align_corners_2x2_to_3x3_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_width9
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -8697,7 +8697,7 @@ const TestModel& get_test_model_align_corners_2x2_to_3x3_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_height9
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -8707,7 +8707,7 @@ const TestModel& get_test_model_align_corners_2x2_to_3x3_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout9
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -8717,7 +8717,7 @@ const TestModel& get_test_model_align_corners_2x2_to_3x3_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // align_corners9
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -8727,7 +8727,7 @@ const TestModel& get_test_model_align_corners_2x2_to_3x3_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // half_pixel_centers9
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -8737,7 +8737,7 @@ const TestModel& get_test_model_align_corners_2x2_to_3x3_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output09
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 2.0f, 3.0f, 4.0f, 4.0f, 3.0f, 4.0f, 4.0f}),
                             .dimensions = {1, 3, 3, 1},
@@ -8774,7 +8774,7 @@ const TestModel& get_test_model_align_corners_2x2_to_3x3_relaxed_all_inputs_as_i
         .isRelaxed = true,
         .main = {
                 .inputIndexes = {7},
-                .operands = {{
+                .operands = {{ // input09
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {1, 2, 2, 1},
@@ -8784,7 +8784,7 @@ const TestModel& get_test_model_align_corners_2x2_to_3x3_relaxed_all_inputs_as_i
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_width9
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -8794,7 +8794,7 @@ const TestModel& get_test_model_align_corners_2x2_to_3x3_relaxed_all_inputs_as_i
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_height9
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -8804,7 +8804,7 @@ const TestModel& get_test_model_align_corners_2x2_to_3x3_relaxed_all_inputs_as_i
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout9
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -8814,7 +8814,7 @@ const TestModel& get_test_model_align_corners_2x2_to_3x3_relaxed_all_inputs_as_i
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // align_corners9
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -8824,7 +8824,7 @@ const TestModel& get_test_model_align_corners_2x2_to_3x3_relaxed_all_inputs_as_i
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // half_pixel_centers9
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -8834,7 +8834,7 @@ const TestModel& get_test_model_align_corners_2x2_to_3x3_relaxed_all_inputs_as_i
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output09
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 2.0f, 3.0f, 4.0f, 4.0f, 3.0f, 4.0f, 4.0f}),
                             .dimensions = {1, 3, 3, 1},
@@ -8844,7 +8844,7 @@ const TestModel& get_test_model_align_corners_2x2_to_3x3_relaxed_all_inputs_as_i
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // input09_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f}),
                             .dimensions = {1, 2, 2, 1},
@@ -8854,7 +8854,7 @@ const TestModel& get_test_model_align_corners_2x2_to_3x3_relaxed_all_inputs_as_i
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy38
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -8864,7 +8864,7 @@ const TestModel& get_test_model_align_corners_2x2_to_3x3_relaxed_all_inputs_as_i
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param38
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -8905,7 +8905,7 @@ const TestModel& get_test_model_align_corners_2x2_to_3x3_quant8() {
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {0},
-                .operands = {{
+                .operands = {{ // input09
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({130, 132, 134, 136}),
                             .dimensions = {1, 2, 2, 1},
@@ -8915,7 +8915,7 @@ const TestModel& get_test_model_align_corners_2x2_to_3x3_quant8() {
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 128
-                        }, {
+                        }, { // output_width9
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -8925,7 +8925,7 @@ const TestModel& get_test_model_align_corners_2x2_to_3x3_quant8() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_height9
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -8935,7 +8935,7 @@ const TestModel& get_test_model_align_corners_2x2_to_3x3_quant8() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout9
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -8945,7 +8945,7 @@ const TestModel& get_test_model_align_corners_2x2_to_3x3_quant8() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // align_corners9
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -8955,7 +8955,7 @@ const TestModel& get_test_model_align_corners_2x2_to_3x3_quant8() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // half_pixel_centers9
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -8965,7 +8965,7 @@ const TestModel& get_test_model_align_corners_2x2_to_3x3_quant8() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output09
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({130, 132, 132, 134, 136, 136, 134, 136, 136}),
                             .dimensions = {1, 3, 3, 1},
@@ -9002,7 +9002,7 @@ const TestModel& get_test_model_align_corners_2x2_to_3x3_quant8_all_inputs_as_in
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {7},
-                .operands = {{
+                .operands = {{ // input09
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({}),
                             .dimensions = {1, 2, 2, 1},
@@ -9012,7 +9012,7 @@ const TestModel& get_test_model_align_corners_2x2_to_3x3_quant8_all_inputs_as_in
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 128
-                        }, {
+                        }, { // output_width9
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -9022,7 +9022,7 @@ const TestModel& get_test_model_align_corners_2x2_to_3x3_quant8_all_inputs_as_in
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_height9
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -9032,7 +9032,7 @@ const TestModel& get_test_model_align_corners_2x2_to_3x3_quant8_all_inputs_as_in
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout9
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -9042,7 +9042,7 @@ const TestModel& get_test_model_align_corners_2x2_to_3x3_quant8_all_inputs_as_in
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // align_corners9
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -9052,7 +9052,7 @@ const TestModel& get_test_model_align_corners_2x2_to_3x3_quant8_all_inputs_as_in
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // half_pixel_centers9
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -9062,7 +9062,7 @@ const TestModel& get_test_model_align_corners_2x2_to_3x3_quant8_all_inputs_as_in
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output09
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({130, 132, 132, 134, 136, 136, 134, 136, 136}),
                             .dimensions = {1, 3, 3, 1},
@@ -9072,7 +9072,7 @@ const TestModel& get_test_model_align_corners_2x2_to_3x3_quant8_all_inputs_as_in
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 128
-                        }, {
+                        }, { // input09_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({130, 132, 134, 136}),
                             .dimensions = {1, 2, 2, 1},
@@ -9082,7 +9082,7 @@ const TestModel& get_test_model_align_corners_2x2_to_3x3_quant8_all_inputs_as_in
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 128
-                        }, {
+                        }, { // dummy39
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({128}),
                             .dimensions = {1},
@@ -9092,7 +9092,7 @@ const TestModel& get_test_model_align_corners_2x2_to_3x3_quant8_all_inputs_as_in
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 128
-                        }, {
+                        }, { // param39
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -9133,7 +9133,7 @@ const TestModel& get_test_model_align_corners_3x3_to_2x2() {
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {0},
-                .operands = {{
+                .operands = {{ // input010
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f}),
                             .dimensions = {1, 3, 3, 1},
@@ -9143,7 +9143,7 @@ const TestModel& get_test_model_align_corners_3x3_to_2x2() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_width10
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -9153,7 +9153,7 @@ const TestModel& get_test_model_align_corners_3x3_to_2x2() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_height10
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -9163,7 +9163,7 @@ const TestModel& get_test_model_align_corners_3x3_to_2x2() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout10
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -9173,7 +9173,7 @@ const TestModel& get_test_model_align_corners_3x3_to_2x2() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // align_corners10
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -9183,7 +9183,7 @@ const TestModel& get_test_model_align_corners_3x3_to_2x2() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // half_pixel_centers10
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -9193,7 +9193,7 @@ const TestModel& get_test_model_align_corners_3x3_to_2x2() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output010
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 3.0f, 7.0f, 9.0f}),
                             .dimensions = {1, 2, 2, 1},
@@ -9230,7 +9230,7 @@ const TestModel& get_test_model_align_corners_3x3_to_2x2_all_inputs_as_internal(
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {7},
-                .operands = {{
+                .operands = {{ // input010
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {1, 3, 3, 1},
@@ -9240,7 +9240,7 @@ const TestModel& get_test_model_align_corners_3x3_to_2x2_all_inputs_as_internal(
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_width10
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -9250,7 +9250,7 @@ const TestModel& get_test_model_align_corners_3x3_to_2x2_all_inputs_as_internal(
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_height10
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -9260,7 +9260,7 @@ const TestModel& get_test_model_align_corners_3x3_to_2x2_all_inputs_as_internal(
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout10
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -9270,7 +9270,7 @@ const TestModel& get_test_model_align_corners_3x3_to_2x2_all_inputs_as_internal(
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // align_corners10
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -9280,7 +9280,7 @@ const TestModel& get_test_model_align_corners_3x3_to_2x2_all_inputs_as_internal(
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // half_pixel_centers10
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -9290,7 +9290,7 @@ const TestModel& get_test_model_align_corners_3x3_to_2x2_all_inputs_as_internal(
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output010
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 3.0f, 7.0f, 9.0f}),
                             .dimensions = {1, 2, 2, 1},
@@ -9300,7 +9300,7 @@ const TestModel& get_test_model_align_corners_3x3_to_2x2_all_inputs_as_internal(
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // input010_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f}),
                             .dimensions = {1, 3, 3, 1},
@@ -9310,7 +9310,7 @@ const TestModel& get_test_model_align_corners_3x3_to_2x2_all_inputs_as_internal(
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy40
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -9320,7 +9320,7 @@ const TestModel& get_test_model_align_corners_3x3_to_2x2_all_inputs_as_internal(
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param40
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -9361,7 +9361,7 @@ const TestModel& get_test_model_align_corners_3x3_to_2x2_float16() {
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {0},
-                .operands = {{
+                .operands = {{ // input010
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f}),
                             .dimensions = {1, 3, 3, 1},
@@ -9371,7 +9371,7 @@ const TestModel& get_test_model_align_corners_3x3_to_2x2_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_width10
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -9381,7 +9381,7 @@ const TestModel& get_test_model_align_corners_3x3_to_2x2_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_height10
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -9391,7 +9391,7 @@ const TestModel& get_test_model_align_corners_3x3_to_2x2_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout10
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -9401,7 +9401,7 @@ const TestModel& get_test_model_align_corners_3x3_to_2x2_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // align_corners10
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -9411,7 +9411,7 @@ const TestModel& get_test_model_align_corners_3x3_to_2x2_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // half_pixel_centers10
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -9421,7 +9421,7 @@ const TestModel& get_test_model_align_corners_3x3_to_2x2_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output010
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({1.0f, 3.0f, 7.0f, 9.0f}),
                             .dimensions = {1, 2, 2, 1},
@@ -9458,7 +9458,7 @@ const TestModel& get_test_model_align_corners_3x3_to_2x2_float16_all_inputs_as_i
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {7},
-                .operands = {{
+                .operands = {{ // input010
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({}),
                             .dimensions = {1, 3, 3, 1},
@@ -9468,7 +9468,7 @@ const TestModel& get_test_model_align_corners_3x3_to_2x2_float16_all_inputs_as_i
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_width10
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -9478,7 +9478,7 @@ const TestModel& get_test_model_align_corners_3x3_to_2x2_float16_all_inputs_as_i
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_height10
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -9488,7 +9488,7 @@ const TestModel& get_test_model_align_corners_3x3_to_2x2_float16_all_inputs_as_i
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout10
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -9498,7 +9498,7 @@ const TestModel& get_test_model_align_corners_3x3_to_2x2_float16_all_inputs_as_i
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // align_corners10
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -9508,7 +9508,7 @@ const TestModel& get_test_model_align_corners_3x3_to_2x2_float16_all_inputs_as_i
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // half_pixel_centers10
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -9518,7 +9518,7 @@ const TestModel& get_test_model_align_corners_3x3_to_2x2_float16_all_inputs_as_i
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output010
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({1.0f, 3.0f, 7.0f, 9.0f}),
                             .dimensions = {1, 2, 2, 1},
@@ -9528,7 +9528,7 @@ const TestModel& get_test_model_align_corners_3x3_to_2x2_float16_all_inputs_as_i
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // input010_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f}),
                             .dimensions = {1, 3, 3, 1},
@@ -9538,7 +9538,7 @@ const TestModel& get_test_model_align_corners_3x3_to_2x2_float16_all_inputs_as_i
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy41
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({0.0f}),
                             .dimensions = {1},
@@ -9548,7 +9548,7 @@ const TestModel& get_test_model_align_corners_3x3_to_2x2_float16_all_inputs_as_i
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param41
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -9589,7 +9589,7 @@ const TestModel& get_test_model_align_corners_3x3_to_2x2_relaxed() {
         .isRelaxed = true,
         .main = {
                 .inputIndexes = {0},
-                .operands = {{
+                .operands = {{ // input010
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f}),
                             .dimensions = {1, 3, 3, 1},
@@ -9599,7 +9599,7 @@ const TestModel& get_test_model_align_corners_3x3_to_2x2_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_width10
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -9609,7 +9609,7 @@ const TestModel& get_test_model_align_corners_3x3_to_2x2_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_height10
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -9619,7 +9619,7 @@ const TestModel& get_test_model_align_corners_3x3_to_2x2_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout10
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -9629,7 +9629,7 @@ const TestModel& get_test_model_align_corners_3x3_to_2x2_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // align_corners10
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -9639,7 +9639,7 @@ const TestModel& get_test_model_align_corners_3x3_to_2x2_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // half_pixel_centers10
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -9649,7 +9649,7 @@ const TestModel& get_test_model_align_corners_3x3_to_2x2_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output010
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 3.0f, 7.0f, 9.0f}),
                             .dimensions = {1, 2, 2, 1},
@@ -9686,7 +9686,7 @@ const TestModel& get_test_model_align_corners_3x3_to_2x2_relaxed_all_inputs_as_i
         .isRelaxed = true,
         .main = {
                 .inputIndexes = {7},
-                .operands = {{
+                .operands = {{ // input010
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {1, 3, 3, 1},
@@ -9696,7 +9696,7 @@ const TestModel& get_test_model_align_corners_3x3_to_2x2_relaxed_all_inputs_as_i
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_width10
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -9706,7 +9706,7 @@ const TestModel& get_test_model_align_corners_3x3_to_2x2_relaxed_all_inputs_as_i
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_height10
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -9716,7 +9716,7 @@ const TestModel& get_test_model_align_corners_3x3_to_2x2_relaxed_all_inputs_as_i
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout10
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -9726,7 +9726,7 @@ const TestModel& get_test_model_align_corners_3x3_to_2x2_relaxed_all_inputs_as_i
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // align_corners10
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -9736,7 +9736,7 @@ const TestModel& get_test_model_align_corners_3x3_to_2x2_relaxed_all_inputs_as_i
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // half_pixel_centers10
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -9746,7 +9746,7 @@ const TestModel& get_test_model_align_corners_3x3_to_2x2_relaxed_all_inputs_as_i
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output010
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 3.0f, 7.0f, 9.0f}),
                             .dimensions = {1, 2, 2, 1},
@@ -9756,7 +9756,7 @@ const TestModel& get_test_model_align_corners_3x3_to_2x2_relaxed_all_inputs_as_i
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // input010_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f}),
                             .dimensions = {1, 3, 3, 1},
@@ -9766,7 +9766,7 @@ const TestModel& get_test_model_align_corners_3x3_to_2x2_relaxed_all_inputs_as_i
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy42
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -9776,7 +9776,7 @@ const TestModel& get_test_model_align_corners_3x3_to_2x2_relaxed_all_inputs_as_i
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param42
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -9817,7 +9817,7 @@ const TestModel& get_test_model_align_corners_3x3_to_2x2_quant8() {
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {0},
-                .operands = {{
+                .operands = {{ // input010
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({130, 132, 134, 136, 138, 140, 142, 144, 146}),
                             .dimensions = {1, 3, 3, 1},
@@ -9827,7 +9827,7 @@ const TestModel& get_test_model_align_corners_3x3_to_2x2_quant8() {
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 128
-                        }, {
+                        }, { // output_width10
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -9837,7 +9837,7 @@ const TestModel& get_test_model_align_corners_3x3_to_2x2_quant8() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_height10
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -9847,7 +9847,7 @@ const TestModel& get_test_model_align_corners_3x3_to_2x2_quant8() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout10
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -9857,7 +9857,7 @@ const TestModel& get_test_model_align_corners_3x3_to_2x2_quant8() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // align_corners10
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -9867,7 +9867,7 @@ const TestModel& get_test_model_align_corners_3x3_to_2x2_quant8() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // half_pixel_centers10
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -9877,7 +9877,7 @@ const TestModel& get_test_model_align_corners_3x3_to_2x2_quant8() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output010
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({130, 134, 142, 146}),
                             .dimensions = {1, 2, 2, 1},
@@ -9914,7 +9914,7 @@ const TestModel& get_test_model_align_corners_3x3_to_2x2_quant8_all_inputs_as_in
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {7},
-                .operands = {{
+                .operands = {{ // input010
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({}),
                             .dimensions = {1, 3, 3, 1},
@@ -9924,7 +9924,7 @@ const TestModel& get_test_model_align_corners_3x3_to_2x2_quant8_all_inputs_as_in
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 128
-                        }, {
+                        }, { // output_width10
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -9934,7 +9934,7 @@ const TestModel& get_test_model_align_corners_3x3_to_2x2_quant8_all_inputs_as_in
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_height10
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -9944,7 +9944,7 @@ const TestModel& get_test_model_align_corners_3x3_to_2x2_quant8_all_inputs_as_in
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout10
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -9954,7 +9954,7 @@ const TestModel& get_test_model_align_corners_3x3_to_2x2_quant8_all_inputs_as_in
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // align_corners10
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -9964,7 +9964,7 @@ const TestModel& get_test_model_align_corners_3x3_to_2x2_quant8_all_inputs_as_in
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // half_pixel_centers10
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -9974,7 +9974,7 @@ const TestModel& get_test_model_align_corners_3x3_to_2x2_quant8_all_inputs_as_in
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output010
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({130, 134, 142, 146}),
                             .dimensions = {1, 2, 2, 1},
@@ -9984,7 +9984,7 @@ const TestModel& get_test_model_align_corners_3x3_to_2x2_quant8_all_inputs_as_in
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 128
-                        }, {
+                        }, { // input010_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({130, 132, 134, 136, 138, 140, 142, 144, 146}),
                             .dimensions = {1, 3, 3, 1},
@@ -9994,7 +9994,7 @@ const TestModel& get_test_model_align_corners_3x3_to_2x2_quant8_all_inputs_as_in
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 128
-                        }, {
+                        }, { // dummy43
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({128}),
                             .dimensions = {1},
@@ -10004,7 +10004,7 @@ const TestModel& get_test_model_align_corners_3x3_to_2x2_quant8_all_inputs_as_in
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 128
-                        }, {
+                        }, { // param43
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -10045,7 +10045,7 @@ const TestModel& get_test_model_align_corners_4x4_to_3x3() {
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {0},
-                .operands = {{
+                .operands = {{ // input011
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f, 10.0f, 11.0f, 12.0f, 13.0f, 14.0f, 15.0f, 16.0f}),
                             .dimensions = {1, 4, 4, 1},
@@ -10055,7 +10055,7 @@ const TestModel& get_test_model_align_corners_4x4_to_3x3() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_width11
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -10065,7 +10065,7 @@ const TestModel& get_test_model_align_corners_4x4_to_3x3() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_height11
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -10075,7 +10075,7 @@ const TestModel& get_test_model_align_corners_4x4_to_3x3() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout11
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -10085,7 +10085,7 @@ const TestModel& get_test_model_align_corners_4x4_to_3x3() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // align_corners11
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -10095,7 +10095,7 @@ const TestModel& get_test_model_align_corners_4x4_to_3x3() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // half_pixel_centers11
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -10105,7 +10105,7 @@ const TestModel& get_test_model_align_corners_4x4_to_3x3() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output011
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 3.0f, 4.0f, 9.0f, 11.0f, 12.0f, 13.0f, 15.0f, 16.0f}),
                             .dimensions = {1, 3, 3, 1},
@@ -10142,7 +10142,7 @@ const TestModel& get_test_model_align_corners_4x4_to_3x3_all_inputs_as_internal(
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {7},
-                .operands = {{
+                .operands = {{ // input011
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {1, 4, 4, 1},
@@ -10152,7 +10152,7 @@ const TestModel& get_test_model_align_corners_4x4_to_3x3_all_inputs_as_internal(
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_width11
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -10162,7 +10162,7 @@ const TestModel& get_test_model_align_corners_4x4_to_3x3_all_inputs_as_internal(
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_height11
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -10172,7 +10172,7 @@ const TestModel& get_test_model_align_corners_4x4_to_3x3_all_inputs_as_internal(
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout11
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -10182,7 +10182,7 @@ const TestModel& get_test_model_align_corners_4x4_to_3x3_all_inputs_as_internal(
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // align_corners11
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -10192,7 +10192,7 @@ const TestModel& get_test_model_align_corners_4x4_to_3x3_all_inputs_as_internal(
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // half_pixel_centers11
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -10202,7 +10202,7 @@ const TestModel& get_test_model_align_corners_4x4_to_3x3_all_inputs_as_internal(
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output011
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 3.0f, 4.0f, 9.0f, 11.0f, 12.0f, 13.0f, 15.0f, 16.0f}),
                             .dimensions = {1, 3, 3, 1},
@@ -10212,7 +10212,7 @@ const TestModel& get_test_model_align_corners_4x4_to_3x3_all_inputs_as_internal(
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // input011_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f, 10.0f, 11.0f, 12.0f, 13.0f, 14.0f, 15.0f, 16.0f}),
                             .dimensions = {1, 4, 4, 1},
@@ -10222,7 +10222,7 @@ const TestModel& get_test_model_align_corners_4x4_to_3x3_all_inputs_as_internal(
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy44
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -10232,7 +10232,7 @@ const TestModel& get_test_model_align_corners_4x4_to_3x3_all_inputs_as_internal(
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param44
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -10273,7 +10273,7 @@ const TestModel& get_test_model_align_corners_4x4_to_3x3_float16() {
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {0},
-                .operands = {{
+                .operands = {{ // input011
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f, 10.0f, 11.0f, 12.0f, 13.0f, 14.0f, 15.0f, 16.0f}),
                             .dimensions = {1, 4, 4, 1},
@@ -10283,7 +10283,7 @@ const TestModel& get_test_model_align_corners_4x4_to_3x3_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_width11
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -10293,7 +10293,7 @@ const TestModel& get_test_model_align_corners_4x4_to_3x3_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_height11
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -10303,7 +10303,7 @@ const TestModel& get_test_model_align_corners_4x4_to_3x3_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout11
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -10313,7 +10313,7 @@ const TestModel& get_test_model_align_corners_4x4_to_3x3_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // align_corners11
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -10323,7 +10323,7 @@ const TestModel& get_test_model_align_corners_4x4_to_3x3_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // half_pixel_centers11
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -10333,7 +10333,7 @@ const TestModel& get_test_model_align_corners_4x4_to_3x3_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output011
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({1.0f, 3.0f, 4.0f, 9.0f, 11.0f, 12.0f, 13.0f, 15.0f, 16.0f}),
                             .dimensions = {1, 3, 3, 1},
@@ -10370,7 +10370,7 @@ const TestModel& get_test_model_align_corners_4x4_to_3x3_float16_all_inputs_as_i
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {7},
-                .operands = {{
+                .operands = {{ // input011
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({}),
                             .dimensions = {1, 4, 4, 1},
@@ -10380,7 +10380,7 @@ const TestModel& get_test_model_align_corners_4x4_to_3x3_float16_all_inputs_as_i
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_width11
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -10390,7 +10390,7 @@ const TestModel& get_test_model_align_corners_4x4_to_3x3_float16_all_inputs_as_i
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_height11
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -10400,7 +10400,7 @@ const TestModel& get_test_model_align_corners_4x4_to_3x3_float16_all_inputs_as_i
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout11
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -10410,7 +10410,7 @@ const TestModel& get_test_model_align_corners_4x4_to_3x3_float16_all_inputs_as_i
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // align_corners11
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -10420,7 +10420,7 @@ const TestModel& get_test_model_align_corners_4x4_to_3x3_float16_all_inputs_as_i
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // half_pixel_centers11
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -10430,7 +10430,7 @@ const TestModel& get_test_model_align_corners_4x4_to_3x3_float16_all_inputs_as_i
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output011
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({1.0f, 3.0f, 4.0f, 9.0f, 11.0f, 12.0f, 13.0f, 15.0f, 16.0f}),
                             .dimensions = {1, 3, 3, 1},
@@ -10440,7 +10440,7 @@ const TestModel& get_test_model_align_corners_4x4_to_3x3_float16_all_inputs_as_i
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // input011_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f, 10.0f, 11.0f, 12.0f, 13.0f, 14.0f, 15.0f, 16.0f}),
                             .dimensions = {1, 4, 4, 1},
@@ -10450,7 +10450,7 @@ const TestModel& get_test_model_align_corners_4x4_to_3x3_float16_all_inputs_as_i
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy45
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({0.0f}),
                             .dimensions = {1},
@@ -10460,7 +10460,7 @@ const TestModel& get_test_model_align_corners_4x4_to_3x3_float16_all_inputs_as_i
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param45
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -10501,7 +10501,7 @@ const TestModel& get_test_model_align_corners_4x4_to_3x3_relaxed() {
         .isRelaxed = true,
         .main = {
                 .inputIndexes = {0},
-                .operands = {{
+                .operands = {{ // input011
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f, 10.0f, 11.0f, 12.0f, 13.0f, 14.0f, 15.0f, 16.0f}),
                             .dimensions = {1, 4, 4, 1},
@@ -10511,7 +10511,7 @@ const TestModel& get_test_model_align_corners_4x4_to_3x3_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_width11
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -10521,7 +10521,7 @@ const TestModel& get_test_model_align_corners_4x4_to_3x3_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_height11
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -10531,7 +10531,7 @@ const TestModel& get_test_model_align_corners_4x4_to_3x3_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout11
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -10541,7 +10541,7 @@ const TestModel& get_test_model_align_corners_4x4_to_3x3_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // align_corners11
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -10551,7 +10551,7 @@ const TestModel& get_test_model_align_corners_4x4_to_3x3_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // half_pixel_centers11
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -10561,7 +10561,7 @@ const TestModel& get_test_model_align_corners_4x4_to_3x3_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output011
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 3.0f, 4.0f, 9.0f, 11.0f, 12.0f, 13.0f, 15.0f, 16.0f}),
                             .dimensions = {1, 3, 3, 1},
@@ -10598,7 +10598,7 @@ const TestModel& get_test_model_align_corners_4x4_to_3x3_relaxed_all_inputs_as_i
         .isRelaxed = true,
         .main = {
                 .inputIndexes = {7},
-                .operands = {{
+                .operands = {{ // input011
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {1, 4, 4, 1},
@@ -10608,7 +10608,7 @@ const TestModel& get_test_model_align_corners_4x4_to_3x3_relaxed_all_inputs_as_i
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_width11
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -10618,7 +10618,7 @@ const TestModel& get_test_model_align_corners_4x4_to_3x3_relaxed_all_inputs_as_i
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_height11
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -10628,7 +10628,7 @@ const TestModel& get_test_model_align_corners_4x4_to_3x3_relaxed_all_inputs_as_i
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout11
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -10638,7 +10638,7 @@ const TestModel& get_test_model_align_corners_4x4_to_3x3_relaxed_all_inputs_as_i
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // align_corners11
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -10648,7 +10648,7 @@ const TestModel& get_test_model_align_corners_4x4_to_3x3_relaxed_all_inputs_as_i
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // half_pixel_centers11
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -10658,7 +10658,7 @@ const TestModel& get_test_model_align_corners_4x4_to_3x3_relaxed_all_inputs_as_i
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output011
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 3.0f, 4.0f, 9.0f, 11.0f, 12.0f, 13.0f, 15.0f, 16.0f}),
                             .dimensions = {1, 3, 3, 1},
@@ -10668,7 +10668,7 @@ const TestModel& get_test_model_align_corners_4x4_to_3x3_relaxed_all_inputs_as_i
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // input011_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f, 10.0f, 11.0f, 12.0f, 13.0f, 14.0f, 15.0f, 16.0f}),
                             .dimensions = {1, 4, 4, 1},
@@ -10678,7 +10678,7 @@ const TestModel& get_test_model_align_corners_4x4_to_3x3_relaxed_all_inputs_as_i
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy46
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -10688,7 +10688,7 @@ const TestModel& get_test_model_align_corners_4x4_to_3x3_relaxed_all_inputs_as_i
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param46
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -10729,7 +10729,7 @@ const TestModel& get_test_model_align_corners_4x4_to_3x3_quant8() {
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {0},
-                .operands = {{
+                .operands = {{ // input011
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({130, 132, 134, 136, 138, 140, 142, 144, 146, 148, 150, 152, 154, 156, 158, 160}),
                             .dimensions = {1, 4, 4, 1},
@@ -10739,7 +10739,7 @@ const TestModel& get_test_model_align_corners_4x4_to_3x3_quant8() {
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 128
-                        }, {
+                        }, { // output_width11
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -10749,7 +10749,7 @@ const TestModel& get_test_model_align_corners_4x4_to_3x3_quant8() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_height11
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -10759,7 +10759,7 @@ const TestModel& get_test_model_align_corners_4x4_to_3x3_quant8() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout11
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -10769,7 +10769,7 @@ const TestModel& get_test_model_align_corners_4x4_to_3x3_quant8() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // align_corners11
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -10779,7 +10779,7 @@ const TestModel& get_test_model_align_corners_4x4_to_3x3_quant8() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // half_pixel_centers11
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -10789,7 +10789,7 @@ const TestModel& get_test_model_align_corners_4x4_to_3x3_quant8() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output011
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({130, 134, 136, 146, 150, 152, 154, 158, 160}),
                             .dimensions = {1, 3, 3, 1},
@@ -10826,7 +10826,7 @@ const TestModel& get_test_model_align_corners_4x4_to_3x3_quant8_all_inputs_as_in
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {7},
-                .operands = {{
+                .operands = {{ // input011
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({}),
                             .dimensions = {1, 4, 4, 1},
@@ -10836,7 +10836,7 @@ const TestModel& get_test_model_align_corners_4x4_to_3x3_quant8_all_inputs_as_in
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 128
-                        }, {
+                        }, { // output_width11
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -10846,7 +10846,7 @@ const TestModel& get_test_model_align_corners_4x4_to_3x3_quant8_all_inputs_as_in
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_height11
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -10856,7 +10856,7 @@ const TestModel& get_test_model_align_corners_4x4_to_3x3_quant8_all_inputs_as_in
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout11
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -10866,7 +10866,7 @@ const TestModel& get_test_model_align_corners_4x4_to_3x3_quant8_all_inputs_as_in
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // align_corners11
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -10876,7 +10876,7 @@ const TestModel& get_test_model_align_corners_4x4_to_3x3_quant8_all_inputs_as_in
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // half_pixel_centers11
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -10886,7 +10886,7 @@ const TestModel& get_test_model_align_corners_4x4_to_3x3_quant8_all_inputs_as_in
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output011
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({130, 134, 136, 146, 150, 152, 154, 158, 160}),
                             .dimensions = {1, 3, 3, 1},
@@ -10896,7 +10896,7 @@ const TestModel& get_test_model_align_corners_4x4_to_3x3_quant8_all_inputs_as_in
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 128
-                        }, {
+                        }, { // input011_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({130, 132, 134, 136, 138, 140, 142, 144, 146, 148, 150, 152, 154, 156, 158, 160}),
                             .dimensions = {1, 4, 4, 1},
@@ -10906,7 +10906,7 @@ const TestModel& get_test_model_align_corners_4x4_to_3x3_quant8_all_inputs_as_in
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 128
-                        }, {
+                        }, { // dummy47
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({128}),
                             .dimensions = {1},
@@ -10916,7 +10916,7 @@ const TestModel& get_test_model_align_corners_4x4_to_3x3_quant8_all_inputs_as_in
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 128
-                        }, {
+                        }, { // param47
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -10957,7 +10957,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_2() {
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {0},
-                .operands = {{
+                .operands = {{ // input012
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f}),
                             .dimensions = {1, 2, 2, 1},
@@ -10967,7 +10967,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_width12
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -10977,7 +10977,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_height12
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -10987,7 +10987,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout12
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -10997,7 +10997,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // align_corners12
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -11007,7 +11007,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // half_pixel_centers12
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -11017,7 +11017,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output012
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f}),
                             .dimensions = {1, 1, 1, 1},
@@ -11054,7 +11054,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_all_inputs_as_internal_
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {7},
-                .operands = {{
+                .operands = {{ // input012
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {1, 2, 2, 1},
@@ -11064,7 +11064,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_all_inputs_as_internal_
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_width12
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -11074,7 +11074,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_all_inputs_as_internal_
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_height12
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -11084,7 +11084,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_all_inputs_as_internal_
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout12
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -11094,7 +11094,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_all_inputs_as_internal_
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // align_corners12
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -11104,7 +11104,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_all_inputs_as_internal_
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // half_pixel_centers12
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -11114,7 +11114,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_all_inputs_as_internal_
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output012
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f}),
                             .dimensions = {1, 1, 1, 1},
@@ -11124,7 +11124,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_all_inputs_as_internal_
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // input012_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f}),
                             .dimensions = {1, 2, 2, 1},
@@ -11134,7 +11134,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_all_inputs_as_internal_
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy48
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -11144,7 +11144,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_all_inputs_as_internal_
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param48
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -11185,7 +11185,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_float16_2() {
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {0},
-                .operands = {{
+                .operands = {{ // input012
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({1.0f, 2.0f, 3.0f, 4.0f}),
                             .dimensions = {1, 2, 2, 1},
@@ -11195,7 +11195,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_float16_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_width12
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -11205,7 +11205,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_float16_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_height12
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -11215,7 +11215,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_float16_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout12
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -11225,7 +11225,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_float16_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // align_corners12
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -11235,7 +11235,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_float16_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // half_pixel_centers12
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -11245,7 +11245,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_float16_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output012
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({1.0f}),
                             .dimensions = {1, 1, 1, 1},
@@ -11282,7 +11282,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_float16_all_inputs_as_i
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {7},
-                .operands = {{
+                .operands = {{ // input012
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({}),
                             .dimensions = {1, 2, 2, 1},
@@ -11292,7 +11292,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_float16_all_inputs_as_i
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_width12
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -11302,7 +11302,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_float16_all_inputs_as_i
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_height12
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -11312,7 +11312,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_float16_all_inputs_as_i
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout12
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -11322,7 +11322,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_float16_all_inputs_as_i
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // align_corners12
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -11332,7 +11332,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_float16_all_inputs_as_i
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // half_pixel_centers12
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -11342,7 +11342,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_float16_all_inputs_as_i
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output012
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({1.0f}),
                             .dimensions = {1, 1, 1, 1},
@@ -11352,7 +11352,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_float16_all_inputs_as_i
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // input012_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({1.0f, 2.0f, 3.0f, 4.0f}),
                             .dimensions = {1, 2, 2, 1},
@@ -11362,7 +11362,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_float16_all_inputs_as_i
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy49
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({0.0f}),
                             .dimensions = {1},
@@ -11372,7 +11372,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_float16_all_inputs_as_i
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param49
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -11413,7 +11413,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_relaxed_2() {
         .isRelaxed = true,
         .main = {
                 .inputIndexes = {0},
-                .operands = {{
+                .operands = {{ // input012
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f}),
                             .dimensions = {1, 2, 2, 1},
@@ -11423,7 +11423,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_relaxed_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_width12
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -11433,7 +11433,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_relaxed_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_height12
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -11443,7 +11443,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_relaxed_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout12
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -11453,7 +11453,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_relaxed_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // align_corners12
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -11463,7 +11463,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_relaxed_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // half_pixel_centers12
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -11473,7 +11473,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_relaxed_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output012
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f}),
                             .dimensions = {1, 1, 1, 1},
@@ -11510,7 +11510,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_relaxed_all_inputs_as_i
         .isRelaxed = true,
         .main = {
                 .inputIndexes = {7},
-                .operands = {{
+                .operands = {{ // input012
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {1, 2, 2, 1},
@@ -11520,7 +11520,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_relaxed_all_inputs_as_i
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_width12
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -11530,7 +11530,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_relaxed_all_inputs_as_i
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_height12
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -11540,7 +11540,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_relaxed_all_inputs_as_i
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout12
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -11550,7 +11550,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_relaxed_all_inputs_as_i
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // align_corners12
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -11560,7 +11560,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_relaxed_all_inputs_as_i
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // half_pixel_centers12
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -11570,7 +11570,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_relaxed_all_inputs_as_i
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output012
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f}),
                             .dimensions = {1, 1, 1, 1},
@@ -11580,7 +11580,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_relaxed_all_inputs_as_i
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // input012_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f}),
                             .dimensions = {1, 2, 2, 1},
@@ -11590,7 +11590,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_relaxed_all_inputs_as_i
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy50
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -11600,7 +11600,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_relaxed_all_inputs_as_i
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param50
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -11641,7 +11641,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_quant8_2() {
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {0},
-                .operands = {{
+                .operands = {{ // input012
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({130, 132, 134, 136}),
                             .dimensions = {1, 2, 2, 1},
@@ -11651,7 +11651,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_quant8_2() {
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 128
-                        }, {
+                        }, { // output_width12
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -11661,7 +11661,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_quant8_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_height12
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -11671,7 +11671,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_quant8_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout12
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -11681,7 +11681,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_quant8_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // align_corners12
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -11691,7 +11691,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_quant8_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // half_pixel_centers12
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -11701,7 +11701,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_quant8_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output012
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({130}),
                             .dimensions = {1, 1, 1, 1},
@@ -11738,7 +11738,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_quant8_all_inputs_as_in
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {7},
-                .operands = {{
+                .operands = {{ // input012
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({}),
                             .dimensions = {1, 2, 2, 1},
@@ -11748,7 +11748,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_quant8_all_inputs_as_in
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 128
-                        }, {
+                        }, { // output_width12
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -11758,7 +11758,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_quant8_all_inputs_as_in
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_height12
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -11768,7 +11768,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_quant8_all_inputs_as_in
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout12
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -11778,7 +11778,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_quant8_all_inputs_as_in
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // align_corners12
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -11788,7 +11788,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_quant8_all_inputs_as_in
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // half_pixel_centers12
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -11798,7 +11798,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_quant8_all_inputs_as_in
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output012
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({130}),
                             .dimensions = {1, 1, 1, 1},
@@ -11808,7 +11808,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_quant8_all_inputs_as_in
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 128
-                        }, {
+                        }, { // input012_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({130, 132, 134, 136}),
                             .dimensions = {1, 2, 2, 1},
@@ -11818,7 +11818,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_quant8_all_inputs_as_in
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 128
-                        }, {
+                        }, { // dummy51
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({128}),
                             .dimensions = {1},
@@ -11828,7 +11828,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_quant8_all_inputs_as_in
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 128
-                        }, {
+                        }, { // param51
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
