@@ -13,7 +13,7 @@ const TestModel& get_test_model() {
         .isRelaxed = true,
         .main = {
                 .inputIndexes = {0},
-                .operands = {{
+                .operands = {{ // op1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 10.0f, 100.0f, 500.0f, 1000.0f}),
                             .dimensions = {1, 5},
@@ -23,7 +23,7 @@ const TestModel& get_test_model() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({2.0f, 3.0f, 4.0f, 5.0f, 6.0f}),
                             .dimensions = {1, 5},
@@ -33,7 +33,7 @@ const TestModel& get_test_model() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // b0
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({900.0f}),
                             .dimensions = {1},
@@ -43,7 +43,7 @@ const TestModel& get_test_model() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // act
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -53,7 +53,7 @@ const TestModel& get_test_model() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({9832.0f}),
                             .dimensions = {1, 1},
@@ -90,7 +90,7 @@ const TestModel& get_test_model_all_inputs_as_internal() {
         .isRelaxed = true,
         .main = {
                 .inputIndexes = {5},
-                .operands = {{
+                .operands = {{ // op1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {1, 5},
@@ -100,7 +100,7 @@ const TestModel& get_test_model_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({2.0f, 3.0f, 4.0f, 5.0f, 6.0f}),
                             .dimensions = {1, 5},
@@ -110,7 +110,7 @@ const TestModel& get_test_model_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // b0
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({900.0f}),
                             .dimensions = {1},
@@ -120,7 +120,7 @@ const TestModel& get_test_model_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // act
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -130,7 +130,7 @@ const TestModel& get_test_model_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({9832.0f}),
                             .dimensions = {1, 1},
@@ -140,7 +140,7 @@ const TestModel& get_test_model_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op1_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 10.0f, 100.0f, 500.0f, 1000.0f}),
                             .dimensions = {1, 5},
@@ -150,7 +150,7 @@ const TestModel& get_test_model_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -160,7 +160,7 @@ const TestModel& get_test_model_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -201,7 +201,7 @@ const TestModel& get_test_model_all_tensors_as_inputs() {
         .isRelaxed = true,
         .main = {
                 .inputIndexes = {0, 1, 2},
-                .operands = {{
+                .operands = {{ // op1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 10.0f, 100.0f, 500.0f, 1000.0f}),
                             .dimensions = {1, 5},
@@ -211,7 +211,7 @@ const TestModel& get_test_model_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({2.0f, 3.0f, 4.0f, 5.0f, 6.0f}),
                             .dimensions = {1, 5},
@@ -221,7 +221,7 @@ const TestModel& get_test_model_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // b0
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({900.0f}),
                             .dimensions = {1},
@@ -231,7 +231,7 @@ const TestModel& get_test_model_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // act
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -241,7 +241,7 @@ const TestModel& get_test_model_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({9832.0f}),
                             .dimensions = {1, 1},
@@ -278,7 +278,7 @@ const TestModel& get_test_model_all_tensors_as_inputs_all_inputs_as_internal() {
         .isRelaxed = true,
         .main = {
                 .inputIndexes = {5, 8, 11},
-                .operands = {{
+                .operands = {{ // op1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {1, 5},
@@ -288,7 +288,7 @@ const TestModel& get_test_model_all_tensors_as_inputs_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {1, 5},
@@ -298,7 +298,7 @@ const TestModel& get_test_model_all_tensors_as_inputs_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // b0
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {1},
@@ -308,7 +308,7 @@ const TestModel& get_test_model_all_tensors_as_inputs_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // act
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -318,7 +318,7 @@ const TestModel& get_test_model_all_tensors_as_inputs_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({9832.0f}),
                             .dimensions = {1, 1},
@@ -328,7 +328,7 @@ const TestModel& get_test_model_all_tensors_as_inputs_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op1_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 10.0f, 100.0f, 500.0f, 1000.0f}),
                             .dimensions = {1, 5},
@@ -338,7 +338,7 @@ const TestModel& get_test_model_all_tensors_as_inputs_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -348,7 +348,7 @@ const TestModel& get_test_model_all_tensors_as_inputs_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -358,7 +358,7 @@ const TestModel& get_test_model_all_tensors_as_inputs_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op2_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({2.0f, 3.0f, 4.0f, 5.0f, 6.0f}),
                             .dimensions = {1, 5},
@@ -368,7 +368,7 @@ const TestModel& get_test_model_all_tensors_as_inputs_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -378,7 +378,7 @@ const TestModel& get_test_model_all_tensors_as_inputs_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -388,7 +388,7 @@ const TestModel& get_test_model_all_tensors_as_inputs_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // b0_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({900.0f}),
                             .dimensions = {1},
@@ -398,7 +398,7 @@ const TestModel& get_test_model_all_tensors_as_inputs_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -408,7 +408,7 @@ const TestModel& get_test_model_all_tensors_as_inputs_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},

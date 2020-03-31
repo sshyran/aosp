@@ -13,7 +13,7 @@ const TestModel& get_test_model_nhwc() {
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {0},
-                .operands = {{
+                .operands = {{ // op1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({10.0f, 21.0f, 10.0f, 22.0f, 10.0f, 23.0f, 10.0f, 24.0f, 10.0f, 25.0f, 10.0f, 26.0f, 10.0f, 27.0f, 10.0f, 28.0f, 10.0f, 29.0f}),
                             .dimensions = {1, 3, 3, 2},
@@ -23,7 +23,7 @@ const TestModel& get_test_model_nhwc() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.25f, 0.0f, 0.2f, 0.0f, 0.25f, 0.0f, 0.0f, 0.3f, 0.25f, 0.0f, 0.0f, 0.0f, 0.25f, 0.1f, 0.0f, 0.0f}),
                             .dimensions = {1, 2, 2, 4},
@@ -33,7 +33,7 @@ const TestModel& get_test_model_nhwc() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f}),
                             .dimensions = {4},
@@ -43,7 +43,7 @@ const TestModel& get_test_model_nhwc() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -53,7 +53,7 @@ const TestModel& get_test_model_nhwc() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -63,7 +63,7 @@ const TestModel& get_test_model_nhwc() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -73,7 +73,7 @@ const TestModel& get_test_model_nhwc() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -83,7 +83,7 @@ const TestModel& get_test_model_nhwc() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -93,7 +93,7 @@ const TestModel& get_test_model_nhwc() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param5
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -103,7 +103,7 @@ const TestModel& get_test_model_nhwc() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param6
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -113,7 +113,7 @@ const TestModel& get_test_model_nhwc() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param7
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -123,7 +123,7 @@ const TestModel& get_test_model_nhwc() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -133,7 +133,7 @@ const TestModel& get_test_model_nhwc() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param8
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -143,7 +143,7 @@ const TestModel& get_test_model_nhwc() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param9
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -153,7 +153,7 @@ const TestModel& get_test_model_nhwc() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({11.0f, 3.0f, 7.2f, 10.6f, 11.0f, 3.0f, 7.4f, 10.9f, 11.0f, 3.0f, 7.8f, 11.5f, 11.0f, 3.0f, 8.0f, 11.8f}),
                             .dimensions = {1, 2, 2, 4},
@@ -190,7 +190,7 @@ const TestModel& get_test_model_nhwc_all_inputs_as_internal() {
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {15},
-                .operands = {{
+                .operands = {{ // op1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {1, 3, 3, 2},
@@ -200,7 +200,7 @@ const TestModel& get_test_model_nhwc_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.25f, 0.0f, 0.2f, 0.0f, 0.25f, 0.0f, 0.0f, 0.3f, 0.25f, 0.0f, 0.0f, 0.0f, 0.25f, 0.1f, 0.0f, 0.0f}),
                             .dimensions = {1, 2, 2, 4},
@@ -210,7 +210,7 @@ const TestModel& get_test_model_nhwc_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f}),
                             .dimensions = {4},
@@ -220,7 +220,7 @@ const TestModel& get_test_model_nhwc_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -230,7 +230,7 @@ const TestModel& get_test_model_nhwc_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -240,7 +240,7 @@ const TestModel& get_test_model_nhwc_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -250,7 +250,7 @@ const TestModel& get_test_model_nhwc_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -260,7 +260,7 @@ const TestModel& get_test_model_nhwc_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -270,7 +270,7 @@ const TestModel& get_test_model_nhwc_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param5
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -280,7 +280,7 @@ const TestModel& get_test_model_nhwc_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param6
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -290,7 +290,7 @@ const TestModel& get_test_model_nhwc_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param7
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -300,7 +300,7 @@ const TestModel& get_test_model_nhwc_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -310,7 +310,7 @@ const TestModel& get_test_model_nhwc_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param8
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -320,7 +320,7 @@ const TestModel& get_test_model_nhwc_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param9
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -330,7 +330,7 @@ const TestModel& get_test_model_nhwc_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({11.0f, 3.0f, 7.2f, 10.6f, 11.0f, 3.0f, 7.4f, 10.9f, 11.0f, 3.0f, 7.8f, 11.5f, 11.0f, 3.0f, 8.0f, 11.8f}),
                             .dimensions = {1, 2, 2, 4},
@@ -340,7 +340,7 @@ const TestModel& get_test_model_nhwc_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op1_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({10.0f, 21.0f, 10.0f, 22.0f, 10.0f, 23.0f, 10.0f, 24.0f, 10.0f, 25.0f, 10.0f, 26.0f, 10.0f, 27.0f, 10.0f, 28.0f, 10.0f, 29.0f}),
                             .dimensions = {1, 3, 3, 2},
@@ -350,7 +350,7 @@ const TestModel& get_test_model_nhwc_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -360,7 +360,7 @@ const TestModel& get_test_model_nhwc_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param41
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -401,7 +401,7 @@ const TestModel& get_test_model_nhwc_all_tensors_as_inputs() {
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {0, 1, 2},
-                .operands = {{
+                .operands = {{ // op1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({10.0f, 21.0f, 10.0f, 22.0f, 10.0f, 23.0f, 10.0f, 24.0f, 10.0f, 25.0f, 10.0f, 26.0f, 10.0f, 27.0f, 10.0f, 28.0f, 10.0f, 29.0f}),
                             .dimensions = {1, 3, 3, 2},
@@ -411,7 +411,7 @@ const TestModel& get_test_model_nhwc_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.25f, 0.0f, 0.2f, 0.0f, 0.25f, 0.0f, 0.0f, 0.3f, 0.25f, 0.0f, 0.0f, 0.0f, 0.25f, 0.1f, 0.0f, 0.0f}),
                             .dimensions = {1, 2, 2, 4},
@@ -421,7 +421,7 @@ const TestModel& get_test_model_nhwc_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f}),
                             .dimensions = {4},
@@ -431,7 +431,7 @@ const TestModel& get_test_model_nhwc_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -441,7 +441,7 @@ const TestModel& get_test_model_nhwc_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -451,7 +451,7 @@ const TestModel& get_test_model_nhwc_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -461,7 +461,7 @@ const TestModel& get_test_model_nhwc_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -471,7 +471,7 @@ const TestModel& get_test_model_nhwc_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -481,7 +481,7 @@ const TestModel& get_test_model_nhwc_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param5
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -491,7 +491,7 @@ const TestModel& get_test_model_nhwc_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param6
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -501,7 +501,7 @@ const TestModel& get_test_model_nhwc_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param7
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -511,7 +511,7 @@ const TestModel& get_test_model_nhwc_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -521,7 +521,7 @@ const TestModel& get_test_model_nhwc_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param8
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -531,7 +531,7 @@ const TestModel& get_test_model_nhwc_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param9
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -541,7 +541,7 @@ const TestModel& get_test_model_nhwc_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({11.0f, 3.0f, 7.2f, 10.6f, 11.0f, 3.0f, 7.4f, 10.9f, 11.0f, 3.0f, 7.8f, 11.5f, 11.0f, 3.0f, 8.0f, 11.8f}),
                             .dimensions = {1, 2, 2, 4},
@@ -578,7 +578,7 @@ const TestModel& get_test_model_nhwc_all_tensors_as_inputs_all_inputs_as_interna
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {15, 18, 21},
-                .operands = {{
+                .operands = {{ // op1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {1, 3, 3, 2},
@@ -588,7 +588,7 @@ const TestModel& get_test_model_nhwc_all_tensors_as_inputs_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {1, 2, 2, 4},
@@ -598,7 +598,7 @@ const TestModel& get_test_model_nhwc_all_tensors_as_inputs_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {4},
@@ -608,7 +608,7 @@ const TestModel& get_test_model_nhwc_all_tensors_as_inputs_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -618,7 +618,7 @@ const TestModel& get_test_model_nhwc_all_tensors_as_inputs_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -628,7 +628,7 @@ const TestModel& get_test_model_nhwc_all_tensors_as_inputs_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -638,7 +638,7 @@ const TestModel& get_test_model_nhwc_all_tensors_as_inputs_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -648,7 +648,7 @@ const TestModel& get_test_model_nhwc_all_tensors_as_inputs_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -658,7 +658,7 @@ const TestModel& get_test_model_nhwc_all_tensors_as_inputs_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param5
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -668,7 +668,7 @@ const TestModel& get_test_model_nhwc_all_tensors_as_inputs_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param6
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -678,7 +678,7 @@ const TestModel& get_test_model_nhwc_all_tensors_as_inputs_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param7
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -688,7 +688,7 @@ const TestModel& get_test_model_nhwc_all_tensors_as_inputs_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -698,7 +698,7 @@ const TestModel& get_test_model_nhwc_all_tensors_as_inputs_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param8
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -708,7 +708,7 @@ const TestModel& get_test_model_nhwc_all_tensors_as_inputs_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param9
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -718,7 +718,7 @@ const TestModel& get_test_model_nhwc_all_tensors_as_inputs_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({11.0f, 3.0f, 7.2f, 10.6f, 11.0f, 3.0f, 7.4f, 10.9f, 11.0f, 3.0f, 7.8f, 11.5f, 11.0f, 3.0f, 8.0f, 11.8f}),
                             .dimensions = {1, 2, 2, 4},
@@ -728,7 +728,7 @@ const TestModel& get_test_model_nhwc_all_tensors_as_inputs_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op1_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({10.0f, 21.0f, 10.0f, 22.0f, 10.0f, 23.0f, 10.0f, 24.0f, 10.0f, 25.0f, 10.0f, 26.0f, 10.0f, 27.0f, 10.0f, 28.0f, 10.0f, 29.0f}),
                             .dimensions = {1, 3, 3, 2},
@@ -738,7 +738,7 @@ const TestModel& get_test_model_nhwc_all_tensors_as_inputs_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -748,7 +748,7 @@ const TestModel& get_test_model_nhwc_all_tensors_as_inputs_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param42
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -758,7 +758,7 @@ const TestModel& get_test_model_nhwc_all_tensors_as_inputs_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op2_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.25f, 0.0f, 0.2f, 0.0f, 0.25f, 0.0f, 0.0f, 0.3f, 0.25f, 0.0f, 0.0f, 0.0f, 0.25f, 0.1f, 0.0f, 0.0f}),
                             .dimensions = {1, 2, 2, 4},
@@ -768,7 +768,7 @@ const TestModel& get_test_model_nhwc_all_tensors_as_inputs_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -778,7 +778,7 @@ const TestModel& get_test_model_nhwc_all_tensors_as_inputs_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param43
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -788,7 +788,7 @@ const TestModel& get_test_model_nhwc_all_tensors_as_inputs_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op3_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f}),
                             .dimensions = {4},
@@ -798,7 +798,7 @@ const TestModel& get_test_model_nhwc_all_tensors_as_inputs_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -808,7 +808,7 @@ const TestModel& get_test_model_nhwc_all_tensors_as_inputs_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param44
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -857,7 +857,7 @@ const TestModel& get_test_model_nhwc_relaxed() {
         .isRelaxed = true,
         .main = {
                 .inputIndexes = {0},
-                .operands = {{
+                .operands = {{ // op1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({10.0f, 21.0f, 10.0f, 22.0f, 10.0f, 23.0f, 10.0f, 24.0f, 10.0f, 25.0f, 10.0f, 26.0f, 10.0f, 27.0f, 10.0f, 28.0f, 10.0f, 29.0f}),
                             .dimensions = {1, 3, 3, 2},
@@ -867,7 +867,7 @@ const TestModel& get_test_model_nhwc_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.25f, 0.0f, 0.2f, 0.0f, 0.25f, 0.0f, 0.0f, 0.3f, 0.25f, 0.0f, 0.0f, 0.0f, 0.25f, 0.1f, 0.0f, 0.0f}),
                             .dimensions = {1, 2, 2, 4},
@@ -877,7 +877,7 @@ const TestModel& get_test_model_nhwc_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f}),
                             .dimensions = {4},
@@ -887,7 +887,7 @@ const TestModel& get_test_model_nhwc_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -897,7 +897,7 @@ const TestModel& get_test_model_nhwc_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -907,7 +907,7 @@ const TestModel& get_test_model_nhwc_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -917,7 +917,7 @@ const TestModel& get_test_model_nhwc_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -927,7 +927,7 @@ const TestModel& get_test_model_nhwc_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -937,7 +937,7 @@ const TestModel& get_test_model_nhwc_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param5
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -947,7 +947,7 @@ const TestModel& get_test_model_nhwc_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param6
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -957,7 +957,7 @@ const TestModel& get_test_model_nhwc_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param7
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -967,7 +967,7 @@ const TestModel& get_test_model_nhwc_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -977,7 +977,7 @@ const TestModel& get_test_model_nhwc_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param8
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -987,7 +987,7 @@ const TestModel& get_test_model_nhwc_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param9
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -997,7 +997,7 @@ const TestModel& get_test_model_nhwc_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({11.0f, 3.0f, 7.2f, 10.6f, 11.0f, 3.0f, 7.4f, 10.9f, 11.0f, 3.0f, 7.8f, 11.5f, 11.0f, 3.0f, 8.0f, 11.8f}),
                             .dimensions = {1, 2, 2, 4},
@@ -1034,7 +1034,7 @@ const TestModel& get_test_model_nhwc_relaxed_all_inputs_as_internal() {
         .isRelaxed = true,
         .main = {
                 .inputIndexes = {15},
-                .operands = {{
+                .operands = {{ // op1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {1, 3, 3, 2},
@@ -1044,7 +1044,7 @@ const TestModel& get_test_model_nhwc_relaxed_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.25f, 0.0f, 0.2f, 0.0f, 0.25f, 0.0f, 0.0f, 0.3f, 0.25f, 0.0f, 0.0f, 0.0f, 0.25f, 0.1f, 0.0f, 0.0f}),
                             .dimensions = {1, 2, 2, 4},
@@ -1054,7 +1054,7 @@ const TestModel& get_test_model_nhwc_relaxed_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f}),
                             .dimensions = {4},
@@ -1064,7 +1064,7 @@ const TestModel& get_test_model_nhwc_relaxed_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -1074,7 +1074,7 @@ const TestModel& get_test_model_nhwc_relaxed_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -1084,7 +1084,7 @@ const TestModel& get_test_model_nhwc_relaxed_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -1094,7 +1094,7 @@ const TestModel& get_test_model_nhwc_relaxed_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -1104,7 +1104,7 @@ const TestModel& get_test_model_nhwc_relaxed_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -1114,7 +1114,7 @@ const TestModel& get_test_model_nhwc_relaxed_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param5
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -1124,7 +1124,7 @@ const TestModel& get_test_model_nhwc_relaxed_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param6
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -1134,7 +1134,7 @@ const TestModel& get_test_model_nhwc_relaxed_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param7
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -1144,7 +1144,7 @@ const TestModel& get_test_model_nhwc_relaxed_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -1154,7 +1154,7 @@ const TestModel& get_test_model_nhwc_relaxed_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param8
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -1164,7 +1164,7 @@ const TestModel& get_test_model_nhwc_relaxed_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param9
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -1174,7 +1174,7 @@ const TestModel& get_test_model_nhwc_relaxed_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({11.0f, 3.0f, 7.2f, 10.6f, 11.0f, 3.0f, 7.4f, 10.9f, 11.0f, 3.0f, 7.8f, 11.5f, 11.0f, 3.0f, 8.0f, 11.8f}),
                             .dimensions = {1, 2, 2, 4},
@@ -1184,7 +1184,7 @@ const TestModel& get_test_model_nhwc_relaxed_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op1_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({10.0f, 21.0f, 10.0f, 22.0f, 10.0f, 23.0f, 10.0f, 24.0f, 10.0f, 25.0f, 10.0f, 26.0f, 10.0f, 27.0f, 10.0f, 28.0f, 10.0f, 29.0f}),
                             .dimensions = {1, 3, 3, 2},
@@ -1194,7 +1194,7 @@ const TestModel& get_test_model_nhwc_relaxed_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -1204,7 +1204,7 @@ const TestModel& get_test_model_nhwc_relaxed_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param45
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -1245,7 +1245,7 @@ const TestModel& get_test_model_nhwc_relaxed_all_tensors_as_inputs() {
         .isRelaxed = true,
         .main = {
                 .inputIndexes = {0, 1, 2},
-                .operands = {{
+                .operands = {{ // op1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({10.0f, 21.0f, 10.0f, 22.0f, 10.0f, 23.0f, 10.0f, 24.0f, 10.0f, 25.0f, 10.0f, 26.0f, 10.0f, 27.0f, 10.0f, 28.0f, 10.0f, 29.0f}),
                             .dimensions = {1, 3, 3, 2},
@@ -1255,7 +1255,7 @@ const TestModel& get_test_model_nhwc_relaxed_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.25f, 0.0f, 0.2f, 0.0f, 0.25f, 0.0f, 0.0f, 0.3f, 0.25f, 0.0f, 0.0f, 0.0f, 0.25f, 0.1f, 0.0f, 0.0f}),
                             .dimensions = {1, 2, 2, 4},
@@ -1265,7 +1265,7 @@ const TestModel& get_test_model_nhwc_relaxed_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f}),
                             .dimensions = {4},
@@ -1275,7 +1275,7 @@ const TestModel& get_test_model_nhwc_relaxed_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -1285,7 +1285,7 @@ const TestModel& get_test_model_nhwc_relaxed_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -1295,7 +1295,7 @@ const TestModel& get_test_model_nhwc_relaxed_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -1305,7 +1305,7 @@ const TestModel& get_test_model_nhwc_relaxed_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -1315,7 +1315,7 @@ const TestModel& get_test_model_nhwc_relaxed_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -1325,7 +1325,7 @@ const TestModel& get_test_model_nhwc_relaxed_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param5
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -1335,7 +1335,7 @@ const TestModel& get_test_model_nhwc_relaxed_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param6
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -1345,7 +1345,7 @@ const TestModel& get_test_model_nhwc_relaxed_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param7
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -1355,7 +1355,7 @@ const TestModel& get_test_model_nhwc_relaxed_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -1365,7 +1365,7 @@ const TestModel& get_test_model_nhwc_relaxed_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param8
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -1375,7 +1375,7 @@ const TestModel& get_test_model_nhwc_relaxed_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param9
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -1385,7 +1385,7 @@ const TestModel& get_test_model_nhwc_relaxed_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({11.0f, 3.0f, 7.2f, 10.6f, 11.0f, 3.0f, 7.4f, 10.9f, 11.0f, 3.0f, 7.8f, 11.5f, 11.0f, 3.0f, 8.0f, 11.8f}),
                             .dimensions = {1, 2, 2, 4},
@@ -1422,7 +1422,7 @@ const TestModel& get_test_model_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as
         .isRelaxed = true,
         .main = {
                 .inputIndexes = {15, 18, 21},
-                .operands = {{
+                .operands = {{ // op1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {1, 3, 3, 2},
@@ -1432,7 +1432,7 @@ const TestModel& get_test_model_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {1, 2, 2, 4},
@@ -1442,7 +1442,7 @@ const TestModel& get_test_model_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {4},
@@ -1452,7 +1452,7 @@ const TestModel& get_test_model_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -1462,7 +1462,7 @@ const TestModel& get_test_model_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -1472,7 +1472,7 @@ const TestModel& get_test_model_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -1482,7 +1482,7 @@ const TestModel& get_test_model_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -1492,7 +1492,7 @@ const TestModel& get_test_model_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -1502,7 +1502,7 @@ const TestModel& get_test_model_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param5
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -1512,7 +1512,7 @@ const TestModel& get_test_model_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param6
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -1522,7 +1522,7 @@ const TestModel& get_test_model_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param7
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -1532,7 +1532,7 @@ const TestModel& get_test_model_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -1542,7 +1542,7 @@ const TestModel& get_test_model_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param8
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -1552,7 +1552,7 @@ const TestModel& get_test_model_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param9
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -1562,7 +1562,7 @@ const TestModel& get_test_model_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({11.0f, 3.0f, 7.2f, 10.6f, 11.0f, 3.0f, 7.4f, 10.9f, 11.0f, 3.0f, 7.8f, 11.5f, 11.0f, 3.0f, 8.0f, 11.8f}),
                             .dimensions = {1, 2, 2, 4},
@@ -1572,7 +1572,7 @@ const TestModel& get_test_model_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op1_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({10.0f, 21.0f, 10.0f, 22.0f, 10.0f, 23.0f, 10.0f, 24.0f, 10.0f, 25.0f, 10.0f, 26.0f, 10.0f, 27.0f, 10.0f, 28.0f, 10.0f, 29.0f}),
                             .dimensions = {1, 3, 3, 2},
@@ -1582,7 +1582,7 @@ const TestModel& get_test_model_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy5
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -1592,7 +1592,7 @@ const TestModel& get_test_model_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param46
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -1602,7 +1602,7 @@ const TestModel& get_test_model_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op2_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.25f, 0.0f, 0.2f, 0.0f, 0.25f, 0.0f, 0.0f, 0.3f, 0.25f, 0.0f, 0.0f, 0.0f, 0.25f, 0.1f, 0.0f, 0.0f}),
                             .dimensions = {1, 2, 2, 4},
@@ -1612,7 +1612,7 @@ const TestModel& get_test_model_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy6
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -1622,7 +1622,7 @@ const TestModel& get_test_model_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param47
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -1632,7 +1632,7 @@ const TestModel& get_test_model_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op3_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f}),
                             .dimensions = {4},
@@ -1642,7 +1642,7 @@ const TestModel& get_test_model_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy7
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -1652,7 +1652,7 @@ const TestModel& get_test_model_nhwc_relaxed_all_tensors_as_inputs_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param48
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -1701,7 +1701,7 @@ const TestModel& get_test_model_nhwc_float16() {
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {0},
-                .operands = {{
+                .operands = {{ // op1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({10.0f, 21.0f, 10.0f, 22.0f, 10.0f, 23.0f, 10.0f, 24.0f, 10.0f, 25.0f, 10.0f, 26.0f, 10.0f, 27.0f, 10.0f, 28.0f, 10.0f, 29.0f}),
                             .dimensions = {1, 3, 3, 2},
@@ -1711,7 +1711,7 @@ const TestModel& get_test_model_nhwc_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({0.25f, 0.0f, 0.20000000298023224f, 0.0f, 0.25f, 0.0f, 0.0f, 0.30000001192092896f, 0.25f, 0.0f, 0.0f, 0.0f, 0.25f, 0.10000000149011612f, 0.0f, 0.0f}),
                             .dimensions = {1, 2, 2, 4},
@@ -1721,7 +1721,7 @@ const TestModel& get_test_model_nhwc_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({1.0f, 2.0f, 3.0f, 4.0f}),
                             .dimensions = {4},
@@ -1731,7 +1731,7 @@ const TestModel& get_test_model_nhwc_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -1741,7 +1741,7 @@ const TestModel& get_test_model_nhwc_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -1751,7 +1751,7 @@ const TestModel& get_test_model_nhwc_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -1761,7 +1761,7 @@ const TestModel& get_test_model_nhwc_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -1771,7 +1771,7 @@ const TestModel& get_test_model_nhwc_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -1781,7 +1781,7 @@ const TestModel& get_test_model_nhwc_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param5
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -1791,7 +1791,7 @@ const TestModel& get_test_model_nhwc_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param6
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -1801,7 +1801,7 @@ const TestModel& get_test_model_nhwc_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param7
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -1811,7 +1811,7 @@ const TestModel& get_test_model_nhwc_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -1821,7 +1821,7 @@ const TestModel& get_test_model_nhwc_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param8
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -1831,7 +1831,7 @@ const TestModel& get_test_model_nhwc_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param9
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -1841,7 +1841,7 @@ const TestModel& get_test_model_nhwc_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({11.0f, 3.0f, 7.199999809265137f, 10.600000381469727f, 11.0f, 3.0f, 7.400000095367432f, 10.899999618530273f, 11.0f, 3.0f, 7.800000190734863f, 11.5f, 11.0f, 3.0f, 8.0f, 11.800000190734863f}),
                             .dimensions = {1, 2, 2, 4},
@@ -1878,7 +1878,7 @@ const TestModel& get_test_model_nhwc_float16_all_inputs_as_internal() {
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {15},
-                .operands = {{
+                .operands = {{ // op1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({}),
                             .dimensions = {1, 3, 3, 2},
@@ -1888,7 +1888,7 @@ const TestModel& get_test_model_nhwc_float16_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({0.25f, 0.0f, 0.20000000298023224f, 0.0f, 0.25f, 0.0f, 0.0f, 0.30000001192092896f, 0.25f, 0.0f, 0.0f, 0.0f, 0.25f, 0.10000000149011612f, 0.0f, 0.0f}),
                             .dimensions = {1, 2, 2, 4},
@@ -1898,7 +1898,7 @@ const TestModel& get_test_model_nhwc_float16_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({1.0f, 2.0f, 3.0f, 4.0f}),
                             .dimensions = {4},
@@ -1908,7 +1908,7 @@ const TestModel& get_test_model_nhwc_float16_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -1918,7 +1918,7 @@ const TestModel& get_test_model_nhwc_float16_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -1928,7 +1928,7 @@ const TestModel& get_test_model_nhwc_float16_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -1938,7 +1938,7 @@ const TestModel& get_test_model_nhwc_float16_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -1948,7 +1948,7 @@ const TestModel& get_test_model_nhwc_float16_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -1958,7 +1958,7 @@ const TestModel& get_test_model_nhwc_float16_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param5
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -1968,7 +1968,7 @@ const TestModel& get_test_model_nhwc_float16_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param6
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -1978,7 +1978,7 @@ const TestModel& get_test_model_nhwc_float16_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param7
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -1988,7 +1988,7 @@ const TestModel& get_test_model_nhwc_float16_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -1998,7 +1998,7 @@ const TestModel& get_test_model_nhwc_float16_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param8
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -2008,7 +2008,7 @@ const TestModel& get_test_model_nhwc_float16_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param9
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -2018,7 +2018,7 @@ const TestModel& get_test_model_nhwc_float16_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({11.0f, 3.0f, 7.199999809265137f, 10.600000381469727f, 11.0f, 3.0f, 7.400000095367432f, 10.899999618530273f, 11.0f, 3.0f, 7.800000190734863f, 11.5f, 11.0f, 3.0f, 8.0f, 11.800000190734863f}),
                             .dimensions = {1, 2, 2, 4},
@@ -2028,7 +2028,7 @@ const TestModel& get_test_model_nhwc_float16_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op1_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({10.0f, 21.0f, 10.0f, 22.0f, 10.0f, 23.0f, 10.0f, 24.0f, 10.0f, 25.0f, 10.0f, 26.0f, 10.0f, 27.0f, 10.0f, 28.0f, 10.0f, 29.0f}),
                             .dimensions = {1, 3, 3, 2},
@@ -2038,7 +2038,7 @@ const TestModel& get_test_model_nhwc_float16_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy8
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({0.0f}),
                             .dimensions = {1},
@@ -2048,7 +2048,7 @@ const TestModel& get_test_model_nhwc_float16_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param49
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -2089,7 +2089,7 @@ const TestModel& get_test_model_nhwc_float16_all_tensors_as_inputs() {
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {0, 1, 2},
-                .operands = {{
+                .operands = {{ // op1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({10.0f, 21.0f, 10.0f, 22.0f, 10.0f, 23.0f, 10.0f, 24.0f, 10.0f, 25.0f, 10.0f, 26.0f, 10.0f, 27.0f, 10.0f, 28.0f, 10.0f, 29.0f}),
                             .dimensions = {1, 3, 3, 2},
@@ -2099,7 +2099,7 @@ const TestModel& get_test_model_nhwc_float16_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({0.25f, 0.0f, 0.20000000298023224f, 0.0f, 0.25f, 0.0f, 0.0f, 0.30000001192092896f, 0.25f, 0.0f, 0.0f, 0.0f, 0.25f, 0.10000000149011612f, 0.0f, 0.0f}),
                             .dimensions = {1, 2, 2, 4},
@@ -2109,7 +2109,7 @@ const TestModel& get_test_model_nhwc_float16_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({1.0f, 2.0f, 3.0f, 4.0f}),
                             .dimensions = {4},
@@ -2119,7 +2119,7 @@ const TestModel& get_test_model_nhwc_float16_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -2129,7 +2129,7 @@ const TestModel& get_test_model_nhwc_float16_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -2139,7 +2139,7 @@ const TestModel& get_test_model_nhwc_float16_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -2149,7 +2149,7 @@ const TestModel& get_test_model_nhwc_float16_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -2159,7 +2159,7 @@ const TestModel& get_test_model_nhwc_float16_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -2169,7 +2169,7 @@ const TestModel& get_test_model_nhwc_float16_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param5
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -2179,7 +2179,7 @@ const TestModel& get_test_model_nhwc_float16_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param6
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -2189,7 +2189,7 @@ const TestModel& get_test_model_nhwc_float16_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param7
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -2199,7 +2199,7 @@ const TestModel& get_test_model_nhwc_float16_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -2209,7 +2209,7 @@ const TestModel& get_test_model_nhwc_float16_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param8
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -2219,7 +2219,7 @@ const TestModel& get_test_model_nhwc_float16_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param9
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -2229,7 +2229,7 @@ const TestModel& get_test_model_nhwc_float16_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({11.0f, 3.0f, 7.199999809265137f, 10.600000381469727f, 11.0f, 3.0f, 7.400000095367432f, 10.899999618530273f, 11.0f, 3.0f, 7.800000190734863f, 11.5f, 11.0f, 3.0f, 8.0f, 11.800000190734863f}),
                             .dimensions = {1, 2, 2, 4},
@@ -2266,7 +2266,7 @@ const TestModel& get_test_model_nhwc_float16_all_tensors_as_inputs_all_inputs_as
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {15, 18, 21},
-                .operands = {{
+                .operands = {{ // op1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({}),
                             .dimensions = {1, 3, 3, 2},
@@ -2276,7 +2276,7 @@ const TestModel& get_test_model_nhwc_float16_all_tensors_as_inputs_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({}),
                             .dimensions = {1, 2, 2, 4},
@@ -2286,7 +2286,7 @@ const TestModel& get_test_model_nhwc_float16_all_tensors_as_inputs_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({}),
                             .dimensions = {4},
@@ -2296,7 +2296,7 @@ const TestModel& get_test_model_nhwc_float16_all_tensors_as_inputs_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -2306,7 +2306,7 @@ const TestModel& get_test_model_nhwc_float16_all_tensors_as_inputs_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -2316,7 +2316,7 @@ const TestModel& get_test_model_nhwc_float16_all_tensors_as_inputs_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -2326,7 +2326,7 @@ const TestModel& get_test_model_nhwc_float16_all_tensors_as_inputs_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -2336,7 +2336,7 @@ const TestModel& get_test_model_nhwc_float16_all_tensors_as_inputs_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -2346,7 +2346,7 @@ const TestModel& get_test_model_nhwc_float16_all_tensors_as_inputs_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param5
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -2356,7 +2356,7 @@ const TestModel& get_test_model_nhwc_float16_all_tensors_as_inputs_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param6
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -2366,7 +2366,7 @@ const TestModel& get_test_model_nhwc_float16_all_tensors_as_inputs_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param7
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -2376,7 +2376,7 @@ const TestModel& get_test_model_nhwc_float16_all_tensors_as_inputs_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -2386,7 +2386,7 @@ const TestModel& get_test_model_nhwc_float16_all_tensors_as_inputs_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param8
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -2396,7 +2396,7 @@ const TestModel& get_test_model_nhwc_float16_all_tensors_as_inputs_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param9
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -2406,7 +2406,7 @@ const TestModel& get_test_model_nhwc_float16_all_tensors_as_inputs_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({11.0f, 3.0f, 7.199999809265137f, 10.600000381469727f, 11.0f, 3.0f, 7.400000095367432f, 10.899999618530273f, 11.0f, 3.0f, 7.800000190734863f, 11.5f, 11.0f, 3.0f, 8.0f, 11.800000190734863f}),
                             .dimensions = {1, 2, 2, 4},
@@ -2416,7 +2416,7 @@ const TestModel& get_test_model_nhwc_float16_all_tensors_as_inputs_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op1_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({10.0f, 21.0f, 10.0f, 22.0f, 10.0f, 23.0f, 10.0f, 24.0f, 10.0f, 25.0f, 10.0f, 26.0f, 10.0f, 27.0f, 10.0f, 28.0f, 10.0f, 29.0f}),
                             .dimensions = {1, 3, 3, 2},
@@ -2426,7 +2426,7 @@ const TestModel& get_test_model_nhwc_float16_all_tensors_as_inputs_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy9
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({0.0f}),
                             .dimensions = {1},
@@ -2436,7 +2436,7 @@ const TestModel& get_test_model_nhwc_float16_all_tensors_as_inputs_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param50
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -2446,7 +2446,7 @@ const TestModel& get_test_model_nhwc_float16_all_tensors_as_inputs_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op2_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({0.25f, 0.0f, 0.20000000298023224f, 0.0f, 0.25f, 0.0f, 0.0f, 0.30000001192092896f, 0.25f, 0.0f, 0.0f, 0.0f, 0.25f, 0.10000000149011612f, 0.0f, 0.0f}),
                             .dimensions = {1, 2, 2, 4},
@@ -2456,7 +2456,7 @@ const TestModel& get_test_model_nhwc_float16_all_tensors_as_inputs_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy10
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({0.0f}),
                             .dimensions = {1},
@@ -2466,7 +2466,7 @@ const TestModel& get_test_model_nhwc_float16_all_tensors_as_inputs_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param51
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -2476,7 +2476,7 @@ const TestModel& get_test_model_nhwc_float16_all_tensors_as_inputs_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op3_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({1.0f, 2.0f, 3.0f, 4.0f}),
                             .dimensions = {4},
@@ -2486,7 +2486,7 @@ const TestModel& get_test_model_nhwc_float16_all_tensors_as_inputs_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy11
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({0.0f}),
                             .dimensions = {1},
@@ -2496,7 +2496,7 @@ const TestModel& get_test_model_nhwc_float16_all_tensors_as_inputs_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param52
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -2545,7 +2545,7 @@ const TestModel& get_test_model_nhwc_quant8() {
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {0},
-                .operands = {{
+                .operands = {{ // op1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({20, 42, 20, 44, 20, 46, 20, 48, 20, 50, 20, 52, 20, 54, 20, 56, 20, 58}),
                             .dimensions = {1, 3, 3, 2},
@@ -2555,7 +2555,7 @@ const TestModel& get_test_model_nhwc_quant8() {
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({25, 0, 20, 0, 25, 0, 0, 30, 25, 0, 0, 0, 25, 10, 0, 0}),
                             .dimensions = {1, 2, 2, 4},
@@ -2565,7 +2565,7 @@ const TestModel& get_test_model_nhwc_quant8() {
                             .scale = 0.01f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({200, 400, 600, 800}),
                             .dimensions = {4},
@@ -2575,7 +2575,7 @@ const TestModel& get_test_model_nhwc_quant8() {
                             .scale = 0.005f,
                             .type = TestOperandType::TENSOR_INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -2585,7 +2585,7 @@ const TestModel& get_test_model_nhwc_quant8() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -2595,7 +2595,7 @@ const TestModel& get_test_model_nhwc_quant8() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -2605,7 +2605,7 @@ const TestModel& get_test_model_nhwc_quant8() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -2615,7 +2615,7 @@ const TestModel& get_test_model_nhwc_quant8() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -2625,7 +2625,7 @@ const TestModel& get_test_model_nhwc_quant8() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param5
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -2635,7 +2635,7 @@ const TestModel& get_test_model_nhwc_quant8() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param6
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -2645,7 +2645,7 @@ const TestModel& get_test_model_nhwc_quant8() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param7
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -2655,7 +2655,7 @@ const TestModel& get_test_model_nhwc_quant8() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -2665,7 +2665,7 @@ const TestModel& get_test_model_nhwc_quant8() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param8
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -2675,7 +2675,7 @@ const TestModel& get_test_model_nhwc_quant8() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param9
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -2685,7 +2685,7 @@ const TestModel& get_test_model_nhwc_quant8() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({110, 30, 72, 106, 110, 30, 74, 109, 110, 30, 78, 115, 110, 30, 80, 118}),
                             .dimensions = {1, 2, 2, 4},
@@ -2722,7 +2722,7 @@ const TestModel& get_test_model_nhwc_quant8_all_inputs_as_internal() {
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {15},
-                .operands = {{
+                .operands = {{ // op1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({}),
                             .dimensions = {1, 3, 3, 2},
@@ -2732,7 +2732,7 @@ const TestModel& get_test_model_nhwc_quant8_all_inputs_as_internal() {
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({25, 0, 20, 0, 25, 0, 0, 30, 25, 0, 0, 0, 25, 10, 0, 0}),
                             .dimensions = {1, 2, 2, 4},
@@ -2742,7 +2742,7 @@ const TestModel& get_test_model_nhwc_quant8_all_inputs_as_internal() {
                             .scale = 0.01f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({200, 400, 600, 800}),
                             .dimensions = {4},
@@ -2752,7 +2752,7 @@ const TestModel& get_test_model_nhwc_quant8_all_inputs_as_internal() {
                             .scale = 0.005f,
                             .type = TestOperandType::TENSOR_INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -2762,7 +2762,7 @@ const TestModel& get_test_model_nhwc_quant8_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -2772,7 +2772,7 @@ const TestModel& get_test_model_nhwc_quant8_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -2782,7 +2782,7 @@ const TestModel& get_test_model_nhwc_quant8_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -2792,7 +2792,7 @@ const TestModel& get_test_model_nhwc_quant8_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -2802,7 +2802,7 @@ const TestModel& get_test_model_nhwc_quant8_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param5
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -2812,7 +2812,7 @@ const TestModel& get_test_model_nhwc_quant8_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param6
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -2822,7 +2822,7 @@ const TestModel& get_test_model_nhwc_quant8_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param7
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -2832,7 +2832,7 @@ const TestModel& get_test_model_nhwc_quant8_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -2842,7 +2842,7 @@ const TestModel& get_test_model_nhwc_quant8_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param8
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -2852,7 +2852,7 @@ const TestModel& get_test_model_nhwc_quant8_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param9
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -2862,7 +2862,7 @@ const TestModel& get_test_model_nhwc_quant8_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({110, 30, 72, 106, 110, 30, 74, 109, 110, 30, 78, 115, 110, 30, 80, 118}),
                             .dimensions = {1, 2, 2, 4},
@@ -2872,7 +2872,7 @@ const TestModel& get_test_model_nhwc_quant8_all_inputs_as_internal() {
                             .scale = 0.1f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op1_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({20, 42, 20, 44, 20, 46, 20, 48, 20, 50, 20, 52, 20, 54, 20, 56, 20, 58}),
                             .dimensions = {1, 3, 3, 2},
@@ -2882,7 +2882,7 @@ const TestModel& get_test_model_nhwc_quant8_all_inputs_as_internal() {
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy12
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({0}),
                             .dimensions = {1},
@@ -2892,7 +2892,7 @@ const TestModel& get_test_model_nhwc_quant8_all_inputs_as_internal() {
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param53
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -2933,7 +2933,7 @@ const TestModel& get_test_model_nhwc_quant8_all_tensors_as_inputs() {
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {0, 1, 2},
-                .operands = {{
+                .operands = {{ // op1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({20, 42, 20, 44, 20, 46, 20, 48, 20, 50, 20, 52, 20, 54, 20, 56, 20, 58}),
                             .dimensions = {1, 3, 3, 2},
@@ -2943,7 +2943,7 @@ const TestModel& get_test_model_nhwc_quant8_all_tensors_as_inputs() {
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({25, 0, 20, 0, 25, 0, 0, 30, 25, 0, 0, 0, 25, 10, 0, 0}),
                             .dimensions = {1, 2, 2, 4},
@@ -2953,7 +2953,7 @@ const TestModel& get_test_model_nhwc_quant8_all_tensors_as_inputs() {
                             .scale = 0.01f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({200, 400, 600, 800}),
                             .dimensions = {4},
@@ -2963,7 +2963,7 @@ const TestModel& get_test_model_nhwc_quant8_all_tensors_as_inputs() {
                             .scale = 0.005f,
                             .type = TestOperandType::TENSOR_INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -2973,7 +2973,7 @@ const TestModel& get_test_model_nhwc_quant8_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -2983,7 +2983,7 @@ const TestModel& get_test_model_nhwc_quant8_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -2993,7 +2993,7 @@ const TestModel& get_test_model_nhwc_quant8_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -3003,7 +3003,7 @@ const TestModel& get_test_model_nhwc_quant8_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -3013,7 +3013,7 @@ const TestModel& get_test_model_nhwc_quant8_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param5
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -3023,7 +3023,7 @@ const TestModel& get_test_model_nhwc_quant8_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param6
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -3033,7 +3033,7 @@ const TestModel& get_test_model_nhwc_quant8_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param7
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -3043,7 +3043,7 @@ const TestModel& get_test_model_nhwc_quant8_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -3053,7 +3053,7 @@ const TestModel& get_test_model_nhwc_quant8_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param8
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -3063,7 +3063,7 @@ const TestModel& get_test_model_nhwc_quant8_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param9
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -3073,7 +3073,7 @@ const TestModel& get_test_model_nhwc_quant8_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({110, 30, 72, 106, 110, 30, 74, 109, 110, 30, 78, 115, 110, 30, 80, 118}),
                             .dimensions = {1, 2, 2, 4},
@@ -3110,7 +3110,7 @@ const TestModel& get_test_model_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {2, 15, 18},
-                .operands = {{
+                .operands = {{ // op1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({}),
                             .dimensions = {1, 3, 3, 2},
@@ -3120,7 +3120,7 @@ const TestModel& get_test_model_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({}),
                             .dimensions = {1, 2, 2, 4},
@@ -3130,7 +3130,7 @@ const TestModel& get_test_model_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_
                             .scale = 0.01f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({200, 400, 600, 800}),
                             .dimensions = {4},
@@ -3140,7 +3140,7 @@ const TestModel& get_test_model_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_
                             .scale = 0.005f,
                             .type = TestOperandType::TENSOR_INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -3150,7 +3150,7 @@ const TestModel& get_test_model_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -3160,7 +3160,7 @@ const TestModel& get_test_model_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -3170,7 +3170,7 @@ const TestModel& get_test_model_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -3180,7 +3180,7 @@ const TestModel& get_test_model_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -3190,7 +3190,7 @@ const TestModel& get_test_model_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param5
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -3200,7 +3200,7 @@ const TestModel& get_test_model_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param6
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -3210,7 +3210,7 @@ const TestModel& get_test_model_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param7
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -3220,7 +3220,7 @@ const TestModel& get_test_model_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -3230,7 +3230,7 @@ const TestModel& get_test_model_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param8
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -3240,7 +3240,7 @@ const TestModel& get_test_model_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param9
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -3250,7 +3250,7 @@ const TestModel& get_test_model_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({110, 30, 72, 106, 110, 30, 74, 109, 110, 30, 78, 115, 110, 30, 80, 118}),
                             .dimensions = {1, 2, 2, 4},
@@ -3260,7 +3260,7 @@ const TestModel& get_test_model_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_
                             .scale = 0.1f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op1_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({20, 42, 20, 44, 20, 46, 20, 48, 20, 50, 20, 52, 20, 54, 20, 56, 20, 58}),
                             .dimensions = {1, 3, 3, 2},
@@ -3270,7 +3270,7 @@ const TestModel& get_test_model_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy13
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({0}),
                             .dimensions = {1},
@@ -3280,7 +3280,7 @@ const TestModel& get_test_model_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param54
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -3290,7 +3290,7 @@ const TestModel& get_test_model_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op2_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({25, 0, 20, 0, 25, 0, 0, 30, 25, 0, 0, 0, 25, 10, 0, 0}),
                             .dimensions = {1, 2, 2, 4},
@@ -3300,7 +3300,7 @@ const TestModel& get_test_model_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_
                             .scale = 0.01f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy14
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({0}),
                             .dimensions = {1},
@@ -3310,7 +3310,7 @@ const TestModel& get_test_model_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_
                             .scale = 0.01f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param55
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -3355,7 +3355,7 @@ const TestModel& get_test_model_nchw() {
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {0},
-                .operands = {{
+                .operands = {{ // op1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 21.0f, 22.0f, 23.0f, 24.0f, 25.0f, 26.0f, 27.0f, 28.0f, 29.0f}),
                             .dimensions = {1, 2, 3, 3},
@@ -3365,7 +3365,7 @@ const TestModel& get_test_model_nchw() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.25f, 0.0f, 0.2f, 0.0f, 0.25f, 0.0f, 0.0f, 0.3f, 0.25f, 0.0f, 0.0f, 0.0f, 0.25f, 0.1f, 0.0f, 0.0f}),
                             .dimensions = {1, 2, 2, 4},
@@ -3375,7 +3375,7 @@ const TestModel& get_test_model_nchw() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f}),
                             .dimensions = {4},
@@ -3385,7 +3385,7 @@ const TestModel& get_test_model_nchw() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -3395,7 +3395,7 @@ const TestModel& get_test_model_nchw() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -3405,7 +3405,7 @@ const TestModel& get_test_model_nchw() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -3415,7 +3415,7 @@ const TestModel& get_test_model_nchw() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -3425,7 +3425,7 @@ const TestModel& get_test_model_nchw() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -3435,7 +3435,7 @@ const TestModel& get_test_model_nchw() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param5
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -3445,7 +3445,7 @@ const TestModel& get_test_model_nchw() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param6
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -3455,7 +3455,7 @@ const TestModel& get_test_model_nchw() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param7
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -3465,7 +3465,7 @@ const TestModel& get_test_model_nchw() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -3475,7 +3475,7 @@ const TestModel& get_test_model_nchw() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param8
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -3485,7 +3485,7 @@ const TestModel& get_test_model_nchw() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param9
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -3495,7 +3495,7 @@ const TestModel& get_test_model_nchw() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({11.0f, 11.0f, 11.0f, 11.0f, 3.0f, 3.0f, 3.0f, 3.0f, 7.2f, 7.4f, 7.8f, 8.0f, 10.6f, 10.9f, 11.5f, 11.8f}),
                             .dimensions = {1, 4, 2, 2},
@@ -3532,7 +3532,7 @@ const TestModel& get_test_model_nchw_all_inputs_as_internal() {
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {15},
-                .operands = {{
+                .operands = {{ // op1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {1, 2, 3, 3},
@@ -3542,7 +3542,7 @@ const TestModel& get_test_model_nchw_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.25f, 0.0f, 0.2f, 0.0f, 0.25f, 0.0f, 0.0f, 0.3f, 0.25f, 0.0f, 0.0f, 0.0f, 0.25f, 0.1f, 0.0f, 0.0f}),
                             .dimensions = {1, 2, 2, 4},
@@ -3552,7 +3552,7 @@ const TestModel& get_test_model_nchw_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f}),
                             .dimensions = {4},
@@ -3562,7 +3562,7 @@ const TestModel& get_test_model_nchw_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -3572,7 +3572,7 @@ const TestModel& get_test_model_nchw_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -3582,7 +3582,7 @@ const TestModel& get_test_model_nchw_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -3592,7 +3592,7 @@ const TestModel& get_test_model_nchw_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -3602,7 +3602,7 @@ const TestModel& get_test_model_nchw_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -3612,7 +3612,7 @@ const TestModel& get_test_model_nchw_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param5
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -3622,7 +3622,7 @@ const TestModel& get_test_model_nchw_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param6
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -3632,7 +3632,7 @@ const TestModel& get_test_model_nchw_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param7
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -3642,7 +3642,7 @@ const TestModel& get_test_model_nchw_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -3652,7 +3652,7 @@ const TestModel& get_test_model_nchw_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param8
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -3662,7 +3662,7 @@ const TestModel& get_test_model_nchw_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param9
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -3672,7 +3672,7 @@ const TestModel& get_test_model_nchw_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({11.0f, 11.0f, 11.0f, 11.0f, 3.0f, 3.0f, 3.0f, 3.0f, 7.2f, 7.4f, 7.8f, 8.0f, 10.6f, 10.9f, 11.5f, 11.8f}),
                             .dimensions = {1, 4, 2, 2},
@@ -3682,7 +3682,7 @@ const TestModel& get_test_model_nchw_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op1_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 21.0f, 22.0f, 23.0f, 24.0f, 25.0f, 26.0f, 27.0f, 28.0f, 29.0f}),
                             .dimensions = {1, 2, 3, 3},
@@ -3692,7 +3692,7 @@ const TestModel& get_test_model_nchw_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy15
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -3702,7 +3702,7 @@ const TestModel& get_test_model_nchw_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param56
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -3743,7 +3743,7 @@ const TestModel& get_test_model_nchw_all_tensors_as_inputs() {
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {0, 1, 2},
-                .operands = {{
+                .operands = {{ // op1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 21.0f, 22.0f, 23.0f, 24.0f, 25.0f, 26.0f, 27.0f, 28.0f, 29.0f}),
                             .dimensions = {1, 2, 3, 3},
@@ -3753,7 +3753,7 @@ const TestModel& get_test_model_nchw_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.25f, 0.0f, 0.2f, 0.0f, 0.25f, 0.0f, 0.0f, 0.3f, 0.25f, 0.0f, 0.0f, 0.0f, 0.25f, 0.1f, 0.0f, 0.0f}),
                             .dimensions = {1, 2, 2, 4},
@@ -3763,7 +3763,7 @@ const TestModel& get_test_model_nchw_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f}),
                             .dimensions = {4},
@@ -3773,7 +3773,7 @@ const TestModel& get_test_model_nchw_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -3783,7 +3783,7 @@ const TestModel& get_test_model_nchw_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -3793,7 +3793,7 @@ const TestModel& get_test_model_nchw_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -3803,7 +3803,7 @@ const TestModel& get_test_model_nchw_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -3813,7 +3813,7 @@ const TestModel& get_test_model_nchw_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -3823,7 +3823,7 @@ const TestModel& get_test_model_nchw_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param5
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -3833,7 +3833,7 @@ const TestModel& get_test_model_nchw_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param6
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -3843,7 +3843,7 @@ const TestModel& get_test_model_nchw_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param7
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -3853,7 +3853,7 @@ const TestModel& get_test_model_nchw_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -3863,7 +3863,7 @@ const TestModel& get_test_model_nchw_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param8
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -3873,7 +3873,7 @@ const TestModel& get_test_model_nchw_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param9
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -3883,7 +3883,7 @@ const TestModel& get_test_model_nchw_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({11.0f, 11.0f, 11.0f, 11.0f, 3.0f, 3.0f, 3.0f, 3.0f, 7.2f, 7.4f, 7.8f, 8.0f, 10.6f, 10.9f, 11.5f, 11.8f}),
                             .dimensions = {1, 4, 2, 2},
@@ -3920,7 +3920,7 @@ const TestModel& get_test_model_nchw_all_tensors_as_inputs_all_inputs_as_interna
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {15, 18, 21},
-                .operands = {{
+                .operands = {{ // op1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {1, 2, 3, 3},
@@ -3930,7 +3930,7 @@ const TestModel& get_test_model_nchw_all_tensors_as_inputs_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {1, 2, 2, 4},
@@ -3940,7 +3940,7 @@ const TestModel& get_test_model_nchw_all_tensors_as_inputs_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {4},
@@ -3950,7 +3950,7 @@ const TestModel& get_test_model_nchw_all_tensors_as_inputs_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -3960,7 +3960,7 @@ const TestModel& get_test_model_nchw_all_tensors_as_inputs_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -3970,7 +3970,7 @@ const TestModel& get_test_model_nchw_all_tensors_as_inputs_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -3980,7 +3980,7 @@ const TestModel& get_test_model_nchw_all_tensors_as_inputs_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -3990,7 +3990,7 @@ const TestModel& get_test_model_nchw_all_tensors_as_inputs_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -4000,7 +4000,7 @@ const TestModel& get_test_model_nchw_all_tensors_as_inputs_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param5
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -4010,7 +4010,7 @@ const TestModel& get_test_model_nchw_all_tensors_as_inputs_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param6
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -4020,7 +4020,7 @@ const TestModel& get_test_model_nchw_all_tensors_as_inputs_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param7
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -4030,7 +4030,7 @@ const TestModel& get_test_model_nchw_all_tensors_as_inputs_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -4040,7 +4040,7 @@ const TestModel& get_test_model_nchw_all_tensors_as_inputs_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param8
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -4050,7 +4050,7 @@ const TestModel& get_test_model_nchw_all_tensors_as_inputs_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param9
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -4060,7 +4060,7 @@ const TestModel& get_test_model_nchw_all_tensors_as_inputs_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({11.0f, 11.0f, 11.0f, 11.0f, 3.0f, 3.0f, 3.0f, 3.0f, 7.2f, 7.4f, 7.8f, 8.0f, 10.6f, 10.9f, 11.5f, 11.8f}),
                             .dimensions = {1, 4, 2, 2},
@@ -4070,7 +4070,7 @@ const TestModel& get_test_model_nchw_all_tensors_as_inputs_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op1_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 21.0f, 22.0f, 23.0f, 24.0f, 25.0f, 26.0f, 27.0f, 28.0f, 29.0f}),
                             .dimensions = {1, 2, 3, 3},
@@ -4080,7 +4080,7 @@ const TestModel& get_test_model_nchw_all_tensors_as_inputs_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy16
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -4090,7 +4090,7 @@ const TestModel& get_test_model_nchw_all_tensors_as_inputs_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param57
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -4100,7 +4100,7 @@ const TestModel& get_test_model_nchw_all_tensors_as_inputs_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op2_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.25f, 0.0f, 0.2f, 0.0f, 0.25f, 0.0f, 0.0f, 0.3f, 0.25f, 0.0f, 0.0f, 0.0f, 0.25f, 0.1f, 0.0f, 0.0f}),
                             .dimensions = {1, 2, 2, 4},
@@ -4110,7 +4110,7 @@ const TestModel& get_test_model_nchw_all_tensors_as_inputs_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy17
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -4120,7 +4120,7 @@ const TestModel& get_test_model_nchw_all_tensors_as_inputs_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param58
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -4130,7 +4130,7 @@ const TestModel& get_test_model_nchw_all_tensors_as_inputs_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op3_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f}),
                             .dimensions = {4},
@@ -4140,7 +4140,7 @@ const TestModel& get_test_model_nchw_all_tensors_as_inputs_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy18
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -4150,7 +4150,7 @@ const TestModel& get_test_model_nchw_all_tensors_as_inputs_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param59
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -4199,7 +4199,7 @@ const TestModel& get_test_model_nchw_relaxed() {
         .isRelaxed = true,
         .main = {
                 .inputIndexes = {0},
-                .operands = {{
+                .operands = {{ // op1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 21.0f, 22.0f, 23.0f, 24.0f, 25.0f, 26.0f, 27.0f, 28.0f, 29.0f}),
                             .dimensions = {1, 2, 3, 3},
@@ -4209,7 +4209,7 @@ const TestModel& get_test_model_nchw_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.25f, 0.0f, 0.2f, 0.0f, 0.25f, 0.0f, 0.0f, 0.3f, 0.25f, 0.0f, 0.0f, 0.0f, 0.25f, 0.1f, 0.0f, 0.0f}),
                             .dimensions = {1, 2, 2, 4},
@@ -4219,7 +4219,7 @@ const TestModel& get_test_model_nchw_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f}),
                             .dimensions = {4},
@@ -4229,7 +4229,7 @@ const TestModel& get_test_model_nchw_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -4239,7 +4239,7 @@ const TestModel& get_test_model_nchw_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -4249,7 +4249,7 @@ const TestModel& get_test_model_nchw_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -4259,7 +4259,7 @@ const TestModel& get_test_model_nchw_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -4269,7 +4269,7 @@ const TestModel& get_test_model_nchw_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -4279,7 +4279,7 @@ const TestModel& get_test_model_nchw_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param5
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -4289,7 +4289,7 @@ const TestModel& get_test_model_nchw_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param6
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -4299,7 +4299,7 @@ const TestModel& get_test_model_nchw_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param7
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -4309,7 +4309,7 @@ const TestModel& get_test_model_nchw_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -4319,7 +4319,7 @@ const TestModel& get_test_model_nchw_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param8
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -4329,7 +4329,7 @@ const TestModel& get_test_model_nchw_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param9
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -4339,7 +4339,7 @@ const TestModel& get_test_model_nchw_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({11.0f, 11.0f, 11.0f, 11.0f, 3.0f, 3.0f, 3.0f, 3.0f, 7.2f, 7.4f, 7.8f, 8.0f, 10.6f, 10.9f, 11.5f, 11.8f}),
                             .dimensions = {1, 4, 2, 2},
@@ -4376,7 +4376,7 @@ const TestModel& get_test_model_nchw_relaxed_all_inputs_as_internal() {
         .isRelaxed = true,
         .main = {
                 .inputIndexes = {15},
-                .operands = {{
+                .operands = {{ // op1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {1, 2, 3, 3},
@@ -4386,7 +4386,7 @@ const TestModel& get_test_model_nchw_relaxed_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.25f, 0.0f, 0.2f, 0.0f, 0.25f, 0.0f, 0.0f, 0.3f, 0.25f, 0.0f, 0.0f, 0.0f, 0.25f, 0.1f, 0.0f, 0.0f}),
                             .dimensions = {1, 2, 2, 4},
@@ -4396,7 +4396,7 @@ const TestModel& get_test_model_nchw_relaxed_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f}),
                             .dimensions = {4},
@@ -4406,7 +4406,7 @@ const TestModel& get_test_model_nchw_relaxed_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -4416,7 +4416,7 @@ const TestModel& get_test_model_nchw_relaxed_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -4426,7 +4426,7 @@ const TestModel& get_test_model_nchw_relaxed_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -4436,7 +4436,7 @@ const TestModel& get_test_model_nchw_relaxed_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -4446,7 +4446,7 @@ const TestModel& get_test_model_nchw_relaxed_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -4456,7 +4456,7 @@ const TestModel& get_test_model_nchw_relaxed_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param5
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -4466,7 +4466,7 @@ const TestModel& get_test_model_nchw_relaxed_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param6
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -4476,7 +4476,7 @@ const TestModel& get_test_model_nchw_relaxed_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param7
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -4486,7 +4486,7 @@ const TestModel& get_test_model_nchw_relaxed_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -4496,7 +4496,7 @@ const TestModel& get_test_model_nchw_relaxed_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param8
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -4506,7 +4506,7 @@ const TestModel& get_test_model_nchw_relaxed_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param9
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -4516,7 +4516,7 @@ const TestModel& get_test_model_nchw_relaxed_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({11.0f, 11.0f, 11.0f, 11.0f, 3.0f, 3.0f, 3.0f, 3.0f, 7.2f, 7.4f, 7.8f, 8.0f, 10.6f, 10.9f, 11.5f, 11.8f}),
                             .dimensions = {1, 4, 2, 2},
@@ -4526,7 +4526,7 @@ const TestModel& get_test_model_nchw_relaxed_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op1_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 21.0f, 22.0f, 23.0f, 24.0f, 25.0f, 26.0f, 27.0f, 28.0f, 29.0f}),
                             .dimensions = {1, 2, 3, 3},
@@ -4536,7 +4536,7 @@ const TestModel& get_test_model_nchw_relaxed_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy19
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -4546,7 +4546,7 @@ const TestModel& get_test_model_nchw_relaxed_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param60
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -4587,7 +4587,7 @@ const TestModel& get_test_model_nchw_relaxed_all_tensors_as_inputs() {
         .isRelaxed = true,
         .main = {
                 .inputIndexes = {0, 1, 2},
-                .operands = {{
+                .operands = {{ // op1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 21.0f, 22.0f, 23.0f, 24.0f, 25.0f, 26.0f, 27.0f, 28.0f, 29.0f}),
                             .dimensions = {1, 2, 3, 3},
@@ -4597,7 +4597,7 @@ const TestModel& get_test_model_nchw_relaxed_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.25f, 0.0f, 0.2f, 0.0f, 0.25f, 0.0f, 0.0f, 0.3f, 0.25f, 0.0f, 0.0f, 0.0f, 0.25f, 0.1f, 0.0f, 0.0f}),
                             .dimensions = {1, 2, 2, 4},
@@ -4607,7 +4607,7 @@ const TestModel& get_test_model_nchw_relaxed_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f}),
                             .dimensions = {4},
@@ -4617,7 +4617,7 @@ const TestModel& get_test_model_nchw_relaxed_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -4627,7 +4627,7 @@ const TestModel& get_test_model_nchw_relaxed_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -4637,7 +4637,7 @@ const TestModel& get_test_model_nchw_relaxed_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -4647,7 +4647,7 @@ const TestModel& get_test_model_nchw_relaxed_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -4657,7 +4657,7 @@ const TestModel& get_test_model_nchw_relaxed_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -4667,7 +4667,7 @@ const TestModel& get_test_model_nchw_relaxed_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param5
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -4677,7 +4677,7 @@ const TestModel& get_test_model_nchw_relaxed_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param6
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -4687,7 +4687,7 @@ const TestModel& get_test_model_nchw_relaxed_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param7
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -4697,7 +4697,7 @@ const TestModel& get_test_model_nchw_relaxed_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -4707,7 +4707,7 @@ const TestModel& get_test_model_nchw_relaxed_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param8
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -4717,7 +4717,7 @@ const TestModel& get_test_model_nchw_relaxed_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param9
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -4727,7 +4727,7 @@ const TestModel& get_test_model_nchw_relaxed_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({11.0f, 11.0f, 11.0f, 11.0f, 3.0f, 3.0f, 3.0f, 3.0f, 7.2f, 7.4f, 7.8f, 8.0f, 10.6f, 10.9f, 11.5f, 11.8f}),
                             .dimensions = {1, 4, 2, 2},
@@ -4764,7 +4764,7 @@ const TestModel& get_test_model_nchw_relaxed_all_tensors_as_inputs_all_inputs_as
         .isRelaxed = true,
         .main = {
                 .inputIndexes = {15, 18, 21},
-                .operands = {{
+                .operands = {{ // op1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {1, 2, 3, 3},
@@ -4774,7 +4774,7 @@ const TestModel& get_test_model_nchw_relaxed_all_tensors_as_inputs_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {1, 2, 2, 4},
@@ -4784,7 +4784,7 @@ const TestModel& get_test_model_nchw_relaxed_all_tensors_as_inputs_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {4},
@@ -4794,7 +4794,7 @@ const TestModel& get_test_model_nchw_relaxed_all_tensors_as_inputs_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -4804,7 +4804,7 @@ const TestModel& get_test_model_nchw_relaxed_all_tensors_as_inputs_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -4814,7 +4814,7 @@ const TestModel& get_test_model_nchw_relaxed_all_tensors_as_inputs_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -4824,7 +4824,7 @@ const TestModel& get_test_model_nchw_relaxed_all_tensors_as_inputs_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -4834,7 +4834,7 @@ const TestModel& get_test_model_nchw_relaxed_all_tensors_as_inputs_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -4844,7 +4844,7 @@ const TestModel& get_test_model_nchw_relaxed_all_tensors_as_inputs_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param5
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -4854,7 +4854,7 @@ const TestModel& get_test_model_nchw_relaxed_all_tensors_as_inputs_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param6
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -4864,7 +4864,7 @@ const TestModel& get_test_model_nchw_relaxed_all_tensors_as_inputs_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param7
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -4874,7 +4874,7 @@ const TestModel& get_test_model_nchw_relaxed_all_tensors_as_inputs_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -4884,7 +4884,7 @@ const TestModel& get_test_model_nchw_relaxed_all_tensors_as_inputs_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param8
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -4894,7 +4894,7 @@ const TestModel& get_test_model_nchw_relaxed_all_tensors_as_inputs_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param9
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -4904,7 +4904,7 @@ const TestModel& get_test_model_nchw_relaxed_all_tensors_as_inputs_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({11.0f, 11.0f, 11.0f, 11.0f, 3.0f, 3.0f, 3.0f, 3.0f, 7.2f, 7.4f, 7.8f, 8.0f, 10.6f, 10.9f, 11.5f, 11.8f}),
                             .dimensions = {1, 4, 2, 2},
@@ -4914,7 +4914,7 @@ const TestModel& get_test_model_nchw_relaxed_all_tensors_as_inputs_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op1_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 21.0f, 22.0f, 23.0f, 24.0f, 25.0f, 26.0f, 27.0f, 28.0f, 29.0f}),
                             .dimensions = {1, 2, 3, 3},
@@ -4924,7 +4924,7 @@ const TestModel& get_test_model_nchw_relaxed_all_tensors_as_inputs_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy20
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -4934,7 +4934,7 @@ const TestModel& get_test_model_nchw_relaxed_all_tensors_as_inputs_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param61
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -4944,7 +4944,7 @@ const TestModel& get_test_model_nchw_relaxed_all_tensors_as_inputs_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op2_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.25f, 0.0f, 0.2f, 0.0f, 0.25f, 0.0f, 0.0f, 0.3f, 0.25f, 0.0f, 0.0f, 0.0f, 0.25f, 0.1f, 0.0f, 0.0f}),
                             .dimensions = {1, 2, 2, 4},
@@ -4954,7 +4954,7 @@ const TestModel& get_test_model_nchw_relaxed_all_tensors_as_inputs_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy21
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -4964,7 +4964,7 @@ const TestModel& get_test_model_nchw_relaxed_all_tensors_as_inputs_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param62
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -4974,7 +4974,7 @@ const TestModel& get_test_model_nchw_relaxed_all_tensors_as_inputs_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op3_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f}),
                             .dimensions = {4},
@@ -4984,7 +4984,7 @@ const TestModel& get_test_model_nchw_relaxed_all_tensors_as_inputs_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy22
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -4994,7 +4994,7 @@ const TestModel& get_test_model_nchw_relaxed_all_tensors_as_inputs_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param63
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -5043,7 +5043,7 @@ const TestModel& get_test_model_nchw_float16() {
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {0},
-                .operands = {{
+                .operands = {{ // op1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 21.0f, 22.0f, 23.0f, 24.0f, 25.0f, 26.0f, 27.0f, 28.0f, 29.0f}),
                             .dimensions = {1, 2, 3, 3},
@@ -5053,7 +5053,7 @@ const TestModel& get_test_model_nchw_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({0.25f, 0.0f, 0.20000000298023224f, 0.0f, 0.25f, 0.0f, 0.0f, 0.30000001192092896f, 0.25f, 0.0f, 0.0f, 0.0f, 0.25f, 0.10000000149011612f, 0.0f, 0.0f}),
                             .dimensions = {1, 2, 2, 4},
@@ -5063,7 +5063,7 @@ const TestModel& get_test_model_nchw_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({1.0f, 2.0f, 3.0f, 4.0f}),
                             .dimensions = {4},
@@ -5073,7 +5073,7 @@ const TestModel& get_test_model_nchw_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -5083,7 +5083,7 @@ const TestModel& get_test_model_nchw_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -5093,7 +5093,7 @@ const TestModel& get_test_model_nchw_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -5103,7 +5103,7 @@ const TestModel& get_test_model_nchw_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -5113,7 +5113,7 @@ const TestModel& get_test_model_nchw_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -5123,7 +5123,7 @@ const TestModel& get_test_model_nchw_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param5
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -5133,7 +5133,7 @@ const TestModel& get_test_model_nchw_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param6
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -5143,7 +5143,7 @@ const TestModel& get_test_model_nchw_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param7
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -5153,7 +5153,7 @@ const TestModel& get_test_model_nchw_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -5163,7 +5163,7 @@ const TestModel& get_test_model_nchw_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param8
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -5173,7 +5173,7 @@ const TestModel& get_test_model_nchw_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param9
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -5183,7 +5183,7 @@ const TestModel& get_test_model_nchw_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({11.0f, 11.0f, 11.0f, 11.0f, 3.0f, 3.0f, 3.0f, 3.0f, 7.199999809265137f, 7.400000095367432f, 7.800000190734863f, 8.0f, 10.600000381469727f, 10.899999618530273f, 11.5f, 11.800000190734863f}),
                             .dimensions = {1, 4, 2, 2},
@@ -5220,7 +5220,7 @@ const TestModel& get_test_model_nchw_float16_all_inputs_as_internal() {
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {15},
-                .operands = {{
+                .operands = {{ // op1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({}),
                             .dimensions = {1, 2, 3, 3},
@@ -5230,7 +5230,7 @@ const TestModel& get_test_model_nchw_float16_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({0.25f, 0.0f, 0.20000000298023224f, 0.0f, 0.25f, 0.0f, 0.0f, 0.30000001192092896f, 0.25f, 0.0f, 0.0f, 0.0f, 0.25f, 0.10000000149011612f, 0.0f, 0.0f}),
                             .dimensions = {1, 2, 2, 4},
@@ -5240,7 +5240,7 @@ const TestModel& get_test_model_nchw_float16_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({1.0f, 2.0f, 3.0f, 4.0f}),
                             .dimensions = {4},
@@ -5250,7 +5250,7 @@ const TestModel& get_test_model_nchw_float16_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -5260,7 +5260,7 @@ const TestModel& get_test_model_nchw_float16_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -5270,7 +5270,7 @@ const TestModel& get_test_model_nchw_float16_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -5280,7 +5280,7 @@ const TestModel& get_test_model_nchw_float16_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -5290,7 +5290,7 @@ const TestModel& get_test_model_nchw_float16_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -5300,7 +5300,7 @@ const TestModel& get_test_model_nchw_float16_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param5
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -5310,7 +5310,7 @@ const TestModel& get_test_model_nchw_float16_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param6
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -5320,7 +5320,7 @@ const TestModel& get_test_model_nchw_float16_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param7
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -5330,7 +5330,7 @@ const TestModel& get_test_model_nchw_float16_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -5340,7 +5340,7 @@ const TestModel& get_test_model_nchw_float16_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param8
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -5350,7 +5350,7 @@ const TestModel& get_test_model_nchw_float16_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param9
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -5360,7 +5360,7 @@ const TestModel& get_test_model_nchw_float16_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({11.0f, 11.0f, 11.0f, 11.0f, 3.0f, 3.0f, 3.0f, 3.0f, 7.199999809265137f, 7.400000095367432f, 7.800000190734863f, 8.0f, 10.600000381469727f, 10.899999618530273f, 11.5f, 11.800000190734863f}),
                             .dimensions = {1, 4, 2, 2},
@@ -5370,7 +5370,7 @@ const TestModel& get_test_model_nchw_float16_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op1_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 21.0f, 22.0f, 23.0f, 24.0f, 25.0f, 26.0f, 27.0f, 28.0f, 29.0f}),
                             .dimensions = {1, 2, 3, 3},
@@ -5380,7 +5380,7 @@ const TestModel& get_test_model_nchw_float16_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy23
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({0.0f}),
                             .dimensions = {1},
@@ -5390,7 +5390,7 @@ const TestModel& get_test_model_nchw_float16_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param64
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -5431,7 +5431,7 @@ const TestModel& get_test_model_nchw_float16_all_tensors_as_inputs() {
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {0, 1, 2},
-                .operands = {{
+                .operands = {{ // op1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 21.0f, 22.0f, 23.0f, 24.0f, 25.0f, 26.0f, 27.0f, 28.0f, 29.0f}),
                             .dimensions = {1, 2, 3, 3},
@@ -5441,7 +5441,7 @@ const TestModel& get_test_model_nchw_float16_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({0.25f, 0.0f, 0.20000000298023224f, 0.0f, 0.25f, 0.0f, 0.0f, 0.30000001192092896f, 0.25f, 0.0f, 0.0f, 0.0f, 0.25f, 0.10000000149011612f, 0.0f, 0.0f}),
                             .dimensions = {1, 2, 2, 4},
@@ -5451,7 +5451,7 @@ const TestModel& get_test_model_nchw_float16_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({1.0f, 2.0f, 3.0f, 4.0f}),
                             .dimensions = {4},
@@ -5461,7 +5461,7 @@ const TestModel& get_test_model_nchw_float16_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -5471,7 +5471,7 @@ const TestModel& get_test_model_nchw_float16_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -5481,7 +5481,7 @@ const TestModel& get_test_model_nchw_float16_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -5491,7 +5491,7 @@ const TestModel& get_test_model_nchw_float16_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -5501,7 +5501,7 @@ const TestModel& get_test_model_nchw_float16_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -5511,7 +5511,7 @@ const TestModel& get_test_model_nchw_float16_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param5
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -5521,7 +5521,7 @@ const TestModel& get_test_model_nchw_float16_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param6
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -5531,7 +5531,7 @@ const TestModel& get_test_model_nchw_float16_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param7
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -5541,7 +5541,7 @@ const TestModel& get_test_model_nchw_float16_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -5551,7 +5551,7 @@ const TestModel& get_test_model_nchw_float16_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param8
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -5561,7 +5561,7 @@ const TestModel& get_test_model_nchw_float16_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param9
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -5571,7 +5571,7 @@ const TestModel& get_test_model_nchw_float16_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({11.0f, 11.0f, 11.0f, 11.0f, 3.0f, 3.0f, 3.0f, 3.0f, 7.199999809265137f, 7.400000095367432f, 7.800000190734863f, 8.0f, 10.600000381469727f, 10.899999618530273f, 11.5f, 11.800000190734863f}),
                             .dimensions = {1, 4, 2, 2},
@@ -5608,7 +5608,7 @@ const TestModel& get_test_model_nchw_float16_all_tensors_as_inputs_all_inputs_as
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {15, 18, 21},
-                .operands = {{
+                .operands = {{ // op1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({}),
                             .dimensions = {1, 2, 3, 3},
@@ -5618,7 +5618,7 @@ const TestModel& get_test_model_nchw_float16_all_tensors_as_inputs_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({}),
                             .dimensions = {1, 2, 2, 4},
@@ -5628,7 +5628,7 @@ const TestModel& get_test_model_nchw_float16_all_tensors_as_inputs_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({}),
                             .dimensions = {4},
@@ -5638,7 +5638,7 @@ const TestModel& get_test_model_nchw_float16_all_tensors_as_inputs_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -5648,7 +5648,7 @@ const TestModel& get_test_model_nchw_float16_all_tensors_as_inputs_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -5658,7 +5658,7 @@ const TestModel& get_test_model_nchw_float16_all_tensors_as_inputs_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -5668,7 +5668,7 @@ const TestModel& get_test_model_nchw_float16_all_tensors_as_inputs_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -5678,7 +5678,7 @@ const TestModel& get_test_model_nchw_float16_all_tensors_as_inputs_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -5688,7 +5688,7 @@ const TestModel& get_test_model_nchw_float16_all_tensors_as_inputs_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param5
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -5698,7 +5698,7 @@ const TestModel& get_test_model_nchw_float16_all_tensors_as_inputs_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param6
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -5708,7 +5708,7 @@ const TestModel& get_test_model_nchw_float16_all_tensors_as_inputs_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param7
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -5718,7 +5718,7 @@ const TestModel& get_test_model_nchw_float16_all_tensors_as_inputs_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -5728,7 +5728,7 @@ const TestModel& get_test_model_nchw_float16_all_tensors_as_inputs_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param8
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -5738,7 +5738,7 @@ const TestModel& get_test_model_nchw_float16_all_tensors_as_inputs_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param9
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -5748,7 +5748,7 @@ const TestModel& get_test_model_nchw_float16_all_tensors_as_inputs_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({11.0f, 11.0f, 11.0f, 11.0f, 3.0f, 3.0f, 3.0f, 3.0f, 7.199999809265137f, 7.400000095367432f, 7.800000190734863f, 8.0f, 10.600000381469727f, 10.899999618530273f, 11.5f, 11.800000190734863f}),
                             .dimensions = {1, 4, 2, 2},
@@ -5758,7 +5758,7 @@ const TestModel& get_test_model_nchw_float16_all_tensors_as_inputs_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op1_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 21.0f, 22.0f, 23.0f, 24.0f, 25.0f, 26.0f, 27.0f, 28.0f, 29.0f}),
                             .dimensions = {1, 2, 3, 3},
@@ -5768,7 +5768,7 @@ const TestModel& get_test_model_nchw_float16_all_tensors_as_inputs_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy24
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({0.0f}),
                             .dimensions = {1},
@@ -5778,7 +5778,7 @@ const TestModel& get_test_model_nchw_float16_all_tensors_as_inputs_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param65
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -5788,7 +5788,7 @@ const TestModel& get_test_model_nchw_float16_all_tensors_as_inputs_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op2_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({0.25f, 0.0f, 0.20000000298023224f, 0.0f, 0.25f, 0.0f, 0.0f, 0.30000001192092896f, 0.25f, 0.0f, 0.0f, 0.0f, 0.25f, 0.10000000149011612f, 0.0f, 0.0f}),
                             .dimensions = {1, 2, 2, 4},
@@ -5798,7 +5798,7 @@ const TestModel& get_test_model_nchw_float16_all_tensors_as_inputs_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy25
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({0.0f}),
                             .dimensions = {1},
@@ -5808,7 +5808,7 @@ const TestModel& get_test_model_nchw_float16_all_tensors_as_inputs_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param66
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -5818,7 +5818,7 @@ const TestModel& get_test_model_nchw_float16_all_tensors_as_inputs_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op3_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({1.0f, 2.0f, 3.0f, 4.0f}),
                             .dimensions = {4},
@@ -5828,7 +5828,7 @@ const TestModel& get_test_model_nchw_float16_all_tensors_as_inputs_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy26
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({0.0f}),
                             .dimensions = {1},
@@ -5838,7 +5838,7 @@ const TestModel& get_test_model_nchw_float16_all_tensors_as_inputs_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param67
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -5887,7 +5887,7 @@ const TestModel& get_test_model_nchw_quant8() {
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {0},
-                .operands = {{
+                .operands = {{ // op1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({20, 20, 20, 20, 20, 20, 20, 20, 20, 42, 44, 46, 48, 50, 52, 54, 56, 58}),
                             .dimensions = {1, 2, 3, 3},
@@ -5897,7 +5897,7 @@ const TestModel& get_test_model_nchw_quant8() {
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({25, 0, 20, 0, 25, 0, 0, 30, 25, 0, 0, 0, 25, 10, 0, 0}),
                             .dimensions = {1, 2, 2, 4},
@@ -5907,7 +5907,7 @@ const TestModel& get_test_model_nchw_quant8() {
                             .scale = 0.01f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({200, 400, 600, 800}),
                             .dimensions = {4},
@@ -5917,7 +5917,7 @@ const TestModel& get_test_model_nchw_quant8() {
                             .scale = 0.005f,
                             .type = TestOperandType::TENSOR_INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -5927,7 +5927,7 @@ const TestModel& get_test_model_nchw_quant8() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -5937,7 +5937,7 @@ const TestModel& get_test_model_nchw_quant8() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -5947,7 +5947,7 @@ const TestModel& get_test_model_nchw_quant8() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -5957,7 +5957,7 @@ const TestModel& get_test_model_nchw_quant8() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -5967,7 +5967,7 @@ const TestModel& get_test_model_nchw_quant8() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param5
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -5977,7 +5977,7 @@ const TestModel& get_test_model_nchw_quant8() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param6
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -5987,7 +5987,7 @@ const TestModel& get_test_model_nchw_quant8() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param7
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -5997,7 +5997,7 @@ const TestModel& get_test_model_nchw_quant8() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -6007,7 +6007,7 @@ const TestModel& get_test_model_nchw_quant8() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param8
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -6017,7 +6017,7 @@ const TestModel& get_test_model_nchw_quant8() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param9
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -6027,7 +6027,7 @@ const TestModel& get_test_model_nchw_quant8() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({110, 110, 110, 110, 30, 30, 30, 30, 72, 74, 78, 80, 106, 109, 115, 118}),
                             .dimensions = {1, 4, 2, 2},
@@ -6064,7 +6064,7 @@ const TestModel& get_test_model_nchw_quant8_all_inputs_as_internal() {
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {15},
-                .operands = {{
+                .operands = {{ // op1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({}),
                             .dimensions = {1, 2, 3, 3},
@@ -6074,7 +6074,7 @@ const TestModel& get_test_model_nchw_quant8_all_inputs_as_internal() {
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({25, 0, 20, 0, 25, 0, 0, 30, 25, 0, 0, 0, 25, 10, 0, 0}),
                             .dimensions = {1, 2, 2, 4},
@@ -6084,7 +6084,7 @@ const TestModel& get_test_model_nchw_quant8_all_inputs_as_internal() {
                             .scale = 0.01f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({200, 400, 600, 800}),
                             .dimensions = {4},
@@ -6094,7 +6094,7 @@ const TestModel& get_test_model_nchw_quant8_all_inputs_as_internal() {
                             .scale = 0.005f,
                             .type = TestOperandType::TENSOR_INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -6104,7 +6104,7 @@ const TestModel& get_test_model_nchw_quant8_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -6114,7 +6114,7 @@ const TestModel& get_test_model_nchw_quant8_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -6124,7 +6124,7 @@ const TestModel& get_test_model_nchw_quant8_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -6134,7 +6134,7 @@ const TestModel& get_test_model_nchw_quant8_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -6144,7 +6144,7 @@ const TestModel& get_test_model_nchw_quant8_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param5
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -6154,7 +6154,7 @@ const TestModel& get_test_model_nchw_quant8_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param6
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -6164,7 +6164,7 @@ const TestModel& get_test_model_nchw_quant8_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param7
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -6174,7 +6174,7 @@ const TestModel& get_test_model_nchw_quant8_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -6184,7 +6184,7 @@ const TestModel& get_test_model_nchw_quant8_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param8
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -6194,7 +6194,7 @@ const TestModel& get_test_model_nchw_quant8_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param9
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -6204,7 +6204,7 @@ const TestModel& get_test_model_nchw_quant8_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({110, 110, 110, 110, 30, 30, 30, 30, 72, 74, 78, 80, 106, 109, 115, 118}),
                             .dimensions = {1, 4, 2, 2},
@@ -6214,7 +6214,7 @@ const TestModel& get_test_model_nchw_quant8_all_inputs_as_internal() {
                             .scale = 0.1f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op1_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({20, 20, 20, 20, 20, 20, 20, 20, 20, 42, 44, 46, 48, 50, 52, 54, 56, 58}),
                             .dimensions = {1, 2, 3, 3},
@@ -6224,7 +6224,7 @@ const TestModel& get_test_model_nchw_quant8_all_inputs_as_internal() {
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy27
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({0}),
                             .dimensions = {1},
@@ -6234,7 +6234,7 @@ const TestModel& get_test_model_nchw_quant8_all_inputs_as_internal() {
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param68
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -6275,7 +6275,7 @@ const TestModel& get_test_model_nchw_quant8_all_tensors_as_inputs() {
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {0, 1, 2},
-                .operands = {{
+                .operands = {{ // op1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({20, 20, 20, 20, 20, 20, 20, 20, 20, 42, 44, 46, 48, 50, 52, 54, 56, 58}),
                             .dimensions = {1, 2, 3, 3},
@@ -6285,7 +6285,7 @@ const TestModel& get_test_model_nchw_quant8_all_tensors_as_inputs() {
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({25, 0, 20, 0, 25, 0, 0, 30, 25, 0, 0, 0, 25, 10, 0, 0}),
                             .dimensions = {1, 2, 2, 4},
@@ -6295,7 +6295,7 @@ const TestModel& get_test_model_nchw_quant8_all_tensors_as_inputs() {
                             .scale = 0.01f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({200, 400, 600, 800}),
                             .dimensions = {4},
@@ -6305,7 +6305,7 @@ const TestModel& get_test_model_nchw_quant8_all_tensors_as_inputs() {
                             .scale = 0.005f,
                             .type = TestOperandType::TENSOR_INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -6315,7 +6315,7 @@ const TestModel& get_test_model_nchw_quant8_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -6325,7 +6325,7 @@ const TestModel& get_test_model_nchw_quant8_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -6335,7 +6335,7 @@ const TestModel& get_test_model_nchw_quant8_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -6345,7 +6345,7 @@ const TestModel& get_test_model_nchw_quant8_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -6355,7 +6355,7 @@ const TestModel& get_test_model_nchw_quant8_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param5
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -6365,7 +6365,7 @@ const TestModel& get_test_model_nchw_quant8_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param6
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -6375,7 +6375,7 @@ const TestModel& get_test_model_nchw_quant8_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param7
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -6385,7 +6385,7 @@ const TestModel& get_test_model_nchw_quant8_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -6395,7 +6395,7 @@ const TestModel& get_test_model_nchw_quant8_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param8
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -6405,7 +6405,7 @@ const TestModel& get_test_model_nchw_quant8_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param9
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -6415,7 +6415,7 @@ const TestModel& get_test_model_nchw_quant8_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({110, 110, 110, 110, 30, 30, 30, 30, 72, 74, 78, 80, 106, 109, 115, 118}),
                             .dimensions = {1, 4, 2, 2},
@@ -6452,7 +6452,7 @@ const TestModel& get_test_model_nchw_quant8_all_tensors_as_inputs_all_inputs_as_
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {2, 15, 18},
-                .operands = {{
+                .operands = {{ // op1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({}),
                             .dimensions = {1, 2, 3, 3},
@@ -6462,7 +6462,7 @@ const TestModel& get_test_model_nchw_quant8_all_tensors_as_inputs_all_inputs_as_
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({}),
                             .dimensions = {1, 2, 2, 4},
@@ -6472,7 +6472,7 @@ const TestModel& get_test_model_nchw_quant8_all_tensors_as_inputs_all_inputs_as_
                             .scale = 0.01f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({200, 400, 600, 800}),
                             .dimensions = {4},
@@ -6482,7 +6482,7 @@ const TestModel& get_test_model_nchw_quant8_all_tensors_as_inputs_all_inputs_as_
                             .scale = 0.005f,
                             .type = TestOperandType::TENSOR_INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -6492,7 +6492,7 @@ const TestModel& get_test_model_nchw_quant8_all_tensors_as_inputs_all_inputs_as_
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -6502,7 +6502,7 @@ const TestModel& get_test_model_nchw_quant8_all_tensors_as_inputs_all_inputs_as_
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -6512,7 +6512,7 @@ const TestModel& get_test_model_nchw_quant8_all_tensors_as_inputs_all_inputs_as_
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -6522,7 +6522,7 @@ const TestModel& get_test_model_nchw_quant8_all_tensors_as_inputs_all_inputs_as_
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -6532,7 +6532,7 @@ const TestModel& get_test_model_nchw_quant8_all_tensors_as_inputs_all_inputs_as_
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param5
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -6542,7 +6542,7 @@ const TestModel& get_test_model_nchw_quant8_all_tensors_as_inputs_all_inputs_as_
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param6
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -6552,7 +6552,7 @@ const TestModel& get_test_model_nchw_quant8_all_tensors_as_inputs_all_inputs_as_
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param7
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -6562,7 +6562,7 @@ const TestModel& get_test_model_nchw_quant8_all_tensors_as_inputs_all_inputs_as_
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -6572,7 +6572,7 @@ const TestModel& get_test_model_nchw_quant8_all_tensors_as_inputs_all_inputs_as_
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param8
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -6582,7 +6582,7 @@ const TestModel& get_test_model_nchw_quant8_all_tensors_as_inputs_all_inputs_as_
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param9
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -6592,7 +6592,7 @@ const TestModel& get_test_model_nchw_quant8_all_tensors_as_inputs_all_inputs_as_
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({110, 110, 110, 110, 30, 30, 30, 30, 72, 74, 78, 80, 106, 109, 115, 118}),
                             .dimensions = {1, 4, 2, 2},
@@ -6602,7 +6602,7 @@ const TestModel& get_test_model_nchw_quant8_all_tensors_as_inputs_all_inputs_as_
                             .scale = 0.1f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op1_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({20, 20, 20, 20, 20, 20, 20, 20, 20, 42, 44, 46, 48, 50, 52, 54, 56, 58}),
                             .dimensions = {1, 2, 3, 3},
@@ -6612,7 +6612,7 @@ const TestModel& get_test_model_nchw_quant8_all_tensors_as_inputs_all_inputs_as_
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy28
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({0}),
                             .dimensions = {1},
@@ -6622,7 +6622,7 @@ const TestModel& get_test_model_nchw_quant8_all_tensors_as_inputs_all_inputs_as_
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param69
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -6632,7 +6632,7 @@ const TestModel& get_test_model_nchw_quant8_all_tensors_as_inputs_all_inputs_as_
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op2_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({25, 0, 20, 0, 25, 0, 0, 30, 25, 0, 0, 0, 25, 10, 0, 0}),
                             .dimensions = {1, 2, 2, 4},
@@ -6642,7 +6642,7 @@ const TestModel& get_test_model_nchw_quant8_all_tensors_as_inputs_all_inputs_as_
                             .scale = 0.01f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy29
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({0}),
                             .dimensions = {1},
@@ -6652,7 +6652,7 @@ const TestModel& get_test_model_nchw_quant8_all_tensors_as_inputs_all_inputs_as_
                             .scale = 0.01f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param70
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -6697,7 +6697,7 @@ const TestModel& get_test_model_nhwc_2() {
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {0},
-                .operands = {{
+                .operands = {{ // op11
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f}),
                             .dimensions = {1, 4, 4, 2},
@@ -6707,7 +6707,7 @@ const TestModel& get_test_model_nhwc_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op21
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f, 10.0f, 11.0f, 12.0f, 13.0f, 14.0f, 15.0f, 16.0f}),
                             .dimensions = {1, 2, 2, 4},
@@ -6717,7 +6717,7 @@ const TestModel& get_test_model_nhwc_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op31
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f, 0.0f, 0.0f}),
                             .dimensions = {4},
@@ -6727,7 +6727,7 @@ const TestModel& get_test_model_nhwc_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param10
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -6737,7 +6737,7 @@ const TestModel& get_test_model_nhwc_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param11
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -6747,7 +6747,7 @@ const TestModel& get_test_model_nhwc_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param12
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -6757,7 +6757,7 @@ const TestModel& get_test_model_nhwc_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param13
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -6767,7 +6767,7 @@ const TestModel& get_test_model_nhwc_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param14
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -6777,7 +6777,7 @@ const TestModel& get_test_model_nhwc_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param15
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -6787,7 +6787,7 @@ const TestModel& get_test_model_nhwc_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param16
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -6797,7 +6797,7 @@ const TestModel& get_test_model_nhwc_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param17
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -6807,7 +6807,7 @@ const TestModel& get_test_model_nhwc_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -6817,7 +6817,7 @@ const TestModel& get_test_model_nhwc_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param18
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -6827,7 +6827,7 @@ const TestModel& get_test_model_nhwc_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param19
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -6837,7 +6837,7 @@ const TestModel& get_test_model_nhwc_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op41
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({13.0f, 14.0f, 0.0f, 0.0f, 0.0f, 0.0f, 11.0f, 12.0f, 5.0f, 6.0f, 0.0f, 0.0f, 0.0f, 0.0f, 3.0f, 4.0f}),
                             .dimensions = {1, 2, 2, 4},
@@ -6874,7 +6874,7 @@ const TestModel& get_test_model_nhwc_all_inputs_as_internal_2() {
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {15},
-                .operands = {{
+                .operands = {{ // op11
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {1, 4, 4, 2},
@@ -6884,7 +6884,7 @@ const TestModel& get_test_model_nhwc_all_inputs_as_internal_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op21
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f, 10.0f, 11.0f, 12.0f, 13.0f, 14.0f, 15.0f, 16.0f}),
                             .dimensions = {1, 2, 2, 4},
@@ -6894,7 +6894,7 @@ const TestModel& get_test_model_nhwc_all_inputs_as_internal_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op31
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f, 0.0f, 0.0f}),
                             .dimensions = {4},
@@ -6904,7 +6904,7 @@ const TestModel& get_test_model_nhwc_all_inputs_as_internal_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param10
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -6914,7 +6914,7 @@ const TestModel& get_test_model_nhwc_all_inputs_as_internal_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param11
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -6924,7 +6924,7 @@ const TestModel& get_test_model_nhwc_all_inputs_as_internal_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param12
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -6934,7 +6934,7 @@ const TestModel& get_test_model_nhwc_all_inputs_as_internal_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param13
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -6944,7 +6944,7 @@ const TestModel& get_test_model_nhwc_all_inputs_as_internal_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param14
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -6954,7 +6954,7 @@ const TestModel& get_test_model_nhwc_all_inputs_as_internal_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param15
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -6964,7 +6964,7 @@ const TestModel& get_test_model_nhwc_all_inputs_as_internal_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param16
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -6974,7 +6974,7 @@ const TestModel& get_test_model_nhwc_all_inputs_as_internal_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param17
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -6984,7 +6984,7 @@ const TestModel& get_test_model_nhwc_all_inputs_as_internal_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -6994,7 +6994,7 @@ const TestModel& get_test_model_nhwc_all_inputs_as_internal_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param18
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -7004,7 +7004,7 @@ const TestModel& get_test_model_nhwc_all_inputs_as_internal_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param19
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -7014,7 +7014,7 @@ const TestModel& get_test_model_nhwc_all_inputs_as_internal_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op41
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({13.0f, 14.0f, 0.0f, 0.0f, 0.0f, 0.0f, 11.0f, 12.0f, 5.0f, 6.0f, 0.0f, 0.0f, 0.0f, 0.0f, 3.0f, 4.0f}),
                             .dimensions = {1, 2, 2, 4},
@@ -7024,7 +7024,7 @@ const TestModel& get_test_model_nhwc_all_inputs_as_internal_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op11_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f}),
                             .dimensions = {1, 4, 4, 2},
@@ -7034,7 +7034,7 @@ const TestModel& get_test_model_nhwc_all_inputs_as_internal_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy30
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -7044,7 +7044,7 @@ const TestModel& get_test_model_nhwc_all_inputs_as_internal_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param71
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -7085,7 +7085,7 @@ const TestModel& get_test_model_nhwc_all_tensors_as_inputs_2() {
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {0, 1, 2},
-                .operands = {{
+                .operands = {{ // op11
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f}),
                             .dimensions = {1, 4, 4, 2},
@@ -7095,7 +7095,7 @@ const TestModel& get_test_model_nhwc_all_tensors_as_inputs_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op21
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f, 10.0f, 11.0f, 12.0f, 13.0f, 14.0f, 15.0f, 16.0f}),
                             .dimensions = {1, 2, 2, 4},
@@ -7105,7 +7105,7 @@ const TestModel& get_test_model_nhwc_all_tensors_as_inputs_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op31
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f, 0.0f, 0.0f}),
                             .dimensions = {4},
@@ -7115,7 +7115,7 @@ const TestModel& get_test_model_nhwc_all_tensors_as_inputs_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param10
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -7125,7 +7125,7 @@ const TestModel& get_test_model_nhwc_all_tensors_as_inputs_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param11
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -7135,7 +7135,7 @@ const TestModel& get_test_model_nhwc_all_tensors_as_inputs_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param12
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -7145,7 +7145,7 @@ const TestModel& get_test_model_nhwc_all_tensors_as_inputs_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param13
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -7155,7 +7155,7 @@ const TestModel& get_test_model_nhwc_all_tensors_as_inputs_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param14
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -7165,7 +7165,7 @@ const TestModel& get_test_model_nhwc_all_tensors_as_inputs_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param15
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -7175,7 +7175,7 @@ const TestModel& get_test_model_nhwc_all_tensors_as_inputs_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param16
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -7185,7 +7185,7 @@ const TestModel& get_test_model_nhwc_all_tensors_as_inputs_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param17
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -7195,7 +7195,7 @@ const TestModel& get_test_model_nhwc_all_tensors_as_inputs_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -7205,7 +7205,7 @@ const TestModel& get_test_model_nhwc_all_tensors_as_inputs_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param18
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -7215,7 +7215,7 @@ const TestModel& get_test_model_nhwc_all_tensors_as_inputs_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param19
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -7225,7 +7225,7 @@ const TestModel& get_test_model_nhwc_all_tensors_as_inputs_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op41
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({13.0f, 14.0f, 0.0f, 0.0f, 0.0f, 0.0f, 11.0f, 12.0f, 5.0f, 6.0f, 0.0f, 0.0f, 0.0f, 0.0f, 3.0f, 4.0f}),
                             .dimensions = {1, 2, 2, 4},
@@ -7262,7 +7262,7 @@ const TestModel& get_test_model_nhwc_all_tensors_as_inputs_all_inputs_as_interna
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {15, 18, 21},
-                .operands = {{
+                .operands = {{ // op11
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {1, 4, 4, 2},
@@ -7272,7 +7272,7 @@ const TestModel& get_test_model_nhwc_all_tensors_as_inputs_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op21
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {1, 2, 2, 4},
@@ -7282,7 +7282,7 @@ const TestModel& get_test_model_nhwc_all_tensors_as_inputs_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op31
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {4},
@@ -7292,7 +7292,7 @@ const TestModel& get_test_model_nhwc_all_tensors_as_inputs_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param10
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -7302,7 +7302,7 @@ const TestModel& get_test_model_nhwc_all_tensors_as_inputs_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param11
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -7312,7 +7312,7 @@ const TestModel& get_test_model_nhwc_all_tensors_as_inputs_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param12
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -7322,7 +7322,7 @@ const TestModel& get_test_model_nhwc_all_tensors_as_inputs_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param13
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -7332,7 +7332,7 @@ const TestModel& get_test_model_nhwc_all_tensors_as_inputs_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param14
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -7342,7 +7342,7 @@ const TestModel& get_test_model_nhwc_all_tensors_as_inputs_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param15
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -7352,7 +7352,7 @@ const TestModel& get_test_model_nhwc_all_tensors_as_inputs_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param16
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -7362,7 +7362,7 @@ const TestModel& get_test_model_nhwc_all_tensors_as_inputs_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param17
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -7372,7 +7372,7 @@ const TestModel& get_test_model_nhwc_all_tensors_as_inputs_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -7382,7 +7382,7 @@ const TestModel& get_test_model_nhwc_all_tensors_as_inputs_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param18
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -7392,7 +7392,7 @@ const TestModel& get_test_model_nhwc_all_tensors_as_inputs_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param19
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -7402,7 +7402,7 @@ const TestModel& get_test_model_nhwc_all_tensors_as_inputs_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op41
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({13.0f, 14.0f, 0.0f, 0.0f, 0.0f, 0.0f, 11.0f, 12.0f, 5.0f, 6.0f, 0.0f, 0.0f, 0.0f, 0.0f, 3.0f, 4.0f}),
                             .dimensions = {1, 2, 2, 4},
@@ -7412,7 +7412,7 @@ const TestModel& get_test_model_nhwc_all_tensors_as_inputs_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op11_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f}),
                             .dimensions = {1, 4, 4, 2},
@@ -7422,7 +7422,7 @@ const TestModel& get_test_model_nhwc_all_tensors_as_inputs_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy31
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -7432,7 +7432,7 @@ const TestModel& get_test_model_nhwc_all_tensors_as_inputs_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param72
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -7442,7 +7442,7 @@ const TestModel& get_test_model_nhwc_all_tensors_as_inputs_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op21_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f, 10.0f, 11.0f, 12.0f, 13.0f, 14.0f, 15.0f, 16.0f}),
                             .dimensions = {1, 2, 2, 4},
@@ -7452,7 +7452,7 @@ const TestModel& get_test_model_nhwc_all_tensors_as_inputs_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy32
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -7462,7 +7462,7 @@ const TestModel& get_test_model_nhwc_all_tensors_as_inputs_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param73
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -7472,7 +7472,7 @@ const TestModel& get_test_model_nhwc_all_tensors_as_inputs_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op31_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f, 0.0f, 0.0f}),
                             .dimensions = {4},
@@ -7482,7 +7482,7 @@ const TestModel& get_test_model_nhwc_all_tensors_as_inputs_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy33
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -7492,7 +7492,7 @@ const TestModel& get_test_model_nhwc_all_tensors_as_inputs_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param74
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -7541,7 +7541,7 @@ const TestModel& get_test_model_nchw_2() {
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {0},
-                .operands = {{
+                .operands = {{ // op11
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f}),
                             .dimensions = {1, 2, 4, 4},
@@ -7551,7 +7551,7 @@ const TestModel& get_test_model_nchw_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op21
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f, 10.0f, 11.0f, 12.0f, 13.0f, 14.0f, 15.0f, 16.0f}),
                             .dimensions = {1, 2, 2, 4},
@@ -7561,7 +7561,7 @@ const TestModel& get_test_model_nchw_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op31
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f, 0.0f, 0.0f}),
                             .dimensions = {4},
@@ -7571,7 +7571,7 @@ const TestModel& get_test_model_nchw_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param10
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -7581,7 +7581,7 @@ const TestModel& get_test_model_nchw_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param11
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -7591,7 +7591,7 @@ const TestModel& get_test_model_nchw_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param12
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -7601,7 +7601,7 @@ const TestModel& get_test_model_nchw_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param13
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -7611,7 +7611,7 @@ const TestModel& get_test_model_nchw_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param14
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -7621,7 +7621,7 @@ const TestModel& get_test_model_nchw_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param15
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -7631,7 +7631,7 @@ const TestModel& get_test_model_nchw_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param16
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -7641,7 +7641,7 @@ const TestModel& get_test_model_nchw_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param17
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -7651,7 +7651,7 @@ const TestModel& get_test_model_nchw_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -7661,7 +7661,7 @@ const TestModel& get_test_model_nchw_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param18
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -7671,7 +7671,7 @@ const TestModel& get_test_model_nchw_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param19
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -7681,7 +7681,7 @@ const TestModel& get_test_model_nchw_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op41
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({13.0f, 0.0f, 5.0f, 0.0f, 14.0f, 0.0f, 6.0f, 0.0f, 0.0f, 11.0f, 0.0f, 3.0f, 0.0f, 12.0f, 0.0f, 4.0f}),
                             .dimensions = {1, 4, 2, 2},
@@ -7718,7 +7718,7 @@ const TestModel& get_test_model_nchw_all_inputs_as_internal_2() {
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {15},
-                .operands = {{
+                .operands = {{ // op11
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {1, 2, 4, 4},
@@ -7728,7 +7728,7 @@ const TestModel& get_test_model_nchw_all_inputs_as_internal_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op21
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f, 10.0f, 11.0f, 12.0f, 13.0f, 14.0f, 15.0f, 16.0f}),
                             .dimensions = {1, 2, 2, 4},
@@ -7738,7 +7738,7 @@ const TestModel& get_test_model_nchw_all_inputs_as_internal_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op31
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f, 0.0f, 0.0f}),
                             .dimensions = {4},
@@ -7748,7 +7748,7 @@ const TestModel& get_test_model_nchw_all_inputs_as_internal_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param10
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -7758,7 +7758,7 @@ const TestModel& get_test_model_nchw_all_inputs_as_internal_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param11
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -7768,7 +7768,7 @@ const TestModel& get_test_model_nchw_all_inputs_as_internal_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param12
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -7778,7 +7778,7 @@ const TestModel& get_test_model_nchw_all_inputs_as_internal_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param13
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -7788,7 +7788,7 @@ const TestModel& get_test_model_nchw_all_inputs_as_internal_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param14
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -7798,7 +7798,7 @@ const TestModel& get_test_model_nchw_all_inputs_as_internal_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param15
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -7808,7 +7808,7 @@ const TestModel& get_test_model_nchw_all_inputs_as_internal_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param16
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -7818,7 +7818,7 @@ const TestModel& get_test_model_nchw_all_inputs_as_internal_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param17
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -7828,7 +7828,7 @@ const TestModel& get_test_model_nchw_all_inputs_as_internal_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -7838,7 +7838,7 @@ const TestModel& get_test_model_nchw_all_inputs_as_internal_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param18
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -7848,7 +7848,7 @@ const TestModel& get_test_model_nchw_all_inputs_as_internal_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param19
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -7858,7 +7858,7 @@ const TestModel& get_test_model_nchw_all_inputs_as_internal_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op41
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({13.0f, 0.0f, 5.0f, 0.0f, 14.0f, 0.0f, 6.0f, 0.0f, 0.0f, 11.0f, 0.0f, 3.0f, 0.0f, 12.0f, 0.0f, 4.0f}),
                             .dimensions = {1, 4, 2, 2},
@@ -7868,7 +7868,7 @@ const TestModel& get_test_model_nchw_all_inputs_as_internal_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op11_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f}),
                             .dimensions = {1, 2, 4, 4},
@@ -7878,7 +7878,7 @@ const TestModel& get_test_model_nchw_all_inputs_as_internal_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy34
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -7888,7 +7888,7 @@ const TestModel& get_test_model_nchw_all_inputs_as_internal_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param75
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -7929,7 +7929,7 @@ const TestModel& get_test_model_nchw_all_tensors_as_inputs_2() {
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {0, 1, 2},
-                .operands = {{
+                .operands = {{ // op11
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f}),
                             .dimensions = {1, 2, 4, 4},
@@ -7939,7 +7939,7 @@ const TestModel& get_test_model_nchw_all_tensors_as_inputs_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op21
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f, 10.0f, 11.0f, 12.0f, 13.0f, 14.0f, 15.0f, 16.0f}),
                             .dimensions = {1, 2, 2, 4},
@@ -7949,7 +7949,7 @@ const TestModel& get_test_model_nchw_all_tensors_as_inputs_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op31
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f, 0.0f, 0.0f}),
                             .dimensions = {4},
@@ -7959,7 +7959,7 @@ const TestModel& get_test_model_nchw_all_tensors_as_inputs_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param10
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -7969,7 +7969,7 @@ const TestModel& get_test_model_nchw_all_tensors_as_inputs_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param11
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -7979,7 +7979,7 @@ const TestModel& get_test_model_nchw_all_tensors_as_inputs_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param12
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -7989,7 +7989,7 @@ const TestModel& get_test_model_nchw_all_tensors_as_inputs_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param13
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -7999,7 +7999,7 @@ const TestModel& get_test_model_nchw_all_tensors_as_inputs_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param14
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -8009,7 +8009,7 @@ const TestModel& get_test_model_nchw_all_tensors_as_inputs_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param15
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -8019,7 +8019,7 @@ const TestModel& get_test_model_nchw_all_tensors_as_inputs_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param16
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -8029,7 +8029,7 @@ const TestModel& get_test_model_nchw_all_tensors_as_inputs_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param17
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -8039,7 +8039,7 @@ const TestModel& get_test_model_nchw_all_tensors_as_inputs_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -8049,7 +8049,7 @@ const TestModel& get_test_model_nchw_all_tensors_as_inputs_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param18
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -8059,7 +8059,7 @@ const TestModel& get_test_model_nchw_all_tensors_as_inputs_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param19
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -8069,7 +8069,7 @@ const TestModel& get_test_model_nchw_all_tensors_as_inputs_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op41
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({13.0f, 0.0f, 5.0f, 0.0f, 14.0f, 0.0f, 6.0f, 0.0f, 0.0f, 11.0f, 0.0f, 3.0f, 0.0f, 12.0f, 0.0f, 4.0f}),
                             .dimensions = {1, 4, 2, 2},
@@ -8106,7 +8106,7 @@ const TestModel& get_test_model_nchw_all_tensors_as_inputs_all_inputs_as_interna
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {15, 18, 21},
-                .operands = {{
+                .operands = {{ // op11
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {1, 2, 4, 4},
@@ -8116,7 +8116,7 @@ const TestModel& get_test_model_nchw_all_tensors_as_inputs_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op21
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {1, 2, 2, 4},
@@ -8126,7 +8126,7 @@ const TestModel& get_test_model_nchw_all_tensors_as_inputs_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op31
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {4},
@@ -8136,7 +8136,7 @@ const TestModel& get_test_model_nchw_all_tensors_as_inputs_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param10
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -8146,7 +8146,7 @@ const TestModel& get_test_model_nchw_all_tensors_as_inputs_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param11
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -8156,7 +8156,7 @@ const TestModel& get_test_model_nchw_all_tensors_as_inputs_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param12
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -8166,7 +8166,7 @@ const TestModel& get_test_model_nchw_all_tensors_as_inputs_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param13
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -8176,7 +8176,7 @@ const TestModel& get_test_model_nchw_all_tensors_as_inputs_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param14
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -8186,7 +8186,7 @@ const TestModel& get_test_model_nchw_all_tensors_as_inputs_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param15
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -8196,7 +8196,7 @@ const TestModel& get_test_model_nchw_all_tensors_as_inputs_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param16
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -8206,7 +8206,7 @@ const TestModel& get_test_model_nchw_all_tensors_as_inputs_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param17
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -8216,7 +8216,7 @@ const TestModel& get_test_model_nchw_all_tensors_as_inputs_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -8226,7 +8226,7 @@ const TestModel& get_test_model_nchw_all_tensors_as_inputs_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param18
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -8236,7 +8236,7 @@ const TestModel& get_test_model_nchw_all_tensors_as_inputs_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param19
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -8246,7 +8246,7 @@ const TestModel& get_test_model_nchw_all_tensors_as_inputs_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op41
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({13.0f, 0.0f, 5.0f, 0.0f, 14.0f, 0.0f, 6.0f, 0.0f, 0.0f, 11.0f, 0.0f, 3.0f, 0.0f, 12.0f, 0.0f, 4.0f}),
                             .dimensions = {1, 4, 2, 2},
@@ -8256,7 +8256,7 @@ const TestModel& get_test_model_nchw_all_tensors_as_inputs_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op11_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f}),
                             .dimensions = {1, 2, 4, 4},
@@ -8266,7 +8266,7 @@ const TestModel& get_test_model_nchw_all_tensors_as_inputs_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy35
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -8276,7 +8276,7 @@ const TestModel& get_test_model_nchw_all_tensors_as_inputs_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param76
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -8286,7 +8286,7 @@ const TestModel& get_test_model_nchw_all_tensors_as_inputs_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op21_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f, 10.0f, 11.0f, 12.0f, 13.0f, 14.0f, 15.0f, 16.0f}),
                             .dimensions = {1, 2, 2, 4},
@@ -8296,7 +8296,7 @@ const TestModel& get_test_model_nchw_all_tensors_as_inputs_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy36
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -8306,7 +8306,7 @@ const TestModel& get_test_model_nchw_all_tensors_as_inputs_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param77
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -8316,7 +8316,7 @@ const TestModel& get_test_model_nchw_all_tensors_as_inputs_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op31_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f, 0.0f, 0.0f}),
                             .dimensions = {4},
@@ -8326,7 +8326,7 @@ const TestModel& get_test_model_nchw_all_tensors_as_inputs_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy37
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -8336,7 +8336,7 @@ const TestModel& get_test_model_nchw_all_tensors_as_inputs_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param78
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -8385,7 +8385,7 @@ const TestModel& get_test_model_valid_padding_nhwc() {
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {0},
-                .operands = {{
+                .operands = {{ // op12
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({10.0f, 21.0f, 10.0f, 22.0f, 10.0f, 23.0f, 10.0f, 24.0f, 10.0f, 25.0f, 10.0f, 26.0f, 10.0f, 27.0f, 10.0f, 28.0f, 10.0f, 29.0f}),
                             .dimensions = {1, 3, 3, 2},
@@ -8395,7 +8395,7 @@ const TestModel& get_test_model_valid_padding_nhwc() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op22
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.25f, 0.0f, 0.2f, 0.0f, 0.25f, 0.0f, 0.0f, 0.3f, 0.25f, 0.0f, 0.0f, 0.0f, 0.25f, 0.1f, 0.0f, 0.0f}),
                             .dimensions = {1, 2, 2, 4},
@@ -8405,7 +8405,7 @@ const TestModel& get_test_model_valid_padding_nhwc() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op32
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f}),
                             .dimensions = {4},
@@ -8415,7 +8415,7 @@ const TestModel& get_test_model_valid_padding_nhwc() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param20
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -8425,7 +8425,7 @@ const TestModel& get_test_model_valid_padding_nhwc() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param21
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -8435,7 +8435,7 @@ const TestModel& get_test_model_valid_padding_nhwc() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param22
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -8445,7 +8445,7 @@ const TestModel& get_test_model_valid_padding_nhwc() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param23
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -8455,7 +8455,7 @@ const TestModel& get_test_model_valid_padding_nhwc() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param24
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -8465,7 +8465,7 @@ const TestModel& get_test_model_valid_padding_nhwc() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -8475,7 +8475,7 @@ const TestModel& get_test_model_valid_padding_nhwc() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param25
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -8485,7 +8485,7 @@ const TestModel& get_test_model_valid_padding_nhwc() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param26
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -8495,7 +8495,7 @@ const TestModel& get_test_model_valid_padding_nhwc() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op42
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({11.0f, 3.0f, 7.2f, 10.6f, 11.0f, 3.0f, 7.4f, 10.9f, 11.0f, 3.0f, 7.8f, 11.5f, 11.0f, 3.0f, 8.0f, 11.8f}),
                             .dimensions = {1, 2, 2, 4},
@@ -8532,7 +8532,7 @@ const TestModel& get_test_model_valid_padding_nhwc_all_inputs_as_internal() {
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {12},
-                .operands = {{
+                .operands = {{ // op12
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {1, 3, 3, 2},
@@ -8542,7 +8542,7 @@ const TestModel& get_test_model_valid_padding_nhwc_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op22
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.25f, 0.0f, 0.2f, 0.0f, 0.25f, 0.0f, 0.0f, 0.3f, 0.25f, 0.0f, 0.0f, 0.0f, 0.25f, 0.1f, 0.0f, 0.0f}),
                             .dimensions = {1, 2, 2, 4},
@@ -8552,7 +8552,7 @@ const TestModel& get_test_model_valid_padding_nhwc_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op32
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f}),
                             .dimensions = {4},
@@ -8562,7 +8562,7 @@ const TestModel& get_test_model_valid_padding_nhwc_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param20
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -8572,7 +8572,7 @@ const TestModel& get_test_model_valid_padding_nhwc_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param21
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -8582,7 +8582,7 @@ const TestModel& get_test_model_valid_padding_nhwc_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param22
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -8592,7 +8592,7 @@ const TestModel& get_test_model_valid_padding_nhwc_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param23
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -8602,7 +8602,7 @@ const TestModel& get_test_model_valid_padding_nhwc_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param24
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -8612,7 +8612,7 @@ const TestModel& get_test_model_valid_padding_nhwc_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -8622,7 +8622,7 @@ const TestModel& get_test_model_valid_padding_nhwc_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param25
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -8632,7 +8632,7 @@ const TestModel& get_test_model_valid_padding_nhwc_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param26
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -8642,7 +8642,7 @@ const TestModel& get_test_model_valid_padding_nhwc_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op42
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({11.0f, 3.0f, 7.2f, 10.6f, 11.0f, 3.0f, 7.4f, 10.9f, 11.0f, 3.0f, 7.8f, 11.5f, 11.0f, 3.0f, 8.0f, 11.8f}),
                             .dimensions = {1, 2, 2, 4},
@@ -8652,7 +8652,7 @@ const TestModel& get_test_model_valid_padding_nhwc_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op12_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({10.0f, 21.0f, 10.0f, 22.0f, 10.0f, 23.0f, 10.0f, 24.0f, 10.0f, 25.0f, 10.0f, 26.0f, 10.0f, 27.0f, 10.0f, 28.0f, 10.0f, 29.0f}),
                             .dimensions = {1, 3, 3, 2},
@@ -8662,7 +8662,7 @@ const TestModel& get_test_model_valid_padding_nhwc_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy38
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -8672,7 +8672,7 @@ const TestModel& get_test_model_valid_padding_nhwc_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param79
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -8713,7 +8713,7 @@ const TestModel& get_test_model_valid_padding_nhwc_all_tensors_as_inputs() {
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {0, 1, 2},
-                .operands = {{
+                .operands = {{ // op12
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({10.0f, 21.0f, 10.0f, 22.0f, 10.0f, 23.0f, 10.0f, 24.0f, 10.0f, 25.0f, 10.0f, 26.0f, 10.0f, 27.0f, 10.0f, 28.0f, 10.0f, 29.0f}),
                             .dimensions = {1, 3, 3, 2},
@@ -8723,7 +8723,7 @@ const TestModel& get_test_model_valid_padding_nhwc_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op22
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.25f, 0.0f, 0.2f, 0.0f, 0.25f, 0.0f, 0.0f, 0.3f, 0.25f, 0.0f, 0.0f, 0.0f, 0.25f, 0.1f, 0.0f, 0.0f}),
                             .dimensions = {1, 2, 2, 4},
@@ -8733,7 +8733,7 @@ const TestModel& get_test_model_valid_padding_nhwc_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op32
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f}),
                             .dimensions = {4},
@@ -8743,7 +8743,7 @@ const TestModel& get_test_model_valid_padding_nhwc_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param20
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -8753,7 +8753,7 @@ const TestModel& get_test_model_valid_padding_nhwc_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param21
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -8763,7 +8763,7 @@ const TestModel& get_test_model_valid_padding_nhwc_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param22
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -8773,7 +8773,7 @@ const TestModel& get_test_model_valid_padding_nhwc_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param23
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -8783,7 +8783,7 @@ const TestModel& get_test_model_valid_padding_nhwc_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param24
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -8793,7 +8793,7 @@ const TestModel& get_test_model_valid_padding_nhwc_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -8803,7 +8803,7 @@ const TestModel& get_test_model_valid_padding_nhwc_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param25
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -8813,7 +8813,7 @@ const TestModel& get_test_model_valid_padding_nhwc_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param26
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -8823,7 +8823,7 @@ const TestModel& get_test_model_valid_padding_nhwc_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op42
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({11.0f, 3.0f, 7.2f, 10.6f, 11.0f, 3.0f, 7.4f, 10.9f, 11.0f, 3.0f, 7.8f, 11.5f, 11.0f, 3.0f, 8.0f, 11.8f}),
                             .dimensions = {1, 2, 2, 4},
@@ -8860,7 +8860,7 @@ const TestModel& get_test_model_valid_padding_nhwc_all_tensors_as_inputs_all_inp
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {12, 15, 18},
-                .operands = {{
+                .operands = {{ // op12
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {1, 3, 3, 2},
@@ -8870,7 +8870,7 @@ const TestModel& get_test_model_valid_padding_nhwc_all_tensors_as_inputs_all_inp
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op22
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {1, 2, 2, 4},
@@ -8880,7 +8880,7 @@ const TestModel& get_test_model_valid_padding_nhwc_all_tensors_as_inputs_all_inp
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op32
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {4},
@@ -8890,7 +8890,7 @@ const TestModel& get_test_model_valid_padding_nhwc_all_tensors_as_inputs_all_inp
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param20
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -8900,7 +8900,7 @@ const TestModel& get_test_model_valid_padding_nhwc_all_tensors_as_inputs_all_inp
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param21
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -8910,7 +8910,7 @@ const TestModel& get_test_model_valid_padding_nhwc_all_tensors_as_inputs_all_inp
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param22
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -8920,7 +8920,7 @@ const TestModel& get_test_model_valid_padding_nhwc_all_tensors_as_inputs_all_inp
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param23
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -8930,7 +8930,7 @@ const TestModel& get_test_model_valid_padding_nhwc_all_tensors_as_inputs_all_inp
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param24
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -8940,7 +8940,7 @@ const TestModel& get_test_model_valid_padding_nhwc_all_tensors_as_inputs_all_inp
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -8950,7 +8950,7 @@ const TestModel& get_test_model_valid_padding_nhwc_all_tensors_as_inputs_all_inp
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param25
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -8960,7 +8960,7 @@ const TestModel& get_test_model_valid_padding_nhwc_all_tensors_as_inputs_all_inp
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param26
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -8970,7 +8970,7 @@ const TestModel& get_test_model_valid_padding_nhwc_all_tensors_as_inputs_all_inp
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op42
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({11.0f, 3.0f, 7.2f, 10.6f, 11.0f, 3.0f, 7.4f, 10.9f, 11.0f, 3.0f, 7.8f, 11.5f, 11.0f, 3.0f, 8.0f, 11.8f}),
                             .dimensions = {1, 2, 2, 4},
@@ -8980,7 +8980,7 @@ const TestModel& get_test_model_valid_padding_nhwc_all_tensors_as_inputs_all_inp
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op12_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({10.0f, 21.0f, 10.0f, 22.0f, 10.0f, 23.0f, 10.0f, 24.0f, 10.0f, 25.0f, 10.0f, 26.0f, 10.0f, 27.0f, 10.0f, 28.0f, 10.0f, 29.0f}),
                             .dimensions = {1, 3, 3, 2},
@@ -8990,7 +8990,7 @@ const TestModel& get_test_model_valid_padding_nhwc_all_tensors_as_inputs_all_inp
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy39
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -9000,7 +9000,7 @@ const TestModel& get_test_model_valid_padding_nhwc_all_tensors_as_inputs_all_inp
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param80
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -9010,7 +9010,7 @@ const TestModel& get_test_model_valid_padding_nhwc_all_tensors_as_inputs_all_inp
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op22_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.25f, 0.0f, 0.2f, 0.0f, 0.25f, 0.0f, 0.0f, 0.3f, 0.25f, 0.0f, 0.0f, 0.0f, 0.25f, 0.1f, 0.0f, 0.0f}),
                             .dimensions = {1, 2, 2, 4},
@@ -9020,7 +9020,7 @@ const TestModel& get_test_model_valid_padding_nhwc_all_tensors_as_inputs_all_inp
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy40
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -9030,7 +9030,7 @@ const TestModel& get_test_model_valid_padding_nhwc_all_tensors_as_inputs_all_inp
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param81
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -9040,7 +9040,7 @@ const TestModel& get_test_model_valid_padding_nhwc_all_tensors_as_inputs_all_inp
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op32_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f}),
                             .dimensions = {4},
@@ -9050,7 +9050,7 @@ const TestModel& get_test_model_valid_padding_nhwc_all_tensors_as_inputs_all_inp
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy41
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -9060,7 +9060,7 @@ const TestModel& get_test_model_valid_padding_nhwc_all_tensors_as_inputs_all_inp
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param82
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -9109,7 +9109,7 @@ const TestModel& get_test_model_valid_padding_nhwc_relaxed() {
         .isRelaxed = true,
         .main = {
                 .inputIndexes = {0},
-                .operands = {{
+                .operands = {{ // op12
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({10.0f, 21.0f, 10.0f, 22.0f, 10.0f, 23.0f, 10.0f, 24.0f, 10.0f, 25.0f, 10.0f, 26.0f, 10.0f, 27.0f, 10.0f, 28.0f, 10.0f, 29.0f}),
                             .dimensions = {1, 3, 3, 2},
@@ -9119,7 +9119,7 @@ const TestModel& get_test_model_valid_padding_nhwc_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op22
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.25f, 0.0f, 0.2f, 0.0f, 0.25f, 0.0f, 0.0f, 0.3f, 0.25f, 0.0f, 0.0f, 0.0f, 0.25f, 0.1f, 0.0f, 0.0f}),
                             .dimensions = {1, 2, 2, 4},
@@ -9129,7 +9129,7 @@ const TestModel& get_test_model_valid_padding_nhwc_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op32
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f}),
                             .dimensions = {4},
@@ -9139,7 +9139,7 @@ const TestModel& get_test_model_valid_padding_nhwc_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param20
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -9149,7 +9149,7 @@ const TestModel& get_test_model_valid_padding_nhwc_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param21
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -9159,7 +9159,7 @@ const TestModel& get_test_model_valid_padding_nhwc_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param22
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -9169,7 +9169,7 @@ const TestModel& get_test_model_valid_padding_nhwc_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param23
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -9179,7 +9179,7 @@ const TestModel& get_test_model_valid_padding_nhwc_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param24
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -9189,7 +9189,7 @@ const TestModel& get_test_model_valid_padding_nhwc_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -9199,7 +9199,7 @@ const TestModel& get_test_model_valid_padding_nhwc_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param25
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -9209,7 +9209,7 @@ const TestModel& get_test_model_valid_padding_nhwc_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param26
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -9219,7 +9219,7 @@ const TestModel& get_test_model_valid_padding_nhwc_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op42
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({11.0f, 3.0f, 7.2f, 10.6f, 11.0f, 3.0f, 7.4f, 10.9f, 11.0f, 3.0f, 7.8f, 11.5f, 11.0f, 3.0f, 8.0f, 11.8f}),
                             .dimensions = {1, 2, 2, 4},
@@ -9256,7 +9256,7 @@ const TestModel& get_test_model_valid_padding_nhwc_relaxed_all_inputs_as_interna
         .isRelaxed = true,
         .main = {
                 .inputIndexes = {12},
-                .operands = {{
+                .operands = {{ // op12
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {1, 3, 3, 2},
@@ -9266,7 +9266,7 @@ const TestModel& get_test_model_valid_padding_nhwc_relaxed_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op22
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.25f, 0.0f, 0.2f, 0.0f, 0.25f, 0.0f, 0.0f, 0.3f, 0.25f, 0.0f, 0.0f, 0.0f, 0.25f, 0.1f, 0.0f, 0.0f}),
                             .dimensions = {1, 2, 2, 4},
@@ -9276,7 +9276,7 @@ const TestModel& get_test_model_valid_padding_nhwc_relaxed_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op32
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f}),
                             .dimensions = {4},
@@ -9286,7 +9286,7 @@ const TestModel& get_test_model_valid_padding_nhwc_relaxed_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param20
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -9296,7 +9296,7 @@ const TestModel& get_test_model_valid_padding_nhwc_relaxed_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param21
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -9306,7 +9306,7 @@ const TestModel& get_test_model_valid_padding_nhwc_relaxed_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param22
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -9316,7 +9316,7 @@ const TestModel& get_test_model_valid_padding_nhwc_relaxed_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param23
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -9326,7 +9326,7 @@ const TestModel& get_test_model_valid_padding_nhwc_relaxed_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param24
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -9336,7 +9336,7 @@ const TestModel& get_test_model_valid_padding_nhwc_relaxed_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -9346,7 +9346,7 @@ const TestModel& get_test_model_valid_padding_nhwc_relaxed_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param25
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -9356,7 +9356,7 @@ const TestModel& get_test_model_valid_padding_nhwc_relaxed_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param26
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -9366,7 +9366,7 @@ const TestModel& get_test_model_valid_padding_nhwc_relaxed_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op42
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({11.0f, 3.0f, 7.2f, 10.6f, 11.0f, 3.0f, 7.4f, 10.9f, 11.0f, 3.0f, 7.8f, 11.5f, 11.0f, 3.0f, 8.0f, 11.8f}),
                             .dimensions = {1, 2, 2, 4},
@@ -9376,7 +9376,7 @@ const TestModel& get_test_model_valid_padding_nhwc_relaxed_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op12_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({10.0f, 21.0f, 10.0f, 22.0f, 10.0f, 23.0f, 10.0f, 24.0f, 10.0f, 25.0f, 10.0f, 26.0f, 10.0f, 27.0f, 10.0f, 28.0f, 10.0f, 29.0f}),
                             .dimensions = {1, 3, 3, 2},
@@ -9386,7 +9386,7 @@ const TestModel& get_test_model_valid_padding_nhwc_relaxed_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy42
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -9396,7 +9396,7 @@ const TestModel& get_test_model_valid_padding_nhwc_relaxed_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param83
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -9437,7 +9437,7 @@ const TestModel& get_test_model_valid_padding_nhwc_relaxed_all_tensors_as_inputs
         .isRelaxed = true,
         .main = {
                 .inputIndexes = {0, 1, 2},
-                .operands = {{
+                .operands = {{ // op12
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({10.0f, 21.0f, 10.0f, 22.0f, 10.0f, 23.0f, 10.0f, 24.0f, 10.0f, 25.0f, 10.0f, 26.0f, 10.0f, 27.0f, 10.0f, 28.0f, 10.0f, 29.0f}),
                             .dimensions = {1, 3, 3, 2},
@@ -9447,7 +9447,7 @@ const TestModel& get_test_model_valid_padding_nhwc_relaxed_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op22
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.25f, 0.0f, 0.2f, 0.0f, 0.25f, 0.0f, 0.0f, 0.3f, 0.25f, 0.0f, 0.0f, 0.0f, 0.25f, 0.1f, 0.0f, 0.0f}),
                             .dimensions = {1, 2, 2, 4},
@@ -9457,7 +9457,7 @@ const TestModel& get_test_model_valid_padding_nhwc_relaxed_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op32
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f}),
                             .dimensions = {4},
@@ -9467,7 +9467,7 @@ const TestModel& get_test_model_valid_padding_nhwc_relaxed_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param20
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -9477,7 +9477,7 @@ const TestModel& get_test_model_valid_padding_nhwc_relaxed_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param21
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -9487,7 +9487,7 @@ const TestModel& get_test_model_valid_padding_nhwc_relaxed_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param22
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -9497,7 +9497,7 @@ const TestModel& get_test_model_valid_padding_nhwc_relaxed_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param23
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -9507,7 +9507,7 @@ const TestModel& get_test_model_valid_padding_nhwc_relaxed_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param24
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -9517,7 +9517,7 @@ const TestModel& get_test_model_valid_padding_nhwc_relaxed_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -9527,7 +9527,7 @@ const TestModel& get_test_model_valid_padding_nhwc_relaxed_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param25
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -9537,7 +9537,7 @@ const TestModel& get_test_model_valid_padding_nhwc_relaxed_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param26
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -9547,7 +9547,7 @@ const TestModel& get_test_model_valid_padding_nhwc_relaxed_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op42
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({11.0f, 3.0f, 7.2f, 10.6f, 11.0f, 3.0f, 7.4f, 10.9f, 11.0f, 3.0f, 7.8f, 11.5f, 11.0f, 3.0f, 8.0f, 11.8f}),
                             .dimensions = {1, 2, 2, 4},
@@ -9584,7 +9584,7 @@ const TestModel& get_test_model_valid_padding_nhwc_relaxed_all_tensors_as_inputs
         .isRelaxed = true,
         .main = {
                 .inputIndexes = {12, 15, 18},
-                .operands = {{
+                .operands = {{ // op12
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {1, 3, 3, 2},
@@ -9594,7 +9594,7 @@ const TestModel& get_test_model_valid_padding_nhwc_relaxed_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op22
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {1, 2, 2, 4},
@@ -9604,7 +9604,7 @@ const TestModel& get_test_model_valid_padding_nhwc_relaxed_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op32
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {4},
@@ -9614,7 +9614,7 @@ const TestModel& get_test_model_valid_padding_nhwc_relaxed_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param20
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -9624,7 +9624,7 @@ const TestModel& get_test_model_valid_padding_nhwc_relaxed_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param21
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -9634,7 +9634,7 @@ const TestModel& get_test_model_valid_padding_nhwc_relaxed_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param22
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -9644,7 +9644,7 @@ const TestModel& get_test_model_valid_padding_nhwc_relaxed_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param23
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -9654,7 +9654,7 @@ const TestModel& get_test_model_valid_padding_nhwc_relaxed_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param24
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -9664,7 +9664,7 @@ const TestModel& get_test_model_valid_padding_nhwc_relaxed_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -9674,7 +9674,7 @@ const TestModel& get_test_model_valid_padding_nhwc_relaxed_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param25
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -9684,7 +9684,7 @@ const TestModel& get_test_model_valid_padding_nhwc_relaxed_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param26
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -9694,7 +9694,7 @@ const TestModel& get_test_model_valid_padding_nhwc_relaxed_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op42
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({11.0f, 3.0f, 7.2f, 10.6f, 11.0f, 3.0f, 7.4f, 10.9f, 11.0f, 3.0f, 7.8f, 11.5f, 11.0f, 3.0f, 8.0f, 11.8f}),
                             .dimensions = {1, 2, 2, 4},
@@ -9704,7 +9704,7 @@ const TestModel& get_test_model_valid_padding_nhwc_relaxed_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op12_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({10.0f, 21.0f, 10.0f, 22.0f, 10.0f, 23.0f, 10.0f, 24.0f, 10.0f, 25.0f, 10.0f, 26.0f, 10.0f, 27.0f, 10.0f, 28.0f, 10.0f, 29.0f}),
                             .dimensions = {1, 3, 3, 2},
@@ -9714,7 +9714,7 @@ const TestModel& get_test_model_valid_padding_nhwc_relaxed_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy43
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -9724,7 +9724,7 @@ const TestModel& get_test_model_valid_padding_nhwc_relaxed_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param84
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -9734,7 +9734,7 @@ const TestModel& get_test_model_valid_padding_nhwc_relaxed_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op22_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.25f, 0.0f, 0.2f, 0.0f, 0.25f, 0.0f, 0.0f, 0.3f, 0.25f, 0.0f, 0.0f, 0.0f, 0.25f, 0.1f, 0.0f, 0.0f}),
                             .dimensions = {1, 2, 2, 4},
@@ -9744,7 +9744,7 @@ const TestModel& get_test_model_valid_padding_nhwc_relaxed_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy44
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -9754,7 +9754,7 @@ const TestModel& get_test_model_valid_padding_nhwc_relaxed_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param85
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -9764,7 +9764,7 @@ const TestModel& get_test_model_valid_padding_nhwc_relaxed_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op32_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f}),
                             .dimensions = {4},
@@ -9774,7 +9774,7 @@ const TestModel& get_test_model_valid_padding_nhwc_relaxed_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy45
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -9784,7 +9784,7 @@ const TestModel& get_test_model_valid_padding_nhwc_relaxed_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param86
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -9833,7 +9833,7 @@ const TestModel& get_test_model_valid_padding_nhwc_float16() {
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {0},
-                .operands = {{
+                .operands = {{ // op12
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({10.0f, 21.0f, 10.0f, 22.0f, 10.0f, 23.0f, 10.0f, 24.0f, 10.0f, 25.0f, 10.0f, 26.0f, 10.0f, 27.0f, 10.0f, 28.0f, 10.0f, 29.0f}),
                             .dimensions = {1, 3, 3, 2},
@@ -9843,7 +9843,7 @@ const TestModel& get_test_model_valid_padding_nhwc_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op22
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({0.25f, 0.0f, 0.20000000298023224f, 0.0f, 0.25f, 0.0f, 0.0f, 0.30000001192092896f, 0.25f, 0.0f, 0.0f, 0.0f, 0.25f, 0.10000000149011612f, 0.0f, 0.0f}),
                             .dimensions = {1, 2, 2, 4},
@@ -9853,7 +9853,7 @@ const TestModel& get_test_model_valid_padding_nhwc_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op32
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({1.0f, 2.0f, 3.0f, 4.0f}),
                             .dimensions = {4},
@@ -9863,7 +9863,7 @@ const TestModel& get_test_model_valid_padding_nhwc_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param20
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -9873,7 +9873,7 @@ const TestModel& get_test_model_valid_padding_nhwc_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param21
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -9883,7 +9883,7 @@ const TestModel& get_test_model_valid_padding_nhwc_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param22
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -9893,7 +9893,7 @@ const TestModel& get_test_model_valid_padding_nhwc_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param23
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -9903,7 +9903,7 @@ const TestModel& get_test_model_valid_padding_nhwc_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param24
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -9913,7 +9913,7 @@ const TestModel& get_test_model_valid_padding_nhwc_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -9923,7 +9923,7 @@ const TestModel& get_test_model_valid_padding_nhwc_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param25
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -9933,7 +9933,7 @@ const TestModel& get_test_model_valid_padding_nhwc_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param26
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -9943,7 +9943,7 @@ const TestModel& get_test_model_valid_padding_nhwc_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op42
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({11.0f, 3.0f, 7.199999809265137f, 10.600000381469727f, 11.0f, 3.0f, 7.400000095367432f, 10.899999618530273f, 11.0f, 3.0f, 7.800000190734863f, 11.5f, 11.0f, 3.0f, 8.0f, 11.800000190734863f}),
                             .dimensions = {1, 2, 2, 4},
@@ -9980,7 +9980,7 @@ const TestModel& get_test_model_valid_padding_nhwc_float16_all_inputs_as_interna
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {12},
-                .operands = {{
+                .operands = {{ // op12
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({}),
                             .dimensions = {1, 3, 3, 2},
@@ -9990,7 +9990,7 @@ const TestModel& get_test_model_valid_padding_nhwc_float16_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op22
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({0.25f, 0.0f, 0.20000000298023224f, 0.0f, 0.25f, 0.0f, 0.0f, 0.30000001192092896f, 0.25f, 0.0f, 0.0f, 0.0f, 0.25f, 0.10000000149011612f, 0.0f, 0.0f}),
                             .dimensions = {1, 2, 2, 4},
@@ -10000,7 +10000,7 @@ const TestModel& get_test_model_valid_padding_nhwc_float16_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op32
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({1.0f, 2.0f, 3.0f, 4.0f}),
                             .dimensions = {4},
@@ -10010,7 +10010,7 @@ const TestModel& get_test_model_valid_padding_nhwc_float16_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param20
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -10020,7 +10020,7 @@ const TestModel& get_test_model_valid_padding_nhwc_float16_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param21
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -10030,7 +10030,7 @@ const TestModel& get_test_model_valid_padding_nhwc_float16_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param22
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -10040,7 +10040,7 @@ const TestModel& get_test_model_valid_padding_nhwc_float16_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param23
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -10050,7 +10050,7 @@ const TestModel& get_test_model_valid_padding_nhwc_float16_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param24
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -10060,7 +10060,7 @@ const TestModel& get_test_model_valid_padding_nhwc_float16_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -10070,7 +10070,7 @@ const TestModel& get_test_model_valid_padding_nhwc_float16_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param25
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -10080,7 +10080,7 @@ const TestModel& get_test_model_valid_padding_nhwc_float16_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param26
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -10090,7 +10090,7 @@ const TestModel& get_test_model_valid_padding_nhwc_float16_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op42
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({11.0f, 3.0f, 7.199999809265137f, 10.600000381469727f, 11.0f, 3.0f, 7.400000095367432f, 10.899999618530273f, 11.0f, 3.0f, 7.800000190734863f, 11.5f, 11.0f, 3.0f, 8.0f, 11.800000190734863f}),
                             .dimensions = {1, 2, 2, 4},
@@ -10100,7 +10100,7 @@ const TestModel& get_test_model_valid_padding_nhwc_float16_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op12_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({10.0f, 21.0f, 10.0f, 22.0f, 10.0f, 23.0f, 10.0f, 24.0f, 10.0f, 25.0f, 10.0f, 26.0f, 10.0f, 27.0f, 10.0f, 28.0f, 10.0f, 29.0f}),
                             .dimensions = {1, 3, 3, 2},
@@ -10110,7 +10110,7 @@ const TestModel& get_test_model_valid_padding_nhwc_float16_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy46
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({0.0f}),
                             .dimensions = {1},
@@ -10120,7 +10120,7 @@ const TestModel& get_test_model_valid_padding_nhwc_float16_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param87
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -10161,7 +10161,7 @@ const TestModel& get_test_model_valid_padding_nhwc_float16_all_tensors_as_inputs
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {0, 1, 2},
-                .operands = {{
+                .operands = {{ // op12
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({10.0f, 21.0f, 10.0f, 22.0f, 10.0f, 23.0f, 10.0f, 24.0f, 10.0f, 25.0f, 10.0f, 26.0f, 10.0f, 27.0f, 10.0f, 28.0f, 10.0f, 29.0f}),
                             .dimensions = {1, 3, 3, 2},
@@ -10171,7 +10171,7 @@ const TestModel& get_test_model_valid_padding_nhwc_float16_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op22
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({0.25f, 0.0f, 0.20000000298023224f, 0.0f, 0.25f, 0.0f, 0.0f, 0.30000001192092896f, 0.25f, 0.0f, 0.0f, 0.0f, 0.25f, 0.10000000149011612f, 0.0f, 0.0f}),
                             .dimensions = {1, 2, 2, 4},
@@ -10181,7 +10181,7 @@ const TestModel& get_test_model_valid_padding_nhwc_float16_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op32
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({1.0f, 2.0f, 3.0f, 4.0f}),
                             .dimensions = {4},
@@ -10191,7 +10191,7 @@ const TestModel& get_test_model_valid_padding_nhwc_float16_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param20
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -10201,7 +10201,7 @@ const TestModel& get_test_model_valid_padding_nhwc_float16_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param21
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -10211,7 +10211,7 @@ const TestModel& get_test_model_valid_padding_nhwc_float16_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param22
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -10221,7 +10221,7 @@ const TestModel& get_test_model_valid_padding_nhwc_float16_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param23
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -10231,7 +10231,7 @@ const TestModel& get_test_model_valid_padding_nhwc_float16_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param24
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -10241,7 +10241,7 @@ const TestModel& get_test_model_valid_padding_nhwc_float16_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -10251,7 +10251,7 @@ const TestModel& get_test_model_valid_padding_nhwc_float16_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param25
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -10261,7 +10261,7 @@ const TestModel& get_test_model_valid_padding_nhwc_float16_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param26
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -10271,7 +10271,7 @@ const TestModel& get_test_model_valid_padding_nhwc_float16_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op42
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({11.0f, 3.0f, 7.199999809265137f, 10.600000381469727f, 11.0f, 3.0f, 7.400000095367432f, 10.899999618530273f, 11.0f, 3.0f, 7.800000190734863f, 11.5f, 11.0f, 3.0f, 8.0f, 11.800000190734863f}),
                             .dimensions = {1, 2, 2, 4},
@@ -10308,7 +10308,7 @@ const TestModel& get_test_model_valid_padding_nhwc_float16_all_tensors_as_inputs
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {12, 15, 18},
-                .operands = {{
+                .operands = {{ // op12
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({}),
                             .dimensions = {1, 3, 3, 2},
@@ -10318,7 +10318,7 @@ const TestModel& get_test_model_valid_padding_nhwc_float16_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op22
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({}),
                             .dimensions = {1, 2, 2, 4},
@@ -10328,7 +10328,7 @@ const TestModel& get_test_model_valid_padding_nhwc_float16_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op32
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({}),
                             .dimensions = {4},
@@ -10338,7 +10338,7 @@ const TestModel& get_test_model_valid_padding_nhwc_float16_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param20
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -10348,7 +10348,7 @@ const TestModel& get_test_model_valid_padding_nhwc_float16_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param21
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -10358,7 +10358,7 @@ const TestModel& get_test_model_valid_padding_nhwc_float16_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param22
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -10368,7 +10368,7 @@ const TestModel& get_test_model_valid_padding_nhwc_float16_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param23
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -10378,7 +10378,7 @@ const TestModel& get_test_model_valid_padding_nhwc_float16_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param24
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -10388,7 +10388,7 @@ const TestModel& get_test_model_valid_padding_nhwc_float16_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -10398,7 +10398,7 @@ const TestModel& get_test_model_valid_padding_nhwc_float16_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param25
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -10408,7 +10408,7 @@ const TestModel& get_test_model_valid_padding_nhwc_float16_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param26
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -10418,7 +10418,7 @@ const TestModel& get_test_model_valid_padding_nhwc_float16_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op42
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({11.0f, 3.0f, 7.199999809265137f, 10.600000381469727f, 11.0f, 3.0f, 7.400000095367432f, 10.899999618530273f, 11.0f, 3.0f, 7.800000190734863f, 11.5f, 11.0f, 3.0f, 8.0f, 11.800000190734863f}),
                             .dimensions = {1, 2, 2, 4},
@@ -10428,7 +10428,7 @@ const TestModel& get_test_model_valid_padding_nhwc_float16_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op12_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({10.0f, 21.0f, 10.0f, 22.0f, 10.0f, 23.0f, 10.0f, 24.0f, 10.0f, 25.0f, 10.0f, 26.0f, 10.0f, 27.0f, 10.0f, 28.0f, 10.0f, 29.0f}),
                             .dimensions = {1, 3, 3, 2},
@@ -10438,7 +10438,7 @@ const TestModel& get_test_model_valid_padding_nhwc_float16_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy47
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({0.0f}),
                             .dimensions = {1},
@@ -10448,7 +10448,7 @@ const TestModel& get_test_model_valid_padding_nhwc_float16_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param88
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -10458,7 +10458,7 @@ const TestModel& get_test_model_valid_padding_nhwc_float16_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op22_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({0.25f, 0.0f, 0.20000000298023224f, 0.0f, 0.25f, 0.0f, 0.0f, 0.30000001192092896f, 0.25f, 0.0f, 0.0f, 0.0f, 0.25f, 0.10000000149011612f, 0.0f, 0.0f}),
                             .dimensions = {1, 2, 2, 4},
@@ -10468,7 +10468,7 @@ const TestModel& get_test_model_valid_padding_nhwc_float16_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy48
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({0.0f}),
                             .dimensions = {1},
@@ -10478,7 +10478,7 @@ const TestModel& get_test_model_valid_padding_nhwc_float16_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param89
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -10488,7 +10488,7 @@ const TestModel& get_test_model_valid_padding_nhwc_float16_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op32_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({1.0f, 2.0f, 3.0f, 4.0f}),
                             .dimensions = {4},
@@ -10498,7 +10498,7 @@ const TestModel& get_test_model_valid_padding_nhwc_float16_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy49
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({0.0f}),
                             .dimensions = {1},
@@ -10508,7 +10508,7 @@ const TestModel& get_test_model_valid_padding_nhwc_float16_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param90
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -10557,7 +10557,7 @@ const TestModel& get_test_model_valid_padding_nhwc_quant8() {
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {0},
-                .operands = {{
+                .operands = {{ // op12
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({20, 42, 20, 44, 20, 46, 20, 48, 20, 50, 20, 52, 20, 54, 20, 56, 20, 58}),
                             .dimensions = {1, 3, 3, 2},
@@ -10567,7 +10567,7 @@ const TestModel& get_test_model_valid_padding_nhwc_quant8() {
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op22
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({25, 0, 20, 0, 25, 0, 0, 30, 25, 0, 0, 0, 25, 10, 0, 0}),
                             .dimensions = {1, 2, 2, 4},
@@ -10577,7 +10577,7 @@ const TestModel& get_test_model_valid_padding_nhwc_quant8() {
                             .scale = 0.01f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op32
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({200, 400, 600, 800}),
                             .dimensions = {4},
@@ -10587,7 +10587,7 @@ const TestModel& get_test_model_valid_padding_nhwc_quant8() {
                             .scale = 0.005f,
                             .type = TestOperandType::TENSOR_INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param20
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -10597,7 +10597,7 @@ const TestModel& get_test_model_valid_padding_nhwc_quant8() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param21
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -10607,7 +10607,7 @@ const TestModel& get_test_model_valid_padding_nhwc_quant8() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param22
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -10617,7 +10617,7 @@ const TestModel& get_test_model_valid_padding_nhwc_quant8() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param23
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -10627,7 +10627,7 @@ const TestModel& get_test_model_valid_padding_nhwc_quant8() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param24
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -10637,7 +10637,7 @@ const TestModel& get_test_model_valid_padding_nhwc_quant8() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -10647,7 +10647,7 @@ const TestModel& get_test_model_valid_padding_nhwc_quant8() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param25
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -10657,7 +10657,7 @@ const TestModel& get_test_model_valid_padding_nhwc_quant8() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param26
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -10667,7 +10667,7 @@ const TestModel& get_test_model_valid_padding_nhwc_quant8() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op42
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({110, 30, 72, 106, 110, 30, 74, 109, 110, 30, 78, 115, 110, 30, 80, 118}),
                             .dimensions = {1, 2, 2, 4},
@@ -10704,7 +10704,7 @@ const TestModel& get_test_model_valid_padding_nhwc_quant8_all_inputs_as_internal
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {12},
-                .operands = {{
+                .operands = {{ // op12
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({}),
                             .dimensions = {1, 3, 3, 2},
@@ -10714,7 +10714,7 @@ const TestModel& get_test_model_valid_padding_nhwc_quant8_all_inputs_as_internal
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op22
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({25, 0, 20, 0, 25, 0, 0, 30, 25, 0, 0, 0, 25, 10, 0, 0}),
                             .dimensions = {1, 2, 2, 4},
@@ -10724,7 +10724,7 @@ const TestModel& get_test_model_valid_padding_nhwc_quant8_all_inputs_as_internal
                             .scale = 0.01f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op32
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({200, 400, 600, 800}),
                             .dimensions = {4},
@@ -10734,7 +10734,7 @@ const TestModel& get_test_model_valid_padding_nhwc_quant8_all_inputs_as_internal
                             .scale = 0.005f,
                             .type = TestOperandType::TENSOR_INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param20
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -10744,7 +10744,7 @@ const TestModel& get_test_model_valid_padding_nhwc_quant8_all_inputs_as_internal
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param21
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -10754,7 +10754,7 @@ const TestModel& get_test_model_valid_padding_nhwc_quant8_all_inputs_as_internal
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param22
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -10764,7 +10764,7 @@ const TestModel& get_test_model_valid_padding_nhwc_quant8_all_inputs_as_internal
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param23
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -10774,7 +10774,7 @@ const TestModel& get_test_model_valid_padding_nhwc_quant8_all_inputs_as_internal
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param24
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -10784,7 +10784,7 @@ const TestModel& get_test_model_valid_padding_nhwc_quant8_all_inputs_as_internal
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -10794,7 +10794,7 @@ const TestModel& get_test_model_valid_padding_nhwc_quant8_all_inputs_as_internal
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param25
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -10804,7 +10804,7 @@ const TestModel& get_test_model_valid_padding_nhwc_quant8_all_inputs_as_internal
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param26
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -10814,7 +10814,7 @@ const TestModel& get_test_model_valid_padding_nhwc_quant8_all_inputs_as_internal
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op42
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({110, 30, 72, 106, 110, 30, 74, 109, 110, 30, 78, 115, 110, 30, 80, 118}),
                             .dimensions = {1, 2, 2, 4},
@@ -10824,7 +10824,7 @@ const TestModel& get_test_model_valid_padding_nhwc_quant8_all_inputs_as_internal
                             .scale = 0.1f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op12_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({20, 42, 20, 44, 20, 46, 20, 48, 20, 50, 20, 52, 20, 54, 20, 56, 20, 58}),
                             .dimensions = {1, 3, 3, 2},
@@ -10834,7 +10834,7 @@ const TestModel& get_test_model_valid_padding_nhwc_quant8_all_inputs_as_internal
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy50
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({0}),
                             .dimensions = {1},
@@ -10844,7 +10844,7 @@ const TestModel& get_test_model_valid_padding_nhwc_quant8_all_inputs_as_internal
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param91
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -10885,7 +10885,7 @@ const TestModel& get_test_model_valid_padding_nhwc_quant8_all_tensors_as_inputs(
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {0, 1, 2},
-                .operands = {{
+                .operands = {{ // op12
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({20, 42, 20, 44, 20, 46, 20, 48, 20, 50, 20, 52, 20, 54, 20, 56, 20, 58}),
                             .dimensions = {1, 3, 3, 2},
@@ -10895,7 +10895,7 @@ const TestModel& get_test_model_valid_padding_nhwc_quant8_all_tensors_as_inputs(
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op22
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({25, 0, 20, 0, 25, 0, 0, 30, 25, 0, 0, 0, 25, 10, 0, 0}),
                             .dimensions = {1, 2, 2, 4},
@@ -10905,7 +10905,7 @@ const TestModel& get_test_model_valid_padding_nhwc_quant8_all_tensors_as_inputs(
                             .scale = 0.01f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op32
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({200, 400, 600, 800}),
                             .dimensions = {4},
@@ -10915,7 +10915,7 @@ const TestModel& get_test_model_valid_padding_nhwc_quant8_all_tensors_as_inputs(
                             .scale = 0.005f,
                             .type = TestOperandType::TENSOR_INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param20
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -10925,7 +10925,7 @@ const TestModel& get_test_model_valid_padding_nhwc_quant8_all_tensors_as_inputs(
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param21
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -10935,7 +10935,7 @@ const TestModel& get_test_model_valid_padding_nhwc_quant8_all_tensors_as_inputs(
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param22
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -10945,7 +10945,7 @@ const TestModel& get_test_model_valid_padding_nhwc_quant8_all_tensors_as_inputs(
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param23
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -10955,7 +10955,7 @@ const TestModel& get_test_model_valid_padding_nhwc_quant8_all_tensors_as_inputs(
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param24
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -10965,7 +10965,7 @@ const TestModel& get_test_model_valid_padding_nhwc_quant8_all_tensors_as_inputs(
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -10975,7 +10975,7 @@ const TestModel& get_test_model_valid_padding_nhwc_quant8_all_tensors_as_inputs(
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param25
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -10985,7 +10985,7 @@ const TestModel& get_test_model_valid_padding_nhwc_quant8_all_tensors_as_inputs(
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param26
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -10995,7 +10995,7 @@ const TestModel& get_test_model_valid_padding_nhwc_quant8_all_tensors_as_inputs(
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op42
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({110, 30, 72, 106, 110, 30, 74, 109, 110, 30, 78, 115, 110, 30, 80, 118}),
                             .dimensions = {1, 2, 2, 4},
@@ -11032,7 +11032,7 @@ const TestModel& get_test_model_valid_padding_nhwc_quant8_all_tensors_as_inputs_
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {2, 12, 15},
-                .operands = {{
+                .operands = {{ // op12
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({}),
                             .dimensions = {1, 3, 3, 2},
@@ -11042,7 +11042,7 @@ const TestModel& get_test_model_valid_padding_nhwc_quant8_all_tensors_as_inputs_
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op22
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({}),
                             .dimensions = {1, 2, 2, 4},
@@ -11052,7 +11052,7 @@ const TestModel& get_test_model_valid_padding_nhwc_quant8_all_tensors_as_inputs_
                             .scale = 0.01f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op32
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({200, 400, 600, 800}),
                             .dimensions = {4},
@@ -11062,7 +11062,7 @@ const TestModel& get_test_model_valid_padding_nhwc_quant8_all_tensors_as_inputs_
                             .scale = 0.005f,
                             .type = TestOperandType::TENSOR_INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param20
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -11072,7 +11072,7 @@ const TestModel& get_test_model_valid_padding_nhwc_quant8_all_tensors_as_inputs_
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param21
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -11082,7 +11082,7 @@ const TestModel& get_test_model_valid_padding_nhwc_quant8_all_tensors_as_inputs_
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param22
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -11092,7 +11092,7 @@ const TestModel& get_test_model_valid_padding_nhwc_quant8_all_tensors_as_inputs_
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param23
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -11102,7 +11102,7 @@ const TestModel& get_test_model_valid_padding_nhwc_quant8_all_tensors_as_inputs_
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param24
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -11112,7 +11112,7 @@ const TestModel& get_test_model_valid_padding_nhwc_quant8_all_tensors_as_inputs_
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -11122,7 +11122,7 @@ const TestModel& get_test_model_valid_padding_nhwc_quant8_all_tensors_as_inputs_
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param25
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -11132,7 +11132,7 @@ const TestModel& get_test_model_valid_padding_nhwc_quant8_all_tensors_as_inputs_
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param26
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -11142,7 +11142,7 @@ const TestModel& get_test_model_valid_padding_nhwc_quant8_all_tensors_as_inputs_
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op42
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({110, 30, 72, 106, 110, 30, 74, 109, 110, 30, 78, 115, 110, 30, 80, 118}),
                             .dimensions = {1, 2, 2, 4},
@@ -11152,7 +11152,7 @@ const TestModel& get_test_model_valid_padding_nhwc_quant8_all_tensors_as_inputs_
                             .scale = 0.1f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op12_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({20, 42, 20, 44, 20, 46, 20, 48, 20, 50, 20, 52, 20, 54, 20, 56, 20, 58}),
                             .dimensions = {1, 3, 3, 2},
@@ -11162,7 +11162,7 @@ const TestModel& get_test_model_valid_padding_nhwc_quant8_all_tensors_as_inputs_
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy51
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({0}),
                             .dimensions = {1},
@@ -11172,7 +11172,7 @@ const TestModel& get_test_model_valid_padding_nhwc_quant8_all_tensors_as_inputs_
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param92
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -11182,7 +11182,7 @@ const TestModel& get_test_model_valid_padding_nhwc_quant8_all_tensors_as_inputs_
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op22_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({25, 0, 20, 0, 25, 0, 0, 30, 25, 0, 0, 0, 25, 10, 0, 0}),
                             .dimensions = {1, 2, 2, 4},
@@ -11192,7 +11192,7 @@ const TestModel& get_test_model_valid_padding_nhwc_quant8_all_tensors_as_inputs_
                             .scale = 0.01f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy52
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({0}),
                             .dimensions = {1},
@@ -11202,7 +11202,7 @@ const TestModel& get_test_model_valid_padding_nhwc_quant8_all_tensors_as_inputs_
                             .scale = 0.01f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param93
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -11247,7 +11247,7 @@ const TestModel& get_test_model_valid_padding_nchw() {
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {0},
-                .operands = {{
+                .operands = {{ // op12
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 21.0f, 22.0f, 23.0f, 24.0f, 25.0f, 26.0f, 27.0f, 28.0f, 29.0f}),
                             .dimensions = {1, 2, 3, 3},
@@ -11257,7 +11257,7 @@ const TestModel& get_test_model_valid_padding_nchw() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op22
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.25f, 0.0f, 0.2f, 0.0f, 0.25f, 0.0f, 0.0f, 0.3f, 0.25f, 0.0f, 0.0f, 0.0f, 0.25f, 0.1f, 0.0f, 0.0f}),
                             .dimensions = {1, 2, 2, 4},
@@ -11267,7 +11267,7 @@ const TestModel& get_test_model_valid_padding_nchw() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op32
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f}),
                             .dimensions = {4},
@@ -11277,7 +11277,7 @@ const TestModel& get_test_model_valid_padding_nchw() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param20
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -11287,7 +11287,7 @@ const TestModel& get_test_model_valid_padding_nchw() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param21
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -11297,7 +11297,7 @@ const TestModel& get_test_model_valid_padding_nchw() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param22
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -11307,7 +11307,7 @@ const TestModel& get_test_model_valid_padding_nchw() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param23
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -11317,7 +11317,7 @@ const TestModel& get_test_model_valid_padding_nchw() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param24
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -11327,7 +11327,7 @@ const TestModel& get_test_model_valid_padding_nchw() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -11337,7 +11337,7 @@ const TestModel& get_test_model_valid_padding_nchw() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param25
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -11347,7 +11347,7 @@ const TestModel& get_test_model_valid_padding_nchw() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param26
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -11357,7 +11357,7 @@ const TestModel& get_test_model_valid_padding_nchw() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op42
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({11.0f, 11.0f, 11.0f, 11.0f, 3.0f, 3.0f, 3.0f, 3.0f, 7.2f, 7.4f, 7.8f, 8.0f, 10.6f, 10.9f, 11.5f, 11.8f}),
                             .dimensions = {1, 4, 2, 2},
@@ -11394,7 +11394,7 @@ const TestModel& get_test_model_valid_padding_nchw_all_inputs_as_internal() {
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {12},
-                .operands = {{
+                .operands = {{ // op12
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {1, 2, 3, 3},
@@ -11404,7 +11404,7 @@ const TestModel& get_test_model_valid_padding_nchw_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op22
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.25f, 0.0f, 0.2f, 0.0f, 0.25f, 0.0f, 0.0f, 0.3f, 0.25f, 0.0f, 0.0f, 0.0f, 0.25f, 0.1f, 0.0f, 0.0f}),
                             .dimensions = {1, 2, 2, 4},
@@ -11414,7 +11414,7 @@ const TestModel& get_test_model_valid_padding_nchw_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op32
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f}),
                             .dimensions = {4},
@@ -11424,7 +11424,7 @@ const TestModel& get_test_model_valid_padding_nchw_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param20
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -11434,7 +11434,7 @@ const TestModel& get_test_model_valid_padding_nchw_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param21
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -11444,7 +11444,7 @@ const TestModel& get_test_model_valid_padding_nchw_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param22
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -11454,7 +11454,7 @@ const TestModel& get_test_model_valid_padding_nchw_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param23
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -11464,7 +11464,7 @@ const TestModel& get_test_model_valid_padding_nchw_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param24
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -11474,7 +11474,7 @@ const TestModel& get_test_model_valid_padding_nchw_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -11484,7 +11484,7 @@ const TestModel& get_test_model_valid_padding_nchw_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param25
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -11494,7 +11494,7 @@ const TestModel& get_test_model_valid_padding_nchw_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param26
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -11504,7 +11504,7 @@ const TestModel& get_test_model_valid_padding_nchw_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op42
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({11.0f, 11.0f, 11.0f, 11.0f, 3.0f, 3.0f, 3.0f, 3.0f, 7.2f, 7.4f, 7.8f, 8.0f, 10.6f, 10.9f, 11.5f, 11.8f}),
                             .dimensions = {1, 4, 2, 2},
@@ -11514,7 +11514,7 @@ const TestModel& get_test_model_valid_padding_nchw_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op12_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 21.0f, 22.0f, 23.0f, 24.0f, 25.0f, 26.0f, 27.0f, 28.0f, 29.0f}),
                             .dimensions = {1, 2, 3, 3},
@@ -11524,7 +11524,7 @@ const TestModel& get_test_model_valid_padding_nchw_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy53
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -11534,7 +11534,7 @@ const TestModel& get_test_model_valid_padding_nchw_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param94
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -11575,7 +11575,7 @@ const TestModel& get_test_model_valid_padding_nchw_all_tensors_as_inputs() {
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {0, 1, 2},
-                .operands = {{
+                .operands = {{ // op12
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 21.0f, 22.0f, 23.0f, 24.0f, 25.0f, 26.0f, 27.0f, 28.0f, 29.0f}),
                             .dimensions = {1, 2, 3, 3},
@@ -11585,7 +11585,7 @@ const TestModel& get_test_model_valid_padding_nchw_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op22
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.25f, 0.0f, 0.2f, 0.0f, 0.25f, 0.0f, 0.0f, 0.3f, 0.25f, 0.0f, 0.0f, 0.0f, 0.25f, 0.1f, 0.0f, 0.0f}),
                             .dimensions = {1, 2, 2, 4},
@@ -11595,7 +11595,7 @@ const TestModel& get_test_model_valid_padding_nchw_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op32
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f}),
                             .dimensions = {4},
@@ -11605,7 +11605,7 @@ const TestModel& get_test_model_valid_padding_nchw_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param20
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -11615,7 +11615,7 @@ const TestModel& get_test_model_valid_padding_nchw_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param21
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -11625,7 +11625,7 @@ const TestModel& get_test_model_valid_padding_nchw_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param22
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -11635,7 +11635,7 @@ const TestModel& get_test_model_valid_padding_nchw_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param23
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -11645,7 +11645,7 @@ const TestModel& get_test_model_valid_padding_nchw_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param24
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -11655,7 +11655,7 @@ const TestModel& get_test_model_valid_padding_nchw_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -11665,7 +11665,7 @@ const TestModel& get_test_model_valid_padding_nchw_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param25
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -11675,7 +11675,7 @@ const TestModel& get_test_model_valid_padding_nchw_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param26
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -11685,7 +11685,7 @@ const TestModel& get_test_model_valid_padding_nchw_all_tensors_as_inputs() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op42
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({11.0f, 11.0f, 11.0f, 11.0f, 3.0f, 3.0f, 3.0f, 3.0f, 7.2f, 7.4f, 7.8f, 8.0f, 10.6f, 10.9f, 11.5f, 11.8f}),
                             .dimensions = {1, 4, 2, 2},
@@ -11722,7 +11722,7 @@ const TestModel& get_test_model_valid_padding_nchw_all_tensors_as_inputs_all_inp
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {12, 15, 18},
-                .operands = {{
+                .operands = {{ // op12
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {1, 2, 3, 3},
@@ -11732,7 +11732,7 @@ const TestModel& get_test_model_valid_padding_nchw_all_tensors_as_inputs_all_inp
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op22
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {1, 2, 2, 4},
@@ -11742,7 +11742,7 @@ const TestModel& get_test_model_valid_padding_nchw_all_tensors_as_inputs_all_inp
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op32
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {4},
@@ -11752,7 +11752,7 @@ const TestModel& get_test_model_valid_padding_nchw_all_tensors_as_inputs_all_inp
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param20
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -11762,7 +11762,7 @@ const TestModel& get_test_model_valid_padding_nchw_all_tensors_as_inputs_all_inp
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param21
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -11772,7 +11772,7 @@ const TestModel& get_test_model_valid_padding_nchw_all_tensors_as_inputs_all_inp
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param22
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -11782,7 +11782,7 @@ const TestModel& get_test_model_valid_padding_nchw_all_tensors_as_inputs_all_inp
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param23
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -11792,7 +11792,7 @@ const TestModel& get_test_model_valid_padding_nchw_all_tensors_as_inputs_all_inp
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param24
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -11802,7 +11802,7 @@ const TestModel& get_test_model_valid_padding_nchw_all_tensors_as_inputs_all_inp
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -11812,7 +11812,7 @@ const TestModel& get_test_model_valid_padding_nchw_all_tensors_as_inputs_all_inp
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param25
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -11822,7 +11822,7 @@ const TestModel& get_test_model_valid_padding_nchw_all_tensors_as_inputs_all_inp
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param26
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -11832,7 +11832,7 @@ const TestModel& get_test_model_valid_padding_nchw_all_tensors_as_inputs_all_inp
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op42
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({11.0f, 11.0f, 11.0f, 11.0f, 3.0f, 3.0f, 3.0f, 3.0f, 7.2f, 7.4f, 7.8f, 8.0f, 10.6f, 10.9f, 11.5f, 11.8f}),
                             .dimensions = {1, 4, 2, 2},
@@ -11842,7 +11842,7 @@ const TestModel& get_test_model_valid_padding_nchw_all_tensors_as_inputs_all_inp
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op12_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 21.0f, 22.0f, 23.0f, 24.0f, 25.0f, 26.0f, 27.0f, 28.0f, 29.0f}),
                             .dimensions = {1, 2, 3, 3},
@@ -11852,7 +11852,7 @@ const TestModel& get_test_model_valid_padding_nchw_all_tensors_as_inputs_all_inp
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy54
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -11862,7 +11862,7 @@ const TestModel& get_test_model_valid_padding_nchw_all_tensors_as_inputs_all_inp
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param95
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -11872,7 +11872,7 @@ const TestModel& get_test_model_valid_padding_nchw_all_tensors_as_inputs_all_inp
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op22_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.25f, 0.0f, 0.2f, 0.0f, 0.25f, 0.0f, 0.0f, 0.3f, 0.25f, 0.0f, 0.0f, 0.0f, 0.25f, 0.1f, 0.0f, 0.0f}),
                             .dimensions = {1, 2, 2, 4},
@@ -11882,7 +11882,7 @@ const TestModel& get_test_model_valid_padding_nchw_all_tensors_as_inputs_all_inp
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy55
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -11892,7 +11892,7 @@ const TestModel& get_test_model_valid_padding_nchw_all_tensors_as_inputs_all_inp
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param96
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -11902,7 +11902,7 @@ const TestModel& get_test_model_valid_padding_nchw_all_tensors_as_inputs_all_inp
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op32_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f}),
                             .dimensions = {4},
@@ -11912,7 +11912,7 @@ const TestModel& get_test_model_valid_padding_nchw_all_tensors_as_inputs_all_inp
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy56
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -11922,7 +11922,7 @@ const TestModel& get_test_model_valid_padding_nchw_all_tensors_as_inputs_all_inp
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param97
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -11971,7 +11971,7 @@ const TestModel& get_test_model_valid_padding_nchw_relaxed() {
         .isRelaxed = true,
         .main = {
                 .inputIndexes = {0},
-                .operands = {{
+                .operands = {{ // op12
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 21.0f, 22.0f, 23.0f, 24.0f, 25.0f, 26.0f, 27.0f, 28.0f, 29.0f}),
                             .dimensions = {1, 2, 3, 3},
@@ -11981,7 +11981,7 @@ const TestModel& get_test_model_valid_padding_nchw_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op22
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.25f, 0.0f, 0.2f, 0.0f, 0.25f, 0.0f, 0.0f, 0.3f, 0.25f, 0.0f, 0.0f, 0.0f, 0.25f, 0.1f, 0.0f, 0.0f}),
                             .dimensions = {1, 2, 2, 4},
@@ -11991,7 +11991,7 @@ const TestModel& get_test_model_valid_padding_nchw_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op32
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f}),
                             .dimensions = {4},
@@ -12001,7 +12001,7 @@ const TestModel& get_test_model_valid_padding_nchw_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param20
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -12011,7 +12011,7 @@ const TestModel& get_test_model_valid_padding_nchw_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param21
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -12021,7 +12021,7 @@ const TestModel& get_test_model_valid_padding_nchw_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param22
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -12031,7 +12031,7 @@ const TestModel& get_test_model_valid_padding_nchw_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param23
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -12041,7 +12041,7 @@ const TestModel& get_test_model_valid_padding_nchw_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param24
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -12051,7 +12051,7 @@ const TestModel& get_test_model_valid_padding_nchw_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -12061,7 +12061,7 @@ const TestModel& get_test_model_valid_padding_nchw_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param25
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -12071,7 +12071,7 @@ const TestModel& get_test_model_valid_padding_nchw_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param26
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -12081,7 +12081,7 @@ const TestModel& get_test_model_valid_padding_nchw_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op42
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({11.0f, 11.0f, 11.0f, 11.0f, 3.0f, 3.0f, 3.0f, 3.0f, 7.2f, 7.4f, 7.8f, 8.0f, 10.6f, 10.9f, 11.5f, 11.8f}),
                             .dimensions = {1, 4, 2, 2},
@@ -12118,7 +12118,7 @@ const TestModel& get_test_model_valid_padding_nchw_relaxed_all_inputs_as_interna
         .isRelaxed = true,
         .main = {
                 .inputIndexes = {12},
-                .operands = {{
+                .operands = {{ // op12
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {1, 2, 3, 3},
@@ -12128,7 +12128,7 @@ const TestModel& get_test_model_valid_padding_nchw_relaxed_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op22
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.25f, 0.0f, 0.2f, 0.0f, 0.25f, 0.0f, 0.0f, 0.3f, 0.25f, 0.0f, 0.0f, 0.0f, 0.25f, 0.1f, 0.0f, 0.0f}),
                             .dimensions = {1, 2, 2, 4},
@@ -12138,7 +12138,7 @@ const TestModel& get_test_model_valid_padding_nchw_relaxed_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op32
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f}),
                             .dimensions = {4},
@@ -12148,7 +12148,7 @@ const TestModel& get_test_model_valid_padding_nchw_relaxed_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param20
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -12158,7 +12158,7 @@ const TestModel& get_test_model_valid_padding_nchw_relaxed_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param21
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -12168,7 +12168,7 @@ const TestModel& get_test_model_valid_padding_nchw_relaxed_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param22
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -12178,7 +12178,7 @@ const TestModel& get_test_model_valid_padding_nchw_relaxed_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param23
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -12188,7 +12188,7 @@ const TestModel& get_test_model_valid_padding_nchw_relaxed_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param24
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -12198,7 +12198,7 @@ const TestModel& get_test_model_valid_padding_nchw_relaxed_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -12208,7 +12208,7 @@ const TestModel& get_test_model_valid_padding_nchw_relaxed_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param25
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -12218,7 +12218,7 @@ const TestModel& get_test_model_valid_padding_nchw_relaxed_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param26
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -12228,7 +12228,7 @@ const TestModel& get_test_model_valid_padding_nchw_relaxed_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op42
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({11.0f, 11.0f, 11.0f, 11.0f, 3.0f, 3.0f, 3.0f, 3.0f, 7.2f, 7.4f, 7.8f, 8.0f, 10.6f, 10.9f, 11.5f, 11.8f}),
                             .dimensions = {1, 4, 2, 2},
@@ -12238,7 +12238,7 @@ const TestModel& get_test_model_valid_padding_nchw_relaxed_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op12_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 21.0f, 22.0f, 23.0f, 24.0f, 25.0f, 26.0f, 27.0f, 28.0f, 29.0f}),
                             .dimensions = {1, 2, 3, 3},
@@ -12248,7 +12248,7 @@ const TestModel& get_test_model_valid_padding_nchw_relaxed_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy57
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -12258,7 +12258,7 @@ const TestModel& get_test_model_valid_padding_nchw_relaxed_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param98
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -12299,7 +12299,7 @@ const TestModel& get_test_model_valid_padding_nchw_relaxed_all_tensors_as_inputs
         .isRelaxed = true,
         .main = {
                 .inputIndexes = {0, 1, 2},
-                .operands = {{
+                .operands = {{ // op12
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 21.0f, 22.0f, 23.0f, 24.0f, 25.0f, 26.0f, 27.0f, 28.0f, 29.0f}),
                             .dimensions = {1, 2, 3, 3},
@@ -12309,7 +12309,7 @@ const TestModel& get_test_model_valid_padding_nchw_relaxed_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op22
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.25f, 0.0f, 0.2f, 0.0f, 0.25f, 0.0f, 0.0f, 0.3f, 0.25f, 0.0f, 0.0f, 0.0f, 0.25f, 0.1f, 0.0f, 0.0f}),
                             .dimensions = {1, 2, 2, 4},
@@ -12319,7 +12319,7 @@ const TestModel& get_test_model_valid_padding_nchw_relaxed_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op32
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f}),
                             .dimensions = {4},
@@ -12329,7 +12329,7 @@ const TestModel& get_test_model_valid_padding_nchw_relaxed_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param20
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -12339,7 +12339,7 @@ const TestModel& get_test_model_valid_padding_nchw_relaxed_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param21
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -12349,7 +12349,7 @@ const TestModel& get_test_model_valid_padding_nchw_relaxed_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param22
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -12359,7 +12359,7 @@ const TestModel& get_test_model_valid_padding_nchw_relaxed_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param23
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -12369,7 +12369,7 @@ const TestModel& get_test_model_valid_padding_nchw_relaxed_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param24
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -12379,7 +12379,7 @@ const TestModel& get_test_model_valid_padding_nchw_relaxed_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -12389,7 +12389,7 @@ const TestModel& get_test_model_valid_padding_nchw_relaxed_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param25
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -12399,7 +12399,7 @@ const TestModel& get_test_model_valid_padding_nchw_relaxed_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param26
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -12409,7 +12409,7 @@ const TestModel& get_test_model_valid_padding_nchw_relaxed_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op42
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({11.0f, 11.0f, 11.0f, 11.0f, 3.0f, 3.0f, 3.0f, 3.0f, 7.2f, 7.4f, 7.8f, 8.0f, 10.6f, 10.9f, 11.5f, 11.8f}),
                             .dimensions = {1, 4, 2, 2},
@@ -12446,7 +12446,7 @@ const TestModel& get_test_model_valid_padding_nchw_relaxed_all_tensors_as_inputs
         .isRelaxed = true,
         .main = {
                 .inputIndexes = {12, 15, 18},
-                .operands = {{
+                .operands = {{ // op12
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {1, 2, 3, 3},
@@ -12456,7 +12456,7 @@ const TestModel& get_test_model_valid_padding_nchw_relaxed_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op22
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {1, 2, 2, 4},
@@ -12466,7 +12466,7 @@ const TestModel& get_test_model_valid_padding_nchw_relaxed_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op32
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {4},
@@ -12476,7 +12476,7 @@ const TestModel& get_test_model_valid_padding_nchw_relaxed_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param20
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -12486,7 +12486,7 @@ const TestModel& get_test_model_valid_padding_nchw_relaxed_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param21
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -12496,7 +12496,7 @@ const TestModel& get_test_model_valid_padding_nchw_relaxed_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param22
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -12506,7 +12506,7 @@ const TestModel& get_test_model_valid_padding_nchw_relaxed_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param23
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -12516,7 +12516,7 @@ const TestModel& get_test_model_valid_padding_nchw_relaxed_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param24
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -12526,7 +12526,7 @@ const TestModel& get_test_model_valid_padding_nchw_relaxed_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -12536,7 +12536,7 @@ const TestModel& get_test_model_valid_padding_nchw_relaxed_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param25
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -12546,7 +12546,7 @@ const TestModel& get_test_model_valid_padding_nchw_relaxed_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param26
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -12556,7 +12556,7 @@ const TestModel& get_test_model_valid_padding_nchw_relaxed_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op42
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({11.0f, 11.0f, 11.0f, 11.0f, 3.0f, 3.0f, 3.0f, 3.0f, 7.2f, 7.4f, 7.8f, 8.0f, 10.6f, 10.9f, 11.5f, 11.8f}),
                             .dimensions = {1, 4, 2, 2},
@@ -12566,7 +12566,7 @@ const TestModel& get_test_model_valid_padding_nchw_relaxed_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op12_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 21.0f, 22.0f, 23.0f, 24.0f, 25.0f, 26.0f, 27.0f, 28.0f, 29.0f}),
                             .dimensions = {1, 2, 3, 3},
@@ -12576,7 +12576,7 @@ const TestModel& get_test_model_valid_padding_nchw_relaxed_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy58
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -12586,7 +12586,7 @@ const TestModel& get_test_model_valid_padding_nchw_relaxed_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param99
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -12596,7 +12596,7 @@ const TestModel& get_test_model_valid_padding_nchw_relaxed_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op22_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.25f, 0.0f, 0.2f, 0.0f, 0.25f, 0.0f, 0.0f, 0.3f, 0.25f, 0.0f, 0.0f, 0.0f, 0.25f, 0.1f, 0.0f, 0.0f}),
                             .dimensions = {1, 2, 2, 4},
@@ -12606,7 +12606,7 @@ const TestModel& get_test_model_valid_padding_nchw_relaxed_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy59
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -12616,7 +12616,7 @@ const TestModel& get_test_model_valid_padding_nchw_relaxed_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param100
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -12626,7 +12626,7 @@ const TestModel& get_test_model_valid_padding_nchw_relaxed_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op32_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f}),
                             .dimensions = {4},
@@ -12636,7 +12636,7 @@ const TestModel& get_test_model_valid_padding_nchw_relaxed_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy60
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -12646,7 +12646,7 @@ const TestModel& get_test_model_valid_padding_nchw_relaxed_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param101
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -12695,7 +12695,7 @@ const TestModel& get_test_model_valid_padding_nchw_float16() {
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {0},
-                .operands = {{
+                .operands = {{ // op12
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 21.0f, 22.0f, 23.0f, 24.0f, 25.0f, 26.0f, 27.0f, 28.0f, 29.0f}),
                             .dimensions = {1, 2, 3, 3},
@@ -12705,7 +12705,7 @@ const TestModel& get_test_model_valid_padding_nchw_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op22
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({0.25f, 0.0f, 0.20000000298023224f, 0.0f, 0.25f, 0.0f, 0.0f, 0.30000001192092896f, 0.25f, 0.0f, 0.0f, 0.0f, 0.25f, 0.10000000149011612f, 0.0f, 0.0f}),
                             .dimensions = {1, 2, 2, 4},
@@ -12715,7 +12715,7 @@ const TestModel& get_test_model_valid_padding_nchw_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op32
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({1.0f, 2.0f, 3.0f, 4.0f}),
                             .dimensions = {4},
@@ -12725,7 +12725,7 @@ const TestModel& get_test_model_valid_padding_nchw_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param20
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -12735,7 +12735,7 @@ const TestModel& get_test_model_valid_padding_nchw_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param21
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -12745,7 +12745,7 @@ const TestModel& get_test_model_valid_padding_nchw_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param22
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -12755,7 +12755,7 @@ const TestModel& get_test_model_valid_padding_nchw_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param23
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -12765,7 +12765,7 @@ const TestModel& get_test_model_valid_padding_nchw_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param24
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -12775,7 +12775,7 @@ const TestModel& get_test_model_valid_padding_nchw_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -12785,7 +12785,7 @@ const TestModel& get_test_model_valid_padding_nchw_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param25
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -12795,7 +12795,7 @@ const TestModel& get_test_model_valid_padding_nchw_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param26
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -12805,7 +12805,7 @@ const TestModel& get_test_model_valid_padding_nchw_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op42
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({11.0f, 11.0f, 11.0f, 11.0f, 3.0f, 3.0f, 3.0f, 3.0f, 7.199999809265137f, 7.400000095367432f, 7.800000190734863f, 8.0f, 10.600000381469727f, 10.899999618530273f, 11.5f, 11.800000190734863f}),
                             .dimensions = {1, 4, 2, 2},
@@ -12842,7 +12842,7 @@ const TestModel& get_test_model_valid_padding_nchw_float16_all_inputs_as_interna
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {12},
-                .operands = {{
+                .operands = {{ // op12
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({}),
                             .dimensions = {1, 2, 3, 3},
@@ -12852,7 +12852,7 @@ const TestModel& get_test_model_valid_padding_nchw_float16_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op22
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({0.25f, 0.0f, 0.20000000298023224f, 0.0f, 0.25f, 0.0f, 0.0f, 0.30000001192092896f, 0.25f, 0.0f, 0.0f, 0.0f, 0.25f, 0.10000000149011612f, 0.0f, 0.0f}),
                             .dimensions = {1, 2, 2, 4},
@@ -12862,7 +12862,7 @@ const TestModel& get_test_model_valid_padding_nchw_float16_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op32
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({1.0f, 2.0f, 3.0f, 4.0f}),
                             .dimensions = {4},
@@ -12872,7 +12872,7 @@ const TestModel& get_test_model_valid_padding_nchw_float16_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param20
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -12882,7 +12882,7 @@ const TestModel& get_test_model_valid_padding_nchw_float16_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param21
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -12892,7 +12892,7 @@ const TestModel& get_test_model_valid_padding_nchw_float16_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param22
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -12902,7 +12902,7 @@ const TestModel& get_test_model_valid_padding_nchw_float16_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param23
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -12912,7 +12912,7 @@ const TestModel& get_test_model_valid_padding_nchw_float16_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param24
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -12922,7 +12922,7 @@ const TestModel& get_test_model_valid_padding_nchw_float16_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -12932,7 +12932,7 @@ const TestModel& get_test_model_valid_padding_nchw_float16_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param25
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -12942,7 +12942,7 @@ const TestModel& get_test_model_valid_padding_nchw_float16_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param26
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -12952,7 +12952,7 @@ const TestModel& get_test_model_valid_padding_nchw_float16_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op42
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({11.0f, 11.0f, 11.0f, 11.0f, 3.0f, 3.0f, 3.0f, 3.0f, 7.199999809265137f, 7.400000095367432f, 7.800000190734863f, 8.0f, 10.600000381469727f, 10.899999618530273f, 11.5f, 11.800000190734863f}),
                             .dimensions = {1, 4, 2, 2},
@@ -12962,7 +12962,7 @@ const TestModel& get_test_model_valid_padding_nchw_float16_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op12_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 21.0f, 22.0f, 23.0f, 24.0f, 25.0f, 26.0f, 27.0f, 28.0f, 29.0f}),
                             .dimensions = {1, 2, 3, 3},
@@ -12972,7 +12972,7 @@ const TestModel& get_test_model_valid_padding_nchw_float16_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy61
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({0.0f}),
                             .dimensions = {1},
@@ -12982,7 +12982,7 @@ const TestModel& get_test_model_valid_padding_nchw_float16_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param102
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -13023,7 +13023,7 @@ const TestModel& get_test_model_valid_padding_nchw_float16_all_tensors_as_inputs
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {0, 1, 2},
-                .operands = {{
+                .operands = {{ // op12
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 21.0f, 22.0f, 23.0f, 24.0f, 25.0f, 26.0f, 27.0f, 28.0f, 29.0f}),
                             .dimensions = {1, 2, 3, 3},
@@ -13033,7 +13033,7 @@ const TestModel& get_test_model_valid_padding_nchw_float16_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op22
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({0.25f, 0.0f, 0.20000000298023224f, 0.0f, 0.25f, 0.0f, 0.0f, 0.30000001192092896f, 0.25f, 0.0f, 0.0f, 0.0f, 0.25f, 0.10000000149011612f, 0.0f, 0.0f}),
                             .dimensions = {1, 2, 2, 4},
@@ -13043,7 +13043,7 @@ const TestModel& get_test_model_valid_padding_nchw_float16_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op32
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({1.0f, 2.0f, 3.0f, 4.0f}),
                             .dimensions = {4},
@@ -13053,7 +13053,7 @@ const TestModel& get_test_model_valid_padding_nchw_float16_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param20
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -13063,7 +13063,7 @@ const TestModel& get_test_model_valid_padding_nchw_float16_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param21
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -13073,7 +13073,7 @@ const TestModel& get_test_model_valid_padding_nchw_float16_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param22
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -13083,7 +13083,7 @@ const TestModel& get_test_model_valid_padding_nchw_float16_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param23
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -13093,7 +13093,7 @@ const TestModel& get_test_model_valid_padding_nchw_float16_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param24
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -13103,7 +13103,7 @@ const TestModel& get_test_model_valid_padding_nchw_float16_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -13113,7 +13113,7 @@ const TestModel& get_test_model_valid_padding_nchw_float16_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param25
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -13123,7 +13123,7 @@ const TestModel& get_test_model_valid_padding_nchw_float16_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param26
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -13133,7 +13133,7 @@ const TestModel& get_test_model_valid_padding_nchw_float16_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op42
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({11.0f, 11.0f, 11.0f, 11.0f, 3.0f, 3.0f, 3.0f, 3.0f, 7.199999809265137f, 7.400000095367432f, 7.800000190734863f, 8.0f, 10.600000381469727f, 10.899999618530273f, 11.5f, 11.800000190734863f}),
                             .dimensions = {1, 4, 2, 2},
@@ -13170,7 +13170,7 @@ const TestModel& get_test_model_valid_padding_nchw_float16_all_tensors_as_inputs
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {12, 15, 18},
-                .operands = {{
+                .operands = {{ // op12
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({}),
                             .dimensions = {1, 2, 3, 3},
@@ -13180,7 +13180,7 @@ const TestModel& get_test_model_valid_padding_nchw_float16_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op22
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({}),
                             .dimensions = {1, 2, 2, 4},
@@ -13190,7 +13190,7 @@ const TestModel& get_test_model_valid_padding_nchw_float16_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op32
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({}),
                             .dimensions = {4},
@@ -13200,7 +13200,7 @@ const TestModel& get_test_model_valid_padding_nchw_float16_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param20
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -13210,7 +13210,7 @@ const TestModel& get_test_model_valid_padding_nchw_float16_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param21
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -13220,7 +13220,7 @@ const TestModel& get_test_model_valid_padding_nchw_float16_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param22
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -13230,7 +13230,7 @@ const TestModel& get_test_model_valid_padding_nchw_float16_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param23
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -13240,7 +13240,7 @@ const TestModel& get_test_model_valid_padding_nchw_float16_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param24
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -13250,7 +13250,7 @@ const TestModel& get_test_model_valid_padding_nchw_float16_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -13260,7 +13260,7 @@ const TestModel& get_test_model_valid_padding_nchw_float16_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param25
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -13270,7 +13270,7 @@ const TestModel& get_test_model_valid_padding_nchw_float16_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param26
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -13280,7 +13280,7 @@ const TestModel& get_test_model_valid_padding_nchw_float16_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op42
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({11.0f, 11.0f, 11.0f, 11.0f, 3.0f, 3.0f, 3.0f, 3.0f, 7.199999809265137f, 7.400000095367432f, 7.800000190734863f, 8.0f, 10.600000381469727f, 10.899999618530273f, 11.5f, 11.800000190734863f}),
                             .dimensions = {1, 4, 2, 2},
@@ -13290,7 +13290,7 @@ const TestModel& get_test_model_valid_padding_nchw_float16_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op12_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 10.0f, 21.0f, 22.0f, 23.0f, 24.0f, 25.0f, 26.0f, 27.0f, 28.0f, 29.0f}),
                             .dimensions = {1, 2, 3, 3},
@@ -13300,7 +13300,7 @@ const TestModel& get_test_model_valid_padding_nchw_float16_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy62
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({0.0f}),
                             .dimensions = {1},
@@ -13310,7 +13310,7 @@ const TestModel& get_test_model_valid_padding_nchw_float16_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param103
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -13320,7 +13320,7 @@ const TestModel& get_test_model_valid_padding_nchw_float16_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op22_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({0.25f, 0.0f, 0.20000000298023224f, 0.0f, 0.25f, 0.0f, 0.0f, 0.30000001192092896f, 0.25f, 0.0f, 0.0f, 0.0f, 0.25f, 0.10000000149011612f, 0.0f, 0.0f}),
                             .dimensions = {1, 2, 2, 4},
@@ -13330,7 +13330,7 @@ const TestModel& get_test_model_valid_padding_nchw_float16_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy63
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({0.0f}),
                             .dimensions = {1},
@@ -13340,7 +13340,7 @@ const TestModel& get_test_model_valid_padding_nchw_float16_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param104
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -13350,7 +13350,7 @@ const TestModel& get_test_model_valid_padding_nchw_float16_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op32_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({1.0f, 2.0f, 3.0f, 4.0f}),
                             .dimensions = {4},
@@ -13360,7 +13360,7 @@ const TestModel& get_test_model_valid_padding_nchw_float16_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy64
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({0.0f}),
                             .dimensions = {1},
@@ -13370,7 +13370,7 @@ const TestModel& get_test_model_valid_padding_nchw_float16_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param105
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -13419,7 +13419,7 @@ const TestModel& get_test_model_valid_padding_nchw_quant8() {
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {0},
-                .operands = {{
+                .operands = {{ // op12
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({20, 20, 20, 20, 20, 20, 20, 20, 20, 42, 44, 46, 48, 50, 52, 54, 56, 58}),
                             .dimensions = {1, 2, 3, 3},
@@ -13429,7 +13429,7 @@ const TestModel& get_test_model_valid_padding_nchw_quant8() {
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op22
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({25, 0, 20, 0, 25, 0, 0, 30, 25, 0, 0, 0, 25, 10, 0, 0}),
                             .dimensions = {1, 2, 2, 4},
@@ -13439,7 +13439,7 @@ const TestModel& get_test_model_valid_padding_nchw_quant8() {
                             .scale = 0.01f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op32
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({200, 400, 600, 800}),
                             .dimensions = {4},
@@ -13449,7 +13449,7 @@ const TestModel& get_test_model_valid_padding_nchw_quant8() {
                             .scale = 0.005f,
                             .type = TestOperandType::TENSOR_INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param20
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -13459,7 +13459,7 @@ const TestModel& get_test_model_valid_padding_nchw_quant8() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param21
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -13469,7 +13469,7 @@ const TestModel& get_test_model_valid_padding_nchw_quant8() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param22
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -13479,7 +13479,7 @@ const TestModel& get_test_model_valid_padding_nchw_quant8() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param23
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -13489,7 +13489,7 @@ const TestModel& get_test_model_valid_padding_nchw_quant8() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param24
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -13499,7 +13499,7 @@ const TestModel& get_test_model_valid_padding_nchw_quant8() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -13509,7 +13509,7 @@ const TestModel& get_test_model_valid_padding_nchw_quant8() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param25
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -13519,7 +13519,7 @@ const TestModel& get_test_model_valid_padding_nchw_quant8() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param26
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -13529,7 +13529,7 @@ const TestModel& get_test_model_valid_padding_nchw_quant8() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op42
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({110, 110, 110, 110, 30, 30, 30, 30, 72, 74, 78, 80, 106, 109, 115, 118}),
                             .dimensions = {1, 4, 2, 2},
@@ -13566,7 +13566,7 @@ const TestModel& get_test_model_valid_padding_nchw_quant8_all_inputs_as_internal
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {12},
-                .operands = {{
+                .operands = {{ // op12
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({}),
                             .dimensions = {1, 2, 3, 3},
@@ -13576,7 +13576,7 @@ const TestModel& get_test_model_valid_padding_nchw_quant8_all_inputs_as_internal
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op22
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({25, 0, 20, 0, 25, 0, 0, 30, 25, 0, 0, 0, 25, 10, 0, 0}),
                             .dimensions = {1, 2, 2, 4},
@@ -13586,7 +13586,7 @@ const TestModel& get_test_model_valid_padding_nchw_quant8_all_inputs_as_internal
                             .scale = 0.01f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op32
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({200, 400, 600, 800}),
                             .dimensions = {4},
@@ -13596,7 +13596,7 @@ const TestModel& get_test_model_valid_padding_nchw_quant8_all_inputs_as_internal
                             .scale = 0.005f,
                             .type = TestOperandType::TENSOR_INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param20
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -13606,7 +13606,7 @@ const TestModel& get_test_model_valid_padding_nchw_quant8_all_inputs_as_internal
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param21
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -13616,7 +13616,7 @@ const TestModel& get_test_model_valid_padding_nchw_quant8_all_inputs_as_internal
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param22
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -13626,7 +13626,7 @@ const TestModel& get_test_model_valid_padding_nchw_quant8_all_inputs_as_internal
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param23
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -13636,7 +13636,7 @@ const TestModel& get_test_model_valid_padding_nchw_quant8_all_inputs_as_internal
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param24
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -13646,7 +13646,7 @@ const TestModel& get_test_model_valid_padding_nchw_quant8_all_inputs_as_internal
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -13656,7 +13656,7 @@ const TestModel& get_test_model_valid_padding_nchw_quant8_all_inputs_as_internal
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param25
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -13666,7 +13666,7 @@ const TestModel& get_test_model_valid_padding_nchw_quant8_all_inputs_as_internal
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param26
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -13676,7 +13676,7 @@ const TestModel& get_test_model_valid_padding_nchw_quant8_all_inputs_as_internal
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op42
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({110, 110, 110, 110, 30, 30, 30, 30, 72, 74, 78, 80, 106, 109, 115, 118}),
                             .dimensions = {1, 4, 2, 2},
@@ -13686,7 +13686,7 @@ const TestModel& get_test_model_valid_padding_nchw_quant8_all_inputs_as_internal
                             .scale = 0.1f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op12_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({20, 20, 20, 20, 20, 20, 20, 20, 20, 42, 44, 46, 48, 50, 52, 54, 56, 58}),
                             .dimensions = {1, 2, 3, 3},
@@ -13696,7 +13696,7 @@ const TestModel& get_test_model_valid_padding_nchw_quant8_all_inputs_as_internal
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy65
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({0}),
                             .dimensions = {1},
@@ -13706,7 +13706,7 @@ const TestModel& get_test_model_valid_padding_nchw_quant8_all_inputs_as_internal
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param106
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -13747,7 +13747,7 @@ const TestModel& get_test_model_valid_padding_nchw_quant8_all_tensors_as_inputs(
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {0, 1, 2},
-                .operands = {{
+                .operands = {{ // op12
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({20, 20, 20, 20, 20, 20, 20, 20, 20, 42, 44, 46, 48, 50, 52, 54, 56, 58}),
                             .dimensions = {1, 2, 3, 3},
@@ -13757,7 +13757,7 @@ const TestModel& get_test_model_valid_padding_nchw_quant8_all_tensors_as_inputs(
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op22
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({25, 0, 20, 0, 25, 0, 0, 30, 25, 0, 0, 0, 25, 10, 0, 0}),
                             .dimensions = {1, 2, 2, 4},
@@ -13767,7 +13767,7 @@ const TestModel& get_test_model_valid_padding_nchw_quant8_all_tensors_as_inputs(
                             .scale = 0.01f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op32
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({200, 400, 600, 800}),
                             .dimensions = {4},
@@ -13777,7 +13777,7 @@ const TestModel& get_test_model_valid_padding_nchw_quant8_all_tensors_as_inputs(
                             .scale = 0.005f,
                             .type = TestOperandType::TENSOR_INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param20
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -13787,7 +13787,7 @@ const TestModel& get_test_model_valid_padding_nchw_quant8_all_tensors_as_inputs(
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param21
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -13797,7 +13797,7 @@ const TestModel& get_test_model_valid_padding_nchw_quant8_all_tensors_as_inputs(
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param22
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -13807,7 +13807,7 @@ const TestModel& get_test_model_valid_padding_nchw_quant8_all_tensors_as_inputs(
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param23
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -13817,7 +13817,7 @@ const TestModel& get_test_model_valid_padding_nchw_quant8_all_tensors_as_inputs(
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param24
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -13827,7 +13827,7 @@ const TestModel& get_test_model_valid_padding_nchw_quant8_all_tensors_as_inputs(
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -13837,7 +13837,7 @@ const TestModel& get_test_model_valid_padding_nchw_quant8_all_tensors_as_inputs(
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param25
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -13847,7 +13847,7 @@ const TestModel& get_test_model_valid_padding_nchw_quant8_all_tensors_as_inputs(
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param26
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -13857,7 +13857,7 @@ const TestModel& get_test_model_valid_padding_nchw_quant8_all_tensors_as_inputs(
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op42
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({110, 110, 110, 110, 30, 30, 30, 30, 72, 74, 78, 80, 106, 109, 115, 118}),
                             .dimensions = {1, 4, 2, 2},
@@ -13894,7 +13894,7 @@ const TestModel& get_test_model_valid_padding_nchw_quant8_all_tensors_as_inputs_
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {2, 12, 15},
-                .operands = {{
+                .operands = {{ // op12
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({}),
                             .dimensions = {1, 2, 3, 3},
@@ -13904,7 +13904,7 @@ const TestModel& get_test_model_valid_padding_nchw_quant8_all_tensors_as_inputs_
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op22
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({}),
                             .dimensions = {1, 2, 2, 4},
@@ -13914,7 +13914,7 @@ const TestModel& get_test_model_valid_padding_nchw_quant8_all_tensors_as_inputs_
                             .scale = 0.01f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op32
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({200, 400, 600, 800}),
                             .dimensions = {4},
@@ -13924,7 +13924,7 @@ const TestModel& get_test_model_valid_padding_nchw_quant8_all_tensors_as_inputs_
                             .scale = 0.005f,
                             .type = TestOperandType::TENSOR_INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param20
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -13934,7 +13934,7 @@ const TestModel& get_test_model_valid_padding_nchw_quant8_all_tensors_as_inputs_
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param21
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -13944,7 +13944,7 @@ const TestModel& get_test_model_valid_padding_nchw_quant8_all_tensors_as_inputs_
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param22
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -13954,7 +13954,7 @@ const TestModel& get_test_model_valid_padding_nchw_quant8_all_tensors_as_inputs_
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param23
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -13964,7 +13964,7 @@ const TestModel& get_test_model_valid_padding_nchw_quant8_all_tensors_as_inputs_
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param24
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -13974,7 +13974,7 @@ const TestModel& get_test_model_valid_padding_nchw_quant8_all_tensors_as_inputs_
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -13984,7 +13984,7 @@ const TestModel& get_test_model_valid_padding_nchw_quant8_all_tensors_as_inputs_
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param25
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -13994,7 +13994,7 @@ const TestModel& get_test_model_valid_padding_nchw_quant8_all_tensors_as_inputs_
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param26
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -14004,7 +14004,7 @@ const TestModel& get_test_model_valid_padding_nchw_quant8_all_tensors_as_inputs_
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op42
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({110, 110, 110, 110, 30, 30, 30, 30, 72, 74, 78, 80, 106, 109, 115, 118}),
                             .dimensions = {1, 4, 2, 2},
@@ -14014,7 +14014,7 @@ const TestModel& get_test_model_valid_padding_nchw_quant8_all_tensors_as_inputs_
                             .scale = 0.1f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op12_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({20, 20, 20, 20, 20, 20, 20, 20, 20, 42, 44, 46, 48, 50, 52, 54, 56, 58}),
                             .dimensions = {1, 2, 3, 3},
@@ -14024,7 +14024,7 @@ const TestModel& get_test_model_valid_padding_nchw_quant8_all_tensors_as_inputs_
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy66
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({0}),
                             .dimensions = {1},
@@ -14034,7 +14034,7 @@ const TestModel& get_test_model_valid_padding_nchw_quant8_all_tensors_as_inputs_
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param107
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -14044,7 +14044,7 @@ const TestModel& get_test_model_valid_padding_nchw_quant8_all_tensors_as_inputs_
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op22_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({25, 0, 20, 0, 25, 0, 0, 30, 25, 0, 0, 0, 25, 10, 0, 0}),
                             .dimensions = {1, 2, 2, 4},
@@ -14054,7 +14054,7 @@ const TestModel& get_test_model_valid_padding_nchw_quant8_all_tensors_as_inputs_
                             .scale = 0.01f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy67
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({0}),
                             .dimensions = {1},
@@ -14064,7 +14064,7 @@ const TestModel& get_test_model_valid_padding_nchw_quant8_all_tensors_as_inputs_
                             .scale = 0.01f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param108
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -14109,7 +14109,7 @@ const TestModel& get_test_model_valid_padding_nhwc_2() {
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {0},
-                .operands = {{
+                .operands = {{ // op13
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f}),
                             .dimensions = {1, 4, 4, 2},
@@ -14119,7 +14119,7 @@ const TestModel& get_test_model_valid_padding_nhwc_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op23
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f, 10.0f, 11.0f, 12.0f, 13.0f, 14.0f, 15.0f, 16.0f}),
                             .dimensions = {1, 2, 2, 4},
@@ -14129,7 +14129,7 @@ const TestModel& get_test_model_valid_padding_nhwc_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op33
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f, 0.0f, 0.0f}),
                             .dimensions = {4},
@@ -14139,7 +14139,7 @@ const TestModel& get_test_model_valid_padding_nhwc_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param27
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -14149,7 +14149,7 @@ const TestModel& get_test_model_valid_padding_nhwc_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param28
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -14159,7 +14159,7 @@ const TestModel& get_test_model_valid_padding_nhwc_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param29
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -14169,7 +14169,7 @@ const TestModel& get_test_model_valid_padding_nhwc_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param30
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -14179,7 +14179,7 @@ const TestModel& get_test_model_valid_padding_nhwc_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param31
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -14189,7 +14189,7 @@ const TestModel& get_test_model_valid_padding_nhwc_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -14199,7 +14199,7 @@ const TestModel& get_test_model_valid_padding_nhwc_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param32
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -14209,7 +14209,7 @@ const TestModel& get_test_model_valid_padding_nhwc_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param33
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -14219,7 +14219,7 @@ const TestModel& get_test_model_valid_padding_nhwc_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op43
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({13.0f, 14.0f, 0.0f, 0.0f, 0.0f, 0.0f, 11.0f, 12.0f, 5.0f, 6.0f, 0.0f, 0.0f, 0.0f, 0.0f, 3.0f, 4.0f}),
                             .dimensions = {1, 2, 2, 4},
@@ -14256,7 +14256,7 @@ const TestModel& get_test_model_valid_padding_nhwc_all_inputs_as_internal_2() {
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {12},
-                .operands = {{
+                .operands = {{ // op13
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {1, 4, 4, 2},
@@ -14266,7 +14266,7 @@ const TestModel& get_test_model_valid_padding_nhwc_all_inputs_as_internal_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op23
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f, 10.0f, 11.0f, 12.0f, 13.0f, 14.0f, 15.0f, 16.0f}),
                             .dimensions = {1, 2, 2, 4},
@@ -14276,7 +14276,7 @@ const TestModel& get_test_model_valid_padding_nhwc_all_inputs_as_internal_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op33
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f, 0.0f, 0.0f}),
                             .dimensions = {4},
@@ -14286,7 +14286,7 @@ const TestModel& get_test_model_valid_padding_nhwc_all_inputs_as_internal_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param27
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -14296,7 +14296,7 @@ const TestModel& get_test_model_valid_padding_nhwc_all_inputs_as_internal_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param28
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -14306,7 +14306,7 @@ const TestModel& get_test_model_valid_padding_nhwc_all_inputs_as_internal_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param29
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -14316,7 +14316,7 @@ const TestModel& get_test_model_valid_padding_nhwc_all_inputs_as_internal_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param30
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -14326,7 +14326,7 @@ const TestModel& get_test_model_valid_padding_nhwc_all_inputs_as_internal_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param31
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -14336,7 +14336,7 @@ const TestModel& get_test_model_valid_padding_nhwc_all_inputs_as_internal_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -14346,7 +14346,7 @@ const TestModel& get_test_model_valid_padding_nhwc_all_inputs_as_internal_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param32
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -14356,7 +14356,7 @@ const TestModel& get_test_model_valid_padding_nhwc_all_inputs_as_internal_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param33
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -14366,7 +14366,7 @@ const TestModel& get_test_model_valid_padding_nhwc_all_inputs_as_internal_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op43
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({13.0f, 14.0f, 0.0f, 0.0f, 0.0f, 0.0f, 11.0f, 12.0f, 5.0f, 6.0f, 0.0f, 0.0f, 0.0f, 0.0f, 3.0f, 4.0f}),
                             .dimensions = {1, 2, 2, 4},
@@ -14376,7 +14376,7 @@ const TestModel& get_test_model_valid_padding_nhwc_all_inputs_as_internal_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op13_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f}),
                             .dimensions = {1, 4, 4, 2},
@@ -14386,7 +14386,7 @@ const TestModel& get_test_model_valid_padding_nhwc_all_inputs_as_internal_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy68
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -14396,7 +14396,7 @@ const TestModel& get_test_model_valid_padding_nhwc_all_inputs_as_internal_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param109
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -14437,7 +14437,7 @@ const TestModel& get_test_model_valid_padding_nhwc_all_tensors_as_inputs_2() {
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {0, 1, 2},
-                .operands = {{
+                .operands = {{ // op13
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f}),
                             .dimensions = {1, 4, 4, 2},
@@ -14447,7 +14447,7 @@ const TestModel& get_test_model_valid_padding_nhwc_all_tensors_as_inputs_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op23
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f, 10.0f, 11.0f, 12.0f, 13.0f, 14.0f, 15.0f, 16.0f}),
                             .dimensions = {1, 2, 2, 4},
@@ -14457,7 +14457,7 @@ const TestModel& get_test_model_valid_padding_nhwc_all_tensors_as_inputs_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op33
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f, 0.0f, 0.0f}),
                             .dimensions = {4},
@@ -14467,7 +14467,7 @@ const TestModel& get_test_model_valid_padding_nhwc_all_tensors_as_inputs_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param27
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -14477,7 +14477,7 @@ const TestModel& get_test_model_valid_padding_nhwc_all_tensors_as_inputs_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param28
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -14487,7 +14487,7 @@ const TestModel& get_test_model_valid_padding_nhwc_all_tensors_as_inputs_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param29
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -14497,7 +14497,7 @@ const TestModel& get_test_model_valid_padding_nhwc_all_tensors_as_inputs_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param30
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -14507,7 +14507,7 @@ const TestModel& get_test_model_valid_padding_nhwc_all_tensors_as_inputs_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param31
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -14517,7 +14517,7 @@ const TestModel& get_test_model_valid_padding_nhwc_all_tensors_as_inputs_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -14527,7 +14527,7 @@ const TestModel& get_test_model_valid_padding_nhwc_all_tensors_as_inputs_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param32
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -14537,7 +14537,7 @@ const TestModel& get_test_model_valid_padding_nhwc_all_tensors_as_inputs_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param33
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -14547,7 +14547,7 @@ const TestModel& get_test_model_valid_padding_nhwc_all_tensors_as_inputs_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op43
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({13.0f, 14.0f, 0.0f, 0.0f, 0.0f, 0.0f, 11.0f, 12.0f, 5.0f, 6.0f, 0.0f, 0.0f, 0.0f, 0.0f, 3.0f, 4.0f}),
                             .dimensions = {1, 2, 2, 4},
@@ -14584,7 +14584,7 @@ const TestModel& get_test_model_valid_padding_nhwc_all_tensors_as_inputs_all_inp
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {12, 15, 18},
-                .operands = {{
+                .operands = {{ // op13
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {1, 4, 4, 2},
@@ -14594,7 +14594,7 @@ const TestModel& get_test_model_valid_padding_nhwc_all_tensors_as_inputs_all_inp
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op23
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {1, 2, 2, 4},
@@ -14604,7 +14604,7 @@ const TestModel& get_test_model_valid_padding_nhwc_all_tensors_as_inputs_all_inp
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op33
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {4},
@@ -14614,7 +14614,7 @@ const TestModel& get_test_model_valid_padding_nhwc_all_tensors_as_inputs_all_inp
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param27
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -14624,7 +14624,7 @@ const TestModel& get_test_model_valid_padding_nhwc_all_tensors_as_inputs_all_inp
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param28
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -14634,7 +14634,7 @@ const TestModel& get_test_model_valid_padding_nhwc_all_tensors_as_inputs_all_inp
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param29
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -14644,7 +14644,7 @@ const TestModel& get_test_model_valid_padding_nhwc_all_tensors_as_inputs_all_inp
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param30
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -14654,7 +14654,7 @@ const TestModel& get_test_model_valid_padding_nhwc_all_tensors_as_inputs_all_inp
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param31
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -14664,7 +14664,7 @@ const TestModel& get_test_model_valid_padding_nhwc_all_tensors_as_inputs_all_inp
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -14674,7 +14674,7 @@ const TestModel& get_test_model_valid_padding_nhwc_all_tensors_as_inputs_all_inp
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param32
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -14684,7 +14684,7 @@ const TestModel& get_test_model_valid_padding_nhwc_all_tensors_as_inputs_all_inp
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param33
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -14694,7 +14694,7 @@ const TestModel& get_test_model_valid_padding_nhwc_all_tensors_as_inputs_all_inp
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op43
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({13.0f, 14.0f, 0.0f, 0.0f, 0.0f, 0.0f, 11.0f, 12.0f, 5.0f, 6.0f, 0.0f, 0.0f, 0.0f, 0.0f, 3.0f, 4.0f}),
                             .dimensions = {1, 2, 2, 4},
@@ -14704,7 +14704,7 @@ const TestModel& get_test_model_valid_padding_nhwc_all_tensors_as_inputs_all_inp
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op13_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f}),
                             .dimensions = {1, 4, 4, 2},
@@ -14714,7 +14714,7 @@ const TestModel& get_test_model_valid_padding_nhwc_all_tensors_as_inputs_all_inp
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy69
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -14724,7 +14724,7 @@ const TestModel& get_test_model_valid_padding_nhwc_all_tensors_as_inputs_all_inp
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param110
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -14734,7 +14734,7 @@ const TestModel& get_test_model_valid_padding_nhwc_all_tensors_as_inputs_all_inp
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op23_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f, 10.0f, 11.0f, 12.0f, 13.0f, 14.0f, 15.0f, 16.0f}),
                             .dimensions = {1, 2, 2, 4},
@@ -14744,7 +14744,7 @@ const TestModel& get_test_model_valid_padding_nhwc_all_tensors_as_inputs_all_inp
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy70
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -14754,7 +14754,7 @@ const TestModel& get_test_model_valid_padding_nhwc_all_tensors_as_inputs_all_inp
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param111
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -14764,7 +14764,7 @@ const TestModel& get_test_model_valid_padding_nhwc_all_tensors_as_inputs_all_inp
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op33_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f, 0.0f, 0.0f}),
                             .dimensions = {4},
@@ -14774,7 +14774,7 @@ const TestModel& get_test_model_valid_padding_nhwc_all_tensors_as_inputs_all_inp
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy71
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -14784,7 +14784,7 @@ const TestModel& get_test_model_valid_padding_nhwc_all_tensors_as_inputs_all_inp
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param112
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -14833,7 +14833,7 @@ const TestModel& get_test_model_valid_padding_nchw_2() {
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {0},
-                .operands = {{
+                .operands = {{ // op13
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f}),
                             .dimensions = {1, 2, 4, 4},
@@ -14843,7 +14843,7 @@ const TestModel& get_test_model_valid_padding_nchw_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op23
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f, 10.0f, 11.0f, 12.0f, 13.0f, 14.0f, 15.0f, 16.0f}),
                             .dimensions = {1, 2, 2, 4},
@@ -14853,7 +14853,7 @@ const TestModel& get_test_model_valid_padding_nchw_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op33
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f, 0.0f, 0.0f}),
                             .dimensions = {4},
@@ -14863,7 +14863,7 @@ const TestModel& get_test_model_valid_padding_nchw_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param27
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -14873,7 +14873,7 @@ const TestModel& get_test_model_valid_padding_nchw_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param28
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -14883,7 +14883,7 @@ const TestModel& get_test_model_valid_padding_nchw_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param29
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -14893,7 +14893,7 @@ const TestModel& get_test_model_valid_padding_nchw_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param30
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -14903,7 +14903,7 @@ const TestModel& get_test_model_valid_padding_nchw_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param31
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -14913,7 +14913,7 @@ const TestModel& get_test_model_valid_padding_nchw_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -14923,7 +14923,7 @@ const TestModel& get_test_model_valid_padding_nchw_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param32
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -14933,7 +14933,7 @@ const TestModel& get_test_model_valid_padding_nchw_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param33
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -14943,7 +14943,7 @@ const TestModel& get_test_model_valid_padding_nchw_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op43
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({13.0f, 0.0f, 5.0f, 0.0f, 14.0f, 0.0f, 6.0f, 0.0f, 0.0f, 11.0f, 0.0f, 3.0f, 0.0f, 12.0f, 0.0f, 4.0f}),
                             .dimensions = {1, 4, 2, 2},
@@ -14980,7 +14980,7 @@ const TestModel& get_test_model_valid_padding_nchw_all_inputs_as_internal_2() {
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {12},
-                .operands = {{
+                .operands = {{ // op13
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {1, 2, 4, 4},
@@ -14990,7 +14990,7 @@ const TestModel& get_test_model_valid_padding_nchw_all_inputs_as_internal_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op23
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f, 10.0f, 11.0f, 12.0f, 13.0f, 14.0f, 15.0f, 16.0f}),
                             .dimensions = {1, 2, 2, 4},
@@ -15000,7 +15000,7 @@ const TestModel& get_test_model_valid_padding_nchw_all_inputs_as_internal_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op33
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f, 0.0f, 0.0f}),
                             .dimensions = {4},
@@ -15010,7 +15010,7 @@ const TestModel& get_test_model_valid_padding_nchw_all_inputs_as_internal_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param27
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -15020,7 +15020,7 @@ const TestModel& get_test_model_valid_padding_nchw_all_inputs_as_internal_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param28
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -15030,7 +15030,7 @@ const TestModel& get_test_model_valid_padding_nchw_all_inputs_as_internal_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param29
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -15040,7 +15040,7 @@ const TestModel& get_test_model_valid_padding_nchw_all_inputs_as_internal_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param30
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -15050,7 +15050,7 @@ const TestModel& get_test_model_valid_padding_nchw_all_inputs_as_internal_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param31
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -15060,7 +15060,7 @@ const TestModel& get_test_model_valid_padding_nchw_all_inputs_as_internal_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -15070,7 +15070,7 @@ const TestModel& get_test_model_valid_padding_nchw_all_inputs_as_internal_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param32
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -15080,7 +15080,7 @@ const TestModel& get_test_model_valid_padding_nchw_all_inputs_as_internal_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param33
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -15090,7 +15090,7 @@ const TestModel& get_test_model_valid_padding_nchw_all_inputs_as_internal_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op43
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({13.0f, 0.0f, 5.0f, 0.0f, 14.0f, 0.0f, 6.0f, 0.0f, 0.0f, 11.0f, 0.0f, 3.0f, 0.0f, 12.0f, 0.0f, 4.0f}),
                             .dimensions = {1, 4, 2, 2},
@@ -15100,7 +15100,7 @@ const TestModel& get_test_model_valid_padding_nchw_all_inputs_as_internal_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op13_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f}),
                             .dimensions = {1, 2, 4, 4},
@@ -15110,7 +15110,7 @@ const TestModel& get_test_model_valid_padding_nchw_all_inputs_as_internal_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy72
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -15120,7 +15120,7 @@ const TestModel& get_test_model_valid_padding_nchw_all_inputs_as_internal_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param113
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -15161,7 +15161,7 @@ const TestModel& get_test_model_valid_padding_nchw_all_tensors_as_inputs_2() {
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {0, 1, 2},
-                .operands = {{
+                .operands = {{ // op13
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f}),
                             .dimensions = {1, 2, 4, 4},
@@ -15171,7 +15171,7 @@ const TestModel& get_test_model_valid_padding_nchw_all_tensors_as_inputs_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op23
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f, 10.0f, 11.0f, 12.0f, 13.0f, 14.0f, 15.0f, 16.0f}),
                             .dimensions = {1, 2, 2, 4},
@@ -15181,7 +15181,7 @@ const TestModel& get_test_model_valid_padding_nchw_all_tensors_as_inputs_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op33
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f, 0.0f, 0.0f}),
                             .dimensions = {4},
@@ -15191,7 +15191,7 @@ const TestModel& get_test_model_valid_padding_nchw_all_tensors_as_inputs_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param27
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -15201,7 +15201,7 @@ const TestModel& get_test_model_valid_padding_nchw_all_tensors_as_inputs_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param28
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -15211,7 +15211,7 @@ const TestModel& get_test_model_valid_padding_nchw_all_tensors_as_inputs_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param29
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -15221,7 +15221,7 @@ const TestModel& get_test_model_valid_padding_nchw_all_tensors_as_inputs_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param30
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -15231,7 +15231,7 @@ const TestModel& get_test_model_valid_padding_nchw_all_tensors_as_inputs_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param31
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -15241,7 +15241,7 @@ const TestModel& get_test_model_valid_padding_nchw_all_tensors_as_inputs_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -15251,7 +15251,7 @@ const TestModel& get_test_model_valid_padding_nchw_all_tensors_as_inputs_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param32
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -15261,7 +15261,7 @@ const TestModel& get_test_model_valid_padding_nchw_all_tensors_as_inputs_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param33
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -15271,7 +15271,7 @@ const TestModel& get_test_model_valid_padding_nchw_all_tensors_as_inputs_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op43
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({13.0f, 0.0f, 5.0f, 0.0f, 14.0f, 0.0f, 6.0f, 0.0f, 0.0f, 11.0f, 0.0f, 3.0f, 0.0f, 12.0f, 0.0f, 4.0f}),
                             .dimensions = {1, 4, 2, 2},
@@ -15308,7 +15308,7 @@ const TestModel& get_test_model_valid_padding_nchw_all_tensors_as_inputs_all_inp
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {12, 15, 18},
-                .operands = {{
+                .operands = {{ // op13
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {1, 2, 4, 4},
@@ -15318,7 +15318,7 @@ const TestModel& get_test_model_valid_padding_nchw_all_tensors_as_inputs_all_inp
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op23
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {1, 2, 2, 4},
@@ -15328,7 +15328,7 @@ const TestModel& get_test_model_valid_padding_nchw_all_tensors_as_inputs_all_inp
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op33
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {4},
@@ -15338,7 +15338,7 @@ const TestModel& get_test_model_valid_padding_nchw_all_tensors_as_inputs_all_inp
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param27
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -15348,7 +15348,7 @@ const TestModel& get_test_model_valid_padding_nchw_all_tensors_as_inputs_all_inp
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param28
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -15358,7 +15358,7 @@ const TestModel& get_test_model_valid_padding_nchw_all_tensors_as_inputs_all_inp
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param29
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -15368,7 +15368,7 @@ const TestModel& get_test_model_valid_padding_nchw_all_tensors_as_inputs_all_inp
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param30
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -15378,7 +15378,7 @@ const TestModel& get_test_model_valid_padding_nchw_all_tensors_as_inputs_all_inp
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param31
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -15388,7 +15388,7 @@ const TestModel& get_test_model_valid_padding_nchw_all_tensors_as_inputs_all_inp
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -15398,7 +15398,7 @@ const TestModel& get_test_model_valid_padding_nchw_all_tensors_as_inputs_all_inp
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param32
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -15408,7 +15408,7 @@ const TestModel& get_test_model_valid_padding_nchw_all_tensors_as_inputs_all_inp
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param33
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -15418,7 +15418,7 @@ const TestModel& get_test_model_valid_padding_nchw_all_tensors_as_inputs_all_inp
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op43
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({13.0f, 0.0f, 5.0f, 0.0f, 14.0f, 0.0f, 6.0f, 0.0f, 0.0f, 11.0f, 0.0f, 3.0f, 0.0f, 12.0f, 0.0f, 4.0f}),
                             .dimensions = {1, 4, 2, 2},
@@ -15428,7 +15428,7 @@ const TestModel& get_test_model_valid_padding_nchw_all_tensors_as_inputs_all_inp
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op13_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f}),
                             .dimensions = {1, 2, 4, 4},
@@ -15438,7 +15438,7 @@ const TestModel& get_test_model_valid_padding_nchw_all_tensors_as_inputs_all_inp
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy73
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -15448,7 +15448,7 @@ const TestModel& get_test_model_valid_padding_nchw_all_tensors_as_inputs_all_inp
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param114
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -15458,7 +15458,7 @@ const TestModel& get_test_model_valid_padding_nchw_all_tensors_as_inputs_all_inp
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op23_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f, 10.0f, 11.0f, 12.0f, 13.0f, 14.0f, 15.0f, 16.0f}),
                             .dimensions = {1, 2, 2, 4},
@@ -15468,7 +15468,7 @@ const TestModel& get_test_model_valid_padding_nchw_all_tensors_as_inputs_all_inp
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy74
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -15478,7 +15478,7 @@ const TestModel& get_test_model_valid_padding_nchw_all_tensors_as_inputs_all_inp
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param115
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -15488,7 +15488,7 @@ const TestModel& get_test_model_valid_padding_nchw_all_tensors_as_inputs_all_inp
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op33_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f, 0.0f, 0.0f}),
                             .dimensions = {4},
@@ -15498,7 +15498,7 @@ const TestModel& get_test_model_valid_padding_nchw_all_tensors_as_inputs_all_inp
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy75
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -15508,7 +15508,7 @@ const TestModel& get_test_model_valid_padding_nchw_all_tensors_as_inputs_all_inp
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param116
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -15557,7 +15557,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc() {
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {0},
-                .operands = {{
+                .operands = {{ // op14
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f}),
                             .dimensions = {1, 6, 6, 1},
@@ -15567,7 +15567,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op24
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f}),
                             .dimensions = {1, 2, 2, 1},
@@ -15577,7 +15577,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op34
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -15587,7 +15587,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param34
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -15597,7 +15597,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param35
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -15607,7 +15607,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param36
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -15617,7 +15617,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param37
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -15627,7 +15627,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param38
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -15637,7 +15637,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -15647,7 +15647,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param39
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -15657,7 +15657,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param40
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -15667,7 +15667,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op44
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({4.0f, 0.0f, 3.0f, 0.0f, 0.0f, 0.0f, 2.0f, 0.0f, 1.0f}),
                             .dimensions = {1, 3, 3, 1},
@@ -15704,7 +15704,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_all_inputs_as_interna
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {12},
-                .operands = {{
+                .operands = {{ // op14
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {1, 6, 6, 1},
@@ -15714,7 +15714,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op24
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f}),
                             .dimensions = {1, 2, 2, 1},
@@ -15724,7 +15724,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op34
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -15734,7 +15734,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param34
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -15744,7 +15744,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param35
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -15754,7 +15754,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param36
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -15764,7 +15764,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param37
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -15774,7 +15774,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param38
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -15784,7 +15784,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -15794,7 +15794,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param39
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -15804,7 +15804,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param40
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -15814,7 +15814,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op44
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({4.0f, 0.0f, 3.0f, 0.0f, 0.0f, 0.0f, 2.0f, 0.0f, 1.0f}),
                             .dimensions = {1, 3, 3, 1},
@@ -15824,7 +15824,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op14_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f}),
                             .dimensions = {1, 6, 6, 1},
@@ -15834,7 +15834,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy76
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -15844,7 +15844,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param117
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -15885,7 +15885,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_all_tensors_as_inputs
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {0, 1, 2},
-                .operands = {{
+                .operands = {{ // op14
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f}),
                             .dimensions = {1, 6, 6, 1},
@@ -15895,7 +15895,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op24
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f}),
                             .dimensions = {1, 2, 2, 1},
@@ -15905,7 +15905,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op34
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -15915,7 +15915,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param34
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -15925,7 +15925,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param35
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -15935,7 +15935,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param36
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -15945,7 +15945,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param37
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -15955,7 +15955,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param38
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -15965,7 +15965,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -15975,7 +15975,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param39
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -15985,7 +15985,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param40
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -15995,7 +15995,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op44
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({4.0f, 0.0f, 3.0f, 0.0f, 0.0f, 0.0f, 2.0f, 0.0f, 1.0f}),
                             .dimensions = {1, 3, 3, 1},
@@ -16032,7 +16032,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_all_tensors_as_inputs
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {12, 15, 18},
-                .operands = {{
+                .operands = {{ // op14
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {1, 6, 6, 1},
@@ -16042,7 +16042,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op24
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {1, 2, 2, 1},
@@ -16052,7 +16052,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op34
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {1},
@@ -16062,7 +16062,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param34
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -16072,7 +16072,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param35
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -16082,7 +16082,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param36
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -16092,7 +16092,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param37
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -16102,7 +16102,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param38
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -16112,7 +16112,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -16122,7 +16122,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param39
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -16132,7 +16132,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param40
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -16142,7 +16142,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op44
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({4.0f, 0.0f, 3.0f, 0.0f, 0.0f, 0.0f, 2.0f, 0.0f, 1.0f}),
                             .dimensions = {1, 3, 3, 1},
@@ -16152,7 +16152,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op14_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f}),
                             .dimensions = {1, 6, 6, 1},
@@ -16162,7 +16162,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy77
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -16172,7 +16172,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param118
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -16182,7 +16182,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op24_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f}),
                             .dimensions = {1, 2, 2, 1},
@@ -16192,7 +16192,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy78
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -16202,7 +16202,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param119
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -16212,7 +16212,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op34_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -16222,7 +16222,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy79
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -16232,7 +16232,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param120
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -16281,7 +16281,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_relaxed() {
         .isRelaxed = true,
         .main = {
                 .inputIndexes = {0},
-                .operands = {{
+                .operands = {{ // op14
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f}),
                             .dimensions = {1, 6, 6, 1},
@@ -16291,7 +16291,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op24
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f}),
                             .dimensions = {1, 2, 2, 1},
@@ -16301,7 +16301,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op34
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -16311,7 +16311,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param34
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -16321,7 +16321,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param35
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -16331,7 +16331,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param36
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -16341,7 +16341,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param37
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -16351,7 +16351,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param38
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -16361,7 +16361,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -16371,7 +16371,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param39
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -16381,7 +16381,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param40
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -16391,7 +16391,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op44
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({4.0f, 0.0f, 3.0f, 0.0f, 0.0f, 0.0f, 2.0f, 0.0f, 1.0f}),
                             .dimensions = {1, 3, 3, 1},
@@ -16428,7 +16428,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_relaxed_all_inputs_as
         .isRelaxed = true,
         .main = {
                 .inputIndexes = {12},
-                .operands = {{
+                .operands = {{ // op14
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {1, 6, 6, 1},
@@ -16438,7 +16438,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_relaxed_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op24
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f}),
                             .dimensions = {1, 2, 2, 1},
@@ -16448,7 +16448,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_relaxed_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op34
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -16458,7 +16458,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_relaxed_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param34
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -16468,7 +16468,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_relaxed_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param35
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -16478,7 +16478,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_relaxed_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param36
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -16488,7 +16488,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_relaxed_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param37
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -16498,7 +16498,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_relaxed_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param38
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -16508,7 +16508,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_relaxed_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -16518,7 +16518,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_relaxed_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param39
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -16528,7 +16528,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_relaxed_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param40
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -16538,7 +16538,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_relaxed_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op44
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({4.0f, 0.0f, 3.0f, 0.0f, 0.0f, 0.0f, 2.0f, 0.0f, 1.0f}),
                             .dimensions = {1, 3, 3, 1},
@@ -16548,7 +16548,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_relaxed_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op14_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f}),
                             .dimensions = {1, 6, 6, 1},
@@ -16558,7 +16558,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_relaxed_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy80
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -16568,7 +16568,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_relaxed_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param121
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -16609,7 +16609,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_relaxed_all_tensors_a
         .isRelaxed = true,
         .main = {
                 .inputIndexes = {0, 1, 2},
-                .operands = {{
+                .operands = {{ // op14
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f}),
                             .dimensions = {1, 6, 6, 1},
@@ -16619,7 +16619,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_relaxed_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op24
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f}),
                             .dimensions = {1, 2, 2, 1},
@@ -16629,7 +16629,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_relaxed_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op34
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -16639,7 +16639,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_relaxed_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param34
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -16649,7 +16649,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_relaxed_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param35
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -16659,7 +16659,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_relaxed_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param36
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -16669,7 +16669,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_relaxed_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param37
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -16679,7 +16679,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_relaxed_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param38
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -16689,7 +16689,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_relaxed_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -16699,7 +16699,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_relaxed_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param39
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -16709,7 +16709,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_relaxed_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param40
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -16719,7 +16719,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_relaxed_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op44
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({4.0f, 0.0f, 3.0f, 0.0f, 0.0f, 0.0f, 2.0f, 0.0f, 1.0f}),
                             .dimensions = {1, 3, 3, 1},
@@ -16756,7 +16756,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_relaxed_all_tensors_a
         .isRelaxed = true,
         .main = {
                 .inputIndexes = {12, 15, 18},
-                .operands = {{
+                .operands = {{ // op14
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {1, 6, 6, 1},
@@ -16766,7 +16766,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_relaxed_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op24
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {1, 2, 2, 1},
@@ -16776,7 +16776,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_relaxed_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op34
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {1},
@@ -16786,7 +16786,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_relaxed_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param34
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -16796,7 +16796,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_relaxed_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param35
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -16806,7 +16806,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_relaxed_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param36
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -16816,7 +16816,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_relaxed_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param37
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -16826,7 +16826,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_relaxed_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param38
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -16836,7 +16836,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_relaxed_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -16846,7 +16846,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_relaxed_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param39
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -16856,7 +16856,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_relaxed_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param40
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -16866,7 +16866,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_relaxed_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op44
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({4.0f, 0.0f, 3.0f, 0.0f, 0.0f, 0.0f, 2.0f, 0.0f, 1.0f}),
                             .dimensions = {1, 3, 3, 1},
@@ -16876,7 +16876,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_relaxed_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op14_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f}),
                             .dimensions = {1, 6, 6, 1},
@@ -16886,7 +16886,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_relaxed_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy81
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -16896,7 +16896,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_relaxed_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param122
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -16906,7 +16906,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_relaxed_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op24_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f}),
                             .dimensions = {1, 2, 2, 1},
@@ -16916,7 +16916,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_relaxed_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy82
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -16926,7 +16926,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_relaxed_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param123
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -16936,7 +16936,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_relaxed_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op34_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -16946,7 +16946,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_relaxed_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy83
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -16956,7 +16956,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_relaxed_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param124
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -17005,7 +17005,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_quant8() {
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {0},
-                .operands = {{
+                .operands = {{ // op14
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}),
                             .dimensions = {1, 6, 6, 1},
@@ -17015,7 +17015,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_quant8() {
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op24
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({8, 16, 24, 32}),
                             .dimensions = {1, 2, 2, 1},
@@ -17025,7 +17025,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_quant8() {
                             .scale = 0.125f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op34
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {1},
@@ -17035,7 +17035,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_quant8() {
                             .scale = 0.0625f,
                             .type = TestOperandType::TENSOR_INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param34
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -17045,7 +17045,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_quant8() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param35
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -17055,7 +17055,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_quant8() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param36
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -17065,7 +17065,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_quant8() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param37
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -17075,7 +17075,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_quant8() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param38
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -17085,7 +17085,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_quant8() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -17095,7 +17095,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_quant8() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param39
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -17105,7 +17105,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_quant8() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param40
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -17115,7 +17115,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_quant8() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op44
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({32, 0, 24, 0, 0, 0, 16, 0, 8}),
                             .dimensions = {1, 3, 3, 1},
@@ -17152,7 +17152,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_quant8_all_inputs_as_
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {12},
-                .operands = {{
+                .operands = {{ // op14
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({}),
                             .dimensions = {1, 6, 6, 1},
@@ -17162,7 +17162,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_quant8_all_inputs_as_
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op24
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({8, 16, 24, 32}),
                             .dimensions = {1, 2, 2, 1},
@@ -17172,7 +17172,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_quant8_all_inputs_as_
                             .scale = 0.125f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op34
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {1},
@@ -17182,7 +17182,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_quant8_all_inputs_as_
                             .scale = 0.0625f,
                             .type = TestOperandType::TENSOR_INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param34
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -17192,7 +17192,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_quant8_all_inputs_as_
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param35
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -17202,7 +17202,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_quant8_all_inputs_as_
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param36
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -17212,7 +17212,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_quant8_all_inputs_as_
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param37
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -17222,7 +17222,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_quant8_all_inputs_as_
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param38
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -17232,7 +17232,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_quant8_all_inputs_as_
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -17242,7 +17242,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_quant8_all_inputs_as_
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param39
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -17252,7 +17252,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_quant8_all_inputs_as_
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param40
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -17262,7 +17262,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_quant8_all_inputs_as_
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op44
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({32, 0, 24, 0, 0, 0, 16, 0, 8}),
                             .dimensions = {1, 3, 3, 1},
@@ -17272,7 +17272,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_quant8_all_inputs_as_
                             .scale = 0.125f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op14_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}),
                             .dimensions = {1, 6, 6, 1},
@@ -17282,7 +17282,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_quant8_all_inputs_as_
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy84
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({0}),
                             .dimensions = {1},
@@ -17292,7 +17292,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_quant8_all_inputs_as_
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param125
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -17333,7 +17333,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_quant8_all_tensors_as
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {0, 1, 2},
-                .operands = {{
+                .operands = {{ // op14
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}),
                             .dimensions = {1, 6, 6, 1},
@@ -17343,7 +17343,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_quant8_all_tensors_as
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op24
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({8, 16, 24, 32}),
                             .dimensions = {1, 2, 2, 1},
@@ -17353,7 +17353,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_quant8_all_tensors_as
                             .scale = 0.125f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op34
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {1},
@@ -17363,7 +17363,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_quant8_all_tensors_as
                             .scale = 0.0625f,
                             .type = TestOperandType::TENSOR_INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param34
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -17373,7 +17373,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_quant8_all_tensors_as
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param35
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -17383,7 +17383,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_quant8_all_tensors_as
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param36
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -17393,7 +17393,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_quant8_all_tensors_as
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param37
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -17403,7 +17403,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_quant8_all_tensors_as
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param38
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -17413,7 +17413,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_quant8_all_tensors_as
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -17423,7 +17423,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_quant8_all_tensors_as
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param39
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -17433,7 +17433,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_quant8_all_tensors_as
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param40
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -17443,7 +17443,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_quant8_all_tensors_as
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op44
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({32, 0, 24, 0, 0, 0, 16, 0, 8}),
                             .dimensions = {1, 3, 3, 1},
@@ -17480,7 +17480,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_quant8_all_tensors_as
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {2, 12, 15},
-                .operands = {{
+                .operands = {{ // op14
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({}),
                             .dimensions = {1, 6, 6, 1},
@@ -17490,7 +17490,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_quant8_all_tensors_as
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op24
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({}),
                             .dimensions = {1, 2, 2, 1},
@@ -17500,7 +17500,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_quant8_all_tensors_as
                             .scale = 0.125f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op34
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {1},
@@ -17510,7 +17510,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_quant8_all_tensors_as
                             .scale = 0.0625f,
                             .type = TestOperandType::TENSOR_INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param34
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -17520,7 +17520,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_quant8_all_tensors_as
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param35
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -17530,7 +17530,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_quant8_all_tensors_as
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param36
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -17540,7 +17540,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_quant8_all_tensors_as
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param37
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -17550,7 +17550,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_quant8_all_tensors_as
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param38
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -17560,7 +17560,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_quant8_all_tensors_as
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -17570,7 +17570,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_quant8_all_tensors_as
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param39
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -17580,7 +17580,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_quant8_all_tensors_as
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param40
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -17590,7 +17590,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_quant8_all_tensors_as
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op44
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({32, 0, 24, 0, 0, 0, 16, 0, 8}),
                             .dimensions = {1, 3, 3, 1},
@@ -17600,7 +17600,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_quant8_all_tensors_as
                             .scale = 0.125f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op14_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}),
                             .dimensions = {1, 6, 6, 1},
@@ -17610,7 +17610,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_quant8_all_tensors_as
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy85
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({0}),
                             .dimensions = {1},
@@ -17620,7 +17620,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_quant8_all_tensors_as
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param126
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -17630,7 +17630,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_quant8_all_tensors_as
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op24_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({8, 16, 24, 32}),
                             .dimensions = {1, 2, 2, 1},
@@ -17640,7 +17640,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_quant8_all_tensors_as
                             .scale = 0.125f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy86
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({0}),
                             .dimensions = {1},
@@ -17650,7 +17650,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_quant8_all_tensors_as
                             .scale = 0.125f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param127
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -17695,7 +17695,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_float16() {
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {0},
-                .operands = {{
+                .operands = {{ // op14
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f}),
                             .dimensions = {1, 6, 6, 1},
@@ -17705,7 +17705,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op24
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({1.0f, 2.0f, 3.0f, 4.0f}),
                             .dimensions = {1, 2, 2, 1},
@@ -17715,7 +17715,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op34
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({0.0f}),
                             .dimensions = {1},
@@ -17725,7 +17725,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param34
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -17735,7 +17735,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param35
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -17745,7 +17745,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param36
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -17755,7 +17755,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param37
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -17765,7 +17765,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param38
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -17775,7 +17775,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -17785,7 +17785,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param39
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -17795,7 +17795,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param40
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -17805,7 +17805,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op44
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({4.0f, 0.0f, 3.0f, 0.0f, 0.0f, 0.0f, 2.0f, 0.0f, 1.0f}),
                             .dimensions = {1, 3, 3, 1},
@@ -17842,7 +17842,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_float16_all_inputs_as
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {12},
-                .operands = {{
+                .operands = {{ // op14
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({}),
                             .dimensions = {1, 6, 6, 1},
@@ -17852,7 +17852,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_float16_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op24
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({1.0f, 2.0f, 3.0f, 4.0f}),
                             .dimensions = {1, 2, 2, 1},
@@ -17862,7 +17862,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_float16_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op34
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({0.0f}),
                             .dimensions = {1},
@@ -17872,7 +17872,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_float16_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param34
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -17882,7 +17882,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_float16_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param35
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -17892,7 +17892,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_float16_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param36
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -17902,7 +17902,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_float16_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param37
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -17912,7 +17912,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_float16_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param38
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -17922,7 +17922,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_float16_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -17932,7 +17932,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_float16_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param39
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -17942,7 +17942,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_float16_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param40
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -17952,7 +17952,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_float16_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op44
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({4.0f, 0.0f, 3.0f, 0.0f, 0.0f, 0.0f, 2.0f, 0.0f, 1.0f}),
                             .dimensions = {1, 3, 3, 1},
@@ -17962,7 +17962,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_float16_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op14_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f}),
                             .dimensions = {1, 6, 6, 1},
@@ -17972,7 +17972,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_float16_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy87
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({0.0f}),
                             .dimensions = {1},
@@ -17982,7 +17982,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_float16_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param128
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -18023,7 +18023,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_float16_all_tensors_a
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {0, 1, 2},
-                .operands = {{
+                .operands = {{ // op14
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f}),
                             .dimensions = {1, 6, 6, 1},
@@ -18033,7 +18033,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_float16_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op24
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({1.0f, 2.0f, 3.0f, 4.0f}),
                             .dimensions = {1, 2, 2, 1},
@@ -18043,7 +18043,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_float16_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op34
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({0.0f}),
                             .dimensions = {1},
@@ -18053,7 +18053,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_float16_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param34
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -18063,7 +18063,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_float16_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param35
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -18073,7 +18073,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_float16_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param36
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -18083,7 +18083,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_float16_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param37
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -18093,7 +18093,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_float16_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param38
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -18103,7 +18103,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_float16_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -18113,7 +18113,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_float16_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param39
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -18123,7 +18123,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_float16_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param40
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -18133,7 +18133,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_float16_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op44
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({4.0f, 0.0f, 3.0f, 0.0f, 0.0f, 0.0f, 2.0f, 0.0f, 1.0f}),
                             .dimensions = {1, 3, 3, 1},
@@ -18170,7 +18170,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_float16_all_tensors_a
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {12, 15, 18},
-                .operands = {{
+                .operands = {{ // op14
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({}),
                             .dimensions = {1, 6, 6, 1},
@@ -18180,7 +18180,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_float16_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op24
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({}),
                             .dimensions = {1, 2, 2, 1},
@@ -18190,7 +18190,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_float16_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op34
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({}),
                             .dimensions = {1},
@@ -18200,7 +18200,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_float16_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param34
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -18210,7 +18210,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_float16_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param35
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -18220,7 +18220,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_float16_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param36
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -18230,7 +18230,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_float16_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param37
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -18240,7 +18240,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_float16_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param38
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -18250,7 +18250,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_float16_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -18260,7 +18260,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_float16_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param39
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -18270,7 +18270,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_float16_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param40
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -18280,7 +18280,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_float16_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op44
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({4.0f, 0.0f, 3.0f, 0.0f, 0.0f, 0.0f, 2.0f, 0.0f, 1.0f}),
                             .dimensions = {1, 3, 3, 1},
@@ -18290,7 +18290,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_float16_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op14_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f}),
                             .dimensions = {1, 6, 6, 1},
@@ -18300,7 +18300,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_float16_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy88
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({0.0f}),
                             .dimensions = {1},
@@ -18310,7 +18310,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_float16_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param129
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -18320,7 +18320,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_float16_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op24_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({1.0f, 2.0f, 3.0f, 4.0f}),
                             .dimensions = {1, 2, 2, 1},
@@ -18330,7 +18330,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_float16_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy89
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({0.0f}),
                             .dimensions = {1},
@@ -18340,7 +18340,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_float16_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param130
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -18350,7 +18350,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_float16_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op34_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({0.0f}),
                             .dimensions = {1},
@@ -18360,7 +18360,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_float16_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy90
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({0.0f}),
                             .dimensions = {1},
@@ -18370,7 +18370,7 @@ const TestModel& get_test_model_same_padding_stride_2_nhwc_float16_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param131
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -18419,7 +18419,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw() {
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {0},
-                .operands = {{
+                .operands = {{ // op14
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f}),
                             .dimensions = {1, 1, 6, 6},
@@ -18429,7 +18429,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op24
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f}),
                             .dimensions = {1, 2, 2, 1},
@@ -18439,7 +18439,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op34
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -18449,7 +18449,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param34
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -18459,7 +18459,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param35
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -18469,7 +18469,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param36
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -18479,7 +18479,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param37
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -18489,7 +18489,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param38
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -18499,7 +18499,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -18509,7 +18509,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param39
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -18519,7 +18519,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param40
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -18529,7 +18529,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op44
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({4.0f, 0.0f, 3.0f, 0.0f, 0.0f, 0.0f, 2.0f, 0.0f, 1.0f}),
                             .dimensions = {1, 1, 3, 3},
@@ -18566,7 +18566,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_all_inputs_as_interna
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {12},
-                .operands = {{
+                .operands = {{ // op14
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {1, 1, 6, 6},
@@ -18576,7 +18576,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op24
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f}),
                             .dimensions = {1, 2, 2, 1},
@@ -18586,7 +18586,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op34
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -18596,7 +18596,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param34
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -18606,7 +18606,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param35
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -18616,7 +18616,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param36
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -18626,7 +18626,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param37
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -18636,7 +18636,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param38
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -18646,7 +18646,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -18656,7 +18656,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param39
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -18666,7 +18666,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param40
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -18676,7 +18676,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op44
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({4.0f, 0.0f, 3.0f, 0.0f, 0.0f, 0.0f, 2.0f, 0.0f, 1.0f}),
                             .dimensions = {1, 1, 3, 3},
@@ -18686,7 +18686,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op14_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f}),
                             .dimensions = {1, 1, 6, 6},
@@ -18696,7 +18696,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy91
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -18706,7 +18706,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_all_inputs_as_interna
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param132
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -18747,7 +18747,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_all_tensors_as_inputs
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {0, 1, 2},
-                .operands = {{
+                .operands = {{ // op14
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f}),
                             .dimensions = {1, 1, 6, 6},
@@ -18757,7 +18757,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op24
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f}),
                             .dimensions = {1, 2, 2, 1},
@@ -18767,7 +18767,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op34
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -18777,7 +18777,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param34
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -18787,7 +18787,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param35
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -18797,7 +18797,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param36
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -18807,7 +18807,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param37
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -18817,7 +18817,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param38
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -18827,7 +18827,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -18837,7 +18837,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param39
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -18847,7 +18847,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param40
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -18857,7 +18857,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op44
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({4.0f, 0.0f, 3.0f, 0.0f, 0.0f, 0.0f, 2.0f, 0.0f, 1.0f}),
                             .dimensions = {1, 1, 3, 3},
@@ -18894,7 +18894,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_all_tensors_as_inputs
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {12, 15, 18},
-                .operands = {{
+                .operands = {{ // op14
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {1, 1, 6, 6},
@@ -18904,7 +18904,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op24
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {1, 2, 2, 1},
@@ -18914,7 +18914,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op34
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {1},
@@ -18924,7 +18924,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param34
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -18934,7 +18934,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param35
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -18944,7 +18944,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param36
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -18954,7 +18954,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param37
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -18964,7 +18964,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param38
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -18974,7 +18974,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -18984,7 +18984,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param39
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -18994,7 +18994,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param40
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -19004,7 +19004,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op44
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({4.0f, 0.0f, 3.0f, 0.0f, 0.0f, 0.0f, 2.0f, 0.0f, 1.0f}),
                             .dimensions = {1, 1, 3, 3},
@@ -19014,7 +19014,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op14_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f}),
                             .dimensions = {1, 1, 6, 6},
@@ -19024,7 +19024,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy92
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -19034,7 +19034,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param133
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -19044,7 +19044,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op24_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f}),
                             .dimensions = {1, 2, 2, 1},
@@ -19054,7 +19054,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy93
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -19064,7 +19064,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param134
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -19074,7 +19074,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op34_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -19084,7 +19084,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy94
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -19094,7 +19094,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_all_tensors_as_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param135
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -19143,7 +19143,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_relaxed() {
         .isRelaxed = true,
         .main = {
                 .inputIndexes = {0},
-                .operands = {{
+                .operands = {{ // op14
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f}),
                             .dimensions = {1, 1, 6, 6},
@@ -19153,7 +19153,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op24
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f}),
                             .dimensions = {1, 2, 2, 1},
@@ -19163,7 +19163,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op34
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -19173,7 +19173,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param34
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -19183,7 +19183,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param35
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -19193,7 +19193,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param36
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -19203,7 +19203,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param37
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -19213,7 +19213,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param38
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -19223,7 +19223,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -19233,7 +19233,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param39
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -19243,7 +19243,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param40
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -19253,7 +19253,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op44
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({4.0f, 0.0f, 3.0f, 0.0f, 0.0f, 0.0f, 2.0f, 0.0f, 1.0f}),
                             .dimensions = {1, 1, 3, 3},
@@ -19290,7 +19290,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_relaxed_all_inputs_as
         .isRelaxed = true,
         .main = {
                 .inputIndexes = {12},
-                .operands = {{
+                .operands = {{ // op14
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {1, 1, 6, 6},
@@ -19300,7 +19300,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_relaxed_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op24
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f}),
                             .dimensions = {1, 2, 2, 1},
@@ -19310,7 +19310,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_relaxed_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op34
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -19320,7 +19320,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_relaxed_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param34
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -19330,7 +19330,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_relaxed_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param35
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -19340,7 +19340,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_relaxed_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param36
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -19350,7 +19350,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_relaxed_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param37
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -19360,7 +19360,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_relaxed_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param38
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -19370,7 +19370,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_relaxed_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -19380,7 +19380,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_relaxed_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param39
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -19390,7 +19390,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_relaxed_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param40
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -19400,7 +19400,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_relaxed_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op44
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({4.0f, 0.0f, 3.0f, 0.0f, 0.0f, 0.0f, 2.0f, 0.0f, 1.0f}),
                             .dimensions = {1, 1, 3, 3},
@@ -19410,7 +19410,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_relaxed_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op14_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f}),
                             .dimensions = {1, 1, 6, 6},
@@ -19420,7 +19420,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_relaxed_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy95
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -19430,7 +19430,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_relaxed_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param136
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -19471,7 +19471,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_relaxed_all_tensors_a
         .isRelaxed = true,
         .main = {
                 .inputIndexes = {0, 1, 2},
-                .operands = {{
+                .operands = {{ // op14
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f}),
                             .dimensions = {1, 1, 6, 6},
@@ -19481,7 +19481,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_relaxed_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op24
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f}),
                             .dimensions = {1, 2, 2, 1},
@@ -19491,7 +19491,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_relaxed_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op34
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -19501,7 +19501,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_relaxed_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param34
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -19511,7 +19511,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_relaxed_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param35
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -19521,7 +19521,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_relaxed_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param36
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -19531,7 +19531,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_relaxed_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param37
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -19541,7 +19541,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_relaxed_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param38
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -19551,7 +19551,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_relaxed_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -19561,7 +19561,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_relaxed_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param39
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -19571,7 +19571,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_relaxed_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param40
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -19581,7 +19581,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_relaxed_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op44
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({4.0f, 0.0f, 3.0f, 0.0f, 0.0f, 0.0f, 2.0f, 0.0f, 1.0f}),
                             .dimensions = {1, 1, 3, 3},
@@ -19618,7 +19618,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_relaxed_all_tensors_a
         .isRelaxed = true,
         .main = {
                 .inputIndexes = {12, 15, 18},
-                .operands = {{
+                .operands = {{ // op14
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {1, 1, 6, 6},
@@ -19628,7 +19628,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_relaxed_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op24
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {1, 2, 2, 1},
@@ -19638,7 +19638,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_relaxed_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op34
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {1},
@@ -19648,7 +19648,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_relaxed_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param34
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -19658,7 +19658,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_relaxed_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param35
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -19668,7 +19668,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_relaxed_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param36
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -19678,7 +19678,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_relaxed_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param37
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -19688,7 +19688,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_relaxed_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param38
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -19698,7 +19698,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_relaxed_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -19708,7 +19708,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_relaxed_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param39
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -19718,7 +19718,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_relaxed_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param40
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -19728,7 +19728,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_relaxed_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op44
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({4.0f, 0.0f, 3.0f, 0.0f, 0.0f, 0.0f, 2.0f, 0.0f, 1.0f}),
                             .dimensions = {1, 1, 3, 3},
@@ -19738,7 +19738,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_relaxed_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op14_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f}),
                             .dimensions = {1, 1, 6, 6},
@@ -19748,7 +19748,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_relaxed_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy96
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -19758,7 +19758,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_relaxed_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param137
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -19768,7 +19768,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_relaxed_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op24_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f, 2.0f, 3.0f, 4.0f}),
                             .dimensions = {1, 2, 2, 1},
@@ -19778,7 +19778,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_relaxed_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy97
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -19788,7 +19788,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_relaxed_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param138
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -19798,7 +19798,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_relaxed_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op34_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -19808,7 +19808,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_relaxed_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy98
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -19818,7 +19818,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_relaxed_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param139
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -19867,7 +19867,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_quant8() {
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {0},
-                .operands = {{
+                .operands = {{ // op14
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}),
                             .dimensions = {1, 1, 6, 6},
@@ -19877,7 +19877,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_quant8() {
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op24
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({8, 16, 24, 32}),
                             .dimensions = {1, 2, 2, 1},
@@ -19887,7 +19887,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_quant8() {
                             .scale = 0.125f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op34
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {1},
@@ -19897,7 +19897,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_quant8() {
                             .scale = 0.0625f,
                             .type = TestOperandType::TENSOR_INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param34
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -19907,7 +19907,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_quant8() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param35
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -19917,7 +19917,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_quant8() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param36
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -19927,7 +19927,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_quant8() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param37
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -19937,7 +19937,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_quant8() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param38
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -19947,7 +19947,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_quant8() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -19957,7 +19957,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_quant8() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param39
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -19967,7 +19967,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_quant8() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param40
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -19977,7 +19977,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_quant8() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op44
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({32, 0, 24, 0, 0, 0, 16, 0, 8}),
                             .dimensions = {1, 1, 3, 3},
@@ -20014,7 +20014,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_quant8_all_inputs_as_
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {12},
-                .operands = {{
+                .operands = {{ // op14
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({}),
                             .dimensions = {1, 1, 6, 6},
@@ -20024,7 +20024,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_quant8_all_inputs_as_
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op24
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({8, 16, 24, 32}),
                             .dimensions = {1, 2, 2, 1},
@@ -20034,7 +20034,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_quant8_all_inputs_as_
                             .scale = 0.125f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op34
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {1},
@@ -20044,7 +20044,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_quant8_all_inputs_as_
                             .scale = 0.0625f,
                             .type = TestOperandType::TENSOR_INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param34
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -20054,7 +20054,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_quant8_all_inputs_as_
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param35
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -20064,7 +20064,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_quant8_all_inputs_as_
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param36
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -20074,7 +20074,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_quant8_all_inputs_as_
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param37
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -20084,7 +20084,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_quant8_all_inputs_as_
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param38
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -20094,7 +20094,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_quant8_all_inputs_as_
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -20104,7 +20104,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_quant8_all_inputs_as_
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param39
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -20114,7 +20114,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_quant8_all_inputs_as_
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param40
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -20124,7 +20124,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_quant8_all_inputs_as_
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op44
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({32, 0, 24, 0, 0, 0, 16, 0, 8}),
                             .dimensions = {1, 1, 3, 3},
@@ -20134,7 +20134,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_quant8_all_inputs_as_
                             .scale = 0.125f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op14_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}),
                             .dimensions = {1, 1, 6, 6},
@@ -20144,7 +20144,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_quant8_all_inputs_as_
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy99
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({0}),
                             .dimensions = {1},
@@ -20154,7 +20154,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_quant8_all_inputs_as_
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param140
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -20195,7 +20195,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_quant8_all_tensors_as
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {0, 1, 2},
-                .operands = {{
+                .operands = {{ // op14
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}),
                             .dimensions = {1, 1, 6, 6},
@@ -20205,7 +20205,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_quant8_all_tensors_as
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op24
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({8, 16, 24, 32}),
                             .dimensions = {1, 2, 2, 1},
@@ -20215,7 +20215,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_quant8_all_tensors_as
                             .scale = 0.125f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op34
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {1},
@@ -20225,7 +20225,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_quant8_all_tensors_as
                             .scale = 0.0625f,
                             .type = TestOperandType::TENSOR_INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param34
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -20235,7 +20235,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_quant8_all_tensors_as
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param35
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -20245,7 +20245,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_quant8_all_tensors_as
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param36
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -20255,7 +20255,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_quant8_all_tensors_as
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param37
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -20265,7 +20265,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_quant8_all_tensors_as
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param38
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -20275,7 +20275,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_quant8_all_tensors_as
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -20285,7 +20285,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_quant8_all_tensors_as
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param39
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -20295,7 +20295,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_quant8_all_tensors_as
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param40
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -20305,7 +20305,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_quant8_all_tensors_as
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op44
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({32, 0, 24, 0, 0, 0, 16, 0, 8}),
                             .dimensions = {1, 1, 3, 3},
@@ -20342,7 +20342,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_quant8_all_tensors_as
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {2, 12, 15},
-                .operands = {{
+                .operands = {{ // op14
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({}),
                             .dimensions = {1, 1, 6, 6},
@@ -20352,7 +20352,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_quant8_all_tensors_as
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op24
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({}),
                             .dimensions = {1, 2, 2, 1},
@@ -20362,7 +20362,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_quant8_all_tensors_as
                             .scale = 0.125f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op34
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {1},
@@ -20372,7 +20372,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_quant8_all_tensors_as
                             .scale = 0.0625f,
                             .type = TestOperandType::TENSOR_INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param34
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -20382,7 +20382,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_quant8_all_tensors_as
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param35
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -20392,7 +20392,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_quant8_all_tensors_as
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param36
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -20402,7 +20402,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_quant8_all_tensors_as
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param37
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -20412,7 +20412,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_quant8_all_tensors_as
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param38
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -20422,7 +20422,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_quant8_all_tensors_as
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -20432,7 +20432,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_quant8_all_tensors_as
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param39
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -20442,7 +20442,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_quant8_all_tensors_as
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param40
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -20452,7 +20452,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_quant8_all_tensors_as
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op44
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({32, 0, 24, 0, 0, 0, 16, 0, 8}),
                             .dimensions = {1, 1, 3, 3},
@@ -20462,7 +20462,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_quant8_all_tensors_as
                             .scale = 0.125f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op14_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}),
                             .dimensions = {1, 1, 6, 6},
@@ -20472,7 +20472,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_quant8_all_tensors_as
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy100
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({0}),
                             .dimensions = {1},
@@ -20482,7 +20482,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_quant8_all_tensors_as
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param141
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -20492,7 +20492,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_quant8_all_tensors_as
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op24_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({8, 16, 24, 32}),
                             .dimensions = {1, 2, 2, 1},
@@ -20502,7 +20502,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_quant8_all_tensors_as
                             .scale = 0.125f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy101
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({0}),
                             .dimensions = {1},
@@ -20512,7 +20512,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_quant8_all_tensors_as
                             .scale = 0.125f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param142
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -20557,7 +20557,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_float16() {
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {0},
-                .operands = {{
+                .operands = {{ // op14
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f}),
                             .dimensions = {1, 1, 6, 6},
@@ -20567,7 +20567,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op24
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({1.0f, 2.0f, 3.0f, 4.0f}),
                             .dimensions = {1, 2, 2, 1},
@@ -20577,7 +20577,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op34
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({0.0f}),
                             .dimensions = {1},
@@ -20587,7 +20587,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param34
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -20597,7 +20597,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param35
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -20607,7 +20607,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param36
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -20617,7 +20617,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param37
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -20627,7 +20627,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param38
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -20637,7 +20637,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -20647,7 +20647,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param39
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -20657,7 +20657,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param40
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -20667,7 +20667,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op44
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({4.0f, 0.0f, 3.0f, 0.0f, 0.0f, 0.0f, 2.0f, 0.0f, 1.0f}),
                             .dimensions = {1, 1, 3, 3},
@@ -20704,7 +20704,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_float16_all_inputs_as
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {12},
-                .operands = {{
+                .operands = {{ // op14
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({}),
                             .dimensions = {1, 1, 6, 6},
@@ -20714,7 +20714,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_float16_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op24
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({1.0f, 2.0f, 3.0f, 4.0f}),
                             .dimensions = {1, 2, 2, 1},
@@ -20724,7 +20724,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_float16_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op34
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({0.0f}),
                             .dimensions = {1},
@@ -20734,7 +20734,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_float16_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param34
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -20744,7 +20744,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_float16_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param35
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -20754,7 +20754,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_float16_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param36
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -20764,7 +20764,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_float16_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param37
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -20774,7 +20774,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_float16_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param38
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -20784,7 +20784,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_float16_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -20794,7 +20794,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_float16_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param39
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -20804,7 +20804,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_float16_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param40
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -20814,7 +20814,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_float16_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op44
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({4.0f, 0.0f, 3.0f, 0.0f, 0.0f, 0.0f, 2.0f, 0.0f, 1.0f}),
                             .dimensions = {1, 1, 3, 3},
@@ -20824,7 +20824,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_float16_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op14_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f}),
                             .dimensions = {1, 1, 6, 6},
@@ -20834,7 +20834,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_float16_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy102
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({0.0f}),
                             .dimensions = {1},
@@ -20844,7 +20844,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_float16_all_inputs_as
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param143
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -20885,7 +20885,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_float16_all_tensors_a
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {0, 1, 2},
-                .operands = {{
+                .operands = {{ // op14
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f}),
                             .dimensions = {1, 1, 6, 6},
@@ -20895,7 +20895,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_float16_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op24
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({1.0f, 2.0f, 3.0f, 4.0f}),
                             .dimensions = {1, 2, 2, 1},
@@ -20905,7 +20905,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_float16_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op34
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({0.0f}),
                             .dimensions = {1},
@@ -20915,7 +20915,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_float16_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param34
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -20925,7 +20925,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_float16_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param35
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -20935,7 +20935,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_float16_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param36
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -20945,7 +20945,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_float16_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param37
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -20955,7 +20955,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_float16_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param38
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -20965,7 +20965,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_float16_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -20975,7 +20975,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_float16_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param39
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -20985,7 +20985,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_float16_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param40
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -20995,7 +20995,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_float16_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op44
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({4.0f, 0.0f, 3.0f, 0.0f, 0.0f, 0.0f, 2.0f, 0.0f, 1.0f}),
                             .dimensions = {1, 1, 3, 3},
@@ -21032,7 +21032,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_float16_all_tensors_a
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {12, 15, 18},
-                .operands = {{
+                .operands = {{ // op14
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({}),
                             .dimensions = {1, 1, 6, 6},
@@ -21042,7 +21042,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_float16_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op24
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({}),
                             .dimensions = {1, 2, 2, 1},
@@ -21052,7 +21052,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_float16_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op34
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({}),
                             .dimensions = {1},
@@ -21062,7 +21062,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_float16_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param34
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -21072,7 +21072,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_float16_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param35
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -21082,7 +21082,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_float16_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param36
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({2}),
                             .dimensions = {},
@@ -21092,7 +21092,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_float16_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param37
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({1}),
                             .dimensions = {},
@@ -21102,7 +21102,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_float16_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param38
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -21112,7 +21112,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_float16_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -21122,7 +21122,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_float16_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param39
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -21132,7 +21132,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_float16_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param40
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({3}),
                             .dimensions = {},
@@ -21142,7 +21142,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_float16_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op44
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({4.0f, 0.0f, 3.0f, 0.0f, 0.0f, 0.0f, 2.0f, 0.0f, 1.0f}),
                             .dimensions = {1, 1, 3, 3},
@@ -21152,7 +21152,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_float16_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op14_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f}),
                             .dimensions = {1, 1, 6, 6},
@@ -21162,7 +21162,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_float16_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy103
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({0.0f}),
                             .dimensions = {1},
@@ -21172,7 +21172,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_float16_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param144
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -21182,7 +21182,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_float16_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op24_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({1.0f, 2.0f, 3.0f, 4.0f}),
                             .dimensions = {1, 2, 2, 1},
@@ -21192,7 +21192,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_float16_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy104
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({0.0f}),
                             .dimensions = {1},
@@ -21202,7 +21202,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_float16_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param145
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -21212,7 +21212,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_float16_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // op34_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({0.0f}),
                             .dimensions = {1},
@@ -21222,7 +21222,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_float16_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy105
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({0.0f}),
                             .dimensions = {1},
@@ -21232,7 +21232,7 @@ const TestModel& get_test_model_same_padding_stride_2_nchw_float16_all_tensors_a
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param146
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
