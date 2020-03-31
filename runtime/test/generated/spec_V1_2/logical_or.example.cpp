@@ -13,7 +13,7 @@ const TestModel& get_test_model_simple() {
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {0, 1},
-                .operands = {{
+                .operands = {{ // input0
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true, false, false, true}),
                             .dimensions = {1, 1, 1, 4},
@@ -23,7 +23,7 @@ const TestModel& get_test_model_simple() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_BOOL8,
                             .zeroPoint = 0
-                        }, {
+                        }, { // input1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true, false, true, false}),
                             .dimensions = {1, 1, 1, 4},
@@ -33,7 +33,7 @@ const TestModel& get_test_model_simple() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_BOOL8,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output0
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true, false, true, true}),
                             .dimensions = {1, 1, 1, 4},
@@ -70,7 +70,7 @@ const TestModel& get_test_model_broadcast() {
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {0, 1},
-                .operands = {{
+                .operands = {{ // input01
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true, false, false, true}),
                             .dimensions = {1, 1, 1, 4},
@@ -80,7 +80,7 @@ const TestModel& get_test_model_broadcast() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_BOOL8,
                             .zeroPoint = 0
-                        }, {
+                        }, { // input11
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {1, 1},
@@ -90,7 +90,7 @@ const TestModel& get_test_model_broadcast() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_BOOL8,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output01
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true, false, false, true}),
                             .dimensions = {1, 1, 1, 4},
