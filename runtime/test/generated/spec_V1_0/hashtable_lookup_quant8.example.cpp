@@ -13,7 +13,7 @@ const TestModel& get_test_model() {
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {0, 1, 2},
-                .operands = {{
+                .operands = {{ // lookup
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({123, 250, 255, 0}),
                             .dimensions = {4},
@@ -23,7 +23,7 @@ const TestModel& get_test_model() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // key
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0, 123, 255}),
                             .dimensions = {3},
@@ -33,7 +33,7 @@ const TestModel& get_test_model() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // value
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({0, 1, 10, 11, 20, 21}),
                             .dimensions = {3, 2},
@@ -43,7 +43,7 @@ const TestModel& get_test_model() {
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({10, 11, 0, 0, 20, 21, 0, 1}),
                             .dimensions = {4, 2},
@@ -53,7 +53,7 @@ const TestModel& get_test_model() {
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 0
-                        }, {
+                        }, { // hits
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({1, 0, 1, 1}),
                             .dimensions = {4},
@@ -90,7 +90,7 @@ const TestModel& get_test_model_all_inputs_as_internal() {
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {0, 1, 5},
-                .operands = {{
+                .operands = {{ // lookup
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({123, 250, 255, 0}),
                             .dimensions = {4},
@@ -100,7 +100,7 @@ const TestModel& get_test_model_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // key
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0, 123, 255}),
                             .dimensions = {3},
@@ -110,7 +110,7 @@ const TestModel& get_test_model_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // value
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({}),
                             .dimensions = {3, 2},
@@ -120,7 +120,7 @@ const TestModel& get_test_model_all_inputs_as_internal() {
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({10, 11, 0, 0, 20, 21, 0, 1}),
                             .dimensions = {4, 2},
@@ -130,7 +130,7 @@ const TestModel& get_test_model_all_inputs_as_internal() {
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 0
-                        }, {
+                        }, { // hits
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({1, 0, 1, 1}),
                             .dimensions = {4},
@@ -140,7 +140,7 @@ const TestModel& get_test_model_all_inputs_as_internal() {
                             .scale = 1.0f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 0
-                        }, {
+                        }, { // value_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({0, 1, 10, 11, 20, 21}),
                             .dimensions = {3, 2},
@@ -150,7 +150,7 @@ const TestModel& get_test_model_all_inputs_as_internal() {
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<uint8_t>({0}),
                             .dimensions = {1},
@@ -160,7 +160,7 @@ const TestModel& get_test_model_all_inputs_as_internal() {
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
