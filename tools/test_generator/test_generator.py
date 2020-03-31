@@ -433,9 +433,11 @@ class Float32Vector(Parameter, ImplicitParameter):
 
 # A shortcut for a SUBGRAPH parameter
 class SubgraphReference(Parameter, ImplicitParameter):
-    def __init__(self, name, value):
-        Parameter.__init__(self, name, ("SUBGRAPH", []), value)
+    def __init__(self, name, model):
+        Parameter.__init__(self, name, ("SUBGRAPH", []), model)
         self.lifetime = "SUBGRAPH"
+        if model.name is None:
+            model.name = name
     @staticmethod
     def IsCompatible(value):
         return type(value) is Model
