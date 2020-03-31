@@ -64,15 +64,15 @@ class SyncFenceEvent : public IEvent {
     // Close the fd the event owns.
     ~SyncFenceEvent() { close(mSyncFenceFd); }
 
-    // Use sync_wait to wait for the sync fence until the status change.
-    void wait() const override { sync_wait(mSyncFenceFd, -1); }
+    // Use syncWait to wait for the sync fence until the status change.
+    void wait() const override { syncWait(mSyncFenceFd, -1); }
 
     // Get the status of the event.
-    // In case of sync_wait error, query the dispatch callback for detailed
+    // In case of syncWait error, query the dispatch callback for detailed
     // error status.
     hal::ErrorStatus getStatus() const override {
         auto error = hal::ErrorStatus::NONE;
-        if (mSyncFenceFd > 0 && sync_wait(mSyncFenceFd, -1) < 0) {
+        if (mSyncFenceFd > 0 && syncWait(mSyncFenceFd, -1) != FenceState::SIGNALED) {
             error = hal::ErrorStatus::GENERAL_FAILURE;
             // If there is a callback available, use the callback to get the error code.
             if (kFencedExecutionCallback != nullptr) {
