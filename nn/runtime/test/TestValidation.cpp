@@ -82,6 +82,7 @@ class ValidationTestModel : public ValidationTest {
 
     int addOperation(ANeuralNetworksOperationType type, const std::vector<uint32_t>& inputs,
                      const std::vector<uint32_t>& outputs) {
+        ++mNumOperations;
         return ANeuralNetworksModel_addOperation(mModel, type, inputs.size(), inputs.data(),
                                                  outputs.size(), outputs.data());
     }
@@ -92,7 +93,7 @@ class ValidationTestModel : public ValidationTest {
     }
     int modelFinish() { return ANeuralNetworksModel_finish(mModel); }
 
-    void createModel() {
+    virtual void createModel() {
         addTensorOperand();
         addTensorOperand();
         addScalarOperand();
@@ -102,7 +103,6 @@ class ValidationTestModel : public ValidationTest {
         ASSERT_EQ(addOperation(ANEURALNETWORKS_ADD, inList, outList), ANEURALNETWORKS_NO_ERROR);
         ASSERT_EQ(identifyInputsAndOutputs(inList, outList), ANEURALNETWORKS_NO_ERROR);
         ASSERT_EQ(modelFinish(), ANEURALNETWORKS_NO_ERROR);
-        mNumOperations = 1;
     }
 
     uint32_t mNumOperands = 0;
@@ -542,6 +542,17 @@ TEST_F(ValidationTestModelExtensions, SetOperandValue_UnspecifiedRank) {
     EXPECT_EQ(ANeuralNetworksModel_setOperandValue(mModel, operandIndex, buffer, sizeof(buffer)),
               ANEURALNETWORKS_BAD_DATA);
 }
+
+TEST_F(ValidationTestModelExtensions, AddOperandDimensionProductOverflow) {
+    uint32_t dimensions[] = {5, 4, 4, 786433, 5, 3, 16777216, 4, 5};
+    ANeuralNetworksOperandType operandType = {
+            .type = getExtensionOperandType(kTestExtensionTensorType),
+            .dimensionCount = std::size(dimensions),
+            .dimensions = dimensions,
+    };
+    // This should fail, as the operand type's dimension product overflows uint32_t.
+    ASSERT_EQ(ANeuralNetworksModel_addOperand(mModel, &operandType), ANEURALNETWORKS_BAD_DATA);
+}
 #endif
 
 TEST_F(ValidationTestModel, SetOptionalOperand) {
@@ -703,7 +714,7 @@ TEST_F(ValidationTestModel, SetOperandValueFromModel) {
     uint32_t dimensions[] = {2};
     ANeuralNetworksOperandType tensorType = {
             .type = ANEURALNETWORKS_TENSOR_FLOAT32,
-            .dimensionCount = 2,
+            .dimensionCount = std::size(dimensions),
             .dimensions = dimensions,
     };
     ANeuralNetworksOperandType scalarType = {.type = ANEURALNETWORKS_INT32};
@@ -1862,6 +1873,53 @@ TEST_F(ValidationTestExecution, GetOutputOperandRankAndDimensions) {
               ANEURALNETWORKS_NO_ERROR);
     EXPECT_EQ(rank, expectedRank);
     EXPECT_EQ(dims[0], expectedDims);
+}
+
+// Regression test for b/146044137.
+class ValidationTestDimensionProductOverflow : public ValidationTestExecution {
+   protected:
+    void createModel() override {
+        uint32_t dimensions[] = {5, 4, 4, 0, 5, 3, 0, 4, 5};
+        ANeuralNetworksOperandType operandType = {
+                .type = ANEURALNETWORKS_TENSOR_FLOAT32,
+                .dimensionCount = std::size(dimensions),
+                .dimensions = dimensions,
+        };
+        addOperand(operandType);
+        addOperand(operandType);
+        ASSERT_EQ(addOperation(ANEURALNETWORKS_ABS, {0}, {1}), ANEURALNETWORKS_NO_ERROR);
+        ASSERT_EQ(identifyInputsAndOutputs({0}, {1}), ANEURALNETWORKS_NO_ERROR);
+        ASSERT_EQ(modelFinish(), ANEURALNETWORKS_NO_ERROR);
+    }
+};
+
+TEST_F(ValidationTestDimensionProductOverflow, SetInputOrOutput) {
+    uint32_t dimensions[] = {5, 4, 4, 786433, 5, 3, 16777216, 4, 5};
+    ANeuralNetworksOperandType operandType = {
+            .type = ANEURALNETWORKS_TENSOR_FLOAT32,
+            .dimensionCount = std::size(dimensions),
+            .dimensions = dimensions,
+    };
+    uint8_t buffer[20];
+    // This should fail, as the new operand type's dimension product overflows
+    // uint32_t.
+    EXPECT_EQ(
+            ANeuralNetworksExecution_setInput(mExecution, 0, &operandType, buffer, sizeof(buffer)),
+            ANEURALNETWORKS_BAD_DATA);
+    EXPECT_EQ(
+            ANeuralNetworksExecution_setOutput(mExecution, 0, &operandType, buffer, sizeof(buffer)),
+            ANEURALNETWORKS_BAD_DATA);
+}
+
+TEST_F(ValidationTestModel, AddOperandDimensionProductOverflow) {
+    uint32_t dimensions[] = {5, 4, 4, 786433, 5, 3, 16777216, 4, 5};
+    ANeuralNetworksOperandType operandType = {
+            .type = ANEURALNETWORKS_TENSOR_FLOAT32,
+            .dimensionCount = std::size(dimensions),
+            .dimensions = dimensions,
+    };
+    // This should fail, as the operand type's dimension product overflows uint32_t.
+    ASSERT_EQ(ANeuralNetworksModel_addOperand(mModel, &operandType), ANEURALNETWORKS_BAD_DATA);
 }
 
 TEST_F(ValidationTestBurst, BurstComputeNull) {

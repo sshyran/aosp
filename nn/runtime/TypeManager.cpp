@@ -18,19 +18,21 @@
 
 #include "TypeManager.h"
 
-#include "Utils.h"
-
 #include <PackageInfo.h>
 #include <android-base/file.h>
 #include <android-base/properties.h>
 #include <binder/IServiceManager.h>
 #include <procpartition/procpartition.h>
+
 #include <algorithm>
+#include <limits>
 #include <map>
 #include <memory>
 #include <string>
 #include <string_view>
 #include <vector>
+
+#include "Utils.h"
 
 namespace android {
 namespace nn {
@@ -279,23 +281,9 @@ uint32_t TypeManager::getSizeOfData(OperandType type,
     if (!isExtensionOperandType(type)) {
         return nonExtensionOperandSizeOfData(type, dimensions);
     }
-
     const Extension::OperandTypeInformation* info;
     CHECK(getExtensionOperandTypeInfo(type, &info));
-
-    if (!info->isTensor) {
-        return info->byteSize;
-    }
-
-    if (dimensions.empty()) {
-        return 0;
-    }
-
-    uint32_t size = info->byteSize;
-    for (auto dimension : dimensions) {
-        size *= dimension;
-    }
-    return size;
+    return info->isTensor ? sizeOfTensorData(info->byteSize, dimensions) : info->byteSize;
 }
 
 }  // namespace nn
