@@ -152,3 +152,23 @@ example = Example({
          0, 0, 0,
          2, 0, 1]
 }, name="same_padding_stride_2").AddNchw(i2, o2, layout).AddVariations("relaxed", quant8, "float16")
+
+# The tests below can comply with a lower version because the runtime removes
+# optional arguments set to default values.
+Example.SetVersion("V1_0",
+                   "depthwise_conv2d_dilation_nhwc",
+                   "depthwise_conv2d_dilation_nhwc_all_inputs_as_internal",
+                   "depthwise_conv2d_dilation_nhwc_all_tensors_as_inputs",
+                   "depthwise_conv2d_dilation_nhwc_all_tensors_as_inputs_all_inputs_as_internal",
+                   "depthwise_conv2d_dilation_nhwc_quant8",
+                   "depthwise_conv2d_dilation_nhwc_quant8_all_inputs_as_internal",
+                   "depthwise_conv2d_dilation_nhwc_quant8_all_tensors_as_inputs",
+                   "depthwise_conv2d_dilation_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal",
+                   "depthwise_conv2d_dilation_valid_padding_nhwc",
+                   "depthwise_conv2d_dilation_valid_padding_nhwc_all_inputs_as_internal",
+                   "depthwise_conv2d_dilation_valid_padding_nhwc_all_tensors_as_inputs",
+                   "depthwise_conv2d_dilation_valid_padding_nhwc_all_tensors_as_inputs_all_inputs_as_internal",
+                   "depthwise_conv2d_dilation_valid_padding_nhwc_quant8",
+                   "depthwise_conv2d_dilation_valid_padding_nhwc_quant8_all_inputs_as_internal",
+                   "depthwise_conv2d_dilation_valid_padding_nhwc_quant8_all_tensors_as_inputs",
+                   "depthwise_conv2d_dilation_valid_padding_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_internal")

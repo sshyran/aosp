@@ -162,3 +162,11 @@ Example({
     o2: [],
     o3: [],
 }).AddNchw(i1, zero_sized, o3, layout).AddVariations("relaxed", quant8, "float16")
+
+# The tests below can comply with a lower version because the runtime removes
+# optional arguments set to default values.
+Example.SetVersion("V1_0",
+                   "resize_bilinear_v1_2_shape_nhwc",
+                   "resize_bilinear_v1_2_shape_nhwc_2",
+                   "resize_bilinear_v1_2_shape_nhwc_all_inputs_as_internal",
+                   "resize_bilinear_v1_2_shape_nhwc_all_inputs_as_internal_2")
