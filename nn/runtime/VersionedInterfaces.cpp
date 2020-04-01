@@ -455,9 +455,9 @@ VersionedIPreparedModel::executeFenced(
             return std::make_tuple(ANEURALNETWORKS_BAD_DATA, hal::hidl_handle(nullptr), nullptr,
                                    timing);
         }
-        int r = sync_wait(syncFd, -1);
-        if (r < 0) {
-            LOG(ERROR) << "sync_wait failed, fd: " << syncFd;
+        auto r = syncWait(syncFd, -1);
+        if (r != FenceState::SIGNALED) {
+            LOG(ERROR) << "syncWait failed, fd: " << syncFd;
             return std::make_tuple(ANEURALNETWORKS_OP_FAILED, hal::hidl_handle(nullptr), nullptr,
                                    timing);
         }
