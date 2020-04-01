@@ -4879,7 +4879,7 @@ const TestModel& get_test_model_axis_dim4_axis3_neg() {
                         }},
                 .outputIndexes = {6}
             },
-        .minSupportedVersion = TestHalVersion::V1_2,
+        .minSupportedVersion = TestHalVersion::V1_0,
         .referenced = {}
     };
     return model;
@@ -5010,7 +5010,7 @@ const TestModel& get_test_model_axis_dim4_axis3_neg_all_inputs_as_internal() {
                         }},
                 .outputIndexes = {6}
             },
-        .minSupportedVersion = TestHalVersion::V1_2,
+        .minSupportedVersion = TestHalVersion::V1_0,
         .referenced = {}
     };
     return model;
@@ -18559,7 +18559,7 @@ const TestModel& get_test_model_axis_dim4_axis3_neg_2() {
                         }},
                 .outputIndexes = {6}
             },
-        .minSupportedVersion = TestHalVersion::V1_2,
+        .minSupportedVersion = TestHalVersion::V1_0,
         .referenced = {}
     };
     return model;
@@ -18690,7 +18690,7 @@ const TestModel& get_test_model_axis_dim4_axis3_neg_all_inputs_as_internal_2() {
                         }},
                 .outputIndexes = {6}
             },
-        .minSupportedVersion = TestHalVersion::V1_2,
+        .minSupportedVersion = TestHalVersion::V1_0,
         .referenced = {}
     };
     return model;
