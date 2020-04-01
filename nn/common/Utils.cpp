@@ -32,6 +32,9 @@
 #include <utility>
 #include <vector>
 
+#include <errno.h>
+#include <poll.h>
+
 #include "ControlFlow.h"
 #include "NeuralNetworks.h"
 #include "NeuralNetworksOEM.h"
@@ -3142,6 +3145,41 @@ V1_3::Request convertToV1_3(const V1_0::Request& request) {
 
 V1_3::Request convertToV1_3(const V1_3::Request& request) {
     return request;
+}
+
+FenceState syncWait(int fd, int timeout) {
+    // This implementation is directly based on the ::sync_wait() implementation.
+
+    struct pollfd fds;
+    int ret;
+
+    if (fd < 0) {
+        errno = EINVAL;
+        return FenceState::UNKNOWN;
+    }
+
+    fds.fd = fd;
+    fds.events = POLLIN;
+
+    do {
+        ret = poll(&fds, 1, timeout);
+        if (ret > 0) {
+            if (fds.revents & POLLNVAL) {
+                errno = EINVAL;
+                return FenceState::UNKNOWN;
+            }
+            if (fds.revents & POLLERR) {
+                errno = EINVAL;
+                return FenceState::ERROR;
+            }
+            return FenceState::SIGNALED;
+        } else if (ret == 0) {
+            errno = ETIME;
+            return FenceState::ACTIVE;
+        }
+    } while (ret == -1 && (errno == EINTR || errno == EAGAIN));
+
+    return FenceState::UNKNOWN;
 }
 
 #ifdef NN_DEBUGGABLE

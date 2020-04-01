@@ -284,7 +284,7 @@ int ExecutionBuilder::getDuration(int32_t durationCode, uint64_t* duration) cons
     // If the sync fence is valid, perform a non-blocking status check on the sync fence status.
     // TODO(b/148423931): consider using a utility method to wait on the sync fence
     // and distinguish the not-finished status and error state.
-    if (hasSyncFence() && sync_wait(mSyncFenceFd, 0) < 0) {
+    if (hasSyncFence() && syncWait(mSyncFenceFd, 0) != FenceState::SIGNALED) {
         LOG(ERROR) << "ANeuralNetworksExecution_getDuration called before the "
                       "execution has finished, or the execution has encountered an error.";
         *duration = UINT64_MAX;
@@ -397,7 +397,7 @@ int ExecutionBuilder::getOutputOperandDimensions(uint32_t index, uint32_t* dimen
     // If the sync fence is valid, perform a non-blocking status check on the sync fence status.
     // TODO(b/148423931): consider using a utility method to wait on the sync fence
     // and distinguish the not-finished status and error state.
-    if (hasSyncFence() && sync_wait(mSyncFenceFd, 0) < 0) {
+    if (hasSyncFence() && syncWait(mSyncFenceFd, 0) != FenceState::SIGNALED) {
         LOG(ERROR) << "ANeuralNetworksExecution_getOutputOperandDimensions called before the "
                       "execution has finished, or the execution has encountered an error.";
         return ANEURALNETWORKS_BAD_STATE;
@@ -429,7 +429,7 @@ int ExecutionBuilder::getOutputOperandRank(uint32_t index, uint32_t* rank) {
     // If the sync fence is valid, perform a non-blocking status check on the sync fence status.
     // TODO(b/148423931): consider using a utility method to wait on the sync fence
     // and distinguish the not-finished status and error state.
-    if (hasSyncFence() && sync_wait(mSyncFenceFd, 0) < 0) {
+    if (hasSyncFence() && syncWait(mSyncFenceFd, 0) != FenceState::SIGNALED) {
         LOG(ERROR) << "ANeuralNetworksExecution_getOutputOperandRank called before the "
                       "execution has finished, or the execution has encountered an error.";
         return ANEURALNETWORKS_BAD_STATE;
@@ -704,9 +704,9 @@ static std::tuple<int, int, sp<hal::IFencedExecutionCallback>> startComputeFence
     VLOG(EXECUTION) << "Performing full fallback on the CPU.";
     for (int syncFd : waitFor) {
         if (syncFd > 0) {
-            int r = sync_wait(syncFd, -1);
-            if (r < 0) {
-                VLOG(EXECUTION) << "sync_wait failed, fd: " << syncFd;
+            auto r = syncWait(syncFd, -1);
+            if (r != FenceState::SIGNALED) {
+                VLOG(EXECUTION) << "syncWait failed, fd: " << syncFd;
                 return std::make_tuple(ANEURALNETWORKS_OP_FAILED, -1, nullptr);
             }
         }
