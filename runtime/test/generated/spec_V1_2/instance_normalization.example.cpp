@@ -180,7 +180,7 @@ const TestModel& get_test_model_nhwc_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, { // param6
+                        }, { // param9
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -388,7 +388,7 @@ const TestModel& get_test_model_nhwc_relaxed_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, { // param7
+                        }, { // param10
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -596,7 +596,7 @@ const TestModel& get_test_model_nhwc_float16_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, { // param8
+                        }, { // param11
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -804,7 +804,7 @@ const TestModel& get_test_model_nchw_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, { // param9
+                        }, { // param12
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -1012,7 +1012,7 @@ const TestModel& get_test_model_nchw_relaxed_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, { // param10
+                        }, { // param13
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -1220,7 +1220,7 @@ const TestModel& get_test_model_nchw_float16_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, { // param11
+                        }, { // param14
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -1428,7 +1428,7 @@ const TestModel& get_test_model_nhwc_all_inputs_as_internal_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, { // param12
+                        }, { // param15
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -1636,7 +1636,7 @@ const TestModel& get_test_model_nhwc_relaxed_all_inputs_as_internal_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, { // param13
+                        }, { // param16
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -1844,7 +1844,7 @@ const TestModel& get_test_model_nhwc_float16_all_inputs_as_internal_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, { // param14
+                        }, { // param17
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -2052,7 +2052,7 @@ const TestModel& get_test_model_nchw_all_inputs_as_internal_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, { // param15
+                        }, { // param18
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -2260,7 +2260,7 @@ const TestModel& get_test_model_nchw_relaxed_all_inputs_as_internal_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, { // param16
+                        }, { // param19
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -2468,7 +2468,7 @@ const TestModel& get_test_model_nchw_float16_all_inputs_as_internal_2() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, { // param17
+                        }, { // param20
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -2507,9 +2507,9 @@ const TestModel& get_test_model_large_nhwc() {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .isRelaxed = false,
-        .main = {
+        .main = { // large
                 .inputIndexes = {0},
-                .operands = {{
+                .operands = {{ // in2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({198.0f, 198.0f, 202.0f, 202.0f}),
                             .dimensions = {1, 2, 2, 1},
@@ -2519,7 +2519,7 @@ const TestModel& get_test_model_large_nhwc() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param6
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f}),
                             .dimensions = {},
@@ -2529,7 +2529,7 @@ const TestModel& get_test_model_large_nhwc() {
                             .scale = 0.0f,
                             .type = TestOperandType::FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param7
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {},
@@ -2539,7 +2539,7 @@ const TestModel& get_test_model_large_nhwc() {
                             .scale = 0.0f,
                             .type = TestOperandType::FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param8
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0001f}),
                             .dimensions = {},
@@ -2549,7 +2549,7 @@ const TestModel& get_test_model_large_nhwc() {
                             .scale = 0.0f,
                             .type = TestOperandType::FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -2559,7 +2559,7 @@ const TestModel& get_test_model_large_nhwc() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // out2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({-0.9999875f, -0.9999875f, 0.9999875f, 0.9999875f}),
                             .dimensions = {1, 2, 2, 1},
@@ -2594,9 +2594,9 @@ const TestModel& get_test_model_large_nhwc_all_inputs_as_internal() {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .isRelaxed = false,
-        .main = {
+        .main = { // large
                 .inputIndexes = {6},
-                .operands = {{
+                .operands = {{ // in2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {1, 2, 2, 1},
@@ -2606,7 +2606,7 @@ const TestModel& get_test_model_large_nhwc_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param6
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f}),
                             .dimensions = {},
@@ -2616,7 +2616,7 @@ const TestModel& get_test_model_large_nhwc_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param7
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {},
@@ -2626,7 +2626,7 @@ const TestModel& get_test_model_large_nhwc_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param8
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0001f}),
                             .dimensions = {},
@@ -2636,7 +2636,7 @@ const TestModel& get_test_model_large_nhwc_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -2646,7 +2646,7 @@ const TestModel& get_test_model_large_nhwc_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // out2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({-0.9999875f, -0.9999875f, 0.9999875f, 0.9999875f}),
                             .dimensions = {1, 2, 2, 1},
@@ -2656,7 +2656,7 @@ const TestModel& get_test_model_large_nhwc_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // in2_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({198.0f, 198.0f, 202.0f, 202.0f}),
                             .dimensions = {1, 2, 2, 1},
@@ -2666,7 +2666,7 @@ const TestModel& get_test_model_large_nhwc_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy12
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -2676,7 +2676,7 @@ const TestModel& get_test_model_large_nhwc_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param21
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -2715,9 +2715,9 @@ const TestModel& get_test_model_large_nhwc_relaxed() {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .isRelaxed = true,
-        .main = {
+        .main = { // large
                 .inputIndexes = {0},
-                .operands = {{
+                .operands = {{ // in2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({198.0f, 198.0f, 202.0f, 202.0f}),
                             .dimensions = {1, 2, 2, 1},
@@ -2727,7 +2727,7 @@ const TestModel& get_test_model_large_nhwc_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param6
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f}),
                             .dimensions = {},
@@ -2737,7 +2737,7 @@ const TestModel& get_test_model_large_nhwc_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param7
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {},
@@ -2747,7 +2747,7 @@ const TestModel& get_test_model_large_nhwc_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param8
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0001f}),
                             .dimensions = {},
@@ -2757,7 +2757,7 @@ const TestModel& get_test_model_large_nhwc_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -2767,7 +2767,7 @@ const TestModel& get_test_model_large_nhwc_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // out2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({-0.9999875f, -0.9999875f, 0.9999875f, 0.9999875f}),
                             .dimensions = {1, 2, 2, 1},
@@ -2802,9 +2802,9 @@ const TestModel& get_test_model_large_nhwc_relaxed_all_inputs_as_internal() {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .isRelaxed = true,
-        .main = {
+        .main = { // large
                 .inputIndexes = {6},
-                .operands = {{
+                .operands = {{ // in2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {1, 2, 2, 1},
@@ -2814,7 +2814,7 @@ const TestModel& get_test_model_large_nhwc_relaxed_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param6
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f}),
                             .dimensions = {},
@@ -2824,7 +2824,7 @@ const TestModel& get_test_model_large_nhwc_relaxed_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param7
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {},
@@ -2834,7 +2834,7 @@ const TestModel& get_test_model_large_nhwc_relaxed_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param8
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0001f}),
                             .dimensions = {},
@@ -2844,7 +2844,7 @@ const TestModel& get_test_model_large_nhwc_relaxed_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -2854,7 +2854,7 @@ const TestModel& get_test_model_large_nhwc_relaxed_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // out2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({-0.9999875f, -0.9999875f, 0.9999875f, 0.9999875f}),
                             .dimensions = {1, 2, 2, 1},
@@ -2864,7 +2864,7 @@ const TestModel& get_test_model_large_nhwc_relaxed_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // in2_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({198.0f, 198.0f, 202.0f, 202.0f}),
                             .dimensions = {1, 2, 2, 1},
@@ -2874,7 +2874,7 @@ const TestModel& get_test_model_large_nhwc_relaxed_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy13
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -2884,7 +2884,7 @@ const TestModel& get_test_model_large_nhwc_relaxed_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param22
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -2923,9 +2923,9 @@ const TestModel& get_test_model_large_nhwc_float16() {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .isRelaxed = false,
-        .main = {
+        .main = { // large
                 .inputIndexes = {0},
-                .operands = {{
+                .operands = {{ // in2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({198.0f, 198.0f, 202.0f, 202.0f}),
                             .dimensions = {1, 2, 2, 1},
@@ -2935,7 +2935,7 @@ const TestModel& get_test_model_large_nhwc_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param6
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({1.0f}),
                             .dimensions = {},
@@ -2945,7 +2945,7 @@ const TestModel& get_test_model_large_nhwc_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param7
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({0.0f}),
                             .dimensions = {},
@@ -2955,7 +2955,7 @@ const TestModel& get_test_model_large_nhwc_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param8
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({9.999999747378752e-05f}),
                             .dimensions = {},
@@ -2965,7 +2965,7 @@ const TestModel& get_test_model_large_nhwc_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -2975,7 +2975,7 @@ const TestModel& get_test_model_large_nhwc_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // out2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({-0.9999874830245972f, -0.9999874830245972f, 0.9999874830245972f, 0.9999874830245972f}),
                             .dimensions = {1, 2, 2, 1},
@@ -3010,9 +3010,9 @@ const TestModel& get_test_model_large_nhwc_float16_all_inputs_as_internal() {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .isRelaxed = false,
-        .main = {
+        .main = { // large
                 .inputIndexes = {6},
-                .operands = {{
+                .operands = {{ // in2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({}),
                             .dimensions = {1, 2, 2, 1},
@@ -3022,7 +3022,7 @@ const TestModel& get_test_model_large_nhwc_float16_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param6
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({1.0f}),
                             .dimensions = {},
@@ -3032,7 +3032,7 @@ const TestModel& get_test_model_large_nhwc_float16_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param7
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({0.0f}),
                             .dimensions = {},
@@ -3042,7 +3042,7 @@ const TestModel& get_test_model_large_nhwc_float16_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param8
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({9.999999747378752e-05f}),
                             .dimensions = {},
@@ -3052,7 +3052,7 @@ const TestModel& get_test_model_large_nhwc_float16_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -3062,7 +3062,7 @@ const TestModel& get_test_model_large_nhwc_float16_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // out2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({-0.9999874830245972f, -0.9999874830245972f, 0.9999874830245972f, 0.9999874830245972f}),
                             .dimensions = {1, 2, 2, 1},
@@ -3072,7 +3072,7 @@ const TestModel& get_test_model_large_nhwc_float16_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // in2_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({198.0f, 198.0f, 202.0f, 202.0f}),
                             .dimensions = {1, 2, 2, 1},
@@ -3082,7 +3082,7 @@ const TestModel& get_test_model_large_nhwc_float16_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy14
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({0.0f}),
                             .dimensions = {1},
@@ -3092,7 +3092,7 @@ const TestModel& get_test_model_large_nhwc_float16_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param23
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -3131,9 +3131,9 @@ const TestModel& get_test_model_large_nchw() {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .isRelaxed = false,
-        .main = {
+        .main = { // large
                 .inputIndexes = {0},
-                .operands = {{
+                .operands = {{ // in2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({198.0f, 198.0f, 202.0f, 202.0f}),
                             .dimensions = {1, 1, 2, 2},
@@ -3143,7 +3143,7 @@ const TestModel& get_test_model_large_nchw() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param6
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f}),
                             .dimensions = {},
@@ -3153,7 +3153,7 @@ const TestModel& get_test_model_large_nchw() {
                             .scale = 0.0f,
                             .type = TestOperandType::FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param7
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {},
@@ -3163,7 +3163,7 @@ const TestModel& get_test_model_large_nchw() {
                             .scale = 0.0f,
                             .type = TestOperandType::FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param8
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0001f}),
                             .dimensions = {},
@@ -3173,7 +3173,7 @@ const TestModel& get_test_model_large_nchw() {
                             .scale = 0.0f,
                             .type = TestOperandType::FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -3183,7 +3183,7 @@ const TestModel& get_test_model_large_nchw() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // out2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({-0.9999875f, -0.9999875f, 0.9999875f, 0.9999875f}),
                             .dimensions = {1, 1, 2, 2},
@@ -3218,9 +3218,9 @@ const TestModel& get_test_model_large_nchw_all_inputs_as_internal() {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .isRelaxed = false,
-        .main = {
+        .main = { // large
                 .inputIndexes = {6},
-                .operands = {{
+                .operands = {{ // in2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {1, 1, 2, 2},
@@ -3230,7 +3230,7 @@ const TestModel& get_test_model_large_nchw_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param6
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f}),
                             .dimensions = {},
@@ -3240,7 +3240,7 @@ const TestModel& get_test_model_large_nchw_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param7
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {},
@@ -3250,7 +3250,7 @@ const TestModel& get_test_model_large_nchw_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param8
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0001f}),
                             .dimensions = {},
@@ -3260,7 +3260,7 @@ const TestModel& get_test_model_large_nchw_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -3270,7 +3270,7 @@ const TestModel& get_test_model_large_nchw_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // out2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({-0.9999875f, -0.9999875f, 0.9999875f, 0.9999875f}),
                             .dimensions = {1, 1, 2, 2},
@@ -3280,7 +3280,7 @@ const TestModel& get_test_model_large_nchw_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // in2_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({198.0f, 198.0f, 202.0f, 202.0f}),
                             .dimensions = {1, 1, 2, 2},
@@ -3290,7 +3290,7 @@ const TestModel& get_test_model_large_nchw_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy15
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -3300,7 +3300,7 @@ const TestModel& get_test_model_large_nchw_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param24
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -3339,9 +3339,9 @@ const TestModel& get_test_model_large_nchw_relaxed() {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .isRelaxed = true,
-        .main = {
+        .main = { // large
                 .inputIndexes = {0},
-                .operands = {{
+                .operands = {{ // in2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({198.0f, 198.0f, 202.0f, 202.0f}),
                             .dimensions = {1, 1, 2, 2},
@@ -3351,7 +3351,7 @@ const TestModel& get_test_model_large_nchw_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param6
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f}),
                             .dimensions = {},
@@ -3361,7 +3361,7 @@ const TestModel& get_test_model_large_nchw_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param7
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {},
@@ -3371,7 +3371,7 @@ const TestModel& get_test_model_large_nchw_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param8
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0001f}),
                             .dimensions = {},
@@ -3381,7 +3381,7 @@ const TestModel& get_test_model_large_nchw_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -3391,7 +3391,7 @@ const TestModel& get_test_model_large_nchw_relaxed() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // out2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({-0.9999875f, -0.9999875f, 0.9999875f, 0.9999875f}),
                             .dimensions = {1, 1, 2, 2},
@@ -3426,9 +3426,9 @@ const TestModel& get_test_model_large_nchw_relaxed_all_inputs_as_internal() {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .isRelaxed = true,
-        .main = {
+        .main = { // large
                 .inputIndexes = {6},
-                .operands = {{
+                .operands = {{ // in2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {1, 1, 2, 2},
@@ -3438,7 +3438,7 @@ const TestModel& get_test_model_large_nchw_relaxed_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param6
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({1.0f}),
                             .dimensions = {},
@@ -3448,7 +3448,7 @@ const TestModel& get_test_model_large_nchw_relaxed_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param7
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {},
@@ -3458,7 +3458,7 @@ const TestModel& get_test_model_large_nchw_relaxed_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param8
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0001f}),
                             .dimensions = {},
@@ -3468,7 +3468,7 @@ const TestModel& get_test_model_large_nchw_relaxed_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -3478,7 +3478,7 @@ const TestModel& get_test_model_large_nchw_relaxed_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // out2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({-0.9999875f, -0.9999875f, 0.9999875f, 0.9999875f}),
                             .dimensions = {1, 1, 2, 2},
@@ -3488,7 +3488,7 @@ const TestModel& get_test_model_large_nchw_relaxed_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // in2_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({198.0f, 198.0f, 202.0f, 202.0f}),
                             .dimensions = {1, 1, 2, 2},
@@ -3498,7 +3498,7 @@ const TestModel& get_test_model_large_nchw_relaxed_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy16
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -3508,7 +3508,7 @@ const TestModel& get_test_model_large_nchw_relaxed_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param25
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -3547,9 +3547,9 @@ const TestModel& get_test_model_large_nchw_float16() {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .isRelaxed = false,
-        .main = {
+        .main = { // large
                 .inputIndexes = {0},
-                .operands = {{
+                .operands = {{ // in2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({198.0f, 198.0f, 202.0f, 202.0f}),
                             .dimensions = {1, 1, 2, 2},
@@ -3559,7 +3559,7 @@ const TestModel& get_test_model_large_nchw_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param6
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({1.0f}),
                             .dimensions = {},
@@ -3569,7 +3569,7 @@ const TestModel& get_test_model_large_nchw_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param7
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({0.0f}),
                             .dimensions = {},
@@ -3579,7 +3579,7 @@ const TestModel& get_test_model_large_nchw_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param8
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({9.999999747378752e-05f}),
                             .dimensions = {},
@@ -3589,7 +3589,7 @@ const TestModel& get_test_model_large_nchw_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -3599,7 +3599,7 @@ const TestModel& get_test_model_large_nchw_float16() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // out2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({-0.9999874830245972f, -0.9999874830245972f, 0.9999874830245972f, 0.9999874830245972f}),
                             .dimensions = {1, 1, 2, 2},
@@ -3634,9 +3634,9 @@ const TestModel& get_test_model_large_nchw_float16_all_inputs_as_internal() {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
         .isRelaxed = false,
-        .main = {
+        .main = { // large
                 .inputIndexes = {6},
-                .operands = {{
+                .operands = {{ // in2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({}),
                             .dimensions = {1, 1, 2, 2},
@@ -3646,7 +3646,7 @@ const TestModel& get_test_model_large_nchw_float16_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param6
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({1.0f}),
                             .dimensions = {},
@@ -3656,7 +3656,7 @@ const TestModel& get_test_model_large_nchw_float16_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param7
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({0.0f}),
                             .dimensions = {},
@@ -3666,7 +3666,7 @@ const TestModel& get_test_model_large_nchw_float16_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param8
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({9.999999747378752e-05f}),
                             .dimensions = {},
@@ -3676,7 +3676,7 @@ const TestModel& get_test_model_large_nchw_float16_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // layout
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -3686,7 +3686,7 @@ const TestModel& get_test_model_large_nchw_float16_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // out2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({-0.9999874830245972f, -0.9999874830245972f, 0.9999874830245972f, 0.9999874830245972f}),
                             .dimensions = {1, 1, 2, 2},
@@ -3696,7 +3696,7 @@ const TestModel& get_test_model_large_nchw_float16_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // in2_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({198.0f, 198.0f, 202.0f, 202.0f}),
                             .dimensions = {1, 1, 2, 2},
@@ -3706,7 +3706,7 @@ const TestModel& get_test_model_large_nchw_float16_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy17
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({0.0f}),
                             .dimensions = {1},
@@ -3716,7 +3716,7 @@ const TestModel& get_test_model_large_nchw_float16_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param26
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
