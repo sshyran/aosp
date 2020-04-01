@@ -1223,10 +1223,10 @@ int ExecutionPlan::Controller::waitForLastStepSyncFence() const {
         return ANEURALNETWORKS_NO_ERROR;
     }
     VLOG(EXECUTION) << "wait for mLastStepSyncFd " << mLastStepSyncFd;
-    int r = sync_wait(mLastStepSyncFd, -1);
+    auto r = syncWait(mLastStepSyncFd, -1);
     int n = ANEURALNETWORKS_NO_ERROR;
-    if (r < 0) {
-        LOG(ERROR) << "sync_wait failed, fd: " << mLastStepSyncFd;
+    if (r != FenceState::SIGNALED) {
+        LOG(ERROR) << "syncWait failed, fd: " << mLastStepSyncFd;
         n = ANEURALNETWORKS_OP_FAILED;
     }
     return n;
