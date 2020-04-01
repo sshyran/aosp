@@ -13,7 +13,7 @@ const TestModel& get_test_model_blackbox() {
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 53, 54, 55, 56, 57, 58, 59, 60},
-                .operands = {{
+                .operands = {{ // input
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.7f, 0.8f, 0.1f, 0.2f, 0.3f, 0.3f, 0.2f, 0.9f, 0.8f, 0.1f, 0.8f, 0.1f, 0.2f, 0.4f, 0.5f, 0.1f, 0.5f, 0.2f, 0.4f, 0.2f, 0.2f, 0.7f, 0.7f, 0.1f, 0.7f, 0.6f, 0.9f, 0.2f, 0.5f, 0.7f}),
                             .dimensions = {3, 2, 5},
@@ -23,7 +23,7 @@ const TestModel& get_test_model_blackbox() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // fw_input_to_input_weights
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.5f, 0.6f, 0.7f, -0.8f, -0.9f, 0.1f, 0.2f, 0.3f, -0.4f, 0.5f, -0.8f, 0.7f, -0.6f, 0.5f, -0.4f, -0.5f, -0.4f, -0.3f, -0.2f, -0.1f}),
                             .dimensions = {4, 5},
@@ -33,7 +33,7 @@ const TestModel& get_test_model_blackbox() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // fw_input_to_forget_weights
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({-0.6f, -0.1f, 0.3f, 0.2f, 0.9f, -0.5f, -0.2f, -0.4f, 0.3f, -0.8f, -0.4f, 0.3f, -0.5f, -0.4f, -0.6f, 0.3f, -0.4f, -0.6f, -0.5f, -0.5f}),
                             .dimensions = {4, 5},
@@ -43,7 +43,7 @@ const TestModel& get_test_model_blackbox() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // fw_input_to_cell_weights
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({-0.4f, -0.3f, -0.2f, -0.1f, -0.5f, 0.5f, -0.2f, -0.3f, -0.2f, -0.6f, 0.6f, -0.1f, -0.4f, -0.3f, -0.7f, 0.7f, -0.9f, -0.5f, 0.8f, 0.6f}),
                             .dimensions = {4, 5},
@@ -53,7 +53,7 @@ const TestModel& get_test_model_blackbox() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // fw_input_to_output_weights
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({-0.8f, -0.4f, -0.2f, -0.9f, -0.1f, -0.7f, 0.3f, -0.3f, -0.8f, -0.2f, 0.6f, -0.2f, 0.4f, -0.7f, -0.3f, -0.5f, 0.1f, 0.5f, -0.6f, -0.4f}),
                             .dimensions = {4, 5},
@@ -63,7 +63,7 @@ const TestModel& get_test_model_blackbox() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // fw_recurrent_to_input_weights
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({-0.2f, -0.3f, 0.4f, 0.1f, -0.5f, 0.9f, -0.2f, -0.3f, -0.7f, 0.05f, -0.2f, -0.6f}),
                             .dimensions = {4, 3},
@@ -73,7 +73,7 @@ const TestModel& get_test_model_blackbox() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // fw_recurrent_to_forget_weights
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({-0.5f, -0.3f, -0.5f, -0.2f, 0.6f, 0.4f, 0.9f, 0.3f, -0.1f, 0.2f, 0.5f, 0.2f}),
                             .dimensions = {4, 3},
@@ -83,7 +83,7 @@ const TestModel& get_test_model_blackbox() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // fw_recurrent_to_cell_weights
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({-0.3f, 0.2f, 0.1f, -0.3f, 0.8f, -0.08f, -0.2f, 0.3f, 0.8f, -0.6f, -0.1f, 0.2f}),
                             .dimensions = {4, 3},
@@ -93,7 +93,7 @@ const TestModel& get_test_model_blackbox() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // fw_recurrent_to_output_weights
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.3f, -0.1f, 0.1f, -0.2f, -0.5f, -0.7f, -0.2f, -0.6f, -0.1f, -0.4f, -0.7f, -0.2f}),
                             .dimensions = {4, 3},
@@ -103,7 +103,7 @@ const TestModel& get_test_model_blackbox() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // fw_cell_to_input_weights
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.05f, 0.1f, 0.25f, 0.15f}),
                             .dimensions = {4},
@@ -113,7 +113,7 @@ const TestModel& get_test_model_blackbox() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // fw_cell_to_forget_weights
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({-0.02f, -0.15f, -0.25f, -0.03f}),
                             .dimensions = {4},
@@ -123,7 +123,7 @@ const TestModel& get_test_model_blackbox() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // fw_cell_to_output_weights
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.1f, -0.1f, -0.5f, 0.05f}),
                             .dimensions = {4},
@@ -133,7 +133,7 @@ const TestModel& get_test_model_blackbox() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // fw_input_gate_bias
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.03f, 0.15f, 0.22f, 0.38f}),
                             .dimensions = {4},
@@ -143,7 +143,7 @@ const TestModel& get_test_model_blackbox() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // fw_forget_gate_bias
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.1f, -0.3f, -0.2f, 0.1f}),
                             .dimensions = {4},
@@ -153,7 +153,7 @@ const TestModel& get_test_model_blackbox() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // fw_cell_bias
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({-0.05f, 0.72f, 0.25f, 0.08f}),
                             .dimensions = {4},
@@ -163,7 +163,7 @@ const TestModel& get_test_model_blackbox() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // fw_output_gate_bias
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.05f, -0.01f, 0.2f, 0.1f}),
                             .dimensions = {4},
@@ -173,7 +173,7 @@ const TestModel& get_test_model_blackbox() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // fw_projection_weights
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({-0.1f, 0.2f, 0.01f, -0.2f, 0.1f, 0.5f, 0.3f, 0.08f, 0.07f, 0.2f, -0.4f, 0.2f}),
                             .dimensions = {3, 4},
@@ -183,7 +183,7 @@ const TestModel& get_test_model_blackbox() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // fw_projection_bias
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {3},
@@ -193,7 +193,7 @@ const TestModel& get_test_model_blackbox() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // bw_input_to_input_weights
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.5f, 0.6f, 0.7f, -0.8f, -0.9f, 0.1f, 0.2f, 0.3f, -0.4f, 0.5f, -0.8f, 0.7f, -0.6f, 0.5f, -0.4f, -0.5f, -0.4f, -0.3f, -0.2f, -0.1f}),
                             .dimensions = {4, 5},
@@ -203,7 +203,7 @@ const TestModel& get_test_model_blackbox() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // bw_input_to_forget_weights
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({-0.6f, -0.1f, 0.3f, 0.2f, 0.9f, -0.5f, -0.2f, -0.4f, 0.3f, -0.8f, -0.4f, 0.3f, -0.5f, -0.4f, -0.6f, 0.3f, -0.4f, -0.6f, -0.5f, -0.5f}),
                             .dimensions = {4, 5},
@@ -213,7 +213,7 @@ const TestModel& get_test_model_blackbox() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // bw_input_to_cell_weights
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({-0.4f, -0.3f, -0.2f, -0.1f, -0.5f, 0.5f, -0.2f, -0.3f, -0.2f, -0.6f, 0.6f, -0.1f, -0.4f, -0.3f, -0.7f, 0.7f, -0.9f, -0.5f, 0.8f, 0.6f}),
                             .dimensions = {4, 5},
@@ -223,7 +223,7 @@ const TestModel& get_test_model_blackbox() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // bw_input_to_output_weights
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({-0.8f, -0.4f, -0.2f, -0.9f, -0.1f, -0.7f, 0.3f, -0.3f, -0.8f, -0.2f, 0.6f, -0.2f, 0.4f, -0.7f, -0.3f, -0.5f, 0.1f, 0.5f, -0.6f, -0.4f}),
                             .dimensions = {4, 5},
@@ -233,7 +233,7 @@ const TestModel& get_test_model_blackbox() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // bw_recurrent_to_input_weights
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({-0.2f, -0.3f, 0.4f, 0.1f, -0.5f, 0.9f, -0.2f, -0.3f, -0.7f, 0.05f, -0.2f, -0.6f}),
                             .dimensions = {4, 3},
@@ -243,7 +243,7 @@ const TestModel& get_test_model_blackbox() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // bw_recurrent_to_forget_weights
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({-0.5f, -0.3f, -0.5f, -0.2f, 0.6f, 0.4f, 0.9f, 0.3f, -0.1f, 0.2f, 0.5f, 0.2f}),
                             .dimensions = {4, 3},
@@ -253,7 +253,7 @@ const TestModel& get_test_model_blackbox() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // bw_recurrent_to_cell_weights
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({-0.3f, 0.2f, 0.1f, -0.3f, 0.8f, -0.08f, -0.2f, 0.3f, 0.8f, -0.6f, -0.1f, 0.2f}),
                             .dimensions = {4, 3},
@@ -263,7 +263,7 @@ const TestModel& get_test_model_blackbox() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // bw_recurrent_to_output_weights
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.3f, -0.1f, 0.1f, -0.2f, -0.5f, -0.7f, -0.2f, -0.6f, -0.1f, -0.4f, -0.7f, -0.2f}),
                             .dimensions = {4, 3},
@@ -273,7 +273,7 @@ const TestModel& get_test_model_blackbox() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // bw_cell_to_input_weights
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.05f, 0.1f, 0.25f, 0.15f}),
                             .dimensions = {4},
@@ -283,7 +283,7 @@ const TestModel& get_test_model_blackbox() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // bw_cell_to_forget_weights
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({-0.02f, -0.15f, -0.25f, -0.03f}),
                             .dimensions = {4},
@@ -293,7 +293,7 @@ const TestModel& get_test_model_blackbox() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // bw_cell_to_output_weights
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.1f, -0.1f, -0.5f, 0.05f}),
                             .dimensions = {4},
@@ -303,7 +303,7 @@ const TestModel& get_test_model_blackbox() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // bw_input_gate_bias
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.03f, 0.15f, 0.22f, 0.38f}),
                             .dimensions = {4},
@@ -313,7 +313,7 @@ const TestModel& get_test_model_blackbox() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // bw_forget_gate_bias
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.1f, -0.3f, -0.2f, 0.1f}),
                             .dimensions = {4},
@@ -323,7 +323,7 @@ const TestModel& get_test_model_blackbox() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // bw_cell_bias
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({-0.05f, 0.72f, 0.25f, 0.08f}),
                             .dimensions = {4},
@@ -333,7 +333,7 @@ const TestModel& get_test_model_blackbox() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // bw_output_gate_bias
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.05f, -0.01f, 0.2f, 0.1f}),
                             .dimensions = {4},
@@ -343,7 +343,7 @@ const TestModel& get_test_model_blackbox() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // bw_projection_weights
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({-0.1f, 0.2f, 0.01f, -0.2f, 0.1f, 0.5f, 0.3f, 0.08f, 0.07f, 0.2f, -0.4f, 0.2f}),
                             .dimensions = {3, 4},
@@ -353,7 +353,7 @@ const TestModel& get_test_model_blackbox() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // bw_projection_bias
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {3},
@@ -363,7 +363,7 @@ const TestModel& get_test_model_blackbox() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // fw_activatiom_state
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f}),
                             .dimensions = {2, 3},
@@ -373,7 +373,7 @@ const TestModel& get_test_model_blackbox() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // fw_cell_state
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f}),
                             .dimensions = {2, 4},
@@ -383,7 +383,7 @@ const TestModel& get_test_model_blackbox() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // bw_activatiom_state
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f}),
                             .dimensions = {2, 3},
@@ -393,7 +393,7 @@ const TestModel& get_test_model_blackbox() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // bw_cell_state
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f}),
                             .dimensions = {2, 4},
@@ -403,7 +403,7 @@ const TestModel& get_test_model_blackbox() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // input1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {3, 2, 5},
@@ -413,7 +413,7 @@ const TestModel& get_test_model_blackbox() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // fw_aux_input_to_input_weights
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {4, 5},
@@ -423,7 +423,7 @@ const TestModel& get_test_model_blackbox() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // fw_input_to_forget_weights1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {4, 5},
@@ -433,7 +433,7 @@ const TestModel& get_test_model_blackbox() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // fw_aux_input_to_cell_weights
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {4, 5},
@@ -443,7 +443,7 @@ const TestModel& get_test_model_blackbox() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // fw_aux_input_to_output_weights
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {4, 5},
@@ -453,7 +453,7 @@ const TestModel& get_test_model_blackbox() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // bw_aux_input_to_input_weights
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {4, 5},
@@ -463,7 +463,7 @@ const TestModel& get_test_model_blackbox() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // bw_input_to_forget_weights1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {4, 5},
@@ -473,7 +473,7 @@ const TestModel& get_test_model_blackbox() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // bw_aux_input_to_cell_weights
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {4, 5},
@@ -483,7 +483,7 @@ const TestModel& get_test_model_blackbox() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // bw_aux_input_to_output_weights
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {4, 5},
@@ -493,7 +493,7 @@ const TestModel& get_test_model_blackbox() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // activation
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({4}),
                             .dimensions = {},
@@ -503,7 +503,7 @@ const TestModel& get_test_model_blackbox() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // cell_clip
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {},
@@ -513,7 +513,7 @@ const TestModel& get_test_model_blackbox() {
                             .scale = 0.0f,
                             .type = TestOperandType::FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // proj_clip
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {},
@@ -523,7 +523,7 @@ const TestModel& get_test_model_blackbox() {
                             .scale = 0.0f,
                             .type = TestOperandType::FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // merge_outputs
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -533,7 +533,7 @@ const TestModel& get_test_model_blackbox() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // time_major
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -543,7 +543,7 @@ const TestModel& get_test_model_blackbox() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // input_layer_norm_weights
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.1f, 0.2f, 0.3f, 0.5f}),
                             .dimensions = {4},
@@ -553,7 +553,7 @@ const TestModel& get_test_model_blackbox() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // forget_layer_norm_weights
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.2f, 0.2f, 0.4f, 0.3f}),
                             .dimensions = {4},
@@ -563,7 +563,7 @@ const TestModel& get_test_model_blackbox() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // cell_layer_norm_weights
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.7f, 0.2f, 0.3f, 0.8f}),
                             .dimensions = {4},
@@ -573,7 +573,7 @@ const TestModel& get_test_model_blackbox() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_layer_norm_weights
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.6f, 0.2f, 0.2f, 0.5f}),
                             .dimensions = {4},
@@ -583,7 +583,7 @@ const TestModel& get_test_model_blackbox() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // input_layer_norm_weights1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.1f, 0.2f, 0.3f, 0.5f}),
                             .dimensions = {4},
@@ -593,7 +593,7 @@ const TestModel& get_test_model_blackbox() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // forget_layer_norm_weights1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.2f, 0.2f, 0.4f, 0.3f}),
                             .dimensions = {4},
@@ -603,7 +603,7 @@ const TestModel& get_test_model_blackbox() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // cell_layer_norm_weights1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.7f, 0.2f, 0.3f, 0.8f}),
                             .dimensions = {4},
@@ -613,7 +613,7 @@ const TestModel& get_test_model_blackbox() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_layer_norm_weights1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.6f, 0.2f, 0.2f, 0.5f}),
                             .dimensions = {4},
@@ -623,7 +623,7 @@ const TestModel& get_test_model_blackbox() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // fw_output
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0244077f, 0.128027f, -0.00170918f, -0.00692428f, 0.0848741f, 0.063445f, 0.0137642f, 0.140751f, 0.0395835f, -0.00403912f, 0.139963f, 0.072681f, -0.00459231f, 0.155278f, 0.0837377f, 0.00752706f, 0.161903f, 0.0561371f}),
                             .dimensions = {3, 2, 3},
@@ -633,7 +633,7 @@ const TestModel& get_test_model_blackbox() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // bw_output
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f}),
                             .dimensions = {3, 2, 3},
@@ -670,7 +670,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {17, 34, 39, 40, 41, 42, 43, 44, 45, 46, 47, 63, 66, 69, 72, 75, 78, 81, 84, 87, 90, 93, 96, 99, 102, 105, 108, 111, 114, 117, 120, 123, 126, 129, 132, 135, 138, 141, 144, 147, 150, 153, 156, 159, 162, 165, 168, 171, 174, 177, 180, 183, 186, 189, 192, 195},
-                .operands = {{
+                .operands = {{ // input
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {3, 2, 5},
@@ -680,7 +680,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // fw_input_to_input_weights
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {4, 5},
@@ -690,7 +690,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // fw_input_to_forget_weights
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {4, 5},
@@ -700,7 +700,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // fw_input_to_cell_weights
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {4, 5},
@@ -710,7 +710,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // fw_input_to_output_weights
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {4, 5},
@@ -720,7 +720,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // fw_recurrent_to_input_weights
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {4, 3},
@@ -730,7 +730,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // fw_recurrent_to_forget_weights
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {4, 3},
@@ -740,7 +740,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // fw_recurrent_to_cell_weights
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {4, 3},
@@ -750,7 +750,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // fw_recurrent_to_output_weights
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {4, 3},
@@ -760,7 +760,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // fw_cell_to_input_weights
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {4},
@@ -770,7 +770,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // fw_cell_to_forget_weights
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {4},
@@ -780,7 +780,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // fw_cell_to_output_weights
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {4},
@@ -790,7 +790,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // fw_input_gate_bias
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {4},
@@ -800,7 +800,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // fw_forget_gate_bias
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {4},
@@ -810,7 +810,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // fw_cell_bias
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {4},
@@ -820,7 +820,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // fw_output_gate_bias
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {4},
@@ -830,7 +830,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // fw_projection_weights
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {3, 4},
@@ -840,7 +840,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // fw_projection_bias
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {3},
@@ -850,7 +850,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // bw_input_to_input_weights
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {4, 5},
@@ -860,7 +860,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // bw_input_to_forget_weights
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {4, 5},
@@ -870,7 +870,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // bw_input_to_cell_weights
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {4, 5},
@@ -880,7 +880,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // bw_input_to_output_weights
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {4, 5},
@@ -890,7 +890,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // bw_recurrent_to_input_weights
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {4, 3},
@@ -900,7 +900,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // bw_recurrent_to_forget_weights
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {4, 3},
@@ -910,7 +910,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // bw_recurrent_to_cell_weights
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {4, 3},
@@ -920,7 +920,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // bw_recurrent_to_output_weights
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {4, 3},
@@ -930,7 +930,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // bw_cell_to_input_weights
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {4},
@@ -940,7 +940,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // bw_cell_to_forget_weights
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {4},
@@ -950,7 +950,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // bw_cell_to_output_weights
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {4},
@@ -960,7 +960,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // bw_input_gate_bias
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {4},
@@ -970,7 +970,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // bw_forget_gate_bias
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {4},
@@ -980,7 +980,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // bw_cell_bias
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {4},
@@ -990,7 +990,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // bw_output_gate_bias
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {4},
@@ -1000,7 +1000,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // bw_projection_weights
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {3, 4},
@@ -1010,7 +1010,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // bw_projection_bias
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {3},
@@ -1020,7 +1020,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // fw_activatiom_state
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {2, 3},
@@ -1030,7 +1030,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // fw_cell_state
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {2, 4},
@@ -1040,7 +1040,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // bw_activatiom_state
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {2, 3},
@@ -1050,7 +1050,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // bw_cell_state
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {2, 4},
@@ -1060,7 +1060,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // input1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {3, 2, 5},
@@ -1070,7 +1070,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // fw_aux_input_to_input_weights
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {4, 5},
@@ -1080,7 +1080,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // fw_input_to_forget_weights1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {4, 5},
@@ -1090,7 +1090,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // fw_aux_input_to_cell_weights
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {4, 5},
@@ -1100,7 +1100,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // fw_aux_input_to_output_weights
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {4, 5},
@@ -1110,7 +1110,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // bw_aux_input_to_input_weights
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {4, 5},
@@ -1120,7 +1120,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // bw_input_to_forget_weights1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {4, 5},
@@ -1130,7 +1130,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // bw_aux_input_to_cell_weights
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {4, 5},
@@ -1140,7 +1140,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // bw_aux_input_to_output_weights
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {4, 5},
@@ -1150,7 +1150,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // activation
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({4}),
                             .dimensions = {},
@@ -1160,7 +1160,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // cell_clip
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {},
@@ -1170,7 +1170,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // proj_clip
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {},
@@ -1180,7 +1180,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // merge_outputs
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false}),
                             .dimensions = {},
@@ -1190,7 +1190,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // time_major
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true}),
                             .dimensions = {},
@@ -1200,7 +1200,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::BOOL,
                             .zeroPoint = 0
-                        }, {
+                        }, { // input_layer_norm_weights
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {4},
@@ -1210,7 +1210,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // forget_layer_norm_weights
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {4},
@@ -1220,7 +1220,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // cell_layer_norm_weights
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {4},
@@ -1230,7 +1230,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_layer_norm_weights
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {4},
@@ -1240,7 +1240,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // input_layer_norm_weights1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {4},
@@ -1250,7 +1250,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // forget_layer_norm_weights1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {4},
@@ -1260,7 +1260,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // cell_layer_norm_weights1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {4},
@@ -1270,7 +1270,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_layer_norm_weights1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({}),
                             .dimensions = {4},
@@ -1280,7 +1280,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // fw_output
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0244077f, 0.128027f, -0.00170918f, -0.00692428f, 0.0848741f, 0.063445f, 0.0137642f, 0.140751f, 0.0395835f, -0.00403912f, 0.139963f, 0.072681f, -0.00459231f, 0.155278f, 0.0837377f, 0.00752706f, 0.161903f, 0.0561371f}),
                             .dimensions = {3, 2, 3},
@@ -1290,7 +1290,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // bw_output
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f}),
                             .dimensions = {3, 2, 3},
@@ -1300,7 +1300,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // input_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.7f, 0.8f, 0.1f, 0.2f, 0.3f, 0.3f, 0.2f, 0.9f, 0.8f, 0.1f, 0.8f, 0.1f, 0.2f, 0.4f, 0.5f, 0.1f, 0.5f, 0.2f, 0.4f, 0.2f, 0.2f, 0.7f, 0.7f, 0.1f, 0.7f, 0.6f, 0.9f, 0.2f, 0.5f, 0.7f}),
                             .dimensions = {3, 2, 5},
@@ -1310,7 +1310,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -1320,7 +1320,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -1330,7 +1330,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // fw_input_to_input_weights_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.5f, 0.6f, 0.7f, -0.8f, -0.9f, 0.1f, 0.2f, 0.3f, -0.4f, 0.5f, -0.8f, 0.7f, -0.6f, 0.5f, -0.4f, -0.5f, -0.4f, -0.3f, -0.2f, -0.1f}),
                             .dimensions = {4, 5},
@@ -1340,7 +1340,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -1350,7 +1350,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -1360,7 +1360,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // fw_input_to_forget_weights_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({-0.6f, -0.1f, 0.3f, 0.2f, 0.9f, -0.5f, -0.2f, -0.4f, 0.3f, -0.8f, -0.4f, 0.3f, -0.5f, -0.4f, -0.6f, 0.3f, -0.4f, -0.6f, -0.5f, -0.5f}),
                             .dimensions = {4, 5},
@@ -1370,7 +1370,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -1380,7 +1380,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -1390,7 +1390,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // fw_input_to_cell_weights_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({-0.4f, -0.3f, -0.2f, -0.1f, -0.5f, 0.5f, -0.2f, -0.3f, -0.2f, -0.6f, 0.6f, -0.1f, -0.4f, -0.3f, -0.7f, 0.7f, -0.9f, -0.5f, 0.8f, 0.6f}),
                             .dimensions = {4, 5},
@@ -1400,7 +1400,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -1410,7 +1410,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -1420,7 +1420,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // fw_input_to_output_weights_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({-0.8f, -0.4f, -0.2f, -0.9f, -0.1f, -0.7f, 0.3f, -0.3f, -0.8f, -0.2f, 0.6f, -0.2f, 0.4f, -0.7f, -0.3f, -0.5f, 0.1f, 0.5f, -0.6f, -0.4f}),
                             .dimensions = {4, 5},
@@ -1430,7 +1430,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -1440,7 +1440,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -1450,7 +1450,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // fw_recurrent_to_input_weights_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({-0.2f, -0.3f, 0.4f, 0.1f, -0.5f, 0.9f, -0.2f, -0.3f, -0.7f, 0.05f, -0.2f, -0.6f}),
                             .dimensions = {4, 3},
@@ -1460,7 +1460,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy5
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -1470,7 +1470,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param5
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -1480,7 +1480,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // fw_recurrent_to_forget_weights_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({-0.5f, -0.3f, -0.5f, -0.2f, 0.6f, 0.4f, 0.9f, 0.3f, -0.1f, 0.2f, 0.5f, 0.2f}),
                             .dimensions = {4, 3},
@@ -1490,7 +1490,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy6
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -1500,7 +1500,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param6
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -1510,7 +1510,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // fw_recurrent_to_cell_weights_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({-0.3f, 0.2f, 0.1f, -0.3f, 0.8f, -0.08f, -0.2f, 0.3f, 0.8f, -0.6f, -0.1f, 0.2f}),
                             .dimensions = {4, 3},
@@ -1520,7 +1520,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy7
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -1530,7 +1530,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param7
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -1540,7 +1540,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // fw_recurrent_to_output_weights_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.3f, -0.1f, 0.1f, -0.2f, -0.5f, -0.7f, -0.2f, -0.6f, -0.1f, -0.4f, -0.7f, -0.2f}),
                             .dimensions = {4, 3},
@@ -1550,7 +1550,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy8
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -1560,7 +1560,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param8
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -1570,7 +1570,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // fw_cell_to_input_weights_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.05f, 0.1f, 0.25f, 0.15f}),
                             .dimensions = {4},
@@ -1580,7 +1580,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy9
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -1590,7 +1590,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param9
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -1600,7 +1600,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // fw_cell_to_forget_weights_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({-0.02f, -0.15f, -0.25f, -0.03f}),
                             .dimensions = {4},
@@ -1610,7 +1610,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy10
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -1620,7 +1620,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param10
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -1630,7 +1630,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // fw_cell_to_output_weights_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.1f, -0.1f, -0.5f, 0.05f}),
                             .dimensions = {4},
@@ -1640,7 +1640,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy11
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -1650,7 +1650,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param11
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -1660,7 +1660,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // fw_input_gate_bias_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.03f, 0.15f, 0.22f, 0.38f}),
                             .dimensions = {4},
@@ -1670,7 +1670,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy12
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -1680,7 +1680,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param12
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -1690,7 +1690,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // fw_forget_gate_bias_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.1f, -0.3f, -0.2f, 0.1f}),
                             .dimensions = {4},
@@ -1700,7 +1700,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy13
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -1710,7 +1710,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param13
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -1720,7 +1720,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // fw_cell_bias_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({-0.05f, 0.72f, 0.25f, 0.08f}),
                             .dimensions = {4},
@@ -1730,7 +1730,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy14
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -1740,7 +1740,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param14
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -1750,7 +1750,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // fw_output_gate_bias_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.05f, -0.01f, 0.2f, 0.1f}),
                             .dimensions = {4},
@@ -1760,7 +1760,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy15
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -1770,7 +1770,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param15
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -1780,7 +1780,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // fw_projection_weights_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({-0.1f, 0.2f, 0.01f, -0.2f, 0.1f, 0.5f, 0.3f, 0.08f, 0.07f, 0.2f, -0.4f, 0.2f}),
                             .dimensions = {3, 4},
@@ -1790,7 +1790,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy16
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -1800,7 +1800,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param16
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -1810,7 +1810,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // bw_input_to_input_weights_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.5f, 0.6f, 0.7f, -0.8f, -0.9f, 0.1f, 0.2f, 0.3f, -0.4f, 0.5f, -0.8f, 0.7f, -0.6f, 0.5f, -0.4f, -0.5f, -0.4f, -0.3f, -0.2f, -0.1f}),
                             .dimensions = {4, 5},
@@ -1820,7 +1820,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy17
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -1830,7 +1830,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param17
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -1840,7 +1840,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // bw_input_to_forget_weights_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({-0.6f, -0.1f, 0.3f, 0.2f, 0.9f, -0.5f, -0.2f, -0.4f, 0.3f, -0.8f, -0.4f, 0.3f, -0.5f, -0.4f, -0.6f, 0.3f, -0.4f, -0.6f, -0.5f, -0.5f}),
                             .dimensions = {4, 5},
@@ -1850,7 +1850,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy18
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -1860,7 +1860,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param18
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -1870,7 +1870,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // bw_input_to_cell_weights_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({-0.4f, -0.3f, -0.2f, -0.1f, -0.5f, 0.5f, -0.2f, -0.3f, -0.2f, -0.6f, 0.6f, -0.1f, -0.4f, -0.3f, -0.7f, 0.7f, -0.9f, -0.5f, 0.8f, 0.6f}),
                             .dimensions = {4, 5},
@@ -1880,7 +1880,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy19
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -1890,7 +1890,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param19
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -1900,7 +1900,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // bw_input_to_output_weights_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({-0.8f, -0.4f, -0.2f, -0.9f, -0.1f, -0.7f, 0.3f, -0.3f, -0.8f, -0.2f, 0.6f, -0.2f, 0.4f, -0.7f, -0.3f, -0.5f, 0.1f, 0.5f, -0.6f, -0.4f}),
                             .dimensions = {4, 5},
@@ -1910,7 +1910,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy20
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -1920,7 +1920,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param20
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -1930,7 +1930,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // bw_recurrent_to_input_weights_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({-0.2f, -0.3f, 0.4f, 0.1f, -0.5f, 0.9f, -0.2f, -0.3f, -0.7f, 0.05f, -0.2f, -0.6f}),
                             .dimensions = {4, 3},
@@ -1940,7 +1940,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy21
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -1950,7 +1950,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param21
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -1960,7 +1960,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // bw_recurrent_to_forget_weights_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({-0.5f, -0.3f, -0.5f, -0.2f, 0.6f, 0.4f, 0.9f, 0.3f, -0.1f, 0.2f, 0.5f, 0.2f}),
                             .dimensions = {4, 3},
@@ -1970,7 +1970,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy22
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -1980,7 +1980,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param22
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -1990,7 +1990,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // bw_recurrent_to_cell_weights_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({-0.3f, 0.2f, 0.1f, -0.3f, 0.8f, -0.08f, -0.2f, 0.3f, 0.8f, -0.6f, -0.1f, 0.2f}),
                             .dimensions = {4, 3},
@@ -2000,7 +2000,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy23
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -2010,7 +2010,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param23
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -2020,7 +2020,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // bw_recurrent_to_output_weights_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.3f, -0.1f, 0.1f, -0.2f, -0.5f, -0.7f, -0.2f, -0.6f, -0.1f, -0.4f, -0.7f, -0.2f}),
                             .dimensions = {4, 3},
@@ -2030,7 +2030,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy24
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -2040,7 +2040,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param24
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -2050,7 +2050,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // bw_cell_to_input_weights_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.05f, 0.1f, 0.25f, 0.15f}),
                             .dimensions = {4},
@@ -2060,7 +2060,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy25
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -2070,7 +2070,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param25
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -2080,7 +2080,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // bw_cell_to_forget_weights_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({-0.02f, -0.15f, -0.25f, -0.03f}),
                             .dimensions = {4},
@@ -2090,7 +2090,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy26
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -2100,7 +2100,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param26
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -2110,7 +2110,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // bw_cell_to_output_weights_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.1f, -0.1f, -0.5f, 0.05f}),
                             .dimensions = {4},
@@ -2120,7 +2120,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy27
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -2130,7 +2130,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param27
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -2140,7 +2140,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // bw_input_gate_bias_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.03f, 0.15f, 0.22f, 0.38f}),
                             .dimensions = {4},
@@ -2150,7 +2150,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy28
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -2160,7 +2160,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param28
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -2170,7 +2170,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // bw_forget_gate_bias_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.1f, -0.3f, -0.2f, 0.1f}),
                             .dimensions = {4},
@@ -2180,7 +2180,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy29
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -2190,7 +2190,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param29
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -2200,7 +2200,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // bw_cell_bias_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({-0.05f, 0.72f, 0.25f, 0.08f}),
                             .dimensions = {4},
@@ -2210,7 +2210,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy30
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -2220,7 +2220,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param30
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -2230,7 +2230,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // bw_output_gate_bias_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.05f, -0.01f, 0.2f, 0.1f}),
                             .dimensions = {4},
@@ -2240,7 +2240,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy31
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -2250,7 +2250,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param31
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -2260,7 +2260,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // bw_projection_weights_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({-0.1f, 0.2f, 0.01f, -0.2f, 0.1f, 0.5f, 0.3f, 0.08f, 0.07f, 0.2f, -0.4f, 0.2f}),
                             .dimensions = {3, 4},
@@ -2270,7 +2270,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy32
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -2280,7 +2280,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param32
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -2290,7 +2290,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // fw_activatiom_state_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f}),
                             .dimensions = {2, 3},
@@ -2300,7 +2300,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy33
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -2310,7 +2310,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param33
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -2320,7 +2320,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // fw_cell_state_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f}),
                             .dimensions = {2, 4},
@@ -2330,7 +2330,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy34
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -2340,7 +2340,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param34
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -2350,7 +2350,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // bw_activatiom_state_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f}),
                             .dimensions = {2, 3},
@@ -2360,7 +2360,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy35
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -2370,7 +2370,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param35
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -2380,7 +2380,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // bw_cell_state_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f}),
                             .dimensions = {2, 4},
@@ -2390,7 +2390,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy36
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -2400,7 +2400,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param36
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -2410,7 +2410,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // input_layer_norm_weights_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.1f, 0.2f, 0.3f, 0.5f}),
                             .dimensions = {4},
@@ -2420,7 +2420,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy37
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -2430,7 +2430,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param37
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -2440,7 +2440,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // forget_layer_norm_weights_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.2f, 0.2f, 0.4f, 0.3f}),
                             .dimensions = {4},
@@ -2450,7 +2450,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy38
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -2460,7 +2460,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param38
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -2470,7 +2470,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // cell_layer_norm_weights_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.7f, 0.2f, 0.3f, 0.8f}),
                             .dimensions = {4},
@@ -2480,7 +2480,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy39
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -2490,7 +2490,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param39
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -2500,7 +2500,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_layer_norm_weights_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.6f, 0.2f, 0.2f, 0.5f}),
                             .dimensions = {4},
@@ -2510,7 +2510,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy40
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -2520,7 +2520,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param40
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -2530,7 +2530,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // input_layer_norm_weights1_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.1f, 0.2f, 0.3f, 0.5f}),
                             .dimensions = {4},
@@ -2540,7 +2540,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy41
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -2550,7 +2550,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param41
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -2560,7 +2560,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // forget_layer_norm_weights1_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.2f, 0.2f, 0.4f, 0.3f}),
                             .dimensions = {4},
@@ -2570,7 +2570,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy42
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -2580,7 +2580,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param42
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -2590,7 +2590,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // cell_layer_norm_weights1_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.7f, 0.2f, 0.3f, 0.8f}),
                             .dimensions = {4},
@@ -2600,7 +2600,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy43
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -2610,7 +2610,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param43
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -2620,7 +2620,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::INT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output_layer_norm_weights1_new
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.6f, 0.2f, 0.2f, 0.5f}),
                             .dimensions = {4},
@@ -2630,7 +2630,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // dummy44
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f}),
                             .dimensions = {1},
@@ -2640,7 +2640,7 @@ const TestModel& get_test_model_blackbox_all_inputs_as_internal() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, {
+                        }, { // param44
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
