@@ -19,6 +19,7 @@
 
 #include <gtest/gtest.h>
 
+#include <memory>
 #include <utility>
 #include <vector>
 
@@ -56,8 +57,14 @@ class GeneratedModel : public test_wrapper::Model {
         mRefModels = std::move(refModels);
     }
 
+    // A helper method to simplify CONSTANT_REFERENCE memory lifetime management.
+    void setConstantReferenceMemory(std::unique_ptr<test_wrapper::Memory> memory) {
+        mConstantReferenceMemory = std::move(memory);
+    }
+
    private:
     std::vector<test_wrapper::Model> mRefModels;
+    std::unique_ptr<test_wrapper::Memory> mConstantReferenceMemory;
 };
 
 // Convert TestModel to NDK model.

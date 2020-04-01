@@ -21,6 +21,7 @@
 #include <android/hidl/manager/1.2/IServiceManager.h>
 #include <android/sync.h>
 #include <build/version.h>
+#include <cutils/native_handle.h>
 #include <hidl/HidlTransportSupport.h>
 #include <hidl/ServiceManagement.h>
 
