@@ -141,7 +141,7 @@ const TestModel& get_test_model_nhwc() {
                         }},
                 .outputIndexes = {11}
             },
-        .minSupportedVersion = TestHalVersion::V1_2,
+        .minSupportedVersion = TestHalVersion::V1_0,
         .referenced = {}
     };
     return model;
@@ -322,7 +322,7 @@ const TestModel& get_test_model_nhwc_all_inputs_as_internal() {
                         }},
                 .outputIndexes = {11}
             },
-        .minSupportedVersion = TestHalVersion::V1_2,
+        .minSupportedVersion = TestHalVersion::V1_0,
         .referenced = {}
     };
     return model;
@@ -2079,7 +2079,7 @@ const TestModel& get_test_model_nhwc_2() {
                         }},
                 .outputIndexes = {8}
             },
-        .minSupportedVersion = TestHalVersion::V1_2,
+        .minSupportedVersion = TestHalVersion::V1_0,
         .referenced = {}
     };
     return model;
@@ -2230,7 +2230,7 @@ const TestModel& get_test_model_nhwc_all_inputs_as_internal_2() {
                         }},
                 .outputIndexes = {8}
             },
-        .minSupportedVersion = TestHalVersion::V1_2,
+        .minSupportedVersion = TestHalVersion::V1_0,
         .referenced = {}
     };
     return model;
@@ -3717,7 +3717,7 @@ const TestModel& get_test_model_large_nhwc() {
                         }},
                 .outputIndexes = {11}
             },
-        .minSupportedVersion = TestHalVersion::V1_2,
+        .minSupportedVersion = TestHalVersion::V1_0,
         .referenced = {}
     };
     return model;
@@ -3898,7 +3898,7 @@ const TestModel& get_test_model_large_nhwc_all_inputs_as_internal() {
                         }},
                 .outputIndexes = {11}
             },
-        .minSupportedVersion = TestHalVersion::V1_2,
+        .minSupportedVersion = TestHalVersion::V1_0,
         .referenced = {}
     };
     return model;

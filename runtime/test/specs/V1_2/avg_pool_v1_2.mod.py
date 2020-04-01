@@ -212,3 +212,27 @@ Example({
     o2: [],
     o3: [],
 }).AddNchw(i1, zero_sized, o3, layout).AddVariations("relaxed", quant8, "float16")
+
+# The tests below can comply with a lower version because the runtime removes
+# optional arguments set to default values.
+Example.SetVersion("V1_0",
+                   "avg_pool_v1_2_nhwc",
+                   "avg_pool_v1_2_nhwc_2",
+                   "avg_pool_v1_2_nhwc_3",
+                   "avg_pool_v1_2_nhwc_4",
+                   "avg_pool_v1_2_nhwc_5",
+                   "avg_pool_v1_2_nhwc_all_inputs_as_internal",
+                   "avg_pool_v1_2_nhwc_all_inputs_as_internal_2",
+                   "avg_pool_v1_2_nhwc_all_inputs_as_internal_3",
+                   "avg_pool_v1_2_nhwc_all_inputs_as_internal_4",
+                   "avg_pool_v1_2_nhwc_all_inputs_as_internal_5",
+                   "avg_pool_v1_2_nhwc_quant8",
+                   "avg_pool_v1_2_nhwc_quant8_2",
+                   "avg_pool_v1_2_nhwc_quant8_3",
+                   "avg_pool_v1_2_nhwc_quant8_4",
+                   "avg_pool_v1_2_nhwc_quant8_5",
+                   "avg_pool_v1_2_nhwc_quant8_all_inputs_as_internal",
+                   "avg_pool_v1_2_nhwc_quant8_all_inputs_as_internal_2",
+                   "avg_pool_v1_2_nhwc_quant8_all_inputs_as_internal_3",
+                   "avg_pool_v1_2_nhwc_quant8_all_inputs_as_internal_4",
+                   "avg_pool_v1_2_nhwc_quant8_all_inputs_as_internal_5")
