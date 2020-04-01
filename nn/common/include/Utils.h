@@ -544,6 +544,17 @@ constexpr hal::Priority convertToHalPriority(int32_t priority) {
     return {};
 }
 
+// The function syncWait() has the same semantics as the system function
+// ::sync_wait(), except that the syncWait() return value is semantically
+// richer.  The timeout parameter is in msecs.
+enum class FenceState {
+    ACTIVE,    // fence has not been signaled
+    SIGNALED,  // fence has been signaled
+    ERROR,     // fence has been placed in the error state
+    UNKNOWN,   // either bad argument passed to syncWait(), or internal error
+};
+FenceState syncWait(int fd, int timeout);
+
 #ifdef NN_DEBUGGABLE
 uint32_t getProp(const char* str, uint32_t defaultValue = 0);
 #endif  // NN_DEBUGGABLE
