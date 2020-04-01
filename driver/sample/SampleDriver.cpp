@@ -671,8 +671,8 @@ Return<void> SamplePreparedModel::executeFenced(
             return Void();
         }
         int syncFenceFd = fenceHandle.getNativeHandle()->data[0];
-        if (sync_wait(syncFenceFd, -1) < 0) {
-            LOG(ERROR) << "sync_wait failed";
+        if (syncWait(syncFenceFd, -1) != FenceState::SIGNALED) {
+            LOG(ERROR) << "syncWait failed";
             cb(ErrorStatus::GENERAL_FAILURE, hidl_handle(nullptr), nullptr);
             return Void();
         }
