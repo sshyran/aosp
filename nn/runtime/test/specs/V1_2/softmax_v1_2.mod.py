@@ -103,3 +103,23 @@ Example({
     o2: [],
     o3: [],
 }).AddVariations("relaxed", quant8, "float16")
+
+# The tests below can comply with a lower version because the runtime removes
+# optional arguments set to default values.
+Example.SetVersion("V1_0",
+                   "softmax_v1_2_axis_dim2_axis1_neg",
+                   "softmax_v1_2_axis_dim2_axis1_neg_2",
+                   "softmax_v1_2_axis_dim2_axis1_neg_all_inputs_as_internal",
+                   "softmax_v1_2_axis_dim2_axis1_neg_all_inputs_as_internal_2",
+                   "softmax_v1_2_axis_dim4_axis3_neg",
+                   "softmax_v1_2_axis_dim4_axis3_neg_2",
+                   "softmax_v1_2_axis_dim4_axis3_neg_all_inputs_as_internal",
+                   "softmax_v1_2_axis_dim4_axis3_neg_all_inputs_as_internal_2",
+                   "softmax_v1_2_axis_quant8_dim2_axis1_neg",
+                   "softmax_v1_2_axis_quant8_dim2_axis1_neg_2",
+                   "softmax_v1_2_axis_quant8_dim2_axis1_neg_all_inputs_as_internal",
+                   "softmax_v1_2_axis_quant8_dim2_axis1_neg_all_inputs_as_internal_2",
+                   "softmax_v1_2_axis_quant8_dim4_axis3_neg",
+                   "softmax_v1_2_axis_quant8_dim4_axis3_neg_2",
+                   "softmax_v1_2_axis_quant8_dim4_axis3_neg_all_inputs_as_internal",
+                   "softmax_v1_2_axis_quant8_dim4_axis3_neg_all_inputs_as_internal_2")
