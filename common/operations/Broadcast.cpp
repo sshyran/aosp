@@ -658,6 +658,8 @@ bool executeDiv(IOperationExecutionContext* context) {
                                 context->getInputValue<int32_t>(kActivationScalar),
                                 context->getOutputBuffer<int32_t>(kOutputTensor),
                                 context->getOutputShape(kOutputTensor), [](int32_t a, int32_t b) {
+                                    // In NNAPI, DIV by zero is undefined, but should not crash.
+                                    if (b == 0) return 0;
                                     int32_t result = a / b;
                                     if (a % b != 0 && ((a < 0) != (b < 0))) {
                                         // Implement "floor division".
