@@ -31,6 +31,9 @@ import traceback
 
 import test_generator as tg
 
+# See ToCpp()
+COMMENT_KEY = "__COMMENT__"
+
 # Take a model from command line
 def ParseCmdLine():
     parser = tg.ArgumentParser()
@@ -72,8 +75,13 @@ def ToCpp(var, indent=0):
     if isinstance(var, dict):
         if not var:
             return "{}"
+        comment = var.get(COMMENT_KEY)
+        comment = "" if comment is None else " // %s" % comment
         str_pair = lambda k, v: "    .%s = %s" % (k, ToCpp(v, indent + 4))
-        agg_init = "{\n%s\n}" % (",\n".join(str_pair(k, var[k]) for k in sorted(var.keys())))
+        agg_init = "{%s\n%s\n}" % (comment,
+                                   ",\n".join(str_pair(k, var[k])
+                                              for k in sorted(var.keys())
+                                              if k != COMMENT_KEY))
         return IndentedStr(agg_init, indent)
     elif isinstance(var, (list, tuple)):
         return "{%s}" % (", ".join(ToCpp(i, indent) for i in var))
@@ -94,6 +102,7 @@ def GetSymmPerChannelQuantParams(extraParams):
 def GetOperandStruct(operand):
     """Get the dictionary that corresponds to test_helper::TestOperand."""
     return {
+        COMMENT_KEY: operand.name,
         "type": "TestOperandType::" + operand.type.type,
         "dimensions": operand.type.dimensions,
         "scale": operand.type.scale,
@@ -119,10 +128,11 @@ def GetOperationStruct(operation):
 def GetSubgraphStruct(subgraph):
     """Get the dictionary that corresponds to test_helper::TestSubgraph."""
     return {
-         "operands": [GetOperandStruct(op) for op in subgraph.operands],
-         "operations": [GetOperationStruct(op) for op in subgraph.operations],
-         "inputIndexes": [op.model_index for op in subgraph.GetInputs()],
-         "outputIndexes": [op.model_index for op in subgraph.GetOutputs()],
+        COMMENT_KEY: subgraph.name,
+        "operands": [GetOperandStruct(op) for op in subgraph.operands],
+        "operations": [GetOperationStruct(op) for op in subgraph.operations],
+        "inputIndexes": [op.model_index for op in subgraph.GetInputs()],
+        "outputIndexes": [op.model_index for op in subgraph.GetOutputs()],
     }
 
 def GetModelStruct(example):
