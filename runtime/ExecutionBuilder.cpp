@@ -104,6 +104,30 @@ const ModelBuilder* ExecutionBuilder::getSourceModel(uint32_t index) const {
     return mPlan->getSourceModels().getModel(index);
 }
 
+bool ExecutionBuilder::isFinished() const {
+    CHECK(!(mFinishedWithoutSyncFence && hasSyncFence()));
+    if (mFinishedWithoutSyncFence) {
+        return true;
+    }
+    if (hasSyncFence()) {
+        auto r = syncWait(mSyncFenceFd, 0);
+        CHECK(r != FenceState::UNKNOWN);
+        return r != FenceState::ACTIVE;
+    }
+    return false;
+}
+
+ExecutionBuilder::Completion ExecutionBuilder::completedWith() const {
+    CHECK(isFinished());
+    if (hasSyncFence()) {
+        auto r = syncWait(mSyncFenceFd, 0);
+        CHECK(r == FenceState::SIGNALED || r == FenceState::ERROR);
+        return (r == FenceState::SIGNALED) ? Completion::NO_ERROR : Completion::OTHER_ERROR;
+    } else {
+        return mCompletionWithoutSyncFence;
+    }
+}
+
 int ExecutionBuilder::setInput(uint32_t index, const ANeuralNetworksOperandType* type,
                                const void* buffer, size_t length) {
     if (mStarted) {
@@ -275,18 +299,15 @@ int ExecutionBuilder::setMeasureTiming(bool measure) {
 }
 
 int ExecutionBuilder::getDuration(int32_t durationCode, uint64_t* duration) const {
-    if (!mFinished && !hasSyncFence()) {
+    if (!isFinished()) {
         LOG(ERROR) << "ANeuralNetworksExecution_getDuration called before the "
                       "execution has finished.";
         *duration = UINT64_MAX;
         return ANEURALNETWORKS_BAD_STATE;
     }
-    // If the sync fence is valid, perform a non-blocking status check on the sync fence status.
-    // TODO(b/148423931): consider using a utility method to wait on the sync fence
-    // and distinguish the not-finished status and error state.
-    if (hasSyncFence() && syncWait(mSyncFenceFd, 0) != FenceState::SIGNALED) {
-        LOG(ERROR) << "ANeuralNetworksExecution_getDuration called before the "
-                      "execution has finished, or the execution has encountered an error.";
+    if (completedWith() != Completion::NO_ERROR) {
+        LOG(ERROR) << "ANeuralNetworksExecution_getDuration called on an execution "
+                      "that has encountered an error.";
         *duration = UINT64_MAX;
         return ANEURALNETWORKS_BAD_STATE;
     }
@@ -299,11 +320,8 @@ int ExecutionBuilder::getDuration(int32_t durationCode, uint64_t* duration) cons
         return ANEURALNETWORKS_BAD_STATE;
     }
 
-    // Timing might be reported through other compute method.
-    // Only query the fenced callback if it is available, and we are not
-    // updating mTiming to keep this method const.
-    Timing timingLaunched = mTiming;
-    Timing timingFenced = kNoTiming;
+    Timing timingLaunched = mTimingWithoutFencedExecutionCallback;
+    Timing timingFenced = timingLaunched;
     if (mFencedExecutionCallback != nullptr) {
         ErrorStatus status;
         const Return<void> ret = mFencedExecutionCallback->getExecutionInfo(
@@ -321,11 +339,6 @@ int ExecutionBuilder::getDuration(int32_t durationCode, uint64_t* duration) cons
             *duration = UINT64_MAX;
             return ANEURALNETWORKS_BAD_STATE;
         }
-    }
-    // timingFenced should be the same as timingLaunched for compute methods other than fenced
-    // compute.
-    if (timingFenced == kNoTiming) {
-        timingFenced = timingLaunched;
     }
     uint64_t microDuration = UINT64_MAX;
     switch (durationCode) {
@@ -389,17 +402,14 @@ int ExecutionBuilder::setLoopTimeout(uint64_t duration) {
 }
 
 int ExecutionBuilder::getOutputOperandDimensions(uint32_t index, uint32_t* dimensions) {
-    if (!mFinished && !hasSyncFence()) {
+    if (!isFinished()) {
         LOG(ERROR) << "ANeuralNetworksExecution_getOutputOperandDimensions called before the "
                       "execution has finished.";
         return ANEURALNETWORKS_BAD_STATE;
     }
-    // If the sync fence is valid, perform a non-blocking status check on the sync fence status.
-    // TODO(b/148423931): consider using a utility method to wait on the sync fence
-    // and distinguish the not-finished status and error state.
-    if (hasSyncFence() && syncWait(mSyncFenceFd, 0) != FenceState::SIGNALED) {
-        LOG(ERROR) << "ANeuralNetworksExecution_getOutputOperandDimensions called before the "
-                      "execution has finished, or the execution has encountered an error.";
+    if (completedWith() == Completion::OTHER_ERROR) {
+        LOG(ERROR) << "ANeuralNetworksExecution_getOutputOperandDimensions called on an execution "
+                      "that has encountered an error.";
         return ANEURALNETWORKS_BAD_STATE;
     }
 
@@ -421,17 +431,14 @@ int ExecutionBuilder::getOutputOperandDimensions(uint32_t index, uint32_t* dimen
 }
 
 int ExecutionBuilder::getOutputOperandRank(uint32_t index, uint32_t* rank) {
-    if (!mFinished && !hasSyncFence()) {
+    if (!isFinished()) {
         LOG(ERROR) << "ANeuralNetworksExecution_getOutputOperandRank called before the "
                       "execution has finished.";
         return ANEURALNETWORKS_BAD_STATE;
     }
-    // If the sync fence is valid, perform a non-blocking status check on the sync fence status.
-    // TODO(b/148423931): consider using a utility method to wait on the sync fence
-    // and distinguish the not-finished status and error state.
-    if (hasSyncFence() && syncWait(mSyncFenceFd, 0) != FenceState::SIGNALED) {
-        LOG(ERROR) << "ANeuralNetworksExecution_getOutputOperandRank called before the "
-                      "execution has finished, or the execution has encountered an error.";
+    if (completedWith() == Completion::OTHER_ERROR) {
+        LOG(ERROR) << "ANeuralNetworksExecution_getOutputOperandRank called on an execution "
+                      "that has encountered an error.";
         return ANEURALNETWORKS_BAD_STATE;
     }
     uint32_t count = static_cast<uint32_t>(mOutputs.size());
@@ -658,8 +665,8 @@ static std::tuple<int, int, sp<hal::IFencedExecutionCallback>> startComputeFence
             if (syncFence == -1) {
                 // TODO(miaowang): support dynamic output shape only with memory domain.
                 // For now just return the initial output shapes.
-                executionBuilder->finish(ErrorStatus::NONE,
-                                         executionBuilder->getInitialOutputShapes());
+                executionBuilder->finishWithoutSyncFence(
+                        ErrorStatus::NONE, executionBuilder->getInitialOutputShapes());
             }
             return std::make_tuple(ANEURALNETWORKS_NO_ERROR, syncFence, computeFencedCallback);
         }
@@ -714,8 +721,8 @@ static std::tuple<int, int, sp<hal::IFencedExecutionCallback>> startComputeFence
     auto [fullN, fullOutputShapes, fullTiming] = cpuFallbackFull(executionBuilder);
     const ErrorStatus fullStatus = convertResultCodeToErrorStatus(fullN);
     syncFence = -1;
-    executionBuilder->finish(fullStatus, fullOutputShapes);
-    executionBuilder->reportTiming(fullTiming);
+    executionBuilder->finishWithoutSyncFence(fullStatus, fullOutputShapes);
+    executionBuilder->reportTimingWithoutFencedExecutionCallback(fullTiming);
     return std::make_tuple(fullN, syncFence, nullptr);
 }
 
@@ -814,7 +821,7 @@ int ExecutionBuilder::compute(sp<ExecutionCallback>* synchronizationCallback,
     }
 
     auto wrappedFinish = [this](ErrorStatus error, const std::vector<OutputShape>& outputShapes) {
-        return finish(error, outputShapes);
+        return finishWithoutSyncFence(error, outputShapes);
     };
 
     // TODO: For asynchronous execution, entire plan-based-path should run in an
@@ -832,7 +839,7 @@ int ExecutionBuilder::compute(sp<ExecutionCallback>* synchronizationCallback,
                                      localSynchronizationCallback);
         localSynchronizationCallback->wait();
         if (mMeasureTiming) {
-            mTiming = localSynchronizationCallback->getTiming();
+            mTimingWithoutFencedExecutionCallback = localSynchronizationCallback->getTiming();
         }
         return convertErrorStatusToResultCode(localSynchronizationCallback->getStatus());
     } else /* asynchronous */ {
@@ -910,10 +917,11 @@ bool ExecutionBuilder::updateMemories() {
     return true;
 }
 
-ErrorStatus ExecutionBuilder::finish(ErrorStatus status,
-                                     const std::vector<OutputShape>& outputShapes) {
-    CHECK(!mFinished) << "ExecutionBuilder::finish is called twice";
-    mFinished = true;
+ErrorStatus ExecutionBuilder::finishWithoutSyncFence(ErrorStatus status,
+                                                     const std::vector<OutputShape>& outputShapes) {
+    CHECK(!mFinishedWithoutSyncFence) << "ExecutionBuilder::finishWithoutSyncFence is called twice";
+    CHECK(!hasSyncFence())
+            << "ExecutionBuilder::finishWithoutSyncFence is called when hasSyncFence()";
     if (!updateOutputShapes(outputShapes) || !updateMemories()) {
         status = ErrorStatus::GENERAL_FAILURE;
     }
@@ -923,6 +931,18 @@ ErrorStatus ExecutionBuilder::finish(ErrorStatus status,
         const Memory* memory = mMemories[output.locationAndLength().poolIndex];
         memory->getValidator().setInitialized(success);
     }
+    switch (convertErrorStatusToResultCode(status)) {
+        case ANEURALNETWORKS_NO_ERROR:
+            mCompletionWithoutSyncFence = Completion::NO_ERROR;
+            break;
+        case ANEURALNETWORKS_OUTPUT_INSUFFICIENT_SIZE:
+            mCompletionWithoutSyncFence = Completion::OUTPUT_INSUFFICIENT_SIZE;
+            break;
+        default:
+            mCompletionWithoutSyncFence = Completion::OTHER_ERROR;
+            break;
+    }
+    mFinishedWithoutSyncFence = true;
     return status;
 }
 
@@ -1060,7 +1080,7 @@ std::tuple<int, std::vector<OutputShape>, Timing> StepExecutor::compute(
             makeTimeoutDuration(mExecutionBuilder->getLoopTimeoutDuration());
     const auto [n, outputShapes, timing] = mPreparedModel->execute(
             mInputs, mOutputs, mMemories, burstController, measure, deadline, loopTimeoutDuration);
-    mExecutionBuilder->reportTiming(timing);
+    mExecutionBuilder->reportTimingWithoutFencedExecutionCallback(timing);
 
     return {n, std::move(outputShapes), timing};
 }
@@ -1086,7 +1106,7 @@ std::tuple<int, int, sp<hal::IFencedExecutionCallback>> StepExecutor::computeFen
             mPreparedModel->executeFenced(mInputs, mOutputs, mMemories, waitFor, measure, deadline,
                                           loopTimeoutDuration, optionalTimeoutDurationAfterFence);
     if (syncFence < 0 && computeFencedCallback == nullptr) {
-        mExecutionBuilder->reportTiming(timing);
+        mExecutionBuilder->reportTimingWithoutFencedExecutionCallback(timing);
     }
     return {n, syncFence, computeFencedCallback};
 }
