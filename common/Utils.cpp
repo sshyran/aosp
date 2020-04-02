@@ -360,21 +360,23 @@ bool nonExtensionOperandTypeIsScalar(int type) {
 uint32_t nonExtensionOperandSizeOfData(OperandType type, const std::vector<uint32_t>& dimensions) {
     CHECK(!isExtensionOperandType(type)) << "Size of extension operand data is unknown";
     int n = static_cast<int>(type);
+    uint32_t sizeOfElement = tableLookup(kSizeOfDataType, kSizeOfDataTypeOEM, n);
+    return tableLookup(kScalarDataType, kScalarDataTypeOEM, n)
+                   ? sizeOfElement
+                   : sizeOfTensorData(sizeOfElement, dimensions);
+}
 
-    uint32_t size = tableLookup(kSizeOfDataType, kSizeOfDataTypeOEM, n);
-
-    if (tableLookup(kScalarDataType, kScalarDataTypeOEM, n) == true) {
-        return size;
-    }
-
+uint32_t sizeOfTensorData(uint32_t sizeOfElement, const std::vector<uint32_t>& dimensions) {
     if (dimensions.empty()) {
         return 0;
     }
-
-    for (auto d : dimensions) {
+    uint64_t size = static_cast<uint64_t>(sizeOfElement);
+    constexpr uint64_t kMaxSize = static_cast<uint64_t>(std::numeric_limits<uint32_t>::max());
+    for (uint32_t d : dimensions) {
         size *= d;
+        CHECK_LE(size, kMaxSize);
     }
-    return size;
+    return static_cast<uint32_t>(size);
 }
 
 bool tensorHasUnspecifiedDimensions(int type, const uint32_t* dim, uint32_t dimCount) {
