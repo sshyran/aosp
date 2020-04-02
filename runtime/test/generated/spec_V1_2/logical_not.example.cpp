@@ -13,7 +13,7 @@ const TestModel& get_test_model() {
         .isRelaxed = false,
         .main = {
                 .inputIndexes = {0},
-                .operands = {{
+                .operands = {{ // input0
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({true, false, false, true}),
                             .dimensions = {1, 1, 4, 1, 1},
@@ -23,7 +23,7 @@ const TestModel& get_test_model() {
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_BOOL8,
                             .zeroPoint = 0
-                        }, {
+                        }, { // output0
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<bool8>({false, true, true, false}),
                             .dimensions = {1, 1, 4, 1, 1},
