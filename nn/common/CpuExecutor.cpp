@@ -155,17 +155,15 @@ bool setInfoAndAllocateIfNeeded(RunTimeOperandInfo* info, const Shape& shape, in
             *result = ANEURALNETWORKS_OP_FAILED;
             return false;
         }
-        if (info->type == OperandType::TENSOR_QUANT8_ASYMM) {
-            if (info->scale != shape.scale) {
-                LOG(ERROR) << "Invalid scale for model output";
-                *result = ANEURALNETWORKS_OP_FAILED;
-                return false;
-            }
-            if (info->zeroPoint != shape.offset) {
-                LOG(ERROR) << "Invalid zeroPoint for model output";
-                *result = ANEURALNETWORKS_OP_FAILED;
-                return false;
-            }
+        if (info->scale != shape.scale) {
+            LOG(ERROR) << "Invalid scale for model output";
+            *result = ANEURALNETWORKS_OP_FAILED;
+            return false;
+        }
+        if (info->zeroPoint != shape.offset) {
+            LOG(ERROR) << "Invalid zeroPoint for model output";
+            *result = ANEURALNETWORKS_OP_FAILED;
+            return false;
         }
         if (info->extraParams != shape.extraParams) {
             LOG(ERROR) << "Invalid extraParams for model output";
