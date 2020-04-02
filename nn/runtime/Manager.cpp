@@ -519,9 +519,9 @@ DriverPreparedModel::executeFenced(
     if (outputPtrArgsMemory != nullptr) {
         NNTRACE_RT_SWITCH(NNTRACE_PHASE_RESULTS, "DriverPreparedModel::executeFenced");
         if (syncFenceFd > 0) {
-            int r = sync_wait(syncFenceFd, -1);
-            if (r < 0) {
-                LOG(ERROR) << "sync wait failed, fd: " << syncFenceFd;
+            auto r = syncWait(syncFenceFd, -1);
+            if (r != FenceState::SIGNALED) {
+                LOG(ERROR) << "syncWait failed, fd: " << syncFenceFd;
                 return {ANEURALNETWORKS_OP_FAILED, syncFenceFd, nullptr, timing};
             }
         }
@@ -714,8 +714,8 @@ CpuPreparedModel::executeFenced(const std::vector<ModelArgumentInfo>& inputs,
             << "CpuPreparedModel::executeFenced wait for sync fences to signal before execution";
     for (int syncFd : waitFor) {
         if (syncFd > 0) {
-            int r = sync_wait(syncFd, -1);
-            if (r < 0) {
+            auto r = syncWait(syncFd, -1);
+            if (r != FenceState::SIGNALED) {
                 LOG(ERROR) << "sync wait failed, fd: " << syncFd;
                 return {ANEURALNETWORKS_OP_FAILED, -1, nullptr, {UINT64_MAX, UINT64_MAX}};
             }
