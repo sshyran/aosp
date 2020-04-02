@@ -91,7 +91,9 @@ class ExecutionBuilder {
 
     // Handshake with lower-level execution support
     bool measureTiming() const { return mMeasureTiming; }
-    void reportTiming(hal::Timing timing) { mTiming = timing; }
+    void reportTimingWithoutFencedExecutionCallback(hal::Timing timing) {
+        mTimingWithoutFencedExecutionCallback = timing;
+    }
 
     const CompilationBuilder* getCompilation() const { return mCompilation; }
     const ModelBuilder* getModel() const { return mModel; }
@@ -101,15 +103,15 @@ class ExecutionBuilder {
         return getSourceModel(sourceOperandIndex.first)->getOperand(sourceOperandIndex.second);
     }
 
-    hal::ErrorStatus finish(hal::ErrorStatus error,
-                            const std::vector<hal::OutputShape>& outputShapes);
+    hal::ErrorStatus finishWithoutSyncFence(hal::ErrorStatus error,
+                                            const std::vector<hal::OutputShape>& outputShapes);
 
     // Retrieve a reference to the IFencedExecutionCallback callback.
     const sp<hal::IFencedExecutionCallback>& getFencedExecutionCallback() {
         return mFencedExecutionCallback;
     }
 
-    bool inFlight() const { return mStarted && !mFinished; }
+    bool inFlight() const { return mStarted && !isFinished(); }
 
     const ModelArgumentInfo& getInputInfo(uint32_t index) const { return mInputs[index]; }
     const ModelArgumentInfo& getOutputInfo(uint32_t index) const { return mOutputs[index]; }
@@ -162,8 +164,9 @@ class ExecutionBuilder {
     // Do we ask the driver to measure timing?
     bool mMeasureTiming = false;
 
-    // Timing reported from the driver
-    hal::Timing mTiming = {};
+    // Timing reported from the driver.  This field is only used if
+    // mFencedExecutionCallback is nullptr.
+    hal::Timing mTimingWithoutFencedExecutionCallback = {};
 
     // Amount of time to complete or abort the execution.
     std::optional<uint64_t> mTimeoutDuration;
@@ -175,13 +178,32 @@ class ExecutionBuilder {
     std::atomic_bool mStarted = false;
 
     // Timing and output shapes can only be queried after the execution is
-    // finished.
-    std::atomic_bool mFinished = false;
+    // finished.  This field only becomes true if !hasSyncFence().
+    // See isFinished().
+    std::atomic_bool mFinishedWithoutSyncFence = false;
 
-    // The sync fence fd that is created in the computeFenced call.
+    bool isFinished() const;
+
+    // With what error status has execution completed?  This field only takes on
+    // a meaningful value if !hasSyncFence().
+    // See completedWith().
+    enum class Completion { NO_ERROR, OUTPUT_INSUFFICIENT_SIZE, OTHER_ERROR };
+    Completion mCompletionWithoutSyncFence = Completion::OTHER_ERROR;
+
+    // With what error status has execution completed?  Must only be called if
+    // isFinished().
+    Completion completedWith() const;
+
+    // The sync fence fd that is created in the computeFenced call, if any.
+    // (Sometimes no sync fence fd will be created.)
     int mSyncFenceFd = -1;
 
-    // The callback used to query execution related info
+    // The callback used to query execution related info in the case of fenced
+    // execution; otherwise, nullptr.  If the execution plan has multiple steps,
+    // this is the callback associated with the last step.  If the last step
+    // doesn't support fenced execution (e.g., the driver is too old), or if the
+    // launch of execution on the driver fails, then this callback will be
+    // nullptr.
     sp<hal::IFencedExecutionCallback> mFencedExecutionCallback;
 };
 
