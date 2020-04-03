@@ -647,16 +647,13 @@ void ExecutionTestTemplate<DriverClass>::TestWait() {
             ASSERT_EQ(mOutputBuffer, kOutputBufferExpected);
         }
         std::vector<uint32_t> dimensions;
-        if (kExpectResult == Result::OUTPUT_INSUFFICIENT_SIZE) {
-            // Only one output operand, hardcoded as index 0.
-            ASSERT_EQ(execution.getOutputOperandDimensions(0, &dimensions),
-                      Result::OUTPUT_INSUFFICIENT_SIZE);
-        } else {
-            ASSERT_EQ(execution.getOutputOperandDimensions(0, &dimensions), Result::NO_ERROR);
-        }
         if (kExpectResult == Result::NO_ERROR ||
             kExpectResult == Result::OUTPUT_INSUFFICIENT_SIZE) {
+            // Only one output operand, hardcoded as index 0.
+            ASSERT_EQ(execution.getOutputOperandDimensions(0, &dimensions), kExpectResult);
             ASSERT_EQ(dimensions, kOutputDimensionsExpected);
+        } else {
+            ASSERT_EQ(execution.getOutputOperandDimensions(0, &dimensions), Result::BAD_STATE);
         }
     }
     {
@@ -668,16 +665,13 @@ void ExecutionTestTemplate<DriverClass>::TestWait() {
             ASSERT_EQ(mOutputBuffer, kOutputBufferExpected);
         }
         std::vector<uint32_t> dimensions;
-        if (kExpectResult == Result::OUTPUT_INSUFFICIENT_SIZE) {
-            // Only one output operand, hardcoded as index 0.
-            ASSERT_EQ(execution.getOutputOperandDimensions(0, &dimensions),
-                      Result::OUTPUT_INSUFFICIENT_SIZE);
-        } else {
-            ASSERT_EQ(execution.getOutputOperandDimensions(0, &dimensions), Result::NO_ERROR);
-        }
         if (kExpectResult == Result::NO_ERROR ||
             kExpectResult == Result::OUTPUT_INSUFFICIENT_SIZE) {
+            // Only one output operand, hardcoded as index 0.
+            ASSERT_EQ(execution.getOutputOperandDimensions(0, &dimensions), kExpectResult);
             ASSERT_EQ(dimensions, kOutputDimensionsExpected);
+        } else {
+            ASSERT_EQ(execution.getOutputOperandDimensions(0, &dimensions), Result::BAD_STATE);
         }
     }
 }
