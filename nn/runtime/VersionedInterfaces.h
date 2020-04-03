@@ -223,17 +223,6 @@ class VersionedIDevice {
             const std::optional<hal::CacheToken>& maybeToken) const;
 
     /**
-     * Returns the current status of a driver.
-     *
-     * @return status Status of the driver, one of:
-     *                - DeviceStatus::AVAILABLE
-     *                - DeviceStatus::BUSY
-     *                - DeviceStatus::OFFLINE
-     *                - DeviceStatus::UNKNOWN
-     */
-    hal::DeviceStatus getStatus() const;
-
-    /**
      * Returns the feature level of a driver.
      *
      * @return featureLevel The API level of the most advanced feature this driver implements.
