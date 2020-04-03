@@ -1253,8 +1253,9 @@ int ANeuralNetworksExecution_compute(ANeuralNetworksExecution* execution) __INTR
  * Get the dimensional information of the specified output operand of the model of the
  * {@link ANeuralNetworksExecution}.
  *
- * On asynchronous execution initiated by {@link ANeuralNetworksExecution_startCompute}
- * or {@link ANeuralNetworksExecution_startComputeWithDependencies},
+ * The execution must have completed.  On asynchronous execution initiated by
+ * {@link ANeuralNetworksExecution_startCompute} or
+ * {@link ANeuralNetworksExecution_startComputeWithDependencies},
  * {@link ANeuralNetworksEvent_wait} must be called prior to this function.
  *
  * @param execution The execution to be queried.
@@ -1278,8 +1279,9 @@ int ANeuralNetworksExecution_getOutputOperandRank(ANeuralNetworksExecution* exec
  * Get the dimensional information of the specified output operand of the model of the
  * {@link ANeuralNetworksExecution}. The target output operand cannot be a scalar.
  *
- * On asynchronous execution initiated by {@link ANeuralNetworksExecution_startCompute}
- * or {@link ANeuralNetworksExecution_startComputeWithDependencies},
+ * The execution must have completed.  On asynchronous execution initiated by
+ * {@link ANeuralNetworksExecution_startCompute} or
+ * {@link ANeuralNetworksExecution_startComputeWithDependencies},
  * {@link ANeuralNetworksEvent_wait} must be called prior to this function.
  *
  * @param execution The execution to be queried.
@@ -1433,9 +1435,11 @@ int ANeuralNetworksExecution_setMeasureTiming(ANeuralNetworksExecution* executio
 
 /**
  * Get the time spent in the specified {@link ANeuralNetworksExecution}, in nanoseconds.
- * The execution must have completed.
  *
- * Available since API level 29.
+ * The execution must have completed.  On asynchronous execution initiated by
+ * {@link ANeuralNetworksExecution_startCompute} or
+ * {@link ANeuralNetworksExecution_startComputeWithDependencies},
+ * {@link ANeuralNetworksEvent_wait} must be called prior to this function.
  *
  * @param execution The execution to be queried.
  * @param durationCode The measurement to be queried, specified by {@link DurationCode}.
@@ -1448,6 +1452,8 @@ int ANeuralNetworksExecution_setMeasureTiming(ANeuralNetworksExecution* executio
  *                 need not support any given measurement.
  *
  * @return ANEURALNETWORKS_NO_ERROR if successful.
+ *
+ * Available since API level 29.
  */
 int ANeuralNetworksExecution_getDuration(const ANeuralNetworksExecution* execution,
                                          int32_t durationCode, uint64_t* duration)
