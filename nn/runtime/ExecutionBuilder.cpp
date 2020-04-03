@@ -900,6 +900,9 @@ bool ExecutionBuilder::updateOutputShapes(const std::vector<OutputShape>& output
     for (uint32_t i = 0; i < outputShapes.size(); i++) {
         // Check if only unspecified dimensions or rank are overwritten.
         NN_RET_CHECK(isUpdatable(mOutputs[i].dimensions(), outputShapes[i].dimensions));
+        const OperandType operandType = mModel->getOutputOperand(i).type;
+        NN_RET_CHECK(!TypeManager::get()->sizeOfDataOverflowsUInt32(operandType,
+                                                                    outputShapes[i].dimensions));
     }
     for (uint32_t i = 0; i < outputShapes.size(); i++) {
         mOutputs[i].dimensions() = outputShapes[i].dimensions;

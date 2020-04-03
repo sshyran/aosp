@@ -286,5 +286,15 @@ uint32_t TypeManager::getSizeOfData(OperandType type,
     return info->isTensor ? sizeOfTensorData(info->byteSize, dimensions) : info->byteSize;
 }
 
+bool TypeManager::sizeOfDataOverflowsUInt32(hal::OperandType type,
+                                            const std::vector<uint32_t>& dimensions) const {
+    if (!isExtensionOperandType(type)) {
+        return nonExtensionOperandSizeOfDataOverflowsUInt32(type, dimensions);
+    }
+    const Extension::OperandTypeInformation* info;
+    CHECK(getExtensionOperandTypeInfo(type, &info));
+    return info->isTensor ? sizeOfTensorDataOverflowsUInt32(info->byteSize, dimensions) : false;
+}
+
 }  // namespace nn
 }  // namespace android
