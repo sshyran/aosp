@@ -190,7 +190,7 @@ test(
     half_pixel_centers=BoolScalar("half_pixel_centers", False),
     output0=Output("output0", "TENSOR_FLOAT32", "{1, 3, 3, 1}"),
     input0_data=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16],
-    output_data=[1,  3,  4, 9, 11, 12, 13, 15, 16],
+    output_data=[1, 3, 4, 9, 11, 12, 13, 15, 16],
 )
 
 test(
@@ -204,4 +204,67 @@ test(
     output0=Output("output0", "TENSOR_FLOAT32", "{1, 1, 1, 1}"),
     input0_data=[1, 2, 3, 4],
     output_data=[1],
+)
+
+# Test from version 1.2 to test default arguments removal
+i1 = Input("in", "TENSOR_FLOAT32", "{2, 2, 2, 2}")
+o1 = Output("out", "TENSOR_FLOAT32", "{2, 3, 3, 2}")
+layout = BoolScalar("layout", False)  # NHWC
+align_corners = BoolScalar("align_corners", False)
+half_pixel_centers = BoolScalar("half_pixel_centers", False)
+model_shape = Model("shape").Operation("RESIZE_NEAREST_NEIGHBOR", i1, 3, 3,
+                                       layout, align_corners,
+                                       half_pixel_centers).To(o1)
+model_scale = Model("scale").Operation("RESIZE_NEAREST_NEIGHBOR", i1, 1.6, 1.8,
+                                       layout, align_corners,
+                                       half_pixel_centers).To(o1)
+
+quant8 = DataTypeConverter().Identify({
+    i1: ("TENSOR_QUANT8_ASYMM", 0.25, 100),
+    o1: ("TENSOR_QUANT8_ASYMM", 0.25, 100)
+})
+
+values = {
+    i1: [1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8],
+    o1: [
+        1, 1, 1, 1, 2, 2, 1, 1, 1, 1, 2, 2, 3, 3, 3, 3, 4, 4, 5, 5, 5, 5, 6, 6,
+        5, 5, 5, 5, 6, 6, 7, 7, 7, 7, 8, 8
+    ]
+}
+
+Example(
+    values, model=model_shape,
+    name="default_values").AddNchw(i1, o1, layout).AddVariations(
+        "relaxed", quant8, "float16")
+Example(
+    values, model=model_scale,
+    name="default_values").AddNchw(i1, o1, layout).AddVariations(
+        "relaxed", quant8, "float16")
+
+Example.SetVersion(
+    "V1_2",
+    "resize_nearest_neighbor_v1_3_scale_default_values_nchw",
+    "resize_nearest_neighbor_v1_3_scale_default_values_nchw_all_inputs_as_internal",
+    "resize_nearest_neighbor_v1_3_scale_default_values_nchw_float16",
+    "resize_nearest_neighbor_v1_3_scale_default_values_nchw_float16_all_inputs_as_internal",
+    "resize_nearest_neighbor_v1_3_scale_default_values_nchw_quant8",
+    "resize_nearest_neighbor_v1_3_scale_default_values_nchw_quant8_all_inputs_as_internal",
+    "resize_nearest_neighbor_v1_3_scale_default_values_nhwc",
+    "resize_nearest_neighbor_v1_3_scale_default_values_nhwc_all_inputs_as_internal",
+    "resize_nearest_neighbor_v1_3_scale_default_values_nhwc_float16",
+    "resize_nearest_neighbor_v1_3_scale_default_values_nhwc_float16_all_inputs_as_internal",
+    "resize_nearest_neighbor_v1_3_scale_default_values_nhwc_quant8",
+    "resize_nearest_neighbor_v1_3_scale_default_values_nhwc_quant8_all_inputs_as_internal",
+    "resize_nearest_neighbor_v1_3_shape_default_values_nchw",
+    "resize_nearest_neighbor_v1_3_shape_default_values_nchw_all_inputs_as_internal",
+    "resize_nearest_neighbor_v1_3_shape_default_values_nchw_float16",
+    "resize_nearest_neighbor_v1_3_shape_default_values_nchw_float16_all_inputs_as_internal",
+    "resize_nearest_neighbor_v1_3_shape_default_values_nchw_quant8",
+    "resize_nearest_neighbor_v1_3_shape_default_values_nchw_quant8_all_inputs_as_internal",
+    "resize_nearest_neighbor_v1_3_shape_default_values_nhwc",
+    "resize_nearest_neighbor_v1_3_shape_default_values_nhwc_all_inputs_as_internal",
+    "resize_nearest_neighbor_v1_3_shape_default_values_nhwc_float16",
+    "resize_nearest_neighbor_v1_3_shape_default_values_nhwc_float16_all_inputs_as_internal",
+    "resize_nearest_neighbor_v1_3_shape_default_values_nhwc_quant8",
+    "resize_nearest_neighbor_v1_3_shape_default_values_nhwc_quant8_all_inputs_as_internal",
 )
