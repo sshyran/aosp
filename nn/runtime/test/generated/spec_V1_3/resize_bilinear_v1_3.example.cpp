@@ -200,7 +200,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2x2x1_to_2x3x3x1_all_inputs
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, { // param
+                        }, { // param4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -428,7 +428,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2x2x1_to_2x3x3x1_float16_al
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, { // param1
+                        }, { // param5
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -656,7 +656,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2x2x1_to_2x3x3x1_relaxed_al
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, { // param2
+                        }, { // param6
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -884,7 +884,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2x2x1_to_2x3x3x1_quant8_all
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 128
-                        }, { // param3
+                        }, { // param7
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -1112,7 +1112,7 @@ const TestModel& get_test_model_half_pixel_centers_2x2x2x1_to_2x3x3x1_quant8_sig
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = 0
-                        }, { // param4
+                        }, { // param8
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -1340,7 +1340,7 @@ const TestModel& get_test_model_half_pixel_centers_2x14x13x3_to_2x6x7x3_all_inpu
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, { // param5
+                        }, { // param9
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -1568,7 +1568,7 @@ const TestModel& get_test_model_half_pixel_centers_2x14x13x3_to_2x6x7x3_float16_
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, { // param6
+                        }, { // param10
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -1796,7 +1796,7 @@ const TestModel& get_test_model_half_pixel_centers_2x14x13x3_to_2x6x7x3_relaxed_
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, { // param7
+                        }, { // param11
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -2024,7 +2024,7 @@ const TestModel& get_test_model_half_pixel_centers_2x6x7x3_to_2x14x13x3_all_inpu
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, { // param8
+                        }, { // param12
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -2252,7 +2252,7 @@ const TestModel& get_test_model_half_pixel_centers_2x6x7x3_to_2x14x13x3_float16_
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, { // param9
+                        }, { // param13
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -2480,7 +2480,7 @@ const TestModel& get_test_model_half_pixel_centers_2x6x7x3_to_2x14x13x3_relaxed_
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, { // param10
+                        }, { // param14
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -2708,7 +2708,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_all_inputs_as_internal(
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, { // param11
+                        }, { // param15
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -2936,7 +2936,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_float16_all_inputs_as_i
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, { // param12
+                        }, { // param16
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -3164,7 +3164,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_relaxed_all_inputs_as_i
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, { // param13
+                        }, { // param17
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -3392,7 +3392,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_quant8_all_inputs_as_in
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 128
-                        }, { // param14
+                        }, { // param18
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -3620,7 +3620,7 @@ const TestModel& get_test_model_align_corners_2x2_to_1x1_quant8_signed_all_input
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = 0
-                        }, { // param15
+                        }, { // param19
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -3848,7 +3848,7 @@ const TestModel& get_test_model_align_corners_2x2_to_3x3_all_inputs_as_internal(
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, { // param16
+                        }, { // param20
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -4076,7 +4076,7 @@ const TestModel& get_test_model_align_corners_2x2_to_3x3_float16_all_inputs_as_i
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, { // param17
+                        }, { // param21
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -4304,7 +4304,7 @@ const TestModel& get_test_model_align_corners_2x2_to_3x3_relaxed_all_inputs_as_i
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, { // param18
+                        }, { // param22
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -4532,7 +4532,7 @@ const TestModel& get_test_model_align_corners_2x2_to_3x3_quant8_all_inputs_as_in
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 128
-                        }, { // param19
+                        }, { // param23
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -4760,7 +4760,7 @@ const TestModel& get_test_model_align_corners_2x2_to_3x3_quant8_signed_all_input
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = 0
-                        }, { // param20
+                        }, { // param24
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -4988,7 +4988,7 @@ const TestModel& get_test_model_align_corners_3x3_to_2x2_all_inputs_as_internal(
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, { // param21
+                        }, { // param25
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -5216,7 +5216,7 @@ const TestModel& get_test_model_align_corners_3x3_to_2x2_float16_all_inputs_as_i
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, { // param22
+                        }, { // param26
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -5444,7 +5444,7 @@ const TestModel& get_test_model_align_corners_3x3_to_2x2_relaxed_all_inputs_as_i
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, { // param23
+                        }, { // param27
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -5672,7 +5672,7 @@ const TestModel& get_test_model_align_corners_3x3_to_2x2_quant8_all_inputs_as_in
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 128
-                        }, { // param24
+                        }, { // param28
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -5900,7 +5900,7 @@ const TestModel& get_test_model_align_corners_3x3_to_2x2_quant8_signed_all_input
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = 0
-                        }, { // param25
+                        }, { // param29
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -6128,7 +6128,7 @@ const TestModel& get_test_model_align_corners_4x4_to_3x3_all_inputs_as_internal(
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, { // param26
+                        }, { // param30
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -6356,7 +6356,7 @@ const TestModel& get_test_model_align_corners_4x4_to_3x3_float16_all_inputs_as_i
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT16,
                             .zeroPoint = 0
-                        }, { // param27
+                        }, { // param31
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -6584,7 +6584,7 @@ const TestModel& get_test_model_align_corners_4x4_to_3x3_relaxed_all_inputs_as_i
                             .scale = 0.0f,
                             .type = TestOperandType::TENSOR_FLOAT32,
                             .zeroPoint = 0
-                        }, { // param28
+                        }, { // param32
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -6812,7 +6812,7 @@ const TestModel& get_test_model_align_corners_4x4_to_3x3_quant8_all_inputs_as_in
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM,
                             .zeroPoint = 128
-                        }, { // param29
+                        }, { // param33
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -7040,7 +7040,7 @@ const TestModel& get_test_model_align_corners_4x4_to_3x3_quant8_signed_all_input
                             .scale = 0.5f,
                             .type = TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED,
                             .zeroPoint = 0
-                        }, { // param30
+                        }, { // param34
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0}),
                             .dimensions = {},
@@ -7069,6 +7069,3654 @@ const TestModel& get_test_model_align_corners_4x4_to_3x3_quant8_signed_all_input
 }
 
 const auto dummy_test_model_align_corners_4x4_to_3x3_quant8_signed_all_inputs_as_internal = TestModelManager::get().add("resize_bilinear_v1_3_align_corners_4x4_to_3x3_quant8_signed_all_inputs_as_internal", get_test_model_align_corners_4x4_to_3x3_quant8_signed_all_inputs_as_internal());
+
+}  // namespace generated_tests::resize_bilinear_v1_3
+
+namespace generated_tests::resize_bilinear_v1_3 {
+
+const TestModel& get_test_model_shape_default_values_nhwc() {
+    static TestModel model = {
+        .expectFailure = false,
+        .expectedMultinomialDistributionTolerance = 0,
+        .isRelaxed = false,
+        .main = { // shape
+                .inputIndexes = {0},
+                .operands = {{ // op1
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<float>({3.0f, 4.0f, 6.0f, 10.0f, 9.0f, 10.0f, 12.0f, 16.0f}),
+                            .dimensions = {1, 2, 2, 2},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT32,
+                            .zeroPoint = 0
+                        }, { // param
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<int32_t>({3}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::INT32,
+                            .zeroPoint = 0
+                        }, { // param1
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<int32_t>({3}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::INT32,
+                            .zeroPoint = 0
+                        }, { // layout7
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<bool8>({false}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::BOOL,
+                            .zeroPoint = 0
+                        }, { // align_corners7
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<bool8>({false}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::BOOL,
+                            .zeroPoint = 0
+                        }, { // half_pixel_centers7
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<bool8>({false}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::BOOL,
+                            .zeroPoint = 0
+                        }, { // op4
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<float>({3.0f, 4.0f, 5.0f, 8.0f, 6.0f, 10.0f, 7.0f, 8.0f, 9.0f, 12.0f, 10.0f, 14.0f, 9.0f, 10.0f, 11.0f, 14.0f, 12.0f, 16.0f}),
+                            .dimensions = {1, 3, 3, 2},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
+                            .numberOfConsumers = 0,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT32,
+                            .zeroPoint = 0
+                        }},
+                .operations = {{
+                            .inputs = {0, 1, 2, 3, 4, 5},
+                            .outputs = {6},
+                            .type = TestOperationType::RESIZE_BILINEAR
+                        }},
+                .outputIndexes = {6}
+            },
+        .minSupportedVersion = TestHalVersion::V1_0,
+        .referenced = {}
+    };
+    return model;
+}
+
+const auto dummy_test_model_shape_default_values_nhwc = TestModelManager::get().add("resize_bilinear_v1_3_shape_default_values_nhwc", get_test_model_shape_default_values_nhwc());
+
+}  // namespace generated_tests::resize_bilinear_v1_3
+
+namespace generated_tests::resize_bilinear_v1_3 {
+
+const TestModel& get_test_model_shape_default_values_nhwc_all_inputs_as_internal() {
+    static TestModel model = {
+        .expectFailure = false,
+        .expectedMultinomialDistributionTolerance = 0,
+        .isRelaxed = false,
+        .main = { // shape
+                .inputIndexes = {7},
+                .operands = {{ // op1
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<float>({}),
+                            .dimensions = {1, 2, 2, 2},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::TEMPORARY_VARIABLE,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT32,
+                            .zeroPoint = 0
+                        }, { // param
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<int32_t>({3}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::INT32,
+                            .zeroPoint = 0
+                        }, { // param1
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<int32_t>({3}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::INT32,
+                            .zeroPoint = 0
+                        }, { // layout7
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<bool8>({false}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::BOOL,
+                            .zeroPoint = 0
+                        }, { // align_corners7
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<bool8>({false}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::BOOL,
+                            .zeroPoint = 0
+                        }, { // half_pixel_centers7
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<bool8>({false}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::BOOL,
+                            .zeroPoint = 0
+                        }, { // op4
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<float>({3.0f, 4.0f, 5.0f, 8.0f, 6.0f, 10.0f, 7.0f, 8.0f, 9.0f, 12.0f, 10.0f, 14.0f, 9.0f, 10.0f, 11.0f, 14.0f, 12.0f, 16.0f}),
+                            .dimensions = {1, 3, 3, 2},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
+                            .numberOfConsumers = 0,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT32,
+                            .zeroPoint = 0
+                        }, { // op1_new
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<float>({3.0f, 4.0f, 6.0f, 10.0f, 9.0f, 10.0f, 12.0f, 16.0f}),
+                            .dimensions = {1, 2, 2, 2},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT32,
+                            .zeroPoint = 0
+                        }, { // dummy31
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<float>({0.0f}),
+                            .dimensions = {1},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT32,
+                            .zeroPoint = 0
+                        }, { // param35
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<int32_t>({0}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::INT32,
+                            .zeroPoint = 0
+                        }},
+                .operations = {{
+                            .inputs = {7, 8, 9},
+                            .outputs = {0},
+                            .type = TestOperationType::ADD
+                        }, {
+                            .inputs = {0, 1, 2, 3, 4, 5},
+                            .outputs = {6},
+                            .type = TestOperationType::RESIZE_BILINEAR
+                        }},
+                .outputIndexes = {6}
+            },
+        .minSupportedVersion = TestHalVersion::V1_0,
+        .referenced = {}
+    };
+    return model;
+}
+
+const auto dummy_test_model_shape_default_values_nhwc_all_inputs_as_internal = TestModelManager::get().add("resize_bilinear_v1_3_shape_default_values_nhwc_all_inputs_as_internal", get_test_model_shape_default_values_nhwc_all_inputs_as_internal());
+
+}  // namespace generated_tests::resize_bilinear_v1_3
+
+namespace generated_tests::resize_bilinear_v1_3 {
+
+const TestModel& get_test_model_shape_default_values_nhwc_relaxed() {
+    static TestModel model = {
+        .expectFailure = false,
+        .expectedMultinomialDistributionTolerance = 0,
+        .isRelaxed = true,
+        .main = { // shape
+                .inputIndexes = {0},
+                .operands = {{ // op1
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<float>({3.0f, 4.0f, 6.0f, 10.0f, 9.0f, 10.0f, 12.0f, 16.0f}),
+                            .dimensions = {1, 2, 2, 2},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT32,
+                            .zeroPoint = 0
+                        }, { // param
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<int32_t>({3}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::INT32,
+                            .zeroPoint = 0
+                        }, { // param1
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<int32_t>({3}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::INT32,
+                            .zeroPoint = 0
+                        }, { // layout7
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<bool8>({false}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::BOOL,
+                            .zeroPoint = 0
+                        }, { // align_corners7
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<bool8>({false}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::BOOL,
+                            .zeroPoint = 0
+                        }, { // half_pixel_centers7
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<bool8>({false}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::BOOL,
+                            .zeroPoint = 0
+                        }, { // op4
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<float>({3.0f, 4.0f, 5.0f, 8.0f, 6.0f, 10.0f, 7.0f, 8.0f, 9.0f, 12.0f, 10.0f, 14.0f, 9.0f, 10.0f, 11.0f, 14.0f, 12.0f, 16.0f}),
+                            .dimensions = {1, 3, 3, 2},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
+                            .numberOfConsumers = 0,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT32,
+                            .zeroPoint = 0
+                        }},
+                .operations = {{
+                            .inputs = {0, 1, 2, 3, 4, 5},
+                            .outputs = {6},
+                            .type = TestOperationType::RESIZE_BILINEAR
+                        }},
+                .outputIndexes = {6}
+            },
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
+        .referenced = {}
+    };
+    return model;
+}
+
+const auto dummy_test_model_shape_default_values_nhwc_relaxed = TestModelManager::get().add("resize_bilinear_v1_3_shape_default_values_nhwc_relaxed", get_test_model_shape_default_values_nhwc_relaxed());
+
+}  // namespace generated_tests::resize_bilinear_v1_3
+
+namespace generated_tests::resize_bilinear_v1_3 {
+
+const TestModel& get_test_model_shape_default_values_nhwc_relaxed_all_inputs_as_internal() {
+    static TestModel model = {
+        .expectFailure = false,
+        .expectedMultinomialDistributionTolerance = 0,
+        .isRelaxed = true,
+        .main = { // shape
+                .inputIndexes = {7},
+                .operands = {{ // op1
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<float>({}),
+                            .dimensions = {1, 2, 2, 2},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::TEMPORARY_VARIABLE,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT32,
+                            .zeroPoint = 0
+                        }, { // param
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<int32_t>({3}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::INT32,
+                            .zeroPoint = 0
+                        }, { // param1
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<int32_t>({3}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::INT32,
+                            .zeroPoint = 0
+                        }, { // layout7
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<bool8>({false}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::BOOL,
+                            .zeroPoint = 0
+                        }, { // align_corners7
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<bool8>({false}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::BOOL,
+                            .zeroPoint = 0
+                        }, { // half_pixel_centers7
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<bool8>({false}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::BOOL,
+                            .zeroPoint = 0
+                        }, { // op4
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<float>({3.0f, 4.0f, 5.0f, 8.0f, 6.0f, 10.0f, 7.0f, 8.0f, 9.0f, 12.0f, 10.0f, 14.0f, 9.0f, 10.0f, 11.0f, 14.0f, 12.0f, 16.0f}),
+                            .dimensions = {1, 3, 3, 2},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
+                            .numberOfConsumers = 0,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT32,
+                            .zeroPoint = 0
+                        }, { // op1_new
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<float>({3.0f, 4.0f, 6.0f, 10.0f, 9.0f, 10.0f, 12.0f, 16.0f}),
+                            .dimensions = {1, 2, 2, 2},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT32,
+                            .zeroPoint = 0
+                        }, { // dummy32
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<float>({0.0f}),
+                            .dimensions = {1},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT32,
+                            .zeroPoint = 0
+                        }, { // param36
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<int32_t>({0}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::INT32,
+                            .zeroPoint = 0
+                        }},
+                .operations = {{
+                            .inputs = {7, 8, 9},
+                            .outputs = {0},
+                            .type = TestOperationType::ADD
+                        }, {
+                            .inputs = {0, 1, 2, 3, 4, 5},
+                            .outputs = {6},
+                            .type = TestOperationType::RESIZE_BILINEAR
+                        }},
+                .outputIndexes = {6}
+            },
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
+        .referenced = {}
+    };
+    return model;
+}
+
+const auto dummy_test_model_shape_default_values_nhwc_relaxed_all_inputs_as_internal = TestModelManager::get().add("resize_bilinear_v1_3_shape_default_values_nhwc_relaxed_all_inputs_as_internal", get_test_model_shape_default_values_nhwc_relaxed_all_inputs_as_internal());
+
+}  // namespace generated_tests::resize_bilinear_v1_3
+
+namespace generated_tests::resize_bilinear_v1_3 {
+
+const TestModel& get_test_model_shape_default_values_nhwc_float16() {
+    static TestModel model = {
+        .expectFailure = false,
+        .expectedMultinomialDistributionTolerance = 0,
+        .isRelaxed = false,
+        .main = { // shape
+                .inputIndexes = {0},
+                .operands = {{ // op1
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<_Float16>({3.0f, 4.0f, 6.0f, 10.0f, 9.0f, 10.0f, 12.0f, 16.0f}),
+                            .dimensions = {1, 2, 2, 2},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT16,
+                            .zeroPoint = 0
+                        }, { // param
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<int32_t>({3}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::INT32,
+                            .zeroPoint = 0
+                        }, { // param1
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<int32_t>({3}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::INT32,
+                            .zeroPoint = 0
+                        }, { // layout7
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<bool8>({false}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::BOOL,
+                            .zeroPoint = 0
+                        }, { // align_corners7
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<bool8>({false}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::BOOL,
+                            .zeroPoint = 0
+                        }, { // half_pixel_centers7
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<bool8>({false}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::BOOL,
+                            .zeroPoint = 0
+                        }, { // op4
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<_Float16>({3.0f, 4.0f, 5.0f, 8.0f, 6.0f, 10.0f, 7.0f, 8.0f, 9.0f, 12.0f, 10.0f, 14.0f, 9.0f, 10.0f, 11.0f, 14.0f, 12.0f, 16.0f}),
+                            .dimensions = {1, 3, 3, 2},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
+                            .numberOfConsumers = 0,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT16,
+                            .zeroPoint = 0
+                        }},
+                .operations = {{
+                            .inputs = {0, 1, 2, 3, 4, 5},
+                            .outputs = {6},
+                            .type = TestOperationType::RESIZE_BILINEAR
+                        }},
+                .outputIndexes = {6}
+            },
+        .minSupportedVersion = TestHalVersion::V1_2,
+        .referenced = {}
+    };
+    return model;
+}
+
+const auto dummy_test_model_shape_default_values_nhwc_float16 = TestModelManager::get().add("resize_bilinear_v1_3_shape_default_values_nhwc_float16", get_test_model_shape_default_values_nhwc_float16());
+
+}  // namespace generated_tests::resize_bilinear_v1_3
+
+namespace generated_tests::resize_bilinear_v1_3 {
+
+const TestModel& get_test_model_shape_default_values_nhwc_float16_all_inputs_as_internal() {
+    static TestModel model = {
+        .expectFailure = false,
+        .expectedMultinomialDistributionTolerance = 0,
+        .isRelaxed = false,
+        .main = { // shape
+                .inputIndexes = {7},
+                .operands = {{ // op1
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<_Float16>({}),
+                            .dimensions = {1, 2, 2, 2},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::TEMPORARY_VARIABLE,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT16,
+                            .zeroPoint = 0
+                        }, { // param
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<int32_t>({3}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::INT32,
+                            .zeroPoint = 0
+                        }, { // param1
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<int32_t>({3}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::INT32,
+                            .zeroPoint = 0
+                        }, { // layout7
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<bool8>({false}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::BOOL,
+                            .zeroPoint = 0
+                        }, { // align_corners7
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<bool8>({false}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::BOOL,
+                            .zeroPoint = 0
+                        }, { // half_pixel_centers7
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<bool8>({false}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::BOOL,
+                            .zeroPoint = 0
+                        }, { // op4
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<_Float16>({3.0f, 4.0f, 5.0f, 8.0f, 6.0f, 10.0f, 7.0f, 8.0f, 9.0f, 12.0f, 10.0f, 14.0f, 9.0f, 10.0f, 11.0f, 14.0f, 12.0f, 16.0f}),
+                            .dimensions = {1, 3, 3, 2},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
+                            .numberOfConsumers = 0,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT16,
+                            .zeroPoint = 0
+                        }, { // op1_new
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<_Float16>({3.0f, 4.0f, 6.0f, 10.0f, 9.0f, 10.0f, 12.0f, 16.0f}),
+                            .dimensions = {1, 2, 2, 2},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT16,
+                            .zeroPoint = 0
+                        }, { // dummy33
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<_Float16>({0.0f}),
+                            .dimensions = {1},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT16,
+                            .zeroPoint = 0
+                        }, { // param37
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<int32_t>({0}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::INT32,
+                            .zeroPoint = 0
+                        }},
+                .operations = {{
+                            .inputs = {7, 8, 9},
+                            .outputs = {0},
+                            .type = TestOperationType::ADD
+                        }, {
+                            .inputs = {0, 1, 2, 3, 4, 5},
+                            .outputs = {6},
+                            .type = TestOperationType::RESIZE_BILINEAR
+                        }},
+                .outputIndexes = {6}
+            },
+        .minSupportedVersion = TestHalVersion::V1_2,
+        .referenced = {}
+    };
+    return model;
+}
+
+const auto dummy_test_model_shape_default_values_nhwc_float16_all_inputs_as_internal = TestModelManager::get().add("resize_bilinear_v1_3_shape_default_values_nhwc_float16_all_inputs_as_internal", get_test_model_shape_default_values_nhwc_float16_all_inputs_as_internal());
+
+}  // namespace generated_tests::resize_bilinear_v1_3
+
+namespace generated_tests::resize_bilinear_v1_3 {
+
+const TestModel& get_test_model_shape_default_values_nhwc_quant8() {
+    static TestModel model = {
+        .expectFailure = false,
+        .expectedMultinomialDistributionTolerance = 0,
+        .isRelaxed = false,
+        .main = { // shape
+                .inputIndexes = {0},
+                .operands = {{ // op1
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<uint8_t>({12, 16, 24, 40, 36, 40, 48, 64}),
+                            .dimensions = {1, 2, 2, 2},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
+                            .numberOfConsumers = 1,
+                            .scale = 0.25f,
+                            .type = TestOperandType::TENSOR_QUANT8_ASYMM,
+                            .zeroPoint = 0
+                        }, { // param
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<int32_t>({3}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::INT32,
+                            .zeroPoint = 0
+                        }, { // param1
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<int32_t>({3}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::INT32,
+                            .zeroPoint = 0
+                        }, { // layout7
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<bool8>({false}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::BOOL,
+                            .zeroPoint = 0
+                        }, { // align_corners7
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<bool8>({false}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::BOOL,
+                            .zeroPoint = 0
+                        }, { // half_pixel_centers7
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<bool8>({false}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::BOOL,
+                            .zeroPoint = 0
+                        }, { // op4
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<uint8_t>({12, 16, 20, 32, 24, 40, 28, 32, 36, 48, 40, 56, 36, 40, 44, 56, 48, 64}),
+                            .dimensions = {1, 3, 3, 2},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
+                            .numberOfConsumers = 0,
+                            .scale = 0.25f,
+                            .type = TestOperandType::TENSOR_QUANT8_ASYMM,
+                            .zeroPoint = 0
+                        }},
+                .operations = {{
+                            .inputs = {0, 1, 2, 3, 4, 5},
+                            .outputs = {6},
+                            .type = TestOperationType::RESIZE_BILINEAR
+                        }},
+                .outputIndexes = {6}
+            },
+        .minSupportedVersion = TestHalVersion::V1_2,
+        .referenced = {}
+    };
+    return model;
+}
+
+const auto dummy_test_model_shape_default_values_nhwc_quant8 = TestModelManager::get().add("resize_bilinear_v1_3_shape_default_values_nhwc_quant8", get_test_model_shape_default_values_nhwc_quant8());
+
+}  // namespace generated_tests::resize_bilinear_v1_3
+
+namespace generated_tests::resize_bilinear_v1_3 {
+
+const TestModel& get_test_model_shape_default_values_nhwc_quant8_all_inputs_as_internal() {
+    static TestModel model = {
+        .expectFailure = false,
+        .expectedMultinomialDistributionTolerance = 0,
+        .isRelaxed = false,
+        .main = { // shape
+                .inputIndexes = {7},
+                .operands = {{ // op1
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<uint8_t>({}),
+                            .dimensions = {1, 2, 2, 2},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::TEMPORARY_VARIABLE,
+                            .numberOfConsumers = 1,
+                            .scale = 0.25f,
+                            .type = TestOperandType::TENSOR_QUANT8_ASYMM,
+                            .zeroPoint = 0
+                        }, { // param
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<int32_t>({3}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::INT32,
+                            .zeroPoint = 0
+                        }, { // param1
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<int32_t>({3}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::INT32,
+                            .zeroPoint = 0
+                        }, { // layout7
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<bool8>({false}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::BOOL,
+                            .zeroPoint = 0
+                        }, { // align_corners7
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<bool8>({false}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::BOOL,
+                            .zeroPoint = 0
+                        }, { // half_pixel_centers7
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<bool8>({false}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::BOOL,
+                            .zeroPoint = 0
+                        }, { // op4
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<uint8_t>({12, 16, 20, 32, 24, 40, 28, 32, 36, 48, 40, 56, 36, 40, 44, 56, 48, 64}),
+                            .dimensions = {1, 3, 3, 2},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
+                            .numberOfConsumers = 0,
+                            .scale = 0.25f,
+                            .type = TestOperandType::TENSOR_QUANT8_ASYMM,
+                            .zeroPoint = 0
+                        }, { // op1_new
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<uint8_t>({12, 16, 24, 40, 36, 40, 48, 64}),
+                            .dimensions = {1, 2, 2, 2},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
+                            .numberOfConsumers = 1,
+                            .scale = 0.25f,
+                            .type = TestOperandType::TENSOR_QUANT8_ASYMM,
+                            .zeroPoint = 0
+                        }, { // dummy34
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<uint8_t>({0}),
+                            .dimensions = {1},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.25f,
+                            .type = TestOperandType::TENSOR_QUANT8_ASYMM,
+                            .zeroPoint = 0
+                        }, { // param38
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<int32_t>({0}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::INT32,
+                            .zeroPoint = 0
+                        }},
+                .operations = {{
+                            .inputs = {7, 8, 9},
+                            .outputs = {0},
+                            .type = TestOperationType::ADD
+                        }, {
+                            .inputs = {0, 1, 2, 3, 4, 5},
+                            .outputs = {6},
+                            .type = TestOperationType::RESIZE_BILINEAR
+                        }},
+                .outputIndexes = {6}
+            },
+        .minSupportedVersion = TestHalVersion::V1_2,
+        .referenced = {}
+    };
+    return model;
+}
+
+const auto dummy_test_model_shape_default_values_nhwc_quant8_all_inputs_as_internal = TestModelManager::get().add("resize_bilinear_v1_3_shape_default_values_nhwc_quant8_all_inputs_as_internal", get_test_model_shape_default_values_nhwc_quant8_all_inputs_as_internal());
+
+}  // namespace generated_tests::resize_bilinear_v1_3
+
+namespace generated_tests::resize_bilinear_v1_3 {
+
+const TestModel& get_test_model_shape_default_values_nchw() {
+    static TestModel model = {
+        .expectFailure = false,
+        .expectedMultinomialDistributionTolerance = 0,
+        .isRelaxed = false,
+        .main = { // shape
+                .inputIndexes = {0},
+                .operands = {{ // op1
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<float>({3.0f, 6.0f, 9.0f, 12.0f, 4.0f, 10.0f, 10.0f, 16.0f}),
+                            .dimensions = {1, 2, 2, 2},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT32,
+                            .zeroPoint = 0
+                        }, { // param
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<int32_t>({3}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::INT32,
+                            .zeroPoint = 0
+                        }, { // param1
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<int32_t>({3}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::INT32,
+                            .zeroPoint = 0
+                        }, { // layout7
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<bool8>({true}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::BOOL,
+                            .zeroPoint = 0
+                        }, { // align_corners7
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<bool8>({false}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::BOOL,
+                            .zeroPoint = 0
+                        }, { // half_pixel_centers7
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<bool8>({false}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::BOOL,
+                            .zeroPoint = 0
+                        }, { // op4
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<float>({3.0f, 5.0f, 6.0f, 7.0f, 9.0f, 10.0f, 9.0f, 11.0f, 12.0f, 4.0f, 8.0f, 10.0f, 8.0f, 12.0f, 14.0f, 10.0f, 14.0f, 16.0f}),
+                            .dimensions = {1, 2, 3, 3},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
+                            .numberOfConsumers = 0,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT32,
+                            .zeroPoint = 0
+                        }},
+                .operations = {{
+                            .inputs = {0, 1, 2, 3, 4, 5},
+                            .outputs = {6},
+                            .type = TestOperationType::RESIZE_BILINEAR
+                        }},
+                .outputIndexes = {6}
+            },
+        .minSupportedVersion = TestHalVersion::V1_2,
+        .referenced = {}
+    };
+    return model;
+}
+
+const auto dummy_test_model_shape_default_values_nchw = TestModelManager::get().add("resize_bilinear_v1_3_shape_default_values_nchw", get_test_model_shape_default_values_nchw());
+
+}  // namespace generated_tests::resize_bilinear_v1_3
+
+namespace generated_tests::resize_bilinear_v1_3 {
+
+const TestModel& get_test_model_shape_default_values_nchw_all_inputs_as_internal() {
+    static TestModel model = {
+        .expectFailure = false,
+        .expectedMultinomialDistributionTolerance = 0,
+        .isRelaxed = false,
+        .main = { // shape
+                .inputIndexes = {7},
+                .operands = {{ // op1
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<float>({}),
+                            .dimensions = {1, 2, 2, 2},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::TEMPORARY_VARIABLE,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT32,
+                            .zeroPoint = 0
+                        }, { // param
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<int32_t>({3}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::INT32,
+                            .zeroPoint = 0
+                        }, { // param1
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<int32_t>({3}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::INT32,
+                            .zeroPoint = 0
+                        }, { // layout7
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<bool8>({true}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::BOOL,
+                            .zeroPoint = 0
+                        }, { // align_corners7
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<bool8>({false}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::BOOL,
+                            .zeroPoint = 0
+                        }, { // half_pixel_centers7
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<bool8>({false}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::BOOL,
+                            .zeroPoint = 0
+                        }, { // op4
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<float>({3.0f, 5.0f, 6.0f, 7.0f, 9.0f, 10.0f, 9.0f, 11.0f, 12.0f, 4.0f, 8.0f, 10.0f, 8.0f, 12.0f, 14.0f, 10.0f, 14.0f, 16.0f}),
+                            .dimensions = {1, 2, 3, 3},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
+                            .numberOfConsumers = 0,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT32,
+                            .zeroPoint = 0
+                        }, { // op1_new
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<float>({3.0f, 6.0f, 9.0f, 12.0f, 4.0f, 10.0f, 10.0f, 16.0f}),
+                            .dimensions = {1, 2, 2, 2},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT32,
+                            .zeroPoint = 0
+                        }, { // dummy35
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<float>({0.0f}),
+                            .dimensions = {1},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT32,
+                            .zeroPoint = 0
+                        }, { // param39
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<int32_t>({0}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::INT32,
+                            .zeroPoint = 0
+                        }},
+                .operations = {{
+                            .inputs = {7, 8, 9},
+                            .outputs = {0},
+                            .type = TestOperationType::ADD
+                        }, {
+                            .inputs = {0, 1, 2, 3, 4, 5},
+                            .outputs = {6},
+                            .type = TestOperationType::RESIZE_BILINEAR
+                        }},
+                .outputIndexes = {6}
+            },
+        .minSupportedVersion = TestHalVersion::V1_2,
+        .referenced = {}
+    };
+    return model;
+}
+
+const auto dummy_test_model_shape_default_values_nchw_all_inputs_as_internal = TestModelManager::get().add("resize_bilinear_v1_3_shape_default_values_nchw_all_inputs_as_internal", get_test_model_shape_default_values_nchw_all_inputs_as_internal());
+
+}  // namespace generated_tests::resize_bilinear_v1_3
+
+namespace generated_tests::resize_bilinear_v1_3 {
+
+const TestModel& get_test_model_shape_default_values_nchw_relaxed() {
+    static TestModel model = {
+        .expectFailure = false,
+        .expectedMultinomialDistributionTolerance = 0,
+        .isRelaxed = true,
+        .main = { // shape
+                .inputIndexes = {0},
+                .operands = {{ // op1
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<float>({3.0f, 6.0f, 9.0f, 12.0f, 4.0f, 10.0f, 10.0f, 16.0f}),
+                            .dimensions = {1, 2, 2, 2},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT32,
+                            .zeroPoint = 0
+                        }, { // param
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<int32_t>({3}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::INT32,
+                            .zeroPoint = 0
+                        }, { // param1
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<int32_t>({3}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::INT32,
+                            .zeroPoint = 0
+                        }, { // layout7
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<bool8>({true}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::BOOL,
+                            .zeroPoint = 0
+                        }, { // align_corners7
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<bool8>({false}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::BOOL,
+                            .zeroPoint = 0
+                        }, { // half_pixel_centers7
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<bool8>({false}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::BOOL,
+                            .zeroPoint = 0
+                        }, { // op4
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<float>({3.0f, 5.0f, 6.0f, 7.0f, 9.0f, 10.0f, 9.0f, 11.0f, 12.0f, 4.0f, 8.0f, 10.0f, 8.0f, 12.0f, 14.0f, 10.0f, 14.0f, 16.0f}),
+                            .dimensions = {1, 2, 3, 3},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
+                            .numberOfConsumers = 0,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT32,
+                            .zeroPoint = 0
+                        }},
+                .operations = {{
+                            .inputs = {0, 1, 2, 3, 4, 5},
+                            .outputs = {6},
+                            .type = TestOperationType::RESIZE_BILINEAR
+                        }},
+                .outputIndexes = {6}
+            },
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
+        .referenced = {}
+    };
+    return model;
+}
+
+const auto dummy_test_model_shape_default_values_nchw_relaxed = TestModelManager::get().add("resize_bilinear_v1_3_shape_default_values_nchw_relaxed", get_test_model_shape_default_values_nchw_relaxed());
+
+}  // namespace generated_tests::resize_bilinear_v1_3
+
+namespace generated_tests::resize_bilinear_v1_3 {
+
+const TestModel& get_test_model_shape_default_values_nchw_relaxed_all_inputs_as_internal() {
+    static TestModel model = {
+        .expectFailure = false,
+        .expectedMultinomialDistributionTolerance = 0,
+        .isRelaxed = true,
+        .main = { // shape
+                .inputIndexes = {7},
+                .operands = {{ // op1
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<float>({}),
+                            .dimensions = {1, 2, 2, 2},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::TEMPORARY_VARIABLE,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT32,
+                            .zeroPoint = 0
+                        }, { // param
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<int32_t>({3}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::INT32,
+                            .zeroPoint = 0
+                        }, { // param1
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<int32_t>({3}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::INT32,
+                            .zeroPoint = 0
+                        }, { // layout7
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<bool8>({true}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::BOOL,
+                            .zeroPoint = 0
+                        }, { // align_corners7
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<bool8>({false}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::BOOL,
+                            .zeroPoint = 0
+                        }, { // half_pixel_centers7
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<bool8>({false}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::BOOL,
+                            .zeroPoint = 0
+                        }, { // op4
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<float>({3.0f, 5.0f, 6.0f, 7.0f, 9.0f, 10.0f, 9.0f, 11.0f, 12.0f, 4.0f, 8.0f, 10.0f, 8.0f, 12.0f, 14.0f, 10.0f, 14.0f, 16.0f}),
+                            .dimensions = {1, 2, 3, 3},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
+                            .numberOfConsumers = 0,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT32,
+                            .zeroPoint = 0
+                        }, { // op1_new
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<float>({3.0f, 6.0f, 9.0f, 12.0f, 4.0f, 10.0f, 10.0f, 16.0f}),
+                            .dimensions = {1, 2, 2, 2},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT32,
+                            .zeroPoint = 0
+                        }, { // dummy36
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<float>({0.0f}),
+                            .dimensions = {1},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT32,
+                            .zeroPoint = 0
+                        }, { // param40
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<int32_t>({0}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::INT32,
+                            .zeroPoint = 0
+                        }},
+                .operations = {{
+                            .inputs = {7, 8, 9},
+                            .outputs = {0},
+                            .type = TestOperationType::ADD
+                        }, {
+                            .inputs = {0, 1, 2, 3, 4, 5},
+                            .outputs = {6},
+                            .type = TestOperationType::RESIZE_BILINEAR
+                        }},
+                .outputIndexes = {6}
+            },
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
+        .referenced = {}
+    };
+    return model;
+}
+
+const auto dummy_test_model_shape_default_values_nchw_relaxed_all_inputs_as_internal = TestModelManager::get().add("resize_bilinear_v1_3_shape_default_values_nchw_relaxed_all_inputs_as_internal", get_test_model_shape_default_values_nchw_relaxed_all_inputs_as_internal());
+
+}  // namespace generated_tests::resize_bilinear_v1_3
+
+namespace generated_tests::resize_bilinear_v1_3 {
+
+const TestModel& get_test_model_shape_default_values_nchw_float16() {
+    static TestModel model = {
+        .expectFailure = false,
+        .expectedMultinomialDistributionTolerance = 0,
+        .isRelaxed = false,
+        .main = { // shape
+                .inputIndexes = {0},
+                .operands = {{ // op1
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<_Float16>({3.0f, 6.0f, 9.0f, 12.0f, 4.0f, 10.0f, 10.0f, 16.0f}),
+                            .dimensions = {1, 2, 2, 2},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT16,
+                            .zeroPoint = 0
+                        }, { // param
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<int32_t>({3}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::INT32,
+                            .zeroPoint = 0
+                        }, { // param1
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<int32_t>({3}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::INT32,
+                            .zeroPoint = 0
+                        }, { // layout7
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<bool8>({true}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::BOOL,
+                            .zeroPoint = 0
+                        }, { // align_corners7
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<bool8>({false}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::BOOL,
+                            .zeroPoint = 0
+                        }, { // half_pixel_centers7
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<bool8>({false}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::BOOL,
+                            .zeroPoint = 0
+                        }, { // op4
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<_Float16>({3.0f, 5.0f, 6.0f, 7.0f, 9.0f, 10.0f, 9.0f, 11.0f, 12.0f, 4.0f, 8.0f, 10.0f, 8.0f, 12.0f, 14.0f, 10.0f, 14.0f, 16.0f}),
+                            .dimensions = {1, 2, 3, 3},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
+                            .numberOfConsumers = 0,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT16,
+                            .zeroPoint = 0
+                        }},
+                .operations = {{
+                            .inputs = {0, 1, 2, 3, 4, 5},
+                            .outputs = {6},
+                            .type = TestOperationType::RESIZE_BILINEAR
+                        }},
+                .outputIndexes = {6}
+            },
+        .minSupportedVersion = TestHalVersion::V1_2,
+        .referenced = {}
+    };
+    return model;
+}
+
+const auto dummy_test_model_shape_default_values_nchw_float16 = TestModelManager::get().add("resize_bilinear_v1_3_shape_default_values_nchw_float16", get_test_model_shape_default_values_nchw_float16());
+
+}  // namespace generated_tests::resize_bilinear_v1_3
+
+namespace generated_tests::resize_bilinear_v1_3 {
+
+const TestModel& get_test_model_shape_default_values_nchw_float16_all_inputs_as_internal() {
+    static TestModel model = {
+        .expectFailure = false,
+        .expectedMultinomialDistributionTolerance = 0,
+        .isRelaxed = false,
+        .main = { // shape
+                .inputIndexes = {7},
+                .operands = {{ // op1
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<_Float16>({}),
+                            .dimensions = {1, 2, 2, 2},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::TEMPORARY_VARIABLE,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT16,
+                            .zeroPoint = 0
+                        }, { // param
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<int32_t>({3}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::INT32,
+                            .zeroPoint = 0
+                        }, { // param1
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<int32_t>({3}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::INT32,
+                            .zeroPoint = 0
+                        }, { // layout7
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<bool8>({true}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::BOOL,
+                            .zeroPoint = 0
+                        }, { // align_corners7
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<bool8>({false}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::BOOL,
+                            .zeroPoint = 0
+                        }, { // half_pixel_centers7
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<bool8>({false}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::BOOL,
+                            .zeroPoint = 0
+                        }, { // op4
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<_Float16>({3.0f, 5.0f, 6.0f, 7.0f, 9.0f, 10.0f, 9.0f, 11.0f, 12.0f, 4.0f, 8.0f, 10.0f, 8.0f, 12.0f, 14.0f, 10.0f, 14.0f, 16.0f}),
+                            .dimensions = {1, 2, 3, 3},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
+                            .numberOfConsumers = 0,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT16,
+                            .zeroPoint = 0
+                        }, { // op1_new
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<_Float16>({3.0f, 6.0f, 9.0f, 12.0f, 4.0f, 10.0f, 10.0f, 16.0f}),
+                            .dimensions = {1, 2, 2, 2},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT16,
+                            .zeroPoint = 0
+                        }, { // dummy37
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<_Float16>({0.0f}),
+                            .dimensions = {1},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT16,
+                            .zeroPoint = 0
+                        }, { // param41
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<int32_t>({0}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::INT32,
+                            .zeroPoint = 0
+                        }},
+                .operations = {{
+                            .inputs = {7, 8, 9},
+                            .outputs = {0},
+                            .type = TestOperationType::ADD
+                        }, {
+                            .inputs = {0, 1, 2, 3, 4, 5},
+                            .outputs = {6},
+                            .type = TestOperationType::RESIZE_BILINEAR
+                        }},
+                .outputIndexes = {6}
+            },
+        .minSupportedVersion = TestHalVersion::V1_2,
+        .referenced = {}
+    };
+    return model;
+}
+
+const auto dummy_test_model_shape_default_values_nchw_float16_all_inputs_as_internal = TestModelManager::get().add("resize_bilinear_v1_3_shape_default_values_nchw_float16_all_inputs_as_internal", get_test_model_shape_default_values_nchw_float16_all_inputs_as_internal());
+
+}  // namespace generated_tests::resize_bilinear_v1_3
+
+namespace generated_tests::resize_bilinear_v1_3 {
+
+const TestModel& get_test_model_shape_default_values_nchw_quant8() {
+    static TestModel model = {
+        .expectFailure = false,
+        .expectedMultinomialDistributionTolerance = 0,
+        .isRelaxed = false,
+        .main = { // shape
+                .inputIndexes = {0},
+                .operands = {{ // op1
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<uint8_t>({12, 24, 36, 48, 16, 40, 40, 64}),
+                            .dimensions = {1, 2, 2, 2},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
+                            .numberOfConsumers = 1,
+                            .scale = 0.25f,
+                            .type = TestOperandType::TENSOR_QUANT8_ASYMM,
+                            .zeroPoint = 0
+                        }, { // param
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<int32_t>({3}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::INT32,
+                            .zeroPoint = 0
+                        }, { // param1
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<int32_t>({3}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::INT32,
+                            .zeroPoint = 0
+                        }, { // layout7
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<bool8>({true}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::BOOL,
+                            .zeroPoint = 0
+                        }, { // align_corners7
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<bool8>({false}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::BOOL,
+                            .zeroPoint = 0
+                        }, { // half_pixel_centers7
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<bool8>({false}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::BOOL,
+                            .zeroPoint = 0
+                        }, { // op4
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<uint8_t>({12, 20, 24, 28, 36, 40, 36, 44, 48, 16, 32, 40, 32, 48, 56, 40, 56, 64}),
+                            .dimensions = {1, 2, 3, 3},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
+                            .numberOfConsumers = 0,
+                            .scale = 0.25f,
+                            .type = TestOperandType::TENSOR_QUANT8_ASYMM,
+                            .zeroPoint = 0
+                        }},
+                .operations = {{
+                            .inputs = {0, 1, 2, 3, 4, 5},
+                            .outputs = {6},
+                            .type = TestOperationType::RESIZE_BILINEAR
+                        }},
+                .outputIndexes = {6}
+            },
+        .minSupportedVersion = TestHalVersion::V1_2,
+        .referenced = {}
+    };
+    return model;
+}
+
+const auto dummy_test_model_shape_default_values_nchw_quant8 = TestModelManager::get().add("resize_bilinear_v1_3_shape_default_values_nchw_quant8", get_test_model_shape_default_values_nchw_quant8());
+
+}  // namespace generated_tests::resize_bilinear_v1_3
+
+namespace generated_tests::resize_bilinear_v1_3 {
+
+const TestModel& get_test_model_shape_default_values_nchw_quant8_all_inputs_as_internal() {
+    static TestModel model = {
+        .expectFailure = false,
+        .expectedMultinomialDistributionTolerance = 0,
+        .isRelaxed = false,
+        .main = { // shape
+                .inputIndexes = {7},
+                .operands = {{ // op1
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<uint8_t>({}),
+                            .dimensions = {1, 2, 2, 2},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::TEMPORARY_VARIABLE,
+                            .numberOfConsumers = 1,
+                            .scale = 0.25f,
+                            .type = TestOperandType::TENSOR_QUANT8_ASYMM,
+                            .zeroPoint = 0
+                        }, { // param
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<int32_t>({3}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::INT32,
+                            .zeroPoint = 0
+                        }, { // param1
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<int32_t>({3}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::INT32,
+                            .zeroPoint = 0
+                        }, { // layout7
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<bool8>({true}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::BOOL,
+                            .zeroPoint = 0
+                        }, { // align_corners7
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<bool8>({false}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::BOOL,
+                            .zeroPoint = 0
+                        }, { // half_pixel_centers7
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<bool8>({false}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::BOOL,
+                            .zeroPoint = 0
+                        }, { // op4
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<uint8_t>({12, 20, 24, 28, 36, 40, 36, 44, 48, 16, 32, 40, 32, 48, 56, 40, 56, 64}),
+                            .dimensions = {1, 2, 3, 3},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
+                            .numberOfConsumers = 0,
+                            .scale = 0.25f,
+                            .type = TestOperandType::TENSOR_QUANT8_ASYMM,
+                            .zeroPoint = 0
+                        }, { // op1_new
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<uint8_t>({12, 24, 36, 48, 16, 40, 40, 64}),
+                            .dimensions = {1, 2, 2, 2},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
+                            .numberOfConsumers = 1,
+                            .scale = 0.25f,
+                            .type = TestOperandType::TENSOR_QUANT8_ASYMM,
+                            .zeroPoint = 0
+                        }, { // dummy38
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<uint8_t>({0}),
+                            .dimensions = {1},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.25f,
+                            .type = TestOperandType::TENSOR_QUANT8_ASYMM,
+                            .zeroPoint = 0
+                        }, { // param42
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<int32_t>({0}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::INT32,
+                            .zeroPoint = 0
+                        }},
+                .operations = {{
+                            .inputs = {7, 8, 9},
+                            .outputs = {0},
+                            .type = TestOperationType::ADD
+                        }, {
+                            .inputs = {0, 1, 2, 3, 4, 5},
+                            .outputs = {6},
+                            .type = TestOperationType::RESIZE_BILINEAR
+                        }},
+                .outputIndexes = {6}
+            },
+        .minSupportedVersion = TestHalVersion::V1_2,
+        .referenced = {}
+    };
+    return model;
+}
+
+const auto dummy_test_model_shape_default_values_nchw_quant8_all_inputs_as_internal = TestModelManager::get().add("resize_bilinear_v1_3_shape_default_values_nchw_quant8_all_inputs_as_internal", get_test_model_shape_default_values_nchw_quant8_all_inputs_as_internal());
+
+}  // namespace generated_tests::resize_bilinear_v1_3
+
+namespace generated_tests::resize_bilinear_v1_3 {
+
+const TestModel& get_test_model_scale_default_values_nhwc() {
+    static TestModel model = {
+        .expectFailure = false,
+        .expectedMultinomialDistributionTolerance = 0,
+        .isRelaxed = false,
+        .main = { // scale
+                .inputIndexes = {0},
+                .operands = {{ // op1
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<float>({3.0f, 4.0f, 6.0f, 10.0f, 9.0f, 10.0f, 12.0f, 16.0f}),
+                            .dimensions = {1, 2, 2, 2},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT32,
+                            .zeroPoint = 0
+                        }, { // param2
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<float>({1.6f}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::FLOAT32,
+                            .zeroPoint = 0
+                        }, { // param3
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<float>({1.6f}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::FLOAT32,
+                            .zeroPoint = 0
+                        }, { // layout7
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<bool8>({false}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::BOOL,
+                            .zeroPoint = 0
+                        }, { // align_corners7
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<bool8>({false}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::BOOL,
+                            .zeroPoint = 0
+                        }, { // half_pixel_centers7
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<bool8>({false}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::BOOL,
+                            .zeroPoint = 0
+                        }, { // op4
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<float>({3.0f, 4.0f, 5.0f, 8.0f, 6.0f, 10.0f, 7.0f, 8.0f, 9.0f, 12.0f, 10.0f, 14.0f, 9.0f, 10.0f, 11.0f, 14.0f, 12.0f, 16.0f}),
+                            .dimensions = {1, 3, 3, 2},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
+                            .numberOfConsumers = 0,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT32,
+                            .zeroPoint = 0
+                        }},
+                .operations = {{
+                            .inputs = {0, 1, 2, 3, 4, 5},
+                            .outputs = {6},
+                            .type = TestOperationType::RESIZE_BILINEAR
+                        }},
+                .outputIndexes = {6}
+            },
+        .minSupportedVersion = TestHalVersion::V1_2,
+        .referenced = {}
+    };
+    return model;
+}
+
+const auto dummy_test_model_scale_default_values_nhwc = TestModelManager::get().add("resize_bilinear_v1_3_scale_default_values_nhwc", get_test_model_scale_default_values_nhwc());
+
+}  // namespace generated_tests::resize_bilinear_v1_3
+
+namespace generated_tests::resize_bilinear_v1_3 {
+
+const TestModel& get_test_model_scale_default_values_nhwc_all_inputs_as_internal() {
+    static TestModel model = {
+        .expectFailure = false,
+        .expectedMultinomialDistributionTolerance = 0,
+        .isRelaxed = false,
+        .main = { // scale
+                .inputIndexes = {7},
+                .operands = {{ // op1
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<float>({}),
+                            .dimensions = {1, 2, 2, 2},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::TEMPORARY_VARIABLE,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT32,
+                            .zeroPoint = 0
+                        }, { // param2
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<float>({1.6f}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::FLOAT32,
+                            .zeroPoint = 0
+                        }, { // param3
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<float>({1.6f}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::FLOAT32,
+                            .zeroPoint = 0
+                        }, { // layout7
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<bool8>({false}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::BOOL,
+                            .zeroPoint = 0
+                        }, { // align_corners7
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<bool8>({false}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::BOOL,
+                            .zeroPoint = 0
+                        }, { // half_pixel_centers7
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<bool8>({false}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::BOOL,
+                            .zeroPoint = 0
+                        }, { // op4
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<float>({3.0f, 4.0f, 5.0f, 8.0f, 6.0f, 10.0f, 7.0f, 8.0f, 9.0f, 12.0f, 10.0f, 14.0f, 9.0f, 10.0f, 11.0f, 14.0f, 12.0f, 16.0f}),
+                            .dimensions = {1, 3, 3, 2},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
+                            .numberOfConsumers = 0,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT32,
+                            .zeroPoint = 0
+                        }, { // op1_new
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<float>({3.0f, 4.0f, 6.0f, 10.0f, 9.0f, 10.0f, 12.0f, 16.0f}),
+                            .dimensions = {1, 2, 2, 2},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT32,
+                            .zeroPoint = 0
+                        }, { // dummy39
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<float>({0.0f}),
+                            .dimensions = {1},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT32,
+                            .zeroPoint = 0
+                        }, { // param43
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<int32_t>({0}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::INT32,
+                            .zeroPoint = 0
+                        }},
+                .operations = {{
+                            .inputs = {7, 8, 9},
+                            .outputs = {0},
+                            .type = TestOperationType::ADD
+                        }, {
+                            .inputs = {0, 1, 2, 3, 4, 5},
+                            .outputs = {6},
+                            .type = TestOperationType::RESIZE_BILINEAR
+                        }},
+                .outputIndexes = {6}
+            },
+        .minSupportedVersion = TestHalVersion::V1_2,
+        .referenced = {}
+    };
+    return model;
+}
+
+const auto dummy_test_model_scale_default_values_nhwc_all_inputs_as_internal = TestModelManager::get().add("resize_bilinear_v1_3_scale_default_values_nhwc_all_inputs_as_internal", get_test_model_scale_default_values_nhwc_all_inputs_as_internal());
+
+}  // namespace generated_tests::resize_bilinear_v1_3
+
+namespace generated_tests::resize_bilinear_v1_3 {
+
+const TestModel& get_test_model_scale_default_values_nhwc_relaxed() {
+    static TestModel model = {
+        .expectFailure = false,
+        .expectedMultinomialDistributionTolerance = 0,
+        .isRelaxed = true,
+        .main = { // scale
+                .inputIndexes = {0},
+                .operands = {{ // op1
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<float>({3.0f, 4.0f, 6.0f, 10.0f, 9.0f, 10.0f, 12.0f, 16.0f}),
+                            .dimensions = {1, 2, 2, 2},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT32,
+                            .zeroPoint = 0
+                        }, { // param2
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<float>({1.6f}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::FLOAT32,
+                            .zeroPoint = 0
+                        }, { // param3
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<float>({1.6f}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::FLOAT32,
+                            .zeroPoint = 0
+                        }, { // layout7
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<bool8>({false}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::BOOL,
+                            .zeroPoint = 0
+                        }, { // align_corners7
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<bool8>({false}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::BOOL,
+                            .zeroPoint = 0
+                        }, { // half_pixel_centers7
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<bool8>({false}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::BOOL,
+                            .zeroPoint = 0
+                        }, { // op4
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<float>({3.0f, 4.0f, 5.0f, 8.0f, 6.0f, 10.0f, 7.0f, 8.0f, 9.0f, 12.0f, 10.0f, 14.0f, 9.0f, 10.0f, 11.0f, 14.0f, 12.0f, 16.0f}),
+                            .dimensions = {1, 3, 3, 2},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
+                            .numberOfConsumers = 0,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT32,
+                            .zeroPoint = 0
+                        }},
+                .operations = {{
+                            .inputs = {0, 1, 2, 3, 4, 5},
+                            .outputs = {6},
+                            .type = TestOperationType::RESIZE_BILINEAR
+                        }},
+                .outputIndexes = {6}
+            },
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
+        .referenced = {}
+    };
+    return model;
+}
+
+const auto dummy_test_model_scale_default_values_nhwc_relaxed = TestModelManager::get().add("resize_bilinear_v1_3_scale_default_values_nhwc_relaxed", get_test_model_scale_default_values_nhwc_relaxed());
+
+}  // namespace generated_tests::resize_bilinear_v1_3
+
+namespace generated_tests::resize_bilinear_v1_3 {
+
+const TestModel& get_test_model_scale_default_values_nhwc_relaxed_all_inputs_as_internal() {
+    static TestModel model = {
+        .expectFailure = false,
+        .expectedMultinomialDistributionTolerance = 0,
+        .isRelaxed = true,
+        .main = { // scale
+                .inputIndexes = {7},
+                .operands = {{ // op1
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<float>({}),
+                            .dimensions = {1, 2, 2, 2},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::TEMPORARY_VARIABLE,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT32,
+                            .zeroPoint = 0
+                        }, { // param2
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<float>({1.6f}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::FLOAT32,
+                            .zeroPoint = 0
+                        }, { // param3
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<float>({1.6f}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::FLOAT32,
+                            .zeroPoint = 0
+                        }, { // layout7
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<bool8>({false}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::BOOL,
+                            .zeroPoint = 0
+                        }, { // align_corners7
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<bool8>({false}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::BOOL,
+                            .zeroPoint = 0
+                        }, { // half_pixel_centers7
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<bool8>({false}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::BOOL,
+                            .zeroPoint = 0
+                        }, { // op4
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<float>({3.0f, 4.0f, 5.0f, 8.0f, 6.0f, 10.0f, 7.0f, 8.0f, 9.0f, 12.0f, 10.0f, 14.0f, 9.0f, 10.0f, 11.0f, 14.0f, 12.0f, 16.0f}),
+                            .dimensions = {1, 3, 3, 2},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
+                            .numberOfConsumers = 0,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT32,
+                            .zeroPoint = 0
+                        }, { // op1_new
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<float>({3.0f, 4.0f, 6.0f, 10.0f, 9.0f, 10.0f, 12.0f, 16.0f}),
+                            .dimensions = {1, 2, 2, 2},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT32,
+                            .zeroPoint = 0
+                        }, { // dummy40
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<float>({0.0f}),
+                            .dimensions = {1},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT32,
+                            .zeroPoint = 0
+                        }, { // param44
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<int32_t>({0}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::INT32,
+                            .zeroPoint = 0
+                        }},
+                .operations = {{
+                            .inputs = {7, 8, 9},
+                            .outputs = {0},
+                            .type = TestOperationType::ADD
+                        }, {
+                            .inputs = {0, 1, 2, 3, 4, 5},
+                            .outputs = {6},
+                            .type = TestOperationType::RESIZE_BILINEAR
+                        }},
+                .outputIndexes = {6}
+            },
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
+        .referenced = {}
+    };
+    return model;
+}
+
+const auto dummy_test_model_scale_default_values_nhwc_relaxed_all_inputs_as_internal = TestModelManager::get().add("resize_bilinear_v1_3_scale_default_values_nhwc_relaxed_all_inputs_as_internal", get_test_model_scale_default_values_nhwc_relaxed_all_inputs_as_internal());
+
+}  // namespace generated_tests::resize_bilinear_v1_3
+
+namespace generated_tests::resize_bilinear_v1_3 {
+
+const TestModel& get_test_model_scale_default_values_nhwc_float16() {
+    static TestModel model = {
+        .expectFailure = false,
+        .expectedMultinomialDistributionTolerance = 0,
+        .isRelaxed = false,
+        .main = { // scale
+                .inputIndexes = {0},
+                .operands = {{ // op1
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<_Float16>({3.0f, 4.0f, 6.0f, 10.0f, 9.0f, 10.0f, 12.0f, 16.0f}),
+                            .dimensions = {1, 2, 2, 2},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT16,
+                            .zeroPoint = 0
+                        }, { // param2
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<_Float16>({1.600000023841858f}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::FLOAT16,
+                            .zeroPoint = 0
+                        }, { // param3
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<_Float16>({1.600000023841858f}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::FLOAT16,
+                            .zeroPoint = 0
+                        }, { // layout7
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<bool8>({false}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::BOOL,
+                            .zeroPoint = 0
+                        }, { // align_corners7
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<bool8>({false}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::BOOL,
+                            .zeroPoint = 0
+                        }, { // half_pixel_centers7
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<bool8>({false}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::BOOL,
+                            .zeroPoint = 0
+                        }, { // op4
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<_Float16>({3.0f, 4.0f, 5.0f, 8.0f, 6.0f, 10.0f, 7.0f, 8.0f, 9.0f, 12.0f, 10.0f, 14.0f, 9.0f, 10.0f, 11.0f, 14.0f, 12.0f, 16.0f}),
+                            .dimensions = {1, 3, 3, 2},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
+                            .numberOfConsumers = 0,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT16,
+                            .zeroPoint = 0
+                        }},
+                .operations = {{
+                            .inputs = {0, 1, 2, 3, 4, 5},
+                            .outputs = {6},
+                            .type = TestOperationType::RESIZE_BILINEAR
+                        }},
+                .outputIndexes = {6}
+            },
+        .minSupportedVersion = TestHalVersion::V1_2,
+        .referenced = {}
+    };
+    return model;
+}
+
+const auto dummy_test_model_scale_default_values_nhwc_float16 = TestModelManager::get().add("resize_bilinear_v1_3_scale_default_values_nhwc_float16", get_test_model_scale_default_values_nhwc_float16());
+
+}  // namespace generated_tests::resize_bilinear_v1_3
+
+namespace generated_tests::resize_bilinear_v1_3 {
+
+const TestModel& get_test_model_scale_default_values_nhwc_float16_all_inputs_as_internal() {
+    static TestModel model = {
+        .expectFailure = false,
+        .expectedMultinomialDistributionTolerance = 0,
+        .isRelaxed = false,
+        .main = { // scale
+                .inputIndexes = {7},
+                .operands = {{ // op1
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<_Float16>({}),
+                            .dimensions = {1, 2, 2, 2},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::TEMPORARY_VARIABLE,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT16,
+                            .zeroPoint = 0
+                        }, { // param2
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<_Float16>({1.600000023841858f}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::FLOAT16,
+                            .zeroPoint = 0
+                        }, { // param3
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<_Float16>({1.600000023841858f}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::FLOAT16,
+                            .zeroPoint = 0
+                        }, { // layout7
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<bool8>({false}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::BOOL,
+                            .zeroPoint = 0
+                        }, { // align_corners7
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<bool8>({false}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::BOOL,
+                            .zeroPoint = 0
+                        }, { // half_pixel_centers7
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<bool8>({false}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::BOOL,
+                            .zeroPoint = 0
+                        }, { // op4
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<_Float16>({3.0f, 4.0f, 5.0f, 8.0f, 6.0f, 10.0f, 7.0f, 8.0f, 9.0f, 12.0f, 10.0f, 14.0f, 9.0f, 10.0f, 11.0f, 14.0f, 12.0f, 16.0f}),
+                            .dimensions = {1, 3, 3, 2},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
+                            .numberOfConsumers = 0,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT16,
+                            .zeroPoint = 0
+                        }, { // op1_new
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<_Float16>({3.0f, 4.0f, 6.0f, 10.0f, 9.0f, 10.0f, 12.0f, 16.0f}),
+                            .dimensions = {1, 2, 2, 2},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT16,
+                            .zeroPoint = 0
+                        }, { // dummy41
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<_Float16>({0.0f}),
+                            .dimensions = {1},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT16,
+                            .zeroPoint = 0
+                        }, { // param45
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<int32_t>({0}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::INT32,
+                            .zeroPoint = 0
+                        }},
+                .operations = {{
+                            .inputs = {7, 8, 9},
+                            .outputs = {0},
+                            .type = TestOperationType::ADD
+                        }, {
+                            .inputs = {0, 1, 2, 3, 4, 5},
+                            .outputs = {6},
+                            .type = TestOperationType::RESIZE_BILINEAR
+                        }},
+                .outputIndexes = {6}
+            },
+        .minSupportedVersion = TestHalVersion::V1_2,
+        .referenced = {}
+    };
+    return model;
+}
+
+const auto dummy_test_model_scale_default_values_nhwc_float16_all_inputs_as_internal = TestModelManager::get().add("resize_bilinear_v1_3_scale_default_values_nhwc_float16_all_inputs_as_internal", get_test_model_scale_default_values_nhwc_float16_all_inputs_as_internal());
+
+}  // namespace generated_tests::resize_bilinear_v1_3
+
+namespace generated_tests::resize_bilinear_v1_3 {
+
+const TestModel& get_test_model_scale_default_values_nhwc_quant8() {
+    static TestModel model = {
+        .expectFailure = false,
+        .expectedMultinomialDistributionTolerance = 0,
+        .isRelaxed = false,
+        .main = { // scale
+                .inputIndexes = {0},
+                .operands = {{ // op1
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<uint8_t>({12, 16, 24, 40, 36, 40, 48, 64}),
+                            .dimensions = {1, 2, 2, 2},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
+                            .numberOfConsumers = 1,
+                            .scale = 0.25f,
+                            .type = TestOperandType::TENSOR_QUANT8_ASYMM,
+                            .zeroPoint = 0
+                        }, { // param2
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<float>({1.6f}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::FLOAT32,
+                            .zeroPoint = 0
+                        }, { // param3
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<float>({1.6f}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::FLOAT32,
+                            .zeroPoint = 0
+                        }, { // layout7
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<bool8>({false}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::BOOL,
+                            .zeroPoint = 0
+                        }, { // align_corners7
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<bool8>({false}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::BOOL,
+                            .zeroPoint = 0
+                        }, { // half_pixel_centers7
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<bool8>({false}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::BOOL,
+                            .zeroPoint = 0
+                        }, { // op4
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<uint8_t>({12, 16, 20, 32, 24, 40, 28, 32, 36, 48, 40, 56, 36, 40, 44, 56, 48, 64}),
+                            .dimensions = {1, 3, 3, 2},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
+                            .numberOfConsumers = 0,
+                            .scale = 0.25f,
+                            .type = TestOperandType::TENSOR_QUANT8_ASYMM,
+                            .zeroPoint = 0
+                        }},
+                .operations = {{
+                            .inputs = {0, 1, 2, 3, 4, 5},
+                            .outputs = {6},
+                            .type = TestOperationType::RESIZE_BILINEAR
+                        }},
+                .outputIndexes = {6}
+            },
+        .minSupportedVersion = TestHalVersion::V1_2,
+        .referenced = {}
+    };
+    return model;
+}
+
+const auto dummy_test_model_scale_default_values_nhwc_quant8 = TestModelManager::get().add("resize_bilinear_v1_3_scale_default_values_nhwc_quant8", get_test_model_scale_default_values_nhwc_quant8());
+
+}  // namespace generated_tests::resize_bilinear_v1_3
+
+namespace generated_tests::resize_bilinear_v1_3 {
+
+const TestModel& get_test_model_scale_default_values_nhwc_quant8_all_inputs_as_internal() {
+    static TestModel model = {
+        .expectFailure = false,
+        .expectedMultinomialDistributionTolerance = 0,
+        .isRelaxed = false,
+        .main = { // scale
+                .inputIndexes = {7},
+                .operands = {{ // op1
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<uint8_t>({}),
+                            .dimensions = {1, 2, 2, 2},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::TEMPORARY_VARIABLE,
+                            .numberOfConsumers = 1,
+                            .scale = 0.25f,
+                            .type = TestOperandType::TENSOR_QUANT8_ASYMM,
+                            .zeroPoint = 0
+                        }, { // param2
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<float>({1.6f}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::FLOAT32,
+                            .zeroPoint = 0
+                        }, { // param3
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<float>({1.6f}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::FLOAT32,
+                            .zeroPoint = 0
+                        }, { // layout7
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<bool8>({false}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::BOOL,
+                            .zeroPoint = 0
+                        }, { // align_corners7
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<bool8>({false}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::BOOL,
+                            .zeroPoint = 0
+                        }, { // half_pixel_centers7
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<bool8>({false}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::BOOL,
+                            .zeroPoint = 0
+                        }, { // op4
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<uint8_t>({12, 16, 20, 32, 24, 40, 28, 32, 36, 48, 40, 56, 36, 40, 44, 56, 48, 64}),
+                            .dimensions = {1, 3, 3, 2},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
+                            .numberOfConsumers = 0,
+                            .scale = 0.25f,
+                            .type = TestOperandType::TENSOR_QUANT8_ASYMM,
+                            .zeroPoint = 0
+                        }, { // op1_new
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<uint8_t>({12, 16, 24, 40, 36, 40, 48, 64}),
+                            .dimensions = {1, 2, 2, 2},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
+                            .numberOfConsumers = 1,
+                            .scale = 0.25f,
+                            .type = TestOperandType::TENSOR_QUANT8_ASYMM,
+                            .zeroPoint = 0
+                        }, { // dummy42
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<uint8_t>({0}),
+                            .dimensions = {1},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.25f,
+                            .type = TestOperandType::TENSOR_QUANT8_ASYMM,
+                            .zeroPoint = 0
+                        }, { // param46
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<int32_t>({0}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::INT32,
+                            .zeroPoint = 0
+                        }},
+                .operations = {{
+                            .inputs = {7, 8, 9},
+                            .outputs = {0},
+                            .type = TestOperationType::ADD
+                        }, {
+                            .inputs = {0, 1, 2, 3, 4, 5},
+                            .outputs = {6},
+                            .type = TestOperationType::RESIZE_BILINEAR
+                        }},
+                .outputIndexes = {6}
+            },
+        .minSupportedVersion = TestHalVersion::V1_2,
+        .referenced = {}
+    };
+    return model;
+}
+
+const auto dummy_test_model_scale_default_values_nhwc_quant8_all_inputs_as_internal = TestModelManager::get().add("resize_bilinear_v1_3_scale_default_values_nhwc_quant8_all_inputs_as_internal", get_test_model_scale_default_values_nhwc_quant8_all_inputs_as_internal());
+
+}  // namespace generated_tests::resize_bilinear_v1_3
+
+namespace generated_tests::resize_bilinear_v1_3 {
+
+const TestModel& get_test_model_scale_default_values_nchw() {
+    static TestModel model = {
+        .expectFailure = false,
+        .expectedMultinomialDistributionTolerance = 0,
+        .isRelaxed = false,
+        .main = { // scale
+                .inputIndexes = {0},
+                .operands = {{ // op1
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<float>({3.0f, 6.0f, 9.0f, 12.0f, 4.0f, 10.0f, 10.0f, 16.0f}),
+                            .dimensions = {1, 2, 2, 2},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT32,
+                            .zeroPoint = 0
+                        }, { // param2
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<float>({1.6f}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::FLOAT32,
+                            .zeroPoint = 0
+                        }, { // param3
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<float>({1.6f}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::FLOAT32,
+                            .zeroPoint = 0
+                        }, { // layout7
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<bool8>({true}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::BOOL,
+                            .zeroPoint = 0
+                        }, { // align_corners7
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<bool8>({false}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::BOOL,
+                            .zeroPoint = 0
+                        }, { // half_pixel_centers7
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<bool8>({false}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::BOOL,
+                            .zeroPoint = 0
+                        }, { // op4
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<float>({3.0f, 5.0f, 6.0f, 7.0f, 9.0f, 10.0f, 9.0f, 11.0f, 12.0f, 4.0f, 8.0f, 10.0f, 8.0f, 12.0f, 14.0f, 10.0f, 14.0f, 16.0f}),
+                            .dimensions = {1, 2, 3, 3},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
+                            .numberOfConsumers = 0,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT32,
+                            .zeroPoint = 0
+                        }},
+                .operations = {{
+                            .inputs = {0, 1, 2, 3, 4, 5},
+                            .outputs = {6},
+                            .type = TestOperationType::RESIZE_BILINEAR
+                        }},
+                .outputIndexes = {6}
+            },
+        .minSupportedVersion = TestHalVersion::V1_2,
+        .referenced = {}
+    };
+    return model;
+}
+
+const auto dummy_test_model_scale_default_values_nchw = TestModelManager::get().add("resize_bilinear_v1_3_scale_default_values_nchw", get_test_model_scale_default_values_nchw());
+
+}  // namespace generated_tests::resize_bilinear_v1_3
+
+namespace generated_tests::resize_bilinear_v1_3 {
+
+const TestModel& get_test_model_scale_default_values_nchw_all_inputs_as_internal() {
+    static TestModel model = {
+        .expectFailure = false,
+        .expectedMultinomialDistributionTolerance = 0,
+        .isRelaxed = false,
+        .main = { // scale
+                .inputIndexes = {7},
+                .operands = {{ // op1
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<float>({}),
+                            .dimensions = {1, 2, 2, 2},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::TEMPORARY_VARIABLE,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT32,
+                            .zeroPoint = 0
+                        }, { // param2
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<float>({1.6f}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::FLOAT32,
+                            .zeroPoint = 0
+                        }, { // param3
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<float>({1.6f}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::FLOAT32,
+                            .zeroPoint = 0
+                        }, { // layout7
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<bool8>({true}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::BOOL,
+                            .zeroPoint = 0
+                        }, { // align_corners7
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<bool8>({false}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::BOOL,
+                            .zeroPoint = 0
+                        }, { // half_pixel_centers7
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<bool8>({false}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::BOOL,
+                            .zeroPoint = 0
+                        }, { // op4
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<float>({3.0f, 5.0f, 6.0f, 7.0f, 9.0f, 10.0f, 9.0f, 11.0f, 12.0f, 4.0f, 8.0f, 10.0f, 8.0f, 12.0f, 14.0f, 10.0f, 14.0f, 16.0f}),
+                            .dimensions = {1, 2, 3, 3},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
+                            .numberOfConsumers = 0,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT32,
+                            .zeroPoint = 0
+                        }, { // op1_new
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<float>({3.0f, 6.0f, 9.0f, 12.0f, 4.0f, 10.0f, 10.0f, 16.0f}),
+                            .dimensions = {1, 2, 2, 2},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT32,
+                            .zeroPoint = 0
+                        }, { // dummy43
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<float>({0.0f}),
+                            .dimensions = {1},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT32,
+                            .zeroPoint = 0
+                        }, { // param47
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<int32_t>({0}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::INT32,
+                            .zeroPoint = 0
+                        }},
+                .operations = {{
+                            .inputs = {7, 8, 9},
+                            .outputs = {0},
+                            .type = TestOperationType::ADD
+                        }, {
+                            .inputs = {0, 1, 2, 3, 4, 5},
+                            .outputs = {6},
+                            .type = TestOperationType::RESIZE_BILINEAR
+                        }},
+                .outputIndexes = {6}
+            },
+        .minSupportedVersion = TestHalVersion::V1_2,
+        .referenced = {}
+    };
+    return model;
+}
+
+const auto dummy_test_model_scale_default_values_nchw_all_inputs_as_internal = TestModelManager::get().add("resize_bilinear_v1_3_scale_default_values_nchw_all_inputs_as_internal", get_test_model_scale_default_values_nchw_all_inputs_as_internal());
+
+}  // namespace generated_tests::resize_bilinear_v1_3
+
+namespace generated_tests::resize_bilinear_v1_3 {
+
+const TestModel& get_test_model_scale_default_values_nchw_relaxed() {
+    static TestModel model = {
+        .expectFailure = false,
+        .expectedMultinomialDistributionTolerance = 0,
+        .isRelaxed = true,
+        .main = { // scale
+                .inputIndexes = {0},
+                .operands = {{ // op1
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<float>({3.0f, 6.0f, 9.0f, 12.0f, 4.0f, 10.0f, 10.0f, 16.0f}),
+                            .dimensions = {1, 2, 2, 2},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT32,
+                            .zeroPoint = 0
+                        }, { // param2
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<float>({1.6f}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::FLOAT32,
+                            .zeroPoint = 0
+                        }, { // param3
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<float>({1.6f}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::FLOAT32,
+                            .zeroPoint = 0
+                        }, { // layout7
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<bool8>({true}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::BOOL,
+                            .zeroPoint = 0
+                        }, { // align_corners7
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<bool8>({false}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::BOOL,
+                            .zeroPoint = 0
+                        }, { // half_pixel_centers7
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<bool8>({false}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::BOOL,
+                            .zeroPoint = 0
+                        }, { // op4
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<float>({3.0f, 5.0f, 6.0f, 7.0f, 9.0f, 10.0f, 9.0f, 11.0f, 12.0f, 4.0f, 8.0f, 10.0f, 8.0f, 12.0f, 14.0f, 10.0f, 14.0f, 16.0f}),
+                            .dimensions = {1, 2, 3, 3},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
+                            .numberOfConsumers = 0,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT32,
+                            .zeroPoint = 0
+                        }},
+                .operations = {{
+                            .inputs = {0, 1, 2, 3, 4, 5},
+                            .outputs = {6},
+                            .type = TestOperationType::RESIZE_BILINEAR
+                        }},
+                .outputIndexes = {6}
+            },
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
+        .referenced = {}
+    };
+    return model;
+}
+
+const auto dummy_test_model_scale_default_values_nchw_relaxed = TestModelManager::get().add("resize_bilinear_v1_3_scale_default_values_nchw_relaxed", get_test_model_scale_default_values_nchw_relaxed());
+
+}  // namespace generated_tests::resize_bilinear_v1_3
+
+namespace generated_tests::resize_bilinear_v1_3 {
+
+const TestModel& get_test_model_scale_default_values_nchw_relaxed_all_inputs_as_internal() {
+    static TestModel model = {
+        .expectFailure = false,
+        .expectedMultinomialDistributionTolerance = 0,
+        .isRelaxed = true,
+        .main = { // scale
+                .inputIndexes = {7},
+                .operands = {{ // op1
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<float>({}),
+                            .dimensions = {1, 2, 2, 2},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::TEMPORARY_VARIABLE,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT32,
+                            .zeroPoint = 0
+                        }, { // param2
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<float>({1.6f}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::FLOAT32,
+                            .zeroPoint = 0
+                        }, { // param3
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<float>({1.6f}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::FLOAT32,
+                            .zeroPoint = 0
+                        }, { // layout7
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<bool8>({true}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::BOOL,
+                            .zeroPoint = 0
+                        }, { // align_corners7
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<bool8>({false}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::BOOL,
+                            .zeroPoint = 0
+                        }, { // half_pixel_centers7
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<bool8>({false}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::BOOL,
+                            .zeroPoint = 0
+                        }, { // op4
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<float>({3.0f, 5.0f, 6.0f, 7.0f, 9.0f, 10.0f, 9.0f, 11.0f, 12.0f, 4.0f, 8.0f, 10.0f, 8.0f, 12.0f, 14.0f, 10.0f, 14.0f, 16.0f}),
+                            .dimensions = {1, 2, 3, 3},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
+                            .numberOfConsumers = 0,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT32,
+                            .zeroPoint = 0
+                        }, { // op1_new
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<float>({3.0f, 6.0f, 9.0f, 12.0f, 4.0f, 10.0f, 10.0f, 16.0f}),
+                            .dimensions = {1, 2, 2, 2},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT32,
+                            .zeroPoint = 0
+                        }, { // dummy44
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<float>({0.0f}),
+                            .dimensions = {1},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT32,
+                            .zeroPoint = 0
+                        }, { // param48
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<int32_t>({0}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::INT32,
+                            .zeroPoint = 0
+                        }},
+                .operations = {{
+                            .inputs = {7, 8, 9},
+                            .outputs = {0},
+                            .type = TestOperationType::ADD
+                        }, {
+                            .inputs = {0, 1, 2, 3, 4, 5},
+                            .outputs = {6},
+                            .type = TestOperationType::RESIZE_BILINEAR
+                        }},
+                .outputIndexes = {6}
+            },
+        .minSupportedVersion = TestHalVersion::UNKNOWN,
+        .referenced = {}
+    };
+    return model;
+}
+
+const auto dummy_test_model_scale_default_values_nchw_relaxed_all_inputs_as_internal = TestModelManager::get().add("resize_bilinear_v1_3_scale_default_values_nchw_relaxed_all_inputs_as_internal", get_test_model_scale_default_values_nchw_relaxed_all_inputs_as_internal());
+
+}  // namespace generated_tests::resize_bilinear_v1_3
+
+namespace generated_tests::resize_bilinear_v1_3 {
+
+const TestModel& get_test_model_scale_default_values_nchw_float16() {
+    static TestModel model = {
+        .expectFailure = false,
+        .expectedMultinomialDistributionTolerance = 0,
+        .isRelaxed = false,
+        .main = { // scale
+                .inputIndexes = {0},
+                .operands = {{ // op1
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<_Float16>({3.0f, 6.0f, 9.0f, 12.0f, 4.0f, 10.0f, 10.0f, 16.0f}),
+                            .dimensions = {1, 2, 2, 2},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT16,
+                            .zeroPoint = 0
+                        }, { // param2
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<_Float16>({1.600000023841858f}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::FLOAT16,
+                            .zeroPoint = 0
+                        }, { // param3
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<_Float16>({1.600000023841858f}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::FLOAT16,
+                            .zeroPoint = 0
+                        }, { // layout7
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<bool8>({true}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::BOOL,
+                            .zeroPoint = 0
+                        }, { // align_corners7
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<bool8>({false}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::BOOL,
+                            .zeroPoint = 0
+                        }, { // half_pixel_centers7
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<bool8>({false}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::BOOL,
+                            .zeroPoint = 0
+                        }, { // op4
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<_Float16>({3.0f, 5.0f, 6.0f, 7.0f, 9.0f, 10.0f, 9.0f, 11.0f, 12.0f, 4.0f, 8.0f, 10.0f, 8.0f, 12.0f, 14.0f, 10.0f, 14.0f, 16.0f}),
+                            .dimensions = {1, 2, 3, 3},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
+                            .numberOfConsumers = 0,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT16,
+                            .zeroPoint = 0
+                        }},
+                .operations = {{
+                            .inputs = {0, 1, 2, 3, 4, 5},
+                            .outputs = {6},
+                            .type = TestOperationType::RESIZE_BILINEAR
+                        }},
+                .outputIndexes = {6}
+            },
+        .minSupportedVersion = TestHalVersion::V1_2,
+        .referenced = {}
+    };
+    return model;
+}
+
+const auto dummy_test_model_scale_default_values_nchw_float16 = TestModelManager::get().add("resize_bilinear_v1_3_scale_default_values_nchw_float16", get_test_model_scale_default_values_nchw_float16());
+
+}  // namespace generated_tests::resize_bilinear_v1_3
+
+namespace generated_tests::resize_bilinear_v1_3 {
+
+const TestModel& get_test_model_scale_default_values_nchw_float16_all_inputs_as_internal() {
+    static TestModel model = {
+        .expectFailure = false,
+        .expectedMultinomialDistributionTolerance = 0,
+        .isRelaxed = false,
+        .main = { // scale
+                .inputIndexes = {7},
+                .operands = {{ // op1
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<_Float16>({}),
+                            .dimensions = {1, 2, 2, 2},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::TEMPORARY_VARIABLE,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT16,
+                            .zeroPoint = 0
+                        }, { // param2
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<_Float16>({1.600000023841858f}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::FLOAT16,
+                            .zeroPoint = 0
+                        }, { // param3
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<_Float16>({1.600000023841858f}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::FLOAT16,
+                            .zeroPoint = 0
+                        }, { // layout7
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<bool8>({true}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::BOOL,
+                            .zeroPoint = 0
+                        }, { // align_corners7
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<bool8>({false}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::BOOL,
+                            .zeroPoint = 0
+                        }, { // half_pixel_centers7
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<bool8>({false}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::BOOL,
+                            .zeroPoint = 0
+                        }, { // op4
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<_Float16>({3.0f, 5.0f, 6.0f, 7.0f, 9.0f, 10.0f, 9.0f, 11.0f, 12.0f, 4.0f, 8.0f, 10.0f, 8.0f, 12.0f, 14.0f, 10.0f, 14.0f, 16.0f}),
+                            .dimensions = {1, 2, 3, 3},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
+                            .numberOfConsumers = 0,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT16,
+                            .zeroPoint = 0
+                        }, { // op1_new
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<_Float16>({3.0f, 6.0f, 9.0f, 12.0f, 4.0f, 10.0f, 10.0f, 16.0f}),
+                            .dimensions = {1, 2, 2, 2},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT16,
+                            .zeroPoint = 0
+                        }, { // dummy45
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<_Float16>({0.0f}),
+                            .dimensions = {1},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::TENSOR_FLOAT16,
+                            .zeroPoint = 0
+                        }, { // param49
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<int32_t>({0}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::INT32,
+                            .zeroPoint = 0
+                        }},
+                .operations = {{
+                            .inputs = {7, 8, 9},
+                            .outputs = {0},
+                            .type = TestOperationType::ADD
+                        }, {
+                            .inputs = {0, 1, 2, 3, 4, 5},
+                            .outputs = {6},
+                            .type = TestOperationType::RESIZE_BILINEAR
+                        }},
+                .outputIndexes = {6}
+            },
+        .minSupportedVersion = TestHalVersion::V1_2,
+        .referenced = {}
+    };
+    return model;
+}
+
+const auto dummy_test_model_scale_default_values_nchw_float16_all_inputs_as_internal = TestModelManager::get().add("resize_bilinear_v1_3_scale_default_values_nchw_float16_all_inputs_as_internal", get_test_model_scale_default_values_nchw_float16_all_inputs_as_internal());
+
+}  // namespace generated_tests::resize_bilinear_v1_3
+
+namespace generated_tests::resize_bilinear_v1_3 {
+
+const TestModel& get_test_model_scale_default_values_nchw_quant8() {
+    static TestModel model = {
+        .expectFailure = false,
+        .expectedMultinomialDistributionTolerance = 0,
+        .isRelaxed = false,
+        .main = { // scale
+                .inputIndexes = {0},
+                .operands = {{ // op1
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<uint8_t>({12, 24, 36, 48, 16, 40, 40, 64}),
+                            .dimensions = {1, 2, 2, 2},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
+                            .numberOfConsumers = 1,
+                            .scale = 0.25f,
+                            .type = TestOperandType::TENSOR_QUANT8_ASYMM,
+                            .zeroPoint = 0
+                        }, { // param2
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<float>({1.6f}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::FLOAT32,
+                            .zeroPoint = 0
+                        }, { // param3
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<float>({1.6f}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::FLOAT32,
+                            .zeroPoint = 0
+                        }, { // layout7
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<bool8>({true}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::BOOL,
+                            .zeroPoint = 0
+                        }, { // align_corners7
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<bool8>({false}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::BOOL,
+                            .zeroPoint = 0
+                        }, { // half_pixel_centers7
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<bool8>({false}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::BOOL,
+                            .zeroPoint = 0
+                        }, { // op4
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<uint8_t>({12, 20, 24, 28, 36, 40, 36, 44, 48, 16, 32, 40, 32, 48, 56, 40, 56, 64}),
+                            .dimensions = {1, 2, 3, 3},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
+                            .numberOfConsumers = 0,
+                            .scale = 0.25f,
+                            .type = TestOperandType::TENSOR_QUANT8_ASYMM,
+                            .zeroPoint = 0
+                        }},
+                .operations = {{
+                            .inputs = {0, 1, 2, 3, 4, 5},
+                            .outputs = {6},
+                            .type = TestOperationType::RESIZE_BILINEAR
+                        }},
+                .outputIndexes = {6}
+            },
+        .minSupportedVersion = TestHalVersion::V1_2,
+        .referenced = {}
+    };
+    return model;
+}
+
+const auto dummy_test_model_scale_default_values_nchw_quant8 = TestModelManager::get().add("resize_bilinear_v1_3_scale_default_values_nchw_quant8", get_test_model_scale_default_values_nchw_quant8());
+
+}  // namespace generated_tests::resize_bilinear_v1_3
+
+namespace generated_tests::resize_bilinear_v1_3 {
+
+const TestModel& get_test_model_scale_default_values_nchw_quant8_all_inputs_as_internal() {
+    static TestModel model = {
+        .expectFailure = false,
+        .expectedMultinomialDistributionTolerance = 0,
+        .isRelaxed = false,
+        .main = { // scale
+                .inputIndexes = {7},
+                .operands = {{ // op1
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<uint8_t>({}),
+                            .dimensions = {1, 2, 2, 2},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::TEMPORARY_VARIABLE,
+                            .numberOfConsumers = 1,
+                            .scale = 0.25f,
+                            .type = TestOperandType::TENSOR_QUANT8_ASYMM,
+                            .zeroPoint = 0
+                        }, { // param2
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<float>({1.6f}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::FLOAT32,
+                            .zeroPoint = 0
+                        }, { // param3
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<float>({1.6f}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::FLOAT32,
+                            .zeroPoint = 0
+                        }, { // layout7
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<bool8>({true}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::BOOL,
+                            .zeroPoint = 0
+                        }, { // align_corners7
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<bool8>({false}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::BOOL,
+                            .zeroPoint = 0
+                        }, { // half_pixel_centers7
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<bool8>({false}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::BOOL,
+                            .zeroPoint = 0
+                        }, { // op4
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<uint8_t>({12, 20, 24, 28, 36, 40, 36, 44, 48, 16, 32, 40, 32, 48, 56, 40, 56, 64}),
+                            .dimensions = {1, 2, 3, 3},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_OUTPUT,
+                            .numberOfConsumers = 0,
+                            .scale = 0.25f,
+                            .type = TestOperandType::TENSOR_QUANT8_ASYMM,
+                            .zeroPoint = 0
+                        }, { // op1_new
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<uint8_t>({12, 24, 36, 48, 16, 40, 40, 64}),
+                            .dimensions = {1, 2, 2, 2},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::SUBGRAPH_INPUT,
+                            .numberOfConsumers = 1,
+                            .scale = 0.25f,
+                            .type = TestOperandType::TENSOR_QUANT8_ASYMM,
+                            .zeroPoint = 0
+                        }, { // dummy46
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<uint8_t>({0}),
+                            .dimensions = {1},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.25f,
+                            .type = TestOperandType::TENSOR_QUANT8_ASYMM,
+                            .zeroPoint = 0
+                        }, { // param50
+                            .channelQuant = {},
+                            .data = TestBuffer::createFromVector<int32_t>({0}),
+                            .dimensions = {},
+                            .isIgnored = false,
+                            .lifetime = TestOperandLifeTime::CONSTANT_COPY,
+                            .numberOfConsumers = 1,
+                            .scale = 0.0f,
+                            .type = TestOperandType::INT32,
+                            .zeroPoint = 0
+                        }},
+                .operations = {{
+                            .inputs = {7, 8, 9},
+                            .outputs = {0},
+                            .type = TestOperationType::ADD
+                        }, {
+                            .inputs = {0, 1, 2, 3, 4, 5},
+                            .outputs = {6},
+                            .type = TestOperationType::RESIZE_BILINEAR
+                        }},
+                .outputIndexes = {6}
+            },
+        .minSupportedVersion = TestHalVersion::V1_2,
+        .referenced = {}
+    };
+    return model;
+}
+
+const auto dummy_test_model_scale_default_values_nchw_quant8_all_inputs_as_internal = TestModelManager::get().add("resize_bilinear_v1_3_scale_default_values_nchw_quant8_all_inputs_as_internal", get_test_model_scale_default_values_nchw_quant8_all_inputs_as_internal());
 
 }  // namespace generated_tests::resize_bilinear_v1_3
 
