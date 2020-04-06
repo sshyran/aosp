@@ -84,6 +84,7 @@ class ObjectTracker {
     auto end() { return mObjects.end(); }
     auto begin() const { return mObjects.begin(); }
     auto end() const { return mObjects.end(); }
+    const std::vector<const ObjectType*>& getObjects() const { return mObjects; }
 
    private:
     // The vector of object pointers we are building.
