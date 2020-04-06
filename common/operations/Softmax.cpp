@@ -246,12 +246,15 @@ bool validate(const IOperationValidationContext* context) {
     } else {
         NN_RET_CHECK_FAIL() << "Unsupported tensor type for operation " << kOperationName;
     }
+    const auto inputRank = getNumberOfDimensions(context->getInputShape(kInputTensor));
+    if (inputRank != 0) {
+        NN_RET_CHECK_LE(inputRank, 4);
+    }
     if (context->getNumInputs() == kNumInputs) {
         NN_RET_CHECK(validateHalVersion(context, HalVersion::V1_2));
         inExpectedTypes.push_back(OperandType::INT32);
     } else {
-        const size_t ndim = context->getInputShape(kInputTensor).dimensions.size();
-        if (ndim != 2 && ndim != 4 && ndim != 0) {
+        if (inputRank != 2 && inputRank != 4 && inputRank != 0) {
             NN_RET_CHECK(validateHalVersion(context, HalVersion::V1_2));
         }
     }
