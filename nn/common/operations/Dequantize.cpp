@@ -83,6 +83,11 @@ bool validate(const IOperationValidationContext* context) {
     const OperandType inputType = context->getInputType(kInputTensor);
     const OperandType outputType = context->getOutputType(kOutputTensor);
 
+    const Shape& input = context->getInputShape(kInputTensor);
+    if (hasKnownRank(input)) {
+        NN_RET_CHECK_LE(getNumberOfDimensions(input), 4);
+    }
+
     if (inputType == OperandType::TENSOR_QUANT8_ASYMM &&
         outputType == OperandType::TENSOR_FLOAT32) {
         return validateHalVersion(context, HalVersion::V1_0);
@@ -101,6 +106,7 @@ bool validate(const IOperationValidationContext* context) {
 
 bool prepare(IOperationExecutionContext* context) {
     const Shape& input = context->getInputShape(kInputTensor);
+    NN_RET_CHECK_LE(getNumberOfDimensions(input), 4);
     Shape output = context->getOutputShape(kOutputTensor);
     output.dimensions = input.dimensions;
     return context->setOutputShape(kOutputTensor, output);
