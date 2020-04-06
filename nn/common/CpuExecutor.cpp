@@ -845,63 +845,6 @@ int CpuExecutor::executeOperation(const Operation& operation, RunTimeOperandInfo
             LOG(ERROR) << "OEM operation not supported for CPU execution";
             success = false;
         } break;
-        case OperationType::FLOOR: {
-            if (!allParametersPresent(1, 1)) {
-                return ANEURALNETWORKS_BAD_DATA;
-            }
-            const RunTimeOperandInfo& input = operands[ins[0]];
-            RunTimeOperandInfo& output = operands[outs[0]];
-            Shape outShape = output.shape();
-
-            if (!floorPrepare(input.shape(), &outShape) ||
-                !setInfoAndAllocateIfNeeded(&output, outShape, &result)) {
-                break;
-            }
-            if (input.type == OperandType::TENSOR_FLOAT32) {
-                success = floorFloat32(reinterpret_cast<const float*>(input.buffer),
-                                       reinterpret_cast<float*>(output.buffer), outShape);
-            } else if (input.type == OperandType::TENSOR_FLOAT16) {
-                success = floorFloat16(reinterpret_cast<const _Float16*>(input.buffer),
-                                       reinterpret_cast<_Float16*>(output.buffer), outShape);
-            }
-        } break;
-        case OperationType::LOCAL_RESPONSE_NORMALIZATION: {
-            const size_t inCount = ins.size();
-            if ((inCount != 6 && inCount != 5) || !allParametersPresent(inCount, 1)) {
-                return ANEURALNETWORKS_BAD_DATA;
-            }
-            const RunTimeOperandInfo& input = operands[ins[0]];
-            int32_t radius = getScalarData<int32_t>(operands[ins[1]]);
-            float bias = (input.type == OperandType::TENSOR_FLOAT16)
-                                 ? getScalarData<_Float16>(operands[ins[2]])
-                                 : getScalarData<float>(operands[ins[2]]);
-            float alpha = (input.type == OperandType::TENSOR_FLOAT16)
-                                  ? getScalarData<_Float16>(operands[ins[3]])
-                                  : getScalarData<float>(operands[ins[3]]);
-            float beta = (input.type == OperandType::TENSOR_FLOAT16)
-                                 ? getScalarData<_Float16>(operands[ins[4]])
-                                 : getScalarData<float>(operands[ins[4]]);
-            const int32_t axis = inCount == 6 ? getScalarData<int32_t>(operands[ins[5]]) : -1;
-
-            RunTimeOperandInfo& output = operands[outs[0]];
-            Shape outShape = output.shape();
-
-            if (!genericNormalizationPrepare(input.shape(), &outShape) ||
-                !setInfoAndAllocateIfNeeded(&output, outShape, &result)) {
-                success = false;
-                break;
-            }
-            if (input.type == OperandType::TENSOR_FLOAT32) {
-                success = localResponseNormFloat32(
-                        reinterpret_cast<const float*>(input.buffer), input.shape(), radius, bias,
-                        alpha, beta, axis, reinterpret_cast<float*>(output.buffer), outShape);
-            } else if (input.type == OperandType::TENSOR_FLOAT16) {
-                success = localResponseNormFloat16(reinterpret_cast<const _Float16*>(input.buffer),
-                                                   input.shape(), radius, bias, alpha, beta, axis,
-                                                   reinterpret_cast<_Float16*>(output.buffer),
-                                                   outShape);
-            }
-        } break;
         case OperationType::RESHAPE: {
             if (!allParametersPresent(2, 1)) {
                 return ANEURALNETWORKS_BAD_DATA;
