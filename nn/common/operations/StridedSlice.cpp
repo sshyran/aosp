@@ -128,6 +128,10 @@ bool validate(const IOperationValidationContext* context) {
                                                      OperandType::INT32,
                                              }));
     NN_RET_CHECK(validateOutputTypes(context, {inputType}));
+    const Shape& input = context->getInputShape(kInputTensor);
+    if (hasKnownRank(input)) {
+        NN_RET_CHECK_LE(getNumberOfDimensions(input), 4);
+    }
     return validateHalVersion(context, minSupportedHalVersion);
 }
 
