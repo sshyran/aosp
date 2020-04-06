@@ -162,6 +162,10 @@ uint32_t getSizeOfDimension(const Shape& shape, uint32_t dimensionIdx) {
     return shape.dimensions[dimensionIdx];
 }
 
+uint32_t hasKnownRank(const Shape& shape) {
+    return !shape.dimensions.empty();
+}
+
 bool handleNegativeAxis(int32_t numberOfDimensions, int32_t* axis) {
     NN_CHECK(-numberOfDimensions <= *axis && *axis < numberOfDimensions);
     if (*axis < 0) {
@@ -384,10 +388,6 @@ bool floorPrepare(const Shape& input, Shape* output) {
 
 bool genericActivationPrepare(const Shape& input, Shape* output) {
     NN_OPS_CHECK(getNumberOfDimensions(input) <= 4);
-    return SetShape(input, output);
-}
-
-bool genericNormalizationPrepare(const Shape& input, Shape* output) {
     return SetShape(input, output);
 }
 

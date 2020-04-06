@@ -1006,7 +1006,8 @@ void dequantizeOpTest(int32_t inputOperandType, int32_t outputOperandType) {
     uint32_t inputDimensions[4] = {2, 2, 2, 2};
     ANeuralNetworksOperandType input = getOpType(inputOperandType, 4, inputDimensions);
     ANeuralNetworksOperandType output = getOpType(outputOperandType, 4, inputDimensions);
-    OperationTestBase dequantizeTest(ANEURALNETWORKS_DEQUANTIZE, {input}, {output});
+    OperationTestBase dequantizeTest(ANEURALNETWORKS_DEQUANTIZE, {input}, {output},
+                                     {{TensorRankConstraint::UpTo(4)}});
     dequantizeTest.testOpsValidations();
 }
 
@@ -1238,7 +1239,9 @@ void simpleMathOpTest(ANeuralNetworksOperationType operationCode, int32_t operan
                                              .scale = 0.0f,
                                              .zeroPoint = 0};
 
-    OperationTestBase simpleMathTest(operationCode, {input1, input2, activation}, {output});
+    OperationTestBase simpleMathTest(
+            operationCode, {input1, input2, activation}, {output},
+            {{TensorRankConstraint::UpTo(4), {0}}, {TensorRankConstraint::UpTo(4), {1}}});
     simpleMathTest.testOpsValidations();
 }
 
@@ -1389,7 +1392,13 @@ void activationOpTest(ANeuralNetworksOperationType operationCode, int32_t operan
     ANeuralNetworksOperandType input = getOpType(operandCode, 4, inputDimensions);
 
     ANeuralNetworksOperandType output = input;
-    OperationTestBase test(operationCode, {input}, {output});
+    std::vector<TensorRankMutator> inputRankMutators;
+    if (operationCode == ANEURALNETWORKS_FLOOR || operationCode == ANEURALNETWORKS_LOGISTIC ||
+        operationCode == ANEURALNETWORKS_RELU || operationCode == ANEURALNETWORKS_RELU1 ||
+        operationCode == ANEURALNETWORKS_RELU6 || operationCode == ANEURALNETWORKS_TANH) {
+        inputRankMutators.push_back({TensorRankConstraint::UpTo(4)});
+    }
+    OperationTestBase test(operationCode, {input}, {output}, inputRankMutators);
     test.testOpsValidations();
 }
 
@@ -1593,7 +1602,8 @@ void reshapeOpTest(int32_t inputOperandCode) {
     ANeuralNetworksOperandType shape = getOpType(ANEURALNETWORKS_TENSOR_INT32, 1, shapeDims);
     uint32_t outputDimensions[2] = {4, 6};
     ANeuralNetworksOperandType output = getOpType(inputOperandCode, 2, outputDimensions);
-    OperationTestBase test(ANEURALNETWORKS_RESHAPE, {input, shape}, {output});
+    OperationTestBase test(ANEURALNETWORKS_RESHAPE, {input, shape}, {output},
+                           {{TensorRankConstraint::UpTo(4)}});
     test.testOpsValidations();
 }
 
@@ -1649,7 +1659,8 @@ void meanOpTest(int32_t inputOperandCode) {
     ANeuralNetworksOperandType keepDims = getOpType(ANEURALNETWORKS_INT32);
     ANeuralNetworksOperandType output = getOpType(inputOperandCode, 3, inputDimensions);
 
-    OperationTestBase test(ANEURALNETWORKS_MEAN, {input, dims, keepDims}, {output});
+    OperationTestBase test(ANEURALNETWORKS_MEAN, {input, dims, keepDims}, {output},
+                           {{TensorRankConstraint::UpTo(4)}});
     test.testOpsValidations();
 }
 
@@ -1678,7 +1689,8 @@ void padOpTest(int32_t inputOperandCode) {
             getOpType(ANEURALNETWORKS_TENSOR_INT32, 1, padSizeDimensions);
     uint32_t outputDimensions[4] = {4, 3, 4, 3};
     ANeuralNetworksOperandType output = getOpType(inputOperandCode, 4, outputDimensions);
-    OperationTestBase test(ANEURALNETWORKS_PAD, {input, padSize}, {output});
+    OperationTestBase test(ANEURALNETWORKS_PAD, {input, padSize}, {output},
+                           {{TensorRankConstraint::UpTo(4)}});
     test.testOpsValidations();
 }
 
@@ -1705,7 +1717,8 @@ void padV2OpTest(int32_t inputOperandCode) {
     }
     uint32_t outputDimensions[4] = {4, 3, 4, 3};
     ANeuralNetworksOperandType output = getOpType(inputOperandCode, 4, outputDimensions);
-    OperationTestBase test(ANEURALNETWORKS_PAD_V2, {input, padSize, padValue}, {output});
+    OperationTestBase test(ANEURALNETWORKS_PAD_V2, {input, padSize, padValue}, {output},
+                           {{TensorRankConstraint::UpTo(4)}});
     test.testOpsValidations();
 }
 
@@ -1726,11 +1739,13 @@ void softmaxOpTest(int32_t operandCode) {
         beta = getOpType(ANEURALNETWORKS_FLOAT16);
     }
 
-    OperationTestBase softmaxTest(ANEURALNETWORKS_SOFTMAX, {input, beta}, {output});
+    OperationTestBase softmaxTest(ANEURALNETWORKS_SOFTMAX, {input, beta}, {output},
+                                  {{TensorRankConstraint::UpTo(4)}});
     softmaxTest.testOpsValidations();
 
     ANeuralNetworksOperandType axis = getOpType(ANEURALNETWORKS_INT32);
-    OperationTestBase softmaxAxisTest(ANEURALNETWORKS_SOFTMAX, {input, beta, axis}, {output});
+    OperationTestBase softmaxAxisTest(ANEURALNETWORKS_SOFTMAX, {input, beta, axis}, {output},
+                                      {{TensorRankConstraint::UpTo(4)}});
     softmaxAxisTest.testOpsValidations();
 }
 
@@ -1976,7 +1991,8 @@ void transposeAndSqueezeOpTest(ANeuralNetworksOperationType operationCode, int32
                                        .zeroPoint = 0};
 
     ANeuralNetworksOperandType output = input;
-    OperationTestBase transposeAndSqueezeTest(operationCode, {input, dims}, {output});
+    OperationTestBase transposeAndSqueezeTest(operationCode, {input, dims}, {output},
+                                              {{TensorRankConstraint::UpTo(4)}});
     transposeAndSqueezeTest.testOpsValidations();
 }
 
@@ -2320,7 +2336,8 @@ void fullyConnectedOpTest(int32_t operandCode) {
                                              .zeroPoint = 0};
 
     OperationTestBase fullyConnectedTest(ANEURALNETWORKS_FULLY_CONNECTED,
-                                         {input, weights, bias, activation}, {output});
+                                         {input, weights, bias, activation}, {output},
+                                         {{TensorRankConstraint::Between(2, 4)}});
     fullyConnectedTest.testOpsValidations();
 }
 
@@ -2353,10 +2370,11 @@ void concatenationTest(int32_t operandCode) {
                                              .zeroPoint = 0};
 
     OperationTestBase concat2Test(ANEURALNETWORKS_CONCATENATION, {input1, input2, activation},
-                                  {output});
+                                  {output}, {{TensorRankConstraint::UpTo(4), {0, 1}}});
     concat2Test.testOpsValidations();
 
-    OperationTestBase concat1Test(ANEURALNETWORKS_CONCATENATION, {input1, activation}, {output});
+    OperationTestBase concat1Test(ANEURALNETWORKS_CONCATENATION, {input1, activation}, {output},
+                                  {{TensorRankConstraint::UpTo(4)}});
     concat1Test.testOpsValidations();
 }
 
@@ -3085,7 +3103,8 @@ void stridedSliceOpTest(int32_t operandCode) {
 
     OperationTestBase stridedSliceTest(
             ANEURALNETWORKS_STRIDED_SLICE,
-            {input, begins, ends, strides, beginMask, endMask, shrinkAxisMask}, {output});
+            {input, begins, ends, strides, beginMask, endMask, shrinkAxisMask}, {output},
+            {{TensorRankConstraint::UpTo(4)}});
     stridedSliceTest.testOpsValidations();
 }
 
@@ -3384,7 +3403,7 @@ void channelShuffleOpTest(int32_t operandCode) {
             ANEURALNETWORKS_CHANNEL_SHUFFLE,
             {getOpType(operandCode, 2, inoutDim), getOpType(ANEURALNETWORKS_INT32),
              getOpType(ANEURALNETWORKS_INT32)},
-            {getOpType(operandCode, 2, inoutDim)});
+            {getOpType(operandCode, 2, inoutDim)}, {{TensorRankConstraint::UpTo(4)}});
     channelShuffleTest.testOpsValidations();
 }
 
@@ -3485,7 +3504,7 @@ void normalizationOpTest(ANeuralNetworksOperationType operationCode, int32_t ope
 
     OperationTestBase normalizationAxisTest(
             operationCode, {getOpType(operandCode, 4, inputDim), getOpType(ANEURALNETWORKS_INT32)},
-            {getOpType(operandCode, 4, inputDim)});
+            {getOpType(operandCode, 4, inputDim)}, {{TensorRankConstraint::UpTo(4)}});
     normalizationAxisTest.testOpsValidations();
 }
 
@@ -3515,7 +3534,7 @@ void localResponseNormOpTest(int32_t operandCode) {
             ANEURALNETWORKS_LOCAL_RESPONSE_NORMALIZATION,
             {getOpType(operandCode, 4, inputDim), getOpType(ANEURALNETWORKS_INT32),
              getOpType(floatScalarType), getOpType(floatScalarType), getOpType(floatScalarType)},
-            {getOpType(operandCode, 4, inputDim)});
+            {getOpType(operandCode, 4, inputDim)}, {{TensorRankConstraint::UpTo(4), {0}}});
     lrnTest.testOpsValidations();
 
     OperationTestBase lrnAxisTest(
@@ -3523,7 +3542,7 @@ void localResponseNormOpTest(int32_t operandCode) {
             {getOpType(operandCode, 4, inputDim), getOpType(ANEURALNETWORKS_INT32),
              getOpType(floatScalarType), getOpType(floatScalarType), getOpType(floatScalarType),
              getOpType(ANEURALNETWORKS_INT32)},
-            {getOpType(operandCode, 4, inputDim)});
+            {getOpType(operandCode, 4, inputDim)}, {{TensorRankConstraint::UpTo(4), {0}}});
     lrnAxisTest.testOpsValidations();
 }
 
@@ -3691,7 +3710,8 @@ void reduceOpTest(ANeuralNetworksOperationType operationCode, int32_t inputOpera
     ANeuralNetworksOperandType input2 = getOpType(ANEURALNETWORKS_TENSOR_INT32, 1, axesDimensions);
     ANeuralNetworksOperandType input3 = getOpType(ANEURALNETWORKS_BOOL, 0);
     ANeuralNetworksOperandType output = getOpType(inputOperandType, 4, inputDimensions);
-    OperationTestBase test(operationCode, {input1, input2, input3}, {output});
+    OperationTestBase test(operationCode, {input1, input2, input3}, {output},
+                           {{TensorRankConstraint::UpTo(4)}});
     test.testOpsValidations();
 }
 
