@@ -298,17 +298,12 @@ TEST_F(TestRemoveDefaultArguments, RESIZE_BILINEAR_by_shape_6_inputs_to_5_inputs
          originalInputCount, expectedInputCount);
 }
 
-// TODO(b/152405977): Add RESIZE_BILINEAR test with 6 -> 3 inputs (by shape).
-// TODO(b/152405977): Add RESIZE_BILINEAR test with 6 -> 4 inputs (by shape).
-
 TEST_F(TestRemoveDefaultArguments, RESIZE_BILINEAR_by_shape_4_inputs_to_3_inputs) {
     const uint32_t originalInputCount = 4;
     const uint32_t expectedInputCount = 3;
     test(::generated_tests::resize_bilinear_v1_2::get_test_model_shape_nhwc(), originalInputCount,
          expectedInputCount);
 }
-
-// TODO(b/152405977): Add RESIZE_BILINEAR test with 6 -> 4 inputs (by scale).
 
 TEST_F(TestRemoveDefaultArguments, SOFTMAX_3_inputs_to_2_inputs) {
     const uint32_t originalInputCount = 3;
@@ -344,9 +339,6 @@ TEST_F(TestRemoveDefaultArguments, RESIZE_NEAREST_NEIGHBOR_by_shape_6_inputs_to_
     test(::generated_tests::resize_nearest_neighbor_v1_3::get_test_model_align_corners_2x2_to_1x1(),
          originalInputCount, expectedInputCount);
 }
-
-// TODO(b/152405977): Add RESIZE_NEAREST_NEIGHBOR test with 6 -> 4 inputs (by shape).
-// TODO(b/152405977): Add RESIZE_NEAREST_NEIGHBOR test with 6 -> 4 inputs (by scale).
 
 }  // namespace
 }  // namespace android::nn
