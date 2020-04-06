@@ -375,6 +375,10 @@ bool validate(OperationType opType, const IOperationValidationContext* context) 
     } else {
         NN_RET_CHECK_FAIL() << "Unsupported tensor type for operation " << getOperationName(opType);
     }
+    const Shape& input = context->getInputShape(kInputTensor);
+    if (hasKnownRank(input)) {
+        NN_RET_CHECK_LE(getNumberOfDimensions(input), 4);
+    }
     return validateInputTypes(context, {inputType}) && validateOutputTypes(context, {inputType});
 }
 
