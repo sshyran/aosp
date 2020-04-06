@@ -27,15 +27,19 @@
 #     sum = sum + xi
 #     i = i + 1
 
-DataType = ["TENSOR_FLOAT32", [1, 2]]
+DataType10 = ["TENSOR_QUANT8_ASYMM_SIGNED", [1, 2], 1.0, 12]
+DataType05 = ["TENSOR_QUANT8_ASYMM_SIGNED", [1, 2], 0.5, 12]
 CounterType = ["TENSOR_INT32", [1]]
 BoolType = ["TENSOR_BOOL8", [1]]
 
+def quantize(data, scale, offset):
+  return [max(-128, min(127, int(round(x / scale)) + offset)) for x in data]
+
 def MakeInnerConditionModel():
-  xi = Input("xi", DataType)
+  xi = Input("xi", DataType10)
   j = Input("j", CounterType)
   i = Input("i", CounterType)
-  x = Input("x", DataType)
+  x = Input("x", DataType05)
   out = Output("out", BoolType)
   model = Model()
   model.IdentifyInputs(xi, j, i, x)
@@ -44,11 +48,11 @@ def MakeInnerConditionModel():
   return model
 
 def MakeInnerBodyModel():
-  xi = Input("xi", DataType)
+  xi = Input("xi", DataType10)
   j = Input("j", CounterType)
   i = Input("i", CounterType)
-  x = Input("x", DataType)
-  xi_out = Output("xi_out", DataType)
+  x = Input("x", DataType05)
+  xi_out = Output("xi_out", DataType10)
   j_out = Output("j_out", CounterType)
   model = Model()
   model.IdentifyInputs(xi, j, i, x)
@@ -58,10 +62,10 @@ def MakeInnerBodyModel():
   return model
 
 def MakeOuterConditionModel():
-  sum = Input("sum", DataType)
+  sum = Input("sum", DataType10)
   i = Input("i", CounterType)
   n = Input("n", CounterType)
-  x = Input("x", DataType)
+  x = Input("x", DataType05)
   out = Output("out", BoolType)
   model = Model()
   model.IdentifyInputs(sum, i, n, x)
@@ -70,47 +74,46 @@ def MakeOuterConditionModel():
   return model
 
 def MakeOuterBodyModel():
-  sum = Input("sum", DataType)
+  sum = Input("sum", DataType10)
   i = Input("i", CounterType)
   n = Input("n", CounterType)
-  x = Input("x", DataType)
-  sum_out = Output("sum_out", DataType)
+  x = Input("x", DataType05)
+  sum_out = Output("sum_out", DataType10)
   i_out = Output("i_out", CounterType)
-  xi_init = x
+  xi_init = Internal("xi_init", DataType10)
   j_init = [1]
   cond = MakeInnerConditionModel()
   body = MakeInnerBodyModel()
-  xi = Internal("xi", DataType)
+  xi = Internal("xi", DataType10)
+  zero = Parameter("zero", DataType10, quantize([0, 0], 1.0, 12))
   model = Model()
   model.IdentifyInputs(sum, i, n, x)
   model.IdentifyOutputs(sum_out, i_out)
+  model.Operation("ADD", x, zero, 0).To(xi_init)
   model.Operation("WHILE", cond, body, xi_init, j_init, i, x).To(xi)
   model.Operation("ADD", i, [1], 0).To(i_out)
   model.Operation("ADD", sum, xi, 0).To(sum_out)
   return model
 
 def Test(x_data, n_data, sum_data):
-  x = Input("x", DataType)
+  x = Input("x", DataType05)
   n = Input("n", CounterType)
-  sum = Output("sum", DataType)
+  sum = Output("sum", DataType10)
   cond = MakeOuterConditionModel()
   body = MakeOuterBodyModel()
-  sum_init = Parameter("sum_init", DataType, [1, 1])
+  sum_init = Parameter("sum_init", DataType10, quantize([1, 1], 1.0, 12))
   i_init = [1]
   model = Model().Operation("WHILE", cond, body, sum_init, i_init, n, x).To(sum)
 
   example = Example({
-    x: x_data,
+    x: quantize(x_data, 0.5, 12),
     n: [n_data],
-    sum: sum_data,
+    sum: quantize(sum_data, 1.0, 12),
   }, name="n_{}".format(n_data))
-  example.AddVariations("relaxed", "float16")
   example.AddVariations(AllOutputsAsInternalCoverter())
 
-for use_shm_for_weights in [False, True]:
-  Configuration.use_shm_for_weights = use_shm_for_weights
-  Test(x_data=[2, 3], n_data=0, sum_data=[1, 1])
-  Test(x_data=[2, 3], n_data=1, sum_data=[1 + 2, 1 + 3])
-  Test(x_data=[2, 3], n_data=2, sum_data=[1 + 2 + 4, 1 + 3 + 9])
-  Test(x_data=[2, 3], n_data=3, sum_data=[1 + 2 + 4 + 8, 1 + 3 + 9 + 27])
-  Test(x_data=[2, 3], n_data=4, sum_data=[1 + 2 + 4 + 8 + 16, 1 + 3 + 9 + 27 + 81])
+Test(x_data=[2, 3], n_data=0, sum_data=[1, 1])
+Test(x_data=[2, 3], n_data=1, sum_data=[1 + 2, 1 + 3])
+Test(x_data=[2, 3], n_data=2, sum_data=[1 + 2 + 4, 1 + 3 + 9])
+Test(x_data=[2, 3], n_data=3, sum_data=[1 + 2 + 4 + 8, 1 + 3 + 9 + 27])
+Test(x_data=[2, 3], n_data=4, sum_data=[1 + 2 + 4 + 8 + 16, 1 + 3 + 9 + 27 + 81])
