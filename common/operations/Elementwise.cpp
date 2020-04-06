@@ -110,6 +110,27 @@ bool validateAbs(const IOperationValidationContext* context) {
                                                                                : HalVersion::V1_2));
 }
 
+bool validateFloor(const IOperationValidationContext* context) {
+    NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
+    NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
+
+    OperandType inputType = context->getInputType(kInputTensor);
+    NN_RET_CHECK(inputType == OperandType::TENSOR_FLOAT16 ||
+                 inputType == OperandType::TENSOR_FLOAT32)
+            << "Unsupported tensor type for operation FLOOR";
+    NN_RET_CHECK(validateInputTypes(context, {inputType}));
+    NN_RET_CHECK(validateOutputTypes(context, {inputType}));
+
+    const Shape& input = context->getInputShape(kInputTensor);
+    if (hasKnownRank(input)) {
+        NN_RET_CHECK_LE(getNumberOfDimensions(input), 4);
+    }
+
+    return validateHalVersion(
+            context,
+            (inputType == OperandType::TENSOR_FLOAT16 ? HalVersion::V1_2 : HalVersion::V1_0));
+}
+
 bool prepare(IOperationExecutionContext* context) {
     Shape input = context->getInputShape(kInputTensor);
     Shape output = context->getOutputShape(kOutputTensor);
@@ -117,8 +138,20 @@ bool prepare(IOperationExecutionContext* context) {
     return context->setOutputShape(kOutputTensor, output);
 }
 
+bool prepareFloor(IOperationExecutionContext* context) {
+    Shape input = context->getInputShape(kInputTensor);
+    Shape output = context->getOutputShape(kOutputTensor);
+    NN_RET_CHECK_LE(getNumberOfDimensions(input), 4);
+    NN_RET_CHECK(SetShape(input, &output));
+    return context->setOutputShape(kOutputTensor, output);
+}
+
 bool executeExp(IOperationExecutionContext* context) {
     return execute(context, std::exp);
+}
+
+bool executeFloor(IOperationExecutionContext* context) {
+    return execute(context, std::floor);
 }
 
 bool executeLog(IOperationExecutionContext* context) {
@@ -143,6 +176,8 @@ NN_REGISTER_OPERATION(ABS, "ABS", elementwise::validateAbs, elementwise::prepare
                       elementwise::executeAbs);
 NN_REGISTER_OPERATION(EXP, "EXP", elementwise::validate, elementwise::prepare,
                       elementwise::executeExp);
+NN_REGISTER_OPERATION(FLOOR, "FLOOR", elementwise::validateFloor, elementwise::prepareFloor,
+                      elementwise::executeFloor);
 NN_REGISTER_OPERATION(LOG, "LOG", elementwise::validate, elementwise::prepare,
                       elementwise::executeLog);
 NN_REGISTER_OPERATION(RSQRT, "RSQRT", elementwise::validate, elementwise::prepare,

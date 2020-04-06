@@ -240,6 +240,13 @@ bool validate(const IOperationValidationContext* context) {
     }
     NN_RET_CHECK(validateInputTypes(context, inExpectedTypes));
     NN_RET_CHECK(validateOutputTypes(context, {inputType}));
+
+    const Shape& input = context->getInputShape(kInputTensor);
+    if (hasKnownRank(input)) {
+        NN_RET_CHECK_GE(getNumberOfDimensions(input), 2);
+        NN_RET_CHECK_LE(getNumberOfDimensions(input), 4);
+    }
+
     return true;
 }
 
@@ -260,6 +267,7 @@ bool prepare(IOperationExecutionContext* context) {
     // The Tensorflow fully connected layer specification says that input should
     // be of at least rank 2, so we check. Tflite doesn't check.
     NN_RET_CHECK_GE(getNumberOfDimensions(input), 2);
+    NN_RET_CHECK_LE(getNumberOfDimensions(input), 4);
     NN_RET_CHECK_EQ(getNumberOfDimensions(weights), 2);
     uint32_t input_n_elements = getNumberOfElements(input);
     uint32_t num_units = getSizeOfDimension(weights, 0);
