@@ -22,6 +22,7 @@
 #include <queue>
 #include <set>
 #include <string>
+#include <thread>
 #include <tuple>
 #include <utility>
 #include <vector>
@@ -410,7 +411,8 @@ std::pair<Timing, Timing> getExpectedTiming(Success s, bool fencedExecution) {
 }
 
 // For these tests we don't care about actually running an inference -- we
-// just want to dummy up execution status and timing results.
+// just want to dummy up execution status and timing results, and control
+// when the execution finishes.
 class TestPreparedModelLatest : public SamplePreparedModel {
    public:
     TestPreparedModelLatest(const HidlModel& model, const SampleDriver* driver, Success success)
