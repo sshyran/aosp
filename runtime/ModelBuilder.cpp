@@ -532,8 +532,239 @@ int ModelBuilder::finish() {
         graphDump("ModelBuilder::finish", modelForValidation, nullptr);
     }
 
+    removeTrailingArgumentsWithDefaultValues();
+
     mCompletedModel = true;
     return ANEURALNETWORKS_NO_ERROR;
+}
+
+void ModelBuilder::removeTrailingArgumentsWithDefaultValues() {
+    for (Operation& operation : mOperations) {
+        const uint32_t count = getNumTrailingArgumentsToRemove(operation);
+        if (count == 0) {
+            continue;
+        }
+        VLOG(MODEL) << "Operation " << toString(operation.type)
+                    << " has trailing optional arguments set to default values. Removing " << count
+                    << " trailing arguments.";
+        CHECK_LT(count, operation.inputs.size());
+        const uint32_t newInputCount = operation.inputs.size() - count;
+        for (uint32_t i = newInputCount; i < operation.inputs.size(); ++i) {
+            --mOperands[operation.inputs[i]].numberOfConsumers;
+        }
+        operation.inputs.resize(newInputCount);
+    }
+}
+
+// See countMatchingTrailingArguments().
+enum class TailSpec {
+    BOOL_FALSE,
+    INT32_ONE,
+    INT32_NEGATIVE_ONE,
+};
+
+// See countMatchingTrailingArguments().
+static bool matchesSpec(TailSpec spec, const Operand& operand,
+                        const std::vector<uint8_t>& mSmallOperandValues) {
+    if (operand.lifetime != OperandLifeTime::CONSTANT_COPY) {
+        // CONSTANT_REFERENCE operands are not supported to avoid mapping memory
+        // during compilation.
+        return false;
+    }
+    auto valuePtr = static_cast<const void*>(&mSmallOperandValues[operand.location.offset]);
+    switch (spec) {
+        case TailSpec::BOOL_FALSE:
+            return operand.type == OperandType::BOOL &&
+                   *static_cast<const bool8*>(valuePtr) == false;
+        case TailSpec::INT32_ONE:
+            return operand.type == OperandType::INT32 &&
+                   *static_cast<const int32_t*>(valuePtr) == 1;
+        case TailSpec::INT32_NEGATIVE_ONE:
+            return operand.type == OperandType::INT32 &&
+                   *static_cast<const int32_t*>(valuePtr) == -1;
+        default:
+            CHECK(false) << "Unhandled TailSpec: " << static_cast<int>(spec);
+    }
+}
+
+// Returns the number of trailing operation inputs that match the specification.
+//
+// Example:
+//     opeation.inputs = {BOOL_TRUE, BOOL_TRUE,  INT32_ONE, INT32_NEGATIVE_ONE}
+//     tail            =            {BOOL_FALSE, INT32_ONE, INT32_NEGATIVE_ONE}
+//     tailStartIndex  = 1    matching elements: ^^^^^^^^^  ^^^^^^^^^^^^^^^^^^
+static uint32_t countMatchingTrailingArguments(uint32_t tailStartIndex,
+                                               const std::vector<TailSpec>& tail,
+                                               const Operation& operation,
+                                               const std::vector<Operand>& operands,
+                                               const std::vector<uint8_t>& smallOperandValues) {
+    const uint32_t inputCount = operation.inputs.size();
+    uint32_t count = 0;
+    for (uint32_t i = inputCount - 1; i >= tailStartIndex; --i) {
+        const Operand& operand = operands[operation.inputs[i]];
+        if (!matchesSpec(tail[i - tailStartIndex], operand, smallOperandValues)) {
+            break;
+        }
+        ++count;
+    }
+    return count;
+}
+
+uint32_t ModelBuilder::getNumTrailingArgumentsToRemove(const Operation& operation) const {
+    const uint32_t inputCount = operation.inputs.size();
+    auto getCount = [this, &operation](uint32_t tailStartIndex, const std::vector<TailSpec>& tail) {
+        return countMatchingTrailingArguments(tailStartIndex, tail, operation, mOperands,
+                                              mSmallOperandValues);
+    };
+    using TS = TailSpec;
+    // Check if the operation has optional arguments that might be set to default
+    // values. Skip the counting if no optional arguments are present.
+    switch (operation.type) {
+        case OperationType::AVERAGE_POOL_2D: {
+            if (inputCount == 11) {
+                // Explicit padding
+                // API level 29: 10 to 11 inputs
+                // API level 27: 10 inputs
+                return getCount(10, {TS::BOOL_FALSE});
+            }
+            if (inputCount == 8) {
+                // Implicit padding
+                // API level 29: 7 to 8 inputs
+                // API level 27: 7 inputs
+                return getCount(7, {TS::BOOL_FALSE});
+            }
+        } break;
+        case OperationType::CONV_2D: {
+            if (10 < inputCount && inputCount <= 13) {
+                // Explicit padding
+                // API level 29: 10 to 13 inputs
+                // API level 27: 10 inputs
+                return getCount(10, {TS::BOOL_FALSE, TS::INT32_ONE, TS::INT32_ONE});
+            }
+            if (7 < inputCount && inputCount <= 10) {
+                // Implicit padding
+                // API level 29: 7 to 10 inputs
+                // API level 27: 7 inputs
+                return getCount(7, {TS::BOOL_FALSE, TS::INT32_ONE, TS::INT32_ONE});
+            }
+        } break;
+        case OperationType::DEPTHWISE_CONV_2D: {
+            if (11 < inputCount && inputCount <= 14) {
+                // Explicit padding
+                // API level 29: 11 to 14 inputs
+                // API level 27: 11 inputs
+                return getCount(11, {TS::BOOL_FALSE, TS::INT32_ONE, TS::INT32_ONE});
+            }
+            if (8 < inputCount && inputCount <= 11) {
+                // Implicit padding
+                // API level 29: 8 to 11 inputs
+                // API level 27: 8 inputs
+                return getCount(8, {TS::BOOL_FALSE, TS::INT32_ONE, TS::INT32_ONE});
+            }
+        } break;
+        case OperationType::DEPTH_TO_SPACE: {
+            if (inputCount == 3) {
+                // API level 29: 2 to 3 inputs
+                // API level 27: 2 inputs
+                return getCount(2, {TS::BOOL_FALSE});
+            }
+        } break;
+        case OperationType::L2_NORMALIZATION: {
+            if (inputCount == 2) {
+                // API level 29: 1 to 2 inputs
+                // API level 27: 1 inputs
+                return getCount(1, {TS::INT32_NEGATIVE_ONE});
+            }
+        } break;
+        case OperationType::L2_POOL_2D: {
+            if (inputCount == 11) {
+                // Explicit padding
+                // API level 29: 10 to 11 inputs
+                // API level 27: 10 inputs
+                return getCount(10, {TS::BOOL_FALSE});
+            }
+            if (inputCount == 8) {
+                // Implicit padding
+                // API level 29: 7 to 8 inputs
+                // API level 27: 7 inputs
+                return getCount(7, {TS::BOOL_FALSE});
+            }
+        } break;
+        case OperationType::LOCAL_RESPONSE_NORMALIZATION: {
+            if (inputCount == 6) {
+                // API level 29: 5 to 6 inputs
+                // API level 27: 5 inputs
+                return getCount(5, {TS::INT32_NEGATIVE_ONE});
+            }
+        } break;
+        case OperationType::MAX_POOL_2D: {
+            if (inputCount == 11) {
+                // Explicit padding
+                // API level 29: 10 to 11 inputs
+                // API level 27: 10 inputs
+                return getCount(10, {TS::BOOL_FALSE});
+            }
+            if (inputCount == 8) {
+                // Implicit padding
+                // API level 29: 7 to 8 inputs
+                // API level 27: 7 inputs
+                return getCount(7, {TS::BOOL_FALSE});
+            }
+        } break;
+        case OperationType::RESIZE_BILINEAR: {
+            if (3 < inputCount && inputCount <= 6) {
+                // By shape:
+                //     API level 30: 3 to 6 inputs
+                //     API level 29: 3 to 4 inputs
+                //     API level 27: 3 inputs
+                // By scale:
+                //     API level 30: 3 to 6 inputs
+                //     API level 29: 3 to 4 inputs
+                return getCount(3, {TS::BOOL_FALSE, TS::BOOL_FALSE, TS::BOOL_FALSE});
+            }
+        } break;
+        case OperationType::SOFTMAX: {
+            if (inputCount == 3) {
+                // API level 29: 2 to 3 inputs
+                // API level 27: 2 inputs
+                return getCount(2, {TS::INT32_NEGATIVE_ONE});
+            }
+        } break;
+        case OperationType::SPACE_TO_DEPTH: {
+            if (inputCount == 3) {
+                // API level 29: 2 to 3 inputs
+                // API level 27: 2 inputs
+                return getCount(2, {TS::BOOL_FALSE});
+            }
+        } break;
+        case OperationType::BATCH_TO_SPACE_ND: {
+            if (inputCount == 3) {
+                // API level 29: 2 to 3 inputs
+                // API level 28: 2 inputs
+                return getCount(2, {TS::BOOL_FALSE});
+            }
+        } break;
+        case OperationType::SPACE_TO_BATCH_ND: {
+            if (inputCount == 4) {
+                // API level 29: 3 to 4 inputs
+                // API level 28: 3 inputs
+                return getCount(3, {TS::BOOL_FALSE});
+            }
+        } break;
+        case OperationType::RESIZE_NEAREST_NEIGHBOR: {
+            if (4 < inputCount && inputCount <= 6) {
+                // By shape or scale
+                // API level 30: 4 to 6 inputs
+                // API level 29: 4 inputs
+                return getCount(4, {TS::BOOL_FALSE, TS::BOOL_FALSE});
+            }
+        } break;
+        default: {
+            // Do nothing.
+        } break;
+    }
+    // No trailing optional arguments to check.
+    return 0;
 }
 
 bool ModelBuilder::sortIntoRunOrder() {
