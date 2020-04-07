@@ -78,6 +78,13 @@ class TypeManager {
     // Aborts if the type is an unknown extension type.
     uint32_t getSizeOfData(hal::OperandType type, const std::vector<uint32_t>& dimensions) const;
 
+    // Returns true if the amount of space needed to store a value of the specified
+    // dimensions and element size overflows the uint32_t type.
+    //
+    // See also TypeManager::sizeOfDataOverflowsUInt32().
+    bool sizeOfDataOverflowsUInt32(hal::OperandType type,
+                                   const std::vector<uint32_t>& dimensions) const;
+
     // Returns true if extensions usage is allowed in current process.
     bool areExtensionsAllowed() const { return mExtensionsAllowed; }
 
