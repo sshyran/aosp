@@ -20,6 +20,7 @@
 
 #include <android-base/scopeguard.h>
 #include <android/hardware_buffer.h>
+#include <cutils/native_handle.h>
 #include <vndk/hardware_buffer.h>
 
 #include <algorithm>
