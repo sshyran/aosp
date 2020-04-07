@@ -85,3 +85,16 @@ Example({
     o2: [],
     o3: [],
 }).AddVariations("relaxed", "float16")
+
+
+# TEST 4: DIV by zero.
+# It is undefined behavior. The output is ignored and we only require the drivers to not crash.
+input0 = Input("input0", "TENSOR_FLOAT16", "{1}")
+input1 = Input("input1", "TENSOR_FLOAT16", "{1}")
+output = IgnoredOutput("output", "TENSOR_FLOAT16", "{1}")
+model = Model("by_zero").Operation("DIV", input0, input1, 0).To(output)
+Example({
+    input0: [1],
+    input1: [0],
+    output: [0],
+})
