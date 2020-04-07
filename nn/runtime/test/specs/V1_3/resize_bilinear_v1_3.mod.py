@@ -530,3 +530,67 @@ test(
     input0_data=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16],
     output_data=[1, 2.5, 4, 7, 8.5, 10, 13, 14.5, 16],
 )
+
+# Test from version 1.2 to test default arguments removal
+i2 = Input("op1", "TENSOR_FLOAT32", "{1, 2, 2, 2}")
+o2 = Output("op4", "TENSOR_FLOAT32", "{1, 3, 3, 2}")
+layout = BoolScalar("layout", False)  # NHWC
+align_corners = BoolScalar("align_corners", False)
+half_pixel_centers = BoolScalar("half_pixel_centers", False)
+model_shape = Model("shape").Operation("RESIZE_BILINEAR", i2, 3, 3, layout,
+                                       align_corners, half_pixel_centers).To(o2)
+model_scale = Model("scale").Operation("RESIZE_BILINEAR", i2, 1.6, 1.6, layout,
+                                       align_corners, half_pixel_centers).To(o2)
+
+# Additional data type
+quant8 = DataTypeConverter().Identify({
+    i2: ("TENSOR_QUANT8_ASYMM", 0.25, 0),
+    o2: ("TENSOR_QUANT8_ASYMM", 0.25, 0)
+})
+
+values = {
+    i2: [3, 4, 6, 10, 9, 10, 12, 16],
+    o2: [3, 4, 5, 8, 6, 10, 7, 8, 9, 12, 10, 14, 9, 10, 11, 14, 12, 16]
+}
+
+# Instantiate an example
+Example(
+    values, model=model_shape,
+    name="default_values").AddNchw(i2, o2, layout).AddVariations(
+        "relaxed", "float16", quant8)
+Example(
+    values, model=model_scale,
+    name="default_values").AddNchw(i2, o2, layout).AddVariations(
+        "relaxed", "float16", quant8)
+
+Example.SetVersion(
+    "V1_2",
+    "resize_bilinear_v1_3_scale_default_values_nchw",
+    "resize_bilinear_v1_3_scale_default_values_nchw_all_inputs_as_internal",
+    "resize_bilinear_v1_3_scale_default_values_nchw_float16",
+    "resize_bilinear_v1_3_scale_default_values_nchw_float16_all_inputs_as_internal",
+    "resize_bilinear_v1_3_scale_default_values_nchw_quant8",
+    "resize_bilinear_v1_3_scale_default_values_nchw_quant8_all_inputs_as_internal",
+    "resize_bilinear_v1_3_scale_default_values_nhwc",
+    "resize_bilinear_v1_3_scale_default_values_nhwc_all_inputs_as_internal",
+    "resize_bilinear_v1_3_scale_default_values_nhwc_float16",
+    "resize_bilinear_v1_3_scale_default_values_nhwc_float16_all_inputs_as_internal",
+    "resize_bilinear_v1_3_scale_default_values_nhwc_quant8",
+    "resize_bilinear_v1_3_scale_default_values_nhwc_quant8_all_inputs_as_internal",
+    "resize_bilinear_v1_3_shape_default_values_nchw",
+    "resize_bilinear_v1_3_shape_default_values_nchw_all_inputs_as_internal",
+    "resize_bilinear_v1_3_shape_default_values_nchw_float16",
+    "resize_bilinear_v1_3_shape_default_values_nchw_float16_all_inputs_as_internal",
+    "resize_bilinear_v1_3_shape_default_values_nchw_quant8",
+    "resize_bilinear_v1_3_shape_default_values_nchw_quant8_all_inputs_as_internal",
+    "resize_bilinear_v1_3_shape_default_values_nhwc_float16",
+    "resize_bilinear_v1_3_shape_default_values_nhwc_float16_all_inputs_as_internal",
+    "resize_bilinear_v1_3_shape_default_values_nhwc_quant8",
+    "resize_bilinear_v1_3_shape_default_values_nhwc_quant8_all_inputs_as_internal",
+)
+
+Example.SetVersion(
+    "V1_0",
+    "resize_bilinear_v1_3_shape_default_values_nhwc",
+    "resize_bilinear_v1_3_shape_default_values_nhwc_all_inputs_as_internal",
+)
