@@ -36,3 +36,11 @@ Model().Operation("LOCAL_RESPONSE_NORMALIZATION", i, 2, 9.0, 4.0, 0.5).To(o)
 Example((input0, {
         o: [-.26492569, .12510864, .14011213, .26726127, -.16178755, .0244266] * 8
     })).AddDims([1, 2, 3], i, o, includeDefault=False).AddVariations("relaxed", "float16")
+
+# The tests below can comply with a lower version because the runtime removes
+# optional arguments set to default values.
+Example.SetVersion("V1_0",
+                   "local_response_normalization_v1_2_axis_dim4_axis3_neg",
+                   "local_response_normalization_v1_2_axis_dim4_axis3_neg_2",
+                   "local_response_normalization_v1_2_axis_dim4_axis3_neg_all_inputs_as_internal",
+                   "local_response_normalization_v1_2_axis_dim4_axis3_neg_all_inputs_as_internal_2")

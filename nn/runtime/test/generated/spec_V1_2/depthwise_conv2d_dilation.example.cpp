@@ -171,7 +171,7 @@ const TestModel& get_test_model_nhwc() {
                         }},
                 .outputIndexes = {14}
             },
-        .minSupportedVersion = TestHalVersion::V1_2,
+        .minSupportedVersion = TestHalVersion::V1_0,
         .referenced = {}
     };
     return model;
@@ -382,7 +382,7 @@ const TestModel& get_test_model_nhwc_all_inputs_as_internal() {
                         }},
                 .outputIndexes = {14}
             },
-        .minSupportedVersion = TestHalVersion::V1_2,
+        .minSupportedVersion = TestHalVersion::V1_0,
         .referenced = {}
     };
     return model;
@@ -559,7 +559,7 @@ const TestModel& get_test_model_nhwc_all_tensors_as_inputs() {
                         }},
                 .outputIndexes = {14}
             },
-        .minSupportedVersion = TestHalVersion::V1_2,
+        .minSupportedVersion = TestHalVersion::V1_0,
         .referenced = {}
     };
     return model;
@@ -838,7 +838,7 @@ const TestModel& get_test_model_nhwc_all_tensors_as_inputs_all_inputs_as_interna
                         }},
                 .outputIndexes = {14}
             },
-        .minSupportedVersion = TestHalVersion::V1_2,
+        .minSupportedVersion = TestHalVersion::V1_0,
         .referenced = {}
     };
     return model;
@@ -2703,7 +2703,7 @@ const TestModel& get_test_model_nhwc_quant8() {
                         }},
                 .outputIndexes = {14}
             },
-        .minSupportedVersion = TestHalVersion::V1_2,
+        .minSupportedVersion = TestHalVersion::V1_0,
         .referenced = {}
     };
     return model;
@@ -2914,7 +2914,7 @@ const TestModel& get_test_model_nhwc_quant8_all_inputs_as_internal() {
                         }},
                 .outputIndexes = {14}
             },
-        .minSupportedVersion = TestHalVersion::V1_2,
+        .minSupportedVersion = TestHalVersion::V1_0,
         .referenced = {}
     };
     return model;
@@ -3091,7 +3091,7 @@ const TestModel& get_test_model_nhwc_quant8_all_tensors_as_inputs() {
                         }},
                 .outputIndexes = {14}
             },
-        .minSupportedVersion = TestHalVersion::V1_2,
+        .minSupportedVersion = TestHalVersion::V1_0,
         .referenced = {}
     };
     return model;
@@ -3336,7 +3336,7 @@ const TestModel& get_test_model_nhwc_quant8_all_tensors_as_inputs_all_inputs_as_
                         }},
                 .outputIndexes = {14}
             },
-        .minSupportedVersion = TestHalVersion::V1_2,
+        .minSupportedVersion = TestHalVersion::V1_0,
         .referenced = {}
     };
     return model;
@@ -8513,7 +8513,7 @@ const TestModel& get_test_model_valid_padding_nhwc() {
                         }},
                 .outputIndexes = {11}
             },
-        .minSupportedVersion = TestHalVersion::V1_2,
+        .minSupportedVersion = TestHalVersion::V1_0,
         .referenced = {}
     };
     return model;
@@ -8694,7 +8694,7 @@ const TestModel& get_test_model_valid_padding_nhwc_all_inputs_as_internal() {
                         }},
                 .outputIndexes = {11}
             },
-        .minSupportedVersion = TestHalVersion::V1_2,
+        .minSupportedVersion = TestHalVersion::V1_0,
         .referenced = {}
     };
     return model;
@@ -8841,7 +8841,7 @@ const TestModel& get_test_model_valid_padding_nhwc_all_tensors_as_inputs() {
                         }},
                 .outputIndexes = {11}
             },
-        .minSupportedVersion = TestHalVersion::V1_2,
+        .minSupportedVersion = TestHalVersion::V1_0,
         .referenced = {}
     };
     return model;
@@ -9090,7 +9090,7 @@ const TestModel& get_test_model_valid_padding_nhwc_all_tensors_as_inputs_all_inp
                         }},
                 .outputIndexes = {11}
             },
-        .minSupportedVersion = TestHalVersion::V1_2,
+        .minSupportedVersion = TestHalVersion::V1_0,
         .referenced = {}
     };
     return model;
@@ -10685,7 +10685,7 @@ const TestModel& get_test_model_valid_padding_nhwc_quant8() {
                         }},
                 .outputIndexes = {11}
             },
-        .minSupportedVersion = TestHalVersion::V1_2,
+        .minSupportedVersion = TestHalVersion::V1_0,
         .referenced = {}
     };
     return model;
@@ -10866,7 +10866,7 @@ const TestModel& get_test_model_valid_padding_nhwc_quant8_all_inputs_as_internal
                         }},
                 .outputIndexes = {11}
             },
-        .minSupportedVersion = TestHalVersion::V1_2,
+        .minSupportedVersion = TestHalVersion::V1_0,
         .referenced = {}
     };
     return model;
@@ -11013,7 +11013,7 @@ const TestModel& get_test_model_valid_padding_nhwc_quant8_all_tensors_as_inputs(
                         }},
                 .outputIndexes = {11}
             },
-        .minSupportedVersion = TestHalVersion::V1_2,
+        .minSupportedVersion = TestHalVersion::V1_0,
         .referenced = {}
     };
     return model;
@@ -11228,7 +11228,7 @@ const TestModel& get_test_model_valid_padding_nhwc_quant8_all_tensors_as_inputs_
                         }},
                 .outputIndexes = {11}
             },
-        .minSupportedVersion = TestHalVersion::V1_2,
+        .minSupportedVersion = TestHalVersion::V1_0,
         .referenced = {}
     };
     return model;
