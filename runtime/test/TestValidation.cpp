@@ -71,11 +71,14 @@ class ValidationTestModel : public ValidationTest {
     }
 
     uint32_t addTensorOperand(int32_t type = ANEURALNETWORKS_TENSOR_FLOAT32) {
-        uint32_t dimensions[] = {2};
+        return addTensorOperand(type, {2});
+    }
+
+    uint32_t addTensorOperand(int32_t type, const std::vector<uint32_t>& dimensions) {
         ANeuralNetworksOperandType operandType = {
                 .type = type,
-                .dimensionCount = sizeof(dimensions) / sizeof(dimensions[0]),
-                .dimensions = dimensions,
+                .dimensionCount = static_cast<uint32_t>(dimensions.size()),
+                .dimensions = dimensions.data(),
         };
         return addOperand(operandType);
     }
@@ -1920,6 +1923,56 @@ TEST_F(ValidationTestModel, AddOperandDimensionProductOverflow) {
     };
     // This should fail, as the operand type's dimension product overflows uint32_t.
     ASSERT_EQ(ANeuralNetworksModel_addOperand(mModel, &operandType), ANEURALNETWORKS_BAD_DATA);
+}
+
+class ValidationTestDimensionProductOverflow2 : public ValidationTestExecution {
+   protected:
+    void createModel() override {
+        addTensorOperand(ANEURALNETWORKS_TENSOR_FLOAT32, {0, 1});
+        addTensorOperand(ANEURALNETWORKS_TENSOR_FLOAT32, {0, 1});
+        addTensorOperand(ANEURALNETWORKS_TENSOR_FLOAT32, {0});
+        addScalarOperand(ANEURALNETWORKS_INT32);
+        int32_t activation = 0;
+        ASSERT_EQ(ANeuralNetworksModel_setOperandValue(mModel, 3, &activation, sizeof(activation)),
+                  ANEURALNETWORKS_NO_ERROR);
+        addTensorOperand(ANEURALNETWORKS_TENSOR_FLOAT32, {0, 0});
+        ASSERT_EQ(addOperation(ANEURALNETWORKS_FULLY_CONNECTED, {0, 1, 2, 3}, {4}),
+                  ANEURALNETWORKS_NO_ERROR);
+        ASSERT_EQ(identifyInputsAndOutputs({0, 1, 2}, {4}), ANEURALNETWORKS_NO_ERROR);
+        ASSERT_EQ(modelFinish(), ANEURALNETWORKS_NO_ERROR);
+    }
+};
+
+TEST_F(ValidationTestDimensionProductOverflow2, DynamicOutputShapeOverflow) {
+    constexpr uint32_t kLargeDim = 1 << 16;
+    std::vector<float> inputData(kLargeDim), outputData(kLargeDim);
+    const uint32_t inputDims[] = {kLargeDim, 1};
+    const uint32_t biasDims[] = {kLargeDim};
+    const ANeuralNetworksOperandType inputType = {
+            .type = ANEURALNETWORKS_TENSOR_FLOAT32,
+            .dimensionCount = std::size(inputDims),
+            .dimensions = inputDims,
+    };
+    const ANeuralNetworksOperandType biasType = {
+            .type = ANEURALNETWORKS_TENSOR_FLOAT32,
+            .dimensionCount = std::size(biasDims),
+            .dimensions = biasDims,
+    };
+    EXPECT_EQ(ANeuralNetworksExecution_setInput(mExecution, 0, &inputType, inputData.data(),
+                                                inputData.size() * sizeof(float)),
+              ANEURALNETWORKS_NO_ERROR);
+    EXPECT_EQ(ANeuralNetworksExecution_setInput(mExecution, 1, &inputType, inputData.data(),
+                                                inputData.size() * sizeof(float)),
+              ANEURALNETWORKS_NO_ERROR);
+    EXPECT_EQ(ANeuralNetworksExecution_setInput(mExecution, 2, &biasType, inputData.data(),
+                                                inputData.size() * sizeof(float)),
+              ANEURALNETWORKS_NO_ERROR);
+    EXPECT_EQ(ANeuralNetworksExecution_setOutput(mExecution, 0, nullptr, outputData.data(),
+                                                 outputData.size() * sizeof(float)),
+              ANEURALNETWORKS_NO_ERROR);
+
+    // This should fail, because the deduced output data size overflows uint32_t.
+    EXPECT_NE(ANeuralNetworksExecution_compute(mExecution), ANEURALNETWORKS_NO_ERROR);
 }
 
 TEST_F(ValidationTestBurst, BurstComputeNull) {
