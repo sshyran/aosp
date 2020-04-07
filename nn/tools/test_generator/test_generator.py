@@ -747,15 +747,17 @@ class DefaultVariation(ModelVariation):
 class DataTypeConverter(ModelVariation, ImplicitVariation):
     supportsSubgraphs = True
 
-    def __init__(self, targetType=None, name=None):
+    def __init__(self, targetType=None, name=None, scale=None, zeroPoint=None):
         ModelVariation.__init__(self, name=name)
         if targetType is not None:
             assert DataTypeConverter.IsCompatible(targetType)
         self.targetType = targetType
+        self.scale = scale
+        self.zeroPoint = zeroPoint
 
     @staticmethod
     def IsCompatible(value):
-        return value.lower() in ["float16", "int32"]
+        return value.lower() in ["float16", "int32", "quant8", "quant8_signed"]
 
     def SetToDefaultName(self):
         if self.targetType is not None:
@@ -779,14 +781,28 @@ class DataTypeConverter(ModelVariation, ImplicitVariation):
 
     def AutoIdentify(self, model):
         if self.targetType is not None:
+            if self.targetType == "quant8" or self.targetType == "quant8_signed":
+                if self.targetType == "quant8":
+                    tensorType = "TENSOR_QUANT8_ASYMM"
+                else:
+                    tensorType = "TENSOR_QUANT8_ASYMM_SIGNED"
+                assert self.scale is not None
+                assert self.zeroPoint is not None
+                tensorType = [tensorType, self.scale, self.zeroPoint]
+                scalarType = None  # Not supported.
+            else:
+                tensorType = ["TENSOR_" + self.targetType.upper()]
+                scalarType = [self.targetType.upper()]
             # By default, select all the float32 tensors/scalars
             targets = dict()
-            targets.update({op: ["TENSOR_" + self.targetType.upper()]
-                            for op in model.operands if op.type.type == "TENSOR_FLOAT32"})
-            targets.update({op: [self.targetType.upper()]
-                            for op in model.operands if op.type.type == "FLOAT32"})
-            targets.update({op: DataTypeConverter(self.targetType, self.name)
+            targets.update({op: DataTypeConverter(self.targetType, self.name,
+                                                  self.scale, self.zeroPoint)
                             for op in model.operands if op.type.type == "SUBGRAPH"})
+            targets.update({op: tensorType
+                            for op in model.operands if op.type.type == "TENSOR_FLOAT32"})
+            if scalarType is not None:
+                targets.update({op: scalarType
+                                for op in model.operands if op.type.type == "FLOAT32"})
             self.Identify(targets)
         return self
 
