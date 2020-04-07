@@ -4789,7 +4789,7 @@ const TestModel& get_test_model_axis_dim4_axis3_neg() {
                         }},
                 .outputIndexes = {3}
             },
-        .minSupportedVersion = TestHalVersion::V1_2,
+        .minSupportedVersion = TestHalVersion::V1_0,
         .referenced = {}
     };
     return model;
@@ -4890,7 +4890,7 @@ const TestModel& get_test_model_axis_dim4_axis3_neg_all_inputs_as_internal() {
                         }},
                 .outputIndexes = {3}
             },
-        .minSupportedVersion = TestHalVersion::V1_2,
+        .minSupportedVersion = TestHalVersion::V1_0,
         .referenced = {}
     };
     return model;
@@ -6469,7 +6469,7 @@ const TestModel& get_test_model_axis_dim2_axis1_neg() {
                         }},
                 .outputIndexes = {3}
             },
-        .minSupportedVersion = TestHalVersion::V1_2,
+        .minSupportedVersion = TestHalVersion::V1_0,
         .referenced = {}
     };
     return model;
@@ -6570,7 +6570,7 @@ const TestModel& get_test_model_axis_dim2_axis1_neg_all_inputs_as_internal() {
                         }},
                 .outputIndexes = {3}
             },
-        .minSupportedVersion = TestHalVersion::V1_2,
+        .minSupportedVersion = TestHalVersion::V1_0,
         .referenced = {}
     };
     return model;
@@ -14869,7 +14869,7 @@ const TestModel& get_test_model_axis_quant8_dim4_axis3_neg() {
                         }},
                 .outputIndexes = {3}
             },
-        .minSupportedVersion = TestHalVersion::V1_2,
+        .minSupportedVersion = TestHalVersion::V1_0,
         .referenced = {}
     };
     return model;
@@ -14970,7 +14970,7 @@ const TestModel& get_test_model_axis_quant8_dim4_axis3_neg_all_inputs_as_interna
                         }},
                 .outputIndexes = {3}
             },
-        .minSupportedVersion = TestHalVersion::V1_2,
+        .minSupportedVersion = TestHalVersion::V1_0,
         .referenced = {}
     };
     return model;
@@ -16549,7 +16549,7 @@ const TestModel& get_test_model_axis_quant8_dim2_axis1_neg() {
                         }},
                 .outputIndexes = {3}
             },
-        .minSupportedVersion = TestHalVersion::V1_2,
+        .minSupportedVersion = TestHalVersion::V1_0,
         .referenced = {}
     };
     return model;
@@ -16650,7 +16650,7 @@ const TestModel& get_test_model_axis_quant8_dim2_axis1_neg_all_inputs_as_interna
                         }},
                 .outputIndexes = {3}
             },
-        .minSupportedVersion = TestHalVersion::V1_2,
+        .minSupportedVersion = TestHalVersion::V1_0,
         .referenced = {}
     };
     return model;
@@ -18229,7 +18229,7 @@ const TestModel& get_test_model_axis_dim4_axis3_neg_2() {
                         }},
                 .outputIndexes = {3}
             },
-        .minSupportedVersion = TestHalVersion::V1_2,
+        .minSupportedVersion = TestHalVersion::V1_0,
         .referenced = {}
     };
     return model;
@@ -18330,7 +18330,7 @@ const TestModel& get_test_model_axis_dim4_axis3_neg_all_inputs_as_internal_2() {
                         }},
                 .outputIndexes = {3}
             },
-        .minSupportedVersion = TestHalVersion::V1_2,
+        .minSupportedVersion = TestHalVersion::V1_0,
         .referenced = {}
     };
     return model;
@@ -19909,7 +19909,7 @@ const TestModel& get_test_model_axis_dim2_axis1_neg_2() {
                         }},
                 .outputIndexes = {3}
             },
-        .minSupportedVersion = TestHalVersion::V1_2,
+        .minSupportedVersion = TestHalVersion::V1_0,
         .referenced = {}
     };
     return model;
@@ -20010,7 +20010,7 @@ const TestModel& get_test_model_axis_dim2_axis1_neg_all_inputs_as_internal_2() {
                         }},
                 .outputIndexes = {3}
             },
-        .minSupportedVersion = TestHalVersion::V1_2,
+        .minSupportedVersion = TestHalVersion::V1_0,
         .referenced = {}
     };
     return model;
@@ -28309,7 +28309,7 @@ const TestModel& get_test_model_axis_quant8_dim4_axis3_neg_2() {
                         }},
                 .outputIndexes = {3}
             },
-        .minSupportedVersion = TestHalVersion::V1_2,
+        .minSupportedVersion = TestHalVersion::V1_0,
         .referenced = {}
     };
     return model;
@@ -28410,7 +28410,7 @@ const TestModel& get_test_model_axis_quant8_dim4_axis3_neg_all_inputs_as_interna
                         }},
                 .outputIndexes = {3}
             },
-        .minSupportedVersion = TestHalVersion::V1_2,
+        .minSupportedVersion = TestHalVersion::V1_0,
         .referenced = {}
     };
     return model;
@@ -29989,7 +29989,7 @@ const TestModel& get_test_model_axis_quant8_dim2_axis1_neg_2() {
                         }},
                 .outputIndexes = {3}
             },
-        .minSupportedVersion = TestHalVersion::V1_2,
+        .minSupportedVersion = TestHalVersion::V1_0,
         .referenced = {}
     };
     return model;
@@ -30090,7 +30090,7 @@ const TestModel& get_test_model_axis_quant8_dim2_axis1_neg_all_inputs_as_interna
                         }},
                 .outputIndexes = {3}
             },
-        .minSupportedVersion = TestHalVersion::V1_2,
+        .minSupportedVersion = TestHalVersion::V1_0,
         .referenced = {}
     };
     return model;
