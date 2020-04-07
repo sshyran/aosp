@@ -62,7 +62,7 @@ class Memory {
                  ANEURALNETWORKS_NO_ERROR;
     }
 
-    ~Memory() { ANeuralNetworksMemory_free(mMemory); }
+    virtual ~Memory() { ANeuralNetworksMemory_free(mMemory); }
 
     // Disallow copy semantics to ensure the runtime object can only be freed
     // once. Copy semantics could be enabled if some sort of reference counting
