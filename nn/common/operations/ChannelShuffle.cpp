@@ -69,6 +69,10 @@ bool validate(const IOperationValidationContext* context) {
                  inputType == OperandType::TENSOR_QUANT8_ASYMM ||
                  inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED)
             << "Unsupported tensor type for operation " << kOperationName;
+    const Shape& inputShape = context->getInputShape(kInputTensor);
+    if (hasKnownRank(inputShape)) {
+        NN_RET_CHECK_LE(getNumberOfDimensions(inputShape), 4);
+    }
     NN_RET_CHECK(validateInputTypes(context, {inputType, OperandType::INT32, OperandType::INT32}));
     NN_RET_CHECK(validateOutputTypes(context, {inputType}));
     if (inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
