@@ -1467,24 +1467,6 @@ std::pair<int, std::shared_ptr<VersionedIPreparedModel>> VersionedIDevice::prepa
     return prepareModelInternal(model, preference, priority, deadline, cacheDir, maybeToken);
 }
 
-DeviceStatus VersionedIDevice::getStatus() const {
-    // version 1.0+ HAL
-    if (getDevice<V1_0::IDevice>() != nullptr) {
-        Return<DeviceStatus> ret = recoverable<DeviceStatus, V1_0::IDevice>(
-                __FUNCTION__, [](const sp<V1_0::IDevice>& device) { return device->getStatus(); });
-
-        if (!ret.isOk()) {
-            LOG(ERROR) << "getStatus failure: " << ret.description();
-            return DeviceStatus::UNKNOWN;
-        }
-        return static_cast<DeviceStatus>(ret);
-    }
-
-    // No device available
-    LOG(ERROR) << "Device not available!";
-    return DeviceStatus::UNKNOWN;
-}
-
 int64_t VersionedIDevice::getFeatureLevel() const {
     constexpr int64_t kFailure = -1;
 
