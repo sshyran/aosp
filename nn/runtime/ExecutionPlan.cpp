@@ -306,6 +306,7 @@ int ExecutionStep::addOperand(uint32_t sourceOperandIndex, uint32_t* stepOperand
 int ExecutionStep::addOperation(int operationIndex) {
     const Operation& operation = getSourceModel()->getOperation(operationIndex);
     if (mToken.ok()) {
+        mToken.update(&mSourceModelIndex, sizeof(mSourceModelIndex));
         mToken.update(&operationIndex, sizeof(operationIndex));
     }
 
