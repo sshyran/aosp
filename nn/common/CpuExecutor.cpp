@@ -146,6 +146,9 @@ int OperationExecutionContext::getResultCode() const {
 // TODO: Return error code directly once we've fully integrated OperationResolver with all ops.
 // Updates the RunTimeOperandInfo with the newly calculated shape.
 // Allocate the buffer if we need to.
+//
+// TODO(b/153081229): This function currently cannot handle extension operands well. We need to
+//                    propagate the extension type info into this function.
 bool setInfoAndAllocateIfNeeded(RunTimeOperandInfo* info, const Shape& shape, int* result) {
     // For user-provided model output operands, the parameters must match the Shape
     // calculated from the preparation step.
@@ -183,6 +186,15 @@ bool setInfoAndAllocateIfNeeded(RunTimeOperandInfo* info, const Shape& shape, in
     info->scale = shape.scale;
     info->zeroPoint = shape.offset;
     info->extraParams = shape.extraParams;
+
+    // TODO(b/153081229): We bypass the overflow check on extension operands because we do not know
+    //                    the sizes of extension types.
+    if (!isExtensionOperandType(info->type) &&
+        nonExtensionOperandSizeOfDataOverflowsUInt32(info->type, info->dimensions)) {
+        LOG(ERROR) << "Operand data size overflows uint32_t";
+        *result = ANEURALNETWORKS_OP_FAILED;
+        return false;
+    }
 
     // Allocate the buffer only if the combined dimension is fully specified
     if (info->buffer == nullptr && (info->lifetime == OperandLifeTime::TEMPORARY_VARIABLE ||
