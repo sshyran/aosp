@@ -306,6 +306,7 @@ int ExecutionStep::addOperand(uint32_t sourceOperandIndex, uint32_t* stepOperand
 int ExecutionStep::addOperation(int operationIndex) {
     const Operation& operation = getSourceModel()->getOperation(operationIndex);
     if (mToken.ok()) {
+        mToken.update(&mSourceModelIndex, sizeof(mSourceModelIndex));
         mToken.update(&operationIndex, sizeof(operationIndex));
     }
 
@@ -1940,7 +1941,7 @@ int ModelBuilder::findBestDeviceForEachOperation(
             }
         }
         if (bestChoice < 0) {
-            LOG(ERROR) << "No driver can do the op";
+            LOG(ERROR) << "No driver can do operation " << toString(operation.type);
             return ANEURALNETWORKS_BAD_DATA;
         } else if (devices[bestChoice] == DeviceManager::getCpuDevice() &&
                    (operation.type == OperationType::IF ||

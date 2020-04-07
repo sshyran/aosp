@@ -58,3 +58,9 @@ Example({
     i2: [245, 247],
     o2: [0, 255],
 }).AddAllDimsAndAxis(i2, o2, axis)
+
+# The tests below can comply with a lower version because the runtime removes
+# optional arguments set to default values.
+Example.SetVersion("V1_0",
+                   "l2_normalization_axis_dim4_axis3_neg",
+                   "l2_normalization_axis_dim4_axis3_neg_all_inputs_as_internal")

@@ -67,6 +67,7 @@
 // specify which operations in a test graph can be executed on which
 // devices.  We accomplish this in the following way:
 // - A unary OEM operation is available.
+// - Control flow operations (IF and WHILE) are not supported.
 // - There is a collection of operations (each of which has two inputs
 //   and one output):
 //   - Eight kinds of operations available at driver version V1_0 or
@@ -270,6 +271,10 @@ uint32_t lookupOperation(const HidlModel& model, uint32_t operationIndex) {
             [&model](uint32_t offset) { return &model.operandValues[offset]; }, operationIndex);
 }
 
+bool isControlFlowOperation(OperationType type) {
+    return type == OperationType::IF || type == OperationType::WHILE;
+}
+
 #ifdef VERBOSE
 // This is a debugging utility function
 void dump(const char* name, const ModelBuilder* model) {
@@ -394,6 +399,11 @@ class PartitioningDriver : public SampleDriver {
         for (size_t i = 0; i < count; i++) {
             if (model.main.operations[i].type == OperationType::OEM_OPERATION) {
                 supported[i] = (mOEM != OEMNo);
+                continue;
+            }
+            // PartitioningDriver does not support control flow operations.
+            if (isControlFlowOperation(model.main.operations[i].type)) {
+                supported[i] = false;
                 continue;
             }
             supported[i] = false;
@@ -571,6 +581,7 @@ class PartitioningModel : private WrapperModel {
     // corresponding operand index.
     uint32_t addFloatOperand() { return addOperand(WrapperType::TENSOR_FLOAT32); }
     uint32_t addQuantOperand() { return addOperand(WrapperType::TENSOR_QUANT8_ASYMM); }
+    uint32_t addBooleanOperand() { return addOperand(WrapperType::TENSOR_BOOL8); }
 
     // Create an operand of the specified type, and return the corresponding
     // operand index.
@@ -663,6 +674,18 @@ class PartitioningModel : private WrapperModel {
         return output;
     }
 
+    // Create an IF operation with the given condition operand and two reference models for the true
+    // and false cases.
+    void addIfOperation(const uint32_t cond, const PartitioningModel& trueModel,
+                        const PartitioningModel& falseModel, const std::vector<uint32_t>& inputs,
+                        const std::vector<uint32_t>& outputs) {
+        const uint32_t opndTrue = addRefModelOperand(trueModel);
+        const uint32_t opndFalse = addRefModelOperand(falseModel);
+        std::vector<uint32_t> ifInputs = {cond, opndTrue, opndFalse};
+        ifInputs.insert(ifInputs.end(), inputs.begin(), inputs.end());
+        addOperation(ANEURALNETWORKS_IF, ifInputs, outputs);
+    }
+
     // Run the partitioning algorithm to create an ExecutionPlan.
     int partitionTheWork(const std::vector<std::shared_ptr<Device>>& devices,
                          ExecutePreference preference, ExecutePriority priority,
@@ -708,6 +731,13 @@ class PartitioningModel : private WrapperModel {
         uint32_t operand = addOperand(WrapperType::INT32);
         setOperandValue(operand, &value, sizeof(value));
         return operand;
+    }
+
+    // Create an operand from a model for control flow graphs.
+    uint32_t addRefModelOperand(const PartitioningModel& model) {
+        const uint32_t index = addOperand(WrapperType::MODEL);
+        WrapperModel::setOperandValueFromModel(index, &model);
+        return index;
     }
 
     // Create an operand of the same type as the specified operand,
@@ -1883,12 +1913,15 @@ class CacheTest : public PartitioningTest {
 
     // Launch a single run of the partitioner against the provided model and device list with
     // cache token privided as tokenIn. Find the partition for the device with deviceName.
-    // Record the tranformed token into tokenOut.
+    // Record the transformed token into tokenOut. Two or more partitions may be on the same device.
+    // "devicePartitionIndex" specifies the index of the ExecutionStep corresponding to the
+    // partition of interest, within the sequence of ExecutionSteps on the target device.
     // If tokenIn is empty, no caching information will be provided to the partitioner.
     void getTransformedCacheTokenSingle(const PartitioningModel& model,
                                         const std::vector<std::shared_ptr<Device>>& devices,
                                         const char* deviceName, const std::vector<uint8_t>& tokenIn,
                                         ExecutePreference preference, ExecutePriority priority,
+                                        uint32_t devicePartitionIndex,
                                         std::vector<uint8_t>* tokenOut) {
         // Compile the model and get the execution plan.
         PartitioningCompilation compilation(&model, devices);
@@ -1903,21 +1936,22 @@ class CacheTest : public PartitioningTest {
         // Find the cache info for the device.
         const uint8_t* token = nullptr;
         if (plan.forTest_getKind() == ExecutionPlan::Kind::SIMPLE) {
+            ASSERT_EQ(devicePartitionIndex, 0u);
             ASSERT_EQ(plan.forTest_simpleGetDevice()->getName(), deviceName);
             token = plan.forTest_simpleGetCacheToken();
         } else if (plan.forTest_getKind() == ExecutionPlan::Kind::COMPOUND) {
             const auto& steps = plan.forTest_compoundGetSteps();
-            bool found = false;
+            uint32_t executionStepCount = 0;
             for (const auto& step : steps) {
-                // In general, two or more partitions can be on the same device. However, this will
-                // not happen on the test models with only 2 operations.
-                if (step->executionStep()->getDevice()->getName() == deviceName) {
-                    ASSERT_FALSE(found);
-                    token = step->executionStep()->forTest_getCacheToken();
-                    found = true;
+                if (step->isExecution() &&
+                    step->executionStep()->getDevice()->getName() == deviceName) {
+                    if (devicePartitionIndex == executionStepCount) {
+                        token = step->executionStep()->forTest_getCacheToken();
+                        break;
+                    }
+                    executionStepCount++;
                 }
             }
-            ASSERT_TRUE(found);
         } else {
             FAIL();
         }
@@ -1933,13 +1967,17 @@ class CacheTest : public PartitioningTest {
 
     // A wrapper of getTransformedCacheTokenSingle, which runs getTransformedCacheTokenSingle
     // multiple times and checks if the transformation provides consistent result.
+    // Two or more partitions may be on the same device. "devicePartitionIndex" specifies the index
+    // of the ExecutionStep corresponding to the partition of interest, within the sequence of
+    // ExecutionSteps on the target device.
     void getTransformedCacheToken(const PartitioningModel& model,
                                   const std::vector<std::shared_ptr<Device>>& devices,
                                   const char* deviceName, const std::vector<uint8_t>& tokenIn,
                                   ExecutePreference preference, ExecutePriority priority,
-                                  std::vector<uint8_t>* tokenOut) {
+                                  std::vector<uint8_t>* tokenOut,
+                                  uint32_t devicePartitionIndex = 0) {
         getTransformedCacheTokenSingle(model, devices, deviceName, tokenIn, preference, priority,
-                                       tokenOut);
+                                       devicePartitionIndex, tokenOut);
 
         // Test if the runtime maps to the same cache token every time for the same compilation
         // setup.
@@ -1947,12 +1985,12 @@ class CacheTest : public PartitioningTest {
             std::vector<uint8_t> token;
             SCOPED_TRACE(i);
             getTransformedCacheTokenSingle(model, devices, deviceName, tokenIn, preference,
-                                           priority, &token);
+                                           priority, devicePartitionIndex, &token);
             EXPECT_EQ(*tokenOut, token);
         }
     }
 
-    void CreateModelForCachingTests(PartitioningModel* model) {
+    void createModelForCachingTests(PartitioningModel* model) {
         uint32_t opnd0 = model->addFloatOperand();
         uint32_t opnd1 = model->addFloatOperand();
         uint32_t opnd2 = model->addOperation2To1V1_0(0, opnd0, opnd1);
@@ -1963,6 +2001,49 @@ class CacheTest : public PartitioningTest {
         ASSERT_TRUE(model->isValid());
     }
 
+    // The first model returned in "models" is the main model.
+    void createControlFlowModelForCachingTests(
+            std::vector<std::unique_ptr<PartitioningModel>>* models) {
+        CHECK(models != nullptr);
+
+        auto trueModel = std::make_unique<PartitioningModel>();
+        {
+            const uint32_t opnd0 = trueModel->addFloatOperand();
+            const uint32_t opnd1 = trueModel->addFloatOperand();
+            const uint32_t opnd2 = trueModel->addOperation2To1V1_0(0, opnd0, opnd1);
+            trueModel->identifyInputsAndOutputs({opnd0, opnd1}, {opnd2});
+            trueModel->finish();
+            ASSERT_TRUE(trueModel->isValid());
+        }
+
+        auto falseModel = std::make_unique<PartitioningModel>();
+        {
+            const uint32_t opnd0 = falseModel->addFloatOperand();
+            const uint32_t opnd1 = falseModel->addFloatOperand();
+            const uint32_t opnd2 = falseModel->addOperation2To1V1_0(0, opnd0, opnd1);
+            falseModel->identifyInputsAndOutputs({opnd0, opnd1}, {opnd2});
+            falseModel->finish();
+            ASSERT_TRUE(falseModel->isValid());
+        }
+
+        auto mainModel = std::make_unique<PartitioningModel>();
+        {
+            const uint32_t opnd0 = mainModel->addBooleanOperand();
+            const uint32_t opnd1 = mainModel->addFloatOperand();
+            const uint32_t opnd2 = mainModel->addFloatOperand();
+            const uint32_t opnd3 = mainModel->addFloatOperand();
+            mainModel->addIfOperation(opnd0, *trueModel, *falseModel, {opnd1, opnd2}, {opnd3});
+            mainModel->identifyInputsAndOutputs({opnd0, opnd1, opnd2}, {opnd3});
+            mainModel->finish();
+            ASSERT_TRUE(mainModel->isValid());
+        }
+
+        models->clear();
+        models->push_back(std::move(mainModel));
+        models->push_back(std::move(trueModel));
+        models->push_back(std::move(falseModel));
+    }
+
     std::string mCacheDir;
 };
 
@@ -1970,7 +2051,7 @@ class CacheTest : public PartitioningTest {
 // simple body.
 TEST_F(CacheTest, CacheTokenNoneSimpleBody) {
     PartitioningModel model;
-    CreateModelForCachingTests(&model);
+    createModelForCachingTests(&model);
 
     // deviceA can execute the whole model.
     const auto deviceA = makeDevices({
@@ -1988,7 +2069,7 @@ TEST_F(CacheTest, CacheTokenNoneSimpleBody) {
 // execution plan with a simple body.
 TEST_F(CacheTest, CacheTokenDifferentDeviceNamesSimpleBody) {
     PartitioningModel model;
-    CreateModelForCachingTests(&model);
+    createModelForCachingTests(&model);
 
     // Two devices that can both execute the whole model.
     const auto deviceA = makeDevices({{"deviceA", 0.5, ~0U}});
@@ -2009,7 +2090,7 @@ TEST_F(CacheTest, CacheTokenDifferentDeviceNamesSimpleBody) {
 // execution plan with a simple body.
 TEST_F(CacheTest, CacheTokenDifferentDeviceVersionStringsSimpleBody) {
     PartitioningModel model;
-    CreateModelForCachingTests(&model);
+    createModelForCachingTests(&model);
 
     // Two devices that can both execute the whole model.
     const auto deviceA_1_0 = makeDevices({{"deviceA", "1.0", 0.5, ~0U}});
@@ -2030,7 +2111,7 @@ TEST_F(CacheTest, CacheTokenDifferentDeviceVersionStringsSimpleBody) {
 // in execution plan with a simple body.
 TEST_F(CacheTest, CacheTokenDifferentPreferencesSimpleBody) {
     PartitioningModel model;
-    CreateModelForCachingTests(&model);
+    createModelForCachingTests(&model);
 
     // One device that can execute the whole model.
     const auto deviceA = makeDevices({{"deviceA", 0.5, ~0U}});
@@ -2053,7 +2134,7 @@ TEST_F(CacheTest, CacheTokenDifferentPreferencesSimpleBody) {
 // in execution plan with a simple body.
 TEST_F(CacheTest, CacheTokenDifferentPrioritiesSimpleBody) {
     PartitioningModel model;
-    CreateModelForCachingTests(&model);
+    createModelForCachingTests(&model);
 
     // One device that can execute the whole model.
     const auto deviceA = makeDevices({{"deviceA", 0.5, ~0U}});
@@ -2076,7 +2157,7 @@ TEST_F(CacheTest, CacheTokenDifferentPrioritiesSimpleBody) {
 // provided by application in execution plan with a simple body.
 TEST_F(CacheTest, CacheTokenDifferentTokensSimpleBody) {
     PartitioningModel model;
-    CreateModelForCachingTests(&model);
+    createModelForCachingTests(&model);
 
     // One device that can execute the whole model.
     const auto deviceA = makeDevices({{"deviceA", 0.5, ~0U}});
@@ -2097,7 +2178,7 @@ TEST_F(CacheTest, CacheTokenDifferentTokensSimpleBody) {
 // compound body.
 TEST_F(CacheTest, CacheTokenNoneCompoundBody) {
     PartitioningModel model;
-    CreateModelForCachingTests(&model);
+    createModelForCachingTests(&model);
 
     // DeviceA executes the first operation only.
     const auto devices = makeDevices({{"deviceA", 0.8, ~0U}, {"deviceB", 0.5, 1 << 1}});
@@ -2117,7 +2198,7 @@ TEST_F(CacheTest, CacheTokenNoneCompoundBody) {
 // execution plan with a compound body.
 TEST_F(CacheTest, CacheTokenDifferentDeviceNamesCompoundBody) {
     PartitioningModel model;
-    CreateModelForCachingTests(&model);
+    createModelForCachingTests(&model);
 
     // DeviceA executes the first operation only.
     const auto devices1 = makeDevices({{"deviceA", 0.8, ~0U}, {"deviceC", 0.5, 1 << 1}});
@@ -2139,7 +2220,7 @@ TEST_F(CacheTest, CacheTokenDifferentDeviceNamesCompoundBody) {
 // execution plan with a compound body.
 TEST_F(CacheTest, CacheTokenDifferentDeviceVersionStringsCompoundBody) {
     PartitioningModel model;
-    CreateModelForCachingTests(&model);
+    createModelForCachingTests(&model);
 
     // DeviceA executes the first operation only.
     const auto devices1 = makeDevices({{"deviceA", "1.0", 0.8, ~0U}, {"deviceB", 0.5, 1 << 1}});
@@ -2161,7 +2242,7 @@ TEST_F(CacheTest, CacheTokenDifferentDeviceVersionStringsCompoundBody) {
 // in execution plan with a compound body.
 TEST_F(CacheTest, CacheTokenDifferentPreferencesCompoundBody) {
     PartitioningModel model;
-    CreateModelForCachingTests(&model);
+    createModelForCachingTests(&model);
 
     // DeviceA executes the first operation only.
     const auto devices = makeDevices({{"deviceA", 0.8, ~0U}, {"deviceB", 0.5, 1 << 1}});
@@ -2184,7 +2265,7 @@ TEST_F(CacheTest, CacheTokenDifferentPreferencesCompoundBody) {
 // in execution plan with a compound body.
 TEST_F(CacheTest, CacheTokenDifferentPrioritiesCompoundBody) {
     PartitioningModel model;
-    CreateModelForCachingTests(&model);
+    createModelForCachingTests(&model);
 
     // DeviceA executes the first operation only.
     const auto devices = makeDevices({{"deviceA", 0.8, ~0U}, {"deviceB", 0.5, 1 << 1}});
@@ -2207,7 +2288,7 @@ TEST_F(CacheTest, CacheTokenDifferentPrioritiesCompoundBody) {
 // provided by application in execution plan with a compound body.
 TEST_F(CacheTest, CacheTokenDifferentTokensCompoundBody) {
     PartitioningModel model;
-    CreateModelForCachingTests(&model);
+    createModelForCachingTests(&model);
 
     // DeviceA executes the first operation only.
     const auto devices = makeDevices({{"deviceA", 0.8, ~0U}, {"deviceB", 0.5, 1 << 1}});
@@ -2228,7 +2309,7 @@ TEST_F(CacheTest, CacheTokenDifferentTokensCompoundBody) {
 // outcome in execution plan with a compound body.
 TEST_F(CacheTest, CacheTokenDifferentPartitionsCompoundBody) {
     PartitioningModel model;
-    CreateModelForCachingTests(&model);
+    createModelForCachingTests(&model);
 
     // DeviceA executes the whole model.
     const auto devices1 = makeDevices({{"deviceA", 0.8, ~0U}, {"deviceB", 0.5, 0U}});
@@ -2249,6 +2330,27 @@ TEST_F(CacheTest, CacheTokenDifferentPartitionsCompoundBody) {
                              ExecutePreference::PREFER_FAST_SINGLE_ANSWER, ExecutePriority::DEFAULT,
                              &tokenOut3);
     expectUniqueTokens({tokenOut1, tokenOut2, tokenOut3});
+}
+
+// Test if the runtime maps different referenced models to different cache tokens.
+TEST_F(CacheTest, CacheTokenDifferentReferenceModelPartitions) {
+    std::vector<std::unique_ptr<PartitioningModel>> models;
+    createControlFlowModelForCachingTests(&models);
+    const auto& main = *models[0];
+
+    // DeviceA executes the two referenced models but does not support control flow operations.
+    // There will be two partitions on deviceA.
+    const auto devices = makeDevices({{"deviceA", 0.8, ~0U}});
+
+    std::vector<uint8_t> tokenIn(ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN, 0);
+    std::vector<uint8_t> tokenOut1, tokenOut2;
+    getTransformedCacheToken(main, devices, "deviceA", tokenIn,
+                             ExecutePreference::PREFER_FAST_SINGLE_ANSWER, ExecutePriority::DEFAULT,
+                             &tokenOut1, /*devicePartitionIndex=*/0);
+    getTransformedCacheToken(main, devices, "deviceA", tokenIn,
+                             ExecutePreference::PREFER_FAST_SINGLE_ANSWER, ExecutePriority::DEFAULT,
+                             &tokenOut2, /*devicePartitionIndex=*/1);
+    expectUniqueTokens({tokenOut1, tokenOut2});
 }
 
 // Very basic tests of some of the PerformanceInfo functionality.
