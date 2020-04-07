@@ -16,10 +16,14 @@
 
 #include <gtest/gtest.h>
 
+#include <android-base/scopeguard.h>
+
 #include <algorithm>
+#include <atomic>
 #include <cassert>
 #include <memory>
 #include <string>
+#include <thread>
 #include <tuple>
 #include <vector>
 
@@ -59,7 +63,8 @@ namespace {
 
 const Timing kBadTiming = {.timeOnDevice = UINT64_MAX, .timeInDriver = UINT64_MAX};
 
-// Wraps the latest version of IPreparedModel to allow dummying up the execution status.
+// Wraps the latest version of IPreparedModel to allow dummying up the execution status,
+// and control when the execution finishes.
 class TestPreparedModelLatest : public IPreparedModel {
    public:
     // If errorStatus is NONE, then execute behaves normally (and sends back
@@ -75,27 +80,34 @@ class TestPreparedModelLatest : public IPreparedModel {
     Return<V1_0::ErrorStatus> execute(const V1_0::Request& request,
                                       const sp<V1_0::IExecutionCallback>& callback) override {
         CHECK(mPreparedModelV1_0 != nullptr) << "V1_0 prepared model is nullptr.";
-        if (mErrorStatus == ErrorStatus::NONE) {
-            return mPreparedModelV1_0->execute(request, callback);
-        } else {
-            callback->notify(convertToV1_0(mErrorStatus));
-            return V1_0::ErrorStatus::NONE;
-        }
+        std::thread([this, &request, &callback] {
+            dummyExecution();
+            if (mErrorStatus == ErrorStatus::NONE) {
+                // Note that we lose the actual launch status.
+                (void)mPreparedModelV1_0->execute(request, callback);
+            } else {
+                callback->notify(convertToV1_0(mErrorStatus));
+            }
+        }).detach();
+        return V1_0::ErrorStatus::NONE;
     }
 
     Return<V1_0::ErrorStatus> execute_1_2(const V1_0::Request& request, MeasureTiming measure,
                                           const sp<V1_2::IExecutionCallback>& callback) override {
         CHECK(mPreparedModelV1_2 != nullptr) << "V1_2 prepared model is nullptr.";
-        if (mErrorStatus == ErrorStatus::NONE) {
-            return mPreparedModelV1_2->execute_1_2(request, measure, callback);
-        } else if (mErrorStatus == ErrorStatus::OUTPUT_INSUFFICIENT_SIZE) {
-            OutputShape shape = {.dimensions = {1}, .isSufficient = false};
-            callback->notify_1_2(convertToV1_0(mErrorStatus), {shape}, kBadTiming);
-            return V1_0::ErrorStatus::NONE;
-        } else {
-            callback->notify_1_2(convertToV1_0(mErrorStatus), {}, kBadTiming);
-            return V1_0::ErrorStatus::NONE;
-        }
+        std::thread([this, &request, measure, &callback] {
+            dummyExecution();
+            if (mErrorStatus == ErrorStatus::NONE) {
+                // Note that we lose the actual launch status.
+                (void)mPreparedModelV1_2->execute_1_2(request, measure, callback);
+            } else if (mErrorStatus == ErrorStatus::OUTPUT_INSUFFICIENT_SIZE) {
+                OutputShape shape = {.dimensions = {1}, .isSufficient = false};
+                callback->notify_1_2(convertToV1_0(mErrorStatus), {shape}, kBadTiming);
+            } else {
+                callback->notify_1_2(convertToV1_0(mErrorStatus), {}, kBadTiming);
+            }
+        }).detach();
+        return V1_0::ErrorStatus::NONE;
     }
 
     Return<V1_3::ErrorStatus> execute_1_3(const V1_3::Request& request, MeasureTiming measure,
@@ -103,22 +115,26 @@ class TestPreparedModelLatest : public IPreparedModel {
                                           const OptionalTimeoutDuration& loopTimeoutDuration,
                                           const sp<V1_3::IExecutionCallback>& callback) override {
         CHECK(mPreparedModelV1_3 != nullptr) << "V1_3 prepared model is nullptr.";
-        if (mErrorStatus == ErrorStatus::NONE) {
-            return mPreparedModelV1_3->execute_1_3(request, measure, deadline, loopTimeoutDuration,
-                                                   callback);
-        } else if (mErrorStatus == ErrorStatus::OUTPUT_INSUFFICIENT_SIZE) {
-            OutputShape shape = {.dimensions = {1}, .isSufficient = false};
-            callback->notify_1_3(mErrorStatus, {shape}, kBadTiming);
-            return V1_3::ErrorStatus::NONE;
-        } else {
-            callback->notify_1_3(mErrorStatus, {}, kBadTiming);
-            return V1_3::ErrorStatus::NONE;
-        }
+        std::thread([this, &request, measure, &deadline, &loopTimeoutDuration, &callback] {
+            dummyExecution();
+            if (mErrorStatus == ErrorStatus::NONE) {
+                // Note that we lose the actual launch status.
+                (void)mPreparedModelV1_3->execute_1_3(request, measure, deadline,
+                                                      loopTimeoutDuration, callback);
+            } else if (mErrorStatus == ErrorStatus::OUTPUT_INSUFFICIENT_SIZE) {
+                OutputShape shape = {.dimensions = {1}, .isSufficient = false};
+                callback->notify_1_3(mErrorStatus, {shape}, kBadTiming);
+            } else {
+                callback->notify_1_3(mErrorStatus, {}, kBadTiming);
+            }
+        }).detach();
+        return V1_3::ErrorStatus::NONE;
     }
 
     Return<void> executeSynchronously(const V1_0::Request& request, MeasureTiming measure,
                                       executeSynchronously_cb cb) override {
         CHECK(mPreparedModelV1_2 != nullptr) << "V1_2 prepared model is nullptr.";
+        dummyExecution();
         if (mErrorStatus == ErrorStatus::NONE) {
             return mPreparedModelV1_2->executeSynchronously(request, measure, cb);
         } else if (mErrorStatus == ErrorStatus::OUTPUT_INSUFFICIENT_SIZE) {
@@ -136,6 +152,7 @@ class TestPreparedModelLatest : public IPreparedModel {
                                           const OptionalTimeoutDuration& loopTimeoutDuration,
                                           executeSynchronously_1_3_cb cb) override {
         CHECK(mPreparedModelV1_3 != nullptr) << "V1_3 prepared model is nullptr.";
+        dummyExecution();
         if (mErrorStatus == ErrorStatus::NONE) {
             return mPreparedModelV1_3->executeSynchronously_1_3(request, measure, deadline,
                                                                 loopTimeoutDuration, cb);
@@ -163,11 +180,47 @@ class TestPreparedModelLatest : public IPreparedModel {
             return Void();
         }
     }
-    Return<void> executeFenced(const V1_3::Request&, const hidl_vec<hidl_handle>&, MeasureTiming,
-                               const OptionalTimePoint&, const OptionalTimeoutDuration&,
-                               const OptionalTimeoutDuration&, executeFenced_cb cb) override {
-        cb(ErrorStatus::DEVICE_UNAVAILABLE, hidl_handle(nullptr), nullptr);
+
+    // Note, due to the limitation of SampleDriver implementation, the call is
+    // synchronous.  The test code that exercises this implementation of
+    // SampleDriver is written with that in mind.  Therefore, this
+    // implementation is synchronous also.  If the SampleDriver is updated to
+    // return real sync fence, this must be updated.
+    Return<void> executeFenced(const V1_3::Request& request, const hidl_vec<hidl_handle>& waitFor,
+                               MeasureTiming measure, const OptionalTimePoint& deadline,
+                               const OptionalTimeoutDuration& loopTimeoutDuration,
+                               const OptionalTimeoutDuration& duration,
+                               executeFenced_cb cb) override {
+        CHECK(mPreparedModelV1_3 != nullptr) << "V1_3 prepared model is nullptr.";
+        CHECK(mErrorStatus != ErrorStatus::OUTPUT_INSUFFICIENT_SIZE)
+                << "executeFenced does not support dynamic output shape";
+        dummyExecution();
+        if (mErrorStatus == ErrorStatus::NONE) {
+            return mPreparedModelV1_3->executeFenced(request, waitFor, measure, deadline,
+                                                     loopTimeoutDuration, duration, cb);
+        } else {
+            // Due to the limitations of the SampleDriver, all failures look
+            // like launch failures.  If the SampleDriver is updated to return
+            // real sync fences, this must be updated.
+            cb(mErrorStatus, hidl_handle(nullptr), nullptr);
+        }
         return Void();
+    }
+
+    // We can place the TestPreparedModelLatest system in a "pause" mode where
+    // no execution will complete until the system is taken out of that mode.
+    // Initially, the system is not in that mode.
+    static void pauseExecutions(bool v) { mPauseExecutions.store(v); }
+
+    // This function is only guaranteed to work in the following pattern:
+    // - pauseExecutions(true);
+    // - // launch execution
+    // - // thread A: waitForExecutionToBegin()
+    // - // thread B: pauseExecutions(false);
+    static void waitForExecutionToBegin() {
+        CHECK(mPauseExecutions.load());
+        while (mExecutionsInFlight.load()) {
+        }
     }
 
    private:
@@ -175,7 +228,19 @@ class TestPreparedModelLatest : public IPreparedModel {
     const sp<V1_2::IPreparedModel> mPreparedModelV1_2;
     const sp<V1_3::IPreparedModel> mPreparedModelV1_3;
     ErrorStatus mErrorStatus;
+
+    static std::atomic<bool> mPauseExecutions;
+    static std::atomic<unsigned int> mExecutionsInFlight;
+
+    static void dummyExecution() {
+        CHECK_EQ(mExecutionsInFlight.fetch_add(1), 0u) << "We do not support concurrent executions";
+        while (mPauseExecutions.load()) {
+        }
+        mExecutionsInFlight.fetch_sub(1);
+    }
 };
+std::atomic<bool> TestPreparedModelLatest::mPauseExecutions = false;
+std::atomic<unsigned int> TestPreparedModelLatest::mExecutionsInFlight = 0;
 
 using TestPreparedModel13 = TestPreparedModelLatest;
 
@@ -636,12 +701,22 @@ void ExecutionTestTemplate<DriverClass>::TestWait() {
 
     ASSERT_EQ(mCompilation.finish(), Result::NO_ERROR);
 
+    const auto getDimensionsWhileRunning = [](WrapperExecution& execution) {
+        TestPreparedModelLatest::waitForExecutionToBegin();
+        // Cannot query dimensions while execution is running
+        std::vector<uint32_t> dimensions;
+        EXPECT_EQ(execution.getOutputOperandDimensions(0, &dimensions), Result::BAD_STATE);
+    };
+
     {
         SCOPED_TRACE("startCompute");
         WrapperExecution execution(&mCompilation);
         ASSERT_NO_FATAL_FAILURE(setInputOutput(&execution));
+        TestPreparedModelLatest::pauseExecutions(true);
         WrapperEvent event;
         ASSERT_EQ(execution.startCompute(&event), Result::NO_ERROR);
+        getDimensionsWhileRunning(execution);
+        TestPreparedModelLatest::pauseExecutions(false);
         ASSERT_EQ(event.wait(), kExpectResult);
         if (kExpectResult == Result::NO_ERROR) {
             ASSERT_EQ(mOutputBuffer, kOutputBufferExpected);
@@ -660,13 +735,81 @@ void ExecutionTestTemplate<DriverClass>::TestWait() {
         SCOPED_TRACE("compute");
         WrapperExecution execution(&mCompilation);
         ASSERT_NO_FATAL_FAILURE(setInputOutput(&execution));
-        ASSERT_EQ(execution.compute(), kExpectResult);
+        TestPreparedModelLatest::pauseExecutions(true);
+        std::thread run([this, &execution] { EXPECT_EQ(execution.compute(), kExpectResult); });
+        getDimensionsWhileRunning(execution);
+        TestPreparedModelLatest::pauseExecutions(false);
+        run.join();
         if (kExpectResult == Result::NO_ERROR) {
             ASSERT_EQ(mOutputBuffer, kOutputBufferExpected);
         }
         std::vector<uint32_t> dimensions;
         if (kExpectResult == Result::NO_ERROR ||
             kExpectResult == Result::OUTPUT_INSUFFICIENT_SIZE) {
+            // Only one output operand, hardcoded as index 0.
+            ASSERT_EQ(execution.getOutputOperandDimensions(0, &dimensions), kExpectResult);
+            ASSERT_EQ(dimensions, kOutputDimensionsExpected);
+        } else {
+            ASSERT_EQ(execution.getOutputOperandDimensions(0, &dimensions), Result::BAD_STATE);
+        }
+    }
+    {
+        SCOPED_TRACE("burstCompute");
+
+        // TODO: If a burst API is added to nn::test_wrapper (e.g.,
+        // Execution::burstCompute()), then use that, rather than using
+        // Execution::setComputeMode() to make Execution::compute() use burst
+        // functionality.
+
+        auto oldComputeMode =
+                WrapperExecution::setComputeMode(WrapperExecution::ComputeMode::BURST);
+        base::ScopeGuard restore(
+                [oldComputeMode] { WrapperExecution::setComputeMode(oldComputeMode); });
+
+        WrapperExecution execution(&mCompilation);
+        ASSERT_NO_FATAL_FAILURE(setInputOutput(&execution));
+        TestPreparedModelLatest::pauseExecutions(true);
+        std::thread run([this, &execution] { EXPECT_EQ(execution.compute(), kExpectResult); });
+        getDimensionsWhileRunning(execution);
+        TestPreparedModelLatest::pauseExecutions(false);
+        run.join();
+        if (kExpectResult == Result::NO_ERROR) {
+            ASSERT_EQ(mOutputBuffer, kOutputBufferExpected);
+        }
+        std::vector<uint32_t> dimensions;
+        if (kExpectResult == Result::NO_ERROR ||
+            kExpectResult == Result::OUTPUT_INSUFFICIENT_SIZE) {
+            // Only one output operand, hardcoded as index 0.
+            ASSERT_EQ(execution.getOutputOperandDimensions(0, &dimensions), kExpectResult);
+            ASSERT_EQ(dimensions, kOutputDimensionsExpected);
+        } else {
+            ASSERT_EQ(execution.getOutputOperandDimensions(0, &dimensions), Result::BAD_STATE);
+        }
+    }
+    if (kExpectResult != Result::OUTPUT_INSUFFICIENT_SIZE) {
+        // computeWithDependencies doesn't support OUTPUT_INSUFFICIENT_SIZE
+        SCOPED_TRACE("computeWithDependencies");
+        WrapperExecution execution(&mCompilation);
+        ASSERT_NO_FATAL_FAILURE(setInputOutput(&execution));
+        TestPreparedModelLatest::pauseExecutions(true);
+
+        WrapperEvent event;
+        // Note, due to the limitation of SampleDriver implementation, the call is synchronous.
+        // If the SampleDriver is updated to return real sync fence, this must be updated.
+        std::thread run([this, &execution, &event] {
+            EXPECT_EQ(execution.startComputeWithDependencies({}, 0, &event), kExpectResult);
+        });
+        getDimensionsWhileRunning(execution);
+        TestPreparedModelLatest::pauseExecutions(false);
+        run.join();
+        if (kExpectResult == Result::NO_ERROR) {
+            ASSERT_EQ(event.wait(), kExpectResult);
+            ASSERT_EQ(mOutputBuffer, kOutputBufferExpected);
+        } else {
+            ASSERT_EQ(event.wait(), Result::UNEXPECTED_NULL);
+        }
+        std::vector<uint32_t> dimensions;
+        if (kExpectResult == Result::NO_ERROR) {
             // Only one output operand, hardcoded as index 0.
             ASSERT_EQ(execution.getOutputOperandDimensions(0, &dimensions), kExpectResult);
             ASSERT_EQ(dimensions, kOutputDimensionsExpected);
