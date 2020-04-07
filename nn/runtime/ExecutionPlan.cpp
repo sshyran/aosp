@@ -1941,7 +1941,7 @@ int ModelBuilder::findBestDeviceForEachOperation(
             }
         }
         if (bestChoice < 0) {
-            LOG(ERROR) << "No driver can do the op";
+            LOG(ERROR) << "No driver can do operation " << toString(operation.type);
             return ANEURALNETWORKS_BAD_DATA;
         } else if (devices[bestChoice] == DeviceManager::getCpuDevice() &&
                    (operation.type == OperationType::IF ||
