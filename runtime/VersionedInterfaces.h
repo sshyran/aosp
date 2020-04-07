@@ -648,11 +648,10 @@ class VersionedIPreparedModel {
      * @param loopTimeoutDuration The maximum amount of time that should be spent
      *     executing a {@link OperationType::WHILE} operation. If a loop
      *     condition model does not output false within this duration, the
-     *     execution must be aborted. If the model contains a {@link
-     *     OperationType::WHILE} operation and no loop timeout duration is
-     *     provided, the maximum amount of time is {@link
-     *     LoopTimeoutDurationNs::DEFAULT}. When provided, the duration must not
-     *     exceed {@link LoopTimeoutDurationNs::MAXIMUM}.
+     *     execution must be aborted. If no loop timeout duration is provided,
+     *     the maximum amount of time is {@link LoopTimeoutDurationNs::DEFAULT}.
+     *     When provided, the duration must not exceed {@link
+     *     LoopTimeoutDurationNs::MAXIMUM}.
      * @param preferSynchronous 'true' to perform synchronous HAL execution when
      *     possible, 'false' to force asynchronous HAL execution.
      * @return A tuple consisting of:
@@ -752,11 +751,10 @@ class VersionedIPreparedModel {
      * @param loopTimeoutDuration The maximum amount of time that should be spent
      *     executing a {@link OperationType::WHILE} operation. If a loop
      *     condition model does not output false within this duration, the
-     *     execution must be aborted. If the model contains a {@link
-     *     OperationType::WHILE} operation and no loop timeout duration is
-     *     provided, the maximum amount of time is {@link
-     *     LoopTimeoutDurationNs::DEFAULT}. When provided, the duration must not
-     *     exceed {@link LoopTimeoutDurationNs::MAXIMUM}.
+     *     execution must be aborted. If no loop timeout duration is provided,
+     *     the maximum amount of time is {@link LoopTimeoutDurationNs::DEFAULT}.
+     *     When provided, the duration must not exceed {@link
+     *     LoopTimeoutDurationNs::MAXIMUM}.
      * @param timeoutDurationAfterFence The timeout duration within which the
      *                                  execution is expected to complete after
      *                                  all sync fences in waitFor are signaled.
