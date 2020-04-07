@@ -366,17 +366,40 @@ uint32_t nonExtensionOperandSizeOfData(OperandType type, const std::vector<uint3
                    : sizeOfTensorData(sizeOfElement, dimensions);
 }
 
-uint32_t sizeOfTensorData(uint32_t sizeOfElement, const std::vector<uint32_t>& dimensions) {
+// Returns a pair of {false, size} on success, {true, 0} if size overflows uint32_t.
+static std::pair<bool, uint32_t> sizeOfTensorDataHelper(uint32_t sizeOfElement,
+                                                        const std::vector<uint32_t>& dimensions) {
     if (dimensions.empty()) {
-        return 0;
+        return {false, 0};
     }
     uint64_t size = static_cast<uint64_t>(sizeOfElement);
     constexpr uint64_t kMaxSize = static_cast<uint64_t>(std::numeric_limits<uint32_t>::max());
     for (uint32_t d : dimensions) {
         size *= d;
-        CHECK_LE(size, kMaxSize);
+        if (size > kMaxSize) return {true, 0};
     }
-    return static_cast<uint32_t>(size);
+    return {false, static_cast<uint32_t>(size)};
+}
+
+uint32_t sizeOfTensorData(uint32_t sizeOfElement, const std::vector<uint32_t>& dimensions) {
+    const auto [overflow, size] = sizeOfTensorDataHelper(sizeOfElement, dimensions);
+    CHECK(!overflow);
+    return size;
+}
+
+bool nonExtensionOperandSizeOfDataOverflowsUInt32(hal::OperandType type,
+                                                  const std::vector<uint32_t>& dimensions) {
+    CHECK(!isExtensionOperandType(type)) << "Size of extension operand data is unknown";
+    int n = static_cast<int>(type);
+    uint32_t sizeOfElement = tableLookup(kSizeOfDataType, kSizeOfDataTypeOEM, n);
+    return tableLookup(kScalarDataType, kScalarDataTypeOEM, n)
+                   ? false
+                   : sizeOfTensorDataOverflowsUInt32(sizeOfElement, dimensions);
+}
+
+bool sizeOfTensorDataOverflowsUInt32(uint32_t sizeOfElement,
+                                     const std::vector<uint32_t>& dimensions) {
+    return sizeOfTensorDataHelper(sizeOfElement, dimensions).first;
 }
 
 bool tensorHasUnspecifiedDimensions(int type, const uint32_t* dim, uint32_t dimCount) {
