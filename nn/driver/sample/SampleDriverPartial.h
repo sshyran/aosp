@@ -35,7 +35,9 @@ namespace sample_driver {
 // unsupported ops.
 class SampleDriverPartial : public SampleDriver {
    public:
-    SampleDriverPartial(const char* name) : SampleDriver(name) {}
+    SampleDriverPartial(const char* name, const IOperationResolver* operationResolver =
+                                                  BuiltinOperationResolver::get())
+        : SampleDriver(name, operationResolver) {}
     hal::Return<void> getSupportedOperations_1_3(const hal::V1_3::Model& model,
                                                  getSupportedOperations_1_3_cb cb) override;
     hal::Return<hal::ErrorStatus> prepareModel_1_3(
