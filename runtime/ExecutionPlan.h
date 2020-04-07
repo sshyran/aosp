@@ -497,8 +497,10 @@ class ExecutionPlan {
         // Used for WHILE loop operand initializers that are constant references.
         std::map<SourceOperandIndex, ConstantReferenceLocation> mSourceOperandToConstantReference;
         std::unique_ptr<MemoryAshmem> mTemporaries;
+        // Index of the next step to be processed by ExecutionPlan::next().
         size_t mNextStepIndex;
-        size_t mLastStepIndex;  // For fallback.
+        // The value to reset mNextStepIndex to for partial CPU fallback.
+        size_t mFallbackNextStepIndex;
         // Map from WhileStep index to the associated WhileState.
         std::unordered_map<size_t, WhileState> mWhileState;
         // The sync fence fd of the last step.
