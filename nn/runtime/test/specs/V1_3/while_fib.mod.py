@@ -24,6 +24,8 @@
 #     i = i + 1
 
 FibType = ["TENSOR_FLOAT32", [1, 2]]
+FibTypeQuant8 = ["TENSOR_QUANT8_ASYMM", 1.0, 0]
+FibTypeQuant8Signed = ["TENSOR_QUANT8_ASYMM_SIGNED", 1.0, 0]
 CounterType = ["TENSOR_INT32", [1]]
 BoolType = ["TENSOR_BOOL8", [1]]
 
@@ -36,7 +38,15 @@ def MakeConditionModel():
   model.IdentifyInputs(fib, i, n)
   model.IdentifyOutputs(out)
   model.Operation("LESS", i, n).To(out)
-  return model
+
+  quant8 = DataTypeConverter().Identify({
+      fib: FibTypeQuant8,
+  })
+  quant8_signed = DataTypeConverter().Identify({
+      fib: FibTypeQuant8Signed,
+  })
+
+  return SubgraphReference("cond", model), quant8, quant8_signed
 
 def MakeBodyModel():
   fib = Input("fib", FibType)
@@ -51,17 +61,46 @@ def MakeBodyModel():
   model.IdentifyOutputs(fib_out, i_out)
   model.Operation("ADD", i, [1], 0).To(i_out)
   model.Operation("FULLY_CONNECTED", fib, matrix, zero_bias, 0).To(fib_out)
-  return model
+
+  quant8 = DataTypeConverter().Identify({
+      fib: FibTypeQuant8,
+      matrix: FibTypeQuant8,
+      zero_bias: ["TENSOR_INT32", 1.0, 0],
+      fib_out: FibTypeQuant8,
+  })
+  quant8_signed = DataTypeConverter().Identify({
+      fib: FibTypeQuant8Signed,
+      matrix: FibTypeQuant8Signed,
+      zero_bias: ["TENSOR_INT32", 1.0, 0],
+      fib_out: FibTypeQuant8Signed,
+  })
+
+  return SubgraphReference("body", model), quant8, quant8_signed
 
 def Test(n, fib):
   n_ = Input("n", CounterType)
   fib_out = Output("fib_out", FibType)
-  cond = MakeConditionModel()
-  body = MakeBodyModel()
+  cond, cond_quant8, cond_quant8_signed = MakeConditionModel()
+  body, body_quant8, body_quant8_signed = MakeBodyModel()
   fib_init = Parameter("fib_init", FibType, [1, 1])
   i_init = [1]
   model = Model().Operation("WHILE", cond, body, fib_init, i_init, n_).To(fib_out)
+
+  quant8 = DataTypeConverter().Identify({
+      fib_init: FibTypeQuant8,
+      fib_out: FibTypeQuant8,
+      cond: cond_quant8,
+      body: body_quant8,
+  })
+  quant8_signed = DataTypeConverter().Identify({
+      fib_init: FibTypeQuant8Signed,
+      fib_out: FibTypeQuant8Signed,
+      cond: cond_quant8_signed,
+      body: body_quant8_signed,
+  })
+
   example = Example({n_: [n], fib_out: fib}, name=str(n), model=model)
+  example.AddVariations("relaxed", "float16", quant8, quant8_signed)
   example.AddVariations(AllOutputsAsInternalCoverter())
 
 # Fibonacci numbers: 1 1 2 3 5 8
