@@ -4195,7 +4195,7 @@ const TestModel& get_test_model_dim4_axis3_neg() {
                         }},
                 .outputIndexes = {2}
             },
-        .minSupportedVersion = TestHalVersion::V1_2,
+        .minSupportedVersion = TestHalVersion::V1_0,
         .referenced = {}
     };
     return model;
@@ -4286,7 +4286,7 @@ const TestModel& get_test_model_dim4_axis3_neg_all_inputs_as_internal() {
                         }},
                 .outputIndexes = {2}
             },
-        .minSupportedVersion = TestHalVersion::V1_2,
+        .minSupportedVersion = TestHalVersion::V1_0,
         .referenced = {}
     };
     return model;
