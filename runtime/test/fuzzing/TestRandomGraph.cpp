@@ -210,8 +210,13 @@ class RandomGraphTest : public ::testing::TestWithParam<uint32_t> {
                 featureLevel <= __ANDROID_API_Q__) {
                 return true;
             }
-            // TODO(xusongw): Remove after b/151328024 is resolved.
-            if (op.type == TestOperationType::ROI_ALIGN) {
+            // TODO(xusongw): Remove after b/151328024, b/152446228, b/152445711, and b/152446298
+            //                are resolved.
+            if ((op.type == TestOperationType::ROI_ALIGN || op.type == TestOperationType::ADD ||
+                 op.type == TestOperationType::SUB || op.type == TestOperationType::MAXIMUM ||
+                 op.type == TestOperationType::MINIMUM) &&
+                mTestModel.main.operands[op.inputs[0]].type ==
+                        TestOperandType::TENSOR_QUANT8_ASYMM) {
                 return true;
             }
         }
