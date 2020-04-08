@@ -376,6 +376,20 @@ class RandomPartitioningTest : public ::testing::TestWithParam<unsigned> {
     static const OperationPattern kOperationPatterns[];
 
     // See OperationPattern::mMakeSpecialInput.  This function is used to
+    // manufacture an ELU input operand that doesn't fit the general operand
+    // pattern known to the graph generator infrastructure.
+    int makeEluSpecialInput([[maybe_unused]] unsigned problemSize, TestModel* model,
+                            unsigned inputIndex) {
+        if (inputIndex != 1) {
+            return -1;
+        }
+
+        // input operand 1 is alpha, a scalar
+        const WrapperOperandType alphaType(WrapperType::FLOAT32, {});
+        return int(model->addConstantOperand(&alphaType, 1.0f));
+    }
+
+    // See OperationPattern::mMakeSpecialInput.  This function is used to
     // manufacture an RNN input operand that doesn't fit the general operand
     // pattern known to the graph generator infrastructure.
     int makeRnnSpecialInput(unsigned problemSize, TestModel* model, unsigned inputIndex) {
@@ -462,6 +476,10 @@ const RandomPartitioningTest::OperationPattern RandomPartitioningTest::kOperatio
         {HalVersion::V1_2, ANEURALNETWORKS_MAXIMUM, 2, 1, -1, nullptr},
         {HalVersion::V1_2, ANEURALNETWORKS_NEG, 1, 1, -1, nullptr},
         {HalVersion::V1_2, ANEURALNETWORKS_SIN, 1, 1, -1, nullptr},
+
+        {HalVersion::V1_3, ANEURALNETWORKS_ELU, 2, 1, -1,
+         &RandomPartitioningTest::makeEluSpecialInput},
+        {HalVersion::V1_3, ANEURALNETWORKS_HARD_SWISH, 1, 1, -1, nullptr},
 };
 
 HalVersion RandomPartitioningTest::getMinHalVersion(ANeuralNetworksOperationType type) {
