@@ -17,6 +17,7 @@
 #ifndef ANDROID_FRAMEWORKS_ML_NN_RUNTIME_TEST_FUZZING_OPERATION_SIGNATURES_OPERATION_SIGNATURE_UTILS_H
 #define ANDROID_FRAMEWORKS_ML_NN_RUNTIME_TEST_FUZZING_OPERATION_SIGNATURES_OPERATION_SIGNATURE_UTILS_H
 
+#include <algorithm>
 #include <functional>
 #include <memory>
 #include <string>
@@ -100,23 +101,28 @@ constexpr float kMaxFloat32 = 2.0f;
 constexpr float kMinFloat32 = -kMaxFloat32;
 
 template <typename T>
-inline void uniform(T low, T up, RandomOperand* op) {
-    T* data = reinterpret_cast<T*>(op->buffer.data());
-    uint32_t len = op->getNumberOfElements();
-    for (uint32_t i = 0; i < len; i++) data[i] = getUniform(low, up);
+inline T getUniformValue(int valueProperties, T low, T up, T zeroPoint) {
+    if (valueProperties & RandomOperand::NON_NEGATIVE) {
+        NN_FUZZER_CHECK(up >= zeroPoint);
+        low = std::max(low, zeroPoint);
+    }
+    if (valueProperties & RandomOperand::NON_ZERO) {
+        return getUniformNonZero(low, up, zeroPoint);
+    } else {
+        return getUniform(low, up);
+    }
 }
 template <>
-inline void uniform<bool8>(bool8, bool8, RandomOperand* op) {
-    bool8* data = reinterpret_cast<bool8*>(op->buffer.data());
-    uint32_t len = op->getNumberOfElements();
-    for (uint32_t i = 0; i < len; i++) data[i] = getBernoulli(0.5f);
+inline bool8 getUniformValue(int, bool8, bool8, bool8) {
+    return getBernoulli(0.5f);
 }
+
 template <typename T>
-inline void uniformNonZero(T low, T up, T zeroPoint, RandomOperand* op) {
+inline void uniform(T low, T up, T zeroPoint, RandomOperand* op) {
     T* data = reinterpret_cast<T*>(op->buffer.data());
     uint32_t len = op->getNumberOfElements();
     for (uint32_t i = 0; i < len; i++) {
-        data[i] = getUniformNonZero(low, up, zeroPoint);
+        data[i] = getUniformValue<T>(op->valueProperties, low, up, zeroPoint);
     }
 }
 
@@ -126,44 +132,33 @@ inline void uniformFinalizer(RandomOperand* op) {
     switch (op->dataType) {
         case TestOperandType::TENSOR_FLOAT32:
         case TestOperandType::FLOAT32:
-            uniform<float>(kMinFloat32, kMaxFloat32, op);
+            uniform<float>(kMinFloat32, kMaxFloat32, 0.0f, op);
             break;
         case TestOperandType::TENSOR_INT32:
         case TestOperandType::INT32:
-            uniform<int32_t>(0, 255, op);
+            uniform<int32_t>(0, 255, op->zeroPoint, op);
             break;
         case TestOperandType::TENSOR_QUANT8_ASYMM:
-            uniform<uint8_t>(0, 255, op);
+            uniform<uint8_t>(0, 255, op->zeroPoint, op);
             break;
         case TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED:
-            uniform<int8_t>(-128, 127, op);
+            uniform<int8_t>(-128, 127, op->zeroPoint, op);
             break;
         case TestOperandType::TENSOR_QUANT8_SYMM:
-            uniform<int8_t>(-128, 127, op);
+            uniform<int8_t>(-128, 127, op->zeroPoint, op);
             break;
         case TestOperandType::TENSOR_QUANT16_ASYMM:
-            uniform<uint16_t>(0, 65535, op);
+            uniform<uint16_t>(0, 65535, op->zeroPoint, op);
             break;
         case TestOperandType::TENSOR_QUANT16_SYMM:
-            uniform<int16_t>(-32768, 32767, op);
+            uniform<int16_t>(-32768, 32767, op->zeroPoint, op);
             break;
         case TestOperandType::TENSOR_BOOL8:
-            uniform<bool8>(true, false, op);
+            uniform<bool8>(true, false, false, op);
             break;
         case TestOperandType::TENSOR_FLOAT16:
         case TestOperandType::FLOAT16:
-            uniform<_Float16>(kMinFloat32, kMaxFloat32, op);
-            break;
-        default:
-            NN_FUZZER_CHECK(false) << "Unsupported data type.";
-    }
-}
-
-// Generate non-zero random buffer values with uniform distribution.
-inline void nonZeroUniformFinalizer(RandomOperand* op) {
-    switch (op->dataType) {
-        case TestOperandType::TENSOR_INT32:
-            uniformNonZero<int32_t>(0, 255, op->zeroPoint, op);
+            uniform<_Float16>(kMinFloat32, kMaxFloat32, 0.0f, op);
             break;
         default:
             NN_FUZZER_CHECK(false) << "Unsupported data type.";
