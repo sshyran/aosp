@@ -56,6 +56,7 @@ const OperationRegistration* register_L2_NORMALIZATION();
 const OperationRegistration* register_L2_POOL_2D();
 const OperationRegistration* register_LESS();
 const OperationRegistration* register_LESS_EQUAL();
+const OperationRegistration* register_LOCAL_RESPONSE_NORMALIZATION();
 const OperationRegistration* register_LOG();
 const OperationRegistration* register_LOGICAL_AND();
 const OperationRegistration* register_LOGICAL_NOT();
@@ -130,6 +131,7 @@ BuiltinOperationResolver::BuiltinOperationResolver() {
     registerOperation(register_L2_POOL_2D());
     registerOperation(register_LESS());
     registerOperation(register_LESS_EQUAL());
+    registerOperation(register_LOCAL_RESPONSE_NORMALIZATION());
     registerOperation(register_LOG());
     registerOperation(register_LOGICAL_AND());
     registerOperation(register_LOGICAL_NOT());
