@@ -3534,7 +3534,7 @@ void localResponseNormOpTest(int32_t operandCode) {
             ANEURALNETWORKS_LOCAL_RESPONSE_NORMALIZATION,
             {getOpType(operandCode, 4, inputDim), getOpType(ANEURALNETWORKS_INT32),
              getOpType(floatScalarType), getOpType(floatScalarType), getOpType(floatScalarType)},
-            {getOpType(operandCode, 4, inputDim)});
+            {getOpType(operandCode, 4, inputDim)}, {{TensorRankConstraint::UpTo(4), {0}}});
     lrnTest.testOpsValidations();
 
     OperationTestBase lrnAxisTest(
@@ -3542,7 +3542,7 @@ void localResponseNormOpTest(int32_t operandCode) {
             {getOpType(operandCode, 4, inputDim), getOpType(ANEURALNETWORKS_INT32),
              getOpType(floatScalarType), getOpType(floatScalarType), getOpType(floatScalarType),
              getOpType(ANEURALNETWORKS_INT32)},
-            {getOpType(operandCode, 4, inputDim)});
+            {getOpType(operandCode, 4, inputDim)}, {{TensorRankConstraint::UpTo(4), {0}}});
     lrnAxisTest.testOpsValidations();
 }
 
