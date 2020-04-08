@@ -53,8 +53,6 @@ inline tflite::Dims<4> convertShapeToDims(const Shape& shape) {
 }
 
 inline tflite::RuntimeShape convertShapeToTflshape(const Shape& shape) {
-    nnAssert(shape.dimensions.size() <= 4);
-
     std::vector<int32_t> tflShapeDim(shape.dimensions.begin(), shape.dimensions.end());
     return tflite::RuntimeShape(tflShapeDim.size(), tflShapeDim.data());
 }

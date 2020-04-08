@@ -18,7 +18,6 @@
 #define ANDROID_FRAMEWORKS_ML_NN_RUNTIME_MEMORY_H
 
 #include <android-base/macros.h>
-#include <cutils/native_handle.h>
 #include <sys/mman.h>
 #include <vndk/hardware_buffer.h>
 

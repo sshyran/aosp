@@ -41,11 +41,16 @@ def Test(value, name):
   then_model = MakeBranchModel("ADD")
   else_model = MakeBranchModel("SUB")
   model = Model().Operation("IF", cond, then_model, else_model, x, y).To(z)
+
+  quant8 = DataTypeConverter("quant8", scale=1.0, zeroPoint=100)
+  quant8_signed = DataTypeConverter("quant8_signed", scale=1.0, zeroPoint=100)
+
   example = Example({
       x: x_data,
       y: y_data,
       z: output_data[value],
   }, model=model, name=name)
+  example.AddVariations("relaxed", "float16", "int32", quant8, quant8_signed)
   example.DisableLifeTimeVariation()
 
 # CONSTANT_COPY
