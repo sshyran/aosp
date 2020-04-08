@@ -23,23 +23,33 @@ namespace nn {
 namespace fuzzing_test {
 
 static void broadcastOpConstructor(TestOperandType dataType, uint32_t rank, RandomOperation* op) {
-    // TODO: All inputs of the broadcast op have the same rank 4 for now.
+    const uint32_t rank2 = getUniform(1u, rank), rankDiff = rank - rank2;
     op->inputs[0]->dimensions.resize(rank);
-    op->inputs[1]->dimensions.resize(rank);
+    op->inputs[1]->dimensions.resize(rank2);
     op->outputs[0]->dimensions.resize(rank);
     for (uint32_t i = 0; i < rank; i++) {
-        if (getBernoulli(0.9f)) {
-            op->inputs[0]->dimensions[i] = RandomVariableType::FREE;
+        op->outputs[0]->dimensions[i] = RandomVariableType::FREE;
+        if (i < rankDiff) {
+            op->inputs[0]->dimensions[i] = op->outputs[0]->dimensions[i];
         } else {
-            op->inputs[0]->dimensions[i] = 1;
+            if (getBernoulli(0.5f)) {
+                // No broadcast on this dimension.
+                op->inputs[0]->dimensions[i] = op->outputs[0]->dimensions[i];
+                op->inputs[1]->dimensions[i - rankDiff] = op->outputs[0]->dimensions[i];
+            } else if (getBernoulli(0.5f)) {
+                // input0 broadcast on this dimension.
+                op->inputs[0]->dimensions[i] = 1;
+                op->inputs[1]->dimensions[i - rankDiff] = op->outputs[0]->dimensions[i];
+            } else {
+                // input1 broadcast on this dimension.
+                op->inputs[0]->dimensions[i] = op->outputs[0]->dimensions[i];
+                op->inputs[1]->dimensions[i - rankDiff] = 1;
+            }
         }
-        if (getBernoulli(0.9f)) {
-            op->inputs[1]->dimensions[i] = op->inputs[0]->dimensions[i];
-        } else {
-            op->inputs[1]->dimensions[i] = 1;
-        }
-        op->outputs[0]->dimensions[i] =
-                max(op->inputs[0]->dimensions[i], op->inputs[1]->dimensions[i]);
+    }
+    if (getBernoulli(0.5f)) {
+        // Swap the dimensions to test the case that inpuy 1 has a larger rank than input0.
+        op->inputs[0]->dimensions.swap(op->inputs[1]->dimensions);
     }
 
     // MUL requires output.scale > input0.scale * input1.scale.
@@ -61,10 +71,12 @@ static void broadcastOpConstructor(TestOperandType dataType, uint32_t rank, Rand
         op->inputs[2]->setScalarValue(0);
     }
 
-    // TODO(b/151151830): TENSOR_INT32 DIV will crash with 0 as divisor.
-    if (op->opType == TestOperationType::DIV && dataType == TestOperandType::TENSOR_INT32) {
-        op->inputs[1]->doNotConnect = true;
-        op->inputs[1]->finalizer = nonZeroUniformFinalizer;
+    if (op->opType == TestOperationType::DIV) {
+        op->inputs[1]->valueProperties = RandomOperand::NON_ZERO;
+    }
+
+    if (op->opType == TestOperationType::POW) {
+        op->inputs[0]->valueProperties = RandomOperand::NON_NEGATIVE;
     }
 }
 
