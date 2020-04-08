@@ -54,11 +54,16 @@ std::vector<uint32_t> RandomOperand::getDimensions() const {
     return result;
 }
 
+static bool areValuePropertiesCompatible(int guaranteed, int required) {
+    return !(~guaranteed & required);
+}
+
 // Check if an edge between [this, other] is valid. If yes, add the edge.
 bool RandomOperand::createEdgeIfValid(const RandomOperand& other) const {
     if (other.type != RandomOperandType::INPUT) return false;
     if (dataType != other.dataType || dimensions.size() != other.dimensions.size() ||
-        scale != other.scale || zeroPoint != other.zeroPoint || doNotConnect || other.doNotConnect)
+        scale != other.scale || zeroPoint != other.zeroPoint || doNotConnect ||
+        other.doNotConnect || !areValuePropertiesCompatible(valueProperties, other.valueProperties))
         return false;
     return RandomVariableNetwork::get()->setEqualIfCompatible(dimensions, other.dimensions);
 }

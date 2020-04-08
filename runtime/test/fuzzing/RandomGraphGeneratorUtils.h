@@ -275,6 +275,15 @@ inline std::enable_if_t<nnIsFloat<T>, T> getUniform(T lower, T upper) {
     std::uniform_real_distribution<float> dis(nextLower, upper);
     return dis(RandomNumberGenerator::generator);
 }
+template <typename T>
+inline std::enable_if_t<nnIsFloat<T>, T> getUniformNonZero(T lower, T upper, T zeroPoint) {
+    if (upper >= zeroPoint) {
+        upper = std::nextafter(static_cast<float>(upper), std::numeric_limits<float>::min());
+    }
+    std::uniform_real_distribution<float> dis(lower, upper);
+    const float value = dis(RandomNumberGenerator::generator);
+    return value >= zeroPoint ? std::nextafter(value, std::numeric_limits<float>::max()) : value;
+}
 
 // getUniform for integers operates on a closed interval [lower, upper].
 // This is important that 255 should be included as a valid candidate for QUANT8_ASYMM values.
