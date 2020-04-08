@@ -20,6 +20,39 @@ namespace android {
 namespace nn {
 namespace fuzzing_test {
 
+static void elementwiseOpConstructor(TestOperandType dataType, uint32_t rank, RandomOperation* op) {
+    sameShapeOpConstructor(dataType, rank, op);
+
+    switch (op->opType) {
+        case TestOperationType::RELU:
+        case TestOperationType::RELU6:
+            op->outputs[0]->valueProperties = RandomOperand::NON_NEGATIVE;
+            break;
+        case TestOperationType::LOGISTIC:
+            op->outputs[0]->valueProperties = RandomOperand::NON_ZERO | RandomOperand::NON_NEGATIVE;
+            break;
+        case TestOperationType::ABS:
+            op->outputs[0]->valueProperties = RandomOperand::NON_NEGATIVE;
+            break;
+        case TestOperationType::EXP:
+            op->outputs[0]->valueProperties = RandomOperand::NON_ZERO | RandomOperand::NON_NEGATIVE;
+            break;
+        case TestOperationType::LOG:
+            op->inputs[0]->valueProperties = RandomOperand::NON_ZERO | RandomOperand::NON_NEGATIVE;
+            break;
+        case TestOperationType::RSQRT:
+            op->inputs[0]->valueProperties = RandomOperand::NON_ZERO | RandomOperand::NON_NEGATIVE;
+            op->outputs[0]->valueProperties = RandomOperand::NON_ZERO | RandomOperand::NON_NEGATIVE;
+            break;
+        case TestOperationType::SQRT:
+            op->inputs[0]->valueProperties = RandomOperand::NON_NEGATIVE;
+            op->outputs[0]->valueProperties = RandomOperand::NON_NEGATIVE;
+            break;
+        default:
+            break;
+    }
+}
+
 #define DEFINE_ELEMENTWISE_SIGNATURE(op, ver, ...)                              \
     DEFINE_OPERATION_SIGNATURE(op##_##ver){.opType = TestOperationType::op,     \
                                            .supportedDataTypes = {__VA_ARGS__}, \
@@ -27,7 +60,7 @@ namespace fuzzing_test {
                                            .version = TestHalVersion::ver,      \
                                            .inputs = {INPUT_DEFAULT},           \
                                            .outputs = {OUTPUT_DEFAULT},         \
-                                           .constructor = sameShapeOpConstructor};
+                                           .constructor = elementwiseOpConstructor};
 
 DEFINE_ELEMENTWISE_SIGNATURE(FLOOR, V1_0, TestOperandType::TENSOR_FLOAT32);
 DEFINE_ELEMENTWISE_SIGNATURE(RELU, V1_0, TestOperandType::TENSOR_FLOAT32,
@@ -55,7 +88,7 @@ DEFINE_ELEMENTWISE_SIGNATURE(HARD_SWISH, V1_3, TestOperandType::TENSOR_FLOAT32,
                                            .version = TestHalVersion::ver,      \
                                            .inputs = {INPUT_DEFAULT},           \
                                            .outputs = {OUTPUT_DEFAULT},         \
-                                           .constructor = sameShapeOpConstructor};
+                                           .constructor = elementwiseOpConstructor};
 
 DEFINE_ELEMENTWISE_SIGNATURE_WITH_RANK5(ABS, V1_2, TestOperandType::TENSOR_FLOAT32,
                                         TestOperandType::TENSOR_FLOAT16);
@@ -69,29 +102,12 @@ DEFINE_ELEMENTWISE_SIGNATURE_WITH_RANK5(SIN, V1_2, TestOperandType::TENSOR_FLOAT
 DEFINE_ELEMENTWISE_SIGNATURE_WITH_RANK5(LOGICAL_NOT, V1_2, TestOperandType::TENSOR_BOOL8);
 DEFINE_ELEMENTWISE_SIGNATURE_WITH_RANK5(ABS, V1_3, TestOperandType::TENSOR_INT32);
 
-// LOG, SQRT, and RSQRT may produce NaN output values. We should not connect the output tensor to
-// the input of another operation.
-static void elementwiseOpWithDisconnectedOutput(TestOperandType type, uint32_t rank,
-                                                RandomOperation* op) {
-    sameShapeOpConstructor(type, rank, op);
-    op->outputs[0]->doNotConnect = true;
-}
-
-#define DEFINE_ELEMENTWISE_SIGNATURE_WITH_DISCONNECTED_OUTPUT(op, ver, ...)     \
-    DEFINE_OPERATION_SIGNATURE(op##_##ver){.opType = TestOperationType::op,     \
-                                           .supportedDataTypes = {__VA_ARGS__}, \
-                                           .supportedRanks = {1, 2, 3, 4, 5},   \
-                                           .version = TestHalVersion::ver,      \
-                                           .inputs = {INPUT_DEFAULT},           \
-                                           .outputs = {OUTPUT_DEFAULT},         \
-                                           .constructor = elementwiseOpWithDisconnectedOutput};
-
-DEFINE_ELEMENTWISE_SIGNATURE_WITH_DISCONNECTED_OUTPUT(LOG, V1_2, TestOperandType::TENSOR_FLOAT32,
-                                                      TestOperandType::TENSOR_FLOAT16);
-DEFINE_ELEMENTWISE_SIGNATURE_WITH_DISCONNECTED_OUTPUT(RSQRT, V1_2, TestOperandType::TENSOR_FLOAT32,
-                                                      TestOperandType::TENSOR_FLOAT16);
-DEFINE_ELEMENTWISE_SIGNATURE_WITH_DISCONNECTED_OUTPUT(SQRT, V1_2, TestOperandType::TENSOR_FLOAT32,
-                                                      TestOperandType::TENSOR_FLOAT16);
+DEFINE_ELEMENTWISE_SIGNATURE_WITH_RANK5(LOG, V1_2, TestOperandType::TENSOR_FLOAT32,
+                                        TestOperandType::TENSOR_FLOAT16);
+DEFINE_ELEMENTWISE_SIGNATURE_WITH_RANK5(RSQRT, V1_2, TestOperandType::TENSOR_FLOAT32,
+                                        TestOperandType::TENSOR_FLOAT16);
+DEFINE_ELEMENTWISE_SIGNATURE_WITH_RANK5(SQRT, V1_2, TestOperandType::TENSOR_FLOAT32,
+                                        TestOperandType::TENSOR_FLOAT16);
 
 // Quantized operations with special output quantization parameters.
 #define DEFINE_ELEMENTWISE_WITH_QUANT_OUTPUT_SIGNATURE(op, ver, s, z, ...)      \
