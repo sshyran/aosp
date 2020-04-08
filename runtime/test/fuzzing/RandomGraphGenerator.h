@@ -38,7 +38,17 @@ class OperationManager;
 enum class RandomOperandType { INPUT = 0, OUTPUT = 1, INTERNAL = 2, CONST = 3, NO_VALUE = 4 };
 
 struct RandomOperand {
+    // Describes the properties of the values of an operand. For operation inputs, this specifies
+    // what is required; for outputs, this specifies what is guaranteed.
+    // The graph generation algorithm will use this information to decide whether to wire an output
+    // to an input or not.
+    enum ValueProperty : int {
+        NON_ZERO = 1 << 0,
+        NON_NEGATIVE = 1 << 1,
+    };
+
     RandomOperandType type;
+    int valueProperties = 0;
     test_helper::TestOperandType dataType;
     float scale = 0.0f;
     int32_t zeroPoint = 0;
