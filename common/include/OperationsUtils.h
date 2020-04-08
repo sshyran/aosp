@@ -152,6 +152,8 @@ uint32_t getNumberOfDimensions(const Shape& shape);
 
 uint32_t getSizeOfDimension(const Shape& shape, uint32_t dimensionIdx);
 
+uint32_t hasKnownRank(const Shape& shape);
+
 // Converts an axis index from the range [-dims, dims) into the range [0, dims).
 bool handleNegativeAxis(int32_t numberOfDimensions, int32_t* axis);
 
