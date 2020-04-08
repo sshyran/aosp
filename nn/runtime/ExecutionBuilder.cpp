@@ -1081,8 +1081,9 @@ std::tuple<int, std::vector<OutputShape>, Timing> StepExecutor::compute(
     const MeasureTiming measure = measureTiming(mExecutionBuilder);
     const OptionalTimeoutDuration loopTimeoutDuration =
             makeTimeoutDuration(mExecutionBuilder->getLoopTimeoutDuration());
-    const auto [n, outputShapes, timing] = mPreparedModel->execute(
-            mInputs, mOutputs, mMemories, burstController, measure, deadline, loopTimeoutDuration);
+    const auto [n, outputShapes, timing] =
+            mPreparedModel->execute(mInputs, mOutputs, mMemories.getObjects(), burstController,
+                                    measure, deadline, loopTimeoutDuration);
     mExecutionBuilder->reportTimingWithoutFencedExecutionCallback(timing);
 
     return {n, std::move(outputShapes), timing};
@@ -1105,9 +1106,9 @@ std::tuple<int, int, sp<hal::IFencedExecutionCallback>> StepExecutor::computeFen
     if (timeoutDurationAfterFence > 0) {
         optionalTimeoutDurationAfterFence.nanoseconds(timeoutDurationAfterFence);
     }
-    const auto [n, syncFence, computeFencedCallback, timing] =
-            mPreparedModel->executeFenced(mInputs, mOutputs, mMemories, waitFor, measure, deadline,
-                                          loopTimeoutDuration, optionalTimeoutDurationAfterFence);
+    const auto [n, syncFence, computeFencedCallback, timing] = mPreparedModel->executeFenced(
+            mInputs, mOutputs, mMemories.getObjects(), waitFor, measure, deadline,
+            loopTimeoutDuration, optionalTimeoutDurationAfterFence);
     if (syncFence < 0 && computeFencedCallback == nullptr) {
         mExecutionBuilder->reportTimingWithoutFencedExecutionCallback(timing);
     }
