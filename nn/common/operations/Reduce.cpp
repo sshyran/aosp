@@ -161,9 +161,17 @@ bool prepare(IOperationExecutionContext* context) {
 bool executeProd(IOperationExecutionContext* context) {
     switch (context->getInputType(kInputTensor)) {
         case OperandType::TENSOR_FLOAT16:
-            return compute<_Float16>(context, 1, [](_Float16 a, _Float16 b) { return a * b; });
+            return compute<_Float16>(context, 1, [](_Float16 a, _Float16 b) -> _Float16 {
+                // Handle the zero case because 0 * inf evaluates to nan.
+                if (a == 0 || b == 0) return 0;
+                return a * b;
+            });
         case OperandType::TENSOR_FLOAT32:
-            return compute<float>(context, 1, [](float a, float b) { return a * b; });
+            return compute<float>(context, 1, [](float a, float b) -> float {
+                // Handle the zero case because 0 * inf evaluates to nan.
+                if (a == 0 || b == 0) return 0;
+                return a * b;
+            });
         default:
             NN_RET_CHECK_FAIL() << "Unsupported tensor type for operation REDUCE_PROD";
     }
