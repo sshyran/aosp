@@ -151,9 +151,17 @@ class MemoryValidatorBase {
     // Try update the memory metadata with the provided metadata. Return false if incompatible.
     virtual bool updateMetadata(const Metadata& metadata) = 0;
 
+    // Whether the memory is created with unknown dimensions or rank.
+    virtual bool createdWithUnknownShape() const { return false; }
+
     virtual void setInitialized(bool) {}
     virtual bool isInitialized() const { return true; }
 };
+
+int copyIBufferToHidlMemory(const sp<hal::IBuffer>& src, const hal::hidl_memory& dst);
+
+int copyHidlMemoryToIBuffer(const hal::hidl_memory& src, const sp<hal::IBuffer>& dst,
+                            const std::vector<uint32_t>& dimensions);
 
 // Represents a memory region.
 class Memory {

@@ -134,7 +134,6 @@ class DeviceMemoryValidator : public MemoryValidatorBase {
     }
 
     Metadata getMetadata() const override {
-        CHECK(mInitialized);
         return {.logicalSize = TypeManager::get()->getSizeOfData(kOperand.type, mUpdatedDimensions),
                 .dimensions = mUpdatedDimensions,
                 .operand = kOperand};
@@ -156,6 +155,10 @@ class DeviceMemoryValidator : public MemoryValidatorBase {
                              TypeManager::get()->getSizeOfData(kOperand.type, combined.value()));
         mUpdatedDimensions = std::move(combined.value());
         return true;
+    }
+
+    bool createdWithUnknownShape() const override {
+        return TypeManager::get()->getSizeOfData(kOperand.type, kInitialDimensions) == 0;
     }
 
     void setInitialized(bool initialized) override { mInitialized = initialized; }
@@ -243,7 +246,7 @@ static int copyHidlMemories(const std::optional<RunTimePoolInfo>& src,
     return ANEURALNETWORKS_NO_ERROR;
 }
 
-static int copyIBufferToHidlMemory(const sp<IBuffer>& src, const hidl_memory& dst) {
+int copyIBufferToHidlMemory(const sp<IBuffer>& src, const hidl_memory& dst) {
     const auto ret = src->copyTo(dst);
     if (!ret.isOk()) {
         LOG(ERROR) << "ANeuralNetworksMemory_copy failure: " << ret.description();
@@ -252,8 +255,8 @@ static int copyIBufferToHidlMemory(const sp<IBuffer>& src, const hidl_memory& ds
     return convertErrorStatusToResultCode(static_cast<ErrorStatus>(ret));
 }
 
-static int copyHidlMemoryToIBuffer(const hidl_memory& src, const sp<IBuffer>& dst,
-                                   const std::vector<uint32_t>& dimensions) {
+int copyHidlMemoryToIBuffer(const hidl_memory& src, const sp<IBuffer>& dst,
+                            const std::vector<uint32_t>& dimensions) {
     const auto ret = dst->copyFrom(src, dimensions);
     if (!ret.isOk()) {
         LOG(ERROR) << "ANeuralNetworksMemory_copy failure: " << ret.description();
