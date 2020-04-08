@@ -559,10 +559,10 @@ void ModelBuilder::removeTrailingArgumentsWithDefaultValues() {
         if (count == 0) {
             continue;
         }
-        const uint32_t inputCount = operation.inputs.size();
         if (VLOG_IS_ON(MODEL)) {
             logRemoval(operation, count, mOperands);
         }
+        const uint32_t inputCount = operation.inputs.size();
         CHECK_LT(count, inputCount);
         const uint32_t newInputCount = inputCount - count;
         for (uint32_t i = newInputCount; i < inputCount; ++i) {
@@ -637,12 +637,13 @@ uint32_t ModelBuilder::getNumTrailingArgumentsToRemove(const Operation& operatio
     // values. Skip the counting if no optional arguments are present.
     switch (operation.type) {
         case OperationType::AVERAGE_POOL_2D: {
-            if (inputCount == 11 && mOperands[7].type == OperandType::INT32) {
+            if (inputCount == 11 && mOperands[operation.inputs[7]].type == OperandType::INT32) {
                 // Explicit padding
                 // API level 29: 10 to 11 inputs
                 // API level 27: 10 inputs
                 return getCount(10, {TS::BOOL_FALSE});
-            } else if (inputCount == 8 && mOperands[7].type == OperandType::BOOL) {
+            } else if (inputCount == 8 &&
+                       mOperands[operation.inputs[7]].type == OperandType::BOOL) {
                 // Implicit padding
                 // API level 29: 7 to 8 inputs
                 // API level 27: 7 inputs
@@ -650,7 +651,8 @@ uint32_t ModelBuilder::getNumTrailingArgumentsToRemove(const Operation& operatio
             }
         } break;
         case OperationType::CONV_2D: {
-            if (10 < inputCount && inputCount <= 13 && mOperands[7].type == OperandType::INT32) {
+            if (10 < inputCount && inputCount <= 13 &&
+                mOperands[operation.inputs[7]].type == OperandType::INT32) {
                 // Explicit padding
                 // API level 29: 10 to 13 inputs
                 // API level 27: 10 inputs
@@ -658,7 +660,7 @@ uint32_t ModelBuilder::getNumTrailingArgumentsToRemove(const Operation& operatio
                 // Inputs 11 and 12 must come together.
                 return inputCount - count == 12 ? 0 : count;
             } else if (7 < inputCount && inputCount <= 10 &&
-                       mOperands[7].type == OperandType::BOOL) {
+                       mOperands[operation.inputs[7]].type == OperandType::BOOL) {
                 // Implicit padding
                 // API level 29: 7 to 10 inputs
                 // API level 27: 7 inputs
@@ -668,7 +670,8 @@ uint32_t ModelBuilder::getNumTrailingArgumentsToRemove(const Operation& operatio
             }
         } break;
         case OperationType::DEPTHWISE_CONV_2D: {
-            if (11 < inputCount && inputCount <= 14 && mOperands[8].type == OperandType::INT32) {
+            if (11 < inputCount && inputCount <= 14 &&
+                mOperands[operation.inputs[8]].type == OperandType::INT32) {
                 // Explicit padding
                 // API level 29: 11 to 14 inputs
                 // API level 27: 11 inputs
@@ -676,7 +679,7 @@ uint32_t ModelBuilder::getNumTrailingArgumentsToRemove(const Operation& operatio
                 // Inputs 12 and 13 must come together.
                 return inputCount - count == 13 ? 0 : count;
             } else if (8 < inputCount && inputCount <= 11 &&
-                       mOperands[8].type == OperandType::BOOL) {
+                       mOperands[operation.inputs[8]].type == OperandType::BOOL) {
                 // Implicit padding
                 // API level 29: 8 to 11 inputs
                 // API level 27: 8 inputs
@@ -700,12 +703,13 @@ uint32_t ModelBuilder::getNumTrailingArgumentsToRemove(const Operation& operatio
             }
         } break;
         case OperationType::L2_POOL_2D: {
-            if (inputCount == 11 && mOperands[7].type == OperandType::INT32) {
+            if (inputCount == 11 && mOperands[operation.inputs[7]].type == OperandType::INT32) {
                 // Explicit padding
                 // API level 29: 10 to 11 inputs
                 // API level 27: 10 inputs
                 return getCount(10, {TS::BOOL_FALSE});
-            } else if (inputCount == 8 && mOperands[7].type == OperandType::BOOL) {
+            } else if (inputCount == 8 &&
+                       mOperands[operation.inputs[7]].type == OperandType::BOOL) {
                 // Implicit padding
                 // API level 29: 7 to 8 inputs
                 // API level 27: 7 inputs
@@ -720,12 +724,13 @@ uint32_t ModelBuilder::getNumTrailingArgumentsToRemove(const Operation& operatio
             }
         } break;
         case OperationType::MAX_POOL_2D: {
-            if (inputCount == 11 && mOperands[7].type == OperandType::INT32) {
+            if (inputCount == 11 && mOperands[operation.inputs[7]].type == OperandType::INT32) {
                 // Explicit padding
                 // API level 29: 10 to 11 inputs
                 // API level 27: 10 inputs
                 return getCount(10, {TS::BOOL_FALSE});
-            } else if (inputCount == 8 && mOperands[7].type == OperandType::BOOL) {
+            } else if (inputCount == 8 &&
+                       mOperands[operation.inputs[7]].type == OperandType::BOOL) {
                 // Implicit padding
                 // API level 29: 7 to 8 inputs
                 // API level 27: 7 inputs

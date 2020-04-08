@@ -46,18 +46,81 @@ static OperandType getOperandType(const TestOperand& op, bool testDynamicOutputS
     }
 }
 
+// A Memory object that owns AHardwareBuffer
+class MemoryAHWB : public Memory {
+   public:
+    static std::unique_ptr<MemoryAHWB> create(uint32_t size) {
+        const uint64_t usage =
+                AHARDWAREBUFFER_USAGE_CPU_READ_OFTEN | AHARDWAREBUFFER_USAGE_CPU_WRITE_OFTEN;
+        AHardwareBuffer_Desc desc = {
+                .width = size,
+                .height = 1,
+                .layers = 1,
+                .format = AHARDWAREBUFFER_FORMAT_BLOB,
+                .usage = usage,
+        };
+        AHardwareBuffer* ahwb = nullptr;
+        EXPECT_EQ(AHardwareBuffer_allocate(&desc, &ahwb), 0);
+        EXPECT_NE(ahwb, nullptr);
+
+        void* buffer = nullptr;
+        EXPECT_EQ(AHardwareBuffer_lock(ahwb, usage, -1, nullptr, &buffer), 0);
+        EXPECT_NE(buffer, nullptr);
+
+        return std::unique_ptr<MemoryAHWB>(new MemoryAHWB(ahwb, buffer));
+    }
+
+    ~MemoryAHWB() override {
+        EXPECT_EQ(AHardwareBuffer_unlock(mAhwb, nullptr), 0);
+        AHardwareBuffer_release(mAhwb);
+    }
+
+    void* getPointer() const { return mBuffer; }
+
+   private:
+    MemoryAHWB(AHardwareBuffer* ahwb, void* buffer) : Memory(ahwb), mAhwb(ahwb), mBuffer(buffer) {}
+
+    AHardwareBuffer* mAhwb;
+    void* mBuffer;
+};
+
+static std::unique_ptr<MemoryAHWB> createConstantReferenceMemory(const TestModel& testModel) {
+    uint32_t size = 0;
+
+    auto processSubgraph = [&size](const TestSubgraph& subgraph) {
+        for (const TestOperand& operand : subgraph.operands) {
+            if (operand.lifetime == TestOperandLifeTime::CONSTANT_REFERENCE) {
+                size += operand.data.alignedSize();
+            }
+        }
+    };
+
+    processSubgraph(testModel.main);
+    for (const TestSubgraph& subgraph : testModel.referenced) {
+        processSubgraph(subgraph);
+    }
+    return size == 0 ? nullptr : MemoryAHWB::create(size);
+}
+
 static void createModelFromSubgraph(const TestSubgraph& subgraph, bool testDynamicOutputShape,
-                                    const std::vector<TestSubgraph>& refSubgraphs, Model* model,
-                                    Model* refModels) {
+                                    const std::vector<TestSubgraph>& refSubgraphs,
+                                    const std::unique_ptr<MemoryAHWB>& memory,
+                                    uint32_t* memoryOffset, Model* model, Model* refModels) {
     // Operands.
     for (const auto& operand : subgraph.operands) {
         auto type = getOperandType(operand, testDynamicOutputShape);
         auto index = model->addOperand(&type);
 
         switch (operand.lifetime) {
-            case TestOperandLifeTime::CONSTANT_COPY:
-            case TestOperandLifeTime::CONSTANT_REFERENCE: {
+            case TestOperandLifeTime::CONSTANT_COPY: {
                 model->setOperandValue(index, operand.data.get<void>(), operand.data.size());
+            } break;
+            case TestOperandLifeTime::CONSTANT_REFERENCE: {
+                const uint32_t length = operand.data.size();
+                std::memcpy(static_cast<uint8_t*>(memory->getPointer()) + *memoryOffset,
+                            operand.data.get<void>(), length);
+                model->setOperandValueFromMemory(index, memory.get(), *memoryOffset, length);
+                *memoryOffset += operand.data.alignedSize();
             } break;
             case TestOperandLifeTime::NO_VALUE: {
                 model->setOperandValue(index, nullptr, 0);
@@ -69,7 +132,7 @@ static void createModelFromSubgraph(const TestSubgraph& subgraph, bool testDynam
                 Model* refModel = &refModels[refIndex];
                 if (!refModel->isFinished()) {
                     createModelFromSubgraph(refSubgraph, testDynamicOutputShape, refSubgraphs,
-                                            refModel, refModels);
+                                            memory, memoryOffset, refModel, refModels);
                     ASSERT_EQ(refModel->finish(), Result::NO_ERROR);
                     ASSERT_TRUE(refModel->isValid());
                 }
@@ -95,10 +158,13 @@ static void createModelFromSubgraph(const TestSubgraph& subgraph, bool testDynam
 void createModel(const TestModel& testModel, bool testDynamicOutputShape, GeneratedModel* model) {
     ASSERT_NE(nullptr, model);
 
+    std::unique_ptr<MemoryAHWB> memory = createConstantReferenceMemory(testModel);
+    uint32_t memoryOffset = 0;
     std::vector<Model> refModels(testModel.referenced.size());
-    createModelFromSubgraph(testModel.main, testDynamicOutputShape, testModel.referenced, model,
-                            refModels.data());
+    createModelFromSubgraph(testModel.main, testDynamicOutputShape, testModel.referenced, memory,
+                            &memoryOffset, model, refModels.data());
     model->setRefModels(std::move(refModels));
+    model->setConstantReferenceMemory(std::move(memory));
 
     // Relaxed computation.
     model->relaxComputationFloat32toFloat16(testModel.isRelaxed);

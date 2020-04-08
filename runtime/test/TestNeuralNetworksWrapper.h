@@ -22,6 +22,7 @@
 
 #include <math.h>
 
+#include <algorithm>
 #include <optional>
 #include <string>
 #include <utility>
@@ -61,7 +62,7 @@ class Memory {
                  ANEURALNETWORKS_NO_ERROR;
     }
 
-    ~Memory() { ANeuralNetworksMemory_free(mMemory); }
+    virtual ~Memory() { ANeuralNetworksMemory_free(mMemory); }
 
     // Disallow copy semantics to ensure the runtime object can only be freed
     // once. Copy semantics could be enabled if some sort of reference counting
@@ -378,6 +379,18 @@ class Execution {
     Result startCompute(Event* event) {
         ANeuralNetworksEvent* ev = nullptr;
         Result result = static_cast<Result>(ANeuralNetworksExecution_startCompute(mExecution, &ev));
+        event->set(ev);
+        return result;
+    }
+
+    Result startComputeWithDependencies(const std::vector<const Event*>& dependencies,
+                                        uint64_t duration, Event* event) {
+        std::vector<const ANeuralNetworksEvent*> deps(dependencies.size());
+        std::transform(dependencies.begin(), dependencies.end(), deps.begin(),
+                       [](const Event* e) { return e->getHandle(); });
+        ANeuralNetworksEvent* ev = nullptr;
+        Result result = static_cast<Result>(ANeuralNetworksExecution_startComputeWithDependencies(
+                mExecution, deps.data(), deps.size(), duration, &ev));
         event->set(ev);
         return result;
     }
