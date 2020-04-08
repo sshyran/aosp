@@ -77,11 +77,12 @@ void expectNear(const TestOperand& op, const TestBuffer& result, const AccuracyC
         double actual = static_cast<double>(actualBuffer[i]);
         double expected = static_cast<double>(expectedBuffer[i]);
         double tolerableRange = criterion.atol + criterion.rtol * std::fabs(expected);
+        EXPECT_FALSE(std::isnan(expected));
 
         // Skip invalid floating point values.
-        if (allowInvalid && (std::isnan(expected) || std::isinf(expected) ||
-                             (std::is_same_v<T, float> && std::fabs(expected) > 1e3) ||
-                             (std::is_same_v<T, _Float16> || std::fabs(expected) > 1e2))) {
+        if (allowInvalid &&
+            (std::isinf(expected) || (std::is_same_v<T, float> && std::fabs(expected) > 1e3) ||
+             (std::is_same_v<T, _Float16> || std::fabs(expected) > 1e2))) {
             numSkip++;
             continue;
         }
