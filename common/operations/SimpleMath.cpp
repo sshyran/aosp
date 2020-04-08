@@ -30,25 +30,6 @@
 namespace android {
 namespace nn {
 
-bool floorFloat16(const _Float16* inputData, _Float16* outputData, const Shape& shape) {
-    NNTRACE_TRANS("floorFloat16");
-    std::vector<float> inputDataFloat32(getNumberOfElements(shape));
-    convertFloat16ToFloat32(inputData, &inputDataFloat32);
-
-    std::vector<float> outputDataFloat32(getNumberOfElements(shape));
-    floorFloat32(inputDataFloat32.data(), outputDataFloat32.data(), shape);
-    convertFloat32ToFloat16(outputDataFloat32, outputData);
-    return true;
-}
-
-bool floorFloat32(const float* inputData, float* outputData, const Shape& shape) {
-    NNTRACE_TRANS("floorFloat32");
-    tflite::Dims<4> dim = convertShapeToDims(shape);
-    NNTRACE_COMP_SWITCH("optimized_ops::Floor");
-    tflite::optimized_ops::Floor(inputData, dim, outputData, dim);
-    return true;
-}
-
 bool meanFloat16(_Float16* inputData, const Shape& inputShape, const int32_t* axis,
                  const Shape& axisShape, bool keepDims, _Float16* outputData,
                  const Shape& outputShape) {
