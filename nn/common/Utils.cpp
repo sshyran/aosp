@@ -961,6 +961,12 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
                            << getOperationName(opType);
                 return ANEURALNETWORKS_BAD_DATA;
             }
+            const auto inputRank = operands[inputIndexes[0]].dimensions.size();
+            if (inputRank > 4) {
+                LOG(ERROR) << "Unsupported input tensor rank for operation "
+                           << getOperationName(opType);
+                return ANEURALNETWORKS_BAD_DATA;
+            }
             return validateOperationOperandTypes(operands, inputCount, inputIndexes,
                                                  inExpectedTypes, outputCount, outputIndexes,
                                                  outExpectedTypes);
@@ -1500,6 +1506,12 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
                            << getOperationName(opType);
                 return ANEURALNETWORKS_BAD_DATA;
             }
+            const auto inputRank = operands[inputIndexes[0]].dimensions.size();
+            if (inputRank > 4) {
+                LOG(ERROR) << "Unsupported input tensor rank for operation "
+                           << getOperationName(opType);
+                return ANEURALNETWORKS_BAD_DATA;
+            }
             return validateOperationOperandTypes(operands, inputCount, inputIndexes,
                                                  inExpectedTypes, outputCount, outputIndexes,
                                                  outExpectedTypes);
@@ -1546,6 +1558,12 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
                            << getOperationName(opType);
                 return ANEURALNETWORKS_BAD_DATA;
             }
+            const auto inputRank = operands[inputIndexes[0]].dimensions.size();
+            if (inputRank > 4) {
+                LOG(ERROR) << "Unsupported input tensor rank for operation "
+                           << getOperationName(opType);
+                return ANEURALNETWORKS_BAD_DATA;
+            }
             return validateOperationOperandTypes(operands, inputCount, inputIndexes,
                                                  inExpectedTypes, outputCount, outputIndexes,
                                                  outExpectedTypes);
@@ -1589,6 +1607,12 @@ int validateOperation(ANeuralNetworksOperationType opType, uint32_t inputCount,
         case ANEURALNETWORKS_MEAN: {
             if (inputCount != 3 || outputCount != 1) {
                 logInvalidInOutNumber(3, 1);
+                return ANEURALNETWORKS_BAD_DATA;
+            }
+            const auto inputRank = operands[inputIndexes[0]].dimensions.size();
+            if (inputRank > 4) {
+                LOG(ERROR) << "Unsupported input tensor rank for operation "
+                           << getOperationName(opType);
                 return ANEURALNETWORKS_BAD_DATA;
             }
             auto inputType = operands[inputIndexes[0]].type;
