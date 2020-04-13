@@ -18,6 +18,8 @@
 
 #include "VersionedInterfaces.h"
 
+#include <fcntl.h>
+
 #include <android-base/logging.h>
 #include <android-base/properties.h>
 #include <android-base/scopeguard.h>
