@@ -102,8 +102,9 @@ def Test(x, n, sum):
   example = Example({x: x_data, n: [n_data], sum: sum_data}, name=str(n_data))
   example.AddVariations(AllOutputsAsInternalCoverter())
 
-Test(x=[2, 3], n=1, sum=[1 + 2, 1 + 3])
-Test(x=[2, 3], n=1, sum=[1 + 2, 1 + 3])
-Test(x=[2, 3], n=2, sum=[1 + 2 + 4, 1 + 3 + 9])
-Test(x=[2, 3], n=3, sum=[1 + 2 + 4 + 8, 1 + 3 + 9 + 27])
-Test(x=[2, 3], n=4, sum=[1 + 2 + 4 + 8 + 16, 1 + 3 + 9 + 27 + 81])
+for use_shm_for_weights in [False, True]:
+  Configuration.use_shm_for_weights = use_shm_for_weights
+  Test(x=[2, 3], n=1, sum=[1 + 2, 1 + 3])
+  Test(x=[2, 3], n=2, sum=[1 + 2 + 4, 1 + 3 + 9])
+  Test(x=[2, 3], n=3, sum=[1 + 2 + 4 + 8, 1 + 3 + 9 + 27])
+  Test(x=[2, 3], n=4, sum=[1 + 2 + 4 + 8 + 16, 1 + 3 + 9 + 27 + 81])
