@@ -103,9 +103,11 @@ def Test(n, fib):
   example.AddVariations("relaxed", "float16", quant8, quant8_signed)
   example.AddVariations(AllOutputsAsInternalCoverter())
 
-# Fibonacci numbers: 1 1 2 3 5 8
-Test(n=1, fib=[1, 1])
-Test(n=2, fib=[1, 2])
-Test(n=3, fib=[2, 3])
-Test(n=4, fib=[3, 5])
-Test(n=5, fib=[5, 8])
+for use_shm_for_weights in [False, True]:
+  Configuration.use_shm_for_weights = use_shm_for_weights
+  # Fibonacci numbers: 1 1 2 3 5 8
+  Test(n=1, fib=[1, 1])
+  Test(n=2, fib=[1, 2])
+  Test(n=3, fib=[2, 3])
+  Test(n=4, fib=[3, 5])
+  Test(n=5, fib=[5, 8])
