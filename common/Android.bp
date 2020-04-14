@@ -289,6 +289,9 @@ cc_test {
         "-Wno-unused-parameter",
         "-Wno-unused-variable",
     ],
+    test_suites: [
+        "general-tests",
+    ],
 }
 
 cc_test {
