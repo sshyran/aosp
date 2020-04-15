@@ -1071,6 +1071,12 @@ static OptionalTimeoutDuration makeTimeoutDuration(uint64_t nanoseconds) {
 std::tuple<int, std::vector<OutputShape>, Timing> StepExecutor::compute(
         const std::optional<Deadline>& deadline,
         const std::shared_ptr<ExecutionBurstController>& burstController) {
+    return computeWithMemories(deadline, mMemories.getObjects(), burstController);
+}
+
+std::tuple<int, std::vector<OutputShape>, Timing> StepExecutor::computeWithMemories(
+        const std::optional<Deadline>& deadline, const std::vector<const Memory*>& memories,
+        const std::shared_ptr<ExecutionBurstController>& burstController) {
     CHECK(mPreparedModel != nullptr);
 
     if (VLOG_IS_ON(EXECUTION)) {
@@ -1081,9 +1087,8 @@ std::tuple<int, std::vector<OutputShape>, Timing> StepExecutor::compute(
     const MeasureTiming measure = measureTiming(mExecutionBuilder);
     const OptionalTimeoutDuration loopTimeoutDuration =
             makeTimeoutDuration(mExecutionBuilder->getLoopTimeoutDuration());
-    const auto [n, outputShapes, timing] =
-            mPreparedModel->execute(mInputs, mOutputs, mMemories.getObjects(), burstController,
-                                    measure, deadline, loopTimeoutDuration);
+    const auto [n, outputShapes, timing] = mPreparedModel->execute(
+            mInputs, mOutputs, memories, burstController, measure, deadline, loopTimeoutDuration);
     mExecutionBuilder->reportTimingWithoutFencedExecutionCallback(timing);
 
     return {n, std::move(outputShapes), timing};
@@ -1128,13 +1133,74 @@ std::tuple<int, std::vector<OutputShape>, Timing> StepExecutor::computeOnCpuFall
     const ExecutionPreference preference =
             static_cast<ExecutionPreference>(ANEURALNETWORKS_PREFER_FAST_SINGLE_ANSWER);
     const Priority priority = convertToHalPriority(ANEURALNETWORKS_PRIORITY_DEFAULT);
-    const auto [n, preparedModel] =
-            mDevice->prepareModel(makeModel, preference, priority, {}, {}, {});
-    mPreparedModel = preparedModel;
+    auto [n, preparedModel] = mDevice->prepareModel(makeModel, preference, priority, {}, {}, {});
+    mPreparedModel = std::move(preparedModel);
     if (n != ANEURALNETWORKS_NO_ERROR) {
         return {n, {}, kNoTiming};
     }
-    return compute({}, /*burstController=*/nullptr);
+
+    // Prepare device memories for CPU fallback.
+    std::vector<const Memory*> memories = mMemories.getObjects();
+    std::vector<bool> isUsedAsInput(memories.size(), false);
+    std::vector<bool> isUsedAsOutput(memories.size(), false);
+    std::vector<std::unique_ptr<Memory>> blobAhwbs;
+
+    // Mark the input and output usages.
+    for (auto& input : mInputs) {
+        if (input.state() == ModelArgumentInfo::MEMORY) {
+            const uint32_t poolIndex = input.locationAndLength().poolIndex;
+            isUsedAsInput[poolIndex] = true;
+        }
+    }
+    for (auto& output : mOutputs) {
+        if (output.state() == ModelArgumentInfo::MEMORY) {
+            const uint32_t poolIndex = output.locationAndLength().poolIndex;
+            // Cannot allocate output buffers with unknown shapes.
+            if (mMemories[poolIndex]->getValidator().createdWithUnknownShape()) {
+                LOG(ERROR) << "Cannot fallback to CPU because at least one of the output operands "
+                              "has unknown shape.";
+                return {ANEURALNETWORKS_OP_FAILED, {}, kNoTiming};
+            }
+            isUsedAsOutput[poolIndex] = true;
+        }
+    }
+
+    // Allocate BLOB mode AHardwareBuffers and read the data from input device memories.
+    for (uint32_t i = 0; i < memories.size(); i++) {
+        const Memory* memory = mMemories[i];
+        if (memory->getIBuffer() != nullptr) {
+            const uint32_t size = memory->getValidator().getMetadata().logicalSize;
+            auto [nAhwb, blobAhwb] = MemoryRuntimeAHWB::create(size);
+            if (nAhwb != ANEURALNETWORKS_NO_ERROR) {
+                return {nAhwb, {}, kNoTiming};
+            }
+            if (isUsedAsInput[i]) {
+                n = copyIBufferToHidlMemory(memory->getIBuffer(), blobAhwb->getHidlMemory());
+                if (n != ANEURALNETWORKS_NO_ERROR) {
+                    return {n, {}, kNoTiming};
+                }
+            }
+            memories[i] = blobAhwb.get();
+            blobAhwbs.push_back(std::move(blobAhwb));
+        }
+    }
+
+    auto [nCompute, outputShapes, timing] = computeWithMemories({}, memories);
+    if (nCompute != ANEURALNETWORKS_NO_ERROR) {
+        return {nCompute, std::move(outputShapes), timing};
+    }
+
+    // Write back to output device memories.
+    for (uint32_t i = 0; i < memories.size(); i++) {
+        const Memory* memory = mMemories[i];
+        if (memory->getIBuffer() != nullptr && isUsedAsOutput[i]) {
+            n = copyHidlMemoryToIBuffer(memories[i]->getHidlMemory(), memory->getIBuffer(), {});
+            if (n != ANEURALNETWORKS_NO_ERROR) {
+                return {n, {}, kNoTiming};
+            }
+        }
+    }
+    return {ANEURALNETWORKS_NO_ERROR, std::move(outputShapes), timing};
 }
 
 }  // namespace nn

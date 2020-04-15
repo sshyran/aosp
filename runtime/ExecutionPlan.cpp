@@ -19,7 +19,6 @@
 #include "ExecutionPlan.h"
 
 #include <android/sync.h>
-#include <cutils/native_handle.h>
 #include <fcntl.h>
 #include <openssl/sha.h>
 #include <sys/stat.h>
@@ -737,7 +736,7 @@ ExecutionPlan::Controller::Controller(
       mSourceOperandToOutputIndex(std::move(sourceOperandToOutputIndex)),
       mSourceOperandToConstantReference(std::move(sourceOperandToConstantReference)),
       mNextStepIndex(0),
-      mLastStepIndex(kBadStepIndex),
+      mFallbackNextStepIndex(kBadStepIndex),
       mLastStepSyncFd(-1) {
     if (totalSizeOfTemporaries == 0) {
         return;
@@ -969,9 +968,9 @@ int ExecutionPlan::fallback(std::shared_ptr<Controller> controller,
     *executor = nullptr;
 
     VLOG(EXECUTION) << "ExecutionPlan::fallback(" << SHOW_IF_DEBUG(controller << ", " << executor)
-                    << "): mNextStepIndex = " << controller->mNextStepIndex;
+                    << "): mFallbackNextStepIndex = " << controller->mFallbackNextStepIndex;
 
-    if (controller->mLastStepIndex == Controller::kBadStepIndex) {
+    if (controller->mFallbackNextStepIndex == Controller::kBadStepIndex) {
         // We haven't called next().
         return ANEURALNETWORKS_OP_FAILED;
     }
@@ -981,7 +980,7 @@ int ExecutionPlan::fallback(std::shared_ptr<Controller> controller,
         return ANEURALNETWORKS_OP_FAILED;
     }
 
-    controller->mNextStepIndex = controller->mLastStepIndex;
+    controller->mNextStepIndex = controller->mFallbackNextStepIndex;
     return next(controller, executor);
 }
 
@@ -1035,6 +1034,7 @@ std::optional<ExecutionPlan::Buffer> ExecutionPlan::getBuffer(
     const auto& sourceOperandToOffsetOfTemporary = controller->mSourceOperandToOffsetOfTemporary;
     const auto& sourceOperandToInputIndex = controller->mSourceOperandToInputIndex;
     const auto& sourceOperandToOutputIndex = controller->mSourceOperandToOutputIndex;
+    const auto& sourceOperandToConstantReference = controller->mSourceOperandToConstantReference;
     if (auto it = sourceOperandToOffsetOfTemporary.find(operandIndex);
         it != sourceOperandToOffsetOfTemporary.end()) {
         const uint32_t offset = it->second;
@@ -1048,6 +1048,14 @@ std::optional<ExecutionPlan::Buffer> ExecutionPlan::getBuffer(
                it != sourceOperandToOutputIndex.end()) {
         const ModelArgumentInfo& info = controller->mExecutionBuilder->getOutputInfo(it->second);
         return getBufferFromModelArgumentInfo(info, controller->mExecutionBuilder);
+    } else if (auto it = sourceOperandToConstantReference.find(operandIndex);
+               it != sourceOperandToConstantReference.end()) {
+        const ConstantReferenceLocation& location = it->second;
+        const std::optional<RunTimePoolInfo> info = location.memory->getRunTimePoolInfo();
+        if (info == std::nullopt) {
+            return std::nullopt;
+        }
+        return Buffer(info->getBuffer() + location.offset, location.length);
     }
     return std::nullopt;
 }
@@ -1070,7 +1078,6 @@ int ExecutionPlan::next(std::shared_ptr<Controller> controller,
                         std::shared_ptr<StepExecutor>* executor,
                         std::shared_ptr<ExecutionBurstController>* burstController,
                         int syncFdOfLastStep) const {
-    controller->mLastStepIndex = controller->mNextStepIndex;
     controller->mLastStepSyncFd = syncFdOfLastStep;
     *executor = nullptr;
     if (burstController != nullptr) {
@@ -1157,6 +1164,7 @@ int ExecutionPlan::nextCompound(const ExecutionStep* step, std::shared_ptr<Contr
         *burstController = controller->mBurstBuilder->getControllerAt(controller->mNextStepIndex);
     }
 
+    controller->mFallbackNextStepIndex = controller->mNextStepIndex;
     controller->mNextStepIndex++;
     return ANEURALNETWORKS_NO_ERROR;
 }
@@ -1367,6 +1375,7 @@ int ExecutionPlan::nextCompound(const WhileStep* step, std::shared_ptr<Controlle
             const SourceOperandIndex& outerOperand = step->outerOutputOperands[i];
             std::optional<Buffer> outerBuffer = getBuffer(controller, outerOperand);
             if (outerBuffer == std::nullopt) {
+                LOG(ERROR) << "Unable to get outerBuffer for operand " << toString(outerOperand);
                 return ANEURALNETWORKS_OP_FAILED;
             }
             const Operand& sourceOperand =
@@ -1375,6 +1384,7 @@ int ExecutionPlan::nextCompound(const WhileStep* step, std::shared_ptr<Controlle
             CHECK_NE(size, 0u);
             std::optional<Buffer> innerBuffer = getBuffer(controller, innerOperand);
             if (innerBuffer == std::nullopt) {
+                LOG(ERROR) << "Unable to get innerBuffer for operand " << toString(innerOperand);
                 return ANEURALNETWORKS_OP_FAILED;
             }
             CHECK_LE(size, innerBuffer->getSize());
