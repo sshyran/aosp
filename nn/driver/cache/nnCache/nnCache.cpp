@@ -16,6 +16,7 @@
 
 #include "nnCache.h"
 
+#include <fcntl.h>
 #include <inttypes.h>
 #include <sys/mman.h>
 #include <sys/stat.h>
