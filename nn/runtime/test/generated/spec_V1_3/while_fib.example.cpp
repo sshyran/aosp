@@ -6,7 +6,7 @@ using namespace test_helper;
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_1() {
+const TestModel& get_test_model_n_1() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -249,13 +249,13 @@ const TestModel& get_test_model_1() {
     return model;
 }
 
-const auto dummy_test_model_1 = TestModelManager::get().add("while_fib_1", get_test_model_1());
+const auto dummy_test_model_n_1 = TestModelManager::get().add("while_fib_n_1", get_test_model_n_1());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_1_all_tensors_as_inputs() {
+const TestModel& get_test_model_n_1_all_tensors_as_inputs() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -498,13 +498,13 @@ const TestModel& get_test_model_1_all_tensors_as_inputs() {
     return model;
 }
 
-const auto dummy_test_model_1_all_tensors_as_inputs = TestModelManager::get().add("while_fib_1_all_tensors_as_inputs", get_test_model_1_all_tensors_as_inputs());
+const auto dummy_test_model_n_1_all_tensors_as_inputs = TestModelManager::get().add("while_fib_n_1_all_tensors_as_inputs", get_test_model_n_1_all_tensors_as_inputs());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_1_all_tensors_as_inputs_all_inputs_as_internal() {
+const TestModel& get_test_model_n_1_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -781,13 +781,13 @@ const TestModel& get_test_model_1_all_tensors_as_inputs_all_inputs_as_internal()
     return model;
 }
 
-const auto dummy_test_model_1_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("while_fib_1_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_1_all_tensors_as_inputs_all_inputs_as_internal());
+const auto dummy_test_model_n_1_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("while_fib_n_1_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_n_1_all_tensors_as_inputs_all_inputs_as_internal());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_1_all_outputs_as_internal() {
+const TestModel& get_test_model_n_1_all_outputs_as_internal() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -1064,13 +1064,13 @@ const TestModel& get_test_model_1_all_outputs_as_internal() {
     return model;
 }
 
-const auto dummy_test_model_1_all_outputs_as_internal = TestModelManager::get().add("while_fib_1_all_outputs_as_internal", get_test_model_1_all_outputs_as_internal());
+const auto dummy_test_model_n_1_all_outputs_as_internal = TestModelManager::get().add("while_fib_n_1_all_outputs_as_internal", get_test_model_n_1_all_outputs_as_internal());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_1_relaxed() {
+const TestModel& get_test_model_n_1_relaxed() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -1313,13 +1313,13 @@ const TestModel& get_test_model_1_relaxed() {
     return model;
 }
 
-const auto dummy_test_model_1_relaxed = TestModelManager::get().add("while_fib_1_relaxed", get_test_model_1_relaxed());
+const auto dummy_test_model_n_1_relaxed = TestModelManager::get().add("while_fib_n_1_relaxed", get_test_model_n_1_relaxed());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_1_relaxed_all_tensors_as_inputs() {
+const TestModel& get_test_model_n_1_relaxed_all_tensors_as_inputs() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -1562,13 +1562,13 @@ const TestModel& get_test_model_1_relaxed_all_tensors_as_inputs() {
     return model;
 }
 
-const auto dummy_test_model_1_relaxed_all_tensors_as_inputs = TestModelManager::get().add("while_fib_1_relaxed_all_tensors_as_inputs", get_test_model_1_relaxed_all_tensors_as_inputs());
+const auto dummy_test_model_n_1_relaxed_all_tensors_as_inputs = TestModelManager::get().add("while_fib_n_1_relaxed_all_tensors_as_inputs", get_test_model_n_1_relaxed_all_tensors_as_inputs());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_1_relaxed_all_tensors_as_inputs_all_inputs_as_internal() {
+const TestModel& get_test_model_n_1_relaxed_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -1845,13 +1845,13 @@ const TestModel& get_test_model_1_relaxed_all_tensors_as_inputs_all_inputs_as_in
     return model;
 }
 
-const auto dummy_test_model_1_relaxed_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("while_fib_1_relaxed_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_1_relaxed_all_tensors_as_inputs_all_inputs_as_internal());
+const auto dummy_test_model_n_1_relaxed_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("while_fib_n_1_relaxed_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_n_1_relaxed_all_tensors_as_inputs_all_inputs_as_internal());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_1_relaxed_all_outputs_as_internal() {
+const TestModel& get_test_model_n_1_relaxed_all_outputs_as_internal() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -2128,13 +2128,13 @@ const TestModel& get_test_model_1_relaxed_all_outputs_as_internal() {
     return model;
 }
 
-const auto dummy_test_model_1_relaxed_all_outputs_as_internal = TestModelManager::get().add("while_fib_1_relaxed_all_outputs_as_internal", get_test_model_1_relaxed_all_outputs_as_internal());
+const auto dummy_test_model_n_1_relaxed_all_outputs_as_internal = TestModelManager::get().add("while_fib_n_1_relaxed_all_outputs_as_internal", get_test_model_n_1_relaxed_all_outputs_as_internal());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_1_float16() {
+const TestModel& get_test_model_n_1_float16() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -2377,13 +2377,13 @@ const TestModel& get_test_model_1_float16() {
     return model;
 }
 
-const auto dummy_test_model_1_float16 = TestModelManager::get().add("while_fib_1_float16", get_test_model_1_float16());
+const auto dummy_test_model_n_1_float16 = TestModelManager::get().add("while_fib_n_1_float16", get_test_model_n_1_float16());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_1_float16_all_tensors_as_inputs() {
+const TestModel& get_test_model_n_1_float16_all_tensors_as_inputs() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -2626,13 +2626,13 @@ const TestModel& get_test_model_1_float16_all_tensors_as_inputs() {
     return model;
 }
 
-const auto dummy_test_model_1_float16_all_tensors_as_inputs = TestModelManager::get().add("while_fib_1_float16_all_tensors_as_inputs", get_test_model_1_float16_all_tensors_as_inputs());
+const auto dummy_test_model_n_1_float16_all_tensors_as_inputs = TestModelManager::get().add("while_fib_n_1_float16_all_tensors_as_inputs", get_test_model_n_1_float16_all_tensors_as_inputs());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_1_float16_all_tensors_as_inputs_all_inputs_as_internal() {
+const TestModel& get_test_model_n_1_float16_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -2909,13 +2909,13 @@ const TestModel& get_test_model_1_float16_all_tensors_as_inputs_all_inputs_as_in
     return model;
 }
 
-const auto dummy_test_model_1_float16_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("while_fib_1_float16_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_1_float16_all_tensors_as_inputs_all_inputs_as_internal());
+const auto dummy_test_model_n_1_float16_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("while_fib_n_1_float16_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_n_1_float16_all_tensors_as_inputs_all_inputs_as_internal());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_1_float16_all_outputs_as_internal() {
+const TestModel& get_test_model_n_1_float16_all_outputs_as_internal() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -3192,13 +3192,13 @@ const TestModel& get_test_model_1_float16_all_outputs_as_internal() {
     return model;
 }
 
-const auto dummy_test_model_1_float16_all_outputs_as_internal = TestModelManager::get().add("while_fib_1_float16_all_outputs_as_internal", get_test_model_1_float16_all_outputs_as_internal());
+const auto dummy_test_model_n_1_float16_all_outputs_as_internal = TestModelManager::get().add("while_fib_n_1_float16_all_outputs_as_internal", get_test_model_n_1_float16_all_outputs_as_internal());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_1_quant8() {
+const TestModel& get_test_model_n_1_quant8() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -3441,13 +3441,13 @@ const TestModel& get_test_model_1_quant8() {
     return model;
 }
 
-const auto dummy_test_model_1_quant8 = TestModelManager::get().add("while_fib_1_quant8", get_test_model_1_quant8());
+const auto dummy_test_model_n_1_quant8 = TestModelManager::get().add("while_fib_n_1_quant8", get_test_model_n_1_quant8());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_1_quant8_all_tensors_as_inputs() {
+const TestModel& get_test_model_n_1_quant8_all_tensors_as_inputs() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -3690,13 +3690,13 @@ const TestModel& get_test_model_1_quant8_all_tensors_as_inputs() {
     return model;
 }
 
-const auto dummy_test_model_1_quant8_all_tensors_as_inputs = TestModelManager::get().add("while_fib_1_quant8_all_tensors_as_inputs", get_test_model_1_quant8_all_tensors_as_inputs());
+const auto dummy_test_model_n_1_quant8_all_tensors_as_inputs = TestModelManager::get().add("while_fib_n_1_quant8_all_tensors_as_inputs", get_test_model_n_1_quant8_all_tensors_as_inputs());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_1_quant8_all_tensors_as_inputs_all_inputs_as_internal() {
+const TestModel& get_test_model_n_1_quant8_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -3973,13 +3973,13 @@ const TestModel& get_test_model_1_quant8_all_tensors_as_inputs_all_inputs_as_int
     return model;
 }
 
-const auto dummy_test_model_1_quant8_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("while_fib_1_quant8_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_1_quant8_all_tensors_as_inputs_all_inputs_as_internal());
+const auto dummy_test_model_n_1_quant8_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("while_fib_n_1_quant8_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_n_1_quant8_all_tensors_as_inputs_all_inputs_as_internal());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_1_quant8_all_outputs_as_internal() {
+const TestModel& get_test_model_n_1_quant8_all_outputs_as_internal() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -4256,13 +4256,13 @@ const TestModel& get_test_model_1_quant8_all_outputs_as_internal() {
     return model;
 }
 
-const auto dummy_test_model_1_quant8_all_outputs_as_internal = TestModelManager::get().add("while_fib_1_quant8_all_outputs_as_internal", get_test_model_1_quant8_all_outputs_as_internal());
+const auto dummy_test_model_n_1_quant8_all_outputs_as_internal = TestModelManager::get().add("while_fib_n_1_quant8_all_outputs_as_internal", get_test_model_n_1_quant8_all_outputs_as_internal());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_1_quant8_signed() {
+const TestModel& get_test_model_n_1_quant8_signed() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -4505,13 +4505,13 @@ const TestModel& get_test_model_1_quant8_signed() {
     return model;
 }
 
-const auto dummy_test_model_1_quant8_signed = TestModelManager::get().add("while_fib_1_quant8_signed", get_test_model_1_quant8_signed());
+const auto dummy_test_model_n_1_quant8_signed = TestModelManager::get().add("while_fib_n_1_quant8_signed", get_test_model_n_1_quant8_signed());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_1_quant8_signed_all_tensors_as_inputs() {
+const TestModel& get_test_model_n_1_quant8_signed_all_tensors_as_inputs() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -4754,13 +4754,13 @@ const TestModel& get_test_model_1_quant8_signed_all_tensors_as_inputs() {
     return model;
 }
 
-const auto dummy_test_model_1_quant8_signed_all_tensors_as_inputs = TestModelManager::get().add("while_fib_1_quant8_signed_all_tensors_as_inputs", get_test_model_1_quant8_signed_all_tensors_as_inputs());
+const auto dummy_test_model_n_1_quant8_signed_all_tensors_as_inputs = TestModelManager::get().add("while_fib_n_1_quant8_signed_all_tensors_as_inputs", get_test_model_n_1_quant8_signed_all_tensors_as_inputs());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_1_quant8_signed_all_tensors_as_inputs_all_inputs_as_internal() {
+const TestModel& get_test_model_n_1_quant8_signed_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -5037,13 +5037,13 @@ const TestModel& get_test_model_1_quant8_signed_all_tensors_as_inputs_all_inputs
     return model;
 }
 
-const auto dummy_test_model_1_quant8_signed_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("while_fib_1_quant8_signed_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_1_quant8_signed_all_tensors_as_inputs_all_inputs_as_internal());
+const auto dummy_test_model_n_1_quant8_signed_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("while_fib_n_1_quant8_signed_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_n_1_quant8_signed_all_tensors_as_inputs_all_inputs_as_internal());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_1_quant8_signed_all_outputs_as_internal() {
+const TestModel& get_test_model_n_1_quant8_signed_all_outputs_as_internal() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -5320,13 +5320,13 @@ const TestModel& get_test_model_1_quant8_signed_all_outputs_as_internal() {
     return model;
 }
 
-const auto dummy_test_model_1_quant8_signed_all_outputs_as_internal = TestModelManager::get().add("while_fib_1_quant8_signed_all_outputs_as_internal", get_test_model_1_quant8_signed_all_outputs_as_internal());
+const auto dummy_test_model_n_1_quant8_signed_all_outputs_as_internal = TestModelManager::get().add("while_fib_n_1_quant8_signed_all_outputs_as_internal", get_test_model_n_1_quant8_signed_all_outputs_as_internal());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_2() {
+const TestModel& get_test_model_n_2() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -5569,13 +5569,13 @@ const TestModel& get_test_model_2() {
     return model;
 }
 
-const auto dummy_test_model_2 = TestModelManager::get().add("while_fib_2", get_test_model_2());
+const auto dummy_test_model_n_2 = TestModelManager::get().add("while_fib_n_2", get_test_model_n_2());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_2_all_tensors_as_inputs() {
+const TestModel& get_test_model_n_2_all_tensors_as_inputs() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -5818,13 +5818,13 @@ const TestModel& get_test_model_2_all_tensors_as_inputs() {
     return model;
 }
 
-const auto dummy_test_model_2_all_tensors_as_inputs = TestModelManager::get().add("while_fib_2_all_tensors_as_inputs", get_test_model_2_all_tensors_as_inputs());
+const auto dummy_test_model_n_2_all_tensors_as_inputs = TestModelManager::get().add("while_fib_n_2_all_tensors_as_inputs", get_test_model_n_2_all_tensors_as_inputs());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_2_all_tensors_as_inputs_all_inputs_as_internal() {
+const TestModel& get_test_model_n_2_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -6101,13 +6101,13 @@ const TestModel& get_test_model_2_all_tensors_as_inputs_all_inputs_as_internal()
     return model;
 }
 
-const auto dummy_test_model_2_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("while_fib_2_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_2_all_tensors_as_inputs_all_inputs_as_internal());
+const auto dummy_test_model_n_2_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("while_fib_n_2_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_n_2_all_tensors_as_inputs_all_inputs_as_internal());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_2_all_outputs_as_internal() {
+const TestModel& get_test_model_n_2_all_outputs_as_internal() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -6384,13 +6384,13 @@ const TestModel& get_test_model_2_all_outputs_as_internal() {
     return model;
 }
 
-const auto dummy_test_model_2_all_outputs_as_internal = TestModelManager::get().add("while_fib_2_all_outputs_as_internal", get_test_model_2_all_outputs_as_internal());
+const auto dummy_test_model_n_2_all_outputs_as_internal = TestModelManager::get().add("while_fib_n_2_all_outputs_as_internal", get_test_model_n_2_all_outputs_as_internal());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_2_relaxed() {
+const TestModel& get_test_model_n_2_relaxed() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -6633,13 +6633,13 @@ const TestModel& get_test_model_2_relaxed() {
     return model;
 }
 
-const auto dummy_test_model_2_relaxed = TestModelManager::get().add("while_fib_2_relaxed", get_test_model_2_relaxed());
+const auto dummy_test_model_n_2_relaxed = TestModelManager::get().add("while_fib_n_2_relaxed", get_test_model_n_2_relaxed());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_2_relaxed_all_tensors_as_inputs() {
+const TestModel& get_test_model_n_2_relaxed_all_tensors_as_inputs() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -6882,13 +6882,13 @@ const TestModel& get_test_model_2_relaxed_all_tensors_as_inputs() {
     return model;
 }
 
-const auto dummy_test_model_2_relaxed_all_tensors_as_inputs = TestModelManager::get().add("while_fib_2_relaxed_all_tensors_as_inputs", get_test_model_2_relaxed_all_tensors_as_inputs());
+const auto dummy_test_model_n_2_relaxed_all_tensors_as_inputs = TestModelManager::get().add("while_fib_n_2_relaxed_all_tensors_as_inputs", get_test_model_n_2_relaxed_all_tensors_as_inputs());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_2_relaxed_all_tensors_as_inputs_all_inputs_as_internal() {
+const TestModel& get_test_model_n_2_relaxed_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -7165,13 +7165,13 @@ const TestModel& get_test_model_2_relaxed_all_tensors_as_inputs_all_inputs_as_in
     return model;
 }
 
-const auto dummy_test_model_2_relaxed_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("while_fib_2_relaxed_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_2_relaxed_all_tensors_as_inputs_all_inputs_as_internal());
+const auto dummy_test_model_n_2_relaxed_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("while_fib_n_2_relaxed_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_n_2_relaxed_all_tensors_as_inputs_all_inputs_as_internal());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_2_relaxed_all_outputs_as_internal() {
+const TestModel& get_test_model_n_2_relaxed_all_outputs_as_internal() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -7448,13 +7448,13 @@ const TestModel& get_test_model_2_relaxed_all_outputs_as_internal() {
     return model;
 }
 
-const auto dummy_test_model_2_relaxed_all_outputs_as_internal = TestModelManager::get().add("while_fib_2_relaxed_all_outputs_as_internal", get_test_model_2_relaxed_all_outputs_as_internal());
+const auto dummy_test_model_n_2_relaxed_all_outputs_as_internal = TestModelManager::get().add("while_fib_n_2_relaxed_all_outputs_as_internal", get_test_model_n_2_relaxed_all_outputs_as_internal());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_2_float16() {
+const TestModel& get_test_model_n_2_float16() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -7697,13 +7697,13 @@ const TestModel& get_test_model_2_float16() {
     return model;
 }
 
-const auto dummy_test_model_2_float16 = TestModelManager::get().add("while_fib_2_float16", get_test_model_2_float16());
+const auto dummy_test_model_n_2_float16 = TestModelManager::get().add("while_fib_n_2_float16", get_test_model_n_2_float16());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_2_float16_all_tensors_as_inputs() {
+const TestModel& get_test_model_n_2_float16_all_tensors_as_inputs() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -7946,13 +7946,13 @@ const TestModel& get_test_model_2_float16_all_tensors_as_inputs() {
     return model;
 }
 
-const auto dummy_test_model_2_float16_all_tensors_as_inputs = TestModelManager::get().add("while_fib_2_float16_all_tensors_as_inputs", get_test_model_2_float16_all_tensors_as_inputs());
+const auto dummy_test_model_n_2_float16_all_tensors_as_inputs = TestModelManager::get().add("while_fib_n_2_float16_all_tensors_as_inputs", get_test_model_n_2_float16_all_tensors_as_inputs());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_2_float16_all_tensors_as_inputs_all_inputs_as_internal() {
+const TestModel& get_test_model_n_2_float16_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -8229,13 +8229,13 @@ const TestModel& get_test_model_2_float16_all_tensors_as_inputs_all_inputs_as_in
     return model;
 }
 
-const auto dummy_test_model_2_float16_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("while_fib_2_float16_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_2_float16_all_tensors_as_inputs_all_inputs_as_internal());
+const auto dummy_test_model_n_2_float16_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("while_fib_n_2_float16_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_n_2_float16_all_tensors_as_inputs_all_inputs_as_internal());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_2_float16_all_outputs_as_internal() {
+const TestModel& get_test_model_n_2_float16_all_outputs_as_internal() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -8512,13 +8512,13 @@ const TestModel& get_test_model_2_float16_all_outputs_as_internal() {
     return model;
 }
 
-const auto dummy_test_model_2_float16_all_outputs_as_internal = TestModelManager::get().add("while_fib_2_float16_all_outputs_as_internal", get_test_model_2_float16_all_outputs_as_internal());
+const auto dummy_test_model_n_2_float16_all_outputs_as_internal = TestModelManager::get().add("while_fib_n_2_float16_all_outputs_as_internal", get_test_model_n_2_float16_all_outputs_as_internal());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_2_quant8() {
+const TestModel& get_test_model_n_2_quant8() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -8761,13 +8761,13 @@ const TestModel& get_test_model_2_quant8() {
     return model;
 }
 
-const auto dummy_test_model_2_quant8 = TestModelManager::get().add("while_fib_2_quant8", get_test_model_2_quant8());
+const auto dummy_test_model_n_2_quant8 = TestModelManager::get().add("while_fib_n_2_quant8", get_test_model_n_2_quant8());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_2_quant8_all_tensors_as_inputs() {
+const TestModel& get_test_model_n_2_quant8_all_tensors_as_inputs() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -9010,13 +9010,13 @@ const TestModel& get_test_model_2_quant8_all_tensors_as_inputs() {
     return model;
 }
 
-const auto dummy_test_model_2_quant8_all_tensors_as_inputs = TestModelManager::get().add("while_fib_2_quant8_all_tensors_as_inputs", get_test_model_2_quant8_all_tensors_as_inputs());
+const auto dummy_test_model_n_2_quant8_all_tensors_as_inputs = TestModelManager::get().add("while_fib_n_2_quant8_all_tensors_as_inputs", get_test_model_n_2_quant8_all_tensors_as_inputs());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_2_quant8_all_tensors_as_inputs_all_inputs_as_internal() {
+const TestModel& get_test_model_n_2_quant8_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -9293,13 +9293,13 @@ const TestModel& get_test_model_2_quant8_all_tensors_as_inputs_all_inputs_as_int
     return model;
 }
 
-const auto dummy_test_model_2_quant8_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("while_fib_2_quant8_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_2_quant8_all_tensors_as_inputs_all_inputs_as_internal());
+const auto dummy_test_model_n_2_quant8_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("while_fib_n_2_quant8_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_n_2_quant8_all_tensors_as_inputs_all_inputs_as_internal());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_2_quant8_all_outputs_as_internal() {
+const TestModel& get_test_model_n_2_quant8_all_outputs_as_internal() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -9576,13 +9576,13 @@ const TestModel& get_test_model_2_quant8_all_outputs_as_internal() {
     return model;
 }
 
-const auto dummy_test_model_2_quant8_all_outputs_as_internal = TestModelManager::get().add("while_fib_2_quant8_all_outputs_as_internal", get_test_model_2_quant8_all_outputs_as_internal());
+const auto dummy_test_model_n_2_quant8_all_outputs_as_internal = TestModelManager::get().add("while_fib_n_2_quant8_all_outputs_as_internal", get_test_model_n_2_quant8_all_outputs_as_internal());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_2_quant8_signed() {
+const TestModel& get_test_model_n_2_quant8_signed() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -9825,13 +9825,13 @@ const TestModel& get_test_model_2_quant8_signed() {
     return model;
 }
 
-const auto dummy_test_model_2_quant8_signed = TestModelManager::get().add("while_fib_2_quant8_signed", get_test_model_2_quant8_signed());
+const auto dummy_test_model_n_2_quant8_signed = TestModelManager::get().add("while_fib_n_2_quant8_signed", get_test_model_n_2_quant8_signed());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_2_quant8_signed_all_tensors_as_inputs() {
+const TestModel& get_test_model_n_2_quant8_signed_all_tensors_as_inputs() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -10074,13 +10074,13 @@ const TestModel& get_test_model_2_quant8_signed_all_tensors_as_inputs() {
     return model;
 }
 
-const auto dummy_test_model_2_quant8_signed_all_tensors_as_inputs = TestModelManager::get().add("while_fib_2_quant8_signed_all_tensors_as_inputs", get_test_model_2_quant8_signed_all_tensors_as_inputs());
+const auto dummy_test_model_n_2_quant8_signed_all_tensors_as_inputs = TestModelManager::get().add("while_fib_n_2_quant8_signed_all_tensors_as_inputs", get_test_model_n_2_quant8_signed_all_tensors_as_inputs());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_2_quant8_signed_all_tensors_as_inputs_all_inputs_as_internal() {
+const TestModel& get_test_model_n_2_quant8_signed_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -10357,13 +10357,13 @@ const TestModel& get_test_model_2_quant8_signed_all_tensors_as_inputs_all_inputs
     return model;
 }
 
-const auto dummy_test_model_2_quant8_signed_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("while_fib_2_quant8_signed_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_2_quant8_signed_all_tensors_as_inputs_all_inputs_as_internal());
+const auto dummy_test_model_n_2_quant8_signed_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("while_fib_n_2_quant8_signed_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_n_2_quant8_signed_all_tensors_as_inputs_all_inputs_as_internal());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_2_quant8_signed_all_outputs_as_internal() {
+const TestModel& get_test_model_n_2_quant8_signed_all_outputs_as_internal() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -10640,13 +10640,13 @@ const TestModel& get_test_model_2_quant8_signed_all_outputs_as_internal() {
     return model;
 }
 
-const auto dummy_test_model_2_quant8_signed_all_outputs_as_internal = TestModelManager::get().add("while_fib_2_quant8_signed_all_outputs_as_internal", get_test_model_2_quant8_signed_all_outputs_as_internal());
+const auto dummy_test_model_n_2_quant8_signed_all_outputs_as_internal = TestModelManager::get().add("while_fib_n_2_quant8_signed_all_outputs_as_internal", get_test_model_n_2_quant8_signed_all_outputs_as_internal());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_3() {
+const TestModel& get_test_model_n_3() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -10889,13 +10889,13 @@ const TestModel& get_test_model_3() {
     return model;
 }
 
-const auto dummy_test_model_3 = TestModelManager::get().add("while_fib_3", get_test_model_3());
+const auto dummy_test_model_n_3 = TestModelManager::get().add("while_fib_n_3", get_test_model_n_3());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_3_all_tensors_as_inputs() {
+const TestModel& get_test_model_n_3_all_tensors_as_inputs() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -11138,13 +11138,13 @@ const TestModel& get_test_model_3_all_tensors_as_inputs() {
     return model;
 }
 
-const auto dummy_test_model_3_all_tensors_as_inputs = TestModelManager::get().add("while_fib_3_all_tensors_as_inputs", get_test_model_3_all_tensors_as_inputs());
+const auto dummy_test_model_n_3_all_tensors_as_inputs = TestModelManager::get().add("while_fib_n_3_all_tensors_as_inputs", get_test_model_n_3_all_tensors_as_inputs());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_3_all_tensors_as_inputs_all_inputs_as_internal() {
+const TestModel& get_test_model_n_3_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -11421,13 +11421,13 @@ const TestModel& get_test_model_3_all_tensors_as_inputs_all_inputs_as_internal()
     return model;
 }
 
-const auto dummy_test_model_3_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("while_fib_3_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_3_all_tensors_as_inputs_all_inputs_as_internal());
+const auto dummy_test_model_n_3_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("while_fib_n_3_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_n_3_all_tensors_as_inputs_all_inputs_as_internal());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_3_all_outputs_as_internal() {
+const TestModel& get_test_model_n_3_all_outputs_as_internal() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -11704,13 +11704,13 @@ const TestModel& get_test_model_3_all_outputs_as_internal() {
     return model;
 }
 
-const auto dummy_test_model_3_all_outputs_as_internal = TestModelManager::get().add("while_fib_3_all_outputs_as_internal", get_test_model_3_all_outputs_as_internal());
+const auto dummy_test_model_n_3_all_outputs_as_internal = TestModelManager::get().add("while_fib_n_3_all_outputs_as_internal", get_test_model_n_3_all_outputs_as_internal());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_3_relaxed() {
+const TestModel& get_test_model_n_3_relaxed() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -11953,13 +11953,13 @@ const TestModel& get_test_model_3_relaxed() {
     return model;
 }
 
-const auto dummy_test_model_3_relaxed = TestModelManager::get().add("while_fib_3_relaxed", get_test_model_3_relaxed());
+const auto dummy_test_model_n_3_relaxed = TestModelManager::get().add("while_fib_n_3_relaxed", get_test_model_n_3_relaxed());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_3_relaxed_all_tensors_as_inputs() {
+const TestModel& get_test_model_n_3_relaxed_all_tensors_as_inputs() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -12202,13 +12202,13 @@ const TestModel& get_test_model_3_relaxed_all_tensors_as_inputs() {
     return model;
 }
 
-const auto dummy_test_model_3_relaxed_all_tensors_as_inputs = TestModelManager::get().add("while_fib_3_relaxed_all_tensors_as_inputs", get_test_model_3_relaxed_all_tensors_as_inputs());
+const auto dummy_test_model_n_3_relaxed_all_tensors_as_inputs = TestModelManager::get().add("while_fib_n_3_relaxed_all_tensors_as_inputs", get_test_model_n_3_relaxed_all_tensors_as_inputs());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_3_relaxed_all_tensors_as_inputs_all_inputs_as_internal() {
+const TestModel& get_test_model_n_3_relaxed_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -12485,13 +12485,13 @@ const TestModel& get_test_model_3_relaxed_all_tensors_as_inputs_all_inputs_as_in
     return model;
 }
 
-const auto dummy_test_model_3_relaxed_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("while_fib_3_relaxed_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_3_relaxed_all_tensors_as_inputs_all_inputs_as_internal());
+const auto dummy_test_model_n_3_relaxed_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("while_fib_n_3_relaxed_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_n_3_relaxed_all_tensors_as_inputs_all_inputs_as_internal());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_3_relaxed_all_outputs_as_internal() {
+const TestModel& get_test_model_n_3_relaxed_all_outputs_as_internal() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -12768,13 +12768,13 @@ const TestModel& get_test_model_3_relaxed_all_outputs_as_internal() {
     return model;
 }
 
-const auto dummy_test_model_3_relaxed_all_outputs_as_internal = TestModelManager::get().add("while_fib_3_relaxed_all_outputs_as_internal", get_test_model_3_relaxed_all_outputs_as_internal());
+const auto dummy_test_model_n_3_relaxed_all_outputs_as_internal = TestModelManager::get().add("while_fib_n_3_relaxed_all_outputs_as_internal", get_test_model_n_3_relaxed_all_outputs_as_internal());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_3_float16() {
+const TestModel& get_test_model_n_3_float16() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -13017,13 +13017,13 @@ const TestModel& get_test_model_3_float16() {
     return model;
 }
 
-const auto dummy_test_model_3_float16 = TestModelManager::get().add("while_fib_3_float16", get_test_model_3_float16());
+const auto dummy_test_model_n_3_float16 = TestModelManager::get().add("while_fib_n_3_float16", get_test_model_n_3_float16());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_3_float16_all_tensors_as_inputs() {
+const TestModel& get_test_model_n_3_float16_all_tensors_as_inputs() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -13266,13 +13266,13 @@ const TestModel& get_test_model_3_float16_all_tensors_as_inputs() {
     return model;
 }
 
-const auto dummy_test_model_3_float16_all_tensors_as_inputs = TestModelManager::get().add("while_fib_3_float16_all_tensors_as_inputs", get_test_model_3_float16_all_tensors_as_inputs());
+const auto dummy_test_model_n_3_float16_all_tensors_as_inputs = TestModelManager::get().add("while_fib_n_3_float16_all_tensors_as_inputs", get_test_model_n_3_float16_all_tensors_as_inputs());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_3_float16_all_tensors_as_inputs_all_inputs_as_internal() {
+const TestModel& get_test_model_n_3_float16_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -13549,13 +13549,13 @@ const TestModel& get_test_model_3_float16_all_tensors_as_inputs_all_inputs_as_in
     return model;
 }
 
-const auto dummy_test_model_3_float16_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("while_fib_3_float16_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_3_float16_all_tensors_as_inputs_all_inputs_as_internal());
+const auto dummy_test_model_n_3_float16_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("while_fib_n_3_float16_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_n_3_float16_all_tensors_as_inputs_all_inputs_as_internal());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_3_float16_all_outputs_as_internal() {
+const TestModel& get_test_model_n_3_float16_all_outputs_as_internal() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -13832,13 +13832,13 @@ const TestModel& get_test_model_3_float16_all_outputs_as_internal() {
     return model;
 }
 
-const auto dummy_test_model_3_float16_all_outputs_as_internal = TestModelManager::get().add("while_fib_3_float16_all_outputs_as_internal", get_test_model_3_float16_all_outputs_as_internal());
+const auto dummy_test_model_n_3_float16_all_outputs_as_internal = TestModelManager::get().add("while_fib_n_3_float16_all_outputs_as_internal", get_test_model_n_3_float16_all_outputs_as_internal());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_3_quant8() {
+const TestModel& get_test_model_n_3_quant8() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -14081,13 +14081,13 @@ const TestModel& get_test_model_3_quant8() {
     return model;
 }
 
-const auto dummy_test_model_3_quant8 = TestModelManager::get().add("while_fib_3_quant8", get_test_model_3_quant8());
+const auto dummy_test_model_n_3_quant8 = TestModelManager::get().add("while_fib_n_3_quant8", get_test_model_n_3_quant8());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_3_quant8_all_tensors_as_inputs() {
+const TestModel& get_test_model_n_3_quant8_all_tensors_as_inputs() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -14330,13 +14330,13 @@ const TestModel& get_test_model_3_quant8_all_tensors_as_inputs() {
     return model;
 }
 
-const auto dummy_test_model_3_quant8_all_tensors_as_inputs = TestModelManager::get().add("while_fib_3_quant8_all_tensors_as_inputs", get_test_model_3_quant8_all_tensors_as_inputs());
+const auto dummy_test_model_n_3_quant8_all_tensors_as_inputs = TestModelManager::get().add("while_fib_n_3_quant8_all_tensors_as_inputs", get_test_model_n_3_quant8_all_tensors_as_inputs());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_3_quant8_all_tensors_as_inputs_all_inputs_as_internal() {
+const TestModel& get_test_model_n_3_quant8_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -14613,13 +14613,13 @@ const TestModel& get_test_model_3_quant8_all_tensors_as_inputs_all_inputs_as_int
     return model;
 }
 
-const auto dummy_test_model_3_quant8_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("while_fib_3_quant8_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_3_quant8_all_tensors_as_inputs_all_inputs_as_internal());
+const auto dummy_test_model_n_3_quant8_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("while_fib_n_3_quant8_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_n_3_quant8_all_tensors_as_inputs_all_inputs_as_internal());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_3_quant8_all_outputs_as_internal() {
+const TestModel& get_test_model_n_3_quant8_all_outputs_as_internal() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -14896,13 +14896,13 @@ const TestModel& get_test_model_3_quant8_all_outputs_as_internal() {
     return model;
 }
 
-const auto dummy_test_model_3_quant8_all_outputs_as_internal = TestModelManager::get().add("while_fib_3_quant8_all_outputs_as_internal", get_test_model_3_quant8_all_outputs_as_internal());
+const auto dummy_test_model_n_3_quant8_all_outputs_as_internal = TestModelManager::get().add("while_fib_n_3_quant8_all_outputs_as_internal", get_test_model_n_3_quant8_all_outputs_as_internal());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_3_quant8_signed() {
+const TestModel& get_test_model_n_3_quant8_signed() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -15145,13 +15145,13 @@ const TestModel& get_test_model_3_quant8_signed() {
     return model;
 }
 
-const auto dummy_test_model_3_quant8_signed = TestModelManager::get().add("while_fib_3_quant8_signed", get_test_model_3_quant8_signed());
+const auto dummy_test_model_n_3_quant8_signed = TestModelManager::get().add("while_fib_n_3_quant8_signed", get_test_model_n_3_quant8_signed());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_3_quant8_signed_all_tensors_as_inputs() {
+const TestModel& get_test_model_n_3_quant8_signed_all_tensors_as_inputs() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -15394,13 +15394,13 @@ const TestModel& get_test_model_3_quant8_signed_all_tensors_as_inputs() {
     return model;
 }
 
-const auto dummy_test_model_3_quant8_signed_all_tensors_as_inputs = TestModelManager::get().add("while_fib_3_quant8_signed_all_tensors_as_inputs", get_test_model_3_quant8_signed_all_tensors_as_inputs());
+const auto dummy_test_model_n_3_quant8_signed_all_tensors_as_inputs = TestModelManager::get().add("while_fib_n_3_quant8_signed_all_tensors_as_inputs", get_test_model_n_3_quant8_signed_all_tensors_as_inputs());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_3_quant8_signed_all_tensors_as_inputs_all_inputs_as_internal() {
+const TestModel& get_test_model_n_3_quant8_signed_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -15677,13 +15677,13 @@ const TestModel& get_test_model_3_quant8_signed_all_tensors_as_inputs_all_inputs
     return model;
 }
 
-const auto dummy_test_model_3_quant8_signed_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("while_fib_3_quant8_signed_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_3_quant8_signed_all_tensors_as_inputs_all_inputs_as_internal());
+const auto dummy_test_model_n_3_quant8_signed_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("while_fib_n_3_quant8_signed_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_n_3_quant8_signed_all_tensors_as_inputs_all_inputs_as_internal());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_3_quant8_signed_all_outputs_as_internal() {
+const TestModel& get_test_model_n_3_quant8_signed_all_outputs_as_internal() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -15960,13 +15960,13 @@ const TestModel& get_test_model_3_quant8_signed_all_outputs_as_internal() {
     return model;
 }
 
-const auto dummy_test_model_3_quant8_signed_all_outputs_as_internal = TestModelManager::get().add("while_fib_3_quant8_signed_all_outputs_as_internal", get_test_model_3_quant8_signed_all_outputs_as_internal());
+const auto dummy_test_model_n_3_quant8_signed_all_outputs_as_internal = TestModelManager::get().add("while_fib_n_3_quant8_signed_all_outputs_as_internal", get_test_model_n_3_quant8_signed_all_outputs_as_internal());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_4() {
+const TestModel& get_test_model_n_4() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -16209,13 +16209,13 @@ const TestModel& get_test_model_4() {
     return model;
 }
 
-const auto dummy_test_model_4 = TestModelManager::get().add("while_fib_4", get_test_model_4());
+const auto dummy_test_model_n_4 = TestModelManager::get().add("while_fib_n_4", get_test_model_n_4());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_4_all_tensors_as_inputs() {
+const TestModel& get_test_model_n_4_all_tensors_as_inputs() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -16458,13 +16458,13 @@ const TestModel& get_test_model_4_all_tensors_as_inputs() {
     return model;
 }
 
-const auto dummy_test_model_4_all_tensors_as_inputs = TestModelManager::get().add("while_fib_4_all_tensors_as_inputs", get_test_model_4_all_tensors_as_inputs());
+const auto dummy_test_model_n_4_all_tensors_as_inputs = TestModelManager::get().add("while_fib_n_4_all_tensors_as_inputs", get_test_model_n_4_all_tensors_as_inputs());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_4_all_tensors_as_inputs_all_inputs_as_internal() {
+const TestModel& get_test_model_n_4_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -16741,13 +16741,13 @@ const TestModel& get_test_model_4_all_tensors_as_inputs_all_inputs_as_internal()
     return model;
 }
 
-const auto dummy_test_model_4_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("while_fib_4_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_4_all_tensors_as_inputs_all_inputs_as_internal());
+const auto dummy_test_model_n_4_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("while_fib_n_4_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_n_4_all_tensors_as_inputs_all_inputs_as_internal());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_4_all_outputs_as_internal() {
+const TestModel& get_test_model_n_4_all_outputs_as_internal() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -17024,13 +17024,13 @@ const TestModel& get_test_model_4_all_outputs_as_internal() {
     return model;
 }
 
-const auto dummy_test_model_4_all_outputs_as_internal = TestModelManager::get().add("while_fib_4_all_outputs_as_internal", get_test_model_4_all_outputs_as_internal());
+const auto dummy_test_model_n_4_all_outputs_as_internal = TestModelManager::get().add("while_fib_n_4_all_outputs_as_internal", get_test_model_n_4_all_outputs_as_internal());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_4_relaxed() {
+const TestModel& get_test_model_n_4_relaxed() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -17273,13 +17273,13 @@ const TestModel& get_test_model_4_relaxed() {
     return model;
 }
 
-const auto dummy_test_model_4_relaxed = TestModelManager::get().add("while_fib_4_relaxed", get_test_model_4_relaxed());
+const auto dummy_test_model_n_4_relaxed = TestModelManager::get().add("while_fib_n_4_relaxed", get_test_model_n_4_relaxed());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_4_relaxed_all_tensors_as_inputs() {
+const TestModel& get_test_model_n_4_relaxed_all_tensors_as_inputs() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -17522,13 +17522,13 @@ const TestModel& get_test_model_4_relaxed_all_tensors_as_inputs() {
     return model;
 }
 
-const auto dummy_test_model_4_relaxed_all_tensors_as_inputs = TestModelManager::get().add("while_fib_4_relaxed_all_tensors_as_inputs", get_test_model_4_relaxed_all_tensors_as_inputs());
+const auto dummy_test_model_n_4_relaxed_all_tensors_as_inputs = TestModelManager::get().add("while_fib_n_4_relaxed_all_tensors_as_inputs", get_test_model_n_4_relaxed_all_tensors_as_inputs());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_4_relaxed_all_tensors_as_inputs_all_inputs_as_internal() {
+const TestModel& get_test_model_n_4_relaxed_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -17805,13 +17805,13 @@ const TestModel& get_test_model_4_relaxed_all_tensors_as_inputs_all_inputs_as_in
     return model;
 }
 
-const auto dummy_test_model_4_relaxed_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("while_fib_4_relaxed_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_4_relaxed_all_tensors_as_inputs_all_inputs_as_internal());
+const auto dummy_test_model_n_4_relaxed_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("while_fib_n_4_relaxed_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_n_4_relaxed_all_tensors_as_inputs_all_inputs_as_internal());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_4_relaxed_all_outputs_as_internal() {
+const TestModel& get_test_model_n_4_relaxed_all_outputs_as_internal() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -18088,13 +18088,13 @@ const TestModel& get_test_model_4_relaxed_all_outputs_as_internal() {
     return model;
 }
 
-const auto dummy_test_model_4_relaxed_all_outputs_as_internal = TestModelManager::get().add("while_fib_4_relaxed_all_outputs_as_internal", get_test_model_4_relaxed_all_outputs_as_internal());
+const auto dummy_test_model_n_4_relaxed_all_outputs_as_internal = TestModelManager::get().add("while_fib_n_4_relaxed_all_outputs_as_internal", get_test_model_n_4_relaxed_all_outputs_as_internal());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_4_float16() {
+const TestModel& get_test_model_n_4_float16() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -18337,13 +18337,13 @@ const TestModel& get_test_model_4_float16() {
     return model;
 }
 
-const auto dummy_test_model_4_float16 = TestModelManager::get().add("while_fib_4_float16", get_test_model_4_float16());
+const auto dummy_test_model_n_4_float16 = TestModelManager::get().add("while_fib_n_4_float16", get_test_model_n_4_float16());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_4_float16_all_tensors_as_inputs() {
+const TestModel& get_test_model_n_4_float16_all_tensors_as_inputs() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -18586,13 +18586,13 @@ const TestModel& get_test_model_4_float16_all_tensors_as_inputs() {
     return model;
 }
 
-const auto dummy_test_model_4_float16_all_tensors_as_inputs = TestModelManager::get().add("while_fib_4_float16_all_tensors_as_inputs", get_test_model_4_float16_all_tensors_as_inputs());
+const auto dummy_test_model_n_4_float16_all_tensors_as_inputs = TestModelManager::get().add("while_fib_n_4_float16_all_tensors_as_inputs", get_test_model_n_4_float16_all_tensors_as_inputs());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_4_float16_all_tensors_as_inputs_all_inputs_as_internal() {
+const TestModel& get_test_model_n_4_float16_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -18869,13 +18869,13 @@ const TestModel& get_test_model_4_float16_all_tensors_as_inputs_all_inputs_as_in
     return model;
 }
 
-const auto dummy_test_model_4_float16_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("while_fib_4_float16_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_4_float16_all_tensors_as_inputs_all_inputs_as_internal());
+const auto dummy_test_model_n_4_float16_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("while_fib_n_4_float16_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_n_4_float16_all_tensors_as_inputs_all_inputs_as_internal());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_4_float16_all_outputs_as_internal() {
+const TestModel& get_test_model_n_4_float16_all_outputs_as_internal() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -19152,13 +19152,13 @@ const TestModel& get_test_model_4_float16_all_outputs_as_internal() {
     return model;
 }
 
-const auto dummy_test_model_4_float16_all_outputs_as_internal = TestModelManager::get().add("while_fib_4_float16_all_outputs_as_internal", get_test_model_4_float16_all_outputs_as_internal());
+const auto dummy_test_model_n_4_float16_all_outputs_as_internal = TestModelManager::get().add("while_fib_n_4_float16_all_outputs_as_internal", get_test_model_n_4_float16_all_outputs_as_internal());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_4_quant8() {
+const TestModel& get_test_model_n_4_quant8() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -19401,13 +19401,13 @@ const TestModel& get_test_model_4_quant8() {
     return model;
 }
 
-const auto dummy_test_model_4_quant8 = TestModelManager::get().add("while_fib_4_quant8", get_test_model_4_quant8());
+const auto dummy_test_model_n_4_quant8 = TestModelManager::get().add("while_fib_n_4_quant8", get_test_model_n_4_quant8());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_4_quant8_all_tensors_as_inputs() {
+const TestModel& get_test_model_n_4_quant8_all_tensors_as_inputs() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -19650,13 +19650,13 @@ const TestModel& get_test_model_4_quant8_all_tensors_as_inputs() {
     return model;
 }
 
-const auto dummy_test_model_4_quant8_all_tensors_as_inputs = TestModelManager::get().add("while_fib_4_quant8_all_tensors_as_inputs", get_test_model_4_quant8_all_tensors_as_inputs());
+const auto dummy_test_model_n_4_quant8_all_tensors_as_inputs = TestModelManager::get().add("while_fib_n_4_quant8_all_tensors_as_inputs", get_test_model_n_4_quant8_all_tensors_as_inputs());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_4_quant8_all_tensors_as_inputs_all_inputs_as_internal() {
+const TestModel& get_test_model_n_4_quant8_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -19933,13 +19933,13 @@ const TestModel& get_test_model_4_quant8_all_tensors_as_inputs_all_inputs_as_int
     return model;
 }
 
-const auto dummy_test_model_4_quant8_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("while_fib_4_quant8_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_4_quant8_all_tensors_as_inputs_all_inputs_as_internal());
+const auto dummy_test_model_n_4_quant8_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("while_fib_n_4_quant8_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_n_4_quant8_all_tensors_as_inputs_all_inputs_as_internal());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_4_quant8_all_outputs_as_internal() {
+const TestModel& get_test_model_n_4_quant8_all_outputs_as_internal() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -20216,13 +20216,13 @@ const TestModel& get_test_model_4_quant8_all_outputs_as_internal() {
     return model;
 }
 
-const auto dummy_test_model_4_quant8_all_outputs_as_internal = TestModelManager::get().add("while_fib_4_quant8_all_outputs_as_internal", get_test_model_4_quant8_all_outputs_as_internal());
+const auto dummy_test_model_n_4_quant8_all_outputs_as_internal = TestModelManager::get().add("while_fib_n_4_quant8_all_outputs_as_internal", get_test_model_n_4_quant8_all_outputs_as_internal());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_4_quant8_signed() {
+const TestModel& get_test_model_n_4_quant8_signed() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -20465,13 +20465,13 @@ const TestModel& get_test_model_4_quant8_signed() {
     return model;
 }
 
-const auto dummy_test_model_4_quant8_signed = TestModelManager::get().add("while_fib_4_quant8_signed", get_test_model_4_quant8_signed());
+const auto dummy_test_model_n_4_quant8_signed = TestModelManager::get().add("while_fib_n_4_quant8_signed", get_test_model_n_4_quant8_signed());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_4_quant8_signed_all_tensors_as_inputs() {
+const TestModel& get_test_model_n_4_quant8_signed_all_tensors_as_inputs() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -20714,13 +20714,13 @@ const TestModel& get_test_model_4_quant8_signed_all_tensors_as_inputs() {
     return model;
 }
 
-const auto dummy_test_model_4_quant8_signed_all_tensors_as_inputs = TestModelManager::get().add("while_fib_4_quant8_signed_all_tensors_as_inputs", get_test_model_4_quant8_signed_all_tensors_as_inputs());
+const auto dummy_test_model_n_4_quant8_signed_all_tensors_as_inputs = TestModelManager::get().add("while_fib_n_4_quant8_signed_all_tensors_as_inputs", get_test_model_n_4_quant8_signed_all_tensors_as_inputs());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_4_quant8_signed_all_tensors_as_inputs_all_inputs_as_internal() {
+const TestModel& get_test_model_n_4_quant8_signed_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -20997,13 +20997,13 @@ const TestModel& get_test_model_4_quant8_signed_all_tensors_as_inputs_all_inputs
     return model;
 }
 
-const auto dummy_test_model_4_quant8_signed_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("while_fib_4_quant8_signed_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_4_quant8_signed_all_tensors_as_inputs_all_inputs_as_internal());
+const auto dummy_test_model_n_4_quant8_signed_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("while_fib_n_4_quant8_signed_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_n_4_quant8_signed_all_tensors_as_inputs_all_inputs_as_internal());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_4_quant8_signed_all_outputs_as_internal() {
+const TestModel& get_test_model_n_4_quant8_signed_all_outputs_as_internal() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -21280,13 +21280,13 @@ const TestModel& get_test_model_4_quant8_signed_all_outputs_as_internal() {
     return model;
 }
 
-const auto dummy_test_model_4_quant8_signed_all_outputs_as_internal = TestModelManager::get().add("while_fib_4_quant8_signed_all_outputs_as_internal", get_test_model_4_quant8_signed_all_outputs_as_internal());
+const auto dummy_test_model_n_4_quant8_signed_all_outputs_as_internal = TestModelManager::get().add("while_fib_n_4_quant8_signed_all_outputs_as_internal", get_test_model_n_4_quant8_signed_all_outputs_as_internal());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_5() {
+const TestModel& get_test_model_n_5() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -21529,13 +21529,13 @@ const TestModel& get_test_model_5() {
     return model;
 }
 
-const auto dummy_test_model_5 = TestModelManager::get().add("while_fib_5", get_test_model_5());
+const auto dummy_test_model_n_5 = TestModelManager::get().add("while_fib_n_5", get_test_model_n_5());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_5_all_tensors_as_inputs() {
+const TestModel& get_test_model_n_5_all_tensors_as_inputs() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -21778,13 +21778,13 @@ const TestModel& get_test_model_5_all_tensors_as_inputs() {
     return model;
 }
 
-const auto dummy_test_model_5_all_tensors_as_inputs = TestModelManager::get().add("while_fib_5_all_tensors_as_inputs", get_test_model_5_all_tensors_as_inputs());
+const auto dummy_test_model_n_5_all_tensors_as_inputs = TestModelManager::get().add("while_fib_n_5_all_tensors_as_inputs", get_test_model_n_5_all_tensors_as_inputs());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_5_all_tensors_as_inputs_all_inputs_as_internal() {
+const TestModel& get_test_model_n_5_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -22061,13 +22061,13 @@ const TestModel& get_test_model_5_all_tensors_as_inputs_all_inputs_as_internal()
     return model;
 }
 
-const auto dummy_test_model_5_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("while_fib_5_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_5_all_tensors_as_inputs_all_inputs_as_internal());
+const auto dummy_test_model_n_5_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("while_fib_n_5_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_n_5_all_tensors_as_inputs_all_inputs_as_internal());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_5_all_outputs_as_internal() {
+const TestModel& get_test_model_n_5_all_outputs_as_internal() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -22344,13 +22344,13 @@ const TestModel& get_test_model_5_all_outputs_as_internal() {
     return model;
 }
 
-const auto dummy_test_model_5_all_outputs_as_internal = TestModelManager::get().add("while_fib_5_all_outputs_as_internal", get_test_model_5_all_outputs_as_internal());
+const auto dummy_test_model_n_5_all_outputs_as_internal = TestModelManager::get().add("while_fib_n_5_all_outputs_as_internal", get_test_model_n_5_all_outputs_as_internal());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_5_relaxed() {
+const TestModel& get_test_model_n_5_relaxed() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -22593,13 +22593,13 @@ const TestModel& get_test_model_5_relaxed() {
     return model;
 }
 
-const auto dummy_test_model_5_relaxed = TestModelManager::get().add("while_fib_5_relaxed", get_test_model_5_relaxed());
+const auto dummy_test_model_n_5_relaxed = TestModelManager::get().add("while_fib_n_5_relaxed", get_test_model_n_5_relaxed());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_5_relaxed_all_tensors_as_inputs() {
+const TestModel& get_test_model_n_5_relaxed_all_tensors_as_inputs() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -22842,13 +22842,13 @@ const TestModel& get_test_model_5_relaxed_all_tensors_as_inputs() {
     return model;
 }
 
-const auto dummy_test_model_5_relaxed_all_tensors_as_inputs = TestModelManager::get().add("while_fib_5_relaxed_all_tensors_as_inputs", get_test_model_5_relaxed_all_tensors_as_inputs());
+const auto dummy_test_model_n_5_relaxed_all_tensors_as_inputs = TestModelManager::get().add("while_fib_n_5_relaxed_all_tensors_as_inputs", get_test_model_n_5_relaxed_all_tensors_as_inputs());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_5_relaxed_all_tensors_as_inputs_all_inputs_as_internal() {
+const TestModel& get_test_model_n_5_relaxed_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -23125,13 +23125,13 @@ const TestModel& get_test_model_5_relaxed_all_tensors_as_inputs_all_inputs_as_in
     return model;
 }
 
-const auto dummy_test_model_5_relaxed_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("while_fib_5_relaxed_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_5_relaxed_all_tensors_as_inputs_all_inputs_as_internal());
+const auto dummy_test_model_n_5_relaxed_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("while_fib_n_5_relaxed_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_n_5_relaxed_all_tensors_as_inputs_all_inputs_as_internal());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_5_relaxed_all_outputs_as_internal() {
+const TestModel& get_test_model_n_5_relaxed_all_outputs_as_internal() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -23408,13 +23408,13 @@ const TestModel& get_test_model_5_relaxed_all_outputs_as_internal() {
     return model;
 }
 
-const auto dummy_test_model_5_relaxed_all_outputs_as_internal = TestModelManager::get().add("while_fib_5_relaxed_all_outputs_as_internal", get_test_model_5_relaxed_all_outputs_as_internal());
+const auto dummy_test_model_n_5_relaxed_all_outputs_as_internal = TestModelManager::get().add("while_fib_n_5_relaxed_all_outputs_as_internal", get_test_model_n_5_relaxed_all_outputs_as_internal());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_5_float16() {
+const TestModel& get_test_model_n_5_float16() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -23657,13 +23657,13 @@ const TestModel& get_test_model_5_float16() {
     return model;
 }
 
-const auto dummy_test_model_5_float16 = TestModelManager::get().add("while_fib_5_float16", get_test_model_5_float16());
+const auto dummy_test_model_n_5_float16 = TestModelManager::get().add("while_fib_n_5_float16", get_test_model_n_5_float16());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_5_float16_all_tensors_as_inputs() {
+const TestModel& get_test_model_n_5_float16_all_tensors_as_inputs() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -23906,13 +23906,13 @@ const TestModel& get_test_model_5_float16_all_tensors_as_inputs() {
     return model;
 }
 
-const auto dummy_test_model_5_float16_all_tensors_as_inputs = TestModelManager::get().add("while_fib_5_float16_all_tensors_as_inputs", get_test_model_5_float16_all_tensors_as_inputs());
+const auto dummy_test_model_n_5_float16_all_tensors_as_inputs = TestModelManager::get().add("while_fib_n_5_float16_all_tensors_as_inputs", get_test_model_n_5_float16_all_tensors_as_inputs());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_5_float16_all_tensors_as_inputs_all_inputs_as_internal() {
+const TestModel& get_test_model_n_5_float16_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -24189,13 +24189,13 @@ const TestModel& get_test_model_5_float16_all_tensors_as_inputs_all_inputs_as_in
     return model;
 }
 
-const auto dummy_test_model_5_float16_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("while_fib_5_float16_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_5_float16_all_tensors_as_inputs_all_inputs_as_internal());
+const auto dummy_test_model_n_5_float16_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("while_fib_n_5_float16_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_n_5_float16_all_tensors_as_inputs_all_inputs_as_internal());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_5_float16_all_outputs_as_internal() {
+const TestModel& get_test_model_n_5_float16_all_outputs_as_internal() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -24472,13 +24472,13 @@ const TestModel& get_test_model_5_float16_all_outputs_as_internal() {
     return model;
 }
 
-const auto dummy_test_model_5_float16_all_outputs_as_internal = TestModelManager::get().add("while_fib_5_float16_all_outputs_as_internal", get_test_model_5_float16_all_outputs_as_internal());
+const auto dummy_test_model_n_5_float16_all_outputs_as_internal = TestModelManager::get().add("while_fib_n_5_float16_all_outputs_as_internal", get_test_model_n_5_float16_all_outputs_as_internal());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_5_quant8() {
+const TestModel& get_test_model_n_5_quant8() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -24721,13 +24721,13 @@ const TestModel& get_test_model_5_quant8() {
     return model;
 }
 
-const auto dummy_test_model_5_quant8 = TestModelManager::get().add("while_fib_5_quant8", get_test_model_5_quant8());
+const auto dummy_test_model_n_5_quant8 = TestModelManager::get().add("while_fib_n_5_quant8", get_test_model_n_5_quant8());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_5_quant8_all_tensors_as_inputs() {
+const TestModel& get_test_model_n_5_quant8_all_tensors_as_inputs() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -24970,13 +24970,13 @@ const TestModel& get_test_model_5_quant8_all_tensors_as_inputs() {
     return model;
 }
 
-const auto dummy_test_model_5_quant8_all_tensors_as_inputs = TestModelManager::get().add("while_fib_5_quant8_all_tensors_as_inputs", get_test_model_5_quant8_all_tensors_as_inputs());
+const auto dummy_test_model_n_5_quant8_all_tensors_as_inputs = TestModelManager::get().add("while_fib_n_5_quant8_all_tensors_as_inputs", get_test_model_n_5_quant8_all_tensors_as_inputs());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_5_quant8_all_tensors_as_inputs_all_inputs_as_internal() {
+const TestModel& get_test_model_n_5_quant8_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -25253,13 +25253,13 @@ const TestModel& get_test_model_5_quant8_all_tensors_as_inputs_all_inputs_as_int
     return model;
 }
 
-const auto dummy_test_model_5_quant8_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("while_fib_5_quant8_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_5_quant8_all_tensors_as_inputs_all_inputs_as_internal());
+const auto dummy_test_model_n_5_quant8_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("while_fib_n_5_quant8_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_n_5_quant8_all_tensors_as_inputs_all_inputs_as_internal());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_5_quant8_all_outputs_as_internal() {
+const TestModel& get_test_model_n_5_quant8_all_outputs_as_internal() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -25536,13 +25536,13 @@ const TestModel& get_test_model_5_quant8_all_outputs_as_internal() {
     return model;
 }
 
-const auto dummy_test_model_5_quant8_all_outputs_as_internal = TestModelManager::get().add("while_fib_5_quant8_all_outputs_as_internal", get_test_model_5_quant8_all_outputs_as_internal());
+const auto dummy_test_model_n_5_quant8_all_outputs_as_internal = TestModelManager::get().add("while_fib_n_5_quant8_all_outputs_as_internal", get_test_model_n_5_quant8_all_outputs_as_internal());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_5_quant8_signed() {
+const TestModel& get_test_model_n_5_quant8_signed() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -25785,13 +25785,13 @@ const TestModel& get_test_model_5_quant8_signed() {
     return model;
 }
 
-const auto dummy_test_model_5_quant8_signed = TestModelManager::get().add("while_fib_5_quant8_signed", get_test_model_5_quant8_signed());
+const auto dummy_test_model_n_5_quant8_signed = TestModelManager::get().add("while_fib_n_5_quant8_signed", get_test_model_n_5_quant8_signed());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_5_quant8_signed_all_tensors_as_inputs() {
+const TestModel& get_test_model_n_5_quant8_signed_all_tensors_as_inputs() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -26034,13 +26034,13 @@ const TestModel& get_test_model_5_quant8_signed_all_tensors_as_inputs() {
     return model;
 }
 
-const auto dummy_test_model_5_quant8_signed_all_tensors_as_inputs = TestModelManager::get().add("while_fib_5_quant8_signed_all_tensors_as_inputs", get_test_model_5_quant8_signed_all_tensors_as_inputs());
+const auto dummy_test_model_n_5_quant8_signed_all_tensors_as_inputs = TestModelManager::get().add("while_fib_n_5_quant8_signed_all_tensors_as_inputs", get_test_model_n_5_quant8_signed_all_tensors_as_inputs());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_5_quant8_signed_all_tensors_as_inputs_all_inputs_as_internal() {
+const TestModel& get_test_model_n_5_quant8_signed_all_tensors_as_inputs_all_inputs_as_internal() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -26317,13 +26317,13 @@ const TestModel& get_test_model_5_quant8_signed_all_tensors_as_inputs_all_inputs
     return model;
 }
 
-const auto dummy_test_model_5_quant8_signed_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("while_fib_5_quant8_signed_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_5_quant8_signed_all_tensors_as_inputs_all_inputs_as_internal());
+const auto dummy_test_model_n_5_quant8_signed_all_tensors_as_inputs_all_inputs_as_internal = TestModelManager::get().add("while_fib_n_5_quant8_signed_all_tensors_as_inputs_all_inputs_as_internal", get_test_model_n_5_quant8_signed_all_tensors_as_inputs_all_inputs_as_internal());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_5_quant8_signed_all_outputs_as_internal() {
+const TestModel& get_test_model_n_5_quant8_signed_all_outputs_as_internal() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -26600,13 +26600,13 @@ const TestModel& get_test_model_5_quant8_signed_all_outputs_as_internal() {
     return model;
 }
 
-const auto dummy_test_model_5_quant8_signed_all_outputs_as_internal = TestModelManager::get().add("while_fib_5_quant8_signed_all_outputs_as_internal", get_test_model_5_quant8_signed_all_outputs_as_internal());
+const auto dummy_test_model_n_5_quant8_signed_all_outputs_as_internal = TestModelManager::get().add("while_fib_n_5_quant8_signed_all_outputs_as_internal", get_test_model_n_5_quant8_signed_all_outputs_as_internal());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_1_2() {
+const TestModel& get_test_model_n_1_2() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -26849,13 +26849,13 @@ const TestModel& get_test_model_1_2() {
     return model;
 }
 
-const auto dummy_test_model_1_2 = TestModelManager::get().add("while_fib_1_2", get_test_model_1_2());
+const auto dummy_test_model_n_1_2 = TestModelManager::get().add("while_fib_n_1_2", get_test_model_n_1_2());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_1_all_tensors_as_inputs_2() {
+const TestModel& get_test_model_n_1_all_tensors_as_inputs_2() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -27098,13 +27098,13 @@ const TestModel& get_test_model_1_all_tensors_as_inputs_2() {
     return model;
 }
 
-const auto dummy_test_model_1_all_tensors_as_inputs_2 = TestModelManager::get().add("while_fib_1_all_tensors_as_inputs_2", get_test_model_1_all_tensors_as_inputs_2());
+const auto dummy_test_model_n_1_all_tensors_as_inputs_2 = TestModelManager::get().add("while_fib_n_1_all_tensors_as_inputs_2", get_test_model_n_1_all_tensors_as_inputs_2());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_1_all_tensors_as_inputs_all_inputs_as_internal_2() {
+const TestModel& get_test_model_n_1_all_tensors_as_inputs_all_inputs_as_internal_2() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -27381,13 +27381,13 @@ const TestModel& get_test_model_1_all_tensors_as_inputs_all_inputs_as_internal_2
     return model;
 }
 
-const auto dummy_test_model_1_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("while_fib_1_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_1_all_tensors_as_inputs_all_inputs_as_internal_2());
+const auto dummy_test_model_n_1_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("while_fib_n_1_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_n_1_all_tensors_as_inputs_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_1_all_outputs_as_internal_2() {
+const TestModel& get_test_model_n_1_all_outputs_as_internal_2() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -27664,13 +27664,13 @@ const TestModel& get_test_model_1_all_outputs_as_internal_2() {
     return model;
 }
 
-const auto dummy_test_model_1_all_outputs_as_internal_2 = TestModelManager::get().add("while_fib_1_all_outputs_as_internal_2", get_test_model_1_all_outputs_as_internal_2());
+const auto dummy_test_model_n_1_all_outputs_as_internal_2 = TestModelManager::get().add("while_fib_n_1_all_outputs_as_internal_2", get_test_model_n_1_all_outputs_as_internal_2());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_1_relaxed_2() {
+const TestModel& get_test_model_n_1_relaxed_2() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -27913,13 +27913,13 @@ const TestModel& get_test_model_1_relaxed_2() {
     return model;
 }
 
-const auto dummy_test_model_1_relaxed_2 = TestModelManager::get().add("while_fib_1_relaxed_2", get_test_model_1_relaxed_2());
+const auto dummy_test_model_n_1_relaxed_2 = TestModelManager::get().add("while_fib_n_1_relaxed_2", get_test_model_n_1_relaxed_2());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_1_relaxed_all_tensors_as_inputs_2() {
+const TestModel& get_test_model_n_1_relaxed_all_tensors_as_inputs_2() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -28162,13 +28162,13 @@ const TestModel& get_test_model_1_relaxed_all_tensors_as_inputs_2() {
     return model;
 }
 
-const auto dummy_test_model_1_relaxed_all_tensors_as_inputs_2 = TestModelManager::get().add("while_fib_1_relaxed_all_tensors_as_inputs_2", get_test_model_1_relaxed_all_tensors_as_inputs_2());
+const auto dummy_test_model_n_1_relaxed_all_tensors_as_inputs_2 = TestModelManager::get().add("while_fib_n_1_relaxed_all_tensors_as_inputs_2", get_test_model_n_1_relaxed_all_tensors_as_inputs_2());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_1_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2() {
+const TestModel& get_test_model_n_1_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -28445,13 +28445,13 @@ const TestModel& get_test_model_1_relaxed_all_tensors_as_inputs_all_inputs_as_in
     return model;
 }
 
-const auto dummy_test_model_1_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("while_fib_1_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_1_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2());
+const auto dummy_test_model_n_1_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("while_fib_n_1_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_n_1_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_1_relaxed_all_outputs_as_internal_2() {
+const TestModel& get_test_model_n_1_relaxed_all_outputs_as_internal_2() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -28728,13 +28728,13 @@ const TestModel& get_test_model_1_relaxed_all_outputs_as_internal_2() {
     return model;
 }
 
-const auto dummy_test_model_1_relaxed_all_outputs_as_internal_2 = TestModelManager::get().add("while_fib_1_relaxed_all_outputs_as_internal_2", get_test_model_1_relaxed_all_outputs_as_internal_2());
+const auto dummy_test_model_n_1_relaxed_all_outputs_as_internal_2 = TestModelManager::get().add("while_fib_n_1_relaxed_all_outputs_as_internal_2", get_test_model_n_1_relaxed_all_outputs_as_internal_2());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_1_float16_2() {
+const TestModel& get_test_model_n_1_float16_2() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -28977,13 +28977,13 @@ const TestModel& get_test_model_1_float16_2() {
     return model;
 }
 
-const auto dummy_test_model_1_float16_2 = TestModelManager::get().add("while_fib_1_float16_2", get_test_model_1_float16_2());
+const auto dummy_test_model_n_1_float16_2 = TestModelManager::get().add("while_fib_n_1_float16_2", get_test_model_n_1_float16_2());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_1_float16_all_tensors_as_inputs_2() {
+const TestModel& get_test_model_n_1_float16_all_tensors_as_inputs_2() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -29226,13 +29226,13 @@ const TestModel& get_test_model_1_float16_all_tensors_as_inputs_2() {
     return model;
 }
 
-const auto dummy_test_model_1_float16_all_tensors_as_inputs_2 = TestModelManager::get().add("while_fib_1_float16_all_tensors_as_inputs_2", get_test_model_1_float16_all_tensors_as_inputs_2());
+const auto dummy_test_model_n_1_float16_all_tensors_as_inputs_2 = TestModelManager::get().add("while_fib_n_1_float16_all_tensors_as_inputs_2", get_test_model_n_1_float16_all_tensors_as_inputs_2());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_1_float16_all_tensors_as_inputs_all_inputs_as_internal_2() {
+const TestModel& get_test_model_n_1_float16_all_tensors_as_inputs_all_inputs_as_internal_2() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -29509,13 +29509,13 @@ const TestModel& get_test_model_1_float16_all_tensors_as_inputs_all_inputs_as_in
     return model;
 }
 
-const auto dummy_test_model_1_float16_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("while_fib_1_float16_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_1_float16_all_tensors_as_inputs_all_inputs_as_internal_2());
+const auto dummy_test_model_n_1_float16_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("while_fib_n_1_float16_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_n_1_float16_all_tensors_as_inputs_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_1_float16_all_outputs_as_internal_2() {
+const TestModel& get_test_model_n_1_float16_all_outputs_as_internal_2() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -29792,13 +29792,13 @@ const TestModel& get_test_model_1_float16_all_outputs_as_internal_2() {
     return model;
 }
 
-const auto dummy_test_model_1_float16_all_outputs_as_internal_2 = TestModelManager::get().add("while_fib_1_float16_all_outputs_as_internal_2", get_test_model_1_float16_all_outputs_as_internal_2());
+const auto dummy_test_model_n_1_float16_all_outputs_as_internal_2 = TestModelManager::get().add("while_fib_n_1_float16_all_outputs_as_internal_2", get_test_model_n_1_float16_all_outputs_as_internal_2());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_1_quant8_2() {
+const TestModel& get_test_model_n_1_quant8_2() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -30041,13 +30041,13 @@ const TestModel& get_test_model_1_quant8_2() {
     return model;
 }
 
-const auto dummy_test_model_1_quant8_2 = TestModelManager::get().add("while_fib_1_quant8_2", get_test_model_1_quant8_2());
+const auto dummy_test_model_n_1_quant8_2 = TestModelManager::get().add("while_fib_n_1_quant8_2", get_test_model_n_1_quant8_2());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_1_quant8_all_tensors_as_inputs_2() {
+const TestModel& get_test_model_n_1_quant8_all_tensors_as_inputs_2() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -30290,13 +30290,13 @@ const TestModel& get_test_model_1_quant8_all_tensors_as_inputs_2() {
     return model;
 }
 
-const auto dummy_test_model_1_quant8_all_tensors_as_inputs_2 = TestModelManager::get().add("while_fib_1_quant8_all_tensors_as_inputs_2", get_test_model_1_quant8_all_tensors_as_inputs_2());
+const auto dummy_test_model_n_1_quant8_all_tensors_as_inputs_2 = TestModelManager::get().add("while_fib_n_1_quant8_all_tensors_as_inputs_2", get_test_model_n_1_quant8_all_tensors_as_inputs_2());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_1_quant8_all_tensors_as_inputs_all_inputs_as_internal_2() {
+const TestModel& get_test_model_n_1_quant8_all_tensors_as_inputs_all_inputs_as_internal_2() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -30573,13 +30573,13 @@ const TestModel& get_test_model_1_quant8_all_tensors_as_inputs_all_inputs_as_int
     return model;
 }
 
-const auto dummy_test_model_1_quant8_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("while_fib_1_quant8_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_1_quant8_all_tensors_as_inputs_all_inputs_as_internal_2());
+const auto dummy_test_model_n_1_quant8_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("while_fib_n_1_quant8_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_n_1_quant8_all_tensors_as_inputs_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_1_quant8_all_outputs_as_internal_2() {
+const TestModel& get_test_model_n_1_quant8_all_outputs_as_internal_2() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -30856,13 +30856,13 @@ const TestModel& get_test_model_1_quant8_all_outputs_as_internal_2() {
     return model;
 }
 
-const auto dummy_test_model_1_quant8_all_outputs_as_internal_2 = TestModelManager::get().add("while_fib_1_quant8_all_outputs_as_internal_2", get_test_model_1_quant8_all_outputs_as_internal_2());
+const auto dummy_test_model_n_1_quant8_all_outputs_as_internal_2 = TestModelManager::get().add("while_fib_n_1_quant8_all_outputs_as_internal_2", get_test_model_n_1_quant8_all_outputs_as_internal_2());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_1_quant8_signed_2() {
+const TestModel& get_test_model_n_1_quant8_signed_2() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -31105,13 +31105,13 @@ const TestModel& get_test_model_1_quant8_signed_2() {
     return model;
 }
 
-const auto dummy_test_model_1_quant8_signed_2 = TestModelManager::get().add("while_fib_1_quant8_signed_2", get_test_model_1_quant8_signed_2());
+const auto dummy_test_model_n_1_quant8_signed_2 = TestModelManager::get().add("while_fib_n_1_quant8_signed_2", get_test_model_n_1_quant8_signed_2());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_1_quant8_signed_all_tensors_as_inputs_2() {
+const TestModel& get_test_model_n_1_quant8_signed_all_tensors_as_inputs_2() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -31354,13 +31354,13 @@ const TestModel& get_test_model_1_quant8_signed_all_tensors_as_inputs_2() {
     return model;
 }
 
-const auto dummy_test_model_1_quant8_signed_all_tensors_as_inputs_2 = TestModelManager::get().add("while_fib_1_quant8_signed_all_tensors_as_inputs_2", get_test_model_1_quant8_signed_all_tensors_as_inputs_2());
+const auto dummy_test_model_n_1_quant8_signed_all_tensors_as_inputs_2 = TestModelManager::get().add("while_fib_n_1_quant8_signed_all_tensors_as_inputs_2", get_test_model_n_1_quant8_signed_all_tensors_as_inputs_2());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_1_quant8_signed_all_tensors_as_inputs_all_inputs_as_internal_2() {
+const TestModel& get_test_model_n_1_quant8_signed_all_tensors_as_inputs_all_inputs_as_internal_2() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -31637,13 +31637,13 @@ const TestModel& get_test_model_1_quant8_signed_all_tensors_as_inputs_all_inputs
     return model;
 }
 
-const auto dummy_test_model_1_quant8_signed_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("while_fib_1_quant8_signed_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_1_quant8_signed_all_tensors_as_inputs_all_inputs_as_internal_2());
+const auto dummy_test_model_n_1_quant8_signed_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("while_fib_n_1_quant8_signed_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_n_1_quant8_signed_all_tensors_as_inputs_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_1_quant8_signed_all_outputs_as_internal_2() {
+const TestModel& get_test_model_n_1_quant8_signed_all_outputs_as_internal_2() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -31920,13 +31920,13 @@ const TestModel& get_test_model_1_quant8_signed_all_outputs_as_internal_2() {
     return model;
 }
 
-const auto dummy_test_model_1_quant8_signed_all_outputs_as_internal_2 = TestModelManager::get().add("while_fib_1_quant8_signed_all_outputs_as_internal_2", get_test_model_1_quant8_signed_all_outputs_as_internal_2());
+const auto dummy_test_model_n_1_quant8_signed_all_outputs_as_internal_2 = TestModelManager::get().add("while_fib_n_1_quant8_signed_all_outputs_as_internal_2", get_test_model_n_1_quant8_signed_all_outputs_as_internal_2());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_2_2() {
+const TestModel& get_test_model_n_2_2() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -32169,13 +32169,13 @@ const TestModel& get_test_model_2_2() {
     return model;
 }
 
-const auto dummy_test_model_2_2 = TestModelManager::get().add("while_fib_2_2", get_test_model_2_2());
+const auto dummy_test_model_n_2_2 = TestModelManager::get().add("while_fib_n_2_2", get_test_model_n_2_2());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_2_all_tensors_as_inputs_2() {
+const TestModel& get_test_model_n_2_all_tensors_as_inputs_2() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -32418,13 +32418,13 @@ const TestModel& get_test_model_2_all_tensors_as_inputs_2() {
     return model;
 }
 
-const auto dummy_test_model_2_all_tensors_as_inputs_2 = TestModelManager::get().add("while_fib_2_all_tensors_as_inputs_2", get_test_model_2_all_tensors_as_inputs_2());
+const auto dummy_test_model_n_2_all_tensors_as_inputs_2 = TestModelManager::get().add("while_fib_n_2_all_tensors_as_inputs_2", get_test_model_n_2_all_tensors_as_inputs_2());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_2_all_tensors_as_inputs_all_inputs_as_internal_2() {
+const TestModel& get_test_model_n_2_all_tensors_as_inputs_all_inputs_as_internal_2() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -32701,13 +32701,13 @@ const TestModel& get_test_model_2_all_tensors_as_inputs_all_inputs_as_internal_2
     return model;
 }
 
-const auto dummy_test_model_2_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("while_fib_2_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_2_all_tensors_as_inputs_all_inputs_as_internal_2());
+const auto dummy_test_model_n_2_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("while_fib_n_2_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_n_2_all_tensors_as_inputs_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_2_all_outputs_as_internal_2() {
+const TestModel& get_test_model_n_2_all_outputs_as_internal_2() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -32984,13 +32984,13 @@ const TestModel& get_test_model_2_all_outputs_as_internal_2() {
     return model;
 }
 
-const auto dummy_test_model_2_all_outputs_as_internal_2 = TestModelManager::get().add("while_fib_2_all_outputs_as_internal_2", get_test_model_2_all_outputs_as_internal_2());
+const auto dummy_test_model_n_2_all_outputs_as_internal_2 = TestModelManager::get().add("while_fib_n_2_all_outputs_as_internal_2", get_test_model_n_2_all_outputs_as_internal_2());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_2_relaxed_2() {
+const TestModel& get_test_model_n_2_relaxed_2() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -33233,13 +33233,13 @@ const TestModel& get_test_model_2_relaxed_2() {
     return model;
 }
 
-const auto dummy_test_model_2_relaxed_2 = TestModelManager::get().add("while_fib_2_relaxed_2", get_test_model_2_relaxed_2());
+const auto dummy_test_model_n_2_relaxed_2 = TestModelManager::get().add("while_fib_n_2_relaxed_2", get_test_model_n_2_relaxed_2());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_2_relaxed_all_tensors_as_inputs_2() {
+const TestModel& get_test_model_n_2_relaxed_all_tensors_as_inputs_2() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -33482,13 +33482,13 @@ const TestModel& get_test_model_2_relaxed_all_tensors_as_inputs_2() {
     return model;
 }
 
-const auto dummy_test_model_2_relaxed_all_tensors_as_inputs_2 = TestModelManager::get().add("while_fib_2_relaxed_all_tensors_as_inputs_2", get_test_model_2_relaxed_all_tensors_as_inputs_2());
+const auto dummy_test_model_n_2_relaxed_all_tensors_as_inputs_2 = TestModelManager::get().add("while_fib_n_2_relaxed_all_tensors_as_inputs_2", get_test_model_n_2_relaxed_all_tensors_as_inputs_2());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_2_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2() {
+const TestModel& get_test_model_n_2_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -33765,13 +33765,13 @@ const TestModel& get_test_model_2_relaxed_all_tensors_as_inputs_all_inputs_as_in
     return model;
 }
 
-const auto dummy_test_model_2_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("while_fib_2_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_2_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2());
+const auto dummy_test_model_n_2_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("while_fib_n_2_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_n_2_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_2_relaxed_all_outputs_as_internal_2() {
+const TestModel& get_test_model_n_2_relaxed_all_outputs_as_internal_2() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -34048,13 +34048,13 @@ const TestModel& get_test_model_2_relaxed_all_outputs_as_internal_2() {
     return model;
 }
 
-const auto dummy_test_model_2_relaxed_all_outputs_as_internal_2 = TestModelManager::get().add("while_fib_2_relaxed_all_outputs_as_internal_2", get_test_model_2_relaxed_all_outputs_as_internal_2());
+const auto dummy_test_model_n_2_relaxed_all_outputs_as_internal_2 = TestModelManager::get().add("while_fib_n_2_relaxed_all_outputs_as_internal_2", get_test_model_n_2_relaxed_all_outputs_as_internal_2());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_2_float16_2() {
+const TestModel& get_test_model_n_2_float16_2() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -34297,13 +34297,13 @@ const TestModel& get_test_model_2_float16_2() {
     return model;
 }
 
-const auto dummy_test_model_2_float16_2 = TestModelManager::get().add("while_fib_2_float16_2", get_test_model_2_float16_2());
+const auto dummy_test_model_n_2_float16_2 = TestModelManager::get().add("while_fib_n_2_float16_2", get_test_model_n_2_float16_2());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_2_float16_all_tensors_as_inputs_2() {
+const TestModel& get_test_model_n_2_float16_all_tensors_as_inputs_2() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -34546,13 +34546,13 @@ const TestModel& get_test_model_2_float16_all_tensors_as_inputs_2() {
     return model;
 }
 
-const auto dummy_test_model_2_float16_all_tensors_as_inputs_2 = TestModelManager::get().add("while_fib_2_float16_all_tensors_as_inputs_2", get_test_model_2_float16_all_tensors_as_inputs_2());
+const auto dummy_test_model_n_2_float16_all_tensors_as_inputs_2 = TestModelManager::get().add("while_fib_n_2_float16_all_tensors_as_inputs_2", get_test_model_n_2_float16_all_tensors_as_inputs_2());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_2_float16_all_tensors_as_inputs_all_inputs_as_internal_2() {
+const TestModel& get_test_model_n_2_float16_all_tensors_as_inputs_all_inputs_as_internal_2() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -34829,13 +34829,13 @@ const TestModel& get_test_model_2_float16_all_tensors_as_inputs_all_inputs_as_in
     return model;
 }
 
-const auto dummy_test_model_2_float16_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("while_fib_2_float16_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_2_float16_all_tensors_as_inputs_all_inputs_as_internal_2());
+const auto dummy_test_model_n_2_float16_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("while_fib_n_2_float16_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_n_2_float16_all_tensors_as_inputs_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_2_float16_all_outputs_as_internal_2() {
+const TestModel& get_test_model_n_2_float16_all_outputs_as_internal_2() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -35112,13 +35112,13 @@ const TestModel& get_test_model_2_float16_all_outputs_as_internal_2() {
     return model;
 }
 
-const auto dummy_test_model_2_float16_all_outputs_as_internal_2 = TestModelManager::get().add("while_fib_2_float16_all_outputs_as_internal_2", get_test_model_2_float16_all_outputs_as_internal_2());
+const auto dummy_test_model_n_2_float16_all_outputs_as_internal_2 = TestModelManager::get().add("while_fib_n_2_float16_all_outputs_as_internal_2", get_test_model_n_2_float16_all_outputs_as_internal_2());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_2_quant8_2() {
+const TestModel& get_test_model_n_2_quant8_2() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -35361,13 +35361,13 @@ const TestModel& get_test_model_2_quant8_2() {
     return model;
 }
 
-const auto dummy_test_model_2_quant8_2 = TestModelManager::get().add("while_fib_2_quant8_2", get_test_model_2_quant8_2());
+const auto dummy_test_model_n_2_quant8_2 = TestModelManager::get().add("while_fib_n_2_quant8_2", get_test_model_n_2_quant8_2());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_2_quant8_all_tensors_as_inputs_2() {
+const TestModel& get_test_model_n_2_quant8_all_tensors_as_inputs_2() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -35610,13 +35610,13 @@ const TestModel& get_test_model_2_quant8_all_tensors_as_inputs_2() {
     return model;
 }
 
-const auto dummy_test_model_2_quant8_all_tensors_as_inputs_2 = TestModelManager::get().add("while_fib_2_quant8_all_tensors_as_inputs_2", get_test_model_2_quant8_all_tensors_as_inputs_2());
+const auto dummy_test_model_n_2_quant8_all_tensors_as_inputs_2 = TestModelManager::get().add("while_fib_n_2_quant8_all_tensors_as_inputs_2", get_test_model_n_2_quant8_all_tensors_as_inputs_2());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_2_quant8_all_tensors_as_inputs_all_inputs_as_internal_2() {
+const TestModel& get_test_model_n_2_quant8_all_tensors_as_inputs_all_inputs_as_internal_2() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -35893,13 +35893,13 @@ const TestModel& get_test_model_2_quant8_all_tensors_as_inputs_all_inputs_as_int
     return model;
 }
 
-const auto dummy_test_model_2_quant8_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("while_fib_2_quant8_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_2_quant8_all_tensors_as_inputs_all_inputs_as_internal_2());
+const auto dummy_test_model_n_2_quant8_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("while_fib_n_2_quant8_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_n_2_quant8_all_tensors_as_inputs_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_2_quant8_all_outputs_as_internal_2() {
+const TestModel& get_test_model_n_2_quant8_all_outputs_as_internal_2() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -36176,13 +36176,13 @@ const TestModel& get_test_model_2_quant8_all_outputs_as_internal_2() {
     return model;
 }
 
-const auto dummy_test_model_2_quant8_all_outputs_as_internal_2 = TestModelManager::get().add("while_fib_2_quant8_all_outputs_as_internal_2", get_test_model_2_quant8_all_outputs_as_internal_2());
+const auto dummy_test_model_n_2_quant8_all_outputs_as_internal_2 = TestModelManager::get().add("while_fib_n_2_quant8_all_outputs_as_internal_2", get_test_model_n_2_quant8_all_outputs_as_internal_2());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_2_quant8_signed_2() {
+const TestModel& get_test_model_n_2_quant8_signed_2() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -36425,13 +36425,13 @@ const TestModel& get_test_model_2_quant8_signed_2() {
     return model;
 }
 
-const auto dummy_test_model_2_quant8_signed_2 = TestModelManager::get().add("while_fib_2_quant8_signed_2", get_test_model_2_quant8_signed_2());
+const auto dummy_test_model_n_2_quant8_signed_2 = TestModelManager::get().add("while_fib_n_2_quant8_signed_2", get_test_model_n_2_quant8_signed_2());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_2_quant8_signed_all_tensors_as_inputs_2() {
+const TestModel& get_test_model_n_2_quant8_signed_all_tensors_as_inputs_2() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -36674,13 +36674,13 @@ const TestModel& get_test_model_2_quant8_signed_all_tensors_as_inputs_2() {
     return model;
 }
 
-const auto dummy_test_model_2_quant8_signed_all_tensors_as_inputs_2 = TestModelManager::get().add("while_fib_2_quant8_signed_all_tensors_as_inputs_2", get_test_model_2_quant8_signed_all_tensors_as_inputs_2());
+const auto dummy_test_model_n_2_quant8_signed_all_tensors_as_inputs_2 = TestModelManager::get().add("while_fib_n_2_quant8_signed_all_tensors_as_inputs_2", get_test_model_n_2_quant8_signed_all_tensors_as_inputs_2());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_2_quant8_signed_all_tensors_as_inputs_all_inputs_as_internal_2() {
+const TestModel& get_test_model_n_2_quant8_signed_all_tensors_as_inputs_all_inputs_as_internal_2() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -36957,13 +36957,13 @@ const TestModel& get_test_model_2_quant8_signed_all_tensors_as_inputs_all_inputs
     return model;
 }
 
-const auto dummy_test_model_2_quant8_signed_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("while_fib_2_quant8_signed_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_2_quant8_signed_all_tensors_as_inputs_all_inputs_as_internal_2());
+const auto dummy_test_model_n_2_quant8_signed_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("while_fib_n_2_quant8_signed_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_n_2_quant8_signed_all_tensors_as_inputs_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_2_quant8_signed_all_outputs_as_internal_2() {
+const TestModel& get_test_model_n_2_quant8_signed_all_outputs_as_internal_2() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -37240,13 +37240,13 @@ const TestModel& get_test_model_2_quant8_signed_all_outputs_as_internal_2() {
     return model;
 }
 
-const auto dummy_test_model_2_quant8_signed_all_outputs_as_internal_2 = TestModelManager::get().add("while_fib_2_quant8_signed_all_outputs_as_internal_2", get_test_model_2_quant8_signed_all_outputs_as_internal_2());
+const auto dummy_test_model_n_2_quant8_signed_all_outputs_as_internal_2 = TestModelManager::get().add("while_fib_n_2_quant8_signed_all_outputs_as_internal_2", get_test_model_n_2_quant8_signed_all_outputs_as_internal_2());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_3_2() {
+const TestModel& get_test_model_n_3_2() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -37489,13 +37489,13 @@ const TestModel& get_test_model_3_2() {
     return model;
 }
 
-const auto dummy_test_model_3_2 = TestModelManager::get().add("while_fib_3_2", get_test_model_3_2());
+const auto dummy_test_model_n_3_2 = TestModelManager::get().add("while_fib_n_3_2", get_test_model_n_3_2());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_3_all_tensors_as_inputs_2() {
+const TestModel& get_test_model_n_3_all_tensors_as_inputs_2() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -37738,13 +37738,13 @@ const TestModel& get_test_model_3_all_tensors_as_inputs_2() {
     return model;
 }
 
-const auto dummy_test_model_3_all_tensors_as_inputs_2 = TestModelManager::get().add("while_fib_3_all_tensors_as_inputs_2", get_test_model_3_all_tensors_as_inputs_2());
+const auto dummy_test_model_n_3_all_tensors_as_inputs_2 = TestModelManager::get().add("while_fib_n_3_all_tensors_as_inputs_2", get_test_model_n_3_all_tensors_as_inputs_2());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_3_all_tensors_as_inputs_all_inputs_as_internal_2() {
+const TestModel& get_test_model_n_3_all_tensors_as_inputs_all_inputs_as_internal_2() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -38021,13 +38021,13 @@ const TestModel& get_test_model_3_all_tensors_as_inputs_all_inputs_as_internal_2
     return model;
 }
 
-const auto dummy_test_model_3_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("while_fib_3_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_3_all_tensors_as_inputs_all_inputs_as_internal_2());
+const auto dummy_test_model_n_3_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("while_fib_n_3_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_n_3_all_tensors_as_inputs_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_3_all_outputs_as_internal_2() {
+const TestModel& get_test_model_n_3_all_outputs_as_internal_2() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -38304,13 +38304,13 @@ const TestModel& get_test_model_3_all_outputs_as_internal_2() {
     return model;
 }
 
-const auto dummy_test_model_3_all_outputs_as_internal_2 = TestModelManager::get().add("while_fib_3_all_outputs_as_internal_2", get_test_model_3_all_outputs_as_internal_2());
+const auto dummy_test_model_n_3_all_outputs_as_internal_2 = TestModelManager::get().add("while_fib_n_3_all_outputs_as_internal_2", get_test_model_n_3_all_outputs_as_internal_2());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_3_relaxed_2() {
+const TestModel& get_test_model_n_3_relaxed_2() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -38553,13 +38553,13 @@ const TestModel& get_test_model_3_relaxed_2() {
     return model;
 }
 
-const auto dummy_test_model_3_relaxed_2 = TestModelManager::get().add("while_fib_3_relaxed_2", get_test_model_3_relaxed_2());
+const auto dummy_test_model_n_3_relaxed_2 = TestModelManager::get().add("while_fib_n_3_relaxed_2", get_test_model_n_3_relaxed_2());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_3_relaxed_all_tensors_as_inputs_2() {
+const TestModel& get_test_model_n_3_relaxed_all_tensors_as_inputs_2() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -38802,13 +38802,13 @@ const TestModel& get_test_model_3_relaxed_all_tensors_as_inputs_2() {
     return model;
 }
 
-const auto dummy_test_model_3_relaxed_all_tensors_as_inputs_2 = TestModelManager::get().add("while_fib_3_relaxed_all_tensors_as_inputs_2", get_test_model_3_relaxed_all_tensors_as_inputs_2());
+const auto dummy_test_model_n_3_relaxed_all_tensors_as_inputs_2 = TestModelManager::get().add("while_fib_n_3_relaxed_all_tensors_as_inputs_2", get_test_model_n_3_relaxed_all_tensors_as_inputs_2());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_3_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2() {
+const TestModel& get_test_model_n_3_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -39085,13 +39085,13 @@ const TestModel& get_test_model_3_relaxed_all_tensors_as_inputs_all_inputs_as_in
     return model;
 }
 
-const auto dummy_test_model_3_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("while_fib_3_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_3_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2());
+const auto dummy_test_model_n_3_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("while_fib_n_3_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_n_3_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_3_relaxed_all_outputs_as_internal_2() {
+const TestModel& get_test_model_n_3_relaxed_all_outputs_as_internal_2() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -39368,13 +39368,13 @@ const TestModel& get_test_model_3_relaxed_all_outputs_as_internal_2() {
     return model;
 }
 
-const auto dummy_test_model_3_relaxed_all_outputs_as_internal_2 = TestModelManager::get().add("while_fib_3_relaxed_all_outputs_as_internal_2", get_test_model_3_relaxed_all_outputs_as_internal_2());
+const auto dummy_test_model_n_3_relaxed_all_outputs_as_internal_2 = TestModelManager::get().add("while_fib_n_3_relaxed_all_outputs_as_internal_2", get_test_model_n_3_relaxed_all_outputs_as_internal_2());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_3_float16_2() {
+const TestModel& get_test_model_n_3_float16_2() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -39617,13 +39617,13 @@ const TestModel& get_test_model_3_float16_2() {
     return model;
 }
 
-const auto dummy_test_model_3_float16_2 = TestModelManager::get().add("while_fib_3_float16_2", get_test_model_3_float16_2());
+const auto dummy_test_model_n_3_float16_2 = TestModelManager::get().add("while_fib_n_3_float16_2", get_test_model_n_3_float16_2());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_3_float16_all_tensors_as_inputs_2() {
+const TestModel& get_test_model_n_3_float16_all_tensors_as_inputs_2() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -39866,13 +39866,13 @@ const TestModel& get_test_model_3_float16_all_tensors_as_inputs_2() {
     return model;
 }
 
-const auto dummy_test_model_3_float16_all_tensors_as_inputs_2 = TestModelManager::get().add("while_fib_3_float16_all_tensors_as_inputs_2", get_test_model_3_float16_all_tensors_as_inputs_2());
+const auto dummy_test_model_n_3_float16_all_tensors_as_inputs_2 = TestModelManager::get().add("while_fib_n_3_float16_all_tensors_as_inputs_2", get_test_model_n_3_float16_all_tensors_as_inputs_2());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_3_float16_all_tensors_as_inputs_all_inputs_as_internal_2() {
+const TestModel& get_test_model_n_3_float16_all_tensors_as_inputs_all_inputs_as_internal_2() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -40149,13 +40149,13 @@ const TestModel& get_test_model_3_float16_all_tensors_as_inputs_all_inputs_as_in
     return model;
 }
 
-const auto dummy_test_model_3_float16_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("while_fib_3_float16_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_3_float16_all_tensors_as_inputs_all_inputs_as_internal_2());
+const auto dummy_test_model_n_3_float16_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("while_fib_n_3_float16_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_n_3_float16_all_tensors_as_inputs_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_3_float16_all_outputs_as_internal_2() {
+const TestModel& get_test_model_n_3_float16_all_outputs_as_internal_2() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -40432,13 +40432,13 @@ const TestModel& get_test_model_3_float16_all_outputs_as_internal_2() {
     return model;
 }
 
-const auto dummy_test_model_3_float16_all_outputs_as_internal_2 = TestModelManager::get().add("while_fib_3_float16_all_outputs_as_internal_2", get_test_model_3_float16_all_outputs_as_internal_2());
+const auto dummy_test_model_n_3_float16_all_outputs_as_internal_2 = TestModelManager::get().add("while_fib_n_3_float16_all_outputs_as_internal_2", get_test_model_n_3_float16_all_outputs_as_internal_2());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_3_quant8_2() {
+const TestModel& get_test_model_n_3_quant8_2() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -40681,13 +40681,13 @@ const TestModel& get_test_model_3_quant8_2() {
     return model;
 }
 
-const auto dummy_test_model_3_quant8_2 = TestModelManager::get().add("while_fib_3_quant8_2", get_test_model_3_quant8_2());
+const auto dummy_test_model_n_3_quant8_2 = TestModelManager::get().add("while_fib_n_3_quant8_2", get_test_model_n_3_quant8_2());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_3_quant8_all_tensors_as_inputs_2() {
+const TestModel& get_test_model_n_3_quant8_all_tensors_as_inputs_2() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -40930,13 +40930,13 @@ const TestModel& get_test_model_3_quant8_all_tensors_as_inputs_2() {
     return model;
 }
 
-const auto dummy_test_model_3_quant8_all_tensors_as_inputs_2 = TestModelManager::get().add("while_fib_3_quant8_all_tensors_as_inputs_2", get_test_model_3_quant8_all_tensors_as_inputs_2());
+const auto dummy_test_model_n_3_quant8_all_tensors_as_inputs_2 = TestModelManager::get().add("while_fib_n_3_quant8_all_tensors_as_inputs_2", get_test_model_n_3_quant8_all_tensors_as_inputs_2());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_3_quant8_all_tensors_as_inputs_all_inputs_as_internal_2() {
+const TestModel& get_test_model_n_3_quant8_all_tensors_as_inputs_all_inputs_as_internal_2() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -41213,13 +41213,13 @@ const TestModel& get_test_model_3_quant8_all_tensors_as_inputs_all_inputs_as_int
     return model;
 }
 
-const auto dummy_test_model_3_quant8_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("while_fib_3_quant8_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_3_quant8_all_tensors_as_inputs_all_inputs_as_internal_2());
+const auto dummy_test_model_n_3_quant8_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("while_fib_n_3_quant8_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_n_3_quant8_all_tensors_as_inputs_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_3_quant8_all_outputs_as_internal_2() {
+const TestModel& get_test_model_n_3_quant8_all_outputs_as_internal_2() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -41496,13 +41496,13 @@ const TestModel& get_test_model_3_quant8_all_outputs_as_internal_2() {
     return model;
 }
 
-const auto dummy_test_model_3_quant8_all_outputs_as_internal_2 = TestModelManager::get().add("while_fib_3_quant8_all_outputs_as_internal_2", get_test_model_3_quant8_all_outputs_as_internal_2());
+const auto dummy_test_model_n_3_quant8_all_outputs_as_internal_2 = TestModelManager::get().add("while_fib_n_3_quant8_all_outputs_as_internal_2", get_test_model_n_3_quant8_all_outputs_as_internal_2());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_3_quant8_signed_2() {
+const TestModel& get_test_model_n_3_quant8_signed_2() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -41745,13 +41745,13 @@ const TestModel& get_test_model_3_quant8_signed_2() {
     return model;
 }
 
-const auto dummy_test_model_3_quant8_signed_2 = TestModelManager::get().add("while_fib_3_quant8_signed_2", get_test_model_3_quant8_signed_2());
+const auto dummy_test_model_n_3_quant8_signed_2 = TestModelManager::get().add("while_fib_n_3_quant8_signed_2", get_test_model_n_3_quant8_signed_2());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_3_quant8_signed_all_tensors_as_inputs_2() {
+const TestModel& get_test_model_n_3_quant8_signed_all_tensors_as_inputs_2() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -41994,13 +41994,13 @@ const TestModel& get_test_model_3_quant8_signed_all_tensors_as_inputs_2() {
     return model;
 }
 
-const auto dummy_test_model_3_quant8_signed_all_tensors_as_inputs_2 = TestModelManager::get().add("while_fib_3_quant8_signed_all_tensors_as_inputs_2", get_test_model_3_quant8_signed_all_tensors_as_inputs_2());
+const auto dummy_test_model_n_3_quant8_signed_all_tensors_as_inputs_2 = TestModelManager::get().add("while_fib_n_3_quant8_signed_all_tensors_as_inputs_2", get_test_model_n_3_quant8_signed_all_tensors_as_inputs_2());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_3_quant8_signed_all_tensors_as_inputs_all_inputs_as_internal_2() {
+const TestModel& get_test_model_n_3_quant8_signed_all_tensors_as_inputs_all_inputs_as_internal_2() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -42277,13 +42277,13 @@ const TestModel& get_test_model_3_quant8_signed_all_tensors_as_inputs_all_inputs
     return model;
 }
 
-const auto dummy_test_model_3_quant8_signed_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("while_fib_3_quant8_signed_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_3_quant8_signed_all_tensors_as_inputs_all_inputs_as_internal_2());
+const auto dummy_test_model_n_3_quant8_signed_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("while_fib_n_3_quant8_signed_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_n_3_quant8_signed_all_tensors_as_inputs_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_3_quant8_signed_all_outputs_as_internal_2() {
+const TestModel& get_test_model_n_3_quant8_signed_all_outputs_as_internal_2() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -42560,13 +42560,13 @@ const TestModel& get_test_model_3_quant8_signed_all_outputs_as_internal_2() {
     return model;
 }
 
-const auto dummy_test_model_3_quant8_signed_all_outputs_as_internal_2 = TestModelManager::get().add("while_fib_3_quant8_signed_all_outputs_as_internal_2", get_test_model_3_quant8_signed_all_outputs_as_internal_2());
+const auto dummy_test_model_n_3_quant8_signed_all_outputs_as_internal_2 = TestModelManager::get().add("while_fib_n_3_quant8_signed_all_outputs_as_internal_2", get_test_model_n_3_quant8_signed_all_outputs_as_internal_2());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_4_2() {
+const TestModel& get_test_model_n_4_2() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -42809,13 +42809,13 @@ const TestModel& get_test_model_4_2() {
     return model;
 }
 
-const auto dummy_test_model_4_2 = TestModelManager::get().add("while_fib_4_2", get_test_model_4_2());
+const auto dummy_test_model_n_4_2 = TestModelManager::get().add("while_fib_n_4_2", get_test_model_n_4_2());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_4_all_tensors_as_inputs_2() {
+const TestModel& get_test_model_n_4_all_tensors_as_inputs_2() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -43058,13 +43058,13 @@ const TestModel& get_test_model_4_all_tensors_as_inputs_2() {
     return model;
 }
 
-const auto dummy_test_model_4_all_tensors_as_inputs_2 = TestModelManager::get().add("while_fib_4_all_tensors_as_inputs_2", get_test_model_4_all_tensors_as_inputs_2());
+const auto dummy_test_model_n_4_all_tensors_as_inputs_2 = TestModelManager::get().add("while_fib_n_4_all_tensors_as_inputs_2", get_test_model_n_4_all_tensors_as_inputs_2());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_4_all_tensors_as_inputs_all_inputs_as_internal_2() {
+const TestModel& get_test_model_n_4_all_tensors_as_inputs_all_inputs_as_internal_2() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -43341,13 +43341,13 @@ const TestModel& get_test_model_4_all_tensors_as_inputs_all_inputs_as_internal_2
     return model;
 }
 
-const auto dummy_test_model_4_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("while_fib_4_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_4_all_tensors_as_inputs_all_inputs_as_internal_2());
+const auto dummy_test_model_n_4_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("while_fib_n_4_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_n_4_all_tensors_as_inputs_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_4_all_outputs_as_internal_2() {
+const TestModel& get_test_model_n_4_all_outputs_as_internal_2() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -43624,13 +43624,13 @@ const TestModel& get_test_model_4_all_outputs_as_internal_2() {
     return model;
 }
 
-const auto dummy_test_model_4_all_outputs_as_internal_2 = TestModelManager::get().add("while_fib_4_all_outputs_as_internal_2", get_test_model_4_all_outputs_as_internal_2());
+const auto dummy_test_model_n_4_all_outputs_as_internal_2 = TestModelManager::get().add("while_fib_n_4_all_outputs_as_internal_2", get_test_model_n_4_all_outputs_as_internal_2());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_4_relaxed_2() {
+const TestModel& get_test_model_n_4_relaxed_2() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -43873,13 +43873,13 @@ const TestModel& get_test_model_4_relaxed_2() {
     return model;
 }
 
-const auto dummy_test_model_4_relaxed_2 = TestModelManager::get().add("while_fib_4_relaxed_2", get_test_model_4_relaxed_2());
+const auto dummy_test_model_n_4_relaxed_2 = TestModelManager::get().add("while_fib_n_4_relaxed_2", get_test_model_n_4_relaxed_2());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_4_relaxed_all_tensors_as_inputs_2() {
+const TestModel& get_test_model_n_4_relaxed_all_tensors_as_inputs_2() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -44122,13 +44122,13 @@ const TestModel& get_test_model_4_relaxed_all_tensors_as_inputs_2() {
     return model;
 }
 
-const auto dummy_test_model_4_relaxed_all_tensors_as_inputs_2 = TestModelManager::get().add("while_fib_4_relaxed_all_tensors_as_inputs_2", get_test_model_4_relaxed_all_tensors_as_inputs_2());
+const auto dummy_test_model_n_4_relaxed_all_tensors_as_inputs_2 = TestModelManager::get().add("while_fib_n_4_relaxed_all_tensors_as_inputs_2", get_test_model_n_4_relaxed_all_tensors_as_inputs_2());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_4_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2() {
+const TestModel& get_test_model_n_4_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -44405,13 +44405,13 @@ const TestModel& get_test_model_4_relaxed_all_tensors_as_inputs_all_inputs_as_in
     return model;
 }
 
-const auto dummy_test_model_4_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("while_fib_4_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_4_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2());
+const auto dummy_test_model_n_4_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("while_fib_n_4_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_n_4_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_4_relaxed_all_outputs_as_internal_2() {
+const TestModel& get_test_model_n_4_relaxed_all_outputs_as_internal_2() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -44688,13 +44688,13 @@ const TestModel& get_test_model_4_relaxed_all_outputs_as_internal_2() {
     return model;
 }
 
-const auto dummy_test_model_4_relaxed_all_outputs_as_internal_2 = TestModelManager::get().add("while_fib_4_relaxed_all_outputs_as_internal_2", get_test_model_4_relaxed_all_outputs_as_internal_2());
+const auto dummy_test_model_n_4_relaxed_all_outputs_as_internal_2 = TestModelManager::get().add("while_fib_n_4_relaxed_all_outputs_as_internal_2", get_test_model_n_4_relaxed_all_outputs_as_internal_2());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_4_float16_2() {
+const TestModel& get_test_model_n_4_float16_2() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -44937,13 +44937,13 @@ const TestModel& get_test_model_4_float16_2() {
     return model;
 }
 
-const auto dummy_test_model_4_float16_2 = TestModelManager::get().add("while_fib_4_float16_2", get_test_model_4_float16_2());
+const auto dummy_test_model_n_4_float16_2 = TestModelManager::get().add("while_fib_n_4_float16_2", get_test_model_n_4_float16_2());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_4_float16_all_tensors_as_inputs_2() {
+const TestModel& get_test_model_n_4_float16_all_tensors_as_inputs_2() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -45186,13 +45186,13 @@ const TestModel& get_test_model_4_float16_all_tensors_as_inputs_2() {
     return model;
 }
 
-const auto dummy_test_model_4_float16_all_tensors_as_inputs_2 = TestModelManager::get().add("while_fib_4_float16_all_tensors_as_inputs_2", get_test_model_4_float16_all_tensors_as_inputs_2());
+const auto dummy_test_model_n_4_float16_all_tensors_as_inputs_2 = TestModelManager::get().add("while_fib_n_4_float16_all_tensors_as_inputs_2", get_test_model_n_4_float16_all_tensors_as_inputs_2());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_4_float16_all_tensors_as_inputs_all_inputs_as_internal_2() {
+const TestModel& get_test_model_n_4_float16_all_tensors_as_inputs_all_inputs_as_internal_2() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -45469,13 +45469,13 @@ const TestModel& get_test_model_4_float16_all_tensors_as_inputs_all_inputs_as_in
     return model;
 }
 
-const auto dummy_test_model_4_float16_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("while_fib_4_float16_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_4_float16_all_tensors_as_inputs_all_inputs_as_internal_2());
+const auto dummy_test_model_n_4_float16_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("while_fib_n_4_float16_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_n_4_float16_all_tensors_as_inputs_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_4_float16_all_outputs_as_internal_2() {
+const TestModel& get_test_model_n_4_float16_all_outputs_as_internal_2() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -45752,13 +45752,13 @@ const TestModel& get_test_model_4_float16_all_outputs_as_internal_2() {
     return model;
 }
 
-const auto dummy_test_model_4_float16_all_outputs_as_internal_2 = TestModelManager::get().add("while_fib_4_float16_all_outputs_as_internal_2", get_test_model_4_float16_all_outputs_as_internal_2());
+const auto dummy_test_model_n_4_float16_all_outputs_as_internal_2 = TestModelManager::get().add("while_fib_n_4_float16_all_outputs_as_internal_2", get_test_model_n_4_float16_all_outputs_as_internal_2());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_4_quant8_2() {
+const TestModel& get_test_model_n_4_quant8_2() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -46001,13 +46001,13 @@ const TestModel& get_test_model_4_quant8_2() {
     return model;
 }
 
-const auto dummy_test_model_4_quant8_2 = TestModelManager::get().add("while_fib_4_quant8_2", get_test_model_4_quant8_2());
+const auto dummy_test_model_n_4_quant8_2 = TestModelManager::get().add("while_fib_n_4_quant8_2", get_test_model_n_4_quant8_2());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_4_quant8_all_tensors_as_inputs_2() {
+const TestModel& get_test_model_n_4_quant8_all_tensors_as_inputs_2() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -46250,13 +46250,13 @@ const TestModel& get_test_model_4_quant8_all_tensors_as_inputs_2() {
     return model;
 }
 
-const auto dummy_test_model_4_quant8_all_tensors_as_inputs_2 = TestModelManager::get().add("while_fib_4_quant8_all_tensors_as_inputs_2", get_test_model_4_quant8_all_tensors_as_inputs_2());
+const auto dummy_test_model_n_4_quant8_all_tensors_as_inputs_2 = TestModelManager::get().add("while_fib_n_4_quant8_all_tensors_as_inputs_2", get_test_model_n_4_quant8_all_tensors_as_inputs_2());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_4_quant8_all_tensors_as_inputs_all_inputs_as_internal_2() {
+const TestModel& get_test_model_n_4_quant8_all_tensors_as_inputs_all_inputs_as_internal_2() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -46533,13 +46533,13 @@ const TestModel& get_test_model_4_quant8_all_tensors_as_inputs_all_inputs_as_int
     return model;
 }
 
-const auto dummy_test_model_4_quant8_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("while_fib_4_quant8_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_4_quant8_all_tensors_as_inputs_all_inputs_as_internal_2());
+const auto dummy_test_model_n_4_quant8_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("while_fib_n_4_quant8_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_n_4_quant8_all_tensors_as_inputs_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_4_quant8_all_outputs_as_internal_2() {
+const TestModel& get_test_model_n_4_quant8_all_outputs_as_internal_2() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -46816,13 +46816,13 @@ const TestModel& get_test_model_4_quant8_all_outputs_as_internal_2() {
     return model;
 }
 
-const auto dummy_test_model_4_quant8_all_outputs_as_internal_2 = TestModelManager::get().add("while_fib_4_quant8_all_outputs_as_internal_2", get_test_model_4_quant8_all_outputs_as_internal_2());
+const auto dummy_test_model_n_4_quant8_all_outputs_as_internal_2 = TestModelManager::get().add("while_fib_n_4_quant8_all_outputs_as_internal_2", get_test_model_n_4_quant8_all_outputs_as_internal_2());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_4_quant8_signed_2() {
+const TestModel& get_test_model_n_4_quant8_signed_2() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -47065,13 +47065,13 @@ const TestModel& get_test_model_4_quant8_signed_2() {
     return model;
 }
 
-const auto dummy_test_model_4_quant8_signed_2 = TestModelManager::get().add("while_fib_4_quant8_signed_2", get_test_model_4_quant8_signed_2());
+const auto dummy_test_model_n_4_quant8_signed_2 = TestModelManager::get().add("while_fib_n_4_quant8_signed_2", get_test_model_n_4_quant8_signed_2());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_4_quant8_signed_all_tensors_as_inputs_2() {
+const TestModel& get_test_model_n_4_quant8_signed_all_tensors_as_inputs_2() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -47314,13 +47314,13 @@ const TestModel& get_test_model_4_quant8_signed_all_tensors_as_inputs_2() {
     return model;
 }
 
-const auto dummy_test_model_4_quant8_signed_all_tensors_as_inputs_2 = TestModelManager::get().add("while_fib_4_quant8_signed_all_tensors_as_inputs_2", get_test_model_4_quant8_signed_all_tensors_as_inputs_2());
+const auto dummy_test_model_n_4_quant8_signed_all_tensors_as_inputs_2 = TestModelManager::get().add("while_fib_n_4_quant8_signed_all_tensors_as_inputs_2", get_test_model_n_4_quant8_signed_all_tensors_as_inputs_2());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_4_quant8_signed_all_tensors_as_inputs_all_inputs_as_internal_2() {
+const TestModel& get_test_model_n_4_quant8_signed_all_tensors_as_inputs_all_inputs_as_internal_2() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -47597,13 +47597,13 @@ const TestModel& get_test_model_4_quant8_signed_all_tensors_as_inputs_all_inputs
     return model;
 }
 
-const auto dummy_test_model_4_quant8_signed_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("while_fib_4_quant8_signed_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_4_quant8_signed_all_tensors_as_inputs_all_inputs_as_internal_2());
+const auto dummy_test_model_n_4_quant8_signed_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("while_fib_n_4_quant8_signed_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_n_4_quant8_signed_all_tensors_as_inputs_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_4_quant8_signed_all_outputs_as_internal_2() {
+const TestModel& get_test_model_n_4_quant8_signed_all_outputs_as_internal_2() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -47880,13 +47880,13 @@ const TestModel& get_test_model_4_quant8_signed_all_outputs_as_internal_2() {
     return model;
 }
 
-const auto dummy_test_model_4_quant8_signed_all_outputs_as_internal_2 = TestModelManager::get().add("while_fib_4_quant8_signed_all_outputs_as_internal_2", get_test_model_4_quant8_signed_all_outputs_as_internal_2());
+const auto dummy_test_model_n_4_quant8_signed_all_outputs_as_internal_2 = TestModelManager::get().add("while_fib_n_4_quant8_signed_all_outputs_as_internal_2", get_test_model_n_4_quant8_signed_all_outputs_as_internal_2());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_5_2() {
+const TestModel& get_test_model_n_5_2() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -48129,13 +48129,13 @@ const TestModel& get_test_model_5_2() {
     return model;
 }
 
-const auto dummy_test_model_5_2 = TestModelManager::get().add("while_fib_5_2", get_test_model_5_2());
+const auto dummy_test_model_n_5_2 = TestModelManager::get().add("while_fib_n_5_2", get_test_model_n_5_2());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_5_all_tensors_as_inputs_2() {
+const TestModel& get_test_model_n_5_all_tensors_as_inputs_2() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -48378,13 +48378,13 @@ const TestModel& get_test_model_5_all_tensors_as_inputs_2() {
     return model;
 }
 
-const auto dummy_test_model_5_all_tensors_as_inputs_2 = TestModelManager::get().add("while_fib_5_all_tensors_as_inputs_2", get_test_model_5_all_tensors_as_inputs_2());
+const auto dummy_test_model_n_5_all_tensors_as_inputs_2 = TestModelManager::get().add("while_fib_n_5_all_tensors_as_inputs_2", get_test_model_n_5_all_tensors_as_inputs_2());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_5_all_tensors_as_inputs_all_inputs_as_internal_2() {
+const TestModel& get_test_model_n_5_all_tensors_as_inputs_all_inputs_as_internal_2() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -48661,13 +48661,13 @@ const TestModel& get_test_model_5_all_tensors_as_inputs_all_inputs_as_internal_2
     return model;
 }
 
-const auto dummy_test_model_5_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("while_fib_5_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_5_all_tensors_as_inputs_all_inputs_as_internal_2());
+const auto dummy_test_model_n_5_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("while_fib_n_5_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_n_5_all_tensors_as_inputs_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_5_all_outputs_as_internal_2() {
+const TestModel& get_test_model_n_5_all_outputs_as_internal_2() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -48944,13 +48944,13 @@ const TestModel& get_test_model_5_all_outputs_as_internal_2() {
     return model;
 }
 
-const auto dummy_test_model_5_all_outputs_as_internal_2 = TestModelManager::get().add("while_fib_5_all_outputs_as_internal_2", get_test_model_5_all_outputs_as_internal_2());
+const auto dummy_test_model_n_5_all_outputs_as_internal_2 = TestModelManager::get().add("while_fib_n_5_all_outputs_as_internal_2", get_test_model_n_5_all_outputs_as_internal_2());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_5_relaxed_2() {
+const TestModel& get_test_model_n_5_relaxed_2() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -49193,13 +49193,13 @@ const TestModel& get_test_model_5_relaxed_2() {
     return model;
 }
 
-const auto dummy_test_model_5_relaxed_2 = TestModelManager::get().add("while_fib_5_relaxed_2", get_test_model_5_relaxed_2());
+const auto dummy_test_model_n_5_relaxed_2 = TestModelManager::get().add("while_fib_n_5_relaxed_2", get_test_model_n_5_relaxed_2());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_5_relaxed_all_tensors_as_inputs_2() {
+const TestModel& get_test_model_n_5_relaxed_all_tensors_as_inputs_2() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -49442,13 +49442,13 @@ const TestModel& get_test_model_5_relaxed_all_tensors_as_inputs_2() {
     return model;
 }
 
-const auto dummy_test_model_5_relaxed_all_tensors_as_inputs_2 = TestModelManager::get().add("while_fib_5_relaxed_all_tensors_as_inputs_2", get_test_model_5_relaxed_all_tensors_as_inputs_2());
+const auto dummy_test_model_n_5_relaxed_all_tensors_as_inputs_2 = TestModelManager::get().add("while_fib_n_5_relaxed_all_tensors_as_inputs_2", get_test_model_n_5_relaxed_all_tensors_as_inputs_2());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_5_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2() {
+const TestModel& get_test_model_n_5_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -49725,13 +49725,13 @@ const TestModel& get_test_model_5_relaxed_all_tensors_as_inputs_all_inputs_as_in
     return model;
 }
 
-const auto dummy_test_model_5_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("while_fib_5_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_5_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2());
+const auto dummy_test_model_n_5_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("while_fib_n_5_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_n_5_relaxed_all_tensors_as_inputs_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_5_relaxed_all_outputs_as_internal_2() {
+const TestModel& get_test_model_n_5_relaxed_all_outputs_as_internal_2() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -50008,13 +50008,13 @@ const TestModel& get_test_model_5_relaxed_all_outputs_as_internal_2() {
     return model;
 }
 
-const auto dummy_test_model_5_relaxed_all_outputs_as_internal_2 = TestModelManager::get().add("while_fib_5_relaxed_all_outputs_as_internal_2", get_test_model_5_relaxed_all_outputs_as_internal_2());
+const auto dummy_test_model_n_5_relaxed_all_outputs_as_internal_2 = TestModelManager::get().add("while_fib_n_5_relaxed_all_outputs_as_internal_2", get_test_model_n_5_relaxed_all_outputs_as_internal_2());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_5_float16_2() {
+const TestModel& get_test_model_n_5_float16_2() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -50257,13 +50257,13 @@ const TestModel& get_test_model_5_float16_2() {
     return model;
 }
 
-const auto dummy_test_model_5_float16_2 = TestModelManager::get().add("while_fib_5_float16_2", get_test_model_5_float16_2());
+const auto dummy_test_model_n_5_float16_2 = TestModelManager::get().add("while_fib_n_5_float16_2", get_test_model_n_5_float16_2());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_5_float16_all_tensors_as_inputs_2() {
+const TestModel& get_test_model_n_5_float16_all_tensors_as_inputs_2() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -50506,13 +50506,13 @@ const TestModel& get_test_model_5_float16_all_tensors_as_inputs_2() {
     return model;
 }
 
-const auto dummy_test_model_5_float16_all_tensors_as_inputs_2 = TestModelManager::get().add("while_fib_5_float16_all_tensors_as_inputs_2", get_test_model_5_float16_all_tensors_as_inputs_2());
+const auto dummy_test_model_n_5_float16_all_tensors_as_inputs_2 = TestModelManager::get().add("while_fib_n_5_float16_all_tensors_as_inputs_2", get_test_model_n_5_float16_all_tensors_as_inputs_2());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_5_float16_all_tensors_as_inputs_all_inputs_as_internal_2() {
+const TestModel& get_test_model_n_5_float16_all_tensors_as_inputs_all_inputs_as_internal_2() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -50789,13 +50789,13 @@ const TestModel& get_test_model_5_float16_all_tensors_as_inputs_all_inputs_as_in
     return model;
 }
 
-const auto dummy_test_model_5_float16_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("while_fib_5_float16_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_5_float16_all_tensors_as_inputs_all_inputs_as_internal_2());
+const auto dummy_test_model_n_5_float16_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("while_fib_n_5_float16_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_n_5_float16_all_tensors_as_inputs_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_5_float16_all_outputs_as_internal_2() {
+const TestModel& get_test_model_n_5_float16_all_outputs_as_internal_2() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -51072,13 +51072,13 @@ const TestModel& get_test_model_5_float16_all_outputs_as_internal_2() {
     return model;
 }
 
-const auto dummy_test_model_5_float16_all_outputs_as_internal_2 = TestModelManager::get().add("while_fib_5_float16_all_outputs_as_internal_2", get_test_model_5_float16_all_outputs_as_internal_2());
+const auto dummy_test_model_n_5_float16_all_outputs_as_internal_2 = TestModelManager::get().add("while_fib_n_5_float16_all_outputs_as_internal_2", get_test_model_n_5_float16_all_outputs_as_internal_2());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_5_quant8_2() {
+const TestModel& get_test_model_n_5_quant8_2() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -51321,13 +51321,13 @@ const TestModel& get_test_model_5_quant8_2() {
     return model;
 }
 
-const auto dummy_test_model_5_quant8_2 = TestModelManager::get().add("while_fib_5_quant8_2", get_test_model_5_quant8_2());
+const auto dummy_test_model_n_5_quant8_2 = TestModelManager::get().add("while_fib_n_5_quant8_2", get_test_model_n_5_quant8_2());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_5_quant8_all_tensors_as_inputs_2() {
+const TestModel& get_test_model_n_5_quant8_all_tensors_as_inputs_2() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -51570,13 +51570,13 @@ const TestModel& get_test_model_5_quant8_all_tensors_as_inputs_2() {
     return model;
 }
 
-const auto dummy_test_model_5_quant8_all_tensors_as_inputs_2 = TestModelManager::get().add("while_fib_5_quant8_all_tensors_as_inputs_2", get_test_model_5_quant8_all_tensors_as_inputs_2());
+const auto dummy_test_model_n_5_quant8_all_tensors_as_inputs_2 = TestModelManager::get().add("while_fib_n_5_quant8_all_tensors_as_inputs_2", get_test_model_n_5_quant8_all_tensors_as_inputs_2());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_5_quant8_all_tensors_as_inputs_all_inputs_as_internal_2() {
+const TestModel& get_test_model_n_5_quant8_all_tensors_as_inputs_all_inputs_as_internal_2() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -51853,13 +51853,13 @@ const TestModel& get_test_model_5_quant8_all_tensors_as_inputs_all_inputs_as_int
     return model;
 }
 
-const auto dummy_test_model_5_quant8_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("while_fib_5_quant8_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_5_quant8_all_tensors_as_inputs_all_inputs_as_internal_2());
+const auto dummy_test_model_n_5_quant8_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("while_fib_n_5_quant8_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_n_5_quant8_all_tensors_as_inputs_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_5_quant8_all_outputs_as_internal_2() {
+const TestModel& get_test_model_n_5_quant8_all_outputs_as_internal_2() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -52136,13 +52136,13 @@ const TestModel& get_test_model_5_quant8_all_outputs_as_internal_2() {
     return model;
 }
 
-const auto dummy_test_model_5_quant8_all_outputs_as_internal_2 = TestModelManager::get().add("while_fib_5_quant8_all_outputs_as_internal_2", get_test_model_5_quant8_all_outputs_as_internal_2());
+const auto dummy_test_model_n_5_quant8_all_outputs_as_internal_2 = TestModelManager::get().add("while_fib_n_5_quant8_all_outputs_as_internal_2", get_test_model_n_5_quant8_all_outputs_as_internal_2());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_5_quant8_signed_2() {
+const TestModel& get_test_model_n_5_quant8_signed_2() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -52385,13 +52385,13 @@ const TestModel& get_test_model_5_quant8_signed_2() {
     return model;
 }
 
-const auto dummy_test_model_5_quant8_signed_2 = TestModelManager::get().add("while_fib_5_quant8_signed_2", get_test_model_5_quant8_signed_2());
+const auto dummy_test_model_n_5_quant8_signed_2 = TestModelManager::get().add("while_fib_n_5_quant8_signed_2", get_test_model_n_5_quant8_signed_2());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_5_quant8_signed_all_tensors_as_inputs_2() {
+const TestModel& get_test_model_n_5_quant8_signed_all_tensors_as_inputs_2() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -52634,13 +52634,13 @@ const TestModel& get_test_model_5_quant8_signed_all_tensors_as_inputs_2() {
     return model;
 }
 
-const auto dummy_test_model_5_quant8_signed_all_tensors_as_inputs_2 = TestModelManager::get().add("while_fib_5_quant8_signed_all_tensors_as_inputs_2", get_test_model_5_quant8_signed_all_tensors_as_inputs_2());
+const auto dummy_test_model_n_5_quant8_signed_all_tensors_as_inputs_2 = TestModelManager::get().add("while_fib_n_5_quant8_signed_all_tensors_as_inputs_2", get_test_model_n_5_quant8_signed_all_tensors_as_inputs_2());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_5_quant8_signed_all_tensors_as_inputs_all_inputs_as_internal_2() {
+const TestModel& get_test_model_n_5_quant8_signed_all_tensors_as_inputs_all_inputs_as_internal_2() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -52917,13 +52917,13 @@ const TestModel& get_test_model_5_quant8_signed_all_tensors_as_inputs_all_inputs
     return model;
 }
 
-const auto dummy_test_model_5_quant8_signed_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("while_fib_5_quant8_signed_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_5_quant8_signed_all_tensors_as_inputs_all_inputs_as_internal_2());
+const auto dummy_test_model_n_5_quant8_signed_all_tensors_as_inputs_all_inputs_as_internal_2 = TestModelManager::get().add("while_fib_n_5_quant8_signed_all_tensors_as_inputs_all_inputs_as_internal_2", get_test_model_n_5_quant8_signed_all_tensors_as_inputs_all_inputs_as_internal_2());
 
 }  // namespace generated_tests::while_fib
 
 namespace generated_tests::while_fib {
 
-const TestModel& get_test_model_5_quant8_signed_all_outputs_as_internal_2() {
+const TestModel& get_test_model_n_5_quant8_signed_all_outputs_as_internal_2() {
     static TestModel model = {
         .expectFailure = false,
         .expectedMultinomialDistributionTolerance = 0,
@@ -53200,7 +53200,7 @@ const TestModel& get_test_model_5_quant8_signed_all_outputs_as_internal_2() {
     return model;
 }
 
-const auto dummy_test_model_5_quant8_signed_all_outputs_as_internal_2 = TestModelManager::get().add("while_fib_5_quant8_signed_all_outputs_as_internal_2", get_test_model_5_quant8_signed_all_outputs_as_internal_2());
+const auto dummy_test_model_n_5_quant8_signed_all_outputs_as_internal_2 = TestModelManager::get().add("while_fib_n_5_quant8_signed_all_outputs_as_internal_2", get_test_model_n_5_quant8_signed_all_outputs_as_internal_2());
 
 }  // namespace generated_tests::while_fib
 
