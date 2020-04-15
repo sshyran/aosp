@@ -51,7 +51,11 @@ body = MakeBodyModel()
 i_init = [1.0]
 model = Model().Operation("WHILE", cond, body, i_init, n).To(i_out)
 
-example = Example({n: [0.0], i_out: [999.9]}, model=model)
+quant8 = DataTypeConverter("quant8", scale=1.0, zeroPoint=127)
+quant8_signed = DataTypeConverter("quant8_signed", scale=1.0, zeroPoint=0)
+
+example = Example({n: [0.0], i_out: [0.0]}, model=model)
+example.AddVariations("relaxed", "float16", quant8, quant8_signed)
 example.DisableLifeTimeVariation()
 example.DisableDynamicOutputShapeVariation()
 example.ExpectFailure()
