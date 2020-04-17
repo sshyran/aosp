@@ -1375,6 +1375,7 @@ int ExecutionPlan::nextCompound(const WhileStep* step, std::shared_ptr<Controlle
             const SourceOperandIndex& outerOperand = step->outerOutputOperands[i];
             std::optional<Buffer> outerBuffer = getBuffer(controller, outerOperand);
             if (outerBuffer == std::nullopt) {
+                // This should never happen.
                 LOG(ERROR) << "Unable to get outerBuffer for operand " << toString(outerOperand);
                 return ANEURALNETWORKS_OP_FAILED;
             }
@@ -1384,6 +1385,7 @@ int ExecutionPlan::nextCompound(const WhileStep* step, std::shared_ptr<Controlle
             CHECK_NE(size, 0u);
             std::optional<Buffer> innerBuffer = getBuffer(controller, innerOperand);
             if (innerBuffer == std::nullopt) {
+                // This should never happen.
                 LOG(ERROR) << "Unable to get innerBuffer for operand " << toString(innerOperand);
                 return ANEURALNETWORKS_OP_FAILED;
             }
