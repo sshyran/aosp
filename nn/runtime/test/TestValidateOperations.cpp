@@ -25,6 +25,7 @@
 #include <memory>
 #include <optional>
 #include <set>
+#include <sstream>
 #include <string>
 #include <utility>
 #include <vector>
@@ -640,32 +641,49 @@ class OperationTestBase {
     std::vector<TensorRankMutator> mInputRankMutators;
 };
 
-MATCHER_P2(IsMutationWithDimensions, origin, expectedDims, "") {
-    OperandTypeWithExtraParams expectedWithoutDims = origin;
-    expectedWithoutDims.operandType.dimensionCount = 0;
-    expectedWithoutDims.operandType.dimensions = nullptr;
-    OperandTypeWithExtraParams actualWithoutDims = arg;
-    actualWithoutDims.operandType.dimensionCount = 0;
-    actualWithoutDims.operandType.dimensions = nullptr;
+std::ostream& operator<<(std::ostream& os, const OperandTypeWithExtraParams& operand) {
+    const auto& operandType = operand.operandType;
+    os << "{ operand_type: { type: " << operandType.type << ", "
+       << "dimensionCount: " << operandType.dimensionCount << ", dimensions: [";
+    std::for_each(operandType.dimensions, operandType.dimensions + operandType.dimensionCount,
+                  [&os](uint32_t dimension) { os << dimension << ", "; });
+    os << "], scale: " << operandType.scale << ", zeroPoint: " << operandType.zeroPoint << " }";
 
-    if ((expectedWithoutDims != actualWithoutDims) ||
-        (arg.operandType.dimensionCount != expectedDims.size())) {
-        return false;
-    }
-
-    if (expectedDims.size() > 0) {
-        if (!arg.operandType.dimensions || arg.operandType.dimensionCount != expectedDims.size()) {
-            return false;
-        }
-        std::vector<uint32_t> actualDims(
-                arg.operandType.dimensions,
-                arg.operandType.dimensions + arg.operandType.dimensionCount);
-
-        bool result = std::equal(actualDims.begin(), actualDims.end(), expectedDims.begin());
-        return result;
+    const auto& channelQuant = operand.channelQuant;
+    if (channelQuant.has_value()) {
+        os << ", channelQuant { channelDim: " << channelQuant->channelDim
+           << ", scaleCount: " << channelQuant->scaleCount << ", scales: [";
+        std::for_each(channelQuant->scales, channelQuant->scales + channelQuant->scaleCount,
+                      [&os](float scale) { os << scale << ", "; });
+        os << "] }";
     } else {
-        return arg.operandType.dimensions == nullptr;
+        os << ", channelQuant: nullopt";
     }
+    os << "}";
+    return os;
+}
+
+inline OperandTypeWithExtraParams MutationWithDimensions(
+        const OperandTypeWithExtraParams& origin, const std::vector<uint32_t>& expectedDims) {
+    OperandTypeWithExtraParams expected = origin;
+    expected.operandType.dimensionCount = expectedDims.size();
+    if (expectedDims.size() == 0) {
+        expected.operandType.dimensions = nullptr;
+    } else {
+        expected.operandType.dimensions = expectedDims.data();
+    }
+    return expected;
+}
+std::string DescribeMutationWithDimensions(const OperandTypeWithExtraParams& origin,
+                                           const std::vector<uint32_t>& expectedDims) {
+    std::ostringstream osstream;
+    osstream << MutationWithDimensions(origin, expectedDims);
+    return osstream.str();
+}
+
+MATCHER_P2(IsMutationWithDimensions, origin, expectedDims,
+           DescribeMutationWithDimensions(origin, expectedDims)) {
+    return arg == MutationWithDimensions(origin, expectedDims);
 }
 
 TEST(TensorRankConstraint, ExactlyWillReturnSameInputAsValidMutation) {
@@ -676,11 +694,13 @@ TEST(TensorRankConstraint, ExactlyWillReturnSameInputAsValidMutation) {
             .dimensions = opDimensions,
     }};
 
-    auto validMutationSet = TensorRankConstraint::Exactly(3).MutationsWithValidRank({operand});
+    auto constraint = TensorRankConstraint::Exactly(3);
+    auto validMutationSet = constraint.MutationsWithValidRank({operand});
     ASSERT_EQ(validMutationSet.size(), 1u);
     auto validMutations = *validMutationSet.begin();
     ASSERT_EQ(validMutations.size(), 1u);
-    EXPECT_THAT(validMutations[0], IsMutationWithDimensions(operand, std::vector({2, 2, 2})));
+    EXPECT_THAT(validMutations[0],
+                IsMutationWithDimensions(operand, std::vector<uint32_t>({2, 2, 2})));
 };
 
 TEST(TensorRankConstraint, ExactlyWillFailIfValidInputHasInvalidSize) {
@@ -702,20 +722,22 @@ TEST(TensorRankConstraint, ExactlyWillReturnTwoInvalidMutationsWithLowerAndHighe
             .dimensions = opDimensions,
     }};
 
-    auto invalidMutations = TensorRankConstraint::Exactly(3).MutationsWithInvalidRank({operand});
+    auto constraint = TensorRankConstraint::Exactly(3);
+    auto invalidMutations = constraint.MutationsWithInvalidRank({operand});
     ASSERT_EQ(invalidMutations.size(), 2u);
-    std::for_each(
-            invalidMutations.begin(), invalidMutations.end(),
-            [&operand](const std::vector<OperandTypeWithExtraParams>& mutations) {
-                EXPECT_EQ(mutations.size(), 1u);
-                if (mutations.size() == 1) {
-                    EXPECT_THAT(
-                            mutations[0],
-                            ::testing::AnyOf(
-                                    IsMutationWithDimensions(operand, std::vector({2, 2})),
-                                    IsMutationWithDimensions(operand, std::vector({2, 2, 2, 1}))));
-                }
-            });
+    std::for_each(invalidMutations.begin(), invalidMutations.end(),
+                  [&operand](const std::vector<OperandTypeWithExtraParams>& mutations) {
+                      EXPECT_EQ(mutations.size(), 1u);
+                      if (mutations.size() == 1) {
+                          EXPECT_THAT(
+                                  mutations[0],
+                                  ::testing::AnyOf(
+                                          IsMutationWithDimensions(operand,
+                                                                   std::vector<uint32_t>({2, 2})),
+                                          IsMutationWithDimensions(
+                                                  operand, std::vector<uint32_t>({2, 2, 2, 1}))));
+                      }
+                  });
 };
 
 TEST(TensorRankConstraint, AtLeastWillReturnTwoValidMutationsAboveThreshold) {
@@ -726,20 +748,22 @@ TEST(TensorRankConstraint, AtLeastWillReturnTwoValidMutationsAboveThreshold) {
             .dimensions = opDimensions,
     }};
 
-    auto invalidMutations = TensorRankConstraint::AtLeast(1).MutationsWithValidRank(
-            {(OperandTypeWithExtraParams)operand});
+    auto constraint = TensorRankConstraint::AtLeast(1);
+    auto invalidMutations =
+            constraint.MutationsWithValidRank({(OperandTypeWithExtraParams)operand});
     ASSERT_EQ(invalidMutations.size(), 2u);
-    std::for_each(invalidMutations.begin(), invalidMutations.end(),
-                  [&operand](const std::vector<OperandTypeWithExtraParams>& mutations) {
-                      EXPECT_EQ(mutations.size(), 1u);
-                      if (mutations.size() == 1) {
-                          EXPECT_THAT(
-                                  mutations[0],
-                                  ::testing::AnyOf(
-                                          IsMutationWithDimensions(operand, std::vector({2})),
-                                          IsMutationWithDimensions(operand, std::vector({2, 2}))));
-                      }
-                  });
+    std::for_each(
+            invalidMutations.begin(), invalidMutations.end(),
+            [&operand](const std::vector<OperandTypeWithExtraParams>& mutations) {
+                EXPECT_EQ(mutations.size(), 1u);
+                if (mutations.size() == 1) {
+                    EXPECT_THAT(mutations[0],
+                                ::testing::AnyOf(IsMutationWithDimensions(
+                                                         operand, std::vector<uint32_t>({2})),
+                                                 IsMutationWithDimensions(
+                                                         operand, std::vector<uint32_t>({2, 2}))));
+                }
+            });
 }
 
 TEST(TensorRankConstraint, AtLeastWillReturnOneInvalidMutationsBelowThreshold) {
@@ -750,12 +774,14 @@ TEST(TensorRankConstraint, AtLeastWillReturnOneInvalidMutationsBelowThreshold) {
             .dimensions = opDimensions,
     }};
 
-    auto invalidMutations = TensorRankConstraint::AtLeast(2).MutationsWithInvalidRank(
-            {(OperandTypeWithExtraParams)operand});
+    auto constraint = TensorRankConstraint::AtLeast(2);
+    auto invalidMutations =
+            constraint.MutationsWithInvalidRank({(OperandTypeWithExtraParams)operand});
     ASSERT_EQ(invalidMutations.size(), 1u);
     auto invalidMutationVector = *invalidMutations.begin();
     ASSERT_EQ(invalidMutationVector.size(), 1u);
-    ASSERT_THAT(invalidMutationVector[0], IsMutationWithDimensions(operand, std::vector({2})));
+    ASSERT_THAT(invalidMutationVector[0],
+                IsMutationWithDimensions(operand, std::vector<uint32_t>({2})));
 }
 
 TEST(TensorRankConstraint, AtLeastWillReturnNoInvalidMutationsIfThresholdIs1) {
@@ -766,8 +792,9 @@ TEST(TensorRankConstraint, AtLeastWillReturnNoInvalidMutationsIfThresholdIs1) {
             .dimensions = opDimensions,
     }};
 
-    auto invalidMutations = TensorRankConstraint::AtLeast(1).MutationsWithInvalidRank(
-            {(OperandTypeWithExtraParams)operand});
+    auto constraint = TensorRankConstraint::AtLeast(1);
+    auto invalidMutations =
+            constraint.MutationsWithInvalidRank({(OperandTypeWithExtraParams)operand});
     ASSERT_EQ(invalidMutations.size(), 0u);
 }
 
@@ -779,21 +806,24 @@ TEST(TensorRankConstraint, UpToWillReturnUpToTwoValidMutationsBelowThreshold) {
             .dimensions = opDimensions,
     }};
 
-    auto invalidMutations = TensorRankConstraint::UpTo(3).MutationsWithValidRank(
-            {(OperandTypeWithExtraParams)operand});
+    auto constraint = TensorRankConstraint::UpTo(3);
+    auto invalidMutations =
+            constraint.MutationsWithValidRank({(OperandTypeWithExtraParams)operand});
+
+    auto expected = std::vector<uint32_t>({7, 7});
     ASSERT_EQ(invalidMutations.size(), 2u);
-    std::for_each(
-            invalidMutations.begin(), invalidMutations.end(),
-            [&operand](const std::vector<OperandTypeWithExtraParams>& mutations) {
-                EXPECT_EQ(mutations.size(), 1u);
-                if (mutations.size() == 1) {
-                    EXPECT_THAT(
-                            mutations[0],
-                            ::testing::AnyOf(
-                                    IsMutationWithDimensions(operand, std::vector<uint32_t>({2})),
-                                    IsMutationWithDimensions(operand, std::vector({2, 2, 2}))));
-                }
-            });
+    std::for_each(invalidMutations.begin(), invalidMutations.end(),
+                  [&operand](const std::vector<OperandTypeWithExtraParams>& mutations) {
+                      EXPECT_EQ(mutations.size(), 1u);
+                      if (mutations.size() == 1) {
+                          EXPECT_THAT(mutations[0],
+                                      ::testing::AnyOf(
+                                              IsMutationWithDimensions(operand,
+                                                                       std::vector<uint32_t>({2})),
+                                              IsMutationWithDimensions(
+                                                      operand, std::vector<uint32_t>({2, 2, 1}))));
+                      }
+                  });
 }
 
 TEST(TensorRankConstraint, UpToWillReturnOneInvalidMutationsAboveThreshold) {
@@ -804,13 +834,14 @@ TEST(TensorRankConstraint, UpToWillReturnOneInvalidMutationsAboveThreshold) {
             .dimensions = opDimensions,
     }};
 
-    auto invalidMutations = TensorRankConstraint::UpTo(3).MutationsWithInvalidRank(
-            {(OperandTypeWithExtraParams)operand});
+    auto constraint = TensorRankConstraint::UpTo(3);
+    auto invalidMutations =
+            constraint.MutationsWithInvalidRank({(OperandTypeWithExtraParams)operand});
     ASSERT_EQ(invalidMutations.size(), 1u);
     auto invalidMutationVector = *invalidMutations.begin();
     ASSERT_EQ(invalidMutationVector.size(), 1u);
     ASSERT_THAT(invalidMutationVector[0],
-                IsMutationWithDimensions(operand, std::vector({2, 2, 2, 1})));
+                IsMutationWithDimensions(operand, std::vector<uint32_t>({2, 2, 2, 1})));
 }
 
 TEST(TensorRankConstraint, BetweenWillReturnTwoValidMutationsOnRangeBoundaries) {
@@ -821,8 +852,8 @@ TEST(TensorRankConstraint, BetweenWillReturnTwoValidMutationsOnRangeBoundaries) 
             .dimensions = opDimensions,
     }};
 
-    auto validMutations = TensorRankConstraint::Between(2, 4).MutationsWithValidRank(
-            {(OperandTypeWithExtraParams)operand});
+    auto constraint = TensorRankConstraint::Between(2, 4);
+    auto validMutations = constraint.MutationsWithValidRank({(OperandTypeWithExtraParams)operand});
     ASSERT_EQ(validMutations.size(), 2u);
     std::for_each(validMutations.begin(), validMutations.end(),
                   [&operand](const std::vector<OperandTypeWithExtraParams>& mutations) {
@@ -830,10 +861,11 @@ TEST(TensorRankConstraint, BetweenWillReturnTwoValidMutationsOnRangeBoundaries) 
                       if (mutations.size() == 1) {
                           EXPECT_THAT(
                                   mutations[0],
-                                  ::testing::AnyOf(IsMutationWithDimensions(
-                                                           operand, std::vector<uint32_t>({2, 2})),
-                                                   IsMutationWithDimensions(
-                                                           operand, std::vector({2, 2, 2, 1}))));
+                                  ::testing::AnyOf(
+                                          IsMutationWithDimensions(operand,
+                                                                   std::vector<uint32_t>({2, 2})),
+                                          IsMutationWithDimensions(
+                                                  operand, std::vector<uint32_t>({2, 2, 2, 1}))));
                       }
                   });
 }
@@ -846,21 +878,23 @@ TEST(TensorRankConstraint, BetweenWillReturnTwoInvValidMutationsAdjacentToRangeB
             .dimensions = opDimensions,
     }};
 
-    auto validMutations = TensorRankConstraint::Between(2, 4).MutationsWithInvalidRank(
-            {(OperandTypeWithExtraParams)operand});
+    auto constraint = TensorRankConstraint::Between(2, 4);
+    auto validMutations =
+            constraint.MutationsWithInvalidRank({(OperandTypeWithExtraParams)operand});
     ASSERT_EQ(validMutations.size(), 2u);
-    std::for_each(validMutations.begin(), validMutations.end(),
-                  [&operand](const std::vector<OperandTypeWithExtraParams>& mutations) {
-                      EXPECT_EQ(mutations.size(), 1u);
-                      if (mutations.size() == 1) {
-                          EXPECT_THAT(
-                                  mutations[0],
-                                  ::testing::AnyOf(IsMutationWithDimensions(
-                                                           operand, std::vector<uint32_t>({2})),
-                                                   IsMutationWithDimensions(
-                                                           operand, std::vector({2, 2, 2, 1, 1}))));
-                      }
-                  });
+    std::for_each(
+            validMutations.begin(), validMutations.end(),
+            [&operand](const std::vector<OperandTypeWithExtraParams>& mutations) {
+                EXPECT_EQ(mutations.size(), 1u);
+                if (mutations.size() == 1) {
+                    EXPECT_THAT(
+                            mutations[0],
+                            ::testing::AnyOf(
+                                    IsMutationWithDimensions(operand, std::vector<uint32_t>({2})),
+                                    IsMutationWithDimensions(
+                                            operand, std::vector<uint32_t>({2, 2, 2, 1, 1}))));
+                }
+            });
 }
 
 TEST(TensorRankConstraint, BetweenWillReturnOneInvalidMutationsOnlyIfLowerBoundIs1) {
@@ -871,13 +905,14 @@ TEST(TensorRankConstraint, BetweenWillReturnOneInvalidMutationsOnlyIfLowerBoundI
             .dimensions = opDimensions,
     }};
 
-    auto invalidMutations = TensorRankConstraint::Between(1, 4).MutationsWithInvalidRank(
-            {(OperandTypeWithExtraParams)operand});
+    auto constraint = TensorRankConstraint::Between(1, 4);
+    auto invalidMutations =
+            constraint.MutationsWithInvalidRank({(OperandTypeWithExtraParams)operand});
     ASSERT_EQ(invalidMutations.size(), 1u);
     auto invalidMutationVector = *invalidMutations.begin();
     ASSERT_EQ(invalidMutationVector.size(), 1u);
     ASSERT_THAT(invalidMutationVector[0],
-                IsMutationWithDimensions(operand, std::vector({2, 2, 2, 1, 1})));
+                IsMutationWithDimensions(operand, std::vector<uint32_t>({2, 2, 2, 1, 1})));
 }
 
 TEST(TensorRankMutator, AppliesConstraintToInputsAtGivenInputsToGenerateValidMutations) {
@@ -903,28 +938,29 @@ TEST(TensorRankMutator, AppliesConstraintToInputsAtGivenInputsToGenerateValidMut
 
     const auto mutationSet = mutator.ValidInputsMutations({operand0, operand1, operand2});
     ASSERT_EQ(mutationSet.size(), 2u);
-    std::for_each(
-            mutationSet.begin(), mutationSet.end(),
-            [&](const std::vector<OperandTypeWithExtraParams>& mutatedInputs) {
-                EXPECT_EQ(mutatedInputs.size(), 3u);
-                if (mutatedInputs.size() == 3) {
-                    EXPECT_EQ(mutatedInputs[0].operandType.dimensionCount,
-                              mutatedInputs[2].operandType.dimensionCount);
-                    EXPECT_THAT(
-                            mutatedInputs[0],
-                            ::testing::AnyOf(
-                                    IsMutationWithDimensions(operand0, std::vector({0, 0})),
-                                    IsMutationWithDimensions(operand0, std::vector({0, 0, 1}))));
+    std::for_each(mutationSet.begin(), mutationSet.end(),
+                  [&](const std::vector<OperandTypeWithExtraParams>& mutatedInputs) {
+                      EXPECT_EQ(mutatedInputs.size(), 3u);
+                      if (mutatedInputs.size() == 3) {
+                          EXPECT_EQ(mutatedInputs[0].operandType.dimensionCount,
+                                    mutatedInputs[2].operandType.dimensionCount);
+                          EXPECT_THAT(mutatedInputs[0],
+                                      ::testing::AnyOf(
+                                              IsMutationWithDimensions(
+                                                      operand0, std::vector<uint32_t>({0, 0})),
+                                              IsMutationWithDimensions(
+                                                      operand0, std::vector<uint32_t>({0, 0, 1}))));
 
-                    EXPECT_EQ(mutatedInputs[1], operand1);
+                          EXPECT_EQ(mutatedInputs[1], operand1);
 
-                    EXPECT_THAT(
-                            mutatedInputs[2],
-                            ::testing::AnyOf(
-                                    IsMutationWithDimensions(operand2, std::vector({2, 2})),
-                                    IsMutationWithDimensions(operand2, std::vector({2, 2, 1}))));
-                }
-            });
+                          EXPECT_THAT(mutatedInputs[2],
+                                      ::testing::AnyOf(
+                                              IsMutationWithDimensions(
+                                                      operand2, std::vector<uint32_t>({2, 2})),
+                                              IsMutationWithDimensions(
+                                                      operand2, std::vector<uint32_t>({2, 2, 1}))));
+                      }
+                  });
 }
 
 TEST(TensorRankMutator, AppliesConstraintToInputsAtGivenInputsToGenerateInvalidMutations) {
@@ -950,19 +986,20 @@ TEST(TensorRankMutator, AppliesConstraintToInputsAtGivenInputsToGenerateInvalidM
 
     const auto mutationSet = mutator.InvalidInputsMutations({operand0, operand1, operand2});
     ASSERT_EQ(mutationSet.size(), 1u);
-    std::for_each(mutationSet.begin(), mutationSet.end(),
-                  [&](const std::vector<OperandTypeWithExtraParams>& mutatedInputs) {
-                      EXPECT_EQ(mutatedInputs.size(), 3u);
-                      if (mutatedInputs.size() == 3) {
-                          EXPECT_THAT(mutatedInputs[0],
-                                      IsMutationWithDimensions(operand0, std::vector({0})));
+    std::for_each(
+            mutationSet.begin(), mutationSet.end(),
+            [&](const std::vector<OperandTypeWithExtraParams>& mutatedInputs) {
+                EXPECT_EQ(mutatedInputs.size(), 3u);
+                if (mutatedInputs.size() == 3) {
+                    EXPECT_THAT(mutatedInputs[0],
+                                IsMutationWithDimensions(operand0, std::vector<uint32_t>({0})));
 
-                          EXPECT_EQ(mutatedInputs[1], operand1);
+                    EXPECT_EQ(mutatedInputs[1], operand1);
 
-                          EXPECT_THAT(mutatedInputs[2],
-                                      IsMutationWithDimensions(operand2, std::vector({2})));
-                      }
-                  });
+                    EXPECT_THAT(mutatedInputs[2],
+                                IsMutationWithDimensions(operand2, std::vector<uint32_t>({2})));
+                }
+            });
 }
 
 void argMinMaxTest(ANeuralNetworksOperationType operationCode, int32_t inputOperandType) {

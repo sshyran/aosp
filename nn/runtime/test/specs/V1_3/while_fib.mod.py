@@ -77,14 +77,14 @@ def MakeBodyModel():
 
   return SubgraphReference("body", model), quant8, quant8_signed
 
-def Test(n, fib):
-  n_ = Input("n", CounterType)
+def Test(n_data, fib_data):
+  n = Input("n", CounterType)
   fib_out = Output("fib_out", FibType)
   cond, cond_quant8, cond_quant8_signed = MakeConditionModel()
   body, body_quant8, body_quant8_signed = MakeBodyModel()
   fib_init = Parameter("fib_init", FibType, [1, 1])
   i_init = [1]
-  model = Model().Operation("WHILE", cond, body, fib_init, i_init, n_).To(fib_out)
+  model = Model().Operation("WHILE", cond, body, fib_init, i_init, n).To(fib_out)
 
   quant8 = DataTypeConverter().Identify({
       fib_init: FibTypeQuant8,
@@ -99,13 +99,15 @@ def Test(n, fib):
       body: body_quant8_signed,
   })
 
-  example = Example({n_: [n], fib_out: fib}, name=str(n), model=model)
+  example = Example({n: [n_data], fib_out: fib_data}, name="n_{}".format(n_data))
   example.AddVariations("relaxed", "float16", quant8, quant8_signed)
   example.AddVariations(AllOutputsAsInternalCoverter())
 
-# Fibonacci numbers: 1 1 2 3 5 8
-Test(n=1, fib=[1, 1])
-Test(n=2, fib=[1, 2])
-Test(n=3, fib=[2, 3])
-Test(n=4, fib=[3, 5])
-Test(n=5, fib=[5, 8])
+for use_shm_for_weights in [False, True]:
+  Configuration.use_shm_for_weights = use_shm_for_weights
+  # Fibonacci numbers: 1 1 2 3 5 8
+  Test(n_data=1, fib_data=[1, 1])
+  Test(n_data=2, fib_data=[1, 2])
+  Test(n_data=3, fib_data=[2, 3])
+  Test(n_data=4, fib_data=[3, 5])
+  Test(n_data=5, fib_data=[5, 8])

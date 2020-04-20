@@ -28,8 +28,7 @@ def MakeBranchModel(operation_name):
   z = Output("z", ValueType)
   return Model().Operation(operation_name, y, [10.0], 0).To(z)
 
-def Test(x, y, z, name):
-  x_data, y_data, z_data = x, y, z
+def Test(x_data, y_data, z_data, name):
   x = Input("x", BoolType)
   y = Input("y", ValueType)
   z = Output("z", ValueType)
@@ -44,5 +43,5 @@ def Test(x, y, z, name):
   example.AddVariations("relaxed", "float16", "int32", quant8, quant8_signed)
   example.AddVariations(AllOutputsAsInternalCoverter())
 
-Test(x=True, y=input_data, z=output_add, name="true")
-Test(x=False, y=input_data, z=output_sub, name="false")
+Test(x_data=True, y_data=input_data, z_data=output_add, name="true")
+Test(x_data=False, y_data=input_data, z_data=output_sub, name="false")
