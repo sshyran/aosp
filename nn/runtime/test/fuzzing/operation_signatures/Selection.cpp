@@ -280,8 +280,7 @@ static void stridedSliceConstructor(TestOperandType, uint32_t rank, RandomOperat
     setFreeDimensions(op->inputs[0], rank);
     std::vector<bool> shrinkMask(rank, false);
     for (uint32_t i = 0; i < rank; i++) {
-        // TODO: Currently shrinkMask is always set to false.
-        shrinkMask[i] = false;
+        shrinkMask[i] = getBernoulli(0.2f);
         int32_t stride = getUniform<int32_t>(1, 3);
         op->inputs[3]->value<int32_t>(i) = stride;
         if (!shrinkMask[i]) {
@@ -303,7 +302,8 @@ static void stridedSliceFinalizer(RandomOperation* op) {
     for (uint32_t i = 0, o = 0; i < rank; i++) {
         int32_t inputSize = op->inputs[0]->dimensions[i].getValue();
         int32_t stride = op->inputs[3]->value<int32_t>(i);
-        if ((shrinkMask & (1 << i)) == 0) {
+        bool shrink = shrinkMask & (1 << i);
+        if (!shrink) {
             int32_t outputSize = op->outputs[0]->dimensions[o++].getValue();
             int32_t maxStart = inputSize - (outputSize - 1) * stride - 1;
             begin[i] = getUniform<int32_t>(0, maxStart);
@@ -328,7 +328,8 @@ static void stridedSliceFinalizer(RandomOperation* op) {
         }
 
         // Switch to negative stride.
-        if (getBernoulli(0.2f)) {
+        // TODO(b/154639297): shrinkMask with negative stride will produce uninitialized output.
+        if (!shrink && getBernoulli(0.2f)) {
             op->inputs[3]->value<int32_t>(i) = -stride;
             std::swap(begin[i], end[i]);
             std::swap(beginMask[i], endMask[i]);
