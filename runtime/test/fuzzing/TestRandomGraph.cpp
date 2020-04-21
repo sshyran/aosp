@@ -196,6 +196,7 @@ class RandomGraphTest : public ::testing::TestWithParam<uint32_t> {
                 //       [0, 255]. We should investigate on a better buffer value generation
                 //       algorithm that represents the real-world cases.
                 "TestRandomGraph_SingleOperationTest_CONV_2D_V1_2_40",
+                "TestRandomGraph_SingleOperationTest_DEPTHWISE_CONV_2D_V1_0_32",
         };
         if (kDisabledTests.find(mTestName) != kDisabledTests.end()) return true;
         for (const auto& op : mTestModel.main.operations) {
