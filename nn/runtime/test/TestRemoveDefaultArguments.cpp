@@ -158,8 +158,8 @@ class TestRemoveDefaultArguments : public ::testing::Test {
         ASSERT_TRUE(model.isValid());
         ASSERT_EQ(model.finish(), Result::NO_ERROR);
 
-        WrapperCompilation compilation;
-        ASSERT_EQ(compilation.createForDevice(&model, mTestDevice), Result::NO_ERROR);
+        auto [result, compilation] = WrapperCompilation::createForDevice(&model, mTestDevice);
+        ASSERT_EQ(result, Result::NO_ERROR);
         ASSERT_EQ(compilation.finish(), Result::NO_ERROR);
     }
 
