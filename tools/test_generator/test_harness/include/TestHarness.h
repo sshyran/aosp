@@ -531,7 +531,10 @@ class SpecDumper {
 
     // Dump a test buffer as a python 1D list.
     // e.g. [1, 2, 3, 4, 5]
-    void dumpTestBuffer(TestOperandType type, const TestBuffer& buffer);
+    //
+    // If useHexFloat is set to true and the operand type is float, the buffer values will be
+    // dumped in hex representation.
+    void dumpTestBuffer(TestOperandType type, const TestBuffer& buffer, bool useHexFloat);
 
     const TestModel& kTestModel;
     std::ostream& mOs;
