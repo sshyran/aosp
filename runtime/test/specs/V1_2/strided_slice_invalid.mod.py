@@ -14,28 +14,27 @@
 # limitations under the License.
 #
 
-# TODO: Move this spec to V1_3 directory?
-#
-# This test makes sure that executing STRIDED_SLICE results in a failure when
-# the output dimensions do not match shrinkAxisMask.
-#
 # Based on strided_slice_float_11.mod.py.
 
-model = Model()
+# This test makes sure that executing STRIDED_SLICE results in a failure when
+# the deduced output dimension is not one and shrinkAxisMask is set.
+# See http://b/79856511#comment2.
 i1 = Input("input", "TENSOR_FLOAT32", "{2, 3}")
-begins = Parameter("begins", "TENSOR_INT32", "{2}", [0, 0])
-# The value "2" below makes the test invalid. See http://b/79856511#comment2.
-ends = Parameter("ends", "TENSOR_INT32", "{2}", [2, 3])
-strides = Parameter("strides", "TENSOR_INT32", "{2}", [1, 1])
-beginMask = Int32Scalar("beginMask", 0)
-endMask = Int32Scalar("endMask", 0)
-shrinkAxisMask = Int32Scalar("shrinkAxisMask", 1)
-
 output = Output("output", "TENSOR_FLOAT32", "{3}")
-
-model = model.Operation("STRIDED_SLICE", i1, begins, ends, strides, beginMask, endMask, shrinkAxisMask).To(output)
-
+Model("output_dims").Operation("STRIDED_SLICE", i1, [0, 0], [2, 3], [1, 1], 0, 0, 1).To(output)
 Example({
     i1: [1, 2, 3, 4, 5, 6],
     output: [1, 2, 3],
+}).ExpectFailure()
+
+
+# This test makes sure that executing STRIDED_SLICE results in a failure when
+# the stride is negative and shrinkAxisMask is set.
+# See http://b/154639297#comment11.
+i1 = Input("input", "TENSOR_FLOAT32", "{2, 3}")
+output = Output("output", "TENSOR_FLOAT32", "{3}")
+Model("neg_stride").Operation("STRIDED_SLICE", i1, [1, 0], [0, 3], [-1, 1], 0, 0, 1).To(output)
+Example({
+    i1: [1, 2, 3, 4, 5, 6],
+    output: [4, 5, 6],
 }).ExpectFailure()
