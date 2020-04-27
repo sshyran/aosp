@@ -1186,6 +1186,7 @@ TEST_P(RandomPartitioningTest, Test) {
     {
         std::cout << "signatures = " << signatures.size() << ", devices = " << devices.size()
                   << std::endl;
+        // TODO: When dumping steps, include non-ExecutionSteps.
         const ExecutionPlan& plan = c2->getExecutionPlan();
         switch (plan.forTest_getKind()) {
             case ExecutionPlan::Kind::SIMPLE:
@@ -1195,13 +1196,19 @@ TEST_P(RandomPartitioningTest, Test) {
                 const auto& steps = plan.forTest_compoundGetSteps();
                 std::set<const Device*> devicesInPlan;
                 for (const auto& step : steps) {
-                    devicesInPlan.insert(step->getDevice().get());
+                    if (const auto* executionStep = step->tryExecutionStep()) {
+                        devicesInPlan.insert(executionStep->getDevice().get());
+                    }
                 }
                 std::cout << "plan: compound, " << steps.size() << " steps over "
                           << devicesInPlan.size() << " devices" << std::endl;
                 for (unsigned i = 0; i < steps.size(); i++) {
-                    std::cout << "Step " << i << ": " << ModelStats(steps[i]->getStepModel())
-                              << ", device = " << steps[i]->getDevice()->getName() << std::endl;
+                    if (const auto executionStep = steps[i]->tryExecutionStep()) {
+                        std::cout << "Step " << i << ": "
+                                  << ModelStats(executionStep->getStepModel())
+                                  << ", device = " << executionStep->getDevice()->getName()
+                                  << std::endl;
+                    }
                 }
                 break;
             }
