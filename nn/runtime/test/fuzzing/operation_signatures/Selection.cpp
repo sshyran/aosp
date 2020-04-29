@@ -320,23 +320,22 @@ static void stridedSliceFinalizer(RandomOperation* op) {
             // arbitrary value.
             if (beginMask[i]) begin[i] = getUniform<int32_t>(-inputSize, inputSize - 1);
             if (endMask[i]) end[i] = getUniform<int32_t>(-inputSize, inputSize - 1);
+
+            // Switch to negative stride.
+            if (getBernoulli(0.2f)) {
+                op->inputs[3]->value<int32_t>(i) = -stride;
+                std::swap(begin[i], end[i]);
+                std::swap(beginMask[i], endMask[i]);
+                begin[i]--;
+                end[i]--;
+                // end = -1 will be interpreted to inputSize - 1 if not setting endMask.
+                if (end[i] < 0) endMask[i] = true;
+            }
         } else {
             // When shrink mask is set, the begin and end must define a slice of size 1, e.g.
             // begin[i] = x, end[i] = x + 1.
             begin[i] = getUniform<int32_t>(0, inputSize - 1);
             end[i] = begin[i] + 1;
-        }
-
-        // Switch to negative stride.
-        // TODO(b/154639297): shrinkMask with negative stride will produce uninitialized output.
-        if (!shrink && getBernoulli(0.2f)) {
-            op->inputs[3]->value<int32_t>(i) = -stride;
-            std::swap(begin[i], end[i]);
-            std::swap(beginMask[i], endMask[i]);
-            begin[i]--;
-            end[i]--;
-            // end = -1 will be intepreted to inputSize - 1 if not setting endMask.
-            if (end[i] < 0) endMask[i] = true;
         }
     }
     op->inputs[4]->setScalarValue<int32_t>(convertToBitMask(beginMask));
