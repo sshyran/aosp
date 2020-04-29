@@ -63,8 +63,6 @@ cc_defaults {
         //
         // Changes to this list must be reflected in the "CtsNNAPITests_static"
         // library to ensure CTS tests coverage.
-        // TODO(xusongw): Re-enable once b/141294076 is fixed.
-        // "TestUnspecifiedDimensions.cpp",
         "GeneratedTestUtils.cpp",
         "TestAssertions.cpp",
         "TestControlFlow.cpp",
@@ -75,6 +73,7 @@ cc_defaults {
         "TestOperandExtraParams.cpp",
         "TestTrivialModel.cpp",
         "TestUnknownDimensions.cpp",
+        "TestUnspecifiedDimensions.cpp",
 
         "TestValidateModel.cpp",
         "TestValidateOperations.cpp",
