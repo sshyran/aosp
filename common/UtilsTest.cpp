@@ -16,9 +16,11 @@
 #include <gmock/gmock-matchers.h>
 #include <gtest/gtest.h>
 
+#include <limits>
 #include <vector>
 
 #include "OperationsUtils.cpp"
+#include "QuantUtils.h"
 
 namespace android {
 namespace nn {
@@ -153,6 +155,126 @@ TEST_F(CombineDimensionsTest, Dimensions) {
     testCompatible({0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0});
     testIncompatible({1, 2, 3, 4}, {2, 2, 3, 4});
     testIncompatible({1, 2, 3, 4}, {1, 2, 3, 3});
+}
+
+TEST(QuantizationUtilsTest, QuantizeMultiplierSmallerThanOneExp) {
+    auto checkInvalidQuantization = [](double value) {
+        int32_t q;
+        int s;
+        EXPECT_FALSE(QuantizeMultiplierSmallerThanOneExp(value, &q, &s));
+    };
+
+    checkInvalidQuantization(-0.1);
+    checkInvalidQuantization(0.0);
+    // If we get close enough to 1.0 it crashes and dies in one of two ways:
+    // Either the shift becomes negative or we trigger the 'less-than-one' CHECK.
+    checkInvalidQuantization(1 - 1e-15);
+    checkInvalidQuantization(1 - 1e-17);
+    checkInvalidQuantization(1.0);
+
+    auto checkQuantization = [](double value, int32_t goldenQuantized, int goldenShift) {
+        int32_t q;
+        int s;
+        EXPECT_TRUE(QuantizeMultiplierSmallerThanOneExp(value, &q, &s));
+        EXPECT_EQ(q, goldenQuantized);
+        EXPECT_EQ(s, goldenShift);
+    };
+
+    checkQuantization(0.25, 1073741824, -1);
+    checkQuantization(0.50 - 5e-9, 2147483627, -1);
+    checkQuantization(0.50 - 1e-10, 1073741824, 0);
+    checkQuantization(0.50, 1073741824, 0);
+    checkQuantization(0.75, 1610612736, 0);
+    checkQuantization(1 - 1e-9, 2147483646, 0);
+}
+
+TEST(QuantizationUtilsTest, QuantizeMultiplierGreaterThanOne) {
+    auto checkInvalidQuantization = [](double value) {
+        int32_t q;
+        int s;
+        EXPECT_FALSE(QuantizeMultiplierGreaterThanOne(value, &q, &s));
+    };
+
+    checkInvalidQuantization(1 + 1e-16);
+
+    auto checkQuantization = [](double value, int32_t goldenQuantized, int goldenShift) {
+        int32_t q;
+        int s;
+        EXPECT_TRUE(QuantizeMultiplierGreaterThanOne(value, &q, &s));
+        EXPECT_EQ(q, goldenQuantized);
+        EXPECT_EQ(s, goldenShift);
+    };
+
+    checkQuantization(1 + 1e-11, 1073741824, 1);
+    checkQuantization(1.25, 1342177280, 1);
+    checkQuantization(1.50, 1610612736, 1);
+    checkQuantization(1.50, 1610612736, 1);
+    checkQuantization(1.75, 1879048192, 1);
+    checkQuantization(2 - 1e-9, 2147483647, 1);
+    checkQuantization(2 - 1e-11, 1073741824, 2);
+    checkQuantization(2, 1073741824, 2);
+}
+
+TEST(QuantizationUtilTest, QuantizeMultiplier) {
+    auto checkQuantization = [](double value, int32_t goldenQuantized, int goldenShift) {
+        int32_t q;
+        int s;
+        EXPECT_TRUE(QuantizeMultiplier(value, &q, &s));
+        EXPECT_EQ(q, goldenQuantized);
+        EXPECT_EQ(s, goldenShift);
+    };
+
+    checkQuantization(-4, -1073741824, 3);
+    checkQuantization(-2, -1073741824, 2);
+    checkQuantization(-1, -1073741824, 1);
+    checkQuantization(-0.5, -1073741824, 0);
+    checkQuantization(-0.25, -1073741824, -1);
+    checkQuantization(-0.125, -1073741824, -2);
+    checkQuantization(0, 0, 0);
+    checkQuantization(0.125, 1073741824, -2);
+    checkQuantization(0.25, 1073741824, -1);
+    checkQuantization(0.5, 1073741824, 0);
+    checkQuantization(1, 1073741824, 1);
+    checkQuantization(2, 1073741824, 2);
+    checkQuantization(4, 1073741824, 3);
+}
+
+TEST(QuantizationUtilTest, QuantizeMultiplierUnderflow) {
+    auto checkQuantization = [](double value, int32_t goldenQuantized, int goldenShift) {
+        int32_t q;
+        int s;
+        EXPECT_TRUE(QuantizeMultiplier(value, &q, &s));
+        EXPECT_EQ(q, goldenQuantized);
+        EXPECT_EQ(s, goldenShift);
+    };
+
+    checkQuantization(std::ldexp(1.0f, -31), 1073741824, -30);
+    checkQuantization(std::ldexp(1.0f, -32), 1073741824, -31);
+    checkQuantization(std::ldexp(0.99f, -32), 0, 0);
+    checkQuantization(std::ldexp(1.0f, -33), 0, 0);
+}
+
+TEST(QuantizationUtilTest, GetInvSqrtQuantizedMultiplierExp) {
+    auto checkInvSqrtQuantization = [](int32_t input, int32_t goldenInvSqrt, int goldenShift) {
+        int32_t q;
+        int s;
+        EXPECT_TRUE(GetInvSqrtQuantizedMultiplierExp(input, 1, &q, &s));
+        EXPECT_EQ(q, goldenInvSqrt);
+        EXPECT_EQ(s, goldenShift);
+    };
+
+    const auto kInt32Max = std::numeric_limits<std::int32_t>::max();
+    checkInvSqrtQuantization(0, kInt32Max, 0);
+    checkInvSqrtQuantization(1, kInt32Max, 0);
+    checkInvSqrtQuantization(2, 1518498372, 0);
+    checkInvSqrtQuantization(3, 1239850284, 0);
+    checkInvSqrtQuantization(4, 1073741828, 0);
+    checkInvSqrtQuantization(100, 214748363, 0);
+    checkInvSqrtQuantization(10000, 343597361, 4);
+    checkInvSqrtQuantization(1000000, 274877901, 7);
+    checkInvSqrtQuantization(100000000, 219902323, 10);
+    checkInvSqrtQuantization((1 << 30), 268435457, 12);
+    checkInvSqrtQuantization(kInt32Max, 189812531, 12);
 }
 
 }  // namespace wrapper

@@ -5,10 +5,10 @@
 #ifndef ANDROID_FRAMEWORKS_ML_NN_COMMON_QUANTUTILS_H
 #define ANDROID_FRAMEWORKS_ML_NN_COMMON_QUANTUTILS_H
 
+#include <public/gemmlowp.h>
+
 #include <limits>
 #include <memory>
-
-#include <public/gemmlowp.h>
 
 #include "OperationsUtils.h"
 #include "Utils.h"
@@ -77,12 +77,23 @@ int CountLeadingZeros(T integer_input) {
 
 inline bool GetInvSqrtQuantizedMultiplierExp(int32_t input, int reverse_shift,
                                              int32_t* output_inv_sqrt, int* output_shift) {
+    NN_RET_CHECK_GE(input, 0);
+    if (input <= 1) {
+        // Handle the input value 1 separately to avoid overflow in that case
+        // in the general computation below. Also handle 0 as if it
+        // were a 1. 0 is an invalid input here (divide by zero) and 1 is a valid
+        // but rare/unrealistic input value. We can expect both to occur in some
+        // incompletely trained models, but probably not in fully trained models.
+        *output_inv_sqrt = std::numeric_limits<std::int32_t>::max();
+        *output_shift = 0;
+        return true;
+    }
+
     *output_shift = 11;
     while (input >= (1 << 29)) {
         input /= 4;
         ++*output_shift;
     }
-    NN_RET_CHECK_GT(input, 0);
     const unsigned max_left_shift_bits = CountLeadingZeros(static_cast<uint32_t>(input)) - 1;
     const unsigned max_left_shift_bit_pairs = max_left_shift_bits / 2;
     const unsigned left_shift_bit_pairs = max_left_shift_bit_pairs - 1;
