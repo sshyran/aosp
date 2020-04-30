@@ -361,7 +361,7 @@ std::ostream& operator<<(std::ostream& os, Success success) {
             {Success::PASS_FENCED_DRIVER_BIT, "FENCED_DRIVER"},
     };
     bool gotOutput = false;
-    for (const auto b : bits) {
+    for (const auto& b : bits) {
         if (hasBit(success, b.first)) {
             if (gotOutput) {
                 os << '|';
@@ -430,6 +430,7 @@ class TestPreparedModelLatest : public SamplePreparedModel {
                 }).detach();
                 return V1_0::ErrorStatus::NONE;
             case Success::FAIL_LAUNCH:
+                dummyExecution();
                 callback->notify(V1_0::ErrorStatus::GENERAL_FAILURE);
                 return V1_0::ErrorStatus::GENERAL_FAILURE;
             case Success::FAIL_WAIT:
@@ -459,6 +460,7 @@ class TestPreparedModelLatest : public SamplePreparedModel {
                 }).detach();
                 return V1_0::ErrorStatus::NONE;
             case Success::FAIL_LAUNCH:
+                dummyExecution();
                 callback->notify(V1_0::ErrorStatus::GENERAL_FAILURE);
                 return V1_0::ErrorStatus::GENERAL_FAILURE;
             case Success::FAIL_WAIT:
@@ -497,9 +499,9 @@ class TestPreparedModelLatest : public SamplePreparedModel {
                 // runtime may call it even for asynchronous execution, so we
                 // need to tolerate Success::FAIL_WAIT here, not just
                 // Success::FAIL_LAUNCH.
-                dummyExecution();
                 FALLTHROUGH_INTENDED;
             case Success::FAIL_LAUNCH:
+                dummyExecution();
                 cb(V1_0::ErrorStatus::GENERAL_FAILURE, {}, kBadTiming);
                 return Void();
             default:
@@ -540,6 +542,7 @@ class TestPreparedModelLatest : public SamplePreparedModel {
                                const OptionalTimeoutDuration&, executeFenced_cb callback) override {
         EXPECT_EQ(measure, MeasureTiming::YES);
         if (hasBit(mSuccess, Success::PASS_BIT)) {
+            dummyExecution();
             const auto expectedTiming = getExpectedTiming(mSuccess, true);
             sp<SampleFencedExecutionCallback> fencedExecutionCallback =
                     new SampleFencedExecutionCallback(expectedTiming.first, expectedTiming.second,
@@ -548,18 +551,15 @@ class TestPreparedModelLatest : public SamplePreparedModel {
             return Void();
         }
         switch (mSuccess) {
-            case Success::FAIL_LAUNCH:
-                callback(V1_3::ErrorStatus::GENERAL_FAILURE, hidl_handle(nullptr), nullptr);
-                return Void();
             case Success::FAIL_WAIT:
-                std::thread([callback] {
-                    dummyExecution();
-                    // Due to the limitation of the SampleDriver,
-                    // FAIL_WAIT behaves the same as FAIL_LAUNCH.
-                    // If the SampleDriver is updated to return real
-                    // sync fences, this must be updated.
-                    callback(V1_3::ErrorStatus::GENERAL_FAILURE, hidl_handle(nullptr), nullptr);
-                }).detach();
+                // Due to the limitation of the SampleDriver,
+                // FAIL_WAIT behaves the same as FAIL_LAUNCH.
+                // If the SampleDriver is updated to return real
+                // sync fences, this must be updated.
+                FALLTHROUGH_INTENDED;
+            case Success::FAIL_LAUNCH:
+                dummyExecution();
+                callback(V1_3::ErrorStatus::GENERAL_FAILURE, hidl_handle(nullptr), nullptr);
                 return Void();
             default:
                 ADD_FAILURE() << "Unexpected Success kind";
@@ -579,7 +579,7 @@ class TestPreparedModelLatest : public SamplePreparedModel {
     // - // thread B: pauseExecutions(false);
     static void waitForExecutionToBegin() {
         CHECK(mPauseExecutions.load());
-        while (mExecutionsInFlight.load()) {
+        while (mExecutionsInFlight.load() == 0) {
         }
     }
 
@@ -875,7 +875,7 @@ TEST_P(TimingTest, Test) {
             isPass ? ANEURALNETWORKS_NO_ERROR : ANEURALNETWORKS_BAD_STATE;
 
     const auto getDurationWhileRunning = [this] {
-        if (kDriverKind == DriverKind::CPU && kSuccess == Success::FAIL_LAUNCH) {
+        if (kDriverKind == DriverKind::CPU) {
             // Testing DriverKind::CPU would require modifying the CPU execution
             // path to control execution completion, similarly to how this test
             // case does with TestPreparedModel::dummyExecution(). This does not
