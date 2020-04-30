@@ -243,8 +243,8 @@ class RandomGraphTest : public ::testing::TestWithParam<uint32_t> {
         // Create compilation for nnapi-reference.
         ASSERT_TRUE(mDevices.find(kRefDeviceName) != mDevices.end());
         const auto refDevice = mDevices[kRefDeviceName];
-        test_wrapper::Compilation compilation;
-        ASSERT_EQ(compilation.createForDevice(&model, refDevice), Result::NO_ERROR);
+        auto [result, compilation] = test_wrapper::Compilation::createForDevice(&model, refDevice);
+        ASSERT_EQ(result, Result::NO_ERROR);
         ASSERT_EQ(compilation.finish(), Result::NO_ERROR);
 
         // Create request.
@@ -294,8 +294,8 @@ class RandomGraphTest : public ::testing::TestWithParam<uint32_t> {
         if (shouldSkipTest(featureLevel)) return;
 
         // Create compilation for device.
-        test_wrapper::Compilation compilation;
-        ASSERT_EQ(compilation.createForDevice(model, device), Result::NO_ERROR);
+        auto [result, compilation] = test_wrapper::Compilation::createForDevice(model, device);
+        ASSERT_EQ(result, Result::NO_ERROR);
         Result compileReturn = compilation.finish();
         // Even if the model is fully supported, the compilation may still fail, e.g. each operation
         // is supported, but model is too big (too many operations and/or too-large constants) for
