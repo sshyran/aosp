@@ -695,9 +695,9 @@ class ModelVariation:
         assert not model.dumped
 
         if not self.supportsSubgraphs:
-          containsSubgraphs = any(operand.lifetime == "SUBGRAPH" for operand in model.operands)
-          assert not containsSubgraphs, "Variation {} does not support subgraphs".format(
-              self.__class__.__name__)
+            containsSubgraphs = any(operand.lifetime == "SUBGRAPH" for operand in model.operands)
+            assert not containsSubgraphs, "Variation {} does not support subgraphs".format(
+                self.__class__.__name__)
 
         if not self.targetOperands:
             self.AutoIdentify(model)
@@ -997,13 +997,11 @@ class AllTensorsAsInputsConverter(ModelVariation):
         if len(model.operations) != 1:
             raise SkipVariation
 
-        # TODO: Re-enable after the corresponding null-deref bugs are addressed.
-        if model.operations[0].optype in [
-                "MEAN", "PAD", "SQUEEZE", "STRIDED_SLICE", "TRANSPOSE", "RESHAPE"]:
-            raise SkipVariation
-
         # Find all constant tensors.
-        tensorParams = [p for p in model.operands if type(p) is Parameter and not p.type.IsScalar()]
+        tensorParams = [
+            p for p in model.operands
+            if type(p) is Parameter and not p.type.IsScalar() and p.value is not None
+        ]
         if not tensorParams:
             raise SkipVariation
 
