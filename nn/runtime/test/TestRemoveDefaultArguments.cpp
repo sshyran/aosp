@@ -137,6 +137,10 @@ class TestDriver : public SampleDriverPartial {
 
 class TestRemoveDefaultArguments : public ::testing::Test {
     virtual void SetUp() {
+        // skip the tests if useCpuOnly = 1
+        if (DeviceManager::get()->getUseCpuOnly()) {
+            GTEST_SKIP();
+        }
         mTestDriver = new TestDriver();
         DeviceManager::get()->forTest_registerDevice(kTestDriverName, mTestDriver);
         mTestDevice = getDeviceByName(kTestDriverName);
