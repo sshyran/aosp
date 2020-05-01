@@ -29,7 +29,9 @@
 #include "Manager.h"
 #include "Memory.h"
 #include "SampleDriver.h"
+#include "SampleDriverFull.h"
 #include "TestNeuralNetworksWrapper.h"
+#include "TestUtils.h"
 
 using namespace android::nn;
 using namespace hal;
@@ -163,16 +165,10 @@ test_wrapper::Model createTestModel() {
     return model;
 }
 
-// Test memory domain with the following parameters
-// - If true, use a V1_2 driver, otherwise, use the latest version;
-// - If true, compile with explicit device list, otherwise, compile in the default way;
-// - The return of the allocate function.
-using MemoryDomainTestParam = std::tuple<bool, bool, AllocateReturn>;
-
-class MemoryDomainTest : public ::testing::TestWithParam<MemoryDomainTestParam> {
+class MemoryDomainTestBase : public ::testing::Test {
    protected:
     void SetUp() override {
-        ::testing::TestWithParam<MemoryDomainTestParam>::SetUp();
+        ::testing::Test::SetUp();
         if (DeviceManager::get()->getUseCpuOnly()) {
             GTEST_SKIP();
         }
@@ -182,28 +178,14 @@ class MemoryDomainTest : public ::testing::TestWithParam<MemoryDomainTestParam> 
 
     void TearDown() override {
         DeviceManager::get()->forTest_reInitializeDeviceList();
-        ::testing::TestWithParam<MemoryDomainTestParam>::TearDown();
+        ::testing::Test::TearDown();
     }
 
-    // If kUseV1_2Driver, allocateReturn must be AllocateReturn::NOT_SUPPORTED.
-    void createAndRegisterDriver(const char* name, std::set<OperationType> supportedOperations,
-                                 AllocateReturn allocateReturn) {
-        sp<V1_0::IDevice> driver;
-        if (kUseV1_2Driver) {
-            CHECK(allocateReturn == AllocateReturn::NOT_SUPPORTED);
-            const sp<TestDriverLatest> testDriver =
-                    new TestDriverLatest(name, supportedOperations, AllocateReturn::NOT_SUPPORTED);
-            driver = new V1_2::ADevice(testDriver);
-        } else {
-            driver = new TestDriverLatest(name, std::move(supportedOperations), allocateReturn);
-        }
-        DeviceManager::get()->forTest_registerDevice(name, driver);
-    }
-
-    // If not kCompileWithExplicitDeviceList, the input argument "deviceNames" is ignored.
+    // If "deviceNames" is not empty, the compilation is created with explicit device list;
+    // otherwise, it is created normally.
     test_wrapper::Compilation createCompilation(const std::vector<std::string>& deviceNames) {
         test_wrapper::Compilation compilation;
-        if (kCompileWithExplicitDeviceList) {
+        if (!deviceNames.empty()) {
             // Map device names to ANeuralNetworksDevice.
             std::map<std::string, ANeuralNetworksDevice*> deviceMap;
             uint32_t numDevices = 0;
@@ -251,13 +233,48 @@ class MemoryDomainTest : public ::testing::TestWithParam<MemoryDomainTestParam> 
         return {n, test_wrapper::Memory(memory)};
     }
 
-    const bool kUseV1_2Driver = std::get<0>(GetParam());
-    const bool kCompileWithExplicitDeviceList = std::get<1>(GetParam());
-    const AllocateReturn kAllocateReturn = std::get<2>(GetParam());
     static const test_wrapper::Model kModel;
 };
 
-const test_wrapper::Model MemoryDomainTest::kModel = createTestModel();
+const test_wrapper::Model MemoryDomainTestBase::kModel = createTestModel();
+
+// Test memory domain with the following parameters
+// - If true, use a V1_2 driver, otherwise, use the latest version;
+// - If true, compile with explicit device list, otherwise, compile in the default way;
+// - The return of the allocate function.
+using MemoryDomainTestParam = std::tuple<bool, bool, AllocateReturn>;
+
+class MemoryDomainTest : public MemoryDomainTestBase,
+                         public ::testing::WithParamInterface<MemoryDomainTestParam> {
+   protected:
+    // If kUseV1_2Driver, allocateReturn must be AllocateReturn::NOT_SUPPORTED.
+    void createAndRegisterDriver(const char* name, std::set<OperationType> supportedOperations,
+                                 AllocateReturn allocateReturn) {
+        sp<V1_0::IDevice> driver;
+        if (kUseV1_2Driver) {
+            CHECK(allocateReturn == AllocateReturn::NOT_SUPPORTED);
+            const sp<TestDriverLatest> testDriver =
+                    new TestDriverLatest(name, supportedOperations, AllocateReturn::NOT_SUPPORTED);
+            driver = new V1_2::ADevice(testDriver);
+        } else {
+            driver = new TestDriverLatest(name, std::move(supportedOperations), allocateReturn);
+        }
+        DeviceManager::get()->forTest_registerDevice(name, driver);
+    }
+
+    // If not kCompileWithExplicitDeviceList, the input argument "deviceNames" is ignored.
+    test_wrapper::Compilation createCompilation(const std::vector<std::string>& deviceNames) {
+        if (kCompileWithExplicitDeviceList) {
+            return MemoryDomainTestBase::createCompilation(deviceNames);
+        } else {
+            return MemoryDomainTestBase::createCompilation({});
+        }
+    }
+
+    const bool kUseV1_2Driver = std::get<0>(GetParam());
+    const bool kCompileWithExplicitDeviceList = std::get<1>(GetParam());
+    const AllocateReturn kAllocateReturn = std::get<2>(GetParam());
+};
 
 // Test device memory allocation on a compilation with only a single partition.
 TEST_P(MemoryDomainTest, SinglePartition) {
@@ -411,5 +428,37 @@ INSTANTIATE_TEST_CASE_P(DeviceVersionLatest, MemoryDomainTest,
 INSTANTIATE_TEST_CASE_P(DeviceVersionV1_2, MemoryDomainTest,
                         testing::Combine(testing::Values(true), testing::Bool(),
                                          testing::Values(AllocateReturn::NOT_SUPPORTED)));
+
+class MemoryDomainCopyTest : public MemoryDomainTestBase {};
+
+TEST_F(MemoryDomainCopyTest, MemoryCopyTest) {
+    sp<sample_driver::SampleDriverFull> driver(new sample_driver::SampleDriverFull(
+            "test_driver", {.execTime = 0.1f, .powerUsage = 0.1f}));
+    DeviceManager::get()->forTest_registerDevice("test_driver", driver);
+    auto compilation = createCompilation({"test_driver"});
+    ASSERT_NE(compilation.getHandle(), nullptr);
+
+    // Allocate ashmem.
+    const float initValue1 = 3.14f, initValue2 = 2.72f;
+    auto ashmem1 = TestAshmem::createFrom(&initValue1, sizeof(float));
+    auto ashmem2 = TestAshmem::createFrom(&initValue2, sizeof(float));
+    ASSERT_NE(ashmem1, nullptr);
+    ASSERT_NE(ashmem2, nullptr);
+
+    // Allocate device memories.
+    auto [n1, memory1] = allocateDeviceMemory(compilation, {0}, {});
+    auto [n2, memory2] = allocateDeviceMemory(compilation, {0}, {});
+    ASSERT_EQ(n1, ANEURALNETWORKS_NO_ERROR);
+    ASSERT_EQ(n2, ANEURALNETWORKS_NO_ERROR);
+
+    // Test memory copying: ashmem1 -> memory1 -> memory2 -> ashmem2
+    ASSERT_EQ(ANeuralNetworksMemory_copy(ashmem1->get()->get(), memory1.get()),
+              ANEURALNETWORKS_NO_ERROR);
+    ASSERT_EQ(ANeuralNetworksMemory_copy(memory1.get(), memory2.get()), ANEURALNETWORKS_NO_ERROR);
+    ASSERT_EQ(ANeuralNetworksMemory_copy(memory2.get(), ashmem2->get()->get()),
+              ANEURALNETWORKS_NO_ERROR);
+
+    EXPECT_EQ(ashmem2->dataAs<float>()[0], initValue1);
+}
 
 }  // namespace
