@@ -194,7 +194,7 @@ Memory::Memory(sp<hal::IBuffer> buffer, uint32_t token)
     : kBuffer(std::move(buffer)), kToken(token) {}
 
 Memory::~Memory() {
-    for (const auto [ptr, weakBurst] : mUsedBy) {
+    for (const auto& [ptr, weakBurst] : mUsedBy) {
         if (const std::shared_ptr<ExecutionBurstController> burst = weakBurst.lock()) {
             burst->freeMemory(getKey());
         }
