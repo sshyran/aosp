@@ -1109,6 +1109,19 @@ TEST_F(ValidationTestCompilation, SetCaching) {
 TEST_F(ValidationTestCompilation, SetPriority) {
     EXPECT_EQ(ANeuralNetworksCompilation_setPriority(nullptr, ANEURALNETWORKS_PRIORITY_DEFAULT),
               ANEURALNETWORKS_UNEXPECTED_NULL);
+
+    // Test invalid values of priority.
+    constexpr int kInvalidPriorities[] = {0,
+                                          ANEURALNETWORKS_PRIORITY_LOW - 1,
+                                          ANEURALNETWORKS_PRIORITY_LOW + 1,
+                                          ANEURALNETWORKS_PRIORITY_MEDIUM - 1,
+                                          ANEURALNETWORKS_PRIORITY_MEDIUM + 1,
+                                          ANEURALNETWORKS_PRIORITY_HIGH - 1,
+                                          ANEURALNETWORKS_PRIORITY_HIGH + 1};
+    for (int invalidPriority : kInvalidPriorities) {
+        EXPECT_EQ(ANeuralNetworksCompilation_setPriority(mCompilation, invalidPriority),
+                  ANEURALNETWORKS_BAD_DATA);
+    }
 }
 
 // Also see TEST_F(ValidationTestCompilationForDevices_1, SetTimeout)
