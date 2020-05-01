@@ -103,6 +103,7 @@ using OperandExtraParams = V1_2::Operand::ExtraParams;
 
 using CacheToken =
         hardware::hidl_array<uint8_t, static_cast<uint32_t>(Constant::BYTE_SIZE_OF_CACHE_TOKEN)>;
+using DeviceFactory = std::function<sp<V1_0::IDevice>(bool blocking)>;
 using ModelFactory = std::function<Model()>;
 
 inline constexpr Priority kDefaultPriority = Priority::MEDIUM;
