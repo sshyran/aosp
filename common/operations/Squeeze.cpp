@@ -110,9 +110,14 @@ bool prepare(IOperationExecutionContext* context) {
 
     // Sets output dimensions.
     std::vector<uint32_t> outDims(numInputDims - numDimsSqueezed);
-    for (int32_t inIdx = 0, outIdx = 0; inIdx < numInputDims; ++inIdx) {
-        if (!shouldSqueeze[inIdx]) {
-            outDims[outIdx++] = getSizeOfDimension(inputShape, inIdx);
+    if (numInputDims == numDimsSqueezed) {
+        // Handle edge case where squeeze removes all dimensions.
+        outDims.push_back(1);
+    } else {
+        for (int32_t inIdx = 0, outIdx = 0; inIdx < numInputDims; ++inIdx) {
+            if (!shouldSqueeze[inIdx]) {
+                outDims[outIdx++] = getSizeOfDimension(inputShape, inIdx);
+            }
         }
     }
     Shape outputShape(inputShape);
