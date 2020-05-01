@@ -130,6 +130,7 @@ cc_defaults {
         "TestPartitioning.cpp",
         "TestPartitioningRandom.cpp",
         "TestRemoveDefaultArguments.cpp",
+        "TestVersionedInterfaces.cpp",
         "fibonacci_extension/FibonacciDriver.cpp",
         "fibonacci_extension/FibonacciExtensionTest.cpp",
 
@@ -139,7 +140,9 @@ cc_defaults {
     ],
     static_libs: [
         "android.hardware.neuralnetworks@1.0-adapter-helper",
+        "android.hardware.neuralnetworks@1.1-adapter-helper",
         "android.hardware.neuralnetworks@1.2-adapter-helper",
+        "android.hardware.neuralnetworks@1.3-adapter-helper",
         "libSampleDriver",
         "libgmock",
         "libhidladapter",
@@ -152,6 +155,7 @@ cc_defaults {
     ],
     header_libs: [
         "libneuralnetworks_private_headers",
+        "libutils_headers",
         "neuralnetworks_example_fibonacci_extension",
     ],
 }
