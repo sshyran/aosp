@@ -169,7 +169,8 @@ class DeviceManager {
 
     // Register a test device.
     void forTest_registerDevice(const std::string& name, const sp<hal::V1_0::IDevice>& device) {
-        registerDevice(name, device);
+        const hal::DeviceFactory makeDevice = [device](bool /*blocking*/) { return device; };
+        registerDevice(name, makeDevice);
     }
 
     // Re-initialize the list of available devices.
@@ -192,7 +193,7 @@ class DeviceManager {
     DeviceManager();
 
     // Adds a device for the manager to use.
-    void registerDevice(const std::string& name, const sp<hal::V1_0::IDevice>& device);
+    void registerDevice(const std::string& name, const hal::DeviceFactory& makeDevice);
 
     void findAvailableDevices();
 
