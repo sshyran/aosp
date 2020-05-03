@@ -15,9 +15,6 @@
  */
 
 #include <android-base/logging.h>
-#include <android-base/mapped_file.h>
-#include <android-base/unique_fd.h>
-#include <android/sharedmem.h>
 #include <ftw.h>
 #include <gtest/gtest.h>
 #include <unistd.h>
@@ -37,6 +34,7 @@
 #include "GeneratedTestUtils.h"
 #include "TestHarness.h"
 #include "TestNeuralNetworksWrapper.h"
+#include "TestUtils.h"
 
 // Systrace is not available from CTS tests due to platform layering
 // constraints. We reuse the NNTEST_ONLY_PUBLIC_API flag, as that should also be
@@ -139,49 +137,6 @@ static void computeWithPtrs(const TestModel& testModel, Execution* execution, Re
     }
     *result = execution->compute();
 }
-
-// Convenience class to manage the file, mapping, and memory object.
-class TestAshmem {
-   public:
-    TestAshmem(::android::base::unique_fd fd, std::unique_ptr<::android::base::MappedFile> mapped,
-               Memory memory)
-        : mFd(std::move(fd)), mMapped(std::move(mapped)), mMemory(std::move(memory)) {}
-
-    // Factory function for TestAshmem; prefer this over the raw constructor
-    static std::unique_ptr<TestAshmem> createFrom(const TestBuffer& buffer) {
-        // Create ashmem-based fd.
-        int fd = ASharedMemory_create(nullptr, buffer.size());
-        if (fd <= 0) return nullptr;
-        ::android::base::unique_fd managedFd(fd);
-
-        // Map and populate ashmem.
-        auto mappedFile =
-                ::android::base::MappedFile::FromFd(fd, 0, buffer.size(), PROT_READ | PROT_WRITE);
-        if (!mappedFile) return nullptr;
-        memcpy(mappedFile->data(), buffer.get<void>(), buffer.size());
-
-        // Create NNAPI memory object.
-        Memory memory(buffer.size(), PROT_READ | PROT_WRITE, fd, 0);
-        if (!memory.isValid()) return nullptr;
-
-        // Store everything in managing class.
-        return std::make_unique<TestAshmem>(std::move(managedFd), std::move(mappedFile),
-                                            std::move(memory));
-    }
-
-    size_t size() { return mMapped->size(); }
-    Memory* get() { return &mMemory; }
-
-    template <typename Type>
-    Type* dataAs() {
-        return static_cast<Type*>(static_cast<void*>(mMapped->data()));
-    }
-
-   private:
-    ::android::base::unique_fd mFd;
-    std::unique_ptr<::android::base::MappedFile> mMapped;
-    Memory mMemory;
-};
 
 static ANeuralNetworksMemory* createDeviceMemoryForInput(const Compilation& compilation,
                                                          uint32_t index) {
