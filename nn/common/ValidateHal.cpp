@@ -770,11 +770,12 @@ static bool validateRequestArguments(const hidl_vec<RequestArgument>& requestArg
                 return false;
             }
             // If the argument specified a dimension, validate it.
-            uint32_t rank = requestArgument.dimensions.size();
-            if (rank == 0) {
+            uint32_t modelRank = operand.dimensions.size();
+            uint32_t requestRank = requestArgument.dimensions.size();
+            if (requestRank == 0) {
                 if (!allowUnspecified) {
                     // Validate that all the dimensions are specified in the model.
-                    for (size_t i = 0; i < operand.dimensions.size(); i++) {
+                    for (size_t i = 0; i < modelRank; i++) {
                         if (operand.dimensions[i] == 0) {
                             LOG(ERROR) << "Model has dimension " << i
                                        << " set to 0 but the request does specify the dimension.";
@@ -783,15 +784,14 @@ static bool validateRequestArguments(const hidl_vec<RequestArgument>& requestArg
                     }
                 }
             } else {
-                if (rank != operand.dimensions.size()) {
+                if (modelRank != 0 && requestRank != modelRank) {
                     LOG(ERROR) << "Request " << type << " " << requestArgumentIndex
-                               << " has number of dimensions (" << rank
-                               << ") different than the model's (" << operand.dimensions.size()
-                               << ")";
+                               << " has number of dimensions (" << requestRank
+                               << ") different than the model's (" << modelRank << ")";
                     return false;
                 }
-                for (size_t i = 0; i < rank; i++) {
-                    if (requestArgument.dimensions[i] != operand.dimensions[i] &&
+                for (size_t i = 0; i < requestRank; i++) {
+                    if (modelRank != 0 && requestArgument.dimensions[i] != operand.dimensions[i] &&
                         operand.dimensions[i] != 0) {
                         LOG(ERROR)
                                 << "Request " << type << " " << requestArgumentIndex
