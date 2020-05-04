@@ -21,6 +21,7 @@
 #include <memory>
 #include <set>
 #include <string>
+#include <utility>
 
 #include "GeneratedTestUtils.h"
 #include "TestHarness.h"
@@ -181,6 +182,10 @@ class RandomGraphTest : public ::testing::TestWithParam<uint32_t> {
 
     virtual void TearDown() override {
         NN_FUZZER_LOG_CLOSE;
+        // Dump test results on failure for debugging.
+        if (::testing::Test::HasFailure() || mDumpSpec) {
+            dumpTestResults();
+        }
 #ifndef NNTEST_CTS
         if (mDetectMemoryLeak) {
             ASSERT_TRUE(NoLeaks());
@@ -211,13 +216,13 @@ class RandomGraphTest : public ::testing::TestWithParam<uint32_t> {
                 featureLevel <= __ANDROID_API_Q__) {
                 return true;
             }
-            // TODO(xusongw): Remove after b/151328024, b/152446228, b/152445711, and b/152446298
-            //                are resolved.
-            if ((op.type == TestOperationType::ROI_ALIGN || op.type == TestOperationType::ADD ||
-                 op.type == TestOperationType::SUB || op.type == TestOperationType::MAXIMUM ||
-                 op.type == TestOperationType::MINIMUM) &&
+            // Skip the following operations for 1.2 and earlier devices.
+            if ((op.type == TestOperationType::ADD || op.type == TestOperationType::SUB ||
+                 op.type == TestOperationType::MAXIMUM || op.type == TestOperationType::MINIMUM ||
+                 op.type == TestOperationType::ROI_ALIGN) &&
                 mTestModel.main.operands[op.inputs[0]].type ==
-                        TestOperandType::TENSOR_QUANT8_ASYMM) {
+                        TestOperandType::TENSOR_QUANT8_ASYMM &&
+                featureLevel <= __ANDROID_API_Q__) {
                 return true;
             }
         }
@@ -270,6 +275,7 @@ class RandomGraphTest : public ::testing::TestWithParam<uint32_t> {
     void computeAndVerifyResultsForDevice(const test_wrapper::Model* model, uint32_t numOps,
                                           const std::string& name) {
         SCOPED_TRACE("Device: " + name);
+        std::cout << "[          ] - RUN:  " << name << "\n";
         ASSERT_TRUE(mDevices.find(name) != mDevices.end());
         const auto device = mDevices[name];
 
@@ -324,11 +330,7 @@ class RandomGraphTest : public ::testing::TestWithParam<uint32_t> {
 
         if (featureLevel >= __ANDROID_API_Q__) {
             checkResults(mTestModel, outputs, mCriteria);
-        }
-
-        // Dump test results on failure for debugging.
-        if (::testing::Test::HasFailure() || mDumpSpec) {
-            dumpTestResults(name, outputs);
+            mResults.emplace_back(name, std::move(outputs));
         }
     }
 
@@ -340,6 +342,7 @@ class RandomGraphTest : public ::testing::TestWithParam<uint32_t> {
         // is available as a fallback, and hence we assume that compilation and
         // execution will succeed.
         SCOPED_TRACE(name);
+        std::cout << "[          ] - RUN:  " << name << "\n";
 
         // Create compilation.
         test_wrapper::Compilation compilation(model);
@@ -354,11 +357,7 @@ class RandomGraphTest : public ::testing::TestWithParam<uint32_t> {
         ASSERT_EQ(execution.compute(), Result::NO_ERROR);
         if (shouldCheckResults) {
             checkResults(mTestModel, outputs, mCriteria);
-        }
-
-        // Dump test results on failure for debugging.
-        if (::testing::Test::HasFailure() || mDumpSpec) {
-            dumpTestResults(name, outputs);
+            mResults.emplace_back(name, std::move(outputs));
         }
     }
 
@@ -407,17 +406,15 @@ class RandomGraphTest : public ::testing::TestWithParam<uint32_t> {
         }
     }
 
-    void dumpTestResults(const std::string& deviceName, const std::vector<TestBuffer>& results) {
-        // The dumper is constructed lazily -- only create the file and dump the test model at the
-        // first time this function is called.
-        if (mDumper == nullptr) {
-            mOutStream.open("/data/local/tmp/" + mTestName + ".mod.py");
-            ASSERT_TRUE(mOutStream.is_open());
-            mOutStream << "# Generated from " << mTestName << ". Do not edit.\n\n";
-            mDumper = std::make_unique<SpecDumper>(mTestModel, mOutStream);
-            mDumper->dumpTestModel();
+    void dumpTestResults() {
+        std::ofstream os("/data/local/tmp/" + mTestName + ".mod.py");
+        ASSERT_TRUE(os.is_open());
+        os << "# Generated from " << mTestName << ". Do not edit.\n\n";
+        SpecDumper dumper(mTestModel, os);
+        dumper.dumpTestModel();
+        for (const auto& [name, results] : mResults) {
+            dumper.dumpResults(name, results);
         }
-        mDumper->dumpResults(deviceName, results);
     }
 
     enum GraphSize : uint32_t { SINGLE = 1, SMALL = 5, LARGE = 40 };
@@ -433,8 +430,8 @@ class RandomGraphTest : public ::testing::TestWithParam<uint32_t> {
     TestModel mTestModel;
     AccuracyCriteria mCriteria;
 
-    std::ofstream mOutStream;
-    std::unique_ptr<SpecDumper> mDumper;
+    // A vector of {name, output_results}.
+    std::vector<std::pair<std::string, std::vector<TestBuffer>>> mResults;
 
     static int64_t mStandardDevicesFeatureLevel;  // minimum across all devices
 #ifndef NNTEST_CTS
