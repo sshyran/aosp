@@ -155,6 +155,11 @@ bool prepare(IOperationExecutionContext* context) {
         }
     }
 
+    // Handle the case when all dimensions are removed
+    if (outputShape.dimensions.empty()) {
+        outputShape.dimensions.push_back(1);
+    }
+
     return context->setOutputShape(kOutputTensor, outputShape);
 }
 
