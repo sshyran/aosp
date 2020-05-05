@@ -2206,6 +2206,8 @@ typedef enum {
      *      For a {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} and
      *      {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED} tensor,
      *      the scale and zeroPoint must be the same as input0.
+     *      If all dimensions are reduced and keep_dims is false, the output
+     *      shape is [1].
      *
      * Available since API level 28.
      */
@@ -2341,6 +2343,8 @@ typedef enum {
      *      For a {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} and
      *      {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED} tensor,
      *      the scale and zeroPoint must be the same as input0.
+     *      If all input dimensions are equal to 1 and are to be squeezed, the
+     *      output shape is [1].
      *
      * Available since API level 28.
      */
@@ -2392,6 +2396,8 @@ typedef enum {
      *      For a {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} and
      *      {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED} tensor,
      *      the scale and zeroPoint must be the same as input0.
+     *      If shrink_axis_mask is true for all input dimensions, the output
+     *      shape is [1].
      *
      * Available since API level 28.
      */
@@ -2525,6 +2531,7 @@ typedef enum {
      *
      * Outputs:
      * * 0: An (n - 1)-D {@link ANEURALNETWORKS_TENSOR_INT32} tensor.
+     *      If input is 1-dimensional, the output shape is [1].
      *
      * Available since API level 29.
      */
@@ -2552,6 +2559,7 @@ typedef enum {
      *
      * Outputs:
      * * 0: An (n - 1)-D {@link ANEURALNETWORKS_TENSOR_INT32} tensor.
+     *      If input is 1-dimensional, the output shape is [1].
      *
      * Available since API level 29.
      */
