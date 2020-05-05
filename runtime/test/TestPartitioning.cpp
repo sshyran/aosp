@@ -86,6 +86,13 @@
 //     MINIMUM, POW, or PRELU.  These operations take no activation
 //     function, so we only get 4 operation kinds, for which we
 //     use operation encodings 16..19.
+// - There is another collection of operations (each of which has one inpus
+//   and one output):
+//   - Single operation available at driver version V1_3 or
+//     later.  It is represented in the graph as HARD_SWISH.
+//     These operations take no activation function, for which we
+//     use operation encodings 20..20.
+
 // When we instantiate a device for testing purposes, we specify what subset of
 // those operations the device is able to execute.
 //
@@ -204,6 +211,11 @@ const uint32_t kFirstEncodingPRELU = kFirstEncodingPOW + 1;
 const uint32_t kFirstEncodingV1_2 = kFirstEncodingMAXIMUM;
 const uint32_t kLastEncodingV1_2 = kFirstEncodingPRELU;
 
+// V1_3 operations
+const uint32_t kFirstEncodingHARD_SWISH = kLastEncodingV1_2 + 1;
+const uint32_t kFirstEncodingV1_3 = kFirstEncodingHARD_SWISH;
+const uint32_t kLastEncodingV1_3 = kFirstEncodingHARD_SWISH;
+
 const std::map<OperationType, uint32_t> operationToFirstEncoding = {
         {OperationType::ADD, kFirstEncodingADD},
         {OperationType::MUL, kFirstEncodingMUL},
@@ -213,6 +225,7 @@ const std::map<OperationType, uint32_t> operationToFirstEncoding = {
         {OperationType::MINIMUM, kFirstEncodingMINIMUM},
         {OperationType::POW, kFirstEncodingPOW},
         {OperationType::PRELU, kFirstEncodingPRELU},
+        {OperationType::HARD_SWISH, kFirstEncodingHARD_SWISH},
 };
 
 // Sorted in reverse order (std::greater) so that we can use map::lower_bound to
@@ -227,6 +240,7 @@ const std::map<uint32_t, std::pair<uint32_t, bool>, std::greater<>> firstEncodin
         {kFirstEncodingMINIMUM, {ANEURALNETWORKS_MINIMUM, false}},
         {kFirstEncodingPOW, {ANEURALNETWORKS_POW, false}},
         {kFirstEncodingPRELU, {ANEURALNETWORKS_PRELU, false}},
+        {kFirstEncodingHARD_SWISH, {ANEURALNETWORKS_HARD_SWISH, false}},
 };
 
 // Look up the operation with the specified index in a graph, and return the
@@ -664,6 +678,16 @@ class PartitioningModel : private WrapperModel {
         return addOperation2To1(operation + kFirstEncodingV1_2, input0, input1, dimensionedOutput);
     }
 
+    // Create a V1_3 operation with two inputs and one output, specifying the
+    // operation kind (where 0 is the first V1_3 operation) and the input
+    // operand indexes.
+    // Returns the output operand index.
+    uint32_t addOperation1To1V1_3(uint32_t operation, const uint32_t input0,
+                                  Dimensioned dimensionedOutput = Dimensioned::YES) {
+        CHECK_LE(operation, kLastEncodingV1_3 - kFirstEncodingV1_3);
+        return addOperation1To1(operation + kFirstEncodingV1_3, input0, dimensionedOutput);
+    }
+
     // Create an OEM operation with one input and one output,
     // specifying the input operand index.  Returns the output operand
     // index.
@@ -723,6 +747,20 @@ class PartitioningModel : private WrapperModel {
             addOperation(type, {input0, input1}, {output});
             return output;
         }
+    }
+
+    // Create an operation with one inputs and one output, specifying
+    // the operation kind and the input operand indexes.
+    // Returns the output operand index.
+    uint32_t addOperation1To1(uint32_t operation, const uint32_t input0,
+                              Dimensioned dimensionedOutput = Dimensioned::YES) {
+        auto it = firstEncodingToOperation.lower_bound(operation);
+        CHECK(it != firstEncodingToOperation.end());
+        ANeuralNetworksOperationType type = it->second.first;
+
+        uint32_t output = addOperandOfSameType(input0, dimensionedOutput);
+        addOperation(type, {input0}, {output});
+        return output;
     }
 
     // Create a scalar integer operand of the specified value, and
@@ -850,10 +888,11 @@ class PartitioningTest : public ::testing::Test {
         }
         DeviceSpecification(const std::string& name, float perf, HalVersion halVersion,
                             uint32_t operationMaskV1_0, uint32_t operationMaskV1_1 = 0,
-                            uint32_t operationMaskV1_2 = 0)
-            : DeviceSpecification(name, perf, perf,
-                                  makeOperationMask(halVersion, operationMaskV1_0,
-                                                    operationMaskV1_1, operationMaskV1_2)) {
+                            uint32_t operationMaskV1_2 = 0, uint32_t operationMaskV1_3 = 0)
+            : DeviceSpecification(
+                      name, perf, perf,
+                      makeOperationMask(halVersion, operationMaskV1_0, operationMaskV1_1,
+                                        operationMaskV1_2, operationMaskV1_3)) {
             mHalVersion = halVersion;
         }
 
@@ -886,7 +925,11 @@ class PartitioningTest : public ::testing::Test {
         // This is used by a DeviceSpecification constructor to build a mask of
         // operations to be supported by the device.
         static uint32_t makeOperationMask(HalVersion halVersion, uint32_t operationMaskV1_0,
-                                          uint32_t operationMaskV1_1, uint32_t operationMaskV1_2) {
+                                          uint32_t operationMaskV1_1, uint32_t operationMaskV1_2,
+                                          uint32_t operationMaskV1_3) {
+            if (halVersion < HalVersion::V1_3) {
+                CHECK(!operationMaskV1_3);
+            }
             if (halVersion < HalVersion::V1_2) {
                 CHECK(!operationMaskV1_2);
             }
@@ -900,9 +943,12 @@ class PartitioningTest : public ::testing::Test {
                     maskOfWidth(kLastEncodingV1_1 - kFirstEncodingV1_1 + 1);
             static const uint32_t kOperationMaskV1_2 =
                     maskOfWidth(kLastEncodingV1_2 - kFirstEncodingV1_2 + 1);
+            static const uint32_t kOperationMaskV1_3 =
+                    maskOfWidth(kLastEncodingV1_3 - kFirstEncodingV1_3 + 1);
             return ((operationMaskV1_0 & kOperationMaskV1_0) << kFirstEncodingV1_0) |
                    ((operationMaskV1_1 & kOperationMaskV1_1) << kFirstEncodingV1_1) |
-                   ((operationMaskV1_2 & kOperationMaskV1_2) << kFirstEncodingV1_2);
+                   ((operationMaskV1_2 & kOperationMaskV1_2) << kFirstEncodingV1_2) |
+                   ((operationMaskV1_3 & kOperationMaskV1_3) << kFirstEncodingV1_3);
         }
     };
     static std::vector<std::shared_ptr<Device>> makeDevices(
@@ -1394,36 +1440,39 @@ TEST_F(PartitioningTest, SliceModel) {
     uint32_t opnd3 = model.addOperation2To1V1_0(1, opnd0, opnd1);
     uint32_t opnd4 = model.addOperation2To1V1_1(0, opnd0, opnd1);
     uint32_t opnd5 = model.addOperation2To1V1_2(0, opnd2, opnd3);
-    model.identifyInputsAndOutputs({opnd0, opnd1}, {opnd2, opnd4, opnd5});
+    uint32_t opnd6 = model.addOperation1To1V1_3(0, opnd2);
+    model.identifyInputsAndOutputs({opnd0, opnd1}, {opnd2, opnd4, opnd5, opnd6});
     model.finish();
     ASSERT_TRUE(model.isValid());
 
-    // Simple partition (V1_0, V1_1, V1_2 devices are available; V1_2 has best perf).
+    // Simple partition (V1_0, V1_1, V1_2, V1_3 devices are available; V1_3 has best perf).
     // No need to compare the original model to the model from the plan -- we
     // didn't actually do any partitioning.
     const auto devicesA = makeDevices({{"V1_0", 0.8, HalVersion::V1_0, ~0U},
                                        {"V1_1", 0.7, HalVersion::V1_1, ~0U, ~0U},
-                                       {"V1_2", 0.6, HalVersion::V1_2, ~0U, ~0U, ~0U}});
+                                       {"V1_2", 0.6, HalVersion::V1_2, ~0U, ~0U, ~0U},
+                                       {"V1_3", 0.5, HalVersion::V1_3, ~0U, ~0U, ~0U, ~0U}});
     ExecutionPlan planA;
     ASSERT_EQ(model.partitionTheWork(devicesA, ExecutePreference::PREFER_LOW_POWER,
                                      ExecutePriority::DEFAULT, {}, &planA),
               ANEURALNETWORKS_NO_ERROR);
     ASSERT_EQ(planA.forTest_getKind(), ExecutionPlan::Kind::SIMPLE);
     ASSERT_NE(planA.forTest_simpleGetDevice().get(), nullptr);
-    ASSERT_EQ(planA.forTest_simpleGetDevice()->getName(), "V1_2");
+    ASSERT_EQ(planA.forTest_simpleGetDevice()->getName(), "V1_3");
 
     // Compound partition (V1_0, V1_1, V1_2 devices are available, in decreasing
     // order of performance; model is distributed across all three devices).
     const auto devicesB = makeDevices({{"V1_0", 0.6, HalVersion::V1_0, ~0U},
                                        {"V1_1", 0.7, HalVersion::V1_1, ~0U, ~0U},
-                                       {"V1_2", 0.8, HalVersion::V1_2, ~0U, ~0U, ~0U}});
+                                       {"V1_2", 0.8, HalVersion::V1_2, ~0U, ~0U, ~0U},
+                                       {"V1_3", 0.9, HalVersion::V1_3, ~0U, ~0U, ~0U, ~0U}});
     ExecutionPlan planB;
     ASSERT_EQ(model.partitionTheWork(devicesB, ExecutePreference::PREFER_LOW_POWER,
                                      ExecutePriority::DEFAULT, {}, &planB),
               ANEURALNETWORKS_NO_ERROR);
     ASSERT_EQ(planB.forTest_getKind(), ExecutionPlan::Kind::COMPOUND);
     const auto& stepsB = planB.forTest_compoundGetSteps();
-    ASSERT_EQ(stepsB.size(), size_t(3));
+    ASSERT_EQ(stepsB.size(), size_t(4));
     {
         // Build a model to compare against the step model from stepsB[0].
         PartitioningModel modelB0;
@@ -1465,24 +1514,43 @@ TEST_F(PartitioningTest, SliceModel) {
         // Build a model to compare against the step model from stepsB[2].
         PartitioningModel modelB2;
         uint32_t b2Opnd0 = modelB2.addFloatOperand();
-        uint32_t b2Opnd1 = modelB2.addFloatOperand();
-        uint32_t b2Opnd2 = modelB2.addOperation2To1V1_2(0, b2Opnd0, b2Opnd1);
+        uint32_t b2Opnd1 = modelB2.addOperation1To1V1_3(0, b2Opnd0);
         // Note: In the partitioning algorithm, temps that are
         // step model inputs precede model outputs that are step model
-        // inputs.  In the original model "model", opnd3 is a temp and
-        // opnd2 is a model output; so in the step model "modelB2", the
-        // corresponding inputs b2Opnd1 and b2Opnd0 must appear in
-        // that order.
-        modelB2.identifyInputsAndOutputs({b2Opnd1, b2Opnd0}, {b2Opnd2});
+        // inputs.
+        modelB2.identifyInputsAndOutputs({b2Opnd0}, {b2Opnd1});
         modelB2.finish();
         ASSERT_TRUE(modelB2.isValid());
 
         ASSERT_NO_FATAL_FAILURE(
-                compare(stepsB[2], &modelB2, devicesB[2], RemapVectorType{},  // modelInputs
-                        RemapVectorType{{opnd5, b2Opnd2}},                    // modelOutputs
-                        RemapVectorType{{opnd3, b2Opnd1}},    // tempsAsStepModelInputs
+                compare(stepsB[2], &modelB2, devicesB[3], RemapVectorType{},  // modelInputs
+                        RemapVectorType{{opnd6, b2Opnd1}},                    // modelOutputs
+                        RemapVectorType{},                    // tempsAsStepModelInputs
                         StepModelOutputSetType{},             // tempsAsStepModelOutputs
                         RemapVectorType{{opnd2, b2Opnd0}}));  // outputsAsStepModelInputs
+    }
+    {
+        // Build a model to compare against the step model from stepsB[3].
+        PartitioningModel modelB3;
+        uint32_t b3Opnd0 = modelB3.addFloatOperand();
+        uint32_t b3Opnd1 = modelB3.addFloatOperand();
+        uint32_t b3Opnd2 = modelB3.addOperation2To1V1_2(0, b3Opnd0, b3Opnd1);
+        // Note: In the partitioning algorithm, temps that are
+        // step model inputs precede model outputs that are step model
+        // inputs.  In the original model "model", opnd3 is a temp and
+        // opnd2 is a model output; so in the step model "modelB3", the
+        // corresponding inputs b3Opnd1 and b3Opnd0 must appear in
+        // that order.
+        modelB3.identifyInputsAndOutputs({b3Opnd1, b3Opnd0}, {b3Opnd2});
+        modelB3.finish();
+        ASSERT_TRUE(modelB3.isValid());
+
+        ASSERT_NO_FATAL_FAILURE(
+                compare(stepsB[3], &modelB3, devicesB[2], RemapVectorType{},  // modelInputs
+                        RemapVectorType{{opnd5, b3Opnd2}},                    // modelOutputs
+                        RemapVectorType{{opnd3, b3Opnd1}},    // tempsAsStepModelInputs
+                        StepModelOutputSetType{},             // tempsAsStepModelOutputs
+                        RemapVectorType{{opnd2, b3Opnd0}}));  // outputsAsStepModelInputs
     }
 
     // TODO: Make sure this still works when we have multiple devices
@@ -1494,25 +1562,25 @@ TEST_F(PartitioningTest, SliceModel) {
 TEST_F(PartitioningTest, SliceModelToEmpty) {
     PartitioningModel model;
     uint32_t opnd0 = model.addFloatOperand();
-    uint32_t opnd1 = model.addFloatOperand();
-    uint32_t opnd2 = model.addOperation2To1V1_2(0, opnd0, opnd1);
-    model.identifyInputsAndOutputs({opnd0, opnd1}, {opnd2});
+    uint32_t opnd1 = model.addOperation1To1V1_3(0, opnd0);
+    model.identifyInputsAndOutputs({opnd0}, {opnd1});
     model.finish();
     ASSERT_TRUE(model.isValid());
 
-    // Only the V1_2 device can handle any operations in the model.
+    // Only the V1_3 device can handle any operations in the model.
     // No need to compare the original model to the model from the plan -- we
     // didn't actually do any partitioning.
     const auto devices = makeDevices({{"V1_0", 0.6, HalVersion::V1_0, ~0U},
                                       {"V1_1", 0.7, HalVersion::V1_1, ~0U, ~0U},
-                                      {"V1_2", 0.8, HalVersion::V1_2, ~0U, ~0U, ~0U}});
+                                      {"V1_2", 0.8, HalVersion::V1_2, ~0U, ~0U, ~0U},
+                                      {"V1_3", 0.9, HalVersion::V1_3, ~0U, ~0U, ~0U, ~0U}});
     ExecutionPlan plan;
     ASSERT_EQ(model.partitionTheWork(devices, ExecutePreference::PREFER_LOW_POWER,
                                      ExecutePriority::DEFAULT, {}, &plan),
               ANEURALNETWORKS_NO_ERROR);
     ASSERT_EQ(plan.forTest_getKind(), ExecutionPlan::Kind::SIMPLE);
     ASSERT_NE(plan.forTest_simpleGetDevice().get(), nullptr);
-    ASSERT_EQ(plan.forTest_simpleGetDevice()->getName(), "V1_2");
+    ASSERT_EQ(plan.forTest_simpleGetDevice()->getName(), "V1_3");
 }
 
 TEST_F(PartitioningTest, Cpu) {
