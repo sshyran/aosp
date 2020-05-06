@@ -21,6 +21,8 @@
 #include <android-base/logging.h>
 #include <android-base/properties.h>
 #include <android-base/strings.h>
+#include <errno.h>
+#include <poll.h>
 #include <sys/system_properties.h>
 
 #include <algorithm>
@@ -31,9 +33,6 @@
 #include <unordered_map>
 #include <utility>
 #include <vector>
-
-#include <errno.h>
-#include <poll.h>
 
 #include "ControlFlow.h"
 #include "NeuralNetworks.h"
@@ -3100,7 +3099,22 @@ bool compliantWithV1_0(const V1_0::Request& request) {
 
 bool compliantWithV1_0(const V1_3::Request& request) {
     return std::all_of(request.pools.begin(), request.pools.end(), [](const auto& pool) {
-        return pool.getDiscriminator() == V1_3::Request::MemoryPool::hidl_discriminator::hidlMemory;
+        if (pool.getDiscriminator() != V1_3::Request::MemoryPool::hidl_discriminator::hidlMemory) {
+            return false;
+        }
+        const auto& name = pool.hidlMemory().name();
+        return name == "ashmem" || name == "mmap_fd";
+    });
+}
+
+bool compliantWithV1_2(const V1_3::Request& request) {
+    return std::all_of(request.pools.begin(), request.pools.end(), [](const auto& pool) {
+        if (pool.getDiscriminator() != V1_3::Request::MemoryPool::hidl_discriminator::hidlMemory) {
+            return false;
+        }
+        const auto& name = pool.hidlMemory().name();
+        return name == "ashmem" || name == "mmap_fd" || name == "hardware_buffer_blob" ||
+               name == "hardware_buffer";
     });
 }
 
@@ -3123,15 +3137,27 @@ V1_0::Request convertToV1_0(const V1_0::Request& request) {
     return request;
 }
 
-V1_0::Request convertToV1_0(const V1_3::Request& request) {
-    if (!compliantWithV1_0(request)) {
-        LOG(ERROR) << "Upcasting non-compliant request " << SHOW_IF_DEBUG(toString(request))
-                   << " from V1_3::Request to V1_0::Request";
-    }
+static V1_0::Request uncheckedConvertToV1_0(const V1_3::Request& request) {
     hidl_vec<hidl_memory> pools(request.pools.size());
     std::transform(request.pools.begin(), request.pools.end(), pools.begin(),
                    [](const auto& pool) { return convertToV1_0(pool); });
     return {.inputs = request.inputs, .outputs = request.outputs, .pools = std::move(pools)};
+}
+
+V1_0::Request convertToV1_0(const V1_3::Request& request) {
+    if (!compliantWithV1_0(request)) {
+        LOG(ERROR) << "Upcasting non-compliant request " << SHOW_IF_DEBUG(toString(request))
+                   << " from V1_3::Request to V1_0::Request of version 1.0";
+    }
+    return uncheckedConvertToV1_0(request);
+}
+
+V1_0::Request convertToV1_2(const V1_3::Request& request) {
+    if (!compliantWithV1_2(request)) {
+        LOG(ERROR) << "Upcasting non-compliant request " << SHOW_IF_DEBUG(toString(request))
+                   << " from V1_3::Request to V1_0::Request of version 1.2";
+    }
+    return uncheckedConvertToV1_0(request);
 }
 
 V1_3::Request convertToV1_3(const V1_0::Request& request) {
