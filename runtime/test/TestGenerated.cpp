@@ -382,7 +382,6 @@ TEST_P(GeneratedValidationTests, Test) {
 }
 
 TEST_P(QuantizationCouplingTest, Test) {
-    execute(testModel);
     execute(convertQuant8AsymmOperandsToSigned(testModel));
 }
 
