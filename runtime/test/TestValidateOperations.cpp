@@ -2374,7 +2374,9 @@ void fullyConnectedOpTest(int32_t operandCode) {
 
     OperationTestBase fullyConnectedTest(ANEURALNETWORKS_FULLY_CONNECTED,
                                          {input, weights, bias, activation}, {output},
-                                         {{TensorRankConstraint::Between(2, 4)}});
+                                         {{TensorRankConstraint::Between(2, 4), {0}},
+                                          {TensorRankConstraint::Exactly(2), {1}},
+                                          {TensorRankConstraint::Exactly(1), {2}}});
     fullyConnectedTest.testOpsValidations();
 }
 
