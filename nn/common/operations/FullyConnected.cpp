@@ -180,6 +180,41 @@ bool fullyConnectedQuant8(const int8_t* inputData, const Shape& inputShape,
     return true;
 }
 
+bool validateShapes(const Shape& input, const Shape& weights, const Shape& bias,
+                    Shape* output = nullptr) {
+    // Check all the parameters of tensor match within themselves and match the
+    // input configuration.
+    NN_RET_CHECK(weights.type == input.type);
+    if (input.type == OperandType::TENSOR_QUANT8_ASYMM ||
+        input.type == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
+        NN_RET_CHECK(bias.type == OperandType::TENSOR_INT32);
+    } else {
+        NN_RET_CHECK(bias.type == input.type);
+    }
+    // The Tensorflow fully connected layer specification says that input should
+    // be of at least rank 2, so we check. Tflite doesn't check.
+    NN_RET_CHECK_GE(getNumberOfDimensions(input), 2);
+    NN_RET_CHECK_LE(getNumberOfDimensions(input), 4);
+    NN_RET_CHECK_EQ(getNumberOfDimensions(weights), 2);
+    NN_RET_CHECK_EQ(getNumberOfDimensions(bias), 1);
+    uint32_t input_n_elements = getNumberOfElements(input);
+    uint32_t num_units = getSizeOfDimension(weights, 0);
+    uint32_t input_size = getSizeOfDimension(weights, 1);
+    uint32_t batch_size = input_size == 0 ? 0 : input_n_elements / input_size;
+    if (batch_size != 0) {
+        NN_RET_CHECK_EQ(input_size * batch_size, input_n_elements);
+    }
+    NN_RET_CHECK_EQ(getSizeOfDimension(bias, 0), num_units);
+    if (output != nullptr) {
+        // Only batch_size can be 0.
+        NN_RET_CHECK_GT(num_units, 0);
+        NN_RET_CHECK_GT(input_size, 0);
+        output->type = input.type;
+        output->dimensions = {batch_size, num_units};
+    }
+    return true;
+}
+
 }  // namespace
 
 bool validate(const IOperationValidationContext* context) {
@@ -241,10 +276,11 @@ bool validate(const IOperationValidationContext* context) {
     NN_RET_CHECK(validateInputTypes(context, inExpectedTypes));
     NN_RET_CHECK(validateOutputTypes(context, {inputType}));
 
-    const Shape& input = context->getInputShape(kInputTensor);
-    if (hasKnownRank(input)) {
-        NN_RET_CHECK_GE(getNumberOfDimensions(input), 2);
-        NN_RET_CHECK_LE(getNumberOfDimensions(input), 4);
+    Shape input = context->getInputShape(kInputTensor);
+    Shape weights = context->getInputShape(kWeightsTensor);
+    Shape bias = context->getInputShape(kBiasTensor);
+    if (hasKnownRank(input) && hasKnownRank(weights) && hasKnownRank(bias)) {
+        NN_RET_CHECK(validateShapes(input, weights, bias));
     }
 
     return true;
@@ -254,34 +290,8 @@ bool prepare(IOperationExecutionContext* context) {
     Shape input = context->getInputShape(kInputTensor);
     Shape weights = context->getInputShape(kWeightsTensor);
     Shape bias = context->getInputShape(kBiasTensor);
-
-    // Check all the parameters of tensor match within themselves and match the
-    // input configuration.
-    NN_RET_CHECK(input.type == weights.type);
-    if (input.type == OperandType::TENSOR_QUANT8_ASYMM ||
-        input.type == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
-        NN_RET_CHECK(bias.type == OperandType::TENSOR_INT32);
-    } else {
-        NN_RET_CHECK(input.type == bias.type);
-    }
-    // The Tensorflow fully connected layer specification says that input should
-    // be of at least rank 2, so we check. Tflite doesn't check.
-    NN_RET_CHECK_GE(getNumberOfDimensions(input), 2);
-    NN_RET_CHECK_LE(getNumberOfDimensions(input), 4);
-    NN_RET_CHECK_EQ(getNumberOfDimensions(weights), 2);
-    uint32_t input_n_elements = getNumberOfElements(input);
-    uint32_t num_units = getSizeOfDimension(weights, 0);
-    uint32_t input_size = getSizeOfDimension(weights, 1);
-    // Only batch_size can be 0.
-    NN_RET_CHECK_GT(num_units, 0);
-    NN_RET_CHECK_GT(input_size, 0);
-    uint32_t batch_size = input_n_elements / input_size;
-    NN_RET_CHECK_EQ(getSizeOfDimension(bias, 0), num_units);
-    NN_RET_CHECK_EQ(input_size * batch_size, input_n_elements);
-
     Shape output = context->getOutputShape(kOutputTensor);
-    output.type = input.type;
-    output.dimensions = {batch_size, num_units};
+    NN_RET_CHECK(validateShapes(input, weights, bias, &output));
     return context->setOutputShape(kOutputTensor, output);
 }
 
