@@ -55,7 +55,7 @@ def MakeBodyModel():
   fib_out = Output("fib_out", FibType)
   i_out = Output("i_out", CounterType)
   matrix = Parameter("matrix", ["TENSOR_FLOAT32", [2, 2]], [0, 1, 1, 1])
-  zero_bias = Parameter("zero_bias", ["TENSOR_FLOAT32", [2, 1]], [0, 0])
+  zero_bias = Parameter("zero_bias", ["TENSOR_FLOAT32", [2]], [0, 0])
   model = Model()
   model.IdentifyInputs(fib, i, n)
   model.IdentifyOutputs(fib_out, i_out)
