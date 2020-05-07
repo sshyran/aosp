@@ -72,12 +72,14 @@ class FailingTestDriver : public SampleDriverPartial {
 
 class FailingDriverTest : public ::testing::Test {
     virtual void SetUp() {
-        if (DeviceManager::get()->getUseCpuOnly()) {
+        DeviceManager* deviceManager = DeviceManager::get();
+        if (deviceManager->getUseCpuOnly() ||
+            !DeviceManager::partitioningAllowsFallback(deviceManager->getPartitioning())) {
             GTEST_SKIP();
         }
         mTestDevice =
                 DeviceManager::forTest_makeDriverDevice(kTestDriverName, new FailingTestDriver());
-        DeviceManager::get()->forTest_setDevices({
+        deviceManager->forTest_setDevices({
                 mTestDevice,
                 DeviceManager::getCpuDevice(),
         });
