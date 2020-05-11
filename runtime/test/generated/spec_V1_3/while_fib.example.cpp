@@ -226,7 +226,7 @@ const TestModel& get_test_model_n_1_unused_output() {
                         }, { // zero_bias
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_COPY,
                             .numberOfConsumers = 1,
@@ -485,7 +485,7 @@ const TestModel& get_test_model_n_1_unused_output_all_tensors_as_inputs() {
                         }, { // zero_bias
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_COPY,
                             .numberOfConsumers = 1,
@@ -778,7 +778,7 @@ const TestModel& get_test_model_n_1_unused_output_all_tensors_as_inputs_all_inpu
                         }, { // zero_bias
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_COPY,
                             .numberOfConsumers = 1,
@@ -1071,7 +1071,7 @@ const TestModel& get_test_model_n_1_unused_output_all_outputs_as_internal() {
                         }, { // zero_bias
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_COPY,
                             .numberOfConsumers = 1,
@@ -1330,7 +1330,7 @@ const TestModel& get_test_model_n_1_unused_output_relaxed() {
                         }, { // zero_bias
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_COPY,
                             .numberOfConsumers = 1,
@@ -1589,7 +1589,7 @@ const TestModel& get_test_model_n_1_unused_output_relaxed_all_tensors_as_inputs(
                         }, { // zero_bias
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_COPY,
                             .numberOfConsumers = 1,
@@ -1882,7 +1882,7 @@ const TestModel& get_test_model_n_1_unused_output_relaxed_all_tensors_as_inputs_
                         }, { // zero_bias
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_COPY,
                             .numberOfConsumers = 1,
@@ -2175,7 +2175,7 @@ const TestModel& get_test_model_n_1_unused_output_relaxed_all_outputs_as_interna
                         }, { // zero_bias
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_COPY,
                             .numberOfConsumers = 1,
@@ -2434,7 +2434,7 @@ const TestModel& get_test_model_n_1_unused_output_float16() {
                         }, { // zero_bias
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({0.0f, 0.0f}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_COPY,
                             .numberOfConsumers = 1,
@@ -2693,7 +2693,7 @@ const TestModel& get_test_model_n_1_unused_output_float16_all_tensors_as_inputs(
                         }, { // zero_bias
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({0.0f, 0.0f}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_COPY,
                             .numberOfConsumers = 1,
@@ -2986,7 +2986,7 @@ const TestModel& get_test_model_n_1_unused_output_float16_all_tensors_as_inputs_
                         }, { // zero_bias
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({0.0f, 0.0f}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_COPY,
                             .numberOfConsumers = 1,
@@ -3279,7 +3279,7 @@ const TestModel& get_test_model_n_1_unused_output_float16_all_outputs_as_interna
                         }, { // zero_bias
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({0.0f, 0.0f}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_COPY,
                             .numberOfConsumers = 1,
@@ -3538,7 +3538,7 @@ const TestModel& get_test_model_n_1_unused_output_quant8() {
                         }, { // zero_bias
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0, 0}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_COPY,
                             .numberOfConsumers = 1,
@@ -3797,7 +3797,7 @@ const TestModel& get_test_model_n_1_unused_output_quant8_all_tensors_as_inputs()
                         }, { // zero_bias
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0, 0}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_COPY,
                             .numberOfConsumers = 1,
@@ -4090,7 +4090,7 @@ const TestModel& get_test_model_n_1_unused_output_quant8_all_tensors_as_inputs_a
                         }, { // zero_bias
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0, 0}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_COPY,
                             .numberOfConsumers = 1,
@@ -4383,7 +4383,7 @@ const TestModel& get_test_model_n_1_unused_output_quant8_all_outputs_as_internal
                         }, { // zero_bias
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0, 0}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_COPY,
                             .numberOfConsumers = 1,
@@ -4642,7 +4642,7 @@ const TestModel& get_test_model_n_1_unused_output_quant8_signed() {
                         }, { // zero_bias
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0, 0}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_COPY,
                             .numberOfConsumers = 1,
@@ -4901,7 +4901,7 @@ const TestModel& get_test_model_n_1_unused_output_quant8_signed_all_tensors_as_i
                         }, { // zero_bias
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0, 0}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_COPY,
                             .numberOfConsumers = 1,
@@ -5194,7 +5194,7 @@ const TestModel& get_test_model_n_1_unused_output_quant8_signed_all_tensors_as_i
                         }, { // zero_bias
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0, 0}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_COPY,
                             .numberOfConsumers = 1,
@@ -5487,7 +5487,7 @@ const TestModel& get_test_model_n_1_unused_output_quant8_signed_all_outputs_as_i
                         }, { // zero_bias
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0, 0}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_COPY,
                             .numberOfConsumers = 1,
@@ -5746,7 +5746,7 @@ const TestModel& get_test_model_n_2_unused_output() {
                         }, { // zero_bias1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_COPY,
                             .numberOfConsumers = 1,
@@ -6005,7 +6005,7 @@ const TestModel& get_test_model_n_2_unused_output_all_tensors_as_inputs() {
                         }, { // zero_bias1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_COPY,
                             .numberOfConsumers = 1,
@@ -6298,7 +6298,7 @@ const TestModel& get_test_model_n_2_unused_output_all_tensors_as_inputs_all_inpu
                         }, { // zero_bias1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_COPY,
                             .numberOfConsumers = 1,
@@ -6591,7 +6591,7 @@ const TestModel& get_test_model_n_2_unused_output_all_outputs_as_internal() {
                         }, { // zero_bias1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_COPY,
                             .numberOfConsumers = 1,
@@ -6850,7 +6850,7 @@ const TestModel& get_test_model_n_2_unused_output_relaxed() {
                         }, { // zero_bias1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_COPY,
                             .numberOfConsumers = 1,
@@ -7109,7 +7109,7 @@ const TestModel& get_test_model_n_2_unused_output_relaxed_all_tensors_as_inputs(
                         }, { // zero_bias1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_COPY,
                             .numberOfConsumers = 1,
@@ -7402,7 +7402,7 @@ const TestModel& get_test_model_n_2_unused_output_relaxed_all_tensors_as_inputs_
                         }, { // zero_bias1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_COPY,
                             .numberOfConsumers = 1,
@@ -7695,7 +7695,7 @@ const TestModel& get_test_model_n_2_unused_output_relaxed_all_outputs_as_interna
                         }, { // zero_bias1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_COPY,
                             .numberOfConsumers = 1,
@@ -7954,7 +7954,7 @@ const TestModel& get_test_model_n_2_unused_output_float16() {
                         }, { // zero_bias1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({0.0f, 0.0f}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_COPY,
                             .numberOfConsumers = 1,
@@ -8213,7 +8213,7 @@ const TestModel& get_test_model_n_2_unused_output_float16_all_tensors_as_inputs(
                         }, { // zero_bias1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({0.0f, 0.0f}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_COPY,
                             .numberOfConsumers = 1,
@@ -8506,7 +8506,7 @@ const TestModel& get_test_model_n_2_unused_output_float16_all_tensors_as_inputs_
                         }, { // zero_bias1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({0.0f, 0.0f}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_COPY,
                             .numberOfConsumers = 1,
@@ -8799,7 +8799,7 @@ const TestModel& get_test_model_n_2_unused_output_float16_all_outputs_as_interna
                         }, { // zero_bias1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({0.0f, 0.0f}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_COPY,
                             .numberOfConsumers = 1,
@@ -9058,7 +9058,7 @@ const TestModel& get_test_model_n_2_unused_output_quant8() {
                         }, { // zero_bias1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0, 0}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_COPY,
                             .numberOfConsumers = 1,
@@ -9317,7 +9317,7 @@ const TestModel& get_test_model_n_2_unused_output_quant8_all_tensors_as_inputs()
                         }, { // zero_bias1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0, 0}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_COPY,
                             .numberOfConsumers = 1,
@@ -9610,7 +9610,7 @@ const TestModel& get_test_model_n_2_unused_output_quant8_all_tensors_as_inputs_a
                         }, { // zero_bias1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0, 0}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_COPY,
                             .numberOfConsumers = 1,
@@ -9903,7 +9903,7 @@ const TestModel& get_test_model_n_2_unused_output_quant8_all_outputs_as_internal
                         }, { // zero_bias1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0, 0}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_COPY,
                             .numberOfConsumers = 1,
@@ -10162,7 +10162,7 @@ const TestModel& get_test_model_n_2_unused_output_quant8_signed() {
                         }, { // zero_bias1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0, 0}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_COPY,
                             .numberOfConsumers = 1,
@@ -10421,7 +10421,7 @@ const TestModel& get_test_model_n_2_unused_output_quant8_signed_all_tensors_as_i
                         }, { // zero_bias1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0, 0}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_COPY,
                             .numberOfConsumers = 1,
@@ -10714,7 +10714,7 @@ const TestModel& get_test_model_n_2_unused_output_quant8_signed_all_tensors_as_i
                         }, { // zero_bias1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0, 0}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_COPY,
                             .numberOfConsumers = 1,
@@ -11007,7 +11007,7 @@ const TestModel& get_test_model_n_2_unused_output_quant8_signed_all_outputs_as_i
                         }, { // zero_bias1
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0, 0}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_COPY,
                             .numberOfConsumers = 1,
@@ -11266,7 +11266,7 @@ const TestModel& get_test_model_n_3_unused_output() {
                         }, { // zero_bias2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_COPY,
                             .numberOfConsumers = 1,
@@ -11525,7 +11525,7 @@ const TestModel& get_test_model_n_3_unused_output_all_tensors_as_inputs() {
                         }, { // zero_bias2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_COPY,
                             .numberOfConsumers = 1,
@@ -11818,7 +11818,7 @@ const TestModel& get_test_model_n_3_unused_output_all_tensors_as_inputs_all_inpu
                         }, { // zero_bias2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_COPY,
                             .numberOfConsumers = 1,
@@ -12111,7 +12111,7 @@ const TestModel& get_test_model_n_3_unused_output_all_outputs_as_internal() {
                         }, { // zero_bias2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_COPY,
                             .numberOfConsumers = 1,
@@ -12370,7 +12370,7 @@ const TestModel& get_test_model_n_3_unused_output_relaxed() {
                         }, { // zero_bias2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_COPY,
                             .numberOfConsumers = 1,
@@ -12629,7 +12629,7 @@ const TestModel& get_test_model_n_3_unused_output_relaxed_all_tensors_as_inputs(
                         }, { // zero_bias2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_COPY,
                             .numberOfConsumers = 1,
@@ -12922,7 +12922,7 @@ const TestModel& get_test_model_n_3_unused_output_relaxed_all_tensors_as_inputs_
                         }, { // zero_bias2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_COPY,
                             .numberOfConsumers = 1,
@@ -13215,7 +13215,7 @@ const TestModel& get_test_model_n_3_unused_output_relaxed_all_outputs_as_interna
                         }, { // zero_bias2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_COPY,
                             .numberOfConsumers = 1,
@@ -13474,7 +13474,7 @@ const TestModel& get_test_model_n_3_unused_output_float16() {
                         }, { // zero_bias2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({0.0f, 0.0f}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_COPY,
                             .numberOfConsumers = 1,
@@ -13733,7 +13733,7 @@ const TestModel& get_test_model_n_3_unused_output_float16_all_tensors_as_inputs(
                         }, { // zero_bias2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({0.0f, 0.0f}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_COPY,
                             .numberOfConsumers = 1,
@@ -14026,7 +14026,7 @@ const TestModel& get_test_model_n_3_unused_output_float16_all_tensors_as_inputs_
                         }, { // zero_bias2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({0.0f, 0.0f}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_COPY,
                             .numberOfConsumers = 1,
@@ -14319,7 +14319,7 @@ const TestModel& get_test_model_n_3_unused_output_float16_all_outputs_as_interna
                         }, { // zero_bias2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({0.0f, 0.0f}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_COPY,
                             .numberOfConsumers = 1,
@@ -14578,7 +14578,7 @@ const TestModel& get_test_model_n_3_unused_output_quant8() {
                         }, { // zero_bias2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0, 0}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_COPY,
                             .numberOfConsumers = 1,
@@ -14837,7 +14837,7 @@ const TestModel& get_test_model_n_3_unused_output_quant8_all_tensors_as_inputs()
                         }, { // zero_bias2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0, 0}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_COPY,
                             .numberOfConsumers = 1,
@@ -15130,7 +15130,7 @@ const TestModel& get_test_model_n_3_unused_output_quant8_all_tensors_as_inputs_a
                         }, { // zero_bias2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0, 0}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_COPY,
                             .numberOfConsumers = 1,
@@ -15423,7 +15423,7 @@ const TestModel& get_test_model_n_3_unused_output_quant8_all_outputs_as_internal
                         }, { // zero_bias2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0, 0}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_COPY,
                             .numberOfConsumers = 1,
@@ -15682,7 +15682,7 @@ const TestModel& get_test_model_n_3_unused_output_quant8_signed() {
                         }, { // zero_bias2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0, 0}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_COPY,
                             .numberOfConsumers = 1,
@@ -15941,7 +15941,7 @@ const TestModel& get_test_model_n_3_unused_output_quant8_signed_all_tensors_as_i
                         }, { // zero_bias2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0, 0}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_COPY,
                             .numberOfConsumers = 1,
@@ -16234,7 +16234,7 @@ const TestModel& get_test_model_n_3_unused_output_quant8_signed_all_tensors_as_i
                         }, { // zero_bias2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0, 0}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_COPY,
                             .numberOfConsumers = 1,
@@ -16527,7 +16527,7 @@ const TestModel& get_test_model_n_3_unused_output_quant8_signed_all_outputs_as_i
                         }, { // zero_bias2
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0, 0}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_COPY,
                             .numberOfConsumers = 1,
@@ -16776,7 +16776,7 @@ const TestModel& get_test_model_n_4() {
                         }, { // zero_bias3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_COPY,
                             .numberOfConsumers = 1,
@@ -17025,7 +17025,7 @@ const TestModel& get_test_model_n_4_all_tensors_as_inputs() {
                         }, { // zero_bias3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_COPY,
                             .numberOfConsumers = 1,
@@ -17308,7 +17308,7 @@ const TestModel& get_test_model_n_4_all_tensors_as_inputs_all_inputs_as_internal
                         }, { // zero_bias3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_COPY,
                             .numberOfConsumers = 1,
@@ -17591,7 +17591,7 @@ const TestModel& get_test_model_n_4_all_outputs_as_internal() {
                         }, { // zero_bias3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_COPY,
                             .numberOfConsumers = 1,
@@ -17840,7 +17840,7 @@ const TestModel& get_test_model_n_4_relaxed() {
                         }, { // zero_bias3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_COPY,
                             .numberOfConsumers = 1,
@@ -18089,7 +18089,7 @@ const TestModel& get_test_model_n_4_relaxed_all_tensors_as_inputs() {
                         }, { // zero_bias3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_COPY,
                             .numberOfConsumers = 1,
@@ -18372,7 +18372,7 @@ const TestModel& get_test_model_n_4_relaxed_all_tensors_as_inputs_all_inputs_as_
                         }, { // zero_bias3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_COPY,
                             .numberOfConsumers = 1,
@@ -18655,7 +18655,7 @@ const TestModel& get_test_model_n_4_relaxed_all_outputs_as_internal() {
                         }, { // zero_bias3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_COPY,
                             .numberOfConsumers = 1,
@@ -18904,7 +18904,7 @@ const TestModel& get_test_model_n_4_float16() {
                         }, { // zero_bias3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({0.0f, 0.0f}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_COPY,
                             .numberOfConsumers = 1,
@@ -19153,7 +19153,7 @@ const TestModel& get_test_model_n_4_float16_all_tensors_as_inputs() {
                         }, { // zero_bias3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({0.0f, 0.0f}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_COPY,
                             .numberOfConsumers = 1,
@@ -19436,7 +19436,7 @@ const TestModel& get_test_model_n_4_float16_all_tensors_as_inputs_all_inputs_as_
                         }, { // zero_bias3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({0.0f, 0.0f}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_COPY,
                             .numberOfConsumers = 1,
@@ -19719,7 +19719,7 @@ const TestModel& get_test_model_n_4_float16_all_outputs_as_internal() {
                         }, { // zero_bias3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({0.0f, 0.0f}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_COPY,
                             .numberOfConsumers = 1,
@@ -19968,7 +19968,7 @@ const TestModel& get_test_model_n_4_quant8() {
                         }, { // zero_bias3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0, 0}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_COPY,
                             .numberOfConsumers = 1,
@@ -20217,7 +20217,7 @@ const TestModel& get_test_model_n_4_quant8_all_tensors_as_inputs() {
                         }, { // zero_bias3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0, 0}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_COPY,
                             .numberOfConsumers = 1,
@@ -20500,7 +20500,7 @@ const TestModel& get_test_model_n_4_quant8_all_tensors_as_inputs_all_inputs_as_i
                         }, { // zero_bias3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0, 0}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_COPY,
                             .numberOfConsumers = 1,
@@ -20783,7 +20783,7 @@ const TestModel& get_test_model_n_4_quant8_all_outputs_as_internal() {
                         }, { // zero_bias3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0, 0}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_COPY,
                             .numberOfConsumers = 1,
@@ -21032,7 +21032,7 @@ const TestModel& get_test_model_n_4_quant8_signed() {
                         }, { // zero_bias3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0, 0}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_COPY,
                             .numberOfConsumers = 1,
@@ -21281,7 +21281,7 @@ const TestModel& get_test_model_n_4_quant8_signed_all_tensors_as_inputs() {
                         }, { // zero_bias3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0, 0}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_COPY,
                             .numberOfConsumers = 1,
@@ -21564,7 +21564,7 @@ const TestModel& get_test_model_n_4_quant8_signed_all_tensors_as_inputs_all_inpu
                         }, { // zero_bias3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0, 0}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_COPY,
                             .numberOfConsumers = 1,
@@ -21847,7 +21847,7 @@ const TestModel& get_test_model_n_4_quant8_signed_all_outputs_as_internal() {
                         }, { // zero_bias3
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0, 0}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_COPY,
                             .numberOfConsumers = 1,
@@ -22096,7 +22096,7 @@ const TestModel& get_test_model_n_5() {
                         }, { // zero_bias4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_COPY,
                             .numberOfConsumers = 1,
@@ -22345,7 +22345,7 @@ const TestModel& get_test_model_n_5_all_tensors_as_inputs() {
                         }, { // zero_bias4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_COPY,
                             .numberOfConsumers = 1,
@@ -22628,7 +22628,7 @@ const TestModel& get_test_model_n_5_all_tensors_as_inputs_all_inputs_as_internal
                         }, { // zero_bias4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_COPY,
                             .numberOfConsumers = 1,
@@ -22911,7 +22911,7 @@ const TestModel& get_test_model_n_5_all_outputs_as_internal() {
                         }, { // zero_bias4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_COPY,
                             .numberOfConsumers = 1,
@@ -23160,7 +23160,7 @@ const TestModel& get_test_model_n_5_relaxed() {
                         }, { // zero_bias4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_COPY,
                             .numberOfConsumers = 1,
@@ -23409,7 +23409,7 @@ const TestModel& get_test_model_n_5_relaxed_all_tensors_as_inputs() {
                         }, { // zero_bias4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_COPY,
                             .numberOfConsumers = 1,
@@ -23692,7 +23692,7 @@ const TestModel& get_test_model_n_5_relaxed_all_tensors_as_inputs_all_inputs_as_
                         }, { // zero_bias4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_COPY,
                             .numberOfConsumers = 1,
@@ -23975,7 +23975,7 @@ const TestModel& get_test_model_n_5_relaxed_all_outputs_as_internal() {
                         }, { // zero_bias4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_COPY,
                             .numberOfConsumers = 1,
@@ -24224,7 +24224,7 @@ const TestModel& get_test_model_n_5_float16() {
                         }, { // zero_bias4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({0.0f, 0.0f}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_COPY,
                             .numberOfConsumers = 1,
@@ -24473,7 +24473,7 @@ const TestModel& get_test_model_n_5_float16_all_tensors_as_inputs() {
                         }, { // zero_bias4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({0.0f, 0.0f}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_COPY,
                             .numberOfConsumers = 1,
@@ -24756,7 +24756,7 @@ const TestModel& get_test_model_n_5_float16_all_tensors_as_inputs_all_inputs_as_
                         }, { // zero_bias4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({0.0f, 0.0f}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_COPY,
                             .numberOfConsumers = 1,
@@ -25039,7 +25039,7 @@ const TestModel& get_test_model_n_5_float16_all_outputs_as_internal() {
                         }, { // zero_bias4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({0.0f, 0.0f}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_COPY,
                             .numberOfConsumers = 1,
@@ -25288,7 +25288,7 @@ const TestModel& get_test_model_n_5_quant8() {
                         }, { // zero_bias4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0, 0}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_COPY,
                             .numberOfConsumers = 1,
@@ -25537,7 +25537,7 @@ const TestModel& get_test_model_n_5_quant8_all_tensors_as_inputs() {
                         }, { // zero_bias4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0, 0}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_COPY,
                             .numberOfConsumers = 1,
@@ -25820,7 +25820,7 @@ const TestModel& get_test_model_n_5_quant8_all_tensors_as_inputs_all_inputs_as_i
                         }, { // zero_bias4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0, 0}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_COPY,
                             .numberOfConsumers = 1,
@@ -26103,7 +26103,7 @@ const TestModel& get_test_model_n_5_quant8_all_outputs_as_internal() {
                         }, { // zero_bias4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0, 0}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_COPY,
                             .numberOfConsumers = 1,
@@ -26352,7 +26352,7 @@ const TestModel& get_test_model_n_5_quant8_signed() {
                         }, { // zero_bias4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0, 0}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_COPY,
                             .numberOfConsumers = 1,
@@ -26601,7 +26601,7 @@ const TestModel& get_test_model_n_5_quant8_signed_all_tensors_as_inputs() {
                         }, { // zero_bias4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0, 0}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_COPY,
                             .numberOfConsumers = 1,
@@ -26884,7 +26884,7 @@ const TestModel& get_test_model_n_5_quant8_signed_all_tensors_as_inputs_all_inpu
                         }, { // zero_bias4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0, 0}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_COPY,
                             .numberOfConsumers = 1,
@@ -27167,7 +27167,7 @@ const TestModel& get_test_model_n_5_quant8_signed_all_outputs_as_internal() {
                         }, { // zero_bias4
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0, 0}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_COPY,
                             .numberOfConsumers = 1,
@@ -27426,7 +27426,7 @@ const TestModel& get_test_model_n_1_unused_output_2() {
                         }, { // zero_bias5
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_REFERENCE,
                             .numberOfConsumers = 1,
@@ -27685,7 +27685,7 @@ const TestModel& get_test_model_n_1_unused_output_all_tensors_as_inputs_2() {
                         }, { // zero_bias5
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_REFERENCE,
                             .numberOfConsumers = 1,
@@ -27978,7 +27978,7 @@ const TestModel& get_test_model_n_1_unused_output_all_tensors_as_inputs_all_inpu
                         }, { // zero_bias5
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_REFERENCE,
                             .numberOfConsumers = 1,
@@ -28271,7 +28271,7 @@ const TestModel& get_test_model_n_1_unused_output_all_outputs_as_internal_2() {
                         }, { // zero_bias5
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_REFERENCE,
                             .numberOfConsumers = 1,
@@ -28530,7 +28530,7 @@ const TestModel& get_test_model_n_1_unused_output_relaxed_2() {
                         }, { // zero_bias5
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_REFERENCE,
                             .numberOfConsumers = 1,
@@ -28789,7 +28789,7 @@ const TestModel& get_test_model_n_1_unused_output_relaxed_all_tensors_as_inputs_
                         }, { // zero_bias5
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_REFERENCE,
                             .numberOfConsumers = 1,
@@ -29082,7 +29082,7 @@ const TestModel& get_test_model_n_1_unused_output_relaxed_all_tensors_as_inputs_
                         }, { // zero_bias5
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_REFERENCE,
                             .numberOfConsumers = 1,
@@ -29375,7 +29375,7 @@ const TestModel& get_test_model_n_1_unused_output_relaxed_all_outputs_as_interna
                         }, { // zero_bias5
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_REFERENCE,
                             .numberOfConsumers = 1,
@@ -29634,7 +29634,7 @@ const TestModel& get_test_model_n_1_unused_output_float16_2() {
                         }, { // zero_bias5
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({0.0f, 0.0f}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_REFERENCE,
                             .numberOfConsumers = 1,
@@ -29893,7 +29893,7 @@ const TestModel& get_test_model_n_1_unused_output_float16_all_tensors_as_inputs_
                         }, { // zero_bias5
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({0.0f, 0.0f}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_REFERENCE,
                             .numberOfConsumers = 1,
@@ -30186,7 +30186,7 @@ const TestModel& get_test_model_n_1_unused_output_float16_all_tensors_as_inputs_
                         }, { // zero_bias5
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({0.0f, 0.0f}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_REFERENCE,
                             .numberOfConsumers = 1,
@@ -30479,7 +30479,7 @@ const TestModel& get_test_model_n_1_unused_output_float16_all_outputs_as_interna
                         }, { // zero_bias5
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({0.0f, 0.0f}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_REFERENCE,
                             .numberOfConsumers = 1,
@@ -30738,7 +30738,7 @@ const TestModel& get_test_model_n_1_unused_output_quant8_2() {
                         }, { // zero_bias5
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0, 0}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_REFERENCE,
                             .numberOfConsumers = 1,
@@ -30997,7 +30997,7 @@ const TestModel& get_test_model_n_1_unused_output_quant8_all_tensors_as_inputs_2
                         }, { // zero_bias5
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0, 0}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_REFERENCE,
                             .numberOfConsumers = 1,
@@ -31290,7 +31290,7 @@ const TestModel& get_test_model_n_1_unused_output_quant8_all_tensors_as_inputs_a
                         }, { // zero_bias5
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0, 0}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_REFERENCE,
                             .numberOfConsumers = 1,
@@ -31583,7 +31583,7 @@ const TestModel& get_test_model_n_1_unused_output_quant8_all_outputs_as_internal
                         }, { // zero_bias5
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0, 0}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_REFERENCE,
                             .numberOfConsumers = 1,
@@ -31842,7 +31842,7 @@ const TestModel& get_test_model_n_1_unused_output_quant8_signed_2() {
                         }, { // zero_bias5
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0, 0}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_REFERENCE,
                             .numberOfConsumers = 1,
@@ -32101,7 +32101,7 @@ const TestModel& get_test_model_n_1_unused_output_quant8_signed_all_tensors_as_i
                         }, { // zero_bias5
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0, 0}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_REFERENCE,
                             .numberOfConsumers = 1,
@@ -32394,7 +32394,7 @@ const TestModel& get_test_model_n_1_unused_output_quant8_signed_all_tensors_as_i
                         }, { // zero_bias5
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0, 0}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_REFERENCE,
                             .numberOfConsumers = 1,
@@ -32687,7 +32687,7 @@ const TestModel& get_test_model_n_1_unused_output_quant8_signed_all_outputs_as_i
                         }, { // zero_bias5
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0, 0}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_REFERENCE,
                             .numberOfConsumers = 1,
@@ -32946,7 +32946,7 @@ const TestModel& get_test_model_n_2_unused_output_2() {
                         }, { // zero_bias6
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_REFERENCE,
                             .numberOfConsumers = 1,
@@ -33205,7 +33205,7 @@ const TestModel& get_test_model_n_2_unused_output_all_tensors_as_inputs_2() {
                         }, { // zero_bias6
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_REFERENCE,
                             .numberOfConsumers = 1,
@@ -33498,7 +33498,7 @@ const TestModel& get_test_model_n_2_unused_output_all_tensors_as_inputs_all_inpu
                         }, { // zero_bias6
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_REFERENCE,
                             .numberOfConsumers = 1,
@@ -33791,7 +33791,7 @@ const TestModel& get_test_model_n_2_unused_output_all_outputs_as_internal_2() {
                         }, { // zero_bias6
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_REFERENCE,
                             .numberOfConsumers = 1,
@@ -34050,7 +34050,7 @@ const TestModel& get_test_model_n_2_unused_output_relaxed_2() {
                         }, { // zero_bias6
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_REFERENCE,
                             .numberOfConsumers = 1,
@@ -34309,7 +34309,7 @@ const TestModel& get_test_model_n_2_unused_output_relaxed_all_tensors_as_inputs_
                         }, { // zero_bias6
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_REFERENCE,
                             .numberOfConsumers = 1,
@@ -34602,7 +34602,7 @@ const TestModel& get_test_model_n_2_unused_output_relaxed_all_tensors_as_inputs_
                         }, { // zero_bias6
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_REFERENCE,
                             .numberOfConsumers = 1,
@@ -34895,7 +34895,7 @@ const TestModel& get_test_model_n_2_unused_output_relaxed_all_outputs_as_interna
                         }, { // zero_bias6
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_REFERENCE,
                             .numberOfConsumers = 1,
@@ -35154,7 +35154,7 @@ const TestModel& get_test_model_n_2_unused_output_float16_2() {
                         }, { // zero_bias6
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({0.0f, 0.0f}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_REFERENCE,
                             .numberOfConsumers = 1,
@@ -35413,7 +35413,7 @@ const TestModel& get_test_model_n_2_unused_output_float16_all_tensors_as_inputs_
                         }, { // zero_bias6
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({0.0f, 0.0f}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_REFERENCE,
                             .numberOfConsumers = 1,
@@ -35706,7 +35706,7 @@ const TestModel& get_test_model_n_2_unused_output_float16_all_tensors_as_inputs_
                         }, { // zero_bias6
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({0.0f, 0.0f}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_REFERENCE,
                             .numberOfConsumers = 1,
@@ -35999,7 +35999,7 @@ const TestModel& get_test_model_n_2_unused_output_float16_all_outputs_as_interna
                         }, { // zero_bias6
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({0.0f, 0.0f}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_REFERENCE,
                             .numberOfConsumers = 1,
@@ -36258,7 +36258,7 @@ const TestModel& get_test_model_n_2_unused_output_quant8_2() {
                         }, { // zero_bias6
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0, 0}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_REFERENCE,
                             .numberOfConsumers = 1,
@@ -36517,7 +36517,7 @@ const TestModel& get_test_model_n_2_unused_output_quant8_all_tensors_as_inputs_2
                         }, { // zero_bias6
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0, 0}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_REFERENCE,
                             .numberOfConsumers = 1,
@@ -36810,7 +36810,7 @@ const TestModel& get_test_model_n_2_unused_output_quant8_all_tensors_as_inputs_a
                         }, { // zero_bias6
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0, 0}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_REFERENCE,
                             .numberOfConsumers = 1,
@@ -37103,7 +37103,7 @@ const TestModel& get_test_model_n_2_unused_output_quant8_all_outputs_as_internal
                         }, { // zero_bias6
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0, 0}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_REFERENCE,
                             .numberOfConsumers = 1,
@@ -37362,7 +37362,7 @@ const TestModel& get_test_model_n_2_unused_output_quant8_signed_2() {
                         }, { // zero_bias6
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0, 0}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_REFERENCE,
                             .numberOfConsumers = 1,
@@ -37621,7 +37621,7 @@ const TestModel& get_test_model_n_2_unused_output_quant8_signed_all_tensors_as_i
                         }, { // zero_bias6
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0, 0}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_REFERENCE,
                             .numberOfConsumers = 1,
@@ -37914,7 +37914,7 @@ const TestModel& get_test_model_n_2_unused_output_quant8_signed_all_tensors_as_i
                         }, { // zero_bias6
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0, 0}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_REFERENCE,
                             .numberOfConsumers = 1,
@@ -38207,7 +38207,7 @@ const TestModel& get_test_model_n_2_unused_output_quant8_signed_all_outputs_as_i
                         }, { // zero_bias6
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0, 0}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_REFERENCE,
                             .numberOfConsumers = 1,
@@ -38466,7 +38466,7 @@ const TestModel& get_test_model_n_3_unused_output_2() {
                         }, { // zero_bias7
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_REFERENCE,
                             .numberOfConsumers = 1,
@@ -38725,7 +38725,7 @@ const TestModel& get_test_model_n_3_unused_output_all_tensors_as_inputs_2() {
                         }, { // zero_bias7
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_REFERENCE,
                             .numberOfConsumers = 1,
@@ -39018,7 +39018,7 @@ const TestModel& get_test_model_n_3_unused_output_all_tensors_as_inputs_all_inpu
                         }, { // zero_bias7
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_REFERENCE,
                             .numberOfConsumers = 1,
@@ -39311,7 +39311,7 @@ const TestModel& get_test_model_n_3_unused_output_all_outputs_as_internal_2() {
                         }, { // zero_bias7
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_REFERENCE,
                             .numberOfConsumers = 1,
@@ -39570,7 +39570,7 @@ const TestModel& get_test_model_n_3_unused_output_relaxed_2() {
                         }, { // zero_bias7
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_REFERENCE,
                             .numberOfConsumers = 1,
@@ -39829,7 +39829,7 @@ const TestModel& get_test_model_n_3_unused_output_relaxed_all_tensors_as_inputs_
                         }, { // zero_bias7
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_REFERENCE,
                             .numberOfConsumers = 1,
@@ -40122,7 +40122,7 @@ const TestModel& get_test_model_n_3_unused_output_relaxed_all_tensors_as_inputs_
                         }, { // zero_bias7
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_REFERENCE,
                             .numberOfConsumers = 1,
@@ -40415,7 +40415,7 @@ const TestModel& get_test_model_n_3_unused_output_relaxed_all_outputs_as_interna
                         }, { // zero_bias7
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_REFERENCE,
                             .numberOfConsumers = 1,
@@ -40674,7 +40674,7 @@ const TestModel& get_test_model_n_3_unused_output_float16_2() {
                         }, { // zero_bias7
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({0.0f, 0.0f}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_REFERENCE,
                             .numberOfConsumers = 1,
@@ -40933,7 +40933,7 @@ const TestModel& get_test_model_n_3_unused_output_float16_all_tensors_as_inputs_
                         }, { // zero_bias7
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({0.0f, 0.0f}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_REFERENCE,
                             .numberOfConsumers = 1,
@@ -41226,7 +41226,7 @@ const TestModel& get_test_model_n_3_unused_output_float16_all_tensors_as_inputs_
                         }, { // zero_bias7
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({0.0f, 0.0f}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_REFERENCE,
                             .numberOfConsumers = 1,
@@ -41519,7 +41519,7 @@ const TestModel& get_test_model_n_3_unused_output_float16_all_outputs_as_interna
                         }, { // zero_bias7
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({0.0f, 0.0f}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_REFERENCE,
                             .numberOfConsumers = 1,
@@ -41778,7 +41778,7 @@ const TestModel& get_test_model_n_3_unused_output_quant8_2() {
                         }, { // zero_bias7
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0, 0}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_REFERENCE,
                             .numberOfConsumers = 1,
@@ -42037,7 +42037,7 @@ const TestModel& get_test_model_n_3_unused_output_quant8_all_tensors_as_inputs_2
                         }, { // zero_bias7
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0, 0}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_REFERENCE,
                             .numberOfConsumers = 1,
@@ -42330,7 +42330,7 @@ const TestModel& get_test_model_n_3_unused_output_quant8_all_tensors_as_inputs_a
                         }, { // zero_bias7
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0, 0}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_REFERENCE,
                             .numberOfConsumers = 1,
@@ -42623,7 +42623,7 @@ const TestModel& get_test_model_n_3_unused_output_quant8_all_outputs_as_internal
                         }, { // zero_bias7
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0, 0}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_REFERENCE,
                             .numberOfConsumers = 1,
@@ -42882,7 +42882,7 @@ const TestModel& get_test_model_n_3_unused_output_quant8_signed_2() {
                         }, { // zero_bias7
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0, 0}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_REFERENCE,
                             .numberOfConsumers = 1,
@@ -43141,7 +43141,7 @@ const TestModel& get_test_model_n_3_unused_output_quant8_signed_all_tensors_as_i
                         }, { // zero_bias7
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0, 0}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_REFERENCE,
                             .numberOfConsumers = 1,
@@ -43434,7 +43434,7 @@ const TestModel& get_test_model_n_3_unused_output_quant8_signed_all_tensors_as_i
                         }, { // zero_bias7
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0, 0}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_REFERENCE,
                             .numberOfConsumers = 1,
@@ -43727,7 +43727,7 @@ const TestModel& get_test_model_n_3_unused_output_quant8_signed_all_outputs_as_i
                         }, { // zero_bias7
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0, 0}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_REFERENCE,
                             .numberOfConsumers = 1,
@@ -43976,7 +43976,7 @@ const TestModel& get_test_model_n_4_2() {
                         }, { // zero_bias8
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_REFERENCE,
                             .numberOfConsumers = 1,
@@ -44225,7 +44225,7 @@ const TestModel& get_test_model_n_4_all_tensors_as_inputs_2() {
                         }, { // zero_bias8
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_REFERENCE,
                             .numberOfConsumers = 1,
@@ -44508,7 +44508,7 @@ const TestModel& get_test_model_n_4_all_tensors_as_inputs_all_inputs_as_internal
                         }, { // zero_bias8
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_REFERENCE,
                             .numberOfConsumers = 1,
@@ -44791,7 +44791,7 @@ const TestModel& get_test_model_n_4_all_outputs_as_internal_2() {
                         }, { // zero_bias8
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_REFERENCE,
                             .numberOfConsumers = 1,
@@ -45040,7 +45040,7 @@ const TestModel& get_test_model_n_4_relaxed_2() {
                         }, { // zero_bias8
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_REFERENCE,
                             .numberOfConsumers = 1,
@@ -45289,7 +45289,7 @@ const TestModel& get_test_model_n_4_relaxed_all_tensors_as_inputs_2() {
                         }, { // zero_bias8
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_REFERENCE,
                             .numberOfConsumers = 1,
@@ -45572,7 +45572,7 @@ const TestModel& get_test_model_n_4_relaxed_all_tensors_as_inputs_all_inputs_as_
                         }, { // zero_bias8
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_REFERENCE,
                             .numberOfConsumers = 1,
@@ -45855,7 +45855,7 @@ const TestModel& get_test_model_n_4_relaxed_all_outputs_as_internal_2() {
                         }, { // zero_bias8
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_REFERENCE,
                             .numberOfConsumers = 1,
@@ -46104,7 +46104,7 @@ const TestModel& get_test_model_n_4_float16_2() {
                         }, { // zero_bias8
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({0.0f, 0.0f}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_REFERENCE,
                             .numberOfConsumers = 1,
@@ -46353,7 +46353,7 @@ const TestModel& get_test_model_n_4_float16_all_tensors_as_inputs_2() {
                         }, { // zero_bias8
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({0.0f, 0.0f}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_REFERENCE,
                             .numberOfConsumers = 1,
@@ -46636,7 +46636,7 @@ const TestModel& get_test_model_n_4_float16_all_tensors_as_inputs_all_inputs_as_
                         }, { // zero_bias8
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({0.0f, 0.0f}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_REFERENCE,
                             .numberOfConsumers = 1,
@@ -46919,7 +46919,7 @@ const TestModel& get_test_model_n_4_float16_all_outputs_as_internal_2() {
                         }, { // zero_bias8
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({0.0f, 0.0f}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_REFERENCE,
                             .numberOfConsumers = 1,
@@ -47168,7 +47168,7 @@ const TestModel& get_test_model_n_4_quant8_2() {
                         }, { // zero_bias8
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0, 0}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_REFERENCE,
                             .numberOfConsumers = 1,
@@ -47417,7 +47417,7 @@ const TestModel& get_test_model_n_4_quant8_all_tensors_as_inputs_2() {
                         }, { // zero_bias8
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0, 0}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_REFERENCE,
                             .numberOfConsumers = 1,
@@ -47700,7 +47700,7 @@ const TestModel& get_test_model_n_4_quant8_all_tensors_as_inputs_all_inputs_as_i
                         }, { // zero_bias8
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0, 0}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_REFERENCE,
                             .numberOfConsumers = 1,
@@ -47983,7 +47983,7 @@ const TestModel& get_test_model_n_4_quant8_all_outputs_as_internal_2() {
                         }, { // zero_bias8
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0, 0}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_REFERENCE,
                             .numberOfConsumers = 1,
@@ -48232,7 +48232,7 @@ const TestModel& get_test_model_n_4_quant8_signed_2() {
                         }, { // zero_bias8
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0, 0}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_REFERENCE,
                             .numberOfConsumers = 1,
@@ -48481,7 +48481,7 @@ const TestModel& get_test_model_n_4_quant8_signed_all_tensors_as_inputs_2() {
                         }, { // zero_bias8
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0, 0}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_REFERENCE,
                             .numberOfConsumers = 1,
@@ -48764,7 +48764,7 @@ const TestModel& get_test_model_n_4_quant8_signed_all_tensors_as_inputs_all_inpu
                         }, { // zero_bias8
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0, 0}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_REFERENCE,
                             .numberOfConsumers = 1,
@@ -49047,7 +49047,7 @@ const TestModel& get_test_model_n_4_quant8_signed_all_outputs_as_internal_2() {
                         }, { // zero_bias8
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0, 0}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_REFERENCE,
                             .numberOfConsumers = 1,
@@ -49296,7 +49296,7 @@ const TestModel& get_test_model_n_5_2() {
                         }, { // zero_bias9
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_REFERENCE,
                             .numberOfConsumers = 1,
@@ -49545,7 +49545,7 @@ const TestModel& get_test_model_n_5_all_tensors_as_inputs_2() {
                         }, { // zero_bias9
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_REFERENCE,
                             .numberOfConsumers = 1,
@@ -49828,7 +49828,7 @@ const TestModel& get_test_model_n_5_all_tensors_as_inputs_all_inputs_as_internal
                         }, { // zero_bias9
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_REFERENCE,
                             .numberOfConsumers = 1,
@@ -50111,7 +50111,7 @@ const TestModel& get_test_model_n_5_all_outputs_as_internal_2() {
                         }, { // zero_bias9
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_REFERENCE,
                             .numberOfConsumers = 1,
@@ -50360,7 +50360,7 @@ const TestModel& get_test_model_n_5_relaxed_2() {
                         }, { // zero_bias9
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_REFERENCE,
                             .numberOfConsumers = 1,
@@ -50609,7 +50609,7 @@ const TestModel& get_test_model_n_5_relaxed_all_tensors_as_inputs_2() {
                         }, { // zero_bias9
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_REFERENCE,
                             .numberOfConsumers = 1,
@@ -50892,7 +50892,7 @@ const TestModel& get_test_model_n_5_relaxed_all_tensors_as_inputs_all_inputs_as_
                         }, { // zero_bias9
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_REFERENCE,
                             .numberOfConsumers = 1,
@@ -51175,7 +51175,7 @@ const TestModel& get_test_model_n_5_relaxed_all_outputs_as_internal_2() {
                         }, { // zero_bias9
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<float>({0.0f, 0.0f}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_REFERENCE,
                             .numberOfConsumers = 1,
@@ -51424,7 +51424,7 @@ const TestModel& get_test_model_n_5_float16_2() {
                         }, { // zero_bias9
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({0.0f, 0.0f}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_REFERENCE,
                             .numberOfConsumers = 1,
@@ -51673,7 +51673,7 @@ const TestModel& get_test_model_n_5_float16_all_tensors_as_inputs_2() {
                         }, { // zero_bias9
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({0.0f, 0.0f}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_REFERENCE,
                             .numberOfConsumers = 1,
@@ -51956,7 +51956,7 @@ const TestModel& get_test_model_n_5_float16_all_tensors_as_inputs_all_inputs_as_
                         }, { // zero_bias9
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({0.0f, 0.0f}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_REFERENCE,
                             .numberOfConsumers = 1,
@@ -52239,7 +52239,7 @@ const TestModel& get_test_model_n_5_float16_all_outputs_as_internal_2() {
                         }, { // zero_bias9
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<_Float16>({0.0f, 0.0f}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_REFERENCE,
                             .numberOfConsumers = 1,
@@ -52488,7 +52488,7 @@ const TestModel& get_test_model_n_5_quant8_2() {
                         }, { // zero_bias9
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0, 0}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_REFERENCE,
                             .numberOfConsumers = 1,
@@ -52737,7 +52737,7 @@ const TestModel& get_test_model_n_5_quant8_all_tensors_as_inputs_2() {
                         }, { // zero_bias9
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0, 0}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_REFERENCE,
                             .numberOfConsumers = 1,
@@ -53020,7 +53020,7 @@ const TestModel& get_test_model_n_5_quant8_all_tensors_as_inputs_all_inputs_as_i
                         }, { // zero_bias9
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0, 0}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_REFERENCE,
                             .numberOfConsumers = 1,
@@ -53303,7 +53303,7 @@ const TestModel& get_test_model_n_5_quant8_all_outputs_as_internal_2() {
                         }, { // zero_bias9
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0, 0}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_REFERENCE,
                             .numberOfConsumers = 1,
@@ -53552,7 +53552,7 @@ const TestModel& get_test_model_n_5_quant8_signed_2() {
                         }, { // zero_bias9
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0, 0}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_REFERENCE,
                             .numberOfConsumers = 1,
@@ -53801,7 +53801,7 @@ const TestModel& get_test_model_n_5_quant8_signed_all_tensors_as_inputs_2() {
                         }, { // zero_bias9
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0, 0}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_REFERENCE,
                             .numberOfConsumers = 1,
@@ -54084,7 +54084,7 @@ const TestModel& get_test_model_n_5_quant8_signed_all_tensors_as_inputs_all_inpu
                         }, { // zero_bias9
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0, 0}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_REFERENCE,
                             .numberOfConsumers = 1,
@@ -54367,7 +54367,7 @@ const TestModel& get_test_model_n_5_quant8_signed_all_outputs_as_internal_2() {
                         }, { // zero_bias9
                             .channelQuant = {},
                             .data = TestBuffer::createFromVector<int32_t>({0, 0}),
-                            .dimensions = {2, 1},
+                            .dimensions = {2},
                             .isIgnored = false,
                             .lifetime = TestOperandLifeTime::CONSTANT_REFERENCE,
                             .numberOfConsumers = 1,
