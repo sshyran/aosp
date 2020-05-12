@@ -530,9 +530,11 @@ hal::hidl_vec<hal::V1_3::Operand> convertToV1_3(const hal::hidl_vec<hal::V1_3::O
 
 bool compliantWithV1_0(const hal::V1_0::Request& request);
 bool compliantWithV1_0(const hal::V1_3::Request& request);
+bool compliantWithV1_2(const hal::V1_3::Request& request);
 
 hal::V1_0::Request convertToV1_0(const hal::V1_0::Request& request);
 hal::V1_0::Request convertToV1_0(const hal::V1_3::Request& request);
+hal::V1_0::Request convertToV1_2(const hal::V1_3::Request& request);
 hal::V1_3::Request convertToV1_3(const hal::V1_0::Request& request);
 hal::V1_3::Request convertToV1_3(const hal::V1_3::Request& request);
 

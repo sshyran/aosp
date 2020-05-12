@@ -18,6 +18,7 @@
 
 #include "GeneratedTestUtils.h"
 #include "HalInterfaces.h"
+#include "Memory.h"
 #include "MemoryUtils.h"
 #include "ModelBuilder.h"
 #include "TestNeuralNetworksWrapper.h"
@@ -71,8 +72,14 @@ static void testAvailableSinceV1_0(const WrapperModel& wrapperModel) {
     ASSERT_TRUE(compliantWithV1_0(hidlModel));
 }
 
+static void testAvailableSinceV1_2(const Request& request) {
+    ASSERT_FALSE(compliantWithV1_0(request));
+    ASSERT_TRUE(compliantWithV1_2(request));
+}
+
 static void testAvailableSinceV1_3(const Request& request) {
     ASSERT_FALSE(compliantWithV1_0(request));
+    ASSERT_FALSE(compliantWithV1_2(request));
 }
 
 static const WrapperOperandType kTypeTensorFloat(WrapperType::TENSOR_FLOAT32, {1});
@@ -126,7 +133,7 @@ TEST_F(ComplianceTest, Rank0TensorTemporaryVariable) {
     testAvailableSinceV1_2(model);
 }
 
-TEST_F(ComplianceTest, HardwareBuffer) {
+TEST_F(ComplianceTest, HardwareBufferModel) {
     const size_t memorySize = 20;
     AHardwareBuffer_Desc desc{
             .width = memorySize,
@@ -155,6 +162,29 @@ TEST_F(ComplianceTest, HardwareBuffer) {
     testAvailableSinceV1_2(model);
 
     AHardwareBuffer_release(buffer);
+}
+
+TEST_F(ComplianceTest, HardwareBufferRequest) {
+    const auto [n, ahwb] = MemoryRuntimeAHWB::create(1024);
+    ASSERT_EQ(n, ANEURALNETWORKS_NO_ERROR);
+    Request::MemoryPool sharedMemoryPool, ahwbMemoryPool = ahwb->getMemoryPool();
+    sharedMemoryPool.hidlMemory(allocateSharedMemory(1024));
+    ASSERT_TRUE(sharedMemoryPool.hidlMemory().valid());
+    ASSERT_TRUE(ahwbMemoryPool.hidlMemory().valid());
+
+    // AHardwareBuffer as input.
+    testAvailableSinceV1_2(Request{
+            .inputs = {{.hasNoValue = false, .location = {.poolIndex = 0}, .dimensions = {}}},
+            .outputs = {{.hasNoValue = false, .location = {.poolIndex = 1}, .dimensions = {}}},
+            .pools = {ahwbMemoryPool, sharedMemoryPool},
+    });
+
+    // AHardwareBuffer as output.
+    testAvailableSinceV1_2(Request{
+            .inputs = {{.hasNoValue = false, .location = {.poolIndex = 0}, .dimensions = {}}},
+            .outputs = {{.hasNoValue = false, .location = {.poolIndex = 1}, .dimensions = {}}},
+            .pools = {sharedMemoryPool, ahwbMemoryPool},
+    });
 }
 
 TEST_F(ComplianceTest, DeviceMemory) {
