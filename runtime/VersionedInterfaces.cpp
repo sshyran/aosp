@@ -243,17 +243,16 @@ std::tuple<int, std::vector<OutputShape>, Timing> VersionedIPreparedModel::execu
         return getResults(*callback);
     }
 
-    const bool compliant = compliantWithV1_0(request);
-    if (!compliant) {
-        LOG(ERROR) << "Could not handle execute or execute_1_2!";
-        return failWithStatus(ErrorStatus::GENERAL_FAILURE);
-    }
-    const V1_0::Request request10 = convertToV1_0(request);
-
     // version 1.2 HAL
     if (mPreparedModelV1_2 != nullptr) {
+        const bool compliant = compliantWithV1_2(request);
+        if (!compliant) {
+            LOG(ERROR) << "Could not handle execute_1_2!";
+            return failWithStatus(ErrorStatus::GENERAL_FAILURE);
+        }
+        const V1_0::Request request12 = convertToV1_2(request);
         Return<V1_0::ErrorStatus> ret =
-                mPreparedModelV1_2->execute_1_2(request10, measure, callback);
+                mPreparedModelV1_2->execute_1_2(request12, measure, callback);
         if (ret.isDeadObject()) {
             LOG(ERROR) << "execute_1_2 failure: " << ret.description();
             return failDeadObject();
@@ -273,6 +272,12 @@ std::tuple<int, std::vector<OutputShape>, Timing> VersionedIPreparedModel::execu
 
     // version 1.0 HAL
     if (mPreparedModelV1_0 != nullptr) {
+        const bool compliant = compliantWithV1_0(request);
+        if (!compliant) {
+            LOG(ERROR) << "Could not handle execute!";
+            return failWithStatus(ErrorStatus::GENERAL_FAILURE);
+        }
+        const V1_0::Request request10 = convertToV1_0(request);
         Return<V1_0::ErrorStatus> ret = mPreparedModelV1_0->execute(request10, callback);
         if (ret.isDeadObject()) {
             LOG(ERROR) << "execute failure: " << ret.description();
@@ -326,16 +331,16 @@ std::tuple<int, std::vector<OutputShape>, Timing> VersionedIPreparedModel::execu
 
     // version 1.2 HAL
     if (mPreparedModelV1_2 != nullptr) {
-        const bool compliant = compliantWithV1_0(request);
+        const bool compliant = compliantWithV1_2(request);
         if (!compliant) {
             LOG(ERROR) << "Could not handle executeSynchronously!";
             return kFailure;
         }
-        const V1_0::Request request10 = convertToV1_0(request);
+        const V1_0::Request request12 = convertToV1_2(request);
 
         std::tuple<int, std::vector<OutputShape>, Timing> result;
         Return<void> ret = mPreparedModelV1_2->executeSynchronously(
-                request10, measure,
+                request12, measure,
                 [&result](V1_0::ErrorStatus error, const hidl_vec<OutputShape>& outputShapes,
                           const Timing& timing) {
                     result = getExecutionResult(convertToV1_3(error), outputShapes, timing);
