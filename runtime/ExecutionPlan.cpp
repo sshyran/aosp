@@ -1108,6 +1108,7 @@ int ExecutionPlan::next(std::shared_ptr<Controller> controller,
             if (burstController != nullptr && controller->mBurstBuilder != nullptr) {
                 *burstController = controller->mBurstBuilder->getControllerAt(0);
             }
+            controller->mFallbackNextStepIndex = 0;
             controller->mNextStepIndex = 1;
             return ANEURALNETWORKS_NO_ERROR;
         }
