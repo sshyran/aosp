@@ -607,6 +607,7 @@ void LogicalStep::dump() const {
 int ExecutionPlan::CompoundBody::finish(const SourceModels* sourceModels,
                                         int32_t executionPreference, int32_t priority,
                                         const std::optional<Deadline>& deadline) {
+    CHECK(!mSuccessfulFinish);
     CHECK(!deadline.has_value());
     const ModelBuilder* mainModel = sourceModels->getModel(kMainModelInSourceModels);
 
@@ -700,6 +701,7 @@ void ExecutionPlan::CompoundBody::findControlFlowBoundaryConstants(
 
 int ExecutionPlan::SimpleBody::finish(const SourceModels*, int32_t executionPreference,
                                       int32_t priority, const std::optional<Deadline>& deadline) {
+    CHECK(!mSuccessfulFinish);
     CHECK(mDevice != nullptr);
     VLOG(COMPILATION) << "ExecutionPlan::SimpleBody::finish, compilation";
     const int n = compile(*mDevice, *mModel, executionPreference, priority, deadline, *mCacheDir,
@@ -1638,7 +1640,7 @@ int ModelBuilder::partitionTheWorkInternal(uint32_t sourceModelIndex,
             VLOG(COMPILATION) << "ModelBuilder::partitionTheWork: only one best device: "
                               << bestDeviceIndex << " = " << devices[bestDeviceIndex]->getName();
             plan->becomeSingleStep(devices[bestDeviceIndex], this);
-            return plan->finish(preference, priority, deadline);
+            return ANEURALNETWORKS_NO_ERROR;
         }
     }
 
