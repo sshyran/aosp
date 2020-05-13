@@ -172,5 +172,43 @@ TEST_F(FailingDriverTest, FailAfterInterpretedWhile) {
     ASSERT_EQ(fSqrt[1], 5);
 }
 
+// Regression test for b/155923033.
+TEST_F(FailingDriverTest, SimplePlan) {
+    // Model:
+    //     output0 = SQRT(input0)
+    //
+    // This results in a SIMPLE execution plan. When FailingTestDriver fails,
+    // partial CPU fallback should complete the execution.
+
+    WrapperOperandType floatType(WrapperType::TENSOR_FLOAT32, {2});
+
+    WrapperModel model;
+    {
+        uint32_t fInput = model.addOperand(&floatType);
+        uint32_t fSqrt = model.addOperand(&floatType);
+        model.addOperation(ANEURALNETWORKS_SQRT, {fInput}, {fSqrt});
+        model.identifyInputsAndOutputs({fInput}, {fSqrt});
+        ASSERT_TRUE(model.isValid());
+        ASSERT_EQ(model.finish(), Result::NO_ERROR);
+    }
+
+    WrapperCompilation compilation(&model);
+    ASSERT_EQ(compilation.finish(), Result::NO_ERROR);
+
+    const CompilationBuilder* compilationBuilder =
+            reinterpret_cast<CompilationBuilder*>(compilation.getHandle());
+    const ExecutionPlan& plan = compilationBuilder->forTest_getExecutionPlan();
+    ASSERT_TRUE(plan.isSimple());
+
+    WrapperExecution execution(&compilation);
+    const float fInput[] = {12 * 12, 5 * 5};
+    float fSqrt[] = {0, 0};
+    ASSERT_EQ(execution.setInput(0, &fInput), Result::NO_ERROR);
+    ASSERT_EQ(execution.setOutput(0, &fSqrt), Result::NO_ERROR);
+    ASSERT_EQ(execution.compute(), Result::NO_ERROR);
+    ASSERT_EQ(fSqrt[0], 12);
+    ASSERT_EQ(fSqrt[1], 5);
+}
+
 }  // namespace
 }  // namespace android::nn
