@@ -379,9 +379,9 @@ std::tuple<int, std::vector<OutputShape>, Timing> DriverPreparedModel::execute(
     const bool burstCompute = (burstController != nullptr);
     bool burstFallback = true;
     if (burstCompute) {
-        const bool compliant = compliantWithV1_0(request);
+        const bool compliant = compliantWithV1_2(request);
         if (compliant) {
-            V1_0::Request request10 = convertToV1_0(request);
+            V1_0::Request request12 = convertToV1_2(request);
             std::vector<intptr_t> memoryIds;
             memoryIds.reserve(localMemories.size());
             for (const Memory* memory : localMemories) {
@@ -390,9 +390,9 @@ std::tuple<int, std::vector<OutputShape>, Timing> DriverPreparedModel::execute(
             }
 
             VLOG(EXECUTION) << "Before ExecutionBurstController->compute() "
-                            << SHOW_IF_DEBUG(toString(request10));
+                            << SHOW_IF_DEBUG(toString(request12));
             std::tie(n, outputShapes, timing, burstFallback) =
-                    burstController->compute(request10, measure, memoryIds);
+                    burstController->compute(request12, measure, memoryIds);
         }
     }
 
