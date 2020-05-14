@@ -17,6 +17,8 @@
 #ifndef ANDROID_FRAMEWORKS_ML_NN_RUNTIME_TEST_FUZZING_RANDOM_GRAPH_GENERATOR_UTILS_H
 #define ANDROID_FRAMEWORKS_ML_NN_RUNTIME_TEST_FUZZING_RANDOM_GRAPH_GENERATOR_UTILS_H
 
+#include <android/log.h>
+
 #include <chrono>
 #include <fstream>
 #include <limits>
@@ -36,6 +38,8 @@ namespace nn {
 namespace fuzzing_test {
 
 #define NN_FUZZER_LOG_INIT(filename) Logger::get()->init((filename))
+#define NN_FUZZER_LOG_WRITE_FATAL_TO_SYSLOG(logTag) \
+    LoggerStream::writeAbortMessageToSystemLog(logTag)
 #define NN_FUZZER_LOG_CLOSE Logger::get()->close()
 #define NN_FUZZER_LOG              \
     if (!Logger::get()->enabled()) \
@@ -84,7 +88,11 @@ class LoggerStream {
     ~LoggerStream() {
         Logger::get()->log(ss.str() + '\n');
         if (mAbortAfterLog) {
-            std::cout << ss.str() << std::endl;
+            if (LoggerStream::mWriteAbortMessageToSystemLog) {
+                __android_log_print(ANDROID_LOG_FATAL, mLogTag.c_str(), "%s", ss.str().c_str());
+            } else {
+                std::cout << ss.str() << std::endl;
+            }
             abort();
         }
     }
@@ -95,11 +103,19 @@ class LoggerStream {
         return *this;
     }
 
+    static void writeAbortMessageToSystemLog(const std::string& logTag) {
+        LoggerStream::mWriteAbortMessageToSystemLog = true;
+        LoggerStream::mLogTag = logTag;
+    }
+
    private:
     LoggerStream(const LoggerStream&) = delete;
     LoggerStream& operator=(const LoggerStream&) = delete;
     std::stringstream ss;
     bool mAbortAfterLog;
+
+    static bool mWriteAbortMessageToSystemLog;
+    static std::string mLogTag;
 };
 
 template <typename T>
