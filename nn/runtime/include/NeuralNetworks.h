@@ -4381,6 +4381,8 @@ typedef enum {
      *
      * Outputs:
      * * 0: A tensor of the same {@link OperandCode} as input0.
+     *      If all dimensions are reduced and keep_dims is false, the output
+     *      shape is [1].
      *
      * Available since API level 29.
      */
@@ -4408,6 +4410,8 @@ typedef enum {
      *
      * Outputs:
      * * 0: A tensor of the same {@link OperandCode} as input0.
+     *      If all dimensions are reduced and keep_dims is false, the output
+     *      shape is [1].
      *
      * Available since API level 29.
      */
@@ -4438,6 +4442,8 @@ typedef enum {
      *
      * Outputs:
      * * 0: A tensor of the same {@link OperandCode} as input0.
+     *      If all dimensions are reduced and keep_dims is false, the output
+     *      shape is [1].
      *      For a {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} and
      *      {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED} tensor,
      *      the scale and zeroPoint must be the same as input0.
@@ -4471,6 +4477,8 @@ typedef enum {
      *
      * Outputs:
      * * 0: A tensor of the same {@link OperandCode} as input0.
+     *      If all dimensions are reduced and keep_dims is false, the output
+     *      shape is [1].
      *      For a {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM} and
      *      {@link ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED} tensor,
      *      the scale and zeroPoint must be the same as input0.
@@ -4501,6 +4509,8 @@ typedef enum {
      *
      * Outputs:
      * * 0: A tensor of the same {@link OperandCode} as input0.
+     *      If all dimensions are reduced and keep_dims is false, the output
+     *      shape is [1].
      *
      * Available since API level 29.
      */
@@ -4528,6 +4538,8 @@ typedef enum {
      *
      * Outputs:
      * * 0: A tensor of the same {@link OperandCode} as input0.
+     *      If all dimensions are reduced and keep_dims is false, the output
+     *      shape is [1].
      *
      * Available since API level 29.
      */
