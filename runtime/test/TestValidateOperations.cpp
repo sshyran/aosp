@@ -107,13 +107,17 @@ struct OperandTypeWithExtraParams {
             }
         }
 
-        if (channelQuant.has_value() && channelQuant->scales) {
-            return that.channelQuant->scales &&
-                   std::equal(channelQuant->scales, channelQuant->scales + channelQuant->scaleCount,
-                              that.channelQuant->scales);
-        } else {
-            return that.channelQuant->scales != nullptr;
+        if (channelQuant.has_value()) {
+            if (channelQuant->scales) {
+                return that.channelQuant->scales &&
+                       std::equal(channelQuant->scales,
+                                  channelQuant->scales + channelQuant->scaleCount,
+                                  that.channelQuant->scales);
+            } else {
+                return that.channelQuant->scales == nullptr;
+            }
         }
+        return true;
     }
 
     bool operator!=(const OperandTypeWithExtraParams& that) const { return !(*this == that); }
