@@ -2521,6 +2521,8 @@
      *      For a {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM} tensor,
      *      the scale and zeroPoint must be the same as input0.
 %/kind
+     *      If all dimensions are reduced and keep_dims is false, the output
+     *      shape is [1].
 %insert-lines AVAIL28
      */
     %{DeclareOperation MEAN 31},
@@ -2690,6 +2692,8 @@
      *      For a {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM} tensor,
      *      the scale and zeroPoint must be the same as input0.
 %/kind
+     *      If all input dimensions are equal to 1 and are to be squeezed, the
+     *      output shape is [1].
 %insert-lines AVAIL28
      */
     %{DeclareOperation SQUEEZE 34},
@@ -2749,6 +2753,8 @@
      *      For a {@link %{OperandTypeLinkPfx}TENSOR_QUANT8_ASYMM} tensor,
      *      the scale and zeroPoint must be the same as input0.
 %/kind
+     *      If shrink_axis_mask is true for all input dimensions, the output
+     *      shape is [1].
 %insert-lines AVAIL28
      */
     %{DeclareOperation STRIDED_SLICE 35},
@@ -3009,6 +3015,7 @@
      *
      * Outputs:
      * * 0: An (n - 1)-D {@link %{OperandTypeLinkPfx}TENSOR_INT32} tensor.
+     *      If input is 1-dimensional, the output shape is [1].
 %insert-lines AVAIL29
      */
     // There is no underscore in ARG_MAX to avoid name conflict with
@@ -3037,6 +3044,7 @@
      *
      * Outputs:
      * * 0: An (n - 1)-D {@link %{OperandTypeLinkPfx}TENSOR_INT32} tensor.
+     *      If input is 1-dimensional, the output shape is [1].
 %insert-lines AVAIL29
      */
     %{DeclareOperation_1.2 ARGMIN 40},  // See ARGMAX for naming discussion.
