@@ -13,20 +13,17 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+
 # Model operands
-op0 = Input("op0", ["TENSOR_FLOAT32", [9, 1, 1]])
-op1 = Output("op1", ["TENSOR_FLOAT32", [9, 1, 1]])
-op5 = Parameter("op5", ["TENSOR_FLOAT32", [1, 1, 1]], [0])
-op7 = Parameter("op7", ["TENSOR_INT32", [0]], value=None)  # omitted
-op8 = Internal("op8", ["TENSOR_FLOAT32", []])
+op1 = Input("op1", ["TENSOR_FLOAT32", [3]])
+op2 = Output("op2", ["TENSOR_INT32", [1]])
 
 # Model operations
 model = Model()
-model.Operation("FLOOR", op0).To(op1)
-model.Operation("SQUEEZE", op5, op7).To(op8)
+model.Operation("ARGMAX", op1, 0).To(op2)
 
 # Example
 Example({
-    op0: [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    op1: [0, 0, 0, 0, 0, 0, 0, 0, 0],
-}, model=model).DisableLifeTimeVariation()
+    op1: [1.0, 2.0, 4.0],
+    op2: [2],
+}, model=model)
