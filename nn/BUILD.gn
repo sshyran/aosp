@@ -1,0 +1,31 @@
+# Copyright 2020 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+import("//common-mk/pkg_config.gni")
+
+group("all") {
+  deps = [
+  ]
+  if (use.test) {
+    deps += [
+      ":chromeos_testrunner",
+    ]
+  }
+}
+
+if (use.test) {
+  executable("chromeos_testrunner") {
+    configs += [ "//common-mk:test" ]
+    include_dirs = [
+      "common/include",
+      "${sysroot}/usr/include/aosp",
+    ]
+    deps = [
+      "//common-mk/testrunner:testrunner",
+    ]
+    sources = [
+      "chromeos/tests/common/includes_test.cc"
+    ]
+  }
+}
