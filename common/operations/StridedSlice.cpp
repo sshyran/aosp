@@ -191,6 +191,11 @@ bool prepare(IOperationExecutionContext* context) {
         }
     }
 
+    // Handle the case when all dimensions are removed
+    if (outDims.empty()) {
+        outDims.push_back(1);
+    }
+
     Shape outputShape = context->getOutputShape(kOutputTensor);
     NN_RET_CHECK(SetShape(inputShape, &outputShape));
     outputShape.dimensions = outDims;
