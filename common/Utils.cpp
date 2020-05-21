@@ -692,12 +692,18 @@ static int validateHalVersion(ANeuralNetworksOperationType opType, HalVersion ha
     return ANEURALNETWORKS_NO_ERROR;
 }
 
-// Checks if two operands have the same types, shapes, and parameters.
-// Omits lifetime, numberOfConsumers, and location.
+// Checks if two operands have the same types, ranks (if specified), dimensions
+// (if specified), scales, zeroPoints, and extraParams.
 static bool compatible(const Operand& a, const Operand& b) {
     NN_RET_CHECK(a.type == b.type) << toString(a.type) << " != " << toString(b.type);
-    NN_RET_CHECK(a.dimensions == b.dimensions)
-            << toString(a.dimensions) << " != " << toString(b.dimensions);
+    if (a.dimensions.size() != 0 && b.dimensions.size() != 0) {
+        NN_RET_CHECK_EQ(a.dimensions.size(), b.dimensions.size()) << "Incompatible dimensions";
+        for (uint32_t i = 0, n = a.dimensions.size(); i < n; ++i) {
+            if (a.dimensions[i] != 0 && b.dimensions[i] != 0) {
+                NN_RET_CHECK_EQ(a.dimensions[i], b.dimensions[i]) << "Incompatible dimensions";
+            }
+        }
+    }
     NN_RET_CHECK_EQ(a.scale, b.scale);
     NN_RET_CHECK_EQ(a.zeroPoint, b.zeroPoint);
     NN_RET_CHECK(a.extraParams == b.extraParams)

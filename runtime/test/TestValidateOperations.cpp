@@ -54,7 +54,7 @@ static const int32_t kAvailableOperandCodes[] = {ANEURALNETWORKS_FLOAT32,
                                                  ANEURALNETWORKS_TENSOR_OEM_BYTE};
 
 ANeuralNetworksOperandType getOpType(int32_t opcode, uint32_t dimCount = 0,
-                                     uint32_t* dim = nullptr) {
+                                     const uint32_t* dim = nullptr) {
     ANeuralNetworksOperandType opType = {.type = opcode,
                                          .dimensionCount = dimCount,
                                          .dimensions = dim,
@@ -72,10 +72,11 @@ ANeuralNetworksOperandType getOpType(int32_t opcode, uint32_t dimCount = 0,
 
 struct OperandTypeWithExtraParams {
     OperandTypeWithExtraParams(const ANeuralNetworksOperandType& operandType)
-        : operandType(operandType), channelQuant(std::nullopt) {}
+        : operandType(operandType), channelQuant(std::nullopt), valueModel(std::nullopt) {}
 
     ANeuralNetworksOperandType operandType;
     std::optional<ANeuralNetworksSymmPerChannelQuantParams> channelQuant;
+    std::optional<const ANeuralNetworksModel*> valueModel;
 
     bool operator==(const OperandTypeWithExtraParams& that) const {
         if (operandType.type != that.operandType.type ||
@@ -89,6 +90,10 @@ struct OperandTypeWithExtraParams {
             (channelQuant.has_value() &&
              (channelQuant->channelDim != that.channelQuant->channelDim ||
               channelQuant->scaleCount != that.channelQuant->scaleCount))) {
+            return false;
+        }
+
+        if (valueModel != that.valueModel) {
             return false;
         }
 
@@ -346,6 +351,10 @@ class OperationTestBase {
         mValidOutputs[index].channelQuant = channelQuant;
     }
 
+    void setInputOperandValueFromModel(int32_t index, const ANeuralNetworksModel* valueModel) {
+        mValidInputs[index].valueModel = valueModel;
+    }
+
     // Add each operand separately and add the operation using these operands.
     // This function does not cover the cases that an operand is used mutiple times.
     int32_t addOperation(const std::vector<OperandTypeWithExtraParams>& inputs,
@@ -361,6 +370,10 @@ class OperationTestBase {
             if (inputs[i].channelQuant) {
                 ANeuralNetworksModel_setOperandSymmPerChannelQuantParams(
                         model, opIdx, &inputs[i].channelQuant.value());
+            }
+            if (inputs[i].valueModel) {
+                ANeuralNetworksModel_setOperandValueFromModel(model, opIdx,
+                                                              inputs[i].valueModel.value());
             }
             inputIds.push_back(opIdx++);
         }
@@ -662,6 +675,12 @@ std::ostream& operator<<(std::ostream& os, const OperandTypeWithExtraParams& ope
         os << "] }";
     } else {
         os << ", channelQuant: nullopt";
+    }
+
+    if (operand.valueModel.has_value()) {
+        os << ", valueModel: " << operand.valueModel.value();
+    } else {
+        os << ", valueModel: nullopt";
     }
     os << "}";
     return os;
@@ -4441,6 +4460,189 @@ TEST(OperationValidationTest, RANK_quant8) {
 
 TEST(OperationValidationTest, RANK_quant8_signed) {
     rankTest(ANEURALNETWORKS_TENSOR_QUANT8_ASYMM_SIGNED);
+}
+
+ANeuralNetworksModel* makeIdentityModel(const ANeuralNetworksOperandType* type) {
+    ANeuralNetworksModel* model = nullptr;
+    EXPECT_EQ(ANeuralNetworksModel_create(&model), ANEURALNETWORKS_NO_ERROR);
+    EXPECT_EQ(ANeuralNetworksModel_addOperand(model, type), ANEURALNETWORKS_NO_ERROR);
+    EXPECT_EQ(ANeuralNetworksModel_addOperand(model, type), ANEURALNETWORKS_NO_ERROR);
+    uint32_t inputs[] = {0};
+    uint32_t outputs[] = {1};
+    EXPECT_EQ(ANeuralNetworksModel_addOperation(model, ANEURALNETWORKS_CAST, std::size(inputs),
+                                                inputs, std::size(outputs), outputs),
+              ANEURALNETWORKS_NO_ERROR);
+    EXPECT_EQ(ANeuralNetworksModel_identifyInputsAndOutputs(model, std::size(inputs), inputs,
+                                                            std::size(outputs), outputs),
+              ANEURALNETWORKS_NO_ERROR);
+    EXPECT_EQ(ANeuralNetworksModel_finish(model), ANEURALNETWORKS_NO_ERROR);
+    return model;
+}
+
+void testIf(const std::vector<uint32_t>& outerDims, const ANeuralNetworksModel* thenModel,
+            const ANeuralNetworksModel* elseModel, bool testMutations) {
+    const uint32_t kThenOperand = 1;
+    const uint32_t kElseOperand = 2;
+    const uint32_t boolDims[] = {1};
+    ANeuralNetworksOperandType boolType =
+            getOpType(ANEURALNETWORKS_TENSOR_BOOL8, std::size(boolDims), boolDims);
+    ANeuralNetworksOperandType dataType =
+            getOpType(ANEURALNETWORKS_TENSOR_FLOAT32, outerDims.size(), outerDims.data());
+    ANeuralNetworksOperandType modelType = getOpType(ANEURALNETWORKS_MODEL);
+    OperationTestBase test(ANEURALNETWORKS_IF, {boolType, modelType, modelType, dataType},
+                           {dataType});
+    test.setInputOperandValueFromModel(kThenOperand, thenModel);
+    test.setInputOperandValueFromModel(kElseOperand, elseModel);
+    if (testMutations) {
+        test.testOpsValidations();
+    } else {
+        EXPECT_TRUE(test.testSuccess());
+    }
+}
+
+void testIf(const std::vector<uint32_t>& outerDims, const std::vector<uint32_t>& thenDims,
+            const std::vector<uint32_t>& elseDims, bool testMutations) {
+    ANeuralNetworksOperandType thenDataType =
+            getOpType(ANEURALNETWORKS_TENSOR_FLOAT32, thenDims.size(), thenDims.data());
+    ANeuralNetworksOperandType elseDataType =
+            getOpType(ANEURALNETWORKS_TENSOR_FLOAT32, elseDims.size(), elseDims.data());
+    ANeuralNetworksModel* thenModel = makeIdentityModel(&thenDataType);
+    ANeuralNetworksModel* elseModel = makeIdentityModel(&elseDataType);
+    testIf(outerDims, thenModel, elseModel, testMutations);
+    ANeuralNetworksModel_free(thenModel);
+    ANeuralNetworksModel_free(elseModel);
+}
+
+TEST(OperationValidationTest, IF) {
+    const std::vector<std::pair<std::string, std::vector<uint32_t>>> configurations = {
+            {"fully specified", {1, 2, 3}},
+            {"unknown dimensions", {0, 2, 0}},
+            {"unknown rank", {}},
+    };
+    // We skip mutation testing for all but the first configuration to avoid the
+    // exponential runtime blowup. The value of additional operand code and
+    // count mutations is negligible because whether the shapes are fully
+    // specified should have nothing to do with the operand code or count.
+    bool testMutations = true;
+    for (const auto& [outerTrace, outerDims] : configurations) {
+        SCOPED_TRACE(testing::Message() << "outerDims: " << outerTrace);
+        for (const auto& [thenTrace, thenDims] : configurations) {
+            SCOPED_TRACE(testing::Message() << "thenDims: " << thenTrace);
+            for (const auto& [elseTrace, elseDims] : configurations) {
+                SCOPED_TRACE(testing::Message() << "elseDims: " << elseTrace);
+                testIf(outerDims, thenDims, elseDims, testMutations);
+                testMutations = false;
+            }
+        }
+    }
+}
+
+// operand 0 --> +------+
+//               | LESS | --> operand 2
+// operand 1 --> +------+
+//
+ANeuralNetworksModel* makeWhileCondModel(const ANeuralNetworksOperandType* dataType,
+                                         const ANeuralNetworksOperandType* boolType) {
+    ANeuralNetworksModel* model = nullptr;
+    EXPECT_EQ(ANeuralNetworksModel_create(&model), ANEURALNETWORKS_NO_ERROR);
+    EXPECT_EQ(ANeuralNetworksModel_addOperand(model, dataType), ANEURALNETWORKS_NO_ERROR);
+    EXPECT_EQ(ANeuralNetworksModel_addOperand(model, dataType), ANEURALNETWORKS_NO_ERROR);
+    EXPECT_EQ(ANeuralNetworksModel_addOperand(model, boolType), ANEURALNETWORKS_NO_ERROR);
+    const uint32_t inputs[] = {0, 1};
+    const uint32_t outputs[] = {2};
+    EXPECT_EQ(ANeuralNetworksModel_addOperation(model, ANEURALNETWORKS_LESS, std::size(inputs),
+                                                inputs, std::size(outputs), outputs),
+              ANEURALNETWORKS_NO_ERROR);
+    EXPECT_EQ(ANeuralNetworksModel_identifyInputsAndOutputs(model, std::size(inputs), inputs,
+                                                            std::size(outputs), outputs),
+              ANEURALNETWORKS_NO_ERROR);
+    EXPECT_EQ(ANeuralNetworksModel_finish(model), ANEURALNETWORKS_NO_ERROR);
+    return model;
+}
+
+//               +------+
+// operand 0 --> | CAST | --> operand 2
+//               +------+
+//
+// operand 1 --> (unused)
+//
+ANeuralNetworksModel* makeWhileBodyModel(const ANeuralNetworksOperandType* type) {
+    ANeuralNetworksModel* model = nullptr;
+    EXPECT_EQ(ANeuralNetworksModel_create(&model), ANEURALNETWORKS_NO_ERROR);
+    EXPECT_EQ(ANeuralNetworksModel_addOperand(model, type), ANEURALNETWORKS_NO_ERROR);
+    EXPECT_EQ(ANeuralNetworksModel_addOperand(model, type), ANEURALNETWORKS_NO_ERROR);
+    EXPECT_EQ(ANeuralNetworksModel_addOperand(model, type), ANEURALNETWORKS_NO_ERROR);
+    const uint32_t castInputs[] = {0};
+    const uint32_t castOutputs[] = {2};
+    EXPECT_EQ(ANeuralNetworksModel_addOperation(model, ANEURALNETWORKS_CAST, std::size(castInputs),
+                                                castInputs, std::size(castOutputs), castOutputs),
+              ANEURALNETWORKS_NO_ERROR);
+    const uint32_t modelInputs[] = {0, 1};
+    const uint32_t modelOutputs[] = {2};
+    EXPECT_EQ(ANeuralNetworksModel_identifyInputsAndOutputs(model, std::size(modelInputs),
+                                                            modelInputs, std::size(modelOutputs),
+                                                            modelOutputs),
+              ANEURALNETWORKS_NO_ERROR);
+    EXPECT_EQ(ANeuralNetworksModel_finish(model), ANEURALNETWORKS_NO_ERROR);
+    return model;
+}
+
+void testWhile(const std::vector<uint32_t>& outerDims, const ANeuralNetworksModel* condModel,
+               const ANeuralNetworksModel* bodyModel, bool testMutations) {
+    const uint32_t kCondOperand = 0;
+    const uint32_t kBodyOperand = 1;
+    ANeuralNetworksOperandType modelType = getOpType(ANEURALNETWORKS_MODEL);
+    ANeuralNetworksOperandType dataType =
+            getOpType(ANEURALNETWORKS_TENSOR_FLOAT32, outerDims.size(), outerDims.data());
+    OperationTestBase test(ANEURALNETWORKS_WHILE, {modelType, modelType, dataType, dataType},
+                           {dataType});
+    test.setInputOperandValueFromModel(kCondOperand, condModel);
+    test.setInputOperandValueFromModel(kBodyOperand, bodyModel);
+    if (testMutations) {
+        test.testOpsValidations();
+    } else {
+        EXPECT_TRUE(test.testSuccess());
+    }
+}
+
+void testWhile(const std::vector<uint32_t>& outerDims, const std::vector<uint32_t>& condDims,
+               const std::vector<uint32_t>& bodyDims, bool testMutations) {
+    const uint32_t boolDims[] = {1};
+    ANeuralNetworksOperandType boolType =
+            getOpType(ANEURALNETWORKS_TENSOR_BOOL8, std::size(boolDims), boolDims);
+    ANeuralNetworksOperandType condDataType =
+            getOpType(ANEURALNETWORKS_TENSOR_FLOAT32, condDims.size(), condDims.data());
+    ANeuralNetworksOperandType bodyDataType =
+            getOpType(ANEURALNETWORKS_TENSOR_FLOAT32, bodyDims.size(), bodyDims.data());
+    ANeuralNetworksModel* condModel = makeWhileCondModel(&condDataType, &boolType);
+    ANeuralNetworksModel* bodyModel = makeWhileBodyModel(&bodyDataType);
+    testWhile(outerDims, condModel, bodyModel, testMutations);
+    ANeuralNetworksModel_free(condModel);
+    ANeuralNetworksModel_free(bodyModel);
+}
+
+TEST(OperationValidationTest, WHILE) {
+    const std::vector<std::pair<std::string, std::vector<uint32_t>>> configurations = {
+            {"fully specified", {1, 2, 3}},
+            {"unknown dimensions", {0, 2, 0}},
+            {"unknown rank", {}},
+    };
+    // We skip mutation testing for all but the first configuration to avoid the
+    // exponential runtime blowup. The value of additional operand code and
+    // count mutations is negligible because whether the shapes are fully
+    // specified should have nothing to do with the operand code or count.
+    bool testMutations = true;
+    for (const auto& [outerTrace, outerDims] : configurations) {
+        SCOPED_TRACE(testing::Message() << "outerDims: " << outerTrace);
+        for (const auto& [condTrace, condDims] : configurations) {
+            SCOPED_TRACE(testing::Message() << "condDims: " << condTrace);
+            for (const auto& [bodyTrace, bodyDims] : configurations) {
+                SCOPED_TRACE(testing::Message() << "bodyDims: " << bodyTrace);
+                testWhile(outerDims, condDims, bodyDims, testMutations);
+                testMutations = false;
+            }
+        }
+    }
 }
 
 }  // end namespace
