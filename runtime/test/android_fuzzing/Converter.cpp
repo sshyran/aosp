@@ -16,6 +16,8 @@
 
 #include "Converter.h"
 
+#include <android-base/logging.h>
+
 #include <algorithm>
 #include <random>
 #include <utility>
@@ -121,12 +123,30 @@ std::vector<TestOperation> convert(const Operations& operations) {
     return testOperations;
 }
 
+void calculateNumberOfConsumers(const std::vector<TestOperation>& operations,
+                                std::vector<TestOperand>* operands) {
+    CHECK(operands != nullptr);
+    const auto addConsumer = [operands](uint32_t operand) {
+        if (operand < operands->size()) {
+            operands->at(operand).numberOfConsumers++;
+        }
+    };
+    const auto addAllConsumers = [&addConsumer](const TestOperation& operation) {
+        std::for_each(operation.inputs.begin(), operation.inputs.end(), addConsumer);
+    };
+    std::for_each(operations.begin(), operations.end(), addAllConsumers);
+}
+
 TestModel convert(const Model& model) {
     std::vector<TestOperand> operands = convert(model.operands());
     std::vector<TestOperation> operations = convert(model.operations());
     std::vector<uint32_t> inputIndexes = convert(model.input_indexes());
     std::vector<uint32_t> outputIndexes = convert(model.output_indexes());
     const bool isRelaxed = model.is_relaxed();
+
+    // Calculate number of consumers.
+    calculateNumberOfConsumers(operations, &operands);
+
     return {.main = {.operands = std::move(operands),
                      .operations = std::move(operations),
                      .inputIndexes = std::move(inputIndexes),
