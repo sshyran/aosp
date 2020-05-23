@@ -5,27 +5,35 @@
 import("//common-mk/pkg_config.gni")
 
 group("all") {
-  deps = [
-  ]
+  deps = []
   if (use.test) {
-    deps += [
-      ":chromeos_testrunner",
-    ]
+    deps += [ ":chromeos_testrunner" ]
   }
+}
+
+pkg_config("target_defaults") {
+  cflags = [
+    "-Wall",
+    "-Werror",
+    "-Wextra",
+  ]
+  cflags_cc = [ "-std=c++17" ]
+  include_dirs = [ "${sysroot}/usr/include/aosp" ]
+  defines = []
+  pkg_deps = [ "libnnapi-support" ]
 }
 
 if (use.test) {
   executable("chromeos_testrunner") {
-    configs += [ "//common-mk:test" ]
+    configs += [
+      ":target_defaults",
+      "//common-mk:test",
+    ]
     include_dirs = [
       "common/include",
       "${sysroot}/usr/include/aosp",
     ]
-    deps = [
-      "//common-mk/testrunner:testrunner",
-    ]
-    sources = [
-      "chromeos/tests/common/includes_test.cc"
-    ]
+    deps = [ "//common-mk/testrunner:testrunner" ]
+    sources = [ "chromeos/tests/common/includes_test.cc" ]
   }
 }
