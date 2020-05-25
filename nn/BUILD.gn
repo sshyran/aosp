@@ -6,7 +6,8 @@ import("//common-mk/pkg_config.gni")
 
 group("all") {
   deps = [
-    ":common_random"
+    ":common_random",
+    ":runtime",
   ]
   if (use.test) {
     deps += [ ":chromeos_testrunner" ]
@@ -19,11 +20,15 @@ pkg_config("target_defaults") {
     "-Werror",
     "-Wextra",
   ]
-  cflags_cc = [ "-std=c++17" ]
-  include_dirs = [
-    "${sysroot}/usr/include/aosp",
+  cflags_cc = [
+    "-std=c++17",
+    # All of the HIDL generated interfaces are missing override directives.
+    "-Wno-inconsistent-missing-override"
   ]
-  defines = []
+  include_dirs = [ "${sysroot}/usr/include/aosp" ]
+  defines = [
+    "__ANDROID_API__=30",  # Android R
+  ]
   pkg_deps = [ "libnnapi-support" ]
 }
 
@@ -50,6 +55,33 @@ static_library("common_random") {
     "common/random/guarded_philox_random.cc",
     "common/random/random.cc",
     "common/random/simple_philox.cc",
+  ]
+}
+
+static_library("runtime") {
+  configs += [
+    ":target_defaults",
+  ]
+  include_dirs = [
+    "common/include",
+    "runtime/include",
+  ]
+  sources = [
+    # Commented out files require one or more of these to be fixed:
+    # b/157383102 - Port libfmq to ChromeOS
+    # b/157388904 - Implementation of hardware buffers API
+    # "runtime/BurstBuilder.cpp",
+    "runtime/Callbacks.cpp",
+    # "runtime/CompilationBuilder.cpp",
+    # "runtime/ExecutionBuilder.cpp",
+    # "runtime/ExecutionPlan.cpp",
+    # "runtime/Manager.cpp",
+    # "runtime/Memory.cpp",
+    "runtime/ModelArgumentInfo.cpp",
+    "runtime/ModelBuilder.cpp",
+    # "runtime/NeuralNetworks.cpp",
+    # "runtime/TypeManager.cpp",
+    # "runtime/VersionedInterfaces.cpp",
   ]
 }
 

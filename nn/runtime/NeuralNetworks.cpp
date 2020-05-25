@@ -22,6 +22,7 @@
 
 #include "NeuralNetworks.h"
 
+#include <android/hardware_buffer.h>
 #include <vndk/hardware_buffer.h>
 
 #include <algorithm>

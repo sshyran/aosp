@@ -19,7 +19,6 @@
 
 #include <android-base/macros.h>
 #include <sys/mman.h>
-#include <vndk/hardware_buffer.h>
 
 #include <algorithm>
 #include <map>
@@ -35,6 +34,10 @@
 #include "HalInterfaces.h"
 #include "NeuralNetworks.h"
 #include "Utils.h"
+
+extern "C" {
+    typedef struct AHardwareBuffer AHardwareBuffer;
+}
 
 namespace android {
 namespace nn {

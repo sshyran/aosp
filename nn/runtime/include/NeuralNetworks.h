@@ -42,10 +42,15 @@
  *   - DO NOT CHANGE THE LAYOUT OR SIZE OF STRUCTURES
  */
 
-#include <android/hardware_buffer.h>
+#include <android/log.h>  // Required for __INTRODUCED_IN(x)
+
 #include <stddef.h>
 #include <stdint.h>
 #include <sys/cdefs.h>
+
+extern "C" {
+    typedef struct AHardwareBuffer AHardwareBuffer;
+}
 
 __BEGIN_DECLS
 
