@@ -6,6 +6,7 @@ import("//common-mk/pkg_config.gni")
 
 group("all") {
   deps = [
+    ":common_operations",
     ":libneuralnetworks",
   ]
   if (use.test) {
@@ -33,7 +34,9 @@ pkg_config("target_defaults") {
   cflags_cc = [
     "-std=c++17",
     # All of the HIDL generated interfaces are missing override directives.
-    "-Wno-inconsistent-missing-override"
+    "-Wno-inconsistent-missing-override",
+    # gemmlowp library has many signed with unsigned compares.
+    "-Wno-sign-compare",
   ]
   include_dirs = [ "${sysroot}/usr/include/aosp" ]
   defines = [
@@ -48,9 +51,11 @@ pkg_config("common_defaults") {
   ]
   include_dirs = [
     "chromeos/includes",
+    "common",
     "common/include",
-    "${sysroot}/usr/include/eigen3",
     "${sysroot}/usr/include/tensorflow",
+    "${sysroot}/usr/include/tensorflow/nnapi/include",
+    "${sysroot}/usr/include/tensorflow/nnapi/include/external/gemmlowp",
     "common/random",
   ]
   defines = []
@@ -94,6 +99,99 @@ static_library("runtime") {
     # "runtime/NeuralNetworks.cpp",
     # "runtime/TypeManager.cpp",
     # "runtime/VersionedInterfaces.cpp",
+  ]
+}
+
+static_library("common_operations") {
+  configs += [
+    ":target_defaults",
+    ":common_defaults",
+    "//common-mk:pic",
+  ]
+  deps = [
+    ":common_random",
+  ]
+  cflags_cc = [
+    # Many functions ignore some parameters
+    "-Wno-unused-parameter",
+    "-Wno-unused-variable",
+    "-Wno-deprecated-copy",
+    "-Wno-unreachable-code-return",
+  ]
+  include_dirs = [
+    "runtime/include",
+  ]
+  sources = [
+    # "common/operations/Activation.cpp", # no type named tflite::HardSwishParams
+    "common/operations/ArgMinMax.cpp",
+    "common/operations/BidirectionalSequenceLSTM.cpp",
+    "common/operations/BidirectionalSequenceRNN.cpp",
+    "common/operations/Broadcast.cpp",
+    "common/operations/Cast.cpp",
+    "common/operations/ChannelShuffle.cpp",
+    "common/operations/Comparisons.cpp",
+    "common/operations/Concatenation.cpp",
+    "common/operations/Conv2D.cpp",
+    "common/operations/DepthwiseConv2D.cpp",
+    "common/operations/Dequantize.cpp",
+    "common/operations/Elementwise.cpp",
+    "common/operations/Elu.cpp",
+    "common/operations/EmbeddingLookup.cpp",
+    "common/operations/EmbeddingLookupTest.cpp",
+    "common/operations/ExpandDims.cpp",
+    "common/operations/Fill.cpp",
+    "common/operations/FullyConnected.cpp",
+    "common/operations/Gather.cpp",
+    "common/operations/GenerateProposals.cpp",
+    "common/operations/GroupedConv2D.cpp",
+    "common/operations/HashtableLookup.cpp",
+    "common/operations/HashtableLookupTest.cpp",
+    "common/operations/HeatmapMaxKeypoint.cpp",
+    "common/operations/InstanceNormalization.cpp",
+    "common/operations/L2Normalization.cpp",
+    "common/operations/LayerNormLSTMTest.cpp",
+    "common/operations/LocalResponseNormalization.cpp",
+    "common/operations/LogicalAndOr.cpp",
+    "common/operations/LogicalNot.cpp",
+    "common/operations/LogSoftmax.cpp",
+    # "common/operations/LSHProjection.cpp", # Requires utils/hash/farmhash.h
+    "common/operations/LSHProjectionTest.cpp",
+    # "common/operations/LSTM.cpp", # Too few arguments in function call
+    "common/operations/LSTMTest.cpp",
+    "common/operations/MaximumMinimum.cpp",
+    "common/operations/Multinomial.cpp",
+    "common/operations/MultinomialTest.cpp",
+    "common/operations/Neg.cpp",
+    "common/operations/Pooling.cpp",
+    "common/operations/Pow.cpp",
+    "common/operations/PRelu.cpp",
+    "common/operations/QLSTM.cpp",
+    "common/operations/Quantize.cpp",
+    "common/operations/QuantizedLSTM.cpp",
+    "common/operations/QuantizedLSTMTest.cpp",
+    "common/operations/Rank.cpp",
+    "common/operations/Reduce.cpp",
+    "common/operations/Reshape.cpp",
+    # "common/operations/ResizeImageOps.cpp", # No matching function call tflite::reference_ops::ResizeBilinear
+    "common/operations/RNN.cpp",
+    "common/operations/RNNTest.cpp",
+    "common/operations/RoiAlign.cpp",
+    "common/operations/RoiPooling.cpp",
+    "common/operations/Select.cpp",
+    "common/operations/SimpleMath.cpp",
+    "common/operations/Slice.cpp",
+    # "common/operations/Softmax.cpp", # undeclared identifier FLT_MAX
+    "common/operations/Split.cpp",
+    "common/operations/Squeeze.cpp",
+    "common/operations/StridedSlice.cpp",
+    # "common/operations/SVDF.cpp", # VectorShiftLeft does not name a template
+    "common/operations/SVDFTest.cpp",
+    "common/operations/Tile.cpp",
+    "common/operations/TopK_V2.cpp",
+    "common/operations/TransposeConv2D.cpp",
+    "common/operations/Transpose.cpp",
+    "common/operations/UnidirectionalSequenceLSTM.cpp",
+    "common/operations/UnidirectionalSequenceRNN.cpp",
   ]
 }
 
