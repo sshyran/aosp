@@ -4,6 +4,7 @@
 
 #include <android-base/logging.h>
 #include <gtest/gtest.h>
+#include <log/log.h>
 
 #include "GraphDump.h"
 #include "TokenHasher.h"
@@ -18,6 +19,12 @@ TEST(IncludesTest, NotReallyATest) {
 
 // Tests that android-base has been linked correctly and the methods are
 // available.
-TEST(IncludesTest, LogLinkTest) {
+TEST(IncludesTest, BaseLogLinkTest) {
   LOG(INFO) << "Logged Something, so linking must be working";
+}
+
+// Tests that liblog writing has been linked correctly and the methods are
+// available.
+TEST(IncludesTest, LibLogLinkTest) {
+  ALOGI("Logged something else, so linking still must be working");
 }
