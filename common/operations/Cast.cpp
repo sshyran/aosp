@@ -17,11 +17,12 @@
 #define LOG_TAG "Operations"
 
 #include "Cast.h"
+
+#include <algorithm>
+
 #include "HalInterfaces.h"
 #include "Operations.h"
 #include "Tracing.h"
-
-#include <algorithm>
 
 namespace android {
 namespace nn {
@@ -67,9 +68,6 @@ bool copyToTensor(const FromT* inputData, int numElements, uint8_t* outputData,
 }  // namespace
 
 bool prepare(const Shape& input, Shape* output) {
-    if (input.dimensions.size() != output->dimensions.size()) {
-        return false;
-    }
     output->dimensions = input.dimensions;
     return true;
 }
