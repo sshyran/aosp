@@ -5,7 +5,9 @@
 import("//common-mk/pkg_config.gni")
 
 group("all") {
-  deps = []
+  deps = [
+    ":common_random"
+  ]
   if (use.test) {
     deps += [ ":chromeos_testrunner" ]
   }
@@ -18,22 +20,55 @@ pkg_config("target_defaults") {
     "-Wextra",
   ]
   cflags_cc = [ "-std=c++17" ]
-  include_dirs = [ "${sysroot}/usr/include/aosp" ]
+  include_dirs = [
+    "${sysroot}/usr/include/aosp",
+  ]
   defines = []
   pkg_deps = [ "libnnapi-support" ]
 }
 
+pkg_config("common_defaults") {
+  configs = [
+    ":target_defaults",
+  ]
+  include_dirs = [
+    "chromeos/includes",
+    "common/include",
+    "${sysroot}/usr/include/eigen3",
+    "${sysroot}/usr/include/tensorflow",
+    "common/random",
+  ]
+  defines = []
+  pkg_deps = [ "libnnapi-support" ]
+}
+
+static_library("common_random") {
+  configs += [
+    ":common_defaults",
+  ]
+  sources = [
+    "common/random/guarded_philox_random.cc",
+    "common/random/random.cc",
+    "common/random/simple_philox.cc",
+  ]
+}
+
 if (use.test) {
   executable("chromeos_testrunner") {
+    include_dirs = [
+      "common/random",
+    ]
     configs += [
-      ":target_defaults",
+      ":common_defaults",
       "//common-mk:test",
     ]
-    include_dirs = [
-      "common/include",
-      "${sysroot}/usr/include/aosp",
+    deps = [
+      ":common_random",
+      "//common-mk/testrunner:testrunner",
     ]
-    deps = [ "//common-mk/testrunner:testrunner" ]
-    sources = [ "chromeos/tests/common/includes_test.cc" ]
+    sources = [
+      "chromeos/tests/common/includes_test.cc",
+      "chromeos/tests/common/random_test.cc"
+    ]
   }
 }

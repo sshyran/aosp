@@ -25,6 +25,10 @@ limitations under the License.
 #include <algorithm>
 #include <type_traits>
 
+// NOTE: bfloat16.h uses iostream, but does not include it.
+// Already fixed in upstream tensorflow 2020-02-24 (revision 83b89cfe)
+// TODO(avg): remove when Tensorflow is uprevved
+#include <iostream>
 #include <tensorflow/core/lib/bfloat16/bfloat16.h>
 #include <unsupported/Eigen/CXX11/Tensor>
 
