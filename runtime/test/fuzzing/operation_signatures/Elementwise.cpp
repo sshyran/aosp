@@ -131,41 +131,51 @@ DEFINE_ELEMENTWISE_WITH_QUANT_OUTPUT_SIGNATURE(LOGISTIC, V1_3, /*scale=*/1.f / 2
 DEFINE_ELEMENTWISE_WITH_QUANT_OUTPUT_SIGNATURE(TANH, V1_3, /*scale=*/1.f / 128, /*zeroPoint=*/0,
                                                TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED);
 
+static void castingOpConstructor(TestOperandType dataType, uint32_t rank, RandomOperation* op) {
+    sameDimensionOpConstructor(dataType, rank, op);
+
+    // If it is casting to/from a FP16 data type, the source/destination should have a scale
+    // representable in FP16 to avoid precision loss.
+    if (op->inputs[0]->dataType == TestOperandType::TENSOR_FLOAT16) {
+        op->outputs[0]->scale = static_cast<_Float16>(op->outputs[0]->scale);
+    } else if (op->outputs[0]->dataType == TestOperandType::TENSOR_FLOAT16) {
+        op->inputs[0]->scale = static_cast<_Float16>(op->inputs[0]->scale);
+    }
+}
+
 // Operations with output data type different from input.
-#define DEFINE_ELEMENTWISE_WITH_TYPED_OUTPUT_SIGNATURE(op, ver, outType, ...) \
-    DEFINE_OPERATION_SIGNATURE(op##_##outType##_##ver){                       \
-            .opType = TestOperationType::op,                                  \
-            .supportedDataTypes = {__VA_ARGS__},                              \
-            .supportedRanks = {1, 2, 3, 4},                                   \
-            .version = TestHalVersion::ver,                                   \
-            .inputs = {INPUT_DEFAULT},                                        \
-            .outputs = {OUTPUT_TYPED(TestOperandType::outType)},              \
-            .constructor = sameDimensionOpConstructor};
+#define DEFINE_QUANTIZATION_OP_SIGNATURE(op, ver, outType, ...)  \
+    DEFINE_OPERATION_SIGNATURE(op##_##outType##_##ver){          \
+            .opType = TestOperationType::op,                     \
+            .supportedDataTypes = {__VA_ARGS__},                 \
+            .supportedRanks = {1, 2, 3, 4},                      \
+            .version = TestHalVersion::ver,                      \
+            .inputs = {INPUT_DEFAULT},                           \
+            .outputs = {OUTPUT_TYPED(TestOperandType::outType)}, \
+            .constructor = castingOpConstructor};
 
-DEFINE_ELEMENTWISE_WITH_TYPED_OUTPUT_SIGNATURE(DEQUANTIZE, V1_0, /*outType=*/TENSOR_FLOAT32,
-                                               TestOperandType::TENSOR_QUANT8_ASYMM);
+DEFINE_QUANTIZATION_OP_SIGNATURE(DEQUANTIZE, V1_0, /*outType=*/TENSOR_FLOAT32,
+                                 TestOperandType::TENSOR_QUANT8_ASYMM);
 
-DEFINE_ELEMENTWISE_WITH_TYPED_OUTPUT_SIGNATURE(DEQUANTIZE, V1_2, /*outType=*/TENSOR_FLOAT32,
-                                               TestOperandType::TENSOR_QUANT8_SYMM);
+DEFINE_QUANTIZATION_OP_SIGNATURE(DEQUANTIZE, V1_2, /*outType=*/TENSOR_FLOAT32,
+                                 TestOperandType::TENSOR_QUANT8_SYMM);
 
-DEFINE_ELEMENTWISE_WITH_TYPED_OUTPUT_SIGNATURE(DEQUANTIZE, V1_2, /*outType=*/TENSOR_FLOAT16,
-                                               TestOperandType::TENSOR_QUANT8_ASYMM,
-                                               TestOperandType::TENSOR_QUANT8_SYMM);
+DEFINE_QUANTIZATION_OP_SIGNATURE(DEQUANTIZE, V1_2, /*outType=*/TENSOR_FLOAT16,
+                                 TestOperandType::TENSOR_QUANT8_ASYMM,
+                                 TestOperandType::TENSOR_QUANT8_SYMM);
 
-DEFINE_ELEMENTWISE_WITH_TYPED_OUTPUT_SIGNATURE(DEQUANTIZE, V1_3, /*outType=*/TENSOR_FLOAT32,
-                                               TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED);
+DEFINE_QUANTIZATION_OP_SIGNATURE(DEQUANTIZE, V1_3, /*outType=*/TENSOR_FLOAT32,
+                                 TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED);
 
-DEFINE_ELEMENTWISE_WITH_TYPED_OUTPUT_SIGNATURE(DEQUANTIZE, V1_3, /*outType=*/TENSOR_FLOAT16,
-                                               TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED);
+DEFINE_QUANTIZATION_OP_SIGNATURE(DEQUANTIZE, V1_3, /*outType=*/TENSOR_FLOAT16,
+                                 TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED);
 
-DEFINE_ELEMENTWISE_WITH_TYPED_OUTPUT_SIGNATURE(QUANTIZE, V1_2, /*outType=*/TENSOR_QUANT8_ASYMM,
-                                               TestOperandType::TENSOR_FLOAT32,
-                                               TestOperandType::TENSOR_FLOAT16);
+DEFINE_QUANTIZATION_OP_SIGNATURE(QUANTIZE, V1_2, /*outType=*/TENSOR_QUANT8_ASYMM,
+                                 TestOperandType::TENSOR_FLOAT32, TestOperandType::TENSOR_FLOAT16);
 
-DEFINE_ELEMENTWISE_WITH_TYPED_OUTPUT_SIGNATURE(QUANTIZE, V1_3,
-                                               /*outType=*/TENSOR_QUANT8_ASYMM_SIGNED,
-                                               TestOperandType::TENSOR_FLOAT32,
-                                               TestOperandType::TENSOR_FLOAT16);
+DEFINE_QUANTIZATION_OP_SIGNATURE(QUANTIZE, V1_3,
+                                 /*outType=*/TENSOR_QUANT8_ASYMM_SIGNED,
+                                 TestOperandType::TENSOR_FLOAT32, TestOperandType::TENSOR_FLOAT16);
 
 #define DEFINE_CAST_SIGNATURE(ver, outType, ...)                 \
     DEFINE_OPERATION_SIGNATURE(CAST_##outType##_##ver){          \
@@ -175,7 +185,7 @@ DEFINE_ELEMENTWISE_WITH_TYPED_OUTPUT_SIGNATURE(QUANTIZE, V1_3,
             .version = TestHalVersion::ver,                      \
             .inputs = {INPUT_DEFAULT},                           \
             .outputs = {OUTPUT_TYPED(TestOperandType::outType)}, \
-            .constructor = sameDimensionOpConstructor};
+            .constructor = castingOpConstructor};
 
 DEFINE_CAST_SIGNATURE(V1_2, /*outType=*/TENSOR_FLOAT32, TestOperandType::TENSOR_FLOAT32,
                       TestOperandType::TENSOR_FLOAT16, TestOperandType::TENSOR_QUANT8_ASYMM,
