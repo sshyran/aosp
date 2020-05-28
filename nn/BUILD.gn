@@ -6,12 +6,22 @@ import("//common-mk/pkg_config.gni")
 
 group("all") {
   deps = [
-    ":common_random",
-    ":runtime",
+    ":libneuralnetworks",
   ]
   if (use.test) {
     deps += [ ":chromeos_testrunner" ]
   }
+}
+
+shared_library("libneuralnetworks") {
+  configs += [ ":target_defaults" ]
+  deps = [
+    ":common_random",
+    ":runtime",
+  ]
+  libs = [
+    "tensorflowlite",
+  ]
 }
 
 pkg_config("target_defaults") {
@@ -50,6 +60,7 @@ pkg_config("common_defaults") {
 static_library("common_random") {
   configs += [
     ":common_defaults",
+    "//common-mk:pic",
   ]
   sources = [
     "common/random/guarded_philox_random.cc",
@@ -61,6 +72,7 @@ static_library("common_random") {
 static_library("runtime") {
   configs += [
     ":target_defaults",
+    "//common-mk:pic",
   ]
   include_dirs = [
     "common/include",
