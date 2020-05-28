@@ -37,7 +37,7 @@ class RNN {
     bool Eval();
 
     static constexpr int kInputTensor = 0;
-    static constexpr int kWeightsTensor = 1;  // Optional
+    static constexpr int kWeightsTensor = 1;
     static constexpr int kRecurrentWeightsTensor = 2;
     static constexpr int kBiasTensor = 3;
     static constexpr int kHiddenStateInTensor = 4;
