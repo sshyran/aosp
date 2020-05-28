@@ -38,9 +38,11 @@ SVDF::SVDF(const Operation& operation, RunTimeOperandInfo* operands) {
     bias_ = GetInput(operation, operands, kBiasTensor);
     state_in_ = GetInput(operation, operands, kStateInTensor);
 
-    params_.rank_ = getScalarData<int>(*GetInput(operation, operands, kRankParam));
-    params_.activation_ = static_cast<TfLiteFusedActivation>(
-            getScalarData<int>(*GetInput(operation, operands, kActivationParam)));
+    const auto& rankOperand = *GetInput(operation, operands, kRankParam);
+    params_.rank_ = getScalarDataWithDefault<int>(rankOperand, 0);
+    const auto& activationOperand = *GetInput(operation, operands, kActivationParam);
+    params_.activation_ = static_cast<TfLiteFusedActivation>(getScalarDataWithDefault<int>(
+            activationOperand, TfLiteFusedActivation::kTfLiteActNone));
 
     state_out_ = GetOutput(operation, operands, kStateOutTensor);
     output_ = GetOutput(operation, operands, kOutputTensor);
@@ -53,7 +55,21 @@ bool SVDF::Prepare(const Operation& operation, RunTimeOperandInfo* operands, Sha
     const int num_inputs = NumInputsWithValues(operation, operands);
 
     NN_CHECK(num_inputs == 6 || num_inputs == 7);
+    constexpr int requiredInputs[] = {
+            kInputTensor, kWeightsFeatureTensor, kWeightsTimeTensor, kStateInTensor,
+            kRankParam,   kActivationParam,
+    };
+    for (const int requiredInput : requiredInputs) {
+        NN_RET_CHECK(!IsNullInput(GetInput(operation, operands, requiredInput)))
+                << "required input " << requiredInput << " is omitted";
+    }
     NN_CHECK_EQ(NumOutputs(operation), 2);
+
+    // Check that the scalar operands' buffers are large enough.
+    const auto& rankOperand = *GetInput(operation, operands, kRankParam);
+    NN_RET_CHECK(rankOperand.length >= sizeof(int));
+    const auto& activationOperand = *GetInput(operation, operands, kActivationParam);
+    NN_RET_CHECK(activationOperand.length >= sizeof(int));
 
     const RunTimeOperandInfo* input = GetInput(operation, operands, SVDF::kInputTensor);
     const RunTimeOperandInfo* weights_feature =
