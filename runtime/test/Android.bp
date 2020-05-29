@@ -41,7 +41,6 @@ cc_defaults {
         "android.hardware.neuralnetworks@1.3",
         "libc++fs",
         "libneuralnetworks_generated_test_harness",
-        "libsync",
         "libtextclassifier_hash_static",
     ],
     whole_static_libs: [

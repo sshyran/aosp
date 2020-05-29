@@ -18,8 +18,6 @@
 
 #include "ExecutionBuilder.h"
 
-#include <android/sync.h>
-
 #include <algorithm>
 #include <limits>
 #include <memory>
