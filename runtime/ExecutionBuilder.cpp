@@ -876,7 +876,11 @@ std::vector<OutputShape> ExecutionBuilder::getInitialOutputShapes() const {
     std::vector<OutputShape> outputShapes(mOutputs.size());
     std::transform(mOutputs.begin(), mOutputs.end(), outputShapes.begin(),
                    [](const auto& x) -> OutputShape {
-                       return {.dimensions = x.dimensions(), .isSufficient = true};
+                       hidl_vec<uint32_t> dimensions;
+                       if (x.state() != ModelArgumentInfo::HAS_NO_VALUE) {
+                           dimensions = x.dimensions();
+                       }
+                       return {.dimensions = std::move(dimensions), .isSufficient = true};
                    });
     return outputShapes;
 }
