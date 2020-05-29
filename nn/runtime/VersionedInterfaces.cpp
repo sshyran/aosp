@@ -24,7 +24,6 @@
 #include <android-base/properties.h>
 #include <android-base/scopeguard.h>
 #include <android-base/thread_annotations.h>
-#include <android/sync.h>
 #include <cutils/native_handle.h>
 
 #include <algorithm>

@@ -17,7 +17,6 @@
 #ifndef ANDROID_FRAMEWORKS_ML_NN_RUNTIME_EVENT_H
 #define ANDROID_FRAMEWORKS_ML_NN_RUNTIME_EVENT_H
 
-#include <android/sync.h>
 #include <utility>
 
 #include "Callbacks.h"
