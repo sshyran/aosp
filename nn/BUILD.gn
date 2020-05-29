@@ -120,6 +120,10 @@ static_library("common_operations") {
   ]
   include_dirs = [
     "runtime/include",
+    "${sysroot}/usr/include/libtextclassifier",
+  ]
+  defines = [
+    "NAMESPACE_FOR_HASH_FUNCTIONS=farmhash",
   ]
   sources = [
     # "common/operations/Activation.cpp", # no type named tflite::HardSwishParams
@@ -154,7 +158,7 @@ static_library("common_operations") {
     "common/operations/LogicalAndOr.cpp",
     "common/operations/LogicalNot.cpp",
     "common/operations/LogSoftmax.cpp",
-    # "common/operations/LSHProjection.cpp", # Requires utils/hash/farmhash.h
+    "common/operations/LSHProjection.cpp",
     "common/operations/LSHProjectionTest.cpp",
     # "common/operations/LSTM.cpp", # Too few arguments in function call
     "common/operations/LSTMTest.cpp",
