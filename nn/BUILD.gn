@@ -6,7 +6,6 @@ import("//common-mk/pkg_config.gni")
 
 group("all") {
   deps = [
-    ":common_operations",
     ":libneuralnetworks",
   ]
   if (use.test) {
@@ -18,6 +17,7 @@ shared_library("libneuralnetworks") {
   configs += [ ":target_defaults" ]
   deps = [
     ":common_random",
+    ":common_operations",
     ":runtime",
   ]
   libs = [
