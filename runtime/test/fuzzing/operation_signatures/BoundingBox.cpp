@@ -17,6 +17,8 @@
 #include <algorithm>
 #include <vector>
 
+#include "TestHarness.h"
+#include "fuzzing/RandomGraphGeneratorUtils.h"
 #include "fuzzing/operation_signatures/OperationSignatureUtils.h"
 
 namespace android {
@@ -71,6 +73,8 @@ static void roiConstructor(TestOperandType, uint32_t rank, RandomOperation* op) 
 
 template <typename T>
 inline void fillRoiTensor(uint32_t numRois, T maxH, T maxW, RandomOperand* op) {
+    NN_FUZZER_CHECK(!op->buffer.empty())
+            << "Trying to fill ROI tensor but the underlying buffer has not been allocated";
     for (uint32_t i = 0; i < numRois; i++) {
         T low = getUniform<T>(0, maxW);
         op->value<T>(i * 4) = low;
@@ -177,6 +181,7 @@ DEFINE_ROI_POOLING_SIGNATURE(V1_3, TestOperandType::TENSOR_QUANT8_ASYMM_SIGNED);
 
 static void heatmapMaxKeypointConstructor(TestOperandType, uint32_t rank, RandomOperation* op) {
     NN_FUZZER_CHECK(rank == 4);
+
     bool useNchw = op->inputs[2]->value<bool8>();
     RandomVariable heatmapSize = RandomVariableType::FREE;
     RandomVariable numRois = RandomVariableType::FREE;
@@ -191,6 +196,10 @@ static void heatmapMaxKeypointConstructor(TestOperandType, uint32_t rank, Random
     op->inputs[1]->dimensions = {numRois, 4};
     op->outputs[0]->dimensions = {numRois, numKeypoints};
     op->outputs[1]->dimensions = {numRois, numKeypoints, 2};
+
+    // The values of the RoI tensor has a special format and cannot be generated from another
+    // operation.
+    op->inputs[1]->doNotConnect = true;
 
     // TODO: This is an ugly fix due to the limitation of the current generator that can not handle
     // the dimension dependency within an input. Without the following line, most of the generated
