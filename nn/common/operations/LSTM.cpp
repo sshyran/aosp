@@ -853,8 +853,9 @@ bool LSTMCell::LSTMStep(
                     input_gate_scratch);
         }
         if (params.use_layer_norm) {
+            // TODO(avg): Clean up when uprevving TFlite (b/157951487)
             tflite::tensor_utils::MeanStddevNormalization(input_gate_scratch, input_gate_scratch,
-                                                          n_cell, n_batch);
+                                                          n_cell, n_batch, kLayerNormEpsilon);
             tflite::tensor_utils::VectorBatchVectorCwiseProduct(input_layer_norm_weights_buffer,
                                                                 n_cell, input_gate_scratch, n_batch,
                                                                 input_gate_scratch);
@@ -872,8 +873,9 @@ bool LSTMCell::LSTMStep(
                                                                       n_batch, forget_gate_scratch);
     }
     if (params.use_layer_norm) {
+        // TODO(avg): Clean up when uprevving TFlite (b/157951487)
         tflite::tensor_utils::MeanStddevNormalization(forget_gate_scratch, forget_gate_scratch,
-                                                      n_cell, n_batch);
+                                                      n_cell, n_batch, kLayerNormEpsilon);
         tflite::tensor_utils::VectorBatchVectorCwiseProduct(forget_layer_norm_weights_buffer,
                                                             n_cell, forget_gate_scratch, n_batch,
                                                             forget_gate_scratch);
@@ -885,7 +887,9 @@ bool LSTMCell::LSTMStep(
 
     // For each batch and cell: update the cell.
     if (params.use_layer_norm) {
-        tflite::tensor_utils::MeanStddevNormalization(cell_scratch, cell_scratch, n_cell, n_batch);
+        // TODO(avg): Clean up when uprevving TFlite (b/157951487)
+        tflite::tensor_utils::MeanStddevNormalization(cell_scratch, cell_scratch, n_cell, n_batch,
+                                                      kLayerNormEpsilon);
         tflite::tensor_utils::VectorBatchVectorCwiseProduct(cell_layer_norm_weights_buffer, n_cell,
                                                             cell_scratch, n_batch, cell_scratch);
         tflite::tensor_utils::VectorBatchVectorAdd(cell_bias_buffer, n_cell, n_batch, cell_scratch);
@@ -915,8 +919,9 @@ bool LSTMCell::LSTMStep(
                                                                       n_batch, output_gate_scratch);
     }
     if (params.use_layer_norm) {
+        // TODO(avg): Clean up when uprevving TFlite (b/157951487)
         tflite::tensor_utils::MeanStddevNormalization(output_gate_scratch, output_gate_scratch,
-                                                      n_cell, n_batch);
+                                                      n_cell, n_batch, kLayerNormEpsilon);
         tflite::tensor_utils::VectorBatchVectorCwiseProduct(output_layer_norm_weights_buffer,
                                                             n_cell, output_gate_scratch, n_batch,
                                                             output_gate_scratch);

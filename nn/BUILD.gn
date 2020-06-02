@@ -162,7 +162,7 @@ static_library("common_operations") {
     "common/operations/LogSoftmax.cpp",
     "common/operations/LSHProjection.cpp",
     "common/operations/LSHProjectionTest.cpp",
-    # "common/operations/LSTM.cpp", # Too few arguments in function call
+    "common/operations/LSTM.cpp",
     "common/operations/LSTMTest.cpp",
     "common/operations/MaximumMinimum.cpp",
     "common/operations/Multinomial.cpp",
