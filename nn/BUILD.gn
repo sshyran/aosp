@@ -58,7 +58,9 @@ pkg_config("common_defaults") {
     "${sysroot}/usr/include/tensorflow/nnapi/include/external/gemmlowp",
     "common/random",
   ]
-  defines = []
+  defines = [
+    "TF_LITE_DISABLE_X86_NEON",
+  ]
   pkg_deps = [ "libnnapi-support" ]
 }
 
