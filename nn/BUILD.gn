@@ -19,6 +19,7 @@ group("all") {
 shared_library("libneuralnetworks") {
   configs += [ ":target_defaults" ]
   deps = [
+    ":common",
     ":common_random",
     ":common_operations",
     ":runtime",
@@ -146,7 +147,6 @@ if (use.test) {
 
 static_library("common_operations") {
   configs += [
-    ":target_defaults",
     ":common_defaults",
     "//common-mk:pic",
   ]
@@ -241,6 +241,44 @@ static_library("common_operations") {
   ]
 }
 
+
+static_library("common") {
+  configs += [
+    ":common_defaults",
+    "//common-mk:pic",
+  ]
+  deps = [
+  ]
+  cflags_cc = [
+  ]
+  include_dirs = [
+    "runtime/include",
+  ]
+  sources = [
+    # Commented out files require one or more of these to be fixed:
+    # b/157383102 - Port libfmq to ChromeOS
+    # b/157388904 - Implementation of hardware buffers API
+    "common/BufferTracker.cpp",
+    #"common/CpuExecutor.cpp",              # hardware buffers
+    #"common/ExecutionBurstController.cpp", # fmq
+    #"common/ExecutionBurstServer.cpp",     # fmq
+    "common/GraphDump.cpp",
+    "common/IndexedShapeWrapper.cpp",
+    "common/LogTagTest.cpp",
+    "common/LogTagTestExtra.cpp",
+    "common/MemoryUtils.cpp",
+    "common/MetaModel.cpp",
+    "common/OperationResolver.cpp",
+    "common/OperationsUtils.cpp",
+    "common/QuantUtils.cpp",
+    "common/TokenHasher.cpp",
+    #"common/Utils.cpp",                    # sys/system_properties.h not found
+    #"common/UtilsTest.cpp",                # must be compiled as a standalone test
+    "common/ValidateHal.cpp",
+  ]
+}
+
+
 if (use.test) {
   executable("chromeos_testrunner") {
     include_dirs = [
@@ -251,12 +289,13 @@ if (use.test) {
       "//common-mk:test",
     ]
     deps = [
+      ":common",
       ":common_random",
       "//common-mk/testrunner:testrunner",
     ]
     sources = [
       "chromeos/tests/common/includes_test.cc",
-      "chromeos/tests/common/random_test.cc"
+      "chromeos/tests/common/random_test.cc",
     ]
   }
 }
