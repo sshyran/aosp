@@ -190,7 +190,7 @@ static_library("common_operations") {
     "common/operations/Split.cpp",
     "common/operations/Squeeze.cpp",
     "common/operations/StridedSlice.cpp",
-    # "common/operations/SVDF.cpp", # VectorShiftLeft does not name a template
+    "common/operations/SVDF.cpp",
     "common/operations/SVDFTest.cpp",
     "common/operations/Tile.cpp",
     "common/operations/TopK_V2.cpp",
