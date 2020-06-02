@@ -186,7 +186,7 @@ static_library("common_operations") {
     "common/operations/Select.cpp",
     "common/operations/SimpleMath.cpp",
     "common/operations/Slice.cpp",
-    # "common/operations/Softmax.cpp", # undeclared identifier FLT_MAX
+    "common/operations/Softmax.cpp",
     "common/operations/Split.cpp",
     "common/operations/Squeeze.cpp",
     "common/operations/StridedSlice.cpp",

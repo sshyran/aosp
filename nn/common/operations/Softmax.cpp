@@ -20,6 +20,8 @@
 #include <tensorflow/lite/kernels/internal/optimized/optimized_ops.h>
 
 #include <algorithm>
+// TODO(avg): upstream this IWYU fix (cfloat included for FLT_MAX)
+#include <cfloat>
 #include <limits>
 #include <vector>
 
