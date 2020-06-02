@@ -120,7 +120,8 @@ bool resizeImageOpNhwc(OperationType opType, const T* inputData, const Shape& in
     if (opType == OperationType::RESIZE_BILINEAR) {
         NNTRACE_COMP_SWITCH("optimized_ops::ResizeBilinear");
         tflite::reference_ops::ResizeBilinear(
-                {.align_corners = alignCorners, .half_pixel_centers = halfPixelCenters},
+                // TODO(avg): revert this when TfLites is upreved (b/157954152)
+                {.align_corners = alignCorners, /*.half_pixel_centers = halfPixelCenters */},
                 convertShapeToTflshape(inputShape), inputData, convertShapeToTflshape(outDimShape),
                 outDimData, convertShapeToTflshape(outputShape), outputData);
     } else if (opType == OperationType::RESIZE_NEAREST_NEIGHBOR) {

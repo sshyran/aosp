@@ -178,7 +178,7 @@ static_library("common_operations") {
     "common/operations/Rank.cpp",
     "common/operations/Reduce.cpp",
     "common/operations/Reshape.cpp",
-    # "common/operations/ResizeImageOps.cpp", # No matching function call tflite::reference_ops::ResizeBilinear
+    "common/operations/ResizeImageOps.cpp",
     "common/operations/RNN.cpp",
     "common/operations/RNNTest.cpp",
     "common/operations/RoiAlign.cpp",
