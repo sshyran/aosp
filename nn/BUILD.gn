@@ -128,7 +128,7 @@ static_library("common_operations") {
     "NAMESPACE_FOR_HASH_FUNCTIONS=farmhash",
   ]
   sources = [
-    # "common/operations/Activation.cpp", # no type named tflite::HardSwishParams
+    "common/operations/Activation.cpp",
     "common/operations/ArgMinMax.cpp",
     "common/operations/BidirectionalSequenceLSTM.cpp",
     "common/operations/BidirectionalSequenceRNN.cpp",

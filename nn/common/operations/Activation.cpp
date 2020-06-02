@@ -308,51 +308,53 @@ bool logisticQuant8Signed(const int8_t* inputData, const Shape& inputShape, int8
     return true;
 }
 
-void DownScaleInt32ToInt16Multiplier(int32_t multiplier_int32, int16_t* multiplier_int16) {
-    TFLITE_DCHECK_GE(multiplier_int32, 0);
-    static constexpr int32_t kRoundingOffset = 1 << 15;
-    if (multiplier_int32 >= std::numeric_limits<int32_t>::max() - kRoundingOffset) {
-        *multiplier_int16 = std::numeric_limits<int16_t>::max();
-        return;
-    }
-    const int32_t result = (multiplier_int32 + kRoundingOffset) >> 16;
-    TFLITE_DCHECK_LE(result << 16, multiplier_int32 + kRoundingOffset);
-    TFLITE_DCHECK_GT(result << 16, multiplier_int32 - kRoundingOffset);
-    *multiplier_int16 = result;
-    TFLITE_DCHECK_EQ(*multiplier_int16, result);
-}
+// TODO(avg): b/157948826 renable HardSwish after TfLite uprev
+//void DownScaleInt32ToInt16Multiplier(int32_t multiplier_int32, int16_t* multiplier_int16) {
+    //TFLITE_DCHECK_GE(multiplier_int32, 0);
+    //static constexpr int32_t kRoundingOffset = 1 << 15;
+    //if (multiplier_int32 >= std::numeric_limits<int32_t>::max() - kRoundingOffset) {
+        //*multiplier_int16 = std::numeric_limits<int16_t>::max();
+        //return;
+    //}
+    //const int32_t result = (multiplier_int32 + kRoundingOffset) >> 16;
+    //TFLITE_DCHECK_LE(result << 16, multiplier_int32 + kRoundingOffset);
+    //TFLITE_DCHECK_GT(result << 16, multiplier_int32 - kRoundingOffset);
+    //*multiplier_int16 = result;
+    //TFLITE_DCHECK_EQ(*multiplier_int16, result);
+//}
 
-template <typename T>
-bool hardSwishQuant(const T* inputData, const Shape& inputShape, T* outputData,
-                    const Shape& outputShape) {
-    tflite::HardSwishParams params;
-    params.input_zero_point = inputShape.offset;
-    params.output_zero_point = outputShape.offset;
-    const float input_scale = inputShape.scale;
-    const float hires_input_scale = (1.0f / 128.0f) * input_scale;
-    const float reluish_scale = 3.0f / 32768.0f;
-    const float output_scale = outputShape.scale;
+// TODO(avg): b/157948826 renable HardSwish after TfLite uprev
+//template <typename T>
+//bool hardSwishQuant(const T* inputData, const Shape& inputShape, T* outputData,
+                    //const Shape& outputShape) {
+    //tflite::HardSwishParams params;
+    //params.input_zero_point = inputShape.offset;
+    //params.output_zero_point = outputShape.offset;
+    //const float input_scale = inputShape.scale;
+    //const float hires_input_scale = (1.0f / 128.0f) * input_scale;
+    //const float reluish_scale = 3.0f / 32768.0f;
+    //const float output_scale = outputShape.scale;
 
-    const float output_multiplier = hires_input_scale / output_scale;
+    //const float output_multiplier = hires_input_scale / output_scale;
 
-    int32_t output_multiplier_fixedpoint_int32;
-    NN_RET_CHECK(QuantizeMultiplier(output_multiplier, &output_multiplier_fixedpoint_int32,
-                                    &params.output_multiplier_exponent));
-    DownScaleInt32ToInt16Multiplier(output_multiplier_fixedpoint_int32,
-                                    &params.output_multiplier_fixedpoint_int16);
-    NN_RET_CHECK(params.output_multiplier_exponent <= 0);
+    //int32_t output_multiplier_fixedpoint_int32;
+    //NN_RET_CHECK(QuantizeMultiplier(output_multiplier, &output_multiplier_fixedpoint_int32,
+                                    //&params.output_multiplier_exponent));
+    //DownScaleInt32ToInt16Multiplier(output_multiplier_fixedpoint_int32,
+                                    //&params.output_multiplier_fixedpoint_int16);
+    //NN_RET_CHECK(params.output_multiplier_exponent <= 0);
 
-    const float reluish_multiplier = hires_input_scale / reluish_scale;
-    int32_t reluish_multiplier_fixedpoint_int32;
-    NN_RET_CHECK(QuantizeMultiplier(reluish_multiplier, &reluish_multiplier_fixedpoint_int32,
-                                    &params.reluish_multiplier_exponent));
-    DownScaleInt32ToInt16Multiplier(reluish_multiplier_fixedpoint_int32,
-                                    &params.reluish_multiplier_fixedpoint_int16);
+    //const float reluish_multiplier = hires_input_scale / reluish_scale;
+    //int32_t reluish_multiplier_fixedpoint_int32;
+    //NN_RET_CHECK(QuantizeMultiplier(reluish_multiplier, &reluish_multiplier_fixedpoint_int32,
+                                    //&params.reluish_multiplier_exponent));
+    //DownScaleInt32ToInt16Multiplier(reluish_multiplier_fixedpoint_int32,
+                                    //&params.reluish_multiplier_fixedpoint_int16);
 
-    tflite::reference_ops::HardSwish(params, convertShapeToTflshape(inputShape), inputData,
-                                     convertShapeToTflshape(outputShape), outputData);
-    return true;
-}
+    //tflite::reference_ops::HardSwish(params, convertShapeToTflshape(inputShape), inputData,
+                                     //convertShapeToTflshape(outputShape), outputData);
+    //return true;
+//}
 
 }  // namespace
 
@@ -382,19 +384,20 @@ bool validate(OperationType opType, const IOperationValidationContext* context) 
     return validateInputTypes(context, {inputType}) && validateOutputTypes(context, {inputType});
 }
 
-bool validateHardSwish(const IOperationValidationContext* context) {
-    NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
-    NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
-    auto inputType = context->getInputType(kInputTensor);
-    if (inputType == OperandType::TENSOR_FLOAT16 || inputType == OperandType::TENSOR_FLOAT32 ||
-        inputType == OperandType::TENSOR_QUANT8_ASYMM ||
-        inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
-        NN_RET_CHECK(validateHalVersion(context, HalVersion::V1_3));
-    } else {
-        NN_RET_CHECK_FAIL() << "Unsupported tensor type for operation ELU";
-    }
-    return validateInputTypes(context, {inputType}) && validateOutputTypes(context, {inputType});
-}
+// TODO(avg): b/157948826 renable HardSwish after TfLite uprev
+//bool validateHardSwish(const IOperationValidationContext* context) {
+    //NN_RET_CHECK_EQ(context->getNumInputs(), kNumInputs);
+    //NN_RET_CHECK_EQ(context->getNumOutputs(), kNumOutputs);
+    //auto inputType = context->getInputType(kInputTensor);
+    //if (inputType == OperandType::TENSOR_FLOAT16 || inputType == OperandType::TENSOR_FLOAT32 ||
+        //inputType == OperandType::TENSOR_QUANT8_ASYMM ||
+        //inputType == OperandType::TENSOR_QUANT8_ASYMM_SIGNED) {
+        //NN_RET_CHECK(validateHalVersion(context, HalVersion::V1_3));
+    //} else {
+        //NN_RET_CHECK_FAIL() << "Unsupported tensor type for operation ELU";
+    //}
+    //return validateInputTypes(context, {inputType}) && validateOutputTypes(context, {inputType});
+//}
 
 bool prepare(OperationType opType, IOperationExecutionContext* context) {
     Shape input = context->getInputShape(kInputTensor);
@@ -575,44 +578,45 @@ bool executeTanh(IOperationExecutionContext* context) {
     }
 }
 
-bool executeHardSwish(IOperationExecutionContext* context) {
-    // Bypass execution in the case of zero-sized input.
-    if (getNumberOfElements(context->getOutputShape(kOutputTensor)) == 0) return true;
-    switch (context->getInputType(kInputTensor)) {
-        case OperandType::TENSOR_FLOAT16: {
-            const Shape& inputShape = context->getInputShape(kInputTensor);
-            const Shape& outputShape = context->getOutputShape(kOutputTensor);
-            std::vector<float> inputFloat(getNumberOfElements(inputShape));
-            std::vector<float> outputFloat(getNumberOfElements(outputShape));
-            convertFloat16ToFloat32(context->getInputBuffer<_Float16>(kInputTensor), &inputFloat);
-            tflite::reference_ops::HardSwish(convertShapeToTflshape(inputShape), inputFloat.data(),
-                                             convertShapeToTflshape(outputShape),
-                                             outputFloat.data());
-            convertFloat32ToFloat16(outputFloat, context->getOutputBuffer<_Float16>(kOutputTensor));
-            return true;
-        }
-        case OperandType::TENSOR_FLOAT32: {
-            tflite::reference_ops::HardSwish(
-                    convertShapeToTflshape(context->getInputShape(kInputTensor)),
-                    context->getInputBuffer<float>(kInputTensor),
-                    convertShapeToTflshape(context->getOutputShape(kOutputTensor)),
-                    context->getOutputBuffer<float>(kOutputTensor));
-            return true;
-        }
-        case OperandType::TENSOR_QUANT8_ASYMM:
-            return hardSwishQuant(context->getInputBuffer<uint8_t>(kInputTensor),
-                                  context->getInputShape(kInputTensor),
-                                  context->getOutputBuffer<uint8_t>(kOutputTensor),
-                                  context->getOutputShape(kOutputTensor));
-        case OperandType::TENSOR_QUANT8_ASYMM_SIGNED:
-            return hardSwishQuant(context->getInputBuffer<int8_t>(kInputTensor),
-                                  context->getInputShape(kInputTensor),
-                                  context->getOutputBuffer<int8_t>(kOutputTensor),
-                                  context->getOutputShape(kOutputTensor));
-        default:
-            NN_RET_CHECK_FAIL() << "Unsupported tensor type for operation TANH";
-    }
-}
+// TODO(avg): b/157948826 renable HardSwish after TfLite uprev
+//bool executeHardSwish(IOperationExecutionContext* context) {
+    //// Bypass execution in the case of zero-sized input.
+    //if (getNumberOfElements(context->getOutputShape(kOutputTensor)) == 0) return true;
+    //switch (context->getInputType(kInputTensor)) {
+        //case OperandType::TENSOR_FLOAT16: {
+            //const Shape& inputShape = context->getInputShape(kInputTensor);
+            //const Shape& outputShape = context->getOutputShape(kOutputTensor);
+            //std::vector<float> inputFloat(getNumberOfElements(inputShape));
+            //std::vector<float> outputFloat(getNumberOfElements(outputShape));
+            //convertFloat16ToFloat32(context->getInputBuffer<_Float16>(kInputTensor), &inputFloat);
+            //tflite::reference_ops::HardSwish(convertShapeToTflshape(inputShape), inputFloat.data(),
+                                             //convertShapeToTflshape(outputShape),
+                                             //outputFloat.data());
+            //convertFloat32ToFloat16(outputFloat, context->getOutputBuffer<_Float16>(kOutputTensor));
+            //return true;
+        //}
+        //case OperandType::TENSOR_FLOAT32: {
+            //tflite::reference_ops::HardSwish(
+                    //convertShapeToTflshape(context->getInputShape(kInputTensor)),
+                    //context->getInputBuffer<float>(kInputTensor),
+                    //convertShapeToTflshape(context->getOutputShape(kOutputTensor)),
+                    //context->getOutputBuffer<float>(kOutputTensor));
+            //return true;
+        //}
+        //case OperandType::TENSOR_QUANT8_ASYMM:
+            //return hardSwishQuant(context->getInputBuffer<uint8_t>(kInputTensor),
+                                  //context->getInputShape(kInputTensor),
+                                  //context->getOutputBuffer<uint8_t>(kOutputTensor),
+                                  //context->getOutputShape(kOutputTensor));
+        //case OperandType::TENSOR_QUANT8_ASYMM_SIGNED:
+            //return hardSwishQuant(context->getInputBuffer<int8_t>(kInputTensor),
+                                  //context->getInputShape(kInputTensor),
+                                  //context->getOutputBuffer<int8_t>(kOutputTensor),
+                                  //context->getOutputShape(kOutputTensor));
+        //default:
+            //NN_RET_CHECK_FAIL() << "Unsupported tensor type for operation TANH";
+    //}
+//}
 
 }  // namespace activation
 
@@ -633,9 +637,10 @@ NN_REGISTER_OPERATION(LOGISTIC, "LOGISTIC",
 NN_REGISTER_OPERATION(TANH, "TANH", std::bind(activation::validate, OperationType::TANH, _1),
                       std::bind(activation::prepare, OperationType::TANH, _1),
                       activation::executeTanh, .allowZeroSizedInput = true);
-NN_REGISTER_OPERATION(HARD_SWISH, "HARD_SWISH", activation::validateHardSwish,
-                      std::bind(activation::prepare, OperationType::HARD_SWISH, _1),
-                      activation::executeHardSwish, .allowZeroSizedInput = true);
+// TODO(avg): b/157948826 renable HardSwish after TfLite uprev
+//NN_REGISTER_OPERATION(HARD_SWISH, "HARD_SWISH", activation::validateHardSwish,
+                      //std::bind(activation::prepare, OperationType::HARD_SWISH, _1),
+                      //activation::executeHardSwish, .allowZeroSizedInput = true);
 
 }  // namespace nn
 }  // namespace android
