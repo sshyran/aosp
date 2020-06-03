@@ -485,7 +485,7 @@ const AccuracyCriteria kStrictCriteria = {
 // broadcast or elementwise, e.g ADD, FLOOR.
 const AccuracyCriteria kMediumCriteria = {
         .float32 = {.bias = 1e-6f, .mse = 1e-8f, .atol = 1e-5f, .rtol = 1e-5f},
-        .float16 = {.bias = 1e-3f, .mse = 1e-6f, .atol = 1e-2f, .rtol = 1e-2f},
+        .float16 = {.bias = 1e-3f, .mse = 1e-5f, .atol = 1e-2f, .rtol = 1e-2f},
         .int32 = {.atol = 1},
         .quant8Asymm = {.bias = 1.2, .mse = 1.2, .atol = 2},
         .quant8AsymmSigned = {.bias = 1.2, .mse = 1.2, .atol = 2},
