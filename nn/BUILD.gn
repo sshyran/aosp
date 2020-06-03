@@ -9,7 +9,10 @@ group("all") {
     ":libneuralnetworks",
   ]
   if (use.test) {
-    deps += [ ":chromeos_testrunner" ]
+    deps += [
+      ":chromeos_testrunner",
+      ":runtime_testrunner",
+    ]
   }
 }
 
@@ -102,6 +105,41 @@ static_library("runtime") {
     # "runtime/TypeManager.cpp",
     # "runtime/VersionedInterfaces.cpp",
   ]
+}
+
+if (use.test) {
+  static_library("generated_test_harness") {
+    include_dirs = [
+      "tools/test_generator/test_harness/include",
+    ]
+    configs += [
+      ":target_defaults",
+      "//common-mk:test",
+    ]
+    sources = [
+      "tools/test_generator/test_harness/TestHarness.cpp",
+    ]
+  }
+  executable("runtime_testrunner") {
+    include_dirs = [
+      "runtime/include",
+      "tools/test_generator/test_harness/include",
+    ]
+    configs += [
+      ":target_defaults",
+      "//common-mk:test",
+    ]
+    deps = [
+      ":generated_test_harness",
+      ":runtime",
+      "//common-mk/testrunner:testrunner",
+    ]
+    sources = [
+      "runtime/test/Bridge.cpp",
+      "runtime/test/RequireDebug.cpp",
+      "runtime/test/TestAssertions.cpp",
+    ]
+  }
 }
 
 static_library("common_operations") {
