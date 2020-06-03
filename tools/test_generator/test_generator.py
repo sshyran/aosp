@@ -295,6 +295,7 @@ class Operand(NamedVariable):
         self.model_index = None
         self.ins = []
         self.outs = []
+        self.mayBeInternal = True
 
     def SetValue(self, value):
         self.value = value if type(value) is list or type(value) is tuple or value is None \
@@ -330,7 +331,14 @@ class Operand(NamedVariable):
                              extraParams=self.type.extraParams)
         if not issubclass(DerivedClass, Internal):
             newop.SetValue(self.value)
+        if not self.mayBeInternal:
+            assert not issubclass(DerivedClass, Internal)
+            newop.ShouldNeverBeInternal()
         return newop
+
+    def ShouldNeverBeInternal(self):
+        self.mayBeInternal = False
+        return self
 
 # Base class of user-defined input/output operand
 class InOut(Operand):
@@ -1031,7 +1039,7 @@ class AllInputsAsInternalCoverter(ModelVariation):
             raise SkipVariation
 
         # Find all input tensors that can be an output of the ADD operation.
-        modelInputs = [i for i in model.GetInputs() if CompatibleWithADD(i)]
+        modelInputs = [i for i in model.GetInputs() if CompatibleWithADD(i) and i.mayBeInternal]
         if not modelInputs:
             raise SkipVariation
 
