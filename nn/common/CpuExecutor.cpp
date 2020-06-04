@@ -387,11 +387,14 @@ std::optional<RunTimePoolInfo> RunTimePoolInfo::createFromHidlMemory(
         const uint32_t layers = 1;  // layers is always 1 for BLOB mode AHardwareBuffer.
         const uint32_t stride = hidlMemory.size();
 
+        // Reordered field initialization to match definition in order to avoid
+        // compiler warning.
+        // TODO(avg): upstream this change
         AHardwareBuffer_Desc desc{
                 .width = width,
-                .format = format,
                 .height = height,
                 .layers = layers,
+                .format = format,
                 .usage = usage,
                 .stride = stride,
         };
@@ -1102,9 +1105,10 @@ int CpuExecutor::executeOperation(const Operation& operation, RunTimeOperandInfo
                       setInfoAndAllocateIfNeeded(&output, outputShape, &result) && lstm_cell.Eval();
         } break;
         case OperationType::RANDOM_MULTINOMIAL: {
-            const RunTimeOperandInfo& lookups = operands[ins[HashtableLookup::kLookupTensor]];
-            const RunTimeOperandInfo& keys = operands[ins[HashtableLookup::kKeyTensor]];
-            const RunTimeOperandInfo& values = operands[ins[HashtableLookup::kValueTensor]];
+            // TODO(avg): upstream fix for unused variables
+            //const RunTimeOperandInfo& lookups = operands[ins[HashtableLookup::kLookupTensor]];
+            //const RunTimeOperandInfo& keys = operands[ins[HashtableLookup::kKeyTensor]];
+            //const RunTimeOperandInfo& values = operands[ins[HashtableLookup::kValueTensor]];
             RunTimeOperandInfo& output = operands[outs[Multinomial::kOutputTensor]];
 
             Shape outputShape;

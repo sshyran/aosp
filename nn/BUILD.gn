@@ -257,9 +257,8 @@ static_library("common") {
   sources = [
     # Commented out files require one or more of these to be fixed:
     # b/157383102 - Port libfmq to ChromeOS
-    # b/157388904 - Implementation of hardware buffers API
     "common/BufferTracker.cpp",
-    #"common/CpuExecutor.cpp",              # hardware buffers
+    "common/CpuExecutor.cpp",
     #"common/ExecutionBurstController.cpp", # fmq
     #"common/ExecutionBurstServer.cpp",     # fmq
     "common/GraphDump.cpp",
