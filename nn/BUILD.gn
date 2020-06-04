@@ -122,11 +122,13 @@ if (use.test) {
   }
   executable("runtime_testrunner") {
     include_dirs = [
+      "runtime",
       "runtime/include",
       "tools/test_generator/test_harness/include",
     ]
     configs += [
       ":target_defaults",
+      ":common_defaults",
       "//common-mk:test",
     ]
     deps = [
