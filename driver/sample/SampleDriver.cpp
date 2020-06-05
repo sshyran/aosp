@@ -20,7 +20,6 @@
 
 #include <android-base/logging.h>
 #include <android-base/properties.h>
-#include <android/sync.h>
 #include <hidl/LegacySupport.h>
 
 #include <algorithm>
