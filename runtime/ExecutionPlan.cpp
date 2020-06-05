@@ -18,7 +18,6 @@
 
 #include "ExecutionPlan.h"
 
-#include <android/sync.h>
 #include <fcntl.h>
 #include <openssl/sha.h>
 #include <sys/stat.h>
