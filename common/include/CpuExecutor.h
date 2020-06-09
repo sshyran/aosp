@@ -250,6 +250,14 @@ T getScalarData(const RunTimeOperandInfo& info) {
     return data[0];
 }
 
+template <typename T>
+T getScalarDataWithDefault(const RunTimeOperandInfo& info, T defaultValue) {
+    if (info.length < sizeof(T)) {
+        return defaultValue;
+    }
+    return getScalarData<T>(info);
+}
+
 inline bool IsNullInput(const RunTimeOperandInfo* input) {
     return input->lifetime == hal::OperandLifeTime::NO_VALUE;
 }
