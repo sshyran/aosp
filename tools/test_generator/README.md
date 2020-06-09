@@ -244,6 +244,14 @@ example.DisableLifeTimeVariation()
 example.DisableDynamicOutputShapeVariation()
 ```
 
+You may also specify a certain operand to be input/const-only that `AllInputsAsInternalCoverter` will skip converting this operand.
+
+```Python
+# "hash" will be converted to a model input when applying AllTensorsAsInputsConverter,
+# but will be skipped when further applying AllInputsAsInternalCoverter.
+hash = Parameter("hash", "TENSOR_FLOAT32", "{1, 1}", [0.123]).ShouldNeverBeInternal()
+```
+
 #### Some helper functions
 
 The test generator provides several helper functions or shorthands to add commonly used group of variations.
