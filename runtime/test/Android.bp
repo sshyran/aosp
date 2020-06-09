@@ -429,3 +429,53 @@ cc_library_static {
     srcs: ["generated/spec_V1_3_cts_only/*.example.cpp"],
     static_libs: ["libneuralnetworks_generated_test_harness"],
 }
+
+cc_library_static {
+    name: "NeuralNetworksTest_random_graph",
+    defaults: ["neuralnetworks_float16"],
+    srcs: [
+        "GeneratedTestUtils.cpp",
+        "TestNeuralNetworksWrapper.cpp",
+        "fuzzing/OperationManager.cpp",
+        "fuzzing/RandomGraphGenerator.cpp",
+        "fuzzing/RandomGraphGeneratorUtils.cpp",
+        "fuzzing/RandomVariable.cpp",
+        "fuzzing/operation_signatures/*.cpp",
+    ],
+    header_libs: [
+        "libneuralnetworks_common_headers",
+        "libneuralnetworks_headers",
+    ],
+    include_dirs: [
+        "frameworks/ml/nn/tools/test_generator/test_harness/include",
+    ],
+    export_include_dirs: [
+        ".",
+        "fuzzing",
+    ],
+    cflags: [
+        "-UNDEBUG",
+        "-Wall",
+        "-Werror",
+    ],
+    shared_libs: [
+        "libandroid",
+        "liblog",
+        "libmemunreachable",
+        "libneuralnetworks",
+    ],
+    static_libs: [
+        "libbase_ndk",
+        "libgmock_ndk",
+        "libgtest_ndk_c++",
+        "libneuralnetworks_generated_test_harness",
+    ],
+    sanitize: {
+        address: true,
+        all_undefined: true,
+        scudo: true,
+    },
+    strip: {
+        keep_symbols: true,
+    },
+}
