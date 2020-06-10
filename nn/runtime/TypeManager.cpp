@@ -153,15 +153,17 @@ TypeManager::TypeManager() {
     // TODO(avg): b/158632389 determine whether to allow extensions
     mExtensionsAllowed = false;
     //mExtensionsAllowed = isNNAPIVendorExtensionsUseAllowed(getVendorExtensionAllowlistedApps());
-    VLOG(MANAGER) << "NNAPI Vendor extensions enabled: " << mExtensionsAllowed;
+    //VLOG(MANAGER) << "NNAPI Vendor extensions enabled: " << mExtensionsAllowed;
+    VLOG(MANAGER) << "NNAPI Vendor extensions disabled under ChromeOS";
     findAvailableExtensions();
 }
 
 bool TypeManager::isExtensionsUseAllowed(const AppPackageInfo& appPackageInfo,
                                          bool useOnProductImageEnabled,
                                          const std::vector<std::string>& allowlist) {
-    // NOTE(avg): extensions are always allowed under Cros
+    // NOTE(avg): extensions are never allowed under Cros
     // TODO(avg): b/158632389 determine whether to allow extensions
+    VLOG(MANAGER) << "NNAPI extensions disabled under ChromeOS";
     return false;
 #if 0
     // Only selected partitions and user-installed apps (/data)
