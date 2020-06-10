@@ -18,11 +18,12 @@
 
 #include "TypeManager.h"
 
-#include <PackageInfo.h>
+// NOTE(avg): Not required for ChromiumOS
+//#include <PackageInfo.h>
 #include <android-base/file.h>
 #include <android-base/properties.h>
-#include <binder/IServiceManager.h>
-#include <procpartition/procpartition.h>
+//#include <binder/IServiceManager.h>
+//#include <procpartition/procpartition.h>
 
 #include <algorithm>
 #include <limits>
@@ -50,6 +51,7 @@ namespace {
 
 using namespace hal;
 
+
 const uint8_t kLowBitsType = static_cast<uint8_t>(ExtensionTypeEncoding::LOW_BITS_TYPE);
 const uint32_t kMaxPrefix =
         (1 << static_cast<uint8_t>(ExtensionTypeEncoding::HIGH_BITS_PREFIX)) - 1;
@@ -62,6 +64,9 @@ bool equal(const Extension& a, const Extension& b) {
     NN_RET_CHECK(a.operandTypes == b.operandTypes);
     return true;
 }
+
+// NOTE(avg): Removed functionality not used in cros
+#if 0
 
 // Property for disabling NNAPI vendor extensions on product image (used on GSI /product image,
 // which can't use NNAPI vendor extensions).
@@ -139,11 +144,15 @@ bool isNNAPIVendorExtensionsUseAllowed(const std::vector<std::string>& allowlist
             appPackageInfo, isNNAPIVendorExtensionsUseAllowedInProductImage(), allowlist);
 }
 
+#endif
 }  // namespace
 
 TypeManager::TypeManager() {
     VLOG(MANAGER) << "TypeManager::TypeManager";
-    mExtensionsAllowed = isNNAPIVendorExtensionsUseAllowed(getVendorExtensionAllowlistedApps());
+    // NOTE(avg): vendor extensions are never allowed under Cros
+    // TODO(avg): b/158632389 determine whether to allow extensions
+    mExtensionsAllowed = false;
+    //mExtensionsAllowed = isNNAPIVendorExtensionsUseAllowed(getVendorExtensionAllowlistedApps());
     VLOG(MANAGER) << "NNAPI Vendor extensions enabled: " << mExtensionsAllowed;
     findAvailableExtensions();
 }
@@ -151,6 +160,10 @@ TypeManager::TypeManager() {
 bool TypeManager::isExtensionsUseAllowed(const AppPackageInfo& appPackageInfo,
                                          bool useOnProductImageEnabled,
                                          const std::vector<std::string>& allowlist) {
+    // NOTE(avg): extensions are always allowed under Cros
+    // TODO(avg): b/158632389 determine whether to allow extensions
+    return false;
+#if 0
     // Only selected partitions and user-installed apps (/data)
     // are allowed to use extensions.
     if (StartsWith(appPackageInfo.binaryPath, "/vendor/") ||
@@ -179,6 +192,7 @@ bool TypeManager::isExtensionsUseAllowed(const AppPackageInfo& appPackageInfo,
                        allowlist.end();
     }
     return false;
+#endif
 }
 
 void TypeManager::findAvailableExtensions() {

@@ -92,6 +92,10 @@ static_library("runtime") {
     ":target_defaults",
     "//common-mk:pic",
   ]
+  cflags_cc = [
+    # Stubbed out functions have unused parameters
+    "-Wno-unused-parameter",
+  ]
   include_dirs = [
     "common/include",
     "runtime/include",
@@ -109,7 +113,7 @@ static_library("runtime") {
     "runtime/ModelArgumentInfo.cpp",
     "runtime/ModelBuilder.cpp",
     "runtime/NeuralNetworks.cpp",
-    # "runtime/TypeManager.cpp",  # Missing PackageInfo.h
+    "runtime/TypeManager.cpp",
     "runtime/VersionedInterfaces.cpp",
   ]
 }
