@@ -187,6 +187,11 @@ bool RandomGraph::generateValue() {
         if (operand->type == RandomOperandType::INPUT) numInputs++;
     }
 
+    auto requiresBufferAllocation = [](std::shared_ptr<RandomOperand>& operand) -> bool {
+        return operand->type != RandomOperandType::INTERNAL &&
+               operand->type != RandomOperandType::NO_VALUE;
+    };
+
     for (auto& operand : mOperands) {
         // Turn INPUT into CONST with probability prob. Need to keep at least one INPUT.
         float prob = 0.5f;
@@ -194,8 +199,7 @@ bool RandomGraph::generateValue() {
             if (operand->type == RandomOperandType::INPUT) numInputs--;
             operand->type = RandomOperandType::CONST;
         }
-        if (operand->type != RandomOperandType::INTERNAL &&
-            operand->type != RandomOperandType::NO_VALUE) {
+        if (requiresBufferAllocation(operand)) {
             if (operand->buffer.empty()) operand->resizeBuffer<uint8_t>(operand->getBufferSize());
             // If operand is set by randomBuffer, copy the frozen values into buffer.
             if (!operand->randomBuffer.empty()) {
@@ -209,6 +213,20 @@ bool RandomGraph::generateValue() {
     }
 
     for (auto& operation : mOperations) {
+        for (auto operand : operation.inputs) {
+            if (requiresBufferAllocation(operand)) {
+                NN_FUZZER_CHECK(!operand->buffer.empty())
+                        << " input operand has no allocated buffer!";
+            }
+        }
+
+        for (auto& operand : operation.outputs) {
+            if (requiresBufferAllocation(operand)) {
+                NN_FUZZER_CHECK(!operand->buffer.empty())
+                        << " output operand has no allocated buffer!";
+            }
+        }
+
         if (operation.finalizer) operation.finalizer(&operation);
     }
     return true;
