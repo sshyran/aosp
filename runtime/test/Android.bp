@@ -446,9 +446,6 @@ cc_library_static {
         "libneuralnetworks_common_headers",
         "libneuralnetworks_headers",
     ],
-    include_dirs: [
-        "frameworks/ml/nn/tools/test_generator/test_harness/include",
-    ],
     export_include_dirs: [
         ".",
         "fuzzing",
