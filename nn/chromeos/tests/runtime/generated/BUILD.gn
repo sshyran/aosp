@@ -672,6 +672,10 @@ static_library("generated_spec_v1_3") {
     "${generated_src}/spec_V1_3_cts_only/concat_invalid_rank.example.cpp",
     "${generated_src}/spec_V1_3_cts_only/conv2d_v1_3_invalid_rank.example.cpp",
     "${generated_src}/spec_V1_3_cts_only/if_simple_dynamic.example.cpp",
+    "${generated_src}/spec_V1_3_cts_only/if_simple_unknown_dimension.example.cpp",
+    "${generated_src}/spec_V1_3_cts_only/if_simple_unknown_rank.example.cpp",
     "${generated_src}/spec_V1_3_cts_only/while_fib_dynamic.example.cpp",
+    "${generated_src}/spec_V1_3_cts_only/while_fib_unknown_dimension.example.cpp",
+    "${generated_src}/spec_V1_3_cts_only/while_fib_unknown_rank.example.cpp",
   ]
 }
