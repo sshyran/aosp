@@ -125,10 +125,8 @@ def Test(n_data, fib_data, add_unused_output=False):
   example.AddVariations("relaxed", "float16", quant8, quant8_signed)
   example.AddVariations(AllOutputsAsInternalCoverter())
 
-for use_shm_for_weights in [False, True]:
-  Configuration.use_shm_for_weights = use_shm_for_weights
-  Test(n_data=2, fib_data=[1, 1], add_unused_output=True)
-  Test(n_data=3, fib_data=[1, 1, 2], add_unused_output=True)
-  Test(n_data=4, fib_data=[1, 1, 2, 3], add_unused_output=True)
-  Test(n_data=5, fib_data=[1, 1, 2, 3, 5])
-  Test(n_data=6, fib_data=[1, 1, 2, 3, 5, 8])
+Test(n_data=2, fib_data=[1, 1], add_unused_output=True)
+Test(n_data=3, fib_data=[1, 1, 2], add_unused_output=True)
+Test(n_data=4, fib_data=[1, 1, 2, 3], add_unused_output=True)
+Test(n_data=5, fib_data=[1, 1, 2, 3, 5])
+Test(n_data=6, fib_data=[1, 1, 2, 3, 5, 8])
