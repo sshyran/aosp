@@ -20,16 +20,11 @@
 #include <optional>
 #include <utility>
 
-#include "Converter.h"
-#include "Model.pb.h"
 #include "NeuralNetworksWrapper.h"
 #include "TestHarness.h"
-#include "src/libfuzzer/libfuzzer_macro.h"
 
 namespace {
 
-using ::android::nn::fuzz::convertToTestModel;
-using ::android_nn_fuzz::Test;
 using ::test_helper::TestModel;
 using namespace ::android::nn::wrapper;
 using namespace test_helper;
@@ -130,7 +125,9 @@ std::optional<Execution> CreateExecution(const Compilation& compilation,
     return execution;
 }
 
-void runTest(const TestModel& testModel) {
+}  // anonymous namespace
+
+void nnapiFuzzTest(const TestModel& testModel) {
     // set up model
     auto model = CreateModel(testModel);
     if (!model.has_value()) {
@@ -151,11 +148,4 @@ void runTest(const TestModel& testModel) {
 
     // perform execution
     execution->compute();
-}
-
-}  // anonymous namespace
-
-DEFINE_PROTO_FUZZER(const Test& model) {
-    const TestModel testModel = convertToTestModel(model);
-    runTest(testModel);
 }
