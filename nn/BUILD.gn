@@ -92,14 +92,13 @@ static_library("runtime") {
     "runtime/include",
   ]
   sources = [
-    # Commented out files require one or more of these to be fixed:
-    # b/157383102 - Port libfmq to ChromeOS
+    # Commented out files require:
     # b/157388904 - Implementation of hardware buffers API
-    # "runtime/BurstBuilder.cpp",
+    "runtime/BurstBuilder.cpp",
     "runtime/Callbacks.cpp",
-    # "runtime/CompilationBuilder.cpp",
-    # "runtime/ExecutionBuilder.cpp",
-    # "runtime/ExecutionPlan.cpp",
+    "runtime/CompilationBuilder.cpp",
+    "runtime/ExecutionBuilder.cpp",
+    "runtime/ExecutionPlan.cpp",
     # "runtime/Manager.cpp",
     # "runtime/Memory.cpp",
     "runtime/ModelArgumentInfo.cpp",
@@ -257,12 +256,10 @@ static_library("common") {
     "runtime/include",
   ]
   sources = [
-    # Commented out files require one or more of these to be fixed:
-    # b/157383102 - Port libfmq to ChromeOS
     "common/BufferTracker.cpp",
     "common/CpuExecutor.cpp",
-    #"common/ExecutionBurstController.cpp", # fmq
-    #"common/ExecutionBurstServer.cpp",     # fmq
+    # "common/ExecutionBurstController.cpp",  # unused type alias
+    # "common/ExecutionBurstServer.cpp",    # unused type alias
     "common/GraphDump.cpp",
     "common/IndexedShapeWrapper.cpp",
     "common/LogTagTest.cpp",
